@@ -121,5 +121,7 @@
         }
       }
     ]
-  }
+  },
+  "familyId": "monster-family.goblin",
+  "variantRole": "minion"
 }

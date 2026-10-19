@@ -2,224 +2,99 @@
   "id": "monster.triceratops",
   "name": "Triceratops",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Triceratops",
-        "group": [
-          "Dinosaurs"
-        ],
-        "size": [
-          "H"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 95,
-          "formula": "10d12 + 30"
-        },
-        "speed": {
-          "walk": 50
-        },
-        "str": 22,
-        "dex": 9,
-        "con": 17,
-        "int": 2,
-        "wis": 11,
-        "cha": 5,
-        "passive": 10,
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Trampling Charge",
-            "entries": [
-              "If the triceratops moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a {@dc 13} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the triceratops can make one stomp attack against it as a bonus action."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Gore",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 5 ft., one target. {@h}24 ({@damage 4d8 + 6}) piercing damage."
-            ]
-          },
-          {
-            "name": "Stomp",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 5 ft., one {@condition prone} creature. {@h}22 ({@damage 3d10 + 6}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/triceratops.opus"
-        },
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Triceratops",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "One of the most aggressive of the herbivorous dinosaurs, a triceratops has a skull that flares out to form a protective plate of bone. With its great horns and formidable speed, a triceratops gores and tramples would-be predators to death.",
-                      {
-                        "type": "entries",
-                        "name": "Dinosaurs",
-                        "entries": [
-                          "Dinosaurs, or behemoths, are among the oldest reptiles in the world. Predatory dinosaurs are savage, territorial hunters. Herbivorous dinosaurs are less aggressive, but they might attack to defend their young, or if startled or harassed.",
-                          "Dinosaurs come in many sizes and shapes. Larger varieties often have drab coloration, while smaller dinosaurs have colorful markings akin to birds. Dinosaurs roam rugged and isolated areas that humanoids seldom visit, including remote mountain valleys, inaccessible plateaus, tropical islands, and deep fens."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Dinosaurs.webp"
-                },
-                "width": 1000,
-                "height": 827
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Dinosaurs"
+    ],
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "beast",
+      "tags": [
+        "dinosaur"
+      ]
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 114,
+      "formula": "12d12 + 36"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 22,
+    "dex": 9,
+    "con": 17,
+    "int": 2,
+    "wis": 11,
+    "cha": 5,
+    "passive": 10,
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The triceratops makes two Gore attacks."
+        ]
+      },
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 5 ft. {@h}19 ({@damage 2d12 + 6}) Piercing damage. If the target is Huge or smaller and the triceratops moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 ({@damage 2d8}) Piercing damage and has the {@condition Prone|SRD52} condition."
         ]
       }
+    ],
+    "environment": [
+      "grassland"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/triceratops.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Triceratops",
-        "group": [
-          "Dinosaurs"
-        ],
-        "size": [
-          "H"
-        ],
-        "type": {
-          "type": "beast",
-          "tags": [
-            "dinosaur"
-          ]
-        },
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 114,
-          "formula": "12d12 + 36"
-        },
-        "speed": {
-          "walk": 50
-        },
-        "str": 22,
-        "dex": 9,
-        "con": 17,
-        "int": 2,
-        "wis": 11,
-        "cha": 5,
-        "passive": 10,
-        "cr": "5",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The triceratops makes two Gore attacks."
-            ]
-          },
-          {
-            "name": "Gore",
-            "entries": [
-              "{@atkr m} {@hit 9}, reach 5 ft. {@h}19 ({@damage 2d12 + 6}) Piercing damage. If the target is Huge or smaller and the triceratops moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 ({@damage 2d8}) Piercing damage and has the {@condition Prone|SRD52} condition."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/triceratops.opus"
-        },
-        "actionTags": [
-          "Multiattack"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Triceratops",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Triceratops.webp"
-                      },
-                      "width": 857,
-                      "height": 1000
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Triceratops.webp"
+                  },
+                  "width": 857,
+                  "height": 1000
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

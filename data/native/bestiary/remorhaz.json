@@ -2,273 +2,124 @@
   "id": "monster.remorhaz",
   "name": "Remorhaz",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Remorhaz",
-        "size": [
-          "H"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 17,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 195,
-          "formula": "17d12 + 85"
-        },
-        "speed": {
-          "walk": 30,
-          "burrow": 20
-        },
-        "str": 24,
-        "dex": 13,
-        "con": 21,
-        "int": 4,
-        "wis": 10,
-        "cha": 5,
-        "senses": [
-          "darkvision 60 ft.",
-          "tremorsense 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "cold",
-          "fire"
-        ],
-        "cr": "11",
-        "trait": [
-          {
-            "name": "Heated Body",
-            "entries": [
-              "A creature that touches the remorhaz or hits it with a melee attack while within 5 feet of it takes 10 ({@damage 3d6}) fire damage."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}40 ({@damage 6d10 + 7}) piercing damage plus 10 ({@damage 3d6}) fire damage. If the target is a creature, it is {@condition grappled} (escape {@dc 17}). Until this grapple ends, the target is {@condition restrained}, and the remorhaz can't bite another target."
-            ]
-          },
-          {
-            "name": "Swallow",
-            "entries": [
-              "The remorhaz makes one bite attack against a Medium or smaller creature it is grappling. If the attack hits, that creature takes the bite's damage and is swallowed, and the grapple ends. While swallowed, the creature is {@condition blinded} and {@condition restrained}, it has {@quickref Cover||3||total cover} against attacks and other effects outside the remorhaz, and it takes 21 ({@damage 6d6}) acid damage at the start of each of the remorhaz's turns.",
-              "If the remorhaz takes 30 damage or more on a single turn from a creature inside it, the remorhaz must succeed on a {@dc 15} Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall {@condition prone} in a space within 10 feet of the remorhaz. If the remorhaz dies, a swallowed creature is no longer {@condition restrained} by it and can escape from the corpse using 15 feet of movement, exiting {@condition prone}."
-            ]
-          }
-        ],
-        "environment": [
-          "arctic"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/remorhaz.opus"
-        },
-        "senseTags": [
-          "D",
-          "T"
-        ],
-        "actionTags": [
-          "Swallow"
-        ],
-        "damageTags": [
-          "A",
-          "F",
-          "P"
-        ],
-        "miscTags": [
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "blinded",
-          "grappled",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Remorhaz",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "From beneath the snow and ice bursts a remorhaz in a cloud of steam, its body pulsing with internal fire. Wing like fins flare from the back of the creature's head, and its wide mouth brims with jagged teeth.",
-                      {
-                        "name": "Arctic Predators",
-                        "type": "entries",
-                        "entries": [
-                          "Remorhazes live in arctic climes, preying on elk, polar bears, and other creatures sharing their territory. They can't tolerate warm weather, having adapted to the cold by generating a furnace-like heat within their bodies. When hunting, a remorhaz burrows deep below the snow and ice and lies in wait for the faint vibrations created by a creature moving above it. While hidden under the ice and snow, it can lower its body temperature so that it doesn't melt its cover."
-                        ]
-                      },
-                      {
-                        "name": "Young Ones",
-                        "type": "entries",
-                        "entries": [
-                          "Frost giant hunters scour the icy wastes for remorhaz nests and eggs. The giants prize young remorhazes, which can be trained from hatching to obey commands and guard the giants' icy citadels. Unlike fully grown specimens, young remorhazes gnaw on their victims instead of swallowing them whole."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Remorhaz.webp"
-                },
-                "width": 924,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 195,
+      "formula": "17d12 + 85"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 24,
+    "dex": 13,
+    "con": 21,
+    "int": 4,
+    "wis": 10,
+    "cha": 5,
+    "senses": [
+      "Darkvision 60 ft.",
+      "Tremorsense 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "cold",
+      "fire"
+    ],
+    "cr": "11",
+    "trait": [
+      {
+        "name": "Heat Aura",
+        "entries": [
+          "At the end of each of the remorhaz's turns, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the remorhaz takes 16 ({@damage 3d10}) Fire damage."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}18 ({@damage 2d10 + 7}) Piercing damage plus 14 ({@damage 4d6}) Fire damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 17}), and it has the {@condition Restrained|SRD52} condition until the grapple ends."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Swallow",
+        "entries": [
+          "{@actSave str} {@dc 19}, one Large or smaller creature {@condition Grappled|SRD52} by the remorhaz (it can have up to two creatures swallowed at a time). {@actSaveFail} The target is swallowed by the remorhaz, and the {@condition Grappled|SRD52} condition ends. A swallowed creature has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, it has {@variantrule Cover|SRD52|Total Cover} against attacks and other effects outside the remorhaz, and it takes 10 ({@damage 3d6}) Acid damage plus 10 ({@damage 3d6}) Fire damage at the start of each of the remorhaz's turns.",
+          "If the remorhaz takes 30 damage or more on a single turn from a creature inside it, the remorhaz must succeed on a {@dc 15} Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, each of which falls in a space within 5 feet of the remorhaz and has the {@condition Prone|SRD52} condition. If the remorhaz dies, any swallowed creature no longer has the {@condition Restrained|SRD52} condition and can escape from the corpse by using 15 feet of movement, exiting {@condition Prone|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/remorhaz.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D",
+      "T"
+    ],
+    "actionTags": [
+      "Swallow"
+    ],
+    "damageTags": [
+      "A",
+      "F",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "prone",
+      "restrained"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Remorhaz",
-        "size": [
-          "H"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 195,
-          "formula": "17d12 + 85"
-        },
-        "speed": {
-          "walk": 40,
-          "burrow": 30
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 24,
-        "dex": 13,
-        "con": 21,
-        "int": 4,
-        "wis": 10,
-        "cha": 5,
-        "senses": [
-          "Darkvision 60 ft.",
-          "Tremorsense 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "cold",
-          "fire"
-        ],
-        "cr": "11",
-        "trait": [
-          {
-            "name": "Heat Aura",
-            "entries": [
-              "At the end of each of the remorhaz's turns, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the remorhaz takes 16 ({@damage 3d10}) Fire damage."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 11}, reach 10 ft. {@h}18 ({@damage 2d10 + 7}) Piercing damage plus 14 ({@damage 4d6}) Fire damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 17}), and it has the {@condition Restrained|SRD52} condition until the grapple ends."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Swallow",
-            "entries": [
-              "{@actSave str} {@dc 19}, one Large or smaller creature {@condition Grappled|SRD52} by the remorhaz (it can have up to two creatures swallowed at a time). {@actSaveFail} The target is swallowed by the remorhaz, and the {@condition Grappled|SRD52} condition ends. A swallowed creature has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, it has {@variantrule Cover|SRD52|Total Cover} against attacks and other effects outside the remorhaz, and it takes 10 ({@damage 3d6}) Acid damage plus 10 ({@damage 3d6}) Fire damage at the start of each of the remorhaz's turns.",
-              "If the remorhaz takes 30 damage or more on a single turn from a creature inside it, the remorhaz must succeed on a {@dc 15} Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, each of which falls in a space within 5 feet of the remorhaz and has the {@condition Prone|SRD52} condition. If the remorhaz dies, any swallowed creature no longer has the {@condition Restrained|SRD52} condition and can escape from the corpse by using 15 feet of movement, exiting {@condition Prone|SRD52}."
-            ]
-          }
-        ],
-        "environment": [
-          "arctic"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/remorhaz.opus"
-        },
-        "senseTags": [
-          "D",
-          "T"
-        ],
-        "actionTags": [
-          "Swallow"
-        ],
-        "damageTags": [
-          "A",
-          "F",
-          "P"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled",
-          "prone",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Remorhaz",
-            "_copy": {
-              "name": "Remorhazes",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Full-grown remorhazes are single-minded ambush predators. They attempt to bite prey and trap it against their searing bodies, then swallow their meal whole. Remorhazes eat as much as they can, since they might go months without feeding."
-                      ]
-                    }
+        "_copy": {
+          "name": "Remorhazes",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Full-grown remorhazes are single-minded ambush predators. They attempt to bite prey and trap it against their searing bodies, then swallow their meal whole. Remorhazes eat as much as they can, since they might go months without feeding."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

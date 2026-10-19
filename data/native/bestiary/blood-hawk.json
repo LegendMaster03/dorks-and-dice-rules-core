@@ -2,203 +2,105 @@
   "id": "monster.blood-hawk",
   "name": "Blood Hawk",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Blood Hawk",
-        "size": [
-          "S"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 7,
-          "formula": "2d6"
-        },
-        "speed": {
-          "walk": 10,
-          "fly": 60
-        },
-        "str": 6,
-        "dex": 14,
-        "con": 10,
-        "int": 3,
-        "wis": 14,
-        "cha": 5,
-        "skill": {
-          "perception": "+4"
-        },
-        "passive": 14,
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Keen Sight",
-            "entries": [
-              "The hawk has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
-            ]
-          },
-          {
-            "name": "Pack Tactics",
-            "entries": [
-              "The hawk has advantage on an attack roll against a creature if at least one of the hawk's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Beak",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "grassland",
-          "forest",
-          "hill",
-          "coastal",
-          "arctic"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/blood-hawk.opus"
-        },
-        "traitTags": [
-          "Keen Senses",
-          "Pack Tactics"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Blood Hawk",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Taking its name from its crimson feathers and aggressive nature, the blood hawk fearlessly attacks almost any animal, stabbing it with its daggerlike beak. Blood hawks flock together in large numbers, attacking as a pack to take down prey."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 7,
+      "formula": "2d6"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 60
+    },
+    "str": 6,
+    "dex": 14,
+    "con": 10,
+    "int": 3,
+    "wis": 14,
+    "cha": 5,
+    "skill": {
+      "perception": "+6"
+    },
+    "passive": 16,
+    "cr": "1/8",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The hawk has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the hawk's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Keen Sight",
+        "entries": [
+          "The hawk has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage, or 6 ({@damage 1d8 + 2}) Piercing damage if the target is {@status Bloodied|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "coastal",
+      "forest",
+      "grassland",
+      "hill",
+      "mountain"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/blood-hawk.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Blood Hawk",
-        "size": [
-          "S"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 7,
-          "formula": "2d6"
-        },
-        "speed": {
-          "walk": 10,
-          "fly": 60
-        },
-        "str": 6,
-        "dex": 14,
-        "con": 10,
-        "int": 3,
-        "wis": 14,
-        "cha": 5,
-        "skill": {
-          "perception": "+6"
-        },
-        "passive": 16,
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Pack Tactics",
-            "entries": [
-              "The hawk has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the hawk's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Beak",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage, or 6 ({@damage 1d8 + 2}) Piercing damage if the target is {@status Bloodied|SRD52}."
-            ]
-          }
-        ],
-        "environment": [
-          "arctic",
-          "coastal",
-          "forest",
-          "grassland",
-          "hill",
-          "mountain"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/blood-hawk.opus"
-        },
-        "traitTags": [
-          "Pack Tactics"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Blood Hawk",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Blood Hawk.webp"
-                      },
-                      "width": 707,
-                      "height": 1000
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Blood Hawk.webp"
+                  },
+                  "width": 707,
+                  "height": 1000
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

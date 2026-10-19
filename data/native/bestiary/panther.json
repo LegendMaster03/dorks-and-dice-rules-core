@@ -2,181 +2,92 @@
   "id": "monster.panther",
   "name": "Panther",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Panther",
-        "size": [
-          "M"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 13,
-          "formula": "3d8"
-        },
-        "speed": {
-          "walk": 50,
-          "climb": 40
-        },
-        "str": 14,
-        "dex": 15,
-        "con": 10,
-        "int": 3,
-        "wis": 14,
-        "cha": 7,
-        "skill": {
-          "perception": "+4",
-          "stealth": "+6"
-        },
-        "passive": 14,
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Keen Smell",
-            "entries": [
-              "The panther has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
-            ]
-          },
-          {
-            "name": "Pounce",
-            "entries": [
-              "If the panther moves at least 20 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a {@dc 12} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the panther can make one bite attack against it as a bonus action."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest",
-          "hill"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/panther.opus"
-        },
-        "traitTags": [
-          "Keen Senses",
-          "Pounce"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "3d8"
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Panther",
-        "size": [
-          "M"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 13,
-          "formula": "3d8"
-        },
-        "speed": {
-          "walk": 50,
-          "climb": 40
-        },
-        "str": 14,
-        "dex": 16,
-        "con": 10,
-        "int": 3,
-        "wis": 14,
-        "cha": 7,
-        "skill": {
-          "perception": "+4",
-          "stealth": "+7"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 14,
-        "cr": "1/4",
-        "action": [
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Slashing damage."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Nimble Escape",
-            "entries": [
-              "The panther takes the {@action Disengage|SRD52} or {@action Hide|SRD52} action."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "grassland",
-          "hill"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/panther.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Panther",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52"
-            }
-          }
+    "speed": {
+      "walk": 50,
+      "climb": 40
+    },
+    "str": 14,
+    "dex": 16,
+    "con": 10,
+    "int": 3,
+    "wis": 14,
+    "cha": 7,
+    "skill": {
+      "perception": "+4",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Slashing damage."
         ]
       }
-    }
-  ]
+    ],
+    "bonus": [
+      {
+        "name": "Nimble Escape",
+        "entries": [
+          "The panther takes the {@action Disengage|SRD52} or {@action Hide|SRD52} action."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "grassland",
+      "hill"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/panther.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Panther",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52"
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The panther has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ]
+  }
 }

@@ -2,392 +2,217 @@
   "id": "monster.druid",
   "name": "Druid",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Druid",
-        "size": [
-          "M"
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 44,
+      "formula": "8d8 + 8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 10,
+    "dex": 12,
+    "con": 13,
+    "int": 12,
+    "wis": 16,
+    "cha": 11,
+    "skill": {
+      "medicine": "+5",
+      "nature": "+3",
+      "perception": "+5"
+    },
+    "passive": 15,
+    "languages": [
+      "Common",
+      "Druidic",
+      "Sylvan"
+    ],
+    "cr": "2",
+    "gear": [
+      "studded leather armor|srd52"
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The druid casts one of the following spells, using Wisdom as the spellcasting ability (spell save {@dc 13}):"
         ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
+        "will": [
+          "{@spell Druidcraft|SRD52}",
+          "{@spell Speak with Animals|SRD52}"
+        ],
+        "daily": {
+          "2e": [
+            "{@spell Entangle|SRD52}",
+            "{@spell Thunderwave|SRD52}"
+          ],
+          "1e": [
+            "{@spell Animal Messenger|SRD52}",
+            "{@spell Longstrider|SRD52}",
+            "{@spell Moonbeam|SRD52}"
           ]
         },
-        "alignment": [
-          "A"
-        ],
-        "ac": [
-          11,
-          {
-            "ac": 16,
-            "condition": "with {@spell barkskin}",
-            "braces": true
-          }
-        ],
-        "hp": {
-          "average": 27,
-          "formula": "5d8 + 5"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 10,
-        "dex": 12,
-        "con": 13,
-        "int": 12,
-        "wis": 15,
-        "cha": 11,
-        "skill": {
-          "medicine": "+4",
-          "nature": "+3",
-          "perception": "+4"
-        },
-        "passive": 14,
-        "languages": [
-          "Druidic plus any two languages"
-        ],
-        "cr": "2",
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The druid is a 4th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 12}, {@hit 4} to hit with spell attacks). It has the following druid spells prepared:"
-            ],
-            "spells": {
-              "0": {
-                "spells": [
-                  "{@spell druidcraft}",
-                  "{@spell produce flame}",
-                  "{@spell shillelagh}"
-                ]
-              },
-              "1": {
-                "slots": 4,
-                "spells": [
-                  "{@spell entangle}",
-                  "{@spell longstrider}",
-                  "{@spell speak with animals}",
-                  "{@spell thunderwave}"
-                ]
-              },
-              "2": {
-                "slots": 3,
-                "spells": [
-                  "{@spell animal messenger}",
-                  "{@spell barkskin}"
-                ]
-              }
-            },
-            "ability": "wis"
-          }
-        ],
-        "action": [
-          {
-            "name": "Quarterstaff",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit ({@hit 4} to hit with shillelagh), reach 5 ft., one target. {@h}3 ({@damage 1d6}) bludgeoning damage, 4 ({@damage 1d8}) bludgeoning damage if wielded with two hands, or 6 ({@damage 1d8 + 2}) bludgeoning damage with {@spell shillelagh}."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "mountain",
-          "grassland",
-          "hill",
-          "arctic",
-          "forest",
-          "swamp",
-          "underdark",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/druid.opus"
-        },
-        "altArt": [
-          {
-            "name": "Demonic Druid",
-            "source": "MTF",
-            "page": 29
-          }
-        ],
-        "attachedItems": [
-          "quarterstaff|srd51"
-        ],
-        "languageTags": [
-          "DU",
-          "X"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "damageTagsSpell": [
-          "F",
-          "T"
-        ],
-        "spellcastingTags": [
-          "CD"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW"
-        ],
-        "savingThrowForcedSpell": [
-          "constitution",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Druid",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Druids dwell in forests and other secluded wilderness locations, where they protect the natural world from monsters and the encroachment of civilization. Some are tribal shamans who heal the sick, pray to animal spirits, and provide spiritual guidance."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Druid.webp"
-                },
-                "width": 1000,
-                "height": 806
-              }
-            ]
-          }
+        "ability": "wis",
+        "displayAs": "action"
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The druid makes two attacks, using Vine Staff or Verdant Wisp in any combination."
+        ]
+      },
+      {
+        "name": "Vine Staff",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Bludgeoning damage plus 2 ({@damage 1d4}) Poison damage."
+        ]
+      },
+      {
+        "name": "Verdant Wisp",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 90 ft. {@h}10 ({@damage 3d6}) Radiant damage."
         ]
       }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "individual",
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/druid.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DU",
+      "S"
+    ],
+    "damageTags": [
+      "B",
+      "I",
+      "R"
+    ],
+    "damageTagsSpell": [
+      "R",
+      "T"
+    ],
+    "spellcastingTags": [
+      "CD"
+    ],
+    "miscTags": [
+      "MA",
+      "RA"
+    ],
+    "conditionInflictSpell": [
+      "restrained"
+    ],
+    "savingThrowForcedSpell": [
+      "charisma",
+      "constitution",
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Druid",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 44,
-          "formula": "8d8 + 8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 10,
-        "dex": 12,
-        "con": 13,
-        "int": 12,
-        "wis": 16,
-        "cha": 11,
-        "skill": {
-          "medicine": "+5",
-          "nature": "+3",
-          "perception": "+5"
-        },
-        "passive": 15,
-        "languages": [
-          "Common",
-          "Druidic",
-          "Sylvan"
-        ],
-        "cr": "2",
-        "gear": [
-          "studded leather armor|srd52"
-        ],
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The druid casts one of the following spells, using Wisdom as the spellcasting ability (spell save {@dc 13}):"
-            ],
-            "will": [
-              "{@spell Druidcraft|SRD52}",
-              "{@spell Speak with Animals|SRD52}"
-            ],
-            "daily": {
-              "2e": [
-                "{@spell Entangle|SRD52}",
-                "{@spell Thunderwave|SRD52}"
-              ],
-              "1e": [
-                "{@spell Animal Messenger|SRD52}",
-                "{@spell Longstrider|SRD52}",
-                "{@spell Moonbeam|SRD52}"
-              ]
-            },
-            "ability": "wis",
-            "displayAs": "action"
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The druid makes two attacks, using Vine Staff or Verdant Wisp in any combination."
-            ]
-          },
-          {
-            "name": "Vine Staff",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Bludgeoning damage plus 2 ({@damage 1d4}) Poison damage."
-            ]
-          },
-          {
-            "name": "Verdant Wisp",
-            "entries": [
-              "{@atkr r} {@hit 5}, range 90 ft. {@h}10 ({@damage 3d6}) Radiant damage."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "individual",
-          "relics"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/druid.opus"
-        },
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DU",
-          "S"
-        ],
-        "damageTags": [
-          "B",
-          "I",
-          "R"
-        ],
-        "damageTagsSpell": [
-          "R",
-          "T"
-        ],
-        "spellcastingTags": [
-          "CD"
-        ],
-        "miscTags": [
-          "MA",
-          "RA"
-        ],
-        "conditionInflictSpell": [
-          "restrained"
-        ],
-        "savingThrowForcedSpell": [
-          "charisma",
-          "constitution",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Druid",
             "entries": [
+              "{@i Steward and Sage of Nature}",
               {
-                "type": "section",
-                "name": "Druid",
-                "entries": [
-                  "{@i Steward and Sage of Nature}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Any|bestiary|environment=any}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Individual, Relics"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
                   },
-                  "Druids use primal magic, traditional teachings, and bonds with animals and eldritch beings to guard the natural world and heal its ills. These magic-users might be recluses devoted to a particular land, or they might be part of a mystic organization. Roll on or choose a result from the Druidic Traditions table to inspire a druid's magical practices.",
                   {
-                    "type": "table",
-                    "caption": "Druid Traditions",
-                    "colLabels": [
-                      "1d6",
-                      "The Druid Is..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "An avenger who strikes against destructive civilizations and those who abuse nature."
-                      ],
-                      [
-                        "2",
-                        "A guide who aids travelers in navigating the realms of Beasts, Fey, or Plants."
-                      ],
-                      [
-                        "3",
-                        "A hermit who works alone to protect the lands, seas, or skies they call home."
-                      ],
-                      [
-                        "4",
-                        "A mender who travels the world healing natural, magical, or manufactured disasters."
-                      ],
-                      [
-                        "5",
-                        "Part of a loose organization that adheres to timeless rituals and guards natural secrets."
-                      ],
-                      [
-                        "6",
-                        "A warden who minds the underpinnings of reality and protects against extraplanar threats."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Individual, Relics"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Druids use primal magic, traditional teachings, and bonds with animals and eldritch beings to guard the natural world and heal its ills. These magic-users might be recluses devoted to a particular land, or they might be part of a mystic organization. Roll on or choose a result from the Druidic Traditions table to inspire a druid's magical practices.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Druid.webp"
-                },
-                "credit": "Cynthia Sheppard",
-                "width": 2550,
-                "height": 1704
+                "type": "table",
+                "caption": "Druid Traditions",
+                "colLabels": [
+                  "1d6",
+                  "The Druid Is..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "An avenger who strikes against destructive civilizations and those who abuse nature."
+                  ],
+                  [
+                    "2",
+                    "A guide who aids travelers in navigating the realms of Beasts, Fey, or Plants."
+                  ],
+                  [
+                    "3",
+                    "A hermit who works alone to protect the lands, seas, or skies they call home."
+                  ],
+                  [
+                    "4",
+                    "A mender who travels the world healing natural, magical, or manufactured disasters."
+                  ],
+                  [
+                    "5",
+                    "Part of a loose organization that adheres to timeless rituals and guards natural secrets."
+                  ],
+                  [
+                    "6",
+                    "A warden who minds the underpinnings of reality and protects against extraplanar threats."
+                  ]
+                ]
               }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Druid.webp"
+            },
+            "credit": "Cynthia Sheppard",
+            "width": 2550,
+            "height": 1704
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

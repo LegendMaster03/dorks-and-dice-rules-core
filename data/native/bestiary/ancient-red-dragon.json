@@ -2,434 +2,232 @@
   "id": "monster.ancient-red-dragon",
   "name": "Ancient Red Dragon",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ancient Red Dragon",
-        "group": [
-          "Chromatic Dragon"
-        ],
-        "size": [
-          "G"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 22,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 546,
-          "formula": "28d20 + 252"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40,
-          "fly": 80
-        },
-        "str": 30,
-        "dex": 10,
-        "con": 29,
-        "int": 18,
-        "wis": 15,
-        "cha": 23,
-        "save": {
-          "dex": "+7",
-          "con": "+16",
-          "wis": "+9",
-          "cha": "+13"
-        },
-        "skill": {
-          "perception": "+16",
-          "stealth": "+7"
-        },
-        "senses": [
-          "blindsight 60 ft.",
-          "darkvision 120 ft."
-        ],
-        "passive": 26,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "24",
-        "trait": [
-          {
-            "name": "Legendary Resistance (3/Day)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 17} to hit, reach 15 ft., one target. {@h}21 ({@damage 2d10 + 10}) piercing damage plus 14 ({@damage 4d6}) fire damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 17} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d6 + 10}) slashing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 17} to hit, reach 20 ft., one target. {@h}19 ({@damage 2d8 + 10}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Frightful Presence",
-            "entries": [
-              "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 21} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
-            ]
-          },
-          {
-            "name": "Fire Breath {@recharge 5}",
-            "entries": [
-              "The dragon exhales fire in a 90-foot cone. Each creature in that area must make a {@dc 24} Dexterity saving throw, taking 91 ({@damage 26d6}) fire damage on a failed save, or half as much damage on a successful one."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Detect",
-            "entries": [
-              "The dragon makes a Wisdom ({@skill Perception}) check."
-            ]
-          },
-          {
-            "name": "Tail Attack",
-            "entries": [
-              "The dragon makes a tail attack."
-            ]
-          },
-          {
-            "name": "Wing Attack (Costs 2 Actions)",
-            "entries": [
-              "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "hill"
-        ],
-        "dragonCastingColor": "red",
-        "dragonAge": "ancient",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/red-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Frightful Presence",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "B",
-          "F",
-          "P",
-          "S"
-        ],
-        "damageTagsLegendary": [
-          "F"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "frightened",
-          "prone"
-        ],
-        "conditionInflictLegendary": [
-          "incapacitated",
-          "poisoned",
-          "prone"
-        ],
-        "savingThrowForced": [
-          "dexterity",
-          "wisdom"
-        ],
-        "savingThrowForcedLegendary": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ancient Red Dragon",
-            "_copy": {
-              "name": "Red Dragon",
-              "source": "SRD51"
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Chromatic Dragons"
+    ],
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ancient Red Dragon",
-        "group": [
-          "Chromatic Dragons"
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 507,
+      "formula": "26d20 + 234"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 10,
+    "con": 29,
+    "int": 18,
+    "wis": 15,
+    "cha": 27,
+    "save": {
+      "dex": "+7",
+      "wis": "+9"
+    },
+    "skill": {
+      "perception": "+16",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 26,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "24",
+      "xpLair": 75000
+    },
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 23}, {@hit 15} to hit with spell attacks):"
         ],
-        "size": [
-          "G"
+        "will": [
+          "{@spell Command|SRD52} (level 2 version)",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Scorching Ray|SRD52} (level 3 version)"
         ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "chromatic"
+        "daily": {
+          "1e": [
+            "{@spell Fireball|SRD52} (level 6 version)",
+            "{@spell Scrying|SRD52}"
           ]
         },
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          22
-        ],
-        "hp": {
-          "average": 507,
-          "formula": "26d20 + 234"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40,
-          "fly": 80
-        },
-        "initiative": {
-          "proficiency": 2
-        },
-        "str": 30,
-        "dex": 10,
-        "con": 29,
-        "int": 18,
-        "wis": 15,
-        "cha": 27,
-        "save": {
-          "dex": "+7",
-          "wis": "+9"
-        },
-        "skill": {
-          "perception": "+16",
-          "stealth": "+7"
-        },
-        "senses": [
-          "Blindsight 60 ft.",
-          "Darkvision 120 ft."
-        ],
-        "passive": 26,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": {
-          "cr": "24",
-          "xpLair": 75000
-        },
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 23}, {@hit 15} to hit with spell attacks):"
-            ],
-            "will": [
-              "{@spell Command|SRD52} (level 2 version)",
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Scorching Ray|SRD52} (level 3 version)"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Fireball|SRD52} (level 6 version)",
-                "{@spell Scrying|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 17}, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 10 ({@damage 3d6}) Fire damage."
-            ]
-          },
-          {
-            "name": "Fire Breath {@recharge 5}",
-            "entries": [
-              "{@actSave dex} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 91 ({@damage 26d6}) Fire damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "legendaryActionsLair": 4,
-        "legendary": [
-          {
-            "name": "Commanding Presence",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Command|SRD52} (level 2 version). The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Fiery Rays",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version). The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Pounce",
-            "entries": [
-              "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
-            ]
-          }
-        ],
-        "environment": [
-          "hill",
-          "mountain"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "dragonAge": "ancient",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/red-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "F",
-          "S"
-        ],
-        "damageTagsSpell": [
-          "F"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflictSpell": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "savingThrowForcedLegendary": [
-          "constitution"
-        ],
-        "savingThrowForcedSpell": [
-          "dexterity",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ancient Red Dragon",
-            "_copy": {
-              "name": "Red Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Ancient red dragons number among the most feared and destructive beings in the multiverse. Few can withstand the wrath of an ancient red dragon that turns its mind toward devastation. These dragons' greed matches their ruinous potential, and they collect vast hoards studded with storied treasures and magic items. Their lairs frequently tap into volcanic depths and might pierce other planes of existence, bringing servants from the Elemental Plane of Fire or the Lower Planes into their service."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Ancient Red Dragon.webp"
-                      },
-                      "title": "Even the bravest souls flee the onslaught of an ancient red dragon",
-                      "credit": "Joshua Raphael",
-                      "width": 2084,
-                      "height": 2560
-                    }
-                  ]
-                }
-              }
-            }
-          }
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 17}, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 10 ({@damage 3d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 91 ({@damage 26d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Commanding Presence",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Command|SRD52} (level 2 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Fiery Rays",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "mountain"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "dragonAge": "ancient",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/red-dragon.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "F",
+      "S"
+    ],
+    "damageTagsSpell": [
+      "F"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflictSpell": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "savingThrowForcedLegendary": [
+      "constitution"
+    ],
+    "savingThrowForcedSpell": [
+      "dexterity",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ancient Red Dragon",
+        "_copy": {
+          "name": "Red Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ancient red dragons number among the most feared and destructive beings in the multiverse. Few can withstand the wrath of an ancient red dragon that turns its mind toward devastation. These dragons' greed matches their ruinous potential, and they collect vast hoards studded with storied treasures and magic items. Their lairs frequently tap into volcanic depths and might pierce other planes of existence, bringing servants from the Elemental Plane of Fire or the Lower Planes into their service."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Ancient Red Dragon.webp"
+                  },
+                  "title": "Even the bravest souls flee the onslaught of an ancient red dragon",
+                  "credit": "Joshua Raphael",
+                  "width": 2084,
+                  "height": 2560
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

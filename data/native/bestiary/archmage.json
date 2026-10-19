@@ -2,499 +2,224 @@
   "id": "monster.archmage",
   "name": "Archmage",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Archmage",
-        "size": [
-          "M"
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "wizard"
+      ]
+    },
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 170,
+      "formula": "31d8 + 31"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 10,
+    "dex": 14,
+    "con": 12,
+    "int": 20,
+    "wis": 15,
+    "cha": 16,
+    "save": {
+      "int": "+9",
+      "wis": "+6"
+    },
+    "skill": {
+      "arcana": "+13",
+      "history": "+9",
+      "perception": "+6"
+    },
+    "passive": 16,
+    "immune": [
+      "psychic"
+    ],
+    "conditionImmune": [
+      {
+        "conditionImmune": [
+          "charmed"
         ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
+        "note": "(with Mind Blank)",
+        "cond": true
+      }
+    ],
+    "languages": [
+      "Common plus five other languages"
+    ],
+    "cr": "12",
+    "gear": [
+      "wand|srd52"
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The archmage casts one of the following spells, using Intelligence as the spellcasting ability (spell save {@dc 17}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Detect Thoughts|SRD52}",
+          "{@spell Disguise Self|SRD52}",
+          "{@spell Invisibility|SRD52}",
+          "{@spell Light|SRD52}",
+          "{@spell Mage Armor|SRD52} (included in AC)",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Prestidigitation|SRD52}"
+        ],
+        "daily": {
+          "2e": [
+            "{@spell Fly|SRD52}",
+            "{@spell Lightning Bolt|SRD52} (level 7 version)"
+          ],
+          "1e": [
+            "{@spell Cone of Cold|SRD52} (level 9 version)",
+            "{@spell Mind Blank|SRD52} (cast before combat)",
+            "{@spell Scrying|SRD52}",
+            "{@spell Teleport|SRD52}"
           ]
         },
-        "alignment": [
-          "A"
+        "ability": "int",
+        "displayAs": "action"
+      },
+      {
+        "name": "Misty Step (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mage casts {@spell Misty Step|SRD52}, using the same spellcasting ability as Spellcasting."
         ],
-        "ac": [
-          12,
-          {
-            "ac": 15,
-            "condition": "with {@spell mage armor}",
-            "braces": true
-          }
-        ],
-        "hp": {
-          "average": 99,
-          "formula": "18d8 + 18"
+        "daily": {
+          "3": [
+            "{@spell Misty Step|SRD52}"
+          ]
         },
-        "speed": {
-          "walk": 30
+        "ability": "int",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      },
+      {
+        "name": "Protective Magic (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The archmage casts {@spell Counterspell|SRD52} or {@spell Shield|SRD52} in response to the spell's trigger, using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "3": [
+            "{@spell Counterspell|SRD52}",
+            "{@spell Shield|SRD52}"
+          ]
         },
-        "str": 10,
-        "dex": 14,
-        "con": 12,
-        "int": 20,
-        "wis": 15,
-        "cha": 16,
-        "save": {
-          "int": "+9",
-          "wis": "+6"
-        },
-        "skill": {
-          "arcana": "+13",
-          "history": "+13"
-        },
-        "passive": 12,
-        "resist": [
-          {
-            "special": "damage from spells"
-          },
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "(from stoneskin)",
-            "cond": true,
-            "preNote": "nonmagical"
-          }
-        ],
-        "languages": [
-          "any six languages"
-        ],
-        "cr": "12",
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The archmage is an 18th-level spellcaster. Its spellcasting ability is Intelligence (spell save {@dc 17}, {@hit 9} to hit with spell attacks). The archmage can cast {@spell disguise self} and {@spell invisibility} at will and has the following wizard spells prepared:"
-            ],
-            "will": [
-              "{@spell disguise self}",
-              "{@spell invisibility}"
-            ],
-            "spells": {
-              "0": {
-                "spells": [
-                  "{@spell fire bolt}",
-                  "{@spell light}",
-                  "{@spell mage hand}",
-                  "{@spell prestidigitation}",
-                  "{@spell shocking grasp}"
-                ]
-              },
-              "1": {
-                "slots": 4,
-                "spells": [
-                  "{@spell detect magic}",
-                  "{@spell identify}",
-                  "{@spell mage armor}*",
-                  "{@spell magic missile}"
-                ]
-              },
-              "2": {
-                "slots": 3,
-                "spells": [
-                  "{@spell detect thoughts}",
-                  "{@spell mirror image}",
-                  "{@spell misty step}"
-                ]
-              },
-              "3": {
-                "slots": 3,
-                "spells": [
-                  "{@spell counterspell}",
-                  "{@spell fly}",
-                  "{@spell lightning bolt}"
-                ]
-              },
-              "4": {
-                "slots": 3,
-                "spells": [
-                  "{@spell banishment}",
-                  "{@spell fire shield}",
-                  "{@spell stoneskin}*"
-                ]
-              },
-              "5": {
-                "slots": 3,
-                "spells": [
-                  "{@spell cone of cold}",
-                  "{@spell scrying}",
-                  "{@spell wall of force}"
-                ]
-              },
-              "6": {
-                "slots": 1,
-                "spells": [
-                  "{@spell globe of invulnerability}"
-                ]
-              },
-              "7": {
-                "slots": 1,
-                "spells": [
-                  "{@spell teleport}"
-                ]
-              },
-              "8": {
-                "slots": 1,
-                "spells": [
-                  "{@spell mind blank}*"
-                ]
-              },
-              "9": {
-                "slots": 1,
-                "spells": [
-                  "{@spell time stop}"
-                ]
-              }
-            },
-            "footerEntries": [
-              "*The archmage casts these spells on itself before combat."
-            ],
-            "ability": "int",
-            "hidden": [
-              "will"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The archmage has advantage on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Dagger",
-            "entries": [
-              "{@atk mw,rw} {@hit 6} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/archmage.opus"
-        },
-        "attachedItems": [
-          "dagger|srd51"
-        ],
-        "traitTags": [
-          "Magic Resistance"
-        ],
-        "languageTags": [
-          "X"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "damageTagsSpell": [
-          "C",
-          "F",
-          "L",
-          "O"
-        ],
-        "spellcastingTags": [
-          "CW"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RW",
-          "THW"
-        ],
-        "savingThrowForcedSpell": [
-          "charisma",
-          "constitution",
-          "dexterity",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "_versions": [
-          {
-            "name": "Archmage (Familiar)",
-            "source": "SRD51",
-            "_mod": {
-              "_": {
-                "mode": "addSpells",
-                "spells": {
-                  "1": {
-                    "spells": [
-                      "{@spell find familiar} (one of the creatures described in the spell or some other Tiny monster, such as a {@creature crawling claw}, {@creature imp}, {@creature pseudodragon}, or {@creature quasit})"
-                    ]
-                  }
-                }
-              }
-            },
-            "variant": null
-          }
-        ],
-        "lore": [
-          {
-            "name": "Archmage",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Archmages are powerful (and usually quite old) spellcasters dedicated to the study of the arcane arts. Benevolent ones counsel kings and queens, while evil ones rule as tyrants and pursue lichdom. Those who are neither good nor evil sequester themselves in remote towers to practice their magic without interruption.",
-                      "An archmage typically has one or more apprentice mages, and an archmage's abode has numerous magical wards and guardians to discourage interlopers."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Archmage.webp"
-                },
-                "width": 499,
-                "height": 1000
-              }
-            ]
-          }
+        "ability": "int",
+        "displayAs": "reaction",
+        "hidden": [
+          "daily"
         ]
       }
+    ],
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The archmage has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The archmage makes four Arcane Burst attacks."
+        ]
+      },
+      {
+        "name": "Arcane Burst",
+        "entries": [
+          "{@atkr m,r} {@hit 9}, reach 5 ft. or range 150 ft. {@h}27 ({@damage 4d10 + 5}) Force damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "arcana",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/archmage.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "O"
+    ],
+    "damageTagsSpell": [
+      "C",
+      "L",
+      "O"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA"
+    ],
+    "conditionInflictSpell": [
+      "invisible"
+    ],
+    "savingThrowForcedSpell": [
+      "constitution",
+      "dexterity",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Archmage",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "wizard"
-          ]
-        },
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 170,
-          "formula": "31d8 + 31"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 10,
-        "dex": 14,
-        "con": 12,
-        "int": 20,
-        "wis": 15,
-        "cha": 16,
-        "save": {
-          "int": "+9",
-          "wis": "+6"
-        },
-        "skill": {
-          "arcana": "+13",
-          "history": "+9",
-          "perception": "+6"
-        },
-        "passive": 16,
-        "immune": [
-          "psychic"
-        ],
-        "conditionImmune": [
-          {
-            "conditionImmune": [
-              "charmed"
-            ],
-            "note": "(with Mind Blank)",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "Common plus five other languages"
-        ],
-        "cr": "12",
-        "gear": [
-          "wand|srd52"
-        ],
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The archmage casts one of the following spells, using Intelligence as the spellcasting ability (spell save {@dc 17}):"
-            ],
-            "will": [
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Detect Thoughts|SRD52}",
-              "{@spell Disguise Self|SRD52}",
-              "{@spell Invisibility|SRD52}",
-              "{@spell Light|SRD52}",
-              "{@spell Mage Armor|SRD52} (included in AC)",
-              "{@spell Mage Hand|SRD52}",
-              "{@spell Prestidigitation|SRD52}"
-            ],
-            "daily": {
-              "2e": [
-                "{@spell Fly|SRD52}",
-                "{@spell Lightning Bolt|SRD52} (level 7 version)"
-              ],
-              "1e": [
-                "{@spell Cone of Cold|SRD52} (level 9 version)",
-                "{@spell Mind Blank|SRD52} (cast before combat)",
-                "{@spell Scrying|SRD52}",
-                "{@spell Teleport|SRD52}"
-              ]
-            },
-            "ability": "int",
-            "displayAs": "action"
-          },
-          {
-            "name": "Misty Step (3/Day)",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The mage casts {@spell Misty Step|SRD52}, using the same spellcasting ability as Spellcasting."
-            ],
-            "daily": {
-              "3": [
-                "{@spell Misty Step|SRD52}"
-              ]
-            },
-            "ability": "int",
-            "displayAs": "bonus",
-            "hidden": [
-              "daily"
-            ]
-          },
-          {
-            "name": "Protective Magic (3/Day)",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The archmage casts {@spell Counterspell|SRD52} or {@spell Shield|SRD52} in response to the spell's trigger, using the same spellcasting ability as Spellcasting."
-            ],
-            "daily": {
-              "3": [
-                "{@spell Counterspell|SRD52}",
-                "{@spell Shield|SRD52}"
-              ]
-            },
-            "ability": "int",
-            "displayAs": "reaction",
-            "hidden": [
-              "daily"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The archmage has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The archmage makes four Arcane Burst attacks."
-            ]
-          },
-          {
-            "name": "Arcane Burst",
-            "entries": [
-              "{@atkr m,r} {@hit 9}, reach 5 ft. or range 150 ft. {@h}27 ({@damage 4d10 + 5}) Force damage."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "arcana",
-          "individual"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/archmage.opus"
-        },
-        "traitTags": [
-          "Magic Resistance"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "O"
-        ],
-        "damageTagsSpell": [
-          "C",
-          "L",
-          "O"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RA"
-        ],
-        "conditionInflictSpell": [
-          "invisible"
-        ],
-        "savingThrowForcedSpell": [
-          "constitution",
-          "dexterity",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Archmage",
-            "_copy": {
-              "name": "Mages",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Archmages have mastered incredible magical power. While some use their magic to protect the world, others become tyrants or pursue forbidden secrets. Many archmages retain magical servants and collect magic items and occult lore."
-                      ]
-                    }
+        "_copy": {
+          "name": "Mages",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Archmages have mastered incredible magical power. While some use their magic to protect the world, others become tyrants or pursue forbidden secrets. Many archmages retain magical servants and collect magic items and occult lore."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

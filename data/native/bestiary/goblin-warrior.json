@@ -128,5 +128,7 @@
         }
       }
     ]
-  }
+  },
+  "familyId": "monster-family.goblin",
+  "variantRole": "warrior"
 }

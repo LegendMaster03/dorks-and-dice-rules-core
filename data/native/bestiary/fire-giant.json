@@ -2,327 +2,144 @@
   "id": "monster.fire-giant",
   "name": "Fire Giant",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Fire Giant",
-        "size": [
-          "H"
-        ],
-        "type": "giant",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 18,
-            "from": [
-              "{@item plate armor|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 162,
-          "formula": "13d12 + 78"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 25,
-        "dex": 9,
-        "con": 23,
-        "int": 10,
-        "wis": 14,
-        "cha": 13,
-        "save": {
-          "dex": "+3",
-          "con": "+10",
-          "cha": "+5"
-        },
-        "skill": {
-          "athletics": "+11",
-          "perception": "+6"
-        },
-        "passive": 16,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Giant"
-        ],
-        "cr": "9",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The giant makes two greatsword attacks."
-            ]
-          },
-          {
-            "name": "Greatsword",
-            "entries": [
-              "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}28 ({@damage 6d6 + 7}) slashing damage."
-            ]
-          },
-          {
-            "name": "Rock",
-            "entries": [
-              "{@atk rw} {@hit 11} to hit, range 60/240 ft., one target. {@h}29 ({@damage 4d10 + 7}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "mountain"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/fire-giant.opus"
-        },
-        "attachedItems": [
-          "greatsword|srd51"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "GI"
-        ],
-        "damageTags": [
-          "B",
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RCH",
-          "RW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Fire Giant",
-            "_copy": {
-              "name": "Giants",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Master crafters and organized warriors, fire giants dwell among volcanoes, lava floes, and rocky mountains. They are ruthless militaristic brutes whose mastery of metalwork is legendary.",
-                          {
-                            "type": "entries",
-                            "name": "Fire Forged",
-                            "entries": [
-                              "Fire giant fortresses are built around and inside volcanoes or near magma-filled caverns. The blistering heat of their homes fuels the fire giants' forges, and causes the iron of their fortress walls to glow a comforting orange. In lands far removed from volcanic heat, fire giants mine coal to burn. Traditional smithies occupy places of honor in their demesnes, and the giants' stony fortresses constantly belch plumes of sooty smoke. In more remote outposts, fire giants burn wood to keep their forge fires lit, deforesting leagues of land in all directions.",
-                              "Fire giants shun cold as much as their cousins the frost giants hate heat. They can adapt to cold environments with effort, though, keeping their hearth fires burning bright and wearing heavy woolen clothing and furs to stay warm."
-                            ]
-                          },
-                          {
-                            "type": "entries",
-                            "name": "Martial Experts",
-                            "entries": [
-                              "From birth, a fire giant is taught to embrace a legacy of war. At the cradle, its parents chant songs of battle. As children, fire giants play at war, hurling igneous rocks at one another across the banks of magma rivers. In later years, formal martial training becomes an integral part of life in the giants' fortresses and underground realms of smoke and ash.",
-                              "The fire giants' songs are odes of battles lost and won, while their dances are martial formations of pounding feet that resound like smiths' hammers throughout their smoky halls.",
-                              "Just as fire giants pass down their knowledge of crafting from generation to generation, their renowned fighting prowess comes not from wild fury but from endless discipline and training. Enemies make the mistake of underestimating fire giants based on their brutish manner, learning too late that these giants live for combat and can be shrewd tacticians."
-                            ]
-                          },
-                          {
-                            "type": "entries",
-                            "name": "Feudal Lords",
-                            "entries": [
-                              "Humanoids conquered in war become serfs to the fire giants. The serfs work the farms and fields on the outskirts of fire giant halls and fortresses, raising livestock and harvesting fields whose bounty is almost entirely tithed to the fire giant kings.",
-                              "Fire giant crafters work through insight and experience rather than writing or arithmetic. Though most fire giants place little worth on such frivolousness, they sometimes keep slaves at court who are versed in such skills. Serfs not destined for court or the fields (especially dwarves) are taken to the fire giants' mountainous realms to mine ore and gemstones from deep within the earth.",
-                              "Fire giants low in the ordning manage the mine tunnels and the slaves that toil there, few of which survive the difficult and dangerous work for long. Though fire giants are skilled in the engineering of mine tunnels and the gathering of ore, they place less importance on the safety of their slaves than on smelting and working the bounty those slaves produce."
-                            ]
-                          },
-                          {
-                            "type": "entries",
-                            "name": "Skilled Artisans",
-                            "entries": [
-                              "Fire giants have a fearsome reputation as soldiers and conquerors, and for their ability to burn, plunder, and destroy. Yet among the giants, fire giants produce the greatest crafters and artists. They excel at smelting and smith work, as they do at the engineering of metal and stone, and the quality of their artistry shows even in their implements of destruction and their weapons of war.",
-                              "Fire giants strive to build the strongest fortresses and most potent siege weapons. They experiment with alloys to create the hardest armor, then forge the swords that can pierce it. Such work requires brawn and brains in equal measure, and fire giants high in the ordning tend to be the smartest and strongest of their kind."
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Fire Giant.webp"
-                    },
-                    "width": 778,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 162,
+      "formula": "13d12 + 78"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 25,
+    "dex": 9,
+    "con": 23,
+    "int": 10,
+    "wis": 14,
+    "cha": 13,
+    "save": {
+      "dex": "+3",
+      "con": "+10",
+      "cha": "+5"
+    },
+    "skill": {
+      "athletics": "+11",
+      "perception": "+6"
+    },
+    "passive": 16,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Giant"
+    ],
+    "cr": "9",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Flame Sword or Hammer Throw in any combination."
+        ]
+      },
+      {
+        "name": "Flame Sword",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}21 ({@damage 4d6 + 7}) Slashing damage plus 10 ({@damage 3d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Hammer Throw",
+        "entries": [
+          "{@atkr r} {@hit 11}, range 60/240 ft. {@h}23 ({@damage 3d10 + 7}) Bludgeoning damage plus 4 ({@damage 1d8}) Fire damage, and the target is pushed up to 15 feet straight away from the giant and has {@variantrule Disadvantage|SRD52} on the next attack roll it makes before the end of its next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "mountain",
+      "underdark"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/fire-giant.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "GI"
+    ],
+    "damageTags": [
+      "B",
+      "F",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Fire Giant",
-        "size": [
-          "H"
-        ],
-        "type": "giant",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          18
-        ],
-        "hp": {
-          "average": 162,
-          "formula": "13d12 + 78"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 25,
-        "dex": 9,
-        "con": 23,
-        "int": 10,
-        "wis": 14,
-        "cha": 13,
-        "save": {
-          "dex": "+3",
-          "con": "+10",
-          "cha": "+5"
-        },
-        "skill": {
-          "athletics": "+11",
-          "perception": "+6"
-        },
-        "passive": 16,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Giant"
-        ],
-        "cr": "9",
-        "action": [
+        "entries": [
           {
-            "name": "Multiattack",
+            "type": "section",
+            "name": "Fire Giant",
             "entries": [
-              "The giant makes two attacks, using Flame Sword or Hammer Throw in any combination."
-            ]
-          },
-          {
-            "name": "Flame Sword",
-            "entries": [
-              "{@atkr m} {@hit 11}, reach 10 ft. {@h}21 ({@damage 4d6 + 7}) Slashing damage plus 10 ({@damage 3d6}) Fire damage."
-            ]
-          },
-          {
-            "name": "Hammer Throw",
-            "entries": [
-              "{@atkr r} {@hit 11}, range 60/240 ft. {@h}23 ({@damage 3d10 + 7}) Bludgeoning damage plus 4 ({@damage 1d8}) Fire damage, and the target is pushed up to 15 feet straight away from the giant and has {@variantrule Disadvantage|SRD52} on the next attack roll it makes before the end of its next turn."
+              "{@i Giant of the Smoldering Depths}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Mountain|bestiary|environment=mountain}, {@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Fire giants inhabit the hollow vaults and molten rivers of mountainous depths. There, they use subterranean heat and riches to craft wonders, from titanic weapons of war to delicate works of art.",
+              "Fire giants have broad frames, skin tones in a variety of rocklike shades, and hair like flame.",
+              "Most fire giants dwell in volcanically active mountains or cavernous depths that house their fortress-forges. Evil fire giants tend to be martially minded, and they craft mighty arms to conquer their neighbors and seize valuable resources. More temperate fire giants trade their works for what they need, and they might share the ancient techniques of Giant artisans with other craftspeople. In either case, fire giants are prone to undertaking ambitious designs, and they rarely appreciate interruptions in their titanic workshops."
             ]
           }
         ],
-        "environment": [
-          "mountain",
-          "underdark"
-        ],
-        "treasure": [
-          "armaments"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/fire-giant.opus"
-        },
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "GI"
-        ],
-        "damageTags": [
-          "B",
-          "F",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "RA",
-          "RCH"
-        ],
-        "hasToken": true,
-        "lore": [
+        "images": [
           {
-            "name": "Fire Giant",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Fire Giant",
-                "entries": [
-                  "{@i Giant of the Smoldering Depths}",
-                  {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Mountain|bestiary|environment=mountain}, {@filter Underdark|bestiary|environment=underdark}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments"
-                      }
-                    ]
-                  },
-                  "Fire giants inhabit the hollow vaults and molten rivers of mountainous depths. There, they use subterranean heat and riches to craft wonders, from titanic weapons of war to delicate works of art.",
-                  "Fire giants have broad frames, skin tones in a variety of rocklike shades, and hair like flame.",
-                  "Most fire giants dwell in volcanically active mountains or cavernous depths that house their fortress-forges. Evil fire giants tend to be martially minded, and they craft mighty arms to conquer their neighbors and seize valuable resources. More temperate fire giants trade their works for what they need, and they might share the ancient techniques of Giant artisans with other craftspeople. In either case, fire giants are prone to undertaking ambitious designs, and they rarely appreciate interruptions in their titanic workshops."
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Fire Giant.webp"
-                },
-                "credit": "Robson Michel",
-                "width": 2550,
-                "height": 1917
-              }
-            ]
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Fire Giant.webp"
+            },
+            "credit": "Robson Michel",
+            "width": 2550,
+            "height": 1917
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

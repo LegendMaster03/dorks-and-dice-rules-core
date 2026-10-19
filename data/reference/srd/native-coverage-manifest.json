@@ -21542,7 +21542,7 @@
     {
       "nativeId": "monster.aboleth",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/aboleth.json",
       "candidates": [
@@ -21554,12 +21554,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.acolyte",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/acolyte.json",
       "candidates": [
@@ -21568,12 +21570,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.priest-acolyte",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-black-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-black-dragon.json",
       "candidates": [
@@ -21585,12 +21589,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-blue-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-blue-dragon.json",
       "candidates": [
@@ -21602,12 +21608,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-brass-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-brass-dragon.json",
       "candidates": [
@@ -21619,12 +21627,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-bronze-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-bronze-dragon.json",
       "candidates": [
@@ -21636,12 +21646,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-copper-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-copper-dragon.json",
       "candidates": [
@@ -21653,12 +21665,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-gold-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-gold-dragon.json",
       "candidates": [
@@ -21670,12 +21684,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-green-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-green-dragon.json",
       "candidates": [
@@ -21687,12 +21703,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-red-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-red-dragon.json",
       "candidates": [
@@ -21704,12 +21722,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-silver-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-silver-dragon.json",
       "candidates": [
@@ -21721,12 +21741,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.adult-white-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/adult-white-dragon.json",
       "candidates": [
@@ -21738,12 +21760,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.air-elemental",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/air-elemental.json",
       "candidates": [
@@ -21755,7 +21779,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.allosaurus",
@@ -21774,7 +21800,7 @@
     {
       "nativeId": "monster.ancient-black-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-black-dragon.json",
       "candidates": [
@@ -21786,12 +21812,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-blue-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-blue-dragon.json",
       "candidates": [
@@ -21803,12 +21831,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-brass-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-brass-dragon.json",
       "candidates": [
@@ -21820,12 +21850,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-bronze-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-bronze-dragon.json",
       "candidates": [
@@ -21837,12 +21869,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-copper-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-copper-dragon.json",
       "candidates": [
@@ -21854,12 +21888,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-gold-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-gold-dragon.json",
       "candidates": [
@@ -21871,12 +21907,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-green-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-green-dragon.json",
       "candidates": [
@@ -21888,12 +21926,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-red-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-red-dragon.json",
       "candidates": [
@@ -21905,12 +21945,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-silver-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-silver-dragon.json",
       "candidates": [
@@ -21922,12 +21964,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ancient-white-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ancient-white-dragon.json",
       "candidates": [
@@ -21939,7 +21983,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.androsphinx",
@@ -21958,7 +22004,7 @@
     {
       "nativeId": "monster.animated-armor",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/animated-armor.json",
       "candidates": [
@@ -21970,7 +22016,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.animated-flying-sword",
@@ -22017,7 +22065,7 @@
     {
       "nativeId": "monster.ankheg",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ankheg.json",
       "candidates": [
@@ -22029,7 +22077,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.ankylosaurus",
@@ -22048,7 +22098,7 @@
     {
       "nativeId": "monster.ape",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ape.json",
       "candidates": [
@@ -22060,7 +22110,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.archelon",
@@ -22079,7 +22131,7 @@
     {
       "nativeId": "monster.archmage",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/archmage.json",
       "candidates": [
@@ -22091,12 +22143,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.assassin",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/assassin.json",
       "candidates": [
@@ -22108,7 +22162,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.avatar-of-death",
@@ -22127,7 +22183,7 @@
     {
       "nativeId": "monster.awakened-shrub",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/awakened-shrub.json",
       "candidates": [
@@ -22139,12 +22195,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.awakened-tree",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/awakened-tree.json",
       "candidates": [
@@ -22156,12 +22214,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.axe-beak",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/axe-beak.json",
       "candidates": [
@@ -22173,12 +22233,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.azer",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/azer.json",
       "candidates": [
@@ -22187,7 +22249,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.azer-sentinel",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.azer-sentinel",
@@ -22206,7 +22270,7 @@
     {
       "nativeId": "monster.baboon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/baboon.json",
       "candidates": [
@@ -22218,12 +22282,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.badger",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/badger.json",
       "candidates": [
@@ -22235,12 +22301,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.balor",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/balor.json",
       "candidates": [
@@ -22252,12 +22320,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bandit",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bandit.json",
       "candidates": [
@@ -22269,12 +22339,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.bandit-captain",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bandit-captain.json",
       "candidates": [
@@ -22286,12 +22358,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.barbed-devil",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/barbed-devil.json",
       "candidates": [
@@ -22303,12 +22377,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.basilisk",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/basilisk.json",
       "candidates": [
@@ -22320,12 +22396,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bat.json",
       "candidates": [
@@ -22337,12 +22415,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bearded-devil",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bearded-devil.json",
       "candidates": [
@@ -22354,12 +22434,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.behir",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/behir.json",
       "candidates": [
@@ -22371,12 +22453,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.berserker",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/berserker.json",
       "candidates": [
@@ -22388,12 +22472,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.black-bear",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/black-bear.json",
       "candidates": [
@@ -22405,12 +22491,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.black-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/black-dragon-wyrmling.json",
       "candidates": [
@@ -22422,12 +22510,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.black-pudding",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/black-pudding.json",
       "candidates": [
@@ -22439,12 +22529,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.blink-dog",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/blink-dog.json",
       "candidates": [
@@ -22456,12 +22548,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.blood-hawk",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/blood-hawk.json",
       "candidates": [
@@ -22473,12 +22567,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.blue-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/blue-dragon-wyrmling.json",
       "candidates": [
@@ -22490,12 +22586,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.boar",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/boar.json",
       "candidates": [
@@ -22507,12 +22605,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bone-devil",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bone-devil.json",
       "candidates": [
@@ -22524,12 +22624,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.brass-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/brass-dragon-wyrmling.json",
       "candidates": [
@@ -22541,12 +22643,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bronze-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bronze-dragon-wyrmling.json",
       "candidates": [
@@ -22558,12 +22662,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.brown-bear",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/brown-bear.json",
       "candidates": [
@@ -22575,7 +22681,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bugbear",
@@ -22589,7 +22697,8 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.bugbear-stalker",
@@ -22622,7 +22731,7 @@
     {
       "nativeId": "monster.bulette",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/bulette.json",
       "candidates": [
@@ -22634,12 +22743,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.camel",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/camel.json",
       "candidates": [
@@ -22651,12 +22762,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.cat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/cat.json",
       "candidates": [
@@ -22668,12 +22781,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.centaur",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/centaur.json",
       "candidates": [
@@ -22682,7 +22797,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.centaur-trooper",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.centaur-trooper",
@@ -22701,7 +22818,7 @@
     {
       "nativeId": "monster.chain-devil",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/chain-devil.json",
       "candidates": [
@@ -22713,12 +22830,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.chimera",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/chimera.json",
       "candidates": [
@@ -22730,12 +22849,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.chuul",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/chuul.json",
       "candidates": [
@@ -22747,12 +22868,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.clay-golem",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/clay-golem.json",
       "candidates": [
@@ -22764,12 +22887,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.cloaker",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/cloaker.json",
       "candidates": [
@@ -22781,12 +22906,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.cloud-giant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/cloud-giant.json",
       "candidates": [
@@ -22798,12 +22925,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.cockatrice",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/cockatrice.json",
       "candidates": [
@@ -22815,12 +22944,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.commoner",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/commoner.json",
       "candidates": [
@@ -22832,12 +22963,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.constrictor-snake",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/constrictor-snake.json",
       "candidates": [
@@ -22849,12 +22982,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.copper-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/copper-dragon-wyrmling.json",
       "candidates": [
@@ -22866,12 +23001,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.couatl",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/couatl.json",
       "candidates": [
@@ -22883,12 +23020,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.crab",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/crab.json",
       "candidates": [
@@ -22900,12 +23039,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.crocodile",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/crocodile.json",
       "candidates": [
@@ -22917,12 +23058,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.cult-fanatic",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/cult-fanatic.json",
       "candidates": [
@@ -22931,12 +23074,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.cultist-fanatic",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.cultist",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/cultist.json",
       "candidates": [
@@ -22948,7 +23093,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.cultist-fanatic",
@@ -22967,7 +23114,7 @@
     {
       "nativeId": "monster.darkmantle",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/darkmantle.json",
       "candidates": [
@@ -22979,12 +23126,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.death-dog",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/death-dog.json",
       "candidates": [
@@ -22996,7 +23145,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.deep-gnome-svirfneblin",
@@ -23015,7 +23166,7 @@
     {
       "nativeId": "monster.deer",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/deer.json",
       "candidates": [
@@ -23027,12 +23178,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.deva",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/deva.json",
       "candidates": [
@@ -23044,12 +23197,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.dire-wolf",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/dire-wolf.json",
       "candidates": [
@@ -23061,12 +23216,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.djinni",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/djinni.json",
       "candidates": [
@@ -23078,12 +23235,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.doppelganger",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/doppelganger.json",
       "candidates": [
@@ -23095,7 +23254,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.draconic-spirit",
@@ -23114,7 +23275,7 @@
     {
       "nativeId": "monster.draft-horse",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/draft-horse.json",
       "candidates": [
@@ -23126,12 +23287,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.dragon-turtle",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/dragon-turtle.json",
       "candidates": [
@@ -23143,12 +23306,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.dretch",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/dretch.json",
       "candidates": [
@@ -23160,12 +23325,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.drider",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/drider.json",
       "candidates": [
@@ -23177,7 +23344,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.drow",
@@ -23196,7 +23365,7 @@
     {
       "nativeId": "monster.druid",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/druid.json",
       "candidates": [
@@ -23208,12 +23377,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.dryad",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/dryad.json",
       "candidates": [
@@ -23225,7 +23396,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.duergar",
@@ -23244,7 +23417,7 @@
     {
       "nativeId": "monster.dust-mephit",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/dust-mephit.json",
       "candidates": [
@@ -23256,12 +23429,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.eagle",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/eagle.json",
       "candidates": [
@@ -23273,12 +23448,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.earth-elemental",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/earth-elemental.json",
       "candidates": [
@@ -23290,12 +23467,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.efreeti",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/efreeti.json",
       "candidates": [
@@ -23307,12 +23486,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.elephant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/elephant.json",
       "candidates": [
@@ -23324,12 +23505,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.elk",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/elk.json",
       "candidates": [
@@ -23341,12 +23524,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.erinyes",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/erinyes.json",
       "candidates": [
@@ -23358,12 +23543,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ettercap",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ettercap.json",
       "candidates": [
@@ -23375,12 +23562,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ettin",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ettin.json",
       "candidates": [
@@ -23392,12 +23581,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.fire-elemental",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/fire-elemental.json",
       "candidates": [
@@ -23409,12 +23600,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.fire-giant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/fire-giant.json",
       "candidates": [
@@ -23426,12 +23619,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.flesh-golem",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/flesh-golem.json",
       "candidates": [
@@ -23443,12 +23638,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.flying-snake",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/flying-snake.json",
       "candidates": [
@@ -23460,12 +23657,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.flying-sword",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/flying-sword.json",
       "candidates": [
@@ -23474,12 +23673,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.animated-flying-sword",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.frog",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/frog.json",
       "candidates": [
@@ -23491,12 +23692,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.frost-giant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/frost-giant.json",
       "candidates": [
@@ -23508,12 +23711,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gargoyle",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gargoyle.json",
       "candidates": [
@@ -23525,12 +23730,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gelatinous-cube",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gelatinous-cube.json",
       "candidates": [
@@ -23542,12 +23749,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.ghast",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ghast.json",
       "candidates": [
@@ -23559,12 +23768,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ghost",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ghost.json",
       "candidates": [
@@ -23576,12 +23787,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ghoul",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ghoul.json",
       "candidates": [
@@ -23593,12 +23806,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-ape",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-ape.json",
       "candidates": [
@@ -23610,12 +23825,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-badger",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-badger.json",
       "candidates": [
@@ -23627,12 +23844,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-bat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-bat.json",
       "candidates": [
@@ -23644,12 +23863,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-boar",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-boar.json",
       "candidates": [
@@ -23661,12 +23882,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-centipede",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-centipede.json",
       "candidates": [
@@ -23678,12 +23901,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-constrictor-snake",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-constrictor-snake.json",
       "candidates": [
@@ -23695,12 +23920,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-crab",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-crab.json",
       "candidates": [
@@ -23712,12 +23939,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-crocodile",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-crocodile.json",
       "candidates": [
@@ -23729,12 +23958,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-eagle",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-eagle.json",
       "candidates": [
@@ -23746,12 +23977,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-elk",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-elk.json",
       "candidates": [
@@ -23763,12 +23996,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-fire-beetle",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-fire-beetle.json",
       "candidates": [
@@ -23780,12 +24015,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-frog",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-frog.json",
       "candidates": [
@@ -23797,12 +24034,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-goat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-goat.json",
       "candidates": [
@@ -23814,12 +24053,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-hyena",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-hyena.json",
       "candidates": [
@@ -23831,7 +24072,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-insect",
@@ -23850,7 +24093,7 @@
     {
       "nativeId": "monster.giant-lizard",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-lizard.json",
       "candidates": [
@@ -23862,12 +24105,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-octopus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-octopus.json",
       "candidates": [
@@ -23879,12 +24124,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-owl",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-owl.json",
       "candidates": [
@@ -23896,12 +24143,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-poisonous-snake",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/giant-poisonous-snake.json",
       "candidates": [
@@ -23910,12 +24159,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.giant-venomous-snake",
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-rat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-rat.json",
       "candidates": [
@@ -23927,12 +24178,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-scorpion",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-scorpion.json",
       "candidates": [
@@ -23944,12 +24197,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-sea-horse",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/giant-sea-horse.json",
       "candidates": [
@@ -23958,7 +24213,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.giant-seahorse",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-seahorse",
@@ -23977,7 +24234,7 @@
     {
       "nativeId": "monster.giant-shark",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-shark.json",
       "candidates": [
@@ -23989,12 +24246,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-spider",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-spider.json",
       "candidates": [
@@ -24006,12 +24265,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-toad",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-toad.json",
       "candidates": [
@@ -24023,7 +24284,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-venomous-snake",
@@ -24042,7 +24305,7 @@
     {
       "nativeId": "monster.giant-vulture",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-vulture.json",
       "candidates": [
@@ -24054,12 +24317,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-wasp",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-wasp.json",
       "candidates": [
@@ -24071,12 +24336,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.giant-weasel",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-weasel.json",
       "candidates": [
@@ -24088,12 +24355,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.giant-wolf-spider",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/giant-wolf-spider.json",
       "candidates": [
@@ -24105,12 +24374,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gibbering-mouther",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gibbering-mouther.json",
       "candidates": [
@@ -24122,12 +24393,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.glabrezu",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/glabrezu.json",
       "candidates": [
@@ -24139,12 +24412,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gladiator",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gladiator.json",
       "candidates": [
@@ -24156,12 +24431,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gnoll",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/gnoll.json",
       "candidates": [
@@ -24170,7 +24447,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.gnoll-warrior",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gnoll-warrior",
@@ -24189,7 +24468,7 @@
     {
       "nativeId": "monster.goat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/goat.json",
       "candidates": [
@@ -24201,12 +24480,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.goblin",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/goblin.json",
       "candidates": [
@@ -24215,7 +24496,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.goblin-warrior",
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.goblin-boss",
@@ -24262,7 +24545,7 @@
     {
       "nativeId": "monster.gold-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gold-dragon-wyrmling.json",
       "candidates": [
@@ -24274,12 +24557,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gorgon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gorgon.json",
       "candidates": [
@@ -24291,12 +24576,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gray-ooze",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/gray-ooze.json",
       "candidates": [
@@ -24308,12 +24595,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.green-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/green-dragon-wyrmling.json",
       "candidates": [
@@ -24325,12 +24614,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.green-hag",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/green-hag.json",
       "candidates": [
@@ -24342,12 +24633,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.grick",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/grick.json",
       "candidates": [
@@ -24359,12 +24652,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.griffon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/griffon.json",
       "candidates": [
@@ -24376,12 +24671,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.grimlock",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/grimlock.json",
       "candidates": [
@@ -24393,12 +24690,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.guard",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/guard.json",
       "candidates": [
@@ -24410,7 +24709,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.guard-captain",
@@ -24429,7 +24730,7 @@
     {
       "nativeId": "monster.guardian-naga",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/guardian-naga.json",
       "candidates": [
@@ -24441,7 +24742,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.gynosphinx",
@@ -24488,7 +24791,7 @@
     {
       "nativeId": "monster.harpy",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/harpy.json",
       "candidates": [
@@ -24500,12 +24803,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hawk",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hawk.json",
       "candidates": [
@@ -24517,12 +24822,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hell-hound",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hell-hound.json",
       "candidates": [
@@ -24534,12 +24841,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hezrou",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hezrou.json",
       "candidates": [
@@ -24551,12 +24860,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hill-giant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hill-giant.json",
       "candidates": [
@@ -24568,12 +24879,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hippogriff",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hippogriff.json",
       "candidates": [
@@ -24585,7 +24898,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hippopotamus",
@@ -24613,7 +24928,8 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hobgoblin-captain",
@@ -24646,7 +24962,7 @@
     {
       "nativeId": "monster.homunculus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/homunculus.json",
       "candidates": [
@@ -24658,12 +24974,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.horned-devil",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/horned-devil.json",
       "candidates": [
@@ -24675,12 +24993,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hunter-shark",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hunter-shark.json",
       "candidates": [
@@ -24692,12 +25012,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hydra",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hydra.json",
       "candidates": [
@@ -24709,12 +25031,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.hyena",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/hyena.json",
       "candidates": [
@@ -24726,12 +25050,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.ice-devil",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ice-devil.json",
       "candidates": [
@@ -24743,12 +25069,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ice-mephit",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ice-mephit.json",
       "candidates": [
@@ -24760,12 +25088,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.imp",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/imp.json",
       "candidates": [
@@ -24777,12 +25107,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.incubus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/incubus.json",
       "candidates": [
@@ -24794,12 +25126,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.invisible-stalker",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/invisible-stalker.json",
       "candidates": [
@@ -24811,12 +25145,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.iron-golem",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/iron-golem.json",
       "candidates": [
@@ -24828,12 +25164,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.jackal",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/jackal.json",
       "candidates": [
@@ -24845,12 +25183,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.killer-whale",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/killer-whale.json",
       "candidates": [
@@ -24862,12 +25202,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.knight",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/knight.json",
       "candidates": [
@@ -24879,12 +25221,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.kobold",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/kobold.json",
       "candidates": [
@@ -24893,7 +25237,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.kobold-warrior",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.kobold-warrior",
@@ -24912,7 +25258,7 @@
     {
       "nativeId": "monster.kraken",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/kraken.json",
       "candidates": [
@@ -24924,12 +25270,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.lamia",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/lamia.json",
       "candidates": [
@@ -24941,12 +25289,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.lemure",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/lemure.json",
       "candidates": [
@@ -24958,12 +25308,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.lich",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/lich.json",
       "candidates": [
@@ -24975,12 +25327,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.lion",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/lion.json",
       "candidates": [
@@ -24992,12 +25346,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.lizard",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/lizard.json",
       "candidates": [
@@ -25009,7 +25365,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.lizardfolk",
@@ -25028,7 +25386,7 @@
     {
       "nativeId": "monster.mage",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mage.json",
       "candidates": [
@@ -25040,12 +25398,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.magma-mephit",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/magma-mephit.json",
       "candidates": [
@@ -25057,12 +25417,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.magmin",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/magmin.json",
       "candidates": [
@@ -25074,12 +25436,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.mammoth",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mammoth.json",
       "candidates": [
@@ -25091,12 +25455,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.manticore",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/manticore.json",
       "candidates": [
@@ -25108,12 +25474,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.marilith",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/marilith.json",
       "candidates": [
@@ -25125,12 +25493,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.mastiff",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mastiff.json",
       "candidates": [
@@ -25142,12 +25512,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.medusa",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/medusa.json",
       "candidates": [
@@ -25159,12 +25531,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.merfolk",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/merfolk.json",
       "candidates": [
@@ -25173,7 +25547,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.merfolk-skirmisher",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.merfolk-skirmisher",
@@ -25192,7 +25568,7 @@
     {
       "nativeId": "monster.merrow",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/merrow.json",
       "candidates": [
@@ -25204,12 +25580,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.mimic",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mimic.json",
       "candidates": [
@@ -25221,7 +25599,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.minotaur",
@@ -25254,7 +25634,7 @@
     {
       "nativeId": "monster.minotaur-skeleton",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/minotaur-skeleton.json",
       "candidates": [
@@ -25266,12 +25646,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.mule",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mule.json",
       "candidates": [
@@ -25283,12 +25665,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.mummy",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mummy.json",
       "candidates": [
@@ -25300,12 +25684,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.mummy-lord",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/mummy-lord.json",
       "candidates": [
@@ -25317,12 +25703,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.nalfeshnee",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/nalfeshnee.json",
       "candidates": [
@@ -25334,12 +25722,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.night-hag",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/night-hag.json",
       "candidates": [
@@ -25351,12 +25741,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.nightmare",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/nightmare.json",
       "candidates": [
@@ -25368,12 +25760,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.noble",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/noble.json",
       "candidates": [
@@ -25385,12 +25779,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.ochre-jelly",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ochre-jelly.json",
       "candidates": [
@@ -25402,12 +25798,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.octopus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/octopus.json",
       "candidates": [
@@ -25419,12 +25817,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.ogre",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ogre.json",
       "candidates": [
@@ -25436,12 +25836,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.ogre-zombie",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/ogre-zombie.json",
       "candidates": [
@@ -25453,12 +25855,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.oni",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/oni.json",
       "candidates": [
@@ -25470,7 +25874,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.orc",
@@ -25503,7 +25909,7 @@
     {
       "nativeId": "monster.otyugh",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/otyugh.json",
       "candidates": [
@@ -25515,12 +25921,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.owl",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/owl.json",
       "candidates": [
@@ -25532,12 +25940,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.owlbear",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/owlbear.json",
       "candidates": [
@@ -25549,12 +25959,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.panther",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/panther.json",
       "candidates": [
@@ -25566,12 +25978,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.pegasus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/pegasus.json",
       "candidates": [
@@ -25583,12 +25997,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.phase-spider",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/phase-spider.json",
       "candidates": [
@@ -25600,7 +26016,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.piranha",
@@ -25647,7 +26065,7 @@
     {
       "nativeId": "monster.pit-fiend",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/pit-fiend.json",
       "candidates": [
@@ -25659,12 +26077,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.planetar",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/planetar.json",
       "candidates": [
@@ -25676,12 +26096,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.plesiosaurus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/plesiosaurus.json",
       "candidates": [
@@ -25693,12 +26115,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.poisonous-snake",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/poisonous-snake.json",
       "candidates": [
@@ -25707,12 +26131,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.venomous-snake",
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.polar-bear",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/polar-bear.json",
       "candidates": [
@@ -25724,12 +26150,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.pony",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/pony.json",
       "candidates": [
@@ -25741,12 +26169,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.priest",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/priest.json",
       "candidates": [
@@ -25758,7 +26188,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.priest-acolyte",
@@ -25777,7 +26209,7 @@
     {
       "nativeId": "monster.pseudodragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/pseudodragon.json",
       "candidates": [
@@ -25789,7 +26221,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.pteranodon",
@@ -25808,7 +26242,7 @@
     {
       "nativeId": "monster.purple-worm",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/purple-worm.json",
       "candidates": [
@@ -25820,12 +26254,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.quasit",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/quasit.json",
       "candidates": [
@@ -25837,12 +26273,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.quipper",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/quipper.json",
       "candidates": [
@@ -25851,12 +26289,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.piranha",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.rakshasa",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/rakshasa.json",
       "candidates": [
@@ -25868,12 +26308,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.rat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/rat.json",
       "candidates": [
@@ -25885,12 +26327,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.raven",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/raven.json",
       "candidates": [
@@ -25902,12 +26346,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.red-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/red-dragon-wyrmling.json",
       "candidates": [
@@ -25919,12 +26365,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.reef-shark",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/reef-shark.json",
       "candidates": [
@@ -25936,12 +26384,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.remorhaz",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/remorhaz.json",
       "candidates": [
@@ -25953,12 +26403,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.rhinoceros",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/rhinoceros.json",
       "candidates": [
@@ -25970,12 +26422,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.riding-horse",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/riding-horse.json",
       "candidates": [
@@ -25987,12 +26441,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.roc",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/roc.json",
       "candidates": [
@@ -26004,12 +26460,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.roper",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/roper.json",
       "candidates": [
@@ -26021,12 +26479,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.rug-of-smothering",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/rug-of-smothering.json",
       "candidates": [
@@ -26035,12 +26495,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.animated-rug-of-smothering",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.rust-monster",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/rust-monster.json",
       "candidates": [
@@ -26052,12 +26514,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.saber-toothed-tiger",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/saber-toothed-tiger.json",
       "candidates": [
@@ -26069,12 +26533,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.sahuagin",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/sahuagin.json",
       "candidates": [
@@ -26083,7 +26549,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.sahuagin-warrior",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.sahuagin-warrior",
@@ -26102,7 +26570,7 @@
     {
       "nativeId": "monster.salamander",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/salamander.json",
       "candidates": [
@@ -26114,12 +26582,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.satyr",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/satyr.json",
       "candidates": [
@@ -26131,12 +26601,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.scorpion",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/scorpion.json",
       "candidates": [
@@ -26148,12 +26620,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.scout",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/scout.json",
       "candidates": [
@@ -26165,12 +26639,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.sea-hag",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/sea-hag.json",
       "candidates": [
@@ -26182,12 +26658,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.sea-horse",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/sea-horse.json",
       "candidates": [
@@ -26196,7 +26674,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.seahorse",
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.seahorse",
@@ -26215,7 +26695,7 @@
     {
       "nativeId": "monster.shadow",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/shadow.json",
       "candidates": [
@@ -26227,12 +26707,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.shambling-mound",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/shambling-mound.json",
       "candidates": [
@@ -26244,12 +26726,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.shield-guardian",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/shield-guardian.json",
       "candidates": [
@@ -26261,12 +26745,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.shrieker",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/shrieker.json",
       "candidates": [
@@ -26275,7 +26761,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.shrieker-fungus",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.shrieker-fungus",
@@ -26294,7 +26782,7 @@
     {
       "nativeId": "monster.silver-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/silver-dragon-wyrmling.json",
       "candidates": [
@@ -26306,12 +26794,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.skeleton",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/skeleton.json",
       "candidates": [
@@ -26323,12 +26813,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.solar",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/solar.json",
       "candidates": [
@@ -26340,12 +26832,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.specter",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/specter.json",
       "candidates": [
@@ -26357,7 +26851,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.sphinx-of-lore",
@@ -26404,7 +26900,7 @@
     {
       "nativeId": "monster.spider",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/spider.json",
       "candidates": [
@@ -26416,12 +26912,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.spirit-naga",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/spirit-naga.json",
       "candidates": [
@@ -26433,12 +26931,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.sprite",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/sprite.json",
       "candidates": [
@@ -26450,12 +26950,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.spy",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/spy.json",
       "candidates": [
@@ -26467,12 +26969,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.steam-mephit",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/steam-mephit.json",
       "candidates": [
@@ -26484,12 +26988,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.stirge",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/stirge.json",
       "candidates": [
@@ -26501,12 +27007,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.stone-giant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/stone-giant.json",
       "candidates": [
@@ -26518,12 +27026,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.stone-golem",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/stone-golem.json",
       "candidates": [
@@ -26535,12 +27045,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.storm-giant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/storm-giant.json",
       "candidates": [
@@ -26552,12 +27064,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.succubus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/succubus.json",
       "candidates": [
@@ -26569,12 +27083,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.swarm-of-bats",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/swarm-of-bats.json",
       "candidates": [
@@ -26586,7 +27102,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.swarm-of-beetles",
@@ -26633,7 +27151,7 @@
     {
       "nativeId": "monster.swarm-of-insects",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/swarm-of-insects.json",
       "candidates": [
@@ -26645,7 +27163,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.swarm-of-piranhas",
@@ -26664,7 +27184,7 @@
     {
       "nativeId": "monster.swarm-of-poisonous-snakes",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/swarm-of-poisonous-snakes.json",
       "candidates": [
@@ -26673,12 +27193,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.swarm-of-venomous-snakes",
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.swarm-of-quippers",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/swarm-of-quippers.json",
       "candidates": [
@@ -26687,12 +27209,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.swarm-of-piranhas",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.swarm-of-rats",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/swarm-of-rats.json",
       "candidates": [
@@ -26704,12 +27228,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.swarm-of-ravens",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/swarm-of-ravens.json",
       "candidates": [
@@ -26721,7 +27247,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.swarm-of-spiders",
@@ -26768,7 +27296,7 @@
     {
       "nativeId": "monster.tarrasque",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/tarrasque.json",
       "candidates": [
@@ -26780,12 +27308,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.thug",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/thug.json",
       "candidates": [
@@ -26794,12 +27324,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.tough",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.tiger",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/tiger.json",
       "candidates": [
@@ -26811,7 +27343,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.tough",
@@ -26844,7 +27378,7 @@
     {
       "nativeId": "monster.treant",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/treant.json",
       "candidates": [
@@ -26856,7 +27390,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.tribal-warrior",
@@ -26875,7 +27411,7 @@
     {
       "nativeId": "monster.triceratops",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/triceratops.json",
       "candidates": [
@@ -26887,12 +27423,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.troll",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/troll.json",
       "candidates": [
@@ -26904,7 +27442,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.troll-limb",
@@ -26923,7 +27463,7 @@
     {
       "nativeId": "monster.tyrannosaurus-rex",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/tyrannosaurus-rex.json",
       "candidates": [
@@ -26935,12 +27475,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.unicorn",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/unicorn.json",
       "candidates": [
@@ -26952,12 +27494,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.vampire",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/vampire.json",
       "candidates": [
@@ -26969,7 +27513,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.vampire-familiar",
@@ -26988,7 +27534,7 @@
     {
       "nativeId": "monster.vampire-spawn",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/vampire-spawn.json",
       "candidates": [
@@ -27000,7 +27546,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.venomous-snake",
@@ -27019,7 +27567,7 @@
     {
       "nativeId": "monster.veteran",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/veteran.json",
       "candidates": [
@@ -27028,12 +27576,14 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": false,
+      "aliasOf": "monster.warrior-veteran",
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.violet-fungus",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/violet-fungus.json",
       "candidates": [
@@ -27045,12 +27595,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.vrock",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/vrock.json",
       "candidates": [
@@ -27062,12 +27614,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.vulture",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/vulture.json",
       "candidates": [
@@ -27079,12 +27633,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.warhorse",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/warhorse.json",
       "candidates": [
@@ -27096,12 +27652,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.warhorse-skeleton",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/warhorse-skeleton.json",
       "candidates": [
@@ -27113,7 +27671,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.warrior-infantry",
@@ -27146,7 +27706,7 @@
     {
       "nativeId": "monster.water-elemental",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/water-elemental.json",
       "candidates": [
@@ -27158,12 +27718,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.weasel",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/weasel.json",
       "candidates": [
@@ -27175,12 +27737,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.werebear",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/werebear.json",
       "candidates": [
@@ -27192,12 +27756,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.wereboar",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/wereboar.json",
       "candidates": [
@@ -27209,12 +27775,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.wererat",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/wererat.json",
       "candidates": [
@@ -27226,12 +27794,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.weretiger",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/weretiger.json",
       "candidates": [
@@ -27243,12 +27813,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.werewolf",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/werewolf.json",
       "candidates": [
@@ -27260,12 +27832,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.white-dragon-wyrmling",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/white-dragon-wyrmling.json",
       "candidates": [
@@ -27277,12 +27851,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.wight",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/wight.json",
       "candidates": [
@@ -27294,12 +27870,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.will-o-wisp",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/will-o-wisp.json",
       "candidates": [
@@ -27311,12 +27889,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.winter-wolf",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/winter-wolf.json",
       "candidates": [
@@ -27328,12 +27908,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.wolf",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/wolf.json",
       "candidates": [
@@ -27345,12 +27927,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.worg",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/worg.json",
       "candidates": [
@@ -27362,12 +27946,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.wraith",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/wraith.json",
       "candidates": [
@@ -27379,12 +27965,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.wyvern",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/wyvern.json",
       "candidates": [
@@ -27396,12 +27984,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.xorn",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/xorn.json",
       "candidates": [
@@ -27413,12 +28003,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-black-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-black-dragon.json",
       "candidates": [
@@ -27430,12 +28022,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-blue-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-blue-dragon.json",
       "candidates": [
@@ -27447,12 +28041,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-brass-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-brass-dragon.json",
       "candidates": [
@@ -27464,12 +28060,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-bronze-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-bronze-dragon.json",
       "candidates": [
@@ -27481,12 +28079,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-copper-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-copper-dragon.json",
       "candidates": [
@@ -27498,12 +28098,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-gold-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-gold-dragon.json",
       "candidates": [
@@ -27515,12 +28117,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-green-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-green-dragon.json",
       "candidates": [
@@ -27532,12 +28136,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-red-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-red-dragon.json",
       "candidates": [
@@ -27549,12 +28155,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-silver-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-silver-dragon.json",
       "candidates": [
@@ -27566,12 +28174,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.young-white-dragon",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/young-white-dragon.json",
       "candidates": [
@@ -27583,12 +28193,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": true
     },
     {
       "nativeId": "monster.zombie",
       "kind": "monster",
-      "status": "multiple-candidates",
+      "status": "native-monster-role-default",
       "sourceRecords": 2,
       "path": "data/native/bestiary/zombie.json",
       "candidates": [
@@ -27600,7 +28212,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "object.generic-object",
@@ -39061,14 +39675,16 @@
     }
   ],
   "canonicalIdentifiersNormalized": 653,
-  "reconciliationStatus": "approved-general-rules-applied; unresolved-mechanics-retained; native-shaping-pending",
+  "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
     "existing-native-covered": 24,
     "matching-candidates": 19,
-    "multiple-candidates": 1358,
+    "multiple-candidates": 1073,
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 467,
+    "native-monster-identity-alias": 21,
+    "native-monster-role-default": 285,
+    "native-single-source-retained": 446,
     "single-candidate": 590
   }
 }

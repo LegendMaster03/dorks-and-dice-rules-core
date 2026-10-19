@@ -2,236 +2,100 @@
   "id": "monster.cultist",
   "name": "Cultist",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Cultist",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
-          ]
-        },
-        "alignment": [
-          "L",
-          "NX",
-          "C",
-          "NY",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 12,
-            "from": [
-              "{@item leather armor|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 9,
-          "formula": "2d8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 12,
-        "con": 10,
-        "int": 10,
-        "wis": 11,
-        "cha": 10,
-        "skill": {
-          "deception": "+2",
-          "religion": "+2"
-        },
-        "passive": 10,
-        "languages": [
-          "any one language (usually Common)"
-        ],
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Dark Devotion",
-            "entries": [
-              "The cultist has advantage on saving throws against being {@condition charmed} or {@condition frightened}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Scimitar",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one creature. {@h}4 ({@damage 1d6 + 1}) slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/cultist.opus"
-        },
-        "altArt": [
-          {
-            "name": "Diabolical Cultist",
-            "source": "MTF",
-            "page": 18
-          },
-          {
-            "name": "Cultist",
-            "source": "RMBRE"
-          }
-        ],
-        "attachedItems": [
-          "scimitar|srd51"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Cultist",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Cultists swear allegiance to dark powers such as elemental princes, demon lords, or archdevils. Most conceal their loyalties to avoid being ostracized, imprisoned, or executed for their beliefs. Unlike evil acolytes, cultists often show signs of insanity in their beliefs and practices."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Cultist.webp"
-                },
-                "width": 618,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 9,
+      "formula": "2d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 12,
+    "con": 10,
+    "int": 10,
+    "wis": 11,
+    "cha": 10,
+    "save": {
+      "wis": "+2"
+    },
+    "skill": {
+      "deception": "+2",
+      "religion": "+2"
+    },
+    "passive": 10,
+    "languages": [
+      "Common"
+    ],
+    "cr": "1/8",
+    "gear": [
+      "leather armor|srd52",
+      "sickle|srd52"
+    ],
+    "action": [
+      {
+        "name": "Ritual Sickle",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Slashing damage plus 1 Necrotic damage."
         ]
       }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "individual",
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/cultist.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "N",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Cultist",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 9,
-          "formula": "2d8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 12,
-        "con": 10,
-        "int": 10,
-        "wis": 11,
-        "cha": 10,
-        "save": {
-          "wis": "+2"
-        },
-        "skill": {
-          "deception": "+2",
-          "religion": "+2"
-        },
-        "passive": 10,
-        "languages": [
-          "Common"
-        ],
-        "cr": "1/8",
-        "gear": [
-          "leather armor|srd52",
-          "sickle|srd52"
-        ],
-        "action": [
-          {
-            "name": "Ritual Sickle",
-            "entries": [
-              "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Slashing damage plus 1 Necrotic damage."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "individual",
-          "relics"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/cultist.opus"
-        },
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "N",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Cultist",
-            "_copy": {
-              "name": "Cultists",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Cultists devote themselves to their faith's leaders and otherworldly masters. While this zeal grants cultists no magical powers, it gives them remarkable resolve in the face of threats. Cultists perform much of a cult's mundane work, which might include evangelism, criminal acts, or serving as sacrifices."
-                      ]
-                    }
+        "_copy": {
+          "name": "Cultists",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Cultists devote themselves to their faith's leaders and otherworldly masters. While this zeal grants cultists no magical powers, it gives them remarkable resolve in the face of threats. Cultists perform much of a cult's mundane work, which might include evangelism, criminal acts, or serving as sacrifices."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

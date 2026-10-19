@@ -2,360 +2,202 @@
   "id": "monster.gladiator",
   "name": "Gladiator",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Gladiator",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
-          ]
-        },
-        "alignment": [
-          "A"
-        ],
-        "ac": [
-          {
-            "ac": 16,
-            "from": [
-              "{@item studded leather armor|srd51|studded leather}",
-              "{@item shield|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 112,
-          "formula": "15d8 + 45"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 18,
-        "dex": 15,
-        "con": 16,
-        "int": 10,
-        "wis": 12,
-        "cha": 15,
-        "save": {
-          "str": "+7",
-          "dex": "+5",
-          "con": "+6"
-        },
-        "skill": {
-          "athletics": "+10",
-          "intimidation": "+5"
-        },
-        "passive": 11,
-        "languages": [
-          "any one language (usually Common)"
-        ],
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Brave",
-            "entries": [
-              "The gladiator has advantage on saving throws against being {@condition frightened}."
-            ]
-          },
-          {
-            "name": "Brute",
-            "entries": [
-              "A melee weapon deals one extra die of its damage when the gladiator hits with it (included in the attack)."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The gladiator makes three melee attacks or two ranged attacks."
-            ]
-          },
-          {
-            "name": "Spear",
-            "entries": [
-              "{@atk mw,rw} {@hit 7} to hit, reach 5 ft. and range 20/60 ft., one target. {@h}11 ({@damage 2d6 + 4}) piercing damage, or 13 ({@damage 2d8 + 4}) piercing damage if used with two hands to make a melee attack."
-            ]
-          },
-          {
-            "name": "Shield Bash",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 5 ft., one creature. {@h}9 ({@damage 2d4 + 4}) bludgeoning damage. If the target is a Medium or smaller creature, it must succeed on a {@dc 15} Strength saving throw or be knocked {@condition prone}."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Parry",
-            "entries": [
-              "The gladiator adds 3 to its AC against one melee attack that would hit it. To do so, the gladiator must see the attacker and be wielding a melee weapon."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/gladiator.opus"
-        },
-        "attachedItems": [
-          "spear|srd51"
-        ],
-        "traitTags": [
-          "Brute"
-        ],
-        "actionTags": [
-          "Multiattack",
-          "Parry"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RW",
-          "THW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Gladiator",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Gladiators battle for the entertainment of raucous crowds. Some gladiators are brutal pit fighters who treat each match as a life-or-death struggle, while others are professional duelists who command huge fees but rarely fight to the death."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 112,
+      "formula": "15d8 + 45"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 10,
+    "wis": 12,
+    "cha": 15,
+    "save": {
+      "str": "+7",
+      "dex": "+5",
+      "con": "+6",
+      "wis": "+4"
+    },
+    "skill": {
+      "athletics": "+10",
+      "performance": "+5"
+    },
+    "passive": 11,
+    "languages": [
+      "Common"
+    ],
+    "cr": "5",
+    "gear": [
+      "shield|srd52",
+      {
+        "item": "spear|srd52",
+        "quantity": 3
+      },
+      "studded leather armor|srd52"
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The gladiator makes three Spear attacks. It can replace one attack with a use of Shield Bash."
+        ]
+      },
+      {
+        "name": "Spear",
+        "entries": [
+          "{@atkr m,r} {@hit 7}, reach 5 ft. or range 20/60 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Shield Bash",
+        "entries": [
+          "{@actSave str} {@dc 15}, one creature within 5 feet that the gladiator can see. {@actSaveFail} 9 ({@damage 2d4 + 4}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Parry",
+        "entries": [
+          "{@actTrigger} The gladiator is hit by a melee attack roll while holding a weapon. {@actResponse} The gladiator adds 3 to its AC against that attack, possibly causing it to miss."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "armaments",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/gladiator.opus"
+    },
+    "actionTags": [
+      "Multiattack",
+      "Parry"
+    ],
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "THW"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Gladiator",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          16
-        ],
-        "hp": {
-          "average": 112,
-          "formula": "15d8 + 45"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 18,
-        "dex": 15,
-        "con": 16,
-        "int": 10,
-        "wis": 12,
-        "cha": 15,
-        "save": {
-          "str": "+7",
-          "dex": "+5",
-          "con": "+6",
-          "wis": "+4"
-        },
-        "skill": {
-          "athletics": "+10",
-          "performance": "+5"
-        },
-        "passive": 11,
-        "languages": [
-          "Common"
-        ],
-        "cr": "5",
-        "gear": [
-          "shield|srd52",
+        "entries": [
           {
-            "item": "spear|srd52",
-            "quantity": 3
-          },
-          "studded leather armor|srd52"
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The gladiator makes three Spear attacks. It can replace one attack with a use of Shield Bash."
-            ]
-          },
-          {
-            "name": "Spear",
-            "entries": [
-              "{@atkr m,r} {@hit 7}, reach 5 ft. or range 20/60 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
-            ]
-          },
-          {
-            "name": "Shield Bash",
-            "entries": [
-              "{@actSave str} {@dc 15}, one creature within 5 feet that the gladiator can see. {@actSaveFail} 9 ({@damage 2d4 + 4}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Parry",
-            "entries": [
-              "{@actTrigger} The gladiator is hit by a melee attack roll while holding a weapon. {@actResponse} The gladiator adds 3 to its AC against that attack, possibly causing it to miss."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "armaments",
-          "individual"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/gladiator.opus"
-        },
-        "actionTags": [
-          "Multiattack",
-          "Parry"
-        ],
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW",
-          "RA",
-          "THW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Gladiator",
             "entries": [
+              "{@i Competitor and Prizefighter}",
               {
-                "type": "section",
-                "name": "Gladiator",
-                "entries": [
-                  "{@i Competitor and Prizefighter}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Any|bestiary|environment=any}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments, Individual"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
                   },
-                  "Gladiators are professional fighters who pit themselves against one another, monsters, and other challenges to entertain audiences. While some compete merely to survive, others love the thrill of performing—and all gladiators know the importance of theatrics in keeping audiences excited. Roll on or choose an option from the Gladiator Theatrics table to inspire the unique flourishes a gladiator uses when competing.",
                   {
-                    "type": "table",
-                    "caption": "Gladiator Theatrics",
-                    "colLabels": [
-                      "1d6",
-                      "During a Competition, the Gladiator..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Dedicates their impending victory to a deity, ruler, beloved noble, or member of the crowd."
-                      ],
-                      [
-                        "2",
-                        "Dresses in a monster-themed mask and cape."
-                      ],
-                      [
-                        "3",
-                        "Judges whether their foe fights honorably."
-                      ],
-                      [
-                        "4",
-                        "Leads the crowd in a rousing theme song."
-                      ],
-                      [
-                        "5",
-                        "Seeks to claim a trophy from a foe."
-                      ],
-                      [
-                        "6",
-                        "Takes advice from the crowd, omens, or a pet."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments, Individual"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Gladiators are professional fighters who pit themselves against one another, monsters, and other challenges to entertain audiences. While some compete merely to survive, others love the thrill of performing—and all gladiators know the importance of theatrics in keeping audiences excited. Roll on or choose an option from the Gladiator Theatrics table to inspire the unique flourishes a gladiator uses when competing.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Gladiator.webp"
-                },
-                "title": "In an undersea arena, the crowd goes wild as a gladiator triumphs over a giant squid",
-                "credit": "Alejandro Pacheco",
-                "width": 1047,
-                "height": 2560
+                "type": "table",
+                "caption": "Gladiator Theatrics",
+                "colLabels": [
+                  "1d6",
+                  "During a Competition, the Gladiator..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Dedicates their impending victory to a deity, ruler, beloved noble, or member of the crowd."
+                  ],
+                  [
+                    "2",
+                    "Dresses in a monster-themed mask and cape."
+                  ],
+                  [
+                    "3",
+                    "Judges whether their foe fights honorably."
+                  ],
+                  [
+                    "4",
+                    "Leads the crowd in a rousing theme song."
+                  ],
+                  [
+                    "5",
+                    "Seeks to claim a trophy from a foe."
+                  ],
+                  [
+                    "6",
+                    "Takes advice from the crowd, omens, or a pet."
+                  ]
+                ]
               }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Gladiator.webp"
+            },
+            "title": "In an undersea arena, the crowd goes wild as a gladiator triumphs over a giant squid",
+            "credit": "Alejandro Pacheco",
+            "width": 1047,
+            "height": 2560
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

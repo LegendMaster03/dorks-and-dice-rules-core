@@ -2,617 +2,289 @@
   "id": "monster.vampire",
   "name": "Vampire",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Vampire",
-        "size": [
-          "M"
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 195,
+      "formula": "23d8 + 92"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 18,
+    "dex": 18,
+    "con": 18,
+    "int": 17,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "dex": "+9",
+      "con": "+9",
+      "wis": "+7",
+      "cha": "+9"
+    },
+    "skill": {
+      "perception": "+7",
+      "stealth": "+9"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 17,
+    "resist": [
+      "necrotic"
+    ],
+    "languages": [
+      "Common plus two other languages"
+    ],
+    "cr": {
+      "cr": "13",
+      "xpLair": 11500
+    },
+    "spellcasting": [
+      {
+        "name": "Charm {@recharge 5}",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The vampire casts {@spell Charm Person|SRD52}, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 17}), and the duration is 24 hours. The {@condition Charmed|SRD52} target is a willing recipient of the vampire's Bite, the damage of which doesn't end the spell. When the spell ends, the target is unaware it was {@condition Charmed|SRD52} by the vampire."
         ],
-        "type": {
-          "type": "undead",
-          "tags": [
-            "shapechanger"
+        "recharge": {
+          "5": [
+            "{@spell Charm Person|SRD52}"
           ]
         },
-        "alignment": [
-          "L",
-          "E"
+        "ability": "cha",
+        "displayAs": "bonus",
+        "hidden": [
+          "recharge"
+        ]
+      },
+      {
+        "name": "Beguile",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The vampire casts {@spell Command|SRD52}, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 17}). The vampire can't take this action again until the start of its next turn."
         ],
-        "ac": [
-          {
-            "ac": 16,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 144,
-          "formula": "17d8 + 68"
+        "legendary": {
+          "1": [
+            "{@spell Command|SRD52}"
+          ]
         },
-        "speed": {
-          "walk": 30
-        },
-        "str": 18,
-        "dex": 18,
-        "con": 18,
-        "int": 17,
-        "wis": 15,
-        "cha": 18,
-        "save": {
-          "dex": "+9",
-          "wis": "+7",
-          "cha": "+9"
-        },
-        "skill": {
-          "perception": "+7",
-          "stealth": "+9"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 17,
-        "resist": [
-          "necrotic",
+        "ability": "cha",
+        "displayAs": "legendary",
+        "hidden": [
+          "legendary"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the vampire fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Misty Escape",
+        "entries": [
+          "If the vampire drops to 0 {@variantrule Hit Points|SRD52} outside its resting place, the vampire uses Shape-Shift to become mist (no action required). If it can't use Shape-Shift, it is destroyed.",
+          "While it has 0 {@variantrule Hit Points|SRD52} in mist form, it can't return to its vampire form, and it must reach its resting place within 2 hours or be destroyed. Once in its resting place, it returns to its vampire form and has the {@condition Paralyzed|SRD52} condition until it regains any {@variantrule Hit Points|SRD52}, and it regains 1 {@variantrule Hit Points|SRD52|Hit Point} after spending 1 hour there."
+        ]
+      },
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The vampire can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "Vampire Weakness",
+        "entries": [
+          "The vampire has these weaknesses:",
           {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "the languages it knew in life"
-        ],
-        "cr": "13",
-        "trait": [
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "If the vampire isn't in sunlight or running water, it can use its action to polymorph into a Tiny bat or a Medium cloud of mist, or back into its true form.",
-              "While in bat form, the vampire can't speak, its walking speed is 5 feet, and it has a flying speed of 30 feet. Its statistics, other than its size and speed, are unchanged. Anything it is wearing transforms with it, but nothing it is carrying does. It reverts to its true form if it dies.",
-              "While in mist form, the vampire can't take any actions, speak, or manipulate objects. It is weightless, has a flying speed of 20 feet, can hover, and can enter a hostile creature's space and stop there. In addition, if air can pass through a space, the mist can do so without squeezing, and it can't pass through water. It has advantage on Strength, Dexterity, and Constitution saving throws, and it is immune to all nonmagical damage, except the damage it takes from sunlight."
-            ]
-          },
-          {
-            "name": "Legendary Resistance (3/Day)",
-            "entries": [
-              "If the vampire fails a saving throw, it can choose to succeed instead."
-            ]
-          },
-          {
-            "name": "Misty Escape",
-            "entries": [
-              "When it drops to 0 hit points outside its resting place, the vampire transforms into a cloud of mist (as in the Shapechanger trait) instead of falling {@condition unconscious}, provided that it isn't in sunlight or running water. If it can't transform, it is destroyed.",
-              "While it has 0 hit points in mist form, it can't revert to its vampire form, and it must reach its resting place within 2 hours or be destroyed. Once in its resting place, it reverts to its vampire form. It is then {@condition paralyzed} until it regains at least 1 hit point. After spending 1 hour in its resting place with 0 hit points, it regains 1 hit point."
-            ]
-          },
-          {
-            "name": "Regeneration",
-            "entries": [
-              "The vampire regains 20 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from {@item Holy Water (Flask)|SRD51|holy water}, this trait doesn't function at the start of the vampire's next turn."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The vampire can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Vampire Weaknesses",
-            "entries": [
-              "The vampire has the following flaws:",
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
               {
-                "type": "list",
-                "style": "list-hang-subtrait",
-                "items": [
-                  {
-                    "type": "itemSub",
-                    "name": "Forbiddance",
-                    "entry": "The vampire can't enter a residence without an invitation from one of the occupants."
-                  },
-                  {
-                    "type": "itemSub",
-                    "name": "Harmed by Running Water",
-                    "entry": "The vampire takes 20 acid damage if it ends its turn in running water."
-                  },
-                  {
-                    "type": "itemSub",
-                    "name": "Stake to the Heart",
-                    "entry": "If a piercing weapon made of wood is driven into the vampire's heart while the vampire is {@condition incapacitated} in its resting place, the vampire is {@condition paralyzed} until the stake is removed."
-                  },
-                  {
-                    "type": "itemSub",
-                    "name": "Sunlight Hypersensitivity",
-                    "entry": "The vampire takes 20 radiant damage when it starts its turn in sunlight. While in sunlight, it has disadvantage on attack rolls and ability checks."
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack (Vampire Form Only)",
-            "entries": [
-              "The vampire makes two attacks, only one of which can be a bite attack."
-            ]
-          },
-          {
-            "name": "Unarmed Strike (Vampire Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 5 ft., one creature. {@h}8 ({@damage 1d8 + 4}) bludgeoning damage. Instead of dealing damage, the vampire can grapple the target (escape {@dc 18})."
-            ]
-          },
-          {
-            "name": "Bite (Bat or Vampire Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 5 ft., one willing creature, or a creature that is {@condition grappled} by the vampire, {@condition incapacitated}, or {@condition restrained}. {@h}7 ({@damage 1d6 + 4}) piercing damage plus 10 ({@damage 3d6}) necrotic damage. The target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and the vampire regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0. A humanoid slain in this way and then buried in the ground rises the following night as a {@creature vampire spawn} under the vampire's control."
-            ]
-          },
-          {
-            "name": "Charm",
-            "entries": [
-              "The vampire targets one humanoid it can see within 30 feet of it. If the target can see the vampire, the target must succeed on a {@dc 17} Wisdom saving throw against this magic or be {@condition charmed} by the vampire. The {@condition charmed} target regards the vampire as a trusted friend to be heeded and protected. Although the target isn't under the vampire's control, it takes the vampire's requests or actions in the most favorable way it can, and it is a willing target for the vampire's bite attack.",
-              "Each time the vampire or the vampire's companions do anything harmful to the target, it can repeat the saving throw, ending the effect on itself on a success. Otherwise, the effect lasts 24 hours or until the vampire is destroyed, is on a different plane of existence than the target, or takes a bonus action to end the effect."
-            ]
-          },
-          {
-            "name": "Children of the Night (1/Day)",
-            "entries": [
-              "The vampire magically calls {@dice 2d4} swarms of {@creature swarm of bats||bats} or {@creature swarm of rats||rats}, provided that the sun isn't up. While outdoors, the vampire can call {@dice 3d6} {@creature wolf||wolves} instead. The called creatures arrive in {@dice 1d4} rounds, acting as allies of the vampire and obeying its spoken commands. The beasts remain for 1 hour, until the vampire dies, or until the vampire dismisses them as a bonus action."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Move",
-            "entries": [
-              "The vampire moves up to its speed without provoking opportunity attacks."
-            ]
-          },
-          {
-            "name": "Unarmed Strike",
-            "entries": [
-              "The vampire makes one unarmed strike."
-            ]
-          },
-          {
-            "name": "Bite (Costs 2 Actions)",
-            "entries": [
-              "The vampire makes one bite attack."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/vampire.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances",
-          "Regeneration",
-          "Shapechanger",
-          "Spider Climb",
-          "Sunlight Sensitivity"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "LF"
-        ],
-        "damageTags": [
-          "B",
-          "N",
-          "P"
-        ],
-        "miscTags": [
-          "HPR",
-          "MW"
-        ],
-        "conditionInflict": [
-          "charmed"
-        ],
-        "savingThrowForced": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Vampire",
-            "entries": [
-              {
-                "type": "entries",
+                "type": "item",
+                "name": "Forbiddance",
                 "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Awakened to an endless night, vampires hunger for the life they have lost and sate that hunger by drinking the blood of the living. Vampires abhor sunlight, for its touch burns them. They never cast shadows or reflections, and any vampire wishing to move unnoticed among the living keeps to the darkness and far from reflective surfaces.",
-                      {
-                        "name": "Dark Desires",
-                        "type": "entries",
-                        "entries": [
-                          "Whether or not a vampire retains any memories from its former life, its emotional attachments wither as once-pure feelings become twisted by undeath. Love turns into hungry obsession, while friendship becomes bitter jealousy. In place of emotion, vampires pursue physical symbols of what they crave, so that a vampire seeking love might fixate on a young beauty. A child might become an object of fascination for a vampire obsessed with youth and potential. Others surround themselves with art, books, or sinister items such as torture devices or trophies from creatures they have killed."
-                        ]
-                      },
-                      {
-                        "name": "Born from Death",
-                        "type": "entries",
-                        "entries": [
-                          "Most of a vampire's victims become vampire spawn-ravenous creatures with a vampire's hunger for blood, but under the control of the vampire that created them. If a true vampire allows a spawn to draw blood from its own body, the spawn transforms into a true vampire no longer under its master's control. Few vampires are willing to relinquish their control in this manner. Vampire spawn become free-willed when their creator dies."
-                        ]
-                      },
-                      {
-                        "name": "Chained to the Grave",
-                        "type": "entries",
-                        "entries": [
-                          "Every vampire remains bound to its coffin, crypt, or grave site, where it must rest by day. If a vampire didn't receive a formal burial, it must lie beneath a foot of earth at the place of its transition to undeath. A vampire can move its place of burial by transporting its coffin or a significant amount of grave dirt to another location. Some vampires set up multiple resting places this way."
-                        ]
-                      },
-                      {
-                        "name": "Undead Nature",
-                        "type": "entries",
-                        "entries": [
-                          "Neither a vampire nor a vampire spawn requires air."
-                        ]
-                      },
-                      {
-                        "type": "entries",
-                        "name": "A Vampire's Lair",
-                        "entries": [
-                          "A vampire chooses a grand yet defensible location for its lair, such as a castle, fortified manor, or walled abbey. It hides its coffin in an underground crypt or vault guarded by vampire spawn or other loyal creatures of the night."
-                        ]
-                      },
-                      {
-                        "type": "inset",
-                        "name": "Player Characters as Vampires",
-                        "entries": [
-                          "The game statistics of a player character transformed into a vampire spawn and then a vampire don't change, except that the character's Strength, Dexterity, and Constitution scores become 18 if they aren't higher. In addition, the character gains the vampire's damage resistances, {@sense darkvision}, traits, and actions. Attack and damage rolls for the vampire's attacks are based on Strength.",
-                          "The save DC for Charm is 8 + the vampire's proficiency bonus + the vampire's Charisma modifier. The character's alignment becomes lawful evil, and the DM might take control of the character until the vampirism is reversed with a {@spell wish} spell or the character is killed and brought back to life."
-                        ]
-                      },
-                      {
-                        "type": "inset",
-                        "name": "Strahd von Zarovich",
-                        "entries": [
-                          "A brilliant thinker and capable warrior in life, Strahd von Zarovich fought in countless battles for his people. When war and killing finally stripped him of his youth and strength, he settled in the remote valley of Barovia and built a castle on a towering pinnacle, from which he could survey his lands. His brother Sergei came to live with him in Castle Ravenloft, becoming Strahd's adviser and constant companion.",
-                          "In his brother, Strahd saw everything he had lost. Sergei was handsome and young, while Strahd had become old and scarred. Resentment colored their relationship, eventually turning into hatred. Strahd's beloved, Tatyana, spurned him for Sergei, whom she pledged to marry.",
-                          "In a desperate attempt to win Tatyana's heart, Strahd forged a pact with dark powers that made him immortal. At the wedding of Sergei and Tatyana, he confronted his brother and killed him. Tatyana fled and flung herself from Ravenloft's walls. Strahd's guards, seeing him for a monster, shot him with arrows. But he did not die. He became a vampire-the first vampire, according to many sages.",
-                          "In the centuries since his transformation, Strahd's lust for life and youth have only grown. He broods in his dark castle, cursing the living for stealing away what he lost, and never admitting his hand in the tragedy he created."
-                        ]
-                      },
-                      {
-                        "type": "insetReadaloud",
-                        "entries": [
-                          {
-                            "type": "quote",
-                            "entries": [
-                              "I am The Ancient, I am The Land. My beginnings are lost in the darkness of the past. I was the warrior, I was good and just. I thundered across the land like the wrath of a just god, but the war years and the killing years wore down my soul as the wind wears down stone into sand."
-                            ],
-                            "by": "Count Strahd von Zarovich"
-                          }
-                        ]
-                      }
-                    ]
-                  }
+                  "The vampire can't enter a residence without an invitation from an occupant."
                 ]
-              }
-            ],
-            "images": [
+              },
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Vampire.webp"
-                },
-                "width": 529,
-                "height": 1000
+                "type": "item",
+                "name": "Running Water",
+                "entries": [
+                  "The vampire takes 20 Acid damage if it ends its turn in running water."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Stake to the Heart",
+                "entries": [
+                  "If a weapon that deals Piercing damage is driven into the vampire's heart while the vampire has the {@condition Incapacitated|SRD52} condition in its resting place, the vampire has the {@condition Paralyzed|SRD52} condition until the weapon is removed."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Sunlight",
+                "entries": [
+                  "The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has {@variantrule Disadvantage|SRD52} on attack rolls and ability checks."
+                ]
               }
             ]
           }
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack (Vampire Form Only)",
+        "entries": [
+          "The vampire makes two Grave Strike attacks and uses Bite."
+        ]
+      },
+      {
+        "name": "Grave Strike (Vampire Form Only)",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 5 ft. {@h}8 ({@damage 1d8 + 4}) Bludgeoning damage plus 7 ({@damage 2d6}) Necrotic damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from one of two hands."
+        ]
+      },
+      {
+        "name": "Bite (Bat or Vampire Form Only)",
+        "entries": [
+          "{@actSave con} {@dc 17}, one creature within 5 feet that is willing or that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition. {@actSaveFail} 6 ({@damage 1d4 + 4}) Piercing damage plus 13 ({@damage 3d8}) Necrotic damage. The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the Necrotic damage taken, and the vampire regains {@variantrule Hit Points|SRD52} equal to that amount. A Humanoid reduced to 0 {@variantrule Hit Points|SRD52} by this damage and then buried rises the following sunset as a {@creature Vampire Spawn|SRD52} under the vampire's control."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "If the vampire isn't in sunlight or running water, it shape-shifts into a Tiny bat ({@variantrule Speed|SRD52} 5 ft., {@variantrule Fly Speed|SRD52} 30 ft.) or a Medium cloud of mist ({@variantrule Speed|SRD52} 5 ft., {@variantrule Fly Speed|SRD52} 20 ft. [hover]), or it returns to its vampire form. Anything it is wearing transforms with it.",
+          "While in bat form, the vampire can't speak. Its game statistics, other than its size and {@variantrule Speed|SRD52}, are unchanged.",
+          "While in mist form, the vampire can't take any actions, speak, or manipulate objects. It is weightless and can enter an enemy's space and stop there. If air can pass through a space, the mist can do so, but it can't pass through liquid. It has {@variantrule Resistance|SRD52} to all damage, except the damage it takes from sunlight."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Deathless Strike",
+        "entries": [
+          "The vampire moves up to half its {@variantrule Speed|SRD52}, and it makes one Grave Strike attack."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/vampire.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Legendary Resistances",
+      "Spider Climb"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "A",
+      "B",
+      "N",
+      "P"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA"
+    ],
+    "conditionInflict": [
+      "charmed",
+      "grappled"
+    ],
+    "conditionInflictSpell": [
+      "charmed",
+      "prone"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "savingThrowForcedLegendary": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Vampire",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "undead",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          16
-        ],
-        "hp": {
-          "average": 195,
-          "formula": "23d8 + 92"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40
-        },
-        "initiative": {
-          "proficiency": 2
-        },
-        "str": 18,
-        "dex": 18,
-        "con": 18,
-        "int": 17,
-        "wis": 15,
-        "cha": 18,
-        "save": {
-          "dex": "+9",
-          "con": "+9",
-          "wis": "+7",
-          "cha": "+9"
-        },
-        "skill": {
-          "perception": "+7",
-          "stealth": "+9"
-        },
-        "senses": [
-          "Darkvision 120 ft."
-        ],
-        "passive": 17,
-        "resist": [
-          "necrotic"
-        ],
-        "languages": [
-          "Common plus two other languages"
-        ],
-        "cr": {
-          "cr": "13",
-          "xpLair": 11500
-        },
-        "spellcasting": [
-          {
-            "name": "Charm {@recharge 5}",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The vampire casts {@spell Charm Person|SRD52}, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 17}), and the duration is 24 hours. The {@condition Charmed|SRD52} target is a willing recipient of the vampire's Bite, the damage of which doesn't end the spell. When the spell ends, the target is unaware it was {@condition Charmed|SRD52} by the vampire."
-            ],
-            "recharge": {
-              "5": [
-                "{@spell Charm Person|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "bonus",
-            "hidden": [
-              "recharge"
-            ]
-          },
-          {
-            "name": "Beguile",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The vampire casts {@spell Command|SRD52}, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 17}). The vampire can't take this action again until the start of its next turn."
-            ],
-            "legendary": {
-              "1": [
-                "{@spell Command|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "legendary",
-            "hidden": [
-              "legendary"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
-            "entries": [
-              "If the vampire fails a saving throw, it can choose to succeed instead."
-            ]
-          },
-          {
-            "name": "Misty Escape",
-            "entries": [
-              "If the vampire drops to 0 {@variantrule Hit Points|SRD52} outside its resting place, the vampire uses Shape-Shift to become mist (no action required). If it can't use Shape-Shift, it is destroyed.",
-              "While it has 0 {@variantrule Hit Points|SRD52} in mist form, it can't return to its vampire form, and it must reach its resting place within 2 hours or be destroyed. Once in its resting place, it returns to its vampire form and has the {@condition Paralyzed|SRD52} condition until it regains any {@variantrule Hit Points|SRD52}, and it regains 1 {@variantrule Hit Points|SRD52|Hit Point} after spending 1 hour there."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The vampire can climb difficult surfaces, including along ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Vampire Weakness",
-            "entries": [
-              "The vampire has these weaknesses:",
-              {
-                "type": "list",
-                "style": "list-hang-notitle",
-                "items": [
-                  {
-                    "type": "item",
-                    "name": "Forbiddance",
-                    "entries": [
-                      "The vampire can't enter a residence without an invitation from an occupant."
-                    ]
-                  },
-                  {
-                    "type": "item",
-                    "name": "Running Water",
-                    "entries": [
-                      "The vampire takes 20 Acid damage if it ends its turn in running water."
-                    ]
-                  },
-                  {
-                    "type": "item",
-                    "name": "Stake to the Heart",
-                    "entries": [
-                      "If a weapon that deals Piercing damage is driven into the vampire's heart while the vampire has the {@condition Incapacitated|SRD52} condition in its resting place, the vampire has the {@condition Paralyzed|SRD52} condition until the weapon is removed."
-                    ]
-                  },
-                  {
-                    "type": "item",
-                    "name": "Sunlight",
-                    "entries": [
-                      "The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has {@variantrule Disadvantage|SRD52} on attack rolls and ability checks."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack (Vampire Form Only)",
-            "entries": [
-              "The vampire makes two Grave Strike attacks and uses Bite."
-            ]
-          },
-          {
-            "name": "Grave Strike (Vampire Form Only)",
-            "entries": [
-              "{@atkr m} {@hit 9}, reach 5 ft. {@h}8 ({@damage 1d8 + 4}) Bludgeoning damage plus 7 ({@damage 2d6}) Necrotic damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from one of two hands."
-            ]
-          },
-          {
-            "name": "Bite (Bat or Vampire Form Only)",
-            "entries": [
-              "{@actSave con} {@dc 17}, one creature within 5 feet that is willing or that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition. {@actSaveFail} 6 ({@damage 1d4 + 4}) Piercing damage plus 13 ({@damage 3d8}) Necrotic damage. The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the Necrotic damage taken, and the vampire regains {@variantrule Hit Points|SRD52} equal to that amount. A Humanoid reduced to 0 {@variantrule Hit Points|SRD52} by this damage and then buried rises the following sunset as a {@creature Vampire Spawn|SRD52} under the vampire's control."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "If the vampire isn't in sunlight or running water, it shape-shifts into a Tiny bat ({@variantrule Speed|SRD52} 5 ft., {@variantrule Fly Speed|SRD52} 30 ft.) or a Medium cloud of mist ({@variantrule Speed|SRD52} 5 ft., {@variantrule Fly Speed|SRD52} 20 ft. [hover]), or it returns to its vampire form. Anything it is wearing transforms with it.",
-              "While in bat form, the vampire can't speak. Its game statistics, other than its size and {@variantrule Speed|SRD52}, are unchanged.",
-              "While in mist form, the vampire can't take any actions, speak, or manipulate objects. It is weightless and can enter an enemy's space and stop there. If air can pass through a space, the mist can do so, but it can't pass through liquid. It has {@variantrule Resistance|SRD52} to all damage, except the damage it takes from sunlight."
-            ]
-          }
-        ],
-        "legendaryActionsLair": 4,
-        "legendary": [
-          {
-            "name": "Deathless Strike",
-            "entries": [
-              "The vampire moves up to half its {@variantrule Speed|SRD52}, and it makes one Grave Strike attack."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "urban"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/vampire.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances",
-          "Spider Climb"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "A",
-          "B",
-          "N",
-          "P"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "HPR",
-          "MA"
-        ],
-        "conditionInflict": [
-          "charmed",
-          "grappled"
-        ],
-        "conditionInflictSpell": [
-          "charmed",
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "savingThrowForcedLegendary": [
-          "wisdom"
-        ],
-        "savingThrowForcedSpell": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Vampire",
-            "_copy": {
-              "name": "Vampires",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Vampires are terrifying hunters and manipulators. They use their powers to shape-shift and bend other creatures' wills as they terrorize and feed on populations over generations."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Vampire.webp"
-                      },
-                      "credit": "Carlo Arellano",
-                      "width": 2560,
-                      "height": 1346
-                    }
+        "_copy": {
+          "name": "Vampires",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Vampires are terrifying hunters and manipulators. They use their powers to shape-shift and bend other creatures' wills as they terrorize and feed on populations over generations."
                   ]
                 }
-              }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Vampire.webp"
+                  },
+                  "credit": "Carlo Arellano",
+                  "width": 2560,
+                  "height": 1346
+                }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

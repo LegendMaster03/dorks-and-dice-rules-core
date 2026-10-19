@@ -2,393 +2,198 @@
   "id": "monster.barbed-devil",
   "name": "Barbed Devil",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Barbed Devil",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 15,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 110,
-          "formula": "13d8 + 52"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 17,
-        "con": 18,
-        "int": 12,
-        "wis": 14,
-        "cha": 14,
-        "save": {
-          "str": "+6",
-          "con": "+7",
-          "wis": "+5",
-          "cha": "+5"
-        },
-        "skill": {
-          "deception": "+5",
-          "insight": "+5",
-          "perception": "+8"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 18,
-        "resist": [
-          "cold",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks that aren't silvered",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal",
-          "telepathy 120 ft."
-        ],
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Barbed Hide",
-            "entries": [
-              "At the start of each of its turns, the barbed devil deals 5 ({@damage 1d10}) piercing damage to any creature grappling it."
-            ]
-          },
-          {
-            "name": "Devil's Sight",
-            "entries": [
-              "Magical darkness doesn't impede the devil's darkvision."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The devil has advantage on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The devil makes three melee attacks: one with its tail and two with its claws. Alternatively, it can use Hurl Flame twice."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) piercing damage."
-            ]
-          },
-          {
-            "name": "Hurl Flame",
-            "entries": [
-              "{@atk rs} {@hit 5} to hit, range 150 ft., one target. {@h}10 ({@damage 3d6}) fire damage. If the target is a flammable object that isn't being worn or carried, it also catches fire."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/barbed-devil.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "F",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Barbed Devil",
-            "_copy": {
-              "name": "Devils",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Creatures of unbridled greed and desire, barbed devils act as guards to the more powerful denizens of the Nine Hells and their vaults. Resembling a tall humanoid covered in sharp barbs, spines, and hooks, a barbed devil has gleaming eyes that are ever watchful for objects and creatures it might claim for itself. These fiends welcome any chance to fight when victory promises reward.",
-                          "Barbed devils are known for an alertness that makes them difficult to surprise, and they attend to their duties without boredom or distraction. They use their sharp claws as weapons or hurl balls of flame at foes that try to flee them."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Barbed Devil.webp"
-                    },
-                    "width": 779,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 110,
+      "formula": "13d8 + 52"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 16,
+    "dex": 17,
+    "con": 18,
+    "int": 12,
+    "wis": 14,
+    "cha": 14,
+    "save": {
+      "str": "+6",
+      "con": "+7",
+      "wis": "+5",
+      "cha": "+5"
+    },
+    "skill": {
+      "deception": "+5",
+      "insight": "+5",
+      "perception": "+8"
+    },
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 18,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Barbed Hide",
+        "entries": [
+          "At the start of each of its turns, the devil deals 5 ({@damage 1d10}) Piercing damage to any creature it is grappling or any creature grappling it."
+        ]
+      },
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes one Claws attack and one Tail attack, or it makes two Hurl Flame attacks."
+        ]
+      },
+      {
+        "name": "Claws",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from both claws."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}14 ({@damage 2d10 + 3}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Hurl Flame",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 150 ft. {@h}17 ({@damage 5d6}) Fire damage. If the target is a flammable object that isn't being worn or carried, it starts {@hazard burning|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/barbed-devil.opus"
+    },
+    "traitTags": [
+      "Devil's Sight",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "F",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Barbed Devil",
-        "group": [
-          "Devils"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 110,
-          "formula": "13d8 + 52"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30
-        },
-        "str": 16,
-        "dex": 17,
-        "con": 18,
-        "int": 12,
-        "wis": 14,
-        "cha": 14,
-        "save": {
-          "str": "+6",
-          "con": "+7",
-          "wis": "+5",
-          "cha": "+5"
-        },
-        "skill": {
-          "deception": "+5",
-          "insight": "+5",
-          "perception": "+8"
-        },
-        "senses": [
-          "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
-        ],
-        "passive": 18,
-        "resist": [
-          "cold"
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal; telepathy 120 ft."
-        ],
-        "cr": "5",
-        "trait": [
+        "entries": [
           {
-            "name": "Barbed Hide",
-            "entries": [
-              "At the start of each of its turns, the devil deals 5 ({@damage 1d10}) Piercing damage to any creature it is grappling or any creature grappling it."
-            ]
-          },
-          {
-            "name": "Diabolical Restoration",
-            "entries": [
-              "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The devil makes one Claws attack and one Tail attack, or it makes two Hurl Flame attacks."
-            ]
-          },
-          {
-            "name": "Claws",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from both claws."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 10 ft. {@h}14 ({@damage 2d10 + 3}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Hurl Flame",
-            "entries": [
-              "{@atkr r} {@hit 5}, range 150 ft. {@h}17 ({@damage 5d6}) Fire damage. If the target is a flammable object that isn't being worn or carried, it starts {@hazard burning|SRD52}."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, nine hells"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/barbed-devil.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "F",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "RA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Barbed Devil",
             "entries": [
+              "{@i Devil of Greed and Obsession}",
               {
-                "type": "section",
-                "name": "Barbed Devil",
-                "entries": [
-                  "{@i Devil of Greed and Obsession}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
                   },
-                  "Infernal collectors, barbed devils fanatically protect troves of treasure and scour the planes of existence for additions to their hoards. Also known as hamatulas among the ranks of the Nine Hells, these devils bedeck their barbed hides with their most prized possessions and trophies taken from those who failed to steal from them. When threatened, barbed devils strike with their thorny limbs and hurl infernal flame.",
-                  "Barbed devils often serve as guards and accountants for ice devil generals, pit fiend warlords, archdevils, and similarly powerful villains. In return, barbed devils gain protection for their own collections. Many barbed devils also maintain networks of imps that search the planes for treasures of interest or usefully greedy mortals.",
-                  "Barbed devils rarely collect anything as prosaic as coins and gems. Rather, they pride themselves on having the multiverse's greatest collection of one kind of thing—typically items of rare pedigree or emblems of power. Barbed devils refuse to steal what they covet; instead they strike bargains to claim both treasure and mortal souls."
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Barbed Devil.webp"
-                },
-                "credit": "Yongjae Choi",
-                "width": 2550,
-                "height": 1704
-              }
+              },
+              "Infernal collectors, barbed devils fanatically protect troves of treasure and scour the planes of existence for additions to their hoards. Also known as hamatulas among the ranks of the Nine Hells, these devils bedeck their barbed hides with their most prized possessions and trophies taken from those who failed to steal from them. When threatened, barbed devils strike with their thorny limbs and hurl infernal flame.",
+              "Barbed devils often serve as guards and accountants for ice devil generals, pit fiend warlords, archdevils, and similarly powerful villains. In return, barbed devils gain protection for their own collections. Many barbed devils also maintain networks of imps that search the planes for treasures of interest or usefully greedy mortals.",
+              "Barbed devils rarely collect anything as prosaic as coins and gems. Rather, they pride themselves on having the multiverse's greatest collection of one kind of thing—typically items of rare pedigree or emblems of power. Barbed devils refuse to steal what they covet; instead they strike bargains to claim both treasure and mortal souls."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Barbed Devil.webp"
+            },
+            "credit": "Yongjae Choi",
+            "width": 2550,
+            "height": 1704
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

@@ -2,431 +2,231 @@
   "id": "monster.weretiger",
   "name": "Weretiger",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Weretiger",
-        "group": [
-          "Lycanthropes"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "human",
-            "shapechanger"
-          ]
-        },
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 120,
-          "formula": "16d8 + 48"
-        },
-        "speed": {
-          "walk": {
-            "number": 30,
-            "condition": "(40 ft. in tiger form)"
-          }
-        },
-        "str": 17,
-        "dex": 15,
-        "con": 16,
-        "int": 10,
-        "wis": 13,
-        "cha": 11,
-        "skill": {
-          "perception": "+5",
-          "stealth": "+4"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 15,
-        "immune": [
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Lycanthropes"
+    ],
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "monstrosity",
+      "tags": [
+        "lycanthrope"
+      ]
+    },
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 120,
+      "formula": "16d8 + 48"
+    },
+    "speed": {
+      "walk": 30,
+      "alternate": {
+        "walk": [
           {
-            "immune": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks that aren't silvered",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "Common (can't speak in tiger form)"
-        ],
-        "cr": "4",
-        "trait": [
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "The weretiger can use its action to polymorph into a tiger-humanoid hybrid or into a tiger, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
-            ]
-          },
-          {
-            "name": "Keen Hearing and Smell",
-            "entries": [
-              "The weretiger has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
-            ]
-          },
-          {
-            "name": "Pounce (Tiger or Hybrid Form Only)",
-            "entries": [
-              "If the weretiger moves at least 15 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the weretiger can make one bite attack against it as a bonus action."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "In humanoid form, the weretiger makes two scimitar attacks or two longbow attacks. In hybrid form, it can attack like a humanoid or make two claw attacks."
-            ]
-          },
-          {
-            "name": "Bite (Tiger or Hybrid Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}8 ({@damage 1d10 + 3}) piercing damage. If the target is a humanoid, it must succeed on a {@dc 13} Constitution saving throw or be cursed with weretiger {@variantrule Player Characters as Lycanthropes|SRD51|lycanthropy}."
-            ]
-          },
-          {
-            "name": "Claw (Tiger or Hybrid Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d8 + 3}) slashing damage."
-            ]
-          },
-          {
-            "name": "Scimitar (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) slashing damage."
-            ]
-          },
-          {
-            "name": "Longbow (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "{@atk rw} {@hit 4} to hit, range 150/600 ft., one target. {@h}6 ({@damage 1d8 + 2}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/weretiger.opus"
-        },
-        "attachedItems": [
-          "longbow|srd51",
-          "scimitar|srd51"
-        ],
-        "traitTags": [
-          "Keen Senses",
-          "Pounce",
-          "Shapechanger"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "CS"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "CUR",
-          "MLW",
-          "MW",
-          "RNG",
-          "RW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Weretiger",
-            "_copy": {
-              "name": "Lycanthropes",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Weretigers are ferocious hunters and warriors with a haughty and fastidious nature. Lithe and sleekly muscular in humanoid form, they are taller than average and meticulously groomed. Weretigers grow to enormous size in animal and hybrid form, but they fight in their more refined humanoid form when they can.",
-                          "They don't like to pass on their curse, because every new weretiger means competition for territory and prey.",
-                          "Weretigers live in jungles on the fringes of humanoid civilization, traveling to isolated settlements to trade or revel. They live and hunt alone or in small family groups."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Weretiger.webp"
-                    },
-                    "width": 827,
-                    "height": 1000
-                  }
-                }
-              }
-            }
+            "number": 40,
+            "condition": "(tiger form only)"
           }
         ]
       }
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "str": 17,
+    "dex": 15,
+    "con": 16,
+    "int": 10,
+    "wis": 13,
+    "cha": 11,
+    "skill": {
+      "perception": "+5",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "languages": [
+      "Common (can't speak in tiger form)"
+    ],
+    "cr": "4",
+    "gear": [
+      "longbow|srd52"
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The weretiger makes two attacks, using Scratch or Longbow in any combination. It can replace one attack with a Bite attack."
+        ]
+      },
+      {
+        "name": "Bite (Tiger or Hybrid Form Only)",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Humanoid, it is subjected to the following effect. {@actSave con} {@dc 13}. {@actSaveFail} The target is cursed. If the cursed target drops to 0 {@variantrule Hit Points|SRD52}, it instead becomes a Weretiger under the DM's control and has 10 {@variantrule Hit Points|SRD52}. {@actSaveSuccess} The target is immune to this weretiger's curse for 24 hours."
+        ]
+      },
+      {
+        "name": "Scratch",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Longbow (Humanoid or Hybrid Form Only)",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 150/600 ft. {@h}11 ({@damage 2d8 + 2}) Piercing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Prowl (Tiger or Hybrid Form Only)",
+        "entries": [
+          "The weretiger moves up to its {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}. At the end of this movement, the weretiger can take the {@action Hide|SRD52} action."
+        ]
+      },
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The weretiger shape-shifts into a Large tiger-humanoid hybrid or a Large tiger, or it returns to its true humanoid form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "grassland"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/weretiger.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "CS"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "CUR",
+      "MA",
+      "RA",
+      "RNG"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Weretiger",
-        "group": [
-          "Lycanthropes"
-        ],
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": {
-          "type": "monstrosity",
-          "tags": [
-            "lycanthrope"
-          ]
-        },
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 120,
-          "formula": "16d8 + 48"
-        },
-        "speed": {
-          "walk": 30,
-          "alternate": {
-            "walk": [
-              {
-                "number": 40,
-                "condition": "(tiger form only)"
-              }
-            ]
-          }
-        },
-        "str": 17,
-        "dex": 15,
-        "con": 16,
-        "int": 10,
-        "wis": 13,
-        "cha": 11,
-        "skill": {
-          "perception": "+5",
-          "stealth": "+4"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 15,
-        "languages": [
-          "Common (can't speak in tiger form)"
-        ],
-        "cr": "4",
-        "gear": [
-          "longbow|srd52"
-        ],
-        "action": [
+        "entries": [
           {
-            "name": "Multiattack",
-            "entries": [
-              "The weretiger makes two attacks, using Scratch or Longbow in any combination. It can replace one attack with a Bite attack."
-            ]
-          },
-          {
-            "name": "Bite (Tiger or Hybrid Form Only)",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Humanoid, it is subjected to the following effect. {@actSave con} {@dc 13}. {@actSaveFail} The target is cursed. If the cursed target drops to 0 {@variantrule Hit Points|SRD52}, it instead becomes a Weretiger under the DM's control and has 10 {@variantrule Hit Points|SRD52}. {@actSaveSuccess} The target is immune to this weretiger's curse for 24 hours."
-            ]
-          },
-          {
-            "name": "Scratch",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Longbow (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "{@atkr r} {@hit 4}, range 150/600 ft. {@h}11 ({@damage 2d8 + 2}) Piercing damage."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Prowl (Tiger or Hybrid Form Only)",
-            "entries": [
-              "The weretiger moves up to its {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}. At the end of this movement, the weretiger can take the {@action Hide|SRD52} action."
-            ]
-          },
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "The weretiger shape-shifts into a Large tiger-humanoid hybrid or a Large tiger, or it returns to its true humanoid form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "forest",
-          "grassland"
-        ],
-        "treasure": [
-          "armaments"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/weretiger.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "CS"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "CUR",
-          "MA",
-          "RA",
-          "RNG"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Weretiger",
             "entries": [
+              "{@i Changed by the Power of the Tiger}",
               {
-                "type": "section",
-                "name": "Weretiger",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Weretigers shape-shift from humanoid forms into tigers or tiger-humanoid hybrids. Although they can transform at will or when their magical nature demands, many weretigers are nocturnal and transform into their bestial shapes at night. Some weretigers' transformations might also be tied to the crescent moon, seasons, or momentous events. Weretigers often view their abilities as a blessing or a family honor, and they use their shape-shifting abilities to defend something with historic importance. Roll on or choose a result from the Weretiger Wards table to inspire what a weretiger defends.",
+              {
+                "type": "table",
+                "caption": "Weretiger Wards",
+                "colLabels": [
+                  "1d4",
+                  "The Weretiger Protects A..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Legendary weapon or symbol of rulership."
+                  ],
+                  [
+                    "2",
+                    "Proving ground for prophesied heroes."
+                  ],
+                  [
+                    "3",
+                    "Rare species of magical plant or animal."
+                  ],
+                  [
+                    "4",
+                    "Sacred fountain with magical waters."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
                 "entries": [
-                  "{@i Changed by the Power of the Tiger}",
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments"
-                      }
-                    ]
-                  },
-                  "Weretigers shape-shift from humanoid forms into tigers or tiger-humanoid hybrids. Although they can transform at will or when their magical nature demands, many weretigers are nocturnal and transform into their bestial shapes at night. Some weretigers' transformations might also be tied to the crescent moon, seasons, or momentous events. Weretigers often view their abilities as a blessing or a family honor, and they use their shape-shifting abilities to defend something with historic importance. Roll on or choose a result from the Weretiger Wards table to inspire what a weretiger defends.",
-                  {
-                    "type": "table",
-                    "caption": "Weretiger Wards",
-                    "colLabels": [
-                      "1d4",
-                      "The Weretiger Protects A..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Legendary weapon or symbol of rulership."
-                      ],
-                      [
-                        "2",
-                        "Proving ground for prophesied heroes."
-                      ],
-                      [
-                        "3",
-                        "Rare species of magical plant or animal."
-                      ],
-                      [
-                        "4",
-                        "Sacred fountain with magical waters."
-                      ]
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "I hunt evil like the great cat hunts its prey, but evil will not long yield to blade alone. It takes strength, honor, and sometimes a little more."
-                        ],
-                        "by": "Delmair Rallyhorn, Weretiger"
-                      }
-                    ]
+                      "I hunt evil like the great cat hunts its prey, but evil will not long yield to blade alone. It takes strength, honor, and sometimes a little more."
+                    ],
+                    "by": "Delmair Rallyhorn, Weretiger"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Weretiger.webp"
-                },
-                "credit": "Zuzanna Wužyk",
-                "width": 1344,
-                "height": 1680
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Weretiger.webp"
+            },
+            "credit": "Zuzanna Wužyk",
+            "width": 1344,
+            "height": 1680
           }
         ]
       }
-    }
-  ]
+    ],
+    "trait": [
+      {
+        "name": "Keen Hearing and Smell",
+        "entries": [
+          "The weretiger has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+        ]
+      }
+    ]
+  }
 }

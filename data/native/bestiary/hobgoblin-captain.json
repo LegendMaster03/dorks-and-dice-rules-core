@@ -129,5 +129,7 @@
         }
       }
     ]
-  }
+  },
+  "familyId": "monster-family.hobgoblin",
+  "variantRole": "captain"
 }

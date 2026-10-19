@@ -2,351 +2,166 @@
   "id": "monster.shield-guardian",
   "name": "Shield Guardian",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 142,
+      "formula": "15d10 + 60"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 18,
+    "dex": 8,
+    "con": 18,
+    "int": 7,
+    "wis": 10,
+    "cha": 3,
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "languages": [
+      "understands commands given in any language but can't speak"
+    ],
+    "cr": "7",
+    "trait": [
+      {
+        "name": "Bound",
+        "entries": [
+          "The guardian is magically bound to an amulet. While the guardian and its amulet are on the same plane of existence, the amulet's wearer can telepathically call the guardian to travel to it, and the guardian knows the distance and direction to the amulet. If the guardian is within 60 feet of the amulet's wearer, half of any damage the wearer takes (round up) is transferred to the guardian."
+        ]
+      },
+      {
+        "name": "Regeneration",
+        "entries": [
+          "The guardian regains 10 {@variantrule Hit Points|SRD52} at the start of each of its turns if it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
+        ]
+      },
+      {
+        "name": "Spell Storing",
+        "entries": [
+          "A spellcaster who wears the guardian's amulet can cause the guardian to store one spell of level 4 or lower. To do so, the wearer must cast the spell on the guardian while within 5 feet of it. The spell has no effect but is stored within the guardian. Any previously stored spell is lost when a new spell is stored. The guardian can cast the spell stored with any parameters set by the original caster, requiring no spell components and using the caster's spellcasting ability. The stored spell is then lost."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The guardian makes two Fist attacks."
+        ]
+      },
+      {
+        "name": "Fist",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage plus 7 ({@damage 2d6}) Force damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Protection",
+        "entries": [
+          "{@actTrigger} An attack roll hits the wearer of the guardian's amulet while the wearer is within 5 feet of the guardian. {@actResponse} The wearer gains a +5 bonus to AC, including against the triggering attack and possibly causing it to miss, until the start of the guardian's next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/shield-guardian.opus"
+    },
+    "traitTags": [
+      "Regeneration"
+    ],
+    "senseTags": [
+      "B",
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "B",
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Shield Guardian",
-        "alias": [
-          "Shield Golem"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": "construct",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
+        "entries": [
           {
-            "ac": 17,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 142,
-          "formula": "15d10 + 60"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 18,
-        "dex": 8,
-        "con": 18,
-        "int": 7,
-        "wis": 10,
-        "cha": 3,
-        "senses": [
-          "blindsight 10 ft.",
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "exhaustion",
-          "frightened",
-          "paralyzed",
-          "poisoned"
-        ],
-        "languages": [
-          "understands commands given in any language but can't speak"
-        ],
-        "cr": "7",
-        "trait": [
-          {
-            "name": "Bound",
-            "entries": [
-              "The shield guardian is magically bound to an amulet. As long as the guardian and its amulet are on the same plane of existence, the amulet's wearer can telepathically call the guardian to travel to it, and the guardian knows the distance and direction to the amulet. If the guardian is within 60 feet of the amulet's wearer, half of any damage the wearer takes (rounded up) is transferred to the guardian."
-            ]
-          },
-          {
-            "name": "Regeneration",
-            "entries": [
-              "The shield guardian regains 10 hit points at the start of its turn if it has at least 1 hit point."
-            ]
-          },
-          {
-            "name": "Spell Storing",
-            "entries": [
-              "A spellcaster who wears the shield guardian's amulet can cause the guardian to store one spell of 4th level or lower. To do so, the wearer must cast the spell on the guardian. The spell has no effect but is stored within the guardian. When commanded to do so by the wearer or when a situation arises that was predefined by the spellcaster, the guardian casts the stored spell with any parameters set by the original caster, requiring no components. When the spell is cast or a new spell is stored, any previously stored spell is lost."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The guardian makes two fist attacks."
-            ]
-          },
-          {
-            "name": "Fist",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Shield",
-            "entries": [
-              "When a creature makes an attack against the wearer of the guardian's amulet, the guardian grants a +2 bonus to the wearer's AC if the guardian is within 5 feet of the wearer."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/shield-guardian.opus"
-        },
-        "traitTags": [
-          "Regeneration"
-        ],
-        "senseTags": [
-          "B",
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "CS",
-          "X"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Shield Guardian",
             "entries": [
+              "{@i Device-Controlled Magical Bodyguard}",
               {
-                "type": "entries",
-                "entries": [
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "entries",
-                    "entries": [
-                      "Wizards and other spellcasters create shield guardians for protection. A shield guardian treads beside its master, absorbing damage to keep its master alive as long as possible.",
-                      {
-                        "name": "Master's Amulet",
-                        "type": "entries",
-                        "entries": [
-                          "Every shield guardian has an amulet magically linked to it. A shield guardian can have only one corresponding amulet, and if that amulet is destroyed, the shield guardian is {@condition incapacitated} until a replacement amulet is created. A shield guardian's amulet is subject to direct attack if it isn't being worn or carried. It has AC 10, 10 hit points, and immunity to poison and psychic damage. Crafting an amulet requires 1 week and costs 1,000 gp in components.",
-                          "A shield guardian's solitary focus is to protect the amulet's wearer. The amulet's wearer can command the guardian to attack its enemies or to guard the wielder against attack. If an attack threatens to injure the wearer, the construct can magically absorb the blow into its own body, even at a distance.",
-                          "A spellcaster can store a single spell within a shield guardian, which can then cast the spell on command or under specific conditions. Many a wizard has been rendered helpless by enemies, only to surprise those foes when its shield guardian unleashes potent magical power."
-                        ]
-                      },
-                      {
-                        "name": "Magnificent Treasure",
-                        "type": "entries",
-                        "entries": [
-                          "Because a shield guardian's ownership can be transferred by giving its matching amulet to another creature, some wizards collect exorbitant sums from princes, nobles, and crime lords to create shield guardians for them. At the same time, a shield guardian makes a mighty prize for anyone who slays its master and claims its amulet."
-                        ]
-                      },
-                      {
-                        "name": "Construct Nature",
-                        "type": "entries",
-                        "entries": [
-                          "A shield guardian doesn't require air, food, drink, or sleep."
-                        ]
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
                   }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Shield Guardian.webp"
-                },
-                "credit": "Aaron Hübrich",
-                "width": 616,
-                "height": 1000
-              }
+              },
+              "An intimidating magical automaton, a shield guardian obeys its master's commands and protects its master from danger. When such a guardian is created, the magic that animates it is intertwined with a bonded command amulet. Any creature that has a shield guardian's command amulet can control that Construct and, in the case of magic-users, imbue it with a spell to unleash under predetermined circumstances. Yet a shield guardian's primary goal is to protect its master. It escorts whoever bears its command amulet and intercedes between the bearer and any threat. Although it isn't mindless, a shield guardian has no sense of self preservation and will sacrifice itself to protect its master.",
+              "Shield guardians are typically constructed of steel, stone, and wood in the shape of watchful soldiers. More fanciful designs exist, reflecting the tastes of their creators. Given their resilience, it's common for shield guardians to eventually serve creatures other than their creators. A shield guardian's command amulet might be passed down through a magic-using society or family for generations."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Shield Guardian.webp"
+            },
+            "credit": "Kai Carpenter",
+            "width": 1056,
+            "height": 1848
           }
         ]
       }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Shield Guardian",
-        "size": [
-          "L"
-        ],
-        "type": "construct",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 142,
-          "formula": "15d10 + 60"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 18,
-        "dex": 8,
-        "con": 18,
-        "int": 7,
-        "wis": 10,
-        "cha": 3,
-        "senses": [
-          "Blindsight 10 ft.",
-          "Darkvision 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "exhaustion",
-          "frightened",
-          "paralyzed",
-          "petrified",
-          "poisoned"
-        ],
-        "languages": [
-          "understands commands given in any language but can't speak"
-        ],
-        "cr": "7",
-        "trait": [
-          {
-            "name": "Bound",
-            "entries": [
-              "The guardian is magically bound to an amulet. While the guardian and its amulet are on the same plane of existence, the amulet's wearer can telepathically call the guardian to travel to it, and the guardian knows the distance and direction to the amulet. If the guardian is within 60 feet of the amulet's wearer, half of any damage the wearer takes (round up) is transferred to the guardian."
-            ]
-          },
-          {
-            "name": "Regeneration",
-            "entries": [
-              "The guardian regains 10 {@variantrule Hit Points|SRD52} at the start of each of its turns if it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
-            ]
-          },
-          {
-            "name": "Spell Storing",
-            "entries": [
-              "A spellcaster who wears the guardian's amulet can cause the guardian to store one spell of level 4 or lower. To do so, the wearer must cast the spell on the guardian while within 5 feet of it. The spell has no effect but is stored within the guardian. Any previously stored spell is lost when a new spell is stored. The guardian can cast the spell stored with any parameters set by the original caster, requiring no spell components and using the caster's spellcasting ability. The stored spell is then lost."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The guardian makes two Fist attacks."
-            ]
-          },
-          {
-            "name": "Fist",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage plus 7 ({@damage 2d6}) Force damage."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Protection",
-            "entries": [
-              "{@actTrigger} An attack roll hits the wearer of the guardian's amulet while the wearer is within 5 feet of the guardian. {@actResponse} The wearer gains a +5 bonus to AC, including against the triggering attack and possibly causing it to miss, until the start of the guardian's next turn."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/shield-guardian.opus"
-        },
-        "traitTags": [
-          "Regeneration"
-        ],
-        "senseTags": [
-          "B",
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "CS",
-          "X"
-        ],
-        "damageTags": [
-          "B",
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Shield Guardian",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Shield Guardian",
-                "entries": [
-                  "{@i Device-Controlled Magical Bodyguard}",
-                  {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "None"
-                      }
-                    ]
-                  },
-                  "An intimidating magical automaton, a shield guardian obeys its master's commands and protects its master from danger. When such a guardian is created, the magic that animates it is intertwined with a bonded command amulet. Any creature that has a shield guardian's command amulet can control that Construct and, in the case of magic-users, imbue it with a spell to unleash under predetermined circumstances. Yet a shield guardian's primary goal is to protect its master. It escorts whoever bears its command amulet and intercedes between the bearer and any threat. Although it isn't mindless, a shield guardian has no sense of self preservation and will sacrifice itself to protect its master.",
-                  "Shield guardians are typically constructed of steel, stone, and wood in the shape of watchful soldiers. More fanciful designs exist, reflecting the tastes of their creators. Given their resilience, it's common for shield guardians to eventually serve creatures other than their creators. A shield guardian's command amulet might be passed down through a magic-using society or family for generations."
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Shield Guardian.webp"
-                },
-                "credit": "Kai Carpenter",
-                "width": 1056,
-                "height": 1848
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+    ]
+  }
 }

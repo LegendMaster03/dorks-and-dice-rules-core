@@ -147,5 +147,7 @@
         }
       }
     ]
-  }
+  },
+  "familyId": "monster-family.hobgoblin",
+  "variantRole": "warrior"
 }

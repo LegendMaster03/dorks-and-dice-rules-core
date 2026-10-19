@@ -136,5 +136,7 @@
         }
       }
     ]
-  }
+  },
+  "familyId": "monster-family.goblin",
+  "variantRole": "boss"
 }

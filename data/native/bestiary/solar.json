@@ -2,557 +2,261 @@
   "id": "monster.solar",
   "name": "Solar",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Solar",
-        "group": [
-          "Angels"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": "celestial",
-        "alignment": [
-          "L",
-          "G"
-        ],
-        "ac": [
-          {
-            "ac": 21,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 243,
-          "formula": "18d10 + 144"
-        },
-        "speed": {
-          "walk": 50,
-          "fly": 150
-        },
-        "str": 26,
-        "dex": 22,
-        "con": 26,
-        "int": 25,
-        "wis": 25,
-        "cha": 30,
-        "save": {
-          "int": "+14",
-          "wis": "+14",
-          "cha": "+17"
-        },
-        "skill": {
-          "perception": "+14"
-        },
-        "senses": [
-          "truesight 120 ft."
-        ],
-        "passive": 24,
-        "resist": [
-          "radiant",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "necrotic",
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "exhaustion",
-          "frightened",
-          "poisoned"
-        ],
-        "languages": [
-          "all",
-          "telepathy 120 ft."
-        ],
-        "cr": "21",
-        "spellcasting": [
-          {
-            "name": "Innate Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The solar's spellcasting ability is Charisma (spell save {@dc 25}). It can innately cast the following spells, requiring no material components:"
-            ],
-            "will": [
-              "{@spell detect evil and good}",
-              "{@spell invisibility} (self only)"
-            ],
-            "daily": {
-              "3e": [
-                "{@spell blade barrier}",
-                "{@spell dispel evil and good}",
-                "{@spell resurrection}"
-              ],
-              "1e": [
-                "{@spell commune}",
-                "{@spell control weather}"
-              ]
-            },
-            "ability": "cha"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Angelic Weapons",
-            "entries": [
-              "The solar's weapon attacks are magical. When the solar hits with any weapon, the weapon deals an extra {@damage 6d8} radiant damage (included in the attack)."
-            ]
-          },
-          {
-            "name": "Divine Awareness",
-            "entries": [
-              "The solar knows if it hears a lie."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The solar has advantage on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The solar makes two greatsword attacks."
-            ]
-          },
-          {
-            "name": "Greatsword",
-            "entries": [
-              "{@atk mw} {@hit 15} to hit, reach 5 ft., one target. {@h}22 ({@damage 4d6 + 8}) slashing damage plus 27 ({@damage 6d8}) radiant damage."
-            ]
-          },
-          {
-            "name": "Slaying Longbow",
-            "entries": [
-              "{@atk rw} {@hit 13} to hit, range 150/600 ft., one target. {@h}15 ({@damage 2d8 + 6}) piercing damage plus 27 ({@damage 6d8}) radiant damage. If the target is a creature that has 100 hit points or fewer, it must succeed on a {@dc 15} Constitution saving throw or die."
-            ]
-          },
-          {
-            "name": "Flying Sword",
-            "entries": [
-              "The solar releases its greatsword to hover magically in an unoccupied space within 5 feet of it. If the solar can see the sword, the solar can mentally command it as a bonus action to fly up to 50 feet and either make one attack against a target or return to the solar's hands. If the hovering sword is targeted by any effect, the solar is considered to be holding it. The hovering sword falls if the solar dies."
-            ]
-          },
-          {
-            "name": "Healing Touch (4/Day)",
-            "entries": [
-              "The solar touches another creature. The target magically regains 40 ({@dice 8d8 + 4}) hit points and is freed from any curse, disease, poison, blindness, or deafness."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Teleport",
-            "entries": [
-              "The solar magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
-            ]
-          },
-          {
-            "name": "Searing Burst (Costs 2 Actions)",
-            "entries": [
-              "The solar emits magical, divine energy. Each creature of its choice in a 10-foot radius must make a {@dc 23} Dexterity saving throw, taking 14 ({@damage 4d6}) fire damage plus 14 ({@damage 4d6}) radiant damage on a failed save, or half as much damage on a successful one."
-            ]
-          },
-          {
-            "name": "Blinding Gaze (Costs 3 Actions)",
-            "entries": [
-              "The solar targets one creature it can see within 30 feet of it. If the target can see it, the target must succeed on a {@dc 15} Constitution saving throw or be {@condition blinded} until magic such as the {@spell lesser restoration} spell removes the blindness."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/solar.opus"
-        },
-        "attachedItems": [
-          "greatsword|srd51"
-        ],
-        "traitTags": [
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "U"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "TP",
-          "XX"
-        ],
-        "damageTags": [
-          "F",
-          "P",
-          "R",
-          "S"
-        ],
-        "damageTagsSpell": [
-          "S"
-        ],
-        "spellcastingTags": [
-          "I"
-        ],
-        "miscTags": [
-          "AOE",
-          "MLW",
-          "MW",
-          "RNG",
-          "RW"
-        ],
-        "conditionInflict": [
-          "blinded"
-        ],
-        "conditionInflictSpell": [
-          "invisible"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "savingThrowForcedSpell": [
-          "charisma",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Solar",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "An angel is a celestial agent sent forth into the planes to further its god's agenda for weal or woe. Its sublime beauty and presence can drive awestruck onlookers to their knees. Yet angels are destroyers too, and their appearance portends doom as often as it signals hope.",
-                      {
-                        "name": "Shards of the Divine",
-                        "type": "entries",
-                        "entries": [
-                          "Angels are formed from the astral essence of benevolent gods and are thus divine beings of great power and foresight.",
-                          "Angels act out the will of their gods with tireless devotion. Even chaotic good deities command lawful good angels, knowing that the angels' dedication to order best allows them to fulfill divine commands. An angel follows a single driving purpose, as decreed by its deity. However, an angel is incapable of following commands that stray from the path of law and good.",
-                          "An angel slays evil creatures without remorse. As the embodiment of law and good, an angel is almost never mistaken in its judgments. This quality can create a sense of superiority in an angel, a sense that comes to the fore when an angel's task conflicts with the goals of another creature. The angel never acquiesces or gives way. When an angel is sent to aid mortals, it is sent not to serve but to command. The gods of good therefore send their angels among mortals only in response to the most dire circumstances."
-                        ]
-                      },
-                      {
-                        "name": "Fallen Angels",
-                        "type": "entries",
-                        "entries": [
-                          "An angel's moral compass grants it a sense of infallibility that can sometimes spell its undoing. Angels are usually too wise to fall for a simple deception, but sometimes pride can lead one to commit an evil act. Whether intentional or accidental, such an act is a permanent stain that marks the angel as an outcast. Fallen angels retain their power but lose their connection to the deities from which they were made. Most fallen angels take their banishment personally, rebelling against the powers they served by seeking rulership over a section of the Abyss or a place among other fallen in the hierarchy of the Nine Hells. Zariel, the ruler of the first layer of the Nine Hells, is such a creature. Rather than rebel, some fallen angels resign themselves to an isolated existence on the Material Plane, living in disguise as simple hermits. If they are redeemed, they can become powerful allies dedicated to justice and compassionate service."
-                        ]
-                      },
-                      {
-                        "name": "Immortal Nature",
-                        "type": "entries",
-                        "entries": [
-                          "An angel doesn't require food, drink, or sleep."
-                        ]
-                      },
-                      {
-                        "type": "entries",
-                        "name": "Solar",
-                        "entries": [
-                          "A solar is godlike in its glory and power.",
-                          "On the battlefield, the solar's sword flies into the fray on its own, and a single arrow from a solar's bow can strike a target dead on contact. So great is a solar's celestial might that even demon princes shrink at its resonant commands.",
-                          "It is said that only twenty-four solars exist. The few solars that are known are stewards of specific deities. The others rest in a state of contemplation, waiting for the time when their services are needed to stave off some cosmic threat to the cause of good."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Solar.webp"
-                },
-                "width": 1000,
-                "height": 678
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Angels"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "celestial",
+      "tags": [
+        "angel"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Solar",
-        "group": [
-          "Angels"
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      21
+    ],
+    "hp": {
+      "average": 297,
+      "formula": "22d10 + 176"
+    },
+    "speed": {
+      "walk": 50,
+      "fly": {
+        "number": 150,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 26,
+    "dex": 22,
+    "con": 26,
+    "int": 25,
+    "wis": 25,
+    "cha": 30,
+    "skill": {
+      "perception": "+14"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 24,
+    "immune": [
+      "poison",
+      "radiant"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "poisoned"
+    ],
+    "languages": [
+      "all; telepathy 120 ft."
+    ],
+    "cr": "21",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The solar casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 25}):"
         ],
-        "size": [
-          "L"
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}"
         ],
-        "type": {
-          "type": "celestial",
-          "tags": [
-            "angel"
+        "daily": {
+          "1e": [
+            "{@spell Commune|SRD52}",
+            "{@spell Control Weather|SRD52}",
+            "{@spell Dispel Evil and Good|SRD52}",
+            "{@spell Resurrection|SRD52}"
           ]
         },
-        "alignment": [
-          "L",
-          "G"
+        "ability": "cha",
+        "displayAs": "action"
+      },
+      {
+        "name": "Divine Aid (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The solar casts {@spell Cure Wounds|SRD52} (level 2 version), {@spell Lesser Restoration|SRD52}, or {@spell Remove Curse|SRD52}, using the same spellcasting ability as Spellcasting."
         ],
-        "ac": [
-          21
-        ],
-        "hp": {
-          "average": 297,
-          "formula": "22d10 + 176"
+        "daily": {
+          "3": [
+            "{@spell Cure Wounds|SRD52} (level 2 version)",
+            "{@spell Lesser Restoration|SRD52}",
+            "{@spell Remove Curse|SRD52}"
+          ]
         },
-        "speed": {
-          "walk": 50,
-          "fly": {
-            "number": 150,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "initiative": {
-          "proficiency": 2
-        },
-        "str": 26,
-        "dex": 22,
-        "con": 26,
-        "int": 25,
-        "wis": 25,
-        "cha": 30,
-        "skill": {
-          "perception": "+14"
-        },
-        "senses": [
-          "Truesight 120 ft."
-        ],
-        "passive": 24,
-        "immune": [
-          "poison",
-          "radiant"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "exhaustion",
-          "frightened",
-          "poisoned"
-        ],
-        "languages": [
-          "all; telepathy 120 ft."
-        ],
-        "cr": "21",
-        "spellcasting": [
+        "ability": "cha",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Divine Awareness",
+        "entries": [
+          "The solar knows if it hears a lie."
+        ]
+      },
+      {
+        "name": "Exalted Restoration",
+        "entries": [
+          "If the solar dies outside Mount Celestia, its body disappears, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in Mount Celestia."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day)",
+        "entries": [
+          "If the solar fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The solar has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The solar makes two Flying Sword attacks. It can replace one attack with a use of Slaying Bow."
+        ]
+      },
+      {
+        "name": "Flying Sword",
+        "entries": [
+          "{@atkr m,r} {@hit 15}, reach 10 ft. or range 120 ft. {@h}22 ({@damage 4d6 + 8}) Slashing damage plus 36 ({@damage 8d8}) Radiant damage. {@hom}The sword magically returns to the solar's hand or hovers within 5 feet of the solar immediately after a ranged attack."
+        ]
+      },
+      {
+        "name": "Slaying Bow",
+        "entries": [
+          "{@actSave dex} {@dc 21}, one creature the solar can see within 600 feet. {@actSaveFail} If the creature has 100 {@variantrule Hit Points|SRD52} or fewer, it dies. It otherwise takes 24 ({@damage 4d8 + 6}) Piercing damage plus 36 ({@damage 8d8}) Radiant damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Blinding Gaze",
+        "entries": [
+          "{@actSave con} {@dc 25}, one creature the solar can see within 120 feet. {@actSaveFail} The target has the {@condition Blinded|SRD52} condition for 1 minute. {@actSaveSuccessOrFail} The solar can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Radiant Teleport",
+        "entries": [
+          "The solar teleports up to 60 feet to an unoccupied space it can see. {@actSave dex} {@dc 25}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the solar at its destination space. {@actSaveFail} 11 ({@damage 2d10}) Radiant damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, upper"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/solar.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "U"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "TP",
+      "XX"
+    ],
+    "damageTags": [
+      "P",
+      "R",
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "blinded"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "dexterity"
+    ],
+    "savingThrowForcedSpell": [
+      "charisma"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Solar",
+        "entries": [
           {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The solar casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 25}):"
-            ],
-            "will": [
-              "{@spell Detect Evil and Good|SRD52}"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Commune|SRD52}",
-                "{@spell Control Weather|SRD52}",
-                "{@spell Dispel Evil and Good|SRD52}",
-                "{@spell Resurrection|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          },
-          {
-            "name": "Divine Aid (3/Day)",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The solar casts {@spell Cure Wounds|SRD52} (level 2 version), {@spell Lesser Restoration|SRD52}, or {@spell Remove Curse|SRD52}, using the same spellcasting ability as Spellcasting."
-            ],
-            "daily": {
-              "3": [
-                "{@spell Cure Wounds|SRD52} (level 2 version)",
-                "{@spell Lesser Restoration|SRD52}",
-                "{@spell Remove Curse|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "bonus",
-            "hidden": [
-              "daily"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Divine Awareness",
-            "entries": [
-              "The solar knows if it hears a lie."
-            ]
-          },
-          {
-            "name": "Exalted Restoration",
-            "entries": [
-              "If the solar dies outside Mount Celestia, its body disappears, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in Mount Celestia."
-            ]
-          },
-          {
-            "name": "Legendary Resistance (4/Day)",
-            "entries": [
-              "If the solar fails a saving throw, it can choose to succeed instead."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The solar has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The solar makes two Flying Sword attacks. It can replace one attack with a use of Slaying Bow."
-            ]
-          },
-          {
-            "name": "Flying Sword",
-            "entries": [
-              "{@atkr m,r} {@hit 15}, reach 10 ft. or range 120 ft. {@h}22 ({@damage 4d6 + 8}) Slashing damage plus 36 ({@damage 8d8}) Radiant damage. {@hom}The sword magically returns to the solar's hand or hovers within 5 feet of the solar immediately after a ranged attack."
-            ]
-          },
-          {
-            "name": "Slaying Bow",
-            "entries": [
-              "{@actSave dex} {@dc 21}, one creature the solar can see within 600 feet. {@actSaveFail} If the creature has 100 {@variantrule Hit Points|SRD52} or fewer, it dies. It otherwise takes 24 ({@damage 4d8 + 6}) Piercing damage plus 36 ({@damage 8d8}) Radiant damage."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Blinding Gaze",
-            "entries": [
-              "{@actSave con} {@dc 25}, one creature the solar can see within 120 feet. {@actSaveFail} The target has the {@condition Blinded|SRD52} condition for 1 minute. {@actSaveSuccessOrFail} The solar can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Radiant Teleport",
-            "entries": [
-              "The solar teleports up to 60 feet to an unoccupied space it can see. {@actSave dex} {@dc 25}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the solar at its destination space. {@actSaveFail} 11 ({@damage 2d10}) Radiant damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, upper"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/solar.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "U"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "TP",
-          "XX"
-        ],
-        "damageTags": [
-          "P",
-          "R",
-          "S"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "blinded"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "savingThrowForcedSpell": [
-          "charisma"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Solar",
             "entries": [
+              "{@i Angelic Protector of the Multiverse}",
               {
-                "type": "section",
-                "name": "Solar",
-                "entries": [
-                  "{@i Angelic Protector of the Multiverse}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Upper Planes)|bestiary|environment=planar, upper}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Upper Planes)|bestiary|environment=planar, upper}"
                   },
-                  "Solars stand as the final line of defense between unspeakable evils and the order of the multiverse. They are the servants of just deities and ageless forces of good. Their interests span the planes, but they rarely intervene in conflicts on the worlds of the Material Plane. When they act, they lead vast angelic hosts and wield holy weapons capable of laying low the wickedest Fiends.",
-                  "Solars can resurrect the dead and often use that power to enlist mortal aid. They bestow grand, new purposes on those they return to life. Solars don't enforce these destinies, but they trust in the potential of mortals to achieve great things."
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Solar.webp"
-                },
-                "credit": "Carlo Arellano",
-                "width": 1197,
-                "height": 1496
-              }
+              },
+              "Solars stand as the final line of defense between unspeakable evils and the order of the multiverse. They are the servants of just deities and ageless forces of good. Their interests span the planes, but they rarely intervene in conflicts on the worlds of the Material Plane. When they act, they lead vast angelic hosts and wield holy weapons capable of laying low the wickedest Fiends.",
+              "Solars can resurrect the dead and often use that power to enlist mortal aid. They bestow grand, new purposes on those they return to life. Solars don't enforce these destinies, but they trust in the potential of mortals to achieve great things."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Solar.webp"
+            },
+            "credit": "Carlo Arellano",
+            "width": 1197,
+            "height": 1496
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

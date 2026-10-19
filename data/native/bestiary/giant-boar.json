@@ -2,185 +2,96 @@
   "id": "monster.giant-boar",
   "name": "Giant Boar",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Giant Boar",
-        "size": [
-          "L"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 12,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 42,
-          "formula": "5d10 + 15"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 17,
-        "dex": 10,
-        "con": 16,
-        "int": 2,
-        "wis": 7,
-        "cha": 5,
-        "passive": 8,
-        "cr": "2",
-        "trait": [
-          {
-            "name": "Charge",
-            "entries": [
-              "If the boar moves at least 20 feet straight toward a target and then hits it with a tusk attack on the same turn, the target takes an extra 7 ({@damage 2d6}) slashing damage. If the target is a creature, it must succeed on a {@dc 13} Strength saving throw or be knocked {@condition prone}."
-            ]
-          },
-          {
-            "name": "Relentless (Recharges after a Short or Long Rest)",
-            "entries": [
-              "If the boar takes 10 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Tusk",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest",
-          "hill"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/giant-boar.opus"
-        },
-        "traitTags": [
-          "Charge"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 42,
+      "formula": "5d10 + 15"
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Giant Boar",
-        "size": [
-          "L"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 42,
-          "formula": "5d10 + 15"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 17,
-        "dex": 10,
-        "con": 16,
-        "int": 2,
-        "wis": 7,
-        "cha": 5,
-        "save": {
-          "str": "+5"
-        },
-        "passive": 8,
-        "cr": "2",
-        "trait": [
-          {
-            "name": "Bloodied Fury",
-            "entries": [
-              "The boar has {@variantrule Advantage|SRD52} on melee attack rolls while it is {@status Bloodied|SRD52}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Gore",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Large or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 7 ({@damage 2d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "grassland",
-          "hill"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/giant-boar.opus"
-        },
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Giant Boar",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Boar.webp"
-                      },
-                      "credit": "Polar Engine",
-                      "width": 1370,
-                      "height": 1440
-                    }
-                  ]
-                }
-              }
-            }
-          }
+    "speed": {
+      "walk": 40
+    },
+    "str": 17,
+    "dex": 10,
+    "con": 16,
+    "int": 2,
+    "wis": 7,
+    "cha": 5,
+    "save": {
+      "str": "+5"
+    },
+    "passive": 8,
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Bloodied Fury",
+        "entries": [
+          "The boar has {@variantrule Advantage|SRD52} on melee attack rolls while it is {@status Bloodied|SRD52}."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Large or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 7 ({@damage 2d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "grassland",
+      "hill"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-boar.opus"
+    },
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Giant Boar",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Boar.webp"
+                  },
+                  "credit": "Polar Engine",
+                  "width": 1370,
+                  "height": 1440
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

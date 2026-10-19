@@ -4,28 +4,39 @@
   "statuses": {
     "existing-native-covered": 24,
     "matching-candidates": 19,
-    "multiple-candidates": 1358,
+    "multiple-candidates": 1073,
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 467,
+    "native-monster-identity-alias": 21,
+    "native-monster-role-default": 285,
+    "native-single-source-retained": 446,
     "single-candidate": 590
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 467
+    "native-single-source-retained": 446
   },
-  "remainingWithMultipleCandidates": 1358,
+  "remainingWithMultipleCandidates": 1073,
   "remainingWithOneCandidate": 590,
-  "retainedDefinitionsNeedingNativeShaping": 531,
+  "retainedDefinitionsNeedingNativeShaping": 795,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1948,
+  "candidateRecordsStillUnresolved": 1663,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
     "Class features, progression and core actions require entitlement-aware review.",
     "Retained records may include imported inline markup; conversion to final typed native execution schemas remains necessary."
-  ]
+  ],
+  "nativeMonsterRoleDefaults": 285,
+  "nativeMonsterIdentityAliases": 21,
+  "monsterFamilyDefinitions": 3,
+  "monsterLegacyVariantReviewEntries": 249,
+  "monsterCompatibleTraitsTransferred": 84,
+  "monsterOlderOnlySourceEntriesStillRetained": 66,
+  "originalUnresolvedCandidateCount": 2479,
+  "reducedUnresolvedCandidateCount": 816,
+  "monsterReviewCaveat": "Newer paired stat-block defaults and semantic aliases are selected; older unique mechanics and some legacy tactical roles still need separate variant review. Selected definitions still require typed-native conversion."
 }

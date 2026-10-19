@@ -2,174 +2,101 @@
   "id": "monster.mule",
   "name": "Mule",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Mule",
-        "size": [
-          "M"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 11,
-          "formula": "2d8 + 2"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 14,
-        "dex": 10,
-        "con": 13,
-        "int": 2,
-        "wis": 10,
-        "cha": 5,
-        "passive": 10,
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Beast of Burden",
-            "entries": [
-              "The mule is considered to be a Large animal for the purpose of determining its carrying capacity."
-            ]
-          },
-          {
-            "name": "Sure-Footed",
-            "entries": [
-              "The mule has advantage on Strength and Dexterity saving throws made against effects that would knock it {@condition prone}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "hill",
-          "urban",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/mule.opus"
-        },
-        "traitTags": [
-          "Beast of Burden",
-          "Sure-Footed"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Mule",
-        "size": [
-          "M"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 11,
-          "formula": "2d8 + 2"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 14,
-        "dex": 10,
-        "con": 13,
-        "int": 2,
-        "wis": 10,
-        "cha": 5,
-        "save": {
-          "str": "+4"
-        },
-        "passive": 10,
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Beast of Burden",
-            "entries": [
-              "The mule counts as one size larger for the purpose of determining its carrying capacity."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "hill",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/mule.opus"
-        },
-        "traitTags": [
-          "Beast of Burden"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Mule",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Mule.webp"
-                      },
-                      "width": 1830,
-                      "height": 1440
-                    }
-                  ]
-                }
-              }
-            }
-          }
+    "speed": {
+      "walk": 40
+    },
+    "str": 14,
+    "dex": 10,
+    "con": 13,
+    "int": 2,
+    "wis": 10,
+    "cha": 5,
+    "save": {
+      "str": "+4"
+    },
+    "passive": 10,
+    "cr": "1/8",
+    "trait": [
+      {
+        "name": "Beast of Burden",
+        "entries": [
+          "The mule counts as one size larger for the purpose of determining its carrying capacity."
+        ]
+      },
+      {
+        "name": "Sure-Footed",
+        "entries": [
+          "The mule has advantage on Strength and Dexterity saving throws made against effects that would knock it {@condition prone}."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "hill",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/mule.opus"
+    },
+    "traitTags": [
+      "Beast of Burden"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Mule",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Mule.webp"
+                  },
+                  "width": 1830,
+                  "height": 1440
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

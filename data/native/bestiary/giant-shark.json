@@ -2,220 +2,112 @@
   "id": "monster.giant-shark",
   "name": "Giant Shark",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Giant Shark",
-        "size": [
-          "H"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 126,
-          "formula": "11d12 + 55"
-        },
-        "speed": {
-          "swim": 50
-        },
-        "str": 23,
-        "dex": 11,
-        "con": 21,
-        "int": 1,
-        "wis": 10,
-        "cha": 5,
-        "skill": {
-          "perception": "+3"
-        },
-        "senses": [
-          "blindsight 60 ft."
-        ],
-        "passive": 13,
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Blood Frenzy",
-            "entries": [
-              "The shark has advantage on melee attack rolls against any creature that doesn't have all its hit points."
-            ]
-          },
-          {
-            "name": "Water Breathing",
-            "entries": [
-              "The shark can breathe only underwater."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 5 ft., one target. {@h}22 ({@damage 3d10 + 6}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underwater"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/giant-shark.opus"
-        },
-        "traitTags": [
-          "Water Breathing"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Giant Shark",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "A giant shark is 30 feet long and normally found in deep oceans. Utterly fearless, it preys on anything that crosses its path, including whales and ships."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 92,
+      "formula": "8d12 + 40"
+    },
+    "speed": {
+      "walk": 5,
+      "swim": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 11,
+    "con": 21,
+    "int": 1,
+    "wis": 10,
+    "cha": 5,
+    "skill": {
+      "perception": "+3"
+    },
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 13,
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The shark can breathe only underwater."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The shark makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 9} (with {@variantrule Advantage|SRD52} if the target doesn't have all its {@variantrule Hit Points|SRD52}), reach 5 ft. {@h}22 ({@damage 3d10 + 6}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "underwater"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-shark.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Water Breathing"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Giant Shark",
-        "size": [
-          "H"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 92,
-          "formula": "8d12 + 40"
-        },
-        "speed": {
-          "walk": 5,
-          "swim": 60
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 23,
-        "dex": 11,
-        "con": 21,
-        "int": 1,
-        "wis": 10,
-        "cha": 5,
-        "skill": {
-          "perception": "+3"
-        },
-        "senses": [
-          "Blindsight 60 ft."
-        ],
-        "passive": 13,
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Water Breathing",
-            "entries": [
-              "The shark can breathe only underwater."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The shark makes two Bite attacks."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 9} (with {@variantrule Advantage|SRD52} if the target doesn't have all its {@variantrule Hit Points|SRD52}), reach 5 ft. {@h}22 ({@damage 3d10 + 6}) Piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underwater"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/giant-shark.opus"
-        },
-        "traitTags": [
-          "Water Breathing"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Giant Shark",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Hunter Shark.webp"
-                      },
-                      "width": 737,
-                      "height": 1000
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Hunter Shark.webp"
+                  },
+                  "width": 737,
+                  "height": 1000
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

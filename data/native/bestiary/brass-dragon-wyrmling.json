@@ -2,296 +2,158 @@
   "id": "monster.brass-dragon-wyrmling",
   "name": "Brass Dragon Wyrmling",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Brass Dragon Wyrmling",
-        "group": [
-          "Metallic Dragon"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "ac": [
-          {
-            "ac": 16,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 16,
-          "formula": "3d8 + 3"
-        },
-        "speed": {
-          "walk": 30,
-          "burrow": 15,
-          "fly": 60
-        },
-        "str": 15,
-        "dex": 10,
-        "con": 13,
-        "int": 10,
-        "wis": 11,
-        "cha": 13,
-        "save": {
-          "dex": "+2",
-          "con": "+3",
-          "wis": "+2",
-          "cha": "+3"
-        },
-        "skill": {
-          "perception": "+4",
-          "stealth": "+2"
-        },
-        "senses": [
-          "blindsight 10 ft.",
-          "darkvision 60 ft."
-        ],
-        "passive": 14,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Draconic"
-        ],
-        "cr": "1",
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d10 + 2}) piercing damage."
-            ]
-          },
-          {
-            "name": "Breath Weapons {@recharge 5}",
-            "entries": [
-              "The dragon uses one of the following breath weapons.",
-              {
-                "type": "list",
-                "style": "list-hang-notitle",
-                "items": [
-                  {
-                    "type": "item",
-                    "name": "Fire Breath",
-                    "entry": "The dragon exhales fire in a 20-foot line that is 5 feet wide. Each creature in that line must make a {@dc 11} Dexterity saving throw, taking 14 ({@damage 4d6}) fire damage on a failed save, or half as much damage on a successful one."
-                  },
-                  {
-                    "type": "item",
-                    "name": "Sleep Breath",
-                    "entry": "The dragon exhales sleep gas in a 15-foot cone. Each creature in that area must succeed on a {@dc 11} Constitution saving throw or fall {@condition unconscious} for 1 minute. This effect ends for a creature if the creature takes damage or someone uses an action to wake it."
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "dragonAge": "wyrmling",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/brass-dragon-wyrmling.opus"
-        },
-        "senseTags": [
-          "B",
-          "D"
-        ],
-        "actionTags": [
-          "Breath Weapon"
-        ],
-        "languageTags": [
-          "DR"
-        ],
-        "damageTags": [
-          "F",
-          "P"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW"
-        ],
-        "conditionInflict": [
-          "unconscious"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Brass Dragon Wyrmling",
-            "_copy": {
-              "name": "Brass Dragon",
-              "source": "SRD51"
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Metallic Dragons"
+    ],
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "4d8 + 4"
+    },
+    "speed": {
+      "walk": 30,
+      "burrow": 15,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 15,
+    "dex": 10,
+    "con": 13,
+    "int": 10,
+    "wis": 11,
+    "cha": 13,
+    "save": {
+      "dex": "+2",
+      "wis": "+2"
+    },
+    "skill": {
+      "perception": "+4",
+      "stealth": "+2"
+    },
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Draconic"
+    ],
+    "cr": "1",
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 1d10 + 2}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 11}, each creature in a 20-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Sleep Breath",
+        "entries": [
+          "{@actSave con} {@dc 11}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it repeats the save. {@actSaveFail 2} The target has the {@condition Unconscious|SRD52} condition for 1 minute. This effect ends for the target if it takes damage or a creature within 5 feet of it takes an action to wake it."
         ]
       }
+    ],
+    "environment": [
+      "desert"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "dragonAge": "wyrmling",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/brass-dragon-wyrmling.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "B",
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "DR"
+    ],
+    "damageTags": [
+      "F",
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "incapacitated",
+      "unconscious"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Brass Dragon Wyrmling",
-        "group": [
-          "Metallic Dragons"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "metallic"
-          ]
-        },
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 22,
-          "formula": "4d8 + 4"
-        },
-        "speed": {
-          "walk": 30,
-          "burrow": 15,
-          "fly": 60
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 15,
-        "dex": 10,
-        "con": 13,
-        "int": 10,
-        "wis": 11,
-        "cha": 13,
-        "save": {
-          "dex": "+2",
-          "wis": "+2"
-        },
-        "skill": {
-          "perception": "+4",
-          "stealth": "+2"
-        },
-        "senses": [
-          "Blindsight 10 ft.",
-          "Darkvision 60 ft."
-        ],
-        "passive": 14,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Draconic"
-        ],
-        "cr": "1",
-        "action": [
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 1d10 + 2}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Fire Breath {@recharge 5}",
-            "entries": [
-              "{@actSave dex} {@dc 11}, each creature in a 20-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Fire damage. {@actSaveSuccess} Half damage."
-            ]
-          },
-          {
-            "name": "Sleep Breath",
-            "entries": [
-              "{@actSave con} {@dc 11}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it repeats the save. {@actSaveFail 2} The target has the {@condition Unconscious|SRD52} condition for 1 minute. This effect ends for the target if it takes damage or a creature within 5 feet of it takes an action to wake it."
-            ]
-          }
-        ],
-        "environment": [
-          "desert"
-        ],
-        "treasure": [
-          "arcana"
-        ],
-        "dragonAge": "wyrmling",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/brass-dragon-wyrmling.opus"
-        },
-        "senseTags": [
-          "B",
-          "D"
-        ],
-        "actionTags": [
-          "Breath Weapon"
-        ],
-        "languageTags": [
-          "DR"
-        ],
-        "damageTags": [
-          "F",
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "incapacitated",
-          "unconscious"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Brass Dragon Wyrmling",
-            "_copy": {
-              "name": "Brass Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Brass dragon wyrmlings are relentlessly curious. These dragons eagerly engage approachable creatures and are quick to explore any place that has an interesting story. Once they hear tales of adventure, many are keen to start their own quests."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Brass Dragon Wyrmling.webp"
-                      },
-                      "credit": "Caio Monteiro",
-                      "width": 975,
-                      "height": 1094
-                    }
+        "_copy": {
+          "name": "Brass Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Brass dragon wyrmlings are relentlessly curious. These dragons eagerly engage approachable creatures and are quick to explore any place that has an interesting story. Once they hear tales of adventure, many are keen to start their own quests."
                   ]
                 }
-              }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Brass Dragon Wyrmling.webp"
+                  },
+                  "credit": "Caio Monteiro",
+                  "width": 975,
+                  "height": 1094
+                }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

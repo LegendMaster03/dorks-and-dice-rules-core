@@ -156,5 +156,7 @@
         }
       }
     ]
-  }
+  },
+  "familyId": "monster-family.bugbear",
+  "variantRole": "stalker"
 }

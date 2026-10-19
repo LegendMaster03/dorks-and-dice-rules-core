@@ -2,287 +2,114 @@
   "id": "monster.zombie",
   "name": "Zombie",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Zombie",
-        "size": [
-          "M"
-        ],
-        "type": "undead",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          8
-        ],
-        "hp": {
-          "average": 22,
-          "formula": "3d8 + 9"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 13,
-        "dex": 6,
-        "con": 16,
-        "int": 3,
-        "wis": 6,
-        "cha": 5,
-        "save": {
-          "wis": "+0"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 8,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "understands all languages it spoke in life but can't speak"
-        ],
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Undead Fortitude",
-            "entries": [
-              "If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d6 + 1}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/zombie.opus"
-        },
-        "altArt": [
-          {
-            "name": "Dwarf Zombie",
-            "source": "PaBTSO"
-          }
-        ],
-        "traitTags": [
-          "Undead Fortitude"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "CS",
-          "LF"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Zombie",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "From somewhere in the darkness, a gurgling moan is heard. A form lurches into view, dragging one foot as it raises bloated arms and broken hands. The zombie advances, driven to kill anyone too slow to escape its grasp.",
-                      {
-                        "name": "Dark Servants",
-                        "type": "entries",
-                        "entries": [
-                          "Sinister necromantic magic infuses the remains of the dead, causing them to rise as zombies that do their creator's bidding without fear or hesitation. They move with a jerky, uneven gait, clad in the moldering apparel they wore when put to rest, and carrying the stench of decay.",
-                          "Most zombies are made from humanoid remains, though the flesh and bones of any formerly living creature can be imbued with a semblance of life. Necromantic magic, usually from spells, animates a zombie. Some zombies rise spontaneously when dark magic saturates an area. Once turned into a zombie, a creature can't be restored to life except by powerful magic, such as a {@spell resurrection} spell.",
-                          "A zombie retains no vestiges of its former self, its mind devoid of thought and imagination. A zombie left without orders simply stands in place and rots unless something comes along that it can kill. The magic animating a zombie imbues it with evil, so left without purpose, it attacks any living creature it encounters."
-                        ]
-                      },
-                      {
-                        "name": "Hideous Forms",
-                        "type": "entries",
-                        "entries": [
-                          "Zombies appear as they did in life, showing the wounds that killed them. However, the magic that creates these vile creatures often takes time to run its course. Dead warriors might rise from a battlefield, eviscerated and bloated after days in the sun. The muddy cadaver of a peasant could claw its way from the ground, riddled with maggots and worms. A zombie might wash ashore or rise from a marsh, swollen and reeking after weeks in the water."
-                        ]
-                      },
-                      {
-                        "name": "Mindless Soldiers",
-                        "type": "entries",
-                        "entries": [
-                          "Zombies take the most direct route to any foe, unable to comprehend obstacles, tactics, or dangerous terrain. A zombie might stumble into a fast-flowing river to reach foes on a far shore, clawing at the surface as it is battered against rocks and destroyed. To reach a foe below it, a zombie might step out of an open window. Zombies stumble through roaring infernos, into pools of acid, and across fields littered with caltrops without hesitation.",
-                          "A zombie can follow simple orders and distinguish friends from foes, but its ability to reason is limited to shambling in whatever direction it is pointed, pummeling any enemy in its path. A zombie armed with a weapon uses it, but the zombie won't retrieve a dropped weapon or other tool until told to do so."
-                        ]
-                      },
-                      {
-                        "name": "Undead Nature",
-                        "type": "entries",
-                        "entries": [
-                          "A zombie doesn't require air, food, drink, or sleep."
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
-                    "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "After Beek died, we cast an {@spell animate dead} spell on his corpse. It was fun for a while, but the zombie started to smell real bad, so we doused it in oil and set it on fire. Beek would've found that hilarious."
-                        ],
-                        "by": "Fonkin Hoodypeak",
-                        "from": "on friendship"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Zombie.webp"
-                },
-                "credit": "Conceptopolis",
-                "width": 543,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      8
+    ],
+    "hp": {
+      "average": 15,
+      "formula": "2d8 + 6"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 13,
+    "dex": 6,
+    "con": 16,
+    "int": 3,
+    "wis": 6,
+    "cha": 5,
+    "save": {
+      "wis": "+0"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 8,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Undead Fortitude",
+        "entries": [
+          "If damage reduces the zombie to 0 {@variantrule Hit Points|SRD52}, it makes a Constitution saving throw ({@dc 5} plus the damage taken) unless the damage is Radiant or from a {@variantrule Critical Hit|SRD52}. On a successful save, the zombie drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, shadowfell",
+      "underdark",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/zombie.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Undead Fortitude"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Zombie",
-        "size": [
-          "M"
-        ],
-        "type": "undead",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          8
-        ],
-        "hp": {
-          "average": 15,
-          "formula": "2d8 + 6"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 13,
-        "dex": 6,
-        "con": 16,
-        "int": 3,
-        "wis": 6,
-        "cha": 5,
-        "save": {
-          "wis": "+0"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 8,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "poisoned"
-        ],
-        "languages": [
-          "understands Common plus one other language but can't speak"
-        ],
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Undead Fortitude",
-            "entries": [
-              "If damage reduces the zombie to 0 {@variantrule Hit Points|SRD52}, it makes a Constitution saving throw ({@dc 5} plus the damage taken) unless the damage is Radiant or from a {@variantrule Critical Hit|SRD52}. On a successful save, the zombie drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, shadowfell",
-          "underdark",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/zombie.opus"
-        },
-        "traitTags": [
-          "Undead Fortitude"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "C",
-          "CS",
-          "X"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Zombie",
-            "_copy": {
-              "name": "Zombies",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Humanoid zombies usually serve as guardians, servants, or soldiers for evil magic-users. In rare cases, foul magic might result in widespread reanimation of the dead, unleashing hordes of zombies to terrorize the living."
-                      ]
-                    }
+        "_copy": {
+          "name": "Zombies",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Humanoid zombies usually serve as guardians, servants, or soldiers for evil magic-users. In rare cases, foul magic might result in widespread reanimation of the dead, unleashing hordes of zombies to terrorize the living."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

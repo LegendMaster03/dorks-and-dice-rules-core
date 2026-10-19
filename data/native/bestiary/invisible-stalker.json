@@ -2,413 +2,230 @@
   "id": "monster.invisible-stalker",
   "name": "Invisible Stalker",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Invisible Stalker",
-        "size": [
-          "M"
-        ],
-        "type": "elemental",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 104,
-          "formula": "16d8 + 32"
-        },
-        "speed": {
-          "walk": 50,
-          "fly": {
-            "number": 50,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "str": 16,
-        "dex": 19,
-        "con": 14,
-        "int": 10,
-        "wis": 15,
-        "cha": 11,
-        "skill": {
-          "perception": "+8",
-          "stealth": "+10"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 18,
-        "resist": [
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "grappled",
-          "paralyzed",
-          "petrified",
-          "poisoned",
-          "prone",
-          "restrained",
-          "unconscious"
-        ],
-        "languages": [
-          "Auran",
-          "understands Common but doesn't speak it"
-        ],
-        "cr": "6",
-        "trait": [
-          {
-            "name": "Invisibility",
-            "entries": [
-              "The stalker is {@condition invisible}."
-            ]
-          },
-          {
-            "name": "Faultless Tracker",
-            "entries": [
-              "The stalker is given a quarry by its summoner. The stalker knows the direction and distance to its quarry as long as the two of them are on the same plane of existence. The stalker also knows the location of its summoner."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The stalker makes two slam attacks."
-            ]
-          },
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/invisible-stalker.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AU",
-          "C"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "invisible"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Invisible Stalker",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "An invisible stalker is an air elemental that has been summoned from its native plane and transformed by powerful magic. Its sole purpose is to hunt down creatures and retrieve objects for its summoner. When it is defeated or the magic that binds it expires, an invisible stalker vanishes in a gust of wind.",
-                      {
-                        "name": "Directed Hunter",
-                        "type": "entries",
-                        "entries": [
-                          "When an invisible stalker is created, it stays at its summoner's side until it is given a task to perform. If an assignment doesn't involve hunting down and slaying a specific creature or recovering an object, the magic that created the invisible stalker ends and the elemental is released. Otherwise, it completes the task, then returns to its summoner for more commands, forced to serve until the magic that binds it expires. If its summoner dies in the interim, the invisible stalker vanishes after completing its task.",
-                          "An invisible stalker is an unwilling servant at best. It resents any undertaking assigned to it. A mission that requires significant time might drive the invisible stalker to pervert the intent of a command unless it is worded carefully."
-                        ]
-                      },
-                      {
-                        "name": "Unseen Threat",
-                        "type": "entries",
-                        "entries": [
-                          "Invisible stalkers are composed of air and are naturally invisible. A creature might hear and feel an invisible stalker in passing, but the elemental remains invisible even when it attacks. A spell that allows someone to see the invisible reveals only the invisible stalker's vague outline."
-                        ]
-                      },
-                      {
-                        "name": "Elemental Nature",
-                        "type": "entries",
-                        "entries": [
-                          "An invisible stalker requires no air, food, drink, or sleep."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Invisible Stalker.webp"
-                },
-                "width": 909,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 97,
+      "formula": "13d10 + 26"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 50,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 16,
+    "dex": 19,
+    "con": 14,
+    "int": 10,
+    "wis": 15,
+    "cha": 11,
+    "skill": {
+      "perception": "+8",
+      "stealth": "+10"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 18,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "languages": [
+      "Common",
+      "Primordial (Auran)"
+    ],
+    "cr": "6",
+    "trait": [
+      {
+        "name": "Air Form",
+        "entries": [
+          "The stalker can enter an enemy's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
+        ]
+      },
+      {
+        "name": "Invisibility",
+        "entries": [
+          "The stalker has the {@condition Invisible|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The stalker makes three Wind Swipe attacks. It can replace one attack with a use of Vortex."
+        ]
+      },
+      {
+        "name": "Wind Swipe",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Force damage."
+        ]
+      },
+      {
+        "name": "Vortex",
+        "entries": [
+          "{@actSave con} {@dc 14}, one Large or smaller creature in the stalker's space. {@actSaveFail} 7 ({@damage 1d8 + 3}) Thunder damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 13}). Until the grapple ends, the target can't cast spells with a Verbal component and takes 7 ({@damage 2d6}) Thunder damage at the start of each of the stalker's turns."
+        ]
+      }
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/invisible-stalker.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AU",
+      "C",
+      "P"
+    ],
+    "damageTags": [
+      "O",
+      "T"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "invisible"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Invisible Stalker",
-        "size": [
-          "L"
-        ],
-        "type": "elemental",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 97,
-          "formula": "13d10 + 26"
-        },
-        "speed": {
-          "walk": 50,
-          "fly": {
-            "number": 50,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 16,
-        "dex": 19,
-        "con": 14,
-        "int": 10,
-        "wis": 15,
-        "cha": 11,
-        "skill": {
-          "perception": "+8",
-          "stealth": "+10"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 18,
-        "resist": [
-          "bludgeoning",
-          "piercing",
-          "slashing"
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "grappled",
-          "paralyzed",
-          "petrified",
-          "poisoned",
-          "prone",
-          "restrained",
-          "unconscious"
-        ],
-        "languages": [
-          "Common",
-          "Primordial (Auran)"
-        ],
-        "cr": "6",
-        "trait": [
+        "entries": [
           {
-            "name": "Air Form",
-            "entries": [
-              "The stalker can enter an enemy's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
-            ]
-          },
-          {
-            "name": "Invisibility",
-            "entries": [
-              "The stalker has the {@condition Invisible|SRD52} condition."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The stalker makes three Wind Swipe attacks. It can replace one attack with a use of Vortex."
-            ]
-          },
-          {
-            "name": "Wind Swipe",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Force damage."
-            ]
-          },
-          {
-            "name": "Vortex",
-            "entries": [
-              "{@actSave con} {@dc 14}, one Large or smaller creature in the stalker's space. {@actSaveFail} 7 ({@damage 1d8 + 3}) Thunder damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 13}). Until the grapple ends, the target can't cast spells with a Verbal component and takes 7 ({@damage 2d6}) Thunder damage at the start of each of the stalker's turns."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/invisible-stalker.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AU",
-          "C",
-          "P"
-        ],
-        "damageTags": [
-          "O",
-          "T"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "grappled",
-          "invisible"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Invisible Stalker",
             "entries": [
+              "{@i Unseen Magical Assassin}",
               {
-                "type": "section",
-                "name": "Invisible Stalker",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Magic and malice give form to invisible stalkers, bodiless spirits of the air. These elusive beings pass unseen with nothing more than a stirring of air. They control powerful winds capable of moving objects and battering foes. Magic-users conjure these creatures to serve as killers and thieves. {@condition Invisible|SRD52} stalkers relentlessly pursue their quarry, and they rarely leave evidence of their crimes.",
+              "In rare cases, an invisible stalker lingers in the world without a spellcaster controlling it. Roll on or choose a result from the Uncontrolled Invisible Stalkers table to inspire why one of these monsters lurks in an area without a direct command.",
+              {
+                "type": "table",
+                "caption": "Uncontrolled Invisible Stalkers",
+                "colLabels": [
+                  "1d6",
+                  "The Invisible Stalker Is..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "The breath of an infamous god or monster."
+                  ],
+                  [
+                    "2",
+                    "A guardian of a hidden portal or magical site."
+                  ],
+                  [
+                    "3",
+                    "The lingering violent thoughts of someone killed in a great battle."
+                  ],
+                  [
+                    "4",
+                    "A manifestation of uncontrolled magic."
+                  ],
+                  [
+                    "5",
+                    "A servant of an evil elemental ruler such as Yan-C-Bin (the Elemental Prince of Evil Air)."
+                  ],
+                  [
+                    "6",
+                    "Unable to complete its duty and tries to create circumstances allowing it to fulfill its task."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
                 "entries": [
-                  "{@i Unseen Magical Assassin}",
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "None"
-                      }
-                    ]
-                  },
-                  "Magic and malice give form to invisible stalkers, bodiless spirits of the air. These elusive beings pass unseen with nothing more than a stirring of air. They control powerful winds capable of moving objects and battering foes. Magic-users conjure these creatures to serve as killers and thieves. {@condition Invisible|SRD52} stalkers relentlessly pursue their quarry, and they rarely leave evidence of their crimes.",
-                  "In rare cases, an invisible stalker lingers in the world without a spellcaster controlling it. Roll on or choose a result from the Uncontrolled Invisible Stalkers table to inspire why one of these monsters lurks in an area without a direct command.",
-                  {
-                    "type": "table",
-                    "caption": "Uncontrolled Invisible Stalkers",
-                    "colLabels": [
-                      "1d6",
-                      "The Invisible Stalker Is..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "The breath of an infamous god or monster."
-                      ],
-                      [
-                        "2",
-                        "A guardian of a hidden portal or magical site."
-                      ],
-                      [
-                        "3",
-                        "The lingering violent thoughts of someone killed in a great battle."
-                      ],
-                      [
-                        "4",
-                        "A manifestation of uncontrolled magic."
-                      ],
-                      [
-                        "5",
-                        "A servant of an evil elemental ruler such as Yan-C-Bin (the Elemental Prince of Evil Air)."
-                      ],
-                      [
-                        "6",
-                        "Unable to complete its duty and tries to create circumstances allowing it to fulfill its task."
-                      ]
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "As detectives, we seek truth by eliminating the impossible, ever mindful that the impossible might also be seeking to eliminate us."
-                        ],
-                        "from": "The Casebook of Alanik Ray"
-                      }
-                    ]
+                      "As detectives, we seek truth by eliminating the impossible, ever mindful that the impossible might also be seeking to eliminate us."
+                    ],
+                    "from": "The Casebook of Alanik Ray"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Invisible Stalker.webp"
-                },
-                "credit": "Kent Davis",
-                "width": 1800,
-                "height": 2250
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Invisible Stalker.webp"
+            },
+            "credit": "Kent Davis",
+            "width": 1800,
+            "height": 2250
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

@@ -2,328 +2,168 @@
   "id": "monster.merrow",
   "name": "Merrow",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Merrow",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 45,
-          "formula": "6d10 + 12"
-        },
-        "speed": {
-          "walk": 10,
-          "swim": 40
-        },
-        "str": 18,
-        "dex": 10,
-        "con": 15,
-        "int": 8,
-        "wis": 10,
-        "cha": 9,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "languages": [
-          "Abyssal",
-          "Aquan"
-        ],
-        "cr": "2",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The merrow can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The merrow makes two attacks: one with its bite and one with its claws or harpoon."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}8 ({@damage 1d8 + 4}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claws",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}9 ({@damage 2d4 + 4}) slashing damage."
-            ]
-          },
-          {
-            "name": "Harpoon",
-            "entries": [
-              "{@atk mw,rw} {@hit 6} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}11 ({@damage 2d6 + 4}) piercing damage. If the target is a Huge or smaller creature, it must succeed on a Strength contest against the merrow or be pulled up to 20 feet toward the merrow."
-            ]
-          }
-        ],
-        "environment": [
-          "underwater",
-          "coastal"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/merrow.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "AQ"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MW",
-          "RW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Merrow",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Merrow haunt coastal waters, preying on fisherfolk, merfolk, and any other edible creature that crosses their path. These savage monsters snatch and devour unwary prey, hauling drowned corpses back to their underwater grottoes to feed.",
-                      {
-                        "name": "Transformed Merfolk",
-                        "type": "entries",
-                        "entries": [
-                          "Long ago, a tribe of merfolk found an idol of Demogorgon at the bottom of the sea.",
-                          "Not knowing what it was, they brought the artifact to their king. Everyone who touched the idol became afflicted with madness, including the king, who decreed that a sacrificial ritual be performed to open a gateway to the Abyss. The ocean turned red with the blood of slaughtered merfolk, but the ritual worked, and the king led the survivors through the underwater gate to Demogorgon's layer of the Abyss. The merfolk remained there for generations, fighting for their lives as the Abyss warped them completely, transforming them into hulking, evil monstrosities. Thus, the first merrow were born."
-                        ]
-                      },
-                      {
-                        "name": "Coastal Bullies",
-                        "type": "entries",
-                        "entries": [
-                          "Whenever an opportunity presents itself, the Prince of Demons sends merrow back to the Material Plane to wreak havoc in the oceans. The merrow are bullies, attacking all creatures smaller and weaker than themselves.",
-                          "Merrow dwell in undersea caves filled with treasures and trophies, taken from their victims and sunken ships. They tie the rotting corpses of dead enemies and drowned sailors to strands of kelp to mark the borders of their territory."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Merrow.webp"
-                },
-                "width": 664,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "6d10 + 12"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 10,
+      "swim": 40
+    },
+    "str": 18,
+    "dex": 15,
+    "con": 15,
+    "int": 8,
+    "wis": 10,
+    "cha": 9,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Abyssal",
+      "Primordial (Aquan)"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The merrow can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The merrow makes two attacks, using Bite, Claw, or Harpoon in any combination."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the end of the merrow's next turn."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 2d4 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Harpoon",
+        "entries": [
+          "{@atkr m,r} {@hit 6}, reach 5 ft. or range 20/60 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature, the merrow pulls the target up to 15 feet straight toward itself."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "underwater"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/merrow.opus"
+    },
+    "traitTags": [
+      "Amphibious"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AB",
+      "AQ",
+      "P"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RA"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Merrow",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 45,
-          "formula": "6d10 + 12"
-        },
-        "speed": {
-          "walk": 10,
-          "swim": 40
-        },
-        "str": 18,
-        "dex": 15,
-        "con": 15,
-        "int": 8,
-        "wis": 10,
-        "cha": 9,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 10,
-        "languages": [
-          "Abyssal",
-          "Primordial (Aquan)"
-        ],
-        "cr": "2",
-        "trait": [
+        "entries": [
           {
-            "name": "Amphibious",
-            "entries": [
-              "The merrow can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The merrow makes two attacks, using Bite, Claw, or Harpoon in any combination."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the end of the merrow's next turn."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 2d4 + 4}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Harpoon",
-            "entries": [
-              "{@atkr m,r} {@hit 6}, reach 5 ft. or range 20/60 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature, the merrow pulls the target up to 15 feet straight toward itself."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "underwater"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/merrow.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "AQ",
-          "P"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "RA"
-        ],
-        "conditionInflict": [
-          "poisoned"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Merrow",
             "entries": [
+              "{@i Ogreish Undersea Abductor}",
               {
-                "type": "section",
-                "name": "Merrow",
-                "entries": [
-                  "{@i Ogreish Undersea Abductor}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Underwater|bestiary|environment=underwater}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Underwater|bestiary|environment=underwater}"
                   },
-                  "Vicious aquatic hunters, merrow combine the features of ogres with those of primeval, predatory fish. They lurk in coastal waters, hoping to snare unsuspecting prey by bursting from the water and grabbing their quarry or by skewering victims with deadly harpoons. These hunters then drag land dwellers back to dismal undersea lairs. Merrow often keep prisoners in their larders as future meals.",
-                  "Merrow raid coastal settlements and merfolk communities to steal weapons and treasure. This leads to conflicts between merfolk and merrow, but it also provokes misunderstandings with surface dwellers who blame merfolk for merrow attacks.",
                   {
-                    "type": "insetReadaloud",
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Vicious aquatic hunters, merrow combine the features of ogres with those of primeval, predatory fish. They lurk in coastal waters, hoping to snare unsuspecting prey by bursting from the water and grabbing their quarry or by skewering victims with deadly harpoons. These hunters then drag land dwellers back to dismal undersea lairs. Merrow often keep prisoners in their larders as future meals.",
+              "Merrow raid coastal settlements and merfolk communities to steal weapons and treasure. This leads to conflicts between merfolk and merrow, but it also provokes misunderstandings with surface dwellers who blame merfolk for merrow attacks.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Sages trace merrows' origins to aquatic ogres, depraved merfolk, and worse. Such broad theories reveal little about these monsters but overmuch of the dread lurking beyond our certain shores."
-                        ],
-                        "by": "Leomund"
-                      }
-                    ]
+                      "Sages trace merrows' origins to aquatic ogres, depraved merfolk, and worse. Such broad theories reveal little about these monsters but overmuch of the dread lurking beyond our certain shores."
+                    ],
+                    "by": "Leomund"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Merrow.webp"
-                },
-                "credit": "David Auden Nash",
-                "width": 1047,
-                "height": 2560
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Merrow.webp"
+            },
+            "credit": "David Auden Nash",
+            "width": 1047,
+            "height": 2560
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

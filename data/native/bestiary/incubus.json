@@ -2,424 +2,248 @@
   "id": "monster.incubus",
   "name": "Incubus",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Incubus",
-        "size": [
-          "M"
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 66,
+      "formula": "12d8 + 12"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "str": 8,
+    "dex": 17,
+    "con": 13,
+    "int": 15,
+    "wis": 12,
+    "cha": 20,
+    "skill": {
+      "deception": "+9",
+      "insight": "+5",
+      "perception": "+5",
+      "persuasion": "+9",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "resist": [
+      "cold",
+      "fire",
+      "poison",
+      "psychic"
+    ],
+    "languages": [
+      "Abyssal",
+      "Common",
+      "Infernal; telepathy 60 ft."
+    ],
+    "cr": "4",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The incubus casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 15}):"
         ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "shapechanger"
+        "will": [
+          "{@spell Disguise Self|SRD52}",
+          "{@spell Etherealness|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Dream|SRD52}",
+            "{@spell Hypnotic Pattern|SRD52}"
           ]
         },
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 15,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 66,
-          "formula": "12d8 + 12"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60
-        },
-        "str": 8,
-        "dex": 17,
-        "con": 13,
-        "int": 15,
-        "wis": 12,
-        "cha": 20,
-        "skill": {
-          "deception": "+9",
-          "insight": "+5",
-          "perception": "+5",
-          "persuasion": "+9",
-          "stealth": "+7"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 15,
-        "resist": [
-          "cold",
-          "fire",
-          "lightning",
-          "poison",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "Abyssal",
-          "Common",
-          "Infernal",
-          "telepathy 60 ft."
-        ],
-        "cr": "4",
-        "trait": [
-          {
-            "name": "Telepathic Bond",
-            "entries": [
-              "The fiend ignores the range restriction on its telepathy when communicating with a creature it has {@condition charmed}. The two don't even need to be on the same plane of existence."
-            ]
-          },
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "The fiend can use its action to polymorph into a Small or Medium humanoid, or back into its true form. Without wings, the fiend loses its flying speed. Other than its size and speed, its statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Claw (Fiend Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) slashing damage."
-            ]
-          },
-          {
-            "name": "Charm",
-            "entries": [
-              "One humanoid the fiend can see within 30 feet of it must succeed on a {@dc 15} Wisdom saving throw or be magically {@condition charmed} for 1 day. The {@condition charmed} target obeys the fiend's verbal or telepathic commands. If the target suffers any harm or receives a suicidal command, it can repeat the saving throw, ending the effect on a success. If the target successfully saves against the effect, or if the effect on it ends, the target is immune to this fiend's Charm for the next 24 hours.",
-              "The fiend can have only one target {@condition charmed} at a time. If it charms another, the effect on the previous target ends."
-            ]
-          },
-          {
-            "name": "Draining Kiss",
-            "entries": [
-              "The fiend kisses a creature {@condition charmed} by it or a willing creature. The target must make a {@dc 15} Constitution saving throw against this magic, taking 32 ({@damage 5d10 + 5}) psychic damage on a failed save, or half as much damage on a successful one. The target's hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0."
-            ]
-          },
-          {
-            "name": "Etherealness",
-            "entries": [
-              "The fiend magically enters the Ethereal Plane from the Material Plane, or vice versa."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/succubus-incubus.opus"
-        },
-        "traitTags": [
-          "Shapechanger"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "AB",
-          "C",
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "S",
-          "Y"
-        ],
-        "miscTags": [
-          "HPR",
-          "MW"
-        ],
-        "conditionInflict": [
-          "charmed"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Incubus",
-            "_copy": {
-              "name": "Succubus/Incubus",
-              "source": "SRD51"
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Incubus.webp"
-                },
-                "width": 1000,
-                "height": 917
-              }
-            ]
-          }
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Succubus Form",
+        "entries": [
+          "When the incubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into a {@creature Succubus|SRD52}, using that stat block instead of this one. Any equipment it's wearing or carrying isn't transformed."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The incubus makes two Restless Touch attacks."
+        ]
+      },
+      {
+        "name": "Restless Touch",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}15 ({@damage 3d6 + 5}) Psychic damage, and the target is cursed for 24 hours or until the incubus dies. Until the curse ends, the target gains no benefit from finishing Short Rests."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Nightmare {@recharge}",
+        "entries": [
+          "{@actSave wis} {@dc 15}, one creature the incubus can see within 60 feet. {@actSaveFail} If the target has 20 {@variantrule Hit Points|SRD52} or fewer, it has the {@condition Unconscious|SRD52} condition for 1 hour, until it takes damage, or until a creature within 5 feet of it takes an action to wake it. Otherwise, the target takes 18 ({@damage 4d8}) Psychic damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, lower",
+      "urban"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/succubus-incubus.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AB",
+      "C",
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "Y"
+    ],
+    "damageTagsSpell": [
+      "O",
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "CUR",
+      "MA"
+    ],
+    "conditionInflict": [
+      "unconscious"
+    ],
+    "conditionInflictSpell": [
+      "charmed",
+      "incapacitated"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Incubus",
-        "size": [
-          "M"
-        ],
-        "type": "fiend",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 66,
-          "formula": "12d8 + 12"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60
-        },
-        "str": 8,
-        "dex": 17,
-        "con": 13,
-        "int": 15,
-        "wis": 12,
-        "cha": 20,
-        "skill": {
-          "deception": "+9",
-          "insight": "+5",
-          "perception": "+5",
-          "persuasion": "+9",
-          "stealth": "+7"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 15,
-        "resist": [
-          "cold",
-          "fire",
-          "poison",
-          "psychic"
-        ],
-        "languages": [
-          "Abyssal",
-          "Common",
-          "Infernal; telepathy 60 ft."
-        ],
-        "cr": "4",
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The incubus casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 15}):"
-            ],
-            "will": [
-              "{@spell Disguise Self|SRD52}",
-              "{@spell Etherealness|SRD52}"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Dream|SRD52}",
-                "{@spell Hypnotic Pattern|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Succubus Form",
-            "entries": [
-              "When the incubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into a {@creature Succubus|SRD52}, using that stat block instead of this one. Any equipment it's wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The incubus makes two Restless Touch attacks."
-            ]
-          },
-          {
-            "name": "Restless Touch",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 5 ft. {@h}15 ({@damage 3d6 + 5}) Psychic damage, and the target is cursed for 24 hours or until the incubus dies. Until the curse ends, the target gains no benefit from finishing Short Rests."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Nightmare {@recharge}",
-            "entries": [
-              "{@actSave wis} {@dc 15}, one creature the incubus can see within 60 feet. {@actSaveFail} If the target has 20 {@variantrule Hit Points|SRD52} or fewer, it has the {@condition Unconscious|SRD52} condition for 1 hour, until it takes damage, or until a creature within 5 feet of it takes an action to wake it. Otherwise, the target takes 18 ({@damage 4d8}) Psychic damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, lower",
-          "urban"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/succubus-incubus.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "C",
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "Y"
-        ],
-        "damageTagsSpell": [
-          "O",
-          "Y"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "CUR",
-          "MA"
-        ],
-        "conditionInflict": [
-          "unconscious"
-        ],
-        "conditionInflictSpell": [
-          "charmed",
-          "incapacitated"
-        ],
-        "savingThrowForced": [
-          "wisdom"
-        ],
-        "savingThrowForcedSpell": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Incubus",
             "entries": [
+              "{@i Life-Leeching Dream Stalker}",
               {
-                "type": "section",
-                "name": "Incubus",
-                "entries": [
-                  "{@i Life-Leeching Dream Stalker}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Lower Planes)|bestiary|environment=planar, lower}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Lower Planes)|bestiary|environment=planar, lower}"
                   },
-                  "Incubi exploit the vulnerability of mortal dreams. Slipping into the homes of sleepers, incubi feed off dreams and replace them with terrifying nightmares. Incubi visit victims nightly until their prey expires. The incubi then hunt for new victims, preferring the loved ones of past targets.",
-                  "Incubi can transform into succubi and vice versa, taking the forms they need to manipulate foes in dreams or in the flesh.",
-                  "Those visited by an incubus have recurring nightmares. Roll on or choose a result from the Incubus Nightmares table to inspire these night terrors.",
                   {
-                    "type": "table",
-                    "caption": "Incubus Nightmares",
-                    "colLabels": [
-                      "1d8",
-                      "The Incubus's Victim Has Dreams Of..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "An angry family member or authority figure."
-                      ],
-                      [
-                        "2",
-                        "Being chased through the wilderness."
-                      ],
-                      [
-                        "3",
-                        "Being devoured by animals or monsters."
-                      ],
-                      [
-                        "4",
-                        "{@hazard Falling|SRD52}, drowning, or suffocating."
-                      ],
-                      [
-                        "5",
-                        "A ruinous public embarrassment."
-                      ],
-                      [
-                        "6",
-                        "A shadowy intruder or monstrous silhouette."
-                      ],
-                      [
-                        "7",
-                        "A traumatic past event."
-                      ],
-                      [
-                        "8",
-                        "A visitor with an eerie or enigmatic message."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Incubi exploit the vulnerability of mortal dreams. Slipping into the homes of sleepers, incubi feed off dreams and replace them with terrifying nightmares. Incubi visit victims nightly until their prey expires. The incubi then hunt for new victims, preferring the loved ones of past targets.",
+              "Incubi can transform into succubi and vice versa, taking the forms they need to manipulate foes in dreams or in the flesh.",
+              "Those visited by an incubus have recurring nightmares. Roll on or choose a result from the Incubus Nightmares table to inspire these night terrors.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Incubus.webp"
-                },
-                "credit": "Jodie Muir",
-                "width": 1260,
-                "height": 2205
+                "type": "table",
+                "caption": "Incubus Nightmares",
+                "colLabels": [
+                  "1d8",
+                  "The Incubus's Victim Has Dreams Of..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "An angry family member or authority figure."
+                  ],
+                  [
+                    "2",
+                    "Being chased through the wilderness."
+                  ],
+                  [
+                    "3",
+                    "Being devoured by animals or monsters."
+                  ],
+                  [
+                    "4",
+                    "{@hazard Falling|SRD52}, drowning, or suffocating."
+                  ],
+                  [
+                    "5",
+                    "A ruinous public embarrassment."
+                  ],
+                  [
+                    "6",
+                    "A shadowy intruder or monstrous silhouette."
+                  ],
+                  [
+                    "7",
+                    "A traumatic past event."
+                  ],
+                  [
+                    "8",
+                    "A visitor with an eerie or enigmatic message."
+                  ]
+                ]
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Incubus.webp"
+            },
+            "credit": "Jodie Muir",
+            "width": 1260,
+            "height": 2205
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

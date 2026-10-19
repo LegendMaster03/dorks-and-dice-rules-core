@@ -2,388 +2,218 @@
   "id": "monster.air-elemental",
   "name": "Air Elemental",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Air Elemental",
-        "size": [
-          "L"
-        ],
-        "type": "elemental",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 90,
-          "formula": "12d10 + 24"
-        },
-        "speed": {
-          "fly": {
-            "number": 90,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "str": 14,
-        "dex": 20,
-        "con": 14,
-        "int": 6,
-        "wis": 10,
-        "cha": 6,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "resist": [
-          "lightning",
-          "thunder",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "grappled",
-          "paralyzed",
-          "petrified",
-          "poisoned",
-          "prone",
-          "restrained",
-          "unconscious"
-        ],
-        "languages": [
-          "Auran"
-        ],
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Air Form",
-            "entries": [
-              "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The elemental makes two slam attacks."
-            ]
-          },
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}14 ({@damage 2d8 + 5}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Whirlwind {@recharge 4}",
-            "entries": [
-              "Each creature in the elemental's space must make a {@dc 13} Strength saving throw. On a failure, a target takes 15 ({@damage 3d8 + 2}) bludgeoning damage and is flung up 20 feet away from the elemental in a random direction and knocked {@condition prone}. If a thrown target strikes an object, such as a wall or floor, the target takes 3 ({@damage 1d6}) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a {@dc 13} Dexterity saving throw or take the same damage and be knocked {@condition prone}.",
-              "If the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked {@condition prone}."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/air-elemental.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AU"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Air Elemental",
-            "_copy": {
-              "name": "Elementals",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "An air elemental is a funneling cloud of whirling air with a vague semblance of a face. Although it likes to race across the ground, picking up dust and debris as it goes, it can also fly and attack from above.",
-                          "An air elemental can turn itself into a screaming cyclone, creating a whirlwind that batters creatures even as it flings them away."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Air Elemental.webp"
-                    },
-                    "width": 677,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 90,
+      "formula": "12d10 + 24"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": {
+        "number": 90,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 14,
+    "dex": 20,
+    "con": 14,
+    "int": 6,
+    "wis": 10,
+    "cha": 6,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "resist": [
+      "bludgeoning",
+      "lightning",
+      "piercing",
+      "slashing"
+    ],
+    "immune": [
+      "poison",
+      "thunder"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "languages": [
+      "Primordial (Auran)"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Air Form",
+        "entries": [
+          "The elemental can enter a creature's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The elemental makes two Thunderous Slam attacks."
+        ]
+      },
+      {
+        "name": "Thunderous Slam",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}14 ({@damage 2d8 + 5}) Thunder damage."
+        ]
+      },
+      {
+        "name": "Whirlwind {@recharge 4}",
+        "entries": [
+          "{@actSave str} {@dc 13}, one Medium or smaller creature in the elemental's space. {@actSaveFail} 24 ({@damage 4d10 + 2}) Thunder damage, and the target is pushed up to 20 feet straight away from the elemental and has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "mountain",
+      "planar, air"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/air-elemental.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AU",
+      "P"
+    ],
+    "damageTags": [
+      "T"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Air Elemental",
-        "size": [
-          "L"
-        ],
-        "type": "elemental",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 90,
-          "formula": "12d10 + 24"
-        },
-        "speed": {
-          "walk": 10,
-          "fly": {
-            "number": 90,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "str": 14,
-        "dex": 20,
-        "con": 14,
-        "int": 6,
-        "wis": 10,
-        "cha": 6,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 10,
-        "resist": [
-          "bludgeoning",
-          "lightning",
-          "piercing",
-          "slashing"
-        ],
-        "immune": [
-          "poison",
-          "thunder"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "grappled",
-          "paralyzed",
-          "petrified",
-          "poisoned",
-          "prone",
-          "restrained",
-          "unconscious"
-        ],
-        "languages": [
-          "Primordial (Auran)"
-        ],
-        "cr": "5",
-        "trait": [
+        "entries": [
           {
-            "name": "Air Form",
-            "entries": [
-              "The elemental can enter a creature's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The elemental makes two Thunderous Slam attacks."
-            ]
-          },
-          {
-            "name": "Thunderous Slam",
-            "entries": [
-              "{@atkr m} {@hit 8}, reach 10 ft. {@h}14 ({@damage 2d8 + 5}) Thunder damage."
-            ]
-          },
-          {
-            "name": "Whirlwind {@recharge 4}",
-            "entries": [
-              "{@actSave str} {@dc 13}, one Medium or smaller creature in the elemental's space. {@actSaveFail} 24 ({@damage 4d10 + 2}) Thunder damage, and the target is pushed up to 20 feet straight away from the elemental and has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage only."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "mountain",
-          "planar, air"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/air-elemental.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AU",
-          "P"
-        ],
-        "damageTags": [
-          "T"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Air Elemental",
             "entries": [
+              "{@i Primal Spirit of Wind and Storm}",
               {
-                "type": "section",
-                "name": "Air Elemental",
-                "entries": [
-                  "{@i Primal Spirit of Wind and Storm}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Mountain|bestiary|environment=mountain}, {@filter Planar (Elemental Plane of Air)|bestiary|environment=planar, air}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "None"
-                      }
-                    ]
-                  },
-                  "Energetic spirits from the Elemental Plane of Air, air elementals gather clouds and winds into ever-changing bodies with indistinct limbs and vague features. Beyond their home plane, these elementals might serve magic-users who conjure them, or they might congregate around nexuses of unbridled planar energy, such as wind-scoured mountain peaks or endless storms. In battle, air elementals batter enemies with powerful gusts or transform into whirlwinds to fling away foes.",
-                  "Air elementals often have distinctive compositions. Roll on or choose a result from the Air Elemental Compositions table to inspire the elemental's appearance.",
-                  {
-                    "type": "insetReadaloud",
-                    "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "What can withstand the storm's scream? The lightning's spear? The want of sweet breath? Air is the mightiest of elements—respect its power."
-                        ],
-                        "by": "Husam, Son of the Breezes, Ruler of Djinn"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Mountain|bestiary|environment=mountain}, {@filter Planar (Elemental Plane of Air)|bestiary|environment=planar, air}"
                   },
                   {
-                    "type": "table",
-                    "caption": "Air Elemental Compositions",
-                    "colLabels": [
-                      "1d6",
-                      "The Air Elemental's Body Features..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Cumulus or cirrus clouds."
-                      ],
-                      [
-                        "2",
-                        "A mixture of vibrantly colored gases."
-                      ],
-                      [
-                        "3",
-                        "A pungent, sour-looking miasma"
-                      ],
-                      [
-                        "4",
-                        "Shifting cloud clusters that resemble animals and simple shapes."
-                      ],
-                      [
-                        "5",
-                        "Sinister features obscured in a misty mass."
-                      ],
-                      [
-                        "6",
-                        "Swirling storm clouds."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Energetic spirits from the Elemental Plane of Air, air elementals gather clouds and winds into ever-changing bodies with indistinct limbs and vague features. Beyond their home plane, these elementals might serve magic-users who conjure them, or they might congregate around nexuses of unbridled planar energy, such as wind-scoured mountain peaks or endless storms. In battle, air elementals batter enemies with powerful gusts or transform into whirlwinds to fling away foes.",
+              "Air elementals often have distinctive compositions. Roll on or choose a result from the Air Elemental Compositions table to inspire the elemental's appearance.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Air Elemental.webp"
-                },
-                "credit": "Chris Cold",
-                "width": 1930,
-                "height": 2127
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "What can withstand the storm's scream? The lightning's spear? The want of sweet breath? Air is the mightiest of elements—respect its power."
+                    ],
+                    "by": "Husam, Son of the Breezes, Ruler of Djinn"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "caption": "Air Elemental Compositions",
+                "colLabels": [
+                  "1d6",
+                  "The Air Elemental's Body Features..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Cumulus or cirrus clouds."
+                  ],
+                  [
+                    "2",
+                    "A mixture of vibrantly colored gases."
+                  ],
+                  [
+                    "3",
+                    "A pungent, sour-looking miasma"
+                  ],
+                  [
+                    "4",
+                    "Shifting cloud clusters that resemble animals and simple shapes."
+                  ],
+                  [
+                    "5",
+                    "Sinister features obscured in a misty mass."
+                  ],
+                  [
+                    "6",
+                    "Swirling storm clouds."
+                  ]
+                ]
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Air Elemental.webp"
+            },
+            "credit": "Chris Cold",
+            "width": 1930,
+            "height": 2127
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

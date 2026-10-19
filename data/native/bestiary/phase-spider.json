@@ -2,325 +2,176 @@
   "id": "monster.phase-spider",
   "name": "Phase Spider",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Phase Spider",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 32,
-          "formula": "5d10 + 5"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30
-        },
-        "str": 15,
-        "dex": 15,
-        "con": 12,
-        "int": 6,
-        "wis": 10,
-        "cha": 6,
-        "skill": {
-          "stealth": "+6"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "cr": "3",
-        "trait": [
-          {
-            "name": "Ethereal Jaunt",
-            "entries": [
-              "As a bonus action, the spider can magically shift from the Material Plane to the Ethereal Plane, or vice versa."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Web Walker",
-            "entries": [
-              "The spider ignores movement restrictions caused by webbing."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}7 ({@damage 1d10 + 2}) piercing damage, and the target must make a {@dc 11} Constitution saving throw, taking 18 ({@damage 4d8}) poison damage on a failed save, or half as much damage on a successful one. If the poison damage reduces the target to 0 hit points, the target is stable but {@condition poisoned} for 1 hour, even after regaining hit points, and is {@condition paralyzed} while {@condition poisoned} in this way."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "grassland",
-          "forest",
-          "hill",
-          "urban",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/phase-spider.opus"
-        },
-        "traitTags": [
-          "Spider Climb",
-          "Web Walker"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "paralyzed",
-          "poisoned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Phase Spider",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "A phase spider possesses the magical ability to phase in and out of the Ethereal Plane. It seems to appear out of nowhere and quickly vanishes after attacking. Its movement on the Ethereal Plane before coming back to the Material Plane makes it seem like it can teleport."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Phase Spider.webp"
-                },
-                "width": 1000,
-                "height": 733
-              },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Phase Spider 2.webp"
-                },
-                "width": 1000,
-                "height": 673
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "7d10 + 7"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 15,
+    "dex": 16,
+    "con": 12,
+    "int": 6,
+    "wis": 10,
+    "cha": 6,
+    "skill": {
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Ethereal Sight",
+        "entries": [
+          "The spider can see 60 feet into the Ethereal Plane while on the Material Plane and vice versa."
+        ]
+      },
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "Web Walker",
+        "entries": [
+          "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spider makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}8 ({@damage 1d10 + 3}) Piercing damage plus 9 ({@damage 2d8}) Poison damage. If this damage reduces the target to 0 {@variantrule Hit Points|SRD52}, the target becomes {@variantrule Stable|SRD52}, and it has the {@condition Poisoned|SRD52} condition for 1 hour. While {@condition Poisoned|SRD52}, the target also has the {@condition Paralyzed|SRD52} condition."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Ethereal Jaunt",
+        "entries": [
+          "The spider teleports from the Material Plane to the Ethereal Plane or vice versa."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "grassland",
+      "hill",
+      "planar, ethereal",
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/phase-spider.opus"
+    },
+    "traitTags": [
+      "Ethereal Sight",
+      "Spider Climb",
+      "Web Walker"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "paralyzed",
+      "poisoned"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Phase Spider",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 45,
-          "formula": "7d10 + 7"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30
-        },
-        "str": 15,
-        "dex": 16,
-        "con": 12,
-        "int": 6,
-        "wis": 10,
-        "cha": 6,
-        "skill": {
-          "stealth": "+7"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 10,
-        "cr": "3",
-        "trait": [
+        "entries": [
           {
-            "name": "Ethereal Sight",
-            "entries": [
-              "The spider can see 60 feet into the Ethereal Plane while on the Material Plane and vice versa."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Web Walker",
-            "entries": [
-              "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The spider makes two Bite attacks."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}8 ({@damage 1d10 + 3}) Piercing damage plus 9 ({@damage 2d8}) Poison damage. If this damage reduces the target to 0 {@variantrule Hit Points|SRD52}, the target becomes {@variantrule Stable|SRD52}, and it has the {@condition Poisoned|SRD52} condition for 1 hour. While {@condition Poisoned|SRD52}, the target also has the {@condition Paralyzed|SRD52} condition."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Ethereal Jaunt",
-            "entries": [
-              "The spider teleports from the Material Plane to the Ethereal Plane or vice versa."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "forest",
-          "grassland",
-          "hill",
-          "planar, ethereal",
-          "underdark",
-          "urban"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/phase-spider.opus"
-        },
-        "traitTags": [
-          "Ethereal Sight",
-          "Spider Climb",
-          "Web Walker"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "paralyzed",
-          "poisoned"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Phase Spider",
             "entries": [
+              "{@i Plane-Shifting Arachnid Ambusher}",
               {
-                "type": "section",
-                "name": "Phase Spider",
-                "entries": [
-                  "{@i Plane-Shifting Arachnid Ambusher}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}, {@filter Planar (Ethereal Plane)|bestiary|environment=planar, ethereal}, {@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}, {@filter Planar (Ethereal Plane)|bestiary|environment=planar, ethereal}, {@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
                   },
-                  "Phase spiders appear out of nowhere to attack, then vanish just as swiftly. These horse-size, magical arachnids are endemic to the Ethereal Plane. From vaporous lairs, they peer through the Border Ethereal into the Material Plane. When they detect prey, phase spiders draw close and then shift or \"phase\" to the Material Plane to attack. They shift between planes of existence and attack from unexpected directions until they overcome their prey or are forced to retreat.",
-                  "Phase spiders are more intelligent than mundane spiders, but most are cowards. They usually flee if they're outnumbered by creatures capable of seeing them on the Ethereal Plane or pursuing them there. They make exceptions for ghosts and similar spirits, which phase spiders gain sustenance from and pursue as favored prey.",
                   {
-                    "type": "insetReadaloud",
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Phase spiders appear out of nowhere to attack, then vanish just as swiftly. These horse-size, magical arachnids are endemic to the Ethereal Plane. From vaporous lairs, they peer through the Border Ethereal into the Material Plane. When they detect prey, phase spiders draw close and then shift or \"phase\" to the Material Plane to attack. They shift between planes of existence and attack from unexpected directions until they overcome their prey or are forced to retreat.",
+              "Phase spiders are more intelligent than mundane spiders, but most are cowards. They usually flee if they're outnumbered by creatures capable of seeing them on the Ethereal Plane or pursuing them there. They make exceptions for ghosts and similar spirits, which phase spiders gain sustenance from and pursue as favored prey.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Some sages say you unknowingly occupy the same ethereally coterminous point as a phase spider an average of four times each year."
-                        ],
-                        "by": "Marcus Wands, Doubtful Authority"
-                      }
-                    ]
+                      "Some sages say you unknowingly occupy the same ethereally coterminous point as a phase spider an average of four times each year."
+                    ],
+                    "by": "Marcus Wands, Doubtful Authority"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Phase Spider.webp"
-                },
-                "credit": "Sean Murray",
-                "width": 1258,
-                "height": 1944
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Phase Spider.webp"
+            },
+            "credit": "Sean Murray",
+            "width": 1258,
+            "height": 1944
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

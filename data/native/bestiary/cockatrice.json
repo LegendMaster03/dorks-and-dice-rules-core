@@ -2,195 +2,93 @@
   "id": "monster.cockatrice",
   "name": "Cockatrice",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Cockatrice",
-        "size": [
-          "S"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 27,
-          "formula": "6d6 + 6"
-        },
-        "speed": {
-          "walk": 20,
-          "fly": 40
-        },
-        "str": 6,
-        "dex": 12,
-        "con": 12,
-        "int": 2,
-        "wis": 13,
-        "cha": 5,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 11,
-        "cr": "1/2",
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one creature. {@h}3 ({@damage 1d4 + 1}) piercing damage, and the target must succeed on a {@dc 11} Constitution saving throw against being magically {@condition petrified}. On a failed save, the creature begins to turn to stone and is {@condition restrained}. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is {@condition petrified} for 24 hours."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/cockatrice.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "petrified",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Cockatrice",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "The cockatrice looks like a hideous hybrid of lizard, bird, and bat, and it is infamous for its ability to turn flesh to stone. These omnivores have a diet that consists of berries, nuts, flowers, and small animals such as insects, mice, and frogs-things they can swallow whole. They would be no threat to anything else if not for their fierce and frenzied response to even a hint of danger. A cockatrice flies into the face of any threat, squawking and madly beating its wings as its head darts out to peck. The smallest scratch from a cockatrice's beak can spell doom as its victim slowly turns to stone from the injury."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Cockatrice.webp"
-                },
-                "width": 1000,
-                "height": 820
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "5d6 + 5"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 6,
+    "dex": 12,
+    "con": 12,
+    "int": 2,
+    "wis": 13,
+    "cha": 5,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 11,
+    "conditionImmune": [
+      "petrified"
+    ],
+    "cr": "1/2",
+    "action": [
+      {
+        "name": "Petrifying Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Piercing damage. If the target is a creature, it is subjected to the following effect. {@actSave con} {@dc 11}. {@actSaveFail 1} The target has the {@condition Restrained|SRD52} condition. The target repeats the save at the end of its next turn if it is still {@condition Restrained|SRD52}, ending the effect on itself on a success. {@actSaveFail 2} The target has the {@condition Petrified|SRD52} condition, instead of the {@condition Restrained|SRD52} condition, for 24 hours."
         ]
       }
+    ],
+    "environment": [
+      "grassland"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/cockatrice.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "petrified",
+      "restrained"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Cockatrice",
-        "size": [
-          "S"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 22,
-          "formula": "5d6 + 5"
-        },
-        "speed": {
-          "walk": 20,
-          "fly": 40
-        },
-        "str": 6,
-        "dex": 12,
-        "con": 12,
-        "int": 2,
-        "wis": 13,
-        "cha": 5,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 11,
-        "conditionImmune": [
-          "petrified"
-        ],
-        "cr": "1/2",
-        "action": [
-          {
-            "name": "Petrifying Bite",
-            "entries": [
-              "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Piercing damage. If the target is a creature, it is subjected to the following effect. {@actSave con} {@dc 11}. {@actSaveFail 1} The target has the {@condition Restrained|SRD52} condition. The target repeats the save at the end of its next turn if it is still {@condition Restrained|SRD52}, ending the effect on itself on a success. {@actSaveFail 2} The target has the {@condition Petrified|SRD52} condition, instead of the {@condition Restrained|SRD52} condition, for 24 hours."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/cockatrice.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "petrified",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Cockatrice",
-            "_copy": {
-              "name": "Cockatrices",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Cockatrices often try to claim eye-catching structures—such as ruins and secluded farms—as roosts."
-                      ]
-                    }
+        "_copy": {
+          "name": "Cockatrices",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Cockatrices often try to claim eye-catching structures—such as ruins and secluded farms—as roosts."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

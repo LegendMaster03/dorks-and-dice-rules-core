@@ -2,188 +2,102 @@
   "id": "monster.crab",
   "name": "Crab",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Crab",
-        "size": [
-          "T"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 11,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 2,
-          "formula": "1d4"
-        },
-        "speed": {
-          "walk": 20,
-          "swim": 20
-        },
-        "str": 2,
-        "dex": 11,
-        "con": 10,
-        "int": 1,
-        "wis": 8,
-        "cha": 2,
-        "skill": {
-          "stealth": "+2"
-        },
-        "senses": [
-          "blindsight 30 ft."
-        ],
-        "passive": 9,
-        "cr": "0",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The crab can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 0} to hit, reach 5 ft., one target. {@h}1 bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal"
-        ],
-        "familiar": true,
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/crab.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 3,
+      "formula": "1d4 + 1"
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Crab",
-        "size": [
-          "T"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 3,
-          "formula": "1d4 + 1"
-        },
-        "speed": {
-          "walk": 20,
-          "swim": 20
-        },
-        "str": 6,
-        "dex": 11,
-        "con": 12,
-        "int": 1,
-        "wis": 8,
-        "cha": 2,
-        "skill": {
-          "stealth": "+2"
-        },
-        "senses": [
-          "Blindsight 30 ft."
-        ],
-        "passive": 9,
-        "cr": "0",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The crab can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "underwater"
-        ],
-        "familiar": true,
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/crab.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Crab",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Crab.webp"
-                      },
-                      "width": 1145,
-                      "height": 1422
-                    }
-                  ]
-                }
-              }
-            }
-          }
+    "speed": {
+      "walk": 20,
+      "swim": 20
+    },
+    "str": 6,
+    "dex": 11,
+    "con": 12,
+    "int": 1,
+    "wis": 8,
+    "cha": 2,
+    "skill": {
+      "stealth": "+2"
+    },
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 9,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The crab can breathe air and water."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Bludgeoning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "underwater"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/crab.opus"
+    },
+    "traitTags": [
+      "Amphibious"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Crab",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Crab.webp"
+                  },
+                  "width": 1145,
+                  "height": 1422
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

@@ -2,510 +2,236 @@
   "id": "monster.drider",
   "name": "Drider",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Drider",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 19,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 123,
-          "formula": "13d10 + 52"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30
-        },
-        "str": 16,
-        "dex": 16,
-        "con": 18,
-        "int": 13,
-        "wis": 14,
-        "cha": 12,
-        "skill": {
-          "perception": "+5",
-          "stealth": "+9"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 15,
-        "languages": [
-          "Elvish",
-          "Undercommon"
-        ],
-        "cr": "6",
-        "spellcasting": [
-          {
-            "name": "Innate Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The drider's innate spellcasting ability is Wisdom (spell save {@dc 13}). The drider can innately cast the following spells, requiring no material components:"
-            ],
-            "will": [
-              "{@spell dancing lights}"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell darkness}",
-                "{@spell faerie fire}"
-              ]
-            },
-            "ability": "wis"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Fey Ancestry",
-            "entries": [
-              "The drider has advantage on saving throws against being {@condition charmed}, and magic can't put the drider to sleep."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The drider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Sunlight Sensitivity",
-            "entries": [
-              "While in sunlight, the drider has disadvantage on attack rolls, as well as on Wisdom ({@skill Perception}) checks that rely on sight."
-            ]
-          },
-          {
-            "name": "Web Walker",
-            "entries": [
-              "The drider ignores movement restrictions caused by webbing."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The drider makes three attacks, either with its longsword or its longbow. It can replace one of those attacks with a bite attack."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one creature. {@h}2 ({@damage 1d4}) piercing damage plus 9 ({@damage 2d8}) poison damage."
-            ]
-          },
-          {
-            "name": "Longsword",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d8 + 3}) slashing damage, or 8 ({@damage 1d10 + 3}) slashing damage if used with two hands."
-            ]
-          },
-          {
-            "name": "Longbow",
-            "entries": [
-              "{@atk rw} {@hit 6} to hit, range 150/600 ft., one target. {@h}7 ({@damage 1d8 + 3}) piercing damage plus 4 ({@damage 1d8}) poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/drider.opus"
-        },
-        "attachedItems": [
-          "longbow|srd51",
-          "longsword|srd51"
-        ],
-        "traitTags": [
-          "Fey Ancestry",
-          "Spider Climb",
-          "Sunlight Sensitivity",
-          "Web Walker"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "E",
-          "U"
-        ],
-        "damageTags": [
-          "I",
-          "P",
-          "S"
-        ],
-        "spellcastingTags": [
-          "I"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RNG",
-          "RW"
-        ],
-        "savingThrowForcedSpell": [
-          "dexterity"
-        ],
-        "hasToken": true,
-        "_versions": [
-          {
-            "name": "Drider Spellcaster",
-            "source": "SRD51",
-            "wis": 16,
-            "spellcasting": [
-              {
-                "name": "Spellcasting",
-                "headerEntries": [
-                  "The drider is a 7th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 14}, {@hit 6} to hit with spell attacks). The drider has the following spells prepared from the cleric spell list:"
-                ],
-                "spells": {
-                  "0": {
-                    "spells": [
-                      "{@spell poison spray}",
-                      "{@spell thaumaturgy}"
-                    ]
-                  },
-                  "1": {
-                    "slots": 4,
-                    "spells": [
-                      "{@spell bane}",
-                      "{@spell detect magic}",
-                      "{@spell sanctuary}"
-                    ]
-                  },
-                  "2": {
-                    "slots": 3,
-                    "spells": [
-                      "{@spell hold person}",
-                      "{@spell silence}"
-                    ]
-                  },
-                  "3": {
-                    "slots": 3,
-                    "spells": [
-                      "{@spell clairvoyance}",
-                      "{@spell dispel magic}"
-                    ]
-                  },
-                  "4": {
-                    "slots": 2,
-                    "spells": [
-                      "{@spell divination}",
-                      "{@spell freedom of movement}"
-                    ]
-                  }
-                },
-                "ability": "wis"
-              }
-            ],
-            "variant": null
-          }
-        ],
-        "lore": [
-          {
-            "name": "Drider",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "When a drow shows great promise, Lolth summons it to the Demonweb Pits for a test of faith and strength. Those that pass the test rise higher in the Spider Queen's favor. Those that fail are transformed into driders-a horrid hybrid of a drow and a giant spider that serves as a living reminder of Lolth's power. Only drow can be turned into driders, and the power to create these creatures resides with Lolth alone.",
-                      {
-                        "type": "entries",
-                        "name": "Scarred for Life",
-                        "entries": [
-                          "Drow transformed into driders return to the Material Plane as twisted and debased creatures. Driven by madness, they disappear into the Underdark to become hermits and hunters, either wandering alone or leading packs of giant spiders.",
-                          "On rare occasion, a drider returns to the fringes of drow society despite its curse, most often to fulfill some longstanding vow or vendetta from its former life. Drow fear and shun the driders, holding them in lower esteem than slaves. However, they tolerate the presence of these creatures as living representatives of Lolth's will, and a reminder of the fate that awaits all who fail the Spider Queen."
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
-                    "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "I failed the Spider Queen once. Never again."
-                        ],
-                        "by": "Pellanistra the drider"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Drider.webp"
-                },
-                "width": 1000,
-                "height": 998
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 123,
+      "formula": "13d10 + 52"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 16,
+    "dex": 19,
+    "con": 18,
+    "int": 13,
+    "wis": 16,
+    "cha": 12,
+    "skill": {
+      "perception": "+6",
+      "stealth": "+10"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 16,
+    "languages": [
+      "Elvish",
+      "Undercommon"
+    ],
+    "cr": "6",
+    "spellcasting": [
+      {
+        "name": "Magic of the Spider Queen {@recharge 5}",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The drider casts {@spell Darkness|SRD52}, {@spell Faerie Fire|SRD52}, or {@spell Web|SRD52}, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 14})."
+        ],
+        "recharge": {
+          "5": [
+            "{@spell Darkness|SRD52}",
+            "{@spell Faerie Fire|SRD52}",
+            "{@spell Web|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "bonus",
+        "hidden": [
+          "recharge"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The drider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "entries": [
+          "While in sunlight, the drider has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      },
+      {
+        "name": "Web Walker",
+        "entries": [
+          "The drider ignores movement restrictions caused by webs, and the drider knows the location of any other creature in contact with the same web."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The drider makes three attacks, using Foreleg or Poison Burst in any combination."
+        ]
+      },
+      {
+        "name": "Foreleg",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}13 ({@damage 2d8 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Poison Burst",
+        "entries": [
+          "{@atkr r} {@hit 6}, range 120 ft. {@h}13 ({@damage 3d6 + 3}) Poison damage."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "underdark"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/drider.opus"
+    },
+    "traitTags": [
+      "Spider Climb",
+      "Sunlight Sensitivity",
+      "Web Walker"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "E",
+      "U"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "damageTagsSpell": [
+      "F"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflictSpell": [
+      "restrained"
+    ],
+    "savingThrowForcedSpell": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Drider",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          19
-        ],
-        "hp": {
-          "average": 123,
-          "formula": "13d10 + 52"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30
-        },
-        "str": 16,
-        "dex": 19,
-        "con": 18,
-        "int": 13,
-        "wis": 16,
-        "cha": 12,
-        "skill": {
-          "perception": "+6",
-          "stealth": "+10"
-        },
-        "senses": [
-          "Darkvision 120 ft."
-        ],
-        "passive": 16,
-        "languages": [
-          "Elvish",
-          "Undercommon"
-        ],
-        "cr": "6",
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Magic of the Spider Queen {@recharge 5}",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The drider casts {@spell Darkness|SRD52}, {@spell Faerie Fire|SRD52}, or {@spell Web|SRD52}, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 14})."
-            ],
-            "recharge": {
-              "5": [
-                "{@spell Darkness|SRD52}",
-                "{@spell Faerie Fire|SRD52}",
-                "{@spell Web|SRD52}"
-              ]
-            },
-            "ability": "wis",
-            "displayAs": "bonus",
-            "hidden": [
-              "recharge"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The drider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Sunlight Sensitivity",
-            "entries": [
-              "While in sunlight, the drider has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
-            ]
-          },
-          {
-            "name": "Web Walker",
-            "entries": [
-              "The drider ignores movement restrictions caused by webs, and the drider knows the location of any other creature in contact with the same web."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The drider makes three attacks, using Foreleg or Poison Burst in any combination."
-            ]
-          },
-          {
-            "name": "Foreleg",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 10 ft. {@h}13 ({@damage 2d8 + 4}) Piercing damage."
-            ]
-          },
-          {
-            "name": "Poison Burst",
-            "entries": [
-              "{@atkr r} {@hit 6}, range 120 ft. {@h}13 ({@damage 3d6 + 3}) Poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "underdark"
-        ],
-        "treasure": [
-          "armaments"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/drider.opus"
-        },
-        "traitTags": [
-          "Spider Climb",
-          "Sunlight Sensitivity",
-          "Web Walker"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "E",
-          "U"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "damageTagsSpell": [
-          "F"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RA",
-          "RCH"
-        ],
-        "conditionInflictSpell": [
-          "restrained"
-        ],
-        "savingThrowForcedSpell": [
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Drider",
             "entries": [
+              "{@i Spiderlike Underdark Hunter}",
               {
-                "type": "section",
-                "name": "Drider",
-                "entries": [
-                  "{@i Spiderlike Underdark Hunter}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Underdark|bestiary|environment=underdark}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Underdark|bestiary|environment=underdark}"
                   },
-                  "Driders combine the features of drow and giant spiders. The wicked god Lolth is fond of transforming her drow worshipers into driders, as either a blessing or a curse. These driders often become fanatical servants of their god, or they are overwhelmed by their transformation and live only to indulge their predatory arachnid instincts.",
-                  "Driders also appear when whole communities are transformed by a wicked god's wrath or other magical means, or driders might be part of a world's natural population. Most dwell underground or in dense forests where they can make the most of their spiderlike traits. Driders with non-drow features are uncommon but possible. Roll on or choose a result from the Drider Metamorphoses table to inspire how supernatural driders come into being.",
                   {
-                    "type": "table",
-                    "caption": "Drider Metamorphoses",
-                    "colLabels": [
-                      "1d6",
-                      "The Drider Gained Its Form As..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "A blessing from a deity of assassins, dangerous wildernesses, or the Underdark."
-                      ],
-                      [
-                        "2",
-                        "A curse from a powerful hag, vengeful witch, or strange Artifact."
-                      ],
-                      [
-                        "3",
-                        "An experiment by an aboleth, a mind flayer, or another life-shaping magic-user."
-                      ],
-                      [
-                        "4",
-                        "A magical means of escaping disaster or some worse fate."
-                      ],
-                      [
-                        "5",
-                        "A mutation after exposure to chaotic planar energies or strange Underdark radiations."
-                      ],
-                      [
-                        "6",
-                        "A punishment from a spiteful god, like Lolth or the Queen of Air and Darkness."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Driders combine the features of drow and giant spiders. The wicked god Lolth is fond of transforming her drow worshipers into driders, as either a blessing or a curse. These driders often become fanatical servants of their god, or they are overwhelmed by their transformation and live only to indulge their predatory arachnid instincts.",
+              "Driders also appear when whole communities are transformed by a wicked god's wrath or other magical means, or driders might be part of a world's natural population. Most dwell underground or in dense forests where they can make the most of their spiderlike traits. Driders with non-drow features are uncommon but possible. Roll on or choose a result from the Drider Metamorphoses table to inspire how supernatural driders come into being.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Drider.webp"
-                },
-                "credit": "Michael Broussard",
-                "width": 1708,
-                "height": 2222
+                "type": "table",
+                "caption": "Drider Metamorphoses",
+                "colLabels": [
+                  "1d6",
+                  "The Drider Gained Its Form As..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "A blessing from a deity of assassins, dangerous wildernesses, or the Underdark."
+                  ],
+                  [
+                    "2",
+                    "A curse from a powerful hag, vengeful witch, or strange Artifact."
+                  ],
+                  [
+                    "3",
+                    "An experiment by an aboleth, a mind flayer, or another life-shaping magic-user."
+                  ],
+                  [
+                    "4",
+                    "A magical means of escaping disaster or some worse fate."
+                  ],
+                  [
+                    "5",
+                    "A mutation after exposure to chaotic planar energies or strange Underdark radiations."
+                  ],
+                  [
+                    "6",
+                    "A punishment from a spiteful god, like Lolth or the Queen of Air and Darkness."
+                  ]
+                ]
               }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Drider.webp"
+            },
+            "credit": "Michael Broussard",
+            "width": 1708,
+            "height": 2222
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

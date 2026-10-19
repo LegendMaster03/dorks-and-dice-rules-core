@@ -2,374 +2,179 @@
   "id": "monster.wereboar",
   "name": "Wereboar",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Wereboar",
-        "group": [
-          "Lycanthropes"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "human",
-            "shapechanger"
-          ]
-        },
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Lycanthropes"
+    ],
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "monstrosity",
+      "tags": [
+        "lycanthrope"
+      ]
+    },
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 97,
+      "formula": "15d8 + 30"
+    },
+    "speed": {
+      "walk": 30,
+      "alternate": {
+        "walk": [
           {
-            "ac": 10,
-            "condition": "in humanoid form"
-          },
-          {
-            "ac": 11,
-            "from": [
-              "natural armor"
-            ],
-            "condition": "in boar or hybrid form"
-          }
-        ],
-        "hp": {
-          "average": 78,
-          "formula": "12d8 + 24"
-        },
-        "speed": {
-          "walk": {
-            "number": 30,
-            "condition": "(40 ft. in boar form)"
-          }
-        },
-        "str": 17,
-        "dex": 10,
-        "con": 15,
-        "int": 10,
-        "wis": 11,
-        "cha": 8,
-        "skill": {
-          "perception": "+2"
-        },
-        "passive": 12,
-        "immune": [
-          {
-            "immune": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks that aren't silvered",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "Common (can't speak in boar form)"
-        ],
-        "cr": "4",
-        "trait": [
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "The wereboar can use its action to polymorph into a boar-humanoid hybrid or into a boar, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
-            ]
-          },
-          {
-            "name": "Charge (Boar or Hybrid Form Only)",
-            "entries": [
-              "If the wereboar moves at least 15 feet straight toward a target and then hits it with its tusks on the same turn, the target takes an extra 7 ({@damage 2d6}) slashing damage. If the target is a creature, it must succeed on a {@dc 13} Strength saving throw or be knocked {@condition prone}."
-            ]
-          },
-          {
-            "name": "Relentless (Recharges after a Short or Long Rest)",
-            "entries": [
-              "If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "The wereboar makes two attacks, only one of which can be with its tusks."
-            ]
-          },
-          {
-            "name": "Maul (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Tusks (Boar or Hybrid Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) slashing damage. If the target is a humanoid, it must succeed on a {@dc 12} Constitution saving throw or be cursed with wereboar {@variantrule Player Characters as Lycanthropes|SRD51|lycanthropy}."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest",
-          "hill"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/wereboar.opus"
-        },
-        "attachedItems": [
-          "maul|srd51"
-        ],
-        "traitTags": [
-          "Charge",
-          "Shapechanger"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "CS"
-        ],
-        "damageTags": [
-          "B",
-          "S"
-        ],
-        "miscTags": [
-          "CUR",
-          "MLW",
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Wereboar",
-            "_copy": {
-              "name": "Lycanthropes",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Wereboars are ill-tempered and vulgar brutes. As humanoids, they are stocky and muscular, with short, stiff hair. In their humanoid and hybrid forms, they use heavy weapons, while in hybrid or animal form, they gain a devastating goring attack through which their curse is spread. A wereboar infects other creatures indiscriminately, relishing the fact that the more its victims resist the curse, the more savage and bestial they become.",
-                          "Wereboars live in small family groups in remote forest areas, building ramshackle huts or dwelling in caves. They are suspicious of strangers but sometimes ally themselves with orcs."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Wereboar.webp"
-                    },
-                    "width": 857,
-                    "height": 1000
-                  }
-                }
-              }
-            }
+            "number": 40,
+            "condition": "(boar form only)"
           }
         ]
       }
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 17,
+    "dex": 10,
+    "con": 15,
+    "int": 10,
+    "wis": 11,
+    "cha": 8,
+    "skill": {
+      "perception": "+2"
+    },
+    "passive": 12,
+    "languages": [
+      "Common (can't speak in boar form)"
+    ],
+    "cr": "4",
+    "gear": [
+      {
+        "item": "javelin|srd52",
+        "quantity": 6
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The wereboar makes two attacks, using Javelin or Tusk in any combination. It can replace one attack with a Gore attack."
+        ]
+      },
+      {
+        "name": "Gore (Boar or Hybrid Form Only)",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Humanoid, it is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail} The target is cursed. If the cursed target drops to 0 {@variantrule Hit Points|SRD52}, it instead becomes a Wereboar under the DM's control and has 10 {@variantrule Hit Points|SRD52}. {@actSaveSuccess} The target is immune to this wereboar's curse for 24 hours."
+        ]
+      },
+      {
+        "name": "Javelin (Humanoid or Hybrid Form Only)",
+        "entries": [
+          "{@atkr m,r} {@hit 5}, reach 5 ft. or range 30/120 ft. {@h}13 ({@damage 3d6 + 3}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Tusk (Boar or Hybrid Form Only)",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Medium or smaller creature and the wereboar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 7 ({@damage 2d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The wereboar shape-shifts into a Medium boar-humanoid hybrid or a Small boar, or it returns to its true humanoid form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "grassland",
+      "hill"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/wereboar.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "CS"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "CUR",
+      "MA",
+      "MLW",
+      "RA",
+      "THW"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Wereboar",
-        "group": [
-          "Lycanthropes"
-        ],
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": {
-          "type": "monstrosity",
-          "tags": [
-            "lycanthrope"
-          ]
-        },
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 97,
-          "formula": "15d8 + 30"
-        },
-        "speed": {
-          "walk": 30,
-          "alternate": {
-            "walk": [
-              {
-                "number": 40,
-                "condition": "(boar form only)"
-              }
-            ]
-          }
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 17,
-        "dex": 10,
-        "con": 15,
-        "int": 10,
-        "wis": 11,
-        "cha": 8,
-        "skill": {
-          "perception": "+2"
-        },
-        "passive": 12,
-        "languages": [
-          "Common (can't speak in boar form)"
-        ],
-        "cr": "4",
-        "gear": [
+        "entries": [
           {
-            "item": "javelin|srd52",
-            "quantity": 6
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The wereboar makes two attacks, using Javelin or Tusk in any combination. It can replace one attack with a Gore attack."
-            ]
-          },
-          {
-            "name": "Gore (Boar or Hybrid Form Only)",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Humanoid, it is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail} The target is cursed. If the cursed target drops to 0 {@variantrule Hit Points|SRD52}, it instead becomes a Wereboar under the DM's control and has 10 {@variantrule Hit Points|SRD52}. {@actSaveSuccess} The target is immune to this wereboar's curse for 24 hours."
-            ]
-          },
-          {
-            "name": "Javelin (Humanoid or Hybrid Form Only)",
-            "entries": [
-              "{@atkr m,r} {@hit 5}, reach 5 ft. or range 30/120 ft. {@h}13 ({@damage 3d6 + 3}) Piercing damage."
-            ]
-          },
-          {
-            "name": "Tusk (Boar or Hybrid Form Only)",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Medium or smaller creature and the wereboar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 7 ({@damage 2d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "The wereboar shape-shifts into a Medium boar-humanoid hybrid or a Small boar, or it returns to its true humanoid form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "grassland",
-          "hill"
-        ],
-        "treasure": [
-          "individual"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/wereboar.opus"
-        },
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "CS"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "CUR",
-          "MA",
-          "MLW",
-          "RA",
-          "THW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Wereboar",
             "entries": [
+              "{@i Changed by the Hunger of the Boar}",
               {
-                "type": "section",
-                "name": "Wereboar",
-                "entries": [
-                  "{@i Changed by the Hunger of the Boar}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Individual"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}"
                   },
-                  "Wereboars shape-shift from their humanoid forms into powerful boars or humanoid-boar hybrids. Many wereboars suffer their shape-shifting nature as a curse, with some involuntarily transforming any time they perform a greedy act or indulge their selfish nature."
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Individual"
+                  }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Werebear, Wereboar, and Wererat.webp"
-                },
-                "title": "A werebear chases a wereboar and wererat out of its territory",
-                "credit": "Slawomir Maniak",
-                "width": 1047,
-                "height": 2560
-              }
+              },
+              "Wereboars shape-shift from their humanoid forms into powerful boars or humanoid-boar hybrids. Many wereboars suffer their shape-shifting nature as a curse, with some involuntarily transforming any time they perform a greedy act or indulge their selfish nature."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Werebear, Wereboar, and Wererat.webp"
+            },
+            "title": "A werebear chases a wereboar and wererat out of its territory",
+            "credit": "Slawomir Maniak",
+            "width": 1047,
+            "height": 2560
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

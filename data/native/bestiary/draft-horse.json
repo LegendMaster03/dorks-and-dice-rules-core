@@ -2,138 +2,79 @@
   "id": "monster.draft-horse",
   "name": "Draft Horse",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Draft Horse",
-        "size": [
-          "L"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 19,
-          "formula": "3d10 + 3"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 18,
-        "dex": 10,
-        "con": 12,
-        "int": 2,
-        "wis": 11,
-        "cha": 7,
-        "passive": 10,
-        "cr": "1/4",
-        "action": [
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}9 ({@damage 2d4 + 4}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/draft-horse.opus"
-        },
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 15,
+      "formula": "2d10 + 4"
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Draft Horse",
-        "size": [
-          "L"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 15,
-          "formula": "2d10 + 4"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 18,
-        "dex": 10,
-        "con": 15,
-        "int": 2,
-        "wis": 11,
-        "cha": 7,
-        "passive": 10,
-        "cr": "1/4",
-        "action": [
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/draft-horse.opus"
-        },
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Draft Horse",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Draft Horse.webp"
-                      },
-                      "width": 1152,
-                      "height": 1440
-                    }
-                  ]
-                }
-              }
-            }
-          }
+    "speed": {
+      "walk": 40
+    },
+    "str": 18,
+    "dex": 10,
+    "con": 15,
+    "int": 2,
+    "wis": 11,
+    "cha": 7,
+    "passive": 10,
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Bludgeoning damage."
         ]
       }
-    }
-  ]
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/draft-horse.opus"
+    },
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Draft Horse",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Draft Horse.webp"
+                  },
+                  "width": 1152,
+                  "height": 1440
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

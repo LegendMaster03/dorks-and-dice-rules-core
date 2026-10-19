@@ -1,0 +1,3661 @@
+{
+  "description": "Non-runtime older abilities and identity matches needing variant/compatibility review; not selectable alternate editions.",
+  "roleMappings": [
+    {
+      "old": "Acolyte",
+      "current": "Priest Acolyte"
+    },
+    {
+      "old": "Azer",
+      "current": "Azer Sentinel"
+    },
+    {
+      "old": "Centaur",
+      "current": "Centaur Trooper"
+    },
+    {
+      "old": "Cult Fanatic",
+      "current": "Cultist Fanatic"
+    },
+    {
+      "old": "Flying Sword",
+      "current": "Animated Flying Sword"
+    },
+    {
+      "old": "Giant Poisonous Snake",
+      "current": "Giant Venomous Snake"
+    },
+    {
+      "old": "Giant Sea Horse",
+      "current": "Giant Seahorse"
+    },
+    {
+      "old": "Gnoll",
+      "current": "Gnoll Warrior"
+    },
+    {
+      "old": "Goblin",
+      "current": "Goblin Warrior"
+    },
+    {
+      "old": "Kobold",
+      "current": "Kobold Warrior"
+    },
+    {
+      "old": "Merfolk",
+      "current": "Merfolk Skirmisher"
+    },
+    {
+      "old": "Poisonous Snake",
+      "current": "Venomous Snake"
+    },
+    {
+      "old": "Quipper",
+      "current": "Piranha"
+    },
+    {
+      "old": "Rug of Smothering",
+      "current": "Animated Rug of Smothering"
+    },
+    {
+      "old": "Sahuagin",
+      "current": "Sahuagin Warrior"
+    },
+    {
+      "old": "Sea Horse",
+      "current": "Seahorse"
+    },
+    {
+      "old": "Shrieker",
+      "current": "Shrieker Fungus"
+    },
+    {
+      "old": "Swarm of Poisonous Snakes",
+      "current": "Swarm of Venomous Snakes"
+    },
+    {
+      "old": "Swarm of Quippers",
+      "current": "Swarm of Piranhas"
+    },
+    {
+      "old": "Thug",
+      "current": "Tough"
+    },
+    {
+      "old": "Veteran",
+      "current": "Warrior Veteran"
+    }
+  ],
+  "distinctLegacyRoleCandidates": {
+    "Hobgoblin": "Martial Advantage rather than Pack Tactics",
+    "Bugbear": "Brute and Surprise Attack rather than grappling-oriented combat"
+  },
+  "entries": [
+    {
+      "nativeId": "monster.aboleth",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Mucous Cloud"
+        ],
+        "action": [
+          "Tail",
+          "Enslave (3/Day)"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Swipe"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.acolyte",
+      "correspondingDefault": "monster.priest-acolyte",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Club"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.adult-black-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-blue-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-brass-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-bronze-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-copper-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-gold-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-green-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-red-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-silver-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.adult-white-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.air-elemental",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Slam"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-black-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-blue-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-brass-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-bronze-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-copper-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-gold-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-green-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-red-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-silver-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail",
+          "Frightful Presence",
+          "Breath Weapons {@recharge 5}",
+          "Change Shape"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ancient-white-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Tail"
+        ],
+        "legendary": [
+          "Detect",
+          "Tail Attack",
+          "Wing Attack (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.animated-armor",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Antimagic Susceptibility",
+          "False Appearance"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ape",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Rock"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.archmage",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Dagger"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.assassin",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Assassinate",
+          "Sneak Attack (1/Turn)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.awakened-shrub",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.awakened-tree",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.azer",
+      "correspondingDefault": "monster.azer-sentinel",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Heated Body",
+          "Heated Weapons"
+        ],
+        "action": [
+          "Warhammer"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.badger",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.balor",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Longsword",
+          "Whip"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.bandit-captain",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Dagger"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.barbed-devil",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight"
+        ],
+        "action": [
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.basilisk",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Petrifying Gaze"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.bat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Echolocation",
+          "Keen Hearing"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Echolocation",
+        "Keen Hearing"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.bearded-devil",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight",
+          "Steadfast"
+        ],
+        "action": [
+          "Glaive"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.berserker",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Reckless"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.black-bear",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Bite",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.black-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.black-pudding",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Pseudopod"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.blink-dog",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.blood-hawk",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.blue-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.boar",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge",
+          "Relentless (Recharges after a Short or Long Rest)"
+        ],
+        "action": [
+          "Tusk"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.bone-devil",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight"
+        ],
+        "action": [
+          "Sting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.brass-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.bronze-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.brown-bear",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.bugbear",
+      "familyId": "monster-family.bugbear",
+      "reason": "Brute and Surprise Attack rather than grappling-oriented combat",
+      "olderAbilitiesNotIncludedAutomatically": {}
+    },
+    {
+      "nativeId": "monster.bulette",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Standing Leap"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Standing Leap"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.cat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.centaur",
+      "correspondingDefault": "monster.centaur-trooper",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge"
+        ],
+        "action": [
+          "Hooves"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.chain-devil",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight"
+        ],
+        "action": [
+          "Animate Chains (Recharges after a Short or Long Rest)"
+        ],
+        "reaction": [
+          "Unnerving Mask"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.chimera",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Horns",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.chuul",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Tentacles"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.clay-golem",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Haste {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.cloaker",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Damage Transfer",
+          "False Appearance"
+        ],
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.cloud-giant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Morningstar",
+          "Rock"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.cockatrice",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.copper-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.couatl",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Change Shape"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.cult-fanatic",
+      "correspondingDefault": "monster.cultist-fanatic",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Dark Devotion"
+        ],
+        "action": [
+          "Multiattack",
+          "Dagger"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.cultist",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Dark Devotion"
+        ],
+        "action": [
+          "Scimitar"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.darkmantle",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Echolocation",
+          "False Appearance"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Echolocation",
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.death-dog",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Two-Headed"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.deer",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.deva",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Angelic Weapons"
+        ],
+        "action": [
+          "Mace",
+          "Healing Touch (3/Day)",
+          "Change Shape"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.dire-wolf",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.djinni",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Elemental Demise"
+        ],
+        "action": [
+          "Scimitar"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.doppelganger",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Ambusher",
+          "Surprise Attack"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.dragon-turtle",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.dretch",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Multiattack",
+          "Bite",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.drider",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Fey Ancestry"
+        ],
+        "action": [
+          "Bite",
+          "Longsword",
+          "Longbow"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.druid",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Quarterstaff"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.dryad",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Club",
+          "Fey Charm"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.dust-mephit",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting (1/Day)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.eagle",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.efreeti",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Elemental Demise"
+        ],
+        "action": [
+          "Scimitar"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.elephant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Trampling Charge"
+        ],
+        "action": [
+          "Stomp"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.elk",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge"
+        ],
+        "action": [
+          "Hooves"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.erinyes",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Hellish Weapons"
+        ],
+        "action": [
+          "Longsword",
+          "Longbow"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ettercap",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Web Sense"
+        ],
+        "action": [
+          "Claws",
+          "Web {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Web Sense"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ettin",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Two Heads",
+          "Wakeful"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Wakeful"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.fire-elemental",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Touch"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.fire-giant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Greatsword",
+          "Rock"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.flesh-golem",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Aversion of Fire",
+          "Magic Weapons"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.flying-sword",
+      "correspondingDefault": "monster.animated-flying-sword",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Antimagic Susceptibility",
+          "False Appearance"
+        ],
+        "action": [
+          "Longsword"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.frost-giant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Greataxe",
+          "Rock"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gargoyle",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ],
+        "action": [
+          "Bite",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ghast",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Turning Defiance"
+        ],
+        "action": [
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ghost",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Horrifying Visage"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ghoul",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-ape",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Rock"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-badger",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Multiattack",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-bat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Echolocation",
+          "Keen Hearing"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Echolocation",
+        "Keen Hearing"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-boar",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge",
+          "Relentless (Recharges after a Short or Long Rest)"
+        ],
+        "action": [
+          "Tusk"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-eagle",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ],
+        "action": [
+          "Beak",
+          "Talons"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-elk",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge"
+        ],
+        "action": [
+          "Hooves"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-goat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge",
+          "Sure-Footed"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Sure-Footed"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-octopus",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Hold Breath",
+          "Underwater Camouflage"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Hold Breath",
+        "Underwater Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-owl",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-rat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-sea-horse",
+      "correspondingDefault": "monster.giant-seahorse",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.giant-shark",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Blood Frenzy"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-spider",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Web Sense"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Web Sense"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-vulture",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight and Smell"
+        ],
+        "action": [
+          "Multiattack",
+          "Beak",
+          "Talons"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-weasel",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.giant-wolf-spider",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Web Sense",
+          "Web Walker"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Web Sense"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gibbering-mouther",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Multiattack",
+          "Bites"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.glabrezu",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Fist"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gladiator",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Brave",
+          "Brute"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gnoll",
+      "correspondingDefault": "monster.gnoll-warrior",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Spear",
+          "Longbow"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.goat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge",
+          "Sure-Footed"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Sure-Footed"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gold-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gorgon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Trampling Charge"
+        ],
+        "action": [
+          "Hooves"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.gray-ooze",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Corrode Metal",
+          "False Appearance"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.green-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.green-hag",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws",
+          "Illusory Appearance",
+          "Invisible Passage"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.grick",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Stone Camouflage"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Stone Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.griffon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ],
+        "action": [
+          "Beak",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.grimlock",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Blind Senses",
+          "Keen Hearing and Smell",
+          "Stone Camouflage"
+        ],
+        "action": [
+          "Spiked Bone Club"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell",
+        "Stone Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.guardian-naga",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Rejuvenation"
+        ],
+        "action": [
+          "Spit Poison"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.harpy",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Multiattack",
+          "Claws",
+          "Club"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hawk",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hell-hound",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hezrou",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hill-giant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Greatclub",
+          "Rock"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hippogriff",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ],
+        "action": [
+          "Beak",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hobgoblin",
+      "familyId": "monster-family.hobgoblin",
+      "reason": "Martial Advantage rather than Pack Tactics",
+      "olderAbilitiesNotIncludedAutomatically": {}
+    },
+    {
+      "nativeId": "monster.horned-devil",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight"
+        ],
+        "action": [
+          "Fork",
+          "Tail"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hunter-shark",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Blood Frenzy"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.hydra",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Wakeful"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Wakeful"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ice-devil",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight"
+        ],
+        "action": [
+          "Bite",
+          "Claws",
+          "Wall of Ice {@recharge}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ice-mephit",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ],
+        "action": [
+          "Claws"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting (1/Day)"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.imp",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Devil's Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.incubus",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Telepathic Bond",
+          "Shapechanger"
+        ],
+        "action": [
+          "Claw (Fiend Form Only)",
+          "Charm",
+          "Draining Kiss",
+          "Etherealness"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.invisible-stalker",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Faultless Tracker"
+        ],
+        "action": [
+          "Slam"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.iron-golem",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Slam",
+          "Sword",
+          "Poison Breath {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.jackal",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell",
+          "Pack Tactics"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.killer-whale",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Echolocation",
+          "Keen Hearing"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Echolocation",
+        "Keen Hearing"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.knight",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Brave"
+        ],
+        "action": [
+          "Leadership (Recharges after a Short or Long Rest)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.kobold",
+      "correspondingDefault": "monster.kobold-warrior",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Sling"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.kraken",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Freedom of Movement"
+        ],
+        "action": [
+          "Bite",
+          "Lightning Storm"
+        ],
+        "legendary": [
+          "Tentacle Attack or Fling",
+          "Lightning Storm (Costs 2 Actions)",
+          "Ink Cloud (Costs 3 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.lamia",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws",
+          "Dagger",
+          "Intoxicating Touch"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.lemure",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Devil's Sight",
+          "Hellish Rejuvenation"
+        ],
+        "action": [
+          "Fist"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.lich",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Rejuvenation",
+          "Turn Resistance"
+        ],
+        "legendary": [
+          "Cantrip"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.lion",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell",
+          "Pounce"
+        ],
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.mage",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Dagger"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.magma-mephit",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ],
+        "action": [
+          "Claws"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting (1/Day)"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.mammoth",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Trampling Charge"
+        ],
+        "action": [
+          "Stomp"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.manticore",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Tail Spike Regrowth"
+        ],
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.marilith",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Longsword",
+          "Tail",
+          "Teleport"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.mastiff",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.medusa",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Petrifying Gaze"
+        ],
+        "action": [
+          "Shortsword",
+          "Longbow"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.merfolk",
+      "correspondingDefault": "monster.merfolk-skirmisher",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Spear"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.merrow",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.mimic",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "False Appearance (Object Form Only)",
+          "Grappler"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance (Object Form Only)"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.minotaur-skeleton",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge"
+        ],
+        "action": [
+          "Greataxe"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.mule",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Sure-Footed"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Sure-Footed"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.mummy-lord",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Rejuvenation"
+        ],
+        "legendary": [
+          "Attack",
+          "Blinding Dust",
+          "Blasphemous Word (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.nalfeshnee",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.night-hag",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws (Hag Form Only)",
+          "Change Shape",
+          "Etherealness"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.octopus",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Hold Breath",
+          "Underwater Camouflage"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Hold Breath",
+        "Underwater Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.ogre-zombie",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Morningstar"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.oni",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Glaive",
+          "Change Shape"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.otyugh",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Limited Telepathy"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.owl",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.owlbear",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight and Smell"
+        ],
+        "action": [
+          "Beak",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.panther",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell",
+          "Pounce"
+        ],
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.pit-fiend",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ],
+        "action": [
+          "Claw",
+          "Mace",
+          "Tail"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.planetar",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Angelic Weapons"
+        ],
+        "action": [
+          "Greatsword",
+          "Healing Touch (4/Day)"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.polar-bear",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Bite",
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.priest",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Divine Eminence"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.pseudodragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Senses",
+          "Limited Telepathy"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.quasit",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger"
+        ],
+        "action": [
+          "Claw (Bite in Beast Form)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.quipper",
+      "correspondingDefault": "monster.piranha",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Blood Frenzy"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.rakshasa",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Limited Magic Immunity"
+        ],
+        "action": [
+          "Claw"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.rat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.red-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.remorhaz",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Heated Body"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.rhinoceros",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.roc",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.roper",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance",
+          "Grasping Tendrils"
+        ],
+        "action": [
+          "Tendril"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.rug-of-smothering",
+      "correspondingDefault": "monster.animated-rug-of-smothering",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Antimagic Susceptibility",
+          "Damage Transfer",
+          "False Appearance"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.rust-monster",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Rust Metal"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.saber-toothed-tiger",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell",
+          "Pounce"
+        ],
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.sahuagin",
+      "correspondingDefault": "monster.sahuagin-warrior",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claws",
+          "Spear"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.salamander",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Heated Body",
+          "Heated Weapons"
+        ],
+        "action": [
+          "Spear",
+          "Tail"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.satyr",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Ram",
+          "Shortsword",
+          "Shortbow"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.scout",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Sight"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Sight"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.sea-hag",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Horrific Appearance"
+        ],
+        "action": [
+          "Claws",
+          "Death Glare"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.shadow",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Strength Drain"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.shambling-mound",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Slam"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.shield-guardian",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "reaction": [
+          "Shield"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.shrieker",
+      "correspondingDefault": "monster.shrieker-fungus",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.silver-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.solar",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Angelic Weapons"
+        ],
+        "action": [
+          "Greatsword",
+          "Slaying Longbow",
+          "Healing Touch (4/Day)"
+        ],
+        "legendary": [
+          "Teleport",
+          "Searing Burst (Costs 2 Actions)"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.spider",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Web Sense"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Web Sense"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.spirit-naga",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Rejuvenation"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.sprite",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Longsword",
+          "Shortbow"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.spy",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Sneak Attack (1/Turn)"
+        ],
+        "action": [
+          "Multiattack"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.steam-mephit",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting (1/Day)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.stirge",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Blood Drain"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.stone-giant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Stone Camouflage"
+        ],
+        "action": [
+          "Greatclub",
+          "Rock"
+        ],
+        "reaction": [
+          "Rock Catching"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Stone Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.stone-golem",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Magic Weapons"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.storm-giant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Greatsword",
+          "Rock",
+          "Lightning Strike {@recharge 5}"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.succubus",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Telepathic Bond",
+          "Shapechanger"
+        ],
+        "action": [
+          "Claw (Fiend Form Only)",
+          "Etherealness"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.swarm-of-bats",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Echolocation",
+          "Keen Hearing"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Echolocation",
+        "Keen Hearing"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.swarm-of-quippers",
+      "correspondingDefault": "monster.swarm-of-piranhas",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Blood Frenzy"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.swarm-of-rats",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.tarrasque",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Horns",
+          "Frightful Presence"
+        ],
+        "legendary": [
+          "Attack",
+          "Move",
+          "Chomp (Costs 2 Actions)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.thug",
+      "correspondingDefault": "monster.tough",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Multiattack"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.tiger",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell",
+          "Pounce"
+        ],
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.treant",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ],
+        "action": [
+          "Rock"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.triceratops",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Trampling Charge"
+        ],
+        "action": [
+          "Stomp"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.troll",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Smell"
+        ],
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.unicorn",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Charge",
+          "Magic Weapons"
+        ],
+        "action": [
+          "Horn",
+          "Healing Touch (3/Day)",
+          "Teleport (1/Day)"
+        ],
+        "legendary": [
+          "Heal Self (Costs 3 Actions)"
+        ],
+        "spellcasting": [
+          "Innate Spellcasting"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.vampire",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Regeneration",
+          "Vampire Weaknesses"
+        ],
+        "action": [
+          "Unarmed Strike (Vampire Form Only)",
+          "Charm",
+          "Children of the Night (1/Day)"
+        ],
+        "legendary": [
+          "Move",
+          "Unarmed Strike"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.vampire-spawn",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Regeneration",
+          "Vampire Weaknesses"
+        ],
+        "action": [
+          "Claws"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.veteran",
+      "correspondingDefault": "monster.warrior-veteran",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Longsword",
+          "Shortsword"
+        ]
+      },
+      "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant"
+    },
+    {
+      "nativeId": "monster.violet-fungus",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "False Appearance"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "False Appearance"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.vrock",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Beak",
+          "Talons"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.vulture",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Sight and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Sight and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.warhorse",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Trampling Charge"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.weasel",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.werebear",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Keen Smell"
+        ],
+        "action": [
+          "Claw (Bear or Hybrid Form Only)",
+          "Greataxe (Humanoid or Hybrid Form Only)"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.wereboar",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Charge (Boar or Hybrid Form Only)",
+          "Relentless (Recharges after a Short or Long Rest)"
+        ],
+        "action": [
+          "Maul (Humanoid or Hybrid Form Only)",
+          "Tusks (Boar or Hybrid Form Only)"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.wererat",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Keen Smell"
+        ],
+        "action": [
+          "Shortsword (Humanoid or Hybrid Form Only)"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.weretiger",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Keen Hearing and Smell",
+          "Pounce (Tiger or Hybrid Form Only)"
+        ],
+        "action": [
+          "Claw (Tiger or Hybrid Form Only)",
+          "Scimitar (Humanoid or Hybrid Form Only)"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.werewolf",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Shapechanger",
+          "Keen Hearing and Smell"
+        ],
+        "action": [
+          "Claws (Hybrid Form Only)",
+          "Spear (Humanoid Form Only)"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.white-dragon-wyrmling",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.wight",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Longsword",
+          "Longbow"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.will-o-wisp",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Variable Illumination"
+        ],
+        "action": [
+          "Invisibility"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.winter-wolf",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell",
+          "Snow Camouflage"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell",
+        "Snow Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.wolf",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.worg",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Keen Hearing and Smell"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Keen Hearing and Smell"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.wyvern",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Claws",
+          "Stinger"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.xorn",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Stone Camouflage"
+        ]
+      },
+      "compatibleTraitsTransferred": [
+        "Stone Camouflage"
+      ],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-black-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-blue-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-brass-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-bronze-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-copper-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-gold-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-green-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-red-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-silver-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw",
+          "Breath Weapons {@recharge 5}"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    },
+    {
+      "nativeId": "monster.young-white-dragon",
+      "familyId": null,
+      "olderAbilitiesNotIncludedAutomatically": {
+        "action": [
+          "Bite",
+          "Claw"
+        ]
+      },
+      "compatibleTraitsTransferred": [],
+      "reason": "Assess semantic replacements, action budget and distinct tactical variants"
+    }
+  ]
+}
