@@ -2,8 +2,9 @@
 """Apply the owner-selected 5.5e monster-roster model to native staging.
 
 Newer shared-name monster stat blocks become the default native representation.
-Known renamed roles become aliases, while source-only creatures with genuinely
-different tactical identity are preserved pending role design.
+Known renamed roles become aliases. Different DM tactics never create
+additional native monster identities; older mechanical options are reviewed
+against the one corresponding creature.
 Legacy mechanical distinctions are kept in a non-runtime review ledger.
 No legacy ability is appended blindly to a revised attack suite.
 """
@@ -27,6 +28,8 @@ ALIAS_PAIRS = {
     "Giant Sea Horse": "Giant Seahorse",
     "Gnoll": "Gnoll Warrior",
     "Goblin": "Goblin Warrior",
+    "Hobgoblin": "Hobgoblin Warrior",
+    "Bugbear": "Bugbear Warrior",
     "Kobold": "Kobold Warrior",
     "Merfolk": "Merfolk Skirmisher",
     "Poisonous Snake": "Venomous Snake",
@@ -40,13 +43,6 @@ ALIAS_PAIRS = {
     "Thug": "Tough",
     "Veteran": "Warrior Veteran",
 }
-# Existing 5.1 monster tactics have no confirmed same-role mechanical successor.
-# Retain them as potential role variants rather than merging away their identity.
-DISTINCT_ROLE_REVIEW = {
-    "Hobgoblin": "Martial Advantage rather than Pack Tactics",
-    "Bugbear": "Brute and Surprise Attack rather than grappling-oriented combat",
-}
-
 # These feature names express independent perceptions, terrain or disguise
 # capabilities, and have no numeric attack or action-economy replacement.
 # Even here, source-specific restrictions remain intact.
@@ -192,7 +188,7 @@ def main():
                 "nativeId": identity, "familyId": family_for(name),
                 "olderAbilitiesNotIncludedAutomatically": distinct,
                 "compatibleTraitsTransferred": attached,
-                "reason": "Assess semantic replacements, action budget and distinct tactical variants",
+                "reason": "Review older mechanics for coherent inclusion in the same creature, without inventing tactical duplicates",
             })
         del d["candidateDefinitions"]
         d["definition"] = definition
@@ -229,7 +225,7 @@ def main():
                 "nativeId": identity,
                 "correspondingDefault": target,
                 "olderAbilitiesNotIncludedAutomatically": distinct,
-                "reason": "Renamed same-role predecessor; review whether distinct tactics warrant another variant",
+                "reason": "Review older capabilities for the one canonical creature; tactics alone do not warrant another variant",
             })
         if "definition" not in doc:
             raise ValueError(f"Missing retained legacy definition {identity}")
@@ -266,26 +262,9 @@ def main():
             "id": "monster-family." + family_name,
             "name": family_name.capitalize(),
             "memberIds": ids,
-            "legacyTacticalReview": [
-                "monster." + slug(n) for n in DISTINCT_ROLE_REVIEW
-                if slug(n) == family_name
-            ],
+            **({"legacyMechanicsReview": ["monster." + family_name]}
+                if family_name in ("hobgoblin", "bugbear") else {}),
         })
-    # Preserve old Hobgoblin and Bugbear as distinct tactical candidates;
-    # their existing source-retained definitions are not auto-merged.
-    for name in DISTINCT_ROLE_REVIEW:
-        identity = "monster." + slug(name)
-        row, doc = entity(identity)
-        if row["status"] != "native-single-source-retained":
-            raise ValueError(f"Unexpected legacy variant status {identity}")
-        doc["familyId"] = family_for(name)
-        row["legacyVariantReviewRequired"] = True
-        legacy_review.append({
-            "nativeId": identity, "familyId": family_for(name),
-            "reason": DISTINCT_ROLE_REVIEW[name],
-            "olderAbilitiesNotIncludedAutomatically": {},
-        })
-
     # Verify every paired source monster was selected and no source-only
     # identity alias was mistakenly elevated to an independent combat variant.
     paired = set(old) & set(newer)
@@ -299,7 +278,11 @@ def main():
     write(REVIEW, {
         "description": "Non-runtime older abilities and identity matches needing variant/compatibility review; not selectable alternate editions.",
         "roleMappings": [{"old": x, "current": y} for x, y in sorted(ALIAS_PAIRS.items())],
-        "distinctLegacyRoleCandidates": DISTINCT_ROLE_REVIEW,
+        "mechanicalOptionReview": {
+            x: {"default": "monster." + slug(y),
+                "policy": "Review older abilities under the single existing creature"}
+            for x, y in ALIAS_PAIRS.items() if x in ("Hobgoblin", "Bugbear")
+        },
         "entries": sorted(legacy_review, key=lambda r: r["nativeId"]),
     })
     counts = Counter(row["status"] for row in manifest["coverage"])
