@@ -134,7 +134,7 @@ def audit(edition, path, rows):
         "low_similarity_fragments": len(suspicious),
         "page_5gram_match_ratio": round(overall / total, 4) if total else None,
         "lowest_coverage_pages": worst,
-        "low_similarity_examples": suspicious[:250],
+        "low_similarity_examples": suspicious[:2000],
         "per_file_low_similarity": dict(collections.Counter(
             x["file"] for x in suspicious).most_common()),
     }
