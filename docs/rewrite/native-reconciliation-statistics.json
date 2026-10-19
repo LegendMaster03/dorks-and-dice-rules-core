@@ -39,18 +39,18 @@
   "originalUnresolvedCandidateCount": 2479,
   "reducedUnresolvedCandidateCount": 816,
   "monsterReviewCaveat": "Selected 5.5e stat blocks are retained. Independent missing older abilities restored with exact original restrictions; revised attack suites are not duplicated. Remaining differences are tracked per feature in the reference ledger. Imported markup still needs native typing.",
-  "monsterAdditionalOlderFeaturesRestored": 142,
+  "monsterAdditionalOlderFeaturesRestored": 145,
   "monsterOlderFeaturesPreviouslyTransferred": 84,
-  "monsterRemainingFeatureQuestions": 5,
-  "monsterReviewEntriesWithOpenQuestions": 5,
+  "monsterRemainingFeatureQuestions": 2,
+  "monsterReviewEntriesWithOpenQuestions": 2,
   "monsterFeatureDispositions": {
     "newer-successor": 95,
     "revised-attack-suite": 333,
-    "restored": 142,
+    "restored": 145,
     "already-present": 84,
     "review-needed": 2,
-    "spell-access-extended": 15,
-    "possible-redesign": 3
+    "spell-access-extended": 15
   },
-  "monsterAdditionalSpellsRestored": 33
+  "monsterAdditionalSpellsRestored": 33,
+  "monsterPartiallyRestoredAbilitiesAwaitingRuling": 1
 }
