@@ -1,7 +1,7 @@
 {
   "_meta": {
     "status": "native-5x-and-selected-3x-condition-catalog; runtime-schema-integration-pending",
-    "note": "Twenty-seven canonical conditions, including Shaken, Panicked, and Cowering. Historical fear escalation among distinct sources remains unresolved rather than silently changing native Frightened. Touch/Flat-Footed/Helpless, Stunned half Speed, conscious Petrified, Exhaustion six tiers, and Wet retained."
+    "note": "Twenty-eight canonical conditions, including the distinct 3.x Fatigued condition. SRD 5.1 six-tier Exhaustion remains unmodified; the historical 3.x Fatigued-to-Exhausted transition has no approved native Exhaustion-tier mapping."
   },
   "conditions": [
     {
@@ -381,6 +381,46 @@
         },
         {
           "event": "fascinating-effect-ends"
+        }
+      ]
+    },
+    {
+      "id": "condition.fatigued",
+      "name": "Fatigued",
+      "kind": "condition",
+      "description": "A Fatigued creature cannot Run or Charge and suffers a -2 effective adjustment to its Strength and Dexterity ability scores. The change affects checks, attacks, saves, and applicable derived statistics through normal ability-score calculations. Eight hours of complete rest ends Fatigued unless its source specifies otherwise. This condition does not itself apply a level of Exhaustion.",
+      "effects": [
+        {
+          "type": "movement-restriction",
+          "prohibited": [
+            "run",
+            "charge"
+          ]
+        },
+        {
+          "type": "effective-ability-score",
+          "ability": "strength",
+          "operation": "add",
+          "value": -2,
+          "minimum": 0,
+          "affectsDerivedStatistics": true
+        },
+        {
+          "type": "effective-ability-score",
+          "ability": "dexterity",
+          "operation": "add",
+          "value": -2,
+          "minimum": 0,
+          "affectsDerivedStatistics": true
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "complete-rest",
+          "durationHours": 8,
+          "unless": {
+            "imposingEffectOverridesRecovery": true
+          }
         }
       ]
     },
