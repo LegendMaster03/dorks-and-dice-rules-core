@@ -287,6 +287,8 @@ This is a summary, **not the completed recovered decision inventory**. Each chap
 
 **Owner direction: established at the conceptual level; precise transition defaults and edge cases remain open.**
 
+**Owner-approved class development sequence and testing boundary (2026-10-19):** Focus on **Band 1 (levels 1–20)** first, reconciling **base classes**, then **subclasses**, then **prestige classes**, in that order. The base-class pass does not include subclass or prestige-class features. Only **Band 1** is needed as the level-band scope for entering testing; **Band 2 (levels 21–40) and later bands are not prerequisites** for initial testing. Expand the class system into Band 2 after the Band 1 class work, using the applicable 3e/3.5e higher-level material in that later design pass. This sequencing does not waive separate foundation, subsystem readiness, authorization, or tester-access safeguards.
+
 Level advancement uses consecutive **20-level bands** where applicable: 1–20, 21–40, 41–60, and so on. A mechanic does not switch to a separate hard-coded epic engine at level 21. Each level-based advancement track has its **own band**, so character total level and individual class/prestige-class occurrence levels may occupy different bands simultaneously. A subclass normally uses its parent class track. Do not automatically treat a competence rank, mythic-like tier, or other non-level track as a 20-level band.
 
 A mechanic can, at a threshold or transition on a declared track:
