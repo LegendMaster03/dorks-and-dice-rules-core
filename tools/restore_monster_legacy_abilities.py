@@ -28,16 +28,15 @@ INDEPENDENT_TRAITS = {
     "Steadfast", "Two Heads", "Two-Headed",
     "Telepathic Bond", "Limited Telepathy", "Blind Senses",
     "Pack Tactics", "Faultless Tracker", "Freedom of Movement",
-    "Turn Resistance", "Damage Transfer", "Reckless",
+    "Turn Resistance", "Reckless",
     "Relentless (Recharges after a Short or Long Rest)",
     "Keen Senses", "Web Walker", "Turning Defiance",
-    "Grappler", "Tail Spike Regrowth",
 }
 # Independent utility actions add choices; they do not alter Multiattack
 # or overwrite a newer action with different damage or saving throw rules.
 INDEPENDENT_ACTIONS = {
-    "Children of the Night (1/Day)", "Etherealness",
-    "Fey Charm", "Leadership (Recharges after a Short or Long Rest)",
+    "Children of the Night (1/Day)",
+    "Leadership (Recharges after a Short or Long Rest)",
 }
 # All these preserve the original legendary action cost in their names and
 # use the selected monster's existing legendary-action economy. Cost tags
@@ -74,6 +73,11 @@ REPOSITIONED_NAMES = {
     "Horrifying Visage": ("Horrific Visage",),
     "Frightful Presence": ("Frightful Presence",),
     "Draining Kiss": ("Restless Touch", "Draining Kiss"),
+    "Etherealness": ("Spellcasting",),
+    "Fey Charm": ("Spellcasting",),
+    "Damage Transfer": ("Attach", "Smother"),
+    "Grappler": ("Bite",),
+    "Tail Spike Regrowth": ("Tail Spike",),
 }
 # These were redesigned; do not assume they were removed. Review the
 # mechanics of the new successor, rather than duplicating the old one.
