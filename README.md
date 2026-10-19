@@ -32,3 +32,13 @@ Keep future source import/conversion data, provenance and source-revision histor
 ## Next steps
 
 Agree on foundational native data contracts, rules composition and access boundaries; choose a suitable runtime; implement the minimum approved engine foundation; add mechanics and converters one subsystem at a time with tests. Review and explicit authorization are required before gameplay implementation, database changes, deployment, re-enabling the service, or merging to `main`.
+
+## SRD native baseline
+
+The pinned SRD 5.1 and 5.2.1 structured corpus has been fully staged
+into native category files and 2,225 per-entity records.
+**Unreviewed candidate definitions are inert**, not executable rules or
+approved native mechanics; resolved Skills and Conditions remain authoritative
+where already decided. The original 90-file source pack is immutable reference
+material. For counts, structure and verification caveats, see
+`docs/rewrite/native-srd-baseline-complete.md`.

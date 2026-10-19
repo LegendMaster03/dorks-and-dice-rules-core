@@ -143,3 +143,15 @@ The native definition is in `data/native/conditions.json`; the comparison
 and Owner decision remain in `data/reference/srd/reconciliation-decisions.json`.
 Structural tests verify the effect target, ending triggers, and preserved
 Exhaustion ruling. The engine does not yet execute this data.
+
+## Baseline staging milestone
+
+The initial source-only milestone described above has now been followed
+by **complete native baseline staging**, without additional mechanical
+reconciliation. All directly modeled rule entities from the pinned SRD
+data pack have native counterpart records or already approved native
+entries; non-rulebook UI/Foundry/generated indexes remain in reference
+material, and legal attribution chapters remain reference-only.
+
+**See [native-srd-baseline-complete.md](native-srd-baseline-complete.md)
+for the current, authoritative baseline coverage and limitations.**

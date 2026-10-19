@@ -22,3 +22,19 @@ Edition-specific names, provenance and external content mappings belong in `data
 ## Native conditions
 
 `conditions.json` stores the compact native condition catalog. Exhaustion has a six-level cumulative rule approved from the tiered SRD 5.1 mechanic. References to the alternative source variant and the Owner's reconciliation decision live outside native rules in `data/reference/srd/reconciliation-decisions.json`.
+
+## Complete staged SRD native coverage
+
+The baseline now includes **2,522 staged logical entities**, including
+already accepted native Skills/Conditions, and 2,225 per-entity JSON
+documents. Small categories remain consolidated. The unreviewed files
+contain `candidateDefinitions` with `baselineStatus:
+"pending-native-reconciliation"`; they are **not active native rules**.
+Both source variants are preserved where appropriate without introducing
+parallel runtime edition engines. Original source provenance and candidate
+mapping stay in `data/reference/srd/`. See
+`docs/rewrite/native-srd-baseline-complete.md` for a coverage accounting.
+
+Legal Information sections are retained in the original SRD books, not
+in gameplay rule sections. Descriptive `fluff` has been attached to
+the relevant staged entity instead of another physical file.
