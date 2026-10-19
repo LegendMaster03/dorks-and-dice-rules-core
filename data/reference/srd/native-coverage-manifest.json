@@ -22688,7 +22688,7 @@
     {
       "nativeId": "monster.bugbear",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/bugbear.json",
       "candidates": [
@@ -22697,8 +22697,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true,
-      "legacyVariantReviewRequired": true
+      "nativeShapingRequired": false,
+      "legacyVariantReviewRequired": true,
+      "aliasOf": "monster.bugbear-warrior"
     },
     {
       "nativeId": "monster.bugbear-stalker",
@@ -24919,7 +24920,7 @@
     {
       "nativeId": "monster.hobgoblin",
       "kind": "monster",
-      "status": "native-single-source-retained",
+      "status": "native-monster-identity-alias",
       "sourceRecords": 1,
       "path": "data/native/bestiary/hobgoblin.json",
       "candidates": [
@@ -24928,8 +24929,9 @@
           "source": "5.1"
         }
       ],
-      "nativeShapingRequired": true,
-      "legacyVariantReviewRequired": true
+      "nativeShapingRequired": false,
+      "legacyVariantReviewRequired": true,
+      "aliasOf": "monster.hobgoblin-warrior"
     },
     {
       "nativeId": "monster.hobgoblin-captain",
@@ -39682,9 +39684,9 @@
     "multiple-candidates": 1073,
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
-    "native-monster-identity-alias": 21,
+    "native-monster-identity-alias": 23,
     "native-monster-role-default": 285,
-    "native-single-source-retained": 446,
+    "native-single-source-retained": 444,
     "single-candidate": 590
   }
 }

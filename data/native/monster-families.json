@@ -7,8 +7,7 @@
         "monster.goblin-minion",
         "monster.goblin-warrior",
         "monster.goblin-boss"
-      ],
-      "legacyTacticalReview": []
+      ]
     },
     {
       "id": "monster-family.hobgoblin",
@@ -17,7 +16,7 @@
         "monster.hobgoblin-warrior",
         "monster.hobgoblin-captain"
       ],
-      "legacyTacticalReview": [
+      "legacyMechanicsReview": [
         "monster.hobgoblin"
       ]
     },
@@ -28,7 +27,7 @@
         "monster.bugbear-warrior",
         "monster.bugbear-stalker"
       ],
-      "legacyTacticalReview": [
+      "legacyMechanicsReview": [
         "monster.bugbear"
       ]
     }

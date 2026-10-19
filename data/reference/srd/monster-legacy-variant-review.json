@@ -10,6 +10,10 @@
       "current": "Azer Sentinel"
     },
     {
+      "old": "Bugbear",
+      "current": "Bugbear Warrior"
+    },
+    {
       "old": "Centaur",
       "current": "Centaur Trooper"
     },
@@ -36,6 +40,10 @@
     {
       "old": "Goblin",
       "current": "Goblin Warrior"
+    },
+    {
+      "old": "Hobgoblin",
+      "current": "Hobgoblin Warrior"
     },
     {
       "old": "Kobold",
@@ -86,10 +94,6 @@
       "current": "Warrior Veteran"
     }
   ],
-  "distinctLegacyRoleCandidates": {
-    "Hobgoblin": "Martial Advantage rather than Pack Tactics",
-    "Bugbear": "Brute and Surprise Attack rather than grappling-oriented combat"
-  },
   "entries": [
     {
       "nativeId": "monster.aboleth",
@@ -865,9 +869,18 @@
     },
     {
       "nativeId": "monster.bugbear",
-      "familyId": "monster-family.bugbear",
-      "reason": "Brute and Surprise Attack rather than grappling-oriented combat",
-      "olderAbilitiesNotIncludedAutomatically": {}
+      "reason": "Reconcile old mechanical options into one coherent creature; different tactics do not constitute a separate monster variant",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Brute",
+          "Surprise Attack"
+        ],
+        "action": [
+          "Morningstar",
+          "Javelin"
+        ]
+      },
+      "correspondingDefault": "monster.bugbear-warrior"
     },
     {
       "nativeId": "monster.bulette",
@@ -1969,9 +1982,13 @@
     },
     {
       "nativeId": "monster.hobgoblin",
-      "familyId": "monster-family.hobgoblin",
-      "reason": "Martial Advantage rather than Pack Tactics",
-      "olderAbilitiesNotIncludedAutomatically": {}
+      "reason": "Reconcile old mechanical options into one coherent creature; different tactics do not constitute a separate monster variant",
+      "olderAbilitiesNotIncludedAutomatically": {
+        "trait": [
+          "Martial Advantage"
+        ]
+      },
+      "correspondingDefault": "monster.hobgoblin-warrior"
     },
     {
       "nativeId": "monster.horned-devil",
@@ -3657,5 +3674,15 @@
       "compatibleTraitsTransferred": [],
       "reason": "Assess semantic replacements, action budget and distinct tactical variants"
     }
-  ]
+  ],
+  "mechanicalOptionReview": {
+    "Hobgoblin": {
+      "default": "monster.hobgoblin-warrior",
+      "policy": "Review older capabilities for inclusion in the single existing creature, not a tactical clone"
+    },
+    "Bugbear": {
+      "default": "monster.bugbear-warrior",
+      "policy": "Review older capabilities for inclusion in the single existing creature, not a tactical clone"
+    }
+  }
 }

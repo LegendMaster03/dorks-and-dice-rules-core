@@ -7,20 +7,20 @@
     "multiple-candidates": 1073,
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
-    "native-monster-identity-alias": 21,
+    "native-monster-identity-alias": 23,
     "native-monster-role-default": 285,
-    "native-single-source-retained": 446,
+    "native-single-source-retained": 444,
     "single-candidate": 590
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 446
+    "native-single-source-retained": 444
   },
   "remainingWithMultipleCandidates": 1073,
   "remainingWithOneCandidate": 590,
-  "retainedDefinitionsNeedingNativeShaping": 795,
+  "retainedDefinitionsNeedingNativeShaping": 793,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
   "candidateRecordsStillUnresolved": 1663,
@@ -31,12 +31,12 @@
     "Retained records may include imported inline markup; conversion to final typed native execution schemas remains necessary."
   ],
   "nativeMonsterRoleDefaults": 285,
-  "nativeMonsterIdentityAliases": 21,
+  "nativeMonsterIdentityAliases": 23,
   "monsterFamilyDefinitions": 3,
   "monsterLegacyVariantReviewEntries": 249,
   "monsterCompatibleTraitsTransferred": 84,
-  "monsterOlderOnlySourceEntriesStillRetained": 66,
+  "monsterOlderOnlySourceEntriesStillRetained": 64,
   "originalUnresolvedCandidateCount": 2479,
   "reducedUnresolvedCandidateCount": 816,
-  "monsterReviewCaveat": "Newer paired stat-block defaults and semantic aliases are selected; older unique mechanics and some legacy tactical roles still need separate variant review. Selected definitions still require typed-native conversion."
+  "monsterReviewCaveat": "Tactics alone do not create independent monsters. The older Hobgoblin and Bugbear are aliases of newer Warrior identities; their mechanical differences remain in the review ledger for a coherent single-stat-block decision. Remaining native schema/markup conversion is pending."
 }
