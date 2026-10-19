@@ -1,8 +1,0 @@
-{
-  "id": "competency.climb",
-  "kind": "competency",
-  "name": "Climb",
-  "independentRankedState": true,
-  "nativeSkill": null,
-  "baselineStatus": "reviewed-granular-competency; further mechanics deferred"
-}

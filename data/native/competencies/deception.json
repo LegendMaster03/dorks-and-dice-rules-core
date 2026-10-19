@@ -1,9 +1,0 @@
-{
-  "id": "competency.deception",
-  "kind": "competency",
-  "name": "Deception",
-  "nativeSkill": "skill.deception",
-  "reviewedHistoricalAliases": [
-    "Bluff"
-  ]
-}

@@ -1,9 +1,0 @@
-{
-  "id": "competency.animal-handling",
-  "kind": "competency",
-  "name": "Animal Handling",
-  "nativeSkill": "skill.animal-handling",
-  "reviewedHistoricalAliases": [
-    "Handle Animal"
-  ]
-}

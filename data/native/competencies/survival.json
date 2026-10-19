@@ -1,9 +1,0 @@
-{
-  "id": "competency.survival",
-  "kind": "competency",
-  "name": "Survival",
-  "nativeSkill": "skill.survival",
-  "reviewedHistoricalAliases": [
-    "Wilderness Lore"
-  ]
-}

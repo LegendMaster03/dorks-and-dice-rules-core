@@ -1,0 +1,61 @@
+{
+  "status": "future-import-mappings-only",
+  "mappings": [
+    {
+      "externalName": "Bluff",
+      "nativeSkill": "skill.deception"
+    },
+    {
+      "externalName": "Diplomacy",
+      "nativeSkill": "skill.persuasion"
+    },
+    {
+      "externalName": "Handle Animal",
+      "nativeSkill": "skill.animal-handling"
+    },
+    {
+      "externalName": "Heal",
+      "nativeSkill": "skill.medicine"
+    },
+    {
+      "externalName": "Intimidate",
+      "nativeSkill": "skill.intimidation"
+    },
+    {
+      "externalName": "Pick Pocket (3e)",
+      "nativeSkill": "skill.sleight-of-hand"
+    },
+    {
+      "externalName": "Sense Motive",
+      "nativeSkill": "skill.insight"
+    },
+    {
+      "externalName": "Wilderness Lore (3e)",
+      "nativeSkill": "skill.survival"
+    },
+    {
+      "externalName": "Knowledge (Arcana)",
+      "nativeSkill": "skill.arcana"
+    },
+    {
+      "externalName": "Knowledge (History)",
+      "nativeSkill": "skill.history"
+    },
+    {
+      "externalName": "Knowledge (Nature)",
+      "nativeSkill": "skill.nature"
+    },
+    {
+      "externalName": "Knowledge (Religion)",
+      "nativeSkill": "skill.religion"
+    },
+    {
+      "externalName": "Knowledge (Psionics)",
+      "nativeSkill": "skill.psionics"
+    },
+    {
+      "externalName": "Knowledge (the planes)",
+      "nativeSkill": "skill.the-planes"
+    }
+  ]
+}

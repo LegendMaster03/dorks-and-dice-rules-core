@@ -24,12 +24,12 @@
     }
   ],
   "nativeBaseline": {
-    "type": "curated JSON source of truth",
-    "files": "data/native/skills/*.json; data/native/competencies/*.json",
-    "reference": "5etools-mirror-3/5etools-src",
-    "pinnedRevision": "90d343cde64cf8dce1083ea0525a6b0b9e545f2e",
-    "upstreamDataset": "data/skills.json",
+    "type": "authored-native-json-catalogs",
+    "files": [
+      "data/native/skills.json",
+      "data/native/competencies.json"
+    ],
     "externalSourceIsRuntimeDependency": false,
-    "coverage": "18 skills and selected reviewed competencies, provisional"
+    "scope": "Native Skills plus unified crafting/tool Competencies; 18 selected SRD skill descriptions are still provisional until official-SRD verification; all reviewed 3.x Skill identities are included without source metadata; complete mechanical profiles not yet implemented"
   }
 }

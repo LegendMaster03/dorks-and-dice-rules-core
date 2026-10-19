@@ -1,23 +1,40 @@
-# Native skills and universal competencies baseline
+# Native Skills and Competencies — corrected baseline
 
-**Status:** Initial native data-only fixtures; no executable rules engine or final JSON schema. The JSON under `data/native/` is the **authority for Dorks & Dice** when approved and published. Original external source files are neither required at evaluation time nor imported into a source-layer database as part of this baseline.
+**Status:** Initial data-only, provisional foundation on the clean-slate rewrite branch. No executable rules engine, database, or public/tester access change.
 
-## Approach
+## Native data organization
 
-This baseline was **curated directly** from SRD-flagged records in 5etools `data/skills.json` pinned at commit `90d343cde64cf8dce1083ea0525a6b0b9e545f2e`, plus reviewed Dorks & Dice competency decisions recovered from `main` documentation and implementation. There is **no baseline importer or generator** in this repository.
+- **`data/native/skills.json`** contains ordinary skills, independently usable narrower skills and derived parent skills, plus the previously adopted standalone skills and specialized Perform/Profession skills. There is no Skills directory of per-entry files.
+- **`data/native/competencies.json`** contains actual competencies: the combination of crafting skills and tool proficiencies into unified trainable capabilities. A competency can have only a crafting facet, only a tool facet, or both. Two different numeric profiles must remain distinct even where their training identity is reviewed as shared.
+- **`data/conversions/skill-name-mappings.json`** holds prior-edition skill-name mappings for future imported content, not native rule semantics. The optional review audit in `data/reference/` documents why the initial list includes the concepts it does, without placing import history in Skills.
 
-The 18 skills are stored as `data/native/skills/<name>.json`. For initial review, each file retains a shorter summary based on the SRD 5.2.1-marked entry and detailed examples from the SRD 5.1-marked entry. Combining text is not automatic permission to combine inconsistent procedures; mechanically divergent material must be reviewed before final approval. No source-specific `srd`, `srd52` or `PHB` flags are used by our native evaluator. Native IDs are stable independently of paths.
+The native JSON is the Dorks & Dice rules source of truth, not a projection of historical-edition records.
 
-Universal `data/native/competencies/` entries reference native skills when the concept has a straightforward skill presentation. They retain existing Dorks & Dice distinctions: direct aliases; independently ranked 3.x skill components; conditional one-way composites; Craft/Perform/Profession families whose children have independent rank state; and Alchemy with one learned training identity but distinct skill/tool mechanical profiles. This first group is **not** the complete competency catalog; later reviewed Craft/Perform/Profession specialties, standalone tools and other identities must still be added.
+## Skills
 
-For example, `competency.stealth` references `skill.stealth`, retains `competency.hide` and `competency.move-silently` as independent state, and declares the reviewed arithmetic-mean composition without erasing those components. The precise conflict behavior between native defaults, global edits, campaigns and optional source contributions remains a separate foundation decision.
+The initial 18 standard SRD skill names and short descriptions are present as native Skills. Additional previously adopted 3.x skills include Appraise, Balance, Climb, Concentration, Decipher Script, Disable Device, Disguise, Escape Artist, Gather Information, Hide, Listen, Move Silently, Open Lock, Ride, Search, Spellcraft, Spot, Swim, Tumble, Use Magic Device, Use Rope, and reviewed psionic capabilities. Some skill numerical mechanics still require native design review; they have not been silently inferred from SRD prose.
 
-## Copyright and attribution
+All three members of **Perception ← Listen + Spot** are skills. Likewise, Stealth, Acrobatics and Athletics are **skills**, not competencies; their component Skills retain independent numerical state. The reviewed arithmetic mean, truncation toward zero, and component-before-parent modifier order are recorded on each parent Skill.
 
-The initial skill texts were copied from the `srd` and `srd52`-marked records in [5etools' data/skills.json](https://github.com/5etools-mirror-3/5etools-src/blob/90d343cde64cf8dce1083ea0525a6b0b9e545f2e/data/skills.json). These are treated as **candidate CC-licensed excerpts** and require comparison against the official SRD 5.1 and 5.2.1 before final publication. Licensed material still requires attribution. Official document identities and CC BY 4.0 attribution statements are recorded in `data/reference/srd/manifest.json`; preserving legal attribution does **not** require a runtime dependency on imported source editions or source records.
+Crafting-related capabilities are not duplicated as unrelated Skill and Competency rows. Craft specialization is modeled under the Competency catalog; Perform and Profession specialties remain skill-presented, with individually addressable children. Speak Language belongs to the separate language-proficiency subsystem, not to Skills or Competencies.
 
-The original `skills.index.json` discovery records were removed as redundant; native skills are now maintained in individual files. No full-SRD import, test database, source ingestion pipeline or gameplay implementation has been introduced.
+## Competencies
 
-## Additional native data
+The initial Competencies catalog contains all 20 previously reviewed Craft specialties and 13 separately established tool-based identities. For example:
 
-Continue creating **one native entity per JSON file** by adapting appropriate CC-covered rules from the two SRDs and applying reviewed changes. Do not embed non-SRD 5etools publications under an assumption that the entire repository is CC. Use the old Rules Core code and `docs/rewrite/` to recover previous *decisions*, not the old application structure. Unsupported or contradictory mechanics must remain marked for review, never guessed.
+- **Alchemy:** crafting-skill facet **and** Alchemist's Supplies tool-proficiency facet under one competency identity.
+- **Carpentry:** crafting-skill facet **and** Carpenter's Tools facet under one identity.
+- **Smithing:** a tool-proficiency competency. It is **not** automatically equated with Blacksmithing, Armorsmithing or Weaponsmithing.
+- **Forgery:** a tool competency with an explicit link to the separately adopted Forgery skill; this linkage is not a generalized claim that skills and competencies are interchangeable.
+
+Only explicit reviewed relationships unify training. A crafting rank does not turn into a tool-proficiency bonus or vice versa. Standalone tools do not invent Craft (X) source rules.
+
+## Historical source information
+
+The core Skills and Competencies catalogs contain no `srd`, `srd52`, previous-edition flags, old source keys, or historical name aliases. Earlier names such as Bluff and Sense Motive are represented **only** in future import-name mapping data. Native Skill names are the chosen Dorks & Dice names.
+
+CC BY 4.0 attributions are retained in `data/reference/srd/manifest.json` because the initial 18 descriptions came from SRD-flagged structured records. Legal provenance documentation does not create a gameplay dependency on an original ruleset. Official-SRD coverage checking is still required before treating excerpts as verified distributable text.
+
+## Checks and remaining work
+
+Structural tests cover the reviewed skill corpus, 18 SRD skills, Skill-to-Skill composites, specialty counts, real competency facets and the strict boundary between core rules and import mappings. This is **not** confirmation that all native numeric Skill mechanics or all crafting/tool interactions are implemented. Those require approved schemas and gameplay-engine work.

@@ -10,7 +10,9 @@ Rules Core is the **headless, authoritative native rules engine and rules-conten
 
 ## Organization
 
-- `data/native/` — version-controlled, independently identified native Dorks & Dice entities, one primary JSON document per entity
+- `data/native/skills.json` — native skills, including all adopted historical-edition skill concepts but **no edition/import metadata**
+- `data/native/competencies.json` — unified crafting-skill and tool-proficiency capabilities, not duplicated ordinary Skills
+- `data/native/` — version-controlled, independently identified native Dorks & Dice entities, one primary JSON document per substantial entity; contained categories such as Skills and Competencies each use one JSON file
 - `data/conversions/` — reviewed, versioned imported-source-to-native conversion definitions
 - `data/schemas/` — data validation schemas as they are defined
 - `data/reference/` — only material cleared for inclusion in version control, with source/license attribution
@@ -25,7 +27,7 @@ Rules Core is the **headless, authoritative native rules engine and rules-conten
 
 Each native rule entity has a stable identity independent of file path. Mechanics, descriptions, and applicable lore can share a single structured JSON entity; `fluff` is not automatically a separate file. Classes and species have typed subfolders; subclasses and subspecies are grouped under their parent identity in directory paths **and** record an explicit parent relationship in data. Class advancement, including epic Level Bands, belongs to its class rather than a separate continuation/progression entity.
 
-Keep immutable external source representations, provenance, source-revision history, rules-lineage relationships, restricted source grants, explicitly adopted homebrew, campaign overrides, and globally published Rules Lawyer decisions conceptually distinct. A source import must not silently become authoritative native rules. Do not commit restricted content, user data, secrets, or deployed database snapshots.
+Keep future source import/conversion data, provenance and source-revision history outside the core native skill rules; separate permissions, restricted source grants, explicitly adopted homebrew, campaign overrides and global Rules Lawyer decisions. A source import must not silently become authoritative native rules. Do not commit restricted content, user data, secrets, or deployed database snapshots.
 
 ## Next steps
 

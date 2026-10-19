@@ -1,9 +1,0 @@
-{
-  "id": "competency.arcana",
-  "kind": "competency",
-  "name": "Arcana",
-  "nativeSkill": "skill.arcana",
-  "reviewedHistoricalAliases": [
-    "Knowledge (Arcana)"
-  ]
-}

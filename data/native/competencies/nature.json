@@ -1,9 +1,0 @@
-{
-  "id": "competency.nature",
-  "kind": "competency",
-  "name": "Nature",
-  "nativeSkill": "skill.nature",
-  "reviewedHistoricalAliases": [
-    "Knowledge (Nature)"
-  ]
-}

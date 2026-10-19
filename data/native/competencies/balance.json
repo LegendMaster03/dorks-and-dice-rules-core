@@ -1,8 +1,0 @@
-{
-  "id": "competency.balance",
-  "kind": "competency",
-  "name": "Balance",
-  "independentRankedState": true,
-  "nativeSkill": null,
-  "baselineStatus": "reviewed-granular-competency; further mechanics deferred"
-}
