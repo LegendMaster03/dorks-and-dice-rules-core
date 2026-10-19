@@ -1,0 +1,46 @@
+name: Official SRD Source Text Comparison
+
+on:
+  push:
+    branches:
+      - audit/source-srd-text-parity-20261019
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF extraction tool
+        run: |
+          if ! command -v pdftotext >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y poppler-utils
+          fi
+      - name: Retrieve authoritative SRD Creative Commons PDFs
+        run: |
+          curl --fail --location --retry 3 --max-time 120 \
+            https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf \
+            -o /tmp/srd51.pdf
+          curl --fail --location --retry 3 --max-time 120 \
+            https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf \
+            -o /tmp/srd52.pdf
+          pdfinfo /tmp/srd51.pdf | grep Pages
+          pdfinfo /tmp/srd52.pdf | grep Pages
+      - name: Compute normalized text overlap diagnostic
+        run: |
+          python3 tools/audit_srd_text_fidelity.py \
+            --srd51 /tmp/srd51.pdf \
+            --srd52 /tmp/srd52.pdf \
+            --output /tmp/srd-official-text-overlap.json
+      - name: Save detailed diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-srd-text-overlap
+          path: /tmp/srd-official-text-overlap.json
+          if-no-files-found: warn
