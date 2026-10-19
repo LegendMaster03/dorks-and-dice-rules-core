@@ -32,3 +32,4 @@ jobs:
           git add data/native data/reference/srd/monster-legacy-variant-review.json docs/rewrite/native-reconciliation-statistics.json docs/rewrite/monster-legacy-feature-results.json
           git commit -m "data(rewrite): restore removed monster spells and unique utility actions"
           git push origin HEAD:feature/rules-core-baseline-consistency
+# One-time final application following reconciliation-test stabilization.
