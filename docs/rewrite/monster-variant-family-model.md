@@ -34,6 +34,23 @@
 
 The candidate backlog remains **1,663**, because both newly mapped aliases were already counted as retained single-source records. This correction changes identity accounting and avoids tactical duplicates; it is not an additional reduction of the original unresolved-pair inventory.
 
-## Remaining acceptance work
+## Reconciliation outcome — removed 5e abilities
 
-Review the older mechanical differences for semantic equivalence, compatible inclusion, or true conflicts under the already-approved five general policies. Do not manufacture a monster variant to avoid deciding a changed attack suite. Finalize creature-family relationships, native schema/markup conversion, and integration with the unified Dorks & Dice attack, Grapple, defense and action rules before calling these stat blocks executable.
+The shared **285** monster stat blocks retain their selected 5.5e statistics and redesigned ordinary attack suites. The previous **84** independently compatible older traits remain included. Subsequent reconciliation restored **141 more older abilities** (traits, actions, and legendary choices), as well as **33 older spell grants** that had no 5.5e counterpart. The newer spellcasting ability and 5.5e action model remain authoritative.
+
+The retained reference comparison file contains **249 historical feature-review entries**, but they are *not* 249 outstanding mechanical decisions. Every originally flagged feature now has a feature-level disposition: already present, moved/reworked, restored, replaced by the newer attack suite, or still unresolved. Exactly **6 open mechanical questions across 6 creatures** remain:
+
+| Creature | Unresolved mechanic | Why it is not safe to translate mechanically |
+| --- | --- | --- |
+| Assassin | Assassinate | Automatic critical hits against surprised targets need integration with native surprise/critical escalation |
+| Lion | Pounce | Older conditional claw/bite extra attacks must be translated to newer Rend/Multiattack |
+| Panther | Pounce | Same conditional attack sequencing issue |
+| Saber-Toothed Tiger | Pounce | Same conditional attack sequencing issue |
+| Weretiger | Pounce (Tiger or Hybrid Form Only) | Same issue, with form-specific eligibility |
+| Priest | Divine Eminence | Older spell-slot expenditure needs a rule under newer slotless monster Spellcasting |
+
+In addition to those six questions, **64 source-unique monster entries** remain retained as independent catalog content. This is not an edition-conflict backlog. Newer-only monsters such as Pirate and Pirate Captain need no older comparison.
+
+Remaining engineering and acceptance work is **native markup/schema conversion, integration against unified Dorks & Dice effects and action timing, monster-family consistency, and challenge/encounter balancing checks**. Additional older traits and legendary choices can affect difficulty even though the selected CR was not changed. None of these are justification for creating a second monster solely for different DM tactics.
+
+Detailed per-feature dispositions: `data/reference/srd/monster-legacy-variant-review.json`. Cumulative statistics: `docs/rewrite/native-reconciliation-statistics.json`.
