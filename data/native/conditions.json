@@ -1,57 +1,37 @@
 {
   "_meta": {
     "status": "approved-native-mechanics; execution-schema-not-yet-final",
-    "note": "Native, edition-independent conditions. Exhaustion uses the approved SRD 5.1 tiered rule; Grappled combines the SRD 5.1 Speed and ending rules with SRD 5.2.1's specific attack penalty. Other listed conditions retain already reconciled effects."
+    "note": "Sixteen canonical Dorks & Dice conditions, including the approved Wet house rule. SRD 5.1 Exhaustion and the previously approved Grappled effects remain unchanged. Stunned has half Speed; Petrified does not inherently remove awareness. Original 5.x source records and reconciliation evidence remain under data/reference/srd/."
   },
   "conditions": [
     {
       "id": "condition.blinded",
       "name": "Blinded",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "A Blinded creature can not see.",
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Blinded",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "A blinded creature can't see and automatically fails any ability check that requires sight.",
-                  "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
-                ]
-              }
-            ]
-          }
+          "type": "sense",
+          "sense": "sight",
+          "availability": "none"
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Blinded",
-            "entries": [
-              "While you have the Blinded condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Can't See",
-                    "entries": [
-                      "You can't see and automatically fail any ability check that requires sight."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "{@action Attack|srd52} rolls against you have {@variantrule Advantage|srd52}, and your attack rolls have {@variantrule Disadvantage|srd52}."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+          "type": "check",
+          "appliesTo": "ability-check",
+          "requiresSense": "sight",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature"
         }
       ]
     },
@@ -59,49 +39,25 @@
       "id": "condition.charmed",
       "name": "Charmed",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "A Charmed creature is unable to attack or deliberately target its charmer with harmful abilities or magical effects.",
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Charmed",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.",
-                  "The charmer has advantage on any ability check to interact socially with the creature."
-                ]
-              }
-            ]
-          }
+          "type": "targeting-restriction",
+          "subject": "affected-creature",
+          "protectedTarget": "charmer",
+          "prohibited": [
+            "attack",
+            "harmful-ability",
+            "harmful-magical-effect"
+          ]
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Charmed",
-            "entries": [
-              "While you have the Charmed condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Can't Harm the Charmer",
-                    "entries": [
-                      "You can't attack the charmer or target the charmer with damaging abilities or {@variantrule Magical Effect|srd52|magical effects}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Social Advantage",
-                    "entries": [
-                      "The charmer has {@variantrule Advantage|srd52} on any ability check to interact with you socially."
-                    ]
-                  }
-                ]
-              }
-            ]
+          "type": "roll-mode",
+          "appliesTo": "ability-check",
+          "mode": "advantage",
+          "subject": "charmer",
+          "when": {
+            "purpose": "social-interaction-with-affected-creature"
           }
         }
       ]
@@ -278,63 +234,19 @@
       "id": "condition.incapacitated",
       "name": "Incapacitated",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "An Incapacitated creature can not take actions, Bonus Actions, or Reactions. The condition does not itself restrict movement, speech, or awareness.",
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Incapacitated",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "An incapacitated creature can't take actions or reactions."
-                ]
-              }
-            ]
-          }
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ]
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Incapacitated",
-            "entries": [
-              "While you have the Incapacitated condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Inactive",
-                    "entries": [
-                      "You can't take any {@variantrule Action|srd52|action}, {@variantrule Bonus Action|srd52}, or {@variantrule Reaction|srd52}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "No Concentration",
-                    "entries": [
-                      "Your {@status Concentration|srd52} is broken."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Speechless",
-                    "entries": [
-                      "You can't speak."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Surprised",
-                    "entries": [
-                      "If you're Incapacitated when you roll {@variantrule Initiative|srd52}, you have {@variantrule Disadvantage|srd52} on the roll."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+          "type": "concentration",
+          "operation": "end"
         }
       ]
     },
@@ -342,56 +254,52 @@
       "id": "condition.invisible",
       "name": "Invisible",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "An Invisible creature can not be seen without magic or a special sense. Its location can still be detected by sound or tracks. The condition does not inherently make the creature hidden.",
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Invisible",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.",
-                  "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
-                ]
-              }
-            ]
+          "type": "visibility",
+          "availability": "invisible-to-ordinary-sight",
+          "canBeSeenWith": [
+            "magic",
+            "special-sense"
+          ],
+          "includesWornOrCarriedEquipment": true
+        },
+        {
+          "type": "obscuration",
+          "degree": "heavily-obscured",
+          "purpose": "hiding"
+        },
+        {
+          "type": "location-clue",
+          "detectableBy": [
+            "sound",
+            "tracks"
+          ]
+        },
+        {
+          "type": "targeting-protection",
+          "appliesTo": "effects-requiring-target-to-be-seen",
+          "unless": {
+            "effectCreatorCanSeeAffectedCreature": true
           }
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Invisible",
-            "entries": [
-              "While you have the Invisible condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Surprise",
-                    "entries": [
-                      "If you're Invisible when you roll {@variantrule Initiative|srd52}, you have {@variantrule Advantage|srd52} on the roll."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Concealed",
-                    "entries": [
-                      "You aren't affected by any effect that requires its target to be seen unless the effect's creator can somehow see you. Any equipment you are wearing or carrying is also concealed."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "{@action Attack|srd52} rolls against you have {@variantrule Disadvantage|srd52}, and your attack rolls have {@variantrule Advantage|srd52}. If a creature can somehow see you, you don't gain this benefit against that creature."
-                    ]
-                  }
-                ]
-              }
-            ]
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-by-affected-creature",
+          "when": {
+            "targetCanSeeAffectedCreature": false
+          }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerCanSeeAffectedCreature": false
           }
         }
       ]
@@ -400,73 +308,46 @@
       "id": "condition.paralyzed",
       "name": "Paralyzed",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "A Paralyzed creature is Incapacitated, immobile, and unable to speak. Attacks that hit from close range are automatically critical hits.",
+      "appliesConditions": [
+        "condition.incapacitated"
+      ],
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Paralyzed",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "A paralyzed creature is {@condition incapacitated} and can't move or speak.",
-                  "The creature automatically fails Strength and Dexterity saving throws.",
-                  "Attack rolls against the creature have advantage.",
-                  "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
-                ]
-              }
-            ]
-          }
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Paralyzed",
-            "entries": [
-              "While you have the Paralyzed condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Incapacitated",
-                    "entries": [
-                      "You have the {@condition Incapacitated|srd52} condition."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Speed 0",
-                    "entries": [
-                      "Your {@variantrule Speed|srd52} is 0 and can't increase."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Saving Throws Affected",
-                    "entries": [
-                      "You automatically fail Strength and Dexterity {@variantrule Saving Throw|srd52|saving throws}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "{@action Attack|srd52} rolls against you have {@variantrule Advantage|srd52}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Automatic Critical Hits",
-                    "entries": [
-                      "Any attack roll that hits you is a {@variantrule Critical Hit|srd52} if the attacker is within 5 feet of you."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "critical-hit",
+          "result": "automatic-critical-hit",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerWithinFeet": 5,
+            "attackHits": true
+          },
+          "countsAsNatural20": false
         }
       ]
     },
@@ -474,89 +355,76 @@
       "id": "condition.petrified",
       "name": "Petrified",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "A Petrified creature becomes an inanimate substance but does not inherently lose awareness; an additional condition or effect can remove awareness.",
+      "appliesConditions": [
+        "condition.incapacitated"
+      ],
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Petrified",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.",
-                  "The creature is {@condition incapacitated}, can't move or speak, and is unaware of its surroundings.",
-                  "Attack rolls against the creature have advantage.",
-                  "The creature automatically fails Strength and Dexterity saving throws.",
-                  "The creature has resistance to all damage.",
-                  "The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
-                ]
-              }
-            ]
-          }
+          "type": "transformation",
+          "into": "solid-inanimate-substance",
+          "typicalMaterial": "stone",
+          "includes": "nonmagical-worn-or-carried-objects"
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Petrified",
-            "entries": [
-              "While you have the Petrified condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Turned to Inanimate Substance",
-                    "entries": [
-                      "You are transformed, along with any nonmagical objects you are wearing and carrying, into a solid inanimate substance (usually stone). Your weight increases by a factor of ten, and you cease aging."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Incapacitated",
-                    "entries": [
-                      "You have the {@condition Incapacitated|srd52} condition."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Speed 0",
-                    "entries": [
-                      "Your {@variantrule Speed|srd52} is 0 and can't increase."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "{@action Attack|srd52} rolls against you have {@variantrule Advantage|srd52}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Saving Throws Affected",
-                    "entries": [
-                      "You automatically fail Strength and Dexterity {@variantrule Saving Throw|srd52|saving throws}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Resist Damage",
-                    "entries": [
-                      "You have {@variantrule Resistance|srd52} to all damage."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Poison Immunity",
-                    "entries": [
-                      "You have {@variantrule Immunity|srd52} to the {@condition Poisoned|srd52} condition."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+          "type": "weight",
+          "operation": "multiply",
+          "factor": 10
+        },
+        {
+          "type": "aging",
+          "operation": "suspend"
+        },
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "damage-resistance",
+          "damageTypes": "all"
+        },
+        {
+          "type": "immunity",
+          "damageType": "poison"
+        },
+        {
+          "type": "immunity",
+          "condition": "condition.poisoned"
+        },
+        {
+          "type": "immunity",
+          "category": "disease"
+        },
+        {
+          "type": "existing-affliction",
+          "afflictions": [
+            "poison",
+            "disease"
+          ],
+          "operation": "suspend-not-neutralize",
+          "resumeWhenConditionEnds": true
         }
       ]
     },
@@ -581,51 +449,48 @@
       "id": "condition.prone",
       "name": "Prone",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "A Prone creature can crawl or spend movement to stand, has Disadvantage on attacks, and is easier to hit at close range.",
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Prone",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.",
-                  "The creature has disadvantage on attack rolls.",
-                  "An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
-                ]
-              }
-            ]
+          "type": "movement-restriction",
+          "allowed": [
+            "crawl",
+            "stand-up"
+          ]
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerWithinFeet": 5
           }
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Prone",
-            "entries": [
-              "While you have the Prone condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Restricted Movement",
-                    "entries": [
-                      "Your only movement options are to {@variantrule Crawling|srd52|crawl} or to spend an amount of movement equal to half your {@variantrule Speed|srd52} (round down) to right yourself and thereby end the condition. If your {@variantrule Speed|srd52} is 0, you can't right yourself."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "You have {@variantrule Disadvantage|srd52} on attack rolls. An attack roll against you has {@variantrule Advantage|srd52} if the attacker is within 5 feet of you. Otherwise, that attack roll has {@variantrule Disadvantage|srd52}."
-                    ]
-                  }
-                ]
-              }
-            ]
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerBeyondFeet": 5
           }
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "stands-up",
+          "movementCost": {
+            "operation": "half-speed",
+            "round": "down"
+          },
+          "requiresPositiveSpeed": true
         }
       ]
     },
@@ -664,58 +529,35 @@
       "id": "condition.stunned",
       "name": "Stunned",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "A Stunned creature is Incapacitated, staggers at half Speed, and can speak only falteringly.",
+      "appliesConditions": [
+        "condition.incapacitated"
+      ],
+      "effects": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Stunned",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "A stunned creature is {@condition incapacitated}, can't move, and can speak only falteringly.",
-                  "The creature automatically fails Strength and Dexterity saving throws.",
-                  "Attack rolls against the creature have advantage."
-                ]
-              }
-            ]
-          }
+          "type": "speed",
+          "operation": "multiply",
+          "factor": 0.5
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Stunned",
-            "entries": [
-              "While you have the Stunned condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Incapacitated",
-                    "entries": [
-                      "You have the {@condition Incapacitated|srd52} condition."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Saving Throws Affected",
-                    "entries": [
-                      "You automatically fail Strength and Dexterity {@variantrule Saving Throw|srd52|saving throws}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "{@action Attack|srd52} rolls against you have {@variantrule Advantage|srd52}."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+          "type": "speech",
+          "availability": "faltering-only"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
         }
       ]
     },
@@ -723,81 +565,131 @@
       "id": "condition.unconscious",
       "name": "Unconscious",
       "kind": "condition",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
+      "description": "An Unconscious creature is unaware of its surroundings, unable to move or speak, and vulnerable to close-range critical hits.",
+      "appliesConditions": [
+        "condition.incapacitated",
+        "condition.prone"
+      ],
+      "onApply": [
         {
-          "key": "candidate-a",
-          "content": {
-            "name": "Unconscious",
-            "entries": [
-              {
-                "type": "list",
-                "items": [
-                  "An unconscious creature is {@condition incapacitated}, can't move or speak, and is unaware of its surroundings.",
-                  "The creature drops whatever it's holding and falls {@condition prone}.",
-                  "The creature automatically fails Strength and Dexterity saving throws.",
-                  "Attack rolls against the creature have advantage.",
-                  "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
-                ]
-              }
+          "event": "drop-held-objects"
+        }
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "awareness",
+          "availability": "none"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "critical-hit",
+          "result": "automatic-critical-hit",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerWithinFeet": 5,
+            "attackHits": true
+          },
+          "countsAsNatural20": false
+        }
+      ],
+      "persistsAfterEnding": [
+        "condition.prone"
+      ]
+    },
+    {
+      "id": "condition.wet",
+      "name": "Wet",
+      "kind": "condition",
+      "description": "A wet creature is one that has recently been swimming or soaked in water, or who has been affected by an effect. Wet creatures have disadvantage on saving throws against spells and effects that deal cold or lightning damage, disadvantage on saving throws made to resist the effects of extreme cold, and advantage on saving throws against spells or effects that deal fire damage. A creature that takes 5 or more fire damage in a single instance, removes its wet clothing or armor (creatures with wet fur remain wet even if they do this), or that spends 1 hour around a source of heat loses this condition.",
+      "appliedWhen": [
+        {
+          "event": "recently-swam"
+        },
+        {
+          "event": "soaked-in-water"
+        },
+        {
+          "event": "effect-applies-wet"
+        }
+      ],
+      "effects": [
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "mode": "disadvantage",
+          "when": {
+            "sourceKind": [
+              "spell",
+              "effect"
+            ],
+            "sourceDealsAnyDamageType": [
+              "cold",
+              "lightning"
             ]
           }
         },
         {
-          "key": "candidate-b",
-          "content": {
-            "name": "Unconscious",
-            "entries": [
-              "While you have the Unconscious condition, you experience the following effects.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Inert",
-                    "entries": [
-                      "You have the {@condition Incapacitated|srd52} and {@condition Prone|srd52} conditions, and you drop whatever you're holding. When this condition ends, you remain {@condition Prone|srd52}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Speed 0",
-                    "entries": [
-                      "Your {@variantrule Speed|srd52} is 0 and can't increase."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Attacks Affected",
-                    "entries": [
-                      "{@action Attack|srd52} rolls against you have {@variantrule Advantage|srd52}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Saving Throws Affected",
-                    "entries": [
-                      "You automatically fail Strength and Dexterity {@variantrule Saving Throw|srd52|saving throws}."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Automatic Critical Hits",
-                    "entries": [
-                      "Any attack roll that hits you is a {@variantrule Critical Hit|srd52} if the attacker is within 5 feet of you."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Unaware",
-                    "entries": [
-                      "You're unaware of your surroundings."
-                    ]
-                  }
-                ]
-              }
-            ]
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "mode": "disadvantage",
+          "when": {
+            "purpose": "resist-extreme-cold"
           }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "mode": "advantage",
+          "when": {
+            "sourceKind": [
+              "spell",
+              "effect"
+            ],
+            "sourceDealsDamageType": "fire"
+          }
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "takes-damage",
+          "damageType": "fire",
+          "minimumDamageTaken": 5,
+          "sameDamageInstance": true
+        },
+        {
+          "event": "removes-wet-clothing-or-armor",
+          "unless": {
+            "hasWetFur": true
+          }
+        },
+        {
+          "event": "remains-around-heat-source",
+          "durationMinutes": 60
         }
       ]
     }
