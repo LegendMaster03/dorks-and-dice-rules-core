@@ -16,6 +16,12 @@ A rule with multiple proposed definitions is **not decided**. The original stagi
 6. Preserve mandatory third-party license and attribution information independently of native gameplay data. Existing pinned reference material is not part of the native runtime model.
 7. Validate every native entity for duplicate identities, conflicting representations, unresolved candidates, missing relationships and missing coverage. A successful inventory or import does not mean normalization is complete.
 
+## Approved cross-category reconciliation policy
+
+**Owner approved on 2026-10-18:** (1) combine equivalent mechanics as one native definition; (2) retain content unique to one SRD when compatible; (3) combine genuinely compatible, nonduplicated additions while respecting eligibility and costs; (4) use category-specific decisions for incompatible numerical values, never an automatic source preference or average; and (5) require a decision for fundamentally different procedures, applying existing design guidance first.
+
+The detailed scope and limitations are recorded in `docs/rewrite/native-rules-design-specification.md`. This approval supplies the default *decision method*, not missing category-specific numerical selections or redesigned procedures. Decisions with no governing policy stay explicit and unresolved. No additional source evidence is required in the native definition.
+
 ## Release gates
 
 **A. Structural consistency:** Native records have uniform representation and at most one authoritative definition each; undecided entries are explicit and contain no competing operative versions. This must be verified across the complete native corpus.
