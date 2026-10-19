@@ -1,22 +1,20 @@
 {
   "id": "class-feature.cleric.divine-intervention-improvement-level-20",
-  "name": "Divine Intervention Improvement",
+  "name": "Divine Intervention — Certain Supplication",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Divine Intervention Improvement",
-        "className": "Cleric",
-        "classSource": "SRD51",
-        "level": 20,
-        "entries": [
-          "At 20th level, your call for intervention succeeds automatically, no roll required."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.cleric",
-  "classLevel": 20
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Divine Intervention — Certain Supplication",
+    "description": "Divine Intervention — Certain Supplication is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "supplication-capstone",
+      "improves": "class-feature.cleric.divine-intervention-level-10",
+      "atLevel": 20,
+      "supplicationAutomaticSuccess": true,
+      "retainsSuccessCooldownDays": 7,
+      "doesNotReduceDirectInterventionCooldown": true
+    }
+  }
 }

@@ -2,40 +2,25 @@
   "id": "class-feature.cleric.improved-blessed-strikes-level-14",
   "name": "Improved Blessed Strikes",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Improved Blessed Strikes",
-        "className": "Cleric",
-        "classSource": "SRD52",
-        "level": 14,
-        "entries": [
-          "The option you chose for Blessed Strikes grows more powerful.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "entries",
-                "name": "Divine Strike",
-                "entries": [
-                  "The extra damage of your Divine Strike increases to {@damage 2d8}."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Potent Spellcasting",
-                "entries": [
-                  "When you cast a Cleric cantrip and deal damage to a creature with it, you can give vitality to yourself or another creature within 60 feet of yourself, granting a number of {@variantrule Temporary Hit Points|SRD52} equal to twice your Wisdom modifier."
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.cleric",
-  "classLevel": 14
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Improved Blessed Strikes",
+    "description": "Improved Blessed Strikes is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "improve-selected-blessed-strikes-option",
+      "requires": "class-feature.cleric.blessed-strikes-level-7",
+      "divineStrike": {
+        "totalDamage": "2d8",
+        "notAdditiveToPriorDie": true
+      },
+      "potentSpellcasting": {
+        "on": "cleric-cantrip-deals-damage-to-creature",
+        "targets": "self-or-other-creature-within-60-feet",
+        "temporaryHitPoints": "2*wisdom-modifier"
+      },
+      "doesNotGrantUnselectedOption": true
+    }
+  }
 }

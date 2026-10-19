@@ -2,21 +2,19 @@
   "id": "class-feature.cleric.sear-undead-level-5",
   "name": "Sear Undead",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Sear Undead",
-        "className": "Cleric",
-        "classSource": "SRD52",
-        "level": 5,
-        "entries": [
-          "Whenever you use Turn Undead, you can roll a number of d8s equal to your Wisdom modifier (minimum of {@dice 1d8}) and add the rolls together. Each Undead that fails its saving throw against that use of Turn Undead takes Radiant damage equal to the roll's total. This damage doesn't end the turn effect."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.cleric",
-  "classLevel": 5
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Sear Undead",
+    "description": "Sear Undead is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "turn-undead-failed-save-extra-damage",
+      "appliesTo": "modern-turn-undead-failed-wisdom-save",
+      "damageDice": "max(1,wisdom-modifier)d8",
+      "damageType": "radiant",
+      "doesNotEndTurnUndead": true,
+      "destructionSupersedesDamage": true
+    }
+  }
 }

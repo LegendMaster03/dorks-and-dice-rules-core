@@ -2,1380 +2,1647 @@
   "id": "class.cleric",
   "name": "Cleric",
   "kind": "class",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Cleric",
-        "hd": {
-          "number": 1,
-          "faces": 8
-        },
-        "proficiency": [
-          "wis",
-          "cha"
-        ],
-        "spellcastingAbility": "wis",
-        "casterProgression": "full",
-        "preparedSpells": "<$level$> + <$wis_mod$>",
-        "preparedSpellsChange": "restLong",
-        "cantripProgression": [
-          3,
-          3,
-          3,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5
-        ],
-        "startingProficiencies": {
-          "armor": [
-            "light",
-            "medium",
-            "shield"
-          ],
-          "weapons": [
-            "simple"
-          ],
-          "skills": [
-            {
-              "choose": {
-                "from": [
-                  "history",
-                  "insight",
-                  "medicine",
-                  "persuasion",
-                  "religion"
-                ],
-                "count": 2
-              }
-            }
-          ]
-        },
-        "startingEquipment": {
-          "additionalFromBackground": true,
-          "default": [
-            "(a) a {@item mace|srd51} or (b) a {@item warhammer|srd51} (if proficient)",
-            "(a) {@item scale mail|srd51}, (b) {@item leather armor|srd51}, or (c) {@item chain mail|srd51} (if proficient)",
-            "(a) a {@item light crossbow|srd51} and {@item Crossbow Bolts (20)|srd51|20 bolts} or (b) any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}",
-            "(a) a {@item priest's pack|srd51} or (b) an {@item explorer's pack|srd51}",
-            "A {@item shield|srd51} and a {@item holy symbol|srd51}"
-          ],
-          "goldAlternative": "{@dice 5d4 × 10|5d4 × 10|Starting Gold}",
-          "defaultData": [
-            {
-              "a": [
-                "mace|srd51"
-              ],
-              "b": [
-                "warhammer|srd51"
-              ]
-            },
-            {
-              "a": [
-                "scale mail|srd51"
-              ],
-              "b": [
-                "leather armor|srd51"
-              ],
-              "c": [
-                "chain mail|srd51"
-              ]
-            },
-            {
-              "a": [
-                "light crossbow|srd51",
-                "crossbow bolts (20)|srd51"
-              ],
-              "b": [
-                {
-                  "equipmentType": "weaponSimple"
-                }
-              ]
-            },
-            {
-              "a": [
-                "priest's pack|srd51"
-              ],
-              "b": [
-                "explorer's pack|srd51"
-              ]
-            },
-            {
-              "_": [
-                "shield|srd51",
-                {
-                  "equipmentType": "focusSpellcastingHoly"
-                }
-              ]
-            }
-          ]
-        },
-        "multiclassing": {
-          "requirements": {
-            "wis": 13
-          },
-          "proficienciesGained": {
-            "armor": [
-              "light",
-              "medium",
-              "shield"
-            ]
-          }
-        },
-        "classTableGroups": [
-          {
-            "colLabels": [
-              "{@filter Cantrips Known|spells|level=0|class=Cleric}"
-            ],
-            "rows": [
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ],
-              [
-                5
-              ]
-            ]
-          },
-          {
-            "title": "Spell Slots per Spell Level",
-            "colLabels": [
-              "{@filter 1st|spells|level=1|class=Cleric}",
-              "{@filter 2nd|spells|level=2|class=Cleric}",
-              "{@filter 3rd|spells|level=3|class=Cleric}",
-              "{@filter 4th|spells|level=4|class=Cleric}",
-              "{@filter 5th|spells|level=5|class=Cleric}",
-              "{@filter 6th|spells|level=6|class=Cleric}",
-              "{@filter 7th|spells|level=7|class=Cleric}",
-              "{@filter 8th|spells|level=8|class=Cleric}",
-              "{@filter 9th|spells|level=9|class=Cleric}"
-            ],
-            "rowsSpellProgression": [
-              [
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                2,
-                1,
-                1
-              ]
-            ]
-          }
-        ],
-        "classFeatures": [
-          "Spellcasting|Cleric||1",
-          {
-            "classFeature": "Divine Domain|Cleric||1",
-            "gainSubclassFeature": true
-          },
-          {
-            "classFeature": "Channel Divinity|Cleric||2",
-            "tableDisplayName": "Channel Divinity (1/rest)"
-          },
-          {
-            "classFeature": "Divine Domain feature|Cleric||2",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Cleric||4",
-          "Destroy Undead (CR 1/2)|Cleric||5",
-          {
-            "classFeature": "Channel Divinity|Cleric||6",
-            "tableDisplayName": "Channel Divinity (2/rest)"
-          },
-          {
-            "classFeature": "Divine Domain feature|Cleric||6",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Cleric||8",
-          "Destroy Undead (CR 1)|Cleric||8",
-          {
-            "classFeature": "Divine Domain feature|Cleric||8",
-            "gainSubclassFeature": true
-          },
-          "Divine Intervention|Cleric||10",
-          "Destroy Undead (CR 2)|Cleric||11",
-          "Ability Score Improvement|Cleric||12",
-          "Destroy Undead (CR 3)|Cleric||14",
-          "Ability Score Improvement|Cleric||16",
-          "Destroy Undead (CR 4)|Cleric||17",
-          {
-            "classFeature": "Divine Domain feature|Cleric||17",
-            "gainSubclassFeature": true
-          },
-          {
-            "classFeature": "Channel Divinity|Cleric||18",
-            "tableDisplayName": "Channel Divinity (3/rest)"
-          },
-          "Ability Score Improvement|Cleric||19",
-          "Divine Intervention Improvement|Cleric||20"
-        ],
-        "subclassTitle": "Divine Domain",
-        "lore": [
-          {
-            "name": "Cleric",
-            "entries": [
-              {
-                "name": "Cleric",
-                "type": "section",
-                "entries": [
-                  "Arms and eyes upraised toward the sun and a prayer on his lips, an elf begins to glow with an inner light that spills out to heal his battle-worn companions.",
-                  "Chanting a song of glory, a dwarf swings his axe in wide swaths to cut through the ranks of orcs arrayed against him, shouting praise to the gods with every foe's fall.",
-                  "Calling down a curse upon the forces of undeath, a human lifts her holy symbol as light pours from it to drive back the zombies crowding in on her companions.",
-                  "Clerics are intermediaries between the mortal world and the distant planes of the gods. As varied as the gods they serve, clerics strive to embody the handiwork of their deities. No ordinary priest, a cleric is imbued with divine magic.",
-                  {
-                    "type": "entries",
-                    "name": "Healers and Warriors",
-                    "entries": [
-                      "Divine magic, as the name suggests, is the power of the gods, flowing from them into the world. Clerics are conduits for that power, manifesting it as miraculous effects. The gods don't grant this power to everyone who seeks it, but only to those chosen to fulfill a high calling.",
-                      "Harnessing divine magic doesn't rely on study or training. A cleric might learn formulaic prayers and ancient rites, but the ability to cast cleric spells relies on devotion and an intuitive sense of a deity's wishes.",
-                      "Clerics combine the helpful magic of healing and inspiring their allies with spells that harm and hinder foes. They can provoke awe and dread, lay curses of plague or poison, and even call down flames from heaven to consume their enemies. For those evildoers who will benefit most from a mace to the head, clerics depend on their combat training to let them wade into melee with the power of the gods on their side."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Divine Agents",
-                    "entries": [
-                      "Not every acolyte or officiant at a temple or shrine is a cleric. Some priests are called to a simple life of temple service, carrying out their gods' will through prayer and sacrifice, not by magic and strength of arms. In some cities, priesthood amounts to a political office, viewed as a stepping stone to higher positions of authority and involving no communion with a god at all. True clerics are rare in most hierarchies.",
-                      "When a cleric takes up an adventuring life, it is usually because his or her god demands it. Pursuing the goals of the gods often involves braving dangers beyond the walls of civilization, smiting evil or seeking holy relics in ancient tombs. Many clerics are also expected to protect their deities' worshipers, which can mean fighting rampaging orcs, negotiating peace between warring nations, or sealing a portal that would allow a demon prince to enter the world.",
-                      "Most adventuring clerics maintain some connection to established temples and orders of their faiths. A temple might ask for a cleric's aid, or a high priest might be in a position to demand it."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Creating a Cleric",
-                    "entries": [
-                      "As you create a cleric, the most important question to consider is which deity to serve and what principles you want your character to embody. Appendix B includes lists of many of the gods of the multiverse. Check with your DM to learn which deities are in your campaign.",
-                      "Once you've chosen a deity, consider your cleric's relationship to that god. Did you enter this service willingly? Or did the god choose you, impelling you into service with no regard for your wishes? How do the temple priests of your faith regard you: as a champion or a troublemaker? What are your ultimate goals? Does your deity have a special task in mind for you? Or are you striving to prove yourself worthy of a great quest?",
-                      {
-                        "type": "entries",
-                        "name": "Quick Build",
-                        "entries": [
-                          "You can make a cleric quickly by following these suggestions. First, Wisdom should be your highest ability score, followed by Strength or Constitution. Second, choose the {@background acolyte} background."
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "source": "SRD51",
-                "page": 56
-              },
-              {
-                "type": "section",
-                "entries": [
-                  {
-                    "type": "quote",
-                    "entries": [
-                      "To become a cleric is to become a messenger of the gods. The power the divine offers is great, but it always comes with tremendous responsibility."
-                    ],
-                    "by": "Riggby the patriarch"
-                  },
-                  "Almost all the folk in the world who revere a deity live their lives without ever being directly touched by a divine being. As such, they can never know what it feels like to be a cleric—someone who is not only a devout worshiper, but who has also been invested with a measure of a deity's power.",
-                  "The question has long been debated: Does a mortal become a cleric as a consequence of deep devotion to one's deity, thereby attracting the god's favor? Or is it the deity who sees the potential in a person and calls that individual into service? Ultimately, perhaps, the answer doesn't matter. However clerics come into being, the world needs clerics as much as clerics and deities need each other.",
-                  "If you're playing a cleric character, the following sections offer ways to add some detail to that character's history and personality.",
-                  {
-                    "type": "quote",
-                    "entries": [
-                      "I don't understand the attraction of gods. Why would anyone worship anything other than me?"
-                    ],
-                    "by": "Xanathar"
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Temple",
-                    "entries": [
-                      "Most clerics start their lives of service as priests in an order, then later realize that they have been blessed by their god with the qualities needed to become a cleric. To prepare for this new duty, candidates typically receive instruction from a cleric of a temple or another place of study devoted to their deity.",
-                      "Some temples are cut off from the world so that their occupants can focus on devotions, while other temples open their doors to minister to and heal the masses. What is noteworthy about the temple you studied at?",
-                      {
-                        "type": "table",
-                        "caption": "Temple",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Temple"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "Your temple is said to be the oldest surviving structure built to honor your god."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "Acolytes of several like-minded deities all received instruction together in your temple."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "You come from a temple famed for the brewery it operates. Some say you smell like one of its ales."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "Your temple is a fortress and a proving ground that trains warrior-priests."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "Your temple is a peaceful, humble place, filled with vegetable gardens and simple priests."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "You served in a temple in the Outer Planes."
-                          ]
-                        ]
-                      },
-                      {
-                        "type": "entries",
-                        "name": "Keepsake",
-                        "entries": [
-                          "Many clerics have items among their personal gear that symbolize their faith, remind them of their vows, or otherwise help to keep them on their chosen paths. Even though such an item is not imbued with divine power, it is vitally important to its owner because of what it represents.",
-                          {
-                            "type": "table",
-                            "caption": "Keepsake",
-                            "colLabels": [
-                              "{@dice d6}",
-                              "Keepsake"
-                            ],
-                            "colStyles": [
-                              "col-1 text-center",
-                              "col-11"
-                            ],
-                            "rows": [
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 1
-                                  }
-                                },
-                                "The finger bone of a saint"
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 2
-                                  }
-                                },
-                                "A metal-bound book that tells how to hunt and destroy infernal creatures"
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 3
-                                  }
-                                },
-                                "A pig's whistle that reminds you of your humble and beloved mentor"
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 4
-                                  }
-                                },
-                                "A braid of hair woven from the tail of a unicorn"
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 5
-                                  }
-                                },
-                                "A scroll that describes how best to rid the world of necromancers"
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 6
-                                  }
-                                },
-                                "A runestone said to be blessed by your god"
-                              ]
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "entries",
-                        "name": "Secret",
-                        "entries": [
-                          "No mortal soul is entirely free of second thoughts or doubt. Even a cleric must grapple with dark desires or the forbidden attraction of turning against the teachings of one's deity.",
-                          "If you haven't considered this aspect of your character yet, see the table entries for some possibilities, or use them for inspiration. Your deep, dark secret might involve something you did (or are doing), or it could be rooted in the way you feel about the world and your role in it.",
-                          {
-                            "type": "table",
-                            "caption": "Secret",
-                            "colLabels": [
-                              "{@dice d6}",
-                              "Secret"
-                            ],
-                            "colStyles": [
-                              "col-1 text-center",
-                              "col-11"
-                            ],
-                            "rows": [
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 1
-                                  }
-                                },
-                                "An imp offers you counsel. You try to ignore the creature, but sometimes its advice is helpful."
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 2
-                                  }
-                                },
-                                "You believe that, in the final analysis, the gods are nothing more than ultrapowerful mortal creatures."
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 3
-                                  }
-                                },
-                                "You acknowledge the power of the gods, but you think that most events are dictated by pure chance."
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 4
-                                  }
-                                },
-                                "Even though you can work divine magic, you have never truly felt the presence of a divine essence within yourself."
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 5
-                                  }
-                                },
-                                "You are plagued by nightmares that you believe are sent by your god as punishment for some unknown transgression."
-                              ],
-                              [
-                                {
-                                  "type": "cell",
-                                  "roll": {
-                                    "exact": 6
-                                  }
-                                },
-                                "In times of despair, you feel that you are but a plaything of the gods, and you resent their remoteness."
-                              ]
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "inset",
-                        "name": "Serving a Pantheon, Philosophy, or Force",
-                        "entries": [
-                          "The typical cleric is an ordained servant of a particular god and chooses a Divine Domain associated with that deity. The cleric's magic flows from the god or the god's sacred realm, and often the cleric bears a holy symbol that represents that divinity.",
-                          "Some clerics, especially in a world like Eberron, serve a whole pantheon, rather than a single deity. In certain campaigns, a cleric might instead serve a cosmic force, such as life or death, or a philosophy or concept, such as love, peace, or one of the nine alignments. Chapter 1 of the Dungeon Master's Guide explores options like these, in the section \"Gods of Your World.\"",
-                          "Talk with your DM about the divine options available in your campaign, whether they're gods, pantheons, philosophies, or cosmic forces. Whatever being or thing your cleric ends up serving, choose a Divine Domain that is appropriate for it, and if it doesn't have a holy symbol, work with your DM to design one.",
-                          "The cleric's class features often refer to your deity. If you are devoted to a pantheon, cosmic force, or philosophy, your cleric features still work for you as written. Think of the references to a god as references to the divine thing you serve that gives you your magic."
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "source": "XGE",
-                "page": 17
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/PHB/Cleric.webp"
-                },
-                "width": 868,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 8
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Cleric",
-        "primaryAbility": [
+    "description": "A divine spellcaster whose chosen faith, deity, pantheon or philosophical tradition grants full-list Cleric spells and two historical and modern ways to channel divine power. Domains and subclasses are not base-class entitlements.",
+    "spellcastingAbility": "wisdom",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "wisdom",
+      "charisma"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "heavy",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "simple"
+    ],
+    "skillChoices": {
+      "choose": 2,
+      "from": [
+        "history",
+        "insight",
+        "medicine",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "rankedClassSkills": [
+      "concentration",
+      "craft",
+      "diplomacy",
+      "heal",
+      "knowledge-arcana",
+      "knowledge-history",
+      "knowledge-religion",
+      "knowledge-planes",
+      "profession",
+      "spellcraft",
+      "scry"
+    ],
+    "skillPoints": {
+      "firstLevel": "4*(2+intelligence-modifier)",
+      "eachAdditionalLevel": "2+intelligence-modifier",
+      "rankedSkillsDistinctFromModernProficiency": true
+    },
+    "historicalAdditionalLanguageChoices": [
+      "celestial",
+      "abyssal",
+      "infernal"
+    ],
+    "historicalArmorArcaneSpellFailure": "apply-shared-spellcasting-rule-not-cleric-only",
+    "spellAccess": "entire-eligible-cleric-spell-list-for-castable-spell-levels",
+    "spellPreparation": "removed",
+    "spellKnownCapacity": "no-finite-leveled-spells-known-cap",
+    "cantripsKnownProgression": [
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "spellSlotsProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "spellResourceChoices": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "domainSpellSlots": "not-granted-until-later-domain-pass",
+    "domainSpellAccess": "not-granted-until-later-domain-pass",
+    "channelDivinityResource": "cleric.channel-divinity",
+    "channelDivinityUsesByLevel": [
+      [
+        1,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        18,
+        4
+      ]
+    ],
+    "channelDivinityAvailableAtClassLevel": 1,
+    "channelDivinityShortRestReturn": 1,
+    "channelDivinityLongRestReturn": "all",
+    "turningModes": [
+      "historical-turning-check",
+      "modern-saving-throw",
+      "historical-rebuke",
+      "historical-command",
+      "historical-bolster",
+      "historical-dispel"
+    ],
+    "legacyTurningDailyUses": "historical-3-plus-charisma-not-added",
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.cleric.divine-order-level-1",
+          "class-feature.cleric.spellcasting-level-1",
+          "cleric.historical-turn-undead",
+          "cleric.historical-rebuke-undead",
+          "cleric.historical-command-undead",
+          "cleric.historical-bolster-undead",
+          "cleric.historical-dispel-turning",
+          "cleric.divine-faith",
+          "cleric.channel-divinity-access"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel"
+        ],
+        "divineSparkDice": 0,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 0,
+          "will": 2
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.cleric.channel-divinity-level-2",
+          "class-feature.cleric.divine-spark-level-2",
+          "class-feature.cleric.turn-undead-level-2"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-4"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-1-2-level-5",
+          "class-feature.cleric.sear-undead-level-5"
+        ],
+        "improvements": [
           {
-            "wis": true
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 0.5
           }
         ],
-        "hd": {
-          "number": 1,
-          "faces": 8
-        },
-        "proficiency": [
-          "wis",
-          "cha"
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
         ],
-        "spellcastingAbility": "wis",
-        "casterProgression": "full",
-        "preparedSpellsProgression": [
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": 0.5,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
           4,
-          5,
-          6,
-          7,
-          9,
-          10,
-          11,
-          12,
-          14,
-          15,
-          16,
-          16,
-          17,
-          17,
-          18,
-          18,
-          19,
-          20,
-          21,
-          22
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
         ],
-        "preparedSpellsChange": "restLong",
-        "cantripProgression": [
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [
+          "class-feature.cleric.channel-divinity-level-6"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.channel-divinity",
+            "totalUses": 3
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": 0.5,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
           3,
           3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.cleric.blessed-strikes-level-7"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.cleric.divine-spark-level-2",
+            "damageOrHealingDice": "2d8"
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 0.5,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
           3,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
-          5,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
           5
         ],
-        "featProgression": [
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-8",
+          "class-feature.cleric.destroy-undead-cr-1-level-8"
+        ],
+        "improvements": [
           {
-            "name": "Epic Boon",
-            "category": [
-              "EB"
-            ],
-            "progression": {
-              "19": 1
-            }
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 1
           }
         ],
-        "startingProficiencies": {
-          "armor": [
-            "light",
-            "medium",
-            "shield"
-          ],
-          "weapons": [
-            "simple"
-          ],
-          "skills": [
-            {
-              "choose": {
-                "from": [
-                  "history",
-                  "insight",
-                  "medicine",
-                  "persuasion",
-                  "religion"
-                ],
-                "count": 2
-              }
-            }
-          ]
-        },
-        "startingEquipment": {
-          "additionalFromBackground": true,
-          "defaultData": [
-            {
-              "A": [
-                {
-                  "item": "chain shirt|srd52"
-                },
-                {
-                  "item": "shield|srd52"
-                },
-                {
-                  "item": "mace|srd52"
-                },
-                {
-                  "item": "holy symbol|srd52"
-                },
-                {
-                  "item": "priest's pack|srd52"
-                },
-                {
-                  "value": 7000
-                }
-              ],
-              "B": [
-                {
-                  "value": 11000
-                }
-              ]
-            }
-          ],
-          "entries": [
-            "{@i Choose A or B:} (A) {@item Chain Shirt|SRD52}, {@item Shield|SRD52}, {@item Mace|SRD52}, {@item Holy Symbol|SRD52}, {@item Priest's Pack|SRD52}, 7 GP; or (B) 110 GP"
-          ]
-        },
-        "multiclassing": {
-          "proficienciesGained": {
-            "armor": [
-              "light",
-              "medium",
-              "shield"
-            ]
-          }
-        },
-        "classTableGroups": [
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 1,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 1,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [
+          "class-feature.cleric.divine-intervention-level-10"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 1,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-2-level-11"
+        ],
+        "improvements": [
           {
-            "colLabels": [
-              "Channel Divinity",
-              "{@filter Cantrips|spells|level=0|class=Cleric}",
-              "{@filter Prepared Spells|spells|level=!0|class=Cleric}"
-            ],
-            "rows": [
-              [
-                0,
-                3,
-                4
-              ],
-              [
-                2,
-                3,
-                5
-              ],
-              [
-                2,
-                3,
-                6
-              ],
-              [
-                2,
-                4,
-                7
-              ],
-              [
-                2,
-                4,
-                9
-              ],
-              [
-                3,
-                4,
-                10
-              ],
-              [
-                3,
-                4,
-                11
-              ],
-              [
-                3,
-                4,
-                12
-              ],
-              [
-                3,
-                4,
-                14
-              ],
-              [
-                3,
-                5,
-                15
-              ],
-              [
-                3,
-                5,
-                16
-              ],
-              [
-                3,
-                5,
-                16
-              ],
-              [
-                3,
-                5,
-                17
-              ],
-              [
-                3,
-                5,
-                17
-              ],
-              [
-                3,
-                5,
-                18
-              ],
-              [
-                3,
-                5,
-                18
-              ],
-              [
-                3,
-                5,
-                19
-              ],
-              [
-                4,
-                5,
-                20
-              ],
-              [
-                4,
-                5,
-                21
-              ],
-              [
-                4,
-                5,
-                22
-              ]
-            ]
-          },
-          {
-            "title": "Spell Slots per Spell Level",
-            "colLabels": [
-              "{@filter 1st|spells|level=1|class=Cleric}",
-              "{@filter 2nd|spells|level=2|class=Cleric}",
-              "{@filter 3rd|spells|level=3|class=Cleric}",
-              "{@filter 4th|spells|level=4|class=Cleric}",
-              "{@filter 5th|spells|level=5|class=Cleric}",
-              "{@filter 6th|spells|level=6|class=Cleric}",
-              "{@filter 7th|spells|level=7|class=Cleric}",
-              "{@filter 8th|spells|level=8|class=Cleric}",
-              "{@filter 9th|spells|level=9|class=Cleric}"
-            ],
-            "rowsSpellProgression": [
-              [
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                2,
-                1,
-                1
-              ]
-            ]
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 2
           }
         ],
-        "classFeatures": [
-          "Spellcasting|Cleric|SRD52|1",
-          "Divine Order|Cleric|SRD52|1",
-          "Channel Divinity|Cleric|SRD52|2",
-          {
-            "classFeature": "Cleric Subclass|Cleric|SRD52|3",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Cleric|SRD52|4",
-          "Sear Undead|Cleric|SRD52|5",
-          {
-            "classFeature": "Subclass Feature|Cleric|SRD52|6",
-            "gainSubclassFeature": true
-          },
-          "Blessed Strikes|Cleric|SRD52|7",
-          "Ability Score Improvement|Cleric|SRD52|8",
-          "Divine Intervention|Cleric|SRD52|10",
-          "Ability Score Improvement|Cleric|SRD52|12",
-          "Improved Blessed Strikes|Cleric|SRD52|14",
-          "Ability Score Improvement|Cleric|SRD52|16",
-          {
-            "classFeature": "Subclass Feature|Cleric|SRD52|17",
-            "gainSubclassFeature": true
-          },
-          "Epic Boon|Cleric|SRD52|19",
-          "Greater Divine Intervention|Cleric|SRD52|20"
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
         ],
-        "subclassTitle": "Cleric Subclass",
-        "lore": [
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 2,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-12"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 2,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [],
+        "improvements": [
           {
-            "name": "Cleric",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Cleric",
-                "source": "SRD52",
-                "page": 68,
-                "entries": [
-                  "Clerics draw power from the realms of the gods and harness it to work miracles. Blessed by a deity, a pantheon, or another immortal entity, a Cleric can reach out to the divine magic of the Outer Planes—where gods dwell—and channel it to bolster people and battle foes.",
-                  "Because their power is a divine gift, Clerics typically associate themselves with temples dedicated to the deity or other immortal force that unlocked their magic. Harnessing divine magic doesn't rely on specific training, yet Clerics might learn prayers and rites that help them draw on power from the Outer Planes.",
-                  "Not every member of a temple or shrine is a Cleric. Some priests are called to a simple life of temple service, carrying out their devotion through prayer and rituals, not through magic. Many mortals claim to speak for the gods, but few can marshal the power of those gods the way a Cleric can."
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/Cleric.webp"
-                },
-                "credit": "Michael Broussard",
-                "width": 1700,
-                "height": 2177
-              },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/051-03-027.cleric-praying.webp"
-                },
-                "title": "A Cleric prays for the day's spells",
-                "credit": "Irina Nordsol",
-                "width": 1855,
-                "height": 1200
-              }
-            ]
+            "feature": "class-feature.cleric.divine-spark-level-2",
+            "damageOrHealingDice": "3d8"
           }
-        ]
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 2,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-3-level-14",
+          "class-feature.cleric.improved-blessed-strikes-level-14"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 3
+          },
+          {
+            "feature": "class-feature.cleric.blessed-strikes-level-7",
+            "upgrade": "improved-blessed-strikes"
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 3,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 3,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-16"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 3,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-4-level-17"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 4
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.cleric.channel-divinity-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.channel-divinity",
+            "totalUses": 4
+          },
+          {
+            "feature": "class-feature.cleric.divine-spark-level-2",
+            "damageOrHealingDice": "4d8"
+          }
+        ],
+        "channelDivinityUses": 4,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 4,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 4,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 4,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.cleric.divine-intervention-improvement-level-20",
+          "class-feature.cleric.greater-divine-intervention-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.cleric.divine-intervention-level-10",
+            "supplicationAutoSuccess": true,
+            "greaterInterventionAdds": "wish"
+          }
+        ],
+        "channelDivinityUses": 4,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 4,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 12,
+          "reflex": 6,
+          "will": 12
+        }
       }
-    }
-  ]
+    ],
+    "inlineFeatures": [
+      {
+        "id": "cleric.historical-turn-undead",
+        "name": "Historical Turn Undead",
+        "classLevel": 1,
+        "description": "An alternate Turn Undead procedure using 3.x Charisma turning checks, total undead Hit Dice and distance; independent of modern Wisdom-save turning procedure but uses same Channel Divinity pool.",
+        "mechanics": {
+          "kind": "legacy-turn-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "effectOnSuccess": "undead-flee-for-10-rounds-or-cower-if-no-escape",
+          "durationRounds": 10,
+          "endsIfClericApproachesWithinFeet": 10,
+          "destroyThreshold": "cleric-class-level-at-least-twice-undead-hit-dice",
+          "notAdditionalModernSave": true
+        }
+      },
+      {
+        "id": "cleric.historical-rebuke-undead",
+        "name": "Rebuke Undead",
+        "classLevel": 1,
+        "description": "Use historical Charisma-based undead rebuking through shared Channel Divinity; rebuked undead cower for 10 rounds, with no moral-alignment requirement.",
+        "mechanics": {
+          "kind": "legacy-rebuke-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "onSuccessfulRebuke": "undead-cowers",
+          "durationRounds": 10,
+          "damageType": "none",
+          "commandThreshold": "cleric-class-level-at-least-twice-undead-hit-dice"
+        }
+      },
+      {
+        "id": "cleric.historical-command-undead",
+        "name": "Command Undead",
+        "classLevel": 1,
+        "description": "Control qualifying undead that would otherwise be commanded by an effective historical rebuke check; limited total HD.",
+        "mechanics": {
+          "kind": "legacy-command-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "requires": "legacy-rebuke-result-would-command-target",
+          "commandIf": "cleric-class-level-at-least-twice-undead-hit-dice",
+          "maximumTotalControlledHitDice": "cleric-class-level",
+          "mentalOrdersAction": "action",
+          "canVoluntarilyRelease": true,
+          "notAlignmentGated": true
+        }
+      },
+      {
+        "id": "cleric.historical-bolster-undead",
+        "name": "Bolster Undead",
+        "classLevel": 1,
+        "description": "Apply the historical rebuking check to bolster qualifying undead against later turning for 10 rounds; uses the shared channeling pool.",
+        "mechanics": {
+          "kind": "legacy-bolster-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "effectiveUndeadHitDiceForTurning": "max(actual-hit-dice,turn-check-table-result)",
+          "durationRounds": 10
+        }
+      },
+      {
+        "id": "cleric.historical-dispel-turning",
+        "name": "Dispel Turning",
+        "classLevel": 1,
+        "description": "Use a historical turning check to counter an existing Turn Undead effect, subject to the opposing turning result and affected HD.",
+        "mechanics": {
+          "kind": "legacy-dispel-turning",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "comparison": "rebuke-check-equal-or-greater-than-existing-turn-check",
+          "limitTotalUndeadHitDice": "turning-damage-roll"
+        }
+      },
+      {
+        "id": "cleric.divine-faith",
+        "name": "Divine Faith",
+        "classLevel": 1,
+        "description": "A Cleric channels divine power through a deity, pantheon, principle, or spiritual vocation. Worship of a specific deity and alignment qualifications are not required.",
+        "mechanics": {
+          "kind": "divine-source-identity",
+          "deityOptional": true,
+          "faithOrSpiritualConvictionAllowed": true,
+          "noAlignmentPrerequisite": true,
+          "alignmentAuras": "historical-flavor-without-class-eligibility-restriction",
+          "noClassPowerLossForAlignmentChange": true
+        }
+      },
+      {
+        "id": "cleric.channel-divinity-access",
+        "name": "Initial Channel Divinity",
+        "classLevel": 1,
+        "description": "Gain the unified Channel Divinity pool with two uses at level one, initially permitting only historical Turn/Rebuke/Command/Bolster/Dispel procedures. Modern Turn Undead and Divine Spark unlock at level two.",
+        "mechanics": {
+          "kind": "initial-divine-resource-grant",
+          "resource": "cleric.channel-divinity",
+          "initialUses": 2,
+          "shortRestRestore": 1,
+          "longRestRestore": "all",
+          "startingEffects": [
+            "cleric.historical-turn-undead",
+            "cleric.historical-rebuke-undead",
+            "cleric.historical-command-undead",
+            "cleric.historical-bolster-undead",
+            "cleric.historical-dispel-turning"
+          ],
+          "modernEffectsUnlockAtClericLevel": 2
+        }
+      }
+    ],
+    "selectableOptionFeatures": [
+      "class-feature.cleric.protector-level-1",
+      "class-feature.cleric.thaumaturge-level-1",
+      "class-feature.cleric.divine-strike-level-7",
+      "class-feature.cleric.potent-spellcasting-level-7"
+    ],
+    "selectedDivineOrderChoices": 1,
+    "selectedBlessedStrikesChoices": 1,
+    "attackProgression": "three-quarter-BAB",
+    "iterativeAttackAndExtraAttack": "alternative-procedures-not-additive",
+    "multiclassWisdomPrerequisite": 13,
+    "multiclassProficienciesWhenEntering": {
+      "armor": [
+        "light",
+        "medium",
+        "shields"
+      ]
+    },
+    "startingEquipment": {
+      "chooseOne": [
+        "warhammer-or-mace-based-cleric-package",
+        "other-SRD51-cleric-package",
+        "SRD52-cleric-package",
+        "eligible-starting-gold"
+      ],
+      "holySymbolOrSacredFocus": "eligible-component-or-symbol",
+      "subjectToNativeEquipmentAndBackgroundRules": true
+    },
+    "deityRequired": false,
+    "alignmentRestriction": null,
+    "formerDeityAlignmentSpellRestrictions": "not-native-cleric-access-restrictions",
+    "historicalCureInflictConversion": "no-separate-prepared-spell-sacrifice-because-full-spell-access",
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonTotalCharacterLevelMinimum": 21,
+    "subclasses": "excluded-until-subclass-pass",
+    "domains": "excluded-until-domain-subclass-pass",
+    "prestigeClasses": "excluded-until-prestige-pass"
+  }
 }

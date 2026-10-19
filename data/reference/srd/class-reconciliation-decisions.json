@@ -1,6 +1,6 @@
 {
   "status": "approved-band-1-base-class-decisions",
-  "scope": "Approved Band 1 base-class rules for reconciled classes; subclasses and prestige classes excluded.",
+  "scope": "Approved Band 1 base-class decisions; does not authorize subclasses or prestige classes.",
   "decisions": [
     {
       "nativeRuleId": "class.barbarian.rage-uses",
@@ -131,6 +131,76 @@
           "path": "data/reference/srd/structured/class/class-bard.json",
           "name": "Spellcasting",
           "detail": "2/3/4 cantrip schedule"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.cleric.full-spell-access",
+      "state": "approved-native-rule",
+      "decision": "Clerics have access to all eligible Cleric spells of castable spell level; no prepared spells, Wisdom-based known cap or 2024 prepared-count limit; player chooses slots or points. Domain-only spells/slots deferred to later subclass work.",
+      "decisionBasis": "Owner approval, 2026-10-19, unified Cleric Band 1 proposal",
+      "nativeLocation": "data/native/classes/base/cleric.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Spells",
+          "detail": "Access all Cleric list via historical preparation"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Spellcasting",
+          "detail": "Prepared list based on Cleric level plus Wisdom"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Spellcasting",
+          "detail": "Prepared list progression"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.cleric.channel-divinity-unified",
+      "state": "approved-native-rule",
+      "decision": "Historical Turn/Rebuke/Command/Bolster/Dispel checks and modern Turn Undead/Divine Spark are separate effects sharing one Channel Divinity pool. Two uses from level 1, three at level 6, four at level 18; one use returned on Short Rest, all on Long Rest; historical 3+Charisma daily uses not additive. No alignment prerequisites. Preserve both historic turning check and modern save procedures as alternatives.",
+      "decisionBasis": "Owner approval, 2026-10-19, one resource with multiple effects and no forced alignment",
+      "nativeLocation": "data/native/classes/base/cleric.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Turn or Rebuke Undead"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Channel Divinity"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Channel Divinity"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.cleric.divine-intervention-level-10",
+      "state": "approved-native-rule",
+      "decision": "From level 10, Direct Intervention grants eligible level <=5 Cleric spell without slot/materials each Long Rest; Divine Supplication makes a percentile request with seven-day cooldown on success and Long Rest reset on failure. At level 20, Supplication success is automatic and Direct Intervention can invoke Wish with 2d4 Long Rest cooldown. Neither procedure removes the other.",
+      "decisionBasis": "Owner approval, 2026-10-19, two distinct modes with source recovery procedures",
+      "nativeLocation": "data/native/features/classes/cleric/divine-intervention-level-10.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Divine Intervention"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Divine Intervention"
         }
       ]
     }

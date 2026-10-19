@@ -2,34 +2,21 @@
   "id": "class-feature.cleric.blessed-strikes-level-7",
   "name": "Blessed Strikes",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Blessed Strikes",
-        "className": "Cleric",
-        "classSource": "SRD52",
-        "level": 7,
-        "entries": [
-          "Divine power infuses you in battle. You gain one of the following options of your choice (if you get either option from a Cleric subclass in an older book, use only the option you choose for this feature).",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "refClassFeature",
-                "classFeature": "Divine Strike|Cleric|SRD52|7"
-              },
-              {
-                "type": "refClassFeature",
-                "classFeature": "Potent Spellcasting|Cleric|SRD52|7"
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.cleric",
-  "classLevel": 7
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Blessed Strikes",
+    "description": "Blessed Strikes is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "choose-one-blessed-strikes-option",
+      "choose": 1,
+      "options": [
+        "class-feature.cleric.divine-strike-level-7",
+        "class-feature.cleric.potent-spellcasting-level-7"
+      ],
+      "optionOnlyOne": true,
+      "oldSubclassVersion": "do-not-duplicate-same-selected-feature"
+    }
+  }
 }

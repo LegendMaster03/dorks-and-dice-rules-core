@@ -2,40 +2,21 @@
   "id": "class-feature.cleric.divine-order-level-1",
   "name": "Divine Order",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Divine Order",
-        "className": "Cleric",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You have dedicated yourself to one of the following sacred roles of your choice.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "options",
-                "count": 1,
-                "entries": [
-                  {
-                    "type": "refClassFeature",
-                    "classFeature": "Protector|Cleric|SRD52|1|SRD52"
-                  },
-                  {
-                    "type": "refClassFeature",
-                    "classFeature": "Thaumaturge|Cleric|SRD52|1|SRD52"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.cleric",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Divine Order",
+    "description": "Divine Order is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "choose-one-divine-order",
+      "choose": 1,
+      "options": [
+        "class-feature.cleric.protector-level-1",
+        "class-feature.cleric.thaumaturge-level-1"
+      ],
+      "choiceFeaturesNotAutomaticallyBothGranted": true,
+      "noSubclassRequirement": true
+    }
+  }
 }

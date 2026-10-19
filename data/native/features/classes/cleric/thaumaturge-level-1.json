@@ -2,21 +2,22 @@
   "id": "class-feature.cleric.thaumaturge-level-1",
   "name": "Thaumaturge",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Thaumaturge",
-        "className": "Cleric",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You know one extra cantrip from the {@filter Cleric spell list|spells|class=Cleric}. In addition, your mystical connection to the divine gives you a bonus to your Intelligence ({@skill Arcana|SRD52} or {@skill Religion|SRD52}) checks. The bonus equals your Wisdom modifier (minimum of +1)."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.cleric",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Thaumaturge",
+    "description": "Thaumaturge is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "divine-order-option",
+      "choiceOf": "class-feature.cleric.divine-order-level-1",
+      "extraKnownClericCantrips": 1,
+      "bonusToSkills": [
+        "arcana",
+        "religion"
+      ],
+      "bonus": "max(1,wisdom-modifier)",
+      "doesNotGrantProtector": true
+    }
+  }
 }

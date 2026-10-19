@@ -334,6 +334,17 @@ Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.m
 
 **Scope:** Band 1 Bard base class first; subclasses and prestige classes later. This rule establishes class identity and cross-source conversion direction, **not** automatic approval of every Bardic ability's quantitative implementation.
 
+### Band 1 Cleric — approved native reconciliation (2026-10-19)
+
+Cleric class levels 1–20 are implemented in `data/native/classes/base/cleric.json`, as detailed in `docs/rewrite/cleric-band-1-reconciliation.md`.
+
+- **Full eligible Cleric spell-list access:** Wisdom spellcasting; no spell preparation or finite prepared/known leveled-spell list; player selects standard spell slots or spell points. Existing source-level cantrip-known and full-caster slot advancement remain intact. Domain-only extra slots, spells and granted powers are deferred, not silently added.
+- **One Channel Divinity pool:** two uses from Cleric level 1 (historical turning prerequisite), three at 6 and four at 18; one use on Short Rest and all on Long Rest. Both historical 3.x check-based Turn/Rebuke/Command and modern 5.x save-based Turn/Sear/Destroy variants are available as separate effects, not automatic stacked procedures or independent resources. No positive/negative energy choice is alignment-gated.
+- **Two modes of Divine Intervention:** At Cleric level 10 choose a predictable slot-free 5th-level-or-lower Cleric spell once per Long Rest (Direct Intervention), or a source 5e open-ended percentile-based DM request (Divine Supplication; seven-day success cooldown, Long Rest failure reset). At level 20 Divine Supplication becomes automatically successful and Greater Direct Intervention may cast Wish with a 2d4 Long Rest cooldown. Each mode has its own historical usage limit.
+- **Class features, not subclasses:** Divine Order grants exactly one Protector/Thaumaturge option, and Blessed Strikes grants exactly one Divine Strike/Potent Spellcasting option. Historical Heavy Armor training is already on the Cleric base class. Domain and subclass implementation stays excluded; Epic Boon eligibility uses total character level 21+.
+
+This authorizes native data and regression tests only. Shared spell, undead-control, condition, and invocation runtime execution remains subject to existing consumer integration and acceptance tests.
+
 ### NPC and monster spellcasting resources — general native ruling (2026-10-19)
 
 **Owner clarification:** The existing Spellcasting Resource Choice is a **general NPC and monster rule**, not a special exception for Priest. NPCs, monsters, and player characters use the same native spellcasting-resource framework where a creature is granted spellcasting. An eligible spellcaster may use spell slots or spell points under the selected campaign/caster profile; the GM chooses the applicable profile for NPCs and monsters. Do not force monsters into a permanently slotless mechanic because SRD 5.2.1 presents their spells as at-will or limited-use actions. Conversely, merely having a spell-like action does not supply a slot or point pool.
