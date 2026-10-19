@@ -63,6 +63,11 @@ class NativeSrdBaselineTests(unittest.TestCase):
             else:
                 native = load(path)
                 self.assertEqual(cid, native["id"], relative)
+            if row["status"] == "matching-candidates":
+                self.assertNotIn("candidateDefinitions", native, cid)
+                self.assertNotIn("baselineStatus", native, cid)
+                self.assertIn("abbreviation", native, cid)
+                continue
             self.assertEqual("pending-native-reconciliation",
                              native["baselineStatus"], cid)
             self.assertNotIn("activeDefinition", native, cid)
