@@ -41,16 +41,16 @@
   "monsterReviewCaveat": "Selected 5.5e stat blocks are retained. Independent missing older abilities restored with exact original restrictions; revised attack suites are not duplicated. Remaining differences are tracked per feature in the reference ledger. Imported markup still needs native typing.",
   "monsterAdditionalOlderFeaturesRestored": 141,
   "monsterOlderFeaturesPreviouslyTransferred": 84,
-  "monsterRemainingFeatureQuestions": 7,
-  "monsterReviewEntriesWithOpenQuestions": 7,
+  "monsterRemainingFeatureQuestions": 6,
+  "monsterReviewEntriesWithOpenQuestions": 6,
   "monsterFeatureDispositions": {
-    "newer-successor": 94,
+    "newer-successor": 95,
     "revised-attack-suite": 333,
     "restored": 141,
     "already-present": 84,
     "review-needed": 3,
     "spell-access-extended": 15,
-    "possible-redesign": 4
+    "possible-redesign": 3
   },
   "monsterAdditionalSpellsRestored": 33
 }
