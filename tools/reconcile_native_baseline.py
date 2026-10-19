@@ -169,7 +169,9 @@ def apply():
         "baselineEntries": len(manifest["coverage"]),
         "statuses": dict(sorted(counts.items())),
         "nativeCatalogRecords": sum(counts.values()),
-        "resolvedThisRun": dict(sorted(changed.items())),
+        "reconciledByApprovedGeneralRules": {
+            status: counts[status] for status in sorted(RECONCILED_STATUSES)
+        },
         "remainingWithMultipleCandidates": counts["multiple-candidates"],
         "remainingWithOneCandidate": counts["single-candidate"],
         "retainedDefinitionsNeedingNativeShaping": sum(
