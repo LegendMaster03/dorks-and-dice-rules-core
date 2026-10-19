@@ -36,20 +36,16 @@ The candidate backlog remains **1,663**, because both newly mapped aliases were 
 
 ## Reconciliation outcome — removed 5e abilities
 
-The shared **285** monster stat blocks retain their selected 5.5e statistics and redesigned ordinary attack suites. The previous **84** independently compatible older traits remain included. Subsequent reconciliation restored **141 more older abilities** (traits, actions, and legendary choices), as well as **33 older spell grants** that had no 5.5e counterpart. The newer spellcasting ability and 5.5e action model remain authoritative.
+The shared **285** monster stat blocks retain their selected 5.5e statistics and redesigned ordinary attack suites. The previous **84** independently compatible older traits remain included. Subsequent reconciliation restored **145 more older abilities** (traits, actions, and legendary choices), as well as **33 older spell grants** that had no 5.5e counterpart. The newer spellcasting ability and 5.5e action model remain authoritative.
 
-The retained reference comparison file contains **249 historical feature-review entries**, but they are *not* 249 outstanding mechanical decisions. Every originally flagged feature now has a feature-level disposition: already present, moved/reworked, restored, replaced by the newer attack suite, or still unresolved. Exactly **6 open mechanical questions across 6 creatures** remain:
+The retained reference comparison file contains **249 historical feature-review entries**, but they are *not* 249 outstanding mechanical decisions. Every originally flagged feature now has a feature-level disposition: already present, moved/reworked, restored, replaced by the newer attack suite, or still unresolved. Exactly **2 unresolved monster-mechanics decisions across 2 creatures** remain. The three beast Pounces and Weretiger Pounce have been reconciled without altering the 5.5e attacks. The Assassin's first-turn Advantage was restored independently; its automatic critical against a surprised target remains undecided.
 
-| Creature | Unresolved mechanic | Why it is not safe to translate mechanically |
+| Creature | Outstanding Owner decision | Reason |
 | --- | --- | --- |
-| Assassin | Assassinate | Automatic critical hits against surprised targets need integration with native surprise/critical escalation |
-| Lion | Pounce | Older conditional claw/bite extra attacks must be translated to newer Rend/Multiattack |
-| Panther | Pounce | Same conditional attack sequencing issue |
-| Saber-Toothed Tiger | Pounce | Same conditional attack sequencing issue |
-| Weretiger | Pounce (Tiger or Hybrid Form Only) | Same issue, with form-specific eligibility |
-| Priest | Divine Eminence | Older spell-slot expenditure needs a rule under newer slotless monster Spellcasting |
+| Assassin | Assassinate automatic critical hit | The older feature makes hits against surprised creatures critical. The native surprise eligibility and interaction with Dorks & Dice critical escalation need a defined procedure; first-turn Advantage is already restored. |
+| Priest | Divine Eminence resource and damage | The older feature spends a spell slot as a bonus action for extra Radiant melee damage. The current Priest has no spell slots, and its Mace already deals Radiant damage. Do not invent a resource or duplicate the base damage. |
 
-In addition to those six questions, **64 source-unique monster entries** remain retained as independent catalog content. This is not an edition-conflict backlog. Newer-only monsters such as Pirate and Pirate Captain need no older comparison.
+In addition to those two questions, **64 source-unique monster entries** remain retained as independent catalog content. This is not an edition-conflict backlog. Newer-only monsters such as Pirate and Pirate Captain need no older comparison.
 
 Remaining engineering and acceptance work is **native markup/schema conversion, integration against unified Dorks & Dice effects and action timing, monster-family consistency, and challenge/encounter balancing checks**. Additional older traits and legendary choices can affect difficulty even though the selected CR was not changed. None of these are justification for creating a second monster solely for different DM tactics.
 
