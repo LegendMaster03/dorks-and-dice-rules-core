@@ -92,9 +92,7 @@
     "vehicle:SRD52": 1
   },
   "unresolvedMultipleSourceRecordKeys": {
-    "baseitem": 2,
     "deity": 5,
-    "feat": 3,
     "itemType": 1
   },
   "excludedSourceRecords": [],
@@ -1494,14 +1492,10 @@
     {
       "nativeId": "baseitem.musket",
       "kind": "baseitem",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/items/equipment/musket.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -1635,14 +1629,10 @@
     {
       "nativeId": "baseitem.pistol",
       "kind": "baseitem",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/items/equipment/pistol.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -9579,14 +9569,10 @@
     {
       "nativeId": "feat.magic-initiate",
       "kind": "feat",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/feats/magic-initiate.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -9596,14 +9582,10 @@
     {
       "nativeId": "feat.savage-attacker",
       "kind": "feat",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/feats/savage-attacker.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -9613,14 +9595,10 @@
     {
       "nativeId": "feat.skilled",
       "kind": "feat",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/feats/skilled.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -15047,13 +15025,18 @@
     {
       "nativeId": "item.plate-armor-of-etherealness",
       "kind": "item",
-      "status": "single-candidate",
-      "sourceRecords": 1,
+      "status": "multiple-candidates",
+      "sourceRecords": 2,
       "path": "data/native/items/magic/plate-armor-of-etherealness.json",
       "candidates": [
         {
           "key": "candidate-a",
           "source": "5.1"
+        },
+        {
+          "key": "candidate-b",
+          "source": "5.2.1",
+          "evidence": "official SRD 5.2.1 PDF; missing from pinned unofficial pack"
         }
       ]
     },
