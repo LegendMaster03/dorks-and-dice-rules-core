@@ -28,11 +28,11 @@ jobs:
           echo "Feature head: $(git rev-parse HEAD)"
           echo "Rewrite head: $(git rev-parse origin/feature/rules-core-rewrite)"
           if ! git merge --no-commit --no-ff origin/feature/rules-core-rewrite; then
-            echo "::error::Merge conflicts must be reconciled before final PR merge"
+            echo "Reconciling known SRD fidelity and native baseline conflicts"
             git diff --name-only --diff-filter=U
-            git status --short | head -n 120
-            exit 1
+            python3 tools/resolve_rewrite_merge_once.py
           fi
+          test -z "$(git diff --name-only --diff-filter=U)"
       - name: Run all Python regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Audit native baseline
@@ -42,6 +42,7 @@ jobs:
         run: |
           set -euo pipefail
           rm .github/workflows/integrate-monster-reconciliation-once.yml
-          git add -u .github/workflows/integrate-monster-reconciliation-once.yml
+          rm tools/resolve_rewrite_merge_once.py
+          git add -u .github/workflows/integrate-monster-reconciliation-once.yml tools/resolve_rewrite_merge_once.py
           git commit -m "merge(rewrite): integrate validated monster reconciliation with current rewrite"
           git push origin HEAD:feature/rules-core-baseline-consistency
