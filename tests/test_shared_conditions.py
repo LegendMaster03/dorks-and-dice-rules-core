@@ -20,8 +20,8 @@ class SharedConditionReconciliationTests(unittest.TestCase):
         cls.source = get("data/reference/srd/structured/conditionsdiseases.json")["condition"]
 
     def test_native_coverage_and_external_edition_separation(self):
-        self.assertEqual(16, len(self.native))
-        self.assertEqual(set(self.native), set(self.decisions))
+        self.assertEqual(18, len(self.native))
+        self.assertEqual(set(self.native) - {"condition.flat-footed", "condition.helpless"}, set(self.decisions))
         self.assertEqual(set(), {
             key for key, value in self.native.items()
             if value.get("baselineStatus") == "pending-native-reconciliation"
@@ -81,7 +81,7 @@ class SharedConditionReconciliationTests(unittest.TestCase):
     def test_grappled_target_relative_attack_penalty_and_speed(self):
         rule = self.native["condition.grappled"]
         self.assertEqual("condition", rule["kind"])
-        self.assertEqual(2, len(rule["effects"]))
+        self.assertEqual(3, len(rule["effects"]))
         self.assertEqual(
             {"type": "speed", "operation": "set", "value": 0, "canIncrease": False},
             rule["effects"][0]
@@ -97,6 +97,9 @@ class SharedConditionReconciliationTests(unittest.TestCase):
                          [e.get("subject") for e in rule["effects"]])
         self.assertNotIn("ability-check",
                          [e.get("appliesTo") for e in rule["effects"]])
+        self.assertEqual("defense-adjustment", rule["effects"][2]["type"])
+        self.assertEqual({"attackerRelationToGrappler": "other-than-grappler"},
+                         rule["effects"][2]["when"])
 
     def test_grappled_ending_triggers_and_source_reconciliation(self):
         rule = self.native["condition.grappled"]
