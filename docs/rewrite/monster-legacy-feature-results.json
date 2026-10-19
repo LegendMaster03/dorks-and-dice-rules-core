@@ -2,15 +2,14 @@
   "summary": {
     "feature:already-present": 84,
     "feature:newer-successor": 95,
-    "feature:possible-redesign": 3,
-    "feature:restored": 142,
+    "feature:restored": 145,
     "feature:review-needed": 2,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 5
+    "monstersWithOpenFeatureQuestions": 2
   },
   "featuresRestoredThisPass": 15,
-  "totalAdditionalOlderFeaturesRestored": 142,
+  "totalAdditionalOlderFeaturesRestored": 145,
   "additionalSpellsRestored": 33,
   "spellsAddedByMonster": {
     "monster.cloud-giant": [
@@ -71,8 +70,8 @@
       "water breathing"
     ]
   },
-  "unresolvedFeatureQuestions": 5,
-  "reviewEntriesWithOpenQuestions": 5,
+  "unresolvedFeatureQuestions": 2,
+  "reviewEntriesWithOpenQuestions": 2,
   "note": "5.5e stats, attack suites and spellcasting ability remain authoritative.",
   "finalPassChanges": {
     "traitsRestored": 14,
@@ -85,5 +84,44 @@
     "nativeAttackReference": "Scratch",
     "nativeBonusAttack": "Bite (Tiger or Hybrid Form Only)",
     "sameMovementSaveAndCost": true
-  }
+  },
+  "remainingOwnerQuestions": [
+    {
+      "nativeId": "monster.assassin",
+      "feature": "Assassinate",
+      "question": "How should the older automatic critical hit against a surprised target work under native surprise and critical escalation? The independent first-turn Advantage was restored."
+    },
+    {
+      "nativeId": "monster.priest",
+      "feature": "Divine Eminence",
+      "question": "Should the old slot-spending Radiant melee bonus be omitted, granted with new spell-slot resources, or redesigned using a limited resource? The newer Mace already deals Radiant damage."
+    }
+  ],
+  "finalPounceAdaptations": [
+    {
+      "nativeId": "monster.lion",
+      "triggerAttack": "Rend",
+      "bonusAttack": "Rend",
+      "approachFeet": 20,
+      "strengthSaveDc": 13,
+      "bonusActionRequired": true
+    },
+    {
+      "nativeId": "monster.panther",
+      "triggerAttack": "Rend",
+      "bonusAttack": "Rend",
+      "approachFeet": 20,
+      "strengthSaveDc": 12,
+      "bonusActionRequired": true
+    },
+    {
+      "nativeId": "monster.saber-toothed-tiger",
+      "triggerAttack": "Rend",
+      "bonusAttack": "Rend",
+      "approachFeet": 20,
+      "strengthSaveDc": 14,
+      "bonusActionRequired": true
+    }
+  ],
+  "assassinFirstTurnAdvantageRestored": true
 }
