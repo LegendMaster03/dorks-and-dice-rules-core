@@ -39,7 +39,7 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
         mappings = self.ledger["roleMappings"]
         aliases = [r for r in self.rows.values()
                    if r["status"] == "native-monster-identity-alias"]
-        self.assertEqual(21, len(mappings))
+        self.assertEqual(23, len(mappings))
         self.assertEqual(len(mappings), len(aliases))
         for row in aliases:
             record = read(row["path"])
@@ -62,11 +62,18 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
         self.assertEqual("monster.goblin-warrior", legacy_goblin["aliasOf"])
         for name in ("hobgoblin", "bugbear"):
             old = read("data/native/bestiary/" + name + ".json")
-            self.assertEqual("retained-native-definition", old["baselineStatus"])
-            self.assertNotIn("aliasOf", old)
-            self.assertIn("definition", old)
+            self.assertEqual("native-identity-alias", old["baselineStatus"])
+            self.assertEqual("monster." + name + "-warrior", old["aliasOf"])
+            self.assertNotIn("definition", old)
             self.assertIn("monster." + name,
-                          families["monster-family." + name]["legacyTacticalReview"])
+                          families["monster-family." + name]["legacyMechanicsReview"])
+            older_review = next(
+                item for item in self.ledger["entries"]
+                if item["nativeId"] == "monster." + name
+            )
+            self.assertTrue(older_review["olderAbilitiesNotIncludedAutomatically"])
+            self.assertEqual("monster." + name + "-warrior",
+                             older_review["correspondingDefault"])
 
     def test_older_traits_and_changes_remain_reviewable(self):
         review = self.ledger["entries"]
