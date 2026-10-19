@@ -31,6 +31,7 @@ INDEPENDENT_TRAITS = {
     "Turn Resistance", "Reckless",
     "Relentless (Recharges after a Short or Long Rest)",
     "Keen Senses", "Web Walker", "Turning Defiance",
+    "Martial Advantage", "Surprise Attack",
 }
 # Independent utility actions add choices; they do not alter Multiattack
 # or overwrite a newer action with different damage or saving throw rules.
