@@ -36,7 +36,7 @@ REFERENCE_KEYS = {
     "source", "page", "srd", "srd52", "classSource", "subclassSource",
     "otherSources", "reprintedAs",
 }
-REF_SUFFIX = re.compile(r"\\|srd(?:51|52)(?=\\||\\}|$)", re.IGNORECASE)
+REF_SUFFIX = re.compile(r"\|srd(?:51|52)(?=\||\}|$)", re.IGNORECASE)
 
 
 def load(path):
