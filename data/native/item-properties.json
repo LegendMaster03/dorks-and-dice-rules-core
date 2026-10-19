@@ -5,7 +5,7 @@
   },
   "records": [
     {
-      "id": "itemProperty.section-1",
+      "id": "itemproperty.section-1",
       "name": "Section 1",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-10",
+      "id": "itemproperty.section-10",
       "name": "Section 10",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-11",
+      "id": "itemproperty.section-11",
       "name": "Section 11",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-12",
+      "id": "itemproperty.section-12",
       "name": "Section 12",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-13",
+      "id": "itemproperty.section-13",
       "name": "Section 13",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -125,7 +125,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-14",
+      "id": "itemproperty.section-14",
       "name": "Section 14",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -149,7 +149,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-15",
+      "id": "itemproperty.section-15",
       "name": "Section 15",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-16",
+      "id": "itemproperty.section-16",
       "name": "Section 16",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-17",
+      "id": "itemproperty.section-17",
       "name": "Section 17",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -221,7 +221,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-18",
+      "id": "itemproperty.section-18",
       "name": "Section 18",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -245,7 +245,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-19",
+      "id": "itemproperty.section-19",
       "name": "Section 19",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -269,7 +269,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-2",
+      "id": "itemproperty.section-2",
       "name": "Section 2",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -293,7 +293,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-20",
+      "id": "itemproperty.section-20",
       "name": "Section 20",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -317,7 +317,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-22",
+      "id": "itemproperty.section-22",
       "name": "Section 22",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -341,7 +341,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-23",
+      "id": "itemproperty.section-23",
       "name": "Section 23",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -365,7 +365,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-24",
+      "id": "itemproperty.section-24",
       "name": "Section 24",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -389,7 +389,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-25",
+      "id": "itemproperty.section-25",
       "name": "Section 25",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -413,7 +413,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-3",
+      "id": "itemproperty.section-3",
       "name": "Section 3",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -438,7 +438,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-4",
+      "id": "itemproperty.section-4",
       "name": "Section 4",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -462,7 +462,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-5",
+      "id": "itemproperty.section-5",
       "name": "Section 5",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -487,7 +487,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-6",
+      "id": "itemproperty.section-6",
       "name": "Section 6",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -511,7 +511,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-7",
+      "id": "itemproperty.section-7",
       "name": "Section 7",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -535,7 +535,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-8",
+      "id": "itemproperty.section-8",
       "name": "Section 8",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -559,7 +559,7 @@
       ]
     },
     {
-      "id": "itemProperty.section-9",
+      "id": "itemproperty.section-9",
       "name": "Section 9",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",
@@ -583,7 +583,7 @@
       ]
     },
     {
-      "id": "itemProperty.special",
+      "id": "itemproperty.special",
       "name": "special",
       "kind": "itemProperty",
       "baselineStatus": "pending-native-reconciliation",

@@ -18807,7 +18807,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.arcane-focus",
+      "nativeId": "itemgroup.arcane-focus",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18820,7 +18820,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.armor-of-resistance",
+      "nativeId": "itemgroup.armor-of-resistance",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18833,7 +18833,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.armor-of-vulnerability",
+      "nativeId": "itemgroup.armor-of-vulnerability",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18846,63 +18846,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.artisan-s-tools",
-      "kind": "itemGroup",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-a",
-          "source": "5.1"
-        },
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.bag-of-tricks",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.belt-of-giant-strength",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.carpet-of-flying",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.dragon-scale-mail",
+      "nativeId": "itemgroup.artisan-s-tools",
       "kind": "itemGroup",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -18919,7 +18863,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.druidic-focus",
+      "nativeId": "itemgroup.bag-of-tricks",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18932,7 +18876,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.elemental-gem",
+      "nativeId": "itemgroup.belt-of-giant-strength",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18945,7 +18889,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.feather-token",
+      "nativeId": "itemgroup.carpet-of-flying",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18958,20 +18902,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.figurine-of-wondrous-power",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.gaming-set",
+      "nativeId": "itemgroup.dragon-scale-mail",
       "kind": "itemGroup",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -18988,7 +18919,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.holy-symbol",
+      "nativeId": "itemgroup.druidic-focus",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19001,7 +18932,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.horn-of-valhalla",
+      "nativeId": "itemgroup.elemental-gem",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19014,7 +18945,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.ioun-stone",
+      "nativeId": "itemgroup.feather-token",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19027,7 +18958,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.manual-of-golems",
+      "nativeId": "itemgroup.figurine-of-wondrous-power",
       "kind": "itemGroup",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19040,115 +18971,7 @@
       ]
     },
     {
-      "nativeId": "itemGroup.musical-instrument",
-      "kind": "itemGroup",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-a",
-          "source": "5.1"
-        },
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.potion-of-giant-strength",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.potion-of-healing",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-a",
-          "source": "5.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.potion-of-resistance",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.potions-of-healing",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.ring-of-elemental-command",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.ring-of-resistance",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.spell-scroll",
-      "kind": "itemGroup",
-      "status": "single-candidate",
-      "sourceRecords": 1,
-      "path": "data/native/item-groups.json",
-      "candidates": [
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
-      "nativeId": "itemGroup.wand-of-the-war-mage",
+      "nativeId": "itemgroup.gaming-set",
       "kind": "itemGroup",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -19165,7 +18988,184 @@
       ]
     },
     {
-      "nativeId": "itemMastery.cleave",
+      "nativeId": "itemgroup.holy-symbol",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.horn-of-valhalla",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.ioun-stone",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.manual-of-golems",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.musical-instrument",
+      "kind": "itemGroup",
+      "status": "multiple-candidates",
+      "sourceRecords": 2,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-a",
+          "source": "5.1"
+        },
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.potion-of-giant-strength",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.potion-of-healing",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-a",
+          "source": "5.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.potion-of-resistance",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.potions-of-healing",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.ring-of-elemental-command",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.ring-of-resistance",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.spell-scroll",
+      "kind": "itemGroup",
+      "status": "single-candidate",
+      "sourceRecords": 1,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemgroup.wand-of-the-war-mage",
+      "kind": "itemGroup",
+      "status": "multiple-candidates",
+      "sourceRecords": 2,
+      "path": "data/native/item-groups.json",
+      "candidates": [
+        {
+          "key": "candidate-a",
+          "source": "5.1"
+        },
+        {
+          "key": "candidate-b",
+          "source": "5.2.1"
+        }
+      ]
+    },
+    {
+      "nativeId": "itemmastery.cleave",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19178,7 +19178,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.graze",
+      "nativeId": "itemmastery.graze",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19191,7 +19191,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.nick",
+      "nativeId": "itemmastery.nick",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19204,7 +19204,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.push",
+      "nativeId": "itemmastery.push",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19217,7 +19217,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.sap",
+      "nativeId": "itemmastery.sap",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19230,7 +19230,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.slow",
+      "nativeId": "itemmastery.slow",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19243,7 +19243,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.topple",
+      "nativeId": "itemmastery.topple",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19256,7 +19256,7 @@
       ]
     },
     {
-      "nativeId": "itemMastery.vex",
+      "nativeId": "itemmastery.vex",
       "kind": "itemMastery",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19269,7 +19269,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.special",
+      "nativeId": "itemproperty.special",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19282,7 +19282,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-4",
+      "nativeId": "itemproperty.section-4",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19295,7 +19295,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-12",
+      "nativeId": "itemproperty.section-12",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19308,7 +19308,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-9",
+      "nativeId": "itemproperty.section-9",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19321,7 +19321,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-10",
+      "nativeId": "itemproperty.section-10",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19334,7 +19334,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-20",
+      "nativeId": "itemproperty.section-20",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19347,7 +19347,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-24",
+      "nativeId": "itemproperty.section-24",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19360,7 +19360,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-19",
+      "nativeId": "itemproperty.section-19",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19373,7 +19373,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-18",
+      "nativeId": "itemproperty.section-18",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19386,7 +19386,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-11",
+      "nativeId": "itemproperty.section-11",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19399,7 +19399,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-1",
+      "nativeId": "itemproperty.section-1",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19412,7 +19412,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-14",
+      "nativeId": "itemproperty.section-14",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19425,7 +19425,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-2",
+      "nativeId": "itemproperty.section-2",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19438,7 +19438,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-6",
+      "nativeId": "itemproperty.section-6",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19451,7 +19451,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-23",
+      "nativeId": "itemproperty.section-23",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19464,7 +19464,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-22",
+      "nativeId": "itemproperty.section-22",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19477,7 +19477,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-13",
+      "nativeId": "itemproperty.section-13",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19490,7 +19490,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-8",
+      "nativeId": "itemproperty.section-8",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19503,7 +19503,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-16",
+      "nativeId": "itemproperty.section-16",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19516,7 +19516,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-15",
+      "nativeId": "itemproperty.section-15",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19529,7 +19529,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-7",
+      "nativeId": "itemproperty.section-7",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19542,7 +19542,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-3",
+      "nativeId": "itemproperty.section-3",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19555,7 +19555,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-17",
+      "nativeId": "itemproperty.section-17",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19568,7 +19568,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-25",
+      "nativeId": "itemproperty.section-25",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19581,7 +19581,7 @@
       ]
     },
     {
-      "nativeId": "itemProperty.section-5",
+      "nativeId": "itemproperty.section-5",
       "kind": "itemProperty",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -19594,7 +19594,7 @@
       ]
     },
     {
-      "nativeId": "itemType.adventuring-gear",
+      "nativeId": "itemtype.adventuring-gear",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19611,7 +19611,7 @@
       ]
     },
     {
-      "nativeId": "itemType.ammunition",
+      "nativeId": "itemtype.ammunition",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 4,
@@ -19636,7 +19636,7 @@
       ]
     },
     {
-      "nativeId": "itemType.artisan-s-tools",
+      "nativeId": "itemtype.artisan-s-tools",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -19653,7 +19653,7 @@
       ]
     },
     {
-      "nativeId": "itemType.explosive",
+      "nativeId": "itemtype.explosive",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19670,7 +19670,7 @@
       ]
     },
     {
-      "nativeId": "itemType.food-and-drink",
+      "nativeId": "itemtype.food-and-drink",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19687,7 +19687,7 @@
       ]
     },
     {
-      "nativeId": "itemType.gaming-set",
+      "nativeId": "itemtype.gaming-set",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -19704,7 +19704,7 @@
       ]
     },
     {
-      "nativeId": "itemType.generic-variant",
+      "nativeId": "itemtype.generic-variant",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19721,7 +19721,7 @@
       ]
     },
     {
-      "nativeId": "itemType.heavy-armor",
+      "nativeId": "itemtype.heavy-armor",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19738,7 +19738,7 @@
       ]
     },
     {
-      "nativeId": "itemType.instrument",
+      "nativeId": "itemtype.instrument",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -19755,7 +19755,7 @@
       ]
     },
     {
-      "nativeId": "itemType.light-armor",
+      "nativeId": "itemtype.light-armor",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19772,7 +19772,7 @@
       ]
     },
     {
-      "nativeId": "itemType.medium-armor",
+      "nativeId": "itemtype.medium-armor",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19789,7 +19789,7 @@
       ]
     },
     {
-      "nativeId": "itemType.melee-weapon",
+      "nativeId": "itemtype.melee-weapon",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19806,7 +19806,7 @@
       ]
     },
     {
-      "nativeId": "itemType.mount",
+      "nativeId": "itemtype.mount",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19823,7 +19823,7 @@
       ]
     },
     {
-      "nativeId": "itemType.other",
+      "nativeId": "itemtype.other",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19840,7 +19840,7 @@
       ]
     },
     {
-      "nativeId": "itemType.potion",
+      "nativeId": "itemtype.potion",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19857,7 +19857,7 @@
       ]
     },
     {
-      "nativeId": "itemType.ranged-weapon",
+      "nativeId": "itemtype.ranged-weapon",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -19874,7 +19874,7 @@
       ]
     },
     {
-      "nativeId": "itemType.ring",
+      "nativeId": "itemtype.ring",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19891,7 +19891,7 @@
       ]
     },
     {
-      "nativeId": "itemType.rod",
+      "nativeId": "itemtype.rod",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19908,7 +19908,7 @@
       ]
     },
     {
-      "nativeId": "itemType.scroll",
+      "nativeId": "itemtype.scroll",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19925,7 +19925,7 @@
       ]
     },
     {
-      "nativeId": "itemType.shield",
+      "nativeId": "itemtype.shield",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19942,7 +19942,7 @@
       ]
     },
     {
-      "nativeId": "itemType.spellcasting-focus",
+      "nativeId": "itemtype.spellcasting-focus",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19959,7 +19959,7 @@
       ]
     },
     {
-      "nativeId": "itemType.tack-and-harness",
+      "nativeId": "itemtype.tack-and-harness",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -19976,7 +19976,7 @@
       ]
     },
     {
-      "nativeId": "itemType.tool",
+      "nativeId": "itemtype.tool",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -19993,7 +19993,7 @@
       ]
     },
     {
-      "nativeId": "itemType.trade-bar",
+      "nativeId": "itemtype.trade-bar",
       "kind": "itemType",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -20006,7 +20006,7 @@
       ]
     },
     {
-      "nativeId": "itemType.trade-good",
+      "nativeId": "itemtype.trade-good",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -20023,7 +20023,7 @@
       ]
     },
     {
-      "nativeId": "itemType.treasure",
+      "nativeId": "itemtype.treasure",
       "kind": "itemType",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -20036,7 +20036,7 @@
       ]
     },
     {
-      "nativeId": "itemType.treasure-art-object",
+      "nativeId": "itemtype.treasure-art-object",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -20053,7 +20053,7 @@
       ]
     },
     {
-      "nativeId": "itemType.treasure-coinage",
+      "nativeId": "itemtype.treasure-coinage",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -20070,7 +20070,7 @@
       ]
     },
     {
-      "nativeId": "itemType.treasure-gemstone",
+      "nativeId": "itemtype.treasure-gemstone",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -20087,7 +20087,7 @@
       ]
     },
     {
-      "nativeId": "itemType.vehicle-air",
+      "nativeId": "itemtype.vehicle-air",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -20104,7 +20104,7 @@
       ]
     },
     {
-      "nativeId": "itemType.vehicle-land",
+      "nativeId": "itemtype.vehicle-land",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -20121,7 +20121,7 @@
       ]
     },
     {
-      "nativeId": "itemType.vehicle-water",
+      "nativeId": "itemtype.vehicle-water",
       "kind": "itemType",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -20138,7 +20138,7 @@
       ]
     },
     {
-      "nativeId": "itemType.wand",
+      "nativeId": "itemtype.wand",
       "kind": "itemType",
       "status": "matching-candidates",
       "sourceRecords": 2,
@@ -38529,5 +38529,5 @@
       "reason": "Legal and licensing metadata is not a native game mechanic"
     }
   ],
-  "canonicalIdentifiersNormalized": 561
+  "canonicalIdentifiersNormalized": 653
 }

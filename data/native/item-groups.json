@@ -5,7 +5,7 @@
   },
   "records": [
     {
-      "id": "itemGroup.arcane-focus",
+      "id": "itemgroup.arcane-focus",
       "name": "Arcane Focus",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "id": "itemGroup.armor-of-resistance",
+      "id": "itemgroup.armor-of-resistance",
       "name": "Armor of Resistance",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -112,7 +112,7 @@
       ]
     },
     {
-      "id": "itemGroup.armor-of-vulnerability",
+      "id": "itemgroup.armor-of-vulnerability",
       "name": "Armor of Vulnerability",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -135,7 +135,7 @@
       ]
     },
     {
-      "id": "itemGroup.artisan-s-tools",
+      "id": "itemgroup.artisan-s-tools",
       "name": "Artisan's Tools",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "id": "itemGroup.bag-of-tricks",
+      "id": "itemgroup.bag-of-tricks",
       "name": "Bag of Tricks",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -219,7 +219,7 @@
       ]
     },
     {
-      "id": "itemGroup.belt-of-giant-strength",
+      "id": "itemgroup.belt-of-giant-strength",
       "name": "Belt of Giant Strength",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -287,7 +287,7 @@
       ]
     },
     {
-      "id": "itemGroup.carpet-of-flying",
+      "id": "itemgroup.carpet-of-flying",
       "name": "Carpet of Flying",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -356,7 +356,7 @@
       ]
     },
     {
-      "id": "itemGroup.dragon-scale-mail",
+      "id": "itemgroup.dragon-scale-mail",
       "name": "Dragon Scale Mail",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -416,7 +416,7 @@
       ]
     },
     {
-      "id": "itemGroup.druidic-focus",
+      "id": "itemgroup.druidic-focus",
       "name": "Druidic Focus",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -441,7 +441,7 @@
       ]
     },
     {
-      "id": "itemGroup.elemental-gem",
+      "id": "itemgroup.elemental-gem",
       "name": "Elemental Gem",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -463,7 +463,7 @@
       ]
     },
     {
-      "id": "itemGroup.feather-token",
+      "id": "itemgroup.feather-token",
       "name": "Feather Token",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -537,7 +537,7 @@
       ]
     },
     {
-      "id": "itemGroup.figurine-of-wondrous-power",
+      "id": "itemgroup.figurine-of-wondrous-power",
       "name": "Figurine of Wondrous Power",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -564,7 +564,7 @@
       ]
     },
     {
-      "id": "itemGroup.gaming-set",
+      "id": "itemgroup.gaming-set",
       "name": "Gaming Set",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -600,7 +600,7 @@
       ]
     },
     {
-      "id": "itemGroup.holy-symbol",
+      "id": "itemgroup.holy-symbol",
       "name": "Holy Symbol",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -626,7 +626,7 @@
       ]
     },
     {
-      "id": "itemGroup.horn-of-valhalla",
+      "id": "itemgroup.horn-of-valhalla",
       "name": "Horn of Valhalla",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -695,7 +695,7 @@
       ]
     },
     {
-      "id": "itemGroup.ioun-stone",
+      "id": "itemgroup.ioun-stone",
       "name": "Ioun Stone",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -733,7 +733,7 @@
       ]
     },
     {
-      "id": "itemGroup.manual-of-golems",
+      "id": "itemgroup.manual-of-golems",
       "name": "Manual of Golems",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -803,7 +803,7 @@
       ]
     },
     {
-      "id": "itemGroup.musical-instrument",
+      "id": "itemgroup.musical-instrument",
       "name": "Musical Instrument",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -851,7 +851,7 @@
       ]
     },
     {
-      "id": "itemGroup.potion-of-giant-strength",
+      "id": "itemgroup.potion-of-giant-strength",
       "name": "Potion of Giant Strength",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -879,7 +879,7 @@
       ]
     },
     {
-      "id": "itemGroup.potion-of-healing",
+      "id": "itemgroup.potion-of-healing",
       "name": "Potion of Healing (*)",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -907,7 +907,7 @@
       ]
     },
     {
-      "id": "itemGroup.potion-of-resistance",
+      "id": "itemgroup.potion-of-resistance",
       "name": "Potion of Resistance",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -996,7 +996,7 @@
       ]
     },
     {
-      "id": "itemGroup.potions-of-healing",
+      "id": "itemgroup.potions-of-healing",
       "name": "Potions of Healing",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -1022,7 +1022,7 @@
       ]
     },
     {
-      "id": "itemGroup.ring-of-elemental-command",
+      "id": "itemgroup.ring-of-elemental-command",
       "name": "Ring of Elemental Command",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -1048,7 +1048,7 @@
       ]
     },
     {
-      "id": "itemGroup.ring-of-resistance",
+      "id": "itemgroup.ring-of-resistance",
       "name": "Ring of Resistance",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -1145,7 +1145,7 @@
       ]
     },
     {
-      "id": "itemGroup.spell-scroll",
+      "id": "itemgroup.spell-scroll",
       "name": "Spell Scroll",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",
@@ -1176,7 +1176,7 @@
       ]
     },
     {
-      "id": "itemGroup.wand-of-the-war-mage",
+      "id": "itemgroup.wand-of-the-war-mage",
       "name": "Wand of the War Mage",
       "kind": "itemGroup",
       "baselineStatus": "pending-native-reconciliation",

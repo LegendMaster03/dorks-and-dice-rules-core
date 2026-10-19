@@ -5,7 +5,7 @@
   },
   "records": [
     {
-      "id": "itemMastery.cleave",
+      "id": "itemmastery.cleave",
       "name": "Cleave",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "id": "itemMastery.graze",
+      "id": "itemmastery.graze",
       "name": "Graze",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "id": "itemMastery.nick",
+      "id": "itemmastery.nick",
       "name": "Nick",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -56,7 +56,7 @@
       ]
     },
     {
-      "id": "itemMastery.push",
+      "id": "itemmastery.push",
       "name": "Push",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "id": "itemMastery.sap",
+      "id": "itemmastery.sap",
       "name": "Sap",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -90,7 +90,7 @@
       ]
     },
     {
-      "id": "itemMastery.slow",
+      "id": "itemmastery.slow",
       "name": "Slow",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "id": "itemMastery.topple",
+      "id": "itemmastery.topple",
       "name": "Topple",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "id": "itemMastery.vex",
+      "id": "itemmastery.vex",
       "name": "Vex",
       "kind": "itemMastery",
       "baselineStatus": "pending-native-reconciliation",

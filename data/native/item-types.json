@@ -5,7 +5,7 @@
   },
   "records": [
     {
-      "id": "itemType.adventuring-gear",
+      "id": "itemtype.adventuring-gear",
       "name": "Adventuring Gear",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "id": "itemType.ammunition",
+      "id": "itemtype.ammunition",
       "name": "Ammunition",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "id": "itemType.artisan-s-tools",
+      "id": "itemtype.artisan-s-tools",
       "name": "Artisan's Tools",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -104,7 +104,7 @@
       ]
     },
     {
-      "id": "itemType.explosive",
+      "id": "itemtype.explosive",
       "name": "Explosive",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "id": "itemType.food-and-drink",
+      "id": "itemtype.food-and-drink",
       "name": "Food and Drink",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -148,7 +148,7 @@
       ]
     },
     {
-      "id": "itemType.gaming-set",
+      "id": "itemtype.gaming-set",
       "name": "Gaming Set",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -188,7 +188,7 @@
       ]
     },
     {
-      "id": "itemType.generic-variant",
+      "id": "itemtype.generic-variant",
       "name": "Generic Variant",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -210,7 +210,7 @@
       ]
     },
     {
-      "id": "itemType.heavy-armor",
+      "id": "itemtype.heavy-armor",
       "name": "Heavy Armor",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -232,7 +232,7 @@
       ]
     },
     {
-      "id": "itemType.instrument",
+      "id": "itemtype.instrument",
       "name": "Instrument",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -272,7 +272,7 @@
       ]
     },
     {
-      "id": "itemType.light-armor",
+      "id": "itemtype.light-armor",
       "name": "Light Armor",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -294,7 +294,7 @@
       ]
     },
     {
-      "id": "itemType.medium-armor",
+      "id": "itemtype.medium-armor",
       "name": "Medium Armor",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -316,7 +316,7 @@
       ]
     },
     {
-      "id": "itemType.melee-weapon",
+      "id": "itemtype.melee-weapon",
       "name": "Melee Weapon",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -338,7 +338,7 @@
       ]
     },
     {
-      "id": "itemType.mount",
+      "id": "itemtype.mount",
       "name": "Mount",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -360,7 +360,7 @@
       ]
     },
     {
-      "id": "itemType.other",
+      "id": "itemtype.other",
       "name": "Other",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -382,7 +382,7 @@
       ]
     },
     {
-      "id": "itemType.potion",
+      "id": "itemtype.potion",
       "name": "Potion",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -404,7 +404,7 @@
       ]
     },
     {
-      "id": "itemType.ranged-weapon",
+      "id": "itemtype.ranged-weapon",
       "name": "Ranged Weapon",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -444,7 +444,7 @@
       ]
     },
     {
-      "id": "itemType.ring",
+      "id": "itemtype.ring",
       "name": "Ring",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -466,7 +466,7 @@
       ]
     },
     {
-      "id": "itemType.rod",
+      "id": "itemtype.rod",
       "name": "Rod",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -488,7 +488,7 @@
       ]
     },
     {
-      "id": "itemType.scroll",
+      "id": "itemtype.scroll",
       "name": "Scroll",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -510,7 +510,7 @@
       ]
     },
     {
-      "id": "itemType.shield",
+      "id": "itemtype.shield",
       "name": "Shield",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -532,7 +532,7 @@
       ]
     },
     {
-      "id": "itemType.spellcasting-focus",
+      "id": "itemtype.spellcasting-focus",
       "name": "Spellcasting Focus",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -554,7 +554,7 @@
       ]
     },
     {
-      "id": "itemType.tack-and-harness",
+      "id": "itemtype.tack-and-harness",
       "name": "Tack and Harness",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -576,7 +576,7 @@
       ]
     },
     {
-      "id": "itemType.tool",
+      "id": "itemtype.tool",
       "name": "Tool",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -607,7 +607,7 @@
       ]
     },
     {
-      "id": "itemType.trade-bar",
+      "id": "itemtype.trade-bar",
       "name": "Trade Bar",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -631,7 +631,7 @@
       ]
     },
     {
-      "id": "itemType.trade-good",
+      "id": "itemtype.trade-good",
       "name": "Trade Good",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -672,7 +672,7 @@
       ]
     },
     {
-      "id": "itemType.treasure",
+      "id": "itemtype.treasure",
       "name": "Treasure",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -687,7 +687,7 @@
       ]
     },
     {
-      "id": "itemType.treasure-art-object",
+      "id": "itemtype.treasure-art-object",
       "name": "Treasure (Art Object)",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -718,7 +718,7 @@
       ]
     },
     {
-      "id": "itemType.treasure-coinage",
+      "id": "itemtype.treasure-coinage",
       "name": "Treasure (Coinage)",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -750,7 +750,7 @@
       ]
     },
     {
-      "id": "itemType.treasure-gemstone",
+      "id": "itemtype.treasure-gemstone",
       "name": "Treasure (Gemstone)",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -781,7 +781,7 @@
       ]
     },
     {
-      "id": "itemType.vehicle-air",
+      "id": "itemtype.vehicle-air",
       "name": "Vehicle (Air)",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -811,7 +811,7 @@
       ]
     },
     {
-      "id": "itemType.vehicle-land",
+      "id": "itemtype.vehicle-land",
       "name": "Vehicle (Land)",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -833,7 +833,7 @@
       ]
     },
     {
-      "id": "itemType.vehicle-water",
+      "id": "itemtype.vehicle-water",
       "name": "Vehicle (Water)",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
@@ -932,7 +932,7 @@
       ]
     },
     {
-      "id": "itemType.wand",
+      "id": "itemtype.wand",
       "name": "Wand",
       "kind": "itemType",
       "baselineStatus": "pending-native-reconciliation",
