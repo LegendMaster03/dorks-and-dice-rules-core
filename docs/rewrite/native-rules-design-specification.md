@@ -306,6 +306,14 @@ Mechanic **eligibility, advancement progression, effect scaling, and prerequisit
 
 Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Keep that historical document available as evidence until its relevant design decisions and any retained data have been reviewed. This **does not** require a dual old/new runtime or deployment cutover.
 
+### Monster families and variant identities — 5.5e-style design direction
+
+**Owner direction (2026-10-18):** Prefer the expanded variety of the 5.5e monster design, using **distinct tactical/role-based monster variants** instead of combining all inherited abilities into one overloaded stat block. A family such as Goblin may offer Minion, Warrior and Boss variants; those are distinct creatures within one native ruleset, not selectable source editions. SRD 5.2.1's variant roster is the starting point for reconciliation.
+
+When an old monster has no exact-name 5.2.1 match, **compare its role and mechanics with newer named variants** before concluding that it is unique content. An older Goblin and a newer Goblin Warrior, for instance, are likely candidates for semantic identity mapping rather than automatic duplication. Preserve genuinely distinct older tactical roles when useful, without copying every older ability onto every newer variant. Keep incompatible numerical or procedural changes open until the applicable coherent stat block is established; do not fabricate new variants solely to avoid making a conflict decision.
+
+See `docs/rewrite/monster-variant-family-model.md` for the group/role model, sample crosswalk and audit caveats. This design direction does not authorize arbitrary numerical mixing or a parallel edition-switch runtime.
+
 ## Core rules chapters to complete progressively by native subsystem
 
 **These chapters are the eventual complete standalone Dorks & Dice game rules, not a checklist that must all finish before the initial native kernel can be written.** Recover already established decisions before defining behavior anew. For **each subsystem before implementing it**, document the native rules in ordinary language, at least one play example, representative source-to-native conversion examples, and unresolved/unsupported interactions. Then implement both the native mechanics and versioned converter tests in that subsystem slice. Chapters include:
