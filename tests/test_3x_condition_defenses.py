@@ -185,7 +185,7 @@ class ThreeXConditionDefenseTests(unittest.TestCase):
     def test_3x_decisions_separate_from_original_5x_source_record(self):
         self.assertEqual(14, len(self.source["decisions"]))
         native = set(self.conditions)
-        self.assertEqual(24, len(native))
+        self.assertEqual(27, len(native))
         assert all(("condition." + key) in native for key in ("flat-footed", "helpless"))
         src = load("data/reference/srd/structured/conditionsdiseases.json")["condition"]
         self.assertEqual(30, len(src))
