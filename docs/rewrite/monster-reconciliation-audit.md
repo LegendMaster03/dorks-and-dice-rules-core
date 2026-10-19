@@ -42,10 +42,14 @@ This audit compares the **285** monster names present in both structured SRD sou
 - **Adult White Dragon:** The newer entry replaces three physical attacks with Rend, changes Multiattack, rearranges Frightful Presence, and replaces legendary actions. It also adds a lair-specific legendary-action count. Combining every old attack and every new attack without a policy would overgrant offensive options.
 - **Lich:** HP average changes from 135 to 315 and multiple features, spellcasting and legendary actions are redesigned. This is not a cosmetic merge.
 
-## Recommended next general ruling (not approved)
+## Owner follow-up — prefer 5.5e-style monster variation
 
-A policy for **which numerical stat block and which replacement action suite serves as the default when both editions materially differ** would resolve many monsters as a family.
+The Owner clarified on **2026-10-18** that the primary value of 5.5e's monster design is its increased **role-specific variety**, which is cleaner than augmenting one generic monster with all edition-specific abilities, even though it is more labor intensive to reconcile. The guiding model is now distinct role-based native variants under shared Dorks & Dice rules, rather than maximizing the number of abilities on an individual stat block.
 
-One coherent possible policy: use the newer 5.2.1 numerical stat block and redesigned basic/legendary actions as the baseline, and restore older unique features only if they have no mechanical duplicate, contradiction, or cost/action incompatibility. Keep genuine lair/legendary mechanics eligible under their stated conditions; do not merely concatenate old/new attack options, and do not turn changes to hit points or attack dice into cumulative bonuses. This is a **proposal**, not an inferred Owner approval. A different Owner choice is valid.
+**Do not interpret the old exact-name baseline inventory as a creature-family inventory.** In the pinned pack, SRD 5.1 has Goblin, Hobgoblin and Bugbear. SRD 5.2.1 instead has Goblin Minion/Warrior/Boss, Hobgoblin Warrior/Captain, and Bugbear Warrior/Stalker. These are not simply an overall reduction in common monsters; they represent split roles with revised identities and mechanics. Goblin (old) and Goblin Warrior (new) require a semantic identity check before both can be considered unique native creature variants.
 
-Existing five approved general rules already allow semantic deduplication and compatible feature additions; they do not choose one edition's conflicting monster values. Owner approval is required before applying a numerical/structural precedence policy across the monster category.
+This also qualifies the original automated result: **retained one-source content is not necessarily confirmed independent content**, because an older creature can have a newer renamed or role-specific equivalent. Preserve it for review; do not invent an edition-named native variant or assume all old actions should be added to the newer roster.
+
+Detailed model and example mapping: `docs/rewrite/monster-variant-family-model.md`.
+
+**Remaining review:** Determine which older monster roles are genuinely distinct, and which legacy mechanics should be represented as compatible additions versus separate tactically useful variants. Use the approved general five reconciliation policies without arbitrarily mixing numerical statistics, attack suites, or action costs.
