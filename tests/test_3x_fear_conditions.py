@@ -22,7 +22,7 @@ class FearConditionsTests(unittest.TestCase):
         return self.native["condition." + name]
 
     def test_unique_native_fear_states_and_unchanged_frightened(self):
-        self.assertEqual(27, len(self.native))
+        self.assertEqual(28, len(self.native))
         self.assertEqual(set(self.native), set(self.chapter["conditionIds"]))
         self.assertEqual({"condition.shaken", "condition.frightened",
                           "condition.panicked", "condition.cowering"},
