@@ -5,28 +5,6 @@
   "baselineStatus": "pending-native-reconciliation",
   "candidateDefinitions": [
     {
-      "key": "candidate-b-1",
-      "content": {
-        "name": "Skilled",
-        "skillToolLanguageProficiencies": [
-          {
-            "choose": [
-              {
-                "from": [
-                  "anySkill",
-                  "anyTool"
-                ],
-                "count": 3
-              }
-            ]
-          }
-        ],
-        "entries": [
-          "You gain proficiency in any combination of three skills or {@filter tools|items|type=tool;artisan's tools;instrument;gaming set;vehicle (land);vehicle (water)} of your choice."
-        ]
-      }
-    },
-    {
       "key": "candidate-b-2",
       "content": {
         "name": "Skilled",

@@ -615,9 +615,9 @@
                     "items": [
                       "{@item Assassin's Blood|srd52}",
                       "{@item Burnt Othur Fumes|srd52}",
-                      "{@item Carrion Crawler Mucus|srd52}",
+                      "{@item Crawler Mucus (Contact)|srd52|Crawler Mucus}",
                       "{@item Essence of Ether|srd52}",
-                      "{@item Lolth's Sting|srd52}",
+                      "{@item Spider's Sting|srd52}",
                       "{@item Malice|srd52}",
                       "{@item Midnight Tears|srd52}",
                       "{@item Oil of Taggit|srd52}",
@@ -946,7 +946,7 @@
                         "items": [
                           "1 {@creature Bugbear Warrior|srd52} (200 XP)",
                           "2 {@creature Giant Wasp|srd52|Giant Wasps} (100 XP each), for 200 XP total",
-                          "6 {@creature Twig Blight|srd52|Twig Blights} (25 XP each), for 150 XP total"
+                          "6 {@creature Giant Rat|srd52|Giant Rats} (25 XP each), for 150 XP total"
                         ]
                       },
                       {
@@ -963,7 +963,7 @@
                       {
                         "type": "list",
                         "items": [
-                          "2 {@creature Nothic|srd52|Nothics} (450 XP each) and 9 {@creature Stirge|srd52|Stirges} (25 XP each), for 1,125 XP total",
+                          "2 {@creature Druid|srd52|Druids} (450 XP each) and 9 {@creature Stirge|srd52|Stirges} (25 XP each), for 1,125 XP total",
                           "1 {@creature Wight|srd52} (700 XP), 1 {@creature Warhorse Skeleton|srd52} (100 XP), and 6 {@creature Skeleton|srd52|Skeletons} (50 XP each), for 1,100 XP total"
                         ]
                       },

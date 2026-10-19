@@ -28,6 +28,21 @@
           }
         }
       }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Plate Armor of Etherealness",
+        "eligibleArmor": [
+          "Half Plate Armor",
+          "Plate Armor"
+        ],
+        "rarity": "legendary",
+        "reqAttune": true,
+        "entries": [
+          "While you're wearing this armor, you can take a {@action Magic|SRD52} action and use a command word to gain the effect of the {@spell Etherealness|SRD52} spell. The spell ends immediately if you remove the armor or take a {@action Magic|SRD52} action to repeat the command word. This property of the armor can't be used again until the next dawn."
+        ]
+      }
     }
   ]
 }

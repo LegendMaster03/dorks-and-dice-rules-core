@@ -5,15 +5,6 @@
   "baselineStatus": "pending-native-reconciliation",
   "candidateDefinitions": [
     {
-      "key": "candidate-b-1",
-      "content": {
-        "name": "Savage Attacker",
-        "entries": [
-          "Once per turn when you roll damage for a melee weapon attack, you can reroll the weapon's damage dice and use either total."
-        ]
-      }
-    },
-    {
       "key": "candidate-b-2",
       "content": {
         "name": "Savage Attacker",
