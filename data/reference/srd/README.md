@@ -7,3 +7,9 @@ The initial skill content has been curated directly from the structured `srd` an
 No baseline importer is required. Future user imports and third-party source support will have separate versioned conversion and provenance requirements. See `docs/rewrite/native-seed-skills-and-competencies.md`.
 
 The compact, corrected starter skill data is in `data/native/skills.json`. It uses short descriptions selected from candidate SRD 5.2.1-marked material, subject to official-SRD checking. Older-edition names and decisions are not stored in the native skill records. Attribution remains relevant even though external source material is not an engine dependency.
+
+## Current baseline status
+
+The pinned structured SRD-only pack is now copied in full under `structured/`; the file-hash manifest is `structured-manifest.json`, and the comparison inventory is `reconciliation-inventory.json`. Both source books are included. See `docs/rewrite/srd-baseline-status.md` for coverage limits and native-reconciliation status.
+
+The temporary one-off GitHub Actions copy/audit workflows have been removed. The normal validation workflow checks the copied files' SHA-256 hashes and the existence of the required content categories.

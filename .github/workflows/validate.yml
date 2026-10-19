@@ -49,5 +49,5 @@ jobs:
           print(f"Repository skeleton OK; validated {len(paths)} JSON files.")
           PY
 
-      - name: Verify native data baseline
-        run: python3 -m unittest discover -s tests -p 'test_native_seed.py' -v
+      - name: Verify native data and pinned structured SRD reference integrity
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v

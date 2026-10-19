@@ -1,0 +1,70 @@
+# Complete structured SRD baseline — import and reconciliation status
+
+**Imported:** all 90 JSON files from the pinned, unofficial SRD-only 5etools-format
+data pack `CoolFireGiant/hewnhero-srd@d06d1dadee357857767b1e4da985df6609509bcf`.
+
+**Location:** `data/reference/srd/structured/`. Exact file names and SHA-256
+digests are recorded in `data/reference/srd/structured-manifest.json`.
+The original JSON includes SRD 5.1 and SRD 5.2.1 rulebook sections,
+creatures, classes, species, feats, spells, items, equipment, actions,
+conditions and other structured material.
+
+**Important limitations:**
+- This is a faithful full import of the **pinned data pack**, not a verified
+  full-text match to both official SRD PDFs. The pack is not an official release.
+- Raw source records are preserved separately from the Dorks & Dice native JSON
+  authority. This is **not** a source-first runtime architecture and introduces
+  no permanent SRD importer.
+- `data/reference/srd/reconciliation-inventory.json` is an automated **diff
+  inventory**, not a set of approved native rules. It matches source records
+  tentatively by entity category, name and parent, and ignores source/page
+  metadata. False-positive matches remain possible; identical-looking data
+  alone is not a universal equivalence proof.
+- The inventory does **not** adjudicate differences. Differing versions
+  remain accessible as evidence until native mechanics have been selected.
+
+## First comparisons
+
+| Category | Changed matches | Only 5.1 | Only 5.2.1 |
+| --- | ---: | ---: | ---: |
+| Skills | 18 | 0 | 0 |
+| Core actions | 13 | 7 | 4 |
+| Conditions | 15 | 0 | 0 |
+| Base classes | 12 | 0 | 0 |
+| Subclasses | 8 | 4 | 4 |
+| Spells | 317 | 2 | 22 |
+| Monsters | 285 | 38 | 49 |
+| Items | 396 | 97 | 68 |
+
+These are structural/content differences, not a determination that each record
+has distinct gameplay mechanics. Only 20 item-type records were identical
+after limited cosmetic normalization; other records commonly vary in text,
+references or mechanics.
+
+Both SRD rulebook document trees have been preserved in full. They have
+different top-level chapter organizations (45 sections in the 5.1 pack book
+versus 16 in 5.2.1), so chapter-count comparisons are not proof of missing
+text or gameplay equivalence.
+
+## Native reconciliation rules
+
+1. The native JSON is the Dorks & Dice rules authority. Do not add
+   edition/source markers or legacy import names as required native runtime
+   state. Source comparisons belong in `data/reference/` and future import
+   mappings in `data/conversions/`.
+2. Begin with rules identical in meaning, then rules whose differences are
+   explicitly resolved in existing Dorks & Dice decisions. Check before
+   applying a 5.1 or 5.2.1 behavior as a default when the decision is absent.
+3. Do not merge entities just because names match: preserve genuine subtypes,
+   procedures, and distinct mechanical effects. Apply the agreed subtype
+   folders (base/sub/prestige, species/subspecies).
+4. Attribute SRD 5.1 and SRD 5.2.1 correctly under CC BY 4.0. Keep the
+   third-party pack provenance separate from claims of official fidelity.
+5. No engine, DB, deployment, source parser, or public/tester exposure is
+   authorized by this source-copy step.
+
+## Outstanding milestone
+
+The complete imported source pack is available for deterministic review.
+**Native reconciliation of the entire pack is NOT complete** and must not
+be described as completed merely because the files have been copied.
