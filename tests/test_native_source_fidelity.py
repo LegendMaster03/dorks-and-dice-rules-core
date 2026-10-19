@@ -131,5 +131,12 @@ class NativeSourceFidelityTests(unittest.TestCase):
         self.assertEqual([x["key"] for x in candidates], [x["key"] for x in row["candidates"]])
         self.assertIn("official SRD 5.2.1 PDF", row["candidates"][1]["evidence"])
 
+
+    def test_warlock_pact_magic_52_uses_official_example_spell(self):
+        feat = read("data/native/features/classes/warlock/pact-magic-level-1.json")
+        modern = next(x["content"] for x in feat["candidateDefinitions"] if x["key"] == "candidate-b")
+        self.assertIn("Charm Person|SRD52", json.dumps(modern))
+        self.assertNotIn("Witch Bolt|SRD52", json.dumps(modern))
+
 if __name__ == "__main__":
     unittest.main()
