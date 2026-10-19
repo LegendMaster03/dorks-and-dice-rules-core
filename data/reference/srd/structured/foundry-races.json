@@ -1,0 +1,350 @@
+{
+	"_meta": {
+		"internalCopies": [
+			"raceFeature"
+		]
+	},
+	"race": [],
+	"raceFeature": [
+		{
+			"name": "Adrenaline Rush",
+			"source": "SRD52",
+			"raceName": "Orc",
+			"raceSource": "SRD52",
+			"system": {
+				"uses.max": "@prof",
+				"uses.recovery": [
+					{
+						"period": "sr",
+						"type": "recoverAll"
+					}
+				]
+			},
+			"activities": [
+				{
+					"name": "Adrenaline Rush: Dash",
+					"type": "heal",
+					"activation": {
+						"type": "bonus"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"healing": {
+						"types": [
+							"temphp"
+						],
+						"scaling": {
+							"number": 1
+						},
+						"bonus": "@prof"
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Draconic Flight",
+			"source": "SRD52",
+			"raceName": "Dragonborn",
+			"raceSource": "SRD52",
+			"activities": [
+				{
+					"name": "Draconic Flight",
+					"type": "utility",
+					"activation": {
+						"type": "bonus"
+					},
+					"duration": {
+						"units": "minute",
+						"value": "10"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "draconicFlight"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "draconicFlight",
+					"duration": {
+						"seconds": 600
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Dwarven Toughness",
+			"source": "SRD52",
+			"raceName": "Dwarf",
+			"raceSource": "SRD52",
+			"effects": [
+				{
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.attributes.hp.bonuses.level",
+							"mode": "ADD",
+							"value": 1
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Gnomish Cunning",
+			"source": "SRD52",
+			"raceName": "Gnome",
+			"raceSource": "SRD52",
+			"effects": [
+				{
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.abilities.int.save.roll.mode",
+							"mode": "ADD",
+							"value": 1
+						},
+						{
+							"key": "system.abilities.wis.save.roll.mode",
+							"mode": "ADD",
+							"value": 1
+						},
+						{
+							"key": "system.abilities.cha.save.roll.mode",
+							"mode": "ADD",
+							"value": 1
+						}
+					],
+					"description": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Large Form",
+			"source": "SRD52",
+			"raceName": "Goliath",
+			"raceSource": "SRD52",
+			"activities": [
+				{
+					"name": "Enlarge",
+					"type": "utility",
+					"activation": {
+						"type": "bonus"
+					},
+					"duration": {
+						"units": "minute",
+						"value": "10"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "largeForm"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "largeForm",
+					"duration": {
+						"seconds": 600
+					},
+					"changes": [
+						{
+							"key": "system.attributes.movement.walk",
+							"mode": "ADD",
+							"value": 10
+						},
+						{
+							"key": "system.abilities.str.check.roll.mode",
+							"mode": "ADD",
+							"value": 1
+						}
+					],
+					"description": "For the duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, you can't use it again until you finish a Long Rest."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Luck",
+			"source": "SRD52",
+			"raceName": "Halfling",
+			"raceSource": "SRD52",
+			"effects": [
+				{
+					"transfer": true,
+					"changes": [
+						{
+							"key": "flags.dnd5e.halflingLucky",
+							"mode": "OVERRIDE",
+							"value": true
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Powerful Build",
+			"source": "SRD52",
+			"raceName": "Goliath",
+			"raceSource": "SRD52",
+			"effects": [
+				{
+					"transfer": true,
+					"changes": [
+						{
+							"key": "flags.dnd5e.powerfulBuild",
+							"mode": "OVERRIDE",
+							"value": true
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Relentless Endurance",
+			"source": "SRD52",
+			"raceName": "Orc",
+			"raceSource": "SRD52",
+			"activities": [
+				{
+					"name": "Relentlessly Endure",
+					"type": "heal",
+					"activation": {
+						"type": "",
+						"condition": "When you are reduced to 0 Hit Points but not killed outright"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"healing": {
+						"types": [
+							"healing"
+						],
+						"scaling": {
+							"number": 1
+						},
+						"bonus": "1"
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Stonecunning",
+			"source": "SRD52",
+			"raceName": "Dwarf",
+			"raceSource": "SRD52",
+			"system": {
+				"uses.max": "@prof",
+				"uses.recovery": [
+					{
+						"period": "lr",
+						"type": "recoverAll"
+					}
+				]
+			},
+			"activities": [
+				{
+					"name": "Stonecunning",
+					"type": "utility",
+					"activation": {
+						"type": "bonus"
+					},
+					"duration": {
+						"units": "minute",
+						"value": "10"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "stonecunning"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "stonecunning",
+					"duration": {
+						"seconds": 600
+					},
+					"changes": [
+						{
+							"key": "system.attributes.senses.tremorsense",
+							"mode": "ADD",
+							"value": 60
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		}
+	]
+}

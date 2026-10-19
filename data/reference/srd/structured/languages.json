@@ -1,0 +1,311 @@
+{
+	"language": [
+		{
+			"name": "Abyssal",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Demons"
+			],
+			"script": "Infernal"
+		},
+		{
+			"name": "Abyssal",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Celestial",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Celestials"
+			],
+			"script": "Celestial"
+		},
+		{
+			"name": "Celestial",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Common",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Humans"
+			],
+			"script": "Common"
+		},
+		{
+			"name": "Common",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Common Sign Language",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Deep Speech",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Aboleths, cloakers"
+			],
+			"script": "none"
+		},
+		{
+			"name": "Deep Speech",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Draconic",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Dragons, dragonborn"
+			],
+			"script": "Draconic"
+		},
+		{
+			"name": "Draconic",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Druidic",
+			"source": "SRD51",
+			"page": 59,
+			"type": "secret",
+			"typicalSpeakers": [
+				"{@class druid||druids}/{@creature druid||druids}",
+				"{@creature treant||treants}"
+			]
+		},
+		{
+			"name": "Druidic",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Dwarvish",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Dwarves"
+			],
+			"script": "Dwarvish"
+		},
+		{
+			"name": "Dwarvish",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Elvish",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Elves"
+			],
+			"script": "Elvish"
+		},
+		{
+			"name": "Elvish",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Giant",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Ogres, giants"
+			],
+			"script": "Dwarvish"
+		},
+		{
+			"name": "Giant",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Gnomish",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Gnomes"
+			],
+			"script": "Dwarvish"
+		},
+		{
+			"name": "Gnomish",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Goblin",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Goblinoids"
+			],
+			"script": "Dwarvish"
+		},
+		{
+			"name": "Goblin",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Halfling",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Halflings"
+			],
+			"script": "Common"
+		},
+		{
+			"name": "Halfling",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Infernal",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Devils"
+			],
+			"script": "Infernal"
+		},
+		{
+			"name": "Infernal",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Orc",
+			"source": "SRD51",
+			"page": 59,
+			"type": "standard",
+			"typicalSpeakers": [
+				"Orcs"
+			],
+			"script": "Dwarvish"
+		},
+		{
+			"name": "Orc",
+			"source": "SRD52",
+			"page": 20,
+			"type": "standard"
+		},
+		{
+			"name": "Primordial",
+			"dialects": [
+				"Auran",
+				"Aquan",
+				"Ignan",
+				"Terran"
+			],
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Elementals"
+			],
+			"script": "Dwarvish"
+		},
+		{
+			"name": "Primordial",
+			"dialects": [
+				"Auran",
+				"Aquan",
+				"Ignan",
+				"Terran"
+			],
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Sylvan",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Fey creatures"
+			],
+			"script": "Elvish"
+		},
+		{
+			"name": "Sylvan",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Thieves' Cant",
+			"source": "SRD51",
+			"page": 59,
+			"type": "secret",
+			"typicalSpeakers": [
+				"{@creature assassin||assassins}",
+				"{@class rogue||rogues}"
+			]
+		},
+		{
+			"name": "Thieves' Cant",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		},
+		{
+			"name": "Undercommon",
+			"source": "SRD51",
+			"page": 59,
+			"type": "exotic",
+			"typicalSpeakers": [
+				"Underworld traders"
+			],
+			"script": "Elvish"
+		},
+		{
+			"name": "Undercommon",
+			"source": "SRD52",
+			"page": 20,
+			"type": "rare"
+		}
+	],
+	"languageScript": []
+}

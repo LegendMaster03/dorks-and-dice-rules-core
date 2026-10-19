@@ -1,0 +1,54 @@
+{
+	"_meta": {
+		"internalCopies": [
+			"backgroundFluff"
+		]
+	},
+	"backgroundFluff": [
+		{
+			"name": "Acolyte",
+			"source": "SRD51",
+			"entries": [
+				{
+					"type": "entries",
+					"entries": [
+						{
+							"type": "entries",
+							"entries": [
+								"You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine. You are not necessarily a cleric—performing sacred rites is not the same thing as channeling divine power."
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Acolyte",
+			"source": "SRD52",
+			"entries": [
+				"You devoted yourself to service in a temple, either nestled in a town or secluded in a sacred grove. There you performed rites in honor of a god or pantheon. You served under a priest and studied religion. Thanks to your priest's instruction and your own devotion, you also learned how to channel a modicum of divine power in service to your place of worship and the people who prayed there."
+			]
+		},
+		{
+			"name": "Criminal",
+			"source": "SRD52",
+			"entries": [
+				"You eked out a living in dark alleyways, cutting purses or burgling shops. Perhaps you were part of a small gang of like-minded wrongdoers who looked out for each other. Or maybe you were a lone wolf, fending for yourself against the local thieves' guild and more fearsome lawbreakers."
+			]
+		},
+		{
+			"name": "Sage",
+			"source": "SRD52",
+			"entries": [
+				"You spent your formative years traveling between manors and monasteries, performing various odd jobs and services in exchange for access to their libraries. You whiled away many a long evening studying books and scrolls, learning the lore of the multiverse—even the rudiments of magic—and your mind yearns for more."
+			]
+		},
+		{
+			"name": "Soldier",
+			"source": "SRD52",
+			"entries": [
+				"You began training for war as soon as you reached adulthood and carry precious few memories of life before you took up arms. Battle is in your blood. Sometimes you catch yourself reflexively performing the basic fighting exercises you learned first. Eventually, you put that training to use on the battlefield, protecting the realm by waging war."
+			]
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"reference": {
+		"bookref-dmscreen": {
+			"name": "DM Reference",
+			"id": "bookref-dmscreen",
+			"contents": []
+		}
+	},
+	"data": {
+		"bookref-dmscreen": []
+	}
+}

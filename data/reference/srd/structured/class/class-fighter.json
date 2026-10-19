@@ -1,0 +1,1366 @@
+{
+	"_meta": {
+		"internalCopies": [
+			"subclass"
+		]
+	},
+	"class": [
+		{
+			"name": "Fighter",
+			"source": "SRD51",
+			"page": 24,
+			"reprintedAs": [
+				"Fighter|SRD52"
+			],
+			"edition": "classic",
+			"hd": {
+				"number": 1,
+				"faces": 10
+			},
+			"proficiency": [
+				"str",
+				"con"
+			],
+			"optionalfeatureProgression": [
+				{
+					"name": "Fighting Style",
+					"featureType": [
+						"FS:F"
+					],
+					"progression": {
+						"1": 1
+					}
+				}
+			],
+			"startingProficiencies": {
+				"armor": [
+					"light",
+					"medium",
+					"heavy",
+					"shield"
+				],
+				"weapons": [
+					"simple",
+					"martial"
+				],
+				"skills": [
+					{
+						"choose": {
+							"from": [
+								"acrobatics",
+								"animal handling",
+								"athletics",
+								"history",
+								"insight",
+								"intimidation",
+								"perception",
+								"survival"
+							],
+							"count": 2
+						}
+					}
+				]
+			},
+			"startingEquipment": {
+				"additionalFromBackground": true,
+				"default": [
+					"(a) {@item chain mail|srd51} or (b) {@item leather armor|srd51}, {@item longbow|srd51}, and {@item arrows (20)|srd51|20 arrows}",
+					"(a) a {@filter martial weapon|items|source=srd51|category=basic|type=martial weapon} and a {@item shield|srd51} or (b) two {@filter martial weapons|items|source=srd51|category=basic|type=martial weapon}",
+					"(a) a {@item light crossbow|srd51} and {@item crossbow bolts (20)|srd51|20 bolts} or (b) two {@item handaxe|srd51|handaxes}",
+					"(a) a {@item dungeoneer's pack|srd51} or (b) an {@item explorer's pack|srd51}"
+				],
+				"goldAlternative": "{@dice 5d4 × 10|5d4 × 10|Starting Gold}",
+				"defaultData": [
+					{
+						"a": [
+							"chain mail|srd51"
+						],
+						"b": [
+							"leather armor|srd51",
+							"longbow|srd51",
+							"arrows (20)|srd51"
+						]
+					},
+					{
+						"a": [
+							{
+								"equipmentType": "weaponMartial"
+							},
+							"shield|srd51"
+						],
+						"b": [
+							{
+								"equipmentType": "weaponMartial",
+								"quantity": 2
+							}
+						]
+					},
+					{
+						"a": [
+							"light crossbow|srd51",
+							"crossbow bolts (20)|srd51"
+						],
+						"b": [
+							{
+								"item": "handaxe|srd51",
+								"quantity": 2
+							}
+						]
+					},
+					{
+						"a": [
+							"dungeoneer's pack|srd51"
+						],
+						"b": [
+							"explorer's pack|srd51"
+						]
+					}
+				]
+			},
+			"multiclassing": {
+				"requirements": {
+					"or": [
+						{
+							"str": 13,
+							"dex": 13
+						}
+					]
+				},
+				"proficienciesGained": {
+					"armor": [
+						"light",
+						"medium",
+						"shield"
+					],
+					"weapons": [
+						"simple",
+						"martial"
+					]
+				}
+			},
+			"classFeatures": [
+				"Fighting Style|Fighter||1",
+				"Second Wind|Fighter||1",
+				"Action Surge|Fighter||2",
+				{
+					"classFeature": "Martial Archetype|Fighter||3",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter||4",
+				"Extra Attack|Fighter||5",
+				"Ability Score Improvement|Fighter||6",
+				{
+					"classFeature": "Martial Archetype feature|Fighter||7",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter||8",
+				"Indomitable|Fighter||9",
+				{
+					"classFeature": "Martial Archetype feature|Fighter||10",
+					"gainSubclassFeature": true
+				},
+				"Extra Attack (2)|Fighter||11",
+				"Ability Score Improvement|Fighter||12",
+				"Indomitable (two uses)|Fighter||13",
+				"Ability Score Improvement|Fighter||14",
+				{
+					"classFeature": "Martial Archetype feature|Fighter||15",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter||16",
+				"Action Surge (two uses)|Fighter||17",
+				"Indomitable (three uses)|Fighter||17",
+				{
+					"classFeature": "Martial Archetype feature|Fighter||18",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter||19",
+				"Extra Attack (3)|Fighter||20"
+			],
+			"subclassTitle": "Martial Archetype",
+			"hasFluff": true,
+			"hasFluffImages": true
+		},
+		{
+			"name": "Fighter",
+			"source": "SRD52",
+			"page": 47,
+			"basicRules2024": true,
+			"edition": "one",
+			"primaryAbility": [
+				{
+					"str": true
+				},
+				{
+					"dex": true
+				}
+			],
+			"hd": {
+				"number": 1,
+				"faces": 10
+			},
+			"proficiency": [
+				"str",
+				"con"
+			],
+			"featProgression": [
+				{
+					"name": "Fighting Style",
+					"category": [
+						"FS"
+					],
+					"progression": {
+						"1": 1
+					}
+				},
+				{
+					"name": "Epic Boon",
+					"category": [
+						"EB"
+					],
+					"progression": {
+						"19": 1
+					}
+				}
+			],
+			"startingProficiencies": {
+				"armor": [
+					"light",
+					"medium",
+					"heavy",
+					"shield"
+				],
+				"weapons": [
+					"simple",
+					"martial"
+				],
+				"skills": [
+					{
+						"choose": {
+							"from": [
+								"acrobatics",
+								"animal handling",
+								"athletics",
+								"history",
+								"insight",
+								"intimidation",
+								"persuasion",
+								"perception",
+								"survival"
+							],
+							"count": 2
+						}
+					}
+				]
+			},
+			"startingEquipment": {
+				"additionalFromBackground": true,
+				"defaultData": [
+					{
+						"A": [
+							{
+								"item": "chain mail|srd52"
+							},
+							{
+								"item": "greatsword|srd52"
+							},
+							{
+								"item": "flail|srd52"
+							},
+							{
+								"item": "javelin|srd52",
+								"quantity": 8
+							},
+							{
+								"item": "dungeoneer's pack|srd52"
+							},
+							{
+								"value": 400
+							}
+						],
+						"B": [
+							{
+								"item": "studded leather armor|srd52"
+							},
+							{
+								"item": "scimitar|srd52"
+							},
+							{
+								"item": "shortsword|srd52"
+							},
+							{
+								"item": "longbow|srd52"
+							},
+							{
+								"item": "arrows (20)|srd52"
+							},
+							{
+								"item": "quiver|srd52"
+							},
+							{
+								"item": "dungeoneer's pack|srd52"
+							},
+							{
+								"value": 1100
+							}
+						],
+						"C": [
+							{
+								"value": 15500
+							}
+						]
+					}
+				],
+				"entries": [
+					"{@i Choose A, B, or C:} (A) {@item Chain Mail|SRD52}, {@item Greatsword|SRD52}, {@item Flail|SRD52}, 8 {@item Javelin|SRD52|Javelins}, {@item Dungeoneer's Pack|SRD52}, and 4 GP; (B) {@item Studded Leather Armor|SRD52}, {@item Scimitar|SRD52}, {@item Shortsword|SRD52}, {@item Longbow|SRD52}, {@item Arrows (20)|SRD52|20 Arrows}, {@item Quiver|SRD52}, {@item Dungeoneer's Pack|SRD52}, and 11 GP; or (C) 155 GP"
+				]
+			},
+			"multiclassing": {
+				"proficienciesGained": {
+					"armor": [
+						"light",
+						"medium",
+						"shield"
+					],
+					"weapons": [
+						"martial"
+					]
+				}
+			},
+			"classTableGroups": [
+				{
+					"colLabels": [
+						"Second Wind",
+						"Weapon Mastery"
+					],
+					"rows": [
+						[
+							"2",
+							"3"
+						],
+						[
+							"2",
+							"3"
+						],
+						[
+							"2",
+							"3"
+						],
+						[
+							"3",
+							"4"
+						],
+						[
+							"3",
+							"4"
+						],
+						[
+							"3",
+							"4"
+						],
+						[
+							"3",
+							"4"
+						],
+						[
+							"3",
+							"4"
+						],
+						[
+							"3",
+							"4"
+						],
+						[
+							"4",
+							"5"
+						],
+						[
+							"4",
+							"5"
+						],
+						[
+							"4",
+							"5"
+						],
+						[
+							"4",
+							"5"
+						],
+						[
+							"4",
+							"5"
+						],
+						[
+							"4",
+							"5"
+						],
+						[
+							"4",
+							"6"
+						],
+						[
+							"4",
+							"6"
+						],
+						[
+							"4",
+							"6"
+						],
+						[
+							"4",
+							"6"
+						],
+						[
+							"4",
+							"6"
+						]
+					]
+				}
+			],
+			"classFeatures": [
+				"Fighting Style|Fighter|SRD52|1",
+				"Second Wind|Fighter|SRD52|1",
+				"Weapon Mastery|Fighter|SRD52|1",
+				"Action Surge|Fighter|SRD52|2",
+				"Tactical Mind|Fighter|SRD52|2",
+				{
+					"classFeature": "Fighter Subclass|Fighter|SRD52|3",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter|SRD52|4",
+				"Extra Attack|Fighter|SRD52|5",
+				"Tactical Shift|Fighter|SRD52|5",
+				"Ability Score Improvement|Fighter|SRD52|6",
+				{
+					"classFeature": "Subclass Feature|Fighter|SRD52|7",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter|SRD52|8",
+				"Indomitable|Fighter|SRD52|9",
+				"Tactical Master|Fighter|SRD52|9",
+				{
+					"classFeature": "Subclass Feature|Fighter|SRD52|10",
+					"gainSubclassFeature": true
+				},
+				"Two Extra Attacks|Fighter|SRD52|11",
+				"Ability Score Improvement|Fighter|SRD52|12",
+				"Indomitable|Fighter|SRD52|13",
+				"Studied Attacks|Fighter|SRD52|13",
+				"Ability Score Improvement|Fighter|SRD52|14",
+				{
+					"classFeature": "Subclass Feature|Fighter|SRD52|15",
+					"gainSubclassFeature": true
+				},
+				"Ability Score Improvement|Fighter|SRD52|16",
+				"Action Surge|Fighter|SRD52|17",
+				"Indomitable|Fighter|SRD52|17",
+				{
+					"classFeature": "Subclass Feature|Fighter|SRD52|18",
+					"gainSubclassFeature": true
+				},
+				"Epic Boon|Fighter|SRD52|19",
+				"Three Extra Attacks|Fighter|SRD52|20"
+			],
+			"subclassTitle": "Fighter Subclass",
+			"hasFluff": true,
+			"hasFluffImages": true
+		}
+	],
+	"subclass": [
+		{
+			"name": "Champion",
+			"shortName": "Champion",
+			"source": "SRD51",
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"page": 25,
+			"reprintedAs": [
+				"Champion|Fighter|SRD52|SRD52"
+			],
+			"edition": "classic",
+			"optionalfeatureProgression": [
+				{
+					"name": "Fighting Style",
+					"featureType": [
+						"FS:F"
+					],
+					"progression": {
+						"10": 1
+					}
+				}
+			],
+			"subclassFeatures": [
+				"Champion|Fighter||Champion||3",
+				"Remarkable Athlete|Fighter||Champion||7",
+				"Additional Fighting Style|Fighter||Champion||10",
+				"Superior Critical|Fighter||Champion||15",
+				"Survivor|Fighter||Champion||18"
+			]
+		},
+		{
+			"name": "Champion",
+			"shortName": "Champion",
+			"source": "SRD52",
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"page": 49,
+			"basicRules2024": true,
+			"edition": "one",
+			"featProgression": [
+				{
+					"name": "Fighting Style",
+					"category": [
+						"FS"
+					],
+					"progression": {
+						"7": 1
+					}
+				}
+			],
+			"subclassFeatures": [
+				"Champion|Fighter|SRD52|Champion|SRD52|3",
+				"Additional Fighting Style|Fighter|SRD52|Champion|SRD52|7",
+				"Heroic Warrior|Fighter|SRD52|Champion|SRD52|10",
+				"Superior Critical|Fighter|SRD52|Champion|SRD52|15",
+				"Survivor|Fighter|SRD52|Champion|SRD52|18"
+			],
+			"hasFluffImages": true
+		}
+	],
+	"classFeature": [
+		{
+			"name": "Fighting Style",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 1,
+			"entries": [
+				"You adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take the same Fighting Style option more than once, even if you get to choose again.",
+				{
+					"type": "options",
+					"count": 1,
+					"entries": [
+						{
+							"type": "refOptionalfeature",
+							"optionalfeature": "Archery"
+						},
+						{
+							"type": "refOptionalfeature",
+							"optionalfeature": "Defense"
+						},
+						{
+							"type": "refOptionalfeature",
+							"optionalfeature": "Dueling"
+						},
+						{
+							"type": "refOptionalfeature",
+							"optionalfeature": "Great Weapon Fighting"
+						},
+						{
+							"type": "refOptionalfeature",
+							"optionalfeature": "Protection"
+						},
+						{
+							"type": "refOptionalfeature",
+							"optionalfeature": "Two-Weapon Fighting"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Second Wind",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 1,
+			"entries": [
+				"You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to {@dice 1d10} + your fighter level.",
+				"Once you use this feature, you must finish a short or long rest before you can use it again."
+			]
+		},
+		{
+			"name": "Action Surge",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 2,
+			"entries": [
+				"Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.",
+				"Once you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn."
+			]
+		},
+		{
+			"name": "Martial Archetype",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 3,
+			"entries": [
+				"At 3rd level, you choose an archetype from the list available that you strive to emulate in your combat styles and techniques. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 4,
+			"entries": [
+				"When you reach 4th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Extra Attack",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 5,
+			"entries": [
+				"Beginning at 5th level, you can attack twice, instead of once, whenever you take the {@action Attack} action on your turn.",
+				"The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 6,
+			"entries": [
+				"When you reach 6th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Martial Archetype feature",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 7,
+			"entries": [
+				"At 7th level, you gain a feature granted by your Martial Archetype."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 8,
+			"entries": [
+				"When you reach 8th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Indomitable",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 9,
+			"entries": [
+				"Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.",
+				"You can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level."
+			]
+		},
+		{
+			"name": "Martial Archetype feature",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 10,
+			"entries": [
+				"At 10th level, you gain a feature granted by your Martial Archetype."
+			]
+		},
+		{
+			"name": "Extra Attack (2)",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 11,
+			"entries": [
+				"At 11th level, you can attack three times whenever you take the {@action Attack} action on your turn."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 12,
+			"entries": [
+				"When you reach 12th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Indomitable (two uses)",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 13,
+			"entries": [
+				"At 13th level, you can use Indomitable twice between long rests."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 14,
+			"entries": [
+				"When you reach 14th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Martial Archetype feature",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 15,
+			"entries": [
+				"At 15th level, you gain a feature granted by your Martial Archetype."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 16,
+			"entries": [
+				"When you reach 16th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Action Surge (two uses)",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 17,
+			"entries": [
+				"At 17th level, you can use Action Surge twice before a rest, but only once on the same turn."
+			]
+		},
+		{
+			"name": "Indomitable (three uses)",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 17,
+			"entries": [
+				"At 17th level, you can use Indomitable three times between long rests."
+			]
+		},
+		{
+			"name": "Martial Archetype feature",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 18,
+			"entries": [
+				"At 18th level, you gain a feature granted by your Martial Archetype."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 19,
+			"entries": [
+				"When you reach 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+				"If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+			]
+		},
+		{
+			"name": "Extra Attack (3)",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"level": 20,
+			"entries": [
+				"At 20th level, you can attack four times whenever you take the {@action Attack} action on your turn."
+			]
+		},
+		{
+			"name": "Fighting Style",
+			"source": "SRD52",
+			"page": 91,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 1,
+			"entries": [
+				"You have honed your martial prowess and gain a {@filter Fighting Style feat|feats|category=FS} of your choice. {@feat Defense|SRD52} is recommended.",
+				"Whenever you gain a Fighter level, you can replace the feat you chose with a different {@filter Fighting Style feat|feats|category=FS}."
+			]
+		},
+		{
+			"name": "Second Wind",
+			"source": "SRD52",
+			"page": 91,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 1,
+			"entries": [
+				"You have a limited well of physical and mental stamina that you can draw on. As a {@variantrule Bonus Action|SRD52}, you can use it to regain {@variantrule Hit Points|SRD52} equal to {@dice 1d10} plus your Fighter level.",
+				"You can use this feature twice. You regain one expended use when you finish a {@variantrule Short Rest|SRD52}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}.",
+				"When you reach certain Fighter levels, you gain more uses of this feature, as shown in the Second Wind column of the Fighter Features table."
+			]
+		},
+		{
+			"name": "Weapon Mastery",
+			"source": "SRD52",
+			"page": 91,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 1,
+			"entries": [
+				"Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of three kinds of {@filter Simple|items|type=simple weapon} or {@filter Martial|items|type=martial weapon} weapons of your choice. Whenever you finish a {@variantrule Long Rest|SRD52}, you can practice weapon drills and change one of those weapon choices.",
+				"When you reach certain Fighter levels, you gain the ability to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of more kinds of weapons, as shown in the Weapon Mastery column of the Fighter Features table."
+			]
+		},
+		{
+			"name": "Action Surge",
+			"source": "SRD52",
+			"page": 91,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 2,
+			"entries": [
+				"You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action, except the {@action Magic|SRD52} action.",
+				"Once you use this feature, you can't do so again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. Starting at level 17, you can use it twice before a rest but only once on a turn."
+			]
+		},
+		{
+			"name": "Tactical Mind",
+			"source": "SRD52",
+			"page": 91,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 2,
+			"entries": [
+				"You have a mind for tactics on and off the battlefield. When you fail an ability check, you can expend a use of your Second Wind to push yourself toward success. Rather than regaining {@variantrule Hit Points|SRD52}, you roll {@dice 1d10} and add the number rolled to the ability check, potentially turning it into a success. If the check still fails, this use of Second Wind isn't expended."
+			]
+		},
+		{
+			"name": "Fighter Subclass",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 3,
+			"entries": [
+				"You gain a Fighter subclass of your choice. A subclass is a specialization that grants you features at certain Fighter levels. For the rest of your career, you gain each of your subclass's features that are of your Fighter level or lower."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 4,
+			"entries": [
+				"You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify. You gain this feature again at Fighter levels 6, 8, 12, 14, and 16."
+			]
+		},
+		{
+			"name": "Extra Attack",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 5,
+			"entries": [
+				"You can attack twice instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+			]
+		},
+		{
+			"name": "Tactical Shift",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 5,
+			"entries": [
+				"Whenever you activate your Second Wind with a {@variantrule Bonus Action|SRD52}, you can move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 6,
+			"entries": [
+				"You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+			]
+		},
+		{
+			"name": "Subclass Feature",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 7,
+			"entries": [
+				"You gain a feature from your Fighter Subclass."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 8,
+			"entries": [
+				"You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+			]
+		},
+		{
+			"name": "Indomitable",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 9,
+			"entries": [
+				"If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+				"You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+			]
+		},
+		{
+			"name": "Tactical Master",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 9,
+			"entries": [
+				"When you attack with a weapon whose mastery property you can use, you can replace that property with the {@itemMastery Push|SRD52}, {@itemMastery Sap|SRD52}, or {@itemMastery Slow|SRD52} property for that attack."
+			]
+		},
+		{
+			"name": "Subclass Feature",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 10,
+			"entries": [
+				"You gain a feature from your Fighter Subclass."
+			]
+		},
+		{
+			"name": "Two Extra Attacks",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 11,
+			"entries": [
+				"You can attack three times instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 12,
+			"entries": [
+				"You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+			]
+		},
+		{
+			"name": "Indomitable",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 13,
+			"entries": [
+				"If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+				"You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+			]
+		},
+		{
+			"name": "Studied Attacks",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 13,
+			"entries": [
+				"You study your opponents and learn from each attack you make. If you make an attack roll against a creature and miss, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 14,
+			"entries": [
+				"You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+			]
+		},
+		{
+			"name": "Subclass Feature",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 15,
+			"entries": [
+				"You gain a feature from your Fighter Subclass."
+			]
+		},
+		{
+			"name": "Ability Score Improvement",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 16,
+			"entries": [
+				"You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+			]
+		},
+		{
+			"name": "Action Surge",
+			"source": "SRD52",
+			"page": 91,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 17,
+			"entries": [
+				"You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action, except the {@action Magic|SRD52} action.",
+				"Once you use this feature, you can't do so again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. Starting at level 17, you can use it twice before a rest but only once on a turn."
+			]
+		},
+		{
+			"name": "Indomitable",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 17,
+			"entries": [
+				"If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+				"You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+			]
+		},
+		{
+			"name": "Subclass Feature",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 18,
+			"entries": [
+				"You gain a feature from your Fighter Subclass."
+			]
+		},
+		{
+			"name": "Epic Boon",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 19,
+			"entries": [
+				"You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Combat Prowess|SRD52} is recommended."
+			]
+		},
+		{
+			"name": "Three Extra Attacks",
+			"source": "SRD52",
+			"page": 92,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"level": 20,
+			"entries": [
+				"You can attack four times instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+			]
+		}
+	],
+	"subclassFeature": [
+		{
+			"name": "Champion",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD51",
+			"level": 3,
+			"entries": [
+				"The archetypal Champion focuses on the development of raw physical power honed to deadly perfection. Those who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.",
+				{
+					"type": "refSubclassFeature",
+					"subclassFeature": "Improved Critical|Fighter||Champion||3"
+				}
+			]
+		},
+		{
+			"name": "Improved Critical",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD51",
+			"level": 3,
+			"header": 1,
+			"entries": [
+				"Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20."
+			]
+		},
+		{
+			"name": "Remarkable Athlete",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD51",
+			"level": 7,
+			"header": 2,
+			"entries": [
+				"Starting at 7th level, you can add half your proficiency bonus (round up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.",
+				"In addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier."
+			]
+		},
+		{
+			"name": "Additional Fighting Style",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD51",
+			"level": 10,
+			"header": 2,
+			"entries": [
+				"At 10th level, you can choose a second option from the Fighting Style class feature."
+			]
+		},
+		{
+			"name": "Superior Critical",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD51",
+			"level": 15,
+			"header": 2,
+			"entries": [
+				"Starting at 15th level, your weapon attacks score a critical hit on a roll of 18-20."
+			]
+		},
+		{
+			"name": "Survivor",
+			"source": "SRD51",
+			"page": 72,
+			"className": "Fighter",
+			"classSource": "SRD51",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD51",
+			"level": 18,
+			"header": 2,
+			"entries": [
+				"At 18th level, you attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points."
+			]
+		},
+		{
+			"name": "Champion",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 3,
+			"entries": [
+				"{@i Pursue Physical Excellence in Combat}",
+				"A Champion focuses on the development of martial prowess in a relentless pursuit of victory. Champions combine rigorous training with physical excellence to deal devastating blows, withstand peril, and garner glory. Whether in athletic contests or bloody battle, Champions strive for the crown of the victor.",
+				{
+					"type": "refSubclassFeature",
+					"subclassFeature": "Improved Critical|Fighter|SRD52|Champion|SRD52|3"
+				},
+				{
+					"type": "refSubclassFeature",
+					"subclassFeature": "Remarkable Athlete|Fighter|SRD52|Champion|SRD52|3"
+				}
+			]
+		},
+		{
+			"name": "Improved Critical",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 3,
+			"header": 2,
+			"entries": [
+				"Your attack rolls with weapons and Unarmed Strikes can score a {@variantrule Critical Hit|SRD52} on a roll of 19 or 20 on the {@dice d20}."
+			]
+		},
+		{
+			"name": "Remarkable Athlete",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 3,
+			"header": 2,
+			"entries": [
+				"Thanks to your athleticism, you have {@variantrule Advantage|SRD52} on {@variantrule Initiative|SRD52} rolls and Strength ({@skill Athletics|SRD52}) checks.",
+				"In addition, immediately after you score a {@variantrule Critical Hit|SRD52}, you can move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+			]
+		},
+		{
+			"name": "Additional Fighting Style",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 7,
+			"header": 2,
+			"entries": [
+				"You gain another {@filter Fighting Style feat|feats|category=FS} of your choice."
+			]
+		},
+		{
+			"name": "Heroic Warrior",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 10,
+			"header": 2,
+			"entries": [
+				"The thrill of battle drives you toward victory. During combat, you can give yourself {@variantrule Heroic Inspiration|SRD52} whenever you start your turn without it."
+			]
+		},
+		{
+			"name": "Superior Critical",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 15,
+			"header": 2,
+			"entries": [
+				"Your attack rolls with weapons and Unarmed Strikes can now score a {@variantrule Critical Hit|SRD52} on a roll of 18–20 on the {@dice d20}."
+			]
+		},
+		{
+			"name": "Survivor",
+			"source": "SRD52",
+			"page": 96,
+			"basicRules2024": true,
+			"className": "Fighter",
+			"classSource": "SRD52",
+			"subclassShortName": "Champion",
+			"subclassSource": "SRD52",
+			"level": 18,
+			"header": 2,
+			"entries": [
+				"You attain the pinnacle of resilience in battle, giving you these benefits.",
+				{
+					"type": "entries",
+					"name": "Defy Death",
+					"entries": [
+						"You have {@variantrule Advantage|SRD52} on {@variantrule Death Saving Throw|SRD52|Death Saving Throws}. Moreover, when you roll 18–20 on a {@variantrule Death Saving Throw|SRD52}, you gain the benefit of rolling a 20 on it."
+					]
+				},
+				{
+					"type": "entries",
+					"name": "Heroic Rally",
+					"entries": [
+						"At the start of each of your turns, you regain {@variantrule Hit Points|SRD52} equal to 5 plus your Constitution modifier if you are {@status Bloodied|SRD52} and have at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
+					]
+				}
+			]
+		}
+	]
+}

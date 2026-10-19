@@ -1,0 +1,466 @@
+{
+  "status": "complete-copy-of-pinned-structured-srd-data-pack; not-verified-against-official-pdfs",
+  "provider": "CoolFireGiant/hewnhero-srd",
+  "repository": "https://github.com/CoolFireGiant/hewnhero-srd",
+  "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+  "license": "CC BY 4.0 (upstream pack claim; verify individual records against official SRDs)",
+  "originalSourceVersions": [
+    "SRD 5.1",
+    "SRD 5.2.1"
+  ],
+  "files": [
+    {
+      "path": "actions.json",
+      "sha256": "ec51bb8c3127b835f1a815c90056947d08bb7e5569764e6f83730c669c8f8490",
+      "bytes": 34551
+    },
+    {
+      "path": "backgrounds.json",
+      "sha256": "42b31e2c5df937e87c9ae8d4411522cab493ae2e583bd82a1e739053df5294c6",
+      "bytes": 16099
+    },
+    {
+      "path": "bestiary/bestiary-srd51.json",
+      "sha256": "7a7139f28059f11f85545714151a6e92fc0e5cddb343f20f57786c3d7d25cc80",
+      "bytes": 831432
+    },
+    {
+      "path": "bestiary/bestiary-srd52.json",
+      "sha256": "5b6bd181ac22a9486ce10159e0ba5d8fdc9b026580411331782422e950176e18",
+      "bytes": 782510
+    },
+    {
+      "path": "bestiary/fluff-bestiary-srd51.json",
+      "sha256": "b6aff10435c1bfbdc067ddceee45a4df5befaec3df479c2e1f330d669691e8c5",
+      "bytes": 418918
+    },
+    {
+      "path": "bestiary/fluff-bestiary-srd52.json",
+      "sha256": "370e5ffe3ae7980bc251c75b0a9a78e908150eb8a0f4d8c6f43641c918186b80",
+      "bytes": 389600
+    },
+    {
+      "path": "bestiary/fluff-index.json",
+      "sha256": "b66feb0574acfae664d77c6f1ab08ef64b8bf3651bdd18e408bc7321da1eaa0d",
+      "bytes": 81
+    },
+    {
+      "path": "bestiary/foundry.json",
+      "sha256": "83bd53e3161b50945d2b570e637c50c38f721052ede32bc3a4e78f931077a3b3",
+      "bytes": 19
+    },
+    {
+      "path": "bestiary/index.json",
+      "sha256": "e5bf6a077de111b792e60d6da8b945f6219e1ff582f5baea2e4d05ee6eb1db05",
+      "bytes": 69
+    },
+    {
+      "path": "bestiary/legendarygroups.json",
+      "sha256": "dbfdda49c3fb66cc0028fb348681d456815822b83e627b696187defdd5d92fcb",
+      "bytes": 88
+    },
+    {
+      "path": "bestiary/template.json",
+      "sha256": "d5b942a2c8c65841bd190e3597dff7c2815ea56a20a9eea25025a6990c3d68d4",
+      "bytes": 121
+    },
+    {
+      "path": "book/book-srd51.json",
+      "sha256": "85c8b1166af25990fac0201a66d181dcf3e1ad6d5991cc2edc430f264f90b77d",
+      "bytes": 441012
+    },
+    {
+      "path": "book/book-srd52.json",
+      "sha256": "d39f3e09411a8a62c739355b56d051629c6cbdc17cfe5fff59b9add9608ab639",
+      "bytes": 497600
+    },
+    {
+      "path": "books.json",
+      "sha256": "7edd1f1f62538a95a5a3268d31886bd18066b6c3e94e863ba8898d5b581a800f",
+      "bytes": 6640
+    },
+    {
+      "path": "class/class-barbarian.json",
+      "sha256": "88269d9063b9a4743f2d5e155f6f6c6e314f4050ee3cc8474938e72593d5cc37",
+      "bytes": 42511
+    },
+    {
+      "path": "class/class-bard.json",
+      "sha256": "5c4a56a47460f139a3efd153168eb4f5ddc88d6f0d2f863688e6c9e3444df1ff",
+      "bytes": 55270
+    },
+    {
+      "path": "class/class-cleric.json",
+      "sha256": "50d45ee564518800dade78146136ea13e030760d353abb93782a5aba80e9351c",
+      "bytes": 54081
+    },
+    {
+      "path": "class/class-druid.json",
+      "sha256": "7ce9035f52a79fc2b458958ebe7a0109bacb3f2cf0aa0d5ec6361a3e87d0c99a",
+      "bytes": 69872
+    },
+    {
+      "path": "class/class-fighter.json",
+      "sha256": "b686c35f42b601a5677139bd13186602a6c3a0279897e42b6289e60e42c359ff",
+      "bytes": 38152
+    },
+    {
+      "path": "class/class-monk.json",
+      "sha256": "de43ce834d971d840a4d360986313079756d4c2f02bceea4effef83dfed9fea0",
+      "bytes": 57643
+    },
+    {
+      "path": "class/class-paladin.json",
+      "sha256": "3879a5d60164951e755f35509972756cf9ec2dbe3f66c3ad0c8160872142804c",
+      "bytes": 57373
+    },
+    {
+      "path": "class/class-ranger.json",
+      "sha256": "663c90f2e227cb5576996bfad4d30bed7c38aea24773108a2c9174d9b1edf261",
+      "bytes": 54181
+    },
+    {
+      "path": "class/class-rogue.json",
+      "sha256": "a6edce9b28380c7b97062ed2b268a111a4d214d2ad24e0cc373311c9ddd2a55d",
+      "bytes": 49140
+    },
+    {
+      "path": "class/class-sorcerer.json",
+      "sha256": "88848af7129fc066e7e35547a3102082628e6059f2b82d5e97ca20fbfc54dd45",
+      "bytes": 54233
+    },
+    {
+      "path": "class/class-warlock.json",
+      "sha256": "3fa142e23ff10113a213b4fbec58fb7e423e2f63ee779e7930260aa2b794382c",
+      "bytes": 50615
+    },
+    {
+      "path": "class/class-wizard.json",
+      "sha256": "5659b9e684d76ff593c6de8fc3b29d7ee0bdf1a72127e60aaeb74b4b682954aa",
+      "bytes": 48980
+    },
+    {
+      "path": "class/fluff-class-barbarian.json",
+      "sha256": "f182b0d4c22c257b013246b4dc977627215dce261478f911a7f32e2365135acf",
+      "bytes": 16052
+    },
+    {
+      "path": "class/fluff-class-bard.json",
+      "sha256": "deadfd6a345e522d9ee35d4946ef547cd24640a1b37e82cd425ce9c31bce8a4d",
+      "bytes": 19977
+    },
+    {
+      "path": "class/fluff-class-cleric.json",
+      "sha256": "717f1108fe5c731fd152dd9e1c2ce49565dedfddb626a29cc51f677387189bfe",
+      "bytes": 16363
+    },
+    {
+      "path": "class/fluff-class-druid.json",
+      "sha256": "58e3bef3dc9fcea9a53114563ffc0a7820dd7f5fd6b2c541679e1056c2cb181e",
+      "bytes": 43710
+    },
+    {
+      "path": "class/fluff-class-fighter.json",
+      "sha256": "727e8268dde53ed889fd21208a581c81868df4cdd5e1378fc0a12ecdcf58a1ec",
+      "bytes": 16196
+    },
+    {
+      "path": "class/fluff-class-monk.json",
+      "sha256": "4004acd000e46c1f63fa57461930a08efb1ffbb39bc8e5d6a40fda41a8edcf21",
+      "bytes": 16263
+    },
+    {
+      "path": "class/fluff-class-paladin.json",
+      "sha256": "ae645fd98788b86833524c133e917d2058d9744d6d6091b883528d9dbdff2824",
+      "bytes": 19242
+    },
+    {
+      "path": "class/fluff-class-ranger.json",
+      "sha256": "3cde79576bd0c3d0317a51bbd510ee4ceddba216302cd56ff6c2a3c69ebcfc9e",
+      "bytes": 16159
+    },
+    {
+      "path": "class/fluff-class-rogue.json",
+      "sha256": "75005fff317d418851b20a85a2390c40dbf166890b2f0c6bcb8b0c5c716530a3",
+      "bytes": 16711
+    },
+    {
+      "path": "class/fluff-class-sorcerer.json",
+      "sha256": "b7777a4e2eb50345ad97b97288e88606851aa02e5252420f06d1ba60eeb4b42d",
+      "bytes": 18886
+    },
+    {
+      "path": "class/fluff-class-warlock.json",
+      "sha256": "6284abbb25853f912e247a1dd035da3525b8803caeac2fc3671ad95db0d0f9c5",
+      "bytes": 16348
+    },
+    {
+      "path": "class/fluff-class-wizard.json",
+      "sha256": "4b8ca99e73c97e3825652a091a9f519d315b49d4b727ad41ed3129dd3642bbaf",
+      "bytes": 16767
+    },
+    {
+      "path": "class/fluff-index.json",
+      "sha256": "21dd95019c89d3da71bc14bda3290c05d874367e0aa6604e3a00fa95704bba1e",
+      "bytes": 463
+    },
+    {
+      "path": "class/foundry.json",
+      "sha256": "6e41121cef948fe9014a04be8550d20140d4d3c35127725e21f4db2db429ec2f",
+      "bytes": 163962
+    },
+    {
+      "path": "class/index.json",
+      "sha256": "9576afe9f1bcc6c409cd8a1f69bf1928371106e5b10ab4257ac6ee25f18f5fd3",
+      "bytes": 391
+    },
+    {
+      "path": "conditionsdiseases.json",
+      "sha256": "1d817b6d183d17104704b5d2bd9f81231b2c3b17e06b4868d2ec4cf59eb0c7f1",
+      "bytes": 38434
+    },
+    {
+      "path": "deities.json",
+      "sha256": "1ce5a70407c16625e31f795f937a1f29842159283800c4d5caa9f06d487dd191",
+      "bytes": 18074
+    },
+    {
+      "path": "feats.json",
+      "sha256": "bcb3e95e790e2b42f8afe4e782ef3058c83426e36cfdffd0d09680097461b398",
+      "bytes": 23574
+    },
+    {
+      "path": "fluff-backgrounds.json",
+      "sha256": "5e2f0696c2ef8eb2e595a86e41c54bb8168dbbcb42cbb4fedc77d7deb6b275a2",
+      "bytes": 2361
+    },
+    {
+      "path": "fluff-conditionsdiseases.json",
+      "sha256": "f611cdfefaa3faadece437020866b268f3d09d010a706f2de16c76b8ad6b2047",
+      "bytes": 67
+    },
+    {
+      "path": "fluff-feats.json",
+      "sha256": "793d910b894eb613215c26e6d0dd52a87d6150a4e8f0263972e0619f5854a983",
+      "bytes": 78
+    },
+    {
+      "path": "fluff-items.json",
+      "sha256": "15e8bc48ece0266b2ba9e3d9827a8a082034996aa89b2d0bb5466c541a5e976d",
+      "bytes": 78
+    },
+    {
+      "path": "fluff-languages.json",
+      "sha256": "e79c3c180c1447507423055bd7836ad10f96667f83a1319e0985997dd572546e",
+      "bytes": 25
+    },
+    {
+      "path": "fluff-objects.json",
+      "sha256": "953f595161e568bb7b00b71b3e5477477f4c3b118ef182d2a4a0e06d2f4a9742",
+      "bytes": 82
+    },
+    {
+      "path": "fluff-optionalfeatures.json",
+      "sha256": "53269e2d6c0a7a167bd466188c4e97a70528f0455aeb8f6fa4a85b88374185ae",
+      "bytes": 32
+    },
+    {
+      "path": "fluff-races.json",
+      "sha256": "2fe055a19fa8a7e270cc60570599288af4a3f03d64ad7bf6242d7a250daa34c8",
+      "bytes": 100
+    },
+    {
+      "path": "fluff-trapshazards.json",
+      "sha256": "cbead9914092583f27d034787298cb26e24ff7841afa8632cd0843344757fa8d",
+      "bytes": 41
+    },
+    {
+      "path": "fluff-vehicles.json",
+      "sha256": "4efcda6f36ec1a9581fb3bc99782c334f45e6aeef877988ce708d06982fed31a",
+      "bytes": 24
+    },
+    {
+      "path": "foundry-actions.json",
+      "sha256": "b63fde6b60158f368d5400a2b4570079df4a759ac7cba3d324f2499469e89260",
+      "bytes": 2417
+    },
+    {
+      "path": "foundry-feats.json",
+      "sha256": "fa4cc75c3816c819fb303b352ab1848a68ed86232b792dfb2e5ff46996219eef",
+      "bytes": 4167
+    },
+    {
+      "path": "foundry-items.json",
+      "sha256": "910c8bb309566d2b9c9ed9082403c353c77f3066d62f111aefc27e2923400f8b",
+      "bytes": 302779
+    },
+    {
+      "path": "foundry-optionalfeatures.json",
+      "sha256": "b8123dcd091396821cb73b1b98764e4651c8f3a5851de069664cb2a28035be89",
+      "bytes": 37139
+    },
+    {
+      "path": "foundry-races.json",
+      "sha256": "d7193c25529d9d3e64e63de9bde95e03c7351507acab935b2486667938a4d872",
+      "bytes": 6079
+    },
+    {
+      "path": "generated/bookref-dmscreen-index.json",
+      "sha256": "c00c7ac57a319f2d5229f8070fc9a048a07ed27fd393553dac53e7729b9276d5",
+      "bytes": 74
+    },
+    {
+      "path": "generated/bookref-dmscreen.json",
+      "sha256": "0c95d096cdaeb86ed3a6111ea0c50ce3cb3e9deebd485de6e7cf3ae266bc6163",
+      "bytes": 165
+    },
+    {
+      "path": "generated/bookref-quick.json",
+      "sha256": "3d0cd04eef28711aac0922f93125dea7f599228dda235c054b305a3645b7b159",
+      "bytes": 159
+    },
+    {
+      "path": "generated/gendata-maps.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "generated/gendata-nav-adventure-book-index.json",
+      "sha256": "885aaac9a9b1fd2510d505878b5d931129a4265677b8e3551395bdf6fa91490f",
+      "bytes": 6658
+    },
+    {
+      "path": "generated/gendata-spell-source-lookup.json",
+      "sha256": "8f6ab343757d066e0e1f6520a3f4794bb1ad2c016f0ad18a1af3e3b9d6c9b13d",
+      "bytes": 453692
+    },
+    {
+      "path": "generated/gendata-subclass-lookup.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "generated/gendata-tables.json",
+      "sha256": "8baacc8e1616c7f588f3927d9e1f939087e4c80a0a607a2a09abe747d8e1fcf3",
+      "bytes": 36
+    },
+    {
+      "path": "generated/gendata-tag-redirects.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3
+    },
+    {
+      "path": "generated/gendata-variantrules.json",
+      "sha256": "46d77bbe85a5d3ca9f6ea694e9e6ffab62980aee5b49229e0534b2a94c3e88c9",
+      "bytes": 23
+    },
+    {
+      "path": "items-base.json",
+      "sha256": "cbb91a6d3583366abe45c4fd23b551a6701f2ce1b7df40a3609e44b8cb3af60f",
+      "bytes": 144320
+    },
+    {
+      "path": "items.json",
+      "sha256": "51d63a1511d902f940ed7640005b91e7832813aa5bfd01a3c7f68701e508f63a",
+      "bytes": 829191
+    },
+    {
+      "path": "languages.json",
+      "sha256": "7aa2e6da65d7ab44b9ae0ca2814e4011373047dad4b37490b6dc54f2a282945e",
+      "bytes": 4864
+    },
+    {
+      "path": "magicvariants.json",
+      "sha256": "3678a824c2c51a73ae00c9170b91b54b00618f0a26878a6a5f8aee8a29576fac",
+      "bytes": 64843
+    },
+    {
+      "path": "objects.json",
+      "sha256": "dae2ac60d557a8e4648b148a60de1d15ea5d2f6dfca779939b626e9c8652d783",
+      "bytes": 5745
+    },
+    {
+      "path": "optionalfeatures.json",
+      "sha256": "12743d5a575243080a9acc0741986fb0fa119002507ff77edc2cb8f3182e0d4e",
+      "bytes": 48323
+    },
+    {
+      "path": "races.json",
+      "sha256": "bac85ea57969f3f67839b473230d745358bf8a51dbe120db4711901e6f20fd03",
+      "bytes": 83267
+    },
+    {
+      "path": "senses.json",
+      "sha256": "37a44b34c9cb487ed22cdb0fb0c45d219a4dfc2098491ced56fa62e6d42f3c26",
+      "bytes": 4474
+    },
+    {
+      "path": "skills.json",
+      "sha256": "5e3625631ddd800ff2bd936fed7196f7424a45280d68799ea551e661419cd537",
+      "bytes": 11040
+    },
+    {
+      "path": "spells/fluff-index.json",
+      "sha256": "395c5114bbf9a6ea1648afbd5876562a3b7193d46a9d5e58ca9cfa1a152f751d",
+      "bytes": 77
+    },
+    {
+      "path": "spells/fluff-spells-srd51.json",
+      "sha256": "5c7486e42d2dbc1c7eea7a3047fba7b0e16c1d4b22f88bd07a2cb7453dd22e0f",
+      "bytes": 2706
+    },
+    {
+      "path": "spells/fluff-spells-srd52.json",
+      "sha256": "547a0355ed5f2822e725b76176d79d107b72425da5585691b54d8cc758d86aec",
+      "bytes": 9267
+    },
+    {
+      "path": "spells/foundry.json",
+      "sha256": "66a3227ec620990abe69c05fdfd62afa5b6d0379739d59883f399bfaf4fd4694",
+      "bytes": 297308
+    },
+    {
+      "path": "spells/index.json",
+      "sha256": "7a6f4f7fe2ee33cb975ad10c2d5b4da32ad8394a00d7f0b3021b9123ddf8950b",
+      "bytes": 65
+    },
+    {
+      "path": "spells/sources.json",
+      "sha256": "e8d57a3d60160c8d62afd2ffb8dab3a24ca3968d77e29d68f95c7cacd8085e37",
+      "bytes": 130646
+    },
+    {
+      "path": "spells/spells-srd51.json",
+      "sha256": "3bef8a0cc230e8eab6848ac04a6cf879c054b9a6d66d6b7b7f1e82b02566d951",
+      "bytes": 532760
+    },
+    {
+      "path": "spells/spells-srd52.json",
+      "sha256": "fdfd87cc3c79c9a7433a4badce7514cc0936fe796ff6523b9125d84c07e8a50d",
+      "bytes": 517097
+    },
+    {
+      "path": "tables.json",
+      "sha256": "30cc45b14e26a1c1419dea2ed3b9d27aec1f1cb3c10eaa2bd9b07f19f40c4375",
+      "bytes": 5014
+    },
+    {
+      "path": "trapshazards.json",
+      "sha256": "f9a72d503137ee21b4373a38cbf10e965b11e7d592d3d44848d723f3f6a0f3bb",
+      "bytes": 39100
+    },
+    {
+      "path": "variantrules.json",
+      "sha256": "0bec7ca9f7a5ae9a254370f47c735ee117a942274d8fec6b3416270fdb2f4748",
+      "bytes": 77101
+    },
+    {
+      "path": "vehicles.json",
+      "sha256": "84608c7a1d13ac40950838299e4c6c2b1a65a7ab80598a2f7d6f44d45d34b2f9",
+      "bytes": 7373
+    }
+  ],
+  "totalBytes": 8159229,
+  "structuredCount": 90,
+  "nativeDataReconciled": false
+}
