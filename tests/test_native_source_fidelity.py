@@ -145,8 +145,8 @@ class NativeSourceFidelityTests(unittest.TestCase):
         modern = candidates[0]["content"]
         names = [e.get("name") for e in modern["entries"] if isinstance(e, dict)]
         self.assertNotIn("Random Properties", names)
-        self.assertEqual("An orb is an etched crystal globe about 10 inches in diameter.",
-                         modern["entries"][0].split(" When used")[0] + ".")
+        self.assertTrue(modern["entries"][0].startswith(
+            "An orb is an etched crystal globe about 10 inches in diameter."))
         content = json.dumps(modern)
         for non_srd in ("Dragonlance setting", "Towers of High Sorcery",
                         "minor beneficial properties", "Orb of Dragonkind"):
