@@ -55,14 +55,16 @@ def source_spell_grants(source_record):
         for sp in feature.get("will", []):
             records.extend(("will", None, sp, m.lower().strip())
                            for m in SPELL.findall(sp))
-        for freq, spells in feature.get("daily", {}).items():
-            for sp in spells:
-                records.extend(("daily", freq, sp, m.lower().strip())
+        daily = feature.get("daily", {})
+        if isinstance(daily, dict):
+            for freq, spells in daily.items():
+                for sp in spells:
+                    records.extend(("daily", freq, sp, m.lower().strip())
+                                   for m in SPELL.findall(sp))
+        elif isinstance(daily, list):
+            for sp in daily:
+                records.extend(("daily", "1e", sp, m.lower().strip())
                                for m in SPELL.findall(sp))
-        # Array-style day-limited grants, used on the legacy mephits.
-        for sp in feature.get("daily", []) if isinstance(feature.get("daily"), list) else []:
-            records.extend(("daily", "1e", sp, m.lower().strip())
-                           for m in SPELL.findall(sp))
     return records
 
 def find_successor(old_name, definition):
