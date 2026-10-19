@@ -282,7 +282,7 @@
             "will": [
               "{@spell Detect Magic|SRD52}",
               "{@spell Fear|SRD52}",
-              "{@spell Melf's Acid Arrow|SRD52} (level 3 version)"
+              "{@spell Acid Arrow|SRD52} (level 3 version)"
             ],
             "daily": {
               "1e": [
@@ -312,7 +312,7 @@
           {
             "name": "Multiattack",
             "entries": [
-              "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Melf's Acid Arrow|SRD52} (level 3 version)."
+              "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Acid Arrow|SRD52} (level 3 version)."
             ]
           },
           {

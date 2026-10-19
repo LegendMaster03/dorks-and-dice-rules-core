@@ -51,7 +51,7 @@
         ],
         "entries": [
           "You learn the {@spell Find Familiar|SRD52} spell and can cast it as a {@action Magic|SRD52} action without expending a spell slot.",
-          "When you cast the spell, you choose one of the normal forms for your familiar or one of the following special forms: {@creature Imp|SRD52}, {@creature Pseudodragon|SRD52}, {@creature Quasit|SRD52}, {@creature Skeleton|SRD52}, {@creature Slaad Tadpole|SRD52}, {@creature Sphinx of Wonder|SRD52}, {@creature Sprite|SRD52}, or {@creature Venomous Snake|SRD52} (see appendix B for the familiar's stat block).",
+          "When you cast the spell, you choose one of the normal forms for your familiar or one of the following special forms: {@creature Imp|SRD52}, {@creature Pseudodragon|SRD52}, {@creature Quasit|SRD52}, {@creature Skeleton|SRD52}, {@creature Sphinx of Wonder|SRD52}, {@creature Sprite|SRD52}, or {@creature Venomous Snake|SRD52} (see \"Monsters\" for the familiar's stat block).",
           "Additionally, when you take the {@action Attack|SRD52} action, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its {@variantrule Reaction|SRD52}."
         ]
       }

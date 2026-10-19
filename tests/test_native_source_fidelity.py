@@ -79,5 +79,57 @@ class NativeSourceFidelityTests(unittest.TestCase):
                 self.assertEqual(row["sourceRecords"], len(actual))
                 self.assertEqual([x["key"] for x in row["candidates"]], [x["key"] for x in actual])
 
+
+    def test_black_dragon_official_spell_identity(self):
+        for name in ("adult-black-dragon", "ancient-black-dragon"):
+            with self.subTest(monster=name):
+                records = read(f"data/native/bestiary/{name}.json")["candidateDefinitions"]
+                modern = next(x["content"] for x in records if x["key"] == "candidate-b")
+                body = json.dumps(modern)
+                self.assertIn("Acid Arrow|SRD52", body)
+                self.assertNotIn("Melf's Acid Arrow", body)
+
+    def test_cube_of_force_official_spell_identities(self):
+        candidates = read("data/native/items/magic/cube-of-force.json")["candidateDefinitions"]
+        modern = next(x["content"] for x in candidates if x["key"] == "candidate-b")
+        rows = modern["entries"][-1]["rows"]
+        self.assertEqual(["Tiny Hut", "Private Sanctum", "Resilient Sphere"],
+                         [rows[i][0].split("|")[0].replace("{@spell ", "") for i in (2, 3, 4)])
+        attached = json.dumps(modern["attachedSpells"])
+        for good in ("tiny hut|srd52", "private sanctum|srd52", "resilient sphere|srd52"):
+            self.assertIn(good, attached)
+        for bad in ("Leomund's", "Mordenkainen's", "Otiluke's", "leomund's", "mordenkainen's", "otiluke's"):
+            self.assertNotIn(bad, json.dumps(modern))
+
+    def test_pact_of_chain_familiar_list_matches_official_srd(self):
+        candidates = read("data/native/features/optional/pact-of-the-chain.json")["candidateDefinitions"]
+        modern = next(x["content"] for x in candidates if x["key"] == "candidate-b")
+        body = json.dumps(modern)
+        self.assertNotIn("Slaad Tadpole", body)
+        self.assertNotIn("appendix B", body)
+        self.assertIn("Sphinx of Wonder|SRD52", body)
+        self.assertIn('see \\"Monsters\\"', body)
+
+    def test_52_avatar_of_death_source_omission_repaired(self):
+        candidates = read("data/native/bestiary/avatar-of-death.json")["candidateDefinitions"]
+        self.assertEqual(["candidate-a", "candidate-b"], [c["key"] for c in candidates])
+        old, modern = [c["content"] for c in candidates]
+        self.assertIn("darkvision 60 ft.", old["senses"])
+        self.assertEqual([20], modern["ac"])
+        self.assertTrue(all(modern[attr] == 16 for attr in ("str", "dex", "con", "int", "wis", "cha")))
+        self.assertEqual(["Truesight 60 ft."], modern["senses"])
+        self.assertEqual(13, modern["passive"])
+        self.assertEqual(0, modern["cr"]["xp"])
+        self.assertIn("equals its summoner", modern["pbNote"])
+        self.assertIn("exhaustion", modern["conditionImmune"])
+        self.assertEqual(["Incorporeal Movement"], [t["name"] for t in modern["trait"]])
+        self.assertEqual(["Multiattack", "Reaping Scythe"], [a["name"] for a in modern["action"]])
+        self.assertIn("Automatic hit", json.dumps(modern["action"]))
+        manifest = read("data/reference/srd/native-coverage-manifest.json")
+        row = next(x for x in manifest["coverage"] if x["nativeId"] == "monster.avatar-of-death")
+        self.assertEqual(2, row["sourceRecords"])
+        self.assertEqual([x["key"] for x in candidates], [x["key"] for x in row["candidates"]])
+        self.assertIn("official SRD 5.2.1 PDF", row["candidates"][1]["evidence"])
+
 if __name__ == "__main__":
     unittest.main()
