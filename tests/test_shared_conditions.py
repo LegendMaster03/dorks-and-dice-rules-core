@@ -20,23 +20,28 @@ class SharedConditionReconciliationTests(unittest.TestCase):
         cls.source = get("data/reference/srd/structured/conditionsdiseases.json")["condition"]
 
     def test_native_coverage_and_external_edition_separation(self):
-        selected = {"condition.exhaustion", "condition.deafened", "condition.frightened",
-                    "condition.grappled", "condition.poisoned", "condition.restrained"}
-        self.assertTrue(selected.issubset(self.native))
-        self.assertEqual(selected, set(self.decisions))
-        pending = {key for key, value in self.native.items()
-                   if value.get("baselineStatus") == "pending-native-reconciliation"}
-        self.assertEqual(9, len(pending))
-        self.assertTrue(pending.isdisjoint(selected))
-        for cond in self.native.values():
+        self.assertEqual(16, len(self.native))
+        self.assertEqual(set(self.native), set(self.decisions))
+        self.assertEqual(set(), {
+            key for key, value in self.native.items()
+            if value.get("baselineStatus") == "pending-native-reconciliation"
+        })
+        for condition in self.native.values():
+            self.assertNotIn("candidateDefinitions", condition)
             for forbidden in ("source", "edition", "srd", "srd52", "sourceAliases"):
-                self.assertNotIn(forbidden, cond)
-        for name in ("Blinded", "Charmed", "Incapacitated",
-                     "Invisible", "Paralyzed", "Petrified", "Prone", "Stunned", "Unconscious"):
-            pending_condition = self.native["condition." + name.lower()]
-            self.assertEqual("pending-native-reconciliation",
-                             pending_condition["baselineStatus"])
-            self.assertEqual(2, len(pending_condition["candidateDefinitions"]))
+                self.assertNotIn(forbidden, condition)
+        for name in ("Blinded", "Charmed", "Incapacitated", "Invisible",
+                     "Paralyzed", "Petrified", "Prone", "Stunned", "Unconscious"):
+            condition = self.native["condition." + name.lower()]
+            self.assertTrue(condition["effects"])
+            self.assertEqual("condition", condition["kind"])
+            self.assertEqual({"SRD51", "SRD52"},
+                             {s["source"] for s in self.source if s["name"] == name})
+        wet = self.native["condition.wet"]
+        self.assertEqual("Wet", wet["name"])
+        self.assertFalse([s for s in self.source if s["name"] == "Wet"])
+        self.assertEqual("approved-house-rule", self.decisions["condition.wet"]["state"])
+        self.assertEqual([], self.decisions["condition.wet"]["evidence"])
 
     def test_deafened(self):
         self.assertEqual([
