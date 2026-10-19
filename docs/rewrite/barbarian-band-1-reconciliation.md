@@ -1,6 +1,6 @@
-# Barbarian — Band 1 base-class reconciliation (working draft)
+# Barbarian — Band 1 base-class reconciliation (approved design)
 
-**Scope:** Class levels 1–20 only. No subclasses, prestige classes, or Band 2 progression. One native Dorks & Dice base class, not parallel editions. **Status: review draft; not authorization to activate native candidate definitions.**
+**Scope:** Class levels 1–20 only. No subclasses, prestige classes, or Band 2 progression. One native Dorks & Dice base class, not parallel editions. **Status: approved Band 1 base-class design (2026-10-19); native source-candidate records remain non-executable until coherently translated into native definitions and validated.**
 
 ## Evidence and established decisions
 
@@ -12,7 +12,7 @@
 
 ## Proposed single Band 1 progression
 
-The table below applies the existing additive-policy conclusions and lists the source-supported acquisition levels. It is a **class draft**, not twelve parallel source tables. Base Attack Bonus and Fortitude/Reflex/Will progression are retained through the established 3.x/native progression mechanics rather than conflated with the 5.x Strength/Constitution saving-throw proficiency grants.
+The table below applies the approved additive-policy conclusions and source-supported acquisition levels. It specifies **one unified class**, not twelve parallel source tables. Base Attack Bonus and Fortitude/Reflex/Will progression are retained through the established 3.x/native progression mechanics rather than conflated with the 5.x Strength/Constitution saving-throw proficiency grants.
 
 | Class level | Base-class grants or improvements |
 | --- | --- |
@@ -35,7 +35,7 @@ The table below applies the existing additive-policy conclusions and lists the s
 | 17 | Tireless Rage; Brutal Critical (3 extra weapon dice); Improved Brutal Strike (2d10; two distinct effects) |
 | 18 | Indomitable Might; Trap Sense +6 |
 | 19 | Damage Reduction 5/−; Ability Score Improvement or qualifying ordinary feat (**not a Band 1 Epic Boon**) |
-| 20 | **Mighty Primal Rage** (+8 Strength and Constitution; +4 Will); Primal Champion (+4 permanent Strength and Constitution, **no permanent maximum**); review level-20 Rage uses |
+| 20 | **Mighty Primal Rage** (+8 Strength and Constitution; +4 Will); Primal Champion (+4 permanent Strength and Constitution, **no permanent maximum**); **Unlimited Rage uses** |
 
 **Once, not twice:** Unarmored Defense, Fast Movement, Extra Attack, and other semantically identical features are one grant, even when the same feature exists in several source editions. Neither Greater nor Mighty Rage grants another activation or separate pool.
 
@@ -62,23 +62,22 @@ Temporary Constitution changes modify effective Constitution and derived HP for 
 - **Fast Movement** grants +10 feet at level 1. Apply the 3.x heavy-load restriction while applicable; the 5.x level-5 wording permits the benefit while not wearing heavy armor. This is one speed bonus with potentially broadened eligibility at level 5, not +20 feet.
 - **Damage Reduction** is an always-available flat defense, distinct from the damage-type Resistance active during Rage. Calculate interactions through shared native damage-resolution order, without a Barbarian-only formula.
 - **Reckless Attack, Brutal Strike, Brutal Critical, Weapon Mastery, Primal Knowledge, Instinctive Pounce, Feral Instinct, Indomitable Will, Indomitable Might** remain independently granted where conditions are met. Brutal Critical must use Dorks & Dice's critical-escalation dice procedure rather than reverting to the original 5e critical calculation.
-- **Relentless Rage** uses a Constitution save beginning at DC 10, increasing by 5 after each use and resetting after a Short or Long Rest. The amount of HP on success conflicts (5e = 1; 5.5e = twice Barbarian level), requiring a specific numerical ruling.
+- **Relentless Rage** (level 11) uses a Constitution save beginning at DC 10, increasing by 5 after each use and resetting after a Short or Long Rest. **Approved: on success, instead of dropping to 0 HP, the Barbarian has HP equal to twice their Barbarian class level.** The 5e alternative (1 HP) is superseded in the native rule.
 - **Weapon Mastery** starts with 2 eligible weapon choices at level 1, increases to 3 choices at level 4, and 4 choices at level 10. The choice limit and eligible weapons remain part of the native Weapon Mastery grant, not bonus weapon proficiencies.
 - **Primal Rage's historical concentration/skill/item restrictions:** Preserve the 3.x inability to perform actions requiring patience or concentration, including the specified spell-trigger, spell-completion, and command-word item activations and otherwise barred features. The historical restrictions on Charisma-, Dexterity-, and Intelligence-based skills need to be interpreted through the native system, where checks can use an alternative Ability; Primal Knowledge's explicit Strength-based checks are allowed when the feature grants them. Do not prohibit every skill named in the old text regardless of actual use, or remove genuinely retained restrictions through a purely textual rewrite. These restrictions apply to **Primal Rage**, not automatically to Battle Rage.
 - **Primal Champion** permanently increases Strength and Constitution by 4 each at level 20, regardless of the active Rage type, without establishing a permanent maximum. Mighty Primal Rage remains a temporary *additional* ability-score modification.
 - Do not impose the 3.x class alignment or automatic illiteracy restrictions. Skills, competencies, saves, BAB-derived iterative attacks, armor/weapon proficiency, multiclass entitlement and Rage action costs map to their already established native subsystems. Do not invent extra feat/skill entitlements from mere differences in edition table format.
 - Subclass entries in the 5.x class tables are **excluded**, not treated as missing base-class features.
 
-## Small remaining decision queue
+## Approved numerical reconciliations (2026-10-19)
 
-The project's approved policy forbids silently choosing changed numerical values. The remaining choices below are **actual residual class-specific conflicts**, not questions about the overall rules framework:
+1. **Rage uses at Barbarian class level 20 — Unlimited.** Adopt the unlimited Rage uses granted by SRD 5.1 at level 20, for the **one shared Rage resource**, not a second pool. Primal Rage's independent once-per-encounter restriction still applies. At class levels 1–19, the common pool grants 2 uses at 1, 3 at 3, 4 at 6, 5 at 12, and 6 at 17; restore one expended use on a Short Rest and all uses on a Long Rest. Unlimited Rage uses do **not** waive timing, eligible state, form-specific requirements or action cost.
+2. **Relentless Rage recovery at Barbarian class level 11 — twice Barbarian class level HP.** When the Barbarian would be reduced to 0 HP while raging and is not killed outright, a successful Constitution save (DC 10 initially, +5 for each subsequent use; reset after a Short or Long Rest) instead sets current HP to **2 × Barbarian class level**. This is one feature, not two independent chances to avert 0 HP.
 
-1. **Rage uses at level 20:** SRD 5.1 says **Unlimited**; SRD 5.2.1 says **6**. **Recommendation:** retain Unlimited at level 20 (common pool), while Primal Rage remains once per encounter. Ordinary earlier use progression follows the 5.x pool of 2 at 1, 3 at 3, 4 at 6, 5 at 12, 6 at 17, with one use recovered on a Short Rest and all on a Long Rest. This is a numerical choice requiring approval.
-2. **Relentless Rage result:** 5e leaves the Barbarian at **1 HP**; 5.5e leaves **twice Barbarian level** HP. **Recommendation:** twice Barbarian level; identical save and escalating DC mechanism. This is a numerical choice requiring approval.
-**Resolved by the existing class-wide feature rule:** Persistent Rage applies to both types at level 15 and increases their maximum duration to 10 minutes without requiring ordinary round-by-round extension. Its recovery applies to the shared pool. Primal Rage retains the once-per-encounter restriction and its fatigue aftereffect until Tireless Rage at 17.
+**Resolved by the existing class-wide feature rule:** Persistent Rage applies to both forms at level 15, making both self-maintaining for up to 10 minutes. Its recovery applies to the shared pool. Primal Rage retains the once-per-encounter restriction and its fatigue aftereffect until Tireless Rage at 17.
 
-**Nonblocking integration checks:** Confirm the unified damage ordering for DR + Resistance, precise treatment of extra critical dice, source-specific surprise wording after native surprise is finalized, and temporary Constitution/HP lifecycle. These are existing cross-cutting subsystem contracts, not new reasons to revisit Barbarian's class identity. Broader Reckless Attack and Danger Sense targeting from SRD 5.2.1 should be tested against native roll/condition eligibility during implementation.
+**Integration checks, not reopening the class design:** Confirm unified damage ordering for Damage Reduction + Resistance; extra critical dice under Dorks & Dice critical escalation; surprise timing under native initiative; temporary Constitution/HP lifecycle; and native eligibility for Danger Sense and Reckless Attack. These remain shared engine/conversion tests and do not overturn the approved class progression.
 
 ## Readiness
 
-All base-class features are accounted for in the Band 1 draft, and subclass features remain excluded. **Do not replace** `data/native/classes/base/barbarian.json` or mark class-feature candidate documents active until the two residual numerical decisions above are settled and associated native feature records can be updated coherently. This review draft contains no runnable class implementation or conversion.
+The Barbarian's **Band 1 base-class design is approved**; no unresolved Barbarian-specific numerical choice remains from this reconciliation. Subclasses, prestige classes and Band 2 are excluded. The staged `data/native/classes/base/barbarian.json` and associated per-feature files **must be promoted together**, using the approved native schema and conversion tests, to avoid a live class referring to unresolved candidate features. They remain pending-native-reconciliation until that coherent implementation step is executed; this design document is authoritative for that step but is **not** itself an executable class.
