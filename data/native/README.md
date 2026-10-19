@@ -38,3 +38,13 @@ mapping stay in `data/reference/srd/`. See
 Legal Information sections are retained in the original SRD books, not
 in gameplay rule sections. Descriptive `fluff` has been attached to
 the relevant staged entity instead of another physical file.
+
+## Approved-policy reconciliation progress
+
+The first approved five-policy normalization pass retained **467 single-source compatible catalog definitions**, reconciled **34 semantically equivalent definitions**, and added **30 compatible Weapon Mastery properties** to eligible equipment definitions. Together with **19** earlier identical Item Type collapses and **24** previously approved entities, **574 of 2,522** staged logical entries now have a single retained/approved representation. **1,358** entries still have multiple unresolved candidates and **590** have single candidates not yet cleared for native retention.
+
+The new retained records use `baselineStatus: "retained-native-definition"` and a single `definition` object. This denotes selected catalog content, **not** an executable mechanics schema. The `definition` may retain 5etools markup and require conversion into final typed mechanics. Its presence does not automatically grant a feat, item mastery, class feature, or any other optional ability to a character.
+
+Approved native Skills and Conditions are not displaced or overridden by staging. No unresolved candidate is made authoritative merely because it appears first in the source pack.
+
+The machine-readable accounting is `docs/rewrite/native-reconciliation-statistics.json`. See `docs/rewrite/native-baseline-consistency-gate.md` for the remaining acceptance gates.
