@@ -93,7 +93,7 @@
                 "name": "Spell Slots",
                 "entries": [
                   "The Warlock Features table shows how many spell slots you have to cast your Warlock spells of levels 1–5. The table also shows the level of those slots, all of which are the same level. You regain all expended Pact Magic spell slots when you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}.",
-                  "For example, when you're a level 5 Warlock, you have two level 3 spell slots. To cast the level 1 spell {@spell Witch Bolt|SRD52}, you must spend one of those slots, and you cast it as a level 3 spell."
+                  "For example, when you're a level 5 Warlock, you have two level 3 spell slots. To cast the level 1 spell {@spell Charm Person|SRD52}, you must spend one of those slots, and you cast it as a level 3 spell."
                 ]
               },
               {

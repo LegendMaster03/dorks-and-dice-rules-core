@@ -5,29 +5,6 @@
   "baselineStatus": "pending-native-reconciliation",
   "candidateDefinitions": [
     {
-      "key": "candidate-b-1",
-      "content": {
-        "name": "Musket",
-        "type": "R",
-        "rarity": "none",
-        "weight": 10,
-        "value": 50000,
-        "weaponCategory": "martial",
-        "age": "renaissance",
-        "property": [
-          "AF|SRD51",
-          "LD",
-          "2H"
-        ],
-        "range": "40/120",
-        "dmg1": "1d12",
-        "dmgType": "P",
-        "firearm": true,
-        "weapon": true,
-        "ammoType": "renaissance bullet"
-      }
-    },
-    {
       "key": "candidate-b-2",
       "content": {
         "name": "Musket",

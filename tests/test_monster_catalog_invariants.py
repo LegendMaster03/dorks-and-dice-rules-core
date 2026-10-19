@@ -72,6 +72,17 @@ class MonsterCatalogInvariants(unittest.TestCase):
                 self.assertNotIn("aliasOf", native)
                 self.assertNotIn("candidateDefinitions", native)
                 current = native["definition"]
+                if name == "Avatar of Death":
+                    # Official 5.5e source correction recovered an omitted
+                    # same-identity creature. One native 5.5e definition
+                    # retains the older unique Turning Immunity trait.
+                    self.assertEqual("native-compatible-merged",
+                                     self.rows[native["id"]]["status"])
+                    self.assertIn("Multiattack",
+                                  [x["name"] for x in current["action"]])
+                    self.assertIn("Turning Immunity",
+                                  [x["name"] for x in current["trait"]])
+                    continue
                 source = self.old[name]
                 for key in (
                     "ac", "hp", "speed", "str", "dex", "con", "int", "wis", "cha",
@@ -96,6 +107,10 @@ class MonsterCatalogInvariants(unittest.TestCase):
                                      f"Newer baseline statistic modified: {name}.{key}")
                 for field in ("trait", "action", "bonus", "reaction", "legendary"):
                     for feature in source.get(field, []):
+                        if name in ("Adult Black Dragon", "Ancient Black Dragon") and field == "action" and feature.get("name") == "Multiattack":
+                            feature = json.loads(json.dumps(feature).replace(
+                                "Melf's Acid Arrow|SRD52", "Acid Arrow|SRD52"
+                            ))
                         self.assertIn(
                             feature, current.get(field, []),
                             f"An original 5.5e ability changed or disappeared: {name}.{field}.{feature.get('name')}"

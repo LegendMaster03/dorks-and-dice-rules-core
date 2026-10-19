@@ -1,0 +1,77 @@
+{
+  "scope": "3x-held-pinned-conditions",
+  "status": "native-condition-data-adopted; move-and-spellcasting-procedure-integration-pending",
+  "sourceMaterials": [
+    {
+      "edition": "D&D 3.0",
+      "sourceName": "Condition Summary",
+      "url": "https://opengamecontent.fandom.com/wiki/D20_System_v3.0_SRD/Condition_Summary",
+      "use": "Held is Helpless, magically immobilized, cannot perform physical actions but can perform purely mental ones."
+    },
+    {
+      "edition": "D&D 3.0",
+      "sourceName": "Hold Person",
+      "url": "https://www.dandwiki.com/wiki/3e_SRD%3AHold_Person",
+      "use": "3.0 Held example: creature remains aware, breathes, cannot speak, and can perform purely mental actions."
+    },
+    {
+      "edition": "D&D 3.5",
+      "sourceName": "Condition Summary",
+      "url": "https://www.d20srd.org/srd/conditionSummary.htm",
+      "use": "Pinned is immobile in grapple but not Helpless; Held occurs descriptively as a Helpless example."
+    },
+    {
+      "edition": "D&D 3.5",
+      "sourceName": "Grapple procedures",
+      "url": "https://www.d20srd.org/srd/combat/specialAttacks.htm",
+      "use": "Pin, escape, speech suppression, attacker-relative -4 AC, and grapple persistence."
+    },
+    {
+      "edition": "D&D 3.5",
+      "sourceName": "Hold Person",
+      "url": "https://www.d20srd.org/srd/spells/holdPerson.htm",
+      "use": "Effect now explicitly uses Paralyzed instead of a distinct Held condition."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "condition.held",
+      "status": "adopted",
+      "mechanics": "Helpless, speed 0, no speech or physical actions, purely mental actions preserved; no automatic Incapacitated/Concentration break.",
+      "originMapping": "3.0 Held; 3.5 Hold Person explicitly applies Paralyzed instead."
+    },
+    {
+      "id": "condition.pinned",
+      "status": "adopted",
+      "mechanics": "Applies Grappled but not Helpless, pinning-creature-relative -4 AC, optional speech suppression, one-round source duration, separate escape options."
+    },
+    {
+      "id": "rule.pin-and-held",
+      "status": "approved-native-data",
+      "mechanics": "Keep source identity of grappler and pinner, distinguish break-pin from escape-grapple, keep Touch/Flat-Footed separate axes."
+    },
+    {
+      "id": "3x-pin-maneuver",
+      "status": "deferred-runtime",
+      "mechanics": "3.5 opposed grapple check in place of attack, alternative Escape Artist using Standard Action; unify with BAB and Action economy later."
+    },
+    {
+      "id": "3x-pinned-spellcasting",
+      "status": "deferred-runtime",
+      "mechanics": "3.5 component limits and concentration skill check DC 20 + spell level; not yet substituted for 5.x Concentration save."
+    }
+  ],
+  "nativeLocations": [
+    "data/native/conditions.json",
+    "data/native/held-pinned.json"
+  ],
+  "sourceRights": "3.x sources are historical Open Game Content under OGL, kept separate from the pinned CC BY SRD 5.x pack; no verbatim historical text has been added.",
+  "otherUntouched": [
+    "Dorks & Dice Grappled initiation/escape choice",
+    "2024-derived Grappled attack penalty versus outsiders",
+    "Petrified awareness",
+    "Stunned half Speed",
+    "SRD 5.1 six-tier Exhaustion",
+    "Wet"
+  ]
+}

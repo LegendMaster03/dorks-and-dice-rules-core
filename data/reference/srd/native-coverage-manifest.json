@@ -92,9 +92,7 @@
     "vehicle:SRD52": 1
   },
   "unresolvedMultipleSourceRecordKeys": {
-    "baseitem": 2,
     "deity": 5,
-    "feat": 3,
     "itemType": 1
   },
   "excludedSourceRecords": [],
@@ -469,7 +467,7 @@
       ]
     },
     {
-      "nativeId": "action.use-an-item",
+      "nativeId": "action.use-an-object",
       "kind": "action",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -1523,14 +1521,10 @@
     {
       "nativeId": "baseitem.musket",
       "kind": "baseitem",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/items/equipment/musket.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -1669,14 +1663,10 @@
     {
       "nativeId": "baseitem.pistol",
       "kind": "baseitem",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/items/equipment/pistol.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -9700,14 +9690,10 @@
     {
       "nativeId": "feat.magic-initiate",
       "kind": "feat",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/feats/magic-initiate.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -9717,14 +9703,10 @@
     {
       "nativeId": "feat.savage-attacker",
       "kind": "feat",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/feats/savage-attacker.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -9734,14 +9716,10 @@
     {
       "nativeId": "feat.skilled",
       "kind": "feat",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
+      "status": "single-candidate",
+      "sourceRecords": 1,
       "path": "data/native/feats/skilled.json",
       "candidates": [
-        {
-          "key": "candidate-b-1",
-          "source": "5.2.1"
-        },
         {
           "key": "candidate-b-2",
           "source": "5.2.1"
@@ -15295,13 +15273,18 @@
     {
       "nativeId": "item.plate-armor-of-etherealness",
       "kind": "item",
-      "status": "native-single-source-retained",
-      "sourceRecords": 1,
+      "status": "multiple-candidates",
+      "sourceRecords": 2,
       "path": "data/native/items/magic/plate-armor-of-etherealness.json",
       "candidates": [
         {
           "key": "candidate-a",
           "source": "5.1"
+        },
+        {
+          "key": "candidate-b",
+          "source": "5.2.1",
+          "evidence": "official SRD 5.2.1 PDF; missing from pinned unofficial pack"
         }
       ],
       "nativeShapingRequired": true
@@ -22169,16 +22152,22 @@
     {
       "nativeId": "monster.avatar-of-death",
       "kind": "monster",
-      "status": "native-single-source-retained",
-      "sourceRecords": 1,
+      "status": "native-compatible-merged",
+      "sourceRecords": 2,
       "path": "data/native/bestiary/avatar-of-death.json",
       "candidates": [
         {
           "key": "candidate-a",
           "source": "5.1"
+        },
+        {
+          "key": "candidate-b",
+          "source": "5.2.1",
+          "evidence": "official SRD 5.2.1 PDF, Mysterious Deck/Avatar of Death; omitted from pinned unofficial pack"
         }
       ],
-      "nativeShapingRequired": true
+      "nativeShapingRequired": true,
+      "legacyVariantReviewRequired": false
     },
     {
       "nativeId": "monster.awakened-shrub",
@@ -39681,12 +39670,12 @@
   "reconciliationCounts": {
     "existing-native-covered": 24,
     "matching-candidates": 19,
-    "multiple-candidates": 1073,
-    "native-compatible-merged": 30,
+    "multiple-candidates": 1069,
+    "native-compatible-merged": 31,
     "native-equivalent-reconciled": 34,
     "native-monster-identity-alias": 23,
     "native-monster-role-default": 285,
-    "native-single-source-retained": 444,
-    "single-candidate": 590
+    "native-single-source-retained": 442,
+    "single-candidate": 595
   }
 }

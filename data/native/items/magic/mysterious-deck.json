@@ -20,12 +20,12 @@
     },
     "grantsProficiency": true,
     "entries": [
-      "Usually found in a box or pouch, this deck contains a number of cards made of ivory or vellum. Most (75 percent) of these decks have thirteen cards, but some have twenty-two. Use the appropriate column of the Deck of Many Things table when randomly determining cards drawn from the deck.",
+      "Usually found in a box or pouch, this deck contains a number of cards made of ivory or vellum. Most (75 percent) of these decks have thirteen cards, but some have twenty-two. Use the appropriate column of the Mysterious Deck table when randomly determining cards drawn from the deck.",
       "Before you draw a card, you must declare how many cards you intend to draw and then draw them randomly. Any cards drawn in excess of this number have no effect. Otherwise, as soon as you draw a card from the deck, its magic takes effect. You must draw each card no more than 1 hour after the previous draw. If you fail to draw the chosen number, the remaining number of cards fly from the deck on their own and take effect all at once.",
       "Once a card is drawn, it disappears. Unless the card is the Fool or Jester, the card reappears in the deck, making it possible to draw the same card twice. (Once the Fool or Jester has left the deck, reroll on the table if that card comes up again.)",
       {
         "type": "table",
-        "caption": "Deck of Many Things",
+        "caption": "Mysterious Deck",
         "colStyles": [
           "col-2 text-center",
           "col-2 text-center",
@@ -193,14 +193,6 @@
         ]
       },
       {
-        "type": "inset",
-        "name": "A Question of Enmity",
-        "entries": [
-          "Two of the cards in the Deck of Many Things can earn a character the enmity of another being. With the Flames card, the enmity is overt. The character should experience the devil's malevolent efforts on multiple occasions. Seeking out the fiend shouldn't be a simple task, and the adventurer should clash with the devil's allies and followers a few times before being able to confront the devil.",
-          "In the case of the Rogue card, the enmity is secret and should come from someone thought to be a friend or an ally. As Dungeon Master, you should wait for a dramatically appropriate moment to reveal this enmity, leaving the adventurer guessing who is likely to become a betrayer."
-        ]
-      },
-      {
         "type": "entries",
         "name": "Fool",
         "entries": [
@@ -260,7 +252,7 @@
         "type": "entries",
         "name": "Ruin",
         "entries": [
-          "All forms of wealth that you carry or own, other than magic items, are lost to you. Portable property vanishes. Businesses, buildings, and land you own are lost in a way that alters reality the least. If you have a Bastion (see the {@book Dungeon Master's Guide|SRD52|7}), it is destroyed by some calamity beyond your control. Any documentation that proves you should own something lost to this card also disappears."
+          "All forms of wealth that you carry or own, other than magic items, are lost to you. Portable property vanishes. Businesses, buildings, and land you own are lost in a way that alters reality the least. Any documentation that proves you should own something lost to this card also disappears."
         ]
       },
       {
@@ -315,10 +307,6 @@
     ],
     "attachedSpells": [
       "wish|srd52"
-    ],
-    "seeAlsoDeck": [
-      "Deck of Many Things|SRD52",
-      "Deck of Many Things (13 Cards)|SRD52"
     ]
   }
 }

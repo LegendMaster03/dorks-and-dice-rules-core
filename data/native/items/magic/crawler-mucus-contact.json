@@ -32,7 +32,7 @@
         "value": 20000,
         "poison": true,
         "entries": [
-          "A creature subjected to Carrion Crawler Mucus must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 minute. The creature also has the {@condition Paralyzed|SRD52} condition while {@condition Poisoned|SRD52} in this way. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success."
+          "A creature subjected to Crawler Mucus must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 minute. The creature also has the {@condition Paralyzed|SRD52} condition while {@condition Poisoned|SRD52} in this way. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success."
         ],
         "poisonTypes": [
           "contact"

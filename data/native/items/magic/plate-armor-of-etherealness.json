@@ -2,26 +2,47 @@
   "id": "item.plate-armor-of-etherealness",
   "name": "Plate Armor of Etherealness",
   "kind": "item",
-  "baselineStatus": "retained-native-definition",
-  "definition": {
-    "baseItem": "plate armor|srd51",
-    "type": "HA",
-    "tier": "major",
-    "rarity": "legendary",
-    "reqAttune": true,
-    "weight": 65,
-    "ac": 18,
-    "strength": "15",
-    "stealth": true,
-    "entries": [
-      "While you're wearing this armor, you can speak its command word as an action to gain the effect of the {@spell etherealness} spell, which lasts for 10 minutes or until you remove the armor or use an action to speak the command word again. This property of the armor can't be used again until the next dawn."
-    ],
-    "attachedSpells": {
-      "daily": {
-        "1e": [
-          "etherealness"
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Plate Armor of Etherealness",
+        "baseItem": "plate armor|srd51",
+        "type": "HA",
+        "tier": "major",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "weight": 65,
+        "ac": 18,
+        "strength": "15",
+        "stealth": true,
+        "entries": [
+          "While you're wearing this armor, you can speak its command word as an action to gain the effect of the {@spell etherealness} spell, which lasts for 10 minutes or until you remove the armor or use an action to speak the command word again. This property of the armor can't be used again until the next dawn."
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1e": [
+              "etherealness"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Plate Armor of Etherealness",
+        "eligibleArmor": [
+          "Half Plate Armor",
+          "Plate Armor"
+        ],
+        "rarity": "legendary",
+        "reqAttune": true,
+        "entries": [
+          "While you're wearing this armor, you can take a {@action Magic|SRD52} action and use a command word to gain the effect of the {@spell Etherealness|SRD52} spell. The spell ends immediately if you remove the armor or take a {@action Magic|SRD52} action to repeat the command word. This property of the armor can't be used again until the next dawn."
         ]
       }
     }
-  }
+  ]
 }

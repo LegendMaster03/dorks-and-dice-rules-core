@@ -29,10 +29,10 @@
 - **23** older monster names map to the corresponding new creature identity, including Goblin, Hobgoblin and Bugbear to their Warrior records.
 - **84** independent older traits were previously carried into the newer definitions.
 - **3** monster families are represented in `data/native/monster-families.json`; different roles remain separate members.
-- **64** single-source monster records remain retained. The old Hobgoblin and Bugbear are *not* among them; they are aliases, so neither creates a duplicate combat stat block.
+- **63** single-source monster records remain retained. The old Hobgoblin and Bugbear are *not* among them; they are aliases, so neither creates a duplicate combat stat block.
 - **249** entries in `data/reference/srd/monster-legacy-variant-review.json` preserve older mechanical questions, including old Hobgoblin and Bugbear features. These entries are **not** additional operative monsters. The original pinned SRDs remain intact.
 
-The candidate backlog remains **1,663**, because both newly mapped aliases were already counted as retained single-source records. This correction changes identity accounting and avoids tactical duplicates; it is not an additional reduction of the original unresolved-pair inventory.
+The candidate backlog is **1,664** after retaining the newly identified conflicting Plate Armor of Etherealness item as pending, because both newly mapped aliases were already counted as retained single-source records. This correction changes identity accounting and avoids tactical duplicates; it is not an additional reduction of the original unresolved-pair inventory.
 
 ## Reconciliation outcome — removed 5e abilities
 
@@ -46,8 +46,10 @@ The retained reference comparison file contains **249 historical feature-review 
 
 **General NPC/monster spellcasting policy (2026-10-19):** NPCs and monsters use the same spell-slot/spell-point resource framework as player characters when qualifying resource grants exist. This is not a Priest-specific privilege and does not give every creature an invented pool. The Priest's retained SRD 5.1 pool (1st: 4, 2nd: 3, 3rd: 2) supports restored Divine Eminence while its 5.5e Spellcasting, Divine Aid, Mace, and Radiant Flame remain intact. At-will spells, separate daily uses, and granted spell access are not silently converted to slots or doubled. The 12 older slot-based monster spellcasters have been identified as reconciliation references; broader allocation requires confirmed grants and source-compatible spell access. See `docs/rewrite/native-rules-design-specification.md`.
 
-In addition to this one question, **64 source-unique monster entries** remain retained as independent catalog content. This is not an edition-conflict backlog. Newer-only monsters such as Pirate and Pirate Captain need no older comparison.
+In addition to this one question, **63 source-unique monster entries** remain retained as independent catalog content. This is not an edition-conflict backlog. Newer-only monsters such as Pirate and Pirate Captain need no older comparison.
 
 Remaining engineering and acceptance work is **native markup/schema conversion, integration against unified Dorks & Dice effects and action timing, monster-family consistency, and challenge/encounter balancing checks**. Additional older traits and legendary choices can affect difficulty even though the selected CR was not changed. None of these are justification for creating a second monster solely for different DM tactics.
 
 Detailed per-feature dispositions: `data/reference/srd/monster-legacy-variant-review.json`. Cumulative statistics: `docs/rewrite/native-reconciliation-statistics.json`.
+
+**Official source correction during branch integration:** Avatar of Death now uses the corrected 5.5e default plus unique legacy Turning Immunity. Plate Armor of Etherealness has a substantive older/newer duration and eligible-armor difference and is pending an item-specific decision; it does not represent an additional monster decision.

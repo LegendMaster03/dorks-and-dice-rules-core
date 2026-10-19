@@ -81,7 +81,7 @@ class NpcMonsterSpellcastingResourceTests(unittest.TestCase):
         for name in ("archmage", "lich", "mage"):
             with self.subTest(monster=name):
                 definition = self.monster(name)["definition"]
-                source = self.newer[definition["name"]]
+                source = self.newer[self.monster(name)["name"]]
                 for spell in source.get("spellcasting", []):
                     retained = next(
                         (x for x in definition.get("spellcasting", [])

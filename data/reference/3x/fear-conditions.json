@@ -1,0 +1,93 @@
+{
+  "scope": "3x-fear-family-reconciliation",
+  "status": "selected-native-conditions-added; edition-specific-escalation-policy-deferred",
+  "sourceMaterials": [
+    {
+      "edition": "D&D 3.0",
+      "title": "Condition Summary",
+      "url": "https://opengamecontent.fandom.com/wiki/D20_System_v3.0_SRD/Condition_Summary",
+      "verification": "third-party transcription/index; not independently verified against original 3.0 SRD"
+    },
+    {
+      "edition": "D&D 3.5",
+      "title": "Condition Summary",
+      "url": "https://www.d20srd.org/srd/conditionSummary.htm",
+      "verification": "public 3.5 SRD transcription"
+    },
+    {
+      "edition": "D&D 3.5",
+      "title": "Special Abilities: Fear",
+      "url": "https://www.d20srd.org/srd/specialAbilities.htm",
+      "verification": "public 3.5 SRD transcription"
+    }
+  ],
+  "sourceEditionDifferences": [
+    {
+      "name": "Cowering",
+      "edition3e": "Drops held gear, cannot act; enemies gain +2 on attacks and target loses Dexterity AC.",
+      "edition35e": "Cannot act, loses Dexterity AC, takes -2 AC; does not explicitly drop gear.",
+      "nativeDecision": "Preserve 3.5 defensive representation and no gear-drop requirement; Panicked explicitly drops gear."
+    },
+    {
+      "name": "Panicked",
+      "edition3e": "50% chance to drop held items; random flight; -2 on saves; cornered creature cowers.",
+      "edition35e": "Always drops held items; fastest flight; -2 on saving throws, skills and ability checks; cornered creature cowers.",
+      "nativeDecision": "Use 3.5 full-drop and penalties; preserve escape-only actions without granting free additional Actions."
+    },
+    {
+      "name": "Shaken",
+      "edition3e": "-2 morale penalty to attacks, checks and saving throws.",
+      "edition35e": "-2 attacks, saves, skill checks and ability checks.",
+      "nativeDecision": "Single -2 native modifier across those roll types, with no redundant -2 from two fear-family conditions."
+    },
+    {
+      "name": "Frightened",
+      "edition3x": "-2 rolls and forced flight.",
+      "nativeExisting": "Line-of-sight Disadvantage on ability checks/attacks and no willing approach; not forced flight.",
+      "nativeDecision": "Existing approved native Frightened stays unchanged; no mandatory 3.x flight imported."
+    },
+    {
+      "name": "Fear escalation",
+      "edition35e": "Additional fear effects may elevate Shaken to Frightened or Panicked.",
+      "nativeDecision": "Do not activate automatic escalation pending owner reconciliation, especially because it would change the scope of approved Frightened."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "condition.shaken",
+      "state": "adopted-native",
+      "description": "Separate lower-severity fear condition with -2 attacks, saves, skills and ability checks."
+    },
+    {
+      "id": "condition.panicked",
+      "state": "adopted-native",
+      "description": "Mandatory flight, held-item drop, no unrelated activities; cornered invokes Cowering."
+    },
+    {
+      "id": "condition.cowering",
+      "state": "adopted-native",
+      "description": "Frozen, cannot act or move, denies positive Dexterity/dodge AC, -2 AC. No implicit Helpless or Concentration loss."
+    },
+    {
+      "id": "condition.frightened",
+      "state": "preserved-approved-native",
+      "description": "No forced flight or additional numerical penalty added to previously approved Frightened."
+    },
+    {
+      "id": "rule.fear-family-escalation",
+      "state": "deferred",
+      "description": "3.5e escalation rules documented but not enabled automatically."
+    }
+  ],
+  "provenanceAndRights": "Only new paraphrased native mechanics are stored. If historical SRD source passages are imported, retain original OGL provenance separate from the 5.x CC BY materials.",
+  "nativeLocations": [
+    "data/native/conditions.json",
+    "data/native/fear.json"
+  ],
+  "stillOpen": [
+    "Independent fear effect escalation and de-escalation",
+    "Interaction of 5e Disadvantage and 3.x numeric fear penalties",
+    "Fleeing requirements under standard or Block Initiative",
+    "Opportunity attacks and pathfinding while compelled to flee"
+  ]
+}

@@ -146,7 +146,7 @@ class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
         manifest = json.loads(
             (ROOT / "data/reference/srd/native-coverage-manifest.json").read_text()
         )
-        locations = {r["nativeId"]: r["path"] for r in manifest["coverage"]}
+        locations = {r["nativeId"]: r["path"] for r in manifest["coverage"] if "path" in r}
         for row in ledger["entries"]:
             identity = row.get("correspondingDefault", row["nativeId"])
             definition = json.loads((ROOT / locations[identity]).read_text())["definition"]

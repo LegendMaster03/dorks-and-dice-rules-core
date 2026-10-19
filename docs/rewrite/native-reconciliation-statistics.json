@@ -4,26 +4,26 @@
   "statuses": {
     "existing-native-covered": 24,
     "matching-candidates": 19,
-    "multiple-candidates": 1073,
-    "native-compatible-merged": 30,
+    "multiple-candidates": 1069,
+    "native-compatible-merged": 31,
     "native-equivalent-reconciled": 34,
     "native-monster-identity-alias": 23,
     "native-monster-role-default": 285,
-    "native-single-source-retained": 444,
-    "single-candidate": 590
+    "native-single-source-retained": 442,
+    "single-candidate": 595
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
-    "native-compatible-merged": 30,
+    "native-compatible-merged": 31,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 444
+    "native-single-source-retained": 442
   },
-  "remainingWithMultipleCandidates": 1073,
-  "remainingWithOneCandidate": 590,
-  "retainedDefinitionsNeedingNativeShaping": 793,
+  "remainingWithMultipleCandidates": 1069,
+  "remainingWithOneCandidate": 595,
+  "retainedDefinitionsNeedingNativeShaping": 792,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1663,
+  "candidateRecordsStillUnresolved": 1664,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
@@ -35,9 +35,9 @@
   "monsterFamilyDefinitions": 3,
   "monsterLegacyVariantReviewEntries": 249,
   "monsterCompatibleTraitsTransferred": 84,
-  "monsterOlderOnlySourceEntriesStillRetained": 64,
+  "monsterOlderOnlySourceEntriesStillRetained": 63,
   "originalUnresolvedCandidateCount": 2479,
-  "reducedUnresolvedCandidateCount": 816,
+  "reducedUnresolvedCandidateCount": 815,
   "monsterReviewCaveat": "Selected 5.5e stat blocks are retained. Independent missing older abilities restored with exact original restrictions; revised attack suites are not duplicated. Remaining differences are tracked per feature in the reference ledger. Imported markup still needs native typing.",
   "monsterAdditionalOlderFeaturesRestored": 146,
   "monsterOlderFeaturesPreviouslyTransferred": 84,
@@ -52,5 +52,9 @@
     "spell-access-extended": 15
   },
   "monsterAdditionalSpellsRestored": 33,
-  "monsterPartiallyRestoredAbilitiesAwaitingRuling": 1
+  "monsterPartiallyRestoredAbilitiesAwaitingRuling": 1,
+  "officialSourceReconciliationCorrections": {
+    "avatarOfDeath": "5.5e creature selected with unique older Turning Immunity retained",
+    "plateArmorOfEtherealness": "two nonequivalent sources preserved pending item decision"
+  }
 }

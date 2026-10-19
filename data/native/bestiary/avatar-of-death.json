@@ -4,6 +4,7 @@
   "kind": "monster",
   "baselineStatus": "retained-native-definition",
   "definition": {
+    "name": "Avatar of Death",
     "size": [
       "M"
     ],
@@ -16,7 +17,7 @@
       20
     ],
     "hp": {
-      "special": "half the hit point maximum of its summoner"
+      "special": "half the Hit Point maximum of its summoner"
     },
     "speed": {
       "walk": 60,
@@ -33,8 +34,7 @@
     "wis": 16,
     "cha": 16,
     "senses": [
-      "darkvision 60 ft.",
-      "truesight 60 ft."
+      "Truesight 60 ft."
     ],
     "passive": 13,
     "immune": [
@@ -43,6 +43,7 @@
     ],
     "conditionImmune": [
       "charmed",
+      "exhaustion",
       "frightened",
       "paralyzed",
       "petrified",
@@ -52,11 +53,16 @@
     "languages": [
       "all languages known to its summoner"
     ],
+    "cr": {
+      "special": "None",
+      "xp": 0
+    },
+    "pbNote": "equals its summoner's Proficiency Bonus",
     "trait": [
       {
         "name": "Incorporeal Movement",
         "entries": [
-          "The avatar can move through other creatures and objects as if they were {@quickref difficult terrain||3}. It takes 5 ({@damage 1d10}) force damage if it ends its turn inside an object."
+          "The avatar can move through other creatures and objects as if they were {@variantrule Difficult Terrain|SRD52}. It takes 5 ({@damage 1d10}) Force damage if it ends its turn inside an object."
         ]
       },
       {
@@ -68,29 +74,18 @@
     ],
     "action": [
       {
+        "name": "Multiattack",
+        "entries": [
+          "The avatar makes a number of Reaping Scythe attacks equal to half the summoner's Proficiency Bonus (rounded up)."
+        ]
+      },
+      {
         "name": "Reaping Scythe",
         "entries": [
-          "The avatar sweeps its spectral scythe through a creature within 5 feet of it, dealing 7 ({@damage 1d8 + 3}) slashing damage plus 4 ({@damage 1d8}) necrotic damage."
+          "Melee Attack Roll: Automatic hit, reach 5 ft. Hit: 7 ({@damage 1d8 + 3}) Slashing damage plus 4 ({@damage 1d8}) Necrotic damage."
         ]
       }
     ],
-    "traitTags": [
-      "Incorporeal Movement",
-      "Turning Immunity"
-    ],
-    "senseTags": [
-      "D",
-      "U"
-    ],
-    "languageTags": [
-      "XX"
-    ],
-    "damageTags": [
-      "N",
-      "O",
-      "S"
-    ],
-    "hasToken": true,
     "lore": [
       {
         "name": "Avatar of Death",
@@ -113,6 +108,19 @@
           }
         ]
       }
+    ],
+    "hasToken": true,
+    "languageTags": [
+      "XX"
+    ],
+    "damageTags": [
+      "N",
+      "O",
+      "S"
+    ],
+    "traitTags": [
+      "Incorporeal Movement",
+      "Turning Immunity"
     ]
   }
 }

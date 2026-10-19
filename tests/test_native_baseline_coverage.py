@@ -63,6 +63,18 @@ class NativeSrdBaselineTests(unittest.TestCase):
             else:
                 native = load(path)
                 self.assertEqual(cid, native["id"], relative)
+            if cid.startswith("condition.") or cid == "rule.conditions":
+                self.assertNotIn("baselineStatus", native, cid)
+                self.assertNotIn("candidateDefinitions", native, cid)
+                if cid.startswith("condition."):
+                    approved = {
+                        decision["nativeRuleId"] for decision in
+                        load(REF / "reconciliation-decisions.json")["decisions"]
+                    }
+                    self.assertIn(cid, approved, cid)
+                else:
+                    self.assertEqual(30, len(native["conditionIds"]))
+                continue
             if row["status"] == "matching-candidates":
                 self.assertNotIn("candidateDefinitions", native, cid)
                 self.assertNotIn("baselineStatus", native, cid)
@@ -101,8 +113,8 @@ class NativeSrdBaselineTests(unittest.TestCase):
         conditions = load(NATIVE / "conditions.json")["conditions"]
         self.assertEqual(88, len(skills))
         self.assertEqual(33, len(competencies))
-        self.assertEqual(15, len(conditions))
-        self.assertEqual(9, sum(x.get("baselineStatus") ==
+        self.assertEqual(30, len(conditions))
+        self.assertEqual(0, sum(x.get("baselineStatus") ==
                                 "pending-native-reconciliation" for x in conditions))
         ex = next(x for x in conditions if x["id"] == "condition.exhaustion")
         self.assertEqual(6, len(ex["levels"]))

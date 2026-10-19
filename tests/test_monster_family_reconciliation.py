@@ -97,7 +97,7 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
         self.assertEqual(
             statuses["multiple-candidates"] + statuses["single-candidate"],
             report["candidateRecordsStillUnresolved"])
-        self.assertEqual(1663, report["candidateRecordsStillUnresolved"])
+        self.assertEqual(1664, report["candidateRecordsStillUnresolved"])
         self.assertEqual(len(self.ledger["entries"]), report["monsterLegacyVariantReviewEntries"])
 
 if __name__ == "__main__":

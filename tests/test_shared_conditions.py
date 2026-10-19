@@ -20,23 +20,28 @@ class SharedConditionReconciliationTests(unittest.TestCase):
         cls.source = get("data/reference/srd/structured/conditionsdiseases.json")["condition"]
 
     def test_native_coverage_and_external_edition_separation(self):
-        selected = {"condition.exhaustion", "condition.deafened", "condition.frightened",
-                    "condition.grappled", "condition.poisoned", "condition.restrained"}
-        self.assertTrue(selected.issubset(self.native))
-        self.assertEqual(selected, set(self.decisions))
-        pending = {key for key, value in self.native.items()
-                   if value.get("baselineStatus") == "pending-native-reconciliation"}
-        self.assertEqual(9, len(pending))
-        self.assertTrue(pending.isdisjoint(selected))
-        for cond in self.native.values():
+        self.assertEqual(30, len(self.native))
+        self.assertEqual(set(self.native) - { "condition.flat-footed", "condition.helpless", "condition.dazed", "condition.dazzled", "condition.entangled", "condition.fascinated", "condition.nauseated", "condition.sickened", "condition.shaken", "condition.panicked", "condition.cowering", "condition.fatigued", "condition.held", "condition.pinned" }, set(self.decisions))
+        self.assertEqual(set(), {
+            key for key, value in self.native.items()
+            if value.get("baselineStatus") == "pending-native-reconciliation"
+        })
+        for condition in self.native.values():
+            self.assertNotIn("candidateDefinitions", condition)
             for forbidden in ("source", "edition", "srd", "srd52", "sourceAliases"):
-                self.assertNotIn(forbidden, cond)
-        for name in ("Blinded", "Charmed", "Incapacitated",
-                     "Invisible", "Paralyzed", "Petrified", "Prone", "Stunned", "Unconscious"):
-            pending_condition = self.native["condition." + name.lower()]
-            self.assertEqual("pending-native-reconciliation",
-                             pending_condition["baselineStatus"])
-            self.assertEqual(2, len(pending_condition["candidateDefinitions"]))
+                self.assertNotIn(forbidden, condition)
+        for name in ("Blinded", "Charmed", "Incapacitated", "Invisible",
+                     "Paralyzed", "Petrified", "Prone", "Stunned", "Unconscious"):
+            condition = self.native["condition." + name.lower()]
+            self.assertTrue(condition["effects"])
+            self.assertEqual("condition", condition["kind"])
+            self.assertEqual({"SRD51", "SRD52"},
+                             {s["source"] for s in self.source if s["name"] == name})
+        wet = self.native["condition.wet"]
+        self.assertEqual("Wet", wet["name"])
+        self.assertFalse([s for s in self.source if s["name"] == "Wet"])
+        self.assertEqual("approved-house-rule", self.decisions["condition.wet"]["state"])
+        self.assertEqual([], self.decisions["condition.wet"]["evidence"])
 
     def test_deafened(self):
         self.assertEqual([
@@ -76,7 +81,7 @@ class SharedConditionReconciliationTests(unittest.TestCase):
     def test_grappled_target_relative_attack_penalty_and_speed(self):
         rule = self.native["condition.grappled"]
         self.assertEqual("condition", rule["kind"])
-        self.assertEqual(2, len(rule["effects"]))
+        self.assertEqual(3, len(rule["effects"]))
         self.assertEqual(
             {"type": "speed", "operation": "set", "value": 0, "canIncrease": False},
             rule["effects"][0]
@@ -92,6 +97,9 @@ class SharedConditionReconciliationTests(unittest.TestCase):
                          [e.get("subject") for e in rule["effects"]])
         self.assertNotIn("ability-check",
                          [e.get("appliesTo") for e in rule["effects"]])
+        self.assertEqual("defense-adjustment", rule["effects"][2]["type"])
+        self.assertEqual({"attackerRelationToGrappler": "other-than-grappler"},
+                         rule["effects"][2]["when"])
 
     def test_grappled_ending_triggers_and_source_reconciliation(self):
         rule = self.native["condition.grappled"]
