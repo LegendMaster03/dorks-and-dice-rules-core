@@ -131,6 +131,7 @@ def apply():
     documents = {}
     changed = Counter()
     changed_ids = []
+    modified_locations = set()
     for row in manifest["coverage"]:
         if row["status"] not in CANDIDATE_STATUSES:
             continue
@@ -152,10 +153,11 @@ def apply():
         row["nativeShapingRequired"] = True
         changed[status] += 1
         changed_ids.append(row["nativeId"])
+        modified_locations.add(location)
 
     # Persist the data only after all cross-file checks succeed.
-    for location, document in documents.items():
-        write(location, document)
+    for location in modified_locations:
+        write(location, documents[location])
     counts = Counter(row["status"] for row in manifest["coverage"])
     manifest["reconciliationStatus"] = (
         "approved-general-rules-applied; unresolved-mechanics-retained; native-shaping-pending"
