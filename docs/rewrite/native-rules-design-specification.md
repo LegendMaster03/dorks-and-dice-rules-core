@@ -61,6 +61,20 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Boundary:** The owner favors this framework as a guide for design. Exact feats, additional reaction triggers, attack progressions, maneuver-resolution formulas and other rows are **not yet approved gameplay rules**. GM-awarded free combat feats remain explicit table exceptions, never a veteran entitlement or default feat progression policy.
 
+### Approved cross-baseline reconciliation policies — five general rules
+
+**Owner approval (2026-10-18):** The following are **approved general decision policies** for normalizing the complete SRD 5.1 / SRD 5.2.1 seed into one coherent Dorks & Dice native baseline. They apply across categories, subject to previously approved Dorks & Dice rulings and rule-specific eligibility. They are not a blanket preference for one edition.
+
+1. **Equivalent mechanics become one definition.** Different wording, markup, terminology or source presentation does not create an independent rule when the gameplay is substantively equivalent. Check the actual outcomes, costs, targets, prerequisites and restrictions before asserting equivalence.
+2. **Unique, compatible content is retained.** A valid rule or option present in only one baseline is retained in the unified native baseline when compatible with the Dorks & Dice design. Absence from the other baseline is not by itself a reason to discard it. This does not grant an optional feature to every character or waive its prerequisites.
+3. **Compatible additions are combined.** Where one version adds a genuinely distinct, compatible capability, include it in the coherent native definition, preserving acquisition, eligibility, action/resource costs, limitations, and optional complexity. Do not duplicate a restated consequence, grant the same benefit twice or append incompatible behaviors mechanically.
+4. **Conflicting values require category-specific rules.** Differences in damage, healing, Hit Points, spell ranges, duration, charges, progression and other quantitative fields are not automatically averaged, added, or selected by publication recency. Establish a coherent decision for the relevant rule family, with explicit exceptions where necessary. **No default value-selection policy has yet been approved for every family.**
+5. **Fundamentally different procedures require a decision.** A redesign of the actual procedure or outcome can not be unified just by merging prose. Apply existing design decisions if they settle the case; otherwise obtain an Owner decision, preferably once for a recurring family, before publishing an authoritative native ruling.
+
+**Operational rule:** One authoritative native definition per decided entity. Multiple staged candidates signal unfinished work, not selectable rule versions. Unresolved conflicts remain explicit, and never silently inherit a source edition default. No source-by-source comparison evidence is required within the native rules or Owner-facing decision queue; license and attribution obligations remain separately governed.
+
+**Boundary:** These are *general reconciliation policies*, not approval of any particular disputed numerical value, procedure redesign, monster stat block, class feature progression or spell effect. Record and validate their concrete applications.
+
 ### Reuse-first combat design — adapt existing procedures, resolve differences case by case
 
 **Owner direction (2026-10-18):** In many combat areas, 5e already supplies a more approachable descendant of a 3.x concept. Treat this as a **head start**, not as a requirement to invent independent procedures. Use established Dorks & Dice house rules and the shared-foundation/optional-depth matrix above, then settle genuine differences **case by case**. Avoid reopening mechanics whose outcomes and interactions are already compatible merely because they come from different editions.
