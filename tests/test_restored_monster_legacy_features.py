@@ -25,7 +25,8 @@ class LegacyMonsterAbilityTests(unittest.TestCase):
                 self.assertEqual(names, [row["name"] for row in annotated])
                 self.assertTrue(all(row["status"] in {
                     "restored", "already-present", "newer-successor",
-                    "revised-attack-suite", "review-needed", "possible-redesign"
+                    "revised-attack-suite", "review-needed", "possible-redesign",
+                    "spell-access-extended"
                 } for row in annotated))
                 counted += len(annotated)
             self.assertEqual(
