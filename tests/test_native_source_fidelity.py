@@ -59,6 +59,9 @@ class NativeSourceFidelityTests(unittest.TestCase):
         spells = json.dumps(read("data/native/rules/spell-descriptions.json"))
         for stale in ["Mordenkainen's Faithful Hound|", "Mordenkainen's Sword|", "Nystul's Magic Aura|", "Tasha's Hideous Laughter|", "Tenser's Floating Disk|"]:
             self.assertNotIn(stale, spells)
+        spell_lists = json.dumps(read("data/native/rules/spell-lists.json"))
+        for stale in ["Mordenkainen's Faithful Hound|", "Mordenkainen's Sword|", "Nystul's Magic Aura|", "Tasha's Hideous Laughter|", "Tenser's Floating Disk|"]:
+            self.assertNotIn(stale, spell_lists)
         manifest = read("data/reference/srd/native-coverage-manifest.json")
         ids = {"feat.magic-initiate", "feat.savage-attacker", "feat.skilled", "baseitem.musket", "baseitem.pistol", "item.plate-armor-of-etherealness"}
         for row in manifest["coverage"]:
