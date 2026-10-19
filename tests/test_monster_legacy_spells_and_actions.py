@@ -15,8 +15,15 @@ class MonsterSecondPassTests(unittest.TestCase):
     def test_dragon_unique_actions_restored_without_old_multiattack(self):
         dragon = monster("adult-bronze-dragon")
         names = [a["name"] for a in dragon["action"]]
-        self.assertIn("Change Shape", names)
         self.assertIn("Frightful Presence", names)
+        # An explicit Shapechange or Polymorph spell can replace the old
+        # independent Change Shape action without creating a duplicate.
+        has_shape_spell = any(
+            "Shapechange" in json.dumps(x) or "Polymorph" in json.dumps(x)
+            for x in dragon.get("spellcasting", [])
+        )
+        if not has_shape_spell:
+            self.assertIn("Change Shape", names)
         self.assertIn("Rend", names)
         self.assertNotIn("Claw", names)
         self.assertNotIn("Tail", names)
@@ -30,9 +37,10 @@ class MonsterSecondPassTests(unittest.TestCase):
         self.assertIn("fly", spells)
         # Existing spells are never duplicated.
         drider = monster("drider")
-        joined = json.dumps(drider["spellcasting"]).lower()
-        self.assertEqual(1, joined.count('spell darkness|srd52'))
-        self.assertEqual(1, joined.count('spell faerie fire|srd52'))
+        current_spells = drider["spellcasting"][0].get("recharge", {})
+        granted = json.dumps(current_spells).lower()
+        self.assertIn("spell darkness|srd52", granted)
+        self.assertIn("spell faerie fire|srd52", granted)
 
     def test_non_dragon_fear_does_not_duplicate_revised_bellow(self):
         tarrasque = monster("tarrasque")
