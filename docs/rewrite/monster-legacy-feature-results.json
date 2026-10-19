@@ -1,13 +1,13 @@
 {
   "summary": {
     "feature:already-present": 84,
-    "feature:newer-successor": 94,
-    "feature:possible-redesign": 4,
+    "feature:newer-successor": 95,
+    "feature:possible-redesign": 3,
     "feature:restored": 141,
     "feature:review-needed": 3,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 7
+    "monstersWithOpenFeatureQuestions": 6
   },
   "featuresRestoredThisPass": 15,
   "totalAdditionalOlderFeaturesRestored": 141,
@@ -71,8 +71,8 @@
       "water breathing"
     ]
   },
-  "unresolvedFeatureQuestions": 7,
-  "reviewEntriesWithOpenQuestions": 7,
+  "unresolvedFeatureQuestions": 6,
+  "reviewEntriesWithOpenQuestions": 6,
   "note": "5.5e stats, attack suites and spellcasting ability remain authoritative.",
   "finalPassChanges": {
     "traitsRestored": 14,
