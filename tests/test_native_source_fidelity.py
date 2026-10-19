@@ -138,5 +138,30 @@ class NativeSourceFidelityTests(unittest.TestCase):
         self.assertIn("Charm Person|SRD52", json.dumps(modern))
         self.assertNotIn("Witch Bolt|SRD52", json.dumps(modern))
 
+
+    def test_dragon_orb_lacks_non_srd_legacy_properties_and_lore(self):
+        candidates = read("data/native/items/magic/dragon-orb.json")["candidateDefinitions"]
+        self.assertEqual(["candidate-b"], [c["key"] for c in candidates])
+        modern = candidates[0]["content"]
+        names = [e.get("name") for e in modern["entries"] if isinstance(e, dict)]
+        self.assertNotIn("Random Properties", names)
+        self.assertEqual("An orb is an etched crystal globe about 10 inches in diameter.",
+                         modern["entries"][0].split(" When used")[0] + ".")
+        content = json.dumps(modern)
+        for non_srd in ("Dragonlance setting", "Towers of High Sorcery",
+                        "minor beneficial properties", "Orb of Dragonkind"):
+            self.assertNotIn(non_srd, content)
+        self.assertIn("Dragon Orb has AC 20", content)
+
+    def test_mysterious_deck_52_excludes_legacy_dm_advice(self):
+        modern = read("data/native/items/magic/mysterious-deck.json")["candidateDefinitions"][0]["content"]
+        table = next(x for x in modern["entries"] if isinstance(x, dict) and x.get("type") == "table")
+        self.assertEqual("Mysterious Deck", table["caption"])
+        names = [x.get("name") for x in modern["entries"] if isinstance(x, dict)]
+        self.assertNotIn("A Question of Enmity", names)
+        body = json.dumps(modern)
+        self.assertNotIn("Deck of Many Things", body)
+        self.assertIn("Avatar of Death|SRD52", body)
+
 if __name__ == "__main__":
     unittest.main()
