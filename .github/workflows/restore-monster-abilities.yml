@@ -1,0 +1,34 @@
+name: Restore Compatible Monster Abilities
+on:
+  push:
+    branches: [feature/rules-core-baseline-consistency]
+    paths:
+      - tools/restore_monster_legacy_abilities.py
+      - tests/test_restored_monster_legacy_features.py
+      - .github/workflows/restore-monster-abilities.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore independent older monster mechanics and classify differences
+        run: python3 tools/restore_monster_legacy_abilities.py
+      - name: Validate all native staged rules
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Audit native identity and staging integrity
+        run: python3 tools/audit_native_baseline.py
+      - name: Commit changes to review branch only
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/native data/reference/srd/monster-legacy-variant-review.json docs/rewrite/native-reconciliation-statistics.json docs/rewrite/monster-legacy-feature-results.json
+          git commit -m "data(rewrite): restore compatible 5e monster traits and review changed attack suites"
+          git push origin HEAD:feature/rules-core-baseline-consistency
