@@ -1,0 +1,43 @@
+name: Apply Native Baseline Reconciliation
+
+on:
+  push:
+    branches:
+      - feature/rules-core-baseline-consistency
+    paths:
+      - tools/reconcile_native_baseline.py
+      - tests/test_native_baseline_coverage.py
+      - .github/workflows/apply-native-baseline.yml
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    name: Apply safe policy resolutions and validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Retain eligible content and reconcile identical definitions
+        run: python3 tools/reconcile_native_baseline.py
+
+      - name: Validate full native inventory and pinned source pack
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Display remaining candidate count
+        run: python3 tools/audit_native_baseline.py
+
+      - name: Save reconciled baseline on this branch only
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/native data/reference/srd/native-coverage-manifest.json docs/rewrite/native-reconciliation-statistics.json
+          git commit -m "data(rewrite): retain compatible unique entries and reconcile equivalent mechanics"
+          git push origin HEAD:feature/rules-core-baseline-consistency
