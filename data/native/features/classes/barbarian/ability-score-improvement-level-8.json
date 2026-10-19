@@ -2,34 +2,26 @@
   "id": "class-feature.barbarian.ability-score-improvement-level-8",
   "name": "Ability Score Improvement",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ability Score Improvement",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 8,
-        "entries": [
-          "When you reach 8th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
-          "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ability Score Improvement",
-        "className": "Barbarian",
-        "classSource": "SRD52",
-        "level": 8,
-        "entries": [
-          "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 8
+  "classLevel": 8,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "At this level choose an ability score increase (+2 to one or +1 to two) or one eligible ordinary feat. Do not impose a permanent maximum.",
+    "mechanics": {
+      "kind": "ability-improvement-or-feat",
+      "abilityIncreases": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "featRequiresEligibility": true,
+      "epicBoonTotalCharacterLevelMinimum": 21,
+      "abilityScoreMaximum": null
+    }
+  }
 }

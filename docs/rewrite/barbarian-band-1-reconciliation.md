@@ -78,6 +78,7 @@ Temporary Constitution changes modify effective Constitution and derived HP for 
 
 **Integration checks, not reopening the class design:** Confirm unified damage ordering for Damage Reduction + Resistance; extra critical dice under Dorks & Dice critical escalation; surprise timing under native initiative; temporary Constitution/HP lifecycle; and native eligibility for Danger Sense and Reckless Attack. These remain shared engine/conversion tests and do not overturn the approved class progression.
 
-## Readiness
+## Native implementation
 
-The Barbarian's **Band 1 base-class design is approved**; no unresolved Barbarian-specific numerical choice remains from this reconciliation. Subclasses, prestige classes and Band 2 are excluded. The staged `data/native/classes/base/barbarian.json` and associated per-feature files **must be promoted together**, using the approved native schema and conversion tests, to avoid a live class referring to unresolved candidate features. They remain pending-native-reconciliation until that coherent implementation step is executed; this design document is authoritative for that step but is **not** itself an executable class.
+The approved Band 1 Barbarian is defined in `data/native/classes/base/barbarian.json` as one 20-level progression. Its 25 source-derived base-class feature records now have single native definitions and the 3.x-only mechanics are explicit inline native features. Nine subclass or source-only candidates remain staged and are **not** granted by the base class. The common Rage pool is Unlimited at level 20; Relentless Rage restores twice Barbarian class level HP. This is an authoritative native data implementation, not an assertion that all runtime consumers or source converters have yet been wired or tested.
+

@@ -2,33 +2,18 @@
   "id": "class-feature.barbarian.reckless-attack-level-2",
   "name": "Reckless Attack",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Reckless Attack",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 2,
-        "entries": [
-          "Starting at 2nd level, you can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Reckless Attack",
-        "className": "Barbarian",
-        "classSource": "SRD52",
-        "level": 2,
-        "entries": [
-          "You can throw aside all concern for defense to attack with increased ferocity. When you make your first attack roll on your turn, you can decide to attack recklessly. Doing so gives you {@variantrule Advantage|SRD52} on attack rolls using Strength until the start of your next turn, but attack rolls against you have {@variantrule Advantage|SRD52} during that time."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 2
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Reckless Attack",
+    "description": "On first attack roll in a turn, choose Strength attack Advantage until next turn; attackers gain Advantage against the Barbarian meanwhile.",
+    "mechanics": {
+      "kind": "reckless-attack",
+      "trigger": "first-attack-roll-of-turn",
+      "strengthAttackMode": "advantage",
+      "incomingAttacks": "advantage",
+      "expires": "start-of-next-turn"
+    }
+  }
 }

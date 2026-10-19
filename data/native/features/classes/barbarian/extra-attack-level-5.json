@@ -2,33 +2,16 @@
   "id": "class-feature.barbarian.extra-attack-level-5",
   "name": "Extra Attack",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Extra Attack",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 5,
-        "entries": [
-          "Beginning at 5th level, you can attack twice, instead of once, whenever you take the {@action Attack} action on your turn."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Extra Attack",
-        "className": "Barbarian",
-        "classSource": "SRD52",
-        "level": 5,
-        "entries": [
-          "You can attack twice instead of once whenever you take the {@action Attack|SRD52} action on your turn."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 5
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Extra Attack",
+    "description": "Two attacks with the standard Attack action; does not add to attacks from the alternative BAB iterative procedure.",
+    "mechanics": {
+      "kind": "attack-action",
+      "standardAttackCount": 2,
+      "babInteraction": "alternative-procedure-not-additive"
+    }
+  }
 }

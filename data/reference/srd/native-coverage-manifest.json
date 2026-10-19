@@ -2216,7 +2216,7 @@
     {
       "nativeId": "class.barbarian",
       "kind": "class",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/classes/base/barbarian.json",
       "candidates": [
@@ -2228,7 +2228,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class.bard",
@@ -2420,7 +2421,7 @@
     {
       "nativeId": "class-feature.barbarian.ability-score-improvement-level-12",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/ability-score-improvement-level-12.json",
       "candidates": [
@@ -2432,12 +2433,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.ability-score-improvement-level-16",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/ability-score-improvement-level-16.json",
       "candidates": [
@@ -2449,12 +2451,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.ability-score-improvement-level-19",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/ability-score-improvement-level-19.json",
       "candidates": [
@@ -2462,12 +2465,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.ability-score-improvement-level-4",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/ability-score-improvement-level-4.json",
       "candidates": [
@@ -2479,12 +2483,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.ability-score-improvement-level-8",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/ability-score-improvement-level-8.json",
       "candidates": [
@@ -2496,7 +2501,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.barbarian-subclass-level-3",
@@ -2514,7 +2520,7 @@
     {
       "nativeId": "class-feature.barbarian.brutal-critical-1-die-level-9",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/brutal-critical-1-die-level-9.json",
       "candidates": [
@@ -2522,12 +2528,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.brutal-critical-2-dice-level-13",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/brutal-critical-2-dice-level-13.json",
       "candidates": [
@@ -2535,12 +2542,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.brutal-critical-3-dice-level-17",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/brutal-critical-3-dice-level-17.json",
       "candidates": [
@@ -2548,12 +2556,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.brutal-strike-level-9",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/brutal-strike-level-9.json",
       "candidates": [
@@ -2561,12 +2570,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.danger-sense-level-2",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/danger-sense-level-2.json",
       "candidates": [
@@ -2578,7 +2588,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.epic-boon-level-19",
@@ -2596,7 +2607,7 @@
     {
       "nativeId": "class-feature.barbarian.extra-attack-level-5",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/extra-attack-level-5.json",
       "candidates": [
@@ -2608,12 +2619,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.fast-movement-level-5",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/fast-movement-level-5.json",
       "candidates": [
@@ -2625,12 +2637,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.feral-instinct-level-7",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/feral-instinct-level-7.json",
       "candidates": [
@@ -2642,12 +2655,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.improved-brutal-strike-level-13",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/improved-brutal-strike-level-13.json",
       "candidates": [
@@ -2655,12 +2669,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.improved-brutal-strike-level-17",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/improved-brutal-strike-level-17.json",
       "candidates": [
@@ -2668,12 +2683,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.indomitable-might-level-18",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/indomitable-might-level-18.json",
       "candidates": [
@@ -2685,12 +2701,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.instinctive-pounce-level-7",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/instinctive-pounce-level-7.json",
       "candidates": [
@@ -2698,7 +2715,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.path-feature-level-10",
@@ -2742,7 +2760,7 @@
     {
       "nativeId": "class-feature.barbarian.persistent-rage-level-15",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/persistent-rage-level-15.json",
       "candidates": [
@@ -2754,12 +2772,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.primal-champion-level-20",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/primal-champion-level-20.json",
       "candidates": [
@@ -2771,12 +2790,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.primal-knowledge-level-3",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/primal-knowledge-level-3.json",
       "candidates": [
@@ -2784,7 +2804,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.primal-path-level-3",
@@ -2802,7 +2823,7 @@
     {
       "nativeId": "class-feature.barbarian.rage-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/rage-level-1.json",
       "candidates": [
@@ -2814,12 +2835,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.reckless-attack-level-2",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/reckless-attack-level-2.json",
       "candidates": [
@@ -2831,12 +2853,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.relentless-rage-level-11",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/relentless-rage-level-11.json",
       "candidates": [
@@ -2848,7 +2871,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.subclass-feature-level-10",
@@ -2892,7 +2916,7 @@
     {
       "nativeId": "class-feature.barbarian.unarmored-defense-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/barbarian/unarmored-defense-level-1.json",
       "candidates": [
@@ -2904,12 +2928,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.barbarian.weapon-mastery-level-1",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/barbarian/weapon-mastery-level-1.json",
       "candidates": [
@@ -2917,7 +2942,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "barbarian-band1-approved"
     },
     {
       "nativeId": "class-feature.bard.ability-score-improvement-level-12",
@@ -39668,14 +39694,14 @@
   "canonicalIdentifiersNormalized": 653,
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
+    "single-candidate": 585,
+    "multiple-candidates": 1053,
+    "native-single-source-retained": 452,
+    "native-compatible-merged": 47,
+    "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,
-    "multiple-candidates": 1069,
-    "native-compatible-merged": 31,
-    "native-equivalent-reconciled": 34,
-    "native-monster-identity-alias": 23,
     "native-monster-role-default": 285,
-    "native-single-source-retained": 442,
-    "single-candidate": 595
+    "native-monster-identity-alias": 23
   }
 }

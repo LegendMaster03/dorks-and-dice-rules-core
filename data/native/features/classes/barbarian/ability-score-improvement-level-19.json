@@ -2,22 +2,26 @@
   "id": "class-feature.barbarian.ability-score-improvement-level-19",
   "name": "Ability Score Improvement",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ability Score Improvement",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 19,
-        "entries": [
-          "When you reach 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
-          "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 19
+  "classLevel": 19,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "At this level choose an ability score increase (+2 to one or +1 to two) or one eligible ordinary feat. Do not impose a permanent maximum.",
+    "mechanics": {
+      "kind": "ability-improvement-or-feat",
+      "abilityIncreases": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "featRequiresEligibility": true,
+      "epicBoonTotalCharacterLevelMinimum": 21,
+      "abilityScoreMaximum": null
+    }
+  }
 }

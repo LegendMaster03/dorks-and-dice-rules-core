@@ -2,956 +2,754 @@
   "id": "class.barbarian",
   "name": "Barbarian",
   "kind": "class",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Barbarian",
-        "hd": {
-          "number": 1,
-          "faces": 12
-        },
-        "proficiency": [
-          "str",
-          "con"
-        ],
-        "startingProficiencies": {
-          "armor": [
-            "light",
-            "medium",
-            "shield"
-          ],
-          "weapons": [
-            "simple",
-            "martial"
-          ],
-          "skills": [
-            {
-              "choose": {
-                "from": [
-                  "animal handling",
-                  "athletics",
-                  "intimidation",
-                  "nature",
-                  "perception",
-                  "survival"
-                ],
-                "count": 2
-              }
-            }
-          ]
-        },
-        "startingEquipment": {
-          "additionalFromBackground": true,
-          "default": [
-            "(a) a {@item greataxe|srd51} or (b) any {@filter martial melee weapon|items|source=srd51|category=basic|type=martial weapon;melee weapon=sand}",
-            "(a) two {@item handaxe|srd51|handaxes} or (b) any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}",
-            "An {@item explorer's pack|srd51}, and four {@item javelin|srd51|javelins}"
-          ],
-          "goldAlternative": "{@dice 2d4 × 10|2d4 × 10|Starting Gold}",
-          "defaultData": [
-            {
-              "a": [
-                "greataxe|srd51"
-              ],
-              "b": [
-                {
-                  "equipmentType": "weaponMartialMelee"
-                }
-              ]
-            },
-            {
-              "a": [
-                {
-                  "item": "handaxe|srd51",
-                  "quantity": 2
-                }
-              ],
-              "b": [
-                {
-                  "equipmentType": "weaponSimple"
-                }
-              ]
-            },
-            {
-              "_": [
-                "explorer's pack|srd51",
-                {
-                  "item": "javelin|srd51",
-                  "quantity": 4
-                }
-              ]
-            }
-          ]
-        },
-        "multiclassing": {
-          "requirements": {
-            "str": 13
-          },
-          "proficienciesGained": {
-            "armor": [
-              "shield"
-            ],
-            "weapons": [
-              "simple",
-              "martial"
-            ]
-          }
-        },
-        "classTableGroups": [
-          {
-            "colLabels": [
-              "Rages",
-              "Rage Damage"
-            ],
-            "rows": [
-              [
-                "2",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "2",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "3",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "3",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "3",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 2
-                }
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                }
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 4
-                }
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                }
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                }
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                }
-              ],
-              [
-                "Unlimited",
-                {
-                  "type": "bonus",
-                  "value": 4
-                }
-              ]
-            ]
-          }
-        ],
-        "classFeatures": [
-          "Rage|Barbarian||1",
-          "Unarmored Defense|Barbarian||1",
-          "Danger Sense|Barbarian||2",
-          "Reckless Attack|Barbarian||2",
-          {
-            "classFeature": "Primal Path|Barbarian||3",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Barbarian||4",
-          "Extra Attack|Barbarian||5",
-          "Fast Movement|Barbarian||5",
-          {
-            "classFeature": "Path Feature|Barbarian||6",
-            "gainSubclassFeature": true
-          },
-          "Feral Instinct|Barbarian||7",
-          "Ability Score Improvement|Barbarian||8",
-          "Brutal Critical (1 die)|Barbarian||9",
-          {
-            "classFeature": "Path feature|Barbarian||10",
-            "gainSubclassFeature": true
-          },
-          "Relentless Rage|Barbarian||11",
-          "Ability Score Improvement|Barbarian||12",
-          "Brutal Critical (2 dice)|Barbarian||13",
-          {
-            "classFeature": "Path feature|Barbarian||14",
-            "gainSubclassFeature": true
-          },
-          "Persistent Rage|Barbarian||15",
-          "Ability Score Improvement|Barbarian||16",
-          "Brutal Critical (3 dice)|Barbarian||17",
-          "Indomitable Might|Barbarian||18",
-          "Ability Score Improvement|Barbarian||19",
-          "Primal Champion|Barbarian||20"
-        ],
-        "subclassTitle": "Primal Path",
-        "lore": [
-          {
-            "name": "Barbarian",
-            "entries": [
-              {
-                "name": "Barbarian",
-                "type": "section",
-                "entries": [
-                  "A tall human tribesman strides through a blizzard, draped in fur and hefting his axe. He laughs as he charges toward the frost giant who dared poach his people's elk herd.",
-                  "A half-orc snarls at the latest challenger to her authority over their savage tribe, ready to break his neck with her bare hands as she did to the last six rivals.",
-                  "Frothing at the mouth, a dwarf slams his helmet into the face of his drow foe, then turns to drive his armored elbow into the gut of another.",
-                  "These barbarians, different as they might be, are defined by their rage: unbridled, unquenchable, and unthinking fury. More than a mere emotion, their anger is the ferocity of a cornered predator, the unrelenting assault of a storm, the churning turmoil of the sea.",
-                  "For some, their rage springs from a communion with fierce animal spirits. Others draw from a roiling reservoir of anger at a world full of pain. For every barbarian, rage is a power that fuels not just a battle frenzy but also uncanny reflexes, resilience, and feats of strength.",
-                  {
-                    "type": "entries",
-                    "name": "Primal Instinct",
-                    "entries": [
-                      "People of towns and cities take pride in how their civilized ways set them apart from animals, as if denying one's own nature was a mark of superiority. To a barbarian, though, civilization is no virtue, but a sign of weakness. The strong embrace their animal nature—keen instincts, primal physicality, and ferocious rage. Barbarians are uncomfortable when hedged in by walls and crowds. They thrive in the wilds of their homelands: the tundra, jungle, or grasslands where their tribes live and hunt.",
-                      "Barbarians come alive in the chaos of combat. They can enter a berserk state where rage takes over, giving them superhuman strength and resilience. A barbarian can draw on this reservoir of fury only a few times without resting, but those few rages are usually sufficient to defeat whatever threats arise."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "A Life of Danger",
-                    "entries": [
-                      "Not every member of the tribes deemed \"barbarians\" by scions of civilized society has the barbarian class. A true barbarian among these people is as uncommon as a skilled fighter in a town, and he or she plays a similar role as a protector of the people and a leader in times of war. Life in the wild places of the world is fraught with peril: rival tribes, deadly weather, and terrifying monsters. Barbarians charge headlong into that danger so that their people don't have to.",
-                      "Their courage in the face of danger makes barbarians perfectly suited for adventuring. Wandering is often a way of life for their native tribes, and the rootless life of the adventurer is little hardship for a barbarian. Some barbarians miss the close-knit family structures of the tribe, but eventually find them replaced by the bonds formed among the members of their adventuring parties."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Creating a Barbarian",
-                    "entries": [
-                      "When creating a barbarian character, think about where your character comes from and his or her place in the world. Talk with your DM about an appropriate origin for your barbarian. Did you come from a distant land, making you a stranger in the area of the campaign? Or is the campaign set in a rough-and-tumble frontier where barbarians are common?",
-                      "What led you to take up the adventuring life? Were you lured to settled lands by the promise of riches? Did you join forces with soldiers of those lands to face a shared threat? Did monsters or an invading horde drive you out of your homeland, making you a rootless refugee? Perhaps you were a prisoner of war, brought in chains to \"civilized\" lands and only now able to win your freedom. Or you might have been cast out from your people because of a crime you committed, a taboo you violated, or a coup that removed you from a position of authority.",
-                      {
-                        "type": "entries",
-                        "name": "Quick Build",
-                        "entries": [
-                          "You can make a barbarian quickly by following these suggestions. First, put your highest ability score in Strength, followed by Constitution. Second, choose the {@background outlander} background."
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "source": "SRD51",
-                "page": 46
-              },
-              {
-                "type": "section",
-                "entries": [
-                  {
-                    "type": "quote",
-                    "entries": [
-                      "I have witnessed the indomitable performance of barbarians on the field of battle, and it makes me wonder what force lies at the heart of their rage."
-                    ],
-                    "by": "Seret, archwizard"
-                  },
-                  "The anger felt by a normal person resembles the rage of a barbarian in the same way that a gentle breeze is akin to a furious thunderstorm. The barbarian's driving force comes from a place that transcends mere emotion, making its manifestation all the more terrible. Whether the impetus for the fury comes entirely from within or from forging a link with a spirit animal, a raging barbarian becomes able to perform supernatural feats of strength and endurance. The outburst is temporary, but while it lasts, it takes over body and mind, driving the barbarian on despite peril and injury, until the last enemy falls.",
-                  "It can be tempting to play a barbarian character that is a straightforward application of the classic archetype—a brute, and usually a dimwitted one at that, who rushes in where others fear to tread. But not all the barbarians in the world are cut from that cloth, so you can certainly put your own spin on things. Either way, consider adding some flourishes to make your barbarian stand out from all others; see the following sections for some ideas.",
-                  {
-                    "type": "quote",
-                    "entries": [
-                      "Rawr! I'm really angry! Funny, I don't feel any stronger. Maybe because I'm always angry, I'm always in top condition. Stands to reason."
-                    ],
-                    "by": "Xanathar"
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Personal Totems",
-                    "entries": [
-                      "Barbarians tend to travel light, carrying little in the way of personal effects or other unnecessary gear. The few possessions they do carry often include small items that have special significance. A personal totem is significant because it has a mystical origin or is tied to an important moment in the character's life—perhaps a remembrance from the barbarian's past or a harbinger of what lies ahead.",
-                      "A personal totem of this sort might be associated with a barbarian's spirit animal, or might actually be the totem object for the animal, but such a connection is not essential. One who has a bear totem spirit, for instance, could still carry an eagle's feather as a personal totem.",
-                      "Consider creating one or more personal totems for your character—objects that hold a special link to your character's past or future. Think about how a totem might affect your character's actions.",
-                      {
-                        "type": "table",
-                        "caption": "Personal Totems",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Totem"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "A tuft of fur from a solitary wolf that you befriended during a hunt"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "Three eagle feathers given to you by a wise shaman, who told you they would play a role in determining your fate"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "A necklace made from the claws of a young cave bear that you slew singlehandedly as a child"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "A small leather pouch holding three stones that represent your ancestors"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "A few small bones from the first beast you killed, tied together with colored wool"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "An egg-sized stone in the shape of your spirit animal that appeared one day in your belt pouch"
-                          ]
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Tattoos",
-                    "entries": [
-                      "The members of many barbarian clans decorate their bodies with tattoos, each of which represents a significant moment in the life of the bearer or the bearer's ancestors, or which symbolizes a feeling or an attitude. As with personal totems, a barbarian's tattoos might or might not be related to an animal spirit.",
-                      "Each tattoo a barbarian displays contributes to that individual's identity. If your character wears tattoos, what do they look like, and what do they represent?",
-                      {
-                        "type": "table",
-                        "caption": "Tattoos",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Tattoo"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "The wings of an eagle are spread wide across your upper back."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "Etched on the backs of your hands are the paws of a cave bear."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "The symbols of your clan are displayed in viny patterns along your arms."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "The antlers of an elk are inked across your back."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "Images of your spirit animal are tattooed along your weapon arm and hand."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "The eyes of a wolf are marked on your back to help you see and ward off evil spirits."
-                          ]
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Superstitions",
-                    "entries": [
-                      "Barbarians vary widely in how they understand life. Some follow gods and look for guidance from those deities in the cycles of nature and the animals they encounter. These barbarians believe that spirits inhabit the plants and animals of the world, and the barbarians look to them for omens and power.",
-                      "Other barbarians trust only in the blood that runs in their veins and the steel they hold in their hands. They have no use for the invisible world, instead relying on their senses to hunt and survive like the wild beasts they emulate.",
-                      "Both of these attitudes can give rise to superstitions. These beliefs are often passed down within a family or shared among the members of a clan or a hunting group.",
-                      "If your barbarian character has any superstitions, were they ingrained in you by your family, or are they the result of personal experience?",
-                      {
-                        "type": "table",
-                        "caption": "Superstition",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Superstition"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "If you disturb the bones of the dead, you inherit all the troubles that plagued them in life."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "Never trust a wizard. They're all devils in disguise, especially the friendly ones."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "Dwarves have lost their spirits, and are almost like the undead. That's why they live underground."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "Magical things bring trouble. Never sleep with a magic object within ten feet of you."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "When you walk through a graveyard, be sure to wear silver, or a ghost might jump into your body."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "If an elf looks you in the eyes, she's trying to read your thoughts."
-                          ]
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "source": "XGE",
-                "page": 8
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/PHB/Barbarian.webp"
-                },
-                "width": 959,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 12
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Barbarian",
-        "primaryAbility": [
+    "savingThrowProficiencies": [
+      "strength",
+      "constitution"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "simple",
+      "martial"
+    ],
+    "skillChoices": {
+      "choose": 2,
+      "from": [
+        "skill.animal-handling",
+        "skill.athletics",
+        "skill.intimidation",
+        "skill.nature",
+        "skill.perception",
+        "skill.survival"
+      ]
+    },
+    "rankedClassSkills": [
+      "skill.climb",
+      "skill.jump",
+      "skill.ride",
+      "skill.swim",
+      "skill.listen",
+      "skill.survival",
+      "skill.intimidation",
+      "skill.animal-handling"
+    ],
+    "skillPoints": {
+      "firstLevel": "4*(4+Int-modifier)",
+      "eachOtherLevel": "4+Int-modifier"
+    },
+    "attackProgression": "full-BAB",
+    "extraAttackAndIteratives": "alternative-procedures-not-cumulative",
+    "multiclassStrengthPrerequisite": 13,
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.barbarian.rage-level-1",
+          "class-feature.barbarian.unarmored-defense-level-1",
+          "class-feature.barbarian.weapon-mastery-level-1",
+          "barbarian.fast-movement"
+        ],
+        "improvements": [],
+        "rageUses": 2,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 2,
+        "trapSense": 0,
+        "damageReduction": 0,
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 0,
+          "will": 0
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.barbarian.danger-sense-level-2",
+          "class-feature.barbarian.reckless-attack-level-2",
+          "barbarian.uncanny-dodge"
+        ],
+        "improvements": [],
+        "rageUses": 2,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 2,
+        "trapSense": 0,
+        "damageReduction": 0,
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 0,
+          "will": 0
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [
+          "class-feature.barbarian.primal-knowledge-level-3",
+          "barbarian.trap-sense"
+        ],
+        "improvements": [],
+        "rageUses": 3,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 2,
+        "trapSense": 1,
+        "damageReduction": 0,
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 1,
+          "will": 1
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-4"
+        ],
+        "improvements": [
           {
-            "str": true
+            "feature": "weapon-mastery",
+            "choices": 3
           }
         ],
-        "hd": {
-          "number": 1,
-          "faces": 12
-        },
-        "proficiency": [
-          "str",
-          "con"
+        "rageUses": 3,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 1,
+        "damageReduction": 0,
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
         ],
-        "featProgression": [
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 1
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.barbarian.extra-attack-level-5",
+          "class-feature.barbarian.fast-movement-level-5",
+          "barbarian.improved-uncanny-dodge"
+        ],
+        "improvements": [],
+        "rageUses": 3,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 1,
+        "damageReduction": 0,
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 1
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [],
+        "improvements": [
           {
-            "name": "Epic Boon",
-            "category": [
-              "EB"
-            ],
-            "progression": {
-              "19": 1
-            }
+            "feature": "barbarian.trap-sense",
+            "bonus": 2
           }
         ],
-        "startingProficiencies": {
-          "armor": [
-            "light",
-            "medium",
-            "shield"
-          ],
-          "weapons": [
-            "simple",
-            "martial"
-          ],
-          "skills": [
-            {
-              "choose": {
-                "from": [
-                  "animal handling",
-                  "athletics",
-                  "intimidation",
-                  "nature",
-                  "perception",
-                  "survival"
-                ],
-                "count": 2
-              }
-            }
-          ]
-        },
-        "startingEquipment": {
-          "additionalFromBackground": true,
-          "defaultData": [
-            {
-              "A": [
-                {
-                  "item": "greataxe|srd52"
-                },
-                {
-                  "item": "handaxe|srd52",
-                  "quantity": 4
-                },
-                {
-                  "item": "explorer's pack|srd52"
-                },
-                {
-                  "value": 1500
-                }
-              ],
-              "B": [
-                {
-                  "value": 7500
-                }
-              ]
-            }
-          ],
-          "entries": [
-            "{@i Choose A or B:} (A) {@item Greataxe|SRD52}, 4 {@item Handaxe|SRD52|Handaxes}, {@item Explorer's Pack|SRD52}, and 15 GP; or (B) 75 GP"
-          ]
-        },
-        "multiclassing": {
-          "proficienciesGained": {
-            "armor": [
-              "shield"
-            ],
-            "weapons": [
-              "martial"
-            ]
-          }
-        },
-        "classTableGroups": [
-          {
-            "colLabels": [
-              "Rages",
-              "Rage Damage",
-              "Weapon Mastery"
-            ],
-            "rows": [
-              [
-                "2",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "2"
-              ],
-              [
-                "2",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "2"
-              ],
-              [
-                "3",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "2"
-              ],
-              [
-                "3",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "3"
-              ],
-              [
-                "3",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "3"
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "3"
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "3"
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 2
-                },
-                "3"
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "3"
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "4"
-              ],
-              [
-                "4",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "4"
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "4"
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "4"
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "4"
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 3
-                },
-                "4"
-              ],
-              [
-                "5",
-                {
-                  "type": "bonus",
-                  "value": 4
-                },
-                "4"
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                },
-                "4"
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                },
-                "4"
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                },
-                "4"
-              ],
-              [
-                "6",
-                {
-                  "type": "bonus",
-                  "value": 4
-                },
-                "4"
-              ]
-            ]
-          }
+        "rageUses": 4,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 2,
+        "damageReduction": 0,
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
         ],
-        "classFeatures": [
-          "Rage|Barbarian|SRD52|1",
-          "Unarmored Defense|Barbarian|SRD52|1",
-          "Weapon Mastery|Barbarian|SRD52|1",
-          "Danger Sense|Barbarian|SRD52|2",
-          "Reckless Attack|Barbarian|SRD52|2",
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.barbarian.feral-instinct-level-7",
+          "class-feature.barbarian.instinctive-pounce-level-7",
+          "barbarian.damage-reduction"
+        ],
+        "improvements": [],
+        "rageUses": 4,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 2,
+        "damageReduction": 1,
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-8"
+        ],
+        "improvements": [],
+        "rageUses": 4,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 2,
+        "damageReduction": 1,
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [
+          "class-feature.barbarian.brutal-critical-1-die-level-9",
+          "class-feature.barbarian.brutal-strike-level-9"
+        ],
+        "improvements": [
           {
-            "classFeature": "Barbarian Subclass|Barbarian|SRD52|3",
-            "gainSubclassFeature": true
+            "feature": "barbarian.trap-sense",
+            "bonus": 3
           },
-          "Primal Knowledge|Barbarian|SRD52|3",
-          "Ability Score Improvement|Barbarian|SRD52|4",
-          "Extra Attack|Barbarian|SRD52|5",
-          "Fast Movement|Barbarian|SRD52|5",
           {
-            "classFeature": "Subclass Feature|Barbarian|SRD52|6",
-            "gainSubclassFeature": true
-          },
-          "Feral Instinct|Barbarian|SRD52|7",
-          "Instinctive Pounce|Barbarian|SRD52|7",
-          "Ability Score Improvement|Barbarian|SRD52|8",
-          "Brutal Strike|Barbarian|SRD52|9",
-          {
-            "classFeature": "Subclass Feature|Barbarian|SRD52|10",
-            "gainSubclassFeature": true
-          },
-          "Relentless Rage|Barbarian|SRD52|11",
-          "Ability Score Improvement|Barbarian|SRD52|12",
-          "Improved Brutal Strike|Barbarian|SRD52|13",
-          {
-            "classFeature": "Subclass Feature|Barbarian|SRD52|14",
-            "gainSubclassFeature": true
-          },
-          "Persistent Rage|Barbarian|SRD52|15",
-          "Ability Score Improvement|Barbarian|SRD52|16",
-          "Improved Brutal Strike|Barbarian|SRD52|17",
-          "Indomitable Might|Barbarian|SRD52|18",
-          "Epic Boon|Barbarian|SRD52|19",
-          "Primal Champion|Barbarian|SRD52|20"
-        ],
-        "subclassTitle": "Barbarian Subclass",
-        "lore": [
-          {
-            "name": "Barbarian",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Barbarian",
-                "source": "SRD52",
-                "page": 50,
-                "entries": [
-                  "Barbarians are mighty warriors who are powered by primal forces of the multiverse that manifest as a Rage. More than a mere emotion—and not limited to anger—this Rage is an incarnation of a predator's ferocity, a storm's fury, and a sea's turmoil.",
-                  "Some Barbarians personify their Rage as a fierce spirit or revered forebear. Others see it as a connection to the pain and anguish of the world, as an impersonal tangle of wild magic, or as an expression of their own deepest self. For every Barbarian, their Rage is a power that fuels not just battle prowess, but also uncanny reflexes and heightened senses.",
-                  "Barbarians often serve as protectors and leaders in their communities. They charge headlong into danger so those under their protection don't have to. Their courage in the face of danger makes Barbarians perfectly suited for adventure."
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/Barbarian.webp"
-                },
-                "credit": "Denman Rooke",
-                "width": 1700,
-                "height": 2265
-              },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/039-03-015.barbarian-weapons.webp"
-                },
-                "credit": "Wayne England",
-                "width": 850,
-                "height": 1057
-              }
-            ]
+            "feature": "battle-rage",
+            "name": "Greater Battle Rage"
           }
-        ]
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 3,
+        "damageReduction": 1,
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "weapon-mastery",
+            "choices": 4
+          },
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 2
+          }
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 4,
+        "trapSense": 3,
+        "damageReduction": 2,
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [
+          "class-feature.barbarian.relentless-rage-level-11"
+        ],
+        "improvements": [
+          {
+            "feature": "primal-rage",
+            "name": "Greater Primal Rage"
+          }
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 3,
+        "damageReduction": 2,
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-12"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 4
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 4,
+        "damageReduction": 2,
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [
+          "class-feature.barbarian.brutal-critical-2-dice-level-13",
+          "class-feature.barbarian.improved-brutal-strike-level-13"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 3
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 4,
+        "damageReduction": 3,
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [
+          "barbarian.indomitable-will"
+        ],
+        "improvements": [],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 4,
+        "damageReduction": 3,
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.barbarian.persistent-rage-level-15"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 5
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 5,
+        "damageReduction": 3,
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-16"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 4
+          },
+          {
+            "feature": "battle-rage",
+            "name": "Mighty Battle Rage"
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 5,
+        "damageReduction": 4,
+        "baseAttackBonus": 16,
+        "iterativeBaseAttackBonuses": [
+          16,
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [
+          "class-feature.barbarian.brutal-critical-3-dice-level-17",
+          "class-feature.barbarian.improved-brutal-strike-level-17",
+          "barbarian.tireless-rage"
+        ],
+        "improvements": [],
+        "rageUses": 6,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 5,
+        "damageReduction": 4,
+        "baseAttackBonus": 17,
+        "iterativeBaseAttackBonuses": [
+          17,
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.barbarian.indomitable-might-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 6
+          }
+        ],
+        "rageUses": 6,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 6,
+        "damageReduction": 4,
+        "baseAttackBonus": 18,
+        "iterativeBaseAttackBonuses": [
+          18,
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 6
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-19"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 5
+          }
+        ],
+        "rageUses": 6,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 6,
+        "damageReduction": 5,
+        "baseAttackBonus": 19,
+        "iterativeBaseAttackBonuses": [
+          19,
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 6
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.barbarian.primal-champion-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "primal-rage",
+            "name": "Mighty Primal Rage"
+          },
+          {
+            "feature": "rage-resource",
+            "uses": "unlimited"
+          }
+        ],
+        "rageUses": "unlimited",
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 8,
+        "primalWillSaveBonus": 4,
+        "weaponMasteryChoices": 4,
+        "trapSense": 6,
+        "damageReduction": 5,
+        "baseAttackBonus": 20,
+        "iterativeBaseAttackBonuses": [
+          20,
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 12,
+          "reflex": 6,
+          "will": 6
+        }
       }
-    }
-  ]
+    ],
+    "inlineFeatures": [
+      {
+        "id": "barbarian.fast-movement",
+        "name": "Fast Movement",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "speed-bonus",
+          "feet": 10,
+          "requiresBeforeLevel5": [
+            "no-heavy-armor",
+            "no-heavy-load"
+          ],
+          "requiresAtLevel5": "no-heavy-armor",
+          "notAdditive": true
+        }
+      },
+      {
+        "id": "barbarian.uncanny-dodge",
+        "name": "Uncanny Dodge",
+        "classLevel": 2,
+        "mechanics": {
+          "kind": "keep-dexterity-to-ac",
+          "against": [
+            "flat-footed",
+            "invisible-attacker"
+          ],
+          "except": "immobilized"
+        }
+      },
+      {
+        "id": "barbarian.trap-sense",
+        "name": "Trap Sense",
+        "classLevel": 3,
+        "mechanics": {
+          "kind": "bonus-vs-traps",
+          "reflexAndDodgeAC": true,
+          "levels": [
+            3,
+            6,
+            9,
+            12,
+            15,
+            18
+          ],
+          "bonuses": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "id": "barbarian.improved-uncanny-dodge",
+        "name": "Improved Uncanny Dodge",
+        "classLevel": 5,
+        "mechanics": {
+          "kind": "anti-flanking",
+          "rogueExceptionAdditionalLevels": 4,
+          "combineMulticlassUncannyDodgeLevels": true
+        }
+      },
+      {
+        "id": "barbarian.damage-reduction",
+        "name": "Damage Reduction",
+        "classLevel": 7,
+        "mechanics": {
+          "kind": "flat-reduction",
+          "eligible": [
+            "weapon-attacks",
+            "natural-attacks"
+          ],
+          "levels": [
+            7,
+            10,
+            13,
+            16,
+            19
+          ],
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "withResistance": "native-damage-resolution"
+        }
+      },
+      {
+        "id": "barbarian.indomitable-will",
+        "name": "Indomitable Will",
+        "classLevel": 14,
+        "mechanics": {
+          "kind": "conditional-will-save-bonus",
+          "bonus": 4,
+          "against": "enchantment",
+          "requires": "rage"
+        }
+      },
+      {
+        "id": "barbarian.tireless-rage",
+        "name": "Tireless Rage",
+        "classLevel": 17,
+        "mechanics": {
+          "kind": "remove-primal-rage-fatigue"
+        }
+      }
+    ],
+    "rageResource": "barbarian.rage",
+    "alignmentRestriction": null,
+    "illiteracyRestriction": false,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonTotalCharacterLevelMinimum": 21,
+    "subclasses": "excluded-pending-subclass-pass",
+    "prestigeClasses": "excluded-pending-prestige-pass"
+  }
 }

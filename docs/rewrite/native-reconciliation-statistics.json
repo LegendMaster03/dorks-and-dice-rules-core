@@ -2,28 +2,28 @@
   "description": "Rule status counts for the pinned staged source pack; not a runtime readiness certificate.",
   "baselineEntries": 2522,
   "statuses": {
+    "single-candidate": 585,
+    "multiple-candidates": 1053,
+    "native-single-source-retained": 452,
+    "native-compatible-merged": 47,
+    "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,
-    "multiple-candidates": 1069,
-    "native-compatible-merged": 31,
-    "native-equivalent-reconciled": 34,
-    "native-monster-identity-alias": 23,
     "native-monster-role-default": 285,
-    "native-single-source-retained": 442,
-    "single-candidate": 595
+    "native-monster-identity-alias": 23
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
-    "native-compatible-merged": 31,
+    "native-compatible-merged": 47,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 442
+    "native-single-source-retained": 452
   },
-  "remainingWithMultipleCandidates": 1069,
-  "remainingWithOneCandidate": 595,
+  "remainingWithMultipleCandidates": 1053,
+  "remainingWithOneCandidate": 585,
   "retainedDefinitionsNeedingNativeShaping": 792,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1664,
+  "candidateRecordsStillUnresolved": 1638,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
@@ -56,5 +56,13 @@
   "officialSourceReconciliationCorrections": {
     "avatarOfDeath": "5.5e creature selected with unique older Turning Immunity retained",
     "plateArmorOfEtherealness": "two nonequivalent sources preserved pending item decision"
+  },
+  "approvedBarbarianBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureRecords": 25,
+    "inertHistoricalSourceAndSubclassRecords": 9
   }
 }

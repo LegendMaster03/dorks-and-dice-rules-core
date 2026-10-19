@@ -1,22 +1,17 @@
 {
   "id": "class-feature.barbarian.brutal-critical-3-dice-level-17",
-  "name": "Brutal Critical (3 dice)",
+  "name": "Brutal Critical",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Brutal Critical (3 dice)",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 17,
-        "entries": [
-          "At 17th level, you can roll three additional weapon damage dice when determining the extra damage for a critical hit with a melee attack."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 17
+  "classLevel": 17,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Brutal Critical",
+    "description": "Brutal Critical grants 3 additional weapon damage dice in the native critical escalation procedure, replacing the preceding quantity.",
+    "mechanics": {
+      "kind": "critical-escalation-bonus-dice",
+      "additionalWeaponDiceTotal": 3,
+      "notStackingBetweenLevels": true
+    }
+  }
 }

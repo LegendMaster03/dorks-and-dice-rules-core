@@ -2,96 +2,144 @@
   "id": "class-feature.barbarian.rage-level-1",
   "name": "Rage",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Rage",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 1,
-        "entries": [
-          "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.",
-          "While raging, you gain the following benefits if you aren't wearing heavy armor:",
-          {
-            "type": "list",
-            "items": [
-              "You have advantage on Strength checks and Strength saving throws.",
-              "When you make a melee weapon attack using Strength, you gain a +2 bonus to the damage roll. This bonus increases as you level.",
-              "You have resistance to bludgeoning, piercing, and slashing damage."
-            ]
-          },
-          "If you are able to cast spells, you can't cast them or concentrate on them while raging.",
-          "Your rage lasts for 1 minute. It ends early if you are knocked {@condition unconscious} or if your turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action.",
-          "Once you have raged the maximum number of times for your barbarian level, you must finish a long rest before you can rage again. You may rage 2 times at 1st level, 3 at 3rd, 4 at 6th, 5 at 12th, and 6 at 17th."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Rage",
-        "className": "Barbarian",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You can imbue yourself with a primal power called Rage, a force that grants you extraordinary might and resilience. You can enter it as a {@variantrule Bonus Action|SRD52} if you aren't wearing Heavy armor.",
-          "You can enter your Rage the number of times shown for your Barbarian level in the Rages column of the Barbarian Features table. You regain one expended use when you finish a {@variantrule Short Rest|SRD52}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}.",
-          "While active, your Rage follows the rules below.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "entries",
-                "name": "Damage Resistance",
-                "entries": [
-                  "You have {@variantrule Resistance|SRD52} to Bludgeoning, Piercing, and Slashing damage."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Rage Damage",
-                "entries": [
-                  "When you make an attack using Strength—with either a weapon or an {@variantrule Unarmed Strike|SRD52}—and deal damage to the target, you gain a bonus to the damage that increases as you gain levels as a Barbarian, as shown in the Rage Damage column of the Barbarian Features table."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Strength Advantage",
-                "entries": [
-                  "You have {@variantrule Advantage|SRD52} on Strength checks and Strength saving throws."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "No Concentration or Spells",
-                "entries": [
-                  "You can't maintain {@status Concentration|SRD52}, and you can't cast spells."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Duration",
-                "entries": [
-                  "The Rage lasts until the end of your next turn, and it ends early if you don Heavy armor or have the {@condition Incapacitated|SRD52} condition. If your Rage is still active on your next turn, you can extend the Rage for another round by doing one of the following:",
-                  {
-                    "type": "list",
-                    "items": [
-                      "Make an attack roll against an enemy.",
-                      "Force an enemy to make a saving throw.",
-                      "Take a {@variantrule Bonus Action|SRD52} to extend your Rage."
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          "Each time the Rage is extended, it lasts until the end of your next turn. You can maintain a Rage for up to 10 minutes."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Rage",
+    "description": "Rage uses a common pool. Choose Battle Rage or Primal Rage when activated.",
+    "mechanics": {
+      "kind": "rage-resource",
+      "activation": "bonus-action",
+      "usesByClassLevel": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          20,
+          "unlimited"
+        ]
+      ],
+      "shortRestRestore": 1,
+      "longRestRestore": "all",
+      "shared": {
+        "strengthAdvantage": true,
+        "resistance": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "forbidSpellsAndConcentration": true,
+        "noHeavyArmor": true
+      },
+      "battle": {
+        "names": [
+          [
+            1,
+            "Battle Rage"
+          ],
+          [
+            9,
+            "Greater Battle Rage"
+          ],
+          [
+            16,
+            "Mighty Battle Rage"
+          ]
+        ],
+        "strengthAttackDamageBonus": [
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            16,
+            4
+          ]
+        ],
+        "durationUntil": "end-of-next-turn",
+        "extendBy": [
+          "attack-enemy",
+          "force-enemy-saving-throw",
+          "bonus-action"
+        ],
+        "maximumMinutes": 10
+      },
+      "primal": {
+        "names": [
+          [
+            1,
+            "Primal Rage"
+          ],
+          [
+            11,
+            "Greater Primal Rage"
+          ],
+          [
+            20,
+            "Mighty Primal Rage"
+          ]
+        ],
+        "temporaryStrengthConstitution": [
+          [
+            1,
+            4
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            20,
+            8
+          ]
+        ],
+        "bonusWillSavingThrow": [
+          [
+            1,
+            2
+          ],
+          [
+            11,
+            3
+          ],
+          [
+            20,
+            4
+          ]
+        ],
+        "armorClassPenalty": -2,
+        "rounds": "3 + modified-Constitution-modifier",
+        "oncePerEncounter": true,
+        "noBattleDamageBonus": true,
+        "temporaryConstitutionModifiesHitPoints": true,
+        "postRage": "condition.fatigued",
+        "fatigueExpires": "end-of-encounter",
+        "fatigueRemovedAtLevel": 17,
+        "restrictionOnConcentrationMagicItemsAndMentalSkills": "retain-historical-primal-restrictions-with-native-ability-substitution"
+      },
+      "persistentUpgradeAt": 15
+    }
+  }
 }

@@ -2,33 +2,18 @@
   "id": "class-feature.barbarian.fast-movement-level-5",
   "name": "Fast Movement",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Fast Movement",
-        "className": "Barbarian",
-        "classSource": "SRD51",
-        "level": 5,
-        "entries": [
-          "Starting at 5th level, your speed increases by 10 feet while you aren't wearing heavy armor."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Fast Movement",
-        "className": "Barbarian",
-        "classSource": "SRD52",
-        "level": 5,
-        "entries": [
-          "Your speed increases by 10 feet while you aren't wearing Heavy armor."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.barbarian",
-  "classLevel": 5
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Fast Movement",
+    "description": "At level 5 the already-granted +10-foot Fast Movement no longer has a heavy-load restriction, provided heavy armor is not worn.",
+    "mechanics": {
+      "kind": "fast-movement-upgrade",
+      "initialFeature": "barbarian.fast-movement",
+      "totalSpeedIncreaseFeet": 10,
+      "notAdditive": true,
+      "requires": "no-heavy-armor"
+    }
+  }
 }
