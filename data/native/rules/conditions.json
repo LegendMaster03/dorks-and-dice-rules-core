@@ -8,15 +8,18 @@
     "A condition lasts until it is countered or for the duration specified by the effect imposing it.",
     "If multiple effects impose the same condition, each instance retains its own duration, but the condition's effects do not increase merely because it is applied more than once. Exhaustion is an explicit exception: it accumulates in levels as defined by its own rule.",
     "Conditions can apply other conditions. Their effects are cumulative, subject to the normal rules for simultaneous effects. When an inherited condition ends, other independently applied instances of that condition remain in force.",
-    "Refer to the canonical condition records for the actual effects, restrictions, and ending triggers. Source-edition definitions are retained separately as historical evidence."
+    "Refer to the canonical condition records for the actual effects, restrictions, and ending triggers. Source-edition definitions are retained separately as historical evidence.",
+    "For attacks using Armor Class, calculate the applicable normal or Touch defense from the target's contributions, then apply only the applicable defensive effects from its conditions. Denial of Dexterity defense is not itself the full Flat-Footed condition. See data/native/defenses.json."
   ],
   "conditionIds": [
     "condition.blinded",
     "condition.charmed",
     "condition.deafened",
     "condition.exhaustion",
+    "condition.flat-footed",
     "condition.frightened",
     "condition.grappled",
+    "condition.helpless",
     "condition.incapacitated",
     "condition.invisible",
     "condition.paralyzed",

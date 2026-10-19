@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "status": "approved-native-mechanics; execution-schema-not-yet-final",
-    "note": "Sixteen canonical Dorks & Dice conditions, including the approved Wet house rule. SRD 5.1 Exhaustion and the previously approved Grappled effects remain unchanged. Stunned has half Speed; Petrified does not inherently remove awareness. Original 5.x source records and reconciliation evidence remain under data/reference/srd/."
+    "status": "approved-native-5x-and-reviewed-3x-defense-consequences; execution-schema-not-yet-final",
+    "note": "Eighteen canonical conditions, including Flat-Footed and Helpless. Native conditions use composable AC contributions rather than mutually exclusive stored AC numbers. Approved Exhaustion, Wet, Stunned half Speed and Petrified awareness are preserved. Original SRD 5.x source data remains in data/reference/srd/; 3.x provenance/decisions are in data/reference/3x/."
   },
   "conditions": [
     {
       "id": "condition.blinded",
       "name": "Blinded",
       "kind": "condition",
-      "description": "A Blinded creature can not see.",
+      "description": "A Blinded creature cannot see, moves at half Speed, and suffers impaired physical defenses. Attack rolls by the creature still have Disadvantage, without an additional blindness miss-chance roll.",
       "effects": [
         {
           "type": "sense",
@@ -24,14 +24,28 @@
         {
           "type": "roll-mode",
           "appliesTo": "attack-roll",
-          "mode": "advantage",
-          "subject": "attacks-against-affected-creature"
-        },
-        {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
           "mode": "disadvantage",
           "subject": "attacks-by-affected-creature"
+        },
+        {
+          "type": "speed",
+          "operation": "multiply",
+          "factor": 0.5
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -2
         }
       ]
     },
@@ -172,6 +186,30 @@
       }
     },
     {
+      "id": "condition.flat-footed",
+      "name": "Flat-Footed",
+      "kind": "condition",
+      "description": "A Flat-Footed creature cannot use applicable positive Dexterity or dodge bonuses to Armor Class and cannot make opportunity attacks. This is distinct from a temporary denial of the same AC contributions without the full condition.",
+      "effects": [
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "reaction-restriction",
+          "prohibited": [
+            "opportunity-attack"
+          ],
+          "doesNotProhibitOtherReactions": true
+        }
+      ]
+    },
+    {
       "id": "condition.frightened",
       "name": "Frightened",
       "kind": "condition",
@@ -218,6 +256,18 @@
           "when": {
             "targetRelationToGrappler": "other-than-grappler"
           }
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true,
+          "when": {
+            "attackerRelationToGrappler": "other-than-grappler"
+          }
         }
       ],
       "endsWhen": [
@@ -227,6 +277,42 @@
         {
           "event": "grappled-creature-moves-outside-grapple-reach",
           "cause": "any-effect"
+        }
+      ]
+    },
+    {
+      "id": "condition.helpless",
+      "name": "Helpless",
+      "kind": "condition",
+      "description": "A Helpless creature is unable to defend itself effectively. For Armor Class, treat its Dexterity score as 0 (modifier -5). Against melee attacks, apply a -4 AC exposure penalty equivalent to the one for Prone; if both conditions apply, use that penalty only once. Helpless alone does not determine awareness, speech, movement, or action economy.",
+      "effects": [
+        {
+          "type": "defense-adjustment",
+          "operation": "set-effective-ability-score",
+          "ability": "dexterity",
+          "value": 0,
+          "modifier": -5,
+          "defense": "armor-class",
+          "supersedes": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "appliesTo": [
+            "normal",
+            "touch",
+            "flat-footed",
+            "touch-flat-footed"
+          ]
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -4,
+          "when": {
+            "incomingAttackType": "melee"
+          },
+          "nonStackingGroup": "prone-or-helpless-melee-exposure"
         }
       ]
     },
@@ -254,7 +340,7 @@
       "id": "condition.invisible",
       "name": "Invisible",
       "kind": "condition",
-      "description": "An Invisible creature can not be seen without magic or a special sense. Its location can still be detected by sound or tracks. The condition does not inherently make the creature hidden.",
+      "description": "An Invisible creature cannot be seen without magic or a special sense. Its location may still be detected by sound or tracks. Invisible attacks deny applicable Dexterity and dodge defenses to targets unable to see the attacker; this replaces the condition's previous attack Advantage rather than stacking with it. Attacks against the Invisible creature retain Disadvantage if the attacker cannot see it.",
       "effects": [
         {
           "type": "visibility",
@@ -287,19 +373,23 @@
         {
           "type": "roll-mode",
           "appliesTo": "attack-roll",
-          "mode": "advantage",
-          "subject": "attacks-by-affected-creature",
-          "when": {
-            "targetCanSeeAffectedCreature": false
-          }
-        },
-        {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
           "mode": "disadvantage",
           "subject": "attacks-against-affected-creature",
           "when": {
             "attackerCanSeeAffectedCreature": false
+          }
+        },
+        {
+          "type": "target-defense-adjustment",
+          "target": "target-of-attacks-by-affected-creature",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true,
+          "when": {
+            "targetCanSeeAffectedCreature": false
           }
         }
       ]
@@ -308,9 +398,10 @@
       "id": "condition.paralyzed",
       "name": "Paralyzed",
       "kind": "condition",
-      "description": "A Paralyzed creature is Incapacitated, immobile, and unable to speak. Attacks that hit from close range are automatically critical hits.",
+      "description": "A Paralyzed creature is Incapacitated and Helpless, immobile, and unable to speak. Attacks that hit from within 5 feet are automatic critical hits, but do not count as natural 20s.",
       "appliesConditions": [
-        "condition.incapacitated"
+        "condition.incapacitated",
+        "condition.helpless"
       ],
       "effects": [
         {
@@ -332,12 +423,6 @@
           "type": "saving-throw",
           "ability": "dexterity",
           "result": "automatic-failure"
-        },
-        {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
-          "mode": "advantage",
-          "subject": "attacks-against-affected-creature"
         },
         {
           "type": "critical-hit",
@@ -449,7 +534,7 @@
       "id": "condition.prone",
       "name": "Prone",
       "kind": "condition",
-      "description": "A Prone creature can crawl or spend movement to stand, has Disadvantage on attacks, and is easier to hit at close range.",
+      "description": "A Prone creature can crawl or spend movement to stand. Its own attacks have Disadvantage. Its effective Armor Class is 4 lower against melee attacks and 4 higher against ranged attacks, reflecting the attack's type rather than the attacker's distance.",
       "effects": [
         {
           "type": "movement-restriction",
@@ -465,21 +550,22 @@
           "subject": "attacks-by-affected-creature"
         },
         {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
-          "mode": "advantage",
-          "subject": "attacks-against-affected-creature",
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -4,
           "when": {
-            "attackerWithinFeet": 5
-          }
+            "incomingAttackType": "melee"
+          },
+          "nonStackingGroup": "prone-or-helpless-melee-exposure"
         },
         {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
-          "mode": "disadvantage",
-          "subject": "attacks-against-affected-creature",
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": 4,
           "when": {
-            "attackerBeyondFeet": 5
+            "incomingAttackType": "ranged"
           }
         }
       ],
@@ -529,7 +615,7 @@
       "id": "condition.stunned",
       "name": "Stunned",
       "kind": "condition",
-      "description": "A Stunned creature is Incapacitated, staggers at half Speed, and can speak only falteringly.",
+      "description": "A Stunned creature is Incapacitated, staggers at half Speed, and can speak only falteringly. It loses applicable Dexterity and dodge defenses and suffers a -2 Armor Class penalty, in place of attacker Advantage. It does not automatically drop held objects.",
       "appliesConditions": [
         "condition.incapacitated"
       ],
@@ -554,10 +640,19 @@
           "result": "automatic-failure"
         },
         {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
-          "mode": "advantage",
-          "subject": "attacks-against-affected-creature"
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -2
         }
       ]
     },
@@ -565,10 +660,11 @@
       "id": "condition.unconscious",
       "name": "Unconscious",
       "kind": "condition",
-      "description": "An Unconscious creature is unaware of its surroundings, unable to move or speak, and vulnerable to close-range critical hits.",
+      "description": "An Unconscious creature is Incapacitated, Helpless, and Prone; it is unaware of its surroundings, unable to move or speak, and vulnerable to close-range automatic critical hits. Its defensive penalties are calculated from Helpless and Prone without duplicating the prior attacker Advantage.",
       "appliesConditions": [
         "condition.incapacitated",
-        "condition.prone"
+        "condition.prone",
+        "condition.helpless"
       ],
       "onApply": [
         {
@@ -599,12 +695,6 @@
           "type": "saving-throw",
           "ability": "dexterity",
           "result": "automatic-failure"
-        },
-        {
-          "type": "roll-mode",
-          "appliesTo": "attack-roll",
-          "mode": "advantage",
-          "subject": "attacks-against-affected-creature"
         },
         {
           "type": "critical-hit",
