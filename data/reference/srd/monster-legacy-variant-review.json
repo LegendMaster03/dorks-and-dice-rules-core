@@ -6190,12 +6190,12 @@
         "trait": [
           {
             "name": "Divine Eminence",
-            "status": "review-needed",
-            "note": "Older feature spends a spell slot as a bonus action for +3d6 Radiant damage on melee weapon hits through turn end (+1d6 per slot level above 1); current 5.5e Priest has no spell slots and Mace already deals +2d4 Radiant. Do not invent a resource or double-count damage."
+            "status": "restored",
+            "note": "Restored shared native spell-slot resource from SRD 5.1 (1st:4, 2nd:3, 3rd:2). One slot spent as a Bonus Action grants +3d6 Radiant on each melee weapon hit until turn end, +1d6 per higher slot level; stacks with current Mace baseline Radiant without counting it twice. 5.5e Spellcasting and Divine Aid uses remain unchanged; legacy prepared spells not copied."
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.pseudodragon",
@@ -8578,10 +8578,10 @@
   "summary": {
     "feature:already-present": 84,
     "feature:newer-successor": 95,
-    "feature:restored": 145,
-    "feature:review-needed": 2,
+    "feature:restored": 146,
+    "feature:review-needed": 1,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 2
+    "monstersWithOpenFeatureQuestions": 1
   }
 }
