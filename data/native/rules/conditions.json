@@ -10,11 +10,13 @@
     "Conditions can apply other conditions. Their effects are cumulative, subject to the normal rules for simultaneous effects. When an inherited condition ends, other independently applied instances of that condition remain in force.",
     "Refer to the canonical condition records for the actual effects, restrictions, and ending triggers. Source-edition definitions are retained separately as historical evidence.",
     "For attacks using Armor Class, calculate the applicable normal or Touch defense from the target's contributions, then apply only the applicable defensive effects from its conditions. Denial of Dexterity defense is not itself the full Flat-Footed condition. See data/native/defenses.json.",
-    "Historical 3.x conditions are normalized into independent native records. Dazed does not imply loss of Concentration, while Nauseated explicitly ends Concentration. Compound skill checks and repeated impairment of the same underlying statistic must not apply the same modifier more than once."
+    "Historical 3.x conditions are normalized into independent native records. Dazed does not imply loss of Concentration, while Nauseated explicitly ends Concentration. Compound skill checks and repeated impairment of the same underlying statistic must not apply the same modifier more than once.",
+    "Fear-based conditions can impose different severities and sources. Do not treat Shaken, Frightened, Panicked, and Cowering as synonyms. The 3.x automatic escalation of multiple fear effects remains a separate, unresolved native policy; direct Panicked-to-Cowering behavior when escape is impossible is defined on Panicked."
   ],
   "conditionIds": [
     "condition.blinded",
     "condition.charmed",
+    "condition.cowering",
     "condition.dazed",
     "condition.dazzled",
     "condition.deafened",
@@ -28,11 +30,13 @@
     "condition.incapacitated",
     "condition.invisible",
     "condition.nauseated",
+    "condition.panicked",
     "condition.paralyzed",
     "condition.petrified",
     "condition.poisoned",
     "condition.prone",
     "condition.restrained",
+    "condition.shaken",
     "condition.sickened",
     "condition.stunned",
     "condition.unconscious",

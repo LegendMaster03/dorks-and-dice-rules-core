@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "status": "approved-native-5x-with-selected-3x-conditions; executable-schema-still-pending",
-    "note": "Twenty-four unified native conditions: sixteen reconciled 5.x and house conditions, two 3.x defensive conditions (Flat-Footed and Helpless), and six additional 3.x conditions (Dazed, Dazzled, Entangled, Fascinated, Nauseated, Sickened). Full 3.x sources, action economy conversions and runtime integration remain separate review work."
+    "status": "native-5x-and-selected-3x-condition-catalog; runtime-schema-integration-pending",
+    "note": "Twenty-seven canonical conditions, including Shaken, Panicked, and Cowering. Historical fear escalation among distinct sources remains unresolved rather than silently changing native Frightened. Touch/Flat-Footed/Helpless, Stunned half Speed, conscious Petrified, Exhaustion six tiers, and Wet retained."
   },
   "conditions": [
     {
@@ -73,6 +73,43 @@
           "when": {
             "purpose": "social-interaction-with-affected-creature"
           }
+        }
+      ]
+    },
+    {
+      "id": "condition.cowering",
+      "name": "Cowering",
+      "kind": "condition",
+      "description": "A Cowering creature is frozen by fear and cannot move, take an Action, Bonus Action, or Reaction. It loses applicable positive Dexterity and dodge contributions to AC and takes an additional -2 AC penalty. It does not automatically become Unconscious, Helpless, or lose Concentration.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ]
+        },
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -2
         }
       ]
     },
@@ -583,6 +620,74 @@
       ]
     },
     {
+      "id": "condition.panicked",
+      "name": "Panicked",
+      "kind": "condition",
+      "description": "A Panicked creature must release held objects and flee at its fastest available pace from the source of its fear and other present dangers. Its path is uncontrolled, it cannot willingly fight or undertake unrelated activities, and it can use a spell or ability only to escape. It takes a -2 penalty on saving throws, skill checks, and ability checks. When prevented from fleeing, it also becomes Cowering until it can flee again.",
+      "onApply": [
+        {
+          "event": "drop-held-objects"
+        }
+      ],
+      "effects": [
+        {
+          "type": "compelled-movement",
+          "direction": "away-from-fear-and-other-dangers",
+          "speed": "maximum-available",
+          "route": "random-viable-escape-route",
+          "priority": "flee",
+          "cannotWillinglyApproachFearSource": true
+        },
+        {
+          "type": "turn-activity-limit",
+          "allowed": [
+            "flee",
+            "spell-or-feature-used-only-to-escape"
+          ],
+          "prohibited": [
+            "attack",
+            "other-non-escape-activities"
+          ],
+          "actionCosts": "use-normal-costs-of-permitted-options"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "saving-throw",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "ability-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        }
+      ],
+      "derivedConditions": [
+        {
+          "condition": "condition.cowering",
+          "when": {
+            "escapeRouteAvailable": false
+          },
+          "endsWhen": {
+            "escapeRouteAvailable": true
+          },
+          "doesNotOverwriteIndependentApplications": true
+        }
+      ]
+    },
+    {
       "id": "condition.paralyzed",
       "name": "Paralyzed",
       "kind": "condition",
@@ -796,6 +901,44 @@
           "appliesTo": "saving-throw",
           "ability": "dexterity",
           "mode": "disadvantage"
+        }
+      ]
+    },
+    {
+      "id": "condition.shaken",
+      "name": "Shaken",
+      "kind": "condition",
+      "description": "A Shaken creature is unsettled by fear and takes a -2 penalty on attack rolls, saving throws, skill checks, and ability checks. Shaken imposes no automatic flight, paralysis, or loss of action economy.",
+      "effects": [
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "saving-throw",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "ability-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
         }
       ]
     },

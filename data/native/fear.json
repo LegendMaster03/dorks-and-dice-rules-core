@@ -1,0 +1,51 @@
+{
+  "id": "rule.fear-family",
+  "name": "Fear-based conditions",
+  "kind": "rule",
+  "status": "partial-native-rule; historical-escalation-unresolved",
+  "conditions": {
+    "condition.shaken": {
+      "severity": 1,
+      "role": "roll-penalties-without-compelled-flight"
+    },
+    "condition.frightened": {
+      "severity": 2,
+      "role": "approved-native-fear-source-avoidance-and-conditional-disadvantage"
+    },
+    "condition.panicked": {
+      "severity": 3,
+      "role": "compulsory-fast-flight-and-drop-held-objects"
+    },
+    "condition.cowering": {
+      "severity": null,
+      "role": "unable-to-flee; frozen-defensive-state-not-automatic-fourth-tier"
+    }
+  },
+  "rules": [
+    "Shaken, Frightened and Panicked remain distinct conditions with independently tracked durations; they must not become edition-dependent synonyms.",
+    "Native Frightened preserves its approved existing effects and does not automatically compel retreat merely because a third-edition source does.",
+    "A Panicked creature drops held items when it first becomes Panicked, must flee from dangerous sources by the fastest viable route, and may use other spells/abilities only to flee.",
+    "If a Panicked creature has no viable escape route, it becomes Cowering for as long as the route remains unavailable; this derived Cowering ends when escape becomes possible, leaving independently applied Cowering instances intact.",
+    "A -2 fear-family modifier on the same check or save applies at most once, even if Shaken and Panicked effects are present. Other genuinely independent modifiers may still apply.",
+    "Cowering suppresses positive Dexterity/dodge AC components and applies -2 AC, not the more severe Helpless Dexterity-as-0 rule. Cowering does not automatically end Concentration.",
+    "The historical cumulative fear escalation across independent effects is not automatically enabled. Its behavior and return to weaker states when effects expire require explicit reconciliation."
+  ],
+  "escalation": {
+    "status": "deferred",
+    "historical3xRule": "shaken+shaken->frightened; shaken+frightened->panicked; frightened+shaken-or-frightened->panicked",
+    "notAdoptedAutomatically": true
+  },
+  "combinedEffectPolicy": {
+    "fearPenaltyNonStackingGroup": "fear-impairment",
+    "numericPenalty": "apply-once-per-affected-roll",
+    "frightenedDisadvantage": "retain-approved-native-semantics-pending-fear-escalation-policy"
+  },
+  "interactions": {
+    "panickedCornered": {
+      "applies": "condition.cowering",
+      "duration": "while-panicked-and-unable-to-flee"
+    },
+    "coweringIsNot": "condition.helpless",
+    "petrifiedAwareness": "unmodified"
+  }
+}
