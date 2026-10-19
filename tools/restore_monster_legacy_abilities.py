@@ -51,7 +51,7 @@ INDEPENDENT_LEGENDARY = {
 }
 # These mephits lost a stand-alone casting feature and have no replacement
 # spellcasting entry or matching spell access in the newer stat block.
-INDEPENDENT_SPELLCASTING = {"Magma Mephit", "Steam Mephit"}
+INDEPENDENT_SPELLCASTING = {"Magma Mephit"}
 # Clearly renamed/repositioned abilities, excluded from automatic copying.
 # Not all are numerically equivalent; a replacement should not be doubled.
 REPOSITIONED_NAMES = {
@@ -126,6 +126,9 @@ def named_from_source(record, kind, name):
 
 def logical_successor(old_name, current):
     targets = REPOSITIONED_NAMES.get(old_name, ())
+    if (old_name == "Innate Spellcasting (1/Day)"
+            and normalized_name("Blurred Form") in feature_names(current)):
+        return "Blurred Form"
     now = feature_names(current)
     for target in targets:
         normalized = normalized_name(target)
@@ -201,7 +204,11 @@ def apply():
                         elif (kind == "spellcasting"
                               and old_name in INDEPENDENT_SPELLCASTING
                               and not definition.get("spellcasting")):
-                            text = json.dumps(definition, ensure_ascii=False).lower()
+                            text = json.dumps({
+                                key: definition.get(key, [])
+                                for key in ("trait", "action", "bonus", "reaction",
+                                            "legendary", "spellcasting")
+                            }, ensure_ascii=False).lower()
                             # Guard against an existing action containing the
                             # spell under another representation.
                             spell_name = "heat metal" if old_name == "Magma Mephit" else "blur"
