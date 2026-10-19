@@ -300,6 +300,48 @@
       "decisionBasis": "Explicit Dorks & Dice Owner addition; not an SRD 5.1 or SRD 5.2.1 condition.",
       "nativeLocation": "data/native/conditions.json",
       "evidence": []
+    },
+    {
+      "nativeRuleId": "class.barbarian.rage-uses",
+      "state": "approved-native-rule",
+      "decision": "At Barbarian class level 20, the shared Rage resource has Unlimited uses; Primal Rage retains its once-per-encounter limit. Before level 20, uses are 2 at class level 1, 3 at 3, 4 at 6, 5 at 12, 6 at 17. One use returns on a Short Rest and all on a Long Rest.",
+      "decisionBasis": "Dorks & Dice Owner approval, 2026-10-19, following Band 1 base-class comparison. No general player-class edition precedence.",
+      "nativeLocation": "data/native/classes/base/barbarian.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Barbarian",
+          "detail": "level 20 Unlimited Rage"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Barbarian",
+          "detail": "level 20 6 Rages and rest recovery"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.barbarian.relentless-rage-level-11",
+      "state": "approved-native-rule",
+      "decision": "At Barbarian class level 11, when raging and reduced to 0 HP without being killed outright, a successful DC 10 Constitution save causes current HP to be twice Barbarian class level instead. Each subsequent use increases DC by 5; a Short or Long Rest resets DC to 10.",
+      "decisionBasis": "Dorks & Dice Owner approval, 2026-10-19, resolving SRD 5.1 (1 HP) versus SRD 5.2.1 (twice Barbarian class level).",
+      "nativeLocation": "data/native/features/classes/barbarian/relentless-rage-level-11.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Relentless Rage",
+          "detail": "1 HP after success"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Relentless Rage",
+          "detail": "2 x Barbarian class level after success"
+        }
+      ]
     }
   ]
 }
