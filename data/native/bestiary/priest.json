@@ -167,6 +167,22 @@
           }
         }
       }
+    ],
+    "spellcastingResources": {
+      "mode": "spell-slots",
+      "slotsByLevel": {
+        "1": 4,
+        "2": 3,
+        "3": 2
+      }
+    },
+    "trait": [
+      {
+        "name": "Divine Eminence",
+        "entries": [
+          "As a bonus action, the priest can expend one spell slot to cause its melee weapon attacks to deal an extra 10 ({@damage 3d6}) Radiant damage on each hit until the end of the current turn. The extra damage increases by {@damage 1d6} for each spell-slot level above 1st. This additional damage applies alongside the Mace attack's existing Radiant damage; it does not apply to Radiant Flame."
+        ]
+      }
     ]
   }
 }
