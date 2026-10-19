@@ -84,7 +84,12 @@
             "{@spell Commune|SRD52}",
             "{@spell Control Weather|SRD52}",
             "{@spell Dispel Evil and Good|SRD52}",
-            "{@spell Raise Dead|SRD52}"
+            "{@spell Raise Dead|SRD52}",
+            "{@spell insect plague}"
+          ],
+          "3e": [
+            "{@spell blade barrier}",
+            "{@spell flame strike}"
           ]
         },
         "ability": "cha",
@@ -148,6 +153,12 @@
         "name": "Holy Burst",
         "entries": [
           "{@actSave dex} {@dc 20}, each enemy in a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the planetar can see within 120 feet. {@actSaveFail} 24 ({@damage 7d6}) Radiant damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Healing Touch (4/Day)",
+        "entries": [
+          "The planetar touches another creature. The target magically regains 30 ({@dice 6d8 + 3}) hit points and is freed from any curse, disease, poison, blindness, or deafness."
         ]
       }
     ],

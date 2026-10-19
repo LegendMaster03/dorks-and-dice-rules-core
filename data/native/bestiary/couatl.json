@@ -70,6 +70,11 @@
             "{@spell Greater Restoration|SRD52}",
             "{@spell Scrying|SRD52}",
             "{@spell Sleep|SRD52}"
+          ],
+          "3e": [
+            "{@spell cure wounds}",
+            "{@spell protection from poison}",
+            "{@spell shield}"
           ]
         },
         "ability": "wis",

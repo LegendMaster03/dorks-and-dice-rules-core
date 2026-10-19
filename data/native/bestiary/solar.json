@@ -73,7 +73,8 @@
           "The solar casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 25}):"
         ],
         "will": [
-          "{@spell Detect Evil and Good|SRD52}"
+          "{@spell Detect Evil and Good|SRD52}",
+          "{@spell invisibility} (self only)"
         ],
         "daily": {
           "1e": [
@@ -81,6 +82,9 @@
             "{@spell Control Weather|SRD52}",
             "{@spell Dispel Evil and Good|SRD52}",
             "{@spell Resurrection|SRD52}"
+          ],
+          "3e": [
+            "{@spell blade barrier}"
           ]
         },
         "ability": "cha",
@@ -149,6 +153,12 @@
         "name": "Slaying Bow",
         "entries": [
           "{@actSave dex} {@dc 21}, one creature the solar can see within 600 feet. {@actSaveFail} If the creature has 100 {@variantrule Hit Points|SRD52} or fewer, it dies. It otherwise takes 24 ({@damage 4d8 + 6}) Piercing damage plus 36 ({@damage 8d8}) Radiant damage."
+        ]
+      },
+      {
+        "name": "Healing Touch (4/Day)",
+        "entries": [
+          "The solar touches another creature. The target magically regains 40 ({@dice 8d8 + 4}) hit points and is freed from any curse, disease, poison, blindness, or deafness."
         ]
       }
     ],

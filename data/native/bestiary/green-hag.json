@@ -78,7 +78,8 @@
           "{@spell Disguise Self|SRD52} (24-hour duration)",
           "{@spell Invisibility|SRD52} (self only, and the hag leaves no tracks while {@condition Invisible|SRD52})",
           "{@spell Minor Illusion|SRD52}",
-          "{@spell Ray of Sickness|SRD52} (level 3 version)"
+          "{@spell Ray of Sickness|SRD52} (level 3 version)",
+          "{@spell vicious mockery}"
         ],
         "ability": "wis",
         "displayAs": "action"

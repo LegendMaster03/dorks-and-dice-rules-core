@@ -58,6 +58,11 @@
             "{@spell Geas|SRD52}",
             "{@spell Major Image|SRD52}",
             "{@spell Scrying|SRD52}"
+          ],
+          "3e": [
+            "{@spell charm person}",
+            "{@spell mirror image}",
+            "{@spell suggestion}"
           ]
         },
         "ability": "cha",

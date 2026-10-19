@@ -82,6 +82,12 @@
         "entries": [
           "The wisp can move through other creatures and objects as if they were {@variantrule Difficult Terrain|SRD52}. It takes 5 ({@damage 1d10}) Force damage if it ends its turn inside an object."
         ]
+      },
+      {
+        "name": "Variable Illumination",
+        "entries": [
+          "The will-o'-wisp sheds bright light in a 5 to 20-foot radius and dim light for an additional number of ft. equal to the chosen radius. The will-o'-wisp can alter the radius as a bonus action."
+        ]
       }
     ],
     "action": [

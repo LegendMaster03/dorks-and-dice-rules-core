@@ -90,6 +90,12 @@
         "entries": [
           "{@actSave con} {@dc 15}, one creature {@condition Charmed|SRD52} by the succubus within 5 feet. {@actSaveFail} 13 ({@damage 3d8}) Psychic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
         ]
+      },
+      {
+        "name": "Etherealness",
+        "entries": [
+          "The fiend magically enters the Ethereal Plane from the Material Plane, or vice versa."
+        ]
       }
     ],
     "bonus": [

@@ -68,7 +68,8 @@
             "{@spell Charm Person|SRD52} (level 2 version)",
             "{@spell Darkness|SRD52}",
             "{@spell Gaseous Form|SRD52}",
-            "{@spell Sleep|SRD52}"
+            "{@spell Sleep|SRD52}",
+            "{@spell cone of cold}"
           ]
         },
         "ability": "cha",
@@ -121,6 +122,12 @@
         "name": "Shape-Shift",
         "entries": [
           "The oni shape-shifts into a Small or Medium Humanoid or a Large Giant, or it returns to its true form. Other than its size, its game statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The oni magically polymorphs into a Small or Medium humanoid, into a Large giant, or back into its true form. Other than its size, its statistics are the same in each form. The only equipment that is transformed is its glaive, which shrinks so that it can be wielded in humanoid form. If the oni dies, it reverts to its true form, and its glaive reverts to its normal size."
         ]
       }
     ],

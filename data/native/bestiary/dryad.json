@@ -55,7 +55,12 @@
         "daily": {
           "1e": [
             "{@spell Entangle|SRD52}",
-            "{@spell Pass without Trace|SRD52}"
+            "{@spell Pass without Trace|SRD52}",
+            "{@spell barkskin}",
+            "{@spell shillelagh}"
+          ],
+          "3e": [
+            "{@spell goodberry}"
           ]
         },
         "ability": "cha",

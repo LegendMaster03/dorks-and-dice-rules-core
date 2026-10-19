@@ -77,6 +77,14 @@
           }
         }
       }
+    ],
+    "trait": [
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the shrieker remains motionless, it is indistinguishable from an ordinary fungus."
+        ]
+      }
     ]
   }
 }

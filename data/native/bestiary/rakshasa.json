@@ -77,7 +77,13 @@
             "{@spell Fly|SRD52}",
             "{@spell Invisibility|SRD52}",
             "{@spell Major Image|SRD52}",
-            "{@spell Plane Shift|SRD52}"
+            "{@spell Plane Shift|SRD52}",
+            "{@spell dominate person}",
+            "{@spell true seeing}"
+          ],
+          "3e": [
+            "{@spell charm person}",
+            "{@spell suggestion}"
           ]
         },
         "ability": "cha",

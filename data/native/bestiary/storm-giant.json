@@ -75,11 +75,16 @@
         ],
         "will": [
           "{@spell Detect Magic|SRD52}",
-          "{@spell Light|SRD52}"
+          "{@spell Light|SRD52}",
+          "{@spell feather fall}",
+          "{@spell levitate}"
         ],
         "daily": {
           "1": [
             "{@spell Control Weather|SRD52}"
+          ],
+          "3e": [
+            "{@spell water breathing}"
           ]
         },
         "ability": "wis",

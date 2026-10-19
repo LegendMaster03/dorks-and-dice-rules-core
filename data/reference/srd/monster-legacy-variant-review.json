@@ -129,8 +129,8 @@
           },
           {
             "name": "Enslave (3/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Dominate Mind (2/Day) is the selected newer procedure"
           }
         ],
         "legendary": [
@@ -141,12 +141,12 @@
           },
           {
             "name": "Tail Swipe",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.acolyte",
@@ -211,8 +211,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -221,7 +221,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-blue-dragon",
@@ -260,8 +260,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -272,8 +272,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -282,7 +282,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-brass-dragon",
@@ -322,8 +322,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -339,8 +339,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -349,7 +349,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-bronze-dragon",
@@ -390,8 +390,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -400,8 +400,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -412,8 +412,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -422,7 +422,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-copper-dragon",
@@ -462,8 +462,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -479,8 +479,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -489,7 +489,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-gold-dragon",
@@ -530,8 +530,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -540,8 +540,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -552,8 +552,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -562,7 +562,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-green-dragon",
@@ -601,8 +601,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -613,8 +613,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -623,7 +623,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-red-dragon",
@@ -662,8 +662,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -674,8 +674,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -684,7 +684,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-silver-dragon",
@@ -725,8 +725,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -735,8 +735,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -747,8 +747,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -757,7 +757,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.adult-white-dragon",
@@ -802,8 +802,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -812,7 +812,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.air-elemental",
@@ -878,8 +878,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -888,7 +888,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-blue-dragon",
@@ -927,8 +927,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -939,8 +939,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -949,7 +949,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-brass-dragon",
@@ -990,8 +990,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -1000,8 +1000,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -1012,8 +1012,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1022,7 +1022,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-bronze-dragon",
@@ -1063,8 +1063,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -1073,8 +1073,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -1085,8 +1085,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1095,7 +1095,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-copper-dragon",
@@ -1136,8 +1136,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -1146,8 +1146,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -1158,8 +1158,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1168,7 +1168,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-gold-dragon",
@@ -1209,8 +1209,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -1219,8 +1219,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -1231,8 +1231,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1241,7 +1241,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-green-dragon",
@@ -1280,8 +1280,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -1292,8 +1292,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1302,7 +1302,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-red-dragon",
@@ -1341,8 +1341,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -1353,8 +1353,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1363,7 +1363,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-silver-dragon",
@@ -1404,8 +1404,8 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Breath Weapons {@recharge 5}",
@@ -1414,8 +1414,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "legendary": [
@@ -1426,8 +1426,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1436,7 +1436,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ancient-white-dragon",
@@ -1481,8 +1481,8 @@
           },
           {
             "name": "Tail Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Wing Attack (Costs 2 Actions)",
@@ -1491,7 +1491,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.animated-armor",
@@ -2060,8 +2060,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           },
           {
             "name": "Relentless (Recharges after a Short or Long Rest)",
@@ -2077,7 +2077,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.bone-devil",
@@ -2311,8 +2311,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ],
         "action": [
@@ -2323,7 +2323,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.chain-devil",
@@ -2407,12 +2407,12 @@
         "action": [
           {
             "name": "Tentacles",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Paralyzing Tentacles is the selected newer procedure"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.clay-golem",
@@ -2438,12 +2438,12 @@
         "action": [
           {
             "name": "Haste {@recharge 5}",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.cloaker",
@@ -2526,12 +2526,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: feather fall, fly"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.cockatrice",
@@ -2608,19 +2608,19 @@
         "action": [
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: cure wounds, protection from poison, shield"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.cult-fanatic",
@@ -2795,24 +2795,24 @@
           },
           {
             "name": "Healing Touch (3/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Newer Shapechange/Polymorph spell access"
           }
         ],
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Every older listed spell is represented in newer abilities"
           }
         ]
       },
-      "remainingFeatureQuestions": 4
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.dire-wolf",
@@ -2871,12 +2871,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: conjure elemental, thunderwave"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.doppelganger",
@@ -2899,8 +2899,8 @@
           },
           {
             "name": "Ambusher",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Reinstated as an independent older capability"
           },
           {
             "name": "Surprise Attack",
@@ -2909,7 +2909,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.dragon-turtle",
@@ -3012,7 +3012,7 @@
           {
             "name": "Innate Spellcasting",
             "status": "review-needed",
-            "note": ""
+            "note": "Missing spell access without a compatible newer general Spellcasting feature: dancing lights"
           }
         ]
       },
@@ -3069,12 +3069,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: barkskin, goodberry, shillelagh"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.dust-mephit",
@@ -3100,12 +3100,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting (1/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Every older listed spell is represented in newer abilities"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.eagle",
@@ -3164,12 +3164,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: conjure elemental, enlarge/reduce"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.elephant",
@@ -3219,8 +3219,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ],
         "action": [
@@ -3231,7 +3231,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.erinyes",
@@ -3435,8 +3435,8 @@
           },
           {
             "name": "False Appearance",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Reinstated as an independent older capability"
           }
         ],
         "action": [
@@ -3447,7 +3447,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.frost-giant",
@@ -3696,8 +3696,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           },
           {
             "name": "Relentless (Recharges after a Short or Long Rest)",
@@ -3713,7 +3713,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.giant-eagle",
@@ -3771,8 +3771,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ],
         "action": [
@@ -3783,7 +3783,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.giant-goat",
@@ -3802,8 +3802,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           },
           {
             "name": "Sure-Footed",
@@ -3812,7 +3812,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.giant-octopus",
@@ -3903,12 +3903,12 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.giant-shark",
@@ -4066,8 +4066,8 @@
         "action": [
           {
             "name": "Multiattack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "5.5e attack sequencing is authoritative"
           },
           {
             "name": "Bites",
@@ -4076,7 +4076,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.glabrezu",
@@ -4102,12 +4102,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Every older listed spell is represented in newer abilities"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.gladiator",
@@ -4185,8 +4185,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           },
           {
             "name": "Sure-Footed",
@@ -4195,7 +4195,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.gold-dragon-wyrmling",
@@ -4329,24 +4329,24 @@
           },
           {
             "name": "Illusory Appearance",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Disguise Self is the selected newer procedure"
           },
           {
             "name": "Invisible Passage",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Invisibility is the selected newer procedure"
           }
         ],
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: vicious mockery"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.grick",
@@ -4839,12 +4839,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting (1/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Every older listed spell is represented in newer abilities"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.imp",
@@ -4911,8 +4911,8 @@
           },
           {
             "name": "Charm",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Draining Kiss",
@@ -4926,7 +4926,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.invisible-stalker",
@@ -5154,13 +5154,13 @@
         "legendary": [
           {
             "name": "Tentacle Attack or Fling",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Lightning Storm (Costs 2 Actions)",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Ink Cloud (Costs 3 Actions)",
@@ -5169,7 +5169,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.lamia",
@@ -5207,12 +5207,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: charm person, mirror image, suggestion"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.lemure",
@@ -5661,8 +5661,8 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ],
         "action": [
@@ -5673,7 +5673,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.mule",
@@ -5724,8 +5724,8 @@
         "legendary": [
           {
             "name": "Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Blinding Dust",
@@ -5739,7 +5739,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.nalfeshnee",
@@ -5792,8 +5792,8 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Etherealness",
@@ -5804,12 +5804,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: ray of enfeeblement, sleep"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.octopus",
@@ -5895,19 +5895,19 @@
           },
           {
             "name": "Change Shape",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: cone of cold"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.otyugh",
@@ -6084,7 +6084,7 @@
           {
             "name": "Innate Spellcasting",
             "status": "review-needed",
-            "note": ""
+            "note": "Missing spell access without a compatible newer general Spellcasting feature: detect magic"
           }
         ]
       },
@@ -6123,19 +6123,19 @@
           },
           {
             "name": "Healing Touch (4/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: blade barrier, flame strike, insect plague"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.polar-bear",
@@ -6309,12 +6309,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: charm person, dominate person, suggestion, true seeing"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.rat",
@@ -6395,12 +6395,12 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.roc",
@@ -6489,12 +6489,12 @@
           },
           {
             "name": "False Appearance",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Reinstated as an independent older capability"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.rust-monster",
@@ -6723,12 +6723,12 @@
           },
           {
             "name": "Death Glare",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Death Glare is the selected newer procedure"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.shadow",
@@ -6806,12 +6806,12 @@
         "trait": [
           {
             "name": "False Appearance",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Reinstated as an independent older capability"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.silver-dragon-wyrmling",
@@ -6883,8 +6883,8 @@
           },
           {
             "name": "Healing Touch (4/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -6902,12 +6902,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: blade barrier, invisibility"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.spider",
@@ -7169,12 +7169,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "spell-access-extended",
+            "note": "Added missing spells using newer Spellcasting ability and older frequency: feather fall, levitate, water breathing"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.succubus",
@@ -7212,12 +7212,12 @@
           },
           {
             "name": "Etherealness",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.swarm-of-bats",
@@ -7317,15 +7317,15 @@
           },
           {
             "name": "Frightful Presence",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Thunderous Bellow is the selected newer procedure"
           }
         ],
         "legendary": [
           {
             "name": "Attack",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           },
           {
             "name": "Move",
@@ -7334,12 +7334,12 @@
           },
           {
             "name": "Chomp (Costs 2 Actions)",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.thug",
@@ -7387,8 +7387,8 @@
           },
           {
             "name": "Pounce",
-            "status": "possible-redesign",
-            "note": "Pounce, Roar, Rend, Scratch"
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ],
         "action": [
@@ -7404,7 +7404,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.treant",
@@ -7456,8 +7456,8 @@
         "trait": [
           {
             "name": "Trampling Charge",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ],
         "action": [
@@ -7468,7 +7468,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.troll",
@@ -7552,13 +7552,13 @@
           },
           {
             "name": "Healing Touch (3/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Teleport (1/Day)",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           }
         ],
         "legendary": [
@@ -7571,12 +7571,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Every older listed spell is represented in newer abilities"
           }
         ]
       },
-      "remainingFeatureQuestions": 5
+      "remainingFeatureQuestions": 2
     },
     {
       "nativeId": "monster.vampire",
@@ -7625,8 +7625,8 @@
           },
           {
             "name": "Charm",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Independent older action retained alongside newer attacks"
           },
           {
             "name": "Children of the Night (1/Day)",
@@ -7642,12 +7642,12 @@
           },
           {
             "name": "Unarmed Strike",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Refers to removed physical attack or replaces the same attack role; selected 5.5e suite governs"
           }
         ]
       },
-      "remainingFeatureQuestions": 3
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.vampire-spawn",
@@ -7799,12 +7799,12 @@
         "trait": [
           {
             "name": "Trampling Charge",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Movement/contact rider is represented in the newer combat action"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.weasel",
@@ -8123,19 +8123,19 @@
         "trait": [
           {
             "name": "Variable Illumination",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Reinstated as an independent older capability"
           }
         ],
         "action": [
           {
             "name": "Invisibility",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Vanish is the selected newer procedure"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.winter-wolf",
@@ -8577,15 +8577,12 @@
   "featureReviewPolicy": "Retain 5.5e attack values and procedures; restore genuinely independent 5e abilities; do not duplicate renamed or relocated abilities. Each remaining feature question is evaluated within one creature.",
   "summary": {
     "feature:already-present": 84,
-    "feature:newer-successor": 40,
-    "feature:possible-redesign": 47,
-    "feature:restored": 94,
-    "feature:review-needed": 106,
-    "feature:revised-attack-suite": 303,
-    "monstersWithOpenFeatureQuestions": 93,
-    "restored:action": 2,
-    "restored:legendary": 49,
-    "restored:spellcasting": 1,
-    "restored:trait": 42
+    "feature:newer-successor": 75,
+    "feature:possible-redesign": 36,
+    "feature:restored": 126,
+    "feature:review-needed": 9,
+    "feature:revised-attack-suite": 331,
+    "feature:spell-access-extended": 13,
+    "monstersWithOpenFeatureQuestions": 39
   }
 }

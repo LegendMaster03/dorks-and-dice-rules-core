@@ -99,6 +99,13 @@
         "entries": [
           "{@atkr m} {@hit 7}, reach 5 ft. {@h}15 ({@damage 3d6 + 5}) Psychic damage, and the target is cursed for 24 hours or until the incubus dies. Until the curse ends, the target gains no benefit from finishing Short Rests."
         ]
+      },
+      {
+        "name": "Charm",
+        "entries": [
+          "One humanoid the fiend can see within 30 feet of it must succeed on a {@dc 15} Wisdom saving throw or be magically {@condition charmed} for 1 day. The {@condition charmed} target obeys the fiend's verbal or telepathic commands. If the target suffers any harm or receives a suicidal command, it can repeat the saving throw, ending the effect on a success. If the target successfully saves against the effect, or if the effect on it ends, the target is immune to this fiend's Charm for the next 24 hours.",
+          "The fiend can have only one target {@condition charmed} at a time. If it charms another, the effect on the previous target ends."
+        ]
       }
     ],
     "bonus": [

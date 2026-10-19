@@ -120,6 +120,12 @@
         "entries": [
           "{@actSave con} {@dc 20}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
         ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 18} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
       }
     ],
     "legendaryActionsLair": 4,

@@ -66,7 +66,8 @@
         ],
         "will": [
           "{@spell Detect Evil and Good|SRD52}",
-          "{@spell Detect Magic|SRD52}"
+          "{@spell Detect Magic|SRD52}",
+          "{@spell thunderwave}"
         ],
         "daily": {
           "2e": [
@@ -79,7 +80,8 @@
             "{@spell Gaseous Form|SRD52}",
             "{@spell Invisibility|SRD52}",
             "{@spell Major Image|SRD52}",
-            "{@spell Plane Shift|SRD52}"
+            "{@spell Plane Shift|SRD52}",
+            "{@spell conjure elemental} ({@creature air elemental} only)"
           ]
         },
         "ability": "cha",

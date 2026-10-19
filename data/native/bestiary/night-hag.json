@@ -91,7 +91,9 @@
         "daily": {
           "2e": [
             "{@spell Phantasmal Killer|SRD52}",
-            "{@spell Plane Shift|SRD52} (self only)"
+            "{@spell Plane Shift|SRD52} (self only)",
+            "{@spell ray of enfeeblement}",
+            "{@spell sleep}"
           ]
         },
         "ability": "int",
@@ -144,6 +146,12 @@
         "name": "Claw",
         "entries": [
           "{@atkr m} {@hit 7}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The hag magically polymorphs into a Small or Medium female humanoid, or back into her true form. Her statistics are the same in each form. Any equipment she is wearing or carrying isn't transformed. She reverts to her true form if she dies."
         ]
       }
     ],

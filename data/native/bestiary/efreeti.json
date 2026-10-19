@@ -73,7 +73,11 @@
             "{@spell Major Image|SRD52}",
             "{@spell Plane Shift|SRD52}",
             "{@spell Tongues|SRD52}",
-            "{@spell Wall of Fire|SRD52} (level 7 version)"
+            "{@spell Wall of Fire|SRD52} (level 7 version)",
+            "{@spell conjure elemental} ({@creature fire elemental} only)"
+          ],
+          "3e": [
+            "{@spell enlarge/reduce}"
           ]
         },
         "ability": "cha",

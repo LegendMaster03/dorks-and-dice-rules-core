@@ -66,6 +66,10 @@
             "{@spell Control Weather|SRD52}",
             "{@spell Gaseous Form|SRD52}",
             "{@spell Telekinesis|SRD52}"
+          ],
+          "3e": [
+            "{@spell feather fall}",
+            "{@spell fly}"
           ]
         },
         "ability": "cha",
