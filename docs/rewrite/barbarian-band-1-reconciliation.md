@@ -53,7 +53,7 @@ The table below applies the existing additive-policy conclusions and lists the s
 
 Temporary Constitution changes modify effective Constitution and derived HP for their duration under the common native ability-score rules. They **do not** become a second pool of Temporary Hit Points. An already-active Rage is not silently both forms; choosing a form determines which type-specific effects and restrictions apply.
 
-**Persistency at 15:** The 5.5e Persistent Rage feature restores expended Rage uses when rolling initiative once per Long Rest and makes Battle Rage self-maintaining for 10 minutes. The original 3.x Primal Rage's shorter duration is a meaningful type-specific drawback; whether Persistent Rage also removes it requires a discrete adjudication, rather than silently erasing the difference. Its recovery benefit applies to the shared Rage pool.
+**Persistent Rage at 15:** Persistent Rage is a base-class feature that applies to **Rage**, not just one form. At level 15, both Battle Rage and Primal Rage become self-maintaining for up to 10 minutes under the same feature. This deliberately upgrades Primal Rage's shorter initial duration; its other restrictions and post-Rage fatigue continue until changed by their own features. The 5.5e once-per-Long-Rest initiative restoration replenishes the **shared Rage pool**. This follows the already approved rule of applying compatible class-wide upgrades to their actual eligible mechanic, rather than artificially reserving the upgrade for one Rage type.
 
 ### Other compatible grants and conversions
 
@@ -69,14 +69,14 @@ Temporary Constitution changes modify effective Constitution and derived HP for 
 
 ## Small remaining decision queue
 
-The project's approved policy forbids silently choosing changed values or fundamentally different procedures. These questions are **not** general mechanics to reopen; they are the actual residual class-specific points:
+The project's approved policy forbids silently choosing changed numerical values. The remaining choices below are **actual residual class-specific conflicts**, not questions about the overall rules framework:
 
 1. **Rage uses at level 20:** SRD 5.1 says **Unlimited**; SRD 5.2.1 says **6**. **Recommendation:** retain Unlimited at level 20 (common pool), while Primal Rage remains once per encounter. Ordinary earlier use progression follows the 5.x pool of 2 at 1, 3 at 3, 4 at 6, 5 at 12, 6 at 17, with one use recovered on a Short Rest and all on a Long Rest. This is a numerical choice requiring approval.
 2. **Relentless Rage result:** 5e leaves the Barbarian at **1 HP**; 5.5e leaves **twice Barbarian level** HP. **Recommendation:** twice Barbarian level; identical save and escalating DC mechanism. This is a numerical choice requiring approval.
-3. **Primal Rage versus Persistent Rage duration:** Primal Rage's shorter duration and once-per-encounter use are part of its type identity, while Persistent Rage is a class feature at level 15. **Recommendation:** Persistent Rage restores the shared pool and removes routine extension for Battle Rage, but does not automatically abolish Primal Rage's separately defined duration or once-per-encounter restriction. The alternative is a deliberate high-level upgrade to Primal Rage; requires confirmation before a final executable rule.
+**Resolved by the existing class-wide feature rule:** Persistent Rage applies to both types at level 15 and increases their maximum duration to 10 minutes without requiring ordinary round-by-round extension. Its recovery applies to the shared pool. Primal Rage retains the once-per-encounter restriction and its fatigue aftereffect until Tireless Rage at 17.
 
 **Nonblocking integration checks:** Confirm the unified damage ordering for DR + Resistance, precise treatment of extra critical dice, source-specific surprise wording after native surprise is finalized, and temporary Constitution/HP lifecycle. These are existing cross-cutting subsystem contracts, not new reasons to revisit Barbarian's class identity. Broader Reckless Attack and Danger Sense targeting from SRD 5.2.1 should be tested against native roll/condition eligibility during implementation.
 
 ## Readiness
 
-All base-class features are accounted for in the Band 1 draft, and subclass features remain excluded. **Do not replace** `data/native/classes/base/barbarian.json` or mark class-feature candidate documents active until the three residual decisions above are settled and associated native feature records can be updated coherently. This review draft contains no runnable class implementation or conversion.
+All base-class features are accounted for in the Band 1 draft, and subclass features remain excluded. **Do not replace** `data/native/classes/base/barbarian.json` or mark class-feature candidate documents active until the two residual numerical decisions above are settled and associated native feature records can be updated coherently. This review draft contains no runnable class implementation or conversion.
