@@ -43,7 +43,7 @@ jobs:
           assert len([c for c in conditions if c["id"]=="condition.exhaustion"])==1
           assert len([c for c in conditions if c["id"]=="condition.grappled"])==1
           assert sum(c.get("baselineStatus")=="pending-native-reconciliation" for c in conditions)==9
-          assert "data/native/skills.json" not in {f["path"] for f in coverage["coverage"]}
+          assert "data/native/skills.json" not in {f.get("path") for f in coverage["coverage"]}
           pending=sum(e["status"] in ("multiple-candidates","single-candidate") for e in coverage["coverage"])
           print("Staged",coverage["nativeDefinitionCount"],"entries with",pending,"unresolved candidates")
           PY
