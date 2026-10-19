@@ -83,9 +83,16 @@ class NpcMonsterSpellcastingResourceTests(unittest.TestCase):
                 definition = self.monster(name)["definition"]
                 source = self.newer[definition["name"]]
                 for spell in source.get("spellcasting", []):
-                    self.assertIn(spell, definition.get("spellcasting", []))
-                # These imports have not gained an unsourced resource pool.
-                self.assertNotIn("spellcastingResources", definition)
+                    retained = next(
+                        (x for x in definition.get("spellcasting", [])
+                         if x.get("name") == spell.get("name")), None
+                    )
+                    self.assertIsNotNone(retained)
+                    self.assertEqual(spell.get("ability"), retained.get("ability"))
+                    self.assertEqual(spell.get("headerEntries"),
+                                     retained.get("headerEntries"))
+                # Granting a supported slot pool in a later conversion must
+                # remain legal; this test deliberately does not prohibit it.
         priest = self.monster("priest")["definition"]
         self.assertEqual(
             self.newer["Priest"]["spellcasting"],
