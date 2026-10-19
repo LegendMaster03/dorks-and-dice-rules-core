@@ -2,14 +2,14 @@
   "summary": {
     "feature:already-present": 84,
     "feature:newer-successor": 95,
-    "feature:restored": 145,
-    "feature:review-needed": 2,
+    "feature:restored": 146,
+    "feature:review-needed": 1,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 2
+    "monstersWithOpenFeatureQuestions": 1
   },
   "featuresRestoredThisPass": 15,
-  "totalAdditionalOlderFeaturesRestored": 145,
+  "totalAdditionalOlderFeaturesRestored": 146,
   "additionalSpellsRestored": 33,
   "spellsAddedByMonster": {
     "monster.cloud-giant": [
@@ -70,8 +70,8 @@
       "water breathing"
     ]
   },
-  "unresolvedFeatureQuestions": 2,
-  "reviewEntriesWithOpenQuestions": 2,
+  "unresolvedFeatureQuestions": 1,
+  "reviewEntriesWithOpenQuestions": 1,
   "note": "5.5e stats, attack suites and spellcasting ability remain authoritative.",
   "finalPassChanges": {
     "traitsRestored": 14,
@@ -90,11 +90,6 @@
       "nativeId": "monster.assassin",
       "feature": "Assassinate",
       "question": "How should the older automatic critical hit against a surprised target work under native surprise and critical escalation? The independent first-turn Advantage was restored."
-    },
-    {
-      "nativeId": "monster.priest",
-      "feature": "Divine Eminence",
-      "question": "Should the old slot-spending Radiant melee bonus be omitted, granted with new spell-slot resources, or redesigned using a limited resource? The newer Mace already deals Radiant damage."
     }
   ],
   "finalPounceAdaptations": [
@@ -123,5 +118,18 @@
       "bonusActionRequired": true
     }
   ],
-  "assassinFirstTurnAdvantageRestored": true
+  "assassinFirstTurnAdvantageRestored": true,
+  "priestDivineEminenceRestoration": {
+    "nativeId": "monster.priest",
+    "resourceMode": "spell-slots",
+    "slotsByLevel": {
+      "1": 4,
+      "2": 3,
+      "3": 2
+    },
+    "source": "SRD 5.1",
+    "benefit": "Bonus action consumes one slot; additional 3d6 Radiant damage on each melee weapon hit this turn, +1d6 for each slot level above 1st",
+    "preservesNewerSpellcasting": true,
+    "legacySpellListAdded": false
+  }
 }
