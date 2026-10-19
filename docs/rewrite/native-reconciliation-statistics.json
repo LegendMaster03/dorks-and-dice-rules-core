@@ -11,7 +11,7 @@
     "single-candidate": 590
   },
   "nativeCatalogRecords": 2522,
-  "resolvedThisRun": {
+  "reconciledByApprovedGeneralRules": {
     "native-compatible-merged": 30,
     "native-equivalent-reconciled": 34,
     "native-single-source-retained": 467
