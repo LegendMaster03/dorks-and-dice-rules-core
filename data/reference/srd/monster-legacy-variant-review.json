@@ -6946,12 +6946,12 @@
         "trait": [
           {
             "name": "Rejuvenation",
-            "status": "possible-redesign",
-            "note": "Restoration, Spirit Jar"
+            "status": "newer-successor",
+            "note": "Fiendish Restoration preserves the same resurrection-after-death mechanic, with the selected 5.5e wording"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.sprite",
@@ -8577,12 +8577,12 @@
   "featureReviewPolicy": "Retain 5.5e attack values and procedures; restore genuinely independent 5e abilities; do not duplicate renamed or relocated abilities. Each remaining feature question is evaluated within one creature.",
   "summary": {
     "feature:already-present": 84,
-    "feature:newer-successor": 94,
-    "feature:possible-redesign": 4,
+    "feature:newer-successor": 95,
+    "feature:possible-redesign": 3,
     "feature:restored": 141,
     "feature:review-needed": 3,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 7
+    "monstersWithOpenFeatureQuestions": 6
   }
 }
