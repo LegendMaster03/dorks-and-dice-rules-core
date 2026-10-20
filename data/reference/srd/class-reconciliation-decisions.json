@@ -203,6 +203,54 @@
           "name": "Divine Intervention"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.druid.wild-shape-size-eligibility",
+      "state": "approved-native-rule",
+      "decision": "Creature size is a normal, mandatory property in Wild Shape eligibility; it is not optional/advanced complexity. Incorporate source-supported historical size progression (3.5: Small/Medium L5, Large L8, Tiny L11, Huge L15) into base-class form eligibility while preserving modern L2 Wild Shape. Resolving exact combined CR, HD and size constraints and HP rules remains open.",
+      "decisionBasis": "Owner clarification and approval on Druid base-class reconciliation, 2026-10-19.",
+      "nativeLocation": "docs/rewrite/druid-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Druid Wild Shape",
+          "detail": "Size-based progression at class levels 5, 8, 11, 15"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape",
+          "detail": "Beast forms and CR/movement restrictions from class level 2"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape",
+          "detail": "Known beast forms with CR and flight restrictions"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.druid.animal-companion-persistent",
+      "state": "approved-native-rule",
+      "decision": "Use the 3.5e persistent Animal Companion from Druid level 1; companion persists between encounters/rests, advances by its documented bonus Hit Dice, armor, abilities and tricks, and is released/replaced by the source ceremony. This is a base-class grant, not a Druid Circle feature, and is distinct from 5.5e temporary Wild Companion, whose simultaneous availability remains to be settled.",
+      "decisionBasis": "Owner approval, 2026-10-19: Animal Companion must be the 3.5e persistent companion.",
+      "nativeLocation": "docs/rewrite/druid-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Animal Companion",
+          "detail": "Persistent druid animal companion with class-level scaling and replacement ceremony"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Companion",
+          "detail": "Temporary familiar from Find Familiar; not equivalent to persistent companion"
+        }
+      ]
     }
   ]
 }
