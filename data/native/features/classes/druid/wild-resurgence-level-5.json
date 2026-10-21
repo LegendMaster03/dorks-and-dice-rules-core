@@ -2,22 +2,29 @@
   "id": "class-feature.druid.wild-resurgence-level-5",
   "name": "Wild Resurgence",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Wild Resurgence",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 5,
-        "entries": [
-          "Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by expending a spell slot (no action required).",
-          "In addition, you can expend one use of Wild Shape (no action required) to give yourself a level 1 spell slot, but you can't do so again until you finish a {@variantrule Long Rest|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 5
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Wild Resurgence",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "wild-shape-finite-charge-exchange",
+      "requiresFiniteCharges": true,
+      "spellSlotToWildShape": {
+        "requiresCurrentCharges": 0,
+        "costSpellSlot": 1,
+        "recoverFiniteCharge": 1,
+        "noAction": true,
+        "frequency": "once-per-turn"
+      },
+      "wildShapeToSpellSlot": {
+        "costFiniteCharge": 1,
+        "spellSlotLevel": 1,
+        "oncePerLongRest": true,
+        "noAction": true
+      },
+      "unlimitedTransformationsNeverCountAsConvertibleFiniteCharges": true
+    }
+  }
 }

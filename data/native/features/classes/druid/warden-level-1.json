@@ -2,21 +2,21 @@
   "id": "class-feature.druid.warden-level-1",
   "name": "Warden",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Warden",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "Trained for battle, you gain proficiency with {@filter Martial weapons|items|type=martial weapon} and training with {@filter Medium armor|items|type=Medium Armor}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Warden",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "primal-order-option",
+      "armor": [
+        "medium"
+      ],
+      "weapons": [
+        "martial"
+      ],
+      "duplicateMediumArmor": "nonstacking"
+    }
+  }
 }

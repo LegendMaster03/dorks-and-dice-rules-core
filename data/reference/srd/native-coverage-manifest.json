@@ -2270,7 +2270,7 @@
     {
       "nativeId": "class.druid",
       "kind": "class",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/classes/base/druid.json",
       "candidates": [
@@ -2282,7 +2282,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class.fighter",
@@ -4002,7 +4003,7 @@
     {
       "nativeId": "class-feature.druid.ability-score-improvement-level-12",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/ability-score-improvement-level-12.json",
       "candidates": [
@@ -4014,12 +4015,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.ability-score-improvement-level-16",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/ability-score-improvement-level-16.json",
       "candidates": [
@@ -4031,12 +4033,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.ability-score-improvement-level-19",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/ability-score-improvement-level-19.json",
       "candidates": [
@@ -4044,12 +4047,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.ability-score-improvement-level-4",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/ability-score-improvement-level-4.json",
       "candidates": [
@@ -4061,12 +4065,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.ability-score-improvement-level-8",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/ability-score-improvement-level-8.json",
       "candidates": [
@@ -4078,12 +4083,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.archdruid-level-20",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/archdruid-level-20.json",
       "candidates": [
@@ -4095,12 +4101,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.beast-spells-level-18",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/beast-spells-level-18.json",
       "candidates": [
@@ -4112,7 +4119,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.druid-circle-level-2",
@@ -4182,7 +4190,7 @@
     {
       "nativeId": "class-feature.druid.druidic-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/druidic-level-1.json",
       "candidates": [
@@ -4194,12 +4202,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.elemental-fury-level-7",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/elemental-fury-level-7.json",
       "candidates": [
@@ -4207,7 +4216,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.epic-boon-level-19",
@@ -4225,7 +4235,7 @@
     {
       "nativeId": "class-feature.druid.improved-elemental-fury-level-15",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/improved-elemental-fury-level-15.json",
       "candidates": [
@@ -4233,12 +4243,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.magician-level-1",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/magician-level-1.json",
       "candidates": [
@@ -4246,12 +4257,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.potent-spellcasting-level-7",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/potent-spellcasting-level-7.json",
       "candidates": [
@@ -4259,12 +4271,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.primal-order-level-1",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/primal-order-level-1.json",
       "candidates": [
@@ -4272,12 +4285,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.primal-strike-level-7",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/primal-strike-level-7.json",
       "candidates": [
@@ -4285,12 +4299,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.spellcasting-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/spellcasting-level-1.json",
       "candidates": [
@@ -4302,7 +4317,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.subclass-feature-level-10",
@@ -4346,7 +4362,7 @@
     {
       "nativeId": "class-feature.druid.timeless-body-level-18",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/timeless-body-level-18.json",
       "candidates": [
@@ -4354,12 +4370,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.warden-level-1",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/warden-level-1.json",
       "candidates": [
@@ -4367,12 +4384,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.wild-companion-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/wild-companion-level-2.json",
       "candidates": [
@@ -4380,12 +4398,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.wild-resurgence-level-5",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/wild-resurgence-level-5.json",
       "candidates": [
@@ -4393,12 +4412,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.wild-shape-level-2",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/druid/wild-shape-level-2.json",
       "candidates": [
@@ -4410,12 +4430,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.wild-shape-improvement-level-4",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/wild-shape-improvement-level-4.json",
       "candidates": [
@@ -4423,12 +4444,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.druid.wild-shape-improvement-level-8",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/druid/wild-shape-improvement-level-8.json",
       "candidates": [
@@ -4436,7 +4458,8 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "druid-band1-approved-2026-10-20"
     },
     {
       "nativeId": "class-feature.fighter.ability-score-improvement-level-12",
@@ -39748,10 +39771,10 @@
   "canonicalIdentifiersNormalized": 653,
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
-    "single-candidate": 549,
-    "multiple-candidates": 1035,
-    "native-single-source-retained": 488,
-    "native-compatible-merged": 65,
+    "single-candidate": 536,
+    "multiple-candidates": 1025,
+    "native-single-source-retained": 501,
+    "native-compatible-merged": 75,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,

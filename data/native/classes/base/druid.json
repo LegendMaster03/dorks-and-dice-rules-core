@@ -2,2523 +2,2069 @@
   "id": "class.druid",
   "name": "Druid",
   "kind": "class",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Druid",
-        "hd": {
-          "number": 1,
-          "faces": 8
-        },
-        "proficiency": [
-          "int",
-          "wis"
-        ],
-        "spellcastingAbility": "wis",
-        "casterProgression": "full",
-        "preparedSpells": "<$level$> + <$wis_mod$>",
-        "preparedSpellsChange": "restLong",
-        "cantripProgression": [
-          2,
-          2,
-          2,
-          3,
-          3,
-          3,
-          3,
-          3,
-          3,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4
-        ],
-        "startingProficiencies": {
-          "armor": [
-            "light",
-            "medium",
-            {
-              "proficiency": "shield",
-              "full": "shields (druids will not wear armor or use shields made of metal)"
-            }
-          ],
-          "weapons": [
-            "{@item club|srd51|clubs}",
-            "{@item dagger|srd51|daggers}",
-            "{@item dart|srd51|darts}",
-            "{@item javelin|srd51|javelins}",
-            "{@item mace|srd51|maces}",
-            "{@item quarterstaff|srd51|quarterstaffs}",
-            "{@item scimitar|srd51|scimitars}",
-            "{@item sickle|srd51|sickles}",
-            "{@item sling|srd51|slings}",
-            "{@item spear|srd51|spears}"
-          ],
-          "tools": [
-            "{@item Herbalism kit|SRD51}"
-          ],
-          "toolProficiencies": [
-            {
-              "herbalism kit": true
-            }
-          ],
-          "skills": [
-            {
-              "choose": {
-                "from": [
-                  "arcana",
-                  "animal handling",
-                  "insight",
-                  "medicine",
-                  "nature",
-                  "perception",
-                  "religion",
-                  "survival"
-                ],
-                "count": 2
-              }
-            }
-          ]
-        },
-        "startingEquipment": {
-          "additionalFromBackground": true,
-          "default": [
-            "(a) a wooden {@item shield|srd51} or (b) any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}",
-            "(a) a {@item scimitar|srd51} or (b) any {@filter simple melee weapon|items|source=srd51|category=basic|type=simple weapon;melee weapon=sand}",
-            "{@item Leather armor|srd51}, an {@item explorer's pack|srd51}, and a {@item druidic focus|srd51}"
-          ],
-          "goldAlternative": "{@dice 2d4 × 10|2d4 × 10|Starting Gold}",
-          "defaultData": [
-            {
-              "a": [
-                "shield|srd51"
-              ],
-              "b": [
-                {
-                  "equipmentType": "weaponSimple"
-                }
-              ]
-            },
-            {
-              "a": [
-                "scimitar|srd51"
-              ],
-              "b": [
-                {
-                  "equipmentType": "weaponSimpleMelee"
-                }
-              ]
-            },
-            {
-              "_": [
-                "Leather armor|srd51",
-                "explorer's pack|srd51",
-                {
-                  "equipmentType": "focusSpellcastingDruidic"
-                }
-              ]
-            }
-          ]
-        },
-        "multiclassing": {
-          "requirements": {
-            "wis": 13
-          },
-          "proficienciesGained": {
-            "armor": [
-              "light",
-              "medium",
-              {
-                "proficiency": "shield",
-                "full": "shields (druids will not wear armor or use shields made of metal)"
-              }
-            ]
-          }
-        },
-        "classTableGroups": [
-          {
-            "colLabels": [
-              "{@filter Cantrips Known|spells|level=0|class=Druid}"
-            ],
-            "rows": [
-              [
-                2
-              ],
-              [
-                2
-              ],
-              [
-                2
-              ],
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                3
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ],
-              [
-                4
-              ]
-            ]
-          },
-          {
-            "title": "Spell Slots per Spell Level",
-            "colLabels": [
-              "{@filter 1st|spells|level=1|class=Druid}",
-              "{@filter 2nd|spells|level=2|class=Druid}",
-              "{@filter 3rd|spells|level=3|class=Druid}",
-              "{@filter 4th|spells|level=4|class=Druid}",
-              "{@filter 5th|spells|level=5|class=Druid}",
-              "{@filter 6th|spells|level=6|class=Druid}",
-              "{@filter 7th|spells|level=7|class=Druid}",
-              "{@filter 8th|spells|level=8|class=Druid}",
-              "{@filter 9th|spells|level=9|class=Druid}"
-            ],
-            "rowsSpellProgression": [
-              [
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                2,
-                1,
-                1
-              ]
-            ]
-          }
-        ],
-        "classFeatures": [
-          "Druidic|Druid||1",
-          "Spellcasting|Druid||1",
-          "Wild Shape|Druid||2",
-          {
-            "classFeature": "Druid Circle|Druid||2",
-            "gainSubclassFeature": true
-          },
-          "Wild Shape Improvement|Druid||4",
-          "Ability Score Improvement|Druid||4",
-          {
-            "classFeature": "Druid Circle feature|Druid||6",
-            "gainSubclassFeature": true
-          },
-          "Wild Shape Improvement|Druid||8",
-          "Ability Score Improvement|Druid||8",
-          {
-            "classFeature": "Druid Circle feature|Druid||10",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Druid||12",
-          {
-            "classFeature": "Druid Circle feature|Druid||14",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Druid||16",
-          "Timeless Body|Druid||18",
-          "Beast Spells|Druid||18",
-          "Ability Score Improvement|Druid||19",
-          "Archdruid|Druid||20"
-        ],
-        "subclassTitle": "Druid Circle",
-        "lore": [
-          {
-            "name": "Druid",
-            "entries": [
-              {
-                "name": "Druid",
-                "type": "section",
-                "entries": [
-                  "Holding high a gnarled staff wreathed with holly, an elf summons the fury of the storm and calls down explosive bolts of lightning to smite the torch-carrying orcs who threaten her forest.",
-                  "Crouching out of sight on a high tree branch in the form of a leopard, a human peers out of the jungle at the strange construction of a temple of Evil Elemental Air, keeping a close eye on the cultists' activities.",
-                  "Swinging a blade formed of pure fire, a half-elf charges into a mass of skeletal soldiers, sundering the unnatural magic that gives the foul creatures the mocking semblance of life.",
-                  "Whether calling on the elemental forces of nature or emulating the creatures of the animal world, druids are an embodiment of nature's resilience, cunning, and fury. They claim no mastery over nature. Instead, they see themselves as extensions of nature's indomitable will.",
-                  {
-                    "type": "entries",
-                    "name": "Power of Nature",
-                    "entries": [
-                      "Druids revere nature above all, gaining their spells and other magical powers either from the force of nature itself or from a nature deity. Many druids pursue a mystic spirituality of transcendent union with nature rather than devotion to a divine entity, while others serve gods of wild nature, animals, or elemental forces. The ancient druidic traditions are sometimes called the Old Faith, in contrast to the worship of gods in temples and shrines.",
-                      "Druid spells are oriented toward nature and animals—the power of tooth and claw, of sun and moon, of fire and storm. Druids also gain the ability to take on animal forms, and some druids make a particular study of this practice, even to the point where they prefer animal form to their natural form."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Preserve the Balance",
-                    "entries": [
-                      "For druids, nature exists in a precarious balance. The four elements that make up a world—air, earth, fire, and water—must remain in equilibrium. If one element were to gain power over the others, the world could be destroyed, drawn into one of the elemental planes and broken apart into its component elements. Thus, druids oppose cults of Elemental Evil and others who promote one element to the exclusion of others.",
-                      "Druids are also concerned with the delicate ecological balance that sustains plant and animal life, and the need for civilized folk to live in harmony with nature, not in opposition to it. Druids accept that which is cruel in nature, and they hate that which is unnatural, including aberrations (such as beholders and mind flayers) and undead (such as zombies and vampires). Druids sometimes lead raids against such creatures, especially when the monsters encroach on the druids' territory.",
-                      "Druids are often found guarding sacred sites or watching over regions of unspoiled nature. But when a significant danger arises, threatening nature's balance or the lands they protect, druids take on a more active role in combating the threat, as adventurers."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Creating a Druid",
-                    "entries": [
-                      "When making a druid, consider why your character has such a close bond with nature. Perhaps your character lives in a society where the Old Faith still thrives, or was raised by a druid after being abandoned in the depths of a forest. Perhaps your character had a dramatic encounter with the spirits of nature, coming face to face with a giant eagle or dire wolf and surviving the experience. Maybe your character was born during an epic storm or a volcanic eruption, which was interpreted as a sign that becoming a druid was part of your character's destiny.",
-                      "Have you always been an adventurer as part of your druidic calling, or did you first spend time as a caretaker of a sacred grove or spring? Perhaps your homeland was befouled by evil, and you took up an adventuring life in hopes of finding a new home or purpose.",
-                      {
-                        "type": "entries",
-                        "name": "Quick Build",
-                        "entries": [
-                          "You can make a druid quickly by following these suggestions. First, Wisdom should be your highest ability score, followed by Constitution. Second, choose the {@background hermit} background."
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "inset",
-                    "name": "Sacred Plants and Wood",
-                    "entries": [
-                      "A druid holds certain plants to be sacred, particularly alder, ash, birch, elder, hazel, holly, juniper, mistletoe, oak, rowan, willow, and yew. Druids often use such plants as part of a spellcasting focus, incorporating lengths of oak or yew or sprigs of mistletoe.",
-                      "Similarly, a druid uses such woods to make other objects, such as weapons and shields. Yew is associated with death and rebirth, so weapon handles for scimitars or sickles might be fashioned from it. Ash is associated with life and oak with strength. These woods make excellent hafts or whole weapons, such as clubs or quarterstaffs, as well as shields. Alder is associated with air, and it might be used for thrown weapons, such as darts or javelins.",
-                      "Druids from regions that lack the plants described here have chosen other plants to take on similar uses. For instance, a druid of a desert region might value the yucca tree and cactus plants."
-                    ]
-                  },
-                  {
-                    "type": "inset",
-                    "name": "Druids and the Gods",
-                    "entries": [
-                      "Some druids venerate the forces of nature themselves, but most druids are devoted to one of the many nature deities worshiped in the multiverse (the lists of gods in appendix B include many such deities). The worship of these deities is often considered a more ancient tradition than the faiths of clerics and urbanized peoples. In fact, in the world of Greyhawk, the druidic faith is called the Old Faith, and it claims many adherents among farmers, foresters, fishers, and others who live closely with nature. This tradition includes the worship of Nature as a primal force beyond personification, but also encompasses the worship of Beory, the Oerth Mother, as well as devotees of Obad-Hai, Ehlonna, and Ulaa.",
-                      "In the worlds of Greyhawk and the Forgotten Realms, druidic circles are not usually connected to the faith of a single nature deity. Any given circle in the Forgotten Realms, for example, might include druids who revere Silvanus, Mielikki, Eldath, Chauntea, or even the harsh Gods of Fury: Talos, Malar, Auril, and Umberlee. These nature gods are often called the First Circle, the first among the druids, and most druids count them all (even the violent ones) as worthy of veneration.",
-                      "The druids of Eberron hold animistic beliefs completely unconnected to the Sovereign Host, the Dark Six, or any of the other religions of the world. They believe that every living thing and every natural phenomenon—sun, moon, wind, fire, and the world itself—has a spirit. Their spells, then, are a means to communicate with and command these spirits. Different druidic sects, though, hold different philosophies about the proper relationship of these spirits to each other and to the forces of civilization. The Ashbound, for example, believe that arcane magic is an abomination against nature, the Children of Winter venerate the forces of death, and the Gatekeepers preserve ancient traditions meant to protect the world from the incursion of aberrations."
-                    ]
-                  }
-                ],
-                "source": "SRD51",
-                "page": 64
-              },
-              {
-                "type": "section",
-                "entries": [
-                  {
-                    "type": "quote",
-                    "entries": [
-                      "Even in death, each creature plays its part in maintaining the Great Balance. But now an imbalance grows, a force that seeks to hold sway over nature. This is the destructive behavior of the mortal races. The farther away from nature their actions take them, the more corrupting their influence becomes. As druids, we seek mainly to protect and educate, to preserve the Great Balance, but there are times when we must rise up against danger and eradicate it."
-                    ],
-                    "by": "Safhran, archdruid"
-                  },
-                  "Druids are the caretakers of the natural world, and it is said that in time a druid becomes the voice of nature, speaking the truth that is too subtle for the general populace to hear. Many who become druids find that they naturally gravitate toward nature; its forces, cycles, and movements fill their minds and spirits with wonder and insight. Many sages and wise folk have studied nature, writing volumes about its mystery and power, but druids are a special kind of being: at some point, they begin to embody these natural forces, producing magical phenomena that link them to the spirit of nature and the flow of life. Because of their strange and mysterious power, druids are often revered, shunned, or considered dangerous by the people around them.",
-                  "Your druid character might be a true worshiper of nature, one who has always scorned civilization and found solace in the wild. Or your character could be a child of the city who now strives to bring the civilized world into harmony with the wilderness. You can use the sections that follow to flesh out your druid, regardless of how your character came to the profession.",
-                  {
-                    "type": "quote",
-                    "entries": [
-                      "I've always liked druids, because they are made of natural ingredients. And I believe that everyone should have such a healthy diet."
-                    ],
-                    "by": "Xanathar"
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Treasured Item",
-                    "entries": [
-                      "Some druids carry one or more items that are sacred to them or have deep personal significance. Such items are not necessarily magical, but every one is an object whose meaning connects the druid's mind and heart to a profound concept or spiritual outlook.",
-                      "When you decide what your character's treasured item is, think about giving it an origin story: how did you come by the item, and why is it important to you?",
-                      {
-                        "type": "table",
-                        "caption": "Treasured Item",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Treasured Item"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "A twig from the meeting tree that stands in the center of your village"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "A vial of water from the source of a sacred river"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "Special herbs tied together in a bundle"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "A small bronze bowl engraved with animal images"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "A rattle made from a dried gourd and holly berries"
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "A miniature golden sickle handed down to you by your mentor"
-                          ]
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Guiding Aspects",
-                    "entries": [
-                      "Many druids feel a strong link to a specific aspect of the natural world, such as a body of water, an animal, a type of tree, or some other sort of plant. You identify with your chosen aspect; by its behavior or its very nature, it sets an example that you seek to emulate.",
-                      {
-                        "type": "table",
-                        "caption": "Guiding Aspects",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Guiding Aspects"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "Yew trees remind you of renewing your mind and spirit, letting the old die and the new spring forth."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "Oak trees represent strength and vitality. Meditating under an oak fills your body and mind with resolve and fortitude."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "The river's endless flow reminds you of the great span of the world. You seek to act with the long-term interests of nature in mind."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "The sea is a constant, churning cauldron of power and chaos. It reminds you that accepting change is necessary to sustain yourself in the world."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "The birds in the sky are evidence that even the smallest creatures can survive if they remain above the fray."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "As demonstrated by the actions of the wolf, an individual's strength is nothing compared to the power of the pack."
-                          ]
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Mentors",
-                    "entries": [
-                      "It's not unusual for would-be druids to seek out (or be sought out by) instructors or elders who teach them the basics of their magical arts. Most druids who learn from a mentor begin their training at a young age, and the mentor has a vital role in shaping a student's attitudes and beliefs.",
-                      "If your character received training from someone else, who or what was that individual, and what was the nature of your relationship? Did your mentor imbue you with a particular outlook or otherwise influence your approach to achieving the goals of your chosen path?",
-                      {
-                        "type": "table",
-                        "caption": "Mentors",
-                        "colLabels": [
-                          "{@dice d6}",
-                          "Mentors"
-                        ],
-                        "colStyles": [
-                          "col-1 text-center",
-                          "col-11"
-                        ],
-                        "rows": [
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 1
-                              }
-                            },
-                            "Your mentor was a wise treant who taught you to think in terms of years and decades rather than days or months."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 2
-                              }
-                            },
-                            "You were tutored by a dryad who watched over a slumbering portal to the Abyss. During your training, you were tasked with watching for hidden threats to the world."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 3
-                              }
-                            },
-                            "Your tutor always interacted with you in the form of a falcon. You never saw the tutor's humanoid form."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 4
-                              }
-                            },
-                            "You were one of several youngsters who were mentored by an old druid, until one of your fellow pupils betrayed your group and killed your master."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 5
-                              }
-                            },
-                            "Your mentor has appeared to you only in visions. You have yet to meet this person, and you are not sure such a person exists in mortal form."
-                          ],
-                          [
-                            {
-                              "type": "cell",
-                              "roll": {
-                                "exact": 6
-                              }
-                            },
-                            "Your mentor was a werebear who taught you to treat all living things with equal regard."
-                          ]
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "section",
-                    "name": "Learning Beast Shapes",
-                    "entries": [
-                      "The Wild Shape feature in the player's handbook lets you transform into a beast that you've seen. That rule gives you a tremendous amount of flexibility, making it easy to amass an array of beast form options for yourself, but you must abide by the limitations in the Beast Shapes table in that book.",
-                      "When you gain Wild Shape as a 2nd-level druid, you might wonder which beasts you've already seen. The following tables organize beasts from the monster manual according to the beasts' most likely environments. Consider the environment your druid grew up in, then consult the appropriate table for a list of animals that your druid has probably seen by 2nd level.",
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "If I could turn into something else, I wouldn't. Because everything else is inferior to me."
-                        ],
-                        "by": "Xanathar"
-                      },
-                      "These tables can also help you and your DM determine which animals you might see on your travels. In addition, the tables include each beast's challenge rating and note whether a beast has a flying or swimming speed. This information will help you determine whether you qualify to assume that beast's form.",
-                      "The tables include all the individual beasts that are eligible for Wild Shape (up to a challenge rating of 1) or the Circle Forms feature of the Circle of the Moon (up to a challenge rating of 6).",
-                      {
-                        "type": "tableGroup",
-                        "tables": [
-                          {
-                            "type": "table",
-                            "caption": "Arctic",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Owl}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Blood hawk}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant owl}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Brown bear}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Polar bear}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Saber-toothed tiger}",
-                                "—"
-                              ],
-                              [
-                                "6",
-                                "{@creature Mammoth}",
-                                "—"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Coast",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Crab}",
-                                "Swim"
-                              ],
-                              [
-                                "0",
-                                "{@creature Eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Blood hawk}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant crab}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant lizard}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant wolf spider}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Pteranodon}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant toad}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Plesiosaurus}",
-                                "Swim"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Desert",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Cat}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Hyena}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Jackal}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Scorpion}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Vulture}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Camel}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Flying snake}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Mule}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant lizard}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant wolf spider}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant hyena}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant spider}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant toad}",
-                                "Swim"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant vulture}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Lion}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "3",
-                                "{@creature Giant scorpion}",
-                                "—"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Forest",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Baboon}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Badger}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Cat}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Deer}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Hyena}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Owl}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Blood hawk}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Flying snake}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant rat}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant weasel}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Mastiff}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Boar}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Elk}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant badger}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant bat}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant frog}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant lizard}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant owl}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant wolf spider}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Panther}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Wolf}",
-                                "—"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Ape}",
-                                "—"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Black bear}",
-                                "—"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Giant wasp}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Brown bear}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Dire wolf}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant hyena}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant spider}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant toad}",
-                                "Swim"
-                              ],
-                              [
-                                "1",
-                                "{@creature Tiger}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant boar}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant elk}",
-                                "—"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Grassland",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Cat}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Deer}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "0",
-                                "{@creature Goat}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Hyena}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Jackal}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Vulture}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Blood hawk}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Flying snake}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant weasel}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Axe beak}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Boar}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Elk}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant wolf spider}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Panther} (leopard)",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Pteranodon}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Riding horse}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Wolf}",
-                                "—"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Giant goat}",
-                                "—"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Giant wasp}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant hyena}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant vulture}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Lion}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Tiger}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Allosaurus}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant boar}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant elk}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Rhinoceros}",
-                                "—"
-                              ],
-                              [
-                                "3",
-                                "{@creature Ankylosaurus}",
-                                "—"
-                              ],
-                              [
-                                "4",
-                                "{@creature Elephant}",
-                                "—"
-                              ],
-                              [
-                                "5",
-                                "{@creature Triceratops}",
-                                "—"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Hill",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Baboon}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "0",
-                                "{@creature Goat}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Hyena}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Raven}",
-                                "Fly"
-                              ],
-                              [
-                                "0",
-                                "{@creature Vulture}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Blood hawk}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant weasel}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Mastiff}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Mule}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Axe beak}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Boar}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Elk}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant owl}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant wolf spider}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Panther} (cougar)",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Wolf}",
-                                "—"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Giant goat}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Brown bear}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Dire wolf}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant hyena}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Lion}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant boar}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant elk}",
-                                "—"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Mountain",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "0",
-                                "{@creature Goat}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Blood hawk}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Pteranodon}",
-                                "Fly"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Giant goat}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant eagle}",
-                                "Fly"
-                              ],
-                              [
-                                "1",
-                                "{@creature Lion}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant elk}",
-                                "—"
-                              ],
-                              [
-                                "2",
-                                "{@creature Saber-toothed tiger}",
-                                "—"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Swamp",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Rat}",
-                                "—"
-                              ],
-                              [
-                                "0",
-                                "{@creature Raven}",
-                                "Fly"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant rat}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant frog}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant lizard}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Crocodile}",
-                                "Swim"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant spider}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant toad}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "5",
-                                "{@creature Giant crocodile}",
-                                "Swim"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Underdark",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Giant fire beetle}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Giant rat}",
-                                "—"
-                              ],
-                              [
-                                "1/8",
-                                "{@creature Stirge}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant bat}",
-                                "Fly"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant centipede}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant lizard}",
-                                "—"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Giant poisonous snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant spider}",
-                                "—"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant toad}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Polar bear} (cave bear)",
-                                "Swim"
-                              ]
-                            ]
-                          },
-                          {
-                            "type": "table",
-                            "caption": "Underwater",
-                            "colLabels": [
-                              "CR",
-                              "Beast",
-                              "Fly/Swim"
-                            ],
-                            "colStyles": [
-                              "col-2 text-center",
-                              "col-8",
-                              "col-2"
-                            ],
-                            "rows": [
-                              [
-                                "0",
-                                "{@creature Quipper}",
-                                "Swim"
-                              ],
-                              [
-                                "1/4",
-                                "{@creature Constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Giant sea horse}",
-                                "Swim"
-                              ],
-                              [
-                                "1/2",
-                                "{@creature Reef shark}",
-                                "Swim"
-                              ],
-                              [
-                                "1",
-                                "{@creature Giant octopus}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Giant constrictor snake}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Hunter shark}",
-                                "Swim"
-                              ],
-                              [
-                                "2",
-                                "{@creature Plesiosaurus}",
-                                "Swim"
-                              ],
-                              [
-                                "3",
-                                "{@creature Killer whale}",
-                                "Swim"
-                              ],
-                              [
-                                "5",
-                                "{@creature Giant shark}",
-                                "Swim"
-                              ]
-                            ]
-                          }
-                        ],
-                        "data": {
-                          "tableInclude": true
-                        }
-                      }
-                    ]
-                  }
-                ],
-                "source": "XGE",
-                "page": 21
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/PHB/Druid.webp"
-                },
-                "width": 1000,
-                "height": 999
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 8
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Druid",
-        "primaryAbility": [
+    "spellcastingAbility": "wisdom",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "intelligence",
+      "wisdom"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "club",
+      "dagger",
+      "dart",
+      "javelin",
+      "mace",
+      "quarterstaff",
+      "scimitar",
+      "sickle",
+      "sling",
+      "spear",
+      "shortspear",
+      "natural-attacks-in-eligible-form"
+    ],
+    "skillChoices": {
+      "count": 2,
+      "from": [
+        "arcana",
+        "animal-handling",
+        "insight",
+        "medicine",
+        "nature",
+        "perception",
+        "religion",
+        "survival"
+      ]
+    },
+    "rankedClassSkills": [
+      "concentration",
+      "craft",
+      "diplomacy",
+      "handle-animal",
+      "heal",
+      "knowledge-nature",
+      "listen",
+      "profession",
+      "ride",
+      "spellcraft",
+      "spot",
+      "survival",
+      "swim"
+    ],
+    "rankedSkillPoints": {
+      "firstLevel": "4*(4+intelligence-modifier)",
+      "otherLevels": "4+intelligence-modifier"
+    },
+    "bonusLanguages": [
+      "sylvan"
+    ],
+    "alignmentRestriction": null,
+    "metalArmorRestrictions": {
+      "mechanicalLossOfMagic": false,
+      "mandatoryNonmetalOnly": false,
+      "mayObserveTraditionVoluntarily": true
+    },
+    "noExDruidLossOfPowersForAlignmentOrTeachingDruidic": true,
+    "spellAccess": "entire-eligible-druid-list-of-castable-levels",
+    "spellPreparation": "none",
+    "spellKnownCapacity": null,
+    "spellResourceModes": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "cantripsKnownProgression": [
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "spellSlotsProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "primalOrderSelection": [
+      "class-feature.druid.magician-level-1",
+      "class-feature.druid.warden-level-1"
+    ],
+    "elementalFurySelection": [
+      "class-feature.druid.potent-spellcasting-level-7",
+      "class-feature.druid.primal-strike-level-7"
+    ],
+    "choiceOnlyFeatureIds": [
+      "class-feature.druid.magician-level-1",
+      "class-feature.druid.potent-spellcasting-level-7",
+      "class-feature.druid.primal-strike-level-7",
+      "class-feature.druid.warden-level-1"
+    ],
+    "animalCompanion": "druid.animal-companion",
+    "animalCompanionPersistent": true,
+    "temporaryWildCompanionCanCoexist": true,
+    "companionActionEconomy": "native-controlled-creature",
+    "wildShape": "class-feature.druid.wild-shape-level-2",
+    "wildShapeHp": "independent-form-hp-pool-with-no-spillover",
+    "finiteWildShapeChargesByLevel": [
+      [
+        2,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        18,
+        4
+      ]
+    ],
+    "unlimitedTransformationsLevel": 20,
+    "convertibleChargesStayFinite": true,
+    "elementalTransformationDailyQuota": "one-at-16-two-at-18-three-at-20",
+    "attackProgression": "three-quarters-BAB",
+    "iterativeAttacks": "native-alternative-attack-procedures",
+    "multiclassWisdomMinimum": 13,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonMinimumTotalCharacterLevel": 21,
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.druid.druidic-level-1",
+          "class-feature.druid.primal-order-level-1",
+          "class-feature.druid.spellcasting-level-1",
+          "druid.animal-companion",
+          "druid.nature-sense",
+          "druid.wild-empathy"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 0,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": null,
+        "modernKnownForms": 0,
+        "legacyFormGates": [],
+        "cantripsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 0,
+          "will": 2
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.druid.wild-companion-level-2",
+          "class-feature.druid.wild-shape-level-2",
+          "druid.woodland-stride"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.25,
+        "modernKnownForms": 4,
+        "legacyFormGates": [],
+        "cantripsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [
+          "druid.trackless-step"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.25,
+        "modernKnownForms": 4,
+        "legacyFormGates": [],
+        "cantripsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-4",
+          "class-feature.druid.wild-shape-improvement-level-4",
+          "druid.resist-natures-lure"
+        ],
+        "improvements": [
           {
-            "wis": true
+            "feature": "class-feature.druid.wild-shape-level-2",
+            "modernCR": 0.5,
+            "modernKnownForms": 6
           }
         ],
-        "hd": {
-          "number": 1,
-          "faces": 8
-        },
-        "proficiency": [
-          "int",
-          "wis"
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
         ],
-        "spellcastingAbility": "wis",
-        "casterProgression": "full",
-        "preparedSpellsProgression": [
-          4,
-          5,
-          6,
-          7,
-          9,
-          10,
-          11,
-          12,
-          14,
-          15,
-          16,
-          16,
-          17,
-          17,
-          18,
-          18,
-          19,
-          20,
-          21,
-          22
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
         ],
-        "preparedSpellsChange": "restLong",
-        "cantripProgression": [
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.druid.wild-resurgence-level-5",
+          "druid.historical-wild-shape"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
           2,
-          2,
-          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "druid.wild-shape",
+            "maxFiniteCharges": 3
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
           3,
           3,
-          3,
-          3,
-          3,
-          3,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
-          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
           4
         ],
-        "additionalSpells": [
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.druid.elemental-fury-level-7"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [
           {
-            "prepared": {
-              "1": [
-                "speak with animals|srd52"
-              ],
-              "2": [
-                "find familiar|srd52"
-              ]
-            }
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
           }
         ],
-        "featProgression": [
-          {
-            "name": "Epic Boon",
-            "category": [
-              "EB"
-            ],
-            "progression": {
-              "19": 1
-            }
-          }
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
         ],
-        "startingProficiencies": {
-          "armor": [
-            "light",
-            "shield"
-          ],
-          "weapons": [
-            "simple"
-          ],
-          "tools": [
-            "{@item Herbalism Kit|SRD52}"
-          ],
-          "toolProficiencies": [
-            {
-              "herbalism kit": true
-            }
-          ],
-          "skills": [
-            {
-              "choose": {
-                "from": [
-                  "arcana",
-                  "animal handling",
-                  "insight",
-                  "medicine",
-                  "nature",
-                  "perception",
-                  "religion",
-                  "survival"
-                ],
-                "count": 2
-              }
-            }
-          ]
-        },
-        "startingEquipment": {
-          "additionalFromBackground": true,
-          "defaultData": [
-            {
-              "A": [
-                {
-                  "item": "leather armor|srd52"
-                },
-                {
-                  "item": "shield|srd52"
-                },
-                {
-                  "item": "sickle|srd52"
-                },
-                {
-                  "item": "druidic focus|srd52"
-                },
-                {
-                  "item": "explorer's pack|srd52"
-                },
-                {
-                  "item": "herbalism kit|srd52"
-                },
-                {
-                  "value": 900
-                }
-              ],
-              "B": [
-                {
-                  "value": 5000
-                }
-              ]
-            }
-          ],
-          "entries": [
-            "{@i Choose A or B:} (A) {@item Leather Armor|SRD52}, {@item Shield|SRD52}, {@item Sickle|SRD52}, {@item Druidic Focus|SRD52|Druidic Focus (Quarterstaff)}, {@item Explorer's Pack|SRD52}, {@item Herbalism kit|SRD52}, 9 GP; or (B) 50 GP"
-          ]
-        },
-        "multiclassing": {
-          "proficienciesGained": {
-            "armor": [
-              "light",
-              "shield"
-            ]
-          }
-        },
-        "classTableGroups": [
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-8",
+          "class-feature.druid.wild-shape-improvement-level-8"
+        ],
+        "improvements": [
           {
-            "colLabels": [
-              "Wild Shape",
-              "{@filter Cantrips|spells|level=0|class=Druid}",
-              "{@filter Prepared Spells|spells|level=!0|class=Druid}"
-            ],
-            "rows": [
-              [
-                0,
-                2,
-                4
-              ],
-              [
-                2,
-                2,
-                5
-              ],
-              [
-                2,
-                2,
-                6
-              ],
-              [
-                2,
-                3,
-                7
-              ],
-              [
-                2,
-                3,
-                9
-              ],
-              [
-                3,
-                3,
-                10
-              ],
-              [
-                3,
-                3,
-                11
-              ],
-              [
-                3,
-                3,
-                12
-              ],
-              [
-                3,
-                3,
-                14
-              ],
-              [
-                3,
-                4,
-                15
-              ],
-              [
-                3,
-                4,
-                16
-              ],
-              [
-                3,
-                4,
-                16
-              ],
-              [
-                3,
-                4,
-                17
-              ],
-              [
-                3,
-                4,
-                17
-              ],
-              [
-                3,
-                4,
-                18
-              ],
-              [
-                3,
-                4,
-                18
-              ],
-              [
-                4,
-                4,
-                19
-              ],
-              [
-                4,
-                4,
-                20
-              ],
-              [
-                4,
-                4,
-                21
-              ],
-              [
-                4,
-                4,
-                22
-              ]
-            ]
+            "feature": "class-feature.druid.wild-shape-level-2",
+            "modernCR": 1,
+            "modernKnownForms": 8
           },
           {
-            "title": "Spell Slots per Spell Level",
-            "colLabels": [
-              "{@filter 1st|spells|level=1|class=Druid}",
-              "{@filter 2nd|spells|level=2|class=Druid}",
-              "{@filter 3rd|spells|level=3|class=Druid}",
-              "{@filter 4th|spells|level=4|class=Druid}",
-              "{@filter 5th|spells|level=5|class=Druid}",
-              "{@filter 6th|spells|level=6|class=Druid}",
-              "{@filter 7th|spells|level=7|class=Druid}",
-              "{@filter 8th|spells|level=8|class=Druid}",
-              "{@filter 9th|spells|level=9|class=Druid}"
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
             ],
-            "rowsSpellProgression": [
-              [
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                1,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                0,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                0,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                0,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                0
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                1,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                1,
-                1,
-                1
-              ],
-              [
-                4,
-                3,
-                3,
-                3,
-                3,
-                2,
-                2,
-                1,
-                1
-              ]
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
             ]
           }
         ],
-        "classFeatures": [
-          "Druidic|Druid|SRD52|1",
-          "Primal Order|Druid|SRD52|1",
-          "Spellcasting|Druid|SRD52|1",
-          "Wild Companion|Druid|SRD52|2",
-          "Wild Shape|Druid|SRD52|2",
-          {
-            "classFeature": "Druid Subclass|Druid|SRD52|3",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Druid|SRD52|4",
-          "Wild Resurgence|Druid|SRD52|5",
-          {
-            "classFeature": "Subclass Feature|Druid|SRD52|6",
-            "gainSubclassFeature": true
-          },
-          "Elemental Fury|Druid|SRD52|7",
-          "Ability Score Improvement|Druid|SRD52|8",
-          {
-            "classFeature": "Subclass Feature|Druid|SRD52|10",
-            "gainSubclassFeature": true
-          },
-          "Ability Score Improvement|Druid|SRD52|12",
-          {
-            "classFeature": "Subclass Feature|Druid|SRD52|14",
-            "gainSubclassFeature": true
-          },
-          "Improved Elemental Fury|Druid|SRD52|15",
-          "Ability Score Improvement|Druid|SRD52|16",
-          "Beast Spells|Druid|SRD52|18",
-          "Epic Boon|Druid|SRD52|19",
-          "Archdruid|Druid|SRD52|20"
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
         ],
-        "subclassTitle": "Druid Subclass",
-        "lore": [
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [
+          "druid.venom-immunity"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
           {
-            "name": "Druid",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Druid",
-                "source": "SRD52",
-                "page": 78,
-                "entries": [
-                  "Druids belong to ancient orders that call on the forces of nature. Harnessing the magic of animals, plants, and the four elements, Druids heal, transform into animals, and wield elemental destruction.",
-                  "Revering nature above all, individual Druids gain their magic from nature, a nature deity, or both, and they typically unite with other Druids to perform rites that mark the passage of the seasons and other natural cycles.",
-                  "Druids are concerned with the delicate ecological balance that sustains plant and animal life and with the need for people to live in harmony with nature. Druids often guard sacred sites or watch over regions of unspoiled nature, but when a significant danger arises, Druids take a more active role as adventurers who combat the threat."
-                ]
-              }
+            "level": 5,
+            "types": [
+              "animal"
             ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/Druid.webp"
-                },
-                "credit": "Alexander Mokhov",
-                "width": 1700,
-                "height": 2170
-              },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/057-03-033.druid-in-nature.webp"
-                },
-                "title": "A Druid channels the power of nature through their magic",
-                "credit": "Jessica Fong",
-                "width": 2226,
-                "height": 1440
-              },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "classes/XPHB/060-03-036.wolf-form-druid.webp"
-                },
-                "title": "A Druid in wolf form howls at the moon",
-                "credit": "John Grello",
-                "width": 1500,
-                "height": 1350
-              }
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
             ]
           }
-        ]
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-12",
+          "druid.plant-wild-shape"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [
+          "druid.a-thousand-faces"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.druid.improved-elemental-fury-level-15",
+          "druid.timeless-body-historical"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-16",
+          "druid.elemental-wild-shape"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 1,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 1,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.druid.beast-spells-level-18",
+          "class-feature.druid.timeless-body-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.wild-shape",
+            "maxFiniteCharges": 4
+          },
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 4,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 2,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          },
+          {
+            "level": 18,
+            "elementalQuota": 2
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 4,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 2,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          },
+          {
+            "level": 18,
+            "elementalQuota": 2
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.druid.archdruid-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 4,
+        "unlimitedTransformationPermission": true,
+        "elementalFormsPerLongRest": 3,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          },
+          {
+            "level": 18,
+            "elementalQuota": 2
+          },
+          {
+            "level": 20,
+            "elementalQuota": 3,
+            "elementalAddSizes": [
+              "huge"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 12,
+          "reflex": 6,
+          "will": 12
+        }
       }
-    }
-  ]
+    ],
+    "inlineFeatures": [
+      {
+        "id": "druid.animal-companion",
+        "name": "Animal Companion",
+        "classLevel": 1,
+        "description": "Animal Companion from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "persistent-animal-companion",
+          "fromLevel": 1,
+          "maximumPersistentCompanions": 1,
+          "lastsAcrossRestsAndEncounters": true,
+          "baseChoices": [
+            "badger",
+            "camel",
+            "dire-rat",
+            "dog",
+            "riding-dog",
+            "eagle",
+            "hawk",
+            "light-horse",
+            "heavy-horse",
+            "owl",
+            "pony",
+            "small-viper",
+            "medium-viper",
+            "wolf"
+          ],
+          "aquaticOptions": [
+            "crocodile",
+            "porpoise",
+            "medium-shark",
+            "squid"
+          ],
+          "alternativeCompanions": [
+            {
+              "availableAtDruidLevel": 4,
+              "effectiveCompanionLevelPenalty": 3,
+              "animals": [
+                "ape",
+                "black-bear",
+                "bison",
+                "boar",
+                "cheetah",
+                "crocodile",
+                "dire-badger",
+                "dire-bat",
+                "dire-weasel",
+                "leopard",
+                "monitor-lizard",
+                "large-shark",
+                "constrictor-snake",
+                "large-viper",
+                "wolverine"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 7,
+              "effectiveCompanionLevelPenalty": 6,
+              "animals": [
+                "brown-bear",
+                "dire-wolverine",
+                "giant-crocodile",
+                "deinonychus",
+                "dire-ape",
+                "dire-boar",
+                "dire-wolf",
+                "elasmosaurus",
+                "lion",
+                "rhinoceros",
+                "huge-viper",
+                "tiger"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 10,
+              "effectiveCompanionLevelPenalty": 9,
+              "animals": [
+                "polar-bear",
+                "dire-lion",
+                "megaraptor",
+                "huge-shark",
+                "giant-constrictor-snake",
+                "orca"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 13,
+              "effectiveCompanionLevelPenalty": 12,
+              "animals": [
+                "dire-bear",
+                "elephant",
+                "giant-octopus"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 16,
+              "effectiveCompanionLevelPenalty": 15,
+              "animals": [
+                "dire-shark",
+                "dire-tiger",
+                "giant-squid",
+                "triceratops",
+                "tyrannosaurus"
+              ]
+            }
+          ],
+          "effectiveCompanionLevel": "druid-level-minus-advanced-animal-adjustment",
+          "progression": [
+            {
+              "minLevel": 1,
+              "maxLevel": 2,
+              "bonusHitDice": 0,
+              "naturalArmorBonus": 0,
+              "strDexBonus": 0,
+              "bonusTricks": 1,
+              "newAbilities": [
+                "link",
+                "share-spells"
+              ]
+            },
+            {
+              "minLevel": 3,
+              "maxLevel": 5,
+              "bonusHitDice": 2,
+              "naturalArmorBonus": 2,
+              "strDexBonus": 1,
+              "bonusTricks": 2,
+              "newAbilities": [
+                "evasion"
+              ]
+            },
+            {
+              "minLevel": 6,
+              "maxLevel": 8,
+              "bonusHitDice": 4,
+              "naturalArmorBonus": 4,
+              "strDexBonus": 2,
+              "bonusTricks": 3,
+              "newAbilities": [
+                "devotion"
+              ]
+            },
+            {
+              "minLevel": 9,
+              "maxLevel": 11,
+              "bonusHitDice": 6,
+              "naturalArmorBonus": 6,
+              "strDexBonus": 3,
+              "bonusTricks": 4,
+              "newAbilities": [
+                "multiattack"
+              ]
+            },
+            {
+              "minLevel": 12,
+              "maxLevel": 14,
+              "bonusHitDice": 8,
+              "naturalArmorBonus": 8,
+              "strDexBonus": 4,
+              "bonusTricks": 5,
+              "newAbilities": []
+            },
+            {
+              "minLevel": 15,
+              "maxLevel": 17,
+              "bonusHitDice": 10,
+              "naturalArmorBonus": 10,
+              "strDexBonus": 5,
+              "bonusTricks": 6,
+              "newAbilities": [
+                "improved-evasion"
+              ]
+            },
+            {
+              "minLevel": 18,
+              "maxLevel": 20,
+              "bonusHitDice": 12,
+              "naturalArmorBonus": 12,
+              "strDexBonus": 6,
+              "bonusTricks": 7,
+              "newAbilities": []
+            }
+          ],
+          "abilities": {
+            "link": "free-handle-move-push-plus-four-wild-empathy-and-handle-animal",
+            "shareSpells": "share-self-spells-within-5-feet-including-touch-self-on-companion",
+            "evasion": "zero-damage-on-successful-reflex-save-for-half",
+            "devotion": "plus-four-Will-vs-enchantment",
+            "multiattack": "feat-when-at-least-three-natural-attacks-else-extra-primary-at-minus-five",
+            "improvedEvasion": "zero-on-success-half-on-fail-for-half"
+          },
+          "replacementCeremonyHours": 24,
+          "uninterruptedCeremony": true,
+          "controlledCreatureInitiative": "controller-initiative",
+          "combatActions": "native-controlled-creature-rules",
+          "notTemporaryWildCompanion": true
+        }
+      },
+      {
+        "id": "druid.nature-sense",
+        "name": "Nature Sense",
+        "classLevel": 1,
+        "description": "Nature Sense from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "nature-competence",
+          "skills": [
+            "knowledge-nature",
+            "survival"
+          ],
+          "bonus": 2,
+          "source3eOrdinaryIdentification": "native-environment-knowledge-procedure"
+        }
+      },
+      {
+        "id": "druid.wild-empathy",
+        "name": "Wild Empathy",
+        "classLevel": 1,
+        "description": "Wild Empathy from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "animal-attitude-check",
+          "formula": "d20+druid-level+charisma-modifier",
+          "rangeFeet": 30,
+          "usualMinutes": 1,
+          "magicalBeasts": {
+            "intelligenceMaximum": 2,
+            "penalty": -4
+          }
+        }
+      },
+      {
+        "id": "druid.woodland-stride",
+        "name": "Woodland Stride",
+        "classLevel": 2,
+        "description": "Woodland Stride from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "normal-travel-through-natural-undergrowth",
+          "noDamageOrPenalty": true,
+          "magicallyManipulatedPlantsStillApply": true
+        }
+      },
+      {
+        "id": "druid.trackless-step",
+        "name": "Trackless Step",
+        "classLevel": 3,
+        "description": "Trackless Step from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "no-trail-in-natural-surroundings",
+          "mayVoluntarilyLeaveTrail": true
+        }
+      },
+      {
+        "id": "druid.resist-natures-lure",
+        "name": "Resist Nature's Lure",
+        "classLevel": 4,
+        "description": "Resist Nature's Lure from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "fey-resistance",
+          "saveBonus": 4,
+          "against": "fey-spell-like-abilities"
+        }
+      },
+      {
+        "id": "druid.historical-wild-shape",
+        "name": "Historical Wild Shape Forms",
+        "classLevel": 5,
+        "description": "Historical Wild Shape Forms from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "base-class-form-eligibility",
+          "path": "historical-familiar-forms",
+          "rules": [
+            {
+              "level": 5,
+              "types": [
+                "animal"
+              ],
+              "sizes": [
+                "small",
+                "medium"
+              ],
+              "maxHitDice": "druid-level"
+            },
+            {
+              "level": 8,
+              "addSizes": [
+                "large"
+              ]
+            },
+            {
+              "level": 11,
+              "addSizes": [
+                "tiny"
+              ]
+            },
+            {
+              "level": 12,
+              "types": [
+                "plant-creature"
+              ],
+              "useCurrentLegacyAnimalSizeLimit": true
+            },
+            {
+              "level": 15,
+              "addSizes": [
+                "huge"
+              ]
+            },
+            {
+              "level": 16,
+              "types": [
+                "elemental"
+              ],
+              "sizes": [
+                "small",
+                "medium",
+                "large"
+              ],
+              "elementalQuota": 1
+            },
+            {
+              "level": 18,
+              "elementalQuota": 2
+            },
+            {
+              "level": 20,
+              "elementalQuota": 3,
+              "elementalAddSizes": [
+                "huge"
+              ]
+            }
+          ],
+          "notAdvancedOption": true,
+          "sameWildShapeUseAndHpMechanics": true
+        }
+      },
+      {
+        "id": "druid.venom-immunity",
+        "name": "Venom Immunity",
+        "classLevel": 9,
+        "description": "Venom Immunity from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "poison-immunity",
+          "allPoisonEffects": true
+        }
+      },
+      {
+        "id": "druid.plant-wild-shape",
+        "name": "Plant Wild Shape",
+        "classLevel": 12,
+        "description": "Plant Wild Shape from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "form-eligibility-extension",
+          "type": "plant-creature",
+          "size": "current-legacy-size-permissions",
+          "hdCap": "druid-level",
+          "notOrdinaryPlants": true
+        }
+      },
+      {
+        "id": "druid.a-thousand-faces",
+        "name": "A Thousand Faces",
+        "classLevel": 13,
+        "description": "A Thousand Faces from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "alter-self-appearance-at-will",
+          "requiresNaturalForm": true,
+          "onlyAppearanceOption": true,
+          "noSpellSlot": true
+        }
+      },
+      {
+        "id": "druid.timeless-body-historical",
+        "name": "Timeless Body — Historical",
+        "classLevel": 15,
+        "description": "Timeless Body — Historical from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "aging-protection",
+          "newAgeAbilityPenalties": false,
+          "immuneToMagicalAging": true,
+          "oldAgeDeathStillPossible": true,
+          "preexistingPenaltiesRemain": true
+        }
+      },
+      {
+        "id": "druid.elemental-wild-shape",
+        "name": "Elemental Wild Shape",
+        "classLevel": 16,
+        "description": "Elemental Wild Shape from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "elemental-form-eligibility",
+          "elementTypes": [
+            "air",
+            "earth",
+            "fire",
+            "water"
+          ],
+          "sizesAt16": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "hugeFromLevel": 20,
+          "usesSharedWildShapeMechanics": true,
+          "separateElementalQuotaByLevel": [
+            [
+              16,
+              1
+            ],
+            [
+              18,
+              2
+            ],
+            [
+              20,
+              3
+            ]
+          ],
+          "quotaLongRestRestore": true,
+          "maximumHD": "druid-level",
+          "eligibleSpecialAbilities": "original-3.5-form-provisions",
+          "notUnlimitedElementalTransformationsAtLevel20": true
+        }
+      }
+    ],
+    "subclasses": "excluded",
+    "prestigeClasses": "excluded"
+  }
 }

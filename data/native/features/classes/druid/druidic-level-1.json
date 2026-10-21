@@ -2,34 +2,20 @@
   "id": "class-feature.druid.druidic-level-1",
   "name": "Druidic",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Druidic",
-        "className": "Druid",
-        "classSource": "SRD51",
-        "level": 1,
-        "entries": [
-          "You know {@language Druidic}, the secret language of druids. You can speak the language and use it to leave hidden messages. You and others who know this language automatically spot such a message. Others spot the message's presence with a successful {@dc 15} Wisdom ({@skill Perception}) check but can't decipher it without magic."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Druidic",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You know Druidic, the secret language of Druids. While learning this ancient tongue, you also unlocked the magic of communicating with animals; you always have the {@spell Speak with Animals|SRD52} spell prepared.",
-          "You can use Druidic to leave hidden messages. You and others who know Druidic automatically spot such a message. Others spot the message's presence with a successful {@dc 15} Intelligence ({@skill Investigation|SRD52}) check but can't decipher it without magic."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Druidic",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "druidic-language",
+      "language": "druidic",
+      "secretMessages": true,
+      "othersMayNoticeDC": 15,
+      "understandingRequiresLanguageOrMagic": true,
+      "alwaysAccessibleSpell": "speak-with-animals",
+      "countsAgainstSpellAccess": false
+    }
+  }
 }

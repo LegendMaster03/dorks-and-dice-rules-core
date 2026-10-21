@@ -2,10 +2,10 @@
   "description": "Rule status counts for the pinned staged source pack; not a runtime readiness certificate.",
   "baselineEntries": 2522,
   "statuses": {
-    "single-candidate": 549,
-    "multiple-candidates": 1035,
-    "native-single-source-retained": 488,
-    "native-compatible-merged": 65,
+    "single-candidate": 536,
+    "multiple-candidates": 1025,
+    "native-single-source-retained": 501,
+    "native-compatible-merged": 75,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,
@@ -14,16 +14,16 @@
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
-    "native-compatible-merged": 65,
+    "native-compatible-merged": 75,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 488
+    "native-single-source-retained": 501
   },
-  "remainingWithMultipleCandidates": 1035,
-  "remainingWithOneCandidate": 549,
+  "remainingWithMultipleCandidates": 1025,
+  "remainingWithOneCandidate": 536,
   "retainedDefinitionsNeedingNativeShaping": 792,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1584,
+  "candidateRecordsStillUnresolved": 1561,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
@@ -146,5 +146,17 @@
       "direct",
       "supplication"
     ]
+  },
+  "approvedDruidBand1": {
+    "levels": [
+      1,
+      20
+    ],
+    "activeFeatureFiles": 22,
+    "inactiveStagedRecords": 9,
+    "historicalInlineFeatures": 12,
+    "persistentAnimalCompanion": true,
+    "wildShapeHp": "2014-independent-form-pool-no-overflow-house-rule",
+    "finiteTransformConversionChargesAt20": 4
   }
 }

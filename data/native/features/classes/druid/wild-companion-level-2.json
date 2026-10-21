@@ -2,22 +2,31 @@
   "id": "class-feature.druid.wild-companion-level-2",
   "name": "Wild Companion",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Wild Companion",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 2,
-        "entries": [
-          "You can summon a nature spirit that assumes an animal form to aid you. As a {@action Magic|SRD52} action, you can expend a spell slot or a use of Wild Shape to cast the {@spell Find Familiar|SRD52} spell without Material components.",
-          "When you cast the spell in this way, the familiar is Fey and disappears when you finish a {@variantrule Long Rest|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 2
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Wild Companion",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "temporary-fey-familiar",
+      "effect": "find-familiar",
+      "action": "magic-action",
+      "costs": [
+        {
+          "spellSlot": 1
+        },
+        {
+          "finiteWildShapeCharge": 1
+        }
+      ],
+      "spellPointMode": "native-cost-equivalence",
+      "noMaterialComponents": true,
+      "expires": "finish-long-rest",
+      "distinctFrom": "druid.animal-companion",
+      "bothMayCoexist": true,
+      "control": "native-controlled-creature-initiative-and-actions",
+      "unlimitedArchdruidTransformationsCannotPayCost": true
+    }
+  }
 }

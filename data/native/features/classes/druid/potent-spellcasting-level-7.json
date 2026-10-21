@@ -2,22 +2,16 @@
   "id": "class-feature.druid.potent-spellcasting-level-7",
   "name": "Potent Spellcasting",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Potent Spellcasting",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 7,
-        "header": 2,
-        "entries": [
-          "Add your Wisdom modifier to the damage you deal with any Druid cantrip."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 7
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Potent Spellcasting",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "elemental-fury-option",
+      "damageToDruidCantrips": "wisdom-modifier",
+      "atLevel15": "+300-feet-range-if-original-range-at-least-10-feet"
+    }
+  }
 }

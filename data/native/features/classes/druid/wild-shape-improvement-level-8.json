@@ -1,22 +1,19 @@
 {
   "id": "class-feature.druid.wild-shape-improvement-level-8",
-  "name": "Wild Shape Improvement",
+  "name": "Wild Shape Improvement (8)",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Wild Shape Improvement",
-        "className": "Druid",
-        "classSource": "SRD51",
-        "level": 8,
-        "entries": [
-          "At 8th level, your Wild Shape improves as shown on the Beast Shapes table."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 8
+  "classLevel": 8,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Wild Shape Improvement (8)",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "wild-shape-modern-form-improvement",
+      "maxCR": 1,
+      "modernKnownForms": 8,
+      "flightAllowed": true,
+      "legacyLargeSizeAlsoUnlocked": true
+    }
+  }
 }

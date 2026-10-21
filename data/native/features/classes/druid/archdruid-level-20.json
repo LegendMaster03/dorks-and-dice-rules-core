@@ -2,60 +2,34 @@
   "id": "class-feature.druid.archdruid-level-20",
   "name": "Archdruid",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Archdruid",
-        "className": "Druid",
-        "classSource": "SRD51",
-        "level": 20,
-        "entries": [
-          "At 20th level, you can use your Wild Shape an unlimited number of times.",
-          "Additionally, you can ignore the verbal and somatic components of your druid spells, as well as any material components that lack a cost and aren't consumed by a spell. You gain this benefit in both your normal shape and your beast shape from Wild Shape."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Archdruid",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 20,
-        "entries": [
-          "The vitality of nature constantly blooms within you, granting you the following benefits.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "entries",
-                "name": "Evergreen Wild Shape",
-                "entries": [
-                  "Whenever you roll {@variantrule Initiative|SRD52} and have no uses of Wild Shape left, you regain one expended use of it."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Nature Magician",
-                "entries": [
-                  "You can convert uses of Wild Shape into a spell slot (no action required). Choose a number of your unexpended uses of Wild Shape and convert them into a single spell slot, with each use contributing 2 spell levels. For example, if you convert two uses of Wild Shape, you produce a level 4 spell slot. Once you use this benefit, you can't do so again until you finish a {@variantrule Long Rest|SRD52}."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Longevity",
-                "entries": [
-                  "The primal magic that you wield causes you to age more slowly. For every ten years that pass, your body ages only one year."
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 20
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Archdruid",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "archdruid-capstone",
+      "unlimitedWildShapeTransformations": true,
+      "finiteTrackedChargePoolStillMaximum": 4,
+      "unlimitedTransformationsCannotPayCosts": true,
+      "evergreen": {
+        "onInitiativeWhenFinitePoolEmptyRecover": 1
+      },
+      "natureMagician": {
+        "oncePerLongRest": true,
+        "consumeFiniteCharges": true,
+        "slotLevel": "2*finite-charges-consumed",
+        "maximumSlotLevel": 8,
+        "spellPointEquivalent": "native-spell-point-rules"
+      },
+      "spellComponents": {
+        "ignoreVerbal": true,
+        "ignoreSomatic": true,
+        "ignoreUnpricedNonconsumedMaterial": true,
+        "inNaturalAndWildShapeForms": true
+      },
+      "longevity": "one-year-per-ten-years-nonstacking"
+    }
+  }
 }

@@ -2,40 +2,22 @@
   "id": "class-feature.druid.improved-elemental-fury-level-15",
   "name": "Improved Elemental Fury",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Improved Elemental Fury",
-        "className": "Druid",
-        "classSource": "SRD52",
-        "level": 15,
-        "entries": [
-          "The option you chose for Elemental Fury grows more powerful, as detailed below.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "entries",
-                "name": "Potent Spellcasting",
-                "entries": [
-                  "When you cast a Druid cantrip with a range of 10 feet or greater, the spell's range increases by 300 feet."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Primal Strike",
-                "entries": [
-                  "The extra damage of your Primal Strike increases to {@damage 2d8}."
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 15
+  "classLevel": 15,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Improved Elemental Fury",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "upgrade-selected-elemental-fury",
+      "potentSpellcasting": {
+        "rangeAtLeastFeet": 10,
+        "additionalFeet": 300
+      },
+      "primalStrike": {
+        "totalExtraDamage": "2d8"
+      },
+      "onlySelectedOptionImproves": true
+    }
+  }
 }

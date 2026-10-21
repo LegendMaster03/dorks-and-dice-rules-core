@@ -1,22 +1,18 @@
 {
   "id": "class-feature.druid.timeless-body-level-18",
-  "name": "Timeless Body",
+  "name": "Timeless Body (Longevity)",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Timeless Body",
-        "className": "Druid",
-        "classSource": "SRD51",
-        "level": 18,
-        "entries": [
-          "Starting at 18th level, the primal magic that you wield causes you to age more slowly. For every 10 years that pass, your body ages only 1 year."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.druid",
-  "classLevel": 18
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Timeless Body (Longevity)",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "slow-aging",
+      "agingRatio": 0.1,
+      "doesNotStackWithArchdruidLongevity": true,
+      "alsoRetainsEarlierHistoricalAgingResilience": true
+    }
+  }
 }
