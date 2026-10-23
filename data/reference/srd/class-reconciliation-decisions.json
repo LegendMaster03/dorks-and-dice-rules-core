@@ -336,6 +336,33 @@
           "detail": "modern armor proficiency without the historical power-loss text"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-every-qualifying-hit",
+      "state": "approved-native-rule",
+      "decision": "Remove the once-per-turn/round limit: apply one class-level Sneak Attack damage instance to each separate successful qualifying attack, reevaluating eligibility for each attack. Attacking may reveal the Rogue and end stealth-dependent qualification but does not automatically end independent qualifying states such as flanking, denied Dexterity defense, Advantage or allied engagement. The feature does not grant extra attacks. Exact unified qualification, source eligibility restrictions and Cunning Strike/critical interactions remain pending.",
+      "decisionBasis": "Owner explicit ruling, 2026-10-23, applying one shared ruleset with player-selectable tactical complexity and meaningful advanced benefits.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue Sneak Attack",
+          "detail": "Bonus damage on qualifying hits; not limited to once per turn"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Once per turn"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Once per turn"
+        }
+      ]
     }
   ]
 }
