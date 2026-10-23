@@ -474,6 +474,44 @@
           "detail": "A failed d20 Test is turned into a numerical result of 20"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.rogue.trapfinding",
+      "state": "approved-native-rule",
+      "decision": "Retain Rogue Trapfinding: advanced search, disabling, and studying/bypassing difficult and magical traps, including helping allies bypass traps without disabling them. Other characters remain capable of finding/disarming eligible traps using ordinary Competencies or their granted features; no blanket Rogue-only access for high-DC or magical traps. Exact native checks and DC are pending.",
+      "decisionBasis": "Owner approved retention of both Rogue trap features, 2026-10-23, expressly rejecting Rogue-only access to ordinary trap-handling opportunities; feature-level numeric integration to be finalized.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD30",
+          "path": "https://www.dragon.ee/30srd/rogue.htm",
+          "name": "Traps"
+        },
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Trapfinding"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.trap-sense",
+      "state": "approved-native-rule",
+      "decision": "Retain the distinct 3.x Rogue Trap Sense defensive progression using native trap-related saves and AC. Source-reference schedule is 3.5e +1 at class level 3, +2 at 6, +3 at 9, +4 at 12, +5 at 15, and +6 at 18; reconcile 3.0's older Uncanny Dodge trap bonuses without duplicate stacking. Exact advancement placement and conversion to native numeric defenses remain pending.",
+      "decisionBasis": "Owner approved retention of both Rogue trap features, 2026-10-23, expressly rejecting Rogue-only access to ordinary trap-handling opportunities; feature-level numeric integration to be finalized.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD30",
+          "path": "https://www.dragon.ee/30srd/rogue.htm",
+          "name": "Uncanny Dodge trap bonuses"
+        },
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Trap Sense"
+        }
+      ]
     }
   ]
 }
