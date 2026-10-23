@@ -39,15 +39,44 @@
 - **Keep distinct historical and modern defenses under clear names.** **Uncanny Awareness** is the approved native name for historical 3.x Dexterity-defense retention when Flat-Footed or facing an unseen attacker; its later anti-flanking enhancement improves **the same Uncanny Awareness feature** without changing its name to Improved Uncanny Awareness. **Uncanny Dodge** remains the separate modern 5.x Reaction-based incoming-damage reduction. Historical 3.5e levels 4/8 and modern level 5 are source-based working placements, not yet independently finalized cross-edition class progression; retain proper defense interactions and any relevant exceptions.
 - **Critical escalation is optional and requires natural die results.** Effects that change, substitute or set a d20 result, including Stroke of Luck's numerical result of 20, do not by that change supply the natural die faces required to initiate or advance an optional critical escalation chain. Preserve normal explicit numeric/test success effects and the separate ordinary critical rules. The shared critical-system specification, not a Rogue-specific exception, governs this distinction.
 
+## Approved: historical trap expertise
+
+**Owner approval (2026-10-23):** Retain both **Trapfinding** and **Trap Sense** as Rogue class features, preserving advanced capabilities without making the ordinary detection and disarming of traps exclusive to Rogues.
+
+- **Trapfinding:** Preserve specialized detection and dismantling of difficult or magical traps and the historical option of identifying a safe bypass for the party without disarming a trap. The 3.5e successful Disable Device check exceeding the trap DC by 10 is the reference for the bypass capability; map Search and Disable Device to native Competencies. Characters without this class feature can still reasonably attempt applicable trap searches/disarming within their actual training and means; do not enforce a blanket Rogue-only rule for high-DC or magical traps. The exact native test/DC mapping and other-source feature permissions remain general subsystem work.
+- **Trap Sense:** Preserve progressive, trap-specific defensive bonuses to appropriate saving throws and AC against trap attacks. As a source-based Band 1 working progression, 3.5e provides +1 at Rogue level 3, increasing to +2 at 6, +3 at 9, +4 at 12, +5 at 15 and +6 at 18. The 3.0 ability was attached to historical Uncanny Dodge at levels 11, 14, 17 and 20 and should not create an additional duplicate bonus track when converted. Apply the established native save/defense contribution and stacking rules. Numeric adoption awaits the final class-level advancement table; these are source values, not an independent extra owner ruling.
+- Trapfinding and Trap Sense are distinct: one provides trap-handling opportunities and one provides defensive protection.
+
+## Historical Rogue special abilities — review proposals, not approved feature definitions
+
+The owner favors retaining the **four selectable level-up grants** at Rogue levels **10, 13, 16 and 19**, with each grant chosen from meaningful alternatives. Individual effects, reuse rules and source overlap require review before native implementation.
+
+| Historical selection | Source capability and recommended reconciliation issue |
+| --- | --- |
+| **Crippling Strike** | Add temporary Strength ability damage on successful Sneak Attacks. D&D 3.0 grants **1 Strength damage** per qualifying hit; D&D 3.5 grants **2**. Because native Sneak Attack has **no per-turn cap**, repeated hits can accumulate substantial ability damage. Decide the numeric magnitude and recovery/stacking through shared ability-damage mechanics; do not assume an extra per-turn cap or immunity based on creature type. |
+| **Defensive Roll** | Historically once/day, Reflex save versus the triggering damage to halve an otherwise potentially lethal physical hit. Its restriction and conditional save may make it a weaker choice than the modern **Uncanny Dodge** Reaction (halves eligible attack damage without a saving throw). Determine a worthwhile, distinct function, same-hit interaction and shared Reaction cost; do not grant an independent extra Reaction by default. |
+| **Improved Evasion** | In 3.x, improves Evasion to halve damage on a failed qualifying save. **Modern 5.x Evasion already halves damage on a failure**, so simply granting this option again produces no benefit. Either treat its historical benefit as already integrated into modern Evasion and remove it as a redundant selection, or define a genuinely new upgrade with separately approved costs and effects. |
+| **Opportunist** | Once/round opportunity attack when an ally damages a foe in melee. Preserve the specific trigger and once/round limit, cost the shared native Reaction and avoid an extra attack or Reaction merely from version conversion. General provocation/turn budgets remain system-level dependencies. |
+| **Skill Mastery** | Historical selected skills (3 + Intelligence modifier) permit taking 10 under stress. Modern **Reliable Talent** already establishes a minimum natural result of 10 for qualifying proficiency checks, broadly overlapping this effect. Avoid offering an ineffective choice: either deem it absorbed by Reliable Talent or propose a distinct selectable skill specialization that adds real capability. |
+| **Slippery Mind** | The 3.x choice grants one additional saving throw a round after failing against enchantment/control; 2024 Slippery Mind at level 15 grants Wisdom **and** Charisma saving throw proficiency. These are different effects and may coexist without duplicating bonuses. A single named class feature can acquire improvements at distinct levels if selected earlier; exact eligibility and when the optional retry applies require final review. |
+| **Bonus Feat** | Retain the option to take one otherwise eligible feat instead of the special ability. Apply normal prerequisites and ordinary Band 1 Epic Boon restrictions. Do not merge or duplicate the regular ASI/feat grants. |
+
+**Review priority:** The most consequential differences are the overlapping **Improved Evasion** and **Skill Mastery**, plus potentially very rapid ability damage from **Crippling Strike**. The owner has not yet approved any suggested redesign of these individual selectable abilities.
+
 ## Explicitly unresolved: eligibility and related mechanics
 
 The decisions settle **frequency and the high-level eligibility principle**, not every concrete trigger or the executable detection system. The following details remain to be reconciled against 3.0, 3.5e, SRD 5.1, SRD 5.2.1, and established native combat rules:
 - Define qualifying detection failures and exploitable vulnerabilities, including the relationship to flanking, denied Dexterity defenses, feints, nearby allies and how Advantage/Disadvantage interacts.
 - Remaining precision-damage restrictions (e.g., cover or concealment and explicitly defined precision immunity) under shared detection and damage systems. **Do not reinstate** a 30-foot cap, historical blanket creature-type/anatomy immunity, special Disadvantage for unconventional proficient weapons, or a Finesse/Ranged-only restriction. Weapon Mastery is not a substitute for proficiency.
 - Interaction with Cunning Strike's Sneak Attack die costs, ordinary critical damage and optional natural-result escalation, special attack sequences, reaction attacks, and broader action economy.
-- Other Rogue base-class reconciliation (e.g., historical Trapfinding, Trap Sense, special ability selections; modern Cunning Action, defenses, Weapon Mastery).
+- Complete the four historical **selectable** special-ability grants after review; Trapfinding and Trap Sense are approved conceptually but their native Competencies/save implementation awaits the general subsystems. Modern Cunning Action, defenses and Weapon Mastery still require final placement in the level progression.
 
 No native Rogue JSON has been implemented or marked reconciled by this document.
+
+## Special ability source comparisons
+
+- D&D 3.0 Rogue: https://www.dragon.ee/30srd/rogue.htm
+- D&D 3.5 Rogue: https://www.d20srd.org/srd/classes/rogue
 
 ## Source references
 
