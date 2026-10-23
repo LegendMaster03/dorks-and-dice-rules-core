@@ -394,8 +394,8 @@
     {
       "nativeRuleId": "class.rogue.sneak-attack-any-range-and-weapon",
       "state": "approved-native-rule",
-      "decision": "Remove the historical 30-foot ranged Sneak Attack cap and modern Finesse-or-Ranged weapon requirement. Any otherwise valid, successful attack may apply Sneak Attack if it satisfies detection or explicitly established vulnerability eligibility; ordinary attack range and visibility restrictions continue to apply. Exact interactions with spell attacks and unusual attack types are deferred to the general combat system.",
-      "decisionBasis": "Owner explicit rulings, 2026-10-23: sniper Sneak Attacks are valid and weapon specialization must not categorically bar Sneak Attack.",
+      "decision": "Remove the historical 30-foot ranged Sneak Attack cap: normal attack range and detection/targeting govern, so snipers can qualify. Retain Finesse and Ranged weapons as standard Sneak Attack choices. Other weapons may qualify conditionally with proficiency plus attack Disadvantage, or applicable Weapon Mastery (subject to normal mastery eligibility), rather than receiving unrestricted Sneak Attack permission. The exact Mastery/Disadvantage interaction requires general attack-rule integration. Every hit still needs approved detection or established-vulnerability eligibility; spell and exotic attack types are not automatically included.",
+      "decisionBasis": "Owner clarified 2026-10-23: Finesse and Ranged weapons both remain suitable; other weapon types need 'proficiency with disadvantage or mastery'. The earlier unrestricted any-weapon interpretation was incorrect.",
       "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
       "evidence": [
         {
@@ -415,8 +415,8 @@
     {
       "nativeRuleId": "class.rogue.sneak-attack-immunity-respected",
       "state": "approved-native-rule",
-      "decision": "Sneak Attack does not overcome real damage resistance or immunity. The applicable normal damage type(s) and defensive mitigation govern the extra damage; do not invent a blanket precision-damage immunity by creature species/anatomy alone without an actual trait or separately approved rule. General damage and unusual target interactions remain open.",
-      "decisionBasis": "Owner explicit ruling, 2026-10-23: immunity remains immunity, illustrated by fire damage against a fire elemental.",
+      "decision": "Undead, constructs and creatures with unusual anatomy are not categorically immune to Sneak Attack. Actual applicable damage-type immunity/resistance and any expressly granted precision-damage immunity still apply. Do not infer immunity from creature type, anatomy or immunity to critical hits alone.",
+      "decisionBasis": "Owner explicitly confirmed 2026-10-23 that historical undead/construct/unusual-anatomy exclusions are removed while genuine immunity remains effective.",
       "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
       "evidence": [
         {
@@ -436,8 +436,8 @@
     {
       "nativeRuleId": "class.rogue.historical-and-modern-uncanny-defense-distinct",
       "state": "approved-native-rule",
-      "decision": "Retain both non-equivalent Uncanny Dodge source feature families: historical Dexterity-based defensive awareness and anti-flanking extension, and modern Reaction that halves one eligible hit's damage. They must have distinguishable native names. Uncanny Awareness / Improved Uncanny Awareness for historical and Uncanny Dodge for modern are proposed labels only; final names and feature-level integration remain open.",
-      "decisionBasis": "Owner explicit ruling, 2026-10-23: both historical and modern defensive features should survive with different names.",
+      "decision": "Retain historical Dexterity-based defensive awareness, including its later anti-flanking improvement, under the approved unified feature name 'Uncanny Awareness' at all improvement stages: improving a feature does not require renaming it. Modern Reaction-based damage reduction remains separately named 'Uncanny Dodge'. Exact class-level placements and cross-feature defense interactions remain to be finalized.",
+      "decisionBasis": "Owner approved 'Uncanny Awareness' and specified that its later improvement retains the same name, 2026-10-23; historical and modern non-equivalent defenses remain distinct.",
       "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
       "evidence": [
         {
