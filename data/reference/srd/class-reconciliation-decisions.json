@@ -340,7 +340,7 @@
     {
       "nativeRuleId": "class.rogue.sneak-attack-every-qualifying-hit",
       "state": "approved-native-rule",
-      "decision": "Remove the once-per-turn/round limit: apply one class-level Sneak Attack damage instance to each separate successful qualifying attack, reevaluating eligibility for each attack. Attacking may reveal the Rogue and end stealth-dependent qualification but does not automatically end independent qualifying states such as flanking, denied Dexterity defense, Advantage or allied engagement. The feature does not grant extra attacks. Exact unified qualification, source eligibility restrictions and Cunning Strike/critical interactions remain pending.",
+      "decision": "Remove the once-per-turn/round limit: apply one Sneak Attack damage instance on each separate successful qualifying attack, reevaluating eligibility on every attack. Qualification follows the approved detection-or-established-vulnerability principle, not Advantage by itself. This feature grants no additional attack actions; precise trigger and combat interactions remain pending.",
       "decisionBasis": "Owner explicit ruling, 2026-10-23, applying one shared ruleset with player-selectable tactical complexity and meaningful advanced benefits.",
       "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
       "evidence": [
@@ -361,6 +361,33 @@
           "path": "data/reference/srd/structured/class/class-rogue.json",
           "name": "Sneak Attack",
           "detail": "Once per turn"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-detection-or-vulnerability",
+      "state": "approved-native-rule",
+      "decision": "A Rogue can apply Sneak Attack damage to a successful attack when the target has failed to detect or anticipate the attack, or when the target has an explicitly established vulnerability that the Rogue can exploit with a precision strike. Detection uses the shared awareness and detection mechanics. Other qualifying vulnerabilities are established by specific conditions, actions, features, or successful techniques. Advantage does not independently establish Sneak Attack eligibility. Each attack is evaluated separately.",
+      "decisionBasis": "Owner explicitly approved this wording, 2026-10-23. This conceptual rule authorizes neither a complete list of qualifying vulnerabilities nor a finished awareness/detection runtime.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue Sneak Attack",
+          "detail": "Historically exploits denied Dexterity defenses or flanking"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Modern advantage and nearby-enemy qualification"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Modern advantage and nearby-ally qualification"
         }
       ]
     }
