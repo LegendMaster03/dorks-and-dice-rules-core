@@ -390,6 +390,90 @@
           "detail": "Modern advantage and nearby-ally qualification"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-any-range-and-weapon",
+      "state": "approved-native-rule",
+      "decision": "Remove the historical 30-foot ranged Sneak Attack cap and modern Finesse-or-Ranged weapon requirement. Any otherwise valid, successful attack may apply Sneak Attack if it satisfies detection or explicitly established vulnerability eligibility; ordinary attack range and visibility restrictions continue to apply. Exact interactions with spell attacks and unusual attack types are deferred to the general combat system.",
+      "decisionBasis": "Owner explicit rulings, 2026-10-23: sniper Sneak Attacks are valid and weapon specialization must not categorically bar Sneak Attack.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sneak Attack",
+          "detail": "30-foot range limit for ranged precision attacks"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Finesse or Ranged weapon gate"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-immunity-respected",
+      "state": "approved-native-rule",
+      "decision": "Sneak Attack does not overcome real damage resistance or immunity. The applicable normal damage type(s) and defensive mitigation govern the extra damage; do not invent a blanket precision-damage immunity by creature species/anatomy alone without an actual trait or separately approved rule. General damage and unusual target interactions remain open.",
+      "decisionBasis": "Owner explicit ruling, 2026-10-23: immunity remains immunity, illustrated by fire damage against a fire elemental.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sneak Attack",
+          "detail": "Historical creature-type/anatomy exclusions"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Bonus damage follows normal weapon damage type"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.historical-and-modern-uncanny-defense-distinct",
+      "state": "approved-native-rule",
+      "decision": "Retain both non-equivalent Uncanny Dodge source feature families: historical Dexterity-based defensive awareness and anti-flanking extension, and modern Reaction that halves one eligible hit's damage. They must have distinguishable native names. Uncanny Awareness / Improved Uncanny Awareness for historical and Uncanny Dodge for modern are proposed labels only; final names and feature-level integration remain open.",
+      "decisionBasis": "Owner explicit ruling, 2026-10-23: both historical and modern defensive features should survive with different names.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Uncanny Dodge and Improved Uncanny Dodge",
+          "detail": "Defensive Dexterity and flanking"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Uncanny Dodge",
+          "detail": "Reaction-based damage reduction"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "rule.critical-escalation-optional-natural-die-only",
+      "state": "approved-native-rule",
+      "decision": "Critical escalation (consecutive natural critical results) is an optional campaign rule, not a mandatory rule for every table. Abilities that alter, substitute or set a numerical roll result do not count as natural die faces for starting or advancing an escalation chain. Ordinary criticals and explicit feature success effects remain separately governed; do not assume a feature-generated result 20 is a natural 20. Eligibility of independent reroll abilities on escalation dice remains a separate unresolved case.",
+      "decisionBasis": "Owner confirmation, 2026-10-23: roll-modifying abilities do not count toward escalation; crit escalation is optional.",
+      "nativeLocation": "docs/rewrite/native-rules-design-specification.md",
+      "evidence": [
+        {
+          "source": "DORKS-AND-DICE",
+          "path": "docs/rewrite/native-rules-design-specification.md",
+          "name": "Critical stacking — Fool's Gold-inspired foundation",
+          "detail": "Consecutive extreme natural d20 results, campaign-scoped optional application"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Stroke of Luck",
+          "detail": "A failed d20 Test is turned into a numerical result of 20"
+        }
+      ]
     }
   ]
 }
