@@ -2,21 +2,19 @@
   "id": "class-feature.sorcerer.arcane-apotheosis-level-20",
   "name": "Arcane Apotheosis",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Arcane Apotheosis",
-        "className": "Sorcerer",
-        "classSource": "SRD52",
-        "level": 20,
-        "entries": [
-          "While your Innate Sorcery feature is active, you can use one Metamagic option on each of your turns without spending Sorcery Points on it."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.sorcerer",
-  "classLevel": 20
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Arcane Apotheosis",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "arcane-apotheosis",
+      "requiresInnateSorceryActive": true,
+      "oneOptionEachTurnGetsDiscount": true,
+      "discountUpToSorceryPoints": 2,
+      "secondMetamagicPaysFullCost": true,
+      "minimumCost": 0
+    }
+  }
 }

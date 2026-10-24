@@ -2,22 +2,39 @@
   "id": "class-feature.sorcerer.sorcery-points-level-2",
   "name": "Sorcery Points",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Sorcery Points",
-        "className": "Sorcerer",
-        "classSource": "SRD51",
-        "level": 2,
-        "header": 1,
-        "entries": [
-          "You have 2 sorcery points, and you gain one additional point every time you level up, to a maximum of 20 at level 20. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.sorcerer",
-  "classLevel": 2
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Sorcery Points",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "sorcery-points",
+      "maxByLevel": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "fullRecovery": "long-rest",
+      "independentOfCastingSpellPoints": true,
+      "samePoolAsFontOfMagic": true
+    }
+  }
 }

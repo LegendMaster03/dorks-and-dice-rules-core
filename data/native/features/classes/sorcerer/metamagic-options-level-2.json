@@ -2,97 +2,120 @@
   "id": "class-feature.sorcerer.metamagic-options-level-2",
   "name": "Metamagic Options",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Metamagic Options",
-        "className": "Sorcerer",
-        "classSource": "SRD52",
-        "level": 2,
-        "entries": [
-          "The following options are available to your Metamagic feature. The options are presented in alphabetical order.",
-          {
-            "type": "options",
-            "count": 2,
-            "entries": [
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Careful Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Distant Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Empowered Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Extended Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Heightened Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Quickened Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Seeking Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Subtle Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Transmuted Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              },
-              {
-                "type": "refOptionalfeature",
-                "optionalfeature": "Twinned Spell|SRD52",
-                "preserve": {
-                  "consumes": true
-                }
-              }
-            ]
-          }
-        ]
+  "parentClass": "class.sorcerer",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Metamagic Options",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "metamagic-options",
+      "options": [
+        {
+          "name": "Careful Spell",
+          "costSorceryPoints": 1,
+          "effect": "chosen creatures auto-succeed and avoid half-damage on saves"
+        },
+        {
+          "name": "Distant Spell",
+          "costSorceryPoints": 1,
+          "effect": "double applicable spell range or extend Touch range to 30 feet"
+        },
+        {
+          "name": "Empowered Spell",
+          "costSorceryPoints": 1,
+          "effect": "reroll Cha-modifier damage dice, using new rolls; combines with another"
+        },
+        {
+          "name": "Extended Spell",
+          "costSorceryPoints": 1,
+          "effect": "double duration up to 24 hours and grant Advantage on Concentration saves"
+        },
+        {
+          "name": "Heightened Spell",
+          "costSorceryPoints": 2,
+          "effect": "one target Disadvantage on all saves against spell"
+        },
+        {
+          "name": "Quickened Spell",
+          "costSorceryPoints": 2,
+          "effect": "Action spell becomes Bonus Action; same-turn leveled spell restriction"
+        },
+        {
+          "name": "Seeking Spell",
+          "costSorceryPoints": 1,
+          "effect": "reroll a missed spell attack; combines with another"
+        },
+        {
+          "name": "Subtle Spell",
+          "costSorceryPoints": 1,
+          "effect": "remove verbal, somatic and unpriced nonconsumed material components"
+        },
+        {
+          "name": "Transmuted Spell",
+          "costSorceryPoints": 1,
+          "effect": "convert acid cold fire lightning poison thunder damage"
+        },
+        {
+          "name": "Twinned Spell",
+          "costSorceryPoints": null,
+          "effect": "select exactly one of Twin and Expanded Targeting",
+          "modes": [
+            {
+              "name": "twin",
+              "costSorceryPoints": "max(1,actual-cast-level)",
+              "addSecondCreatureInRange": true,
+              "only2014EligibleSingleCreatureSpells": true,
+              "noSelfRange": true
+            },
+            {
+              "name": "expanded-targeting",
+              "costSorceryPoints": 1,
+              "upcastAddsTargetRequired": true,
+              "grantOnlyExtraTarget": true
+            }
+          ]
+        },
+        {
+          "name": "Amplified Spell",
+          "costSorceryPoints": 3,
+          "actualCastLevelMaximum": 7,
+          "increase": "50-percent-of-initial-variable-rolled-result-rounded-down"
+        },
+        {
+          "name": "Ascendant Spell",
+          "costPerEffectiveSpellLevel": 2,
+          "allowedLevelsAdded": [
+            1,
+            2
+          ],
+          "effectiveMaximum": 9,
+          "notAboveHighestSpellLevelCasterCanCast": true,
+          "saveDCIncreasePerLevel": 1,
+          "noUpcastDamageOrTargetBenefits": true
+        },
+        {
+          "name": "Widened Spell",
+          "costSorceryPoints": 4,
+          "actualCastLevelMaximum": 6,
+          "eligibleContinuousAreaDimensionMultiplier": 2,
+          "noExtraAreasRangeDurationOrDamage": true
+        },
+        {
+          "name": "Maximized Spell",
+          "costSorceryPoints": 5,
+          "actualCastLevelMaximum": 6,
+          "maximizeOneInitialVariableNumericalResult": true,
+          "noAttackSaveOpposedOrRecurringRolls": true
+        }
+      ],
+      "actualCastLevelForEligibility": true,
+      "twinnedModesMutuallyExclusive": true,
+      "amplifiedPlusMaximized": {
+        "totalCost": 8,
+        "requiresTwoOptionAllowance": true,
+        "result": "maximum-base-result-plus-floor(independently-rolled-eligible-result/2)"
       }
     }
-  ],
-  "parentClass": "class.sorcerer",
-  "classLevel": 2
+  }
 }

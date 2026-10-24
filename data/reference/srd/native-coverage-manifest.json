@@ -2374,7 +2374,7 @@
     {
       "nativeId": "class.sorcerer",
       "kind": "class",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/classes/base/sorcerer.json",
       "candidates": [
@@ -7329,7 +7329,7 @@
     {
       "nativeId": "class-feature.sorcerer.ability-score-improvement-level-12",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/ability-score-improvement-level-12.json",
       "candidates": [
@@ -7346,7 +7346,7 @@
     {
       "nativeId": "class-feature.sorcerer.ability-score-improvement-level-16",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/ability-score-improvement-level-16.json",
       "candidates": [
@@ -7363,7 +7363,7 @@
     {
       "nativeId": "class-feature.sorcerer.ability-score-improvement-level-19",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/ability-score-improvement-level-19.json",
       "candidates": [
@@ -7376,7 +7376,7 @@
     {
       "nativeId": "class-feature.sorcerer.ability-score-improvement-level-4",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/ability-score-improvement-level-4.json",
       "candidates": [
@@ -7393,7 +7393,7 @@
     {
       "nativeId": "class-feature.sorcerer.ability-score-improvement-level-8",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/ability-score-improvement-level-8.json",
       "candidates": [
@@ -7410,7 +7410,7 @@
     {
       "nativeId": "class-feature.sorcerer.arcane-apotheosis-level-20",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/arcane-apotheosis-level-20.json",
       "candidates": [
@@ -7436,7 +7436,7 @@
     {
       "nativeId": "class-feature.sorcerer.flexible-casting-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/flexible-casting-level-2.json",
       "candidates": [
@@ -7449,7 +7449,7 @@
     {
       "nativeId": "class-feature.sorcerer.font-of-magic-level-2",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/font-of-magic-level-2.json",
       "candidates": [
@@ -7466,7 +7466,7 @@
     {
       "nativeId": "class-feature.sorcerer.innate-sorcery-level-1",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/innate-sorcery-level-1.json",
       "candidates": [
@@ -7479,7 +7479,7 @@
     {
       "nativeId": "class-feature.sorcerer.metamagic-level-10",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/metamagic-level-10.json",
       "candidates": [
@@ -7496,7 +7496,7 @@
     {
       "nativeId": "class-feature.sorcerer.metamagic-level-17",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/metamagic-level-17.json",
       "candidates": [
@@ -7513,7 +7513,7 @@
     {
       "nativeId": "class-feature.sorcerer.metamagic-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/metamagic-level-2.json",
       "candidates": [
@@ -7539,7 +7539,7 @@
     {
       "nativeId": "class-feature.sorcerer.metamagic-options-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/metamagic-options-level-2.json",
       "candidates": [
@@ -7617,7 +7617,7 @@
     {
       "nativeId": "class-feature.sorcerer.sorcerous-restoration-level-20",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/sorcerous-restoration-level-20.json",
       "candidates": [
@@ -7630,7 +7630,7 @@
     {
       "nativeId": "class-feature.sorcerer.sorcerous-restoration-level-5",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/sorcerous-restoration-level-5.json",
       "candidates": [
@@ -7643,7 +7643,7 @@
     {
       "nativeId": "class-feature.sorcerer.sorcery-incarnate-level-7",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/sorcery-incarnate-level-7.json",
       "candidates": [
@@ -7656,7 +7656,7 @@
     {
       "nativeId": "class-feature.sorcerer.sorcery-points-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/sorcerer/sorcery-points-level-2.json",
       "candidates": [
@@ -7669,7 +7669,7 @@
     {
       "nativeId": "class-feature.sorcerer.spellcasting-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/sorcerer/spellcasting-level-1.json",
       "candidates": [
@@ -39800,10 +39800,10 @@
   "canonicalIdentifiersNormalized": 653,
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
-    "single-candidate": 522,
-    "multiple-candidates": 1010,
-    "native-single-source-retained": 515,
-    "native-compatible-merged": 90,
+    "single-candidate": 512,
+    "multiple-candidates": 1001,
+    "native-single-source-retained": 525,
+    "native-compatible-merged": 99,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,

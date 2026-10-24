@@ -2,70 +2,53 @@
   "id": "class-feature.sorcerer.flexible-casting-level-2",
   "name": "Flexible Casting",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Flexible Casting",
-        "className": "Sorcerer",
-        "classSource": "SRD51",
-        "level": 2,
-        "header": 1,
-        "entries": [
-          "You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.",
+  "parentClass": "class.sorcerer",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Flexible Casting",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "flexible-casting",
+      "convertSlotToSorceryPoints": {
+        "action": "none",
+        "gain": "slot-level",
+        "maximumApplies": true
+      },
+      "createSlot": {
+        "action": "bonus-action",
+        "costs": [
           {
-            "type": "entries",
-            "name": "Creating Spell Slots",
-            "entries": [
-              "You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The created spell slots vanish at the end of a long rest. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th.",
-              {
-                "type": "table",
-                "caption": "Creating Spell Slots",
-                "colLabels": [
-                  "Spell Slot Level",
-                  "Sorcery Point Cost"
-                ],
-                "colStyles": [
-                  "col-6 text-center",
-                  "col-6 text-center"
-                ],
-                "rows": [
-                  [
-                    "1st",
-                    "2"
-                  ],
-                  [
-                    "2nd",
-                    "3"
-                  ],
-                  [
-                    "3rd",
-                    "5"
-                  ],
-                  [
-                    "4th",
-                    "6"
-                  ],
-                  [
-                    "5th",
-                    "7"
-                  ]
-                ]
-              }
-            ]
+            "slotLevel": 1,
+            "cost": 2,
+            "minSorcererLevel": 2
           },
           {
-            "type": "entries",
-            "name": "Converting a Spell Slot to Sorcery Points",
-            "entries": [
-              "As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level."
-            ]
+            "slotLevel": 2,
+            "cost": 3,
+            "minSorcererLevel": 3
+          },
+          {
+            "slotLevel": 3,
+            "cost": 5,
+            "minSorcererLevel": 5
+          },
+          {
+            "slotLevel": 4,
+            "cost": 6,
+            "minSorcererLevel": 7
+          },
+          {
+            "slotLevel": 5,
+            "cost": 7,
+            "minSorcererLevel": 9
           }
-        ]
-      }
+        ],
+        "maxCreatedSlotLevel": 5,
+        "createdSlotExpires": "long-rest"
+      },
+      "spellPointCastingIntegration": "shared-resource-subsystem",
+      "noPoolMerging": true
     }
-  ],
-  "parentClass": "class.sorcerer",
-  "classLevel": 2
+  }
 }
