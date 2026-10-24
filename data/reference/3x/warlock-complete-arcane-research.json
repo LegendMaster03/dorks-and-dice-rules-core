@@ -1,0 +1,162 @@
+{
+  "id": "historical-source.dnd3.5.complete-arcane.warlock",
+  "title": "Warlock (Complete Arcane, D&D 3.5)",
+  "status": "historical-reference-researched-not-approved-native-rule",
+  "edition": "D&D 3.5",
+  "publication": "Complete Arcane",
+  "publicationYear": 2004,
+  "publisher": "Wizards of the Coast",
+  "primarySourceLocation": {
+    "class": "pp. 5–10",
+    "invocationDescriptions": "Chapter 4"
+  },
+  "sourceIsCoreSrd": false,
+  "authorizedSourcePurchasePage": "https://www.dmsguild.com/en/product/3733/complete-arcane-3-5",
+  "secondaryMechanicalIndexes": [
+    "https://srd.dndtools.org/srd/classes/baseCarc/warlock.html",
+    "https://srd.dndtools.org/srd/magic/invocations/invocations.html"
+  ],
+  "secondarySourceCaution": "Third-party websites may label their pages SRD, but the Complete Arcane Warlock is not part of the original 3.5e core SRD. Index material is used to corroborate mechanical facts; consult an authorized copy for final textual verification.",
+  "rightsAndScope": "Independently prepared historical mechanical research notes and provenance only; no reproduction of copyrighted class text or book pages. This entry is not a license to redistribute Complete Arcane.",
+  "chassis": {
+    "historicalHitDie": "d6",
+    "historicalBaseAttackProgression": "three-quarter",
+    "saves": {
+      "good": [
+        "will"
+      ],
+      "poor": [
+        "fortitude",
+        "reflex"
+      ]
+    },
+    "historicalSkillPointsPerLevel": "2+intelligence-modifier",
+    "weaponArmor": {
+      "simpleWeapons": true,
+      "lightArmor": true,
+      "shields": false
+    },
+    "originalAlignmentRestriction": "any-chaotic-or-any-evil",
+    "note": "These historical values are evidence, not automatic native selections."
+  },
+  "historicalInvocationSystem": {
+    "invocationType": "at-will-spell-like-abilities-in-original-edition",
+    "gradeUnlocksByWarlockClassLevel": [
+      {
+        "level": 1,
+        "grade": "least"
+      },
+      {
+        "level": 6,
+        "grade": "lesser"
+      },
+      {
+        "level": 11,
+        "grade": "greater"
+      },
+      {
+        "level": 16,
+        "grade": "dark"
+      }
+    ],
+    "sampleTotalKnownByWarlockClassLevel": [
+      {
+        "level": 1,
+        "count": 1
+      },
+      {
+        "level": 6,
+        "count": 4
+      },
+      {
+        "level": 11,
+        "count": 7
+      },
+      {
+        "level": 16,
+        "count": 10
+      },
+      {
+        "level": 20,
+        "count": 12
+      }
+    ],
+    "selectionFamilies": [
+      "blast-shape",
+      "eldritch-essence",
+      "other-invocation"
+    ],
+    "blastCombination": "one-blast-shape-plus-one-eldritch-essence-may-be-applied-to-the-same-blast-in-historical-rules",
+    "legacyUseConditions": "Invocations were not ordinary spell slots; timing, interruption and resistance operated as spell-like abilities.",
+    "comparisonNote": "2014 supports up to 8 invocations known; 2024 supports up to 10. Do not combine separate invocation progressions automatically."
+  },
+  "historicalEldritchBlast": {
+    "type": "at-will-single-target-ranged-touch-attack",
+    "originalRangeFeet": 60,
+    "originalDamageMilestones": [
+      {
+        "level": 1,
+        "damage": "1d6"
+      },
+      {
+        "level": 10,
+        "damage": "5d6"
+      },
+      {
+        "level": 20,
+        "damage": "9d6"
+      }
+    ],
+    "note": "Not automatically additive to the modern scalable cantrip's multiple attack beams."
+  },
+  "historicalClassFeatures": [
+    {
+      "level": 2,
+      "name": "Detect Magic",
+      "mechanicSummary": "At-will ability."
+    },
+    {
+      "level": 3,
+      "name": "Damage Reduction",
+      "mechanicSummary": "Cold-iron-qualified resistance; progresses at 7, 11, 15, and 19."
+    },
+    {
+      "level": 4,
+      "name": "Deceive Item",
+      "mechanicSummary": "More reliable use of magic items through the historical Use Magic Device skill."
+    },
+    {
+      "level": 8,
+      "name": "Fiendish Resilience",
+      "mechanicSummary": "Limited-use brief self-healing, improving at levels 13 and 18."
+    },
+    {
+      "level": 10,
+      "name": "Energy Resistance",
+      "mechanicSummary": "Choose two historical energy types for resistance; increases at 20."
+    },
+    {
+      "level": 12,
+      "name": "Imbue Item",
+      "mechanicSummary": "With relevant item-creation prerequisite, substitute a historical item-use skill check for missing spells used in crafting."
+    }
+  ],
+  "additional3xSourceLeads": [
+    {
+      "title": "Complete Mage",
+      "year": 2006,
+      "scope": "Additional Warlock invocations and Warlock-related prestige classes; not imported in this research entry."
+    }
+  ],
+  "reconcileAgainst": [
+    "data/native/classes/base/warlock.json",
+    "data/reference/srd/structured/class/class-warlock.json"
+  ],
+  "ownerDecisionsRequired": [
+    "How to reconcile 3.5 at-will invocations with 2014/2024 Eldritch Invocations and Pact Magic without double-counting abilities.",
+    "How 3.5 Eldritch Blast advancement and blast shapes/essences interact with the 5.x Eldritch Blast cantrip and modern invocations.",
+    "Whether distinct historical defensive/item-use class features are additive and what their native shared-mechanic conversions are.",
+    "Whether to use the 2024 invocation count, the 3.5 count, or another approved native count."
+  ],
+  "noNativeClassMutation": true
+}
