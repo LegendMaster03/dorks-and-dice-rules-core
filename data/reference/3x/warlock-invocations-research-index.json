@@ -1,0 +1,897 @@
+{
+  "kind": "research-historical-invocation-catalog",
+  "scope": "Dungeons & Dragons 3.5e Warlock invocation entries identified in five published supplements",
+  "status": "research-only-not-approved-native-options",
+  "rights": "Invocations are indexed by names and factual grade/type/source metadata, without reproducing published descriptive text. Third-party listing is corroborative, not proof of open-license status.",
+  "reviewed": "2026-10-24",
+  "sources": {
+    "CAr": {
+      "title": "Complete Arcane",
+      "year": 2004,
+      "url": "https://srd.dndtools.org/srd/magic/invocations/invocations/invocationscarc.html",
+      "scope": "Warlock base class and original invocation list"
+    },
+    "CM": {
+      "title": "Complete Mage",
+      "year": 2006,
+      "url": "https://srd.dndtools.org/srd/magic/invocations/invocations/invocationscm.html",
+      "scope": "Warlock invocation expansion"
+    },
+    "DrM": {
+      "title": "Dragon Magic",
+      "year": 2006,
+      "url": "https://srd.dndtools.org/srd/magic/invocations/invocations/invocationsdragonmagic.html",
+      "scope": "Warlock invocation expansion; do not import Dragonfire Adept-only draconic invocations"
+    },
+    "City": {
+      "title": "Cityscape",
+      "year": 2006,
+      "url": "https://srd.dndtools.org/srd/magic/invocations/invocations/invocationscity.html",
+      "scope": "Urban-themed Warlock invocations"
+    },
+    "DotU": {
+      "title": "Drow of the Underdark",
+      "year": 2007,
+      "url": "https://srd.dndtools.org/srd/magic/invocations/invocations/invocationsdotu.html",
+      "scope": "Warlock invocations"
+    }
+  },
+  "sourceAbbreviations": {
+    "CAr": "Complete Arcane",
+    "CM": "Complete Mage",
+    "DrM": "Dragon Magic",
+    "City": "Cityscape",
+    "DotU": "Drow of the Underdark"
+  },
+  "totalIndexed": 86,
+  "countsBySource": {
+    "CAr": 50,
+    "CM": 22,
+    "DrM": 9,
+    "City": 3,
+    "DotU": 2
+  },
+  "countsByGrade": {
+    "least": 26,
+    "lesser": 29,
+    "greater": 20,
+    "dark": 11
+  },
+  "caveats": [
+    "This is an indexed five-book research inventory, not a declaration that every WotC 3.5e or Dragon Magazine invocation has been found.",
+    "Source category corrections checked against the individual books' indexes: Dragonward is another invocation, Eldritch Line is a blast shape, Penetrating Blast is an essence, and Hindering Blast is an essence.",
+    "An entry is not necessarily suitable for native Warlock; prerequisites, mechanics, licensing and overlaps require later review.",
+    "Dragonfire Adept-specific draconic invocations in Dragon Magic are not automatically Warlock invocations.",
+    "Invocation names and equivalence labels are not source rule text."
+  ],
+  "original3xWarlock": {
+    "hitDie": "d6",
+    "attackProgression": "three-quarter",
+    "goodSaves": [
+      "will"
+    ],
+    "poorSaves": [
+      "fortitude",
+      "reflex"
+    ],
+    "invocationsKnownPerLevel": [
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6,
+      7,
+      7,
+      8,
+      8,
+      9,
+      10,
+      10,
+      11,
+      11,
+      12
+    ],
+    "gradeUnlockAtClassLevel": {
+      "least": 1,
+      "lesser": 6,
+      "greater": 11,
+      "dark": 16
+    },
+    "eldritchBlastDiceMilestones": [
+      {
+        "classLevel": 1,
+        "dice": 1
+      },
+      {
+        "classLevel": 3,
+        "dice": 2
+      },
+      {
+        "classLevel": 5,
+        "dice": 3
+      },
+      {
+        "classLevel": 7,
+        "dice": 4
+      },
+      {
+        "classLevel": 9,
+        "dice": 5
+      },
+      {
+        "classLevel": 11,
+        "dice": 6
+      },
+      {
+        "classLevel": 14,
+        "dice": 7
+      },
+      {
+        "classLevel": 17,
+        "dice": 8
+      },
+      {
+        "classLevel": 20,
+        "dice": 9
+      }
+    ],
+    "eldritchBlast": "at-will spell-like ray, historical ranged touch and spell resistance rules; distinct from invocations known",
+    "useLimit": "at-will invocation use in original 3.5e rules, subject to source-specific action, defenses and interruption mechanics",
+    "shapeAndEssence": "at most one of each on a single historical Eldritch Blast",
+    "characterTypeRestrictions": "historical alignment required chaotic or evil; not adopted as native requirement"
+  },
+  "modernSRDComparativeFacts": {
+    "invocationKnownAt20": {
+      "srd51": 8,
+      "srd52": 10
+    },
+    "invocationsKnownByClassLevel": {
+      "srd51": [
+        0,
+        2,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        8,
+        8,
+        8
+      ],
+      "srd52": [
+        1,
+        3,
+        3,
+        3,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        7,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9,
+        10,
+        10,
+        10
+      ]
+    },
+    "modernInvocationListSource": "data/native/features/classes/warlock/eldritch-invocation-options-level-1.json",
+    "srd52ReferencedInvocationOptions": 28,
+    "pactBoonAsSeparateLevel3ClassChoiceInSRD51": true,
+    "pactOfBladeChainTomeAsEldritchInvocationsInSRD52": true,
+    "srd52WarlockSubclassStartsAtLevel": 3,
+    "originalSRD51PatronStartsAtLevel": 1,
+    "eldritchBlastModernStatus": "Warlock cantrip rather than an automatically granted baseline class feature"
+  },
+  "entries": [
+    {
+      "name": "Frightful Blast",
+      "source": "CAr",
+      "grade": "least",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Sickening Blast",
+      "source": "CAr",
+      "grade": "least",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Eldritch Spear",
+      "source": "CAr",
+      "grade": "least",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Hideous Blow",
+      "source": "CAr",
+      "grade": "least",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Baleful Utterance",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Beguiling Influence",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Breath of the Night",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Dark One's Own Luck",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Darkness",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Devil's Sight",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Earthen Grasp",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Entropic Warding",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Leaps and Bounds",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Miasmic Cloud",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "See the Unseen",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Spiderwalk",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Summon Swarm",
+      "source": "CAr",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Beshadowed Blast",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Brimstone Blast",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Hellrime Blast",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Eldritch Chain",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Charm",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Curse of Despair",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "The Dead Walk",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Fell Flight",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Flee the Scene",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Hungry Darkness",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Stony Grasp",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Voidsense",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Voracious Dispelling",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Walk Unseen",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Wall of Gloom",
+      "source": "CAr",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Bewitching Blast",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Noxious Blast",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Repelling Blast",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Vitriolic Blast",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Eldritch Cone",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Chilling Tentacles",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Devour Magic",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Enervating Shadow",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Tenacious Plague",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Wall of Perilous Flame",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Warlock's Call",
+      "source": "CAr",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Utterdark Blast",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Eldritch Doom",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Dark Discorporation",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Dark Foresight",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Path of Shadow",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Retributive Invisibility",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Word of Changing",
+      "source": "CAr",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Hammer Blast",
+      "source": "CM",
+      "grade": "least",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "All-Seeing Eyes",
+      "source": "CM",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Call of the Beast",
+      "source": "CM",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Otherworldly Whispers",
+      "source": "CM",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Serpent's Tongue",
+      "source": "CM",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Soulreaving Aura",
+      "source": "CM",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Swimming the Styx",
+      "source": "CM",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Baneful Blast",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Cold Comfort",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Crawling Eye",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Disembodied Hand",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Mask of Flesh",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Relentless Dispelling",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Witchwood Step",
+      "source": "CM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Hindering Blast",
+      "source": "CM",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Caustic Mire",
+      "source": "CM",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Hellspawned Grace",
+      "source": "CM",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Nightmares Made Real",
+      "source": "CM",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Painful Slumber of Ages",
+      "source": "CM",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Binding Blast",
+      "source": "CM",
+      "grade": "dark",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Caster's Lament",
+      "source": "CM",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Steal Summoning",
+      "source": "CM",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Eldritch Glaive",
+      "source": "DrM",
+      "grade": "least",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Deteriorating Blast",
+      "source": "DrM",
+      "grade": "lesser",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Dread Seizure",
+      "source": "DrM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Ignore the Pyre",
+      "source": "DrM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Weighty Utterance",
+      "source": "DrM",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Eldritch Line",
+      "source": "DrM",
+      "grade": "greater",
+      "category": "blast-shape",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Penetrating Blast",
+      "source": "DrM",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Dragonward",
+      "source": "DrM",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Impenetrable Barrier",
+      "source": "DrM",
+      "grade": "dark",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Cocoon of Refuse",
+      "source": "City",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Thieves' Bane",
+      "source": "City",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Devil's Whispers",
+      "source": "City",
+      "grade": "greater",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Spider-Shape",
+      "source": "DotU",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Sudden Swarm",
+      "source": "DotU",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    }
+  ]
+}
