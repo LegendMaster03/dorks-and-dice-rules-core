@@ -66,6 +66,12 @@ Higher-level alternative animals unlock at Druid levels 4/7/10/13/16, with effec
 
 **Wild Companion** at level 2 is a **separate temporary Fey familiar** summoned via Find Familiar, expending a spell slot or one **finite** Wild Shape charge. It disappears at the next Long Rest and **may coexist** with the persistent companion. Both act on the controller's initiative under the native controlled-creature initiative convention; companion presence does not create free extra turns or attacks beyond their respective rules.
 
+## Potential companion-choice revision — NOT approved (2026-10-23)
+
+The owner is considering **a shared bonded/persistent versus ephemeral/conjured companion choice for eligible base classes**, and may revisit the Druid's already-approved right to have **both** its persistent 3.5e **Animal Companion** and temporary 2024 **Wild Companion familiar**. **No revision has yet been authorized.** Until a later explicit decision, `class.druid.companions-can-coexist` and the current native class grant remain authoritative.
+
+**Mechanics matter:** The Druid's persistent **Animal Companion** is **not itself a familiar**, and has a different progression, creature type, command capabilities and source level (1 instead of Wild Companion's 2). If the owner elects exclusivity, represent a deliberate Druid **companion-path choice**, rather than relabeling the Animal Companion as a bonded familiar or silently swapping away its historical progression. A common underlying choice framework could be shared with Sorcerer and Wizard familiar paths while preserving class-specific grants. Access timing and the benefits traded must be reconciled before editing native Druid data. Detailed **Bonded Familiar** mechanics are intentionally deferred for the owner's further proposal.
+
 ## Metal equipment and identity
 
 The 3.5e nonmetal-armor/shield restriction is not mandatory in native. A Druid wearing otherwise proficient metal armor or shields does **not** lose magic or class features. Nonmetal preferences are optional roleplay traditions. There is no native alignment requirement or automatic loss of Druid abilities for alignment, devotion or teaching Druidic.

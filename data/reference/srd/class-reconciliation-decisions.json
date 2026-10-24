@@ -898,7 +898,7 @@
     {
       "nativeRuleId": "class.sorcerer.arcane-apotheosis-metamagic-cap",
       "state": "approved-native-rule",
-      "decision": "At Sorcerer class level 20, while Innate Sorcery is active, Arcane Apotheosis discounts at most 2 Sorcery Points from ONE Metamagic option EACH turn, minimum resulting cost 0; it does not make arbitrarily costly options free. The second applied option, if permitted by Sorcery Incarnate, pays full cost. This approval resolves only the capstone Metamagic subsidy; whether and how the historical Sorcerous Restoration recovery feature coexists remains separately unresolved.",
+      "decision": "At Sorcerer class level 20, while Innate Sorcery is active, Arcane Apotheosis discounts at most 2 Sorcery Points from ONE Metamagic option EACH turn, minimum resulting cost 0; it does not make arbitrarily costly options free. The second applied option, if permitted by Sorcery Incarnate, pays full cost. This approval resolves only the capstone Metamagic subsidy; Sorcerous Restoration is separately resolved by the owner-approved additive level-20 recovery rule, without changing this capstone's Metamagic discount.",
       "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
       "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
       "evidence": [
@@ -950,6 +950,30 @@
           "source": "NATIVE-CLASS",
           "path": "data/native/classes/base/druid.json",
           "name": "Druid full eligible list"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.sorcerous-restoration-additive-at-20",
+      "state": "approved-native-rule",
+      "decision": "At Sorcerer class level 5 gain 2024 Sorcerous Restoration: regain spent Sorcery Points up to floor(Sorcerer level/2) at the end of one Short Rest, once per Long Rest. At Sorcerer class level 20, ADD the historical 2014 benefit of 4 additional spent Sorcery Points at the end of EVERY Short Rest. These amounts explicitly stack when the first feature is available: up to 14 points on that qualifying level-20 Short Rest, and 4 on later Short Rests while the once-per-Long-Rest component is unavailable. Never exceed the Sorcery Point maximum. Do not alter Long Rest Sorcery Point refresh, conversion with spell slots / optional spell points, or Arcane Apotheosis's separately approved Metamagic discount.",
+      "decisionBasis": "Owner explicitly instructed additive recovery, not mutually exclusive restoration, because the extra four points are a level-20 feature, 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "Sorcerous Restoration at level 20"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "Sorcerous Restoration at level 5"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "Sorcery Point pool and Flexible Casting"
         }
       ]
     }
