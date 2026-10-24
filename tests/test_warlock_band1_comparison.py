@@ -45,10 +45,27 @@ class WarlockBand1ComparisonTests(unittest.TestCase):
         self.assertIn("ninety-supplement-invocation-crosswalk",self.crosswalk["expresslyOutOfScope"])
         for decision in self.crosswalk["decisions"]:
             self.assertIn(decision["status"],{
-                "owner-decision-needed","source-equivalence-check",
+                "owner-decision-needed","approved-native-rule","source-equivalence-check",
                 "shared-class-rule-already-established",
                 "shared-casting-constraints-already-established",
                 "shared-epic-boon-rule-already-established",
                 "follow-on-to-invocation-progression"})
+
+    def test_historical_case_1_approved_without_premature_implementation(self):
+        decision=next(x for x in self.crosswalk["decisions"]
+                      if x["id"]=="historical-defense-utility")
+        self.assertEqual("approved-native-rule",decision["status"])
+        disposition=decision["approvedDisposition"]
+        self.assertEqual(5,len(disposition["retainedClassFeatureFamilies"]))
+        self.assertIn("Eldritch Sight",disposition["detectMagic"])
+        self.assertEqual([3,7,11,15,19],
+                         [x["classLevel"] for x in disposition["damageReduction"]])
+        self.assertEqual([1,2,5],disposition["fiendishResilience"]["healingPerRound"])
+        self.assertEqual("long-rest",disposition["fiendishResilience"]["recharge"])
+        self.assertEqual("pending-native-reconciliation",self.warlock["baselineStatus"])
+        ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
+        self.assertEqual(1,sum(x["nativeRuleId"]=="class.warlock.historical-class-features-band1"
+                               for x in ledger))
+
 
 if __name__=="__main__": unittest.main()

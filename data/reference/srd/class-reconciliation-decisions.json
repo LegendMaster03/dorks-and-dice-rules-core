@@ -1073,6 +1073,31 @@
           "name": "3.5 Wizard Scribe Scroll"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.warlock.historical-class-features-band1",
+      "state": "approved-native-rule",
+      "decision": "Warlock retains 5 historical 3.5e base-class feature families as additive native grants: Damage Reduction (1/2/3/4/5 at levels 3/7/11/15/19, bypassed by cold iron), Deceive Item (level 4, historical take 10 on eligible magic-item competency checks even when distracted/threatened, without waiving prerequisites), Fiendish Resilience (levels 8/13/18, heal 1/2/5 HP per round for up to 20 rounds, one activation per Long Rest), Energy Resistance (level 10 choose two historical energy types for flat 5 damage mitigation, improving to 10 at level 20; electricity/lightning and sonic/thunder mapping), and Imbue Item (level 12, appropriate item-creation entitlement required, allow shared magic-item competency substitution for missing prerequisite spells at historical DC 15+spell level arcane or 25+spell level divine, respecting historical failed-check restrictions). Reuse existing shared damage reduction, recovery, competency and crafting systems rather than inventing separate implementations. Historical automatic level-2 Detect Magic is EXCLUDED: at-will Detect Magic remains an optional Eldritch Sight invocation, using a normal invocation selection. These rules do not automatically activate any specific invocation or patron subclass.",
+      "decisionBasis": "Owner approval on 2026-10-24: accepted five historical feature families as outlined in Case 1; explicitly rejected an automatic at-will Detect Magic feature because it would devalue the overlapping Eldritch Sight invocation. Confirmed maintaining Detect Magic through the invocation only.",
+      "nativeLocation": "data/native/classes/base/warlock.json",
+      "implementationStatus": "owner-approved-awaiting-native-band1-reconciliation",
+      "evidence": [
+        {
+          "source": "SRD35-NONOPEN",
+          "path": "data/reference/3x/warlock-complete-arcane-research.json",
+          "name": "Historical Complete Arcane Warlock feature progression (research provenance; no copyright license implied)"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/native/features/optional/eldritch-sight.json",
+          "name": "2014 Eldritch Sight invocation"
+        },
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/native-rules-design-specification.md",
+          "name": "Shared source reconciliation and rest-based recharge policy"
+        }
+      ]
     }
   ]
 }

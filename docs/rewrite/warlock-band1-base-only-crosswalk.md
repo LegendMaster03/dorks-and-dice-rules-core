@@ -46,7 +46,7 @@ The original 3.5e Warlock class begins in *Complete Arcane* (2004), with the Mar
 | Invocation choices known | 3.5e ends at 12, 2014 at 8, 2024 at 10 | One nonadditive native progression, preserving underlying option prerequisites |
 | Eldritch Blast | Automatically granted 3.5e spell-like invocation versus optional modern cantrip | One base entitlement and **one** attack/damage progression; do not stack 3.5e dice with modern beams |
 | Pact Boon | Independent choice at 2014 level 3 versus part of 2024 invocation catalog | Choose one access path; do not grant double Boons |
-| Original 3.5e class powers | Distinct built-in defense, healing, item-use and magic-detection features | Consider retaining them as class grants with shared native resolution, not as dozens of new subclasses |
+| Original 3.5e class powers | Distinct built-in defense, healing and item-use features; Detect Magic overlaps Eldritch Sight | **APPROVED:** retain Damage Reduction, Deceive Item, Fiendish Resilience, Energy Resistance, Imbue Item; keep Detect Magic exclusively as an Eldritch Sight invocation, not an automatic grant |
 | Invocation grades | 3.5e Least/Lesser/Greater/Dark at 1/6/11/16 versus modern per-option level prerequisites | Record unlock metadata now; detailed prerequisites are catalog work |
 | Capstone and recovery | 2014 full Pact slot recovery after a 1-minute entreaty at 20; 2024 Magical Cunning at 2 upgraded by Eldritch Master at 20 | Use the 2024 upgrade path to avoid redundant full-charge grants |
 
@@ -58,12 +58,24 @@ The original 3.5e Eldritch Blast is automatically granted and counts as an **inv
 
 **Modern overlap warning:** Historical Detect Magic and modern Eldritch Sight overlap; Deceive Item and Imbue Item rely on shared magic-item competencies/crafting; Fiendish Resilience is not identical to the modern Fiendish Vigor invocation; Magical Cunning and Eldritch Master are connected. Preserve their distinction without double counting the same benefit.
 
+### Case 1 approval — historical base-class grants (owner, 2026-10-24)
+
+The owner approved the original historical base-class feature progression **except** the automatic Detect Magic grant. At-will Detect Magic remains selectable through **Eldritch Sight**, and no Warlock receives it automatically at level 2.
+
+- **Damage Reduction:** 1/2/3/4/5 at class levels 3/7/11/15/19, retaining the cold-iron bypass and flat native Damage Reduction.
+- **Deceive Item:** Level 4, retain historical take 10 on eligible magical-item checks while threatened or distracted, mapped to the shared competency system.
+- **Fiendish Resilience:** Levels 8/13/18, 1/2/5 HP recovered per round over up to 20 rounds, one use restored on each Long Rest.
+- **Energy Resistance:** Levels 10/20, two selected types, fixed 5 then 10 damage mitigated; historical electricity and sonic map to native lightning and thunder.
+- **Imbue Item:** Level 12, relevant item-creation entitlement required; permit historical substitute magic-item-use check for missing spell prerequisites, arcane DC 15 + spell level or divine DC 25 + spell level, preserving failure/retry restrictions and using shared crafting implementation.
+
+This decision does **not** resolve invocation selection counts, Eldritch Blast, or Pact Boon packaging. The owner-approved features will be entered into the native 1–20 progression when those remaining class cases are resolved; this source comparison does not prematurely activate them.
+
 ### Inactive content to preserve
 
 All Warlock imported optional-feature records, including Blade/Chain/Tome Boons and each Eldritch Invocation, remain candidates for **later** option reconciliation. Patron subclass features remain candidates for the later subclass pass. `data/reference/3x/warlock-invocations-research-index.json` is an archival research inventory and does not need to be resolved to finish Warlock Band 1.
 
 No source candidates were deleted, no source coverage statuses were changed, and no Warlock native class feature was activated in this comparison.
 
-**Next action:** Obtain the few class-level owner decisions above, then complete the native levels 1–20 definition, reconciled feature grants, source manifest accounting, and tests. A separate tester-facing PDF follows approval and early feedback rather than controlling this base-class scope.
+**Next action:** Resolve invocation progression, Eldritch Blast and Pact Boon class-level choices, then complete the native levels 1–20 definition, reconciled feature grants, source manifest accounting, and tests. A separate tester-facing PDF follows approval and early feedback rather than controlling this base-class scope.
 
 **Sources:** [3.5e Warlock class](https://srd.dndtools.org/srd/classes/baseCarc/warlock.html), [Complete Arcane 2005 errata](https://www.scribd.com/document/511430654/Complete-Arcane-Errata-03-16-2005), `data/native/classes/base/warlock.json`, and `data/reference/srd/structured/class/class-warlock.json`.

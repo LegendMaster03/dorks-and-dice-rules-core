@@ -60,11 +60,106 @@
     },
     {
       "id": "historical-defense-utility",
-      "status": "owner-decision-needed",
+      "status": "approved-native-rule",
       "subject": "Whether to retain additive distinct 3.5 class features",
       "sourceDifferences": "3.5 Detect Magic at 2, damage reduction 3/7/11/15/19, Deceive Item 4, Fiendish Resilience 8/13/18, Energy Resistance 10/20, Imbue Item 12; not matched by modern base features",
-      "recommendation": "Favor preserving distinct identity while routing checks, resistance, healing and crafting to shared systems; avoid automatic stacking with invocation choices of equivalent effect",
-      "minimumImplementation": "Grant milestones and defer only underlying shared procedures; source alignment restriction should not become new mandatory native prerequisite"
+      "recommendation": "Approved: retain five distinct historical base-class feature families under shared native mechanics; keep Detect Magic at will solely as an Eldritch Sight selectable invocation, not an automatic class feature.",
+      "minimumImplementation": "Grant milestones and defer only underlying shared procedures; source alignment restriction should not become new mandatory native prerequisite",
+      "approvedDisposition": {
+        "retainedClassFeatureFamilies": [
+          "damage-reduction",
+          "deceive-item",
+          "fiendish-resilience",
+          "energy-resistance",
+          "imbue-item"
+        ],
+        "detectMagic": "not-automatic; retained through optional Eldritch Sight invocation selection",
+        "damageReduction": [
+          {
+            "classLevel": 3,
+            "value": 1
+          },
+          {
+            "classLevel": 7,
+            "value": 2
+          },
+          {
+            "classLevel": 11,
+            "value": 3
+          },
+          {
+            "classLevel": 15,
+            "value": 4
+          },
+          {
+            "classLevel": 19,
+            "value": 5
+          }
+        ],
+        "damageReductionException": "cold-iron",
+        "damageReductionMechanic": "native-flat-damage-reduction-not-half-damage-resistance",
+        "deceiveItem": {
+          "classLevel": 4,
+          "benefit": "historical-take-10-when-distracted-or-threatened",
+          "check": "native-shared-magical-item-competency",
+          "doesNotWaiveRequirements": true
+        },
+        "fiendishResilience": {
+          "classLevels": [
+            8,
+            13,
+            18
+          ],
+          "healingPerRound": [
+            1,
+            2,
+            5
+          ],
+          "durationRounds": 20,
+          "uses": 1,
+          "recharge": "long-rest",
+          "activationTiming": "shared-action-rules"
+        },
+        "energyResistance": {
+          "classLevels": [
+            10,
+            20
+          ],
+          "choices": 2,
+          "sourceTypes": [
+            "acid",
+            "cold",
+            "electricity",
+            "fire",
+            "sonic"
+          ],
+          "nativeTypeMappings": {
+            "electricity": "lightning",
+            "sonic": "thunder"
+          },
+          "values": [
+            5,
+            10
+          ],
+          "mechanic": "fixed-damage-mitigation-not-half-damage-resistance"
+        },
+        "imbueItem": {
+          "classLevel": 12,
+          "requiresAppropriateItemCreationEntitlement": true,
+          "substitutesMissingSpellPrerequisiteThroughSharedMagicalItemCheck": true,
+          "sourceDcs": {
+            "arcane": "15 + spell level",
+            "divine": "25 + spell level"
+          },
+          "failedCheck": "crafting stopped with creation costs unspent; cannot reattempt missing spell substitution until new Warlock level",
+          "implementation": "use-shared-item-creation-and-competency-systems"
+        },
+        "notApproved": [
+          "individual-eldritch-invocation-reconciliation",
+          "other-warlock-base-class-decisions",
+          "patron-subclasses"
+        ]
+      }
     },
     {
       "id": "invocation-grade-gating",
@@ -848,5 +943,16 @@
     "spell-and-item-catalog-reconciliation",
     "player-facing-warlock-pdf-before-feedback"
   ],
-  "nativeWarlockDefinitionUnmodified": true
+  "nativeWarlockDefinitionUnmodified": true,
+  "approvalProgress": {
+    "approvedCases": [
+      "historical-defense-utility"
+    ],
+    "stillOpenCases": [
+      "invocation-selection-progression",
+      "eldritch-blast",
+      "pact-boons"
+    ],
+    "status": "partial-approval-only"
+  }
 }
