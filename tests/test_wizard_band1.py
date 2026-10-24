@@ -50,7 +50,7 @@ class WizardBand1Tests(unittest.TestCase):
     def test_manifest(self):
         m=read("data/reference/srd/native-coverage-manifest.json")
         rows={x["path"]:x for x in m["coverage"] if "path" in x}
-        self.assertEqual(2522,len(rows))
+        self.assertEqual(2522,len(m["coverage"]))
         for p in [R/"data/native/classes/base/wizard.json",*(R/"data/native/features/classes/wizard").glob("*.json")]:
             x=read(p.relative_to(R));entry=rows.get(p.relative_to(R).as_posix())
             if entry is None:self.assertIn(p.stem,{"scribe-scroll-level-1","wizard-specialization-level-5","wizard-specialization-level-10","wizard-specialization-level-15","wizard-specialization-level-20"})
