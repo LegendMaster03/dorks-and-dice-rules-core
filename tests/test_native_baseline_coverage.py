@@ -105,7 +105,27 @@ class NativeSrdBaselineTests(unittest.TestCase):
                                 for v in native["candidateDefinitions"]))
             self.assertNotIn("source", native)
         tracked = {p for p in NATIVE.rglob("*.json") if p.parent != NATIVE}
-        self.assertEqual(tracked, {p for p in paths if p.parent != NATIVE})
+        source_tracked = {p for p in paths if p.parent != NATIVE}
+        self.assertEqual(set(), source_tracked - tracked)
+        native_only = tracked - source_tracked
+        approved_native_only = {
+            NATIVE / "features/classes/wizard" / f"{name}.json"
+            for name in (
+                "scribe-scroll-level-1",
+                "wizard-specialization-level-5",
+                "wizard-specialization-level-10",
+                "wizard-specialization-level-15",
+                "wizard-specialization-level-20",
+            )
+        }
+        self.assertEqual(approved_native_only, native_only)
+        for path in native_only:
+            entity = load(path)
+            self.assertNotIn(entity["id"], seen)
+            seen.add(entity["id"])
+            self.assertEqual("retained-native-definition", entity["baselineStatus"])
+            self.assertEqual("class.wizard", entity["parentClass"])
+            self.assertIsInstance(entity["definition"]["mechanics"], dict)
 
     def test_approved_skill_competency_and_condition_data_not_overwritten(self):
         skills = load(NATIVE / "skills.json")["skills"]
@@ -142,7 +162,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
     def test_large_entities_have_full_candidate_records_and_merged_lore(self):
         for path, expected in [
-            ("classes/base/wizard.json", 2),
+            # Wizard is now an approved native definition, not a staged candidate.
             ("classes/subclasses/monk/open-hand.json", 2),
             ("spells/acid-splash.json", 2),
             ("species/base/dragonborn.json", 2),
@@ -152,6 +172,10 @@ class NativeSrdBaselineTests(unittest.TestCase):
             self.assertEqual(expected, len(d["candidateDefinitions"]), path)
             self.assertTrue(all(v["content"] for v in d["candidateDefinitions"]))
             self.assertNotIn("fluff", path)
+        wizard = load(NATIVE / "classes/base/wizard.json")
+        self.assertEqual("retained-native-definition", wizard["baselineStatus"])
+        self.assertNotIn("candidateDefinitions", wizard)
+        self.assertEqual(20, len(wizard["definition"]["progression"]))
         aboleth = load(NATIVE / "bestiary/aboleth.json")
         self.assertEqual("retained-native-definition", aboleth["baselineStatus"])
         self.assertIn("lore", aboleth["definition"])

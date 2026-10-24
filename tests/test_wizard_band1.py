@@ -49,7 +49,7 @@ class WizardBand1Tests(unittest.TestCase):
         self.assertEqual("deferred-to-shared-companion-system",self.w["companionPathChoice"]["implementation"])
     def test_manifest(self):
         m=read("data/reference/srd/native-coverage-manifest.json")
-        rows={x["path"]:x for x in m["coverage"]}
+        rows={x["path"]:x for x in m["coverage"] if "path" in x}
         self.assertEqual(2522,len(rows))
         for p in [R/"data/native/classes/base/wizard.json",*(R/"data/native/features/classes/wizard").glob("*.json")]:
             x=read(p.relative_to(R));entry=rows.get(p.relative_to(R).as_posix())
