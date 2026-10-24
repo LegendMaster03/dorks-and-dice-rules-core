@@ -929,7 +929,7 @@
     {
       "nativeRuleId": "class.sorcerer.optional-open-spell-access",
       "state": "approved-native-rule",
-      "decision": "Open Spell Access is an optional GM/campaign spellcasting policy separate from the general removal of daily spell preparation. If enabled for an eligible spellcaster, it removes finite known/prepared spell selection counts, granting access to all spells (including cantrips) on the character's class spell list at levels the class permits. No higher class spell level, off-list spells, added casting resources or free castings are thereby conferred. If the option is off, class-specific known-spell progressions remain in force and daily preparation is still removed; Bard retains its currently approved finite known progression, while Cleric and Druid already have separately approved full-list access. Sorcerer's exact finite option-off default progression remains unresolved, as do executable campaign-policy controls. This optional spell-access policy does not remove or change selected Metamagic option limits.",
+      "decision": "Open Spell Access is an optional GM/campaign spellcasting policy separate from the general removal of daily spell preparation. If enabled for an eligible spellcaster, it removes finite known/prepared spell selection counts, granting access to all spells (including cantrips) on the character's class spell list at levels the class permits. No higher class spell level, off-list spells, added casting resources or free castings are thereby conferred. If the option is off, class-specific known-spell progressions remain in force and daily preparation is still removed; Bard retains its currently approved finite known progression, while Cleric and Druid already have separately approved full-list access. Sorcerer's finite option-off default is the 2024 level 1–20 progression, reaching 22 leveled known spells at Sorcerer level 20. Executable campaign-policy controls remain separate implementation work. This optional spell-access policy does not remove or change selected Metamagic option limits.",
       "decisionBasis": "Owner reaffirmed that the system has an optional rule to remove spells-known selection limits, leaving only class and level restrictions, 2026-10-23. Consistent with established independent daily-preparation removal, spell-slot/spell-point resource choice and class-specific spellcasting.",
       "nativeLocation": "docs/rewrite/native-rules-design-specification.md",
       "evidence": [
@@ -1005,6 +1005,20 @@
           "source": "NATIVE",
           "path": "docs/rewrite/druid-band-1-reconciliation.md",
           "name": "Former Druid companion co-existence; superseded by this owner decision"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.defer-familiar-mechanics",
+      "state": "approved-native-rule",
+      "decision": "Sorcerer's base class declares one exclusive companion path (bonded/persistent or self-focused/ephemeral), but does not specify or grant invented familiar statistics, bond advancement, summons, storage, replacement rules, or power allocation during Sorcerer Band 1 class reconciliation. Defer all detailed familiar mechanics to the shared companion-system pass together with Druid companion revisions and Wizard familiars. This deferral does not block declaring the remaining approved Sorcerer class levels and features.",
+      "decisionBasis": "Owner specifically directed that Sorcerer Familiar details, like Druid companion mechanics, must be revisited when the shared companion system is worked on, 2026-10-24.",
+      "nativeLocation": "data/native/classes/base/sorcerer.json",
+      "evidence": [
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/companion-path-and-tamer-mechanics-analysis.md",
+          "name": "Owner companion path decision and deferred bond design"
         }
       ]
     }

@@ -1,6 +1,6 @@
 # Shared companion paths and Tamer-inspired mechanics — source review
 
-**2026-10-23 — Status:** The owner **approved mutually exclusive base-class companion paths**; all **Tamer-inspired gameplay additions remain proposals awaiting separate review**. No executable companion/familiar code has changed. Do not confuse this approval with authorization to import a proprietary Tamer class or its mechanics verbatim.
+**2026-10-24 — Status:** The owner **approved mutually exclusive base-class companion paths**, but intentionally deferred all detailed **Sorcerer Familiar** and Druid companion mechanical reconciliation to a future shared companion-system pass. Sorcerer Band 1 now declares the exclusive choice without assigning invented familiar powers. Existing Druid source-class implementation still needs migration. No Tamer class work is planned or approved.
 
 ## Approved class-access structure
 
