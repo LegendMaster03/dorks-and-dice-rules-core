@@ -314,7 +314,9 @@
           "path": "data/reference/srd/structured/class/class-druid.json",
           "name": "Wild Companion"
         }
-      ]
+      ],
+      "supersededBy": "class.companion-path-exclusive-choice",
+      "supersededReason": "Later owner approval on 2026-10-23 supersedes automatic simultaneous Animal Companion and Wild Companion grants. Existing declarative Druid data still needs migration."
     },
     {
       "nativeRuleId": "class.druid.metal-armor-no-class-power-loss",
@@ -974,6 +976,35 @@
           "source": "SRD51-SRD52",
           "path": "data/reference/srd/structured/class/class-sorcerer.json",
           "name": "Sorcery Point pool and Flexible Casting"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.companion-path-exclusive-choice",
+      "state": "approved-native-rule",
+      "decision": "Eligible base classes that grant a persistent/bonded versus ephemeral/conjured companion pathway provide an EXCLUSIVE class-grant choice by default, instead of both paths automatically. Sorcerer and Wizard true familiar paths are bonded/persistent or ephemeral/conjured. Druid's paths are historical persistent Animal Companion and the 2024 temporary Wild Companion familiar; the historical Animal Companion is not itself a familiar and retains its distinct progression. This newer rule explicitly supersedes class.druid.companions-can-coexist: the old Druid native data remains to be migrated with regression tests and historical grant timing reviewed. Additional creatures require separately explicit grants, and independently learning Find Familiar does not itself grant extra companion-class paths. Companion roster size, deployment limits, swapping/storage, bond progression, and Tamer-specific privileges have NOT been approved by this choice and are deferred to cross-class companion design.",
+      "decisionBasis": "Owner expressly approved the shared cross-class mutually exclusive companion-path structure, including reconsidering the prior Druid double grant, 2026-10-23. Source timing and mechanics are not rewritten by this structural approval.",
+      "nativeLocation": "docs/rewrite/native-rules-design-specification.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Druid Animal Companion"
+        },
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sorcerer and Wizard familiars"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Druid Wild Companion"
+        },
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/druid-band-1-reconciliation.md",
+          "name": "Former Druid companion co-existence; superseded by this owner decision"
         }
       ]
     }
