@@ -301,6 +301,14 @@ The final independent system must be specified enough that a player and GM can c
 
 This is a summary, **not the completed recovered decision inventory**. Each chapter below should link to individually reviewed decisions in the Phase 0 audit rather than infer approval from an existing endpoint.
 
+## Class-specific subclass deconstruction — owner-approved direction (2026-10-24)
+
+**Generalize the subclass-deconstruction principle and shared Rules Core contract, not the Warlock four-pillar implementation.** A specialized character-development model must convert supported existing subclasses into coherent **guided presets** composed from underlying native parts, while allowing advanced players additional **eligible** individual choices and combinations. Both experiences must share feature effects, prerequisites, resources, and advancement entitlements; guided players should not have to manage the advanced option graph, and advanced players must not gain extra power solely for adopting complexity. Parts can be independent, dependency-linked, or inseparable bundles, as dictated by their actual mechanics.
+
+**Different classes may need fundamentally different alternate development models to achieve that same outcome.** Warlock is the first vertical-slice candidate; Druid is an illustrative possible future case, not an approved implementation. Fixed subclasses remain appropriate where they work well; the four Warlock pillars are **not** compulsory class-wide categories. Establish source-aware subclass-to-preset conversion as part of any specialized model, validate it with Warlock and early feedback, and avoid converting other classes prematurely.
+
+See [the subclass-deconstruction design contract](subclass-deconstruction-guided-complexity-policy.md) for required behavior, source-conversion scope, and testing gates, and [the six-class feasibility study](character-development-subclass-parts-feasibility.md) for specific examples.
+
 ## Level Band progression — replaces epic-specific progression
 
 **Owner direction: established at the conceptual level; precise transition defaults and edge cases remain open.**
