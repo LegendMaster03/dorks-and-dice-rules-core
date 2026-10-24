@@ -2,33 +2,20 @@
   "id": "class-feature.rogue.cunning-action-level-2",
   "name": "Cunning Action",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Cunning Action",
-        "className": "Rogue",
-        "classSource": "SRD51",
-        "level": 2,
-        "entries": [
-          "Starting at 2nd level, your quick thinking and agility allow you to move and act quickly. You can take a bonus action on each of your turns in combat. This action can be used only to take the {@action Dash}, {@action Disengage}, or {@action Hide} action."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Cunning Action",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 2,
-        "entries": [
-          "Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of the following actions as a {@variantrule Bonus Action|SRD52}: {@action Dash|SRD52}, {@action Disengage|SRD52}, or {@action Hide|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 2
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Cunning Action",
+    "description": "Native Rogue Cunning Action; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "bonus-action-choices",
+      "options": [
+        "dash",
+        "disengage",
+        "hide"
+      ],
+      "cost": "bonus-action"
+    }
+  }
 }

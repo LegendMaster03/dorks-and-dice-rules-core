@@ -2,33 +2,15 @@
   "id": "class-feature.rogue.elusive-level-18",
   "name": "Elusive",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Elusive",
-        "className": "Rogue",
-        "classSource": "SRD51",
-        "level": 18,
-        "entries": [
-          "Beginning at 18th level, you are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren't {@condition incapacitated}."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Elusive",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 18,
-        "entries": [
-          "You're so evasive that attackers rarely gain the upper hand against you. No attack roll can have {@variantrule Advantage|SRD52} against you unless you have the {@condition Incapacitated|SRD52} condition."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 18
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Elusive",
+    "description": "Native Rogue Elusive; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "deny-attacker-advantage",
+      "appliesUnless": "incapacitated"
+    }
+  }
 }

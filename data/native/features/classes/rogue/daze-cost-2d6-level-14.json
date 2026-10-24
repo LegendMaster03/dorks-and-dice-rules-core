@@ -2,21 +2,18 @@
   "id": "class-feature.rogue.daze-cost-2d6-level-14",
   "name": "Daze (Cost: 2d6)",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Daze (Cost: 2d6)",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 14,
-        "entries": [
-          "The target must succeed on a Constitution saving throw, or on its next turn, it can do only one of the following: move or take an action or a {@variantrule Bonus Action|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 14
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Daze (Cost: 2d6)",
+    "description": "Native Rogue Daze (Cost: 2d6); uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "cunning-strike-effect",
+      "dieCost": 2,
+      "save": "constitution",
+      "saveDC": "8 + Dexterity modifier + proficiency bonus",
+      "onFailedSaveNextTurn": "only-one-of-move-action-bonus-action"
+    }
+  }
 }

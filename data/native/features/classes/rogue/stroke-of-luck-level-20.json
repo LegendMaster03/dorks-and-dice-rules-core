@@ -2,35 +2,19 @@
   "id": "class-feature.rogue.stroke-of-luck-level-20",
   "name": "Stroke of Luck",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Stroke of Luck",
-        "className": "Rogue",
-        "classSource": "SRD51",
-        "level": 20,
-        "entries": [
-          "At 20th level, you have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the {@dice d20} roll as a 20.",
-          "Once you use this feature, you can't use it again until you finish a short or long rest."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Stroke of Luck",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 20,
-        "entries": [
-          "You have a marvelous knack for succeeding when you need to. If you fail a {@variantrule D20 Test|SRD52}, you can turn the roll into a 20.",
-          "Once you use this feature, you can't use it again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 20
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Stroke of Luck",
+    "description": "Native Rogue Stroke of Luck; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "failed-d20-result-replacement",
+      "on": "failed-d20-test",
+      "setResultTo": 20,
+      "refresh": "short-or-long-rest",
+      "notNatural20": true,
+      "noOptionalCriticalEscalation": true
+    }
+  }
 }

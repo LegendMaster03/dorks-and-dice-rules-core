@@ -2,33 +2,19 @@
   "id": "class-feature.rogue.uncanny-dodge-level-5",
   "name": "Uncanny Dodge",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Uncanny Dodge",
-        "className": "Rogue",
-        "classSource": "SRD51",
-        "level": 5,
-        "entries": [
-          "Starting at 5th level, when an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Uncanny Dodge",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 5,
-        "entries": [
-          "When an attacker that you can see hits you with an attack roll, you can take a {@variantrule Reaction|SRD52} to halve the attack's damage against you (round down)."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 5
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Uncanny Dodge",
+    "description": "Native Rogue Uncanny Dodge; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "reaction-damage-halving",
+      "trigger": "visible-attacker-hits-you",
+      "cost": "reaction",
+      "divideDamageBy": 2,
+      "roundDown": true,
+      "competesWithDefensiveRollReaction": true
+    }
+  }
 }

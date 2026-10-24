@@ -2,38 +2,20 @@
   "id": "class-feature.rogue.devious-strikes-level-14",
   "name": "Devious Strikes",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Devious Strikes",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 14,
-        "entries": [
-          "You've practiced new ways to use your Sneak Attack deviously. The following effects are now among your Cunning Strike options.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "refClassFeature",
-                "classFeature": "Daze (Cost: 2d6)|Rogue|SRD52|14|SRD52"
-              },
-              {
-                "type": "refClassFeature",
-                "classFeature": "Knock Out (Cost: 6d6)|Rogue|SRD52|14|SRD52"
-              },
-              {
-                "type": "refClassFeature",
-                "classFeature": "Obscure (Cost: 3d6)|Rogue|SRD52|14|SRD52"
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 14
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Devious Strikes",
+    "description": "Native Rogue Devious Strikes; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "additional-cunning-strike-options",
+      "options": [
+        "class-feature.rogue.daze-cost-2d6-level-14",
+        "class-feature.rogue.knock-out-cost-6d6-level-14",
+        "class-feature.rogue.obscure-cost-3d6-level-14"
+      ],
+      "saveDC": "8 + Dexterity modifier + proficiency bonus"
+    }
+  }
 }

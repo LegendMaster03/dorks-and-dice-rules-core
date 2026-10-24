@@ -2,21 +2,16 @@
   "id": "class-feature.rogue.reliable-talent-level-7",
   "name": "Reliable Talent",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Reliable Talent",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 7,
-        "entries": [
-          "Whenever you make an ability check that uses one of your skill or tool proficiencies, you can treat a {@dice d20} roll of 9 or lower as a 10."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 7
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Reliable Talent",
+    "description": "Native Rogue Reliable Talent; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "minimum-proficient-check-roll",
+      "minimumD20Result": 10,
+      "skillOrToolProficiencyRequired": true
+    }
+  }
 }

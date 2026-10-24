@@ -1,6 +1,6 @@
 # Rogue — Band 1 reconciliation (working decisions)
 
-**Status:** Partial owner-approved design record, 2026-10-23. **Not implemented as a native class.** Scope: Rogue class levels 1–20, no subclasses, prestige classes or executable runtime.
+**Status:** Owner-approved Band 1 Rogue design implemented as declarative native class data (2026-10-23); not a combat runtime. Scope: Rogue class levels 1–20, no subclasses, prestige classes or executable runtime.
 
 ## Approved: Sneak Attack frequency
 
@@ -121,7 +121,7 @@ The decisions settle **frequency and the high-level eligibility principle**, not
 - Interaction with Cunning Strike's Sneak Attack die costs, ordinary critical damage and optional natural-result escalation, special attack sequences, reaction attacks, and broader action economy.
 - **Defensive Roll is approved as a class choice:** when an attack would reduce the Rogue to 0 HP, spending a Reaction and one use permits a Dexterity save to remain at 1 HP on success; refresh one use per Long Rest. **The DC and exceptional 0-HP outcomes still require shared-system resolution** before executable adjudication, but no further choice between Defensive Roll and Uncanny Dodge is needed for the declarative class.
 
-No native Rogue JSON has been implemented or marked reconciled by this document.
+**Implementation:** The approved progression now resides in `data/native/classes/base/rogue.json`, supported by reconciled, granted class-feature definitions and inline historical/optional features. Superseded 2014/2024 source-only candidates and subclass feature placeholders remain inert. The native coverage manifest has been updated. The class remains declarative, not an executable combat runtime. **Defensive Roll's numerical Dexterity save DC and special zero-HP interactions remain deferred to shared-system implementation.**
 
 ## Special ability source comparisons
 

@@ -2,21 +2,17 @@
   "id": "class-feature.rogue.improved-cunning-strike-level-11",
   "name": "Improved Cunning Strike",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Improved Cunning Strike",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 11,
-        "entries": [
-          "You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost for each effect."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 11
+  "classLevel": 11,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Improved Cunning Strike",
+    "description": "Native Rogue Improved Cunning Strike; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "improved-cunning-strike",
+      "maximumEffectsPerHit": 2,
+      "allEffectsPayDiceCost": true,
+      "availableEachQualifyingHit": true
+    }
+  }
 }

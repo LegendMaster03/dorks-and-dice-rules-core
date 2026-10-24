@@ -2,22 +2,18 @@
   "id": "class-feature.rogue.weapon-mastery-level-1",
   "name": "Weapon Mastery",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Weapon Mastery",
-        "className": "Rogue",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of two kinds of {@filter weapons|items|type=simple weapon;martial weapon} of your choice with which you have proficiency, such as {@item Dagger|SRD52|Daggers} and {@item Shortbow|SRD52|Shortbows}.",
-          "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change the kinds of weapons you chose. For example, you could switch to using the {@variantrule weapon mastery properties|SRD52|mastery properties} of {@item Scimitar|SRD52|Scimitars} and {@item Shortsword|SRD52|Shortswords}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.rogue",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Weapon Mastery",
+    "description": "Native Rogue Weapon Mastery; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "weapon-mastery",
+      "choices": 2,
+      "requireProficiency": true,
+      "swapAfterLongRest": true,
+      "doesNotGrantSneakAttackEligibility": true
+    }
+  }
 }
