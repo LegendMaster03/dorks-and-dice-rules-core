@@ -57,21 +57,61 @@
 
 **Owner clarification (2026-10-23):** Track ordinary class ability charges through **rests**, not calendar days, unless there is a concrete reason for an exception (e.g., an item genuinely tied to a daily cycle or optional survival timekeeping). In this reconciliation, the historical “once per day” **Defensive Roll** allowance should be translated as **one use restored on a Long Rest** under the standard policy. The specific defensive outcome, saving throw, triggering conditions, Reaction interaction and final selectable feature remain **open for review**. No additional Reaction or Short-Rest refresh is implied. Longer source-specific cooldowns already approved elsewhere are not automatically rewritten.
 
-## Historical Rogue special abilities — review proposals, not approved feature definitions
+## Approved: Rogue special-ability selections and resolved overlaps (2026-10-23)
 
-The owner favors retaining the **four selectable level-up grants** at Rogue levels **10, 13, 16 and 19**, with each grant chosen from meaningful alternatives. Individual effects, reuse rules and source overlap require review before native implementation.
+**Owner approval:** Retain **four selectable Rogue special-ability grants** at class levels **10, 13, 16 and 19**, using the 3.5e options as the starting point. The following proposals have been approved **except for Defensive Roll's detailed mechanics**, which remain explicitly open. A player makes a choice upon reaching each listed level; the grants are not four automatically acquired special abilities. Choices must be meaningful and do not grant duplicate existing benefits.
 
-| Historical selection | Source capability and recommended reconciliation issue |
+| Selection | Approved native reconciliation |
 | --- | --- |
-| **Crippling Strike** | Add temporary Strength ability damage on successful Sneak Attacks. D&D 3.0 grants **1 Strength damage** per qualifying hit; the revised 3.5e grants **2**. **Use 3.5e's 2 damage as the working starting proposal, not an approved native value.** Do not revert to 3.0's 1 merely because the approved native Sneak Attack can apply per qualifying hit; test repeated-hit interactions under the eventual common attack/ability-damage rules before considering a change. Preserve appropriate recovery and immunities. |
-| **Defensive Roll** | Historically once/day, Reflex save versus the triggering damage to halve an otherwise potentially lethal physical hit. **Under the approved global rest-based recovery default, propose one use per Long Rest rather than one per calendar day.** Its conditional save may make it weaker than modern **Uncanny Dodge** (halves eligible attack damage without a save). Determine a worthwhile, distinct emergency use, same-hit interaction, and Reaction cost; neither the precise redesign nor a free extra Reaction is approved. |
-| **Improved Evasion** | In 3.x, improves Evasion to halve damage on a failed qualifying save. **Modern 5.x Evasion already halves damage on a failure**, so simply granting this option again produces no benefit. Either treat its historical benefit as already integrated into modern Evasion and remove it as a redundant selection, or define a genuinely new upgrade with separately approved costs and effects. |
-| **Opportunist** | Once/round opportunity attack when an ally damages a foe in melee. Preserve the specific trigger and once/round limit, cost the shared native Reaction and avoid an extra attack or Reaction merely from version conversion. General provocation/turn budgets remain system-level dependencies. |
-| **Skill Mastery** | Historical selected skills (3 + Intelligence modifier) permit taking 10 under stress. Modern **Reliable Talent** already establishes a minimum natural result of 10 for qualifying proficiency checks, broadly overlapping this effect. Avoid offering an ineffective choice: either deem it absorbed by Reliable Talent or propose a distinct selectable skill specialization that adds real capability. |
-| **Slippery Mind** | The 3.x choice grants one additional saving throw a round after failing against enchantment/control; 2024 Slippery Mind at level 15 grants Wisdom **and** Charisma saving throw proficiency. These are different effects and may coexist without duplicating bonuses. A single named class feature can acquire improvements at distinct levels if selected earlier; exact eligibility and when the optional retry applies require final review. |
-| **Bonus Feat** | Retain the option to take one otherwise eligible feat instead of the special ability. Apply normal prerequisites and ordinary Band 1 Epic Boon restrictions. Do not merge or duplicate the regular ASI/feat grants. |
+| **Crippling Strike** | An eligible Sneak Attack inflicts **2 Strength ability damage** in addition to its normal effects (the 3.5e amount). Each independently qualifying hit can produce the effect; do not introduce a once-per-turn cap merely to offset the approved Sneak Attack frequency. Apply eventual native ability-damage recovery, immunity and stacking rules. |
+| **Defensive Roll** | **Partially resolved only.** Retain an emergency-defense option as a candidate for this selection, with **one use restored per Long Rest**, following the approved global resource policy. Its exact trigger, save/DC, damage outcome, Reaction requirement and interaction with Uncanny Dodge are **not approved**. It is not yet an executable class choice. |
+| **Improved Evasion** | **Do not offer as a redundant special-ability selection.** Absorb its historical half damage on a *failed* eligible save into the Rogue's ordinary modern-style **Evasion**; the complete modern effect is granted through baseline Evasion, rather than spending a level-up choice on it. This does not eliminate any of the four special-ability grant slots. |
+| **Opportunist** | As a selected ability, **once per round** when an ally damages a foe in melee, the Rogue may make the historically granted opportunity attack using the **ordinary shared Reaction**; it never grants a second Reaction. Normal attack/Sneak Attack eligibility still applies. Exact general opportunity-attack semantics remain shared combat-system work. |
+| **Skill Mastery** | Replace the historically redundant *take 10 under stress* choice with **Expertise in two additional eligible skills or native competencies**. These must be actual additional Expertise selections, not a second application to a skill that already has Expertise; any repeated selection must provide eligible distinct choices. No new separate fixed numerical modifier is invented. |
+| **Slippery Mind** | Retain both **different** benefits: the modern baseline feature at Rogue level **15** grants **Wisdom and Charisma saving throw proficiencies**, while selecting the historical special ability grants **one additional save one round after failing** against a qualifying enchantment or control effect. These are parts of one named feature with a selectable enhancement; baseline proficiency does not require taking the special-ability option. The shared save/timing subsystem handles the retry. |
+| **Bonus Feat** | May select **one otherwise eligible feat** instead of another special ability, honoring ordinary prerequisites and the rule that **Epic Boons require total character level 21+**. This grant is separate from, and does not replace or duplicate, scheduled ASI/feat grants. |
 
-**Review priority:** The most consequential differences are the overlapping **Improved Evasion** and **Skill Mastery**, plus potentially very rapid ability damage from **Crippling Strike**. The owner has not yet approved any suggested redesign of these individual selectable abilities.
+**Special-ability choice pool for implementation:** Crippling Strike, Opportunist, Skill Mastery, Slippery Mind's optional retry, and Bonus Feat are approved; the Defensive Roll choice is **reserved and unresolved** until its exact mechanics are approved. Improved Evasion's original benefit is part of baseline Evasion and is **not** a special-ability choice.
+
+## Approved: Rogue modern tactical features and repeated Sneak Attack interaction
+
+**Owner approved the earlier modernization proposals except unresolved Defensive Roll mechanics:**
+
+- **Weapon Mastery (level 1):** Preserve the 2024 selection of two mastered, proficient weapon types and normal source-authorized substitution; Mastery gives its normal effects only, and proficiency—not Mastery—is required for Sneak Attack weapon eligibility.
+- **Steady Aim (level 3):** Preserve the 2024 Bonus Action Advantage with its stay-stationary and Speed 0 constraints. **Advantage alone never qualifies** an attack for Sneak Attack under the approved native eligibility rule.
+- **Cunning Strike (level 5):** Preserve Poison, Trip and Withdraw as dice-cost options on a qualifying Sneak Attack. The Rogue may use an allowed Cunning Strike on **each independently qualifying Sneak Attack hit**, paying its Sneak Attack damage dice cost **separately for that hit**.
+- **Improved Cunning Strike (level 11):** Permit **up to two Cunning Strike effects on one qualifying hit**, paying each required die cost independently. This is a limit *per hit*, not a new turn-level Sneak Attack restriction.
+- **Devious Strikes (level 14):** Add the Daze, Knock Out and Obscure choices with their 2024 individual Sneak Attack dice costs. Existing required target saves, equipment prerequisites and effects remain; do not silently turn effects into automatic successes or free riders.
+- The shared native damage/conditions/effect engine will adjudicate multi-hit conditions, target saves, poison interactions, and the cost of Sneak Attack dice on critical hits. These are **execution dependencies**, not permission to reconsider the approved per-hit Cunning Strike frequency.
+
+## Approved: Band 1 Rogue progression direction
+
+**Owner approval of the previously proposed progression (2026-10-23):** Use a **d8 Hit Die** and preserve modern saving throw proficiencies, class proficiencies/skills, Cunning Action, Expertise, ASI/eligible-feat grants and normal subclass-feature placeholders. Specific merged Band 1 feature placement is as follows; this table excludes the repeatable Sneak Attack +1d6 every odd Rogue level and ordinary advancement entries for readability.
+
+| Rogue level | Approved native class grants or improvements |
+| --- | --- |
+| **1** | Sneak Attack 1d6, Trapfinding, Expertise, Thieves' Cant, Weapon Mastery (two eligible selections) |
+| **2** | Cunning Action; **Evasion** (including the historical Improved Evasion outcome) |
+| **3** | Trap Sense +1; Steady Aim; subclass-feature placeholder |
+| **4** | Uncanny Awareness (retaining eligible Dexterity defenses); ordinary ASI/eligible feat |
+| **5** | Uncanny Dodge (Reaction damage reduction); Cunning Strike |
+| **6** | Additional Expertise; Trap Sense +2 |
+| **7** | Reliable Talent (2024's earlier level placement) |
+| **8** | Uncanny Awareness improves to anti-flanking protection under the **same name**; ordinary ASI/eligible feat |
+| **9** | Trap Sense +3; subclass-feature placeholder |
+| **10** | First historical special-ability selection; ordinary ASI/eligible feat |
+| **11** | Improved Cunning Strike |
+| **12** | Trap Sense +4; ordinary ASI/eligible feat |
+| **13** | Second historical special-ability selection; subclass-feature placeholder |
+| **14** | Restore 2014 **Blindsense**; gain **Devious Strikes** |
+| **15** | Baseline Slippery Mind (Wisdom and Charisma save proficiencies); Trap Sense +5 |
+| **16** | Third historical special-ability selection; ordinary ASI/eligible feat |
+| **17** | Subclass-feature placeholder |
+| **18** | Trap Sense +6; Elusive |
+| **19** | Fourth historical special-ability selection; ordinary ASI/eligible feat (**not** a Band 1 Epic Boon) |
+| **20** | Stroke of Luck, subject to the shared ordinary critical and optional natural-die escalation distinction |
+
+**Boundaries:** No subclass or prestige-class features are implemented in this base-class pass. The normal 3.5e Rogue attack/save progressions and standard Rogue grants can be declaratively recorded without selecting the global BAB/Extra Attack execution model. Existing shared foundation rulings, including the critical-escalation option and no unearned class actions, take precedence. **Defensive Roll remains the one special-ability design needing a final decision.**
 
 ## Explicitly unresolved: eligibility and related mechanics
 
@@ -79,7 +119,7 @@ The decisions settle **frequency and the high-level eligibility principle**, not
 - Define qualifying detection failures and exploitable vulnerabilities, including the relationship to flanking, denied Dexterity defenses, feints, nearby allies and how Advantage/Disadvantage interacts.
 - Remaining precision-damage restrictions (e.g., cover or concealment and explicitly defined precision immunity) under shared detection and damage systems. **Do not reinstate** a 30-foot cap, historical blanket creature-type/anatomy immunity, special Disadvantage for unconventional proficient weapons, or a Finesse/Ranged-only restriction. Weapon Mastery is not a substitute for proficiency.
 - Interaction with Cunning Strike's Sneak Attack die costs, ordinary critical damage and optional natural-result escalation, special attack sequences, reaction attacks, and broader action economy.
-- Complete the four historical **selectable** special-ability grants after review; Trapfinding and Trap Sense are approved conceptually but their native Competencies/save implementation awaits the general subsystems. Modern Cunning Action, defenses and Weapon Mastery still require final placement in the level progression.
+- **Defensive Roll remains unresolved:** choose its distinct emergency-defense outcome, save/DC and Reaction/same-hit interactions before offering it as a selectable option. Other special-ability selections, modern tactical additions, and the Band 1 advancement direction are approved; trap and detection calculations remain shared-subsystem execution dependencies.
 
 No native Rogue JSON has been implemented or marked reconciled by this document.
 
