@@ -1362,5 +1362,39 @@
         ]
       }
     }
-  ]
+  ],
+  "approvedNativeSelections": {
+    "wizardSpecialization": {
+      "status": "approved-declarative-unwired",
+      "selectionListId": "wizard-specialization",
+      "featureType": "additional-class-option-selection",
+      "classLevelGrants": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "optionsPerClassLevelGrant": 1,
+      "eligibleOptionFamilies": [
+        "metamagic",
+        "item-creation",
+        "spell-mastery"
+      ],
+      "catalogPolicy": "shared-capabilities-referenced-by-wizard-selection-list",
+      "acquisitionPathways": {
+        "classLevelGrant": "one-extra-specialization-option-at-each-listed-wizard-level",
+        "generalFeatSubstitution": "when-a-wizard-may-select-a-general-feat-the-wizard-may-take-one-eligible-specialization-option-instead",
+        "featSubstitutionConsumesFeatChoice": true,
+        "abilityScoreImprovementRequiresExistingFeatAlternative": true
+      },
+      "prerequisites": "apply-underlying-option-prerequisites",
+      "duplicateSelections": "only-when-underlying-option-permits",
+      "classGrantReplacesOtherClassFeatures": false,
+      "grantsSorceryPoints": false,
+      "grantsSorcererMetamagicFeature": false,
+      "sharedOptionEffectsAndCosts": "deferred-to-shared-feat-metamagic-and-crafting-reconciliation",
+      "historicalScribeScrollLevel1Grant": "separate-reconciliation",
+      "subclassFeatures": "not-activated-by-this-choice"
+    }
+  }
 }

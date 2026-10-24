@@ -1021,6 +1021,25 @@
           "name": "Owner companion path decision and deferred bond design"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.wizard.specialization-selections",
+      "state": "approved-native-rule",
+      "decision": "The Wizard gains one additional selection from the Wizard Specialization list at Wizard class levels 5, 10, 15, and 20, in addition to ordinary class features and feat/ASI advancement. The list references eligible Metamagic, Item Creation, and Spell Mastery options through shared capability definitions rather than duplicating them as Wizard-specific feats. Whenever a Wizard may choose a general feat, the Wizard may instead consume that feat selection to choose one eligible Wizard Specialization option. An ASI only supports this substitution if it already permits a feat choice; the rule does not transform mandatory ASIs into feat choices. Prerequisites always apply; duplicate selections are allowed only where underlying option permits. Wizard selections never grant Sorcery Points or Sorcerer-only Metamagic automatically. Individual option effects, costs and eligible catalog entries remain for their respective shared mechanic reconciliations. The historical automatic Scribe Scroll feature at level 1 remains a separate question.",
+      "decisionBasis": "Owner explicitly approved the additional Wizard specialization selections and general-feat substitution pathway on 2026-10-24, following confirmation of historical D&D 3.5 Wizard bonus feat progression.",
+      "nativeLocation": "data/native/classes/base/wizard.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "https://www.d20srd.org/srd/classes/sorcererWizard.htm",
+          "name": "Wizard bonus feats at 5/10/15/20 and separate Scribe Scroll at 1"
+        },
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/native-rules-design-specification.md",
+          "name": "Shared feats, no daily spell preparation, class Band 1 constraints"
+        }
+      ]
     }
   ]
 }
