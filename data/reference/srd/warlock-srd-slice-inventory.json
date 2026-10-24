@@ -1,0 +1,639 @@
+{
+  "id": "warlock-srd51-srd52-integrated-vertical-slice",
+  "status": "source-inventory-and-acceptance-scope-not-native-reconciliation",
+  "scope": {
+    "band": [
+      1,
+      20
+    ],
+    "editions": [
+      "SRD51",
+      "SRD52"
+    ],
+    "subclasses": [
+      "Fiend"
+    ],
+    "historicalException": "Retain previously approved native 3.5e Warlock class feature decisions, but do not import non-SRD invocation or patron catalogs."
+  },
+  "sources": [
+    "data/reference/srd/structured/class/class-warlock.json",
+    "data/reference/srd/structured/optionalfeatures.json"
+  ],
+  "editionCounts": {
+    "SRD51": {
+      "invocations": 32,
+      "separatePacts": 3
+    },
+    "SRD52": {
+      "invocationsIncludingPacts": 28
+    }
+  },
+  "uniqueSelectableNames": 42,
+  "options": [
+    {
+      "name": "Agonizing Blast",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Armor of Shadows",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ascendant Step",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beast Speech",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beguiling Influence",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bewitching Whispers",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Book of Ancient Secrets",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chains of Carceri",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Devil's Sight",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Devouring Blade",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dreadful Word",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Mind",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Sight",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Smite",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Spear",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eyes of the Rune Keeper",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fiendish Vigor",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gaze of Two Minds",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gift of the Depths",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gift of the Protectors",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Investment of the Chain Master",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons of the First Ones",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lifedrinker",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mask of Many Faces",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Master of Myriad Forms",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Minions of Chaos",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mire the Mind",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Misty Visions",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "One with Shadows",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Otherworldly Leap",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pact of the Blade",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "PB"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pact of the Chain",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "PB"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pact of the Tome",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "PB"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Repelling Blast",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sculptor of Flesh",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sign of Ill Omen",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thief of Five Fates",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thirsting Blade",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Visions of Distant Realms",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Voice of the Chain Master",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Whispers of the Grave",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Witch Sight",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    }
+  ],
+  "outOfScope": [
+    "Pact of the Talisman (not in SRD 5.1/5.2.1)",
+    "Hexblade Patron (not in SRD 5.1/5.2.1)",
+    "Non-SRD 3.5e invocation catalog (historical inventory retained as research)",
+    "Other non-SRD Patron subclasses",
+    "Band 2 level 21+ Warlock progression",
+    "Full-class migration beyond Warlock"
+  ],
+  "openDesignRulings": [
+    "Pact Boon entitlement, uniqueness, and cost",
+    "Invocation selection counts and budget compared with selected Pacts",
+    "Which Patron abilities are granted at level 1 versus later advancement",
+    "Native Eldritch Blast grant and improvements",
+    "How historical at-will and modern slot-based abilities coexist",
+    "Fiend feature edition reconciliation and repeatability/resource costs"
+  ],
+  "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags."
+}
