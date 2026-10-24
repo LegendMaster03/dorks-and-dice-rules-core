@@ -28,6 +28,10 @@ The staged 2014 and 2024 source candidates live in `data/native/classes/base/sor
 | Familiar | Level-1 native Sorcerer class option; historically 24-hour/100 gp summoning and severe death/replacement penalties | Not a default class feature | Not a default class feature | Recover familiar capability using shared familiar and controlled-creature rules; separately review obsolete XP-loss/year-and-day penalties |
 | Origin/subclass | Not necessarily identical to later bloodline/origin models | Sorcerous Origin at level 1, later improvements at 6, 14, 18 | Sorcerer subclass at level 3, improvements at 6, 14, 18 | **Placeholders only** during base class pass; do not grant either subclass's features by default |
 
+## Metamagic system comparison (2026-10-23)
+
+A full source-level comparison of D&D 3.0, 3.5e, SRD 5.1, and 2024 5.5e has been recorded at **`docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md`**. The comparison covers general feats versus Sorcerer-only options; higher-slot costs versus Sorcery Points; 3.x multi-feat stacking and spontaneous casting-time restrictions; individual historical feat effects; and 2014-to-2024 changes including Twinned Spell. **The comparison proposes no new approvals.** Review the distinct historical Empower/Maximize/Heighten/Widen techniques and the 2014-versus-2024 Twinned Spell redesign before selecting a native Metamagic structure.
+
 ## Proposed order of Sorcerer-specific decisions (no new class features approved in this record)
 
 1. **Flexible Casting exchange procedure only:** Sorcery Points and casting spell points **are already distinct tracked pools**. Decide how the source feature's slot-to-Sorcery-Point and Sorcery-Point-to-slot exchanges operate under the optional spell-point casting profile, retaining feature costs and avoiding unsupported additional grants. This is a conversion compatibility detail, **not an open resource-identity or resource-accounting decision**.
