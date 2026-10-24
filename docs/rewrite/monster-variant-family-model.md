@@ -2,6 +2,8 @@
 
 **Owner correction (2026-10-18): Tactics alone do not create different monsters.** A DM can use one creature's existing actions and movement in different ways. Preserve the role-specific variety of 5.5e where a creature really has a different stat block, capability set, or encounter role, not where it merely favors a different strategy.
 
+**Owner presentation clarification (2026-10-23):** The owner values the **broader monster diversity** in the 2024 Monster Manual and especially its **more readable, information-dense statblock layout**. Native Rules Core should retain mechanically meaningful monster variants and use the 2024 edition's statblock organization as **presentation inspiration** for making more details quick to locate. This is a usability goal, **not** approval of all 2024 monster mechanical changes, nor a requirement to copy a proprietary layout exactly. Store creature rules in edition-independent native data; the interface or export format can present those rules without deleting restored 2014 abilities. The owner's general preference for many 2014 5e mechanical rulings and their preference for the 2024 MM's creature breadth and layout are compatible.
+
 ## Design distinctions
 
 - **Creature family:** A semantic grouping for browsing and encounter construction, such as Goblin, Hobgoblin and Bugbear.
