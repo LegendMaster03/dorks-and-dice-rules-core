@@ -1,5 +1,8 @@
 # Warlock Band 1 — base-class-only reconciliation crosswalk
 
+**Superseded scope note (2026-10-24):** This remains a valid historical *base-only source crosswalk*, but its exclusion of individual Eldritch Invocations and Fiend Patron features is **not** the current implementation plan for Warlock. The owner has approved an *integrated* SRD 5.1/5.2.1 Warlock vertical slice covering base class, Fiend subclass, Pact Boons, and all in-SRD invocations. See [integrated Warlock scope](warlock-srd-integrated-vertical-slice.md). This note does not declare unresolved rules approved or claim executable implementation.
+
+
 **Status:** Completed source comparison; decisions pending. **Warlock remains pending-native-reconciliation.** This pass deliberately excludes individual invocations, expanded option catalogs, patron subclasses and prestige classes. Its purpose is to identify actual **class** design choices while reusing established shared rules.
 
 The original 3.5e Warlock class begins in *Complete Arcane* (2004), with the March 16, 2005 errata controlling Eldritch Blast classification. Modern sources are the repo's pinned SRD 5.1 and SRD 5.2.1 structured class candidates. This is a factual progression comparison, **not** an approval of any particular reconciliation policy. Do not treat a source-specific class power as already granted by the native class.
