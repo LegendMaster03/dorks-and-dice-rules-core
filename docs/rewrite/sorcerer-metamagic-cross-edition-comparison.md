@@ -1,6 +1,6 @@
 # Metamagic across D&D 3.0, 3.5e, SRD 5.1 (2014), and SRD 5.2.1 (2024)
 
-**Status (2026-10-23): Source comparison for owner review. No new rules approved, no native Metamagic implementation, and no changes to Sorcery Points or the established independent spell-slot/spell-point casting resources.**
+**Status (2026-10-23): Source comparison with an approved native Metamagic architecture.** The owner approved **Sorcerer class-specific Metamagic options using Sorcery Points**, supplemented with substantively distinct 3.x effects as options in that **same system**. Specific costs, option names, selection progression, balancing/eligibility and combinations remain to be reconciled; **no Sorcerer native JSON implementation has been made**. The established spell slots versus spell points choice and independent Sorcery Point resource are unchanged.
 
 ## Different resource and acquisition models
 
@@ -38,15 +38,33 @@
 
 **Source nuance:** The project's staged `data/reference/srd/structured/optionalfeatures.json` currently includes 8 named Sorcerer options from SRD51 and 8 from SRD52, while 2024 source class text refers to Seeking and Transmuted. Their published 2024 rules were independently checked against the current official D&D Beyond Sorcerer class rules. Do not misreport absence from the staged optionalfeatures list as absence from the 2024 book.
 
-## Consequences for native Dorks & Dice review — NOT owner approvals
+## Approved native direction — unified Sorcerer Metamagic (2026-10-23)
 
-1. **Preserve two entitlement types rather than overwrite one:** A character may qualify for a Metamagic **feat** through ordinary feat progression, and a Sorcerer may gain native Sorcerer **Metamagic options** through class advancement. Do not grant non-Sorcerers the class-only options automatically or require Sorcerer levels to earn a general feat.
-2. **Use their actual cost currencies:** Sorcerer options spend **Sorcery Points**; historical feats could instead alter the **spellcasting expenditure required** (higher-level slot or corresponding increased spell-point casting cost), and should not also charge Sorcery Points unless a separately approved effect explicitly says so. This works within the already settled separation of the three resources.
-3. **Retain non-equivalent effects:** Historical Empower (50% numerical effect) and modern Empowered (rerolled damage dice), and historical Heighten (raising spell level) and modern Heightened (save Disadvantage), are not duplicates. Historical Maximize and Widen have no straightforward core 5.x replacements.
-4. **Treat Twinned as a deliberate edition conflict:** Restoring the 2014 second-target version while also retaining 2024's economical upcast-target version requires an explicit decision about whether to offer two named techniques, their eligibility, and their combination rules. Do not silently convert the 2014 feature into 2024's narrower replacement.
-5. **Do not import the 3.x spontaneous casting-time penalty as a global native rule without approval:** It would interact with the modern Bonus Action and shared full-round commitment system. Historical Quicken has additional inherent incompatibility.
-6. **Check 2024 advantages selectively:** Careful, Extended, Heightened, expanded option counts, Seeking and Transmuted are meaningful improvements/additions, while Twinned is fundamentally redesigned and some Quickened restrictions are edition-dependent.
-7. **Keep stacking governed by the grants:** A 3.x feat's combinability is not automatic permission for a Sorcerer to ignore a modern class feature's two-option cap. The interplay of a feat and a class option on one spell must be defined by the shared spell-alteration process.
+**Owner decision:** Keep **modern Sorcerer class-specific Metamagic**, paid for with the separately tracked **Sorcery Points** class resource. Do **not** implement the 3.x Metamagic feats as a second, parallel Metamagic advancement/spending system *for the Sorcerer*. Instead, **adapt 3.x mechanical functions missing from the modern option repertoire into additional options of the same Sorcerer class feature**. The owner expressly named **Widen Spell** and **Maximize Spell**. This is an architectural ruling, **not** an authorization to convert +N historical spell-slot levels directly into N Sorcery Points or assign specific action costs.
+
+**Source-capability audit for adaptation (specific native names, prices and restrictions pending):**
+
+| 3.x function | Whether the modern class option already represents it | Native disposition |
+| --- | --- | --- |
+| **Widen Spell** | No comparable core 2014/2024 area-expansion option | **Approved for addition** as a Sorcery Point Metamagic option: broaden eligible area dimensions, with exact shape/geometry and cost to be defined |
+| **Maximize Spell** | No core 2014/2024 maximization option; modern Empowered Spell only rerolls dice | **Approved for addition** as a Sorcery Point Metamagic option: maximize appropriate variable numerical effects, with target variable types, cost and limits to be defined |
+| **Historical Empower Spell** | **Not equivalent** to modern Empowered Spell; historical version multiplies eligible variable numerical values by 1.5 rather than rerolling damage dice | **Needs a distinct native option** under the approved rule to recover nonrepresented historical functions; use an unambiguous new name after approval of its exact effect and cost |
+| **Historical Heighten Spell** | **Not equivalent** to modern Heightened Spell, which imposes Disadvantage on saving throws | **Needs a distinct native option** under the approved rule for unrepresented historical functions; distinguish effective spell-level increase from a save-modifier option; exact interaction with upcasting and cost remain open |
+| **Enlarge, Extend, Silent, Still, Quicken** | Corresponding modern functionality exists through Distant, Extended, Subtle, Quickened | Reconcile the edition-specific differences inside existing modern options where reasonable; **do not add duplicated copies solely because the feat names differ** |
+
+**No independent feat entitlement is inferred from this ruling.** In this Sorcerer base-class reconciliation, the historical 3.x Metamagic features are **source mechanics to adapt into class options**, not an additional selection of generic feats automatically granted to other classes. This does not silently prohibit a future, separately designed feat or class feature in another subsystem.
+
+**Still requiring owner review:** Sorcery Point costs, the scope of maximizable and widenable effects, distinct names for the historical Empower/Heighten effects, modern option version differences (particularly 2014 versus 2024 Twinned Spell), how many options a Sorcerer learns and when, using more than one option on the same spell, and the handling of full-round/spontaneous historical casting time. Default spellcasting resources remain **either spell slots or spell points** while Sorcery Points remain independent.
+
+## Further implementation considerations (not additional owner approvals)
+
+1. **One Sorcerer Metamagic entitlement:** The class grants its options through Sorcerer levels. 3.x-exclusive functions are *adapted to that same list* rather than granting an automatic second feat path. Other classes do not gain the Sorcerer-specific options by default.
+2. **One Metamagic spending currency:** Sorcerer Metamagic costs **Sorcery Points**, independent of the character's casting spell slots or casting spell points. Historical +slot-level costs are comparative evidence, **not native prices**.
+3. **Non-equivalent historical effects remain meaningful:** Widen and Maximize are to be added; historical Empower and Heighten have distinct effects that require separate names and careful integration into the unified option list.
+4. **Twinned Spell is still an edition conflict:** The broad 2014 second-target effect versus narrower 2024 upcast-target effect has not been reconciled. The architectural choice does not silently select the newer replacement.
+5. **Spell-combination and casting-time limits are not settled:** Neither free universal stacking from 3.x nor the 3.x spontaneous casting-time penalty has been approved for the native class.
+6. **Review modern improvements selectively:** Careful, Extended, Heightened, Seeking and Transmuted are material additions/changes, but their effects and names must be reconciled feature by feature.
+7. **No automatic extension to feats or other classes:** This ruling concerns Sorcerer Metamagic. Any future metamagic-granting feat or different class's access requires its own design decision.
 
 ## Sources consulted
 
