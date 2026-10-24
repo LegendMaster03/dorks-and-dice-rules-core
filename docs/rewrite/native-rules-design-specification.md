@@ -61,6 +61,14 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Boundary:** The owner favors this framework as a guide for design. Exact feats, additional reaction triggers, attack progressions, maneuver-resolution formulas and other rows are **not yet approved gameplay rules**. GM-awarded free combat feats remain explicit table exceptions, never a veteran entitlement or default feat progression policy.
 
+### Rest-based resource recovery — owner-approved default (2026-10-23)
+
+**Owner decision:** Track and refresh ordinary character ability uses through **Short Rests, Long Rests, or another explicitly granted rest-based recovery rule**, rather than counting calendar days, unless a distinct day-based schedule serves a concrete gameplay purpose. A historical source's “once per day” ordinarily becomes **one use restored on a Long Rest** when incorporated into the native class, rather than requiring a separately tracked daily reset. Other source-defined use counts and Short-Rest versus Long-Rest grants remain individually reconciled; the default does not give a Short Rest to abilities that only recover after a Long Rest.
+
+**Legitimate exceptions:** Rules whose fiction or operation genuinely depends on a day boundary or elapsed calendar time may retain day-based tracking; the owner cited **some magic items** and **optional survival rules**. Do not automatically make every magic item daily or change explicitly selected longer cooldowns, multi-day consequences, environmental calendars, or other justified durations into Long-Rest recovery. In particular, previously approved class-specific cooldowns such as Cleric Divine Supplication's seven-day success cooldown remain in effect unless separately revisited.
+
+**Implementation distinction:** “Once per Long Rest” means a use resets when the character completes a qualifying Long Rest, not merely at midnight or the passage of 24 hours. The rules controlling when rests can be taken remain shared subsystem rules; this policy does not grant additional rests, uses, or reaction resources.
+
 ### Revision-family source review — owner clarification (2026-10-23)
 
 **The two revision families are not symmetrical in the owner's assessment.** The owner was introduced to **D&D 3.5e as a generally improved revision of 3.0e**; use 3.5e as the natural initial comparison point when evaluating an overlapping 3.x mechanic, then check 3.0e for meaningful removed features or alternate strengths. This is not permission to dismiss 3.0e or weaken 3.5e rules without a demonstrated conflict.
