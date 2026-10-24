@@ -27,6 +27,16 @@ Source-verified **high-level distinctions** (summaries only; not native rules):
 
 PDF evidence locations: Tamer class/levels **pages 5–6**; per-companion training **page 7**; roster size, eligibility and taming **pages 8–9**; limitations on special monster powers **page 10**; companion-related class abilities **pages 11–12**; high-level simultaneous deployment **page 13**. The reference's familiar upgrade example is on **pages 15–18**.
 
+## Owner-defined companion power philosophy — 2026-10-23
+
+**Owner direction, not yet a numeric feature specification:** A **bonded familiar** or **persistent animal companion** should feel like an **extension of an otherwise capable player character**. The bonded creature should enhance its owner's own class identity, personal actions, magic, perception, movement, defenses or tactical choices. A character retaining most of their effectiveness without the creature should become more flexible, expressive and capable when paired with it. Preserve the companion's own identity and continuity without making it a second independently class-equivalent hero.
+
+**Distinct future specialist archetype, not being implemented:** If a Tamer class is ever added, its fictional and mechanical center of gravity is the **team**: the trainer contributes leadership and tactical coordination, while several complementary creatures collectively supply much of the combat capability. The owner's Ash-and-Pokémon analogy is illustrative of team dependency, not an adoption of any Pokémon or proprietary Tamer content. **No Tamer class implementation is in scope.**
+
+**Advancement consequence:** The progression of ordinary bonded creatures should prioritize **owner–companion synergy**, reliable execution of their intended roles and relevant survivability. Source-backed familiar and animal-companion improvements can be retained after reconciliation, but a generic per-level independent combat upgrade or the Tamer's broad monster-training tree must **not** automatically be assigned to all bonded creatures. Differentiate **Sorcerer/Wizard familiars** (extending arcane senses, magic delivery, communication and protection) from **Druid animal companions** (extending natural awareness, physical positioning, defense, movement and coordinated combat). The Druid animal can participate in combat; the design rule is about its *role relative to the Druid*, not an automatic no-attack restriction.
+
+**Shared engine versus class budget:** Rules Core should model class-based grants, available companion actions, bond-derived cooperation, creature identity and stat progressions independently. A shared companion engine is not a reason for each class to obtain the same companion offensive scaling or command privileges. The adopted **exclusive companion-path selection** still stands; exact milestone powers, HP/proficiency formulas, special abilities and training choices require later review, and have **not** been approved by this philosophy statement.
+
 ## Proposed generic companion framework — NOT approved
 
 **Model separate dimensions rather than a single "familiar" flag:**
