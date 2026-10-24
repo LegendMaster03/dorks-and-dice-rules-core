@@ -303,9 +303,11 @@ This is a summary, **not the completed recovered decision inventory**. Each chap
 
 ## Native subclass versus prestige classification — owner rule (2026-10-24)
 
-**Class-count classification is decisive:** When a specialization involves **more than one base class**, it is a **prestige class**. When it develops only a single base class, it belongs to that class's subclass or class-specific development structure, even if a historical source originally called it a prestige class. Do not make a one-class specialization into a prestige class solely because it has independent source levels or a legacy prestige label. This rule determines **native classification**; preserve historical source type and identities independently for conversion/provenance.
+**A multi-class prestige is always prestige.** A specialization that substantively depends on or advances more than one base class must retain a **native prestige-class** classification.
 
-**Warlock application:** Historical Hellfire Warlock and Enlightened Spirit are single-class Warlock specializations; Eldritch Disciple and Eldritch Theurge involve Warlock plus divine/arcane casting from another class and therefore remain native prestige classes. See [Warlock historical classification](warlock-3x-prestige-native-classification.md). These determinations **do not authorize** new non-SRD options in the SRD-only Warlock vertical slice, or settle the specifics of their prerequisites, mechanics, advancement costs, or level-band implementation.
+**A single-class prestige is valid and must be considered case by case.** Being based on one class does not automatically force it to become a subclass or selection preset. An independently leveled prestige class may be the better native representation where entry requirements, separate progression, costs, or coherent trade-offs justify it. Alternatively, the content may convert into a conventional subclass or a class-specific modular part/bundle system. Make that decision explicitly for each case; the source's historical `prestigeClass` label is neither binding nor irrelevant.
+
+**Warlock examples:** Eldritch Disciple and Eldritch Theurge definitively remain prestige classes because each combines Warlock with another spellcasting class. Hellfire Warlock and Enlightened Spirit are **pending category review**; neither is automatically reclassified as a Warlock specialization merely because it is Warlock-focused. See [historical classification research](warlock-3x-prestige-native-classification.md). None of these non-SRD additions is authorized for the SRD-only Warlock vertical slice.
 
 ## Class-specific subclass deconstruction — owner-approved direction (2026-10-24)
 

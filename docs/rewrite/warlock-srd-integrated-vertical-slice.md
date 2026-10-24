@@ -14,12 +14,12 @@
 
 ## Legacy 3.5e Warlock prestige classification — source versus native
 
-**Owner-approved classification rule (2026-10-24):** A specialization involving **more than one base class is a native prestige class**; one developing only Warlock is a **Warlock specialization** represented by the Warlock development model. This categorization is independent of the original 3.5e prestige-class label, which stays intact in source provenance.
+**Owner-approved classification distinction (2026-10-24):** A specialization involving **more than one base class must be a native prestige class**. A **single-class prestige remains valid**, and must be assessed **case by case** before deciding to retain independent prestige progression or to represent it as a subclass, Warlock parts/bundles, and/or a guided preset. Source prestige labels remain unchanged for provenance.
 
-- **Warlock-specific specializations:** Hellfire Warlock and Enlightened Spirit → class-owned development parts/chains/bundles and guided presets.
-- **Multi-class prestige classes:** Eldritch Disciple (Warlock + divine caster) and Eldritch Theurge (Warlock + arcane caster) → prestige-class progression across the corresponding class capabilities.
+- **Not yet classified:** Hellfire Warlock and Enlightened Spirit. They principally develop Warlock, but their original progression and costs may warrant **either** native prestige status or integration as Warlock specializations.
+- **Prestige required:** Eldritch Disciple (Warlock + divine spellcasting class) and Eldritch Theurge (Warlock + arcane spellcasting class) involve multiple base classes and therefore remain prestige classes.
 
-See [3.5e Warlock prestige-to-native classification](warlock-3x-prestige-native-classification.md). **These are reference cases only during the SRD-only Warlock vertical slice.** Their native categories are decided; their non-SRD mechanics, prerequisites, budgets, and integration remain deferred.
+See [3.5e Warlock prestige-to-native classification](warlock-3x-prestige-native-classification.md). **All four remain reference-only during the SRD-only Warlock vertical slice**; their non-SRD mechanics, prerequisites, budgets, and integration are deferred.
 
 ## The integrated mechanical work
 
