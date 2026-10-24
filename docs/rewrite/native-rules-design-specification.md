@@ -301,6 +301,12 @@ The final independent system must be specified enough that a player and GM can c
 
 This is a summary, **not the completed recovered decision inventory**. Each chapter below should link to individually reviewed decisions in the Phase 0 audit rather than infer approval from an existing endpoint.
 
+## Native subclass versus prestige classification — owner rule (2026-10-24)
+
+**Class-count classification is decisive:** When a specialization involves **more than one base class**, it is a **prestige class**. When it develops only a single base class, it belongs to that class's subclass or class-specific development structure, even if a historical source originally called it a prestige class. Do not make a one-class specialization into a prestige class solely because it has independent source levels or a legacy prestige label. This rule determines **native classification**; preserve historical source type and identities independently for conversion/provenance.
+
+**Warlock application:** Historical Hellfire Warlock and Enlightened Spirit are single-class Warlock specializations; Eldritch Disciple and Eldritch Theurge involve Warlock plus divine/arcane casting from another class and therefore remain native prestige classes. See [Warlock historical classification](warlock-3x-prestige-native-classification.md). These determinations **do not authorize** new non-SRD options in the SRD-only Warlock vertical slice, or settle the specifics of their prerequisites, mechanics, advancement costs, or level-band implementation.
+
 ## Class-specific subclass deconstruction — owner-approved direction (2026-10-24)
 
 **Generalize the subclass-deconstruction principle and shared Rules Core contract, not the Warlock four-pillar implementation.** A specialized character-development model must convert supported existing subclasses into coherent **guided presets** composed from underlying native parts, while allowing advanced players additional **eligible** individual choices and combinations. Both experiences must share feature effects, prerequisites, resources, and advancement entitlements; guided players should not have to manage the advanced option graph, and advanced players must not gain extra power solely for adopting complexity. Parts can be independent, dependency-linked, or inseparable bundles, as dictated by their actual mechanics.
