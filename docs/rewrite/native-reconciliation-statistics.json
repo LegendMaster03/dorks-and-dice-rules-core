@@ -2,10 +2,10 @@
   "description": "Rule status counts for the pinned staged source pack; not a runtime readiness certificate.",
   "baselineEntries": 2522,
   "statuses": {
-    "single-candidate": 536,
-    "multiple-candidates": 1025,
-    "native-single-source-retained": 501,
-    "native-compatible-merged": 75,
+    "single-candidate": 522,
+    "multiple-candidates": 1010,
+    "native-single-source-retained": 515,
+    "native-compatible-merged": 90,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,
@@ -14,16 +14,16 @@
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
-    "native-compatible-merged": 75,
+    "native-compatible-merged": 90,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 501
+    "native-single-source-retained": 515
   },
-  "remainingWithMultipleCandidates": 1025,
-  "remainingWithOneCandidate": 536,
-  "retainedDefinitionsNeedingNativeShaping": 792,
+  "remainingWithMultipleCandidates": 1010,
+  "remainingWithOneCandidate": 522,
+  "retainedDefinitionsNeedingNativeShaping": 821,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1561,
+  "candidateRecordsStillUnresolved": 1532,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
@@ -158,5 +158,19 @@
     "persistentAnimalCompanion": true,
     "wildShapeHp": "2014-independent-form-pool-no-overflow-house-rule",
     "finiteTransformConversionChargesAt20": 4
+  },
+  "approvedRogueBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureFiles": 28,
+    "inactiveSourceAndSubclassFiles": 11,
+    "inlineMechanics": 14,
+    "moreComplexSourceFeaturesDoNotGrantAdditionalActions": true,
+    "sneakAttackEachQualifyingHit": true,
+    "cunningStrikeCostsPaidPerHit": true,
+    "defensiveRollSaveDC": "pending-shared-resolution",
+    "declarativeOnly": true
   }
 }
