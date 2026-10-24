@@ -2,21 +2,18 @@
   "id": "class-feature.wizard.ritual-adept-level-1",
   "name": "Ritual Adept",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ritual Adept",
-        "className": "Wizard",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You can cast any spell as a {@variantrule Ritual|SRD52} if that spell has the {@variantrule Ritual|SRD52} tag and the spell is in your spellbook. You needn't have the spell prepared, but you must read from the book to cast a spell in this way."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.wizard",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Ritual Adept",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "wizard-ritual-casting",
+      "requiresRitualTag": true,
+      "requiresSpellInSpellbook": true,
+      "mustReadFromPhysicalSpellbook": true,
+      "noDailyPreparationRequired": true
+    }
+  }
 }

@@ -2,21 +2,25 @@
   "id": "class-feature.wizard.scholar-level-2",
   "name": "Scholar",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Scholar",
-        "className": "Wizard",
-        "classSource": "SRD52",
-        "level": 2,
-        "entries": [
-          "While studying magic, you also specialized in another field of study. Choose one of the following skills in which you have proficiency: {@skill Arcana|SRD52}, {@skill History|SRD52}, {@skill Investigation|SRD52}, {@skill Medicine|SRD52}, {@skill Nature|SRD52}, or {@skill Religion|SRD52}. You have {@variantrule Expertise|SRD52} in the chosen skill."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.wizard",
-  "classLevel": 2
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Scholar",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "skill-expertise-choice",
+      "choose": 1,
+      "from": [
+        "arcana",
+        "history",
+        "investigation",
+        "medicine",
+        "nature",
+        "religion"
+      ],
+      "mustAlreadyBeProficient": true,
+      "grant": "expertise"
+    }
+  }
 }

@@ -2408,7 +2408,7 @@
     {
       "nativeId": "class.wizard",
       "kind": "class",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/classes/base/wizard.json",
       "candidates": [
@@ -2420,7 +2420,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.barbarian.ability-score-improvement-level-12",
@@ -8139,7 +8141,7 @@
     {
       "nativeId": "class-feature.wizard.ability-score-improvement-level-12",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/ability-score-improvement-level-12.json",
       "candidates": [
@@ -8151,12 +8153,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.ability-score-improvement-level-16",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/ability-score-improvement-level-16.json",
       "candidates": [
@@ -8168,12 +8172,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.ability-score-improvement-level-19",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/wizard/ability-score-improvement-level-19.json",
       "candidates": [
@@ -8181,12 +8187,14 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.ability-score-improvement-level-4",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/ability-score-improvement-level-4.json",
       "candidates": [
@@ -8198,12 +8206,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.ability-score-improvement-level-8",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/ability-score-improvement-level-8.json",
       "candidates": [
@@ -8215,12 +8225,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.arcane-recovery-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/arcane-recovery-level-1.json",
       "candidates": [
@@ -8232,7 +8244,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.arcane-tradition-level-2",
@@ -8315,7 +8329,7 @@
     {
       "nativeId": "class-feature.wizard.ritual-adept-level-1",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/wizard/ritual-adept-level-1.json",
       "candidates": [
@@ -8323,12 +8337,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.scholar-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/wizard/scholar-level-2.json",
       "candidates": [
@@ -8336,12 +8352,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.signature-spells-level-20",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/signature-spells-level-20.json",
       "candidates": [
@@ -8353,12 +8371,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.spell-mastery-level-18",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/spell-mastery-level-18.json",
       "candidates": [
@@ -8370,12 +8390,14 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.spellcasting-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/wizard/spellcasting-level-1.json",
       "candidates": [
@@ -8387,7 +8409,9 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeShapingRequired": true,
+      "nativeRuleReview": "wizard-band1-approved-2026-10-24"
     },
     {
       "nativeId": "class-feature.wizard.subclass-feature-level-10",
@@ -39800,10 +39824,10 @@
   "canonicalIdentifiersNormalized": 653,
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
-    "single-candidate": 512,
-    "multiple-candidates": 1001,
-    "native-single-source-retained": 525,
-    "native-compatible-merged": 99,
+    "single-candidate": 509,
+    "multiple-candidates": 992,
+    "native-single-source-retained": 528,
+    "native-compatible-merged": 108,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,

@@ -2,35 +2,20 @@
   "id": "class-feature.wizard.arcane-recovery-level-1",
   "name": "Arcane Recovery",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Arcane Recovery",
-        "className": "Wizard",
-        "classSource": "SRD51",
-        "level": 1,
-        "entries": [
-          "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your wizard level (rounded up), and none of the slots can be 6th level or higher.",
-          "For example, if you're a 4th-level wizard, you can recover up to two levels worth of spell slots. You can recover either a 2nd-level spell slot or two 1st-level spell slots."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Arcane Recovery",
-        "className": "Wizard",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You can regain some of your magical energy by studying your spellbook. When you finish a {@variantrule Short Rest|SRD52}, you can choose expended spell slots to recover. The spell slots can have a combined level equal to no more than half your Wizard level (round up), and none of the slots can be level 6 or higher. For example, if you're a level 4 Wizard, you can recover up to two levels' worth of spell slots, regaining either one level 2 spell slot or two level 1 spell slots.",
-          "Once you use this feature, you can't do so again until you finish a {@variantrule Long Rest|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.wizard",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Arcane Recovery",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "recover-spellcasting-resources",
+      "trigger": "finish-short-rest",
+      "studySpellbook": true,
+      "maximumCombinedRecoveredSpellLevels": "ceil(wizard-class-level/2)",
+      "highestRecoverableSpellSlotLevel": 5,
+      "oncePerLongRest": true,
+      "castingSpellPointsCompatibility": "shared-spell-resource-integration-deferred"
+    }
+  }
 }

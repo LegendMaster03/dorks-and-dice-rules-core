@@ -2,236 +2,300 @@
   "id": "class-feature.wizard.spellcasting-level-1",
   "name": "Spellcasting",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Spellcasting",
-        "className": "Wizard",
-        "classSource": "SRD51",
-        "level": 1,
-        "entries": [
-          "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power. See {@book chapter 10|SRD51|10} for the general rules of spellcasting and {@book chapter 11|SRD51|11} for the {@filter wizard spell list|spells|class=wizard}.",
-          {
-            "type": "entries",
-            "name": "Cantrips",
-            "entries": [
-              "At 1st level, you know three cantrips of your choice from the wizard spell list. You learn additional wizard cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Wizard table."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Spellbook",
-            "entries": [
-              "At 1st level, you have a spellbook containing six 1st-level {@filter wizard spells|spells|class=wizard} of your choice. Your spellbook is the repository of the wizard spells you know, except your cantrips, which are fixed in your mind."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Preparing and Casting Spells",
-            "entries": [
-              "The Wizard table shows how many spell slots you have to cast your wizard spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
-              "You prepare the list of wizard spells that are available for you to cast. To do so, choose a number of wizard spells from your spellbook equal to your Intelligence modifier + your wizard level (minimum of one spell). The spells must be of a level for which you have spell slots.",
-              "For example, if you're a 3rd-level wizard, you have four 1st-level and two 2nd-level spell slots. With an Intelligence of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination, chosen from your spellbook. If you prepare the 1st-level spell {@spell magic missile}, you can cast it using a 1st-level or a 2nd-level slot. Casting the spell doesn't remove it from your list of prepared spells.",
-              "You can change your list of prepared spells when you finish a long rest. Preparing a new list of wizard spells requires time spent studying your spellbook and memorizing the incantations and gestures you must make to cast the spell: at least 1 minute per spell level for each spell on your list."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Spellcasting Ability",
-            "entries": [
-              "Intelligence is your spellcasting ability for your wizard spells, since you learn your wizard spells through dedicated study and memorization. You use your Intelligence whenever a spell refers to your spellcasting ability. In addition, you use your Intelligence modifier when setting the saving throw DC for a wizard spell you cast and when making an attack roll with one.",
-              {
-                "type": "abilityDc",
-                "name": "Spell",
-                "attributes": [
-                  "int"
-                ]
-              },
-              {
-                "type": "abilityAttackMod",
-                "name": "Spell",
-                "attributes": [
-                  "int"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Ritual Casting",
-            "entries": [
-              "You can cast a wizard spell as a ritual if that spell has the ritual tag and you have the spell in your spellbook. You don't need to have the spell prepared."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Spellcasting Focus",
-            "entries": [
-              "You can use an {@item arcane focus|srd51} as a spellcasting focus for your wizard spells."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Learning Spells of 1st Level and Higher",
-            "entries": [
-              "Each time you gain a wizard level, you can add two wizard spells of your choice to your spellbook. Each of these spells must be of a level for which you have spell slots, as shown on the Wizard table. On your adventures, you might find other spells that you can add to your spellbook (see \"Your Spellbook\")."
-            ]
-          },
-          {
-            "type": "inset",
-            "name": "Your Spellbook",
-            "entries": [
-              "The spells that you add to your spellbook as you gain levels reflect the arcane research you conduct on your own, as well as intellectual breakthroughs you have had about the nature of the multiverse. You might find other spells during your adventures. You could discover a spell recorded on a scroll in an evil wizard's chest, for example, or in a dusty tome in an ancient library.",
-              "A spellbook doesn't contain cantrips.",
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Copying a Spell into the Book",
-                    "entries": [
-                      "When you find a wizard spell of 1st level or higher, you can add it to your spellbook if it is of a spell level you can prepare and if you can spare the time to decipher and copy it.",
-                      "Copying a spell into your spellbook involves reproducing the basic form of the spell, then deciphering the unique system of notation used by the wizard who wrote it. You must practice the spell until you understand the sounds or gestures required, then transcribe it into your spellbook using your own notation.",
-                      "For each level of the spell, the process takes 2 hours and costs 50 gp. The cost represents material components you expend as you experiment with the spell to master it, as well as the fine inks you need to record it. Once you have spent this time and money, you can prepare the spell just like your other spells.",
-                      {
-                        "type": "entries",
-                        "name": "Copying from a Spell Scroll",
-                        "source": "SRD51",
-                        "page": 139,
-                        "entries": [
-                          "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When you copy a spell from a spell scroll, you must succeed on an Intelligence ({@skill Arcana}) check with a DC equal to 10 + the spell's level. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "Replacing the Book",
-                    "entries": [
-                      "You can copy a spell from your own spellbook into another book—for example, if you want to make a backup copy of your spellbook. This is just like copying a new spell into your spellbook, but faster and easier, since you understand your own notation and already know how to cast the spell. You need spend only 1 hour and 10 gp for each level of the copied spell.",
-                      "If you lose your spellbook, you can use the same procedure to transcribe the spells that you have prepared into a new spellbook. Filling out the remainder of your spellbook requires you to find new spells to do so, as normal. For this reason, many wizards keep backup spellbooks in a safe place."
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "name": "The Book's Appearance",
-                    "entries": [
-                      "Your spellbook is a unique compilation of spells, with its own decorative flourishes and margin notes. It might be a plain, functional leather volume that you received as a gift from your master, a finely bound gilt-edged tome you found in an ancient library, or even a loose collection of notes scrounged together after you lost your previous spellbook in a mishap."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Spellcasting",
-        "className": "Wizard",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "As a student of arcane magic, you have learned to cast spells. See {@book chapter 7|SRD52|7} for the rules on spellcasting. The information below details how you use those rules with Wizard spells, which appear in the {@filter Wizard spell list|spells|class=Wizard} later in the class's description.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "entries",
-                "name": "Cantrips",
-                "entries": [
-                  "You know three Wizard cantrips of your choice. {@spell Light|SRD52}, {@spell Mage Hand|SRD52}, and {@spell Ray of Frost|SRD52} are recommended. Whenever you finish a {@variantrule Long Rest|SRD52}, you can replace one of your cantrips from this feature with another Wizard cantrip of your choice.",
-                  "When you reach Wizard levels 4 and 10, you learn another Wizard cantrip of your choice, as shown in the Cantrips column of the Wizard Features table."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Spellbook",
-                "entries": [
-                  "Your wizardly apprenticeship culminated in the creation of a unique book: your spellbook. It is a Tiny object that weighs 3 pounds, contains 100 pages, and can be read only by you or someone casting {@spell Identify|SRD52}. You determine the book's appearance and materials, such as a gilt-edged tome or a collection of vellum bound with twine.",
-                  "The book contains the level 1+ spells you know. It starts with six level 1 Wizard spells of your choice. {@spell Detect Magic|SRD52}, {@spell Feather Fall|SRD52}, {@spell Mage Armor|SRD52}, {@spell Magic Missile|SRD52}, {@spell Sleep|SRD52}, and {@spell Thunderwave|SRD52} are recommended.",
-                  "Whenever you gain a Wizard level after 1, add two Wizard spells of your choice to your spellbook. Each of these spells must be of a level for which you have spell slots, as shown in the Wizard Features table. The spells are the culmination of arcane research you do regularly."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Spell Slots",
-                "entries": [
-                  "The Wizard Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a {@variantrule Long Rest|SRD52}."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Prepared Spells of Level 1+",
-                "entries": [
-                  "You prepare the list of level 1+ spells that are available for you to cast with this feature. To do so, choose four spells from your spellbook. The chosen spells must be of a level for which you have spell slots.",
-                  "The number of spells on your list increases as you gain Wizard levels, as shown in the Prepared Spells column of the Wizard Features table. Whenever that number increases, choose additional Wizard spells until the number of spells on your list matches the number in the table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 3 Wizard, your list of prepared spells can include six spells of levels 1 and 2 in any combination, chosen from your spellbook.",
-                  "If another Wizard feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Wizard spells for you."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Changing Your Prepared Spells",
-                "entries": [
-                  "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change your list of prepared spells, replacing any of the spells there with spells from your spellbook."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Spellcasting Ability",
-                "entries": [
-                  "Intelligence is your spellcasting ability for your Wizard spells."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Spellcasting Focus",
-                "entries": [
-                  "You can use an {@item Arcane Focus|SRD52} or your spellbook as a {@variantrule Spellcasting Focus|SRD52} for your Wizard spells."
-                ]
-              },
-              {
-                "type": "inset",
-                "name": "Expanding and Replacing a Spellbook",
-                "entries": [
-                  "The spells you add to your spellbook as you gain levels reflect your ongoing magical research, but you might find other spells during your adventures that you can add to the book. You could discover a Wizard spell on a {@item Spell Scroll|SRD52}, for example, and then copy it into your spellbook.",
-                  {
-                    "type": "entries",
-                    "name": "Copying a Spell into the Book",
-                    "entries": [
-                      "When you find a level 1+ Wizard spell, you can copy it into your spellbook if it's of a level you can prepare and if you have time to copy it. For each level of the spell, the transcription takes 2 hours and costs 50 GP. Afterward you can prepare the spell like the other spells in your spellbook."
-                    ]
-                  },
-                  {
-                    "type": "entries",
-                    "name": "Copying the Book",
-                    "entries": [
-                      "You can copy a spell from your spellbook into another book. This is like copying a new spell into your spellbook but faster, since you already know how to cast the spell. You need spend only 1 hour and 10 GP for each level of the copied spell.",
-                      "If you lose your spellbook, you can use the same procedure to transcribe the Wizard spells that you have prepared into a new spellbook. Filling out the remainder of the new book requires you to find new spells to do so. For this reason, many wizards keep a backup spellbook."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.wizard",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Spellcasting",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "spellcasting",
+      "ability": "intelligence",
+      "casterProgression": "full",
+      "maxSpellLevel": 9,
+      "access": "learned-spellbook-repertoire",
+      "learnedSpellbookRepertoireNoDailyPreparation": true,
+      "initialSpellbookLevelOneSpells": 6,
+      "additionalSpellbookSpellsPerWizardClassLevel": 2,
+      "learnedLeveledSpellsByLevelWithoutAdditionalCopies": [
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44
+      ],
+      "cantripsKnownPerLevel": [
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "slotsByLevel": [
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ]
+      ],
+      "resourceChoices": [
+        "spell-slots",
+        "spell-points"
+      ],
+      "optionalOpenSpellAccess": "open-spell-access",
+      "cantripsAtWill": true,
+      "mayReplaceOneCantripAfterLongRest": true,
+      "spellbookMissingDoesNotRemovePreviouslyLearnedOrdinaryCasting": true,
+      "spellbookRequiredForExplicitSpellbookProcedures": true,
+      "focus": [
+        "arcane-focus",
+        "spellbook"
+      ]
+    }
+  }
 }

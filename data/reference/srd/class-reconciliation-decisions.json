@@ -1025,8 +1025,8 @@
     {
       "nativeRuleId": "class.wizard.specialization-selections",
       "state": "approved-native-rule",
-      "decision": "The Wizard gains one additional selection from the Wizard Specialization list at Wizard class levels 5, 10, 15, and 20, in addition to ordinary class features and feat/ASI advancement. The list references eligible Metamagic, Item Creation, and Spell Mastery options through shared capability definitions rather than duplicating them as Wizard-specific feats. Whenever a Wizard may choose a general feat, the Wizard may instead consume that feat selection to choose one eligible Wizard Specialization option. An ASI only supports this substitution if it already permits a feat choice; the rule does not transform mandatory ASIs into feat choices. Prerequisites always apply; duplicate selections are allowed only where underlying option permits. Wizard selections never grant Sorcery Points or Sorcerer-only Metamagic automatically. Individual option effects, costs and eligible catalog entries remain for their respective shared mechanic reconciliations. The historical automatic Scribe Scroll feature at level 1 remains a separate question.",
-      "decisionBasis": "Owner explicitly approved the additional Wizard specialization selections and general-feat substitution pathway on 2026-10-24, following confirmation of historical D&D 3.5 Wizard bonus feat progression.",
+      "decision": "At Wizard class levels 5, 10, 15, and 20 gain one additional Wizard Specialization option from Metamagic or Item Creation. General feat selections may be spent instead on an eligible specialization option, consuming the feat; an ASI must separately permit feat choice. Prerequisites and repetition limits apply. Historical 3.5 Spell Mastery feat is excluded in favor of the 2014 Wizard class feature. No Sorcery Points or Sorcerer class Metamagic are granted. Scribe Scroll is a separate automatic Wizard level-1 feature.",
+      "decisionBasis": "Owner approved additional Wizard specialization choices, feat substitution, and exclusion of the historical Spell Mastery feat, on 2026-10-24.",
       "nativeLocation": "data/native/classes/base/wizard.json",
       "evidence": [
         {
@@ -1038,6 +1038,39 @@
           "source": "NATIVE",
           "path": "docs/rewrite/native-rules-design-specification.md",
           "name": "Shared feats, no daily spell preparation, class Band 1 constraints"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.wizard.band1-spell-mastery-and-spellbook",
+      "state": "approved-native-rule",
+      "decision": "Use 2014 level-18 Spell Mastery, choosing one level-1 and one level-2 spell in own spellbook, casting each at its lowest level without a slot, replacing one or both after eight hours of study. No daily spell preparation. Omit historical Spell Mastery feat and the redundant 2024 level-5 Memorize Spell. Learned Wizard spells remain ordinarily castable without the physical book; explicitly book-dependent rituals and copying still require the book.",
+      "decisionBasis": "Owner approval on 2026-10-24.",
+      "nativeLocation": "data/native/classes/base/wizard.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-wizard.json",
+          "name": "2014 Spell Mastery"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-wizard.json",
+          "name": "Ritual Adept and Memorize Spell"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.wizard.automatic-scribe-scroll-level-1",
+      "state": "approved-native-rule",
+      "decision": "Wizard automatically gains Scribe Scroll class entitlement at level 1 without consuming any general feat or Wizard Specialization choice; scroll crafting remains in shared system.",
+      "decisionBasis": "Owner approval on 2026-10-24.",
+      "nativeLocation": "data/native/features/classes/wizard/scribe-scroll-level-1.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "https://www.d20srd.org/srd/classes/sorcererWizard.htm",
+          "name": "3.5 Wizard Scribe Scroll"
         }
       ]
     }
