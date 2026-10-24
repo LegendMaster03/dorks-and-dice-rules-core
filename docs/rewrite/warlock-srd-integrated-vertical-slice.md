@@ -12,6 +12,14 @@
 4. Preserve the previously approved historical 3.5e **base-class** decisions recorded in `data/reference/srd/class-reconciliation-decisions.json`: Damage Reduction, Deceive Item, Fiendish Resilience (healing), Energy Resistance, Imbue Item, and the exclusion of automatic level-2 Detect Magic. The historical Warlock originates in *Complete Arcane* and is **not itself SRD material**; these decisions are a narrow **already-approved native-rule exception**, not permission to import that non-SRD source's invocation catalog.
 5. **Excluded for now:** Pact of the Talisman, Hexblade, every other non-SRD Patron, outside-SRD options and supplements, the 90-item historical invocation research catalog, and Band 2 (21–40). Do not delete their archival reference material.
 
+## Legacy Warlock prestige classification — source versus native
+
+**Case-by-case classification is required.** A 3.5e source label of `prestige class` is preserved as source provenance but is **not an automatic native prestige-class decision**. Review whether the feature chain is intrinsically a Warlock specialization, an independent advancement path, a cross-class hybrid, or a cohesive set of separately eligible parts. Do not convert 3.5e entries into fictitious 5e subclasses first.
+
+**Reference-only during this SRD slice:** Hellfire Warlock and Enlightened Spirit appear likely candidates for Warlock-specific specializations or coherent part/bundle progressions; Eldritch Disciple and Eldritch Theurge are materially different because they progress invocation use **and another class's divine/arcane spellcasting**. They are candidates for retaining prestige/hybrid progression unless a shared class-development model can faithfully preserve dual-class advancement. **None of these four has an approved final native category or executable option conversion.**
+
+See [3.5e Warlock prestige-to-native classification research](warlock-3x-prestige-native-classification.md). Preserve the existing source-concept distinction between subclasses and prestige classes; native transformations must maintain versioned mappings to the original source records. This reference does not expand the approved SRD-only implementation scope.
+
 ## The integrated mechanical work
 
 - Reconcile source-neutral Warlock base progression, Pact Magic, spell availability under the established native *no daily preparation* policy, Mystic Arcanum, Magical Cunning, Contact Patron, Eldritch Master, and approved historical class features. Preserve current class-level versus total-character-level Band rules and level-21+ Epic Boon eligibility.
