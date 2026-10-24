@@ -728,6 +728,27 @@
           "name": "2024 Rogue"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.rogue.defensive-roll-survival",
+      "state": "approved-native-rule",
+      "decision": "Defensive Roll is a Rogue special-ability choice at one of the historical choice levels 10/13/16/19. If an attack would reduce the Rogue to 0 HP, the Rogue may expend their Reaction and the feature's single use to attempt a Dexterity saving throw. On success they remain at 1 HP instead of dropping to 0 HP from that attack. The use returns on completing a Long Rest, not a calendar-day reset. Because Uncanny Dodge also normally spends the Reaction, neither can use the same Reaction on one triggering hit. The numerical save DC and special zero-HP interactions are NOT approved here: these must be supplied by the shared resolution system before the feature is executable.",
+      "decisionBasis": "Owner approved the assistant's proposed one-per-Long-Rest Reaction-based 1-HP Defensive Roll emergency-survival design on 2026-10-23. The proposal explicitly left the exact Dexterity save DC and special restrictions pending.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue Defensive Roll",
+          "detail": "Historical emergency Reflex save against potentially lethal combat damage; once per day in source"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Uncanny Dodge",
+          "detail": "Reaction-based halving of attack damage, which the new native Defensive Roll remains distinct from"
+        }
+      ]
     }
   ]
 }
