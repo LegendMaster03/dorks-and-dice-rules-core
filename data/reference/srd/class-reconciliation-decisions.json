@@ -749,6 +749,64 @@
           "detail": "Reaction-based halving of attack damage, which the new native Defensive Roll remains distinct from"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-unified-class-feature",
+      "state": "approved-native-rule",
+      "decision": "Use Sorcerer class-granted Metamagic options fueled by the separate Sorcery Points resource; retain this modern class-specific mechanism rather than importing 3.x Metamagic feats as a parallel Sorcerer feat track. Sorcery Points are separate from spell slots and the optional spell-point casting resource. Historical capabilities not otherwise represented are adapted into options in this same class feature, not automatically granted as generic feats or to other classes.",
+      "decisionBasis": "Owner explicitly preferred the modern class-specific Metamagic mechanic over reusing historical feats, 2026-10-23. Numerical costs, progression and inter-option stacking were not approved.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sorcerer historical casting and feat-based Metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-recover-unrepresented-3x-effects",
+      "state": "approved-native-rule",
+      "decision": "Extend the unified Sorcerer Metamagic option repertoire with meaningful 3.x-only functions that modern Sorcerer options lack. Specifically include adapted Widen Spell (expand qualifying areas) and Maximize Spell (maximize eligible variable numerical effects). Historical Empower Spell (multiply eligible variable numerical effects) and Heighten Spell (increase effective spell level) remain distinct from modern Empowered Spell (reroll selected dice) and Heightened Spell (saving throw Disadvantage) and must receive distinct, nonredundant treatment under the same approved adaptation principle. Do not assign any native Sorcery Point costs, stack permissions, names, or eligibility rules by inference; those details remain for reconciliation.",
+      "decisionBasis": "Owner explicitly instructed adapting 3.x functions not already represented, using Widen and Maximize as examples, 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sorcerer historical casting and feat-based Metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Modern Metamagic options"
+        }
+      ]
     }
   ]
 }
