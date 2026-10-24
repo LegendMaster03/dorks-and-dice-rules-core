@@ -377,6 +377,14 @@ The native base class is now `data/native/classes/base/druid.json`; see `docs/re
 
 These are native declarative rules with regression coverage, **not** a claim that every consumer already executes animal-command, form-stat, HP-pool or conversion behavior without further runtime integration.
 
+### Spellcasting-resource pools versus class-specific resource pools — clarification (2026-10-23)
+
+**Existing separation reaffirmed:** `spell slots` and optional `spell points` are **alternative ways of tracking the expenditure of spellcasting resources**; class-specific points are not automatically part of either casting pool. A Sorcerer's **Sorcery Points** are a **separate, independently tracked class-feature resource** for Metamagic and other Sorcerer abilities, whether the character uses spell slots or spell points to cast. Resource type, quantity, recovery and spending remain defined by their own class features. There is no blanket rule permitting one pool to pay costs intended for the other, and no conversion arises merely because both have “points” in their names.
+
+**Edition qualification:** 3.0e and 3.5e base Sorcerers did **not** use the modern Sorcery Points class pool; their Metamagic used feat/spell-level mechanics. The Sorcery Point separation is relevant to 2014 and 2024 5e and native Dorks & Dice implementations, not a claim that a 3.x Sorcery Point pool existed.
+
+**Only integration detail left for Sorcerer:** The 5.x **Flexible Casting** feature explicitly exchanges spell slots and Sorcery Points. When a player uses the **optional spell-point casting** profile rather than slots, the shared spellcasting-conversion subsystem must adapt those explicit exchanges without merging the two balances or inventing a free conversion. That detail does not reopen the settled resource identity or invalidate the approved choice between spell-slot and spell-point casting.
+
 ### NPC and monster spellcasting resources — general native ruling (2026-10-19)
 
 **Owner clarification:** The existing Spellcasting Resource Choice is a **general NPC and monster rule**, not a special exception for Priest. NPCs, monsters, and player characters use the same native spellcasting-resource framework where a creature is granted spellcasting. An eligible spellcaster may use spell slots or spell points under the selected campaign/caster profile; the GM chooses the applicable profile for NPCs and monsters. Do not force monsters into a permanently slotless mechanic because SRD 5.2.1 presents their spells as at-will or limited-use actions. Conversely, merely having a spell-like action does not supply a slot or point pool.
