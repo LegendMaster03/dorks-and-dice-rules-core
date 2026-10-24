@@ -807,6 +807,122 @@
           "name": "Modern Metamagic options"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-approved-legacy-options",
+      "state": "approved-native-rule",
+      "decision": "The unified Sorcerer Metamagic class feature adds four owner-approved options with Sorcery Point prices: Amplified Spell (3; raise one eligible initial-resolution rolled variable numerical effect by 50% rounded down on a spell cast at level <=7); Ascendant Spell (2 per effective spell level, adding one or two effective spell levels but not above level 9 or highest Sorcerer castable level; +1 save DC per level, affects level-dependent interactions but not upcast benefits); Widened Spell (4; double eligible dimensions of one continuous spell area, not range or separate-area count; spell cast at level <=6); Maximized Spell (5; maximize one eligible variable numerical roll in initial resolution, including damage/healing but not attack/save/opposed rolls or later recurring rolls; spell cast at level <=6). Restrictions use actual casting level including ordinary upcasting. Amplified + Maximized, if both options are allowed, costs 8 Sorcery Points and yields maximum base result plus half a separately rolled eligible result, rounded down. Exact unusual spell geometry delegated to shared effects implementation.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-twinned-two-modes",
+      "state": "approved-native-rule",
+      "decision": "One learned Twinned Spell option has two mutually exclusive modes. Twin (2014-derived) costs Sorcery Points equal to actual spell casting level, minimum 1, and adds a second creature in range if the spell targets one creature, is not Self-range and cannot target multiple creatures at its current level. Expanded Targeting (2024-derived) costs 1 Sorcery Point, treating a spell as one level higher solely to gain an additional target when its upcasting rules explicitly add targets; no other upcast benefit. Pick one mode per casting; do not use either twice or both together.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-option-learning-and-combination",
+      "state": "approved-native-rule",
+      "decision": "Sorcerers know two Metamagic options at class level 2, four at 10, and six at 17, drawing both modern options and adapted historical ones from one pool. On gaining a Sorcerer level, one known option can be replaced with an eligible one. Ordinarily one option affects a spell; the explicit Empowered Spell and Seeking Spell exceptions allow them alongside another option. During active Innate Sorcery with Sorcery Incarnate, at most two different options may affect one spell, paying both costs. No option can be applied twice on the same casting; modern casting-time rules apply, without the generic historical spontaneous-casting full-round penalty.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.arcane-apotheosis-metamagic-cap",
+      "state": "approved-native-rule",
+      "decision": "At Sorcerer class level 20, while Innate Sorcery is active, Arcane Apotheosis discounts at most 2 Sorcery Points from ONE Metamagic option EACH turn, minimum resulting cost 0; it does not make arbitrarily costly options free. The second applied option, if permitted by Sorcery Incarnate, pays full cost. This approval resolves only the capstone Metamagic subsidy; whether and how the historical Sorcerous Restoration recovery feature coexists remains separately unresolved.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
     }
   ]
 }

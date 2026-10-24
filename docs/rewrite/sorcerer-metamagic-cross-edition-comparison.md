@@ -1,6 +1,6 @@
 # Metamagic across D&D 3.0, 3.5e, SRD 5.1 (2014), and SRD 5.2.1 (2024)
 
-**Status (2026-10-23): Source comparison with an approved native Metamagic architecture.** The owner approved **Sorcerer class-specific Metamagic options using Sorcery Points**, supplemented with substantively distinct 3.x effects as options in that **same system**. Specific costs, option names, selection progression, balancing/eligibility and combinations remain to be reconciled; **no Sorcerer native JSON implementation has been made**. The established spell slots versus spell points choice and independent Sorcery Point resource are unchanged.
+**Status (2026-10-23): Comparison and owner-approved Metamagic design.** The unified Sorcerer-specific Metamagic option system, distinct legacy additions, exact point costs and eligibility, twin modes, combinations, known-options progression, and Arcane Apotheosis discount are now approved and recorded below. **The Sorcerer native JSON remains pending**, and the rest of the class reconciliation is incomplete. Sorcery Points remain independent of spell slots and optional spell-point casting.
 
 ## Different resource and acquisition models
 
@@ -54,17 +54,46 @@
 
 **No independent feat entitlement is inferred from this ruling.** In this Sorcerer base-class reconciliation, the historical 3.x Metamagic features are **source mechanics to adapt into class options**, not an additional selection of generic feats automatically granted to other classes. This does not silently prohibit a future, separately designed feat or class feature in another subsystem.
 
-**Still requiring owner review:** Sorcery Point costs, the scope of maximizable and widenable effects, distinct names for the historical Empower/Heighten effects, modern option version differences (particularly 2014 versus 2024 Twinned Spell), how many options a Sorcerer learns and when, using more than one option on the same spell, and the handling of full-round/spontaneous historical casting time. Default spellcasting resources remain **either spell slots or spell points** while Sorcery Points remain independent.
+**Subsequently approved:** Detailed costs, eligibility, names, Twinned Spell modes, option-learning levels, stacking and casting-time policy, and the level-20 Arcane Apotheosis adjustment have been settled as recorded in the next section. Default spellcasting resources remain **either spell slots or spell points** while Sorcery Points remain independent.
 
-## Further implementation considerations (not additional owner approvals)
+## Owner-approved Metamagic specifications (2026-10-23)
 
-1. **One Sorcerer Metamagic entitlement:** The class grants its options through Sorcerer levels. 3.x-exclusive functions are *adapted to that same list* rather than granting an automatic second feat path. Other classes do not gain the Sorcerer-specific options by default.
-2. **One Metamagic spending currency:** Sorcerer Metamagic costs **Sorcery Points**, independent of the character's casting spell slots or casting spell points. Historical +slot-level costs are comparative evidence, **not native prices**.
-3. **Non-equivalent historical effects remain meaningful:** Widen and Maximize are to be added; historical Empower and Heighten have distinct effects that require separate names and careful integration into the unified option list.
-4. **Twinned Spell is still an edition conflict:** The broad 2014 second-target effect versus narrower 2024 upcast-target effect has not been reconciled. The architectural choice does not silently select the newer replacement.
-5. **Spell-combination and casting-time limits are not settled:** Neither free universal stacking from 3.x nor the 3.x spontaneous casting-time penalty has been approved for the native class.
-6. **Review modern improvements selectively:** Careful, Extended, Heightened, Seeking and Transmuted are material additions/changes, but their effects and names must be reconciled feature by feature.
-7. **No automatic extension to feats or other classes:** This ruling concerns Sorcerer Metamagic. Any future metamagic-granting feat or different class's access requires its own design decision.
+**Owner approval:** The Sorcerer uses one class-specific, Sorcery Point-funded Metamagic options pool. The previously recommended names, numeric prices, effect restrictions, option selection progression, two Twinned Spell modes, per-spell combination rules, and Arcane Apotheosis adjustment are **approved native design decisions**. These are declarations to be implemented after the remaining Sorcerer Band 1 reconciliation; they do **not** make the currently staged Sorcerer JSON executable.
+
+### Adapted 3.x functions: approved names, costs and limits
+
+| Option | Price | Approved effect and restrictions |
+| --- | --- | --- |
+| **Amplified Spell** (historical Empower effect) | **3 Sorcery Points** | Increase by **50%, rounding down**, **one eligible variable numerical result** from the initial resolution of a spell actually cast at **level 7 or lower**, using its **rolled result**, not its maximum. Distinct from modern **Empowered Spell**, which rerolls damage dice. |
+| **Ascendant Spell** (historical Heighten effect) | **2 Sorcery Points per effective level added** | Increase a spell's **effective magical level by one or two**, up to **spell level 9** and no higher than the highest spell level the Sorcerer can cast. Gain **+1 to the spell's save DC per effective level**. Effective level affects spell-level-dependent interactions such as counterspelling and magical protections. It does **not** grant the damage, additional targets or other benefits of casting with a higher-level slot. Distinct from modern **Heightened Spell**, which causes saving throw Disadvantage. |
+| **Widened Spell** | **4 Sorcery Points** | For a spell actually cast at **level 6 or lower**, double the eligible **dimensions of one continuous spell area** (such as sphere radius, line dimensions, cone, cylinder or cube dimensions), not just its computed surface area. Does **not** extend casting range, duration, damage, or the number of separately created areas. |
+| **Maximized Spell** | **5 Sorcery Points** | For a spell actually cast at **level 6 or lower**, maximize **one eligible variable numerical roll** in its **initial resolution**, including eligible damage or healing. It does **not** maximize attack rolls, saving throws, opposed checks, or automatically maximize repeated later damage from ongoing effects. |
+
+**Casting-level eligibility:** The level 6/7 thresholds check the **actual spell level used to cast**, including normal upcasting, rather than only the spell's printed level. The limits on eligible variables and initial resolution are important even where historical feats had broader consequences. The exact spell-area geometry and modifier precedence in unusual spell descriptions can be handled by shared spell-effect adjudication without replacing these approved core rules.
+
+**Approved combined Amplified + Maximized interaction:** If two-option permission is available, their combined cost is **8 Sorcery Points**, and the affected initial result is **the normal maximum plus half of an independently rolled eligible result** (round the half down). Do not merely take 150% of the maximum or maximize the second roll. Both options still must be eligible for the spell under their own level and effect restrictions.
+
+### Twinned Spell: one class option with two exclusive modes
+
+| Mode | Price | Effect |
+| --- | --- | --- |
+| **Twin** (2014-derived) | **Sorcery Points equal to the spell's actual casting level**, minimum **1** (including cantrips) | Add a second creature in ordinary range to a spell that qualifies under the **2014 single-target restrictions**: the spell targets exactly one creature, is not Self-range, and cannot target multiple creatures at the spell's current level. |
+| **Expanded Targeting** (2024-derived) | **1 Sorcery Point** | Treat an eligible spell as **one level higher solely for acquiring the extra target** that its normal higher-level casting text would grant. The spell must specifically add a target when upcast. Do not also award damage or other ordinary upcasting benefits. |
+
+The player learns **one Twinned Spell option** and chooses **exactly one mode per casting**. Neither mode can be applied twice to one casting, and the two modes cannot be combined on one spell. This keeps the broader 2014 capability and the narrower, cheaper 2024 functionality.
+
+### Access, combinations and Arcane Apotheosis
+
+- **Metamagic options known:** **2 at Sorcerer level 2**, **4 at level 10**, **6 at level 17**. The 3.x-derived additions are **options in this same pool**, not automatic additional selections, feats or a separate resource system. On gaining a Sorcerer level, the Sorcerer may replace **one known option** with another eligible option.
+- **Combination limit:** Normally **one different Metamagic option per spell**, with preserved specific exceptions allowing Empowered Spell or Seeking Spell alongside another option. While **Sorcery Incarnate** enables its benefit during **active Innate Sorcery**, the character may apply **up to two different options to one spell**, paying each price. No option can be applied to the same casting twice; even with a specific exception, **two is the maximum during Sorcery Incarnate**.
+- **Action economy:** Do **not** import the generic 3.x spontaneous-casting full-round Metamagic penalty; modern casting time and explicit option-specific restrictions, including Quickened Spell's restrictions, control.
+- **Arcane Apotheosis at Sorcerer level 20:** While Innate Sorcery is active, reduce the cost of **one Metamagic option per turn by up to 2 Sorcery Points** (minimum 0) rather than making an arbitrarily expensive option free. A 2-point option becomes free; Amplified costs 1, Widened costs 2, Maximized costs 3, and a one-level Ascendant costs 0 if it receives the benefit. The second applied option, if any, pays its ordinary cost. **This modifies only Arcane Apotheosis's Metamagic discount; it does not decide the separate compatibility of earlier Sorcerous Restoration features with the level-20 capstone.**
+
+**Pending class-wide work:** Spell access/known-spell advancement, Flexible Casting conversions in spell-point casting mode, precise Sorcerous Restoration advancement, the historical Familiar, and remaining Sorcerer class grants. **No generic 3.x Metamagic feat entitlement is implied for other classes.**
+
+## Source-comparison considerations (superseded where resolved above)
+
+The earlier seven considerations led to the approved native specifications above. The only open cross-system questions are how those declarations are represented by the shared spell-effect, geometry and saving throw engines, and the other Sorcerer class features that have not yet been reconciled. Do not treat the historical alternative models in the source comparison as additional selectable editions at runtime.
 
 ## Sources consulted
 
