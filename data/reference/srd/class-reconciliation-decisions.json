@@ -512,6 +512,222 @@
           "name": "Trap Sense"
         }
       ]
+    },
+    {
+      "nativeRuleId": "class.rogue.historical-special-choice-levels",
+      "state": "approved-native-rule",
+      "decision": "Retain selectable 3.5e Rogue special-ability grants at class levels 10, 13, 16 and 19. These are choices at level-up, not automatic grants of all choices. The complete effects of Defensive Roll remain unapproved; none of the four slots is removed by absorbing obsolete Improved Evasion.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Preserves selectable progression.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.crippling-strike",
+      "state": "approved-native-rule",
+      "decision": "Selected Crippling Strike adds 2 points of Strength ability damage to each qualifying Sneak Attack hit; no additional once-per-turn cap is imposed. General ability-damage recovery/immunity and stacking are shared-rule dependencies.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Retains 3.5e amount after owner rejected unsubstantiated reduction to the 3.0 amount.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.evasion-and-improved-evasion",
+      "state": "approved-native-rule",
+      "decision": "Baseline Evasion is granted at Rogue level 2 and gives no damage on successful eligible save, half damage on failure (subject to normal incapacity limits). Improved Evasion's source benefit is thereby absorbed and is not a selectable special ability; its redundancy must not consume a selection.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Avoids a nonfunctional historical pick.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.opportunist",
+      "state": "approved-native-rule",
+      "decision": "Selected Opportunist allows one reaction-based opportunity attack per round when an ally damages a foe in melee, respecting the shared Reaction budget; no bonus Reaction or automatic Sneak Attack eligibility.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Keeps the historical additional trigger.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.skill-mastery",
+      "state": "approved-native-rule",
+      "decision": "Selected Skill Mastery grants two additional Expertise choices in eligible skills or native competencies; do not duplicate Expertise already possessed for the same choice. Reliable Talent remains a separate baseline feature.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Replaces overlapping take-10 feature with a useful specialization.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.slippery-mind-reconciled",
+      "state": "approved-native-rule",
+      "decision": "At Rogue level 15, baseline Slippery Mind grants Wisdom and Charisma saving throw proficiencies. Separately selecting historical Slippery Mind's special-ability option grants one retry one round after a failed qualifying enchantment/control save; the two different effects coexist under one name without duplicating proficiency.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Preserves distinct 3.5e and 2024 grants.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.special-choice-bonus-feat",
+      "state": "approved-native-rule",
+      "decision": "An eligible Bonus Feat can be selected as one of the four special-ability options, in addition to—not instead of—the Rogue's independently scheduled ASI/feat grants. Feat prerequisites apply; Epic Boons require total character level 21 or higher.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Keeps original level-up choice.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.cunning-strike-per-qualifying-hit",
+      "state": "approved-native-rule",
+      "decision": "Cunning Strike applies on each independently qualifying Sneak Attack hit, paying per-hit Sneak Attack damage dice costs for Poison, Trip or Withdraw. Improved Cunning Strike at level 11 permits up to two effects per hit with both costs paid. Devious Strikes at level 14 adds Daze, Knock Out and Obscure with normal costs, saves and prerequisites. Steady Aim remains an accuracy action and its Advantage alone does not qualify Sneak Attack.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Adopts beneficial 2024 additions without undermining per-hit native Sneak Attack.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.band1-levels",
+      "state": "approved-native-rule",
+      "decision": "Approve the merged Rogue Band 1 levels and placements documented in docs/rewrite/rogue-band-1-reconciliation.md: d8 Hit Die, level 1 Weapon Mastery, level 2 Evasion, level 3 Steady Aim, level 4 and 8 Uncanny Awareness, level 5 Uncanny Dodge/Cunning Strike, level 7 Reliable Talent, level 10/13/16/19 special choices, level 11 Improved Cunning Strike, level 14 restored 2014 Blindsense and Devious Strikes, level 15 modern Slippery Mind, level 18 Elusive, level 20 Stroke of Luck, plus Trap Sense, Expertise, ASIs and subclass placeholders as shown. Defensive Roll's effect is not included as approved.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Reconciles approved historical and modern class grants while deferring shared execution and subclass work.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
     }
   ]
 }
