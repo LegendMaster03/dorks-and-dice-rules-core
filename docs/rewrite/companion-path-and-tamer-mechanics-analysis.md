@@ -37,6 +37,19 @@ PDF evidence locations: Tamer class/levels **pages 5–6**; per-companion traini
 
 **Shared engine versus class budget:** Rules Core should model class-based grants, available companion actions, bond-derived cooperation, creature identity and stat progressions independently. A shared companion engine is not a reason for each class to obtain the same companion offensive scaling or command privileges. The adopted **exclusive companion-path selection** still stands; exact milestone powers, HP/proficiency formulas, special abilities and training choices require later review, and have **not** been approved by this philosophy statement.
 
+## Owner clarification — ephemeral companions are utility, not bonds (2026-10-23)
+
+The owner explicitly distinguishes the **player experience** of these two approved selectable paths:
+
+| Path | Intended experience | Advancement emphasis |
+| --- | --- | --- |
+| **Bonded / persistent companion** | A specific familiar or animal companion is a continuing part of the character's identity; the creature and the independently capable character grow more effective as a partnership | Individual continuity, bond-dependent synergy, source-appropriate scaling and coordinated actions |
+| **Ephemeral / conjured companion** | A summonable creature or **tool** used for scouting, spell delivery, temporary assistance or convenience by characters **who do not want to maintain a permanent companion relationship**; should feel similar to the ordinary 5e use of `Find Familiar` | The summoning feature itself, its resource costs and utility; **not** individualized bonded-creature training or permanent bond milestones |
+
+**No implied emotional prohibition:** A player may roleplay affection for a recurring summoned spirit, but an ephemeral path **never requires** a unique relationship, permanent companion maintenance, training decisions or long-term identity investment to function. Merely calling a conjured creature a "companion" does not turn it into a bonded character extension.
+
+**Mechanical boundary:** Bond upgrades should be keyed to a **bonded/persistent path grant** and should not automatically spill into the ephemeral alternative. The ephemeral option retains its specific source benefits and ordinary class progression without being punished for a player's choice not to pursue a bond. The shared engine still handles initiative, commands, creature identities, summon/dismiss rules and resource expenditure, but class/path-specific rules supply progression and permitted actions. This clarification is **approved design intent**, not approval of numerical progression, new feats, summoning rates, or final Bonded Familiar features.
+
 ## Proposed generic companion framework — NOT approved
 
 **Model separate dimensions rather than a single "familiar" flag:**
