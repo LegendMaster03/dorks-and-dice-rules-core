@@ -61,6 +61,12 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Boundary:** The owner favors this framework as a guide for design. Exact feats, additional reaction triggers, attack progressions, maneuver-resolution formulas and other rows are **not yet approved gameplay rules**. GM-awarded free combat feats remain explicit table exceptions, never a veteran entitlement or default feat progression policy.
 
+### Revision-family source review — owner clarification (2026-10-23)
+
+The owner was introduced to **D&D 3.5e as a revised and generally improved 3.0e**. Their reason for explicitly comparing **3.0 and 3.5e**, as with **2014 5e and 2024 5.5e**, is to preserve worthwhile improvements while identifying and recovering substantive content/mechanics removed, replaced or weakened in later revisions. This comparison is **not** an instruction to regard the earliest rules as preferable when their numbers are smaller or a proposed balance problem has not yet been demonstrated. Begin from the later edition's considered revisions where appropriate, check earlier editions for lost capabilities, and assess conflicts individually under approved Dorks & Dice mechanics. **No blanket latest-wins precedence rule is created**, and comparison never automatically approves a source change.
+
+The Rogue **Crippling Strike** comparison illustrates this: 3.5e's **2 Strength damage** should be the working review proposal rather than reverting without evidence to 3.0's **1**, notwithstanding native Sneak Attack's approved per-qualifying-hit frequency. The native amount remains subject to the normal owner review.
+
 ### Approved cross-baseline reconciliation policies — five general rules
 
 **Owner approval (2026-10-18):** The following are **approved general decision policies** for normalizing the complete SRD 5.1 / SRD 5.2.1 seed into one coherent Dorks & Dice native baseline. They apply across categories, subject to previously approved Dorks & Dice rulings and rule-specific eligibility. They are not a blanket preference for one edition.
