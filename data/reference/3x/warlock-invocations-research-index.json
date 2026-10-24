@@ -1,6 +1,6 @@
 {
   "kind": "research-historical-invocation-catalog",
-  "scope": "Dungeons & Dragons 3.5e Warlock invocation entries identified in five published supplements",
+  "scope": "Dungeons & Dragons 3.5e Warlock invocations from six identified published supplements",
   "status": "research-only-not-approved-native-options",
   "rights": "Invocations are indexed by names and factual grade/type/source metadata, without reproducing published descriptive text. Third-party listing is corroborative, not proof of open-license status.",
   "reviewed": "2026-10-24",
@@ -34,6 +34,12 @@
       "year": 2007,
       "url": "https://srd.dndtools.org/srd/magic/invocations/invocations/invocationsdotu.html",
       "scope": "Warlock invocations"
+    },
+    "MoI": {
+      "title": "Magic of Incarnum",
+      "year": 2005,
+      "url": "https://www.yumpu.com/en/document/view/48788475/magic-of-incarnum/98",
+      "scope": "Four published Warlock invocations using the historical essentia/incarnum subsystem; not automatically native without that subsystem"
     }
   },
   "sourceAbbreviations": {
@@ -41,28 +47,33 @@
     "CM": "Complete Mage",
     "DrM": "Dragon Magic",
     "City": "Cityscape",
-    "DotU": "Drow of the Underdark"
+    "DotU": "Drow of the Underdark",
+    "MoI": "Magic of Incarnum"
   },
-  "totalIndexed": 86,
+  "totalIndexed": 90,
   "countsBySource": {
     "CAr": 50,
     "CM": 22,
     "DrM": 9,
     "City": 3,
-    "DotU": 2
+    "DotU": 2,
+    "MoI": 4
   },
   "countsByGrade": {
-    "least": 26,
-    "lesser": 29,
-    "greater": 20,
-    "dark": 11
+    "least": 27,
+    "lesser": 30,
+    "greater": 21,
+    "dark": 12
   },
   "caveats": [
     "This is an indexed five-book research inventory, not a declaration that every WotC 3.5e or Dragon Magazine invocation has been found.",
     "Source category corrections checked against the individual books' indexes: Dragonward is another invocation, Eldritch Line is a blast shape, Penetrating Blast is an essence, and Hindering Blast is an essence.",
     "An entry is not necessarily suitable for native Warlock; prerequisites, mechanics, licensing and overlaps require later review.",
     "Dragonfire Adept-specific draconic invocations in Dragon Magic are not automatically Warlock invocations.",
-    "Invocation names and equivalence labels are not source rule text."
+    "Invocation names and equivalence labels are not source rule text.",
+    "The Complete Arcane errata of 2005-03-16 supersedes uncorrected book prose: Eldritch Blast IS an invocation, granted automatically as a class ability, rather than a Warlock invocation-known choice.",
+    "Magic of Incarnum invocations refer to essentia, soulmelds, and alignment components. Those subsystems are not presumed implemented in Dorks & Dice.",
+    "The original Complete Arcane Eldritch Blast was corrected to spell-level-equivalent 1 before blast shape/essence modification, not a level that rises automatically with Warlock class level."
   ],
   "original3xWarlock": {
     "hitDie": "d6",
@@ -140,10 +151,25 @@
         "dice": 9
       }
     ],
-    "eldritchBlast": "at-will spell-like ray, historical ranged touch and spell resistance rules; distinct from invocations known",
+    "eldritchBlast": "At-will automatically granted spell-like INVOCATION under the 2005 Complete Arcane errata; not taken as one of the selectable invocations known; historical ranged-touch ray and spell resistance",
     "useLimit": "at-will invocation use in original 3.5e rules, subject to source-specific action, defenses and interruption mechanics",
     "shapeAndEssence": "at most one of each on a single historical Eldritch Blast",
-    "characterTypeRestrictions": "historical alignment required chaotic or evil; not adopted as native requirement"
+    "characterTypeRestrictions": "historical alignment required chaotic or evil; not adopted as native requirement",
+    "eldritchBlastErrata": {
+      "date": "2005-03-16",
+      "publication": "Complete Arcane errata",
+      "pagesAffected": [
+        7,
+        8
+      ],
+      "changes": [
+        "Eldritch Blast is an invocation, superseding the uncorrected source's negative statement",
+        "Unmodified Eldritch Blast has the equivalent spell level of 1, not class level/2",
+        "Applying a blast shape or essence changes the equivalent spell level according to the attached invocation"
+      ],
+      "provenance": "https://www.scribd.com/document/511430654/Complete-Arcane-Errata-03-16-2005",
+      "approvedNativeMechanic": false
+    }
   },
   "modernSRDComparativeFacts": {
     "invocationKnownAt20": {
@@ -889,6 +915,38 @@
       "name": "Sudden Swarm",
       "source": "DotU",
       "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Drain Incarnum",
+      "source": "MoI",
+      "grade": "least",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Steal Incarnum",
+      "source": "MoI",
+      "grade": "lesser",
+      "category": "other",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Incarnum Blast",
+      "source": "MoI",
+      "grade": "greater",
+      "category": "essence",
+      "sourceKind": "3.5-published-book-index",
+      "approvalStatus": "research-only"
+    },
+    {
+      "name": "Incarnum Shroud",
+      "source": "MoI",
+      "grade": "dark",
       "category": "other",
       "sourceKind": "3.5-published-book-index",
       "approvalStatus": "research-only"

@@ -45,3 +45,7 @@ The 3.5e original also restricted alignment. This is historical evidence; it is 
 6. **Only after approval:** Reconcile levels 1–20, update the native coverage manifest for the existing 5.x candidates, add tests and statistics. The new 3.x research reference is *outside* the pinned 5.x SRD coverage manifest.
 
 **Guardrails:** Preserve source meaning, avoid invented costs, do not turn spell-like invocations into unlimited ordinary Pact spellcasting, and do not copy unlicensed text into the native rule data.
+
+## Subsequent research updates (2026-10-24)
+
+The earlier *Complete Arcane* review is superseded for source breadth by [the six-book historical inventory](warlock-historical-source-inventory.md): *Complete Arcane*, *Complete Mage*, *Dragon Magic*, *Cityscape*, *Drow of the Underdark*, and *Magic of Incarnum*, totalling **90** indexed published Warlock invocations (not yet native options). The **March 16, 2005 *Complete Arcane* errata** explicitly corrects the original book to classify Eldritch Blast as an automatically granted **invocation** (still not a known-invocation selection) and sets its unmodified equivalent spell level to 1. The historical mechanics in this document must be read with that errata applied. Neither correction approves a new native rule.

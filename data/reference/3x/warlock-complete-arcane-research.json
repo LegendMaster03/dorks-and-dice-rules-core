@@ -99,7 +99,7 @@
         "damage": "1d6"
       },
       {
-        "level": 10,
+        "level": 9,
         "damage": "5d6"
       },
       {
@@ -107,7 +107,17 @@
         "damage": "9d6"
       }
     ],
-    "note": "Not automatically additive to the modern scalable cantrip's multiple attack beams."
+    "note": "Eldritch Blast is a spell-like INVOCATION per official 2005 Complete Arcane errata; it is granted automatically, not chosen from limited invocation-known slots. It is not automatically additive to the modern scalable cantrip's multiple beams.",
+    "sourceErrata": {
+      "date": "2005-03-16",
+      "atWillInvocation": true,
+      "automaticallyGranted": true,
+      "consumesSelectedInvocationKnown": false,
+      "defaultSpellLevelEquivalent": 1,
+      "ifShapeOrEssenceApplied": "use-equivalent-spell-level-of-applied-modification",
+      "publication": "Complete Arcane errata, pp.7–8",
+      "provenance": "https://www.scribd.com/document/511430654/Complete-Arcane-Errata-03-16-2005"
+    }
   },
   "historicalClassFeatures": [
     {
@@ -146,6 +156,16 @@
       "title": "Complete Mage",
       "year": 2006,
       "scope": "Additional Warlock invocations and Warlock-related prestige classes; not imported in this research entry."
+    },
+    {
+      "title": "Magic of Incarnum",
+      "year": 2005,
+      "scope": "Four additional Warlock invocations grounded in the essentia subsystem; source names/grades now indexed; not native-approved"
+    },
+    {
+      "title": "Complete Arcane errata",
+      "year": 2005,
+      "scope": "Corrects Eldritch Blast's invocation status and equivalent spell level"
     }
   ],
   "reconcileAgainst": [

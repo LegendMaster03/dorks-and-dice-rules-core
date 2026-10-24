@@ -12,17 +12,20 @@ class WarlockResearchInventoryTests(unittest.TestCase):
     def setUpClass(cls):
         cls.r=load("data/reference/3x/warlock-invocations-research-index.json")
 
-    def test_fixed_five_book_index(self):
+    def test_fixed_six_book_index(self):
         r=self.r
         self.assertEqual("research-only-not-approved-native-options",r["status"])
-        self.assertEqual(86,r["totalIndexed"])
-        self.assertEqual(86,len(r["entries"]))
-        self.assertEqual({"CAr":50,"CM":22,"DrM":9,"City":3,"DotU":2},
+        self.assertEqual(90,r["totalIndexed"])
+        self.assertEqual(90,len(r["entries"]))
+        self.assertEqual({"CAr":50,"CM":22,"DrM":9,"City":3,"DotU":2,"MoI":4},
                          dict(collections.Counter(x["source"] for x in r["entries"])))
-        self.assertEqual({"least":26,"lesser":29,"greater":20,"dark":11},
+        self.assertEqual({"least":27,"lesser":30,"greater":21,"dark":12},
                          dict(collections.Counter(x["grade"] for x in r["entries"])))
-        self.assertEqual(86,len({x["name"].lower() for x in r["entries"]}))
+        self.assertEqual(90,len({x["name"].lower() for x in r["entries"]}))
         self.assertTrue(all(x["approvalStatus"]=="research-only" for x in r["entries"]))
+        self.assertEqual(4,sum(x["source"]=="MoI" for x in r["entries"]))
+        self.assertTrue(self.r["original3xWarlock"]["eldritchBlastErrata"]["changes"])
+        self.assertIn("INVOCATION",self.r["original3xWarlock"]["eldritchBlast"])
 
     def test_corrected_source_specific_categories(self):
         indexed={x["name"]:x for x in self.r["entries"]}

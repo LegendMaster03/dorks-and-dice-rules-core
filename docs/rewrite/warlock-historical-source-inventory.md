@@ -1,6 +1,6 @@
 # Warlock historical source research — inventory before design
 
-**Research status:** Expanded cross-edition research completed for five *identified* D&D 3.5e books and the staged SRD 5.1/5.2.1 Warlock data. **No native Warlock mechanics have been selected, and no class feature is activated by this report.** The source index is `data/reference/3x/warlock-invocations-research-index.json` (names, grade, family and provenance only).
+**Research status:** Expanded cross-edition research completed for six *identified* D&D 3.5e books and the staged SRD 5.1/5.2.1 Warlock data. **No native Warlock mechanics have been selected, and no class feature is activated by this report.** The source index is `data/reference/3x/warlock-invocations-research-index.json` (names, grade, family and provenance only).
 
 ## Source coverage
 
@@ -11,9 +11,10 @@
 | Dragon Magic (2006) | 9 |
 | Cityscape (2006) | 3 |
 | Drow of the Underdark (2007) | 2 |
-| **Total indexed** | **86** |
+| Magic of Incarnum (2005) | 4 |
+| **Total indexed** | **90** |
 
-The grades contain 26 least, 29 lesser, 20 greater, and 11 dark invocations. These 86 entries are an inventory of the specified published sources, **not** 86 independently new native capabilities. Publication-specific prerequisites, spell-like-ability mechanics, repeated effects, and licensing remain review obligations. Additional sources (including periodicals and class variants) have not been comprehensively audited.
+The six-book inventory now contains 27 least, 30 lesser, 21 greater, and 12 dark invocations. These 90 entries are an inventory of the specified published sources, **not** 86 independently new native capabilities. Publication-specific prerequisites, spell-like-ability mechanics, repeated effects, and licensing remain review obligations. Additional sources (including periodicals and class variants) have not been comprehensively audited.
 
 **Publication provenance:** Complete Arcane is a non-core-SRD copyrighted source. A book being indexed by a third-party site whose URL includes `srd` does not make its original rules open content. The inventory contains the invocation names and independently stated factual metadata only. It does not reproduce full descriptions, class prose, spell rules, or other copyrighted source text. Check licensed copies for source-accurate final adjudication.
 
@@ -23,6 +24,8 @@ Sources:
 - [Dragon Magic invocations](https://srd.dndtools.org/srd/magic/invocations/invocations/invocationsdragonmagic.html)
 - [Cityscape invocations](https://srd.dndtools.org/srd/magic/invocations/invocations/invocationscity.html)
 - [Drow of the Underdark invocations](https://srd.dndtools.org/srd/magic/invocations/invocations/invocationsdotu.html)
+- [Magic of Incarnum Warlock invocation index (book excerpt)](https://www.yumpu.com/en/document/view/48788475/magic-of-incarnum/98)
+- [Complete Arcane errata (March 16, 2005)](https://www.scribd.com/document/511430654/Complete-Arcane-Errata-03-16-2005)
 - [Cross-book Warlock-only invocation index](https://srd.dndtools.org/srd/magic/invocations/classInvocationLists/warlockInvocations.html)
 
 ## Original 3.5e Warlock mechanics: high-confidence source facts
@@ -31,7 +34,7 @@ Sources:
 
 **Invocations:** At-will spell-like abilities rather than ordinary spells. Original grades unlock at Warlock class levels **1/6/11/16** (least/lesser/greater/dark), with **12 known by 20**. Save DC and rules interactions depend on an individual invocation's level equivalent, not on ordinary Warlock Pact Magic. Invocation use in 3.5e was affected by action economy, attacks of opportunity, concentration/interruption, spell resistance and armor failure; translation into native rules needs its own decisions.
 
-**Eldritch Blast:** The original is a separate at-will spell-like ray (not itself a choice from the invocation-known pool) with 60-foot range, ranged-touch resolution and spell resistance. Damage increases from 1d6 at class level 1 to 9d6 at 20. Its source milestones are **1, 3, 5, 7, 9, 11, 14, 17, 20**. Historical shapes modify delivery and essences modify attack properties; an original blast admits at most one of each. Modern 5.x Eldritch Blast is a cantrip with its own targeting and scaling, not this automatically granted class feature. Do not stack the two numerical formulas or assume a blast shape is compatible with extra beams.
+**Eldritch Blast:** The original, as corrected by the official **March 16, 2005 Complete Arcane errata**, is an automatically granted **at-will spell-like invocation**, not itself a selectable choice from the limited invocation-known pool. It is a historical ray with 60-foot range, ranged-touch resolution and spell resistance. Damage increases from 1d6 at class level 1 to 9d6 at 20. Its damage milestones are **1, 3, 5, 7, 9, 11, 14, 17, 20**. Errata sets unmodified Eldritch Blast's equivalent spell level at 1; blast shapes or essences can alter that equivalent level. Historical shapes modify delivery and essences modify attack properties; an original blast admits at most one of each. Modern 5.x Eldritch Blast is a cantrip with its own targeting and scaling, not this automatically granted class feature. Do not stack the two numerical formulas or assume a blast shape is compatible with extra beams.
 
 **Distinct historical class features:**
 - Level 2: at-will magical detection
@@ -45,9 +48,9 @@ These are factual historical feature landmarks; exact skill translation, resourc
 
 ## Invocation corpus by type
 
-The historical catalog distinguishes **blast shapes**, **eldritch essences**, and **other invocations**. Examples of mechanically significant shapes: Eldritch Spear, Eldritch Chain, Eldritch Cone, Eldritch Doom, Hideous Blow (*Complete Arcane*), Eldritch Glaive and Eldritch Line (*Dragon Magic*). Examples of essences: Frightful Blast, Brimstone Blast, Vitriolic Blast, Utterdark Blast (*Complete Arcane*); Hammer Blast, Baneful Blast, Hindering Blast and Binding Blast (*Complete Mage*); Deteriorating Blast and Penetrating Blast (*Dragon Magic*).
+The historical catalog distinguishes **blast shapes**, **eldritch essences**, and **other invocations**. Examples of mechanically significant shapes: Eldritch Spear, Eldritch Chain, Eldritch Cone, Eldritch Doom, Hideous Blow (*Complete Arcane*), Eldritch Glaive and Eldritch Line (*Dragon Magic*), and Incarnum Blast (*Magic of Incarnum*), whose application depends on the original incarnum subsystem. Examples of essences: Frightful Blast, Brimstone Blast, Vitriolic Blast, Utterdark Blast (*Complete Arcane*); Hammer Blast, Baneful Blast, Hindering Blast and Binding Blast (*Complete Mage*); Deteriorating Blast and Penetrating Blast (*Dragon Magic*).
 
-The **other** category is not only combat-oriented: items cover scouting/perception, movement and flight, disguises, mind effects, environmental changes, counter-magic, recovery, summoning and transformation. Notable additional options include Crawling Eye, Disembodied Hand, Mask of Flesh, Witchwood Step, Nightmares Made Real (*Complete Mage*), Cocoon of Refuse and Devil's Whispers (*Cityscape*), and Spider-Shape and Sudden Swarm (*Drow of the Underdark*).
+The **other** category is not only combat-oriented: items cover scouting/perception, movement and flight, disguises, mind effects, environmental changes, counter-magic, recovery, summoning and transformation. Notable additional options include Crawling Eye, Disembodied Hand, Mask of Flesh, Witchwood Step, Nightmares Made Real (*Complete Mage*), Cocoon of Refuse and Devil's Whispers (*Cityscape*), and Spider-Shape and Sudden Swarm (*Drow of the Underdark*), plus Drain Incarnum, Steal Incarnum and Incarnum Shroud (*Magic of Incarnum*).
 
 **Index correctness warning:** The aggregated cross-book index appears to mislabel Dragonward, Eldritch Line and Penetrating Blast by category; the dedicated *Dragon Magic* invocation index supports Dragonward as an ordinary invocation, Eldritch Line as a blast shape and Penetrating Blast as an essence. Hindering Blast is an eldritch essence in the *Complete Mage* entry, despite the aggregate listing calling it ordinary. The catalog uses the corrected categories. Also, *Dragon Magic* includes **Dragonfire Adept draconic invocations**, which must not be silently imported into the Warlock list.
 
@@ -78,3 +81,7 @@ The original 3.x source's **at-will invocation model does not imply that ordinar
 **No owner ruling is requested by this document.** The next deliverable is comparison and categorization of source options, then a focused decision package, then a Warlock class draft for the particularly experienced early tester. Avoid producing the final player-facing PDF before decisions and early feedback; a source appendix may accompany an internal draft.
 
 **Scope/limits:** No official proof that the cross-book third-party index is exhaustive of Dragon Magazine or online archival material; no final direct licensed-book proofreading, no verification of individual 2014/2024 invocation effect mappings beyond source progressions and candidate examples, and no decision on how to combine mechanics.
+
+### Errata and scope correction
+
+**The book's uncorrected sentence that Eldritch Blast is not an invocation is superseded.** The March 16, 2005 *Complete Arcane* errata makes it an invocation, keeps it at-will, and sets the unmodified equivalent spell level to 1. This classification does not mean it consumes one of the class's limited chosen-invocation slots. Supplementing the earlier five-source inventory with *Magic of Incarnum* raises the verified indexed count from 86 to **90**. These four options require separate consideration of the historical essentia subsystem rather than inventing native conversions.
