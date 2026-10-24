@@ -3,6 +3,8 @@
 **Status: research and design hypothesis only — not owner approval, native schema adoption, or feature implementation.**
 **Scope:** Six representative subclasses from the imported SRD 5.1 (2014) and SRD 5.2.1 (2024) candidates on `feature/rules-core-rewrite`. This is intentionally a *small cross-class stress test*, not a new audit of all classes, subclasses, or historical options. Existing approved base-class rulings retain priority. Warlock remains the planned first full vertical slice.
 
+**Later owner decision (2026-10-24):** This document retains the historical investigation of four universal categories; that proposal was **not adopted**. Warlock now has **three class-specific pillars: Patron, Pacts, and Eldritch Invocations**. Progression is their combination, not a fourth pillar. The examples below remain research, but the [integrated SRD Warlock plan](warlock-srd-integrated-vertical-slice.md) contains the governing structure.
+
 ## Questions being tested
 
 1. Can the Warlock-inspired four pillars be treated as **four universally required systems**, **four categories into which each base class installs one system**, or a **class-composed vocabulary with optional/multiple systems**?

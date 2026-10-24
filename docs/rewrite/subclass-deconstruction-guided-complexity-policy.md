@@ -6,7 +6,7 @@
 
 ## Governing requirement
 
-An alternative class-development system, such as the proposed modular Warlock, is a **deconstruction of what a subclass does**. It is **not merely a second way to label subclass features**, and it is **not a requirement that every class follow Warlock's four pillars**.
+An alternative class-development system, such as the proposed modular Warlock, is a **deconstruction of what a subclass does**. It is **not merely a second way to label subclass features**, and it is **not a requirement that every class follow Warlock's three pillars (Patron, Pacts, and Eldritch Invocations)**.
 
 Each such system must:
 
@@ -14,7 +14,7 @@ Each such system must:
 2. **Expose additional, meaningful customization to players who opt in.** The system deconstructs subclass packages into the smallest *coherently acquirable* parts, dependent upgrades, and necessary bundles. Where a part is valid as an independent choice, an advanced player can select it subject to prerequisites, entitlements, and class rules. This should make additional combinations and deeper specialization possible, including new native choices.
 3. **Keep both modes in one authoritative ruleset.** Presets and manually selected parts use the same source-neutral native effects, eligibility checks, resource costs, and advancement ledger. Choosing advanced complexity must not silently provide additional grants; choosing guided progression must not impose unnecessary manual decisions.
 4. **Provide a practical, repeatable subclass conversion path.** For each supported source subclass, map source feature progression and interactions to native part definitions, grant/budget rules, dependencies, and a guided preset. Record source/version provenance and explicitly reconcile incompatibilities; do not assume 2014 and 2024 subclasses have identical timing, effects, or resources. Conversion is a design requirement, not a claim that every subclass can be imported automatically or without adjudication.
-5. **Allow domain-specific models.** Warlock's Patron/Origin, Pact specializations, invocations, and thematic paths provide a strong modular design. A future Druid alternative might achieve the same guided/custom outcome through an entirely different structure reflecting Wild Shape, nature circles, terrain-state dependencies, or companions. Its existence and concrete design are not currently approved.
+5. **Allow domain-specific models.** Warlock's **Patron, Pacts, and Eldritch Invocations** provide three interdependent pillars that together form class progression. A future Druid alternative might achieve the same guided/custom outcome through an entirely different structure reflecting Wild Shape, nature circles, terrain-state dependencies, or companions. Its existence and concrete design are not currently approved.
 6. **Preserve conventional subclasses when appropriate.** Most classes may benefit from the existing relatively rigid subclass progression. No class must replace that system merely because Warlock does. Shared category labels do not force equal structure, four mandatory slots, or equivalent character choices.
 
 **The universal requirement is the outcome and Rules Core integration contract. The class-specific development structure is intentionally not universal.**
@@ -40,7 +40,7 @@ A **part** is an acquirable unit that remains mechanically coherent under the cl
 | Native part definitions | Meaningful abilities, upgrades, bundles, selection prerequisites, resource contracts, provenance | Yes, with generic effect primitives underneath |
 | Guided presets | Existing source-class/subclass-inspired character paths using the same underlying parts and grants | Yes; no duplicate entitlement pool |
 
-Do **not** create a universal set of four required character-development systems (Origin, Discipline, Invocations, and Thematic Progression). Those concepts describe the **Warlock hypothesis**; another class may have one, several, or none of their equivalents. A generalized *mechanical contract* is sufficient for integration, while specialized models are free to implement class-appropriate architecture.
+**Warlock has three development pillars: Patron, Pacts, and Eldritch Invocations.** Their combined advancement constitutes progression. **Thematic Progression and guided presets are not independent pillars** or additional advancement currencies: presets arrange ordinary entitlements for familiar subclass builds. Other classes need not adopt these Warlock-specific names or structures. A generalized *mechanical contract* is sufficient for integration.
 
 ## Concrete example: Warlock versus a possible future Druid
 

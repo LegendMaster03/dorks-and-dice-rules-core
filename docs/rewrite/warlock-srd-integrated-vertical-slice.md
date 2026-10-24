@@ -4,6 +4,18 @@
 
 **Parent architecture:** `docs/rewrite/subclass-deconstruction-guided-complexity-policy.md`. Warlock is the first full application of that policy. This work deliberately overrides the older **base-class-only sequencing for Warlock**: its base class, Patron subclass, Pact Boons, and Eldritch Invocations must be designed, reconciled, implemented and tested **together**. Other classes remain subject to their established workflow until separately approved.
 
+## Warlock development model — three pillars (owner-approved, 2026-10-24)
+
+The Warlock has **three class-specific pillars**, which **together form its progression**:
+
+1. **Patron** — the Warlock's source of supernatural power and its associated abilities. Patron identity begins at Warlock level 1; the exact timing of mechanical grants remains subject to SRD 5.1/5.2.1 reconciliation.
+2. **Pacts** — Blade, Chain, and Tome specializations and their associated improvements. Initial choice and advancement entitlements remain to be decided.
+3. **Eldritch Invocations** — individually selectable supernatural capabilities and enhancements, including options with Patron or Pact prerequisites. Preserve early level-1 access.
+
+**Progression is not a fourth pillar.** It is the result of Warlock-level grants, selection rules, prerequisites, and dependencies operating across all three pillars and ordinary base-class features. Guided **subclass presets** are valid, lower-complexity acquisition paths using the *same* abilities and entitlements as custom choices; neither progression nor presets independently grant extra power.
+
+The labels are intentionally **Warlock-specific**, not generic names every class must adopt. Review and implement **one pillar at a time, beginning with Patron**; record interactions with future pillars and test them together in the complete SRD-only Warlock slice. No previously unresolved numeric budgets, costs, or subclass feature timings are approved by this naming/structure decision.
+
 ## Content boundary
 
 1. Use the existing imported **SRD 5.1 (2014)** and **SRD 5.2.1 (2024)** Warlock sources for complete Band 1 (class levels 1–20) base-class progression, all SRD Pact Boons and Eldritch Invocation options, and the **Fiend Patron** subclass from both editions.
