@@ -628,12 +628,13 @@
     "Full-class migration beyond Warlock"
   ],
   "openDesignRulings": [
-    "Advanced optional additional Pacts are not prohibited but deferred; additional-Pact eligibility, minimum level, costs, maximum, and later Pact entitlement progression remain unresolved",
+    "Advanced additional Pacts remain conceptually available but are not unlocked by current native progression; defer eligibility, level, cost, maximum, and renegotiation mechanics",
     "Invocation selection counts and budget compared with selected Pacts",
     "Which Patron abilities are granted at level 1 versus later advancement",
     "Native Eldritch Blast grant and improvements",
     "How historical at-will and modern slot-based abilities coexist",
-    "Fiend feature edition reconciliation and repeatability/resource costs"
+    "Fiend feature edition reconciliation and repeatability/resource costs",
+    "Pact break effects and Invocation restoration/transfer details: preserve prior acquisitions and model Pact affiliation; decide timing, refund/replacement, ownership migration, and legal restoration costs later."
   ],
   "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
   "approvedNativePactDirection": {
@@ -666,7 +667,7 @@
       "SRD51": "Historical 2014 separate Pact Boon at class level 3 preserved; native first Pact uses its own entitlement at level 1",
       "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices"
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract.",
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating.",
     "initialPactClassLevel": 1,
     "pactEntitlementCountAtLevel1": 1,
     "levelOnePillarRoles": {
@@ -695,7 +696,7 @@
       "minimumWarlockLevel": null,
       "costOrEntitlement": null,
       "maximumPacts": null,
-      "note": "Do not hard-code a permanent one-Pact maximum; default native implementation grants one independent Pact at level 1. Additional Pact acquisition is postponed as an advanced option until eligibility, progression, and costs are separately approved."
+      "note": "Do not permanently prohibit additional Pacts; they represent significant new agreements and belong to future advanced rules. The native first Pact remains a dedicated level-1 choice. Leave the level, cost, eligibility, maximum and invocation transfer terms undecided."
     },
     "source2024MultiplePacts": {
       "status": "verified-source-behavior-not-native-entitlement",
@@ -707,6 +708,38 @@
       "eachAdditionalPactCostsOneInvocationSelection": true,
       "source": "https://www.dndbeyond.com/posts/1756-2024-warlock-vs-2014-warlock-whats-new",
       "nativeDorksAndDiceDifference": "First Pact is free dedicated class-level-1 Pact choice; additional Pacts deferred to advanced rules, not automatically purchased as ordinary Invocations."
+    },
+    "pactInvocationLifecycle": {
+      "status": "owner-approved-design-direction-implementation-semantics-deferred",
+      "pactNature": "major-distinct-power-agreement",
+      "invocationNature": "additional-clauses-bound-to-a-specific-pact",
+      "invocationAlwaysAssociatedWithPact": true,
+      "invocationNotIndependentOfPact": true,
+      "pactTermination": {
+        "dependentInvocationsLoseAccess": true,
+        "defaultRetainInvocationUseAfterPactEnds": false,
+        "removeHistoricalAcquisitionRecords": false,
+        "historicalRecordRecommendation": "retain-source-and-acquisition-history-for-later-restoration-or-transfer",
+        "exactGameEffectsAndTiming": "deferred"
+      },
+      "newPactTerms": {
+        "canExplicitlyRestorePriorInvocations": true,
+        "canExplicitlyTransferPriorInvocations": true,
+        "automaticCarryoverWithoutNewTerms": false,
+        "transferEligibilityAndCosts": "deferred",
+        "replacementPactMayBeWithSameOrDifferentPowerSource": "setting-dependent-not-determined-by-this-rule"
+      },
+      "multiplePacts": {
+        "conceptualSupportRequired": true,
+        "eachPactMustBeDistinct": true,
+        "invocationsMustTrackPactAffiliation": true,
+        "canAccessAdditionalPactThroughCurrentDefaultProgression": false,
+        "acquisitionGates": "deferred-to-future-advanced-rule",
+        "switchingOrMultiPactAttachmentPolicy": "deferred"
+      },
+      "pactDependenceVsPrerequisite": "Every Invocation has Pact affiliation, even when it does not list an individual Pact type as its game-mechanical prerequisite.",
+      "preservePlayerChoice": "Pact loss should have identifiable Invocation effects, but rules for refunded selections, replacement clauses and negotiated restoration remain undecided.",
+      "sourceRulesPreserved": true
     }
   }
 }
