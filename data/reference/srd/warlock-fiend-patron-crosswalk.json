@@ -108,7 +108,7 @@
       "differences": [
         "2014: magical or silvered weapon damage ignores this Resistance, no force-damage exclusion is stated.",
         "2024: cannot select Force damage; no magical/silvered weapon bypass is stated.",
-        "Distinct from the approved historical Warlock BASE CLASS Fiendish Resilience that heals HP over time; both must retain separate mechanical IDs."
+        "Distinct from previously approved historical Warlock BASE CLASS fast healing; the owner has reopened that base-class grant for review. The Patron resistance feature remains independent."
       ]
     },
     {
@@ -279,7 +279,8 @@
     {
       "id": "patron-initial-mechanical-grant",
       "question": "Which Fiend powers, if any, begin at Warlock level 1 in the authoritative native progression (beyond identity)?",
-      "status": "owner-ruling-needed"
+      "status": "owner-approved-design-direction",
+      "resolution": "Use the 2014 Fiend level-1 mechanical milestone: Dark One's Blessing and Patron spell access accompany Fiend Patron selection at class level 1. The spell access grant's exact automatic-versus-selectable behavior and spell list remain unresolved. Preserve both source-era projections for provenance."
     },
     {
       "id": "patron-fiend-spell-entitlement",
@@ -288,13 +289,14 @@
     },
     {
       "id": "patron-fiend-blessing-trigger",
-      "question": "Use the original self-kill trigger or the 2024 nearby-ally expanded trigger, and at what native level?",
+      "question": "At the established native level-1 grant, adopt the 2014 self-defeat trigger or 2024 expanded nearby-other-creature trigger?",
       "status": "owner-ruling-needed"
     },
     {
       "id": "patron-fiend-luck-recovery",
-      "question": "Use short-rest single use, Charisma-modifier long-rest uses, or an explicitly approved unified alternative?",
-      "status": "owner-ruling-needed"
+      "question": "Recovery cadence remains open: 2024 Long Rest refill is recommended; 2014 used a single use restored after Short/Long Rest. Do not silently treat Charisma modifier uses as recharging on every Short Rest.",
+      "status": "partially-owner-approved",
+      "approved": "Number of uses equal to the Warlock's Charisma modifier, minimum 1; the same one-per-roll limit and post-roll timing from SRD 5.2.1."
     },
     {
       "id": "patron-fiend-damage-resilience",
@@ -305,6 +307,12 @@
       "id": "patron-fiend-hurl-through-hell",
       "question": "Resolve save, 10d10 versus 8d10, damage timing, Incapacitated, and Pact-slot recovery.",
       "status": "owner-ruling-needed"
+    },
+    {
+      "id": "warlock-historical-base-fiendish-resilience-reconsideration",
+      "status": "reopened-owner-review",
+      "question": "Should the previously approved 3.5e BASE-CLASS Fiendish Resilience fast healing at class levels 8/13/18 remain as an automatic Warlock grant, become an optional Invocation, or be retired after reviewing 5.x defensive features? No replacement was approved; other historical base-class rulings remain in place.",
+      "sourceDecision": "class.warlock.historical-class-features-band1"
     },
     {
       "id": "patron-custom-combinations",
@@ -318,5 +326,23 @@
     "Non-SRD Patron subclasses",
     "3.5e heritage-feat and invocation catalogs",
     "Activating unreconciled mechanics as native rules"
-  ]
+  ],
+  "approvedNativeDirections": {
+    "patronInitialFiendMilestone": {
+      "classLevel": 1,
+      "partIds": [
+        "warlock.patron.fiend.spell-access",
+        "warlock.patron.fiend.dark-ones-blessing"
+      ],
+      "sourceModel": "SRD51",
+      "qualification": "Only acquisition timing and part identity are approved; spell grant semantics and Dark One's Blessing trigger remain undecided."
+    },
+    "luckUses": {
+      "classLevel": 6,
+      "usesExpression": "max(1, charisma_modifier)",
+      "perRollLimit": 1,
+      "reset": "unresolved",
+      "qualification": "Uses are approved, 2024 Long Rest recovery is a recommendation, not yet owner-approved."
+    }
+  }
 }

@@ -86,20 +86,43 @@ Thus there are **13 distinct spell names** across the two sources, but it would 
 
 ## Approved historical interaction
 
-The already approved 3.5e Warlock **base-class Fiendish Resilience** heals 1/2/5 HP per round at class levels 8/13/18 using a one-Long-Rest recharge. The Fiend **Patron feature** called Fiendish Resilience is a resistance to a selected damage type from level 10. These are **two separate mechanics** despite the same display name: never merge their IDs or make one upgrade the other.
+The historically approved, **now reopened for owner reconsideration**, 3.5e Warlock **base-class Fiendish Resilience** heals 1/2/5 HP per round at class levels 8/13/18 using a one-Long-Rest recharge. The Fiend **Patron feature** called Fiendish Resilience is a resistance to a selected damage type from level 10. These are **two separate mechanics** despite the same display name: never merge their IDs or make one upgrade the other.
 
 The 3.5e Warlock is not built on modern named Patron subclass progressions. Do not retroactively mandate choosing a modern Fiend subclass for historically derived features. Non-SRD heritage feats and prestige classes can be researched as future compatibility cases without importing them into this slice.
 
+## Owner review: Fiend mechanics and 3.5e fast healing (2026-10-24)
+
+The historical **3.5e Warlock base-class fast-healing grant is REOPENED FOR REVIEW**. The 3.5e feature provides fast healing 1/2/5 at levels 8/13/18 for up to 20 rounds, once per Long Rest (the original 3.5e rule said once per day). The earlier approval survives in the decision history, but this feature is **not a finalized grant for the restarted Warlock**. Other historical rulings (Damage Reduction, Deceive Item, Energy Resistance, Imbue Item, and optional-only Eldritch Sight) are unaffected. Do not silently delete, retain, or convert healing before the owner decides.
+
+**Why reopen:** healing restores lost HP while 2014/2024 Dark One's Blessing and Fiendish Vigor provide **Temporary Hit Points** and Patron Fiendish Resilience provides **damage resistance**. They are not exact substitutes. However, giving every Warlock extra 20/40/100 potential HP per daily activation could displace Pact/Invocation choices and dilute Patron-specific defensive identity. Evaluate **automatic grant versus optional Invocation versus removal**, comparing all three pillars; an old base feature must not be automatically retained merely because it was approved before the restart.
+
+**Native Patron acquisition decision 1 — approved:** adopt **2014 Fiend level 1** for the Patron's first mechanical milestone, including **Dark One's Blessing and Patron spell access**. The 2024 source's subclass level-3 grant remains preserved in the comparison preset for conversion/provenance; it is not the native first grant. The Blessing **trigger** and the spell grant's **learning/list** still need approval.
+
+**Native Luck decision 4 — partly approved:** the level-6 **Dark One's Own Luck** has a number of uses equal to the Warlock's **Charisma modifier, minimum one**, with one use per roll. The user selected the scaling count, **not** the recharge frequency. 2024 Long Rest recovery is recommended; 2014 instead provided one use per Short/Long Rest.
+
+### Detailed comparisons remaining for owner decision
+
+| Mechanic | 2014 SRD 5.1 | 2024 SRD 5.2.1 | Recommendation (not yet approved) |
+| --- | --- | --- | --- |
+| **Fiend Spells (decision 2)** | Ten spells added to available **choices**, consuming normal Warlock learned-spell entitlements; acquired as a class-level-1 Patron list | Ten spells automatically **prepared** at Warlock levels 3/5/7/9, in addition to normal learned spells; native no-daily-preparation needs conversion | Consider **automatic learned/access grants** separate from Warlock's regular choices, with 2014 initial availability; first decide spell roster and exact level grants. Avoid awarding all 13 distinct names automatically. |
+| **Dark One's Blessing (decision 3)** | Temporary HP **max(1, CHA modifier + Warlock level)** when the Warlock personally drops a hostile creature to 0 HP | Same Temporary HP, also triggers when **another creature** drops an enemy within **10 feet of the Warlock** to 0 HP | Adopt the **2024 cooperative trigger** with the already approved level-1 acquisition; Temporary HP do not stack. |
+| **Patron Fiendish Resilience (decision 5)** | Level 10, choose any one damage type after a Short/Long Rest; damage from **magical or silvered weapons** bypasses the resistance | Level 10, choose any one damage type **except Force**; no bypass for magical or silvered weapons | Adopt the **2024 simpler resistance**. This is independent of the reopened historical base fast healing. |
+| **Hurl Through Hell (decision 6)** | Level 14, on hit immediately removes target until end of next turn, **no saving throw**; non-Fiend target takes **10d10 Psychic on return**; Long Rest restore | Level 14, hit then **Charisma save**; on failure deals **8d10 Psychic immediately** to non-Fiends, removes and **Incapacitates** target until return; Long Rest restore **or expend Pact Magic slot** to restore use | Favor 2024 **saving throw and slot recovery**, then explicitly choose damage amount/timing. 10d10 averages 55; 8d10 averages 44 before saving-throw probability. |
+
+**Spell differences:** shared spells are Burning Hands, Command, Scorching Ray, Fireball, Stinking Cloud, Fire Shield and Wall of Fire. **2014 only:** Blindness/Deafness, Flame Strike, Hallow. **2024 only:** Suggestion, Geas, Insect Plague. This means 10 spells per version, **13 distinct** across both.
+
+No native Fiend combat definition is activated by these research notes. Preserving explicit unresolved mechanics avoids inadvertently using whichever source edition appears first in the imported data.
+
 ## Working definitions and decision gate
 
-The source crosswalk records **one identity, five feature-part identities, two historical guided projections, and seven explicit open decisions**. These are grounded source mappings, **not extra granted powers**.
+The source crosswalk records **one identity, five feature-part identities, two historical guided projections, and eight tracked rulings/reviews** (one approved level-1 decision, one partly approved Luck decision, four Fiend mechanics still requiring decisions, one reopened historical healing review, and one deferred multi-Patron question). These are grounded source mappings, **not extra granted powers**.
 
 Before promoting a native Patron rule to authoritative data, decide:
 
-1. **Level-1 Fiend mechanical grant**: identity only, 2014 Blessing, or another approved entitlement. A non-zero starting benefit may be desirable but is not yet a decision.
+1. **Level-1 Fiend mechanical grant — SETTLED**: use 2014 level 1 for both Dark One's Blessing and Patron spell access. The spell benefit and Blessing trigger are *separately* still open.
 2. **Fiend spell access**: how both source lists and their different acquisition semantics translate into one native entitlement without granting unjustified bonus spells.
-3. **Blessing**: initial level and whether another creature's defeat within 10 feet triggers it.
-4. **Luck**: Short-Rest single use versus Charisma-modifier Long-Rest uses.
+3. **Blessing**: initial level 1 settled; decide whether another creature's defeat within 10 feet triggers it.
+4. **Luck**: Charisma modifier uses (minimum one) settled; choose recharge schedule (2024 Long Rest recommended, not yet approved).
 5. **Patron damage resistance**: Force selection and magical/silvered weapon bypass.
 6. **Hurl Through Hell**: hit and save procedure, timing/dice, status, Pact-slot use recovery.
 
@@ -107,7 +130,7 @@ Before promoting a native Patron rule to authoritative data, decide:
 
 ## Implementation sequence after reconciliation
 
-1. Approve the six Patron rulings and encode **one native set** of part definitions with stable IDs, referenced by an authoritative Fiend progression/preset.
+1. Resolve the remaining Fiend mechanic choices, confirm Luck recovery and the historical fast-healing review, then encode **one native set** of part definitions with stable IDs, referenced by an authoritative Fiend progression/preset.
 2. Implement/validate feature triggers and recovery with shared Rules Core mechanics, including appropriate source conversion mapping. No Fiend-specific runtime engine.
 3. Validate guided versus custom acquisition against the same entitlement ledger, testing level-1 identity and the 1/3/6/10/14 milestone conflicts.
 4. Continue to **Pacts** next, then **Eldritch Invocations**. Validate the integrated class at levels 1–20 after all three pillars are complete.

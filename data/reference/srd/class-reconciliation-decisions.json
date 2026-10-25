@@ -1097,7 +1097,21 @@
           "path": "docs/rewrite/native-rules-design-specification.md",
           "name": "Shared source reconciliation and rest-based recharge policy"
         }
-      ]
+      ],
+      "reviewClarification": {
+        "requestedOn": "2026-10-24",
+        "feature": "3.5e base-class Fiendish Resilience (fast healing)",
+        "status": "reopened-for-owner-review-not-a-new-mechanical-ruling",
+        "question": "Retain as automatic base-class grant, convert to optional Eldritch Invocation, or retire after considering 5.x defenses; the historical approval is recorded but is no longer final for Warlock implementation.",
+        "unaffectedApprovedFeatureFamilies": [
+          "Damage Reduction",
+          "Deceive Item",
+          "Energy Resistance",
+          "Imbue Item"
+        ],
+        "historicalValuesPreserved": "Fast healing 1/2/5 at Warlock levels 8/13/18 for up to 20 rounds once per Long Rest",
+        "warning": "This is a scoped reopening, not automatic deletion or replacement of native mechanics."
+      }
     }
   ]
 }

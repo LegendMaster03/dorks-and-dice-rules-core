@@ -83,10 +83,21 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
 
     def test_decisions_left_open_not_hidden_as_native(self):
         decision=self.crosswalk["openNativeDecisions"]
-        self.assertEqual(7,len(decision))
-        self.assertEqual(7,len({d["id"] for d in decision}))
-        self.assertEqual(6,sum(d["status"]=="owner-ruling-needed" for d in decision))
-        self.assertEqual(1,sum(d["status"]=="deferred-outside-srd" for d in decision))
+        self.assertEqual(8,len(decision))
+        self.assertEqual(8,len({d["id"] for d in decision}))
+        statuses={k:sum(d["status"]==k for d in decision) for k in {"owner-ruling-needed","deferred-outside-srd","owner-approved-design-direction","partially-owner-approved","reopened-owner-review"}}
+        self.assertEqual({"owner-ruling-needed":4,"deferred-outside-srd":1,"owner-approved-design-direction":1,"partially-owner-approved":1,"reopened-owner-review":1},statuses)
+        initial=next(d for d in decision if d["id"]=="patron-initial-mechanical-grant")
+        self.assertIn("level 1",initial["resolution"])
+        self.assertEqual(1,self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["classLevel"])
+        self.assertEqual(["warlock.patron.fiend.spell-access","warlock.patron.fiend.dark-ones-blessing"],self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["partIds"])
+        luck=self.crosswalk["approvedNativeDirections"]["luckUses"]
+        self.assertEqual("max(1, charisma_modifier)",luck["usesExpression"])
+        self.assertEqual("unresolved",luck["reset"])
+        ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
+        review=next(v["reviewClarification"] for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
+        self.assertEqual("reopened-for-owner-review-not-a-new-mechanical-ruling",review["status"])
+        self.assertEqual(4,len(review["unaffectedApprovedFeatureFamilies"]))
         self.assertNotIn("definition",self.native)
 
 if __name__=="__main__":
