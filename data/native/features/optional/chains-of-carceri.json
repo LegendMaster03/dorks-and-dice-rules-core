@@ -51,5 +51,43 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "per-target-rest-restriction"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Chain",
+    "minimumWarlockLevel": 15,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "slot-free-target-restricted-spell",
+      "spell": "hold-monster",
+      "allowedCreatureTypes": [
+        "celestial",
+        "fiend",
+        "elemental"
+      ],
+      "spellSlotCost": 0,
+      "materialCost": 0,
+      "lockout": {
+        "key": "target-identity",
+        "begins": "on-attempt-including-failure",
+        "ends": "warlock-long-rest"
+      },
+      "globalOncePerLongRestLimit": false
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

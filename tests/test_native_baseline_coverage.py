@@ -108,6 +108,15 @@ class NativeSrdBaselineTests(unittest.TestCase):
         source_tracked = {p for p in paths if p.parent != NATIVE}
         self.assertEqual(set(), source_tracked - tracked)
         native_only = tracked - source_tracked
+        approved_non_srd_invocations = {
+            NATIVE / "features/optional" / f"{name}.json"
+            for name in (
+                "improved-pact-weapon", "gift-of-the-ever-living-ones",
+                "aspect-of-the-moon", "far-scribe",
+                "rebuke-of-the-talisman", "protection-of-the-talisman",
+                "bond-of-the-talisman",
+            )
+        }
         approved_native_only = {
             NATIVE / "features/classes/wizard" / f"{name}.json"
             for name in (
@@ -118,9 +127,16 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 "wizard-specialization-level-20",
             )
         }
-        self.assertEqual(approved_native_only, native_only)
+        self.assertEqual(approved_native_only | approved_non_srd_invocations, native_only)
         for path in native_only:
             entity = load(path)
+            if path in approved_non_srd_invocations:
+                contract = entity["nativeInvocationDefinition"]
+                self.assertEqual("pending-native-reconciliation", entity["baselineStatus"])
+                self.assertFalse(contract["nativeExecutable"])
+                self.assertEqual("non-srd-review-pending", contract["sourceRightsReview"])
+                self.assertFalse(entity["publishedSourceBoundary"]["fullProtectedTextImported"])
+                continue
             self.assertNotIn(entity["id"], seen)
             seen.add(entity["id"])
             self.assertEqual("retained-native-definition", entity["baselineStatus"])

@@ -42,5 +42,34 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "thirsting-blade-prerequisite-becomes-stale"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Blade",
+    "minimumWarlockLevel": 12,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "attack-count-override",
+      "weapon": "active-pact-weapon",
+      "action": "Attack",
+      "totalAttacks": 3,
+      "requiresPactMilestone": "blade.pact-weapon-two-attacks-level-5",
+      "stacking": "highest-compatible-total-not-additive"
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

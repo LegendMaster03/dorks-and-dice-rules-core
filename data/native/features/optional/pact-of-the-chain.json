@@ -56,5 +56,37 @@
         ]
       }
     }
-  ]
+  ],
+  "nativeFamiliarCommandDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "familiarActsOn": "warlock-shared-initiative",
+    "familiarTracksOwn": [
+      "action",
+      "movement",
+      "reaction"
+    ],
+    "attackPermission": "requires-valid-command",
+    "baseCommand": {
+      "warlockAction": "Attack",
+      "warlockAttackSacrifice": 1,
+      "familiarAction": "Attack",
+      "requiresInvestment": false
+    },
+    "investmentAlternative": {
+      "warlockAction": "Bonus Action",
+      "familiarAction": "Attack",
+      "requiresInvocation": "invocation.investment-of-the-chain-master",
+      "preservesWarlockRegularAction": true
+    },
+    "commandedFamiliarAttackActionsPerSharedInitiativeRound": 1,
+    "attackRollsPerFamiliarAttackAction": {
+      "beforeWarlockLevel5": 1,
+      "fromWarlockLevel5": 2
+    },
+    "levelFiveAttacksAreSameAction": true,
+    "cannotUseBothCommandPathsForExtraAction": true,
+    "appliesOnlyToAttachedPactFamiliar": true,
+    "otherControlledSummonsUnaffected": true
+  }
 }

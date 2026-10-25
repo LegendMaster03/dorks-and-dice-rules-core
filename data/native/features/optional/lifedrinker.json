@@ -65,5 +65,49 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "2014-vs-2024-damage-frequency-and-healing"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Blade",
+    "minimumWarlockLevel": 9,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "once-per-turn-hit",
+      "attackWeapon": "active-pact-weapon",
+      "damage": {
+        "dice": "1d6",
+        "typeChoices": [
+          "necrotic",
+          "psychic",
+          "radiant"
+        ],
+        "usesPerTurn": 1
+      },
+      "optionalHealing": {
+        "trigger": "same-qualifying-hit",
+        "cost": {
+          "resource": "hit-die",
+          "amount": 1
+        },
+        "result": "roll-expended-hit-die-plus-constitution-modifier",
+        "minimumHitPoints": 1
+      },
+      "retains2014PerHitCharismaDamage": false
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

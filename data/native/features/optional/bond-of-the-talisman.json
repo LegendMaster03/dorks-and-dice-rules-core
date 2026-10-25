@@ -1,0 +1,53 @@
+{
+  "id": "optionalfeature.bond-of-the-talisman",
+  "name": "Bond Of The Talisman",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Talisman",
+    "minimumWarlockLevel": 12,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "bidirectional-talisman-teleport",
+      "requiresAnotherCreatureWearingTalisman": true,
+      "planeRestriction": "same-plane",
+      "actionCost": "acting-creature-action",
+      "targetDestination": "nearest-unoccupied-space-next-to-other-party",
+      "directionChoices": [
+        "warlock-to-wearer",
+        "wearer-to-warlock"
+      ],
+      "resource": {
+        "id": "invocation.bond-of-the-talisman.uses",
+        "maximum": "warlock-proficiency-bonus",
+        "recharge": "long-rest",
+        "oneSharedPoolBothDirections": true,
+        "separateFrom": [
+          "talisman.base-charges",
+          "invocation.protection-of-the-talisman.uses"
+        ]
+      }
+    },
+    "sourceRightsReview": "non-srd-review-pending",
+    "originalSourceVersionsUnaffected": true
+  },
+  "publishedSourceBoundary": {
+    "sourceRecord": "data/reference/warlock-pact-specific-invocations.json",
+    "fullProtectedTextImported": false,
+    "historicalSourceOnlyInReference": true
+  }
+}

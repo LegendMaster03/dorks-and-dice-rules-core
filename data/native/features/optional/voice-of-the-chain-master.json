@@ -32,5 +32,37 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "none-yet-confirmed"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Chain",
+    "minimumWarlockLevel": null,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "familiar-communication",
+      "requiresFamiliarFromAttachedPact": true,
+      "planeRestriction": "same-plane",
+      "grants": [
+        "telepathic-communication",
+        "remote-familiar-senses",
+        "speech-through-familiar-in-warlock-voice"
+      ],
+      "baseSensoryActionIsNotDuplicated": true
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

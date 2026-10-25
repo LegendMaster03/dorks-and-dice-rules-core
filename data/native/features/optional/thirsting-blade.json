@@ -65,5 +65,23 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "native-level5-second-attack-duplicate"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": false,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Blade",
+    "minimumWarlockLevel": 5,
+    "invocationSelectionCost": 0,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": null,
+    "effect": {
+      "kind": "historical-alias",
+      "intrinsicReplacement": "blade.pact-weapon-two-attacks-level-5",
+      "selectableInvocationEffect": false
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

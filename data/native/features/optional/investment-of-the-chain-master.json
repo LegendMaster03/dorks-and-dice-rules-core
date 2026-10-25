@@ -77,5 +77,46 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "native-familiar-command-economy-vs-intrinsic-second-attack"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Chain",
+    "minimumWarlockLevel": 5,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "familiar-enhancement",
+      "bonusActionCommand": {
+        "actionCost": "warlock-bonus-action",
+        "isAlternativeTo": "warlock-attack-action-sacrifice",
+        "usesSameCommandedActionAllowance": true
+      },
+      "flyOrSwimSpeedFeet": 40,
+      "preserveSuperiorBaseSpeed": true,
+      "replacePhysicalDamageWith": [
+        "necrotic",
+        "radiant"
+      ],
+      "forcedSaveDC": "warlock-spell-save-dc",
+      "familiarDamageResistance": {
+        "cost": "warlock-reaction",
+        "scope": "one-damage-instance"
+      },
+      "grantsExtraFamiliarAttackAction": false
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

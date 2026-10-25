@@ -42,5 +42,43 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "none-yet-confirmed"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Blade",
+    "minimumWarlockLevel": 5,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "pact-weapon-hit-slot-smite",
+      "usesPerTurn": 1,
+      "cost": {
+        "resource": "pact-magic-spell-slot",
+        "amount": 1
+      },
+      "extraDamage": {
+        "type": "force",
+        "die": "d8",
+        "diceCount": "1+expended-slot-level"
+      },
+      "optionalProne": {
+        "maximumCreatureSize": "Huge"
+      },
+      "criticalResolution": "unified-system"
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

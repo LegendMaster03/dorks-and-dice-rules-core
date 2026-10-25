@@ -1,0 +1,47 @@
+{
+  "id": "optionalfeature.protection-of-the-talisman",
+  "name": "Protection Of The Talisman",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Talisman",
+    "minimumWarlockLevel": 7,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "wearer-saving-throw-correction",
+      "trigger": "active-wearer-fails-saving-throw",
+      "bonusDice": "1d4",
+      "recheckSuccess": true,
+      "resource": {
+        "id": "invocation.protection-of-the-talisman.uses",
+        "maximum": "warlock-proficiency-bonus",
+        "recharge": "long-rest",
+        "separateFrom": [
+          "talisman.base-charges",
+          "invocation.bond-of-the-talisman.uses"
+        ]
+      }
+    },
+    "sourceRightsReview": "non-srd-review-pending",
+    "originalSourceVersionsUnaffected": true
+  },
+  "publishedSourceBoundary": {
+    "sourceRecord": "data/reference/warlock-pact-specific-invocations.json",
+    "fullProtectedTextImported": false,
+    "historicalSourceOnlyInReference": true
+  }
+}

@@ -44,5 +44,36 @@
     "associatedPatronMustAccept": true,
     "sourceVersionsRetained": true,
     "conflictGate": "none-yet-confirmed"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Tome",
+    "minimumWarlockLevel": 9,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "book-of-shadows-rescue-page",
+      "nameCapacity": "max(1,charisma-modifier)",
+      "consentRequired": true,
+      "when": "named-creature-at-zero-hit-points-not-killed-outright",
+      "resultHitPoints": 1,
+      "sharedUsesPerLongRest": 1,
+      "nameErasureAction": "Magic",
+      "independentFromTalisman": true
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
   }
 }

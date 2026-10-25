@@ -1,0 +1,41 @@
+{
+  "id": "optionalfeature.aspect-of-the-moon",
+  "name": "Aspect Of The Moon",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Tome",
+    "minimumWarlockLevel": null,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "sleep-exemption",
+      "sleepRequired": false,
+      "canBeForcedToSleep": false,
+      "longRestStillRequired": true,
+      "mayRemainAwakeDuringLongRest": true,
+      "grantsAdditionalLongRests": false,
+      "blanketConditionImmunity": false
+    },
+    "sourceRightsReview": "non-srd-review-pending",
+    "originalSourceVersionsUnaffected": true
+  },
+  "publishedSourceBoundary": {
+    "sourceRecord": "data/reference/warlock-pact-specific-invocations.json",
+    "fullProtectedTextImported": false,
+    "historicalSourceOnlyInReference": true
+  }
+}

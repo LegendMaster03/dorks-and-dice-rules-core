@@ -1,0 +1,45 @@
+{
+  "id": "optionalfeature.gift-of-the-ever-living-ones",
+  "name": "Gift Of The Ever Living Ones",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Chain",
+    "minimumWarlockLevel": null,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "healing-dice-maximum",
+      "requiresAttachedPactFamiliarWithinFeet": 100,
+      "recipient": "warlock",
+      "eligible": "rolled-hit-point-restoration-dice",
+      "excludes": [
+        "flat-healing",
+        "temporary-hit-points",
+        "damage",
+        "other-creature-healing"
+      ],
+      "doesNotChangeFiendFastHealing": true
+    },
+    "sourceRightsReview": "non-srd-review-pending",
+    "originalSourceVersionsUnaffected": true
+  },
+  "publishedSourceBoundary": {
+    "sourceRecord": "data/reference/warlock-pact-specific-invocations.json",
+    "fullProtectedTextImported": false,
+    "historicalSourceOnlyInReference": true
+  }
+}
