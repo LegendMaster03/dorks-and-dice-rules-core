@@ -45,7 +45,7 @@ The 2016 official Wizards of the Coast **playtest** source says a character **de
 
 ## Intrinsic Pact progression after adding two options
 
-**Only Blade, Chain and Tome have explicitly approved level-5 Deepened-Pact-like advancements.** **Do not copy those level-5 grants to Talisman or Star Chain**, invent a new 5th-level grant, or make Pact of the Talisman/Star Chain baseline weaker/stronger by fiat.
+**All four active Pacts now have approved native level-5 advancement designs.** Blade, Chain and Tome have the BG3-inspired effects; **Talisman has owner-approved Deepened Pact: Shared Ward** at level 5 using its own shared Talisman charges and the Warlock's Reaction, plus approved nonstacking mixed-source level-1 check benefits. **Star Chain remains disabled**; nothing from this approval activates or advances it. The [Talisman decision record](warlock-talisman-pact-strengthening-proposal.md) controls.
 
 The architecture now requires a review of **each Pact's functional role and advancement through Warlock levels 1–20**, including what belongs to the Pact versus optional Patron-restricted Invocations.
 
@@ -60,7 +60,7 @@ Proposed, *unapproved* directions:
 - Retain **Fiend** as the only currently playable Patron. Talisman is not inherently Patron-restricted in its source; Star Chain explicitly is.
 - **Do not offer Star Chain or Seeker in any current build or active Pact reconciliation**. Preserve source eligibility for potential future study: Star Chain requires Seeker, while a Seeker Warlock could instead choose Blade, Chain, or Tome in the UA.
 - Preserve closed approved Fiend decisions and separate Patron/Pact/Invocation grants. Invocations are bound to one actual Pact and removed from use (not acquisition records) when it is broken.
-- Do **not** automatically give Talisman or Star Chain the BG3 Deepened Pact level-5 benefits that were approved for Blade, Chain and Tome.
+- **Talisman's distinct native level-5 Shared Ward is approved** and is not a copy of BG3 Deepened Pact. **Star Chain is disabled** and receives no new approved level-5 benefit.
 - Guided and custom builders use the same entitlements and compatibility checks.
 - The ongoing ten-Patron × three-Pact research remains **historical**; Talisman is the fourth active Pact design case. A five-Pact matrix is **archived, not an active 50-pair compatibility workstream**.
 
