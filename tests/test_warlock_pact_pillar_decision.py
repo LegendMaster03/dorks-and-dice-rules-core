@@ -43,10 +43,10 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(p["pactEnhancementsCanBeInvocations"])
         self.assertTrue(p["invocationMayRequirePact"])
 
-    def test_three_pacts_keep_their_original_source_categories(self):
+    def test_original_srd_pacts_preserve_source_categories_when_scope_extends(self):
         p=self.inventory["approvedNativePactDirection"]
         names={"Pact of the Blade","Pact of the Chain","Pact of the Tome"}
-        self.assertEqual(names,set(p["inScopeChoices"]))
+        self.assertTrue(names.issubset(set(p["inScopeChoices"])))
         for name in names:
             found=[option for option in self.inventory["options"] if option["name"]==name]
             self.assertEqual(1,len(found))
@@ -61,7 +61,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertIsNone(open_rules["additionalPactsAllowed"])
         self.assertIsNone(open_rules["additionalPactsAcquisitionCost"])
         self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
-        self.assertEqual(3,len(open_rules["individualPactMechanicalReconciliation"]))
+        self.assertEqual(5,len(open_rules["individualPactMechanicalReconciliation"]))
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
         self.assertIn("defer eligibility, level, cost",self.inventory["openDesignRulings"][0])
 
@@ -264,6 +264,80 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertIn("Shadowfell",h["xgte2014Lore"])
         self.assertIn("Curse", " ".join(h["openIssues"]))
         self.assertIn("Charisma weapon attack/damage",h["redundantHexWarriorElements"])
+
+    def test_five_pact_reconciliation_catalog_preserves_srd_counts(self):
+        pact=self.inventory["approvedNativePactDirection"]
+        scope=pact["expandedFivePactReview"]
+        choices={"Pact of the Blade","Pact of the Chain","Pact of the Tome",
+                 "Pact of the Talisman","Pact of the Star Chain"}
+        self.assertEqual(choices,set(pact["inScopeChoices"]))
+        self.assertEqual(choices,set(pact["decisionsPending"]["individualPactMechanicalReconciliation"]))
+        self.assertEqual(5,scope["totalDistinctPactCandidates"])
+        self.assertEqual(1,scope["initialPactClassLevel"])
+        self.assertEqual(1,scope["initialPactEntitlementCount"])
+        self.assertFalse(scope["eachFirstPactConsumesInvocationChoice"])
+        self.assertEqual("pending-individual-native-reconciliation",scope["nativeRuntimeImplementationStatus"])
+        self.assertTrue(scope["originalSrdOptionCountsMustRemainUnchanged"])
+        self.assertEqual(42,len(self.inventory["options"]))
+        self.assertEqual(32,self.inventory["editionCounts"]["SRD51"]["invocations"])
+        self.assertEqual(3,self.inventory["editionCounts"]["SRD51"]["separatePacts"])
+        self.assertEqual(28,self.inventory["editionCounts"]["SRD52"]["invocationsIncludingPacts"])
+        self.assertFalse(any(x["name"] in choices-{"Pact of the Blade","Pact of the Chain","Pact of the Tome"} 
+                             for x in self.inventory["options"]))
+        self.assertTrue(scope["noPatronCatalogExpansion"])
+        self.assertTrue(scope["noAdditionalPactAcquisitionRuleApproved"])
+        self.assertFalse(any(x.startswith("Pact of the Talisman") for x in self.inventory["outOfScope"]))
+
+    def test_talisman_published_source_and_invocation_family_are_reference_only(self):
+        scope=self.inventory["approvedNativePactDirection"]["expandedFivePactReview"]
+        t=scope["newSources"]["talisman"]
+        self.assertEqual("Pact of the Talisman",t["name"])
+        self.assertEqual(2020,t["year"])
+        self.assertEqual(3,t["sourcePactLevel"])
+        self.assertEqual("published-official-non-SRD-2014-era-pact-boon",t["sourceType"])
+        self.assertEqual("1d4 on a failed ability check by the wearer",t["sourceCore"]["failureRollBonus"])
+        self.assertEqual("proficiency-bonus",t["sourceCore"]["usesPerLongRest"])
+        self.assertEqual(1,t["sourceCore"]["replacementCeremonyHours"])
+        self.assertEqual({"Rebuke of the Talisman","Protection of the Talisman","Bond of the Talisman"},
+                         set(t["invocationNames"]))
+        self.assertEqual({"Rebuke of the Talisman":None,"Protection of the Talisman":7,
+                          "Bond of the Talisman":12},t["publishedInvocationLevelPrereqs"])
+        self.assertFalse(t["mechanicsApprovedForNative"])
+        self.assertEqual("not-approved",t["level5IntrinsicAdvance"])
+        self.assertTrue(t["sourceRulesNotCoveredBySrdLicense"])
+
+    def test_star_chain_enforces_seeker_patron_constraint_not_generic_fiend(self):
+        p=self.inventory["approvedNativePactDirection"]
+        scope=p["expandedFivePactReview"]
+        c=scope["newSources"]["starChain"]
+        self.assertEqual("Pact of the Star Chain",c["name"])
+        self.assertEqual("unpublished-wizards-of-the-coast-playtest-non-SRD",c["sourceType"])
+        self.assertEqual(2016,c["year"])
+        self.assertEqual(3,c["sourcePactLevel"])
+        self.assertEqual("dedicated-to-the-Seeker",c["patronRestrictionInSource"])
+        self.assertEqual("Augury",c["sourceCore"]["ritualSpell"])
+        self.assertFalse(c["sourceCore"]["ritualSpellConsumesKnownSpellSelection"])
+        self.assertEqual("advantage-on-one-intelligence-check",c["sourceCore"]["checkBenefit"])
+        self.assertEqual("short-or-long-rest",c["sourceCore"]["checkBenefitRecharge"])
+        self.assertEqual(1,c["sourceCore"]["replacementCeremonyHours"])
+        elig=c["eligibility"]
+        self.assertTrue(elig["requiresSeekerLinkedPatron"])
+        self.assertFalse(elig["matchesOrdinaryFiendPatronByDefault"])
+        self.assertEqual("requires-future-explicit-owner-approval",elig["otherPatronSourceTraitOrSpecialException"])
+        self.assertEqual("source-ineligible-pending-explicit-approved-exception",elig["playabilityWithFiendOnlyPatronSlice"])
+        self.assertTrue(elig["nonPlayableSyntheticSeekerFixtureAllowed"])
+        self.assertTrue(c["noUnapprovedSeekerPatronImport"])
+        self.assertFalse(c["mechanicsApprovedForNative"])
+        self.assertEqual("not-approved",c["level5IntrinsicAdvance"])
+        self.assertTrue(scope["noPatronCatalogExpansion"])
+
+    def test_pact_level_five_upgrades_not_silently_granted_to_new_options(self):
+        p=self.inventory["approvedNativePactDirection"]
+        levels=p["expandedFivePactReview"]["nativeFirstPactUpgradeApproval"]
+        self.assertEqual({"blade":5,"chain":5,"tome":5,"talisman":None,"starChain":None},levels)
+        self.assertEqual({"blade","chain","tome"},set(p["approvedLevelFivePactImprovements"]["options"]))
+        self.assertFalse(p["bladePactNativeBaseline"]["nativeExecutableActivation"])
+        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
 if __name__=="__main__":
     unittest.main()
