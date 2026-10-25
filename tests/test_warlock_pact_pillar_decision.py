@@ -155,5 +155,35 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(checks["sameInGuidedAndCustomBuilds"])
         self.assertIn("receiving Patron",p["pactInvocationLifecycle"]["compatibilityRevalidation"])
 
+    def test_blade_2024_baseline_approved_without_automatic_pact_progression(self):
+        pact=self.inventory["approvedNativePactDirection"]
+        blade=pact["bladePactNativeBaseline"]
+        self.assertEqual("owner-approved-2024-base-with-separate-pact-progression-review",blade["status"])
+        self.assertEqual("Pact of the Blade",blade["pact"])
+        self.assertEqual("SRD52",blade["sourceEdition"])
+        self.assertEqual(1,blade["initialAcquisition"]["classLevel"])
+        self.assertFalse(blade["initialAcquisition"]["consumesInvocationSelection"])
+        features=blade["approvedBaseFeatures"]
+        self.assertEqual("bonus-action",features["createConjuredWeapon"]["activation"])
+        self.assertEqual(["simple-melee","martial-melee"],features["createConjuredWeapon"]["weaponTypes"])
+        self.assertEqual("bonus-action",features["bondExistingMagicWeapon"]["activation"])
+        self.assertTrue(features["bondExistingMagicWeapon"]["forbidsAttunedToAnotherCreature"])
+        self.assertTrue(features["bondExistingMagicWeapon"]["forbidsAlreadyBoundToAnotherWarlock"])
+        self.assertTrue(features["proficientWithPactWeapon"])
+        self.assertTrue(features["weaponCanBeSpellcastingFocus"])
+        self.assertTrue(features["mayUseCharismaForAttackAndDamageInsteadOfStrengthOrDexterity"])
+        self.assertEqual({"normal-weapon-type","necrotic","psychic","radiant"},
+                         set(features["selectableDamageTypes"]))
+        self.assertEqual("review-separately",
+                         blade["deferredSourceDifferences"]["original2014HourRitualAndExtradimensionalMagicWeaponStorage"])
+        progression=blade["pactProgressionConcern"]
+        self.assertEqual("owner-identifies-pact-pillar-baseline-as-underwhelming",progression["status"])
+        self.assertEqual("not-yet-approved",progression["nativePactIntrinsicProgression"])
+        self.assertEqual("candidate-for-owner-review-not-granted",progression["specificPotentialLevel5SecondAttack"])
+        self.assertEqual("not-yet-approved",progression["thirstingBladeDisposition"])
+        self.assertTrue(progression["avoidsAutomaticStacking"])
+        self.assertFalse(blade["nativeExecutableActivation"])
+        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
+
 if __name__=="__main__":
     unittest.main()
