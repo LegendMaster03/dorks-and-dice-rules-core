@@ -1,6 +1,6 @@
 # Warlock Pillar 2 — Pact of the Blade: 3.5e, SRD 5.1, SRD 5.2.1 comparison
 
-**Status:** Source comparison complete; **mechanical reconciliation NOT owner-approved**. No native executable Pact of the Blade rule is activated by this document. Prepared October 25, 2026 for the current SRD-only Warlock vertical slice.
+**Status:** Source comparison complete. **Owner approved the 2024/SRD 5.2.1 base Pact of the Blade mechanics** for native use, but intrinsic Pact progression, 2014 differences, and advanced Invocations remain **unresolved**. No native executable Pact of the Blade rule is activated by this document. Prepared October 25, 2026 for the current SRD-only Warlock vertical slice.
 
 **Previously approved Pact architecture remains controlling:** Every native Warlock chooses a **separate, dedicated Pact at Warlock level 1**, consuming no Invocation choice. An Invocation is an additional clause attached to one Pact, and may require the Pact's type and/or its associated Patron. Patron acceptance under applicable terms and explicit mechanical eligibility are separately validated. Future additional Pacts remain a deferred advanced option; their level/cost/maximum is not resolved. See [Pact pillar reconciliation](warlock-pact-pillar-reconciliation.md).
 
@@ -15,13 +15,13 @@
 | Topic | 2014 SRD 5.1 | 2024 SRD 5.2.1 | Native reconciliation |
 | --- | --- | --- | --- |
 | Initial acquisition | Level 3 separate Pact Boon | No level prerequisite, acquired as Invocation from level 1 | **Already approved:** dedicated Pact at Warlock level 1; no Invocation spent |
-| Conjuring action | **Action** in empty hand | **Bonus Action** in hand | Open: activation action; favor evaluating 2024 usability |
-| Conjured weapon forms | Chosen **melee** weapon; form chosen on each creation | **Simple or Martial melee** weapon | Open: permitted forms; preserve melee-conjuration distinction |
-| Weapon proficiency | Proficient while wielded | Proficient while bond lasts | Closely aligned |
-| Attack/damage ability | Normal weapon rule, generally Strength/Dexterity; base Pact **does not grant Charisma substitution** | May use **Charisma** instead of Strength/Dexterity | Open: whether 2024 benefit is native base Pact or elective enhancement |
-| Alter damage type | Weapon's normal type; treated magical for overcoming nonmagical resistance/immunity | May inflict normal type or **Necrotic, Psychic, Radiant** | Open: type conversion and explicit handling of magical attacks under mixed-edition defenses |
-| Spellcasting focus | Not part of base Pact | Bonded weapon is a Warlock **Spellcasting Focus** | Open: adopt 2024 focus benefit? |
-| Bond magic weapon | **1-hour ritual** holding a magic weapon | **Bonus Action**, touching a magic weapon | Open: speed, permanence, and restrictions |
+| Conjuring action | **Action** in empty hand | **Bonus Action** in hand | **Approved: 2024 Bonus Action** |
+| Conjured weapon forms | Chosen **melee** weapon; form chosen on each creation | **Simple or Martial melee** weapon | **Approved: 2024 simple/martial melee conjuration** |
+| Weapon proficiency | Proficient while wielded | Proficient while bond lasts | **Approved: 2024 proficiency** |
+| Attack/damage ability | Normal weapon rule, generally Strength/Dexterity; base Pact **does not grant Charisma substitution** | May use **Charisma** instead of Strength/Dexterity | **Approved: 2024 optional Charisma substitution** |
+| Alter damage type | Weapon's normal type; treated magical for overcoming nonmagical resistance/immunity | May inflict normal type or **Necrotic, Psychic, Radiant** | **Approved: 2024 damage-type choice**; historical magical attack bypass remains open |
+| Spellcasting focus | Not part of base Pact | Bonded weapon is a Warlock **Spellcasting Focus** | **Approved: 2024 Pact focus** |
+| Bond magic weapon | **1-hour ritual** holding a magic weapon | **Bonus Action**, touching a magic weapon | **Approved: 2024 quick bond**; separate review of 2014 ritual/storage and related restrictions |
 | Magic ranged weapon | Official Sage Advice clarifies a **bonded magic** weapon need not be melee, although conjured weapon must be melee | Official 2024 Sage Advice preserves same distinction; **bonded magic** weapon need not be melee | Open: consistent source-preserving rule; do not accidentally prohibit magic ranged weapons |
 | Magic weapon exclusions | Cannot use bonding ritual on **artifact or sentient weapon** | Cannot bond weapon attuned to **someone else** or **bonded to another Warlock** | Open: whether to use both safeguards, and interaction with native attunement |
 | Storing bonded magic weapon | Explicit **extradimensional storage and recall** from 1-hour ritual | **No equivalent storage/recall language** in base Invocation | Open: restore 2014 convenience, make optional upgrade, or retire |
@@ -30,6 +30,16 @@
 **Important 2014/2024 distinction:** Neither source permits freely **conjuring a nonmagical ranged weapon**. An already-existing **magic ranged weapon** may instead be bonded. Official 2024 Sage Advice explicitly confirms the distinction.
 
 **Note on existing magic weapon ownership:** The 2024 Pact has a short bond action but does not explicitly reproduce 2014's 1-hour permanent weapon ritual, extradimensional storage, or item retrieval. Do not infer those effects automatically from the source.
+
+## Pact pillar depth — progression review prompted by owner feedback
+
+**Owner feedback:** The 2024 Blade baseline is an acceptable starting point but **underwhelming for a major, independent Pact pillar**. Its intrinsic benefits concentrate at acquisition, while meaningful higher-level weapon attack scaling is supplied by optional Invocations. This leaves the Pact disproportionately dependent on the Invocation pillar for core competence.
+
+**Design direction to evaluate, not approved mechanics:** A Pact should deliver sustained, recognizable specialization and its own progression, without requiring optional Invocations solely to remain effective. Conversely, Invocations should represent additional clauses that substantially customize an already functional Pact.
+
+**First mechanical case to decide:** At Warlock level **5**, should **two Pact-weapon attacks per Attack action** become an **intrinsic Pact of the Blade advancement**, rather than remaining the optional **Thirsting Blade** Invocation? If approved, the corresponding Invocation must be retired, converted into a distinct upgrade, or otherwise accounted for **without duplicate extra attacks or bonus entitlements**.
+
+**Follow-on balance questions:** Compare core Blade weapon combat with base Eldritch Blast at 1/5/11/12/17/20; decide whether intrinsic scaling should extend past level 5; decide whether the 2024 third attack of **Devouring Blade** stays an elective Invocation or changes role; preserve limits on simultaneous 3.5e iterative attacks, Eldritch Blast weapon-channeling, and source-era attack chains. **No automatic extra attack or new damage scaling is approved yet.**
 
 ## Pact-linked Invocations — separate from the first Pact
 
@@ -50,7 +60,7 @@ These Invocations remain **Invocation-pillar options**, with **Pact of the Blade
 
 ## Decision cases for owner, in logical order
 
-1. **Base Pact:** Use the 2024 Bonus Action, proficiency, Charisma attack/damage, spellcasting focus, and selectable Necrotic/Psychic/Radiant type as native default? If not, identify which elements are elective.
+1. **Base Pact — APPROVED:** Native starts from the 2024 Bonus Action, proficiency, Charisma attack/damage, spellcasting focus, and selectable Necrotic/Psychic/Radiant damage. **Not yet sufficient as a complete Pact-pillar progression.**
 2. **Existing magic weapon bonding:** Preserve 2014's hour-long bonded-weapon ritual and extradimensional storage, use 2024 quick touch-bond, combine under distinct rules, or relegate the old ritual/storage to an optional Pact enhancement? Clarify 2014 artifact/sentient and 2024 attunement/bond exclusions.
 3. **Weapon form:** Keep both sources' distinction between conjured melee and bonded existing magic weapons (including ranged); specify when damage conversion/Charisma applies to bonded ranged weapons.
 4. **Magical weapon treatment:** The 2014 Pact explicitly overcomes mundane resistance/immunity, while 2024 offers damage-type conversion. Native Warlock and monsters preserve mechanics from multiple editions; resolve both explicitly.
