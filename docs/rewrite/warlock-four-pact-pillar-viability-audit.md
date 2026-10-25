@@ -5,9 +5,50 @@
 
 **Question:** After reconciling D&D 5e 2014, 5e 2024 and the owner-approved *Baldur's Gate 3* Deepened Pact improvements, have the four active Pacts become sufficiently **substantial, differentiated and independently advancing** to be a third major Warlock pillar alongside Patron and Pact-bound Invocations?
 
+## Owner clarification: a Pact's Invocation ecosystem is part of its substantive value
+
+**Owner correction (2026-10-25):** A Pact is **not judged primarily by how many free class-level features it gains**. Its depth includes **what Invocations may be attached to it**, how those clauses combine and specialize the base agreement, and which Patron relationships accept or enable the clauses. This clarification **supersedes any statement in the earlier audit implying every Pact must gain mandatory intrinsic features at Warlock 11, 17 or 20**.
+
+**Correct assessment model:**
+
+1. **Base Pact and existing automatic advancements:** Unique permanent role and sufficiently usable basic capability. Preserve approved Blade/Chain/Tome automatic 5th-level upgrades; no new intrinsic level milestones are implied.
+2. **Pact-exclusive and Pact-dependent Invocation branches:** Number, depth, level spread and *meaningful distinct builds* created by optional attached clauses. Invocation acquisition is a genuine investment, not a sign the Pact is incomplete unless a particular Invocation is required simply to operate the baseline.
+3. **Shared eligible Invocation pool:** Even Invocations **without a Pact-type prerequisite attach to the selected Pact** by owner's approved architecture, so a Talisman or Chain user can build a unique suite of general powers around that Pact. These Invocations do **not** become free Pact grants, and their presence is **not by itself evidence of four different Pact-exclusive catalogs**.
+4. **Patron requirements and willingness:** A Pact can gate Invocations by **the Patron of that very Pact**, and the Patron can accept/refuse certain clauses. A Fiend+Blade, Fiend+Talisman or a different future Patron combination can yield different legal attachment pathways. Restrictions remain per option; do **not** invent universal Fiend/Blade-only gating.
+5. **Sensible baseline / no mandatory tax:** An Invocation may be extremely strong and remain elective. Only if *every functional build* requires it for basic attacks, companion commands, rituals or talisman utility should relocation into the core Pact be examined.
+6. **Advancement by chosen investments:** A Warlock can gain a meaningful higher-level Pact specialization by attaching later Invocations without receiving a separate mandatory Pact feature at the same level. Assess 1–20 progression from **Pact + attached Invocation choices**, while still evaluating intrinsic baseline separately.
+
+### Source-backed Pact-specific Invocation branches
+
+The following are **source option identities**, not automatically approved native grants. They are examples of **options explicitly gated by Pact**. The SRD 5.1/5.2.1 source lists are **not the full published non-SRD Invocation catalog**.
+
+| Pact | SRD 5.1 explicit Pact-gated Invocations | SRD 5.2.1 explicit Pact-gated Invocations | Published additional non-SRD leads |
+| --- | --- | --- | --- |
+| **Blade** | **Thirsting Blade** (5), **Lifedrinker** (12) | **Thirsting Blade** (5), **Eldritch Smite** (5), **Lifedrinker** (9), **Devouring Blade** (12; source requires Thirsting Blade) | **Improved Pact Weapon** (*Xanathar's*) |
+| **Chain** | **Voice of the Chain Master**, **Chains of Carceri** (15) | **Investment of the Chain Master** (5) | **Gift of the Ever-Living Ones** (*Xanathar's*) |
+| **Tome** | **Book of Ancient Secrets** | **Gift of the Protectors** (9) | **Aspect of the Moon** (*Xanathar's*), **Far Scribe** (*Tasha's*) |
+| **Talisman** | No Talisman in SRD 5.1 | No Talisman in SRD 5.2.1 | **Rebuke of the Talisman**, **Protection of the Talisman** (7), **Bond of the Talisman** (12), all *Tasha's* |
+
+**Counts from the actual imported SRD optional-feature entries:** 2014 SRD **32 Invocations**, **5** with an explicit Blade/Chain/Tome prerequisite and **27** without a specific Pact type prerequisite. 2024 SRD **28 Invocation entries** *including the 3 Pacts themselves*; excluding those three Pact entries leaves **25 other Invocations**, **6** with explicit Blade/Chain/Tome prerequisite (including `Devouring Blade`'s `Thirsting Blade` chain) and **19** without an explicit Pact-type requirement. These numbers are **edition inventories, not 31 different native Pact-specific options**, and must **not be simply added** across editions where options overlap.
+
+**Further nuance:** Some old Invocation functions have become **approved intrinsic features** (e.g. Thirsting Blade's 5th-level second attack in native Blade; Improved Pact Weapon's spellcasting-focus aspect is already in the 2024 Blade baseline). Their source identities remain; native duplicate handling is still unresolved. Other options may be sufficiently significant to anchor an *elective* high-level specialization. For Talisman the three existing optional clauses cover protection, retaliation and travel; the correct first question is whether that offers a meaningful **distinct support build**, not whether the Pact automatically grants all three.
+
+**Relative scope:** All no-Pact-type-requirement Invocations can be *potentially attached* to any of the four Pacts in our framework, if the level/feature requirements and the particular Patron's accepted terms are satisfied. No option auto-attaches, and each selected Invocation still consumes its ordinary approved budget. Invocations that require an actual Pact type or the Patron **of its own attached Pact** must pass those checks.
+
+### Revised verdict
+
+| Pact | Unique approved or source-based Pact foundation | Pact-specific choice ecosystem | Main unresolved adequacy question |
+| --- | --- | --- | --- |
+| Blade | Approved weapon bond and level-5 martial progression | Multiple distinct **offense, resource-spend and weapon-enhancement** branches | Are the surviving nonduplicate Invocation branches and shared options enough for viable high-level martial builds? |
+| Chain | Source-based special familiar, approved level-5 familiar extra attack | **Communication/scouting, self-healing synergy, empowered companion**, late special control | Does base familiar command/action economy work without mandatory `Investment of the Chain Master`? Do elective familiar branches feel distinct? |
+| Tome | Source-based cantrips/ritual book, approved level-5 three free spells | **Ritual-collector, protective grimoire, remote communication, rest utility** | Should accumulating ordinary rituals require `Book of Ancient Secrets`, or is it elective advanced knowledge? Distinct spell/ritual builds may be enough without automatic high-tier features. |
+| Talisman | Published base transferable skill assistance, native base still pending | **Rebuke, Protection, Bond** plus compatible general/Patron Invocations | Can support, defense, retaliation and bearer-linked travel produce compelling builds, and is the base Talisman useful without paying to unlock all its basic identity? |
+
+**Outcome:** **Do not recommend blanket intrinsic level-11/17 additions as a prerequisite to considering a Pact substantial.** Finish the **combined Pact + attached Invocation** progression and choice-path audit first. Optional branch depth, not merely free feature count, is central. An automatic Talisman level-5 advancement is **a candidate**, not an established requirement or approved rule.
+
 ## Executive assessment
 
-**The three original SRD Pacts have become credible initial major specializations**, with a meaningful 1st-level identity plus an approved intrinsic 5th-level upgrade. **However, none yet has an approved intrinsic continuation beyond Warlock level 5**, so the **full level-1-to-20 Pact pillar is not finished**. **Talisman remains the least complete**, with no owner-approved native effect/5th-level improvement, although a published source baseline exists. A level-1 choice that has to buy most of its defining functionality through Invocations is not a fully independent progression pillar.
+**The three original SRD Pacts are credible major specializations**: they have differentiated foundations, intrinsic 5th-level upgrades and several **Pact-specific Invocation paths**. Their level-1-to-20 viability must be evaluated as **base Pact + attached optional Invocations + Patron eligibility**, not just automatically granted features. No higher-tier intrinsic Pact grants are approved; **that is not necessarily a deficiency**. **Talisman** has a published base and three specific optional Invocations, but its *native baseline and compelling choice-path depth* remain to be reconciled. The issue is not whether all defining specializations cost Invocation choices, but whether **at least one useful core function exists without a mandatory tax**.
 
 **Current design readiness (qualitative; not power rankings):**
 
@@ -26,11 +67,11 @@ A fully substantial Pact should meet all five criteria:
 
 1. **Recognizable identity** independent of selecting a Patron; its signature behavior changes player decisions in play.
 2. **Self-sufficient baseline competence:** a Warlock is not functionally forced to buy an optional Invocation to perform the Pact's core job.
-3. **Intrinsic level progression** throughout the Warlock's career, not a one-time object followed by an optional-Invocation upgrade tree.
+3. **Meaningful progression through the Pact's attached Invocation tree and/or intrinsic Pact advancements** throughout the Warlock's career; automatic features at every tier are **not required**.
 4. **Meaningful agency beyond the selection:** weapon choices, familiar forms/roles, book knowledge and rituals, or talisman assignment/defense are real choices with costs/consequences.
 5. **Cross-Patron portability:** generic Pact competence does not appropriate source-specific Fiend or other Patron powers. Restrictions/Patron willingness remain per option.
 
-**A Pact is not required to have as many features as a Patron**, or be numerically equivalent at every level. The Pact should, however, be recognizable and viable at 1, 5, 11, 17 and 20 without spending an Invocation on simply keeping its base mechanic operational. These are **evaluation checkpoints**, not approved new feature levels.
+**A Pact is not required to have as many automatic features as a Patron**, or be numerically equivalent at every level. Evaluate its recognizable baseline plus **electively attached Invocations** at 1, 5, 11, 17 and 20; at higher levels an Invocation can legitimately supply substantial progression. The issue is *forced purchases for baseline operation*, not optional specialization purchases. These are **evaluation checkpoints**, not approved new feature levels.
 
 ## A. Pact of the Blade
 
@@ -179,4 +220,4 @@ The source Pact's **familiar Reaction attack** triggered by sacrificing the Warl
 - *Baldur's Gate 3* Deepened Pact comparison: https://bg3.wiki/wiki/Deepened_Pact
 - D&D Beyond 2024 Warlock design overview: https://www.dndbeyond.com/posts/1756-2024-warlock-vs-2014-warlock-whats-new
 
-**Conclusion:** The Pact pillar is **structurally established and substantively promising**, especially for Blade, Chain and Tome at Warlock 1–5, but **not yet a self-sufficient, full Warlock 1–20 advancement pillar**. Its strongest near-term tasks are **Chain action semantics, Tome ritual progression, and Talisman core/5th-level progression**, followed by equal-budget high-tier comparisons and distinct utility advancements for Blade.
+**Conclusion (corrected for owner clarification):** The Pact pillar is **structurally established and substantively promising**, and much of its depth will **properly reside in optional Pact-attached Invocations**. The 1–20 verdict is **pending a combined Pact/Invocation branch audit**, not a finding that more automatic high-tier Pact features are necessarily needed. Resolve **Chain action semantics, Tome ritual/Invocation boundary, and Talisman's support baseline/three published Invocation paths**, then perform **equal-budget high-level build comparisons**. Add further intrinsic Pact progression **only where a demonstrated baseline deficit requires it**.
