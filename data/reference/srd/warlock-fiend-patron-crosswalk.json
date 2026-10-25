@@ -109,7 +109,9 @@
         "2014: magical or silvered weapon damage ignores this Resistance, no force-damage exclusion is stated.",
         "2024: cannot select Force damage; no magical/silvered weapon bypass is stated.",
         "Distinct from previously approved historical Warlock BASE CLASS fast healing; the owner has reopened that base-class grant for review. The Patron resistance feature remains independent."
-      ]
+      ],
+      "nativeDisposition": "retired-source-only",
+      "nativeProgressionGrant": false
     },
     {
       "id": "warlock.patron.fiend.hurl-through-hell",
@@ -305,7 +307,8 @@
     {
       "id": "patron-fiend-damage-resilience",
       "question": "Select force eligibility and magical/silvered damage bypass rules?",
-      "status": "owner-ruling-needed"
+      "status": "owner-approved-design-direction",
+      "resolution": "Approve option A: retire the Fiend Patron level-10 selected-type damage-resistance feature from native advancement without replacement. Preserve 2014 and 2024 source feature definitions and source-era preset provenance. The universal base Warlock Energy Resistance at class level 10 remains unchanged, mitigating 5 damage from two chosen energy types and improving to 10 at level 20. Fiend Infernal Retaliation at levels 8, 13 and 18 is unchanged."
     },
     {
       "id": "patron-fiend-hurl-through-hell",
@@ -776,10 +779,20 @@
         ],
         "reason": "Superseded by owner's final request for one roster shared by default automatic and optional 2014-style spell selection."
       }
+    },
+    "fiendPatronDamageResistance": {
+      "nativeStatus": "retired-without-replacement",
+      "sourcePartId": "warlock.patron.fiend.damage-resilience",
+      "nativeGrant": false,
+      "classLevel": 10,
+      "replacementPatronFeature": null,
+      "compensatingPatronEntitlement": false,
+      "sourcePresetsRetainedForHistoricalComparison": true,
+      "baseWarlockEnergyResistanceUnaffected": true
     }
   },
   "fiendPatronConsolidatedDecision": {
-    "status": "approved-scope-consolidated-with-open-source-reconciliation",
+    "status": "owner-approved-fiend-design-awaiting-native-implementation",
     "document": "docs/rewrite/warlock-fiend-patron-consolidated-decision.md",
     "patronClassLevel": 1,
     "approvedPatronMilestones": [
@@ -804,11 +817,6 @@
         "status": "approved"
       },
       {
-        "classLevel": 10,
-        "feature": "Fiendish Resilience (damage resistance)",
-        "status": "feature-milestone-known-mechanics-open"
-      },
-      {
         "classLevel": 13,
         "feature": "Infernal Retaliation upgrade",
         "status": "approved"
@@ -824,14 +832,20 @@
         "status": "approved"
       }
     ],
-    "unresolvedNativeFiendRules": [
-      "patron-fiend-damage-resilience"
-    ],
+    "unresolvedNativeFiendRules": [],
     "implementationNotes": [
       "No automatic Hellfire Shield grant; Shield acquisition decision deferred to Invocations pillar",
       "Do not activate pending-native-reconciliation subclass until the remaining mechanical decisions are resolved",
       "Outstanding procedural details of sustained Infernal Retaliation effects require shared mechanics implementation",
-      "Fiend spell access uses one merged 13-spell repertoire in both campaign profiles: native automatic grants 5/2/2/4 at 3/5/7/9, or optional 2014-style expanded choices with all 13 learned via ordinary spell entitlements. Remove unmodified 2024-only optional profile."
+      "Fiend spell access uses one merged 13-spell repertoire in both campaign profiles: native automatic grants 5/2/2/4 at 3/5/7/9, or optional 2014-style expanded choices with all 13 learned via ordinary spell entitlements. Remove unmodified 2024-only optional profile.",
+      "Level-10 Fiend Patron resistance retired without replacement, while base Warlock Energy Resistance remains and both SRD source records remain historical."
+    ],
+    "retiredPatronFeatures": [
+      {
+        "classLevel": 10,
+        "feature": "warlock.patron.fiend.damage-resilience",
+        "disposition": "retired-without-replacement"
+      }
     ]
   }
 }
