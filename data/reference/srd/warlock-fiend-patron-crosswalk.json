@@ -286,8 +286,9 @@
       "id": "patron-fiend-spell-entitlement",
       "question": "Which source spell lists and spell-access grants are unified, and what native entitlement replaces source always-prepared versus expanded-choice rules?",
       "status": "owner-approved-design-direction",
-      "resolution": "Owner supersedes earlier default C. Native default follows the 2024 automatic Patron-spell grant system, restoring the 2014-only Blindness/Deafness at Warlock level 3 and Flame Strike and Hallow at Warlock level 9. All 13 union spells are automatically known at levels 3/5/7/9 (5/2/2/4) in addition to ordinary selections, no daily preparation, and no added slots or free casts. Patron identity/spell access begins at level 1; no automatic Fiend spells before level 3. Faithful original optional 2014 profile = ten expanded choices (not automatic). Faithful original optional 2024 profile = ten automatically granted spells. Profiles are mutually exclusive and must not double-grant already known spells.",
-      "priorResolution": "Owner approves Option C as the default native Fiend spell-access rule: level-1 Patron expands the eligible spell list to the union of SRD 5.1 and 5.2.1 (13 distinct spells), while the 2024 ten spells are automatically known/access-granted in addition to normal Warlock selections at class levels 3/5/7/9. Only 2014-specific Blindness/Deafness, Flame Strike, and Hallow remain regular optional selections under the default. Owner also approves optional mutually exclusive rules A (expanded choices only: all 13 eligible, no automatic Patron spells) and B (all 13 automatically learned at corresponding Warlock spell-level unlocks 1/3/5/7/9). No preparation, no duplicate known/grants, restore a normal choice if a previously selected spell becomes automatic, and no extra free casting/slots. These are campaign rule modes, not cumulative effects."
+      "resolution": "APPROVED: BOTH modes use the SAME merged 13-spell Fiend list. Native default automatically grants all thirteen at Warlock levels 3/5/7/9 (5/2/2/4), restoring Blindness/Deafness at 3 and Flame Strike/Hallow at 9. The SINGLE OPTIONAL 2014-style expanded-list rule makes those SAME thirteen spells available as regular Warlock spell selections, with no automatic acquisition. Unmodified 2024 is not a separate optional profile. Modes are mutually exclusive and use normal no-preparation casting, with no duplicate spell grants, extra slots, or free casts. Patron identity/spell access begins at Warlock 1; automatic spells begin at Warlock 3. Original SRD lists remain preserved as source evidence only.",
+      "priorResolution": "Owner approves Option C as the default native Fiend spell-access rule: level-1 Patron expands the eligible spell list to the union of SRD 5.1 and 5.2.1 (13 distinct spells), while the 2024 ten spells are automatically known/access-granted in addition to normal Warlock selections at class levels 3/5/7/9. Only 2014-specific Blindness/Deafness, Flame Strike, and Hallow remain regular optional selections under the default. Owner also approves optional mutually exclusive rules A (expanded choices only: all 13 eligible, no automatic Patron spells) and B (all 13 automatically learned at corresponding Warlock spell-level unlocks 1/3/5/7/9). No preparation, no duplicate known/grants, restore a normal choice if a previously selected spell becomes automatic, and no extra free casting/slots. These are campaign rule modes, not cumulative effects.",
+      "previousResolutionBeforeMergedProfiles": "Owner supersedes earlier default C. Native default follows the 2024 automatic Patron-spell grant system, restoring the 2014-only Blindness/Deafness at Warlock level 3 and Flame Strike and Hallow at Warlock level 9. All 13 union spells are automatically known at levels 3/5/7/9 (5/2/2/4) in addition to ordinary selections, no daily preparation, and no added slots or free casts. Patron identity/spell access begins at level 1; no automatic Fiend spells before level 3. Faithful original optional 2014 profile = ten expanded choices (not automatic). Faithful original optional 2024 profile = ten automatically granted spells. Profiles are mutually exclusive and must not double-grant already known spells."
     },
     {
       "id": "patron-fiend-blessing-trigger",
@@ -602,7 +603,7 @@
       "qualification": "Owner explicitly defers Hellfire Shield's acquisition method and remaining costs to the Eldritch Invocations pillar. Three Fiend-only routes remain candidate models, not approved grants: Patron automatic grant, Patron choice, and Invocation with Fiend prerequisite. Never count Hellfire Shield as an Infernal Retaliation mode or grant it within the current Fiend Patron package. Its Reaction and derived Eldritch Blast damage direction are preserved for next-pillar review."
     },
     "fiendSpellAccess": {
-      "status": "owner-approved-native-default-2024-plus-restored-2014-with-two-edition-options",
+      "status": "owner-approved-merged-thirteen-spells-two-acquisition-modes",
       "featureId": "warlock.patron.fiend.spell-access",
       "startsAtWarlockLevel": 1,
       "spellNamesBySpellLevel": {
@@ -677,37 +678,8 @@
           "choicesOnlySpells": [],
           "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
         },
-        "optional-srd51-2014-expanded": {
-          "designation": "OPTIONAL faithful SRD 5.1: 10 expanded choices, none automatic",
-          "expandedEligibleSpells": [
-            "burning hands",
-            "command",
-            "blindness/deafness",
-            "scorching ray",
-            "fireball",
-            "stinking cloud",
-            "fire shield",
-            "wall of fire",
-            "flame strike",
-            "hallow"
-          ],
-          "automaticallyKnownAtWarlockLevel": {},
-          "choicesOnlySpells": [
-            "burning hands",
-            "command",
-            "blindness/deafness",
-            "scorching ray",
-            "fireball",
-            "stinking cloud",
-            "fire shield",
-            "wall of fire",
-            "flame strike",
-            "hallow"
-          ],
-          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
-        },
-        "optional-srd52-2024-automatic": {
-          "designation": "OPTIONAL faithful SRD 5.2.1: 10 automatic Patron spells",
+        "optional-2014-style-expanded-merged": {
+          "designation": "OPTIONAL 2014-style expanded choices using all thirteen reconciled Fiend spells",
           "expandedEligibleSpells": [
             "burning hands",
             "command",
@@ -718,30 +690,30 @@
             "fire shield",
             "wall of fire",
             "geas",
-            "insect plague"
+            "insect plague",
+            "blindness/deafness",
+            "flame strike",
+            "hallow"
           ],
-          "automaticallyKnownAtWarlockLevel": {
-            "3": [
-              "burning hands",
-              "command",
-              "scorching ray",
-              "suggestion"
-            ],
-            "5": [
-              "fireball",
-              "stinking cloud"
-            ],
-            "7": [
-              "fire shield",
-              "wall of fire"
-            ],
-            "9": [
-              "geas",
-              "insect plague"
-            ]
-          },
-          "choicesOnlySpells": [],
-          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
+          "automaticallyKnownAtWarlockLevel": {},
+          "choicesOnlySpells": [
+            "burning hands",
+            "command",
+            "scorching ray",
+            "suggestion",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "geas",
+            "insect plague",
+            "blindness/deafness",
+            "flame strike",
+            "hallow"
+          ],
+          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true,
+          "normalSpellSelectionRequiredForLearnedSpells": true,
+          "note": "All thirteen merged Fiend spells become eligible Warlock learned-spell choices from Patron level 1, subject to ordinary spell-level restrictions. None is automatically known."
         }
       },
       "sharedCastingRules": {
@@ -789,11 +761,20 @@
           "automaticWarlockClassLevel": 9
         }
       ],
-      "sourceRosterSeparation": "Original SRD 5.1 and SRD 5.2.1 projections are preserved unchanged; the native default automatically grants their 13-spell union at 2024 levels 3/5/7/9, while optional profiles use their historical ten-spell rosters.",
+      "sourceRosterSeparation": "Original SRD 5.1 and 5.2.1 ten-spell rosters remain preserved as historical source projections. Both playable campaign modes use one merged thirteen-spell Fiend list; only acquisition semantics differ. The redundant 2024-only optional profile is removed.",
       "priorApprovedDesign": {
         "defaultMode": "C-reconciled-native",
         "status": "owner-approved-native-rule-with-two-campaign-options",
         "rationale": "Superseded by explicit approval of 2024 automatic grants with missing 2014 spells restored."
+      },
+      "rulesScope": "same-merged-spell-list-in-both-modes; only-acquisition-differs",
+      "priorRuleVersion": {
+        "status": "owner-approved-native-default-2024-plus-restored-2014-with-two-edition-options",
+        "removedOptionalProfiles": [
+          "optional-srd51-2014-expanded",
+          "optional-srd52-2024-automatic"
+        ],
+        "reason": "Superseded by owner's final request for one roster shared by default automatic and optional 2014-style spell selection."
       }
     }
   },
@@ -810,7 +791,7 @@
       {
         "classLevel": 1,
         "feature": "Fiend Patron spell access",
-        "status": "approved-native-2024-auto-plus-2014-restored-and-faithful-optional-profiles"
+        "status": "approved-merged-13-spell-roster-default-automatic-optional-expanded"
       },
       {
         "classLevel": 6,
@@ -850,7 +831,7 @@
       "No automatic Hellfire Shield grant; Shield acquisition decision deferred to Invocations pillar",
       "Do not activate pending-native-reconciliation subclass until the remaining mechanical decisions are resolved",
       "Outstanding procedural details of sustained Infernal Retaliation effects require shared mechanics implementation",
-      "Native default automatically grants all 13 Fiend Patron spells at Warlock 3/5/7/9, including restored Blindness/Deafness at 3 and Flame Strike/Hallow at 9; optional faithful 2014 expanded-ten and 2024 automatic-ten modes remain mutually exclusive."
+      "Fiend spell access uses one merged 13-spell repertoire in both campaign profiles: native automatic grants 5/2/2/4 at 3/5/7/9, or optional 2014-style expanded choices with all 13 learned via ordinary spell entitlements. Remove unmodified 2024-only optional profile."
     ]
   }
 }
