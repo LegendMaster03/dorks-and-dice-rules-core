@@ -45,6 +45,8 @@ These analogies are **conversion candidates**, not automatically mechanically eq
 
 **Fiend remains the sole active Patron of the SRD-only vertical slice.** It is particularly well grounded because the 3.5e Warlock had direct fiendish origin/heritage antecedents, and two SRD 5.x variants provide substantive rule differences to reconcile. This study references non-SRD heritage and historical variants without implementing them.
 
+**Owner clarification — inheritance is not an automatic Warlock class inheritance (2026-10-24):** The ancestor's agreement and setting decide independently whether (a) power, (b) a Patron connection or claim, and (c) contractual obligations pass to a child. Inherited, autonomous magic without a current Patron power connection can make the descendant a **Sorcerer**, despite having a Warlock ancestor. Inherited Patron-sourced magic can instead make them a **Warlock** without personal consent or direct contact. An inherited Patron relationship without magical power does not itself award Warlock levels. The historical origin of the power is not the same as its present mechanical source. See [Patron pillar inheritance clarification](warlock-patron-pillar-reconciliation.md).
+
 ## Implications for designing the native Patron pillar
 
 - Treat **Patron identity/source** and **specific Patron-granted mechanics** separately. A source might be a pact, ancestor, inherited legacy, or other supernatural relationship without mandating a contract.

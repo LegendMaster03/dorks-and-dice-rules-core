@@ -23,7 +23,7 @@ The machine-readable source-preserving crosswalk is `data/reference/srd/warlock-
 
 **Do not misclassify inherited power as Patronless.** The Patron's power/source must exist in the character concept, but a Warlock need not know or identify the individual being; the level-1 build can record a Patron type or hidden/unrevealed Patron reference. Discovery of the Patron's name, motives, or role can remain narrative. These cases do not remove the required Patron power source.
 
-**A genuinely Patronless Warlock is not a valid native Warlock concept.** Owner ruling: if the supernatural power derives from a Patron, the character is a Warlock; if there is no Patron-derived source at all and the power is the character's own innate magic, the appropriate base-class identity is **Sorcerer**. A Warlock may be unaware of, estranged from, or unable to contact their Patron; such cases are **not** Patronless. A named NPC, contractual agreement, permission, allegiance, active contact, and knowledge of the Patron's individual name are **not** prerequisites. This distinction is the approved Dorks & Dice class taxonomy, not a claim that 3.5e published an identical formal Patron rule.
+**A genuinely Patronless Warlock is not a valid native Warlock concept.** Owner ruling: active **Patron-sourced Warlock power** defines Warlock class identity, while **self-sustaining innate magic with no operative Patron power connection** fits Sorcerer, even if that power originated in an ancestor's Warlock bargain. A Warlock may be unaware of, estranged from, or unable to contact their Patron; such cases are **not** Patronless. Contractual obligation, awareness, communication, and named NPC identity are not prerequisites. **An ancestor's Patron or contract alone does not determine a descendant's class**; the setting and original bargain control what power and Patron connection, if any, transfer.
 
 **Narrative relationship is separate from mechanical entitlement.** The manner of receiving power does not automatically add or remove Fiend, Archfey, or other Patron features. A guided Fiend preset establishes a Fiend power-source relationship but does not mandate a personally signed deal. Patron feature acquisition still follows its approved level/selection/compatibility rules.
 
@@ -37,6 +37,27 @@ The machine-readable source-preserving crosswalk is `data/reference/srd/warlock-
 **Hexblade and Vestige remain open base-class-versus-Warlock classifications.** Their historical equivalents—the 3.5e Hexblade and Binder—were separate base classes, while 5.x treats the concepts as Warlock Patrons. Evaluate *each* for its distinct gameplay loop, specialized resources, progression independence, overlap with existing Warlock Pacts/Invocations, and ability to reconstruct its published Warlock preset. Neither is pre-committed to class status. This review is **separate from prestige classification**: these are base-class-versus-Warlock membership questions, not automatically 3.5e prestige cases.
 
 **Why Fiend is the correct first Patron case:** Fiend has a named 2014/2024 SRD subclass with a strong historical 3.5e Warlock fiendish-origin/heritage precedent. It can validate direct feature reconciliation without needing to invent modern subclasses for historical sources. Historical non-SRD Fiendish Heritage and Hellfire options remain **reference-only**, not automatically available selectable content.
+
+## Intergenerational bargains: power and Patron connection can inherit separately (owner clarification, 2026-10-24)
+
+**The original agreement and setting determine what passes to descendants.** Do not automatically inherit a Warlock class, a subclass, its abilities, or an obligation merely because an ancestor was a Warlock. Model these separately:
+
+1. **Inherited magic / power:** Does a magical capability transfer to the descendant, and if so, is it a self-sustaining innate gift or an ongoing manifestation of a Patron's power?
+2. **Inherited Patron connection:** Does the original Patron's source relationship, claim, or influence pass to the descendant? A descendant can have a Patron without having made or even knowing about the original deal.
+3. **Inherited contractual obligations:** Does any term bind descendants? The answer is setting/contract specific. A Patron connection and binding obligations are **not synonymous**, and neither should be assumed solely from ancestry.
+
+**Examples, not mandatory outcomes:**
+
+| Transfer under the original arrangement | Character consequence |
+| --- | --- |
+| **Power and Patron connection** | A descendant whose abilities still operate through that Patron may become a **Warlock** without making a personal deal. |
+| **Power, but not an operative Patron power connection** | If the magic becomes an **autonomous inherited innate ability**, the descendant can be a **Sorcerer**, even though the family history includes a Warlock and a Patron. |
+| **Patron connection or obligation, but no magical power** | The descendant has a supernatural relationship or inherited obligation but **does not become a Warlock automatically**; a class requires the appropriate power and progression. |
+| **Neither** | Descent alone confers neither the Patron's power nor Warlock class identity. |
+
+**Classification tests the descendant's current power source, not the genealogy of that power.** A family could have Warlock and Sorcerer members. Having a Patron somewhere in the family tree does not automatically make all magical descendants Warlocks. Conversely, an unknown or inherited Patron can still actively supply a Warlock's power without a fresh contract. A contract can grant power without transferring an obligation, or create obligations without automatically granting class features.
+
+**Rule implementation boundary:** distinguish `historicalPowerOrigin`, `currentPowerSource`, `patronConnection`, and `inheritedObligation` at the conceptual level when conversion needs them. These are **design distinctions, not approved mandatory JSON field names**. The character's actual source/feature entitlements follow approved class rules; setting and GM determine contract terms. Do not encode a universal inheritance rule into Patron eligibility or auto-grant abilities to descendants.
 
 ## Cross-edition Patron landscape beyond SRD Fiend
 

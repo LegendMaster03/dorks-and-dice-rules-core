@@ -25,6 +25,8 @@ The labels are intentionally **Warlock-specific**, not generic names every class
 
 See [Patron pillar rules and pending decisions](warlock-patron-pillar-reconciliation.md) and [ten-Patron cross-edition comparison](warlock-patron-3x-5x-comparison.md).
 
+**Inheritance clarification (owner decision, 2026-10-24):** Descent from a Warlock does **not** itself establish Warlock class membership. Depending on the setting and original agreement, the child can inherit **power**, a **Patron connection**, **both**, or **neither**; inherited obligations may vary independently. **Continuing Patron-sourced power → Warlock; autonomous innate magic without a current Patron source → Sorcerer.** A descendant can therefore be a Sorcerer even when their ancestor was a Warlock. Patron connections without magic do not grant class levels. No universal contract-transfer or hereditary ability grant should be encoded; refer to [Patron inheritance rule](warlock-patron-pillar-reconciliation.md).
+
 ## Pillar-by-pillar implementation status
 
 **Pillar 1 — Patron: source reconciliation underway.** The full Fiend SRD 5.1/5.2.1 source crosswalk and five stable Patron part identities have been recorded, with **source-faithful 2014/2024 preset projections**, 13 distinct spell-list entries, and six owner rulings still open. See [Warlock Patron pillar reconciliation](warlock-patron-pillar-reconciliation.md) and `data/reference/srd/warlock-fiend-patron-crosswalk.json`. **This is a validated candidate mapping, not an active native Fiend feature package**; existing `pending-native-reconciliation` markers remain untouched.
