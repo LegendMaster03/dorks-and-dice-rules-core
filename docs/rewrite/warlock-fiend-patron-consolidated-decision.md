@@ -18,7 +18,7 @@ The native Fiend is a Warlock Patron acquired at **Warlock class level 1**. It p
 | --- | --- | --- | --- |
 | **1** | Fiend Patron identity | Patron source/identity begins at Warlock level 1; do not defer identity to 2024 level 3 | No second Patron grant when reaching level 3 |
 | **1** | Dark One's Blessing | 2024 cooperative defeat trigger; temporary HP = max(1, Charisma modifier + Warlock level) | Standard nonstacking temporary HP |
-| **1** | Patron spell access | Default automatically grants 13 spells at 3/5/7/9, including the three restored 2014-only spells | Optional faithful 2014 expanded-ten or 2024 automatic-ten profiles |
+| **1** | Patron spell access | Default automatically grants 13 spells at 3/5/7/9, including the three restored 2014-only spells | Optional 2014-style expanded choices from the same 13-spell list |
 | **6** | Dark One's Own Luck | Add 1d10 after an ability check/save roll, before resolution, at most once per roll; uses = max(1, Charisma modifier), recovered on Long Rest | Approved |
 | **8** | Infernal Retaliation | Acquire one Fiend Patron feature with **two** alternative Reaction modes: Fiendish Resilience fast healing and Fiendish Flamewreath; shared 1 use/Long Rest | Tick and damage-event implementation details below |
 | **10** | Fiendish Resilience (damage resistance) | Distinct, source-attested Fiend Patron resistance feature at class level 10 | Damage-type eligibility and bypass **unresolved** |
@@ -86,21 +86,20 @@ The Fiend Patron and spell-access feature begin at **Warlock level 1**, while **
 
 **Bold spells** are the three restored from the 2014 Fiend list. Their automatic grant levels follow their spell levels: Blindness/Deafness (2nd) at Warlock 3; Flame Strike and Hallow (5th) at Warlock 9. The default adds **5/2/2/4** automatic spells at Warlock 3/5/7/9. It does **not** accelerate first-level Fiend spells to Warlock level 1.
 
-### Optional source-edition campaign rules (mutually exclusive)
+### Two playable spell-access modes — one merged repertoire
 
-| Mode | Fiend roster | Acquisition semantics |
+| Campaign mode | Fiend spells available | Acquisition rule |
 | --- | --- | --- |
-| **Native Dorks & Dice (default)** | 13-spell union | All 13 automatically known at 3/5/7/9 |
-| **2014 SRD 5.1 (optional)** | Original ten 2014 spells only | Expanded selectable list; spells consume normal Warlock choices; none automatic |
-| **2024 SRD 5.2.1 (optional)** | Original ten 2024 spells only | Automatic Patron spell grants at the original 3/5/7/9 Warlock class levels |
+| **Native Dorks & Dice (default)** | All **13 merged** spells | All thirteen automatically known at Warlock levels 3/5/7/9 |
+| **2014-style expanded access (optional)** | The **same 13 merged** spells | All thirteen may be chosen using normal Warlock spell selections; none is automatically learned |
 
-The optional rules preserve the **actual edition rosters**, not the native 13-spell union. They replace the default, never stack with it, and use the same native spell definitions.
+Both modes use one reconciled spell list. The only difference is how the Warlock acquires its spells. The optional rule uses 2014-style expanded-list mechanics **without reverting to the original ten-spell list**. The redundant unmodified 2024 optional rule is removed. Original 2014 and 2024 lists remain in historical source projections, not as playable Patron spell rosters. Both modes are mutually exclusive, not cumulative.
 
 ### Shared casting and entitlement rules
 
 No daily preparation; automatically acquired Patron spells are known and accessible. They do not consume normal Warlock spell selections, grant extra Pact Magic slots, or grant free castings. The Warlock must still satisfy normal spell-level eligibility and expend the appropriate valid casting resource. Do not duplicate already known spells. If a regular Warlock spell choice later becomes automatically known, **restore that normal choice** for another eligible spell. Campaign-profile migration must preserve entitlements and avoid duplicates.
 
-The original SRD lists remain preserved as source projections. Non-SRD Fiendish Heritage is not automatically introduced. This approval supersedes the previous C default (ten automatic plus three optional choices) and the previous level-1 all-automatic B schedule.
+The original SRD lists remain preserved as historical source projections rather than playable roster restrictions. Non-SRD Fiendish Heritage is not automatically introduced. This approval supersedes the previous C default (ten automatic plus three optional choices) and the previous level-1 all-automatic B schedule.
 
 ## Remaining Fiend Patron mechanic review
 
@@ -129,7 +128,7 @@ The approved design direction outside Infernal Retaliation remains **player-chos
 
 ## Completion and implementation gate
 
-- **Settled:** Fiend identity at level 1; **native automatic 13-spell access with faithful optional 2014/2024 source profiles**; Blessing; Luck; Hurl Through Hell; one two-mode Infernal Retaliation at 8/13/18 with 20-round duration, shared one-use Long Rest recovery, and the once-only stabilization rule; Shield excluded and deferred to the Invocation pillar.
+- **Settled:** Fiend identity at level 1; **native automatic 13-spell access with optional 2014-style selection from the same 13-spell list**; Blessing; Luck; Hurl Through Hell; one two-mode Infernal Retaliation at 8/13/18 with 20-round duration, shared one-use Long Rest recovery, and the once-only stabilization rule; Shield excluded and deferred to the Invocation pillar.
 - **Not settled:** Level-10 Fiend damage resistance, currently under consideration for supersession by the improved native defensive mechanics. Some Infernal Retaliation effect resolution still needs shared engine mapping.
 - **Native activation:** Do not overwrite `data/native/classes/subclasses/warlock/fiend.json`'s `pending-native-reconciliation` candidate staging or claim a playable vertical slice until remaining mechanics are resolved and tests validated.
 - **Workflow:** Resolve the remaining level-10 damage-resistance disposition, then proceed through **Pacts** and **Eldritch Invocations**; address deferred Hellfire Shield routes in the **Invocations pillar**, without reopening Infernal Retaliation.
