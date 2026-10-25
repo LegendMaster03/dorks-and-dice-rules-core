@@ -71,6 +71,50 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual(13,len(names51 | names52))
         self.assertEqual(7,len(names51 & names52))
 
+    def test_fiend_spells_default_c_and_optional_a_b(self):
+        rules=self.crosswalk["approvedNativeDirections"]["fiendSpellAccess"]
+        source=self.crosswalk["sourceSpellAccess"]
+        self.assertEqual("owner-approved-native-rule-with-two-campaign-options",rules["status"])
+        self.assertEqual(1,rules["startsAtWarlockLevel"])
+        self.assertEqual("C-reconciled-native",rules["defaultMode"])
+        self.assertTrue(rules["modesMutuallyExclusive"])
+        self.assertEqual({"C-reconciled-native","A-expanded-only","B-all-automatic"},
+                         set(rules["availableModes"]))
+        roster={s for group in rules["spellNamesBySpellLevel"].values() for s in group}
+        self.assertEqual(13,len(roster))
+        spells24={s for group in source["SRD52"]["classLevelGroups"].values() for s in group}
+        spells14={s for group in source["SRD51"]["spellLevelGroups"].values() for s in group}
+        self.assertEqual(spells24 | spells14,roster)
+        c=rules["availableModes"]["C-reconciled-native"]
+        a=rules["availableModes"]["A-expanded-only"]
+        b=rules["availableModes"]["B-all-automatic"]
+        self.assertEqual(source["SRD52"]["classLevelGroups"],c["automaticallyKnownAtWarlockLevel"])
+        self.assertEqual(10,len({s for group in c["automaticallyKnownAtWarlockLevel"].values() for s in group}))
+        self.assertEqual({"blindness/deafness","flame strike","hallow"},set(c["choicesOnlySpells"]))
+        self.assertEqual({},a["automaticallyKnownAtWarlockLevel"])
+        self.assertEqual(roster,set(a["choicesOnlySpells"]))
+        self.assertEqual([],b["choicesOnlySpells"])
+        expectedB={
+            "1":["burning hands","command"],
+            "3":["blindness/deafness","scorching ray","suggestion"],
+            "5":["fireball","stinking cloud"],
+            "7":["fire shield","wall of fire"],
+            "9":["flame strike","hallow","geas","insect plague"]
+        }
+        self.assertEqual(expectedB,b["automaticallyKnownAtWarlockLevel"])
+        self.assertEqual(13,sum(len(group) for group in b["automaticallyKnownAtWarlockLevel"].values()))
+        for mode in (a,b,c):
+            self.assertEqual(roster,set(mode["expandedEligibleSpells"]))
+            self.assertTrue(mode["automaticGrantsDoNotConsumeOrdinarySpellSelections"])
+        common=rules["sharedCastingRules"]
+        self.assertTrue(common["usesNativeNoPreparation"])
+        self.assertFalse(common["patronAccessGrantsFreeCastings"])
+        self.assertFalse(common["patronAccessGrantsExtraPactSlots"])
+        self.assertTrue(common["deduplicateAlreadyKnownSpells"])
+        self.assertFalse(common["optionalModesStack"])
+        self.assertIn("replace",common["previouslySelectedSpellBecomesAutomaticallyKnown"])
+        self.assertNotIn("definition",self.native)
+
     def test_each_part_is_source_backed_without_spoofing_class_resilience(self):
         source_names={s:{x["name"] for x in self.source["subclassFeature"] if x["source"] == s} for s in ("SRD51","SRD52")}
         parts=self.crosswalk["parts"]
@@ -86,7 +130,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual(8,len(decision))
         self.assertEqual(8,len({d["id"] for d in decision}))
         statuses={k:sum(d["status"]==k for d in decision) for k in {"owner-ruling-needed","deferred-outside-srd","owner-approved-design-direction","partially-owner-approved","reopened-owner-review"}}
-        self.assertEqual({"owner-ruling-needed":2,"deferred-outside-srd":1,"owner-approved-design-direction":5,"partially-owner-approved":0,"reopened-owner-review":0},statuses)
+        self.assertEqual({"owner-ruling-needed":1,"deferred-outside-srd":1,"owner-approved-design-direction":6,"partially-owner-approved":0,"reopened-owner-review":0},statuses)
         initial=next(d for d in decision if d["id"]=="patron-initial-mechanical-grant")
         self.assertIn("level 1",initial["resolution"])
         self.assertEqual(1,self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["classLevel"])
@@ -105,9 +149,9 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertTrue(approved["hurlThroughHell"]["spentOnAttempt"])
         self.assertEqual("8d10 psychic immediately",approved["hurlThroughHell"]["onFailedSave"]["nonFiendDamage"])
         resolutions={d["id"]:d for d in decision}
-        for key in ("patron-fiend-blessing-trigger","patron-fiend-luck-recovery","patron-fiend-hurl-through-hell"):
+        for key in ("patron-fiend-blessing-trigger","patron-fiend-luck-recovery","patron-fiend-hurl-through-hell","patron-fiend-spell-entitlement"):
             self.assertEqual("owner-approved-design-direction",resolutions[key]["status"])
-        for key in ("patron-fiend-spell-entitlement","patron-fiend-damage-resilience"):
+        for key in ("patron-fiend-damage-resilience",):
             self.assertEqual("owner-ruling-needed",resolutions[key]["status"])
         ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
         review=next(v["reviewClarification"] for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
@@ -167,11 +211,14 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertFalse(shield["consumesInfernalRetaliationResource"])
         summary=self.crosswalk["fiendPatronConsolidatedDecision"]
         self.assertEqual("approved-scope-consolidated-with-open-source-reconciliation",summary["status"])
-        self.assertEqual(["patron-fiend-spell-entitlement","patron-fiend-damage-resilience"],
+        self.assertEqual(["patron-fiend-damage-resilience"],
                          summary["unresolvedNativeFiendRules"])
         self.assertEqual([1,1,6,8,10,13,14,18],
                          [part["classLevel"] for part in summary["approvedPatronMilestones"]])
         self.assertEqual("docs/rewrite/warlock-fiend-patron-consolidated-decision.md",summary["document"])
+        self.assertEqual("approved-native-default-C-plus-optional-A-B",
+                         next(p["status"] for p in summary["approvedPatronMilestones"]
+                              if p["feature"]=="Fiend Patron spell access"))
         historical=next(d for d in self.crosswalk["openNativeDecisions"]
                         if d["id"]=="warlock-historical-base-fiendish-resilience-reconsideration")
         self.assertNotIn("alongside Fiendish Flamewreath and Hellfire Shield",historical["resolution"])
