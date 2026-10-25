@@ -628,7 +628,7 @@
     "Full-class migration beyond Warlock"
   ],
   "openDesignRulings": [
-    "Pact initial selection LEVEL, extra Pact eligibility and cost, and any further Pact entitlement progression (dedicated non-Invocation first Pact now approved)",
+    "Additional Pact eligibility and cost, plus later Pact entitlements (first Pact is dedicated class-level-1 selection)",
     "Invocation selection counts and budget compared with selected Pacts",
     "Which Patron abilities are granted at level 1 versus later advancement",
     "Native Eldritch Blast grant and improvements",
@@ -637,7 +637,7 @@
   ],
   "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
   "approvedNativePactDirection": {
-    "status": "owner-approved-principle-with-acquisition-details-open",
+    "status": "owner-approved-initial-pact-entitlement-and-level-one-acquisition",
     "pillar": "Pacts",
     "separateFromInvocationPillar": true,
     "inScopeChoices": [
@@ -653,7 +653,6 @@
     "invocationMayRequirePact": true,
     "existingPactSelectionIsNotDuplicatedByGuidedBuild": true,
     "decisionsPending": {
-      "initialPactAcquisitionWarlockLevel": null,
       "additionalPactsAllowed": null,
       "additionalPactsAcquisitionCost": null,
       "furtherPactEntitlementProgression": null,
@@ -664,9 +663,27 @@
       ]
     },
     "sourcePreservation": {
-      "SRD51": "Original separate Pact Boon entries retained as historical sources",
-      "SRD52": "Original invocation-categorized Pact entries retained as historical sources; not native acquisition cost"
+      "SRD51": "Historical 2014 separate Pact Boon at class level 3 preserved; native first Pact uses its own entitlement at level 1",
+      "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices"
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization."
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract.",
+    "initialPactClassLevel": 1,
+    "pactEntitlementCountAtLevel1": 1,
+    "levelOnePillarRoles": {
+      "Patron": "who-provides-warlock-power",
+      "Pact": "terms-or-form-of-power-relationship",
+      "EldritchInvocations": "additional-clauses-and-capabilities"
+    },
+    "clauseAnalogyNotMandatoryLiteralContract": true,
+    "inheritedOrNoncontractualPowerRelationshipsRemainValid": true,
+    "levelOneAcquisition": {
+      "classLevel": 1,
+      "pactSelections": 1,
+      "usesDedicatedPactEntitlement": true,
+      "consumesInvocationSelection": false,
+      "acquiredAlongsidePatronIdentity": true,
+      "invocationChoicesRemainSeparate": true,
+      "patronPactSelectionOrder": "order-independent-with-final-prerequisite-validation"
+    }
   }
 }
