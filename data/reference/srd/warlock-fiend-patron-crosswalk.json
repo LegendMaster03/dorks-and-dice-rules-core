@@ -312,9 +312,10 @@
     },
     {
       "id": "warlock-historical-base-fiendish-resilience-reconsideration",
-      "status": "reopened-owner-review",
+      "status": "owner-approved-design-direction",
       "question": "Should the previously approved 3.5e BASE-CLASS Fiendish Resilience fast healing at class levels 8/13/18 remain as an automatic Warlock grant, become an optional Invocation, or be retired after reviewing 5.x defensive features? No replacement was approved; other historical base-class rulings remain in place.",
-      "sourceDecision": "class.warlock.historical-class-features-band1"
+      "sourceDecision": "class.warlock.historical-class-features-band1",
+      "resolution": "Historical 3.5e base Warlock fast healing is NOT an automatic native base Warlock grant. Fold Fiendish Resilience healing into one Fiend-Patron-specific feature named Infernal Retaliation, alongside Fiendish Flamewreath and Hellfire Shield as available activation effects. All effects belong to ONE feature entitlement and ONE shared use per Long Rest. Choosing any effect expends the shared use and precludes using any other effect until recovery. No universal Warlock defensive-resource pool. Historical source progression and Constitution-damage details are preserved as candidates; acquisition level, precise effect values and activation procedures remain pending."
     },
     {
       "id": "patron-custom-combinations",
@@ -376,6 +377,46 @@
       "uses": "one-per-long-rest; spend a pact-magic spell slot to restore a use",
       "spentOnAttempt": true,
       "qualification": "Owner approved the entire previously proposed SRD 5.2.1-style Hurl Through Hell package."
+    },
+    "infernalRetaliation": {
+      "featureId": "warlock.patron.fiend.infernal-retaliation",
+      "patronId": "warlock.patron.fiend.identity",
+      "grantedAs": "one-fiend-patron-feature",
+      "availableEffects": [
+        "fiendish-resilience-fast-healing",
+        "fiendish-flamewreath",
+        "hellfire-shield"
+      ],
+      "effectsAreSeparateEntitlements": false,
+      "choiceTiming": "on-activation",
+      "sharedResource": {
+        "uses": 1,
+        "recovery": "long-rest",
+        "consumesOnAnyEffect": true
+      },
+      "automaticForAllWarlocks": false,
+      "historicalFastHealing": {
+        "source": "3.5e Complete Arcane base Warlock",
+        "nativeDisposition": "absorbed-as-fiend-patron-effect-not-base-class-grant",
+        "sourceLevelSteps": [
+          8,
+          13,
+          18
+        ],
+        "sourceHealingPerRound": [
+          1,
+          2,
+          5
+        ],
+        "sourceDurationRounds": 20
+      },
+      "pending": [
+        "native Fiend feature acquisition level",
+        "effect activation timing, duration and damage scaling",
+        "Hellfire Shield Constitution-damage cost and compatibility",
+        "healing interaction at 0 HP"
+      ],
+      "qualification": "One feature with three effects, not three independently granted abilities. These directions are approved design rules, not an executable native implementation. Fiend Patron level-10 resistance remains a separate feature despite the historical Fiendish Resilience name collision."
     }
   }
 }
