@@ -155,10 +155,10 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(checks["sameInGuidedAndCustomBuilds"])
         self.assertIn("receiving Patron",p["pactInvocationLifecycle"]["compatibilityRevalidation"])
 
-    def test_blade_2024_baseline_approved_without_automatic_pact_progression(self):
+    def test_blade_2024_baseline_and_intrinsic_level_five_pact_advancement(self):
         pact=self.inventory["approvedNativePactDirection"]
         blade=pact["bladePactNativeBaseline"]
-        self.assertEqual("owner-approved-2024-base-with-separate-pact-progression-review",blade["status"])
+        self.assertEqual("owner-approved-2024-base-and-intrinsic-level5-extra-attack",blade["status"])
         self.assertEqual("Pact of the Blade",blade["pact"])
         self.assertEqual("SRD52",blade["sourceEdition"])
         self.assertEqual(1,blade["initialAcquisition"]["classLevel"])
@@ -178,10 +178,33 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
                          blade["deferredSourceDifferences"]["original2014HourRitualAndExtradimensionalMagicWeaponStorage"])
         progression=blade["pactProgressionConcern"]
         self.assertEqual("owner-identifies-pact-pillar-baseline-as-underwhelming",progression["status"])
-        self.assertEqual("not-yet-approved",progression["nativePactIntrinsicProgression"])
-        self.assertEqual("candidate-for-owner-review-not-granted",progression["specificPotentialLevel5SecondAttack"])
-        self.assertEqual("not-yet-approved",progression["thirstingBladeDisposition"])
+        self.assertEqual("partially-owner-approved-level5-extra-attack",progression["nativePactIntrinsicProgression"])
+        self.assertEqual("owner-approved-intrinsic-pact-feature",progression["specificPotentialLevel5SecondAttack"])
+        self.assertEqual("base-two-attack-benefit-superseded-by-approved-level5-pact-progression-replacement-option-unresolved",progression["thirstingBladeDisposition"])
         self.assertTrue(progression["avoidsAutomaticStacking"])
+        extra=progression["approvedLevel5ExtraAttack"]
+        self.assertEqual("owner-approved",extra["status"])
+        self.assertEqual("Blade Pact Extra Attack (Pact pillar advancement)",extra["feature"])
+        self.assertEqual(5,extra["warlockClassLevel"])
+        self.assertEqual("attack-action",extra["action"])
+        self.assertEqual(2,extra["totalAttacksWithPactWeapon"])
+        self.assertEqual("weapon-currently-bound-or-conjured-by-pact-of-the-blade",extra["qualifyingWeapon"])
+        self.assertTrue(extra["grantsOneAdditionalAttackRatherThanTwoIndependentFeatures"])
+        self.assertFalse(extra["consumesInvocationSelection"])
+        self.assertFalse(extra["requiresThirstingBladeInvocation"])
+        self.assertEqual("pact-of-the-blade",extra["grantedBy"])
+        self.assertEqual("unresolved",extra["additionalHigherLevelBladeProgression"])
+        self.assertIn("non-Thirsting-Blade-prerequisite",progression["devouringBladeDisposition"])
+        bg3=blade["externalBG3Research"]
+        self.assertEqual("comparison-only-not-SRD-not-blanket-native-grant",bg3["status"])
+        self.assertTrue(bg3["bladeExtraAttackViaDeepenedPact"])
+        self.assertTrue(bg3["appliesWithoutThirstingBladeInvocation"])
+        self.assertTrue(bg3["bindsNonmagicalOrMagicalExistingWeapon"])
+        self.assertTrue(bg3["pactWeaponImmuneToDisarmingAndDropping"])
+        self.assertTrue(bg3["preventsThrowingBoundWeapon"])
+        self.assertTrue(bg3["stackingExploitNotAdopted"])
+        self.assertEqual(4,len(bg3["candidatesRequiringOwnerApproval"]))
+
         self.assertFalse(blade["nativeExecutableActivation"])
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
