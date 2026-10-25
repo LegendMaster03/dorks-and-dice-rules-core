@@ -16,12 +16,18 @@
     "historicalException": "Retain previously approved native 3.5e Warlock class feature decisions, but do not import non-SRD invocation or patron catalogs.",
     "nonSrdPactReconciliationException": {
       "names": [
-        "Pact of the Talisman",
-        "Pact of the Star Chain"
+        "Pact of the Talisman"
       ],
       "sourceRulesNotImportedIntoSrdOptions": true,
       "noNonSrdPlayablePatronAuthorized": true,
       "initialFiendOnlyPatronSliceStillApplies": true
+    },
+    "disabledHistoricalPatronPactPackage": {
+      "patron": "The Seeker",
+      "pact": "Pact of the Star Chain",
+      "status": "disabled-together",
+      "archivedNotDeleted": true,
+      "noRuntimeAvailability": true
     }
   },
   "sources": [
@@ -633,7 +639,8 @@
     "Non-SRD 3.5e invocation catalog (historical inventory retained as research)",
     "Other non-SRD Patron subclasses",
     "Band 2 level 21+ Warlock progression",
-    "Full-class migration beyond Warlock"
+    "Full-class migration beyond Warlock",
+    "Pact of the Star Chain and Seeker Patron (both disabled and deferred; archival UA research preserved)"
   ],
   "openDesignRulings": [
     "Advanced additional Pacts remain conceptually available but are not unlocked by current native progression; defer eligibility, level, cost, maximum, and renegotiation mechanics",
@@ -647,7 +654,7 @@
     "Per-Pact Patron willingness can be constrained by specific setting or inherited terms; determine detailed acceptance/negotiation UX and secret-Patron adjudication later without imposing universal live negotiation.",
     "Level-5 Pact upgrades for Blade, Chain, Tome are owner-approved as a design; resolve Chain command/attack economy, Tome spell interaction, Thirsting Blade replacement and any post-level-5 progression before native activation.",
     "Resolve source-faithful base mechanics, the three Talisman-bound Invocations, and Pact-level progression for Talisman; do not silently give it the Blade/Chain/Tome Deepened Pact milestone.",
-    "Resolve Star Chain as an independent Seeker-restricted UA Pact versus Tome overlap; playable Fiend+Star Chain is source-ineligible pending explicit approved alternative Patron qualification. Design its level-5 and later Pact progression separately."
+    "Archived (not active): Seeker Patron and Star Chain Pact are a single bidirectionally-required package, disabled together pending future owner approval and substantive non-SRD playtest expansion."
   ],
   "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
   "approvedNativePactDirection": {
@@ -658,8 +665,7 @@
       "Pact of the Blade",
       "Pact of the Chain",
       "Pact of the Tome",
-      "Pact of the Talisman",
-      "Pact of the Star Chain"
+      "Pact of the Talisman"
     ],
     "everyWarlockReceivesDedicatedInitialPactChoice": true,
     "initialPactEntitlement": "separate-class-pact-selection-not-eldritch-invocation",
@@ -676,8 +682,7 @@
         "Pact of the Blade",
         "Pact of the Chain",
         "Pact of the Tome",
-        "Pact of the Talisman",
-        "Pact of the Star Chain"
+        "Pact of the Talisman"
       ]
     },
     "sourcePreservation": {
@@ -685,7 +690,7 @@
       "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices",
       "EXTRAS": "Talisman (Tasha's, 2020, official published non-SRD) and Star Chain (UA The Faithful, 2016, playtest non-SRD) are independently documented source-based Pact review additions, not SRD51/SRD52 inventory entries."
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants. Owner approves BG3-style automatic level-5 improvements for all three Pact categories (Blade attack already settled, Chain familiar extra attack, Tome three free third-level spells) without spending Invocations. User also approves BG3 mundane-weapon binding for Blade; that weapon-specific effect does not apply to Chain or Tome. Hexblade patron-to-Pact classification remains under consideration; lore/source research only, no new playable parts. Owner extends Pact reconciliation from three to five, adding non-SRD official Talisman and unpublished UA Star Chain as comparative design cases; Star Chain's original Seeker-linked Patron prerequisite remains explicit and may only be broadened by later approved exception. Earlier editions' source-oriented Pact types map to Patrons instead of the Pact specialization pillar.",
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants. Owner approves BG3-style automatic level-5 improvements for all three Pact categories (Blade attack already settled, Chain familiar extra attack, Tome three free third-level spells) without spending Invocations. User also approves BG3 mundane-weapon binding for Blade; that weapon-specific effect does not apply to Chain or Tome. Hexblade patron-to-Pact classification remains under consideration; lore/source research only, no new playable parts. Owner extends Pact reconciliation from three to five, adding non-SRD official Talisman and unpublished UA Star Chain as comparative design cases; Star Chain's original Seeker-linked Patron prerequisite remains explicit and may only be broadened by later approved exception. Earlier editions' source-oriented Pact types map to Patrons instead of the Pact specialization pillar. Subsequent owner decision suspends both Seeker Patron and Star Chain Pact as an inseparable pair because source is UA with insufficient development; preserve five-Pact research but actively reconcile only Blade, Chain, Tome, and Talisman. Native future design must require the pair bidirectionally, without asserting this reverse condition was a literal rule in the original UA.",
     "initialPactClassLevel": 1,
     "pactEntitlementCountAtLevel1": 1,
     "levelOnePillarRoles": {
@@ -1072,8 +1077,8 @@
       ]
     },
     "expandedFivePactReview": {
-      "status": "owner-approved-five-pact-reconciliation-catalog-not-mechanical-grant",
-      "scopeInterpretation": "Five distinct Pact options under current Warlock Pact-design reconciliation. Original 2014/2024 SRD options remain source-preserved; Talisman and Star Chain non-SRD external source research.",
+      "status": "historical-five-pact-research-preserved-one-pair-now-deferred",
+      "scopeInterpretation": "Historical comparison of five Pact ideas, with Star Chain and its required Seeker Patron now disabled together. Active reconciliation covers Blade/Chain/Tome/Talisman only.",
       "editionClarification": "3.5e Warlock had no discrete Pact Boons; 4e Fey, Infernal, Star, Vestige etc named Pacts represent Patron/power-source identity, not this Pact specialization pillar.",
       "initialPactClassLevel": 1,
       "initialPactEntitlementCount": 1,
@@ -1129,18 +1134,24 @@
           "patronRestrictionInSource": "dedicated-to-the-Seeker",
           "eligibility": {
             "requiresSeekerLinkedPatron": true,
-            "requiresOriginalSeekerSubclassAsCurrentPlayablePatron": false,
+            "requiresOriginalSeekerSubclassAsCurrentPlayablePatron": true,
             "matchesOrdinaryFiendPatronByDefault": false,
-            "otherPatronSourceTraitOrSpecialException": "requires-future-explicit-owner-approval",
+            "otherPatronSourceTraitOrSpecialException": "disabled-no-exceptions-under-current-owner-ruling",
             "requiresIndividualPatronWillingnessWhenApplicable": true,
             "namedPatronMayRemainUnrevealedWhenSeekerLinkCanBeValidated": true,
-            "playabilityWithFiendOnlyPatronSlice": "source-ineligible-pending-explicit-approved-exception",
+            "playabilityWithFiendOnlyPatronSlice": "disabled-not-offered",
             "nonPlayableSyntheticSeekerFixtureAllowed": true
           },
           "mechanicsApprovedForNative": false,
-          "level5IntrinsicAdvance": "not-approved",
+          "level5IntrinsicAdvance": "deferred-alongside-Seeker",
           "noUnapprovedSeekerPatronImport": true,
-          "sourceRulesNotCoveredBySrdLicense": true
+          "sourceRulesNotCoveredBySrdLicense": true,
+          "status": "disabled-archived-for-future-coordinated-Seeker-research",
+          "inActiveReview": false,
+          "enabled": false,
+          "pairedSeekerEnabled": false,
+          "mustEnableTogetherWithSeeker": true,
+          "ownerNativeMutualDependency": "Seeker Patron requires Star Chain Pact, and Star Chain Pact requires Seeker Patron; both disabled together until reapproved."
         }
       },
       "nativeFirstPactUpgradeApproval": {
@@ -1152,7 +1163,59 @@
       },
       "noPatronCatalogExpansion": true,
       "noAdditionalPactAcquisitionRuleApproved": true,
-      "sourceInventoryAndOptionCountsUnmodified": true
+      "sourceInventoryAndOptionCountsUnmodified": true,
+      "activePactChoices": [
+        "Pact of the Blade",
+        "Pact of the Chain",
+        "Pact of the Tome",
+        "Pact of the Talisman"
+      ],
+      "activePactCount": 4,
+      "deferredPactChoices": [
+        "Pact of the Star Chain"
+      ]
+    },
+    "activeFourPactReconciliation": {
+      "status": "owner-approved-active-four-pact-review-star-chain-seeker-suspended",
+      "choices": [
+        "Pact of the Blade",
+        "Pact of the Chain",
+        "Pact of the Tome",
+        "Pact of the Talisman"
+      ],
+      "candidateCount": 4,
+      "includedNonSrdException": "Pact of the Talisman",
+      "separateDeferredPackage": "Seeker Patron + Pact of the Star Chain",
+      "disabledPairActive": false,
+      "invocationCostsAndAdditionalPactGates": "unchanged",
+      "firstPactWarlockLevel": 1,
+      "sourceReferencePreserved": true
+    },
+    "starChainSeekerPair": {
+      "status": "owner-directed-disabled-deferred-retain-all-prior-work",
+      "reason": "UA Seeker/Star Chain is an inseparable Patron-and-Pact package in the intended native architecture; playtest leaves insufficient material for current vertical slice.",
+      "patron": "The Seeker",
+      "pact": "Pact of the Star Chain",
+      "requiresCompanionPairBothWays": true,
+      "patronRequiresPact": "Pact of the Star Chain",
+      "pactRequiresPatron": "The Seeker",
+      "bothDisabledTogether": true,
+      "patronEnabled": false,
+      "pactEnabled": false,
+      "inCurrentActivePactReconciliation": false,
+      "inCurrentPlayablePatronCatalog": false,
+      "selectableInCharacterBuilder": false,
+      "applicableToGuidedAndCustomBuilds": true,
+      "substitutePatronOrPactNotAllowedWhileDisabled": true,
+      "exceptionOrManualBypass": "not-approved",
+      "preserveResearchNotes": true,
+      "preserveUAProvenance": true,
+      "preserveHistoricalFivePactComparison": true,
+      "archivalCompatibilityFixturesAllowed": true,
+      "reactivation": "requires-explicit-owner-approval-and-reconciliation-of-both-together",
+      "noActiveFifthPactGrant": true,
+      "oldSeekerOnlySourceRequirementStillRecorded": true,
+      "note": "Bidirectional dependency is an owner-approved native design intent, not an assertion that the original UA compelled every Seeker to choose Star Chain. Both members must be enabled in a future coordinated design pass."
     }
   }
 }
