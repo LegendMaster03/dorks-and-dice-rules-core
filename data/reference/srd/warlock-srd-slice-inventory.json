@@ -637,7 +637,7 @@
     "Pact break effects and Invocation restoration/transfer details: preserve prior acquisitions and model Pact affiliation; decide timing, refund/replacement, ownership migration, and legal restoration costs later.",
     "Invocation Pact/Patron requirements and Pact Patron requirements are supported; individual option restrictions are deferred to each option reconciliation. Do not impose blanket restrictions or assume waived prerequisites on transfer.",
     "Per-Pact Patron willingness can be constrained by specific setting or inherited terms; determine detailed acceptance/negotiation UX and secret-Patron adjudication later without imposing universal live negotiation.",
-    "Pact of the Blade intrinsic progression: evaluate whether baseline martial scaling belongs to the dedicated Pact pillar and what happens to Thirsting Blade/Devouring Blade Invocation entitlements. No automatic extra attack granted yet."
+    "Level-5 Pact upgrades for Blade, Chain, Tome are owner-approved as a design; resolve Chain command/attack economy, Tome spell interaction, Thirsting Blade replacement and any post-level-5 progression before native activation."
   ],
   "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
   "approvedNativePactDirection": {
@@ -670,7 +670,7 @@
       "SRD51": "Historical 2014 separate Pact Boon at class level 3 preserved; native first Pact uses its own entitlement at level 1",
       "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices"
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants.",
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants. Owner approves BG3-style automatic level-5 improvements for all three Pact categories (Blade attack already settled, Chain familiar extra attack, Tome three free third-level spells) without spending Invocations. User also approves BG3 mundane-weapon binding for Blade; that weapon-specific effect does not apply to Chain or Tome. Hexblade patron-to-Pact classification remains under consideration; lore/source research only, no new playable parts.",
     "initialPactClassLevel": 1,
     "pactEntitlementCountAtLevel1": 1,
     "levelOnePillarRoles": {
@@ -885,12 +885,22 @@
           "more-than-five-feet-away-for-one-minute",
           "death"
         ],
-        "conjuredWeaponDisappearsWhenBondEnds": true
+        "conjuredWeaponDisappearsWhenBondEnds": true,
+        "bondOrdinaryNonmagicalWeapons": {
+          "status": "owner-approved-for-blade-specific-weapon-bond",
+          "mayBindExistingNonmagicalMeleeWeapon": true,
+          "turnsBoundWeaponMagicalForDamageAndResistanceInteraction": true,
+          "action": "bonus-action-from-approved-2024-Pact-bond",
+          "requiresPactOfTheBlade": true,
+          "doesNotGrantWeaponBondingToChainOrTome": true,
+          "interactionWithSpecialMagicWeapons": "unchanged-existing-magic-weapon-exclusions-and-source-difference-review",
+          "droppingThrowingDisarm": "not-approved-yet"
+        }
       },
       "deferredSourceDifferences": {
         "original2014HourRitualAndExtradimensionalMagicWeaponStorage": "review-separately",
         "original2014ArtifactAndSentientWeaponExclusions": "review-separately",
-        "mixedEditionMagicalAttackResistanceBypass": "review-separately",
+        "mixedEditionMagicalAttackResistanceBypass": "explicitly-treat-bound-mundane-weapons-as-magical-under-native-attack-resistance-rules-details-pending",
         "existingMagicRangedWeaponNativeSupportAndExceptions": "clarify-separately",
         "nativeSpecialItemAndBondReplacementInteractions": "review-separately"
       },
@@ -947,12 +957,104 @@
           "tome": "Level 5 Deepened Pact grants one free Long Rest cast each of Animate Dead, Haste, Call Lightning"
         },
         "candidatesRequiringOwnerApproval": [
-          "bond-mundane-existing-weapons-as-magical",
           "anti-disarm-bound-pact-weapon",
           "handling-of-weapon-throwing",
           "other-Pacts-equivalent-intrinsic-progression"
         ]
       }
+    },
+    "approvedLevelFivePactImprovements": {
+      "status": "owner-approved-design-not-executable-native-content",
+      "sourceInspiration": "Baldur's Gate 3 Deepened Pact",
+      "approvalInterpretation": "Intrinsic level-five advances for each distinct Pact (Blade, Chain, Tome), NOT giving each Pact weapon binding",
+      "warlockClassLevel": 5,
+      "consumesEldritchInvocationSelections": false,
+      "progressionPillar": "Pacts",
+      "appliesToEachPactSeparately": true,
+      "options": {
+        "blade": {
+          "approved": true,
+          "source": "already-owner-approved",
+          "nativePart": "pact-of-the-blade-intrinsic-extra-attack",
+          "level": 5,
+          "extraAttackUsingPactWeapon": true,
+          "totalAttacksOnAttackAction": 2,
+          "noStackingDuplicateThirstingBlade": true
+        },
+        "chain": {
+          "approved": true,
+          "nativePart": "pact-of-the-chain-intrinsic-familiar-extra-attack",
+          "level": 5,
+          "qualifyingCreature": "familiar-granted-through-this-Pact",
+          "extraAttackOnFamiliarAttackAction": true,
+          "totalAttacksIfOrdinarilyOne": 2,
+          "usesInvocationChoice": false,
+          "attackCommandAndTurnEconomy": "reconcile-with-native-controlled-creatures-and-2024-chain-pact-after-base-Chain-reconciliation",
+          "doesNotGrantWarlockExtraAttack": true
+        },
+        "tome": {
+          "approved": true,
+          "nativePart": "pact-of-the-tome-intrinsic-deepened-spell-grants",
+          "level": 5,
+          "spells": [
+            {
+              "name": "Animate Dead",
+              "spellLevel": 3,
+              "freeCastsPerLongRest": 1
+            },
+            {
+              "name": "Haste",
+              "spellLevel": 3,
+              "freeCastsPerLongRest": 1
+            },
+            {
+              "name": "Call Lightning",
+              "spellLevel": 3,
+              "freeCastsPerLongRest": 1
+            }
+          ],
+          "slotsConsumedForGrantedUses": 0,
+          "consumeRegularWarlockSpellsKnownEntitlement": false,
+          "usesInvocationChoice": false,
+          "noDailyPreparation": "native-no-daily-spell-preparation-policy",
+          "spellHandling": "reconcile-concentration-components-summons-and-level-native-spell-implementations"
+        }
+      },
+      "notApproved": [
+        "BG3-specific non-level5 Pact changes to Chain or Tome",
+        "BG3 extra attack multiclass stacking",
+        "automatic additional Pact acquisition",
+        "additional Pact improvements beyond level 5",
+        "Hexblade Patron-to-Pact reclassification"
+      ]
+    },
+    "hexbladeClassificationReview": {
+      "status": "research-only-no-owner-reclassification",
+      "inCurrentPlayableSRDVerticalSlice": false,
+      "ownerQuestion": "Should Hexblade be Pact rather than Patron given separate Patron/Pact/Invocation pillars?",
+      "original3x": "Hexblade was a separate base class in 3.5e Complete Warrior, not a Warlock Pact",
+      "xgte2014Lore": "Mysterious Shadowfell power behind sentient weapons is the Patron, potentially Raven Queen but not definitely; magic weapon is manifestation/intermediary rather than necessarily Patron",
+      "reclassificationCandidate": "Keep Patron as actual power source; martial bond is Blade Pact; curse/specter/defense may be Patron features or Pact/Patron-limited Invocation specialization pending owner review",
+      "importantCounterexample": "Published 2014 Hexblade Patron could select Tome or Chain and make nonweapon attacks; entire Patron is not intrinsically Blade-only",
+      "redundantHexWarriorElements": [
+        "Charisma weapon attack/damage",
+        "Pact weapon proficiency",
+        "magic weapon binding"
+      ],
+      "openIssues": [
+        "Hexblade Curse cross-Pact independence and critical-rules conversion",
+        "Accursed Specter classification",
+        "Armor of Hexes classification",
+        "Master of Hexes classification",
+        "Shadowfell Patron identity vs different Patrons granting curse power"
+      ],
+      "doesNotChangePlayablePatronMenu": true,
+      "sourceRefs": [
+        "Xanathar's Guide to Everything (2017)",
+        "Complete Warrior (2003)",
+        "https://www.dndbeyond.com/posts/356-heroes-of-hallows-eve-hexblade-warlock",
+        "https://bg3.wiki/wiki/Hexblade"
+      ]
     }
   }
 }
