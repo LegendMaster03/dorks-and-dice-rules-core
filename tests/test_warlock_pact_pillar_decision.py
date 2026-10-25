@@ -208,7 +208,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertFalse(blade["nativeExecutableActivation"])
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
-    def test_all_three_pacts_gain_intrinsic_level_five_upgrades_without_invocation_cost(self):
+    def test_all_four_active_pacts_gain_intrinsic_level_five_upgrades_without_invocation_cost(self):
         p=self.inventory["approvedNativePactDirection"]
         deep=p["approvedLevelFivePactImprovements"]
         self.assertEqual("owner-approved-design-not-executable-native-content",deep["status"])
@@ -216,7 +216,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertFalse(deep["consumesEldritchInvocationSelections"])
         self.assertEqual("Pacts",deep["progressionPillar"])
         self.assertTrue(deep["appliesToEachPactSeparately"])
-        self.assertEqual({"blade","chain","tome"},set(deep["options"]))
+        self.assertEqual({"blade","chain","tome","talisman"},set(deep["options"]))
         blade=deep["options"]["blade"]
         self.assertTrue(blade["approved"])
         self.assertEqual(2,blade["totalAttacksOnAttackAction"])
@@ -306,8 +306,9 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
                          set(t["invocationNames"]))
         self.assertEqual({"Rebuke of the Talisman":None,"Protection of the Talisman":7,
                           "Bond of the Talisman":12},t["publishedInvocationLevelPrereqs"])
-        self.assertFalse(t["mechanicsApprovedForNative"])
-        self.assertEqual("not-approved",t["level5IntrinsicAdvance"])
+        self.assertTrue(t["mechanicsApprovedForNative"])
+        self.assertEqual("owner-approved-deepened-pact-shared-ward",t["level5IntrinsicAdvance"])
+        self.assertFalse(t["nativeExecutableActivation"])
         self.assertTrue(t["sourceRulesNotCoveredBySrdLicense"])
 
     def test_star_chain_enforces_seeker_patron_constraint_not_generic_fiend(self):
@@ -349,12 +350,102 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(pair["noRuntimeAvailability"])
         self.assertIn("Pact of the Star Chain and Seeker Patron",self.inventory["outOfScope"][-1])
 
-    def test_pact_level_five_upgrades_not_silently_granted_to_new_options(self):
+    def test_all_four_active_pacts_gain_level_five_advancements_but_star_chain_is_deferred(self):
         p=self.inventory["approvedNativePactDirection"]
         levels=p["expandedFivePactReview"]["nativeFirstPactUpgradeApproval"]
-        self.assertEqual({"blade":5,"chain":5,"tome":5,"talisman":None,"starChain":None},levels)
-        self.assertEqual({"blade","chain","tome"},set(p["approvedLevelFivePactImprovements"]["options"]))
+        self.assertEqual({"blade":5,"chain":5,"tome":5,"talisman":5,"starChain":None},levels)
+        self.assertEqual({"blade","chain","tome","talisman"},set(p["approvedLevelFivePactImprovements"]["options"]))
         self.assertFalse(p["bladePactNativeBaseline"]["nativeExecutableActivation"])
+        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
+
+    def test_talisman_approved_level_one_base_fuses_both_sources_without_stacking(self):
+        p=self.inventory["approvedNativePactDirection"]
+        t=p["expandedFivePactReview"]["newSources"]["talisman"]
+        native=t["ownerApprovedNative"]
+        self.assertEqual("owner-approved-native-design-pending-runtime-integration",native["status"])
+        self.assertTrue(t["mechanicsApprovedForNative"])
+        self.assertFalse(t["nativeExecutableActivation"])
+        self.assertEqual("Pact of the Talisman",t["name"])
+        self.assertEqual(1,native["level1"]["level"])
+        self.assertTrue(native["usesDedicatedFirstPactEntitlement"])
+        item=native["level1"]["artifact"]
+        self.assertEqual(1,item["activePerPact"])
+        self.assertTrue(item["mayBeWornByWarlock"])
+        self.assertTrue(item["mayBeWornByAlly"])
+        guidance=native["level1"]["untrainedGuidance"]
+        self.assertEqual("1d4",guidance["dice"])
+        self.assertEqual(0,guidance["chargesCost"])
+        self.assertEqual("none",guidance["usageLimit"])
+        self.assertIn("skill-in-which-wearer-is-not-proficient",guidance["condition"])
+        self.assertIn("saving-throws",guidance["excludes"])
+        correction=native["level1"]["fortunateCorrection"]
+        self.assertEqual("wearer-fails-any-ability-check",correction["condition"])
+        self.assertEqual("1d4",correction["dice"])
+        self.assertEqual(1,correction["chargesCost"])
+        self.assertTrue(correction["mayAffectChecksWithSkillProficiency"])
+        self.assertTrue(correction["mayAffectOtherAbilityChecks"])
+        nostack=native["level1"]["nonstacking"]
+        self.assertEqual(1,nostack["maxNativeTalismanDicePerCheck"])
+        self.assertIn("untrained-guidance-and-fortunate-correction",nostack["forbidden"])
+        charges=native["level1"]["charges"]
+        self.assertEqual("warlock-proficiency-bonus",charges["maximum"])
+        self.assertEqual({"fortunate-correction","shared-ward"},set(charges["currentPoolSharedBy"]))
+        self.assertEqual("long-rest",charges["recharge"])
+        self.assertTrue(charges["replacementDoesNotRecharge"])
+        replacement=native["level1"]["replacement"]
+        self.assertEqual(1,replacement["ceremonyHours"])
+        self.assertTrue(replacement["previousTalismanDeactivates"])
+        self.assertFalse(replacement["rechargeChargesOnReplacement"])
+
+    def test_talisman_approved_shared_ward_spends_same_pool_and_reaction(self):
+        p=self.inventory["approvedNativePactDirection"]
+        tal=p["expandedFivePactReview"]["newSources"]["talisman"]["ownerApprovedNative"]
+        ward=tal["level5"]
+        self.assertEqual("Deepened Pact: Shared Ward",ward["name"])
+        self.assertEqual(5,ward["level"])
+        self.assertEqual("active-talisman-wearer-takes-damage",ward["trigger"])
+        self.assertEqual(60,ward["rangeFeet"])
+        self.assertTrue(ward["selfWearerAllowed"])
+        self.assertEqual("reaction-of-warlock",ward["actionCost"])
+        self.assertEqual(1,ward["chargesCost"])
+        self.assertEqual("level1-talisman-shared-charges",ward["chargesResource"])
+        self.assertEqual("2d6",ward["damageReductionDice"])
+        self.assertEqual("warlock-charisma-modifier",ward["damageReductionAdd"])
+        self.assertEqual(0,ward["minimumDamageReduction"])
+        self.assertTrue(ward["reductionCannotExceedIncomingDamage"])
+        self.assertTrue(ward["reducesSingleDamageInstance"])
+        self.assertFalse(ward["consumesInvocationSelection"])
+        self.assertFalse(ward["consumesSpellSlot"])
+        self.assertIn("rebuke-of-the-talisman",ward["reactionCompetition"])
+        self.assertEqual("not-approved",ward["furtherIntrinsicScaling"])
+        deep=p["approvedLevelFivePactImprovements"]["options"]["talisman"]
+        self.assertTrue(deep["approved"])
+        self.assertTrue(deep["competesWithRebukeReaction"])
+        self.assertTrue(deep["noAdditionalChargePool"])
+        self.assertFalse(deep["nativeExecutableActivation"])
+        self.assertEqual(5,p["expandedFivePactReview"]["nativeFirstPactUpgradeApproval"]["talisman"])
+        self.assertIsNone(p["expandedFivePactReview"]["nativeFirstPactUpgradeApproval"]["starChain"])
+
+    def test_talisman_three_invocations_remain_optional_pact_bound_clauses(self):
+        p=self.inventory["approvedNativePactDirection"]
+        native=p["expandedFivePactReview"]["newSources"]["talisman"]["ownerApprovedNative"]
+        invocation=native["invocations"]
+        self.assertTrue(invocation["allArePactAttached"])
+        self.assertTrue(invocation["noAutomaticRebukeOrProtectionOrBond"])
+        self.assertEqual([],invocation["automaticInvocationGrants"])
+        entries={x["name"]:x for x in invocation["eligibleSpecializations"]}
+        self.assertEqual({"Rebuke of the Talisman","Protection of the Talisman","Bond of the Talisman"},set(entries))
+        self.assertIsNone(entries["Rebuke of the Talisman"]["classLevelPrerequisite"])
+        self.assertEqual(7,entries["Protection of the Talisman"]["classLevelPrerequisite"])
+        self.assertEqual(12,entries["Bond of the Talisman"]["classLevelPrerequisite"])
+        self.assertEqual("own-published-proficiency-bonus-per-long-rest-pool",
+                         entries["Protection of the Talisman"]["resource"])
+        self.assertEqual("own-published-proficiency-bonus-per-long-rest-pool",
+                         entries["Bond of the Talisman"]["resource"])
+        self.assertEqual("invocation-selection",entries["Bond of the Talisman"]["cost"])
+        self.assertTrue(invocation["subjectToPatronAndPactRestrictions"])
+        self.assertFalse(native["implementationNotes"]["runtimeImplemented"])
+        self.assertTrue(native["implementationNotes"]["starChainAndSeekerStillDisabled"])
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
 if __name__=="__main__":
