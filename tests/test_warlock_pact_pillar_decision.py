@@ -177,7 +177,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertEqual("review-separately",
                          blade["deferredSourceDifferences"]["original2014HourRitualAndExtradimensionalMagicWeaponStorage"])
         progression=blade["pactProgressionConcern"]
-        self.assertEqual("owner-identifies-pact-pillar-baseline-as-underwhelming",progression["status"])
+        self.assertEqual("owner-approved-intrinsic-level5-attack-other-progression-open",progression["status"])
         self.assertEqual("partially-owner-approved-level5-extra-attack",progression["nativePactIntrinsicProgression"])
         self.assertEqual("owner-approved-intrinsic-pact-feature",progression["specificPotentialLevel5SecondAttack"])
         self.assertEqual("base-two-attack-benefit-superseded-by-approved-level5-pact-progression-replacement-option-unresolved",progression["thirstingBladeDisposition"])
