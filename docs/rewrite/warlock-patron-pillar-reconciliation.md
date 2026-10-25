@@ -67,7 +67,7 @@ A separate [comparison of the ten published 5.x Patrons with 3.5e Warlock power 
 
 | Mechanic | SRD 5.1 (2014) | SRD 5.2.1 (2024) | Native reconciliation issue |
 | --- | --- | --- | --- |
-| Patron identity | Fiend selected at level 1 | Fiend subclass selected at level 3 | **Identity at level 1 is approved; early mechanical grant is open** |
+| Patron identity | Fiend selected at level 1 | Fiend subclass selected at level 3 | **Patron identity and first mechanical grant at level 1 are approved** |
 | Fiend spells | Ten additions to options for Warlock spells (not automatically known) | Ten automatically available spells, granted at Warlock levels 3/5/7/9 | Grant semantics and lists differ, native no-daily-preparation policy applies |
 | Dark One's Blessing | Level 1; Warlock reduces hostile creature to 0 HP | Level 3; also triggers when another defeats enemy within 10 feet | Trigger and first-grant level |
 | Dark One's Own Luck | Level 6; +1d10 ability check or saving throw; 1 use per Short/Long Rest | Level 6; +1d10; Charisma-modifier uses (min 1) per Long Rest, once per roll | Recovery and number of uses |
@@ -96,18 +96,18 @@ The historical **3.5e Warlock base-class fast-healing grant is REOPENED FOR REVI
 
 **Why reopen:** healing restores lost HP while 2014/2024 Dark One's Blessing and Fiendish Vigor provide **Temporary Hit Points** and Patron Fiendish Resilience provides **damage resistance**. They are not exact substitutes. However, giving every Warlock extra 20/40/100 potential HP per daily activation could displace Pact/Invocation choices and dilute Patron-specific defensive identity. Evaluate **automatic grant versus optional Invocation versus removal**, comparing all three pillars; an old base feature must not be automatically retained merely because it was approved before the restart.
 
-**Native Patron acquisition decision 1 — approved:** adopt **2014 Fiend level 1** for the Patron's first mechanical milestone, including **Dark One's Blessing and Patron spell access**. The 2024 source's subclass level-3 grant remains preserved in the comparison preset for conversion/provenance; it is not the native first grant. The Blessing **trigger** and the spell grant's **learning/list** still need approval.
+**Native Patron acquisition decision 1 — approved:** adopt **2014 Fiend level 1** for the Patron's first mechanical milestone, including **Dark One's Blessing and Patron spell access**. The 2024 subclass level-3 grant remains a source-era comparison only. The **2024 cooperative Blessing trigger is approved**; the Fiend spell grant's entitlement semantics and spell roster still need approval.
 
-**Native Luck decision 4 — partly approved:** the level-6 **Dark One's Own Luck** has a number of uses equal to the Warlock's **Charisma modifier, minimum one**, with one use per roll. The user selected the scaling count, **not** the recharge frequency. 2024 Long Rest recovery is recommended; 2014 instead provided one use per Short/Long Rest.
+**Native Luck decision 4 — approved:** At level 6, **Dark One's Own Luck** adds 1d10 to an ability check or saving throw after the roll and before its effects, no more than once per roll, with uses equal to **max(1, Charisma modifier)**. All uses recover on a **Long Rest** (2024 recovery approved).
 
-### Detailed comparisons remaining for owner decision
+### Source comparison and resolved or remaining owner decisions
 
 | Mechanic | 2014 SRD 5.1 | 2024 SRD 5.2.1 | Recommendation (not yet approved) |
 | --- | --- | --- | --- |
 | **Fiend Spells (decision 2)** | Ten spells added to available **choices**, consuming normal Warlock learned-spell entitlements; acquired as a class-level-1 Patron list | Ten spells automatically **prepared** at Warlock levels 3/5/7/9, in addition to normal learned spells; native no-daily-preparation needs conversion | Consider **automatic learned/access grants** separate from Warlock's regular choices, with 2014 initial availability; first decide spell roster and exact level grants. Avoid awarding all 13 distinct names automatically. |
-| **Dark One's Blessing (decision 3)** | Temporary HP **max(1, CHA modifier + Warlock level)** when the Warlock personally drops a hostile creature to 0 HP | Same Temporary HP, also triggers when **another creature** drops an enemy within **10 feet of the Warlock** to 0 HP | Adopt the **2024 cooperative trigger** with the already approved level-1 acquisition; Temporary HP do not stack. |
+| **Dark One's Blessing (decision 3)** | Temporary HP **max(1, CHA modifier + Warlock level)** when the Warlock personally drops a hostile creature to 0 HP | Same temporary HP, also triggers when **another creature** drops an enemy within **10 feet of the Warlock** to 0 HP | **APPROVED:** 2024 cooperative trigger at level 1; temporary HP do not stack. |
 | **Patron Fiendish Resilience (decision 5)** | Level 10, choose any one damage type after a Short/Long Rest; damage from **magical or silvered weapons** bypasses the resistance | Level 10, choose any one damage type **except Force**; no bypass for magical or silvered weapons | Adopt the **2024 simpler resistance**. This is independent of the reopened historical base fast healing. |
-| **Hurl Through Hell (decision 6)** | Level 14, on hit immediately removes target until end of next turn, **no saving throw**; non-Fiend target takes **10d10 Psychic on return**; Long Rest restore | Level 14, hit then **Charisma save**; on failure deals **8d10 Psychic immediately** to non-Fiends, removes and **Incapacitates** target until return; Long Rest restore **or expend Pact Magic slot** to restore use | Favor 2024 **saving throw and slot recovery**, then explicitly choose damage amount/timing. 10d10 averages 55; 8d10 averages 44 before saving-throw probability. |
+| **Hurl Through Hell (decision 6)** | Level 14, on hit immediately removes target until end of next turn, **no saving throw**; non-Fiend target takes **10d10 Psychic on return**; Long Rest restore | Level 14, hit then **Charisma save**; on failure deals **8d10 Psychic immediately** to non-Fiends, removes and **Incapacitates** target until return; Long Rest restore **or expend Pact Magic slot** to restore use | **APPROVED:** 2024-style package at level 14, including save, timing, condition, and Pact Magic slot recovery. |
 
 **Spell differences:** shared spells are Burning Hands, Command, Scorching Ray, Fireball, Stinking Cloud, Fire Shield and Wall of Fire. **2014 only:** Blindness/Deafness, Flame Strike, Hallow. **2024 only:** Suggestion, Geas, Insect Plague. This means 10 spells per version, **13 distinct** across both.
 
@@ -115,22 +115,22 @@ No native Fiend combat definition is activated by these research notes. Preservi
 
 ## Working definitions and decision gate
 
-The source crosswalk records **one identity, five feature-part identities, two historical guided projections, and eight tracked rulings/reviews** (one approved level-1 decision, one partly approved Luck decision, four Fiend mechanics still requiring decisions, one reopened historical healing review, and one deferred multi-Patron question). These are grounded source mappings, **not extra granted powers**.
+The source crosswalk records **one identity, five feature-part identities, two historical guided projections, and eight tracked rulings/reviews** (four owner-approved Fiend directions, two remaining Fiend decisions, one reopened historical healing review, and one deferred multi-Patron question). These are grounded source mappings, **not extra granted powers**.
 
 Before promoting a native Patron rule to authoritative data, decide:
 
 1. **Level-1 Fiend mechanical grant — SETTLED**: use 2014 level 1 for both Dark One's Blessing and Patron spell access. The spell benefit and Blessing trigger are *separately* still open.
 2. **Fiend spell access**: how both source lists and their different acquisition semantics translate into one native entitlement without granting unjustified bonus spells.
-3. **Blessing**: initial level 1 settled; decide whether another creature's defeat within 10 feet triggers it.
-4. **Luck**: Charisma modifier uses (minimum one) settled; choose recharge schedule (2024 Long Rest recommended, not yet approved).
+3. **Blessing — SETTLED**: 2024 expanded cooperative trigger is approved at level 1.
+4. **Luck — SETTLED**: Charisma modifier uses (minimum one) and Long Rest recharge.
 5. **Patron damage resistance**: Force selection and magical/silvered weapon bypass.
-6. **Hurl Through Hell**: hit and save procedure, timing/dice, status, Pact-slot use recovery.
+6. **Hurl Through Hell — SETTLED**: 2024 hit/save, 8d10 timing, Incapacitated, and Pact-slot recovery.
 
 **Deferred beyond one-Patron SRD proof:** Whether and how advanced Warlocks can mix different Patrons' abilities; those choices cannot be proven from SRD Fiend alone. Minimal synthetic fixtures may exercise the generic prerequisite/selection contract without pretending to be playable Patrons.
 
 ## Implementation sequence after reconciliation
 
-1. Resolve the remaining Fiend mechanic choices, confirm Luck recovery and the historical fast-healing review, then encode **one native set** of part definitions with stable IDs, referenced by an authoritative Fiend progression/preset.
+1. Resolve the two remaining Fiend mechanic choices (spell entitlement and Patron damage resistance) and the historical fast-healing review, then encode **one native set** of part definitions with stable IDs, referenced by an authoritative Fiend progression/preset.
 2. Implement/validate feature triggers and recovery with shared Rules Core mechanics, including appropriate source conversion mapping. No Fiend-specific runtime engine.
 3. Validate guided versus custom acquisition against the same entitlement ledger, testing level-1 identity and the 1/3/6/10/14 milestone conflicts.
 4. Continue to **Pacts** next, then **Eldritch Invocations**. Validate the integrated class at levels 1–20 after all three pillars are complete.
@@ -139,25 +139,25 @@ The source crosswalk tests already verify both projections, all feature identiti
 
 ## Owner-approved Eldritch Blast layers and Infernal Retaliation (2026-10-24)
 
-**Approval scope:** The owner approved the three-layer Eldritch Blast architecture and the **Infernal Retaliation** feature-family reconciliation. The owner has since clarified that **Hellfire Blast should be a distinct ability**, not a stronger version of Eldritch Blast or a required part of the layered Eldritch Blast system. The separate, non-splitting, increasing-damage Hellfire concept remains under design; no numeric damage formula, action type, level schedule, or resource cost has yet been approved. Do not promote these candidate mechanics into playable native grants without further decisions.
+**Approval scope:** The owner approved the three-layer Eldritch Blast architecture and the **Infernal Retaliation** feature-family reconciliation. The owner subsequently reconsidered separation and now **favors Hellfire Blast as an advanced Eldritch Blast enhancement further specialized to the Patron**, consistent with its 3.5e origin. Exact integration and the non-splitting, increasing-damage Hellfire concept remain under design; no numeric damage formula, action type, level schedule, or resource cost has yet been approved. Do not promote these candidate mechanics into playable native grants without further decisions.
 
 ### Three-layer Eldritch Blast architecture — approved
 
-1. **Base Eldritch Blast:** the shared Warlock attack and scaling mechanic. Whether it is automatically acquired as a class feature rather than selected as a 5.x cantrip remains unresolved.
+1. **Base Eldritch Blast — OWNER APPROVED:** the shared Warlock attack granted **automatically as a Warlock class feature at level 1**, not requiring a cantrip selection. Exact native damage progression and cantrip count representation remain to be reconciled.
 2. **Patron Imprint:** the Patron's signature manifestation or modification of Eldritch Blast, such as a damage-type conversion or conditional effect. This is part of the **Patron** pillar, not a fourth pillar and not necessarily a raw damage increase. Do not require Patrons outside the Fiend SRD slice to have executable Imprints yet.
-3. **Optional Invocations:** elective Blast Shapes, Eldritch Essences, and other Eldritch Blast enhancements in the **Invocations** pillar. Preserve source-inspired shape/essence distinctions and explicit compatibility rules; do not grant additional Invocation selections or duplicate entitlements merely for a guided preset. **Hellfire Blast is not inherently one of these Eldritch Blast modifiers.**
+3. **Optional Invocations:** elective Blast Shapes, Eldritch Essences, and advanced Eldritch Blast enhancements in the **Invocations** pillar. The owner favors Hellfire Blast as an advanced Patron-associated enhancement; its exact prerequisites, costs, and compatibility are still pending. Do not grant additional Invocation selections or duplicate entitlements merely for a guided preset.
 
 A Patron's imprint should not make Pact of the Blade or other non-blast Warlock builds invalid. Implement a single authoritative Eldritch Blast capability composed of compatible modifiers rather than multiple independent edition-specific attacks. Shared resolution must eventually address number of attack rolls, hit triggers, critical hits, per-hit bonuses, damage types, targeting, resource costs, and modifier priority.
 
-### Hellfire Blast as an independent Warlock ability — owner clarification (2026-10-24)
+### Hellfire Blast as an advanced Patron-specialized Eldritch Blast enhancement — current direction (2026-10-24)
 
-**Separate Hellfire Blast from the Eldritch Blast modifier stack.** The owner does not want Hellfire Blast mechanically entangled with the layered Eldritch Blast architecture unless the game is intentionally building a comparable stronger Eldritch Blast version for every Patron. That is **not** the approved architecture: Patron Imprints ordinarily flavor or modify baseline Eldritch Blast, not prescribe an additional stronger blast for each Patron. The Hellfire specialization may therefore offer its own attack/ability that a qualifying Warlock chooses *instead of* ordinary Eldritch Blast, without inheriting that attack's beam count, damage dice, or scaling.
+The owner **reconsidered an earlier standalone Hellfire Blast proposal** and favors retaining its original 3.5e identity as an **enhancement of Eldritch Blast**, specialized further by infernal Patron power. This fits the approved three-layer architecture: base Eldritch Blast (automatic level-1 class feature), Patron Imprint, and elective enhanced Invocations. The **advanced-enhancement direction is favored**, but no new numeric damage or acquisition ruling has been approved.
 
-**3.5e provenance:** Hellfire Blast historically enhanced Eldritch Blast (*Fiendish Codex II*), adding 2d6 per Hellfire Warlock level (up to +6d6) at a cost of 1 Constitution damage per use, and could interact with Blast Shapes. The **native separation is an intentional design choice**, not a claim that the 3.5e rules presented it as an unrelated ability. Preserve its non-ordinary-Fire-damage identity as a reconciliation consideration, not yet a finalized native damage rule.
+**Historical provenance:** *Fiendish Codex II* Hellfire Blast enhanced Eldritch Blast with 2d6 extra damage per Hellfire Warlock level (up to +6d6), at 1 Constitution damage per activation; this was not ordinary Fire damage and could interact with some Blast Shapes. Preserve this as a direct predecessor for reconciliation, not as permission to copy its additional damage onto each 5.x beam.
 
-**Under review:** Design Hellfire as one concentrated, non-beam-splitting attack that grows in damage, consistent with the owner's earlier suggestion. Derive its own power budget and scaling directly, **not** by automatically combining all of a 5.x Eldritch Blast's beams plus historical Hellfire dice. Its attack roll/save type, area/multiple targets, target selection, damage, criticals, vitality or other costs, daily limitations, prerequisites, and eventual native placement in Patron/Invocation feature entitlements require review. Do not automatically apply Patron Imprints, Blast Shapes, Eldritch Essences, Agonizing Blast, or Eldritch Blast-specific on-hit bonuses to Hellfire Blast; any explicit compatibility can be considered individually later.
+**Remaining decisions:** whether an enhanced Hellfire blast concentrates normal multiple beams into one stronger hit, its exact damage growth, critical-hit interactions, self-sacrifice costs, eligible Patron/Invocation prerequisites, Blast Shape compatibility, and how it interacts with the ordinary Patron Imprint. Other Patrons **may** have distinctive advanced enhancements, but need not receive equally strong damage amplifiers or identical mechanics. Hellfire must not become a mandatory ability of every Fiend Warlock.
 
-Hellfire Blast remains an optional, infernal-origin specialization and is not a compulsory feature of every Fiend Warlock. The **Infernal Retaliation** family decision is unaffected by this separation.
+The owner-approved **Infernal Retaliation** family is separate and unaffected.
 
 ### Infernal Retaliation family — approved concept
 
@@ -171,3 +171,14 @@ Unify the overlapping *Complete Mage* **Fiendish Flamewreath** and *Fiendish Cod
 ### Scope and provenance
 
 Mechanical reconciliation sources for the current effort are 3e/3.5e and 5e/5.5e. **4e is not a mechanical reconciliation source**, although it can be noted for historical provenance where needed. Hellfire Warlock (*Fiendish Codex II*) is a principal 3.5e comparator for the Fiend Patron, with its unique features eligible for merging or optional specialization rather than wholesale adoption of a separate three-level progression. Non-SRD abilities remain research/design candidates pending approval for native executable inclusion. Guided builds must use the same native authoritative parts and budgets as advanced character construction.
+
+## Four further owner approvals — 2026-10-24
+
+These supersede older open-decision wording above and in historical research notes; SRD source projections themselves remain unchanged.
+
+1. **Base Warlock Eldritch Blast:** Automatically granted at Warlock level 1 as a class feature, without requiring a cantrip selection. The three-layer architecture remains intact. Native scaling and the accounting of other cantrip entitlements remain outstanding.
+2. **Dark One's Blessing:** The 2024 cooperative trigger is approved, at the already-approved native level-1 milestone. The Warlock gains temporary HP equal to **max(1, CHA modifier + Warlock level)** when the Warlock drops a hostile creature to 0 HP, or another creature drops an enemy within 10 feet of the Warlock to 0 HP. Temporary HP do not stack.
+3. **Dark One's Own Luck:** The previously established Charisma-modifier uses (minimum one), 1d10 bonus, and once-per-roll limit are confirmed, with **Long Rest** restoration now approved.
+4. **Hurl Through Hell:** Approve the **2024-style** level-14 feature package: once per turn on a qualifying attack-roll hit, expend a use and force a Charisma save against the Warlock spell save DC. On failure, the target travels through the Lower Planes, a non-Fiend target immediately takes **8d10 Psychic**, and the target is **Incapacitated** until returning at the end of the Warlock's next turn. One use recovers on a Long Rest; spending a Pact Magic spell slot can restore a use. A successful save does not refund the attempt.
+
+**Still unresolved:** Fiend spell entitlement/list reconciliation, Patron Fiendish Resilience damage-resistance rules and interactions with 3.5e resistance, and reopened 3.5e *base-class* Fiendish Resilience fast healing. These approvals do **not** make the pending Fiend native subclass or base Warlock executable.
