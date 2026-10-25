@@ -29,6 +29,16 @@ This allocates **power origin, progression grant, attachment/manifestation, and 
 
 **Warning:** The Tome upgrade represents three potentially high-impact level-3 spell castings per Long Rest; approval is recorded, but future testing must compare its resource value with Blade/Chain and Pact Magic. Do not silently nerf or add compensatory grants. The level-5 Chain upgrade needs a compatible interpretation of the owner's existing **controlled creatures acting on player initiative** house rule.
 
+## Pact catalog extension: Talisman and Star Chain (owner-approved 2026-10-25)
+
+This original Patron allocation study was authored for **ten Patron concepts × Blade/Chain/Tome** (30 conceptual pairings). The owner subsequently expanded Pact reconciliation to include **Talisman** (official non-SRD 2020) and **Star Chain** (2016 WotC Seeker-specific UA playtest), producing a conceptual **ten × five = fifty** combinations for *eligibility screening*. **The original 30-pair research does not itself validate the extra twenty combinations**. Consult [five-Pact scope](warlock-five-pact-reconciliation-scope.md).
+
+**Talisman overlay (10 reference pairs):** There is **no named-Patron requirement in the published Talisman Pact Boon**. A Fiend, Archfey, Celestial, Great Old One, Fathomless, Genie, Hexblade, Undead, Undying, or Vestige relationship can therefore be examined for a Talisman Pact *subject to its own terms*. Talisman is a protective transferable amulet and must not duplicate existing Patron defensive/healing resources or automatically add its three optional Invocations. These ten pairs are **eligible-in-principle design cases, not individually playtested or automatically permitted by a particular Patron**.
+
+**Star Chain overlay (10 reference pairs):** The **original UA specifically requires a character dedicated to the Seeker**. None of the ten Patron **categories alone** establishes that source-defined link. **Do not declare the 10 ordinary Patron+Star Chain pairings legal merely because a Patron is willing to offer it**, or infer that Archfey/Great Old One/Celestial/Genie knowledge themes waive this requirement. A character could conceivably have a Seeker-linked specific Patron *within* a broad category, but a mapping from traits/category to Seeker eligibility must be **explicitly approved later**. The **Seeker itself is not an in-scope playable Patron** and was not one of the ten reference Patron concepts. Preserve synthetic Seeker-linked fixtures for testing the eligibility contract, with no actual playable Seeker import.
+
+**Fiend-only runnable slice:** Blade, Chain and Tome are the existing three Fiend+Pact paths; **Talisman adds a fourth Fiend+Pact design case**, pending its own native mechanics. **Star Chain adds a negative test case for Fiend** until a Seeker-linked eligibility exception or playable Seeker Patron is separately approved. Do not call these five legal Fiend build paths. Star Chain's level-5 development is unsolved, not inherited from BG3.
+
 ## Classification criteria
 
 For **each individual source feature**, answer in order:
