@@ -136,3 +136,34 @@ Before promoting a native Patron rule to authoritative data, decide:
 4. Continue to **Pacts** next, then **Eldritch Invocations**. Validate the integrated class at levels 1–20 after all three pillars are complete.
 
 The source crosswalk tests already verify both projections, all feature identities, and source spell lists, without making unapproved mechanical promises.
+
+## Owner-approved Eldritch Blast layers and Infernal Retaliation (2026-10-24)
+
+**Approval scope:** The owner approved the three-layer Eldritch Blast architecture and the **Infernal Retaliation** feature-family reconciliation. The owner separately suggested a **non-splitting Hellfire Blast with increasing damage**, in the manner of 3.x; that is an endorsed direction for design comparison, not approval of a specific damage formula, action type, level schedule, or compatibility rule. Do not promote these candidate mechanics into playable native grants without further decisions.
+
+### Three-layer Eldritch Blast architecture — approved
+
+1. **Base Eldritch Blast:** the shared Warlock attack and scaling mechanic. Whether it is automatically acquired as a class feature rather than selected as a 5.x cantrip remains unresolved.
+2. **Patron Imprint:** the Patron's signature manifestation or modification of Eldritch Blast, such as a damage-type conversion or conditional effect. This is part of the **Patron** pillar, not a fourth pillar and not necessarily a raw damage increase. Do not require Patrons outside the Fiend SRD slice to have executable Imprints yet.
+3. **Optional Invocations:** elective Blast Shapes, Eldritch Essences, and advanced enhancements (including candidate Hellfire enhancements) in the **Invocations** pillar. Preserve source-inspired shape/essence distinctions and explicit compatibility rules; do not grant additional Invocation selections or duplicate entitlements merely for a guided preset.
+
+A Patron's imprint should not make Pact of the Blade or other non-blast Warlock builds invalid. Implement a single authoritative Eldritch Blast capability composed of compatible modifiers rather than multiple independent edition-specific attacks. Shared resolution must eventually address number of attack rolls, hit triggers, critical hits, per-hit bonuses, damage types, targeting, resource costs, and modifier priority.
+
+### Hellfire Blast single-attack proposal — under numerical review
+
+The owner proposed that **Hellfire does not split into 5.x beams**, instead becoming a **single stronger blast whose damage grows**, analogous to 3.x. This is a compelling candidate for a Hellfire specialization mode, not a commitment to a particular damage progression. Crucially, in *Fiendish Codex II*, Hellfire Blast adds **2d6 per Hellfire Warlock level** (up to +6d6), deals damage that is **not ordinary Fire damage**, and inflicts **1 Constitution damage** per use; the original class explicitly permits the additional damage on multiple targets reached through a Blast Shape such as Chain or Cone. Thus "does not split" should distinguish the **5.x beam mechanic** from historically optional multi-target **Blast Shapes**, whose native eligibility remains to be decided.
+
+Do **not** apply +6d6 independently to every 5.x beam. Candidate conversion: combine the base Eldritch Blast's level-appropriate beam damage into one attack and add a separately scaled Hellfire bonus. This trades several hit chances for one hit/miss outcome and changes critical-hit and on-hit interaction profiles; values, secondary target effects, shape combinations, Constitution cost, and resource gates require owner approval. Hellfire should remain an optional, costly specialization rather than automatic equipment for every Fiend Warlock.
+
+### Infernal Retaliation family — approved concept
+
+Unify the overlapping *Complete Mage* **Fiendish Flamewreath** and *Fiendish Codex II* **Hellfire Shield** defensive retaliation concepts under an **Infernal Retaliation** feature family with distinct selectable variants or upgrades, rather than building two unrelated combat systems.
+
+- **Flamewreath candidate:** sustained protective retaliation without the Hellfire vitality sacrifice.
+- **Hellfire Shield candidate:** stronger reactive retaliation with the historical self-sacrifice mechanic (1 Constitution damage in its 3.5e source), subject to conversion of action economy, damage, save, limits, and costs.
+
+**Approved:** shared family / de-duplication approach. **Not yet approved:** free grants, eligibility levels, feature-cost entitlement, variant interchangeability, numerical damage, recovery, or use of Constitution damage unchanged. Reopened base-class Fiendish Resilience healing remains a separate unresolved decision. Do not equate restoration of hit points with restoration of Constitution damage.
+
+### Scope and provenance
+
+Mechanical reconciliation sources for the current effort are 3e/3.5e and 5e/5.5e. **4e is not a mechanical reconciliation source**, although it can be noted for historical provenance where needed. Hellfire Warlock (*Fiendish Codex II*) is a principal 3.5e comparator for the Fiend Patron, with its unique features eligible for merging or optional specialization rather than wholesale adoption of a separate three-level progression. Non-SRD abilities remain research/design candidates pending approval for native executable inclusion. Guided builds must use the same native authoritative parts and budgets as advanced character construction.
