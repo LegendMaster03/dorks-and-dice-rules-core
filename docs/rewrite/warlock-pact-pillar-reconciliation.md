@@ -18,7 +18,7 @@ This is a **narrative analogy, not a universal legal-contract requirement**. War
 
 1. **Every Warlock receives one first Pact selection at class level 1.** It is a class feature in the **Pact pillar** with its own dedicated selection entitlement.
 2. A first Pact **never consumes an Eldritch Invocation selection**. Being a Pact is not equivalent to being an Invocation even though the 2024 source classifies the three as invocations.
-3. **Pact of the Blade**, **Pact of the Chain**, and **Pact of the Tome** are the three currently in-scope Pact options.
+3. **Five Pacts are now in the reconciliation catalog:** **Pact of the Blade, Pact of the Chain, Pact of the Tome, Pact of the Talisman**, and **Pact of the Star Chain**. Blade/Chain/Tome originate in SRD 5.1/5.2.1; Talisman is an officially published non-SRD 2014-era Pact Boon from *Tasha's Cauldron of Everything*, while Star Chain is a non-SRD 2016 WotC Unearthed Arcana **playtest** Pact, not officially published. Their source classifications and restrictions must remain distinct.
 4. Eldritch Invocations represent clauses attached to a specific Pact. They may enhance a Pact or have an explicit Pact prerequisite. These are **additional choices**, using separately approved Invocation entitlements, rather than a second instance of the base Pact grant. Pact affiliation is distinct from a mechanical prerequisite that names Blade, Chain, or Tome.
 5. Guided Warlock presets and custom/advanced creation **use precisely the same** first-Pact selection and any additional entitlements. No guided-mode double-grants.
 6. Initial Pact and Patron identities both exist at Warlock **level 1**. Any prerequisite depending on one must be evaluated in an order-independent level-up/character-creation process; the player should not be forced to choose one narrative ordering to make an otherwise valid combination.
@@ -72,6 +72,16 @@ The original **3.5e Hexblade** was a distinct base class in *Complete Warrior*. 
 
 **Potential design split:** Weapon proficiency, Charisma weapon attacks and ordinary weapon binding fit the **Blade Pact** and are largely native-approved; the power source still belongs to **Patron**; curses/specters/defensive powers could be Patron manifestations or Patron/Pact-restricted Invocations, but their placement remains **unapproved**. A distinct *Hexblade Pact* might duplicate Blade and constrain unrelated choices; consider only when the Fiend+Blade/Chain/Tome vertical slice is playable and tested. No Hexblade playable import or Patron-to-Pact reclassification is authorized.
 
+## Expanded five-Pact scope — Talisman and Star Chain (owner-approved for reconciliation)
+
+[Detailed five-Pact scope and evidence](warlock-five-pact-reconciliation-scope.md) is authoritative for non-SRD source classification. This addition expands **Pact option reconciliation**, not the **Fiend-only playable Patron catalog**, the SRD import data, the number of initial Pacts, or the acquisition of further Pacts.
+
+- **Talisman:** Official additional 2014-era Pact Boon from *Tasha's Cauldron of Everything* (2020). Baseline **1d4 after failed ability check, proficiency-bonus uses per Long Rest, transferable talisman bearer**, plus 1-hour replacement ceremony. Review **Rebuke, Protection, and Bond of the Talisman** as distinct source-era **optional Invocations**, rather than assuming their effects are freely granted. No unique native base or level-5 upgrade is approved yet.
+- **Star Chain:** WotC **Unearthed Arcana: The Faithful** (2016), **unpublished playtest** Pact Boon. Starlight chain with **Augury ritual**, Intelligence-check advantage once per Short/Long Rest, and a 1-hour replacement ceremony. Its published eligibility is **a character dedicated to the Seeker Patron**. Preserve this cross-pillar prerequisite as a real test: an ordinary **Fiend Patron does not qualify by default**; no new playable Seeker Patron is added here, and there is no general waiver by Patron willingness. Later explicit owner approval could extend Seeker-like traits or other eligible Patrons.
+- **Source-era levels:** Both original Pacts were acquired at 2014 Warlock **level 3**; our **already approved separate level-1 first Pact** still controls native class acquisition. Preserve the original levels for provenance.
+- **Advance all five meaningfully:** Examine Talisman and Star Chain's own level-5+ growth as new design cases, without automatically copying **Blade/Chain/Tome's already approved BG3-inspired level-5 grants** or granting their Invocations free.
+- **Edition classification:** The 3.5e Warlock has **no discrete 5e-style Pact Boons**. The named 4e **Fey/Infernal/Star/etc. Eldritch Pacts** classify power sources, analogous to our **Patron** pillar, not Blade/Chain/Tome/Talisman/Star Chain mechanical Pact selections.
+
 ## Source comparisons (preserved, not controlling native costs)
 
 - **2014 / SRD 5.1:** Pact Boons were distinct class choices at Warlock **level 3**.
@@ -83,11 +93,11 @@ The original **3.5e Hexblade** was a distinct base class in *Complete Warrior*. 
 
 - **Additional Pacts:** conceptually permitted as a future advanced option, **not available through current default progression**; their level, cost, maximum, coexistence rules and acquisition restrictions are deferred.
 - **Later Pact upgrades/entitlements**: whether a Pact receives any special advancement choices separate from optional Invocations.
-- **Mechanics** of Pact of the Blade, Chain, and Tome individually, including any interaction with Eldritch Blast, familiars, and spellcasting.
+- **Mechanics** of all **five** Pacts individually, including Blade/Eldritch Blast, Chain/familiars, Tome/spells, Talisman/support, and Star Chain/divination/Seeker restrictions. Intrinsic level-5 upgrades are approved only for Blade, Chain, and Tome.
 - **Invocation budgets, scaling, and individual option-specific restrictions** remain under the Invocations pillar; the typed Patron/Pact eligibility model is approved but does not itself assign restrictions to particular options. Approval of a dedicated first Pact must not rewrite Invocation counts.
 
 ## Next case
 
-Additional Pacts remain possible but **their gating is intentionally deferred**. Proceed to reconcile **Pact of the Blade**, **Pact of the Chain**, and **Pact of the Tome** individually. Pact-termination edge cases and invocation transfer costs remain follow-up rule design.
+Additional simultaneous Pacts remain possible but **their gating is intentionally deferred**. Reconcile **Blade, Chain, Tome, Talisman, and Star Chain** individually, while checking each against its original publication or playtest provenance. Star Chain's Seeker-specific prerequisite is **preserved**, so it remains a non-playable compatibility case under the current Fiend-only Patron test. Pact-termination edge cases and Invocation transfer costs remain follow-up rule design.
 
 Related: [Warlock integrated SRD slice](warlock-srd-integrated-vertical-slice.md), [Patron reconciliation](warlock-patron-pillar-reconciliation.md).
