@@ -86,7 +86,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual(8,len(decision))
         self.assertEqual(8,len({d["id"] for d in decision}))
         statuses={k:sum(d["status"]==k for d in decision) for k in {"owner-ruling-needed","deferred-outside-srd","owner-approved-design-direction","partially-owner-approved","reopened-owner-review"}}
-        self.assertEqual({"owner-ruling-needed":2,"deferred-outside-srd":1,"owner-approved-design-direction":4,"partially-owner-approved":0,"reopened-owner-review":1},statuses)
+        self.assertEqual({"owner-ruling-needed":2,"deferred-outside-srd":1,"owner-approved-design-direction":5,"partially-owner-approved":0,"reopened-owner-review":0},statuses)
         initial=next(d for d in decision if d["id"]=="patron-initial-mechanical-grant")
         self.assertIn("level 1",initial["resolution"])
         self.assertEqual(1,self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["classLevel"])
@@ -111,8 +111,21 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
             self.assertEqual("owner-ruling-needed",resolutions[key]["status"])
         ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
         review=next(v["reviewClarification"] for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
-        self.assertEqual("reopened-for-owner-review-not-a-new-mechanical-ruling",review["status"])
+        self.assertEqual("resolved-owner-approved-fiend-patron-infernal-retaliation",review["status"])
         self.assertEqual(4,len(review["unaffectedApprovedFeatureFamilies"]))
+        retaliation=approved["infernalRetaliation"]
+        self.assertEqual("warlock.patron.fiend.identity",retaliation["patronId"])
+        self.assertEqual("one-fiend-patron-feature",retaliation["grantedAs"])
+        self.assertFalse(retaliation["effectsAreSeparateEntitlements"])
+        self.assertFalse(retaliation["automaticForAllWarlocks"])
+        self.assertEqual("on-activation",retaliation["choiceTiming"])
+        self.assertEqual({"fiendish-resilience-fast-healing","fiendish-flamewreath","hellfire-shield"},set(retaliation["availableEffects"]))
+        self.assertEqual({"uses":1,"recovery":"long-rest","consumesOnAnyEffect":True},retaliation["sharedResource"])
+        self.assertEqual("warlock.patron.fiend.infernal-retaliation",review["nativeFeatureId"])
+        base=next(v for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
+        self.assertIn("retains 4 historical",base["decision"])
+        self.assertNotIn("Fiendish Resilience (levels",base["decision"])
+        self.assertIn("Fiendish Resilience (levels",base["priorApproval"]["decision"])
         self.assertNotIn("definition",self.native)
 
 if __name__=="__main__":
