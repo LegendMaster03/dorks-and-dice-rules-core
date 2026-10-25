@@ -6,7 +6,7 @@
 
 Warlock has **three class-specific pillars: Patron, Pacts, and Eldritch Invocations**. Their interaction produces progression, and guided subclass presets are another means of selecting the same abilities, *not* an independent pillar.
 
-- **Patron identity belongs at Warlock class level 1.** It can be a specific individual or a non-contractual supernatural source; Fiend is the initial SRD example.
+- **Patron identity or power-source connection belongs at Warlock class level 1.** The character may have a direct or inherited connection to a Patron; an inherited Patron is still a Patron, even without a personal agreement or a known individual name. Fiend is the initial SRD example.
 - **Patron features are separate from identity and can be acquired later.** The 2014 Fiend presents subclass features at 1/6/10/14, and 2024 at 3/6/10/14; those are source projections, not two gameplay engines. The 2024 subclass first appears at 3 in source, but native Patron identity remains known from level 1.
 - **Deconstruction yields five coherent part IDs plus identity**: spell access, Dark One's Blessing, Dark One's Own Luck, Fiend damage resistance, and Hurl Through Hell. These names identify rule capabilities, not necessarily five independent player purchases. Prerequisites, packaging, feature timing, and advancement entitlements remain to be reconciled.
 - **Guided source projections** use the same part IDs and grant each once per progression. They do not provide duplicate subclass or part entitlements. The actual **single authoritative native Fiend preset** cannot be finalized until the open rulings are approved; SRD51/SRD52 projections are comparison and compatibility fixtures.
@@ -15,13 +15,17 @@ The machine-readable source-preserving crosswalk is `data/reference/srd/warlock-
 
 ## Patron relationship and cross-pillar eligibility — owner design direction (2026-10-24)
 
-**The Patron pillar is Warlock-specific terminology, not a requirement that every Warlock sign a contract or possess a conscious external patron.** Record the Warlock's power-source relationship at level 1, with at least these representable cases:
+**A Patron does not require the Warlock to have personally entered a contract.** A Warlock who inherits a connection to a supernatural being still has a **Patron**: the relationship and its consequences can be inherited, even if the Warlock has never met, communicated with, or agreed to serve that being. The distinction is **how the Patron connection was acquired**, not whether the Patron exists.
 
-- **Personal Patron:** a named or identifiable being with whom the Warlock has a pact, bargain, or another connection. **A pact is not necessarily a negotiated contract**.
-- **Impersonal or inherited source:** supernatural lineage, ambient/otherworldly influence, granted legacy, or a similar origin, with no current personal Patron or contract required. This preserves relevant 3.5e Warlock concepts.
-- **No external Patron:** a Warlock concept with no discrete external source-being. The Patron *pillar* still manages the origin/identity and eventual Patron-slot power progression; it must not require a non-null NPC/patron entity record for character validity. **The precise mechanics and selectable paths for such a character are not yet approved.**
+- **Direct Patron connection:** the Warlock personally makes a bargain, receives a blessing, is chosen, or develops another relationship with the power-granting being.
+- **Inherited Patron connection:** an ancestor's bargain, a family legacy, or supernatural ancestry links the Warlock to the Patron or Patron type. No personal agreement, knowledge of the being's name, or ongoing contact is inherently required.
+- **Other indirect Patron connection:** supernatural forces designate the Warlock as a conduit or pass along the effects of a Patron's power without the character personally negotiating for it.
 
-**Narrative relationship is separate from mechanical entitlement.** Neither an absent contract nor an absent external Patron automatically grants Fiend, Archfey, or any other Patron's powers. A guided Fiend preset does establish a Fiend power relationship, but does not force other origin types to imitate a Fiend bargain. Patron feature acquisition remains subject to the approved level/selection/compatibility rules.
+**Do not misclassify inherited power as Patronless.** A specific Patron relationship can exist without a character knowing the Patron's identity; the level-1 build records the relevant power-source identity or type, while discovery of an individual name may remain narrative.
+
+**A genuinely Patronless Warlock is a separate, unresolved design question.** The fact that 3.5e allows inherited or involuntary power does **not** by itself prove a Warlock lacks a Patron or any supernatural power source. Do not introduce a Patronless mechanical option or declare it universally valid from these examples. Do not require a named NPC object, active contact, or signed contract when validating a legitimate inherited connection.
+
+**Narrative relationship is separate from mechanical entitlement.** The manner of receiving power does not automatically add or remove Fiend, Archfey, or other Patron features. A guided Fiend preset establishes a Fiend power-source relationship but does not mandate a personally signed deal. Patron feature acquisition still follows its approved level/selection/compatibility rules.
 
 **Cross-pillar prerequisites are supported by design.** A Pact choice or improvement may require an eligible Patron category/trait/feature, an Invocation may require a specific Pact or Patron part, and a Patron feature may depend on an existing Pact/Invocation. At the shared Rules Core level, store these as explicit **typed prerequisites and dependency relationships** rather than hard-coded names or impossible one-way pillar hierarchies. The character builder must explain incompatible or unavailable choices and preserve the same restrictions for guided presets and custom builds.
 
