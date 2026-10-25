@@ -1,0 +1,276 @@
+{
+  "id": "warlock.invocation-progression.band-1-comparison",
+  "title": "Warlock Band 1 Invocation progression: published editions and provisional Dorks & Dice hybrid",
+  "scope": {
+    "levelStart": 1,
+    "levelEnd": 20,
+    "band": "1",
+    "beyondLevel20": "out-of-scope"
+  },
+  "status": "owner-selected-provisional-testing-model-not-final-balance-approval",
+  "recordedOn": "2026-10-25",
+  "repositoryBranch": "feature/rules-core-rewrite",
+  "historicalSources": {
+    "original35": "data/reference/3x/warlock-invocations-research-index.json#original3xWarlock.invocationsKnownPerLevel",
+    "edition5e2014": "data/reference/3x/warlock-invocations-research-index.json#modernSRDComparativeFacts.invocationsKnownByClassLevel.srd51",
+    "edition55e2024": "data/reference/3x/warlock-invocations-research-index.json#modernSRDComparativeFacts.invocationsKnownByClassLevel.srd52",
+    "historicalPactOwnership": "docs/rewrite/warlock-eldritch-invocation-reconciliation-audit.md"
+  },
+  "definitions": {
+    "edition35Invocations": "3.5e published automatic invocations known; no modern independent Pact Boon.",
+    "edition5e2014Invocations": "2014 published Invocations known; its Pact Boon is independent but acquired at level 3.",
+    "edition55e2024TotalInvocationSelections": "2024 published Invocation budget; Pact options can consume a selection.",
+    "edition55eOnePactAdjustedElectiveInvocations": "Illustrative 2024 budget after exactly one Pact is bought using a selection, not a universal 2024 build.",
+    "provisionalHybridElectiveInvocations": "Current Band 1 initial-testing candidate: maximum of 3.5e count and 2024 one-Pact-adjusted elective count."
+  },
+  "pactAssumptions": {
+    "nativeFirstPactAcquisitionLevel": 1,
+    "nativeFirstPactCostsInvocationSelection": false,
+    "nativeInvocationAttachesToOneConcretePact": true,
+    "nativeEligiblePatronMustAccept": true,
+    "otherPactAcquisitionRulesStillDeferred": true
+  },
+  "model": {
+    "formula": "max(edition35Invocations, edition55e2024TotalInvocationSelections - 1)",
+    "levelOneElectiveInvocations": 1,
+    "levelOnePact": "independently-granted-first-Pact",
+    "atLevel20ElectiveInvocations": 12,
+    "milestoneLevels": [
+      1,
+      2,
+      4,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      16,
+      18,
+      20
+    ],
+    "changedAcquisitionsRelativeTo35": [
+      {
+        "invocationNumber": 4,
+        "edition35WarlockLevel": 6,
+        "provisionalHybridWarlockLevel": 5
+      },
+      {
+        "invocationNumber": 5,
+        "edition35WarlockLevel": 8,
+        "provisionalHybridWarlockLevel": 7
+      },
+      {
+        "invocationNumber": 6,
+        "edition35WarlockLevel": 10,
+        "provisionalHybridWarlockLevel": 9
+      }
+    ],
+    "approvalBoundary": "For initial testing and balance review only; not a final entitlement table, class activation, or runtime mechanic."
+  },
+  "deferredAlternatives": [
+    {
+      "id": "no-level-1-invocation",
+      "levelOneElectiveInvocations": 0,
+      "status": "balance-counterfactual-only-not-current-testing-model",
+      "reason": "May avoid granting a separate Pact and elective Invocation at level 1; user explicitly retained the earlier one-point hybrid."
+    }
+  ],
+  "levels": [
+    {
+      "warlockLevel": 1,
+      "edition35Invocations": 1,
+      "edition5e2014Invocations": 0,
+      "edition55e2024TotalInvocationSelections": 1,
+      "edition55eOnePactAdjustedElectiveInvocations": 0,
+      "provisionalHybridElectiveInvocations": 1
+    },
+    {
+      "warlockLevel": 2,
+      "edition35Invocations": 2,
+      "edition5e2014Invocations": 2,
+      "edition55e2024TotalInvocationSelections": 3,
+      "edition55eOnePactAdjustedElectiveInvocations": 2,
+      "provisionalHybridElectiveInvocations": 2
+    },
+    {
+      "warlockLevel": 3,
+      "edition35Invocations": 2,
+      "edition5e2014Invocations": 2,
+      "edition55e2024TotalInvocationSelections": 3,
+      "edition55eOnePactAdjustedElectiveInvocations": 2,
+      "provisionalHybridElectiveInvocations": 2
+    },
+    {
+      "warlockLevel": 4,
+      "edition35Invocations": 3,
+      "edition5e2014Invocations": 2,
+      "edition55e2024TotalInvocationSelections": 3,
+      "edition55eOnePactAdjustedElectiveInvocations": 2,
+      "provisionalHybridElectiveInvocations": 3
+    },
+    {
+      "warlockLevel": 5,
+      "edition35Invocations": 3,
+      "edition5e2014Invocations": 3,
+      "edition55e2024TotalInvocationSelections": 5,
+      "edition55eOnePactAdjustedElectiveInvocations": 4,
+      "provisionalHybridElectiveInvocations": 4
+    },
+    {
+      "warlockLevel": 6,
+      "edition35Invocations": 4,
+      "edition5e2014Invocations": 3,
+      "edition55e2024TotalInvocationSelections": 5,
+      "edition55eOnePactAdjustedElectiveInvocations": 4,
+      "provisionalHybridElectiveInvocations": 4
+    },
+    {
+      "warlockLevel": 7,
+      "edition35Invocations": 4,
+      "edition5e2014Invocations": 4,
+      "edition55e2024TotalInvocationSelections": 6,
+      "edition55eOnePactAdjustedElectiveInvocations": 5,
+      "provisionalHybridElectiveInvocations": 5
+    },
+    {
+      "warlockLevel": 8,
+      "edition35Invocations": 5,
+      "edition5e2014Invocations": 4,
+      "edition55e2024TotalInvocationSelections": 6,
+      "edition55eOnePactAdjustedElectiveInvocations": 5,
+      "provisionalHybridElectiveInvocations": 5
+    },
+    {
+      "warlockLevel": 9,
+      "edition35Invocations": 5,
+      "edition5e2014Invocations": 5,
+      "edition55e2024TotalInvocationSelections": 7,
+      "edition55eOnePactAdjustedElectiveInvocations": 6,
+      "provisionalHybridElectiveInvocations": 6
+    },
+    {
+      "warlockLevel": 10,
+      "edition35Invocations": 6,
+      "edition5e2014Invocations": 5,
+      "edition55e2024TotalInvocationSelections": 7,
+      "edition55eOnePactAdjustedElectiveInvocations": 6,
+      "provisionalHybridElectiveInvocations": 6
+    },
+    {
+      "warlockLevel": 11,
+      "edition35Invocations": 7,
+      "edition5e2014Invocations": 5,
+      "edition55e2024TotalInvocationSelections": 7,
+      "edition55eOnePactAdjustedElectiveInvocations": 6,
+      "provisionalHybridElectiveInvocations": 7
+    },
+    {
+      "warlockLevel": 12,
+      "edition35Invocations": 7,
+      "edition5e2014Invocations": 6,
+      "edition55e2024TotalInvocationSelections": 8,
+      "edition55eOnePactAdjustedElectiveInvocations": 7,
+      "provisionalHybridElectiveInvocations": 7
+    },
+    {
+      "warlockLevel": 13,
+      "edition35Invocations": 8,
+      "edition5e2014Invocations": 6,
+      "edition55e2024TotalInvocationSelections": 8,
+      "edition55eOnePactAdjustedElectiveInvocations": 7,
+      "provisionalHybridElectiveInvocations": 8
+    },
+    {
+      "warlockLevel": 14,
+      "edition35Invocations": 8,
+      "edition5e2014Invocations": 6,
+      "edition55e2024TotalInvocationSelections": 8,
+      "edition55eOnePactAdjustedElectiveInvocations": 7,
+      "provisionalHybridElectiveInvocations": 8
+    },
+    {
+      "warlockLevel": 15,
+      "edition35Invocations": 9,
+      "edition5e2014Invocations": 7,
+      "edition55e2024TotalInvocationSelections": 9,
+      "edition55eOnePactAdjustedElectiveInvocations": 8,
+      "provisionalHybridElectiveInvocations": 9
+    },
+    {
+      "warlockLevel": 16,
+      "edition35Invocations": 10,
+      "edition5e2014Invocations": 7,
+      "edition55e2024TotalInvocationSelections": 9,
+      "edition55eOnePactAdjustedElectiveInvocations": 8,
+      "provisionalHybridElectiveInvocations": 10
+    },
+    {
+      "warlockLevel": 17,
+      "edition35Invocations": 10,
+      "edition5e2014Invocations": 7,
+      "edition55e2024TotalInvocationSelections": 9,
+      "edition55eOnePactAdjustedElectiveInvocations": 8,
+      "provisionalHybridElectiveInvocations": 10
+    },
+    {
+      "warlockLevel": 18,
+      "edition35Invocations": 11,
+      "edition5e2014Invocations": 8,
+      "edition55e2024TotalInvocationSelections": 10,
+      "edition55eOnePactAdjustedElectiveInvocations": 9,
+      "provisionalHybridElectiveInvocations": 11
+    },
+    {
+      "warlockLevel": 19,
+      "edition35Invocations": 11,
+      "edition5e2014Invocations": 8,
+      "edition55e2024TotalInvocationSelections": 10,
+      "edition55eOnePactAdjustedElectiveInvocations": 9,
+      "provisionalHybridElectiveInvocations": 11
+    },
+    {
+      "warlockLevel": 20,
+      "edition35Invocations": 12,
+      "edition5e2014Invocations": 8,
+      "edition55e2024TotalInvocationSelections": 10,
+      "edition55eOnePactAdjustedElectiveInvocations": 9,
+      "provisionalHybridElectiveInvocations": 12
+    }
+  ],
+  "analysisUse": {
+    "keepAllFourComparisonSeriesOnGraph": true,
+    "keepOnePactAdjusted2024Series": true,
+    "compareWithNativePatronPactAndSpellcastingFeatures": true,
+    "testingLevels": [
+      1,
+      2,
+      4,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      16,
+      18,
+      20
+    ],
+    "cautions": [
+      "The max function combines higher entitlement budgets and does not establish mechanical balance.",
+      "Invocation strength and available options differ by edition; named effects are not assumed interchangeable.",
+      "Native Pacts have substantial automatic features, especially at level 5, and should be assessed alongside new Invocation selections.",
+      "The option pool includes non-SRD rights-review candidates and unresolved 3.5e conversions; no protected source text is imported here.",
+      "The Pact-adjusted 2024 line assumes exactly one Pact purchased; published 2024 Invocation spending may vary.",
+      "The grade-unlock schedule from 3.5e is historical, not adopted native prerequisites.",
+      "Band 2/levels 21-40 are outside this provisional Band 1 test decision."
+    ],
+    "ownerReviewQuestions": [
+      "Does level 1 feel excessive with Patron, free Pact, and one elective Invocation?",
+      "Does level 5 overconcentrate power with intrinsic Pact advancement and an Invocation selection?",
+      "Do Pact-specific and general options create meaningful choices at each milestone?",
+      "Are twelve elective choices by level 20 balanced with native Pact Magic and Patron features?",
+      "Would the level-1-zero alternative or a ten-to-eleven-point end budget improve class balance?"
+    ]
+  }
+}
