@@ -18,7 +18,7 @@ The native Fiend is a Warlock Patron acquired at **Warlock class level 1**. It p
 | --- | --- | --- | --- |
 | **1** | Fiend Patron identity | Patron source/identity begins at Warlock level 1; do not defer identity to 2024 level 3 | No second Patron grant when reaching level 3 |
 | **1** | Dark One's Blessing | 2024 cooperative defeat trigger; temporary HP = max(1, Charisma modifier + Warlock level) | Standard nonstacking temporary HP |
-| **1** | Patron spell access | At Patron level 1, 13 spells become eligible; default C grants ten automatically at class levels 3/5/7/9 | Optional campaign rules A (expanded only) and B (all 13 automatically) |
+| **1** | Patron spell access | Default automatically grants 13 spells at 3/5/7/9, including the three restored 2014-only spells | Optional faithful 2014 expanded-ten or 2024 automatic-ten profiles |
 | **6** | Dark One's Own Luck | Add 1d10 after an ability check/save roll, before resolution, at most once per roll; uses = max(1, Charisma modifier), recovered on Long Rest | Approved |
 | **8** | Infernal Retaliation | Acquire one Fiend Patron feature with **two** alternative Reaction modes: Fiendish Resilience fast healing and Fiendish Flamewreath; shared 1 use/Long Rest | Tick and damage-event implementation details below |
 | **10** | Fiendish Resilience (damage resistance) | Distinct, source-attested Fiend Patron resistance feature at class level 10 | Damage-type eligibility and bypass **unresolved** |
@@ -70,41 +70,37 @@ At Warlock level **14**, once per turn on a **qualifying attack-roll hit**, expe
 
 This is the owner-approved coherent SRD 5.2.1-style rule rather than the 2014 no-save, 10d10-on-return version.
 
-## Fiend Patron spell access — owner-approved native rule C; optional A/B
+## Fiend Patron spell access — approved native 2024 automatic grants with 2014 restorations
 
-**The Fiend spell-access feature begins at Warlock level 1.** It does not itself give free castings or additional Pact Magic slots. Three **mutually exclusive campaign-rule modes** share one native spell-access feature and one 13-spell eligible roster; they are alternatives, **not cumulative grants**.
+The Fiend Patron and spell-access feature begin at **Warlock level 1**, while **automatic Patron spell grants begin at Warlock level 3**, following the 2024 class-level schedule. **All 13 spells** in the 2014/2024 union become automatically known, without consuming regular Warlock spell selections.
 
-| Mode | Rule | Classification |
-| --- | --- | --- |
-| **C — Reconciled** | Expand eligible spells to all **13** at Patron level 1, and automatically know the **ten 2024 spells** at Warlock levels 3, 5, 7, 9 without consuming regular choices; the **three 2014-only spells** remain eligible normal selections | **DEFAULT native** |
-| **A — Expanded only** | All **13** are eligible normal spell selections; **none** is automatically learned. Each selected spell consumes a regular Warlock spell choice | **Optional campaign rule** |
-| **B — All automatically known** | Automatically learn **all 13**, without consuming regular Warlock selections, at eligible Warlock class levels **1, 3, 5, 7, 9** according to their spell levels | **Optional campaign rule** |
+### Native default
 
-### Eligible Fiend spell roster — identical in all modes
-
-| Spell level | Full 13-spell union |
+| Warlock level | Automatically known Fiend spells |
 | --- | --- |
-| **1st** | Burning Hands; Command |
-| **2nd** | Blindness/Deafness; Scorching Ray; Suggestion |
-| **3rd** | Fireball; Stinking Cloud |
-| **4th** | Fire Shield; Wall of Fire |
-| **5th** | Flame Strike; Hallow; Geas; Insect Plague |
+| **1** | None yet; Patron identity and spell-access feature granted |
+| **3** | Burning Hands; Command; Scorching Ray; Suggestion; **Blindness/Deafness** |
+| **5** | Fireball; Stinking Cloud |
+| **7** | Fire Shield; Wall of Fire |
+| **9** | Geas; Insect Plague; **Flame Strike; Hallow** |
 
-### Automatic-grant schedules by mode
+**Bold spells** are the three restored from the 2014 Fiend list. Their automatic grant levels follow their spell levels: Blindness/Deafness (2nd) at Warlock 3; Flame Strike and Hallow (5th) at Warlock 9. The default adds **5/2/2/4** automatic spells at Warlock 3/5/7/9. It does **not** accelerate first-level Fiend spells to Warlock level 1.
 
-| Warlock class level | **C (default)** — automatic grants | **B (optional)** — automatic grants |
+### Optional source-edition campaign rules (mutually exclusive)
+
+| Mode | Fiend roster | Acquisition semantics |
 | --- | --- | --- |
-| **1** | None; Patron expands available options | Burning Hands; Command |
-| **3** | Burning Hands; Command; Scorching Ray; Suggestion | Blindness/Deafness; Scorching Ray; Suggestion |
-| **5** | Fireball; Stinking Cloud | Fireball; Stinking Cloud |
-| **7** | Fire Shield; Wall of Fire | Fire Shield; Wall of Fire |
-| **9** | Geas; Insect Plague | Flame Strike; Hallow; Geas; Insect Plague |
+| **Native Dorks & Dice (default)** | 13-spell union | All 13 automatically known at 3/5/7/9 |
+| **2014 SRD 5.1 (optional)** | Original ten 2014 spells only | Expanded selectable list; spells consume normal Warlock choices; none automatic |
+| **2024 SRD 5.2.1 (optional)** | Original ten 2024 spells only | Automatic Patron spell grants at the original 3/5/7/9 Warlock class levels |
 
-**Mode A has no automatic Patron spell grants** at any level. B grants all 13, while C grants ten automatically and keeps the other three eligible as ordinary learned-spell choices.
+The optional rules preserve the **actual edition rosters**, not the native 13-spell union. They replace the default, never stack with it, and use the same native spell definitions.
 
-**Common entitlement/casting rules:** Native Warlocks do not prepare spells daily. An automatically known Patron spell is available without a learned-spell selection but **still requires Pact Magic slots or another valid casting resource** and obeys normal spell-level eligibility; the grants supply no free casts or slots. A spell already known must not be granted twice. If a spell was taken with a normal Warlock selection and later becomes an automatic Patron spell (for example, under C), **refund/replace the original selection** with another legal spell rather than lose the selection entitlement. The optional rule choice is configured at campaign level, and changing modes midcampaign requires a de-duplicated, entitlement-preserving migration.
+### Shared casting and entitlement rules
 
-**Provenance:** SRD 5.1 expanded list contributes the original three extra options; SRD 5.2.1 contributes the ten automatic spell grants. The no-daily-preparation native casting system controls both. Non-SRD Fiendish Heritage features remain research-only and are not added to this spell feature.
+No daily preparation; automatically acquired Patron spells are known and accessible. They do not consume normal Warlock spell selections, grant extra Pact Magic slots, or grant free castings. The Warlock must still satisfy normal spell-level eligibility and expend the appropriate valid casting resource. Do not duplicate already known spells. If a regular Warlock spell choice later becomes automatically known, **restore that normal choice** for another eligible spell. Campaign-profile migration must preserve entitlements and avoid duplicates.
+
+The original SRD lists remain preserved as source projections. Non-SRD Fiendish Heritage is not automatically introduced. This approval supersedes the previous C default (ten automatic plus three optional choices) and the previous level-1 all-automatic B schedule.
 
 ## Remaining Fiend Patron mechanic review
 
@@ -133,7 +129,7 @@ The approved design direction outside Infernal Retaliation remains **player-chos
 
 ## Completion and implementation gate
 
-- **Settled:** Fiend identity at level 1; **spell-access default C with A/B optional modes**; Blessing; Luck; Hurl Through Hell; one two-mode Infernal Retaliation at 8/13/18 with 20-round duration, shared one-use Long Rest recovery, and the once-only stabilization rule; Shield excluded and deferred to the Invocation pillar.
+- **Settled:** Fiend identity at level 1; **native automatic 13-spell access with faithful optional 2014/2024 source profiles**; Blessing; Luck; Hurl Through Hell; one two-mode Infernal Retaliation at 8/13/18 with 20-round duration, shared one-use Long Rest recovery, and the once-only stabilization rule; Shield excluded and deferred to the Invocation pillar.
 - **Not settled:** Level-10 Fiend damage resistance, currently under consideration for supersession by the improved native defensive mechanics. Some Infernal Retaliation effect resolution still needs shared engine mapping.
 - **Native activation:** Do not overwrite `data/native/classes/subclasses/warlock/fiend.json`'s `pending-native-reconciliation` candidate staging or claim a playable vertical slice until remaining mechanics are resolved and tests validated.
 - **Workflow:** Resolve the remaining level-10 damage-resistance disposition, then proceed through **Pacts** and **Eldritch Invocations**; address deferred Hellfire Shield routes in the **Invocations pillar**, without reopening Infernal Retaliation.
