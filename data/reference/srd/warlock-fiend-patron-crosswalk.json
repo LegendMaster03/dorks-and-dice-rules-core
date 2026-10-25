@@ -534,9 +534,9 @@
       "disposition": "optional-hellfire-specialization-not-infernal-retaliation",
       "shield": {
         "name": "Hellfire Shield",
-        "placement": "optional-specialization-candidate-for-eldritch-invocation-reconciliation",
+        "placement": "fiend-associated-specialization-acquisition-undecided",
         "automaticallyGrantedAtFiendLevel8": false,
-        "requiresSeparateAcquisition": true,
+        "requiresSeparateAcquisition": null,
         "relatedEnhancements": [
           "hellfire-blast",
           "eldritch-blast"
@@ -559,17 +559,45 @@
           "sourceScaling": "one-acquisition-tier; damage scales indirectly with Eldritch Blast including Hellfire Blast enhancement",
           "sourceDamage": "eldritch-blast-damage-plus-hellfire-blast-bonus-when-applicable",
           "sourceAbilityDamageCost": "1 Constitution damage per activation",
-          "nativeThreeTierProgression": "derived-damage-across-native-8-13-18-milestones",
+          "nativeThreeTierProgression": "not-part-of-infernal-retaliation; own acquisition level undecided",
           "compatibilityWithNativeHellfireEnhancement": "not-yet-reconciled"
         },
         "unresolved": [
-          "prerequisites and invocation selection entitlement",
+          "select between Fiend Patron automatic grant, Fiend Patron feature choice, or Fiend-prerequisite Eldritch Invocation; resolve level and entitlement budget",
           "own resource/cost and original Constitution ability damage",
           "derived damage and multi-beam/critical compatibility",
           "eligible targets and effect resolution"
-        ]
+        ],
+        "acquisitionCandidates": [
+          {
+            "id": "fiend-patron-grant",
+            "route": "automatic-patron-feature",
+            "requiresPatron": "fiend",
+            "status": "owner-proposed-option",
+            "classLevel": "undecided",
+            "chargesSelectionEntitlement": false
+          },
+          {
+            "id": "fiend-patron-choice",
+            "route": "selectable-patron-feature",
+            "requiresPatron": "fiend",
+            "status": "owner-proposed-option",
+            "choiceLevel": "undecided",
+            "entitlementBudget": "undecided"
+          },
+          {
+            "id": "fiend-eldritch-invocation",
+            "route": "eldritch-invocation",
+            "requiresPatron": "fiend",
+            "status": "owner-proposed-option",
+            "invocationLevelPrerequisite": "undecided",
+            "usesNormalInvocationSelection": true
+          }
+        ],
+        "acquisitionStatus": "three-permitted-candidate-routes-no-final-route-selected",
+        "acquisitionRule": "One shared Hellfire Shield definition. Do not grant, award choice, or charge an Invocation selection until the owner selects an acquisition route. Multiple possible source pathways must not award duplicate copies or extra charges."
       },
-      "qualification": "Hellfire Shield is no longer part of the Fiend's unified Infernal Retaliation feature. Preserve the previously approved derived-damage rather than fixed-tier direction as a separate optional Hellfire specialization. No playable invocation is activated yet."
+      "qualification": "Hellfire Shield is not an Infernal Retaliation mode. Owner proposed three Fiend-only acquisition possibilities: Patron grant, Patron choice, or Eldritch Invocation requiring the Fiend Patron. The acquisition route remains undecided; retain one native ability identity, the derived-damage direction and independent cost design. Do not silently treat the invocation route as already selected."
     }
   }
 }
