@@ -67,7 +67,11 @@ class WarlockBand1ComparisonTests(unittest.TestCase):
         self.assertTrue(retaliation["singleFeatureEntitlement"])
         self.assertEqual("Fiend Patron only",retaliation["scope"])
         self.assertEqual(1,retaliation["sharedUses"])
-        self.assertEqual(3,len(retaliation["effects"]))
+        self.assertEqual(2,len(retaliation["effects"]))
+        self.assertEqual(["fiendish-resilience-fast-healing","fiendish-flamewreath"],retaliation["effects"])
+        self.assertEqual([13,18],retaliation["upgradeClassLevels"])
+        self.assertEqual("stabilize-once-remain-unconscious-no-healing-or-repeat-stabilization",retaliation["fastHealingAtZeroHp"])
+        self.assertIn("optional Hellfire",disposition["hellfireShieldNativeDisposition"])
         self.assertEqual("pending-native-reconciliation",self.warlock["baselineStatus"])
         ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
         self.assertEqual(1,sum(x["nativeRuleId"]=="class.warlock.historical-class-features-band1"
