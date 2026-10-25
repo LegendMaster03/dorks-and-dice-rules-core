@@ -517,7 +517,7 @@
     },
     {
       "id": "invocation.gift-of-the-ever-living-ones",
-      "name": "Gift of the Ever Living Ones",
+      "name": "Gift of the Ever-Living Ones",
       "requiredPactType": "Chain",
       "attachment": {
         "belongsToSpecificPact": true,
