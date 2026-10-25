@@ -203,10 +203,67 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(bg3["pactWeaponImmuneToDisarmingAndDropping"])
         self.assertTrue(bg3["preventsThrowingBoundWeapon"])
         self.assertTrue(bg3["stackingExploitNotAdopted"])
-        self.assertEqual(4,len(bg3["candidatesRequiringOwnerApproval"]))
+        self.assertEqual(3,len(bg3["candidatesRequiringOwnerApproval"]))
 
         self.assertFalse(blade["nativeExecutableActivation"])
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
+
+    def test_all_three_pacts_gain_intrinsic_level_five_upgrades_without_invocation_cost(self):
+        p=self.inventory["approvedNativePactDirection"]
+        deep=p["approvedLevelFivePactImprovements"]
+        self.assertEqual("owner-approved-design-not-executable-native-content",deep["status"])
+        self.assertEqual(5,deep["warlockClassLevel"])
+        self.assertFalse(deep["consumesEldritchInvocationSelections"])
+        self.assertEqual("Pacts",deep["progressionPillar"])
+        self.assertTrue(deep["appliesToEachPactSeparately"])
+        self.assertEqual({"blade","chain","tome"},set(deep["options"]))
+        blade=deep["options"]["blade"]
+        self.assertTrue(blade["approved"])
+        self.assertEqual(2,blade["totalAttacksOnAttackAction"])
+        self.assertTrue(blade["noStackingDuplicateThirstingBlade"])
+        chain=deep["options"]["chain"]
+        self.assertTrue(chain["approved"])
+        self.assertEqual(5,chain["level"])
+        self.assertTrue(chain["extraAttackOnFamiliarAttackAction"])
+        self.assertEqual(2,chain["totalAttacksIfOrdinarilyOne"])
+        self.assertFalse(chain["usesInvocationChoice"])
+        self.assertTrue(chain["doesNotGrantWarlockExtraAttack"])
+        self.assertIn("reconcile-with-native",chain["attackCommandAndTurnEconomy"])
+        tome=deep["options"]["tome"]
+        self.assertTrue(tome["approved"])
+        self.assertEqual(5,tome["level"])
+        self.assertEqual({"Animate Dead","Haste","Call Lightning"},{z["name"] for z in tome["spells"]})
+        self.assertTrue(all(z["freeCastsPerLongRest"]==1 and z["spellLevel"]==3 for z in tome["spells"]))
+        self.assertEqual(0,tome["slotsConsumedForGrantedUses"])
+        self.assertFalse(tome["consumeRegularWarlockSpellsKnownEntitlement"])
+        self.assertFalse(tome["usesInvocationChoice"])
+        self.assertIn("no-daily",tome["noDailyPreparation"])
+        self.assertNotIn("Hexblade",deep["options"])
+        self.assertFalse(p["bladePactNativeBaseline"]["nativeExecutableActivation"])
+        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
+
+    def test_nonmagical_weapon_bond_applies_to_blade_only(self):
+        p=self.inventory["approvedNativePactDirection"]
+        b=p["bladePactNativeBaseline"]["approvedBaseFeatures"]["bondOrdinaryNonmagicalWeapons"]
+        self.assertEqual("owner-approved-for-blade-specific-weapon-bond",b["status"])
+        self.assertTrue(b["mayBindExistingNonmagicalMeleeWeapon"])
+        self.assertTrue(b["turnsBoundWeaponMagicalForDamageAndResistanceInteraction"])
+        self.assertEqual("bonus-action-from-approved-2024-Pact-bond",b["action"])
+        self.assertTrue(b["requiresPactOfTheBlade"])
+        self.assertTrue(b["doesNotGrantWeaponBondingToChainOrTome"])
+        self.assertEqual("not-approved-yet",b["droppingThrowingDisarm"])
+        self.assertNotIn("bond-mundane-existing-weapons-as-magical",
+                         p["bladePactNativeBaseline"]["externalBG3Research"]["candidatesRequiringOwnerApproval"])
+
+    def test_hexblade_pillar_classification_remains_research_only(self):
+        p=self.inventory["approvedNativePactDirection"]
+        h=p["hexbladeClassificationReview"]
+        self.assertEqual("research-only-no-owner-reclassification",h["status"])
+        self.assertFalse(h["inCurrentPlayableSRDVerticalSlice"])
+        self.assertTrue(h["doesNotChangePlayablePatronMenu"])
+        self.assertIn("Shadowfell",h["xgte2014Lore"])
+        self.assertIn("Curse", " ".join(h["openIssues"]))
+        self.assertIn("Charisma weapon attack/damage",h["redundantHexWarriorElements"])
 
 if __name__=="__main__":
     unittest.main()
