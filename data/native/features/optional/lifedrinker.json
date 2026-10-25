@@ -54,5 +54,16 @@
         ]
       }
     }
-  ]
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.lifedrinker",
+    "requiredPactType": "Blade",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "2014-vs-2024-damage-frequency-and-healing"
+  }
 }

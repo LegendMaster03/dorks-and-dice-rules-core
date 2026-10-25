@@ -31,5 +31,16 @@
         ]
       }
     }
-  ]
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.eldritch-smite",
+    "requiredPactType": "Blade",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "none-yet-confirmed"
+  }
 }

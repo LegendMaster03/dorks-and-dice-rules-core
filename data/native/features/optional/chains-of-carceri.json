@@ -40,5 +40,16 @@
         ]
       }
     }
-  ]
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.chains-of-carceri",
+    "requiredPactType": "Chain",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "per-target-rest-restriction"
+  }
 }

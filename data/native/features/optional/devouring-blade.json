@@ -31,5 +31,16 @@
         ]
       }
     }
-  ]
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.devouring-blade",
+    "requiredPactType": "Blade",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "thirsting-blade-prerequisite-becomes-stale"
+  }
 }

@@ -21,5 +21,16 @@
         ]
       }
     }
-  ]
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.voice-of-the-chain-master",
+    "requiredPactType": "Chain",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "none-yet-confirmed"
+  }
 }
