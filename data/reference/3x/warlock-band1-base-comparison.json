@@ -63,13 +63,12 @@
       "status": "approved-native-rule",
       "subject": "Whether to retain additive distinct 3.5 class features",
       "sourceDifferences": "3.5 Detect Magic at 2, damage reduction 3/7/11/15/19, Deceive Item 4, Fiendish Resilience 8/13/18, Energy Resistance 10/20, Imbue Item 12; not matched by modern base features",
-      "recommendation": "Approved: retain five distinct historical base-class feature families under shared native mechanics; keep Detect Magic at will solely as an Eldritch Sight selectable invocation, not an automatic class feature.",
-      "minimumImplementation": "Grant milestones and defer only underlying shared procedures; source alignment restriction should not become new mandatory native prerequisite",
+      "recommendation": "Owner-approved updated disposition: retain four original universal base-class families—Damage Reduction, Deceive Item, Energy Resistance, Imbue Item; automatic Detect Magic remains excluded. Historical fast healing is preserved as a FIEND Patron Infernal Retaliation effect, not a universal Warlock grant. Prior approval remains in provenance.",
+      "minimumImplementation": "Grant only the four retained base-class families through class progression; create a single Fiend-specific Infernal Retaliation grant with three effect choices using one Long Rest use after remaining activation/acquisition details are approved.",
       "approvedDisposition": {
         "retainedClassFeatureFamilies": [
           "damage-reduction",
           "deceive-item",
-          "fiendish-resilience",
           "energy-resistance",
           "imbue-item"
         ],
@@ -103,22 +102,6 @@
           "benefit": "historical-take-10-when-distracted-or-threatened",
           "check": "native-shared-magical-item-competency",
           "doesNotWaiveRequirements": true
-        },
-        "fiendishResilience": {
-          "classLevels": [
-            8,
-            13,
-            18
-          ],
-          "healingPerRound": [
-            1,
-            2,
-            5
-          ],
-          "durationRounds": 20,
-          "uses": 1,
-          "recharge": "long-rest",
-          "activationTiming": "shared-action-rules"
         },
         "energyResistance": {
           "classLevels": [
@@ -158,7 +141,41 @@
           "individual-eldritch-invocation-reconciliation",
           "other-warlock-base-class-decisions",
           "patron-subclasses"
-        ]
+        ],
+        "fiendPatronInfernalRetaliation": {
+          "featureId": "warlock.patron.fiend.infernal-retaliation",
+          "scope": "Fiend Patron only",
+          "singleFeatureEntitlement": true,
+          "effects": [
+            "fiendish-resilience-fast-healing",
+            "fiendish-flamewreath",
+            "hellfire-shield"
+          ],
+          "sharedUses": 1,
+          "recovery": "long-rest",
+          "needsNativeAcquisitionAndEffectDetails": true
+        }
+      },
+      "priorApprovedBaseHealing": {
+        "sourceFeature": "fiendish-resilience",
+        "historicalCandidateValues": {
+          "classLevels": [
+            8,
+            13,
+            18
+          ],
+          "healingPerRound": [
+            1,
+            2,
+            5
+          ],
+          "durationRounds": 20,
+          "uses": 1,
+          "recharge": "long-rest",
+          "activationTiming": "shared-action-rules"
+        },
+        "originalClassification": "3.5e universal base Warlock",
+        "status": "superseded-as-native-base-class-grant"
       }
     },
     {
