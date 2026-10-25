@@ -222,7 +222,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual([1,1,6,8,10,13,14,18],
                          [part["classLevel"] for part in summary["approvedPatronMilestones"]])
         self.assertEqual("docs/rewrite/warlock-fiend-patron-consolidated-decision.md",summary["document"])
-        self.assertEqual("approved-native-default-C-plus-optional-A-B",
+        self.assertEqual("approved-native-2024-auto-plus-2014-restored-and-faithful-optional-profiles",
                          next(p["status"] for p in summary["approvedPatronMilestones"]
                               if p["feature"]=="Fiend Patron spell access"))
         historical=next(d for d in self.crosswalk["openNativeDecisions"]
