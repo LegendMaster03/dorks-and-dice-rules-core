@@ -25,6 +25,10 @@ Source variants and typed Pact binding are recorded in [`data/reference/warlock-
 
 **Shared Invocations:** This 16-name group is not the entire Warlock Invocation catalog. Every *general* Invocation may attach to any otherwise eligible concrete Pact, subject to feature prerequisites and associated Patron acceptance. This pass explicitly catalogs options with a **named Pact prerequisite**. Source edition names do not change native Pact eligibility without approval.
 
+## Owner-reviewable conflict resolution proposal (not adopted)
+
+A [single proposal covering all 16 Pact-specific Invocations](warlock-pact-specific-invocation-conflict-resolution-proposal.md) now offers concrete native dispositions for Thirsting/Devouring, Lifedrinker, Eldritch Smite, Chain attack commands and Investment, Tome rituals, Talisman Invocations, and the remaining source-specific options. **This is a proposal only.** The staged source records, `pending-native-reconciliation` markers and Invocation progression remain unchanged; **do not implement or mark conflicts resolved until owner approval**.
+
 ## Open conflicts — next work phase (not resolved here)
 
 | Priority | Invocation | Conflict / missing ruling |
