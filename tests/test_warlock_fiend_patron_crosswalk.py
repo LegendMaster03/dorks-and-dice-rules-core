@@ -121,6 +121,11 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual("on-activation",retaliation["choiceTiming"])
         self.assertEqual({"fiendish-resilience-fast-healing","fiendish-flamewreath","hellfire-shield"},set(retaliation["availableEffects"]))
         self.assertEqual({"uses":1,"recovery":"long-rest","consumesOnAnyEffect":True},retaliation["sharedResource"])
+        self.assertEqual("reaction",retaliation["activation"]["actionType"])
+        self.assertEqual("one-reaction",retaliation["activation"]["actionCost"])
+        self.assertEqual(set(retaliation["availableEffects"]),set(retaliation["activation"]["modes"]))
+        self.assertTrue(all(mode["actionType"]=="reaction" and mode["trigger"]=="pending-native-reconciliation"
+                            for mode in retaliation["activation"]["modes"].values()))
         self.assertEqual("warlock.patron.fiend.infernal-retaliation",review["nativeFeatureId"])
         base=next(v for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
         self.assertIn("retains 4 historical",base["decision"])
