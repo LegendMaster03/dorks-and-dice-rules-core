@@ -102,5 +102,58 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
+    def test_pact_patron_and_invocation_requirements_use_same_bound_pact(self):
+        p=self.inventory["approvedNativePactDirection"]
+        requirements=p["compatibilityRules"]
+        self.assertEqual("owner-approved-pact-invocation-patron-eligibility-and-patron-acceptance",requirements["status"])
+        self.assertTrue(requirements["pactChoice"]["mayRequireCompatiblePatron"])
+        self.assertTrue(requirements["pactChoice"]["validatesPatronAssociatedWithPact"])
+        self.assertTrue(requirements["pactChoice"]["noMandatoryPatronRestrictionsOnEveryPact"])
+        invocation=requirements["invocationChoice"]
+        self.assertTrue(invocation["alwaysHasBoundPact"])
+        self.assertTrue(invocation["mayRestrictPactType"])
+        self.assertTrue(invocation["mayRestrictPatronOfBoundPact"])
+        self.assertTrue(invocation["mayRequireBothPactAndItsPatron"])
+        self.assertTrue(invocation["validatesAgainstBoundPactNotAnyUnrelatedPact"])
+        self.assertTrue(invocation["validatesAgainstPatronOfBoundPactNotAnyOtherPatron"])
+        self.assertTrue(invocation["noMandatorySpecificPactTypeRestrictionOnEveryInvocation"])
+        self.assertTrue(invocation["noMandatoryPatronRestrictionOnEveryInvocation"])
+        patron_links=requirements["pactAssociations"]
+        self.assertEqual("per-distinct-pact-not-solely-global-character-patron",patron_links["pactToPatronRecordScope"])
+        self.assertTrue(patron_links["patronMayBeUnrevealedOrInherited"])
+        self.assertTrue(patron_links["literalPersonalContractNotRequired"])
+        self.assertEqual(4,len(requirements["exampleEligibilityMatrixNonPlayable"]))
+        self.assertEqual([True,False,False,True],
+                         [fixture["eligible"] for fixture in requirements["exampleEligibilityMatrixNonPlayable"]])
+
+    def test_patrons_control_terms_without_waiving_explicit_prerequisites(self):
+        p=self.inventory["approvedNativePactDirection"]
+        acceptance=p["compatibilityRules"]["patronTermsAndWillingness"]
+        for field in ("patronCanSpecifyAcceptablePacts",
+                      "patronCanSpecifyAcceptableInvocationsOrClauses",
+                      "patronTermsMayDependOnSelectedPact",
+                      "patronAcceptanceDistinctFromMechanicalPrerequisites",
+                      "bothMustBeSatisfiedWhenAcceptanceIsSpecified",
+                      "individualPatronMayDeclineOtherwiseEligibleOption",
+                      "acceptanceMayBeEstablishedInInitialOrInheritedPactTerms",
+                      "patronCannotSilentlyOverrideExplicitMechanicalPrerequisites"):
+            self.assertTrue(acceptance[field],field)
+        self.assertTrue(acceptance["noBlanketDefaultRejectionOfStandardPactsOrInvocations"])
+        self.assertFalse(acceptance["requiresActivePatronCommunicationForEveryChoice"])
+        self.assertFalse(acceptance["requiresPersonallySignedAgreement"])
+        self.assertEqual("setting-or-gm-defined-patron-terms-and-willingness",acceptance["adjudication"])
+        checks=p["compatibilityRules"]["validation"]
+        self.assertTrue(checks["checkPatronAcceptanceWhenSpecified"])
+        self.assertTrue(checks["acceptanceScopedToPatronOfBoundPact"])
+        self.assertTrue(checks["revalidatePatronAcceptanceOnInvocationTransfer"])
+        self.assertTrue(checks["revalidateOnInvocationRestorationOrTransfer"])
+        self.assertTrue(checks["inheritedTermsCanSatisfyWithoutNewNegotiation"])
+        self.assertTrue(checks["newPactTermsMustExplicitlyAuthorizeRestorationOrTransfer"])
+        self.assertTrue(checks["newPactTermsNotAutomaticWaiverOfRequirements"])
+        self.assertTrue(checks["doNotTreatGeneralMechanicalEligibilityAsProofOfPatronAgreement"])
+        self.assertTrue(checks["noUnapprovedExceptionOrSourceSpecificRestriction"])
+        self.assertTrue(checks["sameInGuidedAndCustomBuilds"])
+        self.assertIn("receiving Patron",p["pactInvocationLifecycle"]["compatibilityRevalidation"])
+
 if __name__=="__main__":
     unittest.main()
