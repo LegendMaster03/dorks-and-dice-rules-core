@@ -1077,8 +1077,8 @@
     {
       "nativeRuleId": "class.warlock.historical-class-features-band1",
       "state": "approved-native-rule",
-      "decision": "Warlock retains 5 historical 3.5e base-class feature families as additive native grants: Damage Reduction (1/2/3/4/5 at levels 3/7/11/15/19, bypassed by cold iron), Deceive Item (level 4, historical take 10 on eligible magic-item competency checks even when distracted/threatened, without waiving prerequisites), Fiendish Resilience (levels 8/13/18, heal 1/2/5 HP per round for up to 20 rounds, one activation per Long Rest), Energy Resistance (level 10 choose two historical energy types for flat 5 damage mitigation, improving to 10 at level 20; electricity/lightning and sonic/thunder mapping), and Imbue Item (level 12, appropriate item-creation entitlement required, allow shared magic-item competency substitution for missing prerequisite spells at historical DC 15+spell level arcane or 25+spell level divine, respecting historical failed-check restrictions). Reuse existing shared damage reduction, recovery, competency and crafting systems rather than inventing separate implementations. Historical automatic level-2 Detect Magic is EXCLUDED: at-will Detect Magic remains an optional Eldritch Sight invocation, using a normal invocation selection. These rules do not automatically activate any specific invocation or patron subclass.",
-      "decisionBasis": "Owner approval on 2026-10-24: accepted five historical feature families as outlined in Case 1; explicitly rejected an automatic at-will Detect Magic feature because it would devalue the overlapping Eldritch Sight invocation. Confirmed maintaining Detect Magic through the invocation only.",
+      "decision": "Warlock retains 4 historical 3.5e base-class feature families as additive native grants: Damage Reduction (1/2/3/4/5 at levels 3/7/11/15/19, bypassed by cold iron), Deceive Item (level 4, historical take 10 on eligible magic-item competency checks even when distracted/threatened, without waiving prerequisites), Energy Resistance (level 10 choose two historical energy types for flat 5 damage mitigation, improving to 10 at level 20; electricity/lightning and sonic/thunder mapping), and Imbue Item (level 12, appropriate item-creation entitlement required, allow shared magic-item competency substitution for missing prerequisite spells at historical DC 15+spell level arcane or 25+spell level divine, respecting historical failed-check restrictions). Reuse existing shared damage reduction, recovery, competency and crafting systems rather than inventing separate implementations. Historical automatic level-2 Detect Magic is EXCLUDED: at-will Detect Magic remains an optional Eldritch Sight invocation, using a normal invocation selection. These rules do not automatically activate any specific invocation or patron subclass.",
+      "decisionBasis": "Owner approval on 2026-10-24: accepted five historical feature families as outlined in Case 1; explicitly rejected an automatic at-will Detect Magic feature because it would devalue the overlapping Eldritch Sight invocation. Confirmed maintaining Detect Magic through the invocation only. Owner clarification on 2026-10-24 supersedes ONLY the fast-healing base-class grant: Fiendish Resilience fast healing becomes one available effect of the Fiend Patron's single Infernal Retaliation feature, which has one shared use per Long Rest.",
       "nativeLocation": "data/native/classes/base/warlock.json",
       "implementationStatus": "owner-approved-awaiting-native-band1-reconciliation",
       "evidence": [
@@ -1101,7 +1101,7 @@
       "reviewClarification": {
         "requestedOn": "2026-10-24",
         "feature": "3.5e base-class Fiendish Resilience (fast healing)",
-        "status": "reopened-for-owner-review-not-a-new-mechanical-ruling",
+        "status": "resolved-owner-approved-fiend-patron-infernal-retaliation",
         "question": "Retain as automatic base-class grant, convert to optional Eldritch Invocation, or retire after considering 5.x defenses; the historical approval is recorded but is no longer final for Warlock implementation.",
         "unaffectedApprovedFeatureFamilies": [
           "Damage Reduction",
@@ -1110,7 +1110,14 @@
           "Imbue Item"
         ],
         "historicalValuesPreserved": "Fast healing 1/2/5 at Warlock levels 8/13/18 for up to 20 rounds once per Long Rest",
-        "warning": "This is a scoped reopening, not automatic deletion or replacement of native mechanics."
+        "warning": "Original base-class provenance and approval are retained above for history; superseded fast healing must not appear as a native base-class grant. Remaining four historical base-class families stay approved.",
+        "resolution": "The previously universal base-class Fiendish Resilience fast healing is instead a Fiend Patron effect inside ONE Infernal Retaliation feature, alongside Fiendish Flamewreath and Hellfire Shield. One shared activation per Long Rest covers all its effects. No universal Warlock defensive feature or pool is introduced.",
+        "nativeFeatureId": "warlock.patron.fiend.infernal-retaliation"
+      },
+      "priorApproval": {
+        "decision": "Warlock retains 5 historical 3.5e base-class feature families as additive native grants: Damage Reduction (1/2/3/4/5 at levels 3/7/11/15/19, bypassed by cold iron), Deceive Item (level 4, historical take 10 on eligible magic-item competency checks even when distracted/threatened, without waiving prerequisites), Fiendish Resilience (levels 8/13/18, heal 1/2/5 HP per round for up to 20 rounds, one activation per Long Rest), Energy Resistance (level 10 choose two historical energy types for flat 5 damage mitigation, improving to 10 at level 20; electricity/lightning and sonic/thunder mapping), and Imbue Item (level 12, appropriate item-creation entitlement required, allow shared magic-item competency substitution for missing prerequisite spells at historical DC 15+spell level arcane or 25+spell level divine, respecting historical failed-check restrictions). Reuse existing shared damage reduction, recovery, competency and crafting systems rather than inventing separate implementations. Historical automatic level-2 Detect Magic is EXCLUDED: at-will Detect Magic remains an optional Eldritch Sight invocation, using a normal invocation selection. These rules do not automatically activate any specific invocation or patron subclass.",
+        "decisionBasis": "Owner approval on 2026-10-24: accepted five historical feature families as outlined in Case 1; explicitly rejected an automatic at-will Detect Magic feature because it would devalue the overlapping Eldritch Sight invocation. Confirmed maintaining Detect Magic through the invocation only.",
+        "status": "historical-owner-approval-superseded-for-fast-healing-only"
       }
     }
   ]
