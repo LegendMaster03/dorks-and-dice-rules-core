@@ -157,7 +157,13 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual("optional-hellfire-specialization-not-infernal-retaliation",specialization["disposition"])
         shield=specialization["shield"]
         self.assertFalse(shield["automaticallyGrantedAtFiendLevel8"])
-        self.assertTrue(shield["requiresSeparateAcquisition"])
+        self.assertIsNone(shield["requiresSeparateAcquisition"])
+        self.assertEqual("three-permitted-candidate-routes-no-final-route-selected",shield["acquisitionStatus"])
+        self.assertEqual({"automatic-patron-feature","selectable-patron-feature","eldritch-invocation"},
+                         {r["route"] for r in shield["acquisitionCandidates"]})
+        self.assertTrue(all(r["requiresPatron"]=="fiend" for r in shield["acquisitionCandidates"]))
+        self.assertTrue(all(r["status"]=="owner-proposed-option" for r in shield["acquisitionCandidates"]))
+        self.assertTrue(next(r for r in shield["acquisitionCandidates"] if r["route"]=="eldritch-invocation")["usesNormalInvocationSelection"])
         self.assertFalse(shield["consumesInfernalRetaliationResource"])
         self.assertEqual("reaction",shield["actionType"])
         self.assertEqual(3,shield["historicalSource"]["sourceHellfireWarlockLevel"])
