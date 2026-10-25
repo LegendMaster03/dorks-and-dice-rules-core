@@ -82,6 +82,12 @@ The original **3.5e Hexblade** was a distinct base class in *Complete Warrior*. 
 - **Advance the four active Pacts meaningfully:** Examine **Talisman's** own level-5+ growth without automatically copying **Blade/Chain/Tome's approved BG3-inspired grants** or making related Invocations free. **Do not develop Star Chain or Seeker further in this slice**; preserve their research until explicit reauthorization.
 - **Edition classification:** The 3.5e Warlock has **no discrete 5e-style Pact Boons**. The named 4e **Fey/Infernal/Star/etc. Eldritch Pacts** classify power sources, analogous to our **Patron** pillar, not Blade/Chain/Tome/Talisman/Star Chain mechanical Pact selections.
 
+## Four-Pact viability audit — meaningful pillar, unfinished progression (2026-10-25)
+
+The [comparative Pact-pillar viability audit](warlock-four-pact-pillar-viability-audit.md) evaluates **Blade, Chain, Tome and Talisman** against source-era baseline features, existing owner-approved improvements, Invocation dependence, player-choice identity, and high-level relevance. **Finding:** The independent Pact pillar is now structurally justified; **Blade, Chain and Tome have meaningful level-1 specializations and approved level-5 improvements**, whereas **Talisman has a published baseline but no approved native progression**. None yet has an approved higher-tier 11–20 Pact advancement. **Chain** requires attack/command rules before its familiar extra attack is implementable; **Tome** needs a decision on whether the 2014 scalable Book of Ancient Secrets ritual repository belongs in intrinsic Pact progression; **Talisman** needs an intrinsic role and likely a level-5 advancement without duplicating optional Rebuke/Protection/Bond Invocation benefits. Blade also needs a high-level viability audit against Eldritch Blast and a ruling on the old storage ritual.
+
+**These are findings and proposal candidates, not new owner approvals.** No Intrinsic higher-level feature, invocation entitlement transfer, companion command economy, or future Patron×Pact manifestation is adopted by this audit. Star Chain/Seeker remain disabled and archived.
+
 ## Source comparisons (preserved, not controlling native costs)
 
 - **2014 / SRD 5.1:** Pact Boons were distinct class choices at Warlock **level 3**.
