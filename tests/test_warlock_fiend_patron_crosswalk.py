@@ -71,42 +71,42 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual(13,len(names51 | names52))
         self.assertEqual(7,len(names51 & names52))
 
-    def test_fiend_spells_native_2024_with_restored_2014_and_optional_profiles(self):
+    def test_fiend_spell_access_profiles_share_thirteen_spell_union(self):
         rules=self.crosswalk["approvedNativeDirections"]["fiendSpellAccess"]
-        source=self.crosswalk["sourceSpellAccess"]
-        self.assertEqual("owner-approved-native-default-2024-plus-restored-2014-with-two-edition-options",rules["status"])
+        sources=self.crosswalk["sourceSpellAccess"]
+        self.assertEqual("owner-approved-merged-thirteen-spells-two-acquisition-modes",rules["status"])
         self.assertEqual(1,rules["startsAtWarlockLevel"])
         self.assertEqual("native-2024-plus-restored-2014",rules["defaultMode"])
         self.assertTrue(rules["modesMutuallyExclusive"])
-        self.assertEqual({"native-2024-plus-restored-2014","optional-srd51-2014-expanded","optional-srd52-2024-automatic"},set(rules["availableModes"]))
-        roster={s for group in rules["spellNamesBySpellLevel"].values() for s in group}
+        self.assertEqual({"native-2024-plus-restored-2014","optional-2014-style-expanded-merged"},set(rules["availableModes"]))
+        roster={spell for vals in rules["spellNamesBySpellLevel"].values() for spell in vals}
+        source14={spell for vals in sources["SRD51"]["spellLevelGroups"].values() for spell in vals}
+        source24={spell for vals in sources["SRD52"]["classLevelGroups"].values() for spell in vals}
         self.assertEqual(13,len(roster))
-        orig14={s for group in source["SRD51"]["spellLevelGroups"].values() for s in group}
-        orig24={s for group in source["SRD52"]["classLevelGroups"].values() for s in group}
-        self.assertEqual(orig14 | orig24,roster)
-        default=rules["availableModes"]["native-2024-plus-restored-2014"]
-        optional14=rules["availableModes"]["optional-srd51-2014-expanded"]
-        optional24=rules["availableModes"]["optional-srd52-2024-automatic"]
-        schedule=default["automaticallyKnownAtWarlockLevel"]
-        self.assertEqual({"3","5","7","9"},set(schedule))
-        self.assertEqual([5,2,2,4],[len(schedule[str(level)]) for level in (3,5,7,9)])
-        self.assertEqual(set(schedule["3"]),set(source["SRD52"]["classLevelGroups"]["3"]) | {"blindness/deafness"})
-        self.assertEqual(set(schedule["9"]),set(source["SRD52"]["classLevelGroups"]["9"]) | {"flame strike","hallow"})
+        self.assertEqual(10,len(source14))
+        self.assertEqual(10,len(source24))
+        self.assertEqual(source14 | source24,roster)
+        native=rules["availableModes"]["native-2024-plus-restored-2014"]
+        optional=rules["availableModes"]["optional-2014-style-expanded-merged"]
+        self.assertEqual(roster,set(native["expandedEligibleSpells"]))
+        self.assertEqual(roster,set(optional["expandedEligibleSpells"]))
+        self.assertEqual(roster,set(optional["choicesOnlySpells"]))
+        self.assertEqual([],native["choicesOnlySpells"])
+        self.assertEqual({},optional["automaticallyKnownAtWarlockLevel"])
+        self.assertTrue(optional["normalSpellSelectionRequiredForLearnedSpells"])
+        auto=native["automaticallyKnownAtWarlockLevel"]
+        self.assertEqual({"3","5","7","9"},set(auto))
+        self.assertEqual([5,2,2,4],[len(auto[str(level)]) for level in (3,5,7,9)])
+        self.assertEqual(roster,{spell for vals in auto.values() for spell in vals})
+        self.assertEqual(set(auto["3"]),set(sources["SRD52"]["classLevelGroups"]["3"]) | {"blindness/deafness"})
+        self.assertEqual(set(auto["9"]),set(sources["SRD52"]["classLevelGroups"]["9"]) | {"flame strike","hallow"})
         for level in ("5","7"):
-            self.assertEqual(source["SRD52"]["classLevelGroups"][level],schedule[level])
-        self.assertEqual(roster,{s for group in schedule.values() for s in group})
-        self.assertEqual([],default["choicesOnlySpells"])
+            self.assertEqual(sources["SRD52"]["classLevelGroups"][level],auto[level])
         self.assertEqual({("blindness/deafness",3),("flame strike",9),("hallow",9)},
-                         {(r["spell"],r["automaticWarlockClassLevel"]) for r in rules["restoredFrom2014"]})
-        self.assertEqual(3,len(rules["restoredFrom2014"]))
-        self.assertEqual({},optional14["automaticallyKnownAtWarlockLevel"])
-        self.assertEqual(orig14,set(optional14["expandedEligibleSpells"]))
-        self.assertEqual(orig14,set(optional14["choicesOnlySpells"]))
-        self.assertEqual(source["SRD52"]["classLevelGroups"],optional24["automaticallyKnownAtWarlockLevel"])
-        self.assertEqual(orig24,set(optional24["expandedEligibleSpells"]))
-        self.assertEqual([],optional24["choicesOnlySpells"])
-        for profile in (default,optional14,optional24):
-            self.assertTrue(profile["automaticGrantsDoNotConsumeOrdinarySpellSelections"])
+                         {(v["spell"],v["automaticWarlockClassLevel"]) for v in rules["restoredFrom2014"]})
+        for mode in (native,optional):
+            self.assertTrue(mode["automaticGrantsDoNotConsumeOrdinarySpellSelections"])
+        self.assertEqual("same-merged-spell-list-in-both-modes; only-acquisition-differs",rules["rulesScope"])
         common=rules["sharedCastingRules"]
         self.assertTrue(common["usesNativeNoPreparation"])
         self.assertFalse(common["patronAccessGrantsFreeCastings"])
@@ -114,11 +114,11 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertTrue(common["deduplicateAlreadyKnownSpells"])
         self.assertFalse(common["optionalModesStack"])
         self.assertIn("replace",common["previouslySelectedSpellBecomesAutomaticallyKnown"])
-        self.assertEqual("C-reconciled-native",rules["priorApprovedDesign"]["defaultMode"])
-        self.assertEqual(["patron-fiend-damage-resilience"],self.crosswalk["fiendPatronConsolidatedDecision"]["unresolvedNativeFiendRules"])
-        decision=next(d for d in self.crosswalk["openNativeDecisions"] if d["id"]=="patron-fiend-spell-entitlement")
-        self.assertEqual("owner-approved-design-direction",decision["status"])
-        self.assertIn("restoring",decision["resolution"])
+        self.assertEqual(["patron-fiend-damage-resilience"],
+                         self.crosswalk["fiendPatronConsolidatedDecision"]["unresolvedNativeFiendRules"])
+        ruling=next(v for v in self.crosswalk["openNativeDecisions"] if v["id"]=="patron-fiend-spell-entitlement")
+        self.assertEqual("owner-approved-design-direction",ruling["status"])
+        self.assertIn("SINGLE OPTIONAL",ruling["resolution"])
         self.assertNotIn("definition",self.native)
 
     def test_each_part_is_source_backed_without_spoofing_class_resilience(self):
@@ -222,7 +222,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual([1,1,6,8,10,13,14,18],
                          [part["classLevel"] for part in summary["approvedPatronMilestones"]])
         self.assertEqual("docs/rewrite/warlock-fiend-patron-consolidated-decision.md",summary["document"])
-        self.assertEqual("approved-native-2024-auto-plus-2014-restored-and-faithful-optional-profiles",
+        self.assertEqual("approved-merged-13-spell-roster-default-automatic-optional-expanded",
                          next(p["status"] for p in summary["approvedPatronMilestones"]
                               if p["feature"]=="Fiend Patron spell access"))
         historical=next(d for d in self.crosswalk["openNativeDecisions"]
