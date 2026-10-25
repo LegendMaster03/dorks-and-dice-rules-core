@@ -285,7 +285,8 @@
     {
       "id": "patron-fiend-spell-entitlement",
       "question": "Which source spell lists and spell-access grants are unified, and what native entitlement replaces source always-prepared versus expanded-choice rules?",
-      "status": "owner-ruling-needed"
+      "status": "owner-approved-design-direction",
+      "resolution": "Owner approves Option C as the default native Fiend spell-access rule: level-1 Patron expands the eligible spell list to the union of SRD 5.1 and 5.2.1 (13 distinct spells), while the 2024 ten spells are automatically known/access-granted in addition to normal Warlock selections at class levels 3/5/7/9. Only 2014-specific Blindness/Deafness, Flame Strike, and Hallow remain regular optional selections under the default. Owner also approves optional mutually exclusive rules A (expanded choices only: all 13 eligible, no automatic Patron spells) and B (all 13 automatically learned at corresponding Warlock spell-level unlocks 1/3/5/7/9). No preparation, no duplicate known/grants, restore a normal choice if a previously selected spell becomes automatic, and no extra free casting/slots. These are campaign rule modes, not cumulative effects."
     },
     {
       "id": "patron-fiend-blessing-trigger",
@@ -338,7 +339,7 @@
         "warlock.patron.fiend.dark-ones-blessing"
       ],
       "sourceModel": "SRD51",
-      "qualification": "First grant timing and part identity are approved, as is the 2024 cooperative Blessing trigger; spell grant semantics and exact spell roster remain unresolved."
+      "qualification": "Level-1 Patron spell-access feature and Dark One's Blessing approved. Spell access uses owner-approved default C (all 13 spells eligible, ten 2024 spells granted automatically at levels 3/5/7/9), with optional campaign modes A and B; the spell-access identity starts at 1 and does not automatically grant 2024 spells at level 1 under default C."
     },
     "luckUses": {
       "classLevel": 6,
@@ -598,6 +599,193 @@
         "acquisitionRule": "Defer acquisition selection to Eldritch Invocations pillar. Preserve three Fiend-only possibilities (automatic Patron grant, Patron choice, or Fiend-prerequisite Invocation), with no grant or resource expenditure selected yet. Whichever mechanism is selected later must use one native Shield ability definition and prevent duplicate entitlements."
       },
       "qualification": "Owner explicitly defers Hellfire Shield's acquisition method and remaining costs to the Eldritch Invocations pillar. Three Fiend-only routes remain candidate models, not approved grants: Patron automatic grant, Patron choice, and Invocation with Fiend prerequisite. Never count Hellfire Shield as an Infernal Retaliation mode or grant it within the current Fiend Patron package. Its Reaction and derived Eldritch Blast damage direction are preserved for next-pillar review."
+    },
+    "fiendSpellAccess": {
+      "status": "owner-approved-native-rule-with-two-campaign-options",
+      "featureId": "warlock.patron.fiend.spell-access",
+      "startsAtWarlockLevel": 1,
+      "spellNamesBySpellLevel": {
+        "1": [
+          "burning hands",
+          "command"
+        ],
+        "2": [
+          "blindness/deafness",
+          "scorching ray",
+          "suggestion"
+        ],
+        "3": [
+          "fireball",
+          "stinking cloud"
+        ],
+        "4": [
+          "fire shield",
+          "wall of fire"
+        ],
+        "5": [
+          "flame strike",
+          "hallow",
+          "geas",
+          "insect plague"
+        ]
+      },
+      "modesMutuallyExclusive": true,
+      "chooseModeAt": "campaign-rules-configuration",
+      "defaultMode": "C-reconciled-native",
+      "availableModes": {
+        "C-reconciled-native": {
+          "designation": "DEFAULT native rule",
+          "expandedEligibleSpells": [
+            "burning hands",
+            "command",
+            "blindness/deafness",
+            "scorching ray",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "flame strike",
+            "hallow",
+            "suggestion",
+            "geas",
+            "insect plague"
+          ],
+          "automaticallyKnownAtWarlockLevel": {
+            "3": [
+              "burning hands",
+              "command",
+              "scorching ray",
+              "suggestion"
+            ],
+            "5": [
+              "fireball",
+              "stinking cloud"
+            ],
+            "7": [
+              "fire shield",
+              "wall of fire"
+            ],
+            "9": [
+              "geas",
+              "insect plague"
+            ]
+          },
+          "choicesOnlySpells": [
+            "blindness/deafness",
+            "flame strike",
+            "hallow"
+          ],
+          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
+        },
+        "A-expanded-only": {
+          "designation": "OPTIONAL campaign rule; 2014-style entitlement",
+          "expandedEligibleSpells": [
+            "burning hands",
+            "command",
+            "blindness/deafness",
+            "scorching ray",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "flame strike",
+            "hallow",
+            "suggestion",
+            "geas",
+            "insect plague"
+          ],
+          "automaticallyKnownAtWarlockLevel": {},
+          "choicesOnlySpells": [
+            "burning hands",
+            "command",
+            "blindness/deafness",
+            "scorching ray",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "flame strike",
+            "hallow",
+            "suggestion",
+            "geas",
+            "insect plague"
+          ],
+          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
+        },
+        "B-all-automatic": {
+          "designation": "OPTIONAL campaign rule; generous all-13 grant",
+          "expandedEligibleSpells": [
+            "burning hands",
+            "command",
+            "blindness/deafness",
+            "scorching ray",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "flame strike",
+            "hallow",
+            "suggestion",
+            "geas",
+            "insect plague"
+          ],
+          "automaticallyKnownAtWarlockLevel": {
+            "1": [
+              "burning hands",
+              "command"
+            ],
+            "3": [
+              "blindness/deafness",
+              "scorching ray",
+              "suggestion"
+            ],
+            "5": [
+              "fireball",
+              "stinking cloud"
+            ],
+            "7": [
+              "fire shield",
+              "wall of fire"
+            ],
+            "9": [
+              "flame strike",
+              "hallow",
+              "geas",
+              "insect plague"
+            ]
+          },
+          "choicesOnlySpells": [],
+          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
+        }
+      },
+      "sharedCastingRules": {
+        "usesNativeNoPreparation": true,
+        "accessStartsAtPatronLevel1": true,
+        "castSpellsUsing": "ordinary-eligible-Pact-Magic-or-other-valid-casting-resource",
+        "patronAccessGrantsFreeCastings": false,
+        "patronAccessGrantsExtraPactSlots": false,
+        "deduplicateAlreadyKnownSpells": true,
+        "previouslySelectedSpellBecomesAutomaticallyKnown": "refund-or-replace-that-ordinary-warlock-spell-choice-with-other-eligible-choice",
+        "optionalModesStack": false,
+        "specialModeChangesMidCampaign": "resolve-existing-learned-and-automatic-grants-without-duplicates-and-with-DM-approved-migration",
+        "note": "No daily spell preparation. Spells must still be of a level the Warlock can learn or cast; expanded availability does not bypass normal eligibility."
+      },
+      "spellListComparison": {
+        "distinctAcrossSources": 13,
+        "sharedAcrossSources": 7,
+        "source51Only": [
+          "blindness/deafness",
+          "flame strike",
+          "hallow"
+        ],
+        "source52Only": [
+          "suggestion",
+          "geas",
+          "insect plague"
+        ],
+        "source51AutomaticGrants": 0,
+        "source52AutomaticGrants": 10
+      }
     }
   },
   "fiendPatronConsolidatedDecision": {
@@ -613,7 +801,7 @@
       {
         "classLevel": 1,
         "feature": "Fiend Patron spell access",
-        "status": "grant-timing-approved-entitlement-open"
+        "status": "approved-native-default-C-plus-optional-A-B"
       },
       {
         "classLevel": 6,
@@ -647,13 +835,13 @@
       }
     ],
     "unresolvedNativeFiendRules": [
-      "patron-fiend-spell-entitlement",
       "patron-fiend-damage-resilience"
     ],
     "implementationNotes": [
       "No automatic Hellfire Shield grant; Shield acquisition decision deferred to Invocations pillar",
       "Do not activate pending-native-reconciliation subclass until the remaining mechanical decisions are resolved",
-      "Outstanding procedural details of sustained Infernal Retaliation effects require shared mechanics implementation"
+      "Outstanding procedural details of sustained Infernal Retaliation effects require shared mechanics implementation",
+      "Fiend spell access resolved: default reconciled C grants ten 2024 spells and offers all thirteen spell choices; optional A expanded-only or B all-thirteen automatically known are mutually exclusive campaign rules."
     ]
   }
 }
