@@ -86,14 +86,29 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual(8,len(decision))
         self.assertEqual(8,len({d["id"] for d in decision}))
         statuses={k:sum(d["status"]==k for d in decision) for k in {"owner-ruling-needed","deferred-outside-srd","owner-approved-design-direction","partially-owner-approved","reopened-owner-review"}}
-        self.assertEqual({"owner-ruling-needed":4,"deferred-outside-srd":1,"owner-approved-design-direction":1,"partially-owner-approved":1,"reopened-owner-review":1},statuses)
+        self.assertEqual({"owner-ruling-needed":2,"deferred-outside-srd":1,"owner-approved-design-direction":4,"partially-owner-approved":0,"reopened-owner-review":1},statuses)
         initial=next(d for d in decision if d["id"]=="patron-initial-mechanical-grant")
         self.assertIn("level 1",initial["resolution"])
         self.assertEqual(1,self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["classLevel"])
         self.assertEqual(["warlock.patron.fiend.spell-access","warlock.patron.fiend.dark-ones-blessing"],self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["partIds"])
         luck=self.crosswalk["approvedNativeDirections"]["luckUses"]
         self.assertEqual("max(1, charisma_modifier)",luck["usesExpression"])
-        self.assertEqual("unresolved",luck["reset"])
+        self.assertEqual("long-rest",luck["reset"])
+        approved=self.crosswalk["approvedNativeDirections"]
+        self.assertEqual("automatic-warlock-base-class-feature",approved["baseEldritchBlast"]["grantMode"])
+        self.assertEqual(1,approved["baseEldritchBlast"]["classLevel"])
+        self.assertFalse(approved["baseEldritchBlast"]["requiresCantripSelection"])
+        self.assertEqual(1,approved["darkOnesBlessing"]["classLevel"])
+        self.assertEqual(2,len(approved["darkOnesBlessing"]["triggers"]))
+        self.assertEqual("max(1, charisma_modifier + warlock_level)",approved["darkOnesBlessing"]["temporaryHitPoints"])
+        self.assertEqual(14,approved["hurlThroughHell"]["classLevel"])
+        self.assertTrue(approved["hurlThroughHell"]["spentOnAttempt"])
+        self.assertEqual("8d10 psychic immediately",approved["hurlThroughHell"]["onFailedSave"]["nonFiendDamage"])
+        resolutions={d["id"]:d for d in decision}
+        for key in ("patron-fiend-blessing-trigger","patron-fiend-luck-recovery","patron-fiend-hurl-through-hell"):
+            self.assertEqual("owner-approved-design-direction",resolutions[key]["status"])
+        for key in ("patron-fiend-spell-entitlement","patron-fiend-damage-resilience"):
+            self.assertEqual("owner-ruling-needed",resolutions[key]["status"])
         ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
         review=next(v["reviewClarification"] for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
         self.assertEqual("reopened-for-owner-review-not-a-new-mechanical-ruling",review["status"])
