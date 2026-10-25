@@ -95,6 +95,12 @@ The [revised four-Pact audit](warlock-four-pact-pillar-viability-audit.md) evalu
 **Research result:** **Blade** already has automatic level-5 second weapon attack and optional smite/damage/advanced martial paths; **Chain** has scouting/communication/healing/familiar empowerment choices but needs precise base familiar command rules; **Tome** has ritual/protective/messaging/rest-utility choice paths and a major approved level-5 spell grant but needs a clear basic-vs-advanced ritual boundary; **Talisman** now has an **approved level-1 mixed-UA/published check-support base and level-5 Shared Ward**, plus published retaliation, saving-throw protection and teleport Invocation branches; its native runtime implementation and balance testing remain pending. None of this approves automatic high-tier Pact features or invocation transfers. Star Chain/Seeker remain disabled.
 
 
+## Eldritch Invocation pillar review — source inventory, decisions pending
+
+The [Invocation source reconciliation audit](warlock-eldritch-invocation-reconciliation-audit.md) now inventories **39 distinct SRD 5.1/5.2.1 Invocation names** (18 shared, 14 exclusive to 2014 and 7 exclusive to 2024), plus **Rebuke, Protection and Bond of the Talisman** as three published non-SRD elective options: **42 distinct Invocation candidates in total**. This **42-candidate Invocation set is different from** the historical 42-entry SRD option inventory, which counted the original three Pacts as 2024 Invocation entries. The audit compares Pact-type prerequisites, generic Invocation attachment to a specific Pact, mutually dependent features, old/new spell and slot policies, and the still-unapproved Invocation selection budget.
+
+The earlier **owner-approved level-5 automatic Pact advancements remain unchanged**, including Blade's redundant **Thirsting Blade** source benefit. None of the 42 Invocation candidates has been automatically adopted by this audit; **Hellfire Shield and complete 3.5e Invocation catalogs remain separately deferred**. Reconcile from the catalog on `feature/rules-core-rewrite` without implementing or granting unapproved mechanics.
+
 ## Source comparisons (preserved, not controlling native costs)
 
 - **2014 / SRD 5.1:** Pact Boons were distinct class choices at Warlock **level 3**.
