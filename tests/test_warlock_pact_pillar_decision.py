@@ -61,7 +61,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertIsNone(open_rules["additionalPactsAllowed"])
         self.assertIsNone(open_rules["additionalPactsAcquisitionCost"])
         self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
-        self.assertEqual(5,len(open_rules["individualPactMechanicalReconciliation"]))
+        self.assertEqual(4,len(open_rules["individualPactMechanicalReconciliation"]))
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
         self.assertIn("defer eligibility, level, cost",self.inventory["openDesignRulings"][0])
 
@@ -265,12 +265,16 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertIn("Curse", " ".join(h["openIssues"]))
         self.assertIn("Charisma weapon attack/damage",h["redundantHexWarriorElements"])
 
-    def test_five_pact_reconciliation_catalog_preserves_srd_counts(self):
+    def test_four_active_pacts_preserve_fifth_archival_research_and_srd_counts(self):
         pact=self.inventory["approvedNativePactDirection"]
         scope=pact["expandedFivePactReview"]
         choices={"Pact of the Blade","Pact of the Chain","Pact of the Tome",
-                 "Pact of the Talisman","Pact of the Star Chain"}
+                 "Pact of the Talisman"}
         self.assertEqual(choices,set(pact["inScopeChoices"]))
+        self.assertNotIn("Pact of the Star Chain",pact["inScopeChoices"])
+        self.assertEqual(["Pact of the Star Chain"],scope["deferredPactChoices"])
+        self.assertEqual(4,scope["activePactCount"])
+        self.assertEqual(choices,set(scope["activePactChoices"]))
         self.assertEqual(choices,set(pact["decisionsPending"]["individualPactMechanicalReconciliation"]))
         self.assertEqual(5,scope["totalDistinctPactCandidates"])
         self.assertEqual(1,scope["initialPactClassLevel"])
@@ -323,13 +327,27 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         elig=c["eligibility"]
         self.assertTrue(elig["requiresSeekerLinkedPatron"])
         self.assertFalse(elig["matchesOrdinaryFiendPatronByDefault"])
-        self.assertEqual("requires-future-explicit-owner-approval",elig["otherPatronSourceTraitOrSpecialException"])
-        self.assertEqual("source-ineligible-pending-explicit-approved-exception",elig["playabilityWithFiendOnlyPatronSlice"])
+        self.assertEqual("disabled-no-exceptions-under-current-owner-ruling",elig["otherPatronSourceTraitOrSpecialException"])
+        self.assertEqual("disabled-not-offered",elig["playabilityWithFiendOnlyPatronSlice"])
         self.assertTrue(elig["nonPlayableSyntheticSeekerFixtureAllowed"])
         self.assertTrue(c["noUnapprovedSeekerPatronImport"])
         self.assertFalse(c["mechanicsApprovedForNative"])
-        self.assertEqual("not-approved",c["level5IntrinsicAdvance"])
+        self.assertEqual("deferred-alongside-Seeker",c["level5IntrinsicAdvance"])
         self.assertTrue(scope["noPatronCatalogExpansion"])
+        self.assertFalse(c["enabled"])
+        self.assertFalse(c["inActiveReview"])
+        self.assertFalse(c["pairedSeekerEnabled"])
+        self.assertTrue(c["seekerMayUseOtherPactsInOriginalUA"])
+        self.assertTrue(c["starChainRequiresSeekerInOriginalUA"])
+        self.assertFalse(c["mustEnableTogetherWithSeeker"])
+        self.assertIn("NOT an original source rule",c["ownerNativeMutualDependency"])
+        pair=self.inventory["scope"]["disabledHistoricalPatronPactPackage"]
+        self.assertEqual("disabled-together",pair["status"])
+        self.assertEqual("The Seeker",pair["patron"])
+        self.assertEqual("Pact of the Star Chain",pair["pact"])
+        self.assertTrue(pair["archivedNotDeleted"])
+        self.assertTrue(pair["noRuntimeAvailability"])
+        self.assertIn("Pact of the Star Chain and Seeker Patron",self.inventory["outOfScope"][-1])
 
     def test_pact_level_five_upgrades_not_silently_granted_to_new_options(self):
         p=self.inventory["approvedNativePactDirection"]
