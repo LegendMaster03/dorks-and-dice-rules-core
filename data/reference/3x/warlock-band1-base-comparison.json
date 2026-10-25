@@ -63,8 +63,8 @@
       "status": "approved-native-rule",
       "subject": "Whether to retain additive distinct 3.5 class features",
       "sourceDifferences": "3.5 Detect Magic at 2, damage reduction 3/7/11/15/19, Deceive Item 4, Fiendish Resilience 8/13/18, Energy Resistance 10/20, Imbue Item 12; not matched by modern base features",
-      "recommendation": "Owner-approved updated disposition: retain four original universal base-class families—Damage Reduction, Deceive Item, Energy Resistance, Imbue Item; automatic Detect Magic remains excluded. Historical fast healing is preserved as a FIEND Patron Infernal Retaliation effect, not a universal Warlock grant. Prior approval remains in provenance.",
-      "minimumImplementation": "Grant only the four retained base-class families through class progression; create a single Fiend-specific Infernal Retaliation grant with three effect choices using one Long Rest use after remaining activation/acquisition details are approved.",
+      "recommendation": "Approved: retain four Warlock universal base-class feature families; fast healing now appears only as one of TWO Fiend-specific Infernal Retaliation effects (with Flamewreath), one use per Long Rest; 8/13/18 progression; stabilization once without recovery of consciousness at 0 HP. Hellfire Shield is separate optional Hellfire specialization; automatic Detect Magic excluded.",
+      "minimumImplementation": "Grant only four retained base-class families. For the Fiend Patron, implement one Infernal Retaliation feature at Warlock level 8, upgrading 13 and 18, with TWO effects using one shared Long Rest use; active fast healing stabilizes once at 0 HP but does not heal or restore consciousness there. Hellfire Shield is a separate optional Hellfire specialization candidate requiring its own design.",
       "approvedDisposition": {
         "retainedClassFeatureFamilies": [
           "damage-reduction",
@@ -148,13 +148,21 @@
           "singleFeatureEntitlement": true,
           "effects": [
             "fiendish-resilience-fast-healing",
-            "fiendish-flamewreath",
-            "hellfire-shield"
+            "fiendish-flamewreath"
           ],
           "sharedUses": 1,
           "recovery": "long-rest",
-          "needsNativeAcquisitionAndEffectDetails": true
-        }
+          "needsNativeAcquisitionAndEffectDetails": false,
+          "grantClassLevel": 8,
+          "upgradeClassLevels": [
+            13,
+            18
+          ],
+          "fastHealingAtZeroHp": "stabilize-once-remain-unconscious-no-healing-or-repeat-stabilization",
+          "effectDurationRounds": 20,
+          "needsNativeEffectResolutionAndImplementation": true
+        },
+        "hellfireShieldNativeDisposition": "Removed from Infernal Retaliation; optional Hellfire specialization candidate with independent acquisition and resource to be decided during Invocations."
       },
       "priorApprovedBaseHealing": {
         "sourceFeature": "fiendish-resilience",
