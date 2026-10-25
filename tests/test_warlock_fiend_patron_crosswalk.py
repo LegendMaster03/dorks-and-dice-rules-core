@@ -114,8 +114,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertTrue(common["deduplicateAlreadyKnownSpells"])
         self.assertFalse(common["optionalModesStack"])
         self.assertIn("replace",common["previouslySelectedSpellBecomesAutomaticallyKnown"])
-        self.assertEqual(["patron-fiend-damage-resilience"],
-                         self.crosswalk["fiendPatronConsolidatedDecision"]["unresolvedNativeFiendRules"])
+        self.assertEqual([],self.crosswalk["fiendPatronConsolidatedDecision"]["unresolvedNativeFiendRules"])
         ruling=next(v for v in self.crosswalk["openNativeDecisions"] if v["id"]=="patron-fiend-spell-entitlement")
         self.assertEqual("owner-approved-design-direction",ruling["status"])
         self.assertIn("SINGLE OPTIONAL",ruling["resolution"])
@@ -125,6 +124,24 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         source_names={s:{x["name"] for x in self.source["subclassFeature"] if x["source"] == s} for s in ("SRD51","SRD52")}
         parts=self.crosswalk["parts"]
         self.assertEqual("warlock.patron.fiend.damage-resilience",parts[3]["id"])
+        self.assertEqual("retired-source-only",parts[3]["nativeDisposition"])
+        self.assertFalse(parts[3]["nativeProgressionGrant"])
+        retirement=self.crosswalk["approvedNativeDirections"]["fiendPatronDamageResistance"]
+        self.assertEqual("retired-without-replacement",retirement["nativeStatus"])
+        self.assertIsNone(retirement["replacementPatronFeature"])
+        self.assertFalse(retirement["compensatingPatronEntitlement"])
+        self.assertFalse(retirement["nativeGrant"])
+        self.assertTrue(retirement["sourcePresetsRetainedForHistoricalComparison"])
+        self.assertTrue(retirement["baseWarlockEnergyResistanceUnaffected"])
+        summary=self.crosswalk["fiendPatronConsolidatedDecision"]
+        self.assertEqual(10,summary["retiredPatronFeatures"][0]["classLevel"])
+        self.assertFalse(any(row["classLevel"]==10 for row in summary["approvedPatronMilestones"]))
+        self.assertEqual(2,sum(any("warlock.patron.fiend.damage-resilience" in m["parts"] for m in
+                          self.crosswalk["sourcePresets"][edition]["milestones"]) for edition in ("SRD51","SRD52")))
+        ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
+        base=next(item for item in ledger if item["nativeRuleId"]=="class.warlock.historical-class-features-band1")
+        self.assertIn("Energy Resistance (level 10",base["decision"])
+
         self.assertNotEqual(parts[3]["id"],"class-feature.warlock.fiendish-resilience")
         for part in parts:
             for s in ("SRD51","SRD52"):
@@ -136,7 +153,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual(8,len(decision))
         self.assertEqual(8,len({d["id"] for d in decision}))
         statuses={k:sum(d["status"]==k for d in decision) for k in {"owner-ruling-needed","deferred-outside-srd","owner-approved-design-direction","partially-owner-approved","reopened-owner-review"}}
-        self.assertEqual({"owner-ruling-needed":1,"deferred-outside-srd":1,"owner-approved-design-direction":6,"partially-owner-approved":0,"reopened-owner-review":0},statuses)
+        self.assertEqual({"owner-ruling-needed":0,"deferred-outside-srd":1,"owner-approved-design-direction":7,"partially-owner-approved":0,"reopened-owner-review":0},statuses)
         initial=next(d for d in decision if d["id"]=="patron-initial-mechanical-grant")
         self.assertIn("level 1",initial["resolution"])
         self.assertEqual(1,self.crosswalk["approvedNativeDirections"]["patronInitialFiendMilestone"]["classLevel"])
@@ -157,8 +174,8 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         resolutions={d["id"]:d for d in decision}
         for key in ("patron-fiend-blessing-trigger","patron-fiend-luck-recovery","patron-fiend-hurl-through-hell","patron-fiend-spell-entitlement"):
             self.assertEqual("owner-approved-design-direction",resolutions[key]["status"])
-        for key in ("patron-fiend-damage-resilience",):
-            self.assertEqual("owner-ruling-needed",resolutions[key]["status"])
+        self.assertEqual("owner-approved-design-direction",resolutions["patron-fiend-damage-resilience"]["status"])
+        self.assertIn("without replacement",resolutions["patron-fiend-damage-resilience"]["resolution"])
         ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
         review=next(v["reviewClarification"] for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
         self.assertEqual("resolved-owner-approved-fiend-patron-infernal-retaliation",review["status"])
@@ -216,10 +233,9 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertTrue(next(r for r in shield["acquisitionCandidates"] if r["route"]=="eldritch-invocation")["usesNormalInvocationSelection"])
         self.assertFalse(shield["consumesInfernalRetaliationResource"])
         summary=self.crosswalk["fiendPatronConsolidatedDecision"]
-        self.assertEqual("approved-scope-consolidated-with-open-source-reconciliation",summary["status"])
-        self.assertEqual(["patron-fiend-damage-resilience"],
-                         summary["unresolvedNativeFiendRules"])
-        self.assertEqual([1,1,6,8,10,13,14,18],
+        self.assertEqual("owner-approved-fiend-design-awaiting-native-implementation",summary["status"])
+        self.assertEqual([],summary["unresolvedNativeFiendRules"])
+        self.assertEqual([1,1,6,8,13,14,18],
                          [part["classLevel"] for part in summary["approvedPatronMilestones"]])
         self.assertEqual("docs/rewrite/warlock-fiend-patron-consolidated-decision.md",summary["document"])
         self.assertEqual("approved-merged-13-spell-roster-default-automatic-optional-expanded",
