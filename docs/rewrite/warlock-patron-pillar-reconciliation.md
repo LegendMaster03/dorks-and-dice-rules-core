@@ -86,13 +86,13 @@ Thus there are **13 distinct spell names** across the two sources, but it would 
 
 ## Approved historical interaction
 
-The historically approved, **now reopened for owner reconsideration**, 3.5e Warlock **base-class Fiendish Resilience** heals 1/2/5 HP per round at class levels 8/13/18 using a one-Long-Rest recharge. The Fiend **Patron feature** called Fiendish Resilience is a resistance to a selected damage type from level 10. These are **two separate mechanics** despite the same display name: never merge their IDs or make one upgrade the other.
+The historically approved 3.5e Warlock **base-class Fiendish Resilience** healed 1/2/5 HP per round at class levels 8/13/18 using a one-Long-Rest recharge; **the owner has since moved this mechanic into the Fiend Patron's single Infernal Retaliation feature**, rather than retaining the universal native base-class grant. The Fiend **Patron feature** called Fiendish Resilience is a resistance to a selected damage type from level 10. These are **two separate mechanics** despite the same display name: never merge their IDs or make one upgrade the other.
 
 The 3.5e Warlock is not built on modern named Patron subclass progressions. Do not retroactively mandate choosing a modern Fiend subclass for historically derived features. Non-SRD heritage feats and prestige classes can be researched as future compatibility cases without importing them into this slice.
 
 ## Owner review: Fiend mechanics and 3.5e fast healing (2026-10-24)
 
-The historical **3.5e Warlock base-class fast-healing grant is REOPENED FOR REVIEW**. The 3.5e feature provides fast healing 1/2/5 at levels 8/13/18 for up to 20 rounds, once per Long Rest (the original 3.5e rule said once per day). The earlier approval survives in the decision history, but this feature is **not a finalized grant for the restarted Warlock**. Other historical rulings (Damage Reduction, Deceive Item, Energy Resistance, Imbue Item, and optional-only Eldritch Sight) are unaffected. Do not silently delete, retain, or convert healing before the owner decides.
+**Historical review (since resolved):** The 3.5e feature provided fast healing 1/2/5 at levels 8/13/18 for up to 20 rounds, once per Long Rest (originally once per day). The old native base-class approval remains in decision history but is **superseded for fast healing only**. Native healing now belongs to the **Fiend Patron's Infernal Retaliation** feature, with original scaling retained as reference rather than automatically established for the new Patron feature. Other historical rulings (Damage Reduction, Deceive Item, Energy Resistance, Imbue Item, and optional-only Eldritch Sight) are unaffected. Do not silently delete, retain, or convert healing before the owner decides.
 
 **Why reopen:** healing restores lost HP while 2014/2024 Dark One's Blessing and Fiendish Vigor provide **Temporary Hit Points** and Patron Fiendish Resilience provides **damage resistance**. They are not exact substitutes. However, giving every Warlock extra 20/40/100 potential HP per daily activation could displace Pact/Invocation choices and dilute Patron-specific defensive identity. Evaluate **automatic grant versus optional Invocation versus removal**, comparing all three pillars; an old base feature must not be automatically retained merely because it was approved before the restart.
 
@@ -115,7 +115,7 @@ No native Fiend combat definition is activated by these research notes. Preservi
 
 ## Working definitions and decision gate
 
-The source crosswalk records **one identity, five feature-part identities, two historical guided projections, and eight tracked rulings/reviews** (four owner-approved Fiend directions, two remaining Fiend decisions, one reopened historical healing review, and one deferred multi-Patron question). These are grounded source mappings, **not extra granted powers**.
+The source crosswalk records **one identity, five feature-part identities, two historical guided projections, and eight tracked rulings/reviews** (five owner-approved directions, including the resolved fast-healing relocation, two remaining Fiend mechanics, and one deferred multi-Patron question). These are grounded source mappings, **not extra granted powers**.
 
 Before promoting a native Patron rule to authoritative data, decide:
 
@@ -130,7 +130,7 @@ Before promoting a native Patron rule to authoritative data, decide:
 
 ## Implementation sequence after reconciliation
 
-1. Resolve the two remaining Fiend mechanic choices (spell entitlement and Patron damage resistance) and the historical fast-healing review, then encode **one native set** of part definitions with stable IDs, referenced by an authoritative Fiend progression/preset.
+1. Resolve the two remaining Fiend mechanics (spell entitlement and Patron damage resistance) and the pending numerical/acquisition details for the Fiend-specific Infernal Retaliation feature; then encode **one native set** of parts with stable IDs and an authoritative Fiend progression/preset.
 2. Implement/validate feature triggers and recovery with shared Rules Core mechanics, including appropriate source conversion mapping. No Fiend-specific runtime engine.
 3. Validate guided versus custom acquisition against the same entitlement ledger, testing level-1 identity and the 1/3/6/10/14 milestone conflicts.
 4. Continue to **Pacts** next, then **Eldritch Invocations**. Validate the integrated class at levels 1–20 after all three pillars are complete.
@@ -159,14 +159,21 @@ The owner **reconsidered an earlier standalone Hellfire Blast proposal** and fav
 
 The owner-approved **Infernal Retaliation** family is separate and unaffected.
 
-### Infernal Retaliation family — approved concept
+### Infernal Retaliation — one Fiend Patron feature, owner-approved (2026-10-24)
 
-Unify the overlapping *Complete Mage* **Fiendish Flamewreath** and *Fiendish Codex II* **Hellfire Shield** defensive retaliation concepts under an **Infernal Retaliation** feature family with distinct selectable variants or upgrades, rather than building two unrelated combat systems.
+**Infernal Retaliation is ONE Fiend Patron feature** that makes all three of the following effects available when the feature is acquired. These are modes of a single feature—not three separately granted, learned, or purchased features.
 
-- **Flamewreath candidate:** sustained protective retaliation without the Hellfire vitality sacrifice.
-- **Hellfire Shield candidate:** stronger reactive retaliation with the historical self-sacrifice mechanic (1 Constitution damage in its 3.5e source), subject to conversion of action economy, damage, save, limits, and costs.
+| Effect | Function | Historical predecessor |
+| --- | --- | --- |
+| **Fiendish Resilience** | Fast healing over time | *Complete Arcane* universal 3.5e Warlock fast healing, reclassified as Fiend-only in the native system |
+| **Fiendish Flamewreath** | Sustained retaliation against melee attackers | *Complete Mage* alternative class feature |
+| **Hellfire Shield** | Immediate retaliation against an attacker | *Fiendish Codex II* Hellfire Warlock |
 
-**Approved:** shared family / de-duplication approach. **Not yet approved:** free grants, eligibility levels, feature-cost entitlement, variant interchangeability, numerical damage, recovery, or use of Constitution damage unchanged. Reopened base-class Fiendish Resilience healing remains a separate unresolved decision. Do not equate restoration of hit points with restoration of Constitution damage.
+**One shared use per Long Rest.** The Fiend Warlock chooses which effect to use **at activation**. Activating any of these effects consumes the feature's one use, making the other two unavailable until the next Long Rest. Neither access to three effects nor their historical advancement creates additional charges or feature entitlements. **Do not create a universal Warlock defensive resource or grant this feature to non-Fiend Warlocks by default.**
+
+The 3.5e universal base Warlock fast-healing grant is now **superseded as a native class grant**, although its source mechanics and previous decision are preserved for provenance. Damage Reduction, Deceive Item, Energy Resistance and Imbue Item remain approved base Warlock features. The modern Fiend Patron's level-10 damage-resistance feature, also named Fiendish Resilience, has a distinct native ID and is **not** an Infernal Retaliation mode.
+
+**Not yet resolved:** When the Fiend Patron acquires Infernal Retaliation; converted healing/retaliation damage and duration; exact activation/action mechanics; whether active fast healing operates at 0 HP; and the original Hellfire Shield's Constitution-damage cost. Do not assume 3.5e base-class level 8 is automatically the native Fiend feature level or that all original values are approved. The single-feature entitlement and shared Long Rest recovery **are** approved.
 
 ### Scope and provenance
 
@@ -181,4 +188,8 @@ These supersede older open-decision wording above and in historical research not
 3. **Dark One's Own Luck:** The previously established Charisma-modifier uses (minimum one), 1d10 bonus, and once-per-roll limit are confirmed, with **Long Rest** restoration now approved.
 4. **Hurl Through Hell:** Approve the **2024-style** level-14 feature package: once per turn on a qualifying attack-roll hit, expend a use and force a Charisma save against the Warlock spell save DC. On failure, the target travels through the Lower Planes, a non-Fiend target immediately takes **8d10 Psychic**, and the target is **Incapacitated** until returning at the end of the Warlock's next turn. One use recovers on a Long Rest; spending a Pact Magic spell slot can restore a use. A successful save does not refund the attempt.
 
-**Still unresolved:** Fiend spell entitlement/list reconciliation, Patron Fiendish Resilience damage-resistance rules and interactions with 3.5e resistance, and reopened 3.5e *base-class* Fiendish Resilience fast healing. These approvals do **not** make the pending Fiend native subclass or base Warlock executable.
+**Still unresolved:** Fiend spell entitlement/list reconciliation, Patron Fiendish Resilience damage-resistance rules and interactions with 3.5e resistance, and Infernal Retaliation acquisition/effect details (not its Fiend-only classification or shared Long Rest resource). These approvals do **not** make the pending Fiend native subclass or base Warlock executable.
+
+## Latest owner ruling — unified Fiend Infernal Retaliation (2026-10-24)
+
+The owner explicitly rejected splitting Infernal Retaliation into separately granted parts or extending its resource to every Warlock. **Fiend-specific single feature:** when granted, it offers fast healing (Fiendish Resilience), Fiendish Flamewreath, and Hellfire Shield. **Only one effect may be activated per Long Rest in total**, chosen when expending that feature's shared use. The 3.5e universal healing grant is superseded only in its *native class placement*; source provenance and the other four approved 3.5e Warlock base-class features are unchanged. Detailed values and acquisition timing require later reconciliation; this ruling alone does not activate a playable feature.
