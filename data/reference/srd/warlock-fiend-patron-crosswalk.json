@@ -1,0 +1,322 @@
+{
+  "id": "warlock-patron-fiend-source-reconciliation",
+  "kind": "patron-pillar-source-crosswalk",
+  "status": "source-mapped-native-mechanics-not-yet-reconciled",
+  "parentClass": "class.warlock",
+  "pillar": "Patron",
+  "scope": {
+    "sources": [
+      "SRD51",
+      "SRD52"
+    ],
+    "levels": [
+      1,
+      20
+    ],
+    "includedPatron": "Fiend"
+  },
+  "authoritativePatronIdentity": {
+    "id": "warlock.patron.fiend.identity",
+    "name": "Fiend Patron",
+    "classLevel": 1,
+    "status": "approved-native-design-direction",
+    "sourceNote": "2014 subclass chooses Fiend at level 1; 2024 source describes subclass at level 3. Native Patron identity still begins at level 1; the timing of granted powers is separate."
+  },
+  "parts": [
+    {
+      "id": "warlock.patron.fiend.spell-access",
+      "name": "Fiend Spell Access",
+      "kind": "spell-access",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "The Fiend",
+          "Expanded Spell List"
+        ],
+        "SRD52": [
+          "Fiend Spells"
+        ]
+      },
+      "common": "Patron alters spells available to the Warlock.",
+      "differences": [
+        "2014 adds spell choices to the Warlock spell list without automatically granting them; 2024 grants specified spells via always-prepared terminology, requiring the approved native no-daily-preparation conversion.",
+        "The two spell lists are not identical.",
+        "2014 source feature appears at Warlock 1; 2024 at Warlock 3."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.dark-ones-blessing",
+      "name": "Dark One's Blessing",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Dark One's Blessing"
+        ],
+        "SRD52": [
+          "Dark One's Blessing"
+        ]
+      },
+      "common": "Temporary Hit Points equal to Charisma modifier plus Warlock class level, minimum 1, when a qualifying enemy is reduced to 0 Hit Points.",
+      "differences": [
+        "2014: Warlock personally reduces a hostile creature to 0 HP.",
+        "2024: also triggers when another creature reduces an enemy within 10 feet of the Warlock to 0 HP.",
+        "Acquisition level differs: 2014 level 1; 2024 level 3."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.dark-ones-own-luck",
+      "name": "Dark One's Own Luck",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Dark One's Own Luck"
+        ],
+        "SRD52": [
+          "Dark One's Own Luck"
+        ]
+      },
+      "common": "At Warlock level 6, add 1d10 to an ability check or saving throw after the roll and before its effects.",
+      "differences": [
+        "2014: one use, restored after Short or Long Rest.",
+        "2024: Charisma modifier uses (minimum one), no more than once per roll; all uses restored after Long Rest."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.damage-resilience",
+      "name": "Fiendish Resilience (Fiend Patron)",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Fiendish Resilience"
+        ],
+        "SRD52": [
+          "Fiendish Resilience"
+        ]
+      },
+      "common": "At Warlock level 10, select a damage type at the end of a Short or Long Rest and gain Resistance until changed on a later rest.",
+      "differences": [
+        "2014: magical or silvered weapon damage ignores this Resistance, no force-damage exclusion is stated.",
+        "2024: cannot select Force damage; no magical/silvered weapon bypass is stated.",
+        "Distinct from the approved historical Warlock BASE CLASS Fiendish Resilience that heals HP over time; both must retain separate mechanical IDs."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.hurl-through-hell",
+      "name": "Hurl Through Hell",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Hurl Through Hell"
+        ],
+        "SRD52": [
+          "Hurl Through Hell"
+        ]
+      },
+      "common": "At Warlock level 14, on a qualifying attack hit, send a creature through the Lower Planes and return it at the end of the next turn; damage is Psychic for non-Fiends.",
+      "differences": [
+        "2014: no saving throw, deals 10d10 damage on return, once per Long Rest.",
+        "2024: Charisma saving throw negates the effect; on a failure deals 8d10 on application and Incapacitates until return; once per Long Rest, but expending a Pact Magic slot can restore a use.",
+        "The native ruling must resolve saving throw, damage timing/dice, status, and slot-spending recovery together."
+      ]
+    }
+  ],
+  "sourceSpellAccess": {
+    "SRD51": {
+      "sourceName": "Expanded Spell List",
+      "grantMode": "expanded-choices-not-automatic",
+      "sourceFeature": "The Fiend",
+      "sourceAcquisitionClassLevel": 1,
+      "spellLevelGroups": {
+        "1": [
+          "burning hands",
+          "command"
+        ],
+        "2": [
+          "blindness/deafness",
+          "scorching ray"
+        ],
+        "3": [
+          "fireball",
+          "stinking cloud"
+        ],
+        "4": [
+          "fire shield",
+          "wall of fire"
+        ],
+        "5": [
+          "flame strike",
+          "hallow"
+        ]
+      }
+    },
+    "SRD52": {
+      "sourceName": "Fiend Spells",
+      "grantMode": "always-prepared-in-source-requires-native-no-preparation-reconciliation",
+      "sourceFeature": "Fiend Spells",
+      "sourceAcquisitionClassLevel": 3,
+      "classLevelGroups": {
+        "3": [
+          "burning hands",
+          "command",
+          "scorching ray",
+          "suggestion"
+        ],
+        "5": [
+          "fireball",
+          "stinking cloud"
+        ],
+        "7": [
+          "fire shield",
+          "wall of fire"
+        ],
+        "9": [
+          "geas",
+          "insect plague"
+        ]
+      }
+    }
+  },
+  "sourcePresets": {
+    "SRD51": {
+      "id": "warlock.patron.fiend.preset.srd51",
+      "sourceSubclassName": "The Fiend",
+      "sourceSubclassChoiceLevel": 1,
+      "nativeIdentityChoiceLevel": 1,
+      "milestones": [
+        {
+          "level": 1,
+          "parts": [
+            "warlock.patron.fiend.spell-access",
+            "warlock.patron.fiend.dark-ones-blessing"
+          ]
+        },
+        {
+          "level": 6,
+          "parts": [
+            "warlock.patron.fiend.dark-ones-own-luck"
+          ]
+        },
+        {
+          "level": 10,
+          "parts": [
+            "warlock.patron.fiend.damage-resilience"
+          ]
+        },
+        {
+          "level": 14,
+          "parts": [
+            "warlock.patron.fiend.hurl-through-hell"
+          ]
+        }
+      ]
+    },
+    "SRD52": {
+      "id": "warlock.patron.fiend.preset.srd52",
+      "sourceSubclassName": "Fiend Patron",
+      "sourceSubclassChoiceLevel": 3,
+      "nativeIdentityChoiceLevel": 1,
+      "milestones": [
+        {
+          "level": 3,
+          "parts": [
+            "warlock.patron.fiend.spell-access",
+            "warlock.patron.fiend.dark-ones-blessing"
+          ]
+        },
+        {
+          "level": 6,
+          "parts": [
+            "warlock.patron.fiend.dark-ones-own-luck"
+          ]
+        },
+        {
+          "level": 10,
+          "parts": [
+            "warlock.patron.fiend.damage-resilience"
+          ]
+        },
+        {
+          "level": 14,
+          "parts": [
+            "warlock.patron.fiend.hurl-through-hell"
+          ]
+        }
+      ]
+    }
+  },
+  "sourceFeatureCoverage": {
+    "SRD51": [
+      "The Fiend",
+      "Dark One's Blessing",
+      "Dark One's Own Luck",
+      "Fiendish Resilience",
+      "Hurl Through Hell"
+    ],
+    "SRD52": [
+      "Fiend Patron",
+      "Fiend Spells",
+      "Dark One's Blessing",
+      "Dark One's Own Luck",
+      "Fiendish Resilience",
+      "Hurl Through Hell"
+    ]
+  },
+  "openNativeDecisions": [
+    {
+      "id": "patron-initial-mechanical-grant",
+      "question": "Which Fiend powers, if any, begin at Warlock level 1 in the authoritative native progression (beyond identity)?",
+      "status": "owner-ruling-needed"
+    },
+    {
+      "id": "patron-fiend-spell-entitlement",
+      "question": "Which source spell lists and spell-access grants are unified, and what native entitlement replaces source always-prepared versus expanded-choice rules?",
+      "status": "owner-ruling-needed"
+    },
+    {
+      "id": "patron-fiend-blessing-trigger",
+      "question": "Use the original self-kill trigger or the 2024 nearby-ally expanded trigger, and at what native level?",
+      "status": "owner-ruling-needed"
+    },
+    {
+      "id": "patron-fiend-luck-recovery",
+      "question": "Use short-rest single use, Charisma-modifier long-rest uses, or an explicitly approved unified alternative?",
+      "status": "owner-ruling-needed"
+    },
+    {
+      "id": "patron-fiend-damage-resilience",
+      "question": "Select force eligibility and magical/silvered damage bypass rules?",
+      "status": "owner-ruling-needed"
+    },
+    {
+      "id": "patron-fiend-hurl-through-hell",
+      "question": "Resolve save, 10d10 versus 8d10, damage timing, Incapacitated, and Pact-slot recovery.",
+      "status": "owner-ruling-needed"
+    },
+    {
+      "id": "patron-custom-combinations",
+      "question": "How much interchange among different Patrons is permitted and costed? Real multi-Patron validation deferred because only Fiend is in the SRDs.",
+      "status": "deferred-outside-srd"
+    }
+  ],
+  "explicitExclusions": [
+    "Pacts acquisition and budgets",
+    "Eldritch Invocation selection numbers",
+    "Non-SRD Patron subclasses",
+    "3.5e heritage-feat and invocation catalogs",
+    "Activating unreconciled mechanics as native rules"
+  ]
+}
