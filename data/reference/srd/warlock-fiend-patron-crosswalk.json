@@ -315,7 +315,7 @@
       "status": "owner-approved-design-direction",
       "question": "Should the previously approved 3.5e BASE-CLASS Fiendish Resilience fast healing at class levels 8/13/18 remain as an automatic Warlock grant, become an optional Invocation, or be retired after reviewing 5.x defensive features? No replacement was approved; other historical base-class rulings remain in place.",
       "sourceDecision": "class.warlock.historical-class-features-band1",
-      "resolution": "Historical 3.5e base Warlock fast healing is NOT an automatic native base Warlock grant. Fold Fiendish Resilience healing into one Fiend-Patron-specific feature named Infernal Retaliation, alongside Fiendish Flamewreath and Hellfire Shield as available activation effects. All effects belong to ONE feature entitlement and ONE shared use per Long Rest. Choosing any effect expends the shared use and precludes using any other effect until recovery. No universal Warlock defensive-resource pool. Historical source progression and Constitution-damage details are preserved as candidates; acquisition level, precise effect values and activation procedures remain pending."
+      "resolution": "Historical 3.5e base Warlock Fiendish Resilience fast healing is NOT an automatic native base Warlock grant. It belongs to one Fiend-only Infernal Retaliation feature, alongside Fiendish Flamewreath ONLY. The feature is granted at Warlock level 8, improves at 13 and 18, and permits one player-chosen Reaction activation per Long Rest of either 20-round effect. At 0 HP while active, fast healing stabilizes once without healing or waking the Warlock; no repeated automatic stabilization. Hellfire Shield is excluded and its acquisition method deferred to Eldritch Invocations pillar. Other historical base-class rulings remain unchanged."
     },
     {
       "id": "patron-custom-combinations",
@@ -531,7 +531,7 @@
       }
     },
     "hellfireSpecialization": {
-      "disposition": "optional-hellfire-specialization-not-infernal-retaliation",
+      "disposition": "deferred-to-eldritch-invocations-pillar-not-infernal-retaliation",
       "shield": {
         "name": "Hellfire Shield",
         "placement": "fiend-associated-specialization-acquisition-undecided",
@@ -563,7 +563,7 @@
           "compatibilityWithNativeHellfireEnhancement": "not-yet-reconciled"
         },
         "unresolved": [
-          "select between Fiend Patron automatic grant, Fiend Patron feature choice, or Fiend-prerequisite Eldritch Invocation; resolve level and entitlement budget",
+          "DEFERRED to Eldritch Invocations pillar: select automatic Fiend Patron grant, Fiend Patron feature choice, or Fiend-prerequisite Eldritch Invocation; assign level and entitlement",
           "own resource/cost and original Constitution ability damage",
           "derived damage and multi-beam/critical compatibility",
           "eligible targets and effect resolution"
@@ -594,10 +594,66 @@
             "usesNormalInvocationSelection": true
           }
         ],
-        "acquisitionStatus": "three-permitted-candidate-routes-no-final-route-selected",
-        "acquisitionRule": "One shared Hellfire Shield definition. Do not grant, award choice, or charge an Invocation selection until the owner selects an acquisition route. Multiple possible source pathways must not award duplicate copies or extra charges."
+        "acquisitionStatus": "deferred-to-eldritch-invocations-pillar",
+        "acquisitionRule": "Defer acquisition selection to Eldritch Invocations pillar. Preserve three Fiend-only possibilities (automatic Patron grant, Patron choice, or Fiend-prerequisite Invocation), with no grant or resource expenditure selected yet. Whichever mechanism is selected later must use one native Shield ability definition and prevent duplicate entitlements."
       },
-      "qualification": "Hellfire Shield is not an Infernal Retaliation mode. Owner proposed three Fiend-only acquisition possibilities: Patron grant, Patron choice, or Eldritch Invocation requiring the Fiend Patron. The acquisition route remains undecided; retain one native ability identity, the derived-damage direction and independent cost design. Do not silently treat the invocation route as already selected."
+      "qualification": "Owner explicitly defers Hellfire Shield's acquisition method and remaining costs to the Eldritch Invocations pillar. Three Fiend-only routes remain candidate models, not approved grants: Patron automatic grant, Patron choice, and Invocation with Fiend prerequisite. Never count Hellfire Shield as an Infernal Retaliation mode or grant it within the current Fiend Patron package. Its Reaction and derived Eldritch Blast damage direction are preserved for next-pillar review."
     }
+  },
+  "fiendPatronConsolidatedDecision": {
+    "status": "approved-scope-consolidated-with-open-source-reconciliation",
+    "document": "docs/rewrite/warlock-fiend-patron-consolidated-decision.md",
+    "patronClassLevel": 1,
+    "approvedPatronMilestones": [
+      {
+        "classLevel": 1,
+        "feature": "Dark One's Blessing",
+        "status": "approved"
+      },
+      {
+        "classLevel": 1,
+        "feature": "Fiend Patron spell access",
+        "status": "grant-timing-approved-entitlement-open"
+      },
+      {
+        "classLevel": 6,
+        "feature": "Dark One's Own Luck",
+        "status": "approved"
+      },
+      {
+        "classLevel": 8,
+        "feature": "Infernal Retaliation",
+        "status": "approved"
+      },
+      {
+        "classLevel": 10,
+        "feature": "Fiendish Resilience (damage resistance)",
+        "status": "feature-milestone-known-mechanics-open"
+      },
+      {
+        "classLevel": 13,
+        "feature": "Infernal Retaliation upgrade",
+        "status": "approved"
+      },
+      {
+        "classLevel": 14,
+        "feature": "Hurl Through Hell",
+        "status": "approved"
+      },
+      {
+        "classLevel": 18,
+        "feature": "Infernal Retaliation upgrade",
+        "status": "approved"
+      }
+    ],
+    "unresolvedNativeFiendRules": [
+      "patron-fiend-spell-entitlement",
+      "patron-fiend-damage-resilience"
+    ],
+    "implementationNotes": [
+      "No automatic Hellfire Shield grant; Shield acquisition decision deferred to Invocations pillar",
+      "Do not activate pending-native-reconciliation subclass until the remaining mechanical decisions are resolved",
+      "Outstanding procedural details of sustained Infernal Retaliation effects require shared mechanics implementation"
+    ]
   }
 }
