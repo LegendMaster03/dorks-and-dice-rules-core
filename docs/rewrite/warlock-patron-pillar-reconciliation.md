@@ -169,11 +169,13 @@ The owner-approved **Infernal Retaliation** family is separate and unaffected.
 | **Fiendish Flamewreath** | Sustained retaliation against melee attackers | *Complete Mage* alternative class feature |
 | **Hellfire Shield** | Immediate retaliation against an attacker | *Fiendish Codex II* Hellfire Warlock |
 
+**All three effects are Reactions.** Using any mode consumes the Warlock's Reaction and the feature's single shared use. The Fiend Warlock chooses the qualifying effect when its specific trigger occurs.
+
 **One shared use per Long Rest.** The Fiend Warlock chooses which effect to use **at activation**. Activating any of these effects consumes the feature's one use, making the other two unavailable until the next Long Rest. Neither access to three effects nor their historical advancement creates additional charges or feature entitlements. **Do not create a universal Warlock defensive resource or grant this feature to non-Fiend Warlocks by default.**
 
 The 3.5e universal base Warlock fast-healing grant is now **superseded as a native class grant**, although its source mechanics and previous decision are preserved for provenance. Damage Reduction, Deceive Item, Energy Resistance and Imbue Item remain approved base Warlock features. The modern Fiend Patron's level-10 damage-resistance feature, also named Fiendish Resilience, has a distinct native ID and is **not** an Infernal Retaliation mode.
 
-**Not yet resolved:** When the Fiend Patron acquires Infernal Retaliation; converted healing/retaliation damage and duration; exact activation/action mechanics; whether active fast healing operates at 0 HP; and the original Hellfire Shield's Constitution-damage cost. Do not assume 3.5e base-class level 8 is automatically the native Fiend feature level or that all original values are approved. The single-feature entitlement and shared Long Rest recovery **are** approved.
+**Not yet resolved:** When the Fiend Patron acquires Infernal Retaliation; converted healing/retaliation damage and duration; each Reaction's exact qualifying trigger and timing window; whether active fast healing operates at 0 HP; and the original Hellfire Shield's Constitution-damage cost. Do not assume 3.5e base-class level 8 is automatically the native Fiend feature level or that all original values are approved. The single-feature entitlement and shared Long Rest recovery **are** approved.
 
 ### Scope and provenance
 
@@ -193,3 +195,9 @@ These supersede older open-decision wording above and in historical research not
 ## Latest owner ruling — unified Fiend Infernal Retaliation (2026-10-24)
 
 The owner explicitly rejected splitting Infernal Retaliation into separately granted parts or extending its resource to every Warlock. **Fiend-specific single feature:** when granted, it offers fast healing (Fiendish Resilience), Fiendish Flamewreath, and Hellfire Shield. **Only one effect may be activated per Long Rest in total**, chosen when expending that feature's shared use. The 3.5e universal healing grant is superseded only in its *native class placement*; source provenance and the other four approved 3.5e Warlock base-class features are unchanged. Detailed values and acquisition timing require later reconciliation; this ruling alone does not activate a playable feature.
+
+## Reaction clarification — owner-approved (2026-10-24)
+
+All three Infernal Retaliation modes—Fiendish Resilience fast healing, Fiendish Flamewreath, and Hellfire Shield—**activate using a Reaction**. Activating any mode uses the Warlock's Reaction **and** the one shared Infernal Retaliation charge per Long Rest; this does not grant extra Reactions. This is a deliberate native conversion, irrespective of the historical 3.5e Free Action or immediate-action activation rules. Do not code any mode as an Action, Bonus Action, automatic free activation, or permanently passive effect.
+
+**Still to resolve:** A Reaction must have a trigger. Determine the trigger separately for each mode, particularly whether Fiendish Resilience responds to taking damage, being hit by an attack, or another qualifying event. Flamewreath and Hellfire Shield also require precise attack/hit/damage timing. Do not silently use a chosen trigger as an approved rule. The Fiend-only single feature and common once-per-Long-Rest resource remain unchanged.
