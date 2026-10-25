@@ -54,6 +54,14 @@ A **Pact is a major agreement**, not an ordinary Invocation or interchangeable m
 
 **Owner direction:** A second or third Pact must remain a possible future *advanced character option*, understood as another **major agreement**. It is **not an ordinary Eldritch Invocation purchase**, and it is neither permanently forbidden nor automatically available under current native progression. Eligibility, earliest level, special entitlements/costs, Pact limits, coexistence rules and the exact terms for Invocation transfer will be decided when implementing advanced options. Current default Warlocks receive **one level-1 Pact**.
 
+## Blade Pact first intrinsic advancement (owner-approved, 2026-10-25)
+
+**Pact of the Blade gains its own second Pact-weapon attack at Warlock class level 5**, whenever the Warlock takes the Attack action with that weapon. The Pact weapon is attacked with **twice total**, rather than once. This does **not** consume an Invocation selection or require the **Thirsting Blade** Invocation.
+
+The historical Thirsting Blade source is preserved, but its existing two-attack benefit is redundant in native rules. The precise treatment of the duplicate Invocation (removal, substitute unique enhancement, or historical conversion shim) remains to be decided. **Devouring Blade** has a published prerequisite on Thirsting Blade which will need to be redirected if retained; it is **not automatically granted**. Do not combine level-5 extra attacks additively with ordinary Extra Attack or unrelated melee class features absent an explicit native rule.
+
+**BG3 comparison:** *Baldur's Gate 3* calls the automatic Warlock level-5 progression **Deepened Pact**. It grants Blade a second Pact-weapon attack, Chain a familiar extra attack, and Tome one Long Rest use each of *Animate Dead*, *Haste*, and *Call Lightning*. Only the **Blade** rule has been approved. The Chain/Tome examples remain sources for later per-Pact examination, not preapproved mechanics. BG3 further allows bonding a mundane weapon and prevents dropping/disarming a bound weapon; those are optional comparison candidates, **not yet native grants**. See [Blade source comparison and BG3 review](warlock-pact-blade-source-comparison.md).
+
 ## Source comparisons (preserved, not controlling native costs)
 
 - **2014 / SRD 5.1:** Pact Boons were distinct class choices at Warlock **level 3**.
