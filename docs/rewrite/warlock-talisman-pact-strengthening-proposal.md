@@ -1,98 +1,98 @@
-# Pact of the Talisman — native strengthening proposal and Invocation boundary
+# Pact of the Talisman — owner-approved native design
 
-**Status:** **PROPOSAL / OWNER REVIEW REQUIRED**. Prepared 2026-10-25 in response to owner direction to bring Talisman up to the same degree of substance as Blade, Chain and Tome before proceeding to the next Warlock pillar. **None of the novel effects, numerical values, source fusion, or Invocation adjustments below are approved native mechanics.** The initial dedicated level-1 Pact entitlement and the three other Pacts' already approved level-5 advancements remain unchanged.
+**Decision date:** 2026-10-25  
+**Status:** **OWNER-APPROVED MECHANICAL DESIGN**. This is the authoritative Talisman baseline and level-5 decision record. **Native executable implementation is still pending**; source materials and `data/native/classes/base/warlock.json` are not claimed to contain activated mechanics.
 
-**Scope:** Only **Pact of the Talisman** (published in *Tasha's Cauldron of Everything*, 2020, preceded by 2019 UA) and its attachment opportunities. **Seeker and Star Chain remain disabled.** Fiend is the only active test Patron; no extra Patron/Pact acquisition or entitlement is authorized.
+**Context:** To strengthen Talisman as the fourth active Pact, the owner approved the two-part package proposed here: combine the 2019 UA and 2020 published check benefits **without stacking**, and give Talisman an **intrinsic level-5 Shared Ward**, while leaving its three distinctive published Invocations **optional**. Blade, Chain and Tome approvals are unchanged. Seeker and Star Chain remain disabled and archived. Fiend is still the only active Patron for the Warlock vertical-slice tests.
 
-## Problem to solve
+## 1. Source lineage (historical evidence, not a new license)
 
-The published Talisman grants a portable **limited reaction to failed ability checks**. Its fuller combat/support identity resides mostly in separately acquired Invocations (Rebuke, Protection and Bond). Other native Pacts have strong baseline functions and intrinsic 5th-level Pact development already approved (Blade extra weapon attack, Chain familiar extra attack, Tome three distinct free 3rd-level spells once/Long Rest). Talisman needs (1) useful independent support at level 1, (2) a meaningful level-5 *Pact*-owned improvement, and (3) a substantial optional Invocation family that does not merely pay for baseline utility.
-
-**Owner clarification:** Evaluate Pact value as **base Pact + approved innate progression + attached Invocations**, not automatic powers alone. Do not add compulsory 11th- or 17th-level features solely to make the Pact look as long as a Patron's progression.
-
-## Source crosswalk — historical, not automatically native
-
-| Source | Source mechanics | Distinction |
+| Source | Historical ability | Native treatment |
 | --- | --- | --- |
-| **2019 WotC Unearthed Arcana, Class Feature Variants** | Transferable amulet; wearer can add **1d4 to ability checks using a skill they are not proficient in**. No daily use limit stated. Lost talisman replaced by 1-hour ceremony, destroying predecessor. | **Proactive / untrained-skill guidance**, available repeatedly; only checks using nonproficient *skills*, not all ability checks/saving throws. |
-| **2020 Tasha's, published Pact Boon** | Transferable amulet; **after failing any ability check**, bearer can add **1d4**, potentially succeeding; **proficiency-bonus uses per Long Rest**. Similar 1-hour replacement ceremony. | **Reactive failure correction**, any ability check, but a limited pool. |
-| **2019 UA, Rebuke** | Optional Invocation: when the bearer is hit by a visible nearby attacker, Warlock Reaction deals **Charisma-modifier psychic damage** and pushes attacker. | Published version instead uses **proficiency bonus** for damage; source-era differences must be preserved. |
-| **2019 UA, Protection** | Optional Invocation: Warlock **level 9**, +1d4 on a saving throw lacking proficiency; no daily cap stated. | Published version is **level 7**, applies **after any failed saving throw**, uses an **independent proficiency-bonus-per-Long-Rest pool**. |
-| **2019 UA, Bond** | Optional Invocation at level 12: action-based teleport between the Warlock and another talisman wearer within same plane, no explicit number of daily uses stated. | Published level-12 version retains condition/action and adds **PB uses per Long Rest**. |
+| **2019 WotC UA: Class Feature Variants** | Talisman wearer adds **1d4 to ability checks made with a skill in which they lack proficiency**, no stated per-rest use cap | **Approved** as **Untrained Guidance** with no charge expenditure |
+| **2020 published *Tasha's Cauldron of Everything*** | After a failed **ability check**, wearer can add **1d4** to try to succeed; uses equal the Warlock's proficiency bonus, restored by Long Rest | **Approved** as **Fortunate Correction**, retaining the published limited-use model |
+| Both original sources | Transferable talisman and one-hour replacement ceremony | **Approved**; old talisman becomes inactive, charges **not restored** on replacement |
+| 2020 published optional Invocations | **Rebuke**, **Protection** (Warlock 7+), **Bond** (Warlock 12+) | **Preserved as optional Pact-bound Invocations**; not automatically granted |
 
-**Preservation and rights:** This table is paraphrased mechanical research. The 2019 UA and 2020 published non-SRD rule text are not added to CC SRD data; exact source entries remain external historical references.
+**Non-SRD provenance:** Both external sources are separate from SRD 5.1/5.2.1 and are recorded as independent, paraphrased research. The 2019 playtest and the final 2020 published text differ; our combined native rule is a **Dorks & Dice house design**, not a claim that one official edition contained both benefits.
 
-## Recommended cohesive native package — **not yet approved**
+## 2. Approved native Pact of the Talisman — Warlock level 1
 
-### Level 1 — Talisman of Guidance (combined UA/published baseline)
+**Acquisition and item:** Selecting Pact of the Talisman spends the single dedicated **Warlock level-1 Pact entitlement**, **not** an Eldritch Invocation choice. The Warlock acquires one active magical talisman that may be worn by them or given to another wearer. Its magical capabilities derive from the specific associated Pact/Patron relationship.
 
-1. **Magical transferable talisman.** The Warlock creates or receives one active talisman, which can be worn by the Warlock or handed to another willing wearer. The active talisman identifies its linked Pact agreement; **no other Pact, Patron or Invocation receives an extra entitlement** from the item.
-2. **Untrained Guidance (UA lineage):** While wearing it, a creature making an **ability check using a skill in which the wearer lacks proficiency** may add **1d4** to the check. There is **no use expenditure** for this benefit. Resolve native parent/child skill competencies by the shared proficiency rules; do not silently treat saves, attacks or initiative as qualifying skill checks.
-3. **Fortunate Correction (published lineage):** When the bearer **fails an ability check**, they may consume **one Talisman charge** to add **1d4** to that check, potentially succeeding. This applies whether or not proficient. **Charges = Warlock's proficiency bonus; recharge all on Long Rest.** This is the published 2020 usage model.
-4. **Nonstacking same-Pact benefits:** An ability check can receive **at most one of Untrained Guidance and Fortunate Correction**. The wearer may not claim both Talisman dice for the same roll. This restriction is **new native design**, intended to avoid combining historical source versions for 2d4.
-5. **Replacement:** If lost, a **1-hour ceremony** during a Short or Long Rest replaces the talisman, deactivating its predecessor. **Replacing a talisman does not restore spent charges**. Native Pact severance and general inventory/owner effects remain under established lifecycle rules.
+**Untrained Guidance (always available while worn):** When the bearer makes an **ability check using a skill in which the bearer is not proficient**, the bearer can add **1d4**. This benefit has **no per-rest use limit** and **does not expend a Talisman charge**. Whether the check uses a skill and whether the bearer is proficient must be determined under Dorks & Dice's shared skill/competency rules; this benefit is not itself a saving throw, attack roll, or arbitrary non-skill ability-check bonus.
 
-**Why combine source rules rather than just use published 2020?** 2019's unlimited nonproficient assistance creates a recognizable persistent **support Pact** at level 1, rather than only 2–6 failed skill checks per adventuring day. 2020's broader failure rescue is a valuable scarce choice. These are different triggers, so the nonstacking rule maintains meaningful tradeoffs.
+**Fortunate Correction (limited):** After the bearer **fails an ability check**, they may spend **one Talisman charge** to add **1d4** to that check, potentially turning failure into success. It is available whether or not the check uses a skill or the bearer is proficient. Its trigger remains **failure**, not merely an unsatisfactory roll.
 
-**Balance risks for review:** Unrestricted +1d4 nonproficient skill assistance affects many routine exploration and social checks and may stack with *Guidance* and Bard skill bonuses; test bounded accuracy and whether replacing the published proficiency-use limit is justified. Optional conservative alternative: keep only the published 2020 check-correction baseline and strengthen only the 5th-level ward; this is mechanically simpler but weaker at levels 1–4. **Neither design is approved yet.**
+**Nonstacking:** A **single check may benefit from at most one** of **Untrained Guidance** and **Fortunate Correction**. A check assisted by Untrained Guidance cannot add Fortunate Correction's second 1d4, even if it is still unsuccessful. This is a deliberate native safeguard against receiving 2d4 from both historical source versions.
 
-### Level 5 — Deepened Pact: Shared Ward (new Dorks & Dice feature)
+**Charges:** The talisman has **a single shared pool of charges equal to the Warlock's proficiency bonus**. All charges return on a **Long Rest**. **Fortunate Correction and Shared Ward consume the same pool.** Selecting Talisman, gaining it in guided mode, replacing it, or handing it to another creature never supplies a second pool.
 
-Proposed rules:
-- **Trigger:** A creature wearing **your active Talisman** takes damage. The Warlock must be **within 60 feet** of the wearer and capable of using a Reaction. The wearer may be the Warlock.
-- **Reaction:** Expend **one charge from the SAME level-1 Fortunate Correction pool** to reduce that instance of damage by **2d6 + your Charisma modifier (minimum reduction 0)**. Apply mitigation to that damage instance; no negative damage, no retaliation and no free movement.
-- **Action economy:** The Warlock spends **its Reaction**. A Warlock with **Rebuke of the Talisman** must choose Ward *or* Rebuke for the same triggering attack because both use its Reaction. Rebuke remains a distinct optional retaliation/displacement path; neither is silently given away.
-- **Availability:** No Invocation selection spent, no spell slot required, no additional charge pool, no extra creature beyond the talisman wearer. Prevent multiple Ward uses from the same Warlock Reaction/damage instance. Does not need to see the attacker; the wearer and distance must qualify.
+**Replacement:** A lost talisman can be replaced with a **one-hour ceremony** during a Short or Long Rest. The previous talisman becomes inactive. **Replacing it does not recharge any charges**; the Pact retains the resource balance and use history.
 
-**Numerical balance hypothesis:** 2d6 + Charisma modifier at level 5 is meaningful single-hit mitigation but trades against the same limited ability-check rescues. At higher levels proficiency-bonus charge capacity increases organically. Re-evaluate damage reduction at Warlock **11/17** if it becomes too weak; no higher-tier dice progression is assumed approved now. Additional scaling could instead arise through elective Pact-bound Invocations.
+## 3. Approved Deepened Pact: Shared Ward — Warlock level 5
 
-**Alternative level-5 direction, not preferred:** Automatically grant saving-throw +1d4 by moving the published **Protection of the Talisman** Invocation into level-5 Pact progression. This creates an automatic benefit but risks reducing the three published Talisman specialization branches to only two; preserving Protection would then require a **separately reviewed replacement Invocation**. Ward avoids this duplication and gives protection against damage a distinct resource/action tradeoff.
+An intrinsic benefit of **Pact of the Talisman**, not an Invocation.
 
-### Optional Talisman Invocation tree — preserve published clauses
+| Property | Approved mechanic |
+| --- | --- |
+| Level acquired | **Warlock 5** |
+| Trigger | The wearer of the Warlock's **current active Pact talisman takes damage** |
+| Range | Warlock is within **60 feet of the wearer**; the Warlock **may be the wearer** |
+| Cost | The **Warlock's Reaction** and **one charge** from the same Talisman pool used by Fortunate Correction |
+| Effect | Reduce **that one instance** of damage by **2d6 + the Warlock's Charisma modifier**, to a minimum reduction of **0** and no more than the incoming damage |
+| What is *not* required | Invocation expenditure, a spell slot, an additional resource pool, or sight of the attacker |
+| Reaction conflict | **Rebuke of the Talisman** also uses the Warlock's Reaction, so the two can not both be used for the same triggering attack with that one Reaction |
 
-| Optional Invocation | Historical source | Native design intent (not automatic) | Interaction with new package |
+No further automatic dice progression or free high-level feature has been approved. This strengthens Pact baseline protection without moving optional Invocation benefits into it.
+
+## 4. Invocation ecosystem — published branches remain distinct elective choices
+
+Each Invocation is attached to **this specific Pact** and checks the level/prerequisites and the willingness of the Patron associated with it. Choosing Talisman does **not** automatically grant these Invocations.
+
+| Invocation | Published level prerequisite | Separate function | Relationship to intrinsic Pact |
 | --- | --- | --- | --- |
-| **Rebuke of the Talisman** | Tasha's, no level prerequisite, Pact required | Psychic retaliation + push on a nearby visible attacker that hits bearer, Warlock Reaction | Competes for Reaction with **Shared Ward**; no duplicate damage mitigation; uses **PB psychic damage** in published source |
-| **Protection of the Talisman** | Tasha's, Warlock **7+**, Pact required | **1d4 after failed saving throw**, **PB uses per Long Rest** from its *own* independent pool | Supplies **failed-save defense** as a voluntary specialization, whereas baseline handles **ability checks** and Ward handles **damage** |
-| **Bond of the Talisman** | Tasha's, Warlock **12+**, Pact required | Warlock and *another* bearer can use Actions to teleport to one another across same plane; **PB uses per Long Rest** | Adds long-range positional rescue/travel; **not** automatically granted at Pact level 5 |
-| **General eligible Invocations** | 2014/2024 SRD & later native reconciliations | Every chosen Invocation must bind to a **specific Pact**, even without an explicit Pact-type requirement | Adds utility/combat/defense to Talisman builds, with individual Pact/Patron prerequisites and Patron acceptance |
+| **Rebuke of the Talisman** | Talisman Pact; no extra class level | **Psychic retaliation and pushing the attacker** | Remains optional. Uses the **Warlock's Reaction**, competing with Shared Ward. |
+| **Protection of the Talisman** | Warlock **7+**, Talisman Pact | **1d4** to a failed **saving throw**; independently limited uses | Remains optional; saving throws are not Talisman's level-1 ability-check grant. Keep the published independent **proficiency-bonus-per-Long-Rest pool**. |
+| **Bond of the Talisman** | Warlock **12+**, Talisman Pact | **Teleportation between the Warlock and another wearer**, subject to its source conditions | Remains optional; does not consume the intrinsic Pact pool. Keep its own published **proficiency-bonus-per-Long-Rest pool**. |
+| **Shared/common Invocations** | Per-Invocation, Pact and Patron prerequisites | Add further defense, mobility, spell, blast, and other playstyle choices | Every selected Invocation still belongs to exactly one Pact even without a named Pact-type requirement. |
 
-**Separate resource ledgers:** Base Pact **Talisman charges** fuel the choice between checks and Ward; optional Protection and Bond keep separate resource pools as specified in their published sources. These only exist if the relevant Invocation is chosen. No double-grants from guided character presets.
+**Source fidelity:** The 2019 UA Invocation wording/progression differs from the 2020 published options; exact native Invocation texts and adaptation remain to be reconciled separately. The **decision to retain Rebuke/Protection/Bond as optional, non-granted features is approved**, as are the resource-pool boundaries above.
 
-## Comparative level snapshots — illustrative, not implemented
+## 5. Role, relative depth and balance
 
-| Level | Blade | Chain | Tome | **Proposed Talisman** |
-| --- | --- | --- | --- | --- |
-| **1** | Approved weapon bond/CHA/focus | Pending reconciled familiar base | Pending reconciled book + rituals | Persistent nonproficient skill assistance **plus PB limited failed-check rescues** |
-| **5** | Automatic 2 Pact-weapon attacks | Automatic familiar second attack; commands pending | Three 3rd-level free spells 1/LR each | Automatic **Shared Ward** (Reaction to reduce damage, spend same Pact charges) |
-| **7** | Optional Pact attack enhancements | Optional familiar/utility Invocations | Optional grimoire upgrades | Optional **Protection** saving throw Invocation becomes eligible |
-| **12** | Optional higher-tier weapon improvement | Optional companion options | Optional ritual/protection options | Optional **Bond** teleportation Invocation becomes eligible |
-| **17–20** | Evaluate base+optional Invocations | Evaluate base+optional Invocations | Evaluate base+optional Invocations | Evaluate base+optional Invocations; no arbitrary automatic extra features |
+**Talisman's playstyle:** The Warlock chooses **who wears** the magical item, whether to reserve charges to repair check failures or mitigate important attacks, and whether to spend later Invocation choices on retaliation, saving throws, teleportation or unrelated general abilities. This gives a **transferable support/protection Pact** rather than another weapon, familiar or spellbook route.
 
-**Source editions differ**: 2024 SRD has no Talisman. It receives one native initial Pact entitlement at Warlock 1 **because the overarching native rule is approved**, not because the 2019/2020 sources granted it there.
+**Existing approved level-5 Pact features compared:**
 
-## Four-Pact pillar sufficiency test for this proposal
+- **Blade:** two Pact-weapon attacks total on the Warlock's Attack action.
+- **Chain:** familiar gains an additional attack when the familiar legitimately takes its Attack action (native command economy still pending).
+- **Tome:** free casts each of *Animate Dead*, *Haste*, and *Call Lightning* once per Long Rest (native spell interactions still pending).
+- **Talisman:** **Shared Ward** (Reaction + charge, damage mitigation) alongside the combined level-1 check benefits.
 
-**Baseline independence:** Talisman assists skill checks without compulsory Invocation; can also rescue any failed ability check using limited charges.  
-**Level-5 growth:** Shared Ward gives a direct role in reducing damage, not just repeated d4 checking.  
-**Meaningful attachment options:** Rebuke, Protection, and Bond remain *different elective paths* (offensive push, failed saves, teleport).  
-**Internal tradeoffs:** Spend scarce charges on ability check rescues or Ward; use Reaction for Ward vs Rebuke; wear it yourself vs entrust it to an ally.  
-**Patron independence:** A Fiend Patron can grant it unless individual approved requirements/Patron terms prohibit it; source-specific powers remain Patron-owned.  
-**Distinct from other Pacts:** Unlike Chain's familiar and Tome's spells, its emphasis is a **delegable magical object and bearer-based protection**.
+**Do not require** a new level-11 or level-17 automatic feature as a precondition of Pact depth. Evaluate the Pact's **base + intrinsic advancement + elective attached Invocation paths**, and compare meaningful choices rather than only free feature counts.
 
-### Recommended owner decision sequence
+## 6. Implementation and testing gates — approved rules, not yet active engine functionality
 
-1. **Level-1 baseline:** Approve or reject **unlimited UA nonproficient skill checks** alongside 2020 **PB/LR failed-check d4**, with the no-double-dice condition. Alternative: retain only published 2020.
-2. **Level-5 Deepened Pact:** Approve, modify or reject **Shared Ward** with Reaction, 60-foot range, **shared PB/LR pool** and **2d6 + CHA** reduction.
-3. **Invocation retention:** Confirm published **Rebuke, Protection, Bond** remain **elective attached Invocations**, with source-specific resource pools and historical differences.
-4. **Then test:** Compare Warlock 1, 5, 11, 17 and 20 Fiend+Talisman against **Fiend+Blade, Fiend+Chain and Fiend+Tome** at equal Invocation entitlements, target selection, number of rests, expected incoming attacks, and exploration uses. Avoid defaulting to damage-per-round as the only measure of protection value.
+1. Make a native Talisman mechanic/ID with exactly **one active item** and a Pact-specific resource ledger; approval stored in `data/reference/srd/warlock-srd-slice-inventory.json`, under `approvedNativePactDirection.expandedFivePactReview.newSources.talisman.ownerApprovedNative`.
+2. Distinguish skill-based **Untrained Guidance** from all-ability-check **Fortunate Correction**; test proficiency status at the time of the check under the unified Skills/Competencies subsystem.
+3. Enforce **no two Talisman dice on one check**, even if the first modification fails to produce success. Test a failed nonproficient check with and without a charge.
+4. **Shared Ward** triggers on wearer damage, validates current linked item/wearer/range/Warlock Reaction and charge pool, then subtracts up to **2d6 + CHA** from **one** damage instance. Test self-wearing, ally-wearing, damage less than the reduction, out of range, empty pool, and invalidated talisman.
+5. **Rebuke** and Shared Ward cannot consume the same Warlock Reaction twice; **Protection** and **Bond** use their own optional Invocation ledger and do not consume the core Talisman charges.
+6. A one-hour replacement **invalidates the previous talisman without restoring resources**. Transferring an active talisman is not an Invocation transfer, multiple active talismans, or an additional Pact.
+7. Guided and custom Warlocks acquire the same Talisman Pact feature exactly once; first Pact consumes **no** Invocation budget. Patron acceptance and all Invocation prerequisites apply to the **same bound Pact**.
+8. Verify level-1/5/11/17/20 Fiend+Talisman against Fiend+Blade/Chain/Tome with equal Invocation entitlements, action economy, rests, nonproficient-skill prevalence and ordinary encounter damage. This is a balance test, **not** a request to silently nerf the owner's approved values.
+9. No playable Seeker, Star Chain, or other non-SRD Patron is added; no existing Fiend/BG3/native Pact ruling is reopened.
 
-**Do not update** `approvedNativePactDirection.expandedFivePactReview.newSources.talisman.mechanicsApprovedForNative`, `level5IntrinsicAdvance`, source categories, native Warlock files or Invocation entitlements **until** owner approves the specific design choices.
+## Historical review artifacts and source pointers
 
-## Sources
+The earlier unapproved proposal is preserved by the repository's Git history; this file supersedes its status and resolves its two owner-approval gates. External research references:
 
-- Official WotC **2019 UA**: https://media.wizards.com/2019/dnd/downloads/UA-ClassFeatures.pdf — pages 11–12 (PDF page indexes 10–11): Talisman boon and draft Rebuke/Protection/Bond.
-- *Tasha's Cauldron of Everything* (Wizards of the Coast, 2020), Warlock optional Pact Boon and optional Invocations. Published rules verified for research by publicly indexed descriptions; **not SRD**.
-- Existing rule status and imported SRDs: `docs/rewrite/warlock-pact-pillar-reconciliation.md`, `docs/rewrite/warlock-four-pact-pillar-viability-audit.md`, `data/reference/srd/warlock-srd-slice-inventory.json`, `data/reference/srd/structured/optionalfeatures.json`.
+- 2019 WotC UA *Class Feature Variants*: https://media.wizards.com/2019/dnd/downloads/UA-ClassFeatures.pdf
+- 2020 *Tasha's Cauldron of Everything*, Pact of the Talisman and Rebuke/Protection/Bond Invocation lineages (non-SRD)
+- `docs/rewrite/warlock-five-pact-reconciliation-scope.md`
+- `docs/rewrite/warlock-pact-pillar-reconciliation.md`
+- `docs/rewrite/warlock-four-pact-pillar-viability-audit.md`
+- `data/reference/srd/warlock-srd-slice-inventory.json`
 
-**Historical Star Chain and Seeker are disabled; the user did not authorize revival. No new native mechanics are active in this proposal.**
+**This decision is approved for the Dorks & Dice rewrite. It has not yet been merged or made executable.**
