@@ -95,7 +95,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/thirsting-blade.json",
       "openConflict": "native-level5-second-attack-duplicate",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retire-native-selectable-option-keep-historical-source",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.devouring-blade",
@@ -135,7 +142,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/devouring-blade.json",
       "openConflict": "thirsting-blade-prerequisite-becomes-stale",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "warlock-12-elective-require-intrinsic-blade-level5-attack-three-attacks-total",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.lifedrinker",
@@ -193,7 +207,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/lifedrinker.json",
       "openConflict": "2014-vs-2024-damage-frequency-and-healing",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "2024-level9-once-per-turn-d6-and-hit-die-heal-no-2014-stacking",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.eldritch-smite",
@@ -233,7 +254,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/eldritch-smite.json",
       "openConflict": "none-yet-confirmed",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "2024-level5-elective-pact-magic-slot-force-damage-and-optional-prone",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.voice-of-the-chain-master",
@@ -263,7 +291,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/voice-of-the-chain-master.json",
       "openConflict": "none-yet-confirmed",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2014-same-plane-familiar-senses-voice-and-telepathy",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.chains-of-carceri",
@@ -299,7 +334,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/chains-of-carceri.json",
       "openConflict": "per-target-rest-restriction",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2014-level15-per-target-long-rest-lockout",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.investment-of-the-chain-master",
@@ -339,7 +381,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/investment-of-the-chain-master.json",
       "openConflict": "native-familiar-command-economy-vs-intrinsic-second-attack",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2024-level5-with-alternate-bonus-action-command-one-familiar-attack-action",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.book-of-ancient-secrets",
@@ -369,7 +418,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/book-of-ancient-secrets.json",
       "openConflict": "2024-tome-two-starter-ritual-overlap",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "elective-advanced-ritual-inscription-no-free-duplicate-starter-rituals",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.gift-of-the-protectors",
@@ -409,7 +465,14 @@
       ],
       "existingNativeFile": "data/native/features/optional/gift-of-the-protectors.json",
       "openConflict": "none-yet-confirmed",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2024-level9-charisma-name-cap-one-shared-rescue-per-long-rest",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.rebuke-of-the-talisman",
@@ -435,7 +498,14 @@
       ],
       "existingNativeFile": null,
       "openConflict": "shared-ward-reaction-competition",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2020-reaction-retaliation-vs-shared-ward-pick-one",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.protection-of-the-talisman",
@@ -461,7 +531,14 @@
       ],
       "existingNativeFile": null,
       "openConflict": "separate-protection-invocation-charge-pool",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2020-level7-separate-proficiency-based-save-d4-uses",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.bond-of-the-talisman",
@@ -487,7 +564,14 @@
       ],
       "existingNativeFile": null,
       "openConflict": "separate-bond-invocation-charge-pool",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2020-level12-one-shared-directional-teleport-pool",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.improved-pact-weapon",
@@ -513,7 +597,14 @@
       ],
       "existingNativeFile": null,
       "openConflict": "native-blade-weapon-focus-overlap",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "elective-conditional-plus1-and-ranged-conjuration-no-duplicate-focus",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.gift-of-the-ever-living-ones",
@@ -539,7 +630,14 @@
       ],
       "existingNativeFile": null,
       "openConflict": "fast-healing-and-healing-dice-interaction",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-source-max-healing-dice-to-warlock-with-familiar-within100ft",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.aspect-of-the-moon",
@@ -565,7 +663,14 @@
       ],
       "existingNativeFile": null,
       "openConflict": "rest-and-sleep-semantics",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-source-no-sleep-requirement-rest-rules-still-apply",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     },
     {
       "id": "invocation.far-scribe",
@@ -591,7 +696,36 @@
       ],
       "existingNativeFile": null,
       "openConflict": "sending-and-book-name-limit",
-      "mechanicsReconciliation": "deferred-until-after-codification"
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-source-level5-proficiency-limited-sending-correspondents",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
     }
-  ]
+  ],
+  "ownerApprovedConflictResolution": {
+    "status": "owner-approved-native-design-not-implemented",
+    "approvalDate": "2026-10-25",
+    "authority": "Owner's explicit 'Approved' of complete 16-option conflict-resolution proposal",
+    "sourceDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+    "approvedOptionsCount": 16,
+    "selectableCandidateCountAfterRetiringThirsting": 15,
+    "historicalThirstingOnly": true,
+    "chainBaselineCommandRuleApproved": true,
+    "preserve2014And2024Variants": true,
+    "preservePreviouslyApprovedPactFeatures": true,
+    "nonSrdRightsReviewAndNativeConversionStillRequired": true,
+    "invocationSelectionProgressionApproved": false,
+    "threeFiveInvocationCatalogImportApproved": false,
+    "noPlayableRuntimeImplementationYet": true,
+    "noMainMergeAuthorized": true,
+    "phases": [
+      "codification-complete",
+      "conflict-resolutions-approved-not-executable",
+      "then-choose-3.5e-invocations-vs-invocation-progression"
+    ]
+  }
 }

@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-25  
 **Branch:** `feature/rules-core-rewrite`  
-**Status:** **PROPOSAL ONLY — NOT OWNER-APPROVED OR EXECUTABLE.** This is the requested next-stage decision package for the 16 Pact-specific Invocation records already codified in `data/reference/warlock-pact-specific-invocations.json`. **No native effects, choice-budget values, source historical entries, or approved Pact mechanics are changed by this document.**
+**Status:** **OWNER-APPROVED NATIVE DESIGN (2026-10-25); IMPLEMENTATION PENDING.** The owner explicitly approved the complete 16-option resolution package in this document, including the Chain familiar action-economy adaptation. Original source variants and stage-only native candidates remain unchanged until actual conversion and validation. **These approved rules are not yet executable or merged to main.**
 
 ## Design rules used throughout
 
@@ -11,7 +11,7 @@
 3. An adopted Invocation normally **costs one selection**, but **how many selections are available and at which levels is deliberately postponed** until the owner elects to discuss Invocation progression. Listed source-level prerequisites are **minimum eligibility gates**, not an approved global selection schedule.
 4. **Default to a coherent single 2024 version when 2014 and 2024 effects conflict**, preserving all 2014 variants in the immutable reference/source candidates. Do **not** blindly sum damage from two editions or turn an Invocation into a free Pact feature.
 5. **Base Pact remains usable without its own optional Invocations**. Optional Invocation upgrades should broaden tactics, increase potency or improve action economy; they should not be necessary merely to make an already-approved intrinsic feature function.
-6. **No merge or activation** without owner acceptance of this explicit proposal. Seven options remain published **non-SRD references** and must be independently converted/rights-reviewed before any native gameplay data; no 3.5e catalog or Star Chain/Seeker expansion.
+6. **Owner acceptance has been received;** activation still requires source-neutral native implementation, regression testing and appropriate validation. Do not merge to `main` without separate authorization. Seven options remain published **non-SRD references** and must be independently converted/rights-reviewed before any native gameplay data; no 3.5e catalog or Star Chain/Seeker expansion.
 
 ## Recommended resolution: Blade (five Invocations)
 
@@ -112,4 +112,4 @@ All three **already approved to remain optional** under the owner's Talisman dec
 - Other published references: *Xanathar's Guide to Everything* (2017) and *Tasha's Cauldron of Everything* (2020), source metadata only.
 - 2024 basic Warlock source: https://www.dndbeyond.com/classes/2190885-warlock
 
-**No proposed native change is considered adopted until the owner explicitly approves the contents.**
+**Owner approval received (2026-10-25): all 16 dispositions, including the Chain command adaptation, are approved as native design requirements.** Source texts remain archived; executable implementation, full regression testing, and any actual deployment still remain to be completed on `feature/rules-core-rewrite`. No Invocation selection-count or 3.5e catalog decision is implied.

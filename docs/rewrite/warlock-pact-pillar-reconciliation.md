@@ -101,6 +101,22 @@ The [Invocation source reconciliation audit](warlock-eldritch-invocation-reconci
 
 The earlier **owner-approved level-5 automatic Pact advancements remain unchanged**, including Blade's redundant **Thirsting Blade** source benefit. None of the 42 Invocation candidates has been automatically adopted by this audit; **Hellfire Shield and complete 3.5e Invocation catalogs remain separately deferred**. Reconcile from the catalog on `feature/rules-core-rewrite` without implementing or granting unapproved mechanics.
 
+## Approved Pact-specific Invocation conflict resolutions (owner approval 2026-10-25)
+
+The full [16-option Invocation resolution decision](warlock-pact-specific-invocation-conflict-resolution-proposal.md) was **approved by the owner**. A machine-readable decision register is stored in [`data/reference/warlock-pact-specific-invocations.json`](../../data/reference/warlock-pact-specific-invocations.json) under `ownerApprovedConflictResolution` and each record's `ownerApprovedDisposition`. The **original SRD source candidates are not mutated**; executable native effects are still to be authored and tested.
+
+**The critical approved cross-system change is the Chain familiar command baseline:** On the Warlock's shared initiative, the familiar has its own movement, action, and reaction. Without Investment of the Chain Master, the Warlock may forgo one attack from its Attack action to order **one familiar Attack action** on the familiar's turn in that initiative round. Chain's already-approved intrinsic level-5 improvement allows **two attacks total during that one familiar Attack action**. With Investment, the Warlock may instead spend a **Bonus Action** to give that command, leaving the Warlock's Action available. Neither route permits more than **one commanded familiar Attack action per turn/initiative round**; the optional upgrade alters command economy, not total Attack actions. This rule is specific to the Pact familiar, not all controlled creatures or summoning.
+
+**Blade:** Thirsting Blade's native selectable entry is retired because Blade level 5 already grants two Pact-weapon attacks; Devouring Blade at level 12 becomes an elective third total attack with the intrinsic level-5 attack prerequisite; 2024 Lifedrinker and Eldritch Smite govern the single native variants; Improved Pact Weapon preserves conditional +1 and ranged conjuration, without a redundant spellcasting focus grant.
+
+**Tome:** Book of Ancient Secrets is elective *expanded ritual transcription* without a duplicate free two-ritual starter grant; the 2024 Gift of the Protectors has a Charisma-modifier names cap and one shared page rescue per Long Rest; Aspect of the Moon and Far Scribe remain elective published-source conversions. Ritual-transcription records survive book replacement without awarding extra rituals.
+
+**Talisman:** Rebuke competes with Shared Ward for the Warlock Reaction; Protection uses a separate PB/LR saving-throw help pool; Bond uses its own PB/LR teleport-use pool shared between both directions. None is automatically granted.
+
+**Chain's other Invocations:** Voice, Chains of Carceri (per-target Long Rest limiter), Investment's other 2024 upgrades, and Gift of the Ever-Living Ones (healing dice only) are adopted per the approved proposal, with relevant source boundaries and resource checks.
+
+**Not decided:** How many Invocations a Warlock acquires and at which levels, whether to next investigate historical 3.5e Invocations or define Invocation progression, and any non-SRD source licensing/implementation choices beyond the independently approved mechanics. **Star Chain and Seeker remain disabled.** Do not merge to `main` without separate authorization.
+
 ## Source comparisons (preserved, not controlling native costs)
 
 - **2014 / SRD 5.1:** Pact Boons were distinct class choices at Warlock **level 3**.
