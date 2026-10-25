@@ -13,6 +13,27 @@ Warlock has **three class-specific pillars: Patron, Pacts, and Eldritch Invocati
 
 The machine-readable source-preserving crosswalk is `data/reference/srd/warlock-fiend-patron-crosswalk.json`. Imported source records remain untouched at `data/reference/srd/structured/class/class-warlock.json` and staged native candidates remain `pending-native-reconciliation`.
 
+## Patron relationship and cross-pillar eligibility — owner design direction (2026-10-24)
+
+**The Patron pillar is Warlock-specific terminology, not a requirement that every Warlock sign a contract or possess a conscious external patron.** Record the Warlock's power-source relationship at level 1, with at least these representable cases:
+
+- **Personal Patron:** a named or identifiable being with whom the Warlock has a pact, bargain, or another connection. **A pact is not necessarily a negotiated contract**.
+- **Impersonal or inherited source:** supernatural lineage, ambient/otherworldly influence, granted legacy, or a similar origin, with no current personal Patron or contract required. This preserves relevant 3.5e Warlock concepts.
+- **No external Patron:** a Warlock concept with no discrete external source-being. The Patron *pillar* still manages the origin/identity and eventual Patron-slot power progression; it must not require a non-null NPC/patron entity record for character validity. **The precise mechanics and selectable paths for such a character are not yet approved.**
+
+**Narrative relationship is separate from mechanical entitlement.** Neither an absent contract nor an absent external Patron automatically grants Fiend, Archfey, or any other Patron's powers. A guided Fiend preset does establish a Fiend power relationship, but does not force other origin types to imitate a Fiend bargain. Patron feature acquisition remains subject to the approved level/selection/compatibility rules.
+
+**Cross-pillar prerequisites are supported by design.** A Pact choice or improvement may require an eligible Patron category/trait/feature, an Invocation may require a specific Pact or Patron part, and a Patron feature may depend on an existing Pact/Invocation. At the shared Rules Core level, store these as explicit **typed prerequisites and dependency relationships** rather than hard-coded names or impossible one-way pillar hierarchies. The character builder must explain incompatible or unavailable choices and preserve the same restrictions for guided presets and custom builds.
+
+- Prerequisites may reference **source traits** (e.g., a fiendish or otherworldly source), **specific unlocked parts**, or Warlock class levels. A source trait does not imply a particular named NPC or a contract.
+- Cross-pillar restrictions should be attached **only when mechanically or narratively justified for the specific option**. Do **not** restrict all Blade/Chain/Tome Pacts to particular Patrons merely because the architecture permits dependencies.
+- Never silently waive a prerequisite for guided presets. If an option changes later, validate acquired dependent parts and provide a clear replacement or grandfathering rule rather than creating an invalid invisible state.
+- The first SRD Fiend slice must show at least one **synthetic, non-playable compatibility fixture** exercising both an allowed and a denied Patron-dependent Pact/Invocation option. This tests generic eligibility without authoring an unsupported new playable Pact or Patron.
+
+**Hexblade and Vestige remain open base-class-versus-Warlock classifications.** Their historical equivalents—the 3.5e Hexblade and Binder—were separate base classes, while 5.x treats the concepts as Warlock Patrons. Evaluate *each* for its distinct gameplay loop, specialized resources, progression independence, overlap with existing Warlock Pacts/Invocations, and ability to reconstruct its published Warlock preset. Neither is pre-committed to class status. This review is **separate from prestige classification**: these are base-class-versus-Warlock membership questions, not automatically 3.5e prestige cases.
+
+**Why Fiend is the correct first Patron case:** Fiend has a named 2014/2024 SRD subclass with a strong historical 3.5e Warlock fiendish-origin/heritage precedent. It can validate direct feature reconciliation without needing to invent modern subclasses for historical sources. Historical non-SRD Fiendish Heritage and Hellfire options remain **reference-only**, not automatically available selectable content.
+
 ## Cross-edition Patron landscape beyond SRD Fiend
 
 A separate [comparison of the ten published 5.x Patrons with 3.5e Warlock power sources, heritage feats, Binder, Hexblade, and related class material](warlock-patron-3x-5x-comparison.md) is recorded as **reference research**. 3.5e did **not** offer a ten-Patron subclass menu. This compatibility survey does not expand the current playable SRD-only Fiend implementation. Especially important future tests include Hexblade–Blade Pact overlap, Genie variable elemental subtypes, the Vestige companion, and distinguishing Undead from Undying.

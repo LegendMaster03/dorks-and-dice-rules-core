@@ -16,6 +16,15 @@ The Warlock has **three class-specific pillars**, which **together form its prog
 
 The labels are intentionally **Warlock-specific**, not generic names every class must adopt. Review and implement **one pillar at a time, beginning with Patron**; record interactions with future pillars and test them together in the complete SRD-only Warlock slice. No previously unresolved numeric budgets, costs, or subclass feature timings are approved by this naming/structure decision.
 
+## Patron identity, classification, and dependencies — owner clarification (2026-10-24)
+
+- **Patron does not require a contracted or even external Patron entity.** The pillar must represent personal patrons, inherited/impersonal power sources, and Warlocks without an external Patron. Source identity is established from level 1; mechanics for non-SRD alternatives remain for later adjudication, not automatically unlocked.
+- **Cross-pillar prerequisites are permitted per option:** a Pact may require an eligible Patron source/feature, an Invocation may require a Pact or Patron part, and a Patron manifestation may have a Pact/Invocation dependency. Such links are explicitly modeled by the shared eligibility contract; do not impose blanket Patron requirements on all standard Pacts.
+- **Hexblade and Vestige base-class placement remains undecided.** Since the historical Hexblade and Binder were distinct 3.5e base classes, we must eventually compare their independent progression/mechanical identity against reconstructing their 5.x Warlock configurations as Patrons and other parts. This is not yet content integration.
+- **Fiend is retained as the first complete Patron conversion** because both in-SRD 5.x versions and fiendish 3.5e Warlock antecedents offer robust comparison. The latter remain reference material rather than new non-SRD entitlements.
+
+See [Patron pillar rules and pending decisions](warlock-patron-pillar-reconciliation.md) and [ten-Patron cross-edition comparison](warlock-patron-3x-5x-comparison.md).
+
 ## Pillar-by-pillar implementation status
 
 **Pillar 1 — Patron: source reconciliation underway.** The full Fiend SRD 5.1/5.2.1 source crosswalk and five stable Patron part identities have been recorded, with **source-faithful 2014/2024 preset projections**, 13 distinct spell-list entries, and six owner rulings still open. See [Warlock Patron pillar reconciliation](warlock-patron-pillar-reconciliation.md) and `data/reference/srd/warlock-fiend-patron-crosswalk.json`. **This is a validated candidate mapping, not an active native Fiend feature package**; existing `pending-native-reconciliation` markers remain untouched.

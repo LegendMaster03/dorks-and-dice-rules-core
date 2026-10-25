@@ -35,6 +35,16 @@ These analogies are **conversion candidates**, not automatically mechanically eq
 4. Historical prestige material such as **Hellfire Warlock** and **Enlightened Spirit** may inform mechanics, but native category remains **case-by-case** for single-class variants. **Eldritch Disciple** and **Eldritch Theurge** involve Warlock plus a different caster base class and therefore must remain **prestige classes** under the approved rule.
 5. The original 3.5e **Binder** used its own progression and vestiges. Its adjacency to 2026 Vestige should *not* be used to silently import Binder's mechanics into a Warlock-only Patron part.
 
+## Additional owner direction: future classifications and Patron flexibility (2026-10-24)
+
+**Neither Hexblade nor Vestige has a final native base-class-versus-Warlock ruling.** Their closest 3.5e counterparts, Hexblade and Binder, were distinct **base classes**, not Warlock source prestige classes. Native classification must evaluate whether each has sufficient independent resource/ability progression, a distinct core gameplay role, and separation from Warlock's Patron/Pact/Invocation mechanics to merit a base class, or can best be supported as Warlock-defined parts and a guided Patron preset. Do not merge or split either by default. This is separate from the already approved rules for actual prestige classes.
+
+Warlocks may obtain supernatural power **without a formal Patron contract, without a personally identified external Patron, or without an external Patron entity at all**. The Warlock's **Patron pillar** remains the home of that origin and its class development, not a universal requirement to select a named NPC. Such modes require future native entitlement definitions; their existence does not unlock other Patrons' powers for free.
+
+**Options may have cross-pillar eligibility requirements.** An individual Pact or Invocation could require an eligible Patron trait/part, and a Patron manifestation may depend on a Pact/Invocation. These are explicit typed prerequisites, not globally assumed class restrictions. This principle must be represented in the shared rules contract and must apply equally to guided and custom construction.
+
+**Fiend remains the sole active Patron of the SRD-only vertical slice.** It is particularly well grounded because the 3.5e Warlock had direct fiendish origin/heritage antecedents, and two SRD 5.x variants provide substantive rule differences to reconcile. This study references non-SRD heritage and historical variants without implementing them.
+
 ## Implications for designing the native Patron pillar
 
 - Treat **Patron identity/source** and **specific Patron-granted mechanics** separately. A source might be a pact, ancestor, inherited legacy, or other supernatural relationship without mandating a contract.
