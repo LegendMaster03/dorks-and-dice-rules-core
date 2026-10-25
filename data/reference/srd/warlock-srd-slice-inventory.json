@@ -628,7 +628,7 @@
     "Full-class migration beyond Warlock"
   ],
   "openDesignRulings": [
-    "Additional Pact eligibility and cost, plus later Pact entitlements (first Pact is dedicated class-level-1 selection)",
+    "Advanced optional additional Pacts are not prohibited but deferred; additional-Pact eligibility, minimum level, costs, maximum, and later Pact entitlement progression remain unresolved",
     "Invocation selection counts and budget compared with selected Pacts",
     "Which Patron abilities are granted at level 1 versus later advancement",
     "Native Eldritch Blast grant and improvements",
@@ -684,6 +684,29 @@
       "acquiredAlongsidePatronIdentity": true,
       "invocationChoicesRemainSeparate": true,
       "patronPactSelectionOrder": "order-independent-with-final-prerequisite-validation"
+    },
+    "additionalPactDesignDirection": {
+      "status": "owner-approved-defer-as-advanced-option",
+      "additionalPactsCategoricallyForbidden": false,
+      "approvedAsDefaultNativeEntitlement": false,
+      "availableInCurrentWarlockVerticalSlice": false,
+      "futureAdvancedAcquisition": "candidate-to-design-later",
+      "eligibility": "undecided",
+      "minimumWarlockLevel": null,
+      "costOrEntitlement": null,
+      "maximumPacts": null,
+      "note": "Do not hard-code a permanent one-Pact maximum; default native implementation grants one independent Pact at level 1. Additional Pact acquisition is postponed as an advanced option until eligibility, progression, and costs are separately approved."
+    },
+    "source2024MultiplePacts": {
+      "status": "verified-source-behavior-not-native-entitlement",
+      "method": "Pact of the Blade, Chain, and Tome are separate Eldritch Invocation selections and may coexist",
+      "prerequisites": "no additional level prerequisites on base Pact invocations",
+      "warlockLevel1InvocationSelections": 1,
+      "warlockLevel2InvocationSelections": 3,
+      "allThreeCouldBeChosenByWarlockLevel2": true,
+      "eachAdditionalPactCostsOneInvocationSelection": true,
+      "source": "https://www.dndbeyond.com/posts/1756-2024-warlock-vs-2014-warlock-whats-new",
+      "nativeDorksAndDiceDifference": "First Pact is free dedicated class-level-1 Pact choice; additional Pacts deferred to advanced rules, not automatically purchased as ordinary Invocations."
     }
   }
 }
