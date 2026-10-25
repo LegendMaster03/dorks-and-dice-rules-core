@@ -154,7 +154,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertTrue(all("hellfireShieldDamage" not in m for m in native["milestones"]))
         self.assertEqual("one-fiend-patron-feature-with-two-mode-options",native["sourceGrant"])
         specialization=approved["hellfireSpecialization"]
-        self.assertEqual("optional-hellfire-specialization-not-infernal-retaliation",specialization["disposition"])
+        self.assertEqual("deferred-to-eldritch-invocations-pillar-not-infernal-retaliation",specialization["disposition"])
         shield=specialization["shield"]
         self.assertFalse(shield["automaticallyGrantedAtFiendLevel8"])
         self.assertIsNone(shield["requiresSeparateAcquisition"])
