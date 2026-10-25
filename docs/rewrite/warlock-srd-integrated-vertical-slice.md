@@ -16,6 +16,12 @@ The Warlock has **three class-specific pillars**, which **together form its prog
 
 The labels are intentionally **Warlock-specific**, not generic names every class must adopt. Review and implement **one pillar at a time, beginning with Patron**; record interactions with future pillars and test them together in the complete SRD-only Warlock slice. No previously unresolved numeric budgets, costs, or subclass feature timings are approved by this naming/structure decision.
 
+## Pillar-by-pillar implementation status
+
+**Pillar 1 — Patron: source reconciliation underway.** The full Fiend SRD 5.1/5.2.1 source crosswalk and five stable Patron part identities have been recorded, with **source-faithful 2014/2024 preset projections**, 13 distinct spell-list entries, and six owner rulings still open. See [Warlock Patron pillar reconciliation](warlock-patron-pillar-reconciliation.md) and `data/reference/srd/warlock-fiend-patron-crosswalk.json`. **This is a validated candidate mapping, not an active native Fiend feature package**; existing `pending-native-reconciliation` markers remain untouched.
+
+**Next gate:** Resolve Patron acquisition and feature mechanics and then author one effective native Fiend definition, referencing the same underlying parts from guided and custom progression. Only then move on to **Pacts**, followed by **Eldritch Invocations**, keeping cross-pillar entitlements and budget questions visible.
+
 ## Content boundary
 
 1. Use the existing imported **SRD 5.1 (2014)** and **SRD 5.2.1 (2024)** Warlock sources for complete Band 1 (class levels 1–20) base-class progression, all SRD Pact Boons and Eldritch Invocation options, and the **Fiend Patron** subclass from both editions.
