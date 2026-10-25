@@ -29,7 +29,11 @@ This allocates **power origin, progression grant, attachment/manifestation, and 
 
 **Warning:** The Tome upgrade represents three potentially high-impact level-3 spell castings per Long Rest; approval is recorded, but future testing must compare its resource value with Blade/Chain and Pact Magic. Do not silently nerf or add compensatory grants. The level-5 Chain upgrade needs a compatible interpretation of the owner's existing **controlled creatures acting on player initiative** house rule.
 
-## Pact catalog extension: Talisman and Star Chain (owner-approved 2026-10-25)
+## Four active Pact candidates, fifth historical Pact archived (2026-10-25)
+
+**Current owner decision:** Keep **Blade, Chain, Tome, and Talisman** in active Pact reconciliation. **Star Chain and the Seeker Patron are disabled/deferred**, with their earlier research, historical five-Pact matrix considerations, and prerequisite tests preserved below. No source text or historical reasoning is deleted. The 2016 UA permits a Seeker Warlock to take **Blade, Chain, or Tome** instead of Star Chain; Star Chain requires Seeker, **not vice versa**. A future return to the UA options requires explicit owner review. Historical ten-Patron × five-Pact screening is **not an active build or implementation plan**.
+
+### Historical extension: Talisman and Star Chain (earlier owner-approved review, partially superseded)
 
 This original Patron allocation study was authored for **ten Patron concepts × Blade/Chain/Tome** (30 conceptual pairings). The owner subsequently expanded Pact reconciliation to include **Talisman** (official non-SRD 2020) and **Star Chain** (2016 WotC Seeker-specific UA playtest), producing a conceptual **ten × five = fifty** combinations for *eligibility screening*. **The original 30-pair research does not itself validate the extra twenty combinations**. Consult [five-Pact scope](warlock-five-pact-reconciliation-scope.md).
 
