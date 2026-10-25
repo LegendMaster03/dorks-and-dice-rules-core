@@ -49,29 +49,29 @@ The original 3.5e Warlock class begins in *Complete Arcane* (2004), with the Mar
 | Invocation choices known | 3.5e ends at 12, 2014 at 8, 2024 at 10 | One nonadditive native progression, preserving underlying option prerequisites |
 | Eldritch Blast | Automatically granted 3.5e spell-like invocation versus optional modern cantrip | One base entitlement and **one** attack/damage progression; do not stack 3.5e dice with modern beams |
 | Pact Boon | Independent choice at 2014 level 3 versus part of 2024 invocation catalog | Choose one access path; do not grant double Boons |
-| Original 3.5e class powers | Distinct built-in defense, healing and item-use features; Detect Magic overlaps Eldritch Sight | **APPROVED:** retain Damage Reduction, Deceive Item, Fiendish Resilience, Energy Resistance, Imbue Item; keep Detect Magic exclusively as an Eldritch Sight invocation, not an automatic grant |
+| Original 3.5e class powers | Distinct built-in defense, healing and item-use features; Detect Magic overlaps Eldritch Sight | **CURRENT RULING:** retain Damage Reduction, Deceive Item, Energy Resistance, Imbue Item as native base-class grants. Fiendish Resilience fast healing moves to the **Fiend Patron's single Infernal Retaliation feature**, alongside Flamewreath and Hellfire Shield (one shared use per Long Rest); automatic Detect Magic remains excluded. |
 | Invocation grades | 3.5e Least/Lesser/Greater/Dark at 1/6/11/16 versus modern per-option level prerequisites | Record unlock metadata now; detailed prerequisites are catalog work |
 | Capstone and recovery | 2014 full Pact slot recovery after a 1-minute entreaty at 20; 2024 Magical Cunning at 2 upgraded by Eldritch Master at 20 | Use the 2024 upgrade path to avoid redundant full-charge grants |
 
 ### Historical features, class grants rather than subclass powers
 
-3.5e Warlock has **Detect Magic at 2**; cold-iron-qualified **Damage Reduction at 3/7/11/15/19** (1 through 5); **Deceive Item at 4** (historically take 10 on Use Magic Device checks while distracted/threatened); **Fiendish Resilience at 8/13/18** (historical limited-use healing 1, 2, 5 per round for 2 minutes); **Energy Resistance at 10/20** (two fixed energy choices, resistance 5 then 10); and **Imbue Item at 12** (historical item-creation feat plus magic-item-use check substituting for missing prerequisite spells). These are actual original **base** features. Exact native conversion of damage reduction, skill checks and crafting is shared-system work; the decision to grant them remains open.
+3.5e Warlock has **Detect Magic at 2**; cold-iron-qualified **Damage Reduction at 3/7/11/15/19** (1 through 5); **Deceive Item at 4** (historically take 10 on Use Magic Device checks while distracted/threatened); **Fiendish Resilience at 8/13/18** (historical limited-use healing 1, 2, 5 per round for 2 minutes); **Energy Resistance at 10/20** (two fixed energy choices, resistance 5 then 10); and **Imbue Item at 12** (historical item-creation feat plus magic-item-use check substituting for missing prerequisite spells). These are actual original **3.5e base** features, which must remain intact in the historical comparison even when native Dorks & Dice reclassifies them. The current native disposition is four universal base-class families; historical fast healing is now Fiend-only Infernal Retaliation. Shared damage-reduction, skill-check and crafting conversion remains implementation work.
 
 The original 3.5e Eldritch Blast is automatically granted and counts as an **invocation under published errata**, though it does not consume one of the 1–12 chosen invocation slots. Original damage reaches 9d6 at level 20, with one blast shape and one essence per blast. Modern 5.x Eldritch Blast is a selectable cantrip with beam scaling; imported 2024 does not automatically include it as a class feature. The base-class pass must decide baseline access and **one** scaling algorithm, while the individual shapes and essences can wait.
 
 **Modern overlap warning:** Historical Detect Magic and modern Eldritch Sight overlap; Deceive Item and Imbue Item rely on shared magic-item competencies/crafting; Fiendish Resilience is not identical to the modern Fiendish Vigor invocation; Magical Cunning and Eldritch Master are connected. Preserve their distinction without double counting the same benefit.
 
-### Case 1 approval — historical base-class grants (owner, 2026-10-24)
+### Case 1 historical approval — revised by later owner decision (2026-10-24)
 
-The owner approved the original historical base-class feature progression **except** the automatic Detect Magic grant. At-will Detect Magic remains selectable through **Eldritch Sight**, and no Warlock receives it automatically at level 2.
+The owner initially approved the original historical base-class feature progression **except** automatic Detect Magic. A later owner ruling moved Fiendish Resilience fast healing from universal base-class progression into the Fiend Patron's **one Infernal Retaliation feature**, which also offers Fiendish Flamewreath and Hellfire Shield. The feature's three effects share one use per Long Rest. At-will Detect Magic remains selectable through **Eldritch Sight**, and no Warlock receives it automatically at level 2.
 
 - **Damage Reduction:** 1/2/3/4/5 at class levels 3/7/11/15/19, retaining the cold-iron bypass and flat native Damage Reduction.
 - **Deceive Item:** Level 4, retain historical take 10 on eligible magical-item checks while threatened or distracted, mapped to the shared competency system.
-- **Fiendish Resilience:** Levels 8/13/18, 1/2/5 HP recovered per round over up to 20 rounds, one use restored on each Long Rest.
+- **Fiendish Resilience (historically approved, now reclassified):** Source levels 8/13/18 and 1/2/5 healing over 20 rounds are preserved as provenance. **No universal base-class grant**; the feature becomes one Fiend-specific Infernal Retaliation effect.
 - **Energy Resistance:** Levels 10/20, two selected types, fixed 5 then 10 damage mitigated; historical electricity and sonic map to native lightning and thunder.
 - **Imbue Item:** Level 12, relevant item-creation entitlement required; permit historical substitute magic-item-use check for missing spell prerequisites, arcane DC 15 + spell level or divine DC 25 + spell level, preserving failure/retry restrictions and using shared crafting implementation.
 
-This decision does **not** resolve invocation selection counts, Eldritch Blast, or Pact Boon packaging. The owner-approved features will be entered into the native 1–20 progression when those remaining class cases are resolved; this source comparison does not prematurely activate them.
+This historical source decision does **not** resolve invocation selection counts or Pact Boon packaging. Eldritch Blast is now approved as an automatic level-1 Warlock feature. Only the four remaining historical base-class families will enter the native 1–20 base progression; Fiendish Resilience healing belongs to the Fiend-only Infernal Retaliation grant; this source comparison does not prematurely activate them.
 
 ### Inactive content to preserve
 
