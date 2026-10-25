@@ -175,7 +175,7 @@ The owner-approved **Infernal Retaliation** family is separate and unaffected.
 
 The 3.5e universal base Warlock fast-healing grant is now **superseded as a native class grant**, although its source mechanics and previous decision are preserved for provenance. Damage Reduction, Deceive Item, Energy Resistance and Imbue Item remain approved base Warlock features. The modern Fiend Patron's level-10 damage-resistance feature, also named Fiendish Resilience, has a distinct native ID and is **not** an Infernal Retaliation mode.
 
-**Not yet resolved:** When the Fiend Patron acquires Infernal Retaliation; converted healing/retaliation damage and duration; exact effects/timing on a player-selected Reaction without a mandatory trigger; whether active fast healing operates at 0 HP; and the original Hellfire Shield's Constitution-damage cost. Do not assume 3.5e base-class level 8 is automatically the native Fiend feature level or that all original values are approved. The single-feature entitlement and shared Long Rest recovery **are** approved.
+**Approved progression:** Infernal Retaliation is granted as **one Fiend Patron feature at Warlock level 8**, upgrading at **levels 13 and 18**. Fast healing improves **1/2/5 HP per round**, and Flamewreath retaliation improves **1d6/2d6/5d6 Fire damage**. Hellfire Shield instead deals **damage derived from the Warlock's current Eldritch Blast**, including a Hellfire enhancement only when separately acquired and compatible; it gets no fixed bonus tiers at levels 13 or 18. **One shared activation per Long Rest** across all three modes remains unchanged. **Still unresolved:** exact conversion/duration/resolution timing for player-chosen Reactions, whether fast healing operates at 0 HP, Hellfire Shield's original Constitution-damage cost, and the damage-calculation rules for multiple Eldritch Blast beams or optional Hellfire enhancements.
 
 ### Scope and provenance
 
@@ -208,6 +208,18 @@ All three Infernal Retaliation modes—Fiendish Resilience fast healing, Fiendis
 | **Fiendish Flamewreath** | *Player's Handbook II*, not *Complete Mage* | **Yes** | Melee-retaliation **1d6 / 2d6 / 5d6 Fire**; original activation lasted 20 rounds |
 | **Hellfire Shield** | *Fiendish Codex II* | **No** | Historically obtained at **Hellfire Warlock prestige level 3** only; its damage equaled Eldritch Blast **including the Hellfire Blast bonus**, so it scaled indirectly with those abilities rather than having its own three-tier class-feature advancement |
 
-The proposed **native** Infernal Retaliation progression at **Warlock levels 8, 13 and 18 is not approved** by this source comparison. Fiendish Resilience and Flamewreath offer a faithful three-step template; Hellfire Shield would require either a deliberately new native three-tier progression or a compatible derived-damage calculation. Its historical Constitution damage cost and dependency on Hellfire Blast are **not silently granted or adopted** into native mechanics. The native Fiend-feature acquisition level, damage/duration conversion, and compatibility with Patron Imprint/Eldritch Blast enhancements are still open.
+The owner has **approved** a native Fiend progression at **Warlock levels 8, 13, and 18**, including the historically established fast-healing and Flamewreath values: **1/2/5 HP per round** and **1d6/2d6/5d6 Fire retaliation**, respectively. At level 8, the Fiend acquires **all three modes as one feature**; levels 13 and 18 improve existing modes rather than grant new resources or entitlements. **Hellfire Shield scales by derived damage** from the Warlock's current Eldritch Blast, incorporating a Hellfire Blast enhancement only if separately acquired and compatible; there are **no independent fixed Hellfire Shield tier dice** or automatic Hellfire Blast grants. The historical Constitution-damage cost and full compatibility with Patron Imprints, Blast Shapes, multiple beams, and critical rules remain unresolved. Effect duration, reaction resolution timing, and fast healing at 0 HP also remain open.
 
 **Sources for historical facts:** *Complete Arcane* (Warlock Fiendish Resilience), *Player's Handbook II* p. 65 (Fiendish Flamewreath), *Fiendish Codex II* (Hellfire Warlock, Hellfire Shield).
+
+## Owner-approved Fiend Infernal Retaliation progression (2026-10-24)
+
+**Class milestones 8 / 13 / 18 are now approved**, and apply to the *single* Fiend-specific **Infernal Retaliation** feature. The three effects are accessible when this one feature is acquired; there are **not** three additional acquisitions or daily pools.
+
+| Warlock class level | Fiendish Resilience fast healing | Fiendish Flamewreath retaliation | Hellfire Shield retaliation |
+| --- | --- | --- | --- |
+| **8 (grant)** | 1 HP per round | 1d6 Fire | Damage derived from current Eldritch Blast, with eligible Hellfire enhancements |
+| **13 (upgrade)** | 2 HP per round | 2d6 Fire | Continues derived damage, no new fixed tier |
+| **18 (upgrade)** | 5 HP per round | 5d6 Fire | Continues derived damage, no new fixed tier |
+
+All three **activate as player-chosen Reactions without mandatory triggers**, spending **one shared use per Long Rest**. A character needs no separate Hellfire Blast entitlement to possess the Shield mode; unowned or inapplicable enhancements contribute nothing. Numerical damage resolution for the source attack (including potential multiple beams), activation durations, targeting, critical interaction, fast healing at 0 HP, and whether Hellfire Shield retains Constitution damage are later reconciliation tasks. Do not guess these or apply an extra fixed Shield bonus at levels 13/18. This is an owner-approved design and entitlement rule, not yet an executable native feature.
