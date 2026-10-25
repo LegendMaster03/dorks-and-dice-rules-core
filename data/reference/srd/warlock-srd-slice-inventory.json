@@ -628,12 +628,45 @@
     "Full-class migration beyond Warlock"
   ],
   "openDesignRulings": [
-    "Pact Boon entitlement, uniqueness, and cost",
+    "Pact initial selection LEVEL, extra Pact eligibility and cost, and any further Pact entitlement progression (dedicated non-Invocation first Pact now approved)",
     "Invocation selection counts and budget compared with selected Pacts",
     "Which Patron abilities are granted at level 1 versus later advancement",
     "Native Eldritch Blast grant and improvements",
     "How historical at-will and modern slot-based abilities coexist",
     "Fiend feature edition reconciliation and repeatability/resource costs"
   ],
-  "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags."
+  "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
+  "approvedNativePactDirection": {
+    "status": "owner-approved-principle-with-acquisition-details-open",
+    "pillar": "Pacts",
+    "separateFromInvocationPillar": true,
+    "inScopeChoices": [
+      "Pact of the Blade",
+      "Pact of the Chain",
+      "Pact of the Tome"
+    ],
+    "everyWarlockReceivesDedicatedInitialPactChoice": true,
+    "initialPactEntitlement": "separate-class-pact-selection-not-eldritch-invocation",
+    "firstPactConsumesInvocationSelection": false,
+    "pactChoicesAreOrdinaryInvocations": false,
+    "pactEnhancementsCanBeInvocations": true,
+    "invocationMayRequirePact": true,
+    "existingPactSelectionIsNotDuplicatedByGuidedBuild": true,
+    "decisionsPending": {
+      "initialPactAcquisitionWarlockLevel": null,
+      "additionalPactsAllowed": null,
+      "additionalPactsAcquisitionCost": null,
+      "furtherPactEntitlementProgression": null,
+      "individualPactMechanicalReconciliation": [
+        "Pact of the Blade",
+        "Pact of the Chain",
+        "Pact of the Tome"
+      ]
+    },
+    "sourcePreservation": {
+      "SRD51": "Original separate Pact Boon entries retained as historical sources",
+      "SRD52": "Original invocation-categorized Pact entries retained as historical sources; not native acquisition cost"
+    },
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization."
+  }
 }
