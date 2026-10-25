@@ -412,29 +412,76 @@
       },
       "pending": [
         "native Fiend feature acquisition level",
-        "each reaction's qualifying trigger and timing window; effect duration and numerical scaling",
         "Hellfire Shield Constitution-damage cost and compatibility",
-        "healing interaction at 0 HP"
+        "healing interaction at 0 HP",
+        "precise duration and resolution timing for player-chosen Reactions, including when any retaliatory effects take place"
       ],
-      "qualification": "One feature with three effects, not three independently granted abilities. These directions are approved design rules, not an executable native implementation. Fiend Patron level-10 resistance remains a separate feature despite the historical Fiendish Resilience name collision. All three effects require a Reaction upon activation, with precise triggers unresolved. Their historical source action types are provenance only; the native Reaction rule deliberately overrides them.",
+      "qualification": "One feature with three effects, not three independently granted abilities. These directions are approved design rules, not an executable native implementation. Fiend Patron level-10 resistance remains a separate feature despite the historical Fiendish Resilience name collision. All three effects require a Reaction upon activation, but no trigger; the player chooses when to activate them. Their historical source action types are provenance only; the native Reaction rule deliberately overrides them. Historically, only fast healing and Flamewreath have explicit three-step progressions; Hellfire Shield scales via associated Eldritch Blast damage rather than three independent tiers.",
       "activation": {
         "actionType": "reaction",
         "modes": {
           "fiendish-resilience-fast-healing": {
             "actionType": "reaction",
-            "trigger": "pending-native-reconciliation"
+            "requiresExternalTrigger": false,
+            "activation": "player-choice"
           },
           "fiendish-flamewreath": {
             "actionType": "reaction",
-            "trigger": "pending-native-reconciliation"
+            "requiresExternalTrigger": false,
+            "activation": "player-choice"
           },
           "hellfire-shield": {
             "actionType": "reaction",
-            "trigger": "pending-native-reconciliation"
+            "requiresExternalTrigger": false,
+            "activation": "player-choice"
           }
         },
         "actionCost": "one-reaction",
-        "clarification": "Owner approved all three effects as Reactions. Each requires a qualifying trigger, to be chosen individually. When an effect is activated it consumes both the Reaction and the single Infernal Retaliation use per Long Rest."
+        "clarification": "Owner correction: In native Dorks & Dice, Reactions have no mandatory trigger. The Warlock may choose when to use an available Reaction, and may activate any Infernal Retaliation effect, consuming both that Reaction and the feature's one shared use per Long Rest. Ongoing effects do not consume more Reactions merely to continue.",
+        "actionTiming": "player-chosen-when-reaction-available",
+        "requiresExternalTrigger": false
+      },
+      "historicalEffectScaling": {
+        "sourceDistinction": "provenance-only; these source tiers do not by themselves approve native Fiend feature acquisition levels",
+        "fiendishResilience": {
+          "source": "Complete Arcane",
+          "sourceWarlockLevels": [
+            8,
+            13,
+            18
+          ],
+          "fastHealingPerRound": [
+            1,
+            2,
+            5
+          ],
+          "durationRounds": 20,
+          "sourceScaling": "three-explicit-tiers"
+        },
+        "fiendishFlamewreath": {
+          "source": "Player's Handbook II",
+          "sourceWarlockLevels": [
+            8,
+            13,
+            18
+          ],
+          "retaliationFireDamage": [
+            "1d6",
+            "2d6",
+            "5d6"
+          ],
+          "durationRounds": 20,
+          "sourceScaling": "three-explicit-tiers"
+        },
+        "hellfireShield": {
+          "source": "Fiendish Codex II",
+          "sourceHellfireWarlockLevel": 3,
+          "sourceScaling": "one-acquisition-tier; damage scales indirectly with Eldritch Blast including Hellfire Blast enhancement",
+          "sourceDamage": "eldritch-blast-damage-plus-hellfire-blast-bonus-when-applicable",
+          "sourceAbilityDamageCost": "1 Constitution damage per activation",
+          "nativeThreeTierProgression": "not-yet-designed",
+          "compatibilityWithNativeHellfireEnhancement": "not-yet-reconciled"
+        }
       }
     }
   }
