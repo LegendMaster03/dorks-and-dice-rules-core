@@ -6,11 +6,11 @@
 
 ## Summary
 
-The native Fiend is a Warlock Patron acquired at **Warlock class level 1**. It provides Dark One's Blessing, Patron spell access, Dark One's Own Luck, one two-mode Infernal Retaliation feature with upgrades, a separate level-10 damage-resistance feature, and Hurl Through Hell.
+The native Fiend is a Warlock Patron acquired at **Warlock class level 1**. It provides Dark One's Blessing, Patron spell access, Dark One's Own Luck, one two-mode Infernal Retaliation feature with upgrades, and Hurl Through Hell. The 2014/2024 Patron level-10 damage-resistance feature is retired from native progression without replacement.
 
 **Hellfire Shield is excluded from the Fiend's normal automatic features and from Infernal Retaliation. Its acquisition decision is deferred to the Eldritch Invocations pillar.** The three possible Fiend-restricted routes—automatic Patron grant, Patron choice, or Invocation with Fiend prerequisite—are candidates, not a completed ruling.
 
-**One core Fiend mechanic remains open:** the level-10 damage-resistance feature, which the owner is considering replacing with the newer defensive mechanics. The spell roster and entitlement rules are now approved: default C, optional A/B. Keep the native Fiend subclass `pending-native-reconciliation` until these and any required effect-resolution details are adjudicated. A consolidated decision is not an executable package.
+**All identified Fiend Patron feature dispositions are approved.** The merged 13-spell roster uses automatic acquisition by default and 2014-style elective acquisition as one optional rule. Level-10 Patron resistance is retired without replacement. The staged native Fiend remains `pending-native-reconciliation` until approved mechanics are implemented and outstanding effect timing and cross-pillar interactions are validated. This record is not an executable package.
 
 ## Approved or partially approved advancement
 
@@ -21,7 +21,7 @@ The native Fiend is a Warlock Patron acquired at **Warlock class level 1**. It p
 | **1** | Patron spell access | Default automatically grants 13 spells at 3/5/7/9, including the three restored 2014-only spells | Optional 2014-style expanded choices from the same 13-spell list |
 | **6** | Dark One's Own Luck | Add 1d10 after an ability check/save roll, before resolution, at most once per roll; uses = max(1, Charisma modifier), recovered on Long Rest | Approved |
 | **8** | Infernal Retaliation | Acquire one Fiend Patron feature with **two** alternative Reaction modes: Fiendish Resilience fast healing and Fiendish Flamewreath; shared 1 use/Long Rest | Tick and damage-event implementation details below |
-| **10** | Fiendish Resilience (damage resistance) | Distinct, source-attested Fiend Patron resistance feature at class level 10 | Damage-type eligibility and bypass **unresolved** |
+| **10** | Fiendish Resilience (selected-type damage resistance) | **Retired** from native Fiend Patron progression | No replacement; original SRD 5.1/5.2.1 feature definitions remain historical |
 | **13** | Infernal Retaliation improvement | Increase fast healing to 2 HP/round and Flamewreath to 2d6 Fire retaliation | No extra feature use |
 | **14** | Hurl Through Hell | Approved 2024-style save, damage timing, return, condition, and recovery | Details below |
 | **18** | Infernal Retaliation improvement | Increase fast healing to 5 HP/round and Flamewreath to 5d6 Fire retaliation | No extra feature use |
@@ -58,7 +58,7 @@ Infernal Retaliation is **not** a shared base Warlock feature. It is acquired at
 - **Fast healing at 0 HP:** If the Warlock is reduced to 0 HP **while this mode is already active**, the Warlock **stabilizes once** without recovering any HP or consciousness. The mode does **not** heal while the Warlock remains at 0 HP, restore consciousness, revive a dead creature, or automatically stabilize again after subsequent damage. Further damage at 0 HP applies normal damage/death-saving-throw and stabilization rules. A Warlock already unconscious ordinarily can not activate its Reaction to start this mode.
 - **Remaining procedural implementation:** Determine exact per-round healing tick timing above 0 HP, plus when Flamewreath retaliation damage applies during the ongoing effect. Do not confuse these event-resolution details with a requirement for an external trigger to activate the Reaction.
 
-**Name collision:** The 3.5e healing effect called *Fiendish Resilience* (now an Infernal Retaliation mode) is **not** the 5.x **level-10 Fiendish Resilience damage-resistance** feature. They must have separate native feature identities.
+**Name collision:** The 3.5e healing effect called *Fiendish Resilience* (now an Infernal Retaliation mode) is **not** the 5.x **level-10 Fiendish Resilience damage-resistance** feature. The damage-resistance feature is now source-only and must not become an additional native grant; the healing mode remains part of Infernal Retaliation.
 
 ## Hurl Through Hell
 
@@ -101,16 +101,13 @@ No daily preparation; automatically acquired Patron spells are known and accessi
 
 The original SRD lists remain preserved as historical source projections rather than playable roster restrictions. Non-SRD Fiendish Heritage is not automatically introduced. This approval supersedes the previous C default (ten automatic plus three optional choices) and the previous level-1 all-automatic B schedule.
 
-## Remaining Fiend Patron mechanic review
+## Level-10 Fiend resistance — retired without replacement (owner-approved)
 
-### 2. Fiendish Resilience: damage resistance at level 10
+**Native decision:** Omit the Fiend Patron's 2014/2024 **Fiendish Resilience selected-type damage resistance** from native advancement. It grants **no feature, no alternate choice, and no replacement at level 10**. Retain both SRD versions, their differing damage-type restrictions, and the historical source-preset milestones only for provenance and import comparison.
 
-The **feature slot and separate identity** are retained; the final rule for damage type selection is **not yet approved**.
+**Unaffected Warlock base feature:** Every qualifying Warlock still gains the previously approved 3.5e-derived **Energy Resistance** at Warlock level **10**, selecting **two energy damage types**, mitigating **5 damage** of each selected type, upgrading to **10 damage** at Warlock level **20**. This is a universal Warlock ability, not the retired Fiend Patron resistance, and must not be omitted or double-granted.
 
-- **2014 source:** Choice of damage resistance after a Short or Long Rest, with a magical/silvered-weapon bypass.
-- **2024 source:** Choice excludes Force damage, and the earlier magical/silvered-weapon bypass is absent.
-
-The owner must decide Force eligibility, selection-change cadence, and any bypass behavior. This does **not** reopen the separately approved fast-healing mode.
+**Unaffected Fiend feature:** Infernal Retaliation's fast healing and Flamewreath progression at levels **8/13/18** remains approved; Hellfire Shield is still deferred to Invocations.
 
 ## Hellfire Shield — deferred explicitly to Eldritch Invocations pillar
 
@@ -129,8 +126,8 @@ The approved design direction outside Infernal Retaliation remains **player-chos
 ## Completion and implementation gate
 
 - **Settled:** Fiend identity at level 1; **native automatic 13-spell access with optional 2014-style selection from the same 13-spell list**; Blessing; Luck; Hurl Through Hell; one two-mode Infernal Retaliation at 8/13/18 with 20-round duration, shared one-use Long Rest recovery, and the once-only stabilization rule; Shield excluded and deferred to the Invocation pillar.
-- **Not settled:** Level-10 Fiend damage resistance, currently under consideration for supersession by the improved native defensive mechanics. Some Infernal Retaliation effect resolution still needs shared engine mapping.
+- **Not yet implemented:** Some Infernal Retaliation tick/retaliation-event resolution requires shared engine mapping; the native Fiend definition and cross-pillar entitlement integration still require implementation. No Fiend feature-disposition vote remains pending.
 - **Native activation:** Do not overwrite `data/native/classes/subclasses/warlock/fiend.json`'s `pending-native-reconciliation` candidate staging or claim a playable vertical slice until remaining mechanics are resolved and tests validated.
-- **Workflow:** Resolve the remaining level-10 damage-resistance disposition, then proceed through **Pacts** and **Eldritch Invocations**; address deferred Hellfire Shield routes in the **Invocations pillar**, without reopening Infernal Retaliation.
+- **Workflow:** Encode and validate this approved Fiend Patron design, then proceed through **Pacts** and **Eldritch Invocations**. Resolve Hellfire Shield acquisition and costs in the Invocations pillar; do not reintroduce retired level-10 Patron resistance.
 
 Authoritative sources: `data/reference/srd/warlock-fiend-patron-crosswalk.json`; `data/reference/srd/class-reconciliation-decisions.json`; `data/reference/3x/warlock-band1-base-comparison.json`; original SRD 5.1 and 5.2.1 source candidates preserved under `data/native/classes/subclasses/warlock/fiend.json`.
