@@ -634,7 +634,8 @@
     "Native Eldritch Blast grant and improvements",
     "How historical at-will and modern slot-based abilities coexist",
     "Fiend feature edition reconciliation and repeatability/resource costs",
-    "Pact break effects and Invocation restoration/transfer details: preserve prior acquisitions and model Pact affiliation; decide timing, refund/replacement, ownership migration, and legal restoration costs later."
+    "Pact break effects and Invocation restoration/transfer details: preserve prior acquisitions and model Pact affiliation; decide timing, refund/replacement, ownership migration, and legal restoration costs later.",
+    "Invocation Pact/Patron requirements and Pact Patron requirements are supported; individual option restrictions are deferred to each option reconciliation. Do not impose blanket restrictions or assume waived prerequisites on transfer."
   ],
   "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
   "approvedNativePactDirection": {
@@ -667,7 +668,7 @@
       "SRD51": "Historical 2014 separate Pact Boon at class level 3 preserved; native first Pact uses its own entitlement at level 1",
       "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices"
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating.",
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible.",
     "initialPactClassLevel": 1,
     "pactEntitlementCountAtLevel1": 1,
     "levelOnePillarRoles": {
@@ -739,7 +740,86 @@
       },
       "pactDependenceVsPrerequisite": "Every Invocation has Pact affiliation, even when it does not list an individual Pact type as its game-mechanical prerequisite.",
       "preservePlayerChoice": "Pact loss should have identifiable Invocation effects, but rules for refunded selections, replacement clauses and negotiated restoration remain undecided.",
-      "sourceRulesPreserved": true
+      "sourceRulesPreserved": true,
+      "compatibilityRevalidation": "A Pact-bound Invocation cannot be enabled under an incompatible Pact or Patron merely by restoration/transfer terms. Revalidate explicit Pact/Patron-specific prerequisites when affiliation changes; rules for explicit exceptions or conversion remain deferred."
+    },
+    "compatibilityRules": {
+      "status": "owner-approved-cross-pillar-restriction-design",
+      "pactChoice": {
+        "mayRequireCompatiblePatron": true,
+        "restrictionScope": "specific-pact-definition-not-universal-for-all-pacts",
+        "requirementTargets": [
+          "patron-type",
+          "patron-trait",
+          "patron-feature",
+          "other-approved-patron-eligibility"
+        ],
+        "validatesPatronAssociatedWithPact": true,
+        "noMandatoryPatronRestrictionsOnEveryPact": true
+      },
+      "invocationChoice": {
+        "alwaysHasBoundPact": true,
+        "mayRestrictPactType": true,
+        "mayRestrictPatronOfBoundPact": true,
+        "mayRequireBothPactAndItsPatron": true,
+        "mayHaveAdditionalFeatureOrLevelRequirements": true,
+        "noMandatorySpecificPactTypeRestrictionOnEveryInvocation": true,
+        "noMandatoryPatronRestrictionOnEveryInvocation": true,
+        "validatesAgainstBoundPactNotAnyUnrelatedPact": true,
+        "validatesAgainstPatronOfBoundPactNotAnyOtherPatron": true
+      },
+      "pactAssociations": {
+        "pactHasPatronSourceOrRelationship": true,
+        "patronMayBeUnrevealedOrInherited": true,
+        "literalPersonalContractNotRequired": true,
+        "differentPactsMayHaveSeparatePatronRelationshipsConceptually": true,
+        "multiplePactAcquisitionGates": "deferred",
+        "pactToPatronRecordScope": "per-distinct-pact-not-solely-global-character-patron"
+      },
+      "validation": {
+        "validatePactPatronEligibilityOnAcquisition": true,
+        "validateInvocationPactAndPatronEligibilityOnAcquisition": true,
+        "revalidateOnInvocationRestorationOrTransfer": true,
+        "newPactTermsMustExplicitlyAuthorizeRestorationOrTransfer": true,
+        "newPactTermsNotAutomaticWaiverOfRequirements": true,
+        "explicitExceptionMechanism": "deferred-for-advanced-rules",
+        "noUnapprovedExceptionOrSourceSpecificRestriction": true,
+        "useSharedTypedPrerequisites": true,
+        "sameInGuidedAndCustomBuilds": true,
+        "explainIneligibilityToUser": true,
+        "historicalRecordsPreservedIfUnavailable": true
+      },
+      "exampleEligibilityMatrixNonPlayable": [
+        {
+          "pact": "Blade",
+          "pactPatron": "Fiend",
+          "invocationRequiresPact": "Blade",
+          "invocationRequiresPatron": "Fiend",
+          "eligible": true
+        },
+        {
+          "pact": "Tome",
+          "pactPatron": "Fiend",
+          "invocationRequiresPact": "Blade",
+          "invocationRequiresPatron": "Fiend",
+          "eligible": false
+        },
+        {
+          "pact": "Blade",
+          "pactPatron": "Archfey",
+          "invocationRequiresPact": "Blade",
+          "invocationRequiresPatron": "Fiend",
+          "eligible": false
+        },
+        {
+          "pact": "Blade",
+          "pactPatron": "Archfey",
+          "invocationRequiresPact": null,
+          "invocationRequiresPatron": null,
+          "eligible": true
+        }
+      ],
+      "note": "Examples are eligibility fixtures only and do not create real Fiend-only or Pact-only Invocations. Actual restrictions are authored individually, not assigned by category globally."
     }
   }
 }
