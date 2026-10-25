@@ -63,7 +63,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
         self.assertEqual(3,len(open_rules["individualPactMechanicalReconciliation"]))
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
-        self.assertIn("Additional Pact eligibility and cost",self.inventory["openDesignRulings"][0])
+        self.assertIn("defer eligibility, level, cost",self.inventory["openDesignRulings"][0])
 
     def test_invocations_are_pact_bound_and_not_independent(self):
         p=self.inventory["approvedNativePactDirection"]
