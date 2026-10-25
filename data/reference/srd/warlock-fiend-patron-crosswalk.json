@@ -384,8 +384,7 @@
       "grantedAs": "one-fiend-patron-feature",
       "availableEffects": [
         "fiendish-resilience-fast-healing",
-        "fiendish-flamewreath",
-        "hellfire-shield"
+        "fiendish-flamewreath"
       ],
       "effectsAreSeparateEntitlements": false,
       "choiceTiming": "on-activation",
@@ -411,12 +410,11 @@
         "sourceDurationRounds": 20
       },
       "pending": [
-        "Hellfire Shield Constitution-damage cost and compatibility",
-        "healing interaction at 0 HP",
-        "duration and resolution timing for player-chosen Reactions, including when any retaliatory effects take place",
-        "exact native Eldritch Blast / Hellfire Blast damage compatibility for Hellfire Shield, including multi-beam and critical resolution"
+        "precise handling of fast healing tick timing while above 0 HP",
+        "Flamewreath retaliation damage application against attacks during its duration",
+        "Fiend-specific implementation and source-conversion validation; exact shield costs belong to separate optional Hellfire specialization"
       ],
-      "qualification": "One feature with three effects, not three independently granted abilities. These directions are approved design rules, not an executable native implementation. Fiend Patron level-10 resistance remains a separate feature despite the historical Fiendish Resilience name collision. All three effects require a Reaction upon activation, but no trigger; the player chooses when to activate them. Their historical source action types are provenance only; the native Reaction rule deliberately overrides them. Historically, only fast healing and Flamewreath have explicit three-step progressions; Hellfire Shield scales via associated Eldritch Blast damage rather than three independent tiers. Owner approved acquiring Infernal Retaliation at Warlock level 8 with upgrades at levels 13 and 18: healing 1/2/5 per round, Flamewreath retaliation 1d6/2d6/5d6 Fire, and Hellfire Shield damage derived from current Eldritch Blast with applicable Hellfire enhancement instead of invented fixed tier dice. All remain one entitlement and one shared Long Rest use.",
+      "qualification": "One Fiend Patron feature with TWO player-chosen Reaction effects, Fiendish Resilience fast healing and Fiendish Flamewreath. One shared use per Long Rest; acquire at Warlock level 8 and improve at levels 13/18. Each sustained mode lasts 20 rounds. If active fast healing encounters 0 HP, stabilize the Warlock once but do not heal at 0 HP or restore consciousness, and do not automatically restabilize after further damage. Hellfire Shield is REMOVED from this feature and is a separate optional Hellfire specialization candidate, not an automatic Fiend grant. Patron level-10 damage resistance remains distinct. Native feature executable definition is still pending.",
       "activation": {
         "actionType": "reaction",
         "modes": {
@@ -429,20 +427,15 @@
             "actionType": "reaction",
             "requiresExternalTrigger": false,
             "activation": "player-choice"
-          },
-          "hellfire-shield": {
-            "actionType": "reaction",
-            "requiresExternalTrigger": false,
-            "activation": "player-choice"
           }
         },
         "actionCost": "one-reaction",
-        "clarification": "Owner correction: In native Dorks & Dice, Reactions have no mandatory trigger. The Warlock may choose when to use an available Reaction, and may activate any Infernal Retaliation effect, consuming both that Reaction and the feature's one shared use per Long Rest. Ongoing effects do not consume more Reactions merely to continue.",
+        "clarification": "Native Dorks & Dice Reactions do not require a trigger: the player chooses when to activate either eligible effect while a Reaction is available. Activating either mode spends that Reaction and the one shared Infernal Retaliation use per Long Rest; ongoing effects do not consume further Reactions.",
         "actionTiming": "player-chosen-when-reaction-available",
         "requiresExternalTrigger": false
       },
       "historicalEffectScaling": {
-        "sourceDistinction": "Historical sources for numeric scaling; owner has now adopted native Infernal Retaliation levels 8/13/18 and retained the historical fast-healing and Flamewreath tier values in the native mode progression. Hellfire Shield has no independent fixed-damage tier.",
+        "sourceDistinction": "Historical 3.5e 1/2/5 fast healing and 1d6/2d6/5d6 Flamewreath tiers inform the approved native two-effect Fiend feature; Hellfire Shield history is separately preserved under optional Hellfire specialization, not the feature.",
         "fiendishResilience": {
           "source": "Complete Arcane",
           "sourceWarlockLevels": [
@@ -472,15 +465,6 @@
           ],
           "durationRounds": 20,
           "sourceScaling": "three-explicit-tiers"
-        },
-        "hellfireShield": {
-          "source": "Fiendish Codex II",
-          "sourceHellfireWarlockLevel": 3,
-          "sourceScaling": "one-acquisition-tier; damage scales indirectly with Eldritch Blast including Hellfire Blast enhancement",
-          "sourceDamage": "eldritch-blast-damage-plus-hellfire-blast-bonus-when-applicable",
-          "sourceAbilityDamageCost": "1 Constitution damage per activation",
-          "nativeThreeTierProgression": "derived-damage-across-native-8-13-18-milestones",
-          "compatibilityWithNativeHellfireEnhancement": "not-yet-reconciled"
         }
       },
       "nativeProgression": {
@@ -490,41 +474,102 @@
           13,
           18
         ],
-        "sourceGrant": "one-fiend-patron-feature-with-three-mode-options",
+        "sourceGrant": "one-fiend-patron-feature-with-two-mode-options",
         "doesNotGrantAdditionalResourceUsesOnUpgrade": true,
         "milestones": [
           {
             "warlockClassLevel": 8,
             "kind": "initial-grant",
             "fiendishResilienceFastHealingPerRound": 1,
-            "fiendishFlamewreathRetaliationDamage": "1d6 fire",
-            "hellfireShieldDamage": "derived"
+            "fiendishFlamewreathRetaliationDamage": "1d6 fire"
           },
           {
             "warlockClassLevel": 13,
             "kind": "upgrade-existing-feature",
             "fiendishResilienceFastHealingPerRound": 2,
-            "fiendishFlamewreathRetaliationDamage": "2d6 fire",
-            "hellfireShieldDamage": "derived"
+            "fiendishFlamewreathRetaliationDamage": "2d6 fire"
           },
           {
             "warlockClassLevel": 18,
             "kind": "upgrade-existing-feature",
             "fiendishResilienceFastHealingPerRound": 5,
-            "fiendishFlamewreathRetaliationDamage": "5d6 fire",
-            "hellfireShieldDamage": "derived"
+            "fiendishFlamewreathRetaliationDamage": "5d6 fire"
           }
         ]
       },
-      "nativeHellfireShieldDamage": {
-        "progressionType": "derived-not-fixed-tiers",
-        "derivesFrom": "warlock-current-eldritch-blast-damage",
-        "includesHellfireBlastEnhancement": "only-if-acquired-and-applicable-under-future-compatibility-rules",
-        "automaticHellfireBlastEntitlement": false,
-        "fixedBonusesAtLevels8_13_18": false,
-        "noStackedAllBeamAssumption": true,
-        "qualification": "Derived damage reflects current Eldritch Blast and eligible Hellfire modifications; no invented numeric tiers. Eldritch Blast's final attack/beam calculation, Hellfire eligibility, Constitution damage, targeting, and resolution timing remain open."
+      "effectRules": {
+        "fiendishResilience": {
+          "effectId": "fiendish-resilience-fast-healing",
+          "durationRounds": 20,
+          "fastHealingPerRoundByWarlockLevel": {
+            "8": 1,
+            "13": 2,
+            "18": 5
+          },
+          "atZeroHitPoints": {
+            "whenReducedToZeroWhileActive": "stabilize-once",
+            "remainsUnconscious": true,
+            "healingWhileAtZero": false,
+            "restoresConsciousnessByOngoingHealing": false,
+            "requiresEffectActiveBeforeIncapacitation": true,
+            "subsequentDamageAtZero": "normal-damage-and-death-saving-throw-rules",
+            "repeatedAutomaticStabilization": false,
+            "doesNotReviveDead": true,
+            "clarification": "The active resilience effect can stabilize the Warlock when reduced to 0 HP once during that activation, without restoring HP or consciousness. Further damage at 0 HP follows ordinary stabilization/death rules; the feature does not repeatedly stabilize."
+          }
+        },
+        "fiendishFlamewreath": {
+          "effectId": "fiendish-flamewreath",
+          "durationRounds": 20,
+          "meleeRetaliationFireDamageByWarlockLevel": {
+            "8": "1d6",
+            "13": "2d6",
+            "18": "5d6"
+          },
+          "preciseTriggerForRetaliationDamage": "pending-resolution-only; activation-reaction-is-player-chosen-and-triggerless"
+        }
       }
+    },
+    "hellfireSpecialization": {
+      "disposition": "optional-hellfire-specialization-not-infernal-retaliation",
+      "shield": {
+        "name": "Hellfire Shield",
+        "placement": "optional-specialization-candidate-for-eldritch-invocation-reconciliation",
+        "automaticallyGrantedAtFiendLevel8": false,
+        "requiresSeparateAcquisition": true,
+        "relatedEnhancements": [
+          "hellfire-blast",
+          "eldritch-blast"
+        ],
+        "actionType": "reaction",
+        "requiresMandatoryTrigger": false,
+        "consumesInfernalRetaliationResource": false,
+        "nativeDamageDesign": {
+          "progressionType": "derived-not-fixed-tiers",
+          "derivesFrom": "warlock-current-eldritch-blast-damage",
+          "includesHellfireBlastEnhancement": "only-if-acquired-and-applicable-under-future-compatibility-rules",
+          "automaticHellfireBlastEntitlement": false,
+          "fixedBonusesAtLevels8_13_18": false,
+          "noStackedAllBeamAssumption": true,
+          "qualification": "Derived damage reflects current Eldritch Blast and eligible Hellfire modifications; no invented numeric tiers. Eldritch Blast's final attack/beam calculation, Hellfire eligibility, Constitution damage, targeting, and resolution timing remain open."
+        },
+        "historicalSource": {
+          "source": "Fiendish Codex II",
+          "sourceHellfireWarlockLevel": 3,
+          "sourceScaling": "one-acquisition-tier; damage scales indirectly with Eldritch Blast including Hellfire Blast enhancement",
+          "sourceDamage": "eldritch-blast-damage-plus-hellfire-blast-bonus-when-applicable",
+          "sourceAbilityDamageCost": "1 Constitution damage per activation",
+          "nativeThreeTierProgression": "derived-damage-across-native-8-13-18-milestones",
+          "compatibilityWithNativeHellfireEnhancement": "not-yet-reconciled"
+        },
+        "unresolved": [
+          "prerequisites and invocation selection entitlement",
+          "own resource/cost and original Constitution ability damage",
+          "derived damage and multi-beam/critical compatibility",
+          "eligible targets and effect resolution"
+        ]
+      },
+      "qualification": "Hellfire Shield is no longer part of the Fiend's unified Infernal Retaliation feature. Preserve the previously approved derived-damage rather than fixed-tier direction as a separate optional Hellfire specialization. No playable invocation is activated yet."
     }
   }
 }
