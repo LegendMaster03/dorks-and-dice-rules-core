@@ -65,5 +65,42 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
         self.assertIn("Additional Pact eligibility and cost",self.inventory["openDesignRulings"][0])
 
+    def test_invocations_are_pact_bound_and_not_independent(self):
+        p=self.inventory["approvedNativePactDirection"]
+        lifecycle=p["pactInvocationLifecycle"]
+        self.assertEqual("owner-approved-design-direction-implementation-semantics-deferred",lifecycle["status"])
+        self.assertEqual("major-distinct-power-agreement",lifecycle["pactNature"])
+        self.assertEqual("additional-clauses-bound-to-a-specific-pact",lifecycle["invocationNature"])
+        self.assertTrue(lifecycle["invocationAlwaysAssociatedWithPact"])
+        self.assertTrue(lifecycle["invocationNotIndependentOfPact"])
+        self.assertTrue(lifecycle["pactTermination"]["dependentInvocationsLoseAccess"])
+        self.assertFalse(lifecycle["pactTermination"]["defaultRetainInvocationUseAfterPactEnds"])
+        self.assertFalse(lifecycle["pactTermination"]["removeHistoricalAcquisitionRecords"])
+        self.assertTrue(lifecycle["newPactTerms"]["canExplicitlyRestorePriorInvocations"])
+        self.assertTrue(lifecycle["newPactTerms"]["canExplicitlyTransferPriorInvocations"])
+        self.assertFalse(lifecycle["newPactTerms"]["automaticCarryoverWithoutNewTerms"])
+        self.assertEqual("deferred",lifecycle["newPactTerms"]["transferEligibilityAndCosts"])
+        self.assertTrue(lifecycle["multiplePacts"]["conceptualSupportRequired"])
+        self.assertTrue(lifecycle["multiplePacts"]["eachPactMustBeDistinct"])
+        self.assertTrue(lifecycle["multiplePacts"]["invocationsMustTrackPactAffiliation"])
+        self.assertFalse(lifecycle["multiplePacts"]["canAccessAdditionalPactThroughCurrentDefaultProgression"])
+        self.assertEqual("deferred-to-future-advanced-rule",lifecycle["multiplePacts"]["acquisitionGates"])
+
+    def test_optional_additional_pacts_not_prohibited_or_prematurely_enabled(self):
+        p=self.inventory["approvedNativePactDirection"]
+        extra=p["additionalPactDesignDirection"]
+        self.assertEqual("owner-approved-defer-as-advanced-option",extra["status"])
+        self.assertFalse(extra["additionalPactsCategoricallyForbidden"])
+        self.assertFalse(extra["approvedAsDefaultNativeEntitlement"])
+        self.assertFalse(extra["availableInCurrentWarlockVerticalSlice"])
+        self.assertIsNone(extra["minimumWarlockLevel"])
+        self.assertIsNone(extra["costOrEntitlement"])
+        self.assertIsNone(extra["maximumPacts"])
+        open_rules=p["decisionsPending"]
+        self.assertIsNone(open_rules["additionalPactsAllowed"])
+        self.assertIsNone(open_rules["additionalPactsAcquisitionCost"])
+        self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
+        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
+
 if __name__=="__main__":
     unittest.main()
