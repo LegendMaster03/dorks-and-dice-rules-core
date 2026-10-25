@@ -44,7 +44,7 @@ The following are **source option identities**, not automatically approved nativ
 | Tome | Source-based cantrips/ritual book, approved level-5 three free spells | **Ritual-collector, protective grimoire, remote communication, rest utility** | Should accumulating ordinary rituals require `Book of Ancient Secrets`, or is it elective advanced knowledge? Distinct spell/ritual builds may be enough without automatic high-tier features. |
 | Talisman | Published base transferable skill assistance, native base still pending | **Rebuke, Protection, Bond** plus compatible general/Patron Invocations | Can support, defense, retaliation and bearer-linked travel produce compelling builds, and is the base Talisman useful without paying to unlock all its basic identity? |
 
-**Outcome:** **Do not recommend blanket intrinsic level-11/17 additions as a prerequisite to considering a Pact substantial.** Finish the **combined Pact + attached Invocation** progression and choice-path audit first. Optional branch depth, not merely free feature count, is central. An automatic Talisman level-5 advancement is **a candidate**, not an established requirement or approved rule.
+**Outcome (updated):** **Do not recommend blanket intrinsic level-11/17 additions as a prerequisite to considering a Pact substantial.** Finish the **combined Pact + attached Invocation** progression and choice-path audit first. Optional branch depth, not merely free feature count, is central. Talisman's **Shared Ward level-5 advancement is now owner-approved**; earlier comparison rows below preserve the historical preapproval gap analysis.
 
 ## Executive assessment
 
@@ -59,7 +59,7 @@ The following are **source option identities**, not automatically approved nativ
 | **Tome** | **Source-proposed, not yet fully reconciled:** Book of Shadows, three flexible cantrips, two first-level rituals, spellcasting focus | **Approved:** three separate free 3rd-level spell castings per Long Rest (*Animate Dead*, *Haste*, *Call Lightning*) | **Generally yes** at level 1–5, with a major level-5 burst; higher-level ritual acquisition may depend on an Invocation/older source feature | **None approved** | Strong identity and action flexibility; needs ritual/knowledge progression and resource-balance audit |
 | **Talisman** | **Published source:** transferable amulet; add 1d4 to a *failed ability check*; proficiency-bonus uses per Long Rest; no native adoption yet | **NONE approved** | **Marginal**. Its published protection/retaliation/teleportation elements are separate optional Invocations | **None approved** (proficiency bonus naturally increases available base charges) | **Not yet sufficient** as an independent Pact pillar |
 
-**Rating logic:** An edition source mechanic is *evidence*, not an approved native feature. The owner has approved **first-Pact entitlement at Warlock level 1 for all four active options**, plus Blade's specific base/level-5 improvements and Chain/Tome's specific level-5 BG3 additions. Unresolved Chain/Tome/Talisman base definitions must not be described as approved.
+**Rating logic (updated):** An edition source mechanic is *evidence*, not necessarily an approved native feature. The owner has approved **first-Pact entitlement at Warlock level 1 for all four**, Blade's base and level-5 improvement, Chain/Tome level-5 BG3 additions, and **Talisman's nonstacking check-support baseline plus level-5 Shared Ward**. Chain/Tome baseline and the Talisman native runtime remain to be reconciled; earlier rows retain preapproval evaluation for history.
 
 ## Structural qualification standard
 
@@ -127,11 +127,11 @@ The source Pact's **familiar Reaction attack** triggered by sacrificing the Warl
 
 **Candidate directions, not rulings:** give Tome a tiered *knowledge/ritual acquisition* baseline drawing carefully from 2014 Book of Ancient Secrets; keep optional rare/specialized tomes, protective pages and extra spellcasting techniques as Invocations; test concentration and Warlock spell access before adding further free high-level spells.
 
-## Talisman strengthening direction — draft, not adopted (2026-10-25)
+## Talisman strengthening direction — subsequently owner-approved (2026-10-25)
 
-The owner has directed us to **bring Talisman up to the other three Pacts before proceeding to the next Warlock pillar**. A [dedicated Talisman strengthening proposal](warlock-talisman-pact-strengthening-proposal.md) compares the 2019 UA's unproficient-skill +1d4 without a stated daily cap against the 2020 published after-failure +1d4 (PB uses/Long Rest). It **proposes, but does not approve**, a nonstacking level-1 synthesis plus a level-5 **Shared Ward** that reduces damage with a Reaction while consuming the same Pact charge pool. The existing optional **Rebuke, Protection, and Bond of the Talisman** Invocations retain distinct retaliation, saving throw, and teleport specializations; none becomes free.
+The owner has directed us to **bring Talisman up to the other three Pacts before proceeding to the next Warlock pillar**. A [dedicated Talisman strengthening proposal](warlock-talisman-pact-strengthening-proposal.md) compares the 2019 UA's unproficient-skill +1d4 without a stated daily cap against the 2020 published after-failure +1d4 (PB uses/Long Rest). It **now records an owner-approved** nonstacking level-1 synthesis plus a level-5 **Shared Ward** that reduces damage with a Reaction while consuming the same Pact charge pool; see the [approved decision](warlock-talisman-pact-strengthening-proposal.md). The existing optional **Rebuke, Protection, and Bond of the Talisman** Invocations retain distinct retaliation, saving throw, and teleport specializations; none becomes free.
 
-This proposal replaces the earlier assumption that Talisman's three Invocation branches must automatically be rolled into its baseline. The right target is **a sufficiently useful base + an intrinsic level-5 feature + elective Invocation paths**. Existing historical source inventories and owner-approved levels remain unchanged.
+**The owner approved this design.** It replaces the earlier assumption that Talisman's three Invocation branches must automatically be rolled into its baseline. The adopted target is **a sufficiently useful base + an intrinsic level-5 feature + elective Invocation paths**. Existing historical source inventories and owner-approved levels remain unchanged.
 
 ## D. Pact of the Talisman
 
