@@ -280,7 +280,7 @@
       "id": "patron-initial-mechanical-grant",
       "question": "Which Fiend powers, if any, begin at Warlock level 1 in the authoritative native progression (beyond identity)?",
       "status": "owner-approved-design-direction",
-      "resolution": "Use the 2014 Fiend level-1 mechanical milestone: Dark One's Blessing and Patron spell access accompany Fiend Patron selection at class level 1. The spell access grant's exact automatic-versus-selectable behavior and spell list remain unresolved. Preserve both source-era projections for provenance."
+      "resolution": "Use the 2014 Fiend level-1 mechanical milestone: Dark One's Blessing and Patron spell access accompany Fiend Patron selection at class level 1. Blessing trigger is approved in its 2024 form; Fiend spell entitlement mode and spell roster remain unresolved. Preserve both source-era projections for provenance."
     },
     {
       "id": "patron-fiend-spell-entitlement",
@@ -290,13 +290,14 @@
     {
       "id": "patron-fiend-blessing-trigger",
       "question": "At the established native level-1 grant, adopt the 2014 self-defeat trigger or 2024 expanded nearby-other-creature trigger?",
-      "status": "owner-ruling-needed"
+      "status": "owner-approved-design-direction",
+      "resolution": "At Warlock level 1, grant temporary HP equal to max(1, Charisma modifier + Warlock level) when the Warlock reduces a hostile creature to 0 HP, or when another creature reduces an enemy within 10 feet of the Warlock to 0 HP, following the 2024 expanded cooperative trigger and ordinary nonstacking temporary-HP rules."
     },
     {
       "id": "patron-fiend-luck-recovery",
       "question": "Recovery cadence remains open: 2024 Long Rest refill is recommended; 2014 used a single use restored after Short/Long Rest. Do not silently treat Charisma modifier uses as recharging on every Short Rest.",
-      "status": "partially-owner-approved",
-      "approved": "Number of uses equal to the Warlock's Charisma modifier, minimum 1; the same one-per-roll limit and post-roll timing from SRD 5.2.1."
+      "status": "owner-approved-design-direction",
+      "resolution": "At Warlock level 6, Dark One's Own Luck adds 1d10 to an ability check or saving throw after the roll and before its effects, at most once per roll; uses equal max(1, Charisma modifier) and all expended uses recover on a Long Rest. Approves the previously recommended 2024 recovery schedule."
     },
     {
       "id": "patron-fiend-damage-resilience",
@@ -306,7 +307,8 @@
     {
       "id": "patron-fiend-hurl-through-hell",
       "question": "Resolve save, 10d10 versus 8d10, damage timing, Incapacitated, and Pact-slot recovery.",
-      "status": "owner-ruling-needed"
+      "status": "owner-approved-design-direction",
+      "resolution": "At Warlock level 14, once per turn on a qualifying attack-roll hit, expend a use to force the target to make a Charisma saving throw against Warlock spell save DC. On failure, transport it through the Lower Planes, immediately deal 8d10 Psychic damage if the target is not a Fiend, and apply Incapacitated until it returns at the end of the Warlock's next turn. A use returns after a Long Rest; expending a Pact Magic spell slot can restore a use. A successful save still consumes the attempted use. Use the coherent 2024 feature package."
     },
     {
       "id": "warlock-historical-base-fiendish-resilience-reconsideration",
@@ -335,14 +337,45 @@
         "warlock.patron.fiend.dark-ones-blessing"
       ],
       "sourceModel": "SRD51",
-      "qualification": "Only acquisition timing and part identity are approved; spell grant semantics and Dark One's Blessing trigger remain undecided."
+      "qualification": "First grant timing and part identity are approved, as is the 2024 cooperative Blessing trigger; spell grant semantics and exact spell roster remain unresolved."
     },
     "luckUses": {
       "classLevel": 6,
       "usesExpression": "max(1, charisma_modifier)",
       "perRollLimit": 1,
-      "reset": "unresolved",
-      "qualification": "Uses are approved, 2024 Long Rest recovery is a recommendation, not yet owner-approved."
+      "reset": "long-rest",
+      "qualification": "Owner approved both Charisma-modifier uses and the 2024 Long Rest recovery schedule."
+    },
+    "baseEldritchBlast": {
+      "classLevel": 1,
+      "grantMode": "automatic-warlock-base-class-feature",
+      "requiresCantripSelection": false,
+      "qualification": "Eldritch Blast is automatically granted as a base Warlock class feature at level 1. Exact damage scaling, spell/cantrip count representation, Patron Imprint behavior and Invocation compatibility remain to be reconciled; do not create duplicate grants."
+    },
+    "darkOnesBlessing": {
+      "classLevel": 1,
+      "temporaryHitPoints": "max(1, charisma_modifier + warlock_level)",
+      "triggers": [
+        "warlock-reduces-hostile-creature-to-zero-hp",
+        "other-creature-reduces-enemy-within-10-feet-of-warlock-to-zero-hp"
+      ],
+      "recovery": "trigger-based-no-use-limit",
+      "qualification": "Owner approves the 2024 cooperative trigger at the approved native level-1 feature milestone; standard temporary hit points do not stack."
+    },
+    "hurlThroughHell": {
+      "classLevel": 14,
+      "frequency": "once-per-turn",
+      "prerequisite": "qualifying-attack-roll-hit",
+      "savingThrow": "charisma-vs-warlock-spell-save-dc",
+      "onFailedSave": {
+        "target": "transported-through-lower-planes",
+        "nonFiendDamage": "8d10 psychic immediately",
+        "condition": "incapacitated-until-return",
+        "returnTime": "end-of-warlocks-next-turn"
+      },
+      "uses": "one-per-long-rest; spend a pact-magic spell slot to restore a use",
+      "spentOnAttempt": true,
+      "qualification": "Owner approved the entire previously proposed SRD 5.2.1-style Hurl Through Hell package."
     }
   }
 }
