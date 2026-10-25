@@ -158,13 +158,26 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         shield=specialization["shield"]
         self.assertFalse(shield["automaticallyGrantedAtFiendLevel8"])
         self.assertIsNone(shield["requiresSeparateAcquisition"])
-        self.assertEqual("three-permitted-candidate-routes-no-final-route-selected",shield["acquisitionStatus"])
+        self.assertEqual("deferred-to-eldritch-invocations-pillar",shield["acquisitionStatus"])
         self.assertEqual({"automatic-patron-feature","selectable-patron-feature","eldritch-invocation"},
                          {r["route"] for r in shield["acquisitionCandidates"]})
         self.assertTrue(all(r["requiresPatron"]=="fiend" for r in shield["acquisitionCandidates"]))
         self.assertTrue(all(r["status"]=="owner-proposed-option" for r in shield["acquisitionCandidates"]))
         self.assertTrue(next(r for r in shield["acquisitionCandidates"] if r["route"]=="eldritch-invocation")["usesNormalInvocationSelection"])
         self.assertFalse(shield["consumesInfernalRetaliationResource"])
+        summary=self.crosswalk["fiendPatronConsolidatedDecision"]
+        self.assertEqual("approved-scope-consolidated-with-open-source-reconciliation",summary["status"])
+        self.assertEqual(["patron-fiend-spell-entitlement","patron-fiend-damage-resilience"],
+                         summary["unresolvedNativeFiendRules"])
+        self.assertEqual([1,1,6,8,10,13,14,18],
+                         [part["classLevel"] for part in summary["approvedPatronMilestones"]])
+        self.assertEqual("docs/rewrite/warlock-fiend-patron-consolidated-decision.md",summary["document"])
+        historical=next(d for d in self.crosswalk["openNativeDecisions"]
+                        if d["id"]=="warlock-historical-base-fiendish-resilience-reconsideration")
+        self.assertNotIn("alongside Fiendish Flamewreath and Hellfire Shield",historical["resolution"])
+        self.assertIn("DEFERRED",shield["unresolved"][0])
+        self.assertEqual("deferred-to-eldritch-invocations-pillar-not-infernal-retaliation",
+                         approved["hellfireSpecialization"]["disposition"])
         self.assertEqual("reaction",shield["actionType"])
         self.assertEqual(3,shield["historicalSource"]["sourceHellfireWarlockLevel"])
         derived=shield["nativeDamageDesign"]
