@@ -127,6 +127,12 @@ The source Pact's **familiar Reaction attack** triggered by sacrificing the Warl
 
 **Candidate directions, not rulings:** give Tome a tiered *knowledge/ritual acquisition* baseline drawing carefully from 2014 Book of Ancient Secrets; keep optional rare/specialized tomes, protective pages and extra spellcasting techniques as Invocations; test concentration and Warlock spell access before adding further free high-level spells.
 
+## Talisman strengthening direction — draft, not adopted (2026-10-25)
+
+The owner has directed us to **bring Talisman up to the other three Pacts before proceeding to the next Warlock pillar**. A [dedicated Talisman strengthening proposal](warlock-talisman-pact-strengthening-proposal.md) compares the 2019 UA's unproficient-skill +1d4 without a stated daily cap against the 2020 published after-failure +1d4 (PB uses/Long Rest). It **proposes, but does not approve**, a nonstacking level-1 synthesis plus a level-5 **Shared Ward** that reduces damage with a Reaction while consuming the same Pact charge pool. The existing optional **Rebuke, Protection, and Bond of the Talisman** Invocations retain distinct retaliation, saving throw, and teleport specializations; none becomes free.
+
+This proposal replaces the earlier assumption that Talisman's three Invocation branches must automatically be rolled into its baseline. The right target is **a sufficiently useful base + an intrinsic level-5 feature + elective Invocation paths**. Existing historical source inventories and owner-approved levels remain unchanged.
+
 ## D. Pact of the Talisman
 
 ### Historical sources
