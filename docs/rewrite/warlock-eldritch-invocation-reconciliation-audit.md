@@ -4,6 +4,18 @@
 **Branch:** `feature/rules-core-rewrite`  
 **Status:** **SOURCE REVIEW / OPEN DECISIONS. NO NEW OWNER RULINGS OR NATIVE EXECUTABLE MECHANICS.** Source values below are taken from the imported SRD 5.1 and SRD 5.2.1 records, not from speculative 3.5e catalog imports. The prior approved Pact/Patron architecture controls all future native allocations.
 
+## Work order revised by owner — Pact-specific options first
+
+**Current first pass completed:** [Pact-specific Invocation codification](warlock-pact-specific-invocation-codification.md) and [its machine-readable 16-record manifest](../../data/reference/warlock-pact-specific-invocations.json) cover **nine already-imported SRD options plus seven previously identified published non-SRD options** across Blade (5), Chain (4), Tome (4), and Talisman (3). All nine existing native SRD optional-feature files now carry explicit **required Pact-type attachment metadata** while preserving their original candidate definitions and `pending-native-reconciliation` status. Seven non-SRD options are independently paraphrased **reference-only**, not SRD imports or activated native abilities. **No additional Invocation budget was adopted.**
+
+**Owner-directed order:**
+
+1. **Codify** known Pact-specific Invocations (completed).
+2. **Resolve** cross-edition mechanics, duplicate effects and outdated prerequisites **before** any general Invocation selection-budget decision (next work).
+3. Decide between **further 3.5e Invocation research** and **native Invocation progression** **after conflict reconciliation**; do not silently choose one in advance.
+
+This **supersedes** the earlier recommended ordering that began with Invocation entitlement progression. The existing 39-SRD-plus-3-Talisman first-pass catalog counts remain intact: indexing the other four non-SRD Pact-specific names **does not silently expand the playable 42-option first pass**.
+
 ## Current binding agreements (not up for silent reinterpretation)
 
 1. **Patron, Pact and Invocation are separate pillars.** A Warlock acquires one **dedicated first Pact at level 1** without consuming an Invocation selection; base Pact acquisition is *not* selectable again as an ordinary Invocation.
