@@ -654,8 +654,8 @@
     "Invocation Pact/Patron requirements and Pact Patron requirements are supported; individual option restrictions are deferred to each option reconciliation. Do not impose blanket restrictions or assume waived prerequisites on transfer.",
     "Per-Pact Patron willingness can be constrained by specific setting or inherited terms; determine detailed acceptance/negotiation UX and secret-Patron adjudication later without imposing universal live negotiation.",
     "Level-5 Pact upgrades for Blade, Chain, Tome are owner-approved as a design; resolve Chain command/attack economy, Tome spell interaction, Thirsting Blade replacement and any post-level-5 progression before native activation.",
-    "Resolve source-faithful base mechanics, the three Talisman-bound Invocations, and Pact-level progression for Talisman; do not silently give it the Blade/Chain/Tome Deepened Pact milestone.",
-    "Archived (not active): Seeker Patron and Star Chain Pact are a single bidirectionally-required package, disabled together pending future owner approval and substantive non-SRD playtest expansion."
+    "Archived (not active): Seeker Patron and Star Chain Pact are a single bidirectionally-required package, disabled together pending future owner approval and substantive non-SRD playtest expansion.",
+    "Implement approved native Talisman at level 1 (unlimited untrained-skill d4 OR charge-limited failed-check d4, nonstacking) and level 5 (Shared Ward Reaction within 60 ft, shared PB/LR charges); validate no new Invocation charges, restoration exploits or conflicting reactions; do not treat these approved decisions as executable yet."
   ],
   "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
   "approvedNativePactDirection": {
@@ -691,7 +691,7 @@
       "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices",
       "EXTRAS": "Talisman (Tasha's, 2020, official published non-SRD) and Star Chain (UA The Faithful, 2016, playtest non-SRD) are independently documented source-based Pact review additions, not SRD51/SRD52 inventory entries."
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants. Owner approves BG3-style automatic level-5 improvements for all three Pact categories (Blade attack already settled, Chain familiar extra attack, Tome three free third-level spells) without spending Invocations. User also approves BG3 mundane-weapon binding for Blade; that weapon-specific effect does not apply to Chain or Tome. Hexblade patron-to-Pact classification remains under consideration; lore/source research only, no new playable parts. Owner extends Pact reconciliation from three to five, adding non-SRD official Talisman and unpublished UA Star Chain as comparative design cases; Star Chain's original Seeker-linked Patron prerequisite remains explicit and may only be broadened by later approved exception. Earlier editions' source-oriented Pact types map to Patrons instead of the Pact specialization pillar. Subsequent owner decision suspends both Seeker Patron and Star Chain Pact as an inseparable pair because source is UA with insufficient development; preserve five-Pact research but actively reconcile only Blade, Chain, Tome, and Talisman. Native future design must require the pair bidirectionally, without asserting this reverse condition was a literal rule in the original UA. Original Unearthed Arcana The Faithful explicitly offers Seeker the Star Chain INSTEAD OF an existing Pact Boon; Star Chain depends on Seeker but Seeker does not depend on Star Chain. Both are independently disabled for now by owner direction; no historical source is deleted.",
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants. Owner approves BG3-style automatic level-5 improvements for all three Pact categories (Blade attack already settled, Chain familiar extra attack, Tome three free third-level spells) without spending Invocations. User also approves BG3 mundane-weapon binding for Blade; that weapon-specific effect does not apply to Chain or Tome. Hexblade patron-to-Pact classification remains under consideration; lore/source research only, no new playable parts. Owner extends Pact reconciliation from three to five, adding non-SRD official Talisman and unpublished UA Star Chain as comparative design cases; Star Chain's original Seeker-linked Patron prerequisite remains explicit and may only be broadened by later approved exception. Earlier editions' source-oriented Pact types map to Patrons instead of the Pact specialization pillar. Subsequent owner decision suspends both Seeker Patron and Star Chain Pact as an inseparable pair because source is UA with insufficient development; preserve five-Pact research but actively reconcile only Blade, Chain, Tome, and Talisman. Native future design must require the pair bidirectionally, without asserting this reverse condition was a literal rule in the original UA. Original Unearthed Arcana The Faithful explicitly offers Seeker the Star Chain INSTEAD OF an existing Pact Boon; Star Chain depends on Seeker but Seeker does not depend on Star Chain. Both are independently disabled for now by owner direction; no historical source is deleted. Owner approves native Talisman Pact consolidation of 2019 UA unlimited 1d4 checks with untrained skill and 2020 Tasha's charge-limited 1d4 correction after failed ability checks; the two Talisman bonuses cannot stack on the same roll. One transferable Talisman, a 1-hour replacement ceremony and no recharge on replacement; shared PB/Long Rest charges. Warlock level 5 gains automatic Shared Ward Reaction within 60 ft for 2d6+CHA reduction, spending one charge, without using an Invocation. Rebuke, Protection, Bond remain selectable Pact-attached Invocations, with distinct resource ledgers where published. Talisman rules are approved as design, not yet native runtime active.",
     "initialPactClassLevel": 1,
     "pactEntitlementCountAtLevel1": 1,
     "levelOnePillarRoles": {
@@ -987,7 +987,7 @@
     "approvedLevelFivePactImprovements": {
       "status": "owner-approved-design-not-executable-native-content",
       "sourceInspiration": "Baldur's Gate 3 Deepened Pact",
-      "approvalInterpretation": "Intrinsic level-five advances for each distinct Pact (Blade, Chain, Tome), NOT giving each Pact weapon binding",
+      "approvalInterpretation": "Intrinsic Warlock-level-5 upgrades approved for four distinct Pact choices: Blade second attack, Chain familiar extra attack, Tome three free third-level spells, Talisman Shared Ward; Star Chain and Seeker remain disabled.",
       "warlockClassLevel": 5,
       "consumesEldritchInvocationSelections": false,
       "progressionPillar": "Pacts",
@@ -1039,6 +1039,20 @@
           "usesInvocationChoice": false,
           "noDailyPreparation": "native-no-daily-spell-preparation-policy",
           "spellHandling": "reconcile-concentration-components-summons-and-level-native-spell-implementations"
+        },
+        "talisman": {
+          "approved": true,
+          "source": "Dorks-and-Dice-native-development-after-2019-UA-and-2020-published-reconciliation",
+          "nativePart": "pact-of-the-talisman-deepened-pact-shared-ward",
+          "level": 5,
+          "warlockReactionRequired": true,
+          "qualifyingTarget": "current-wearer-of-active-linked-talisman-within-60-feet",
+          "consumesSharedTalismanCharge": 1,
+          "damageReduced": "2d6-plus-warlock-charisma-modifier-minimum-zero",
+          "consumesInvocationSelection": false,
+          "competesWithRebukeReaction": true,
+          "noAdditionalChargePool": true,
+          "nativeExecutableActivation": false
         }
       },
       "notApproved": [
@@ -1079,7 +1093,7 @@
     },
     "expandedFivePactReview": {
       "status": "owner-disabled-seeker-and-star-chain-preserving-five-pact-historical-research",
-      "scopeInterpretation": "Four active Pact reconciliation options (Blade, Chain, Tome, Talisman); Star Chain and the Seeker Patron are paused as separate archival UA research entries. The original UA permits Seeker Warlocks to choose Blade, Chain, or Tome instead.",
+      "scopeInterpretation": "Four active Pact reconciliation choices (Blade, Chain, Tome, Talisman); the Talisman level-1 package and level-5 Shared Ward are owner-approved design rulings, while runtime integration remains pending. Star Chain and the Seeker Patron stay disabled/archived.",
       "editionClarification": "3.5e Warlock had no discrete Pact Boons; 4e Fey, Infernal, Star, Vestige etc named Pacts represent Patron/power-source identity, not this Pact specialization pillar.",
       "initialPactClassLevel": 1,
       "initialPactEntitlementCount": 1,
@@ -1111,10 +1125,152 @@
             "Protection of the Talisman": 7,
             "Bond of the Talisman": 12
           },
-          "mechanicsApprovedForNative": false,
-          "level5IntrinsicAdvance": "not-approved",
+          "mechanicsApprovedForNative": true,
+          "level5IntrinsicAdvance": "owner-approved-deepened-pact-shared-ward",
           "nativeFirstPactEligibility": "subject-to-per-patron-terms-and-normal-pact-restrictions",
-          "sourceRulesNotCoveredBySrdLicense": true
+          "sourceRulesNotCoveredBySrdLicense": true,
+          "status": "owner-approved-native-talisman-design-pending-runtime-integration",
+          "nativeExecutableActivation": false,
+          "ownerApprovedNative": {
+            "status": "owner-approved-native-design-pending-runtime-integration",
+            "sourceFusion": [
+              "2019-unearthed-arcana-class-feature-variants",
+              "2020-tashas-cauldron-of-everything"
+            ],
+            "usesDedicatedFirstPactEntitlement": true,
+            "level1": {
+              "level": 1,
+              "artifact": {
+                "type": "transferable-magical-talisman",
+                "activePerPact": 1,
+                "mayBeWornByWarlock": true,
+                "mayBeWornByAlly": true,
+                "linkedToPact": true
+              },
+              "untrainedGuidance": {
+                "condition": "wearer-makes-ability-check-using-a-skill-in-which-wearer-is-not-proficient",
+                "dice": "1d4",
+                "chargesCost": 0,
+                "usageLimit": "none",
+                "excludes": [
+                  "non-skill-ability-checks",
+                  "saving-throws",
+                  "attack-rolls"
+                ],
+                "explicitSharedSkillCompetencyHandling": "use-native-skills-and-proficiencies"
+              },
+              "fortunateCorrection": {
+                "condition": "wearer-fails-any-ability-check",
+                "timing": "after-roll-is-determined-failure",
+                "dice": "1d4",
+                "chargesCost": 1,
+                "mayAffectChecksWithSkillProficiency": true,
+                "mayAffectChecksWithoutSkillProficiency": true,
+                "mayAffectOtherAbilityChecks": true,
+                "canTurnFailureIntoSuccess": true
+              },
+              "nonstacking": {
+                "forbidden": "untrained-guidance-and-fortunate-correction-on-same-ability-check",
+                "maxNativeTalismanDicePerCheck": 1,
+                "chargedAlternativeStillRequiresFailure": true
+              },
+              "charges": {
+                "maximum": "warlock-proficiency-bonus",
+                "currentPoolSharedBy": [
+                  "fortunate-correction",
+                  "shared-ward"
+                ],
+                "recharge": "long-rest",
+                "replacementDoesNotRecharge": true
+              },
+              "replacement": {
+                "ceremonyHours": 1,
+                "eligibleRestContext": [
+                  "short-rest",
+                  "long-rest"
+                ],
+                "previousTalismanDeactivates": true,
+                "rechargeChargesOnReplacement": false
+              }
+            },
+            "level5": {
+              "name": "Deepened Pact: Shared Ward",
+              "level": 5,
+              "trigger": "active-talisman-wearer-takes-damage",
+              "rangeFeet": 60,
+              "rangeMeasuredFrom": "warlock-to-current-wearer",
+              "selfWearerAllowed": true,
+              "actionCost": "reaction-of-warlock",
+              "chargesCost": 1,
+              "chargesResource": "level1-talisman-shared-charges",
+              "damageReductionDice": "2d6",
+              "damageReductionAdd": "warlock-charisma-modifier",
+              "minimumDamageReduction": 0,
+              "reductionCannotExceedIncomingDamage": true,
+              "noSightRequirementForAttacker": true,
+              "reducesSingleDamageInstance": true,
+              "consumesInvocationSelection": false,
+              "consumesSpellSlot": false,
+              "grantsRetaliation": false,
+              "reactionCompetition": [
+                "rebuke-of-the-talisman",
+                "other-reaction-abilities"
+              ],
+              "resolution": "reduce-triggering-damage-instance",
+              "furtherIntrinsicScaling": "not-approved"
+            },
+            "invocations": {
+              "eligibleSpecializations": [
+                {
+                  "name": "Rebuke of the Talisman",
+                  "classLevelPrerequisite": null,
+                  "role": "psychic-retaliation-and-push",
+                  "cost": "invocation-selection",
+                  "actionCompetition": "shared-ward-reaction"
+                },
+                {
+                  "name": "Protection of the Talisman",
+                  "classLevelPrerequisite": 7,
+                  "role": "failed-saving-throw-protection",
+                  "resource": "own-published-proficiency-bonus-per-long-rest-pool",
+                  "cost": "invocation-selection"
+                },
+                {
+                  "name": "Bond of the Talisman",
+                  "classLevelPrerequisite": 12,
+                  "role": "teleportation-between-warlock-and-another-talisman-wearer",
+                  "resource": "own-published-proficiency-bonus-per-long-rest-pool",
+                  "cost": "invocation-selection"
+                }
+              ],
+              "automaticInvocationGrants": [],
+              "allArePactAttached": true,
+              "subjectToPatronAndPactRestrictions": true,
+              "noAutomaticRebukeOrProtectionOrBond": true
+            },
+            "implementationNotes": {
+              "sourceIsNonSrd": true,
+              "doesNotReclassifySourceAsSrd": true,
+              "sameForGuidedAndAdvancedCreation": true,
+              "noSourceFileMutation": true,
+              "exactNativeImplementationAndIntegrationPending": true,
+              "runtimeImplemented": false,
+              "fiendOnlyPatronVerticalSliceUnchanged": true,
+              "starChainAndSeekerStillDisabled": true,
+              "otherThreePactsUnchanged": true,
+              "needBalanceTests": [
+                "guidance-stacking-and-proficiency-interaction",
+                "bounded-accuracy-and-exploration",
+                "reaction-attack-trigger-resolution",
+                "same-charge-pool-and-rest-recharge",
+                "ability-check-success-after-limited-die",
+                "wearer-transfer-and-range",
+                "no-double-dice-per-check",
+                "non-invocation-required-base",
+                "cross-pact-level5-equal-entitlement-comparison"
+              ]
+            }
+          }
         },
         "starChain": {
           "name": "Pact of the Star Chain",
@@ -1163,7 +1319,7 @@
         "blade": 5,
         "chain": 5,
         "tome": 5,
-        "talisman": null,
+        "talisman": 5,
         "starChain": null
       },
       "noPatronCatalogExpansion": true,
