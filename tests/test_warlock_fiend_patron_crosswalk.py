@@ -119,7 +119,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertFalse(retaliation["effectsAreSeparateEntitlements"])
         self.assertFalse(retaliation["automaticForAllWarlocks"])
         self.assertEqual("on-activation",retaliation["choiceTiming"])
-        self.assertEqual({"fiendish-resilience-fast-healing","fiendish-flamewreath","hellfire-shield"},set(retaliation["availableEffects"]))
+        self.assertEqual({"fiendish-resilience-fast-healing","fiendish-flamewreath"},set(retaliation["availableEffects"]))
         self.assertEqual({"uses":1,"recovery":"long-rest","consumesOnAnyEffect":True},retaliation["sharedResource"])
         self.assertEqual("reaction",retaliation["activation"]["actionType"])
         self.assertEqual("one-reaction",retaliation["activation"]["actionCost"])
@@ -133,8 +133,16 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual([1,2,5],provenance["fiendishResilience"]["fastHealingPerRound"])
         self.assertEqual(["1d6","2d6","5d6"],provenance["fiendishFlamewreath"]["retaliationFireDamage"])
         self.assertEqual("Player's Handbook II",provenance["fiendishFlamewreath"]["source"])
-        self.assertEqual(3,provenance["hellfireShield"]["sourceHellfireWarlockLevel"])
-        self.assertEqual("derived-damage-across-native-8-13-18-milestones",provenance["hellfireShield"]["nativeThreeTierProgression"])
+        self.assertNotIn("hellfireShield",provenance)
+        self.assertEqual(20,retaliation["effectRules"]["fiendishResilience"]["durationRounds"])
+        self.assertEqual(20,retaliation["effectRules"]["fiendishFlamewreath"]["durationRounds"])
+        at_zero=retaliation["effectRules"]["fiendishResilience"]["atZeroHitPoints"]
+        self.assertEqual("stabilize-once",at_zero["whenReducedToZeroWhileActive"])
+        self.assertTrue(at_zero["remainsUnconscious"])
+        self.assertFalse(at_zero["healingWhileAtZero"])
+        self.assertFalse(at_zero["restoresConsciousnessByOngoingHealing"])
+        self.assertFalse(at_zero["repeatedAutomaticStabilization"])
+        self.assertEqual("normal-damage-and-death-saving-throw-rules",at_zero["subsequentDamageAtZero"])
         native=retaliation["nativeProgression"]
         self.assertEqual("owner-approved-design-direction",native["status"])
         self.assertEqual(8,native["grantClassLevel"])
@@ -143,8 +151,17 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual([8,13,18],[m["warlockClassLevel"] for m in native["milestones"]])
         self.assertEqual([1,2,5],[m["fiendishResilienceFastHealingPerRound"] for m in native["milestones"]])
         self.assertEqual(["1d6 fire","2d6 fire","5d6 fire"],[m["fiendishFlamewreathRetaliationDamage"] for m in native["milestones"]])
-        self.assertTrue(all(m["hellfireShieldDamage"]=="derived" for m in native["milestones"]))
-        derived=retaliation["nativeHellfireShieldDamage"]
+        self.assertTrue(all("hellfireShieldDamage" not in m for m in native["milestones"]))
+        self.assertEqual("one-fiend-patron-feature-with-two-mode-options",native["sourceGrant"])
+        specialization=approved["hellfireSpecialization"]
+        self.assertEqual("optional-hellfire-specialization-not-infernal-retaliation",specialization["disposition"])
+        shield=specialization["shield"]
+        self.assertFalse(shield["automaticallyGrantedAtFiendLevel8"])
+        self.assertTrue(shield["requiresSeparateAcquisition"])
+        self.assertFalse(shield["consumesInfernalRetaliationResource"])
+        self.assertEqual("reaction",shield["actionType"])
+        self.assertEqual(3,shield["historicalSource"]["sourceHellfireWarlockLevel"])
+        derived=shield["nativeDamageDesign"]
         self.assertEqual("derived-not-fixed-tiers",derived["progressionType"])
         self.assertEqual("warlock-current-eldritch-blast-damage",derived["derivesFrom"])
         self.assertFalse(derived["automaticHellfireBlastEntitlement"])
