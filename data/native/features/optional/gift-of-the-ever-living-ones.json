@@ -1,6 +1,6 @@
 {
   "id": "optionalfeature.gift-of-the-ever-living-ones",
-  "name": "Gift Of The Ever Living Ones",
+  "name": "Gift of the Ever-Living Ones",
   "kind": "optionalfeature",
   "baselineStatus": "pending-native-reconciliation",
   "nativeInvocationDefinition": {

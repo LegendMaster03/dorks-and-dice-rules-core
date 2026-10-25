@@ -29,7 +29,7 @@ class NativeWarlockInvocationContracts(unittest.TestCase):
         self.assertEqual(7, self.progress["count"]["nonSrdRightsReviewPending"])
         self.assertFalse(self.progress["runtimeImplemented"])
         self.assertFalse(self.progress["invocationProgressionApproved"])
-        entries = {"invocation." + r["name"].lower().replace(" ", "-"): r
+        entries = {r["invocationId"]: r
                    for r in self.progress["files"]}
         self.assertEqual(16, len(entries))
         for item in self.inventory["entries"]:
