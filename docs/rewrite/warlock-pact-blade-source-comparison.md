@@ -1,6 +1,6 @@
 # Warlock Pillar 2 — Pact of the Blade: 3.5e, SRD 5.1, SRD 5.2.1 comparison
 
-**Status:** Source comparison complete. **Owner approved the 2024/SRD 5.2.1 base Pact of the Blade mechanics** for native use, but intrinsic Pact progression, 2014 differences, and advanced Invocations remain **unresolved**. No native executable Pact of the Blade rule is activated by this document. Prepared October 25, 2026 for the current SRD-only Warlock vertical slice.
+**Status:** Source comparison complete. **Owner approved the 2024/SRD 5.2.1 base Pact of the Blade and an intrinsic second Pact-weapon attack at Warlock level 5**, independent of Invocation selection. The disposition of Thirsting Blade, further Pact progression, older 2014 differences, and advanced Invocations remain **unresolved**. No native executable Pact of the Blade rule is activated by this document. Prepared October 25, 2026 for the current SRD-only Warlock vertical slice.
 
 **Previously approved Pact architecture remains controlling:** Every native Warlock chooses a **separate, dedicated Pact at Warlock level 1**, consuming no Invocation choice. An Invocation is an additional clause attached to one Pact, and may require the Pact's type and/or its associated Patron. Patron acceptance under applicable terms and explicit mechanical eligibility are separately validated. Future additional Pacts remain a deferred advanced option; their level/cost/maximum is not resolved. See [Pact pillar reconciliation](warlock-pact-pillar-reconciliation.md).
 
@@ -31,23 +31,42 @@
 
 **Note on existing magic weapon ownership:** The 2024 Pact has a short bond action but does not explicitly reproduce 2014's 1-hour permanent weapon ritual, extradimensional storage, or item retrieval. Do not infer those effects automatically from the source.
 
-## Pact pillar depth — progression review prompted by owner feedback
+## Pact pillar depth — level-5 automatic second attack approved
 
-**Owner feedback:** The 2024 Blade baseline is an acceptable starting point but **underwhelming for a major, independent Pact pillar**. Its intrinsic benefits concentrate at acquisition, while meaningful higher-level weapon attack scaling is supplied by optional Invocations. This leaves the Pact disproportionately dependent on the Invocation pillar for core competence.
+**Owner ruling:** Pact of the Blade advances at **Warlock class level 5**. When the Warlock takes the **Attack action** with their Pact weapon, they may attack **twice total, instead of once**, as an intrinsic **Pact-pillar class feature**. No Invocation selection, Thirsting Blade prerequisite, spell slot, or compensating extra entitlement is required.
 
-**Design direction to evaluate, not approved mechanics:** A Pact should deliver sustained, recognizable specialization and its own progression, without requiring optional Invocations solely to remain effective. Conversely, Invocations should represent additional clauses that substantially customize an already functional Pact.
+This is an approved baseline advancement of the Pact. It must not stack as another independent Extra Attack grant with a source's or another class's same two-attack benefit; shared native attack-economy rules apply. This is **not** approval of a third attack, additional attack beyond level 5, or multiclass attack stacking. The 2024 **Thirsting Blade** source remains preserved as historical data. Its existing benefit is now **covered by the Pact**; its exact fate (retire duplicate, replace with a genuinely different enhancement, or conversion adapter) remains open. The 2024 **Devouring Blade** prerequisite must be reconciled accordingly rather than silently require the redundant Thirsting Blade purchase.
 
-**First mechanical case to decide:** At Warlock level **5**, should **two Pact-weapon attacks per Attack action** become an **intrinsic Pact of the Blade advancement**, rather than remaining the optional **Thirsting Blade** Invocation? If approved, the corresponding Invocation must be retired, converted into a distinct upgrade, or otherwise accounted for **without duplicate extra attacks or bonus entitlements**.
+**Why this matters:** The independent Pact pillar provides the basic martial progression. Invocations supply meaningful elective specializations rather than functioning as a mandatory tax to maintain ordinary weapon competence.
 
-**Follow-on balance questions:** Compare core Blade weapon combat with base Eldritch Blast at 1/5/11/12/17/20; decide whether intrinsic scaling should extend past level 5; decide whether the 2024 third attack of **Devouring Blade** stays an elective Invocation or changes role; preserve limits on simultaneous 3.5e iterative attacks, Eldritch Blast weapon-channeling, and source-era attack chains. **No automatic extra attack or new damage scaling is approved yet.**
+## Baldur's Gate 3 implementation comparison (external design research)
+
+*Baldur's Gate 3* is **not another SRD rules edition** and its changes are **comparison material only**. Its Warlock Pact begins at **level 3**, while our native dedicated Pact begins at **level 1**. Its class is limited to **level 12**, so it cannot establish Warlock Pact advancement from 13–20.
+
+| Subject | BG3 difference from 2014 / relevance to 2024 | Native disposition |
+| --- | --- | --- |
+| **Deepened Pact at level 5** | Automatically adds one extra Pact-weapon attack via Pact advancement; does **not** require taking Thirsting Blade as an Invocation. In the same feature, Chain grants familiar an extra attack and Tome gains Animate Dead, Haste, and Call Lightning, each once per Long Rest. | **Blade extra attack approved**. Chain/Tome versions are future comparison cases, **not yet approved**. |
+| **Charisma attacks** | Adds Charisma attack/damage rolls to the Pact weapon, later also reflected in tabletop 2024. | **Already approved** as part of 2024 base. |
+| **Bind mundane weapon** | BG3 can bind **ordinary nonmagical** melee weapons as well as magic weapons, turning their damage magical; 2014 and 2024 source bonding is restricted to an existing **magic weapon**, apart from separately conjuring a Pact weapon. | **Candidate**, not yet approved: binding any existing mundane weapon into a magical Pact weapon. |
+| **No disarming/dropping** | BG3's bound Pact Weapon condition prevents being dropped or disarmed, but also prevents **throwing** the weapon. | **Candidate**, not yet approved; resolve voluntary drop/throw separately, do not import all condition flags together. |
+| **Quick binding** | BG3 weapon summoning and binding use an **Action**, rather than 2014's one-hour ritual to bond a magic weapon. | 2024 **Bonus Action** conjuring/bonding is **already approved** and faster than BG3. |
+| **Magical conjured weapon** | BG3 explicitly declares conjured/bound Pact weapons magical for damage interactions. | **Candidate** for explicit mixed-edition magic-resistance text; no additional bypass rule approved. |
+| **Conjured forms** | BG3 uses a predefined weapon selection, including additional Hexblade-exclusive choices from Patch 8. | Keep approved 2024 broad simple/martial melee conjuration; do not narrow to UI-dependent forms. |
+| **Lifedrinker Invocation** | BG3 at Warlock **level 12** gives Charisma-modifier Necrotic damage to **melee attacks** and does not require Pact of the Blade. Unlike 2024's level-9 once-per-turn dice/healing redesign, this resembles a broadened 2014-style Invocation. | **Invocation reconciliation later**, not intrinsic Pact damage. |
+| **Extra Attack stack issue** | Outside Honour Mode, BG3 permits **Deepened Pact Extra Attack** to stack with some ordinary Extra Attack class features; in Honour Mode it does not. | Treat as game-mode implementation behavior, **not** a license to stack in native Dorks & Dice. |
+| **Hexblade subclass** | Added as a Warlock Patron option in BG3 Patch 8 (April 15, 2025), with its own bound-weapon/curse rules. | **Outside the current Fiend-only Patron vertical slice**; do not treat Hexblade-specific features as ordinary Pact of the Blade grants. |
+
+**Design interpretation:** BG3 provides evidence for **a meaningful automatic level-5 advancement for all three Pacts**. We have expressly approved **only Blade's two attacks**, while its other examples remain candidate inspiration for Chain/Tome reconciliations. BG3 also suggests stronger *weapon ownership* benefits (binding mundane weapons, resisting disarm) that would give Blade identity beyond raw attack counts. These must be individually approved, respecting Pact-bound magic, Patron acceptance, and 2014 extradimensional-storage behavior.
+
+**BG3 reference sources:** [Pact of the Blade](https://bg3.wiki/wiki/Pact_of_the_Blade_%28Passive_Feature%29), [Bind Pact Weapon](https://bg3.wiki/wiki/Bind_Pact_Weapon), [Deepened Pact](https://bg3.wiki/wiki/Deepened_Pact), [2014-to-BG3 Warlock changes](https://bg3.wiki/wiki/D%26D_5e_Class_Changes), [Lifedrinker](https://bg3.wiki/wiki/Lifedrinker), [Patch 8](https://bg3.wiki/wiki/Patch_notes/Patch_8).
 
 ## Pact-linked Invocations — separate from the first Pact
 
 | Option | 2014 SRD 5.1 | 2024 SRD 5.2.1 | Reconciliation note |
 | --- | --- | --- | --- |
-| **Thirsting Blade** | Warlock **5+**, Pact Blade; Attack action with Pact weapon grants **two attacks total** | Warlock **5+**, Pact Blade; **two attacks total** | Same core function; retain as an optional Invocation candidate rather than automatic Pact upgrade unless separately approved |
+| **Thirsting Blade** | Warlock **5+**, Pact Blade; Attack action with Pact weapon grants **two attacks total** | Warlock **5+**, Pact Blade; **two attacks total** | **Native second attack now intrinsic at level 5**. Source Invocation retained historically; duplicate Invocation removal/replacement is **still to be decided**. |
 | **Lifedrinker** | Warlock **12+**, Pact Blade; **Charisma modifier (minimum 1) Necrotic** damage on **every Pact-weapon hit** | Warlock **9+**, Pact Blade; **once per turn** add **1d6 Necrotic/Psychic/Radiant** and may expend a Hit Point Die for healing | Mechanically different: throughput, healing, resource, damage choices and level require owner decision |
-| **Devouring Blade** | **Not in SRD 5.1** | Warlock **12+**, requires Thirsting Blade; increases to **three attacks total** | Native advanced chain candidate; do not automatically grant or stack with 3.x iterative attacks |
+| **Devouring Blade** | **Not in SRD 5.1** | Warlock **12+**, requires Thirsting Blade; increases to **three attacks total** | Still elective/unapproved. If kept, replace its obsolete Thirsting Blade purchase prerequisite with the intrinsic level-5 Pact advancement or another approved condition. |
 | **Eldritch Smite** | **Not in SRD 5.1** (later supplements outside this 2014 SRD slice exist) | Warlock **5+**, Pact Blade; **once per turn** spend Pact Magic slot for Force bonus damage and possible Prone (Huge or smaller) | In-scope 2024 optional Invocation candidate; check short-rest slots and native 0-HP/Prone rules |
 
 These Invocations remain **Invocation-pillar options**, with **Pact of the Blade as a prerequisite/affiliation**; they do **not** become free Pact features. Author-specific Patron restrictions can be added per Invocation when justified, but no universal Fiend-only restriction is approved.
@@ -60,11 +79,11 @@ These Invocations remain **Invocation-pillar options**, with **Pact of the Blade
 
 ## Decision cases for owner, in logical order
 
-1. **Base Pact — APPROVED:** Native starts from the 2024 Bonus Action, proficiency, Charisma attack/damage, spellcasting focus, and selectable Necrotic/Psychic/Radiant damage. **Not yet sufficient as a complete Pact-pillar progression.**
+1. **Base Pact — APPROVED:** Native starts from the 2024 Bonus Action, proficiency, Charisma attack/damage, spellcasting focus, and selectable Necrotic/Psychic/Radiant damage. **Level-5 Pact advancement — APPROVED:** two Pact-weapon attacks per Attack action with no Invocation expenditure. Higher-level Pact features remain open.
 2. **Existing magic weapon bonding:** Preserve 2014's hour-long bonded-weapon ritual and extradimensional storage, use 2024 quick touch-bond, combine under distinct rules, or relegate the old ritual/storage to an optional Pact enhancement? Clarify 2014 artifact/sentient and 2024 attunement/bond exclusions.
 3. **Weapon form:** Keep both sources' distinction between conjured melee and bonded existing magic weapons (including ranged); specify when damage conversion/Charisma applies to bonded ranged weapons.
 4. **Magical weapon treatment:** The 2014 Pact explicitly overcomes mundane resistance/immunity, while 2024 offers damage-type conversion. Native Warlock and monsters preserve mechanics from multiple editions; resolve both explicitly.
-5. **Pact Invocation progression:** Reconcile two-attack Thirsting Blade (5+), Lifedrinker (12+ vs 9+, once-per-hit vs once-per-turn), and 2024 Devouring Blade/Eldritch Smite, preserving normal Invocation budgets and signed Pact/Patron eligibility.
+5. **Pact Invocation progression:** The intrinsic level-5 second attack supersedes Thirsting Blade's unchanged basic benefit. Decide whether Thirsting Blade is retired, given a truly distinct new option, or maintained only for source-era compatibility. Reconcile Lifedrinker (12+ vs 9+, once-per-hit vs once-per-turn), 2024 Devouring Blade/Eldritch Smite, and new prerequisites without duplicate attacks/Invocation entitlements.
 6. **3.5e heritage:** Defer Hideous Blow and Eldritch Glaive until the Invocations pillar, after core Pact weapon attacks and Eldritch Blast balance are established.
 
 ## In-scope acceptance tests (future implementation)
@@ -73,7 +92,7 @@ These Invocations remain **Invocation-pillar options**, with **Pact of the Blade
 - Pact must remain attached to an allowed Patron; Patron terms may forbid a particular Pact, and Invocation eligibility must be evaluated against the **same Pact's** Patron.
 - Pact termination suspends attached Invocations; transfer requires a valid receiving Pact/Patron with accepted terms, never automatic carryover.
 - Represent a conjured melee weapon separately from a bonded existing magic weapon; enforce chosen safeguards on item attunement, ownership, special properties and weapon form.
-- Compare Blade weapon builds to **base Eldritch Blast** at Warlock **1/5/11/12/17/20**, with and without optional Invocations; avoid accidentally granting extra attacks more than once.
+- Compare Blade weapon builds to **base Eldritch Blast** at Warlock **1/5/11/12/17/20**, including the **approved intrinsic Pact extra attack at level 5**, with and without optional Invocations; avoid counting Thirsting Blade as a second bonus attack or giving a free Invocation entitlement.
 - Apply Dorks & Dice base action economy and approved critical and damage rules, not 3.x full-round/multiple attacks by default.
 - Maintain a native pending-reconciliation status until approved effect and resource definitions are tested.
 
