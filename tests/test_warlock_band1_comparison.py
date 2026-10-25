@@ -56,12 +56,18 @@ class WarlockBand1ComparisonTests(unittest.TestCase):
                       if x["id"]=="historical-defense-utility")
         self.assertEqual("approved-native-rule",decision["status"])
         disposition=decision["approvedDisposition"]
-        self.assertEqual(5,len(disposition["retainedClassFeatureFamilies"]))
+        self.assertEqual(4,len(disposition["retainedClassFeatureFamilies"]))
         self.assertIn("Eldritch Sight",disposition["detectMagic"])
         self.assertEqual([3,7,11,15,19],
                          [x["classLevel"] for x in disposition["damageReduction"]])
-        self.assertEqual([1,2,5],disposition["fiendishResilience"]["healingPerRound"])
-        self.assertEqual("long-rest",disposition["fiendishResilience"]["recharge"])
+        self.assertNotIn("fiendish-resilience",disposition["retainedClassFeatureFamilies"])
+        self.assertEqual([1,2,5],decision["priorApprovedBaseHealing"]["historicalCandidateValues"]["healingPerRound"])
+        self.assertEqual("long-rest",decision["priorApprovedBaseHealing"]["historicalCandidateValues"]["recharge"])
+        retaliation=disposition["fiendPatronInfernalRetaliation"]
+        self.assertTrue(retaliation["singleFeatureEntitlement"])
+        self.assertEqual("Fiend Patron only",retaliation["scope"])
+        self.assertEqual(1,retaliation["sharedUses"])
+        self.assertEqual(3,len(retaliation["effects"]))
         self.assertEqual("pending-native-reconciliation",self.warlock["baselineStatus"])
         ledger=load("data/reference/srd/class-reconciliation-decisions.json")["decisions"]
         self.assertEqual(1,sum(x["nativeRuleId"]=="class.warlock.historical-class-features-band1"
