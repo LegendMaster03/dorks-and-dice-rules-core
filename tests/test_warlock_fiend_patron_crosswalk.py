@@ -123,9 +123,18 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
         self.assertEqual({"uses":1,"recovery":"long-rest","consumesOnAnyEffect":True},retaliation["sharedResource"])
         self.assertEqual("reaction",retaliation["activation"]["actionType"])
         self.assertEqual("one-reaction",retaliation["activation"]["actionCost"])
+        self.assertEqual("player-chosen-when-reaction-available",retaliation["activation"]["actionTiming"])
+        self.assertFalse(retaliation["activation"]["requiresExternalTrigger"])
         self.assertEqual(set(retaliation["availableEffects"]),set(retaliation["activation"]["modes"]))
-        self.assertTrue(all(mode["actionType"]=="reaction" and mode["trigger"]=="pending-native-reconciliation"
-                            for mode in retaliation["activation"]["modes"].values()))
+        self.assertTrue(all(mode["actionType"]=="reaction" and mode["requiresExternalTrigger"] is False
+                            and mode["activation"]=="player-choice" for mode in retaliation["activation"]["modes"].values()))
+        provenance=retaliation["historicalEffectScaling"]
+        self.assertEqual([8,13,18],provenance["fiendishResilience"]["sourceWarlockLevels"])
+        self.assertEqual([1,2,5],provenance["fiendishResilience"]["fastHealingPerRound"])
+        self.assertEqual(["1d6","2d6","5d6"],provenance["fiendishFlamewreath"]["retaliationFireDamage"])
+        self.assertEqual("Player's Handbook II",provenance["fiendishFlamewreath"]["source"])
+        self.assertEqual(3,provenance["hellfireShield"]["sourceHellfireWarlockLevel"])
+        self.assertEqual("not-yet-designed",provenance["hellfireShield"]["nativeThreeTierProgression"])
         self.assertEqual("warlock.patron.fiend.infernal-retaliation",review["nativeFeatureId"])
         base=next(v for v in ledger if v["nativeRuleId"]=="class.warlock.historical-class-features-band1")
         self.assertIn("retains 4 historical",base["decision"])
