@@ -670,7 +670,7 @@
       "SRD51": "Historical 2014 separate Pact Boon at class level 3 preserved; native first Pact uses its own entitlement at level 1",
       "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices"
     },
-    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks.",
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants.",
     "initialPactClassLevel": 1,
     "pactEntitlementCountAtLevel1": 1,
     "levelOnePillarRoles": {
@@ -848,7 +848,7 @@
       }
     },
     "bladePactNativeBaseline": {
-      "status": "owner-approved-2024-base-with-separate-pact-progression-review",
+      "status": "owner-approved-2024-base-and-intrinsic-level5-extra-attack",
       "pact": "Pact of the Blade",
       "sourceEdition": "SRD52",
       "initialAcquisition": {
@@ -895,17 +895,64 @@
         "nativeSpecialItemAndBondReplacementInteractions": "review-separately"
       },
       "pactProgressionConcern": {
-        "status": "owner-identifies-pact-pillar-baseline-as-underwhelming",
+        "status": "owner-approved-intrinsic-level5-attack-other-progression-open",
         "issue": "The 2024 Blade entry gives weapon access, while essential martial attack growth at higher levels is gated by optional Invocations.",
-        "nativePactIntrinsicProgression": "not-yet-approved",
-        "specificPotentialLevel5SecondAttack": "candidate-for-owner-review-not-granted",
-        "thirstingBladeDisposition": "not-yet-approved",
-        "devouringBladeDisposition": "not-yet-approved",
-        "invocationBudgetAndBalance": "not-yet-approved",
+        "nativePactIntrinsicProgression": "partially-owner-approved-level5-extra-attack",
+        "specificPotentialLevel5SecondAttack": "owner-approved-intrinsic-pact-feature",
+        "thirstingBladeDisposition": "base-two-attack-benefit-superseded-by-approved-level5-pact-progression-replacement-option-unresolved",
+        "devouringBladeDisposition": "pending-reconciliation-needs-non-Thirsting-Blade-prerequisite-if-its-source-invocation-is-retired",
+        "invocationBudgetAndBalance": "pending-reconcile-source-Thirsting-Blade-and-Devouring-Blade-no-auto-invocation-refund-or-bonus-grant",
         "guidingDistinction": "A Pact should deliver a meaningful self-sustaining specialization across class progression; Invocations should be optional specializations rather than unavoidable taxes to maintain baseline competence.",
-        "avoidsAutomaticStacking": true
+        "avoidsAutomaticStacking": true,
+        "approvedLevel5ExtraAttack": {
+          "status": "owner-approved",
+          "feature": "Blade Pact Extra Attack (Pact pillar advancement)",
+          "sourceConcept": "BG3 Deepened Pact: Pact of the Blade (level 5), functionally 2014/2024 Thirsting Blade",
+          "warlockClassLevel": 5,
+          "qualifyingWeapon": "weapon-currently-bound-or-conjured-by-pact-of-the-blade",
+          "action": "attack-action",
+          "totalAttacksWithPactWeapon": 2,
+          "grantsOneAdditionalAttackRatherThanTwoIndependentFeatures": true,
+          "consumesInvocationSelection": false,
+          "requiresThirstingBladeInvocation": false,
+          "grantedBy": "pact-of-the-blade",
+          "extraAttackStackingOrMulticlass": "follow-native-attack-economy-no-independent-additive-stacking-until-explicitly-approved",
+          "additionalHigherLevelBladeProgression": "unresolved"
+        }
       },
-      "nativeExecutableActivation": false
+      "nativeExecutableActivation": false,
+      "externalBG3Research": {
+        "status": "comparison-only-not-SRD-not-blanket-native-grant",
+        "externalSource": "Baldur's Gate 3 (up to Warlock level 12, 2025 Patch 8 reviewed)",
+        "url": "https://bg3.wiki/wiki/D%26D_5e_Class_Changes",
+        "pactAcquisitionLevel": 3,
+        "deepenedPactLevel": 5,
+        "bladeExtraAttackViaDeepenedPact": true,
+        "appliesWithoutThirstingBladeInvocation": true,
+        "weaponSummonActivation": "action",
+        "bondExistingWeaponActivation": "action",
+        "bindsNonmagicalOrMagicalExistingWeapon": true,
+        "makesBondedWeaponMagical": true,
+        "charismaAttackAndDamage": true,
+        "pactWeaponImmuneToDisarmingAndDropping": true,
+        "preventsThrowingBoundWeapon": true,
+        "summonWeaponVariantsRestricted": true,
+        "battleImplementationOfExtraAttackMayStackOutsideHonourMode": true,
+        "stackingExploitNotAdopted": true,
+        "bg3NoNative2024DamageTypeSwap": true,
+        "lifedrinkerLevel12AndNotPactBladeRestricted": true,
+        "hexbladeIntroducedPatch8": true,
+        "futureOtherPactComparisons": {
+          "chain": "Level 5 Deepened Pact gives familiar extra attack",
+          "tome": "Level 5 Deepened Pact grants one free Long Rest cast each of Animate Dead, Haste, Call Lightning"
+        },
+        "candidatesRequiringOwnerApproval": [
+          "bond-mundane-existing-weapons-as-magical",
+          "anti-disarm-bound-pact-weapon",
+          "handling-of-weapon-throwing",
+          "other-Pacts-equivalent-intrinsic-progression"
+        ]
+      }
     }
   }
 }
