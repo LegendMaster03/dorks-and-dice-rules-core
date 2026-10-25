@@ -1,6 +1,6 @@
 # Warlock Pact pillar — approved acquisition architecture
 
-**Status:** Owner-approved level-1 Pact acquisition, three-pillar identity, and Pact-bound Invocation lifecycle (2026-10-25). Additional Pact acquisition gating and Pact-specific mechanics are deferred. These are design approvals, not activation of the pending native Warlock.
+**Status:** Owner-approved level-1 Pact acquisition, Pact-bound Invocation lifecycle, cross-pillar prerequisites, and Patron discretion over accepted agreements/clauses (2026-10-25). Additional Pact acquisition gating and Pact-specific mechanics are deferred. These are design approvals, not activation of the pending native Warlock.
 
 ## Three independent pillars
 
@@ -24,12 +24,26 @@ This is a **narrative analogy, not a universal legal-contract requirement**. War
 6. Initial Pact and Patron identities both exist at Warlock **level 1**. Any prerequisite depending on one must be evaluated in an order-independent level-up/character-creation process; the player should not be forced to choose one narrative ordering to make an otherwise valid combination.
 7. The Pact pillar remains separate from the Patron and Invocation pillars in native data and rules evaluation.
 
+## Pact / Patron / Invocation compatibility and Patron acceptance (owner-approved)
+
+**A Patron determines which Pacts and Invocation clauses it is willing to accept.** This operates alongside explicit game-mechanical restrictions; neither automatically substitutes for the other.
+
+- **Pact requirements:** A Pact definition may restrict eligible **Patron types, traits, features or other Patron qualifications**. Independently, the particular Patron may accept or decline the Pact's terms. Do **not** impose a blanket Patron restriction on Blade, Chain or Tome without one being authored.
+- **Invocation requirements:** An Invocation is always attached to a **specific Pact**, even if no special Pact-type prerequisite applies. An Invocation may require a particular **Pact type**, the **Patron associated with that Pact**, **both**, or other features/levels. The associated Patron can also impose terms restricting which additional clauses it will grant.
+- **Correct context:** Validate an Invocation against **the Pact to which it is attached and that Pact's Patron**. A different Pact or Patron somewhere else in a future multi-Pact build does not satisfy an unmet restriction.
+- **Separate eligibility and consent:** Meeting published prerequisites does **not** automatically establish that a Patron accepts a particular agreement or clause when that Patron has restrictive terms. Conversely, Patron willingness does **not silently waive** explicit prerequisites. A special exception mechanism is not yet approved.
+- **Inherited and indirect arrangements:** The relevant Patron's existing or inherited terms can already authorize a Pact or Invocation. Do **not** require live contact, a signed agreement, or fresh personal negotiation whenever an Invocation is selected.
+- **Transfer or restoration:** The **receiving Pact** must meet the Invocation's prerequisites, and its Patron must **accept** the restored/transferred clauses under the new or preexisting terms. The prior Patron's permission alone is insufficient.
+- **Implementation:** Use **typed, per-option prerequisites** and Pact-to-Patron affiliations, evaluate eligibility and applicable Patron terms equally in guided/custom creation, explain denied choices, and preserve a historical record if a previously acquired Invocation becomes unavailable. Patron identity can be concealed while terms are adjudicated by the setting/DM.
+
+These rules establish **permission and dependency structure**, not automatic restrictions on all Pacts or an unrestricted Patron veto without setting-defined terms. Actual per-option restrictions and adjudication procedures will be decided during each Pact and Invocation reconciliation.
+
 ## Pact lifecycle and Pact-bound Invocations (approved design direction)
 
 A **Pact is a major agreement**, not an ordinary Invocation or interchangeable minor customization. **Every Eldritch Invocation is a clause attached to a Pact**. That Pact's continuing existence controls access to its attached Invocations; this is true even for an Invocation that does not require a specific type of Pact.
 
 - **Pact termination:** When a Pact is broken, its attached Invocations **cease to be available**. An Invocation attached to a broken Pact does **not** continue functioning independently.
-- **New agreement:** A newly formed Pact **may explicitly restore or transfer** Invocations originating under a previous Pact, if the new terms allow. **There is no automatic carryover**.
+- **New agreement:** A newly formed Pact **may explicitly restore or transfer** Invocations originating under a previous Pact, if its Patron accepts those clauses, the new terms allow it, and the Invocation's Pact/Patron requirements remain satisfied. **There is no automatic carryover or waiver**.
 - **Traceability:** Preserve each Invocation's association with its Pact and its acquisition history, so loss, restoration, or transfer is explainable and auditable. A useful implementation distinction is **unavailable but recorded**, rather than permanently deleting the ability record when its Pact is broken.
 - **Multiple Pacts:** The rules/data model must allow *distinct Pact agreements* and therefore identify which Pact provides which Invocation. This does **not** grant additional Pacts in the current default progression.
 - **Narrative flexibility:** Pact is an agreement/relationship metaphor, not always a written contract. Established Patron inheritance/noncontractual-source rulings remain valid.
@@ -52,7 +66,7 @@ A **Pact is a major agreement**, not an ordinary Invocation or interchangeable m
 - **Additional Pacts:** conceptually permitted as a future advanced option, **not available through current default progression**; their level, cost, maximum, coexistence rules and acquisition restrictions are deferred.
 - **Later Pact upgrades/entitlements**: whether a Pact receives any special advancement choices separate from optional Invocations.
 - **Mechanics** of Pact of the Blade, Chain, and Tome individually, including any interaction with Eldritch Blast, familiars, and spellcasting.
-- **Invocation budgets, scaling, and option prerequisites** remain under the Invocations pillar; approval of a free dedicated first Pact must not silently rewrite those counts.
+- **Invocation budgets, scaling, and individual option-specific restrictions** remain under the Invocations pillar; the typed Patron/Pact eligibility model is approved but does not itself assign restrictions to particular options. Approval of a dedicated first Pact must not rewrite Invocation counts.
 
 ## Next case
 
