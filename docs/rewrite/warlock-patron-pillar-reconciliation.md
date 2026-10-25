@@ -175,7 +175,7 @@ The owner-approved **Infernal Retaliation** family is separate and unaffected.
 
 The 3.5e universal base Warlock fast-healing grant is now **superseded as a native class grant**, although its source mechanics and previous decision are preserved for provenance. Damage Reduction, Deceive Item, Energy Resistance and Imbue Item remain approved base Warlock features. The modern Fiend Patron's level-10 damage-resistance feature, also named Fiendish Resilience, has a distinct native ID and is **not** an Infernal Retaliation mode.
 
-**Not yet resolved:** When the Fiend Patron acquires Infernal Retaliation; converted healing/retaliation damage and duration; each Reaction's exact qualifying trigger and timing window; whether active fast healing operates at 0 HP; and the original Hellfire Shield's Constitution-damage cost. Do not assume 3.5e base-class level 8 is automatically the native Fiend feature level or that all original values are approved. The single-feature entitlement and shared Long Rest recovery **are** approved.
+**Not yet resolved:** When the Fiend Patron acquires Infernal Retaliation; converted healing/retaliation damage and duration; exact effects/timing on a player-selected Reaction without a mandatory trigger; whether active fast healing operates at 0 HP; and the original Hellfire Shield's Constitution-damage cost. Do not assume 3.5e base-class level 8 is automatically the native Fiend feature level or that all original values are approved. The single-feature entitlement and shared Long Rest recovery **are** approved.
 
 ### Scope and provenance
 
@@ -196,8 +196,18 @@ These supersede older open-decision wording above and in historical research not
 
 The owner explicitly rejected splitting Infernal Retaliation into separately granted parts or extending its resource to every Warlock. **Fiend-specific single feature:** when granted, it offers fast healing (Fiendish Resilience), Fiendish Flamewreath, and Hellfire Shield. **Only one effect may be activated per Long Rest in total**, chosen when expending that feature's shared use. The 3.5e universal healing grant is superseded only in its *native class placement*; source provenance and the other four approved 3.5e Warlock base-class features are unchanged. Detailed values and acquisition timing require later reconciliation; this ruling alone does not activate a playable feature.
 
-## Reaction clarification — owner-approved (2026-10-24)
+## Reaction clarification — final owner correction (2026-10-24)
 
-All three Infernal Retaliation modes—Fiendish Resilience fast healing, Fiendish Flamewreath, and Hellfire Shield—**activate using a Reaction**. Activating any mode uses the Warlock's Reaction **and** the one shared Infernal Retaliation charge per Long Rest; this does not grant extra Reactions. This is a deliberate native conversion, irrespective of the historical 3.5e Free Action or immediate-action activation rules. Do not code any mode as an Action, Bonus Action, automatic free activation, or permanently passive effect.
+All three Infernal Retaliation modes—Fiendish Resilience fast healing, Fiendish Flamewreath, and Hellfire Shield—**activate using a Reaction**. **Under Dorks & Dice native action economy, a Reaction does not require an external trigger; the player chooses when to use it.** Do not import reaction-trigger prerequisites from 5e or 3.5e. Activating any mode spends the available Reaction and the feature's **single shared use per Long Rest**, making the other two effects unavailable until recovery. A sustained effect, once activated, continues for its stated duration without consuming additional Reactions. Do not impose Action/Bonus Action or source-edition Free Action/immediate-action semantics.
 
-**Still to resolve:** A Reaction must have a trigger. Determine the trigger separately for each mode, particularly whether Fiendish Resilience responds to taking damage, being hit by an attack, or another qualifying event. Flamewreath and Hellfire Shield also require precise attack/hit/damage timing. Do not silently use a chosen trigger as an approved rule. The Fiend-only single feature and common once-per-Long-Rest resource remain unchanged.
+### Verified 3.5e scaling — not three independent tiers for every mode
+
+| Effect | Historical source | Three explicit tiers? | Historical effects at Warlock levels 8 / 13 / 18 |
+| --- | --- | --- | --- |
+| **Fiendish Resilience (fast healing)** | *Complete Arcane* | **Yes** | Fast healing **1 / 2 / 5** per round; original activation lasted 20 rounds |
+| **Fiendish Flamewreath** | *Player's Handbook II*, not *Complete Mage* | **Yes** | Melee-retaliation **1d6 / 2d6 / 5d6 Fire**; original activation lasted 20 rounds |
+| **Hellfire Shield** | *Fiendish Codex II* | **No** | Historically obtained at **Hellfire Warlock prestige level 3** only; its damage equaled Eldritch Blast **including the Hellfire Blast bonus**, so it scaled indirectly with those abilities rather than having its own three-tier class-feature advancement |
+
+The proposed **native** Infernal Retaliation progression at **Warlock levels 8, 13 and 18 is not approved** by this source comparison. Fiendish Resilience and Flamewreath offer a faithful three-step template; Hellfire Shield would require either a deliberately new native three-tier progression or a compatible derived-damage calculation. Its historical Constitution damage cost and dependency on Hellfire Blast are **not silently granted or adopted** into native mechanics. The native Fiend-feature acquisition level, damage/duration conversion, and compatibility with Patron Imprint/Eldritch Blast enhancements are still open.
+
+**Sources for historical facts:** *Complete Arcane* (Warlock Fiendish Resilience), *Player's Handbook II* p. 65 (Fiendish Flamewreath), *Fiendish Codex II* (Hellfire Warlock, Hellfire Shield).
