@@ -412,11 +412,30 @@
       },
       "pending": [
         "native Fiend feature acquisition level",
-        "effect activation timing, duration and damage scaling",
+        "each reaction's qualifying trigger and timing window; effect duration and numerical scaling",
         "Hellfire Shield Constitution-damage cost and compatibility",
         "healing interaction at 0 HP"
       ],
-      "qualification": "One feature with three effects, not three independently granted abilities. These directions are approved design rules, not an executable native implementation. Fiend Patron level-10 resistance remains a separate feature despite the historical Fiendish Resilience name collision."
+      "qualification": "One feature with three effects, not three independently granted abilities. These directions are approved design rules, not an executable native implementation. Fiend Patron level-10 resistance remains a separate feature despite the historical Fiendish Resilience name collision. All three effects require a Reaction upon activation, with precise triggers unresolved. Their historical source action types are provenance only; the native Reaction rule deliberately overrides them.",
+      "activation": {
+        "actionType": "reaction",
+        "modes": {
+          "fiendish-resilience-fast-healing": {
+            "actionType": "reaction",
+            "trigger": "pending-native-reconciliation"
+          },
+          "fiendish-flamewreath": {
+            "actionType": "reaction",
+            "trigger": "pending-native-reconciliation"
+          },
+          "hellfire-shield": {
+            "actionType": "reaction",
+            "trigger": "pending-native-reconciliation"
+          }
+        },
+        "actionCost": "one-reaction",
+        "clarification": "Owner approved all three effects as Reactions. Each requires a qualifying trigger, to be chosen individually. When an effect is activated it consumes both the Reaction and the single Infernal Retaliation use per Long Rest."
+      }
     }
   }
 }
