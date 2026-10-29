@@ -132,7 +132,7 @@ def check_migration_shas():
         except OSError as exc:
             errors.append(f"lost original blob: {after}: {exc}")
             continue
-        sha = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\\0" + data).hexdigest()
+        sha = hashlib.sha1(b"blob " + str(len(data)).encode() + bytes([0]) + data).hexdigest()
         if sha != entry["gitBlobSha"]:
             errors.append(f"modified original blob: {after}")
         if len(data) != entry["bytes"]:
