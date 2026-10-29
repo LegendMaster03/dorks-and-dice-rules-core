@@ -23,9 +23,10 @@
       "noMaterialComponents": true,
       "expires": "finish-long-rest",
       "distinctFrom": "druid.animal-companion",
-      "bothMayCoexist": true,
+      "bothMayCoexist": false,
       "control": "native-controlled-creature-initiative-and-actions",
-      "unlimitedArchdruidTransformationsCannotPayCost": true
+      "unlimitedArchdruidTransformationsCannotPayCost": true,
+      "requiresCompanionPathSelection": "temporary-wild-companion"
     }
   }
 }
