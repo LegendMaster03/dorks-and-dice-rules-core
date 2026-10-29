@@ -1,0 +1,9 @@
+{
+  "id": "first-party-001",
+  "kind": "ruleset-package",
+  "schemaVersion": 1,
+  "nativeRoot": "native/",
+  "workingRoot": "working/",
+  "runtimeContentRoot": "native/",
+  "description": "Internal stable identifier, not a public title or game name."
+}
