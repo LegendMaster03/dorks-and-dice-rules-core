@@ -12,7 +12,7 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.inventory=load("data/reference/srd/warlock-srd-slice-inventory.json")
-        cls.base=load("data/native/classes/base/warlock.json")
+        cls.base=load("data/rulesets/first-party-001/working/classes/base/warlock.json")
 
     def test_first_pact_is_dedicated_level_one_class_entitlement(self):
         p=self.inventory["approvedNativePactDirection"]

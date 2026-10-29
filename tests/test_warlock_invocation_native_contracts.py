@@ -8,7 +8,7 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-OPT = ROOT / "data/native/features/optional"
+OPT = ROOT / "data/rulesets/first-party-001/working/features/optional"
 
 def read(path):
     return json.loads(path.read_text(encoding="utf-8"))

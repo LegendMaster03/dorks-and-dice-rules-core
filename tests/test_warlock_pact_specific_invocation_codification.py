@@ -17,7 +17,7 @@ class PactSpecificInvocationCodificationTests(unittest.TestCase):
         cls.records = cls.data["entries"]
         cls.by_name = {entry["name"]: entry for entry in cls.records}
         cls.srd = load(ROOT / "data/reference/srd/structured/optionalfeatures.json")["optionalfeature"]
-        cls.warlock = load(ROOT / "data/native/classes/base/warlock.json")
+        cls.warlock = load(ROOT / "data/rulesets/first-party-001/working/classes/base/warlock.json")
 
     def test_pass_order_preserves_unresolved_budget_and_three_five_work(self):
         self.assertEqual("source-staged-conflicts-not-resolved", self.data["status"])

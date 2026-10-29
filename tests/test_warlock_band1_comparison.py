@@ -10,7 +10,7 @@ class WarlockBand1ComparisonTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.crosswalk=load("data/reference/3x/warlock-band1-base-comparison.json")
-        cls.warlock=load("data/native/classes/base/warlock.json")
+        cls.warlock=load("data/rulesets/first-party-001/working/classes/base/warlock.json")
 
     def test_scope_and_base_source_consistency(self):
         obj=self.crosswalk

@@ -47,7 +47,7 @@ class WarlockResearchInventoryTests(unittest.TestCase):
         self.assertEqual(8,x["modernSRDComparativeFacts"]["invocationKnownAt20"]["srd51"])
         self.assertEqual(10,x["modernSRDComparativeFacts"]["invocationKnownAt20"]["srd52"])
         self.assertEqual(28,x["modernSRDComparativeFacts"]["srd52ReferencedInvocationOptions"])
-        native=load("data/native/classes/base/warlock.json")
+        native=load("data/rulesets/first-party-001/working/classes/base/warlock.json")
         self.assertEqual("pending-native-reconciliation",native["baselineStatus"])
         self.assertEqual(2,len(native["candidateDefinitions"]))
 
