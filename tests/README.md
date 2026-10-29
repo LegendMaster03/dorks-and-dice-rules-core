@@ -1,5 +1,6 @@
 # Tests
 
-No runtime or gameplay code exists yet. New tests will be organized around native rule validation, deterministic evaluation, conversion, source lineage, authorization and visibility isolation, and integration contracts as subsystems are approved.
+- `RulesCore.Host.Tests/` — .NET 10 xUnit tests using a real ephemeral Kestrel listener to verify lifecycle, configuration failure, liveness/readiness and absence of public/private API routes.
+- Existing Python JSON/source-integrity tests remain separate and unchanged.
 
-Previous .NET tests remain on `main` as behavioral reference, not executable rewrite tests.
+Run `dotnet test RulesCore.slnx -c Release` for the Phase 1B host; existing Python checks continue through the preexisting structural validation workflow.

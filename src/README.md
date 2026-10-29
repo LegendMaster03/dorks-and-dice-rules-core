@@ -1,7 +1,6 @@
-# Rules Core source
+# Rules Core source — Phase 1B
 
-This directory is intentionally empty of executable application code after the approved clean-slate rewrite.
+- `RulesCore.Host/` — .NET 10 headless Minimal API host. Only liveness and intentionally-unready readiness endpoints exist.
+- `RulesCore.Content/` — framework-independent native ruleset path and readiness contracts. No content loader exists yet.
 
-The future implementation is **headless** and independent of the Rules Wiki user interface. The primary implementation language and framework are not yet selected. Define the native rules foundation and required API/authorization contracts before introducing source projects.
-
-Do not restore the old .NET project hierarchy simply to preserve legacy compatibility. The previous implementation is available on `main` as reference.
+The retired service remains on `main` solely for reference. Neither current project serves game rules, exposes authoring APIs, nor depends on PostgreSQL. See `docs/rewrite/phase-1b-host.md` for configuration and Phase 2 handoff.
