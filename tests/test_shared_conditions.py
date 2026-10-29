@@ -13,7 +13,7 @@ def get(p):
 class SharedConditionReconciliationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.native = {x["id"]: x for x in get("data/native/conditions.json")["conditions"]}
+        cls.native = {x["id"]: x for x in get("data/rulesets/first-party-001/native/conditions.json")["conditions"]}
         cls.decisions = {
             x["nativeRuleId"]: x for x in get("data/reference/srd/reconciliation-decisions.json")["decisions"]
         }

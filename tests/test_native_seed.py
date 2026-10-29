@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "data" / "native"
+NATIVE = ROOT / "data" / "rulesets" / "first-party-001" / "working"
 CONVERSIONS = ROOT / "data" / "conversions"
 
 
