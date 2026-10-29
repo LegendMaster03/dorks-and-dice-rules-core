@@ -82,6 +82,16 @@ class CoherentContentWaveOneTests(unittest.TestCase):
                 source = read(WORKING / "classes/base" / f"{name}.json")
                 self.assertEqual("retained-native-definition", source["baselineStatus"])
                 source.pop("baselineStatus")
+                if name == "druid":
+                    native = cls["definition"]
+                    self.assertTrue(native["companionPathChoice"]["exclusive"])
+                    self.assertEqual(1, native["companionPathChoice"]["selectionFromDruidLevel"])
+                    self.assertFalse(native["temporaryWildCompanionCanCoexist"])
+                    self.assertNotIn("druid.animal-companion", native["progression"][0]["featureGrants"])
+                    self.assertNotIn("class-feature.druid.wild-companion-level-2", native["progression"][1]["featureGrants"])
+                    self.assertIn("druid.animal-companion", native["choiceOnlyFeatureIds"])
+                    self.assertIn("class-feature.druid.wild-companion-level-2", native["choiceOnlyFeatureIds"])
+                    source["definition"] = dict(native)
                 self.assertEqual(source, cls)
 
     def test_feature_dependencies_and_provenance(self):
@@ -94,6 +104,11 @@ class CoherentContentWaveOneTests(unittest.TestCase):
                 self.assertEqual("class." + name, entry["parentClass"])
                 source = read(WORKING / "features/classes" / name / path.name)
                 self.assertEqual("retained-native-definition", source.pop("baselineStatus"))
+                if name == "druid" and path.name == "wild-companion-level-2.json":
+                    mechanics = entry["definition"]["mechanics"]
+                    self.assertFalse(mechanics["bothMayCoexist"])
+                    self.assertEqual("temporary-wild-companion", mechanics["requiresCompanionPathSelection"])
+                    source["definition"]["mechanics"] = dict(mechanics)
                 self.assertEqual(source, entry)
                 self.assertIn(entry["id"], self.catalog)
 
