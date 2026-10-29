@@ -239,7 +239,41 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
     if source_copy.get("kind") == "monster":
         # This reference adds no invented numeric statistics or action grants.
         source_copy["statBlockFoundationId"] = "rule.monster-statblock-foundation"
-    return native_record == source_copy
+    if native_record == source_copy:
+        return True
+    # Explicitly documented reconciliation divergence is a static CONTENT
+    # validation exception, never a runtime rule approval or fallback.
+    ledger_path = REPO / "docs/content-promotion/promotion-ledger.json"
+    if not ledger_path.is_file():
+        return False
+    divergence = read_json(ledger_path).get("sourceDivergences", {}).get(native_record["id"])
+    if not divergence or not divergence.get("reconciliationDocument"):
+        return False
+    if not (REPO / divergence["reconciliationDocument"]).is_file():
+        return False
+
+    def changed_paths(selected, historical, prefix=""):
+        if selected == historical:
+            return set()
+        if isinstance(selected, dict) and isinstance(historical, dict):
+            paths = set()
+            for key in selected.keys() | historical.keys():
+                if key not in selected or key not in historical:
+                    paths.add(prefix + "/" + key)
+                else:
+                    paths.update(changed_paths(selected[key], historical[key], prefix + "/" + key))
+            return paths
+        if isinstance(selected, list) and isinstance(historical, list) and len(selected) == len(historical):
+            paths = set()
+            for index, (new, old) in enumerate(zip(selected, historical)):
+                paths.update(changed_paths(new, old, prefix + "/" + str(index)))
+            return paths
+        return {prefix}
+
+    expected = divergence.get("changedPaths", [])
+    return bool(expected) and len(expected) == len(set(expected)) and (
+        changed_paths(native_record, source_copy) == set(expected)
+    )
 
 
 def main(argv=None):
