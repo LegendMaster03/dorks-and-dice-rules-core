@@ -24,4 +24,6 @@ jobs:
         with:
           dotnet-version: "10.0.x"
       - name: Check content against ledger with the actual C# native loader
+        env:
+          CONTENT_REVIEW_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: dotnet run --project tests/NativeCatalogFingerprint/NativeCatalogFingerprint.csproj --configuration Release

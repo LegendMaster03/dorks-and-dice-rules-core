@@ -34,7 +34,7 @@ The 16 creature examples include simple beasts, three Goblin roles, two Hobgobli
 
 ## Safety and release
 
-This is a **content-only** proposal. The selected native definitions change the semantic catalog digest; the old deployment fingerprint `870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6` must not be accepted for an updated image. The new digest must be obtained from the actual C# native loader for the reviewed release SHA. Do not change the deployment script to skip the check.
+This is a **content-only** proposal. The selected native definitions change the semantic catalog digest; the old deployment fingerprint `870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6` must not be accepted for an updated image. The exact semantic digest **3b60c6f125eb525285333bc26758abeb41424aa4b4c362831d36987e11375f8c** was computed and verified with the C# native loader by the read-only content workflow. The actual release SHA must still be explicitly approved when the updated image is built. Do not change the deployment script to skip the check.
 
 The existing C# `NativeCatalogTests.ApprovedPackageLoads35PlayableRecords` asserts the original count of 35 and will need a separate Core Code rewrite owner update, not an unreviewed content-side rewrite. The review/verification handoffs live under `docs/handoffs/`.
 

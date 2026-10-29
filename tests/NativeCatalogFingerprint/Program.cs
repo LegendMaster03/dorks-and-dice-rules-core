@@ -21,7 +21,7 @@ var hasMismatch = catalog.Count != total;
 Console.WriteLine($"RULESET_ID={catalog.RulesetId}");
 Console.WriteLine($"CATALOG_SHA256={catalog.Fingerprint}");
 Console.WriteLine($"NATIVE_ENTITY_COUNT={catalog.Count}");
-Console.WriteLine($"RELEASE_SHA={Environment.GetEnvironmentVariable("GITHUB_SHA") ?? "local"}");
+Console.WriteLine($"CONTENT_REVIEW_SHA={Environment.GetEnvironmentVariable("CONTENT_REVIEW_SHA") ?? Environment.GetEnvironmentVariable("GITHUB_SHA") ?? "local"}");
 foreach (var kind in kinds.EnumerateObject())
 {
     var actual = catalog.CountByCategory(kind.Name);
