@@ -58,5 +58,5 @@ jobs:
       - name: Audit inert working definitions without granting authority
         run: python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/working
 
-      - name: Verify split, original blob preservation and native relationships
+      - name: Verify authoritative boundary, SRD coverage and original migration ledger
         run: python3 tools/validate_ruleset_split.py

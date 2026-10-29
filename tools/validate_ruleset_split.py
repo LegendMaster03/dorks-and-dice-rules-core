@@ -111,6 +111,62 @@ def check_srd_coverage():
     return errors, len(rows)
 
 
+def check_migration_ledger():
+    """Permanently validate the original migration inventory, not mutable bytes.
+
+    This check remains valid when rules are edited, moved to native after
+    approval, or have their coverage paths updated in later phases.
+    """
+    errors = []
+    ledger = read_json(REPO / "docs/rewrite/phase-1a-native-working-ledger.json")
+    counts = ledger["counts"]
+    files = ledger["files"]
+    source_rows = ledger["records"]
+    manifest = read_json(REPO / "data/reference/srd/native-coverage-manifest.json")
+    current_rows = manifest["coverage"]
+
+    if len(files) != counts["beforeFiles"]:
+        errors.append("migration ledger original-file count mismatch")
+    if counts["afterNativeFiles"] + counts["afterWorkingFiles"] + counts["archivedReadmes"] != len(files):
+        errors.append("migration ledger destination-file counts do not reconcile")
+    if counts["afterNativeJson"] + counts["afterWorkingJson"] != counts["beforeJson"]:
+        errors.append("migration ledger JSON-file counts do not reconcile")
+    if len(source_rows) != counts["SRDCoverageBefore"] or len(source_rows) != counts["SRDCoverageAfter"]:
+        errors.append("migration ledger original SRD record counts do not reconcile")
+
+    old_paths, new_paths = set(), set()
+    for entry in files:
+        old_path, new_path = entry["oldPath"], entry["newPath"]
+        if not old_path.startswith("data/native/"):
+            errors.append(f"invalid original path in migration ledger: {old_path}")
+        if not (new_path.startswith("data/rulesets/first-party-001/native/") or
+                new_path.startswith("data/rulesets/first-party-001/working/") or
+                new_path == "docs/rewrite/phase-1a-original-native-readme.md"):
+            errors.append(f"unexpected original migration destination: {new_path}")
+        if old_path in old_paths or new_path in new_paths:
+            errors.append(f"repeated original or destination path: {old_path} -> {new_path}")
+        old_paths.add(old_path)
+        new_paths.add(new_path)
+        if not isinstance(entry["bytes"], int) or entry["bytes"] < 0:
+            errors.append(f"invalid original blob length: {old_path}")
+        if not re.fullmatch(r"[0-9a-f]{40}", entry["gitBlobSha"]):
+            errors.append(f"invalid original Git blob SHA: {old_path}")
+
+    initial_ids = [entry["id"] for entry in source_rows]
+    current_ids = [entry["nativeId"] for entry in current_rows]
+    if len(initial_ids) != len(set(initial_ids)):
+        errors.append("duplicate original SRD entity in migration ledger")
+    if len(current_ids) != len(set(current_ids)):
+        errors.append("duplicate current SRD entity in coverage manifest")
+    if set(initial_ids) != set(current_ids):
+        errors.append("current SRD logical identities differ from original migration ledger")
+    initial_kinds = {entry["id"]: entry["kind"] for entry in source_rows}
+    for row in current_rows:
+        if initial_kinds.get(row["nativeId"]) != row["kind"]:
+            errors.append(f"source kind changed for original SRD identity: {row['nativeId']}")
+    return errors, len(files)
+
+
 def check_migration_shas():
     """Snapshot-only proof: not a permanent publication or future-edit gate."""
     errors = []
@@ -159,6 +215,8 @@ def main(argv=None):
     errors.extend(native_errors)
     errors.extend(check_relationships())
     errors.extend(check_srd_coverage()[0])
+    ledger_errors, _ = check_migration_ledger()
+    errors.extend(ledger_errors)
     working_ids = defaultdict(list)
     for path in sorted(WORKING.rglob("*.json")):
         try:
