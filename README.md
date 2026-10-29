@@ -1,46 +1,40 @@
 # Dorks & Dice — Rules Core
 
-Rules Core is the **headless, authoritative native rules engine and rules-content service** for the Dorks & Dice tabletop system. The separately hosted [Rules Wiki](https://github.com/LegendMaster03/dorks-and-dice-rules-wiki) provides its user-facing rules experience.
+Rules Core is the headless rules-content service and future mechanical execution engine for the Dorks & Dice tabletop system. [Rules Wiki](https://github.com/LegendMaster03/dorks-and-dice-rules-wiki) is a separate user-facing application.
 
-## Rewrite branch status
+## Rewrite implementation status
 
-`feature/rules-core-rewrite` is a **clean-slate architecture and foundation branch**. The old implementation has deliberately been removed from this branch. Its source code, historical behavior, and previous tests remain available on `main` until the rewrite is approved for merging.
+`feature/rules-core-rewrite` contains the reviewed Phase 1A native/working data separation and Phase 1B C#/.NET 10 host foundation. The previous implementation remains on `main` as historical reference, not a second runtime to deploy. **The new host boots but does not yet load or serve rules**. Phase 2 will implement the native catalog and Phase 3 will connect authorized consumers.
 
-**No executable service, database migration, or gameplay engine exists on this branch yet.** Do not deploy this branch or enable public/tester access. The deployment workflow is intentionally inert. Choice of implementation language and framework remains open; C#, C++, Java, and TypeScript are candidates, not requirements.
+No gameplay evaluator, rules database integration, public/private rule endpoint, or Rules Wiki integration has been implemented in this rewrite. PostgreSQL is not required to start the host. Production deployment remains intentionally disabled; do not enable public/tester access or merge to `main` without separate authorization.
 
-## Organization
+## Data layout and authority
 
-- `data/rulesets/first-party-001/working/skills.json` — provisional skill records, including all adopted historical-edition skill concepts but **no edition/import metadata**
-- `data/rulesets/first-party-001/working/competencies.json` — provisional unified crafting-skill and tool-proficiency capabilities, not duplicated ordinary Skills
-- `data/rulesets/first-party-001/working/` — version-controlled, independently identified native Dorks & Dice entities, one primary JSON document per substantial entity; contained categories such as Skills and Competencies each use one JSON file
-- `data/conversions/` — reviewed, versioned imported-source-to-native conversion definitions
-- `data/schemas/` — data validation schemas as they are defined
-- `data/reference/` — only material cleared for inclusion in version control, with source/license attribution
-- `src/` — new headless rules engine/service, currently intentionally empty
-- `docs/rewrite/` — authoritative rewrite design decisions, staged foundation, and subsystem notes
-- `docs/` — other earlier design and implementation documentation retained as **historical reference**
-- `tests/` — future deterministic tests and authorization/isolation checks
-- `tools/` — future offline conversion, data validation, and development utilities
-- `.github/workflows/` — language-neutral skeleton checks; deployment disabled pending reviewed implementation
+- `data/rulesets/first-party-001/manifest.json` — provisional internal ruleset identity and layout.
+- `data/rulesets/first-party-001/native/` — **only** approved, authoritative native rules. This is the **only** eventual runtime rules source.
+- `data/rulesets/first-party-001/working/` — inert drafts, staged SRD candidates, incomplete reconciliations, and identity aliases. Never load or fall back to this directory in the runtime.
+- `data/reference/` — pinned imported evidence and licensing/source provenance; not authoritative runtime mechanics.
+- `data/conversions/` — reviewed conversion mappings for later phases.
+- `data/schemas/` — future native schema documentation and validation.
 
-## Rules-data principles
+Each native rule has a stable identity independent of its file path. Approval is determined by the controlled working-to-native promotion workflow, **not** by a runtime status detector or per-rule publication allowlist. Preserve source history independently from the authoritative native definition.
 
-Each native rule entity has a stable identity independent of file path. Mechanics, descriptions, and applicable lore can share a single structured JSON entity; `fluff` is not automatically a separate file. Classes and species have typed subfolders; subclasses and subspecies are grouped under their parent identity in directory paths **and** record an explicit parent relationship in data. Class advancement, including epic Level Bands, belongs to its class rather than a separate continuation/progression entity.
+The Phase 1A audit documents 35 authoritative records, 2,626 distinct working identities, and lossless preservation of 2,522 SRD coverage entries at the time of migration. See `docs/rewrite/phase-1a-audit.md` and `docs/rewrite/phase-1a-native-working-ledger.json`; these counts are historical snapshots and change as approved rules are promoted.
 
-Keep future source import/conversion data, provenance and source-revision history outside the core native skill rules; separate permissions, restricted source grants, explicitly adopted homebrew, campaign overrides and global Rules Lawyer decisions. A source import must not silently become authoritative native rules. Do not commit restricted content, user data, secrets, or deployed database snapshots.
+## .NET 10 host foundation
+
+- `src/RulesCore.Host/` — ASP.NET Core Minimal API/Kestrel host, with structured logging, configuration validation, and graceful shutdown.
+- `src/RulesCore.Content/` — transport-independent native path and readiness contracts.
+- `tests/RulesCore.Host.Tests/` — startup, configuration, native-only path, and endpoint exposure tests.
+- `RulesCore.slnx` and `Dockerfile` — buildable .NET service and container image.
+- `docs/rewrite/phase-1b-host.md` — Phase 1B behavior and Phase 2/3 handoff.
+
+Run `dotnet restore RulesCore.slnx`, `dotnet build RulesCore.slnx -c Release`, and `dotnet test RulesCore.slnx -c Release`. Native data validation runs in `.github/workflows/validate.yml`; host tests and Docker smoke tests run in `.github/workflows/phase1-host-ci.yml`.
+
+At present `GET /health` returns HTTP 200 (process alive), `GET /ready` returns HTTP 503 (native catalog not yet loaded), and rule API paths are unmapped (HTTP 404). These are intentional. `RulesCore:ApiSurface` accepts only `PublicOnly` or `PrivateOnly`; future private routes must implement Site ticket redemption, exact authorized tunnel-source verification, and per-user authorization before exposure.
 
 ## Next steps
 
-Agree on foundational native data contracts, rules composition and access boundaries; choose a suitable runtime; implement the minimum approved engine foundation; add mechanics and converters one subsystem at a time with tests. Review and explicit authorization are required before gameplay implementation, database changes, deployment, re-enabling the service, or merging to `main`.
+**Phase 2:** load and validate only `native/` into an immutable indexed catalog, support consolidated JSON category files and individual entities, test authoritative identity integrity and search, and activate readiness only when a usable snapshot exists. **Phase 3:** implement distinct public/private APIs and the existing Rules Wiki contracts without bypassing the Site private Tool tunnel.
 
-## SRD native baseline
-
-The pinned SRD 5.1 and 5.2.1 structured corpus has been staged
-in the inert working tree, retaining its 2,225 per-entity records.
-**Unreviewed candidate definitions are inert**, not executable rules or
-approved native mechanics; the reconciled Conditions catalog is authoritative,
-while the full Skills and Competencies catalogs remain provisional. The original 90-file source pack is immutable reference
-material. For counts, structure and verification caveats, see
-`docs/rewrite/native-srd-baseline-complete.md`.
-
-For the Phase 1A migration evidence and file/record reconciliation see `docs/rewrite/phase-1a-audit.md`.
+Game mechanics and source conversions are implemented later, subsystem by subsystem, according to approved rules decisions. Unresolved SRD candidate definitions remain inert.
