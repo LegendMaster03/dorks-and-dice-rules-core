@@ -94,15 +94,23 @@ The `definition` above is an **abbreviated shape illustration**. The actual resp
 
 HTTP 400: `{"error":"invalid_query"}` or `{"error":"invalid_id"}`. HTTP 404: `{"error":"ruleset_not_found"}`, `{"error":"rule_not_found"}`, or `{"error":"api_not_found"}` for unmatched routes. HTTP 503: `{"error":"native_catalog_unavailable"}`. Only the three named GET routes are supported; no writes, refresh, generic HTTP proxy or adapter. `/health` remains independent of catalog availability and `/ready` reports validated catalog readiness (not public-distribution approval).
 
-## Consumer migration impact and next gate
+## Consumer migration impact — verified against current consumer code
 
-**Character Sheet:** Replace existing `/api/rules` and campaign resolution dependencies with native ruleset-scoped list/detail reads; update rule IDs and projections. Class-specific resource and spell-slot mechanics are not supplied by this read-only API and require separately approved mechanics contracts.
+The following is a **read-only survey**, not a modification of either consumer or its deployed routes.
 
-**Block Initiative:** Resolve condition/statblock references from native IDs and definitions. Current legacy combat/kaiju evaluation and dynamic mechanics are not reproduced here; migrate those consumers in separate phases, without an old/new adapter.
+**Character Sheet**, `LegendMaster03/dorks-and-dice-character-sheet` main `3ef460315fda49d3c71335fd7cb5b6b6056b2cef`:
+- `src/CharacterSheet.Web/Client/src/rules-core-api.ts` calls `GET /api/rules?entityType=...&q=...&limit=200` and `GET /api/rules/{conceptKey}` and expects `ResolvedRulesCatalogResponse` / `ResolvedRuleDetail` fields such as `conceptKey`, `entityType`, `displayName`, source revision and package/edition metadata. Phase 3B uses `/api/rulesets/{id}/rules?category=...&limit<=100`, paginated native IDs, `name`, `kind`, `definition`; all old projections must be replaced, not aliased.
+- `src/CharacterSheet.Web/DelegatedRulesCoreGateway.cs` also calls legacy mechanics, character advancement eligibility, recovery, character projection, manufacturing, enchanting and campaign endpoints. This Phase 3B **read-only** API is insufficient for those operations; plan new distinct mechanics contracts in later phases. Do not convert these POST operations into static catalog reads.
+- Character Sheet currently uses Site's `/tool-host/registrations/rules-core/api/upstream` route for public access. Keep that access design under explicit migration review; it is not equivalent to the Wiki's private pair tunnel.
 
-**Hex Crawl and other tools:** Identify resolved-rule/campaign behavior that is not merely read-only catalog access; defer any required gameplay computation or campaign overrides to separate API design.
+**Block Initiative**, `LegendMaster03/dorks-and-dice-block-initiative` main `cee2e62bf104da2c9f3b8ae4d66ee9fcf0bbb90a`:
+- `src/BlockInitiative.Web/Client/src/integrations/rules-core/client.ts` searches `GET /api/rules?entityType=...&q=...&limit=...` and only accepts resolved matches with `conceptKey`, `sourceEntityId`, and `displayName`. Change discovery to native category and ID and replace the resolved-response filtering and `rule:{conceptKey}` persistence scheme deliberately.
+- `src/BlockInitiative.Web/Client/src/integrations/rules-core/monsters.ts` calls `/api/rules/{conceptKey}` for a resolved monster `document`, then projects HP, initiative, normal/Touch/Flat-Footed AC and CR with edition metadata. The current **35-rule authoritative native catalog contains no monster definitions**. Migrating route shapes alone will not restore monster template lookup. Defer this consumer feature until approved monsters exist in native and a native statblock projection is agreed.
+- Conditions and saved encounter links also require native identity and rehydration migration; inspect old `browserLink` handling rather than synthesizing source/edition details that are not present in native.
 
-**Rules Wiki:** Remains on the Phase 3A private Site-ticketed routes, not this public API. Do not change its named-operation whitelist or deploy the Wiki.
+**Hex Crawl and other tools:** Survey any dependence on resolved-rule/campaign behavior that is not plain catalog browsing. Defer required game execution, campaign overrides and conversions to separately reviewed contracts.
+
+**Rules Wiki:** Remains on Phase 3A private Site-ticketed routes, not this public API. Do not change its named-operation whitelist or deploy the Wiki.
 
 **Phase 4/pre-deployment:** Verify live Site-issued `rules-wiki` to `rules-core` ticket redemption, correct source and target, revoked/wrong tickets and site-mode behavior; browser acceptance and private-pair/public-network isolation; record Core/Wiki SHA pairing and rollback order; conduct first-party licensing/attribution/content review before any anonymous definition distribution. Simulated-ticket CI and public API tests **do not** establish live private-tunnel acceptance. No public or tester exposure and no production deployment until separately approved.
 
