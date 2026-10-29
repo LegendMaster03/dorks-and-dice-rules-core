@@ -424,5 +424,27 @@
     "fingerprint": "46965599d7d37798823a7b416ff954ab99aac91a5a3432b6df4c5e1db06d2a3e",
     "fingerprintSource": "RulesCore.Content.NativeCatalogLoader through successful content-only .NET 10 workflow 40853683143",
     "fingerprintVerifiedAt": "2026-10-29"
+  },
+  "sourceDivergences": {
+    "class.druid": {
+      "reconciliationDocument": "docs/rewrite/druid-band-1-reconciliation.md",
+      "reason": "Owner-approved exclusive companion path on 2026-10-23 supersedes the earlier simultaneous grants in the preserved working class.",
+      "changedPaths": [
+        "/definition/choiceOnlyFeatureIds",
+        "/definition/temporaryWildCompanionCanCoexist",
+        "/definition/progression/0/featureGrants",
+        "/definition/progression/0/pendingCompanionPathChoice",
+        "/definition/progression/1/featureGrants",
+        "/definition/companionPathChoice"
+      ]
+    },
+    "class-feature.druid.wild-companion-level-2": {
+      "reconciliationDocument": "docs/rewrite/druid-band-1-reconciliation.md",
+      "reason": "Temporary Wild Companion is conditional on exclusive path selection, not an automatic companion stacking with Animal Companion.",
+      "changedPaths": [
+        "/definition/mechanics/bothMayCoexist",
+        "/definition/mechanics/requiresCompanionPathSelection"
+      ]
+    }
   }
 }
