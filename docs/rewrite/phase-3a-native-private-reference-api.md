@@ -1,6 +1,6 @@
 # Phase 3A — Native private reference contract
 
-Status: local implementation candidate, not integrated or deployed. The release remains blocked until both repository builds, test suites, and private ingress checks pass in CI and a real Site ticket is redeemed against the new Core.
+Status: code integrated into the rewrite branch at 4bf95dce56c98dc9975aef41696d55dbfb72dae0; coordinated Wiki integration ab56a5659dbb533097e094fd71f02245a983def3. Both integrated CI suites passed. **Not deployed:** live Site-issued-ticket redemption, real private-pair network isolation and browser acceptance remain unverified Phase 4/pre-deployment gates.
 
 ## Authority and identity
 
