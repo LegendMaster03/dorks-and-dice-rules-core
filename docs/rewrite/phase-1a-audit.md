@@ -102,3 +102,23 @@ Validation was performed by the repository's GitHub Actions `Validate Rules Core
 - Migration snapshot verification: **2,277** original Git blobs checked against their old SHA and length, all identical; **2,522** source-coverage manifest rows remain mapped and accounted for.
 
 The SHA snapshot mode (`python3 tools/validate_ruleset_split.py --check-migration-sha`) proves this Phase 1A move was lossless. It is a one-time historical migration gate, not a design decision or a permanent prohibition on editing or promoting approved rules. Future content changes should preserve the historical ledger and use ordinary rule validation, not require the current working-tree files to remain byte-identical to their original staged versions.
+
+## Follow-up verification: candidate counts and full-class dependencies
+
+The latest strict content audit from [CI run 40823367700](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/40823367700) reports **35 native records**, **2,626 working identities**, and **1,491 working records with `candidateDefinitions`** (983 with multiple candidates, 508 with one). The pinned SRD manifest has 1,501 historical `single-candidate` or `multiple-candidates` statuses (509 and 992 respectively); its ten extra source labels represent **nine now-approved Conditions and the approved Conditions rule chapter**. Those historical selection labels are not current publication statuses. The earlier 1,664 unresolved count in dated documents should not be interpreted as a current count.
+
+The seven reconciled Band 1 base classes (Barbarian, Bard, Cleric, Druid, Rogue, Sorcerer, and Wizard) are not classified as unapproved designs. Their reconciliation documents explicitly record approved declarative class-level choices. However, their JSON progressions grant separately identified features currently stored in the working tree, alongside source candidates or deferred shared mechanics. Publishing only a class chassis without its referenced native feature closure would create an apparently complete but incomplete runtime reference. No class was promoted solely on its retained-source label; these are **reviewed class designs held for a coherent promotion pass**, not requests to reopen settled class decisions.
+
+| Band 1 class | Manifest class + features | Selected/retained records | Still-staged candidates |
+| --- | ---: | ---: | ---: |
+| Barbarian | 35 | 26 | 9 |
+| Bard | 36 | 26 | 10 |
+| Cleric | 38 | 28 | 10 |
+| Druid | 32 | 23 | 9 |
+| Rogue | 40 | 29 | 11 |
+| Sorcerer | 29 | 19 | 10 |
+| Wizard | 22 | 12 | 10 |
+
+These are **historical manifest labels**, not an owner-decision tally. Some candidate feature files are intentionally inactive subclass/epic placeholders and must not be granted during a later promotion. The Druid companion-path revision additionally requires reconciliation with the existing JSON's outdated coexistence representation; Rogue detection/anticipation details and Wizard/Sorcerer companion integration have documented deferrals. Preserve approved decisions and prior test coverage during future promotion.
+
+The permanent test suite now validates the ledger's unique mappings, stable historical SRD identity roster, category/count reconciliation and current content boundary; it no longer requires the working files to retain their original byte representation forever. The original 2,277 SHA comparisons remain available as the **one-time completed Phase 1A snapshot proof** through `--check-migration-sha`. Legitimate later updates will not be blocked by that historical test.
