@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/rules-core-phase3a-native-private-api
+      - feature/rules-core-rewrite
   pull_request:
     branches:
       - feature/rules-core-rewrite
