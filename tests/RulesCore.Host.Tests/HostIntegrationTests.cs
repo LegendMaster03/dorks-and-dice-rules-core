@@ -40,7 +40,7 @@ public sealed class HostIntegrationTests
 
         var readiness = await client.GetAsync("/ready");
         Assert.Equal(HttpStatusCode.ServiceUnavailable, readiness.StatusCode);
-        Assert.Contains("native_catalog_not_loaded", await readiness.Content.ReadAsStringAsync());
+        Assert.Contains("content_unavailable", await readiness.Content.ReadAsStringAsync());
 
         // Both endpoint families remain absent, regardless of configured mode.
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rules")).StatusCode);

@@ -1,4 +1,4 @@
-# Headless runtime only. This image is not deployed by the rewrite branch.
+# Headless runtime only. The Phase 2 branch is not a deployment target.
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
@@ -14,7 +14,11 @@ RUN dotnet publish src/RulesCore.Host/RulesCore.Host.csproj \
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 ENV ASPNETCORE_HTTP_PORTS=8080
+ENV Rulesets__ContentRoot=/app/data/rulesets
 COPY --from=build /app/publish ./
+# Runtime image intentionally excludes working/, reference/ and conversions/.
+COPY data/rulesets/first-party-001/manifest.json ./data/rulesets/first-party-001/manifest.json
+COPY data/rulesets/first-party-001/native/ ./data/rulesets/first-party-001/native/
 USER $APP_UID
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "RulesCore.Host.dll"]
