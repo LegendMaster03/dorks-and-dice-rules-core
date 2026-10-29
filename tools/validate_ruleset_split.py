@@ -213,6 +213,35 @@ def check_migration_shas():
     return errors, len(files)
 
 
+def matches_preserved_working_evidence(native_record, working_record, working_path):
+    """Accept only a documented source mirror, never an effective working rule.
+
+    This is a static consistency check. The loader never reads working/.
+    Selected native definitions are verified against their original staged
+    source, which remains in place for the immutable migration ledger.
+    """
+    if native_record.get("kind") == "monsterFamily":
+        if working_path != WORKING / "monster-families.json":
+            return False
+        if set(working_record) - {"id", "name", "memberIds", "legacyMechanicsReview"}:
+            return False
+        return native_record == {
+            "id": working_record.get("id"), "name": working_record.get("name"),
+            "kind": "monsterFamily", "memberIds": working_record.get("memberIds"),
+        }
+
+    if working_record.get("baselineStatus") != "retained-native-definition":
+        return False
+    if "candidateDefinitions" in working_record or "candidateSpecializations" in working_record:
+        return False
+    source_copy = dict(working_record)
+    source_copy.pop("baselineStatus")
+    if source_copy.get("kind") == "monster":
+        # This reference adds no invented numeric statistics or action grants.
+        source_copy["statBlockFoundationId"] = "rule.monster-statblock-foundation"
+    return native_record == source_copy
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check-migration-sha", action="store_true",
@@ -244,9 +273,23 @@ def main(argv=None):
     for ident, locations in working_ids.items():
         if len(locations) != 1:
             errors.append(f"duplicate working ID {ident}: {locations}")
-    for ident in ids:
-        if ident in working_ids:
-            errors.append(f"authoritative {ident} also appears in working")
+    # A selected definition can retain its original staged evidence file.
+    # Only a strict source mirror is allowed: multiple effective definitions
+    # or a changed source copy remain validation errors.
+    for ident, native_path in ids.items():
+        if ident not in working_ids or len(working_ids[ident]) != 1:
+            continue
+        working_path = Path(working_ids[ident][0])
+        native_record = next(
+            row for row in top_level_records(read_json(native_path))
+            if row.get("id") == ident
+        )
+        working_record = next(
+            row for row in top_level_records(read_json(working_path))
+            if row.get("id") == ident
+        )
+        if not matches_preserved_working_evidence(native_record, working_record, working_path):
+            errors.append(f"authoritative {ident} conflicts with preserved working evidence")
     checked = None
     if args.check_migration_sha:
         sha_errors, checked = check_migration_shas()
