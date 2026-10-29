@@ -55,7 +55,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
             path = ROOT / relative
             self.assertTrue(path.is_file(), relative)
             paths.add(path)
-            if path.parent == WORKING:
+            if path.parent in (WORKING, AUTHORITATIVE):
                 catalog = load(path)
                 matches = [x for v in catalog.values() if isinstance(v, list)
                            for x in v if isinstance(x, dict) and x.get("id") == cid]
