@@ -25,6 +25,22 @@ public static class NativeCatalogLoader
     public static NativeCatalogSnapshot Load(NativeRulesetLocation location)
     {
         ArgumentNullException.ThrowIfNull(location);
+        try
+        {
+            return LoadValidated(location);
+        }
+        catch (IOException exc)
+        {
+            throw Invalid("content_unavailable", "Native content cannot be read.", exc);
+        }
+        catch (UnauthorizedAccessException exc)
+        {
+            throw Invalid("content_unavailable", "Native content cannot be read.", exc);
+        }
+    }
+
+    private static NativeCatalogSnapshot LoadValidated(NativeRulesetLocation location)
+    {
         var expected = NativeRulesetLayout.Resolve(location.ContentRoot, location.RulesetId);
         if (!PathEquals(expected.NativeDirectory, location.NativeDirectory) ||
             !PathEquals(expected.ContentRoot, location.ContentRoot))

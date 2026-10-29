@@ -173,7 +173,7 @@ public sealed class NativeCatalogTests
         var store = new NativeCatalogStore();
         Assert.False(store.Current().IsReady);
         store.Publish(first);
-        var readers = Enumerable.Range(0, 8).Select(_ => Task.Run(() =>
+        var readers = Enumerable.Range(0, 8).Select(worker => Task.Run(() =>
         {
             for (var i = 0; i < 500; i++)
             {
