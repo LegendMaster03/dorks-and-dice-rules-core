@@ -89,3 +89,16 @@ These are approved rule contracts, not executable implementations or approvals o
 Ruleset stable identifier: `first-party-001`, independent of any public game name.
 
 Only `data/rulesets/first-party-001/native/` is the authoritative runtime/API content root. `data/rulesets/first-party-001/working/` is never a fallback. Approved completed rules move to native with the superseded working definition removed. Source provenance, pinned SRD and license material stay under `data/reference/`; mappings remain under `data/conversions/`. This branch owns content, Python tests and CI paths, not `src/` or C# runtime scaffolding. No merge, deploy or database changes are authorized.
+
+## Validation results — Phase 1A
+
+Validation was performed by the repository's GitHub Actions `Validate Rules Core Rewrite Structure` workflow, [run 40822812806](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/40822812806), on commit `29c47af87adacb3c2fcdd42970257a7395fd1269` (2026-10-29). All required steps passed:
+
+- Repository skeleton, old runtime exclusion and parsing of **2,372** JSON files across `data/`.
+- Full existing and new Python suite: **239 tests**, **0 failures**, **0 errors**, with staged source-reference and promoted rule tests retained.
+- Strict native consistency audit: no invalid JSON, duplicate native IDs or unresolved candidate definitions in the authoritative root.
+- Working consistency inventory: JSON and staged candidates retained without being published.
+- Independent ruleset boundary and relationship checks: **35 authoritative records**, **2,626 distinct working identities**, no overlap or missing referenced condition definitions.
+- Migration snapshot verification: **2,277** original Git blobs checked against their old SHA and length, all identical; **2,522** source-coverage manifest rows remain mapped and accounted for.
+
+The SHA snapshot mode (`python3 tools/validate_ruleset_split.py --check-migration-sha`) proves this Phase 1A move was lossless. It is a one-time historical migration gate, not a design decision or a permanent prohibition on editing or promoting approved rules. Future content changes should preserve the historical ledger and use ordinary rule validation, not require the current working-tree files to remain byte-identical to their original staged versions.
