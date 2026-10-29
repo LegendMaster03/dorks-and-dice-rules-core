@@ -1,0 +1,48 @@
+{
+  "id": "item.bullseye-lantern",
+  "name": "Bullseye Lantern",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bullseye Lantern",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 1000,
+        "entries": [
+          "A bullseye lantern casts bright light in a 60-foot cone and dim light for an additional 60 feet. Once lit, it burns for 6 hours on a flask (1 pint) of oil."
+        ],
+        "light": [
+          {
+            "bright": 60,
+            "dim": 120,
+            "shape": "cone"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bullseye Lantern",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 1000,
+        "entries": [
+          "A Bullseye Lantern burns Oil as fuel to cast {@variantrule Bright Light|SRD52} in a 60-foot Cone and {@variantrule Dim Light|SRD52} for an additional 60 feet."
+        ],
+        "light": [
+          {
+            "bright": 60,
+            "dim": 120,
+            "shape": "cone"
+          }
+        ]
+      }
+    }
+  ]
+}

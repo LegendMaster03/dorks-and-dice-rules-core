@@ -1,0 +1,44 @@
+{
+  "id": "item.ring-of-swimming",
+  "name": "Ring of Swimming",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Swimming",
+        "type": "RG|SRD51",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "modifySpeed": {
+          "static": {
+            "swim": 40
+          }
+        },
+        "entries": [
+          "You have a swimming speed of 40 feet while wearing this ring."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Swimming",
+        "type": "RG|SRD52",
+        "rarity": "uncommon",
+        "modifySpeed": {
+          "static": {
+            "swim": 40
+          }
+        },
+        "entries": [
+          "You have a {@variantrule Swim Speed|SRD52} of 40 feet while wearing this ring."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "item.ring-of-feather-falling",
+  "name": "Ring of Feather Falling",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Feather Falling",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "entries": [
+          "When you fall while wearing this ring, you descend 60 feet per round and take no damage from falling."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Feather Falling",
+        "type": "RG|SRD52",
+        "rarity": "rare",
+        "reqAttune": true,
+        "entries": [
+          "When you fall while wearing this ring, you descend 60 feet per round and take no damage from falling."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ]
+      }
+    }
+  ]
+}

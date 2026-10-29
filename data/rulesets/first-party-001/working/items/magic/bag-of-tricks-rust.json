@@ -1,0 +1,130 @@
+{
+  "id": "item.bag-of-tricks-rust",
+  "name": "Bag of Tricks, Rust",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bag of Tricks, Rust",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 0.5,
+        "recharge": "dawn",
+        "entries": [
+          "This ordinary bag, made from rust cloth, appears empty. Reaching inside the bag, however, reveals the presence of a small, fuzzy object.",
+          "You can use an action to pull the fuzzy object from the bag and throw it up to 20 feet. When the object lands, it transforms into a creature you determine by rolling a {@dice d8} and consulting the table. The creature vanishes at the next dawn or when it is reduced to 0 hit points.",
+          "The creature is friendly to you and your companions, and it acts on your turn. You can use a bonus action to command how the creature moves and what action it takes on its next turn, or to give it general orders, such as to attack your enemies. In the absence of such orders, the creature acts in a fashion appropriate to its nature.",
+          "Once three fuzzy objects have been pulled from the bag, the bag can't be used again until the next dawn.",
+          {
+            "type": "table",
+            "colLabels": [
+              "{@dice d8}",
+              "Creature"
+            ],
+            "colStyles": [
+              "col-1 text-center",
+              "col-11"
+            ],
+            "rows": [
+              [
+                "1",
+                "{@creature Rat}"
+              ],
+              [
+                "2",
+                "{@creature Owl}"
+              ],
+              [
+                "3",
+                "{@creature Mastiff}"
+              ],
+              [
+                "4",
+                "{@creature Goat}"
+              ],
+              [
+                "5",
+                "{@creature Giant goat}"
+              ],
+              [
+                "6",
+                "{@creature Giant boar}"
+              ],
+              [
+                "7",
+                "{@creature Lion}"
+              ],
+              [
+                "8",
+                "{@creature Brown bear}"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bag of Tricks, Rust",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "recharge": "dawn",
+        "entries": [
+          "This bag made from rust cloth appears empty. Reaching inside the bag, however, reveals the presence of a small, fuzzy object.",
+          "You can take a {@action Magic|SRD52} action to pull the fuzzy object from the bag and throw it up to 20 feet. When the object lands, it transforms into a creature you determine by rolling on the table below. See the {@book Monster Manual|SRD52} for the creature's stat block. The creature vanishes at the next dawn or when it is reduced to 0 {@variantrule Hit Points|SRD52}.",
+          "The creature is {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies, and it acts immediately after you on your {@variantrule Initiative|SRD52} count. You can take a {@variantrule Bonus Action|SRD52} to command how the creature moves and what action it takes on its next turn, such as attacking an enemy. In the absence of such orders, the creature acts in a fashion appropriate to its nature.",
+          "Once three fuzzy objects have been pulled from the bag, the bag can't be used again until the next dawn.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "colLabels": [
+              "1d8",
+              "Creature"
+            ],
+            "rows": [
+              [
+                "1",
+                "{@creature Rat|SRD52}"
+              ],
+              [
+                "2",
+                "{@creature Owl|SRD52}"
+              ],
+              [
+                "3",
+                "{@creature Mastiff|SRD52}"
+              ],
+              [
+                "4",
+                "{@creature Goat|SRD52}"
+              ],
+              [
+                "5",
+                "{@creature Giant Goat|SRD52}"
+              ],
+              [
+                "6",
+                "{@creature Giant Boar|SRD52}"
+              ],
+              [
+                "7",
+                "{@creature Lion|SRD52}"
+              ],
+              [
+                "8",
+                "{@creature Brown Bear|SRD52}"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

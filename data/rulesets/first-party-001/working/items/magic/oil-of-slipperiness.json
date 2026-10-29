@@ -1,0 +1,47 @@
+{
+  "id": "item.oil-of-slipperiness",
+  "name": "Oil of Slipperiness",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Oil of Slipperiness",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "entries": [
+          "This sticky black unguent is thick and heavy in the container, but it flows quickly when poured. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of a {@spell freedom of movement} spell for 8 hours.",
+          "Alternatively, the oil can be poured on the ground as an action, where it covers a 10-foot square, duplicating the effect of the {@spell grease} spell in that area for 8 hours."
+        ],
+        "attachedSpells": [
+          "freedom of movement"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Oil of Slipperiness",
+        "type": "P|SRD52",
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "entries": [
+          "One vial of this oil can cover one Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the {@spell Freedom of Movement|SRD52} spell for 8 hours.",
+          "Alternatively, the oil can be poured on the ground as a {@action Magic|SRD52} action, where it covers a 10-foot square, duplicating the effect of the {@spell Grease|SRD52} spell in that area for 8 hours.",
+          "This sticky, black unguent is thick and heavy, but it flows quickly when poured."
+        ],
+        "attachedSpells": [
+          "freedom of movement|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

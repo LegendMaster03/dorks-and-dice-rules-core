@@ -1,0 +1,18 @@
+{
+  "id": "deity.uller",
+  "name": "Uller",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "title": "God of hunting and winter",
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Longbow"
+  }
+}

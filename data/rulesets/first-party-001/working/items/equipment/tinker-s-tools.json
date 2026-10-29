@@ -1,0 +1,114 @@
+{
+  "id": "baseitem.tinker-s-tools",
+  "name": "Tinker's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Tinker's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 10,
+        "value": 5000,
+        "additionalEntries": [
+          "A set of tinker's tools is designed to enable you to repair many mundane objects. Though you can't manufacture much with tinker's tools, you can mend torn clothes, sharpen a worn sword, and patch a tattered suit of chain mail.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Tinker's tools include a variety of hand tools, thread, needles, a whetstone, scraps of cloth and leather, and a small pot of glue."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "History",
+            "entries": [
+              "You can determine the age and origin of objects, even if you have only a few pieces remaining from the original."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "When you inspect a damaged object, you gain knowledge of how it was damaged and how long ago."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Repair",
+            "entries": [
+              "You can restore 10 hit points to a damaged object for each hour of work. For any object, you need access to the raw materials required to repair it. For metal objects, you need access to an open flame hot enough to make the metal pliable."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Tinker's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Temporarily repair a disabled device",
+                "10"
+              ],
+              [
+                "Repair an item in half the time",
+                "15"
+              ],
+              [
+                "Improvise a temporary item using scraps",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tinker's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 5000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Dexterity"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Assemble a Tiny item composed of scrap, which falls apart in 1 minute ({@dc 20})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Musket|SRD52}, {@item Pistol|SRD52}, {@item Bell|SRD52}, {@item Bullseye Lantern|SRD52}, {@item Flask|SRD52}, {@item Hooded Lantern|SRD52}, {@item Hunting Trap|SRD52}, {@item Lock|SRD52}, {@item Manacles|SRD52}, {@item Mirror|SRD52}, {@item Shovel|SRD52}, {@item Signal Whistle|SRD52}, {@item Tinderbox|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

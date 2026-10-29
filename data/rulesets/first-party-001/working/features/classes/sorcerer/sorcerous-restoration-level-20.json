@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.sorcerer.sorcerous-restoration-level-20",
+  "name": "Sorcerous Restoration",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Sorcerous Restoration",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "additive-short-rest-restoration",
+      "extraPointsOnEveryShortRest": 4,
+      "addsToLevel5OncePerLongRestRecovery": true,
+      "maximumRecoveredWithLevel5RestorationAtLevel20": 14,
+      "obeysResourceCap": true
+    }
+  }
+}

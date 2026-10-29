@@ -1,0 +1,25 @@
+{
+  "id": "baseitem.glaive",
+  "name": "Glaive",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 6,
+    "value": 2000,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "polearm": true,
+    "weapon": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "deity.njord",
+  "name": "Njord",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "God of sea and wind",
+    "domains": [
+      "Nature",
+      "Tempest"
+    ],
+    "symbol": "Gold coin"
+  }
+}

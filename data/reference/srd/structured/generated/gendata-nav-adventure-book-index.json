@@ -1,0 +1,349 @@
+{
+	"adventure": [],
+	"book": [
+		{
+			"name": "System Reference Document 5.1",
+			"id": "SRD51",
+			"source": "SRD51",
+			"group": "core",
+			"published": "2023-01-01",
+			"author": "Wizards of the Coast LLC (CC-BY-4.0)",
+			"contents": [
+				{
+					"name": "Legal Information",
+					"headers": []
+				},
+				{
+					"name": "Races",
+					"headers": [
+						"Racial Traits"
+					]
+				},
+				{
+					"name": "Classes",
+					"headers": []
+				},
+				{
+					"name": "Beyond 1st Level",
+					"headers": [
+						"Multiclassing",
+						"Alignment",
+						"Languages",
+						"Inspiration",
+						"Backgrounds"
+					]
+				},
+				{
+					"name": "Equipment",
+					"headers": [
+						"Selling Treasure",
+						"Armor",
+						"Weapons",
+						"Adventuring Gear",
+						"Tools",
+						"Mounts and Vehicles",
+						"Trade Goods",
+						"Expenses"
+					]
+				},
+				{
+					"name": "Feats",
+					"headers": []
+				},
+				{
+					"name": "Using Ability Scores",
+					"headers": [
+						"Ability Scores and Modifiers",
+						"Advantage and Disadvantage",
+						"Proficiency Bonus",
+						"Ability Checks",
+						"Using Each Ability",
+						"Saving Throws"
+					]
+				},
+				{
+					"name": "Adventuring",
+					"headers": [
+						"Time",
+						"Movement",
+						"The Environment",
+						"Resting",
+						"Between Adventures"
+					]
+				},
+				{
+					"name": "Combat",
+					"headers": [
+						"The Order of Combat",
+						"Movement and Position",
+						"Actions in Combat",
+						"Making an Attack",
+						"Cover",
+						"Damage and Healing",
+						"Mounted Combat",
+						"Underwater Combat"
+					]
+				},
+				{
+					"name": "Spellcasting",
+					"headers": [
+						"What Is a Spell?",
+						"Casting a Spell"
+					]
+				},
+				{
+					"name": "Spell Lists",
+					"headers": [
+						"Bard Spells",
+						"Cleric Spells",
+						"Druid Spells",
+						"Paladin Spells",
+						"Ranger Spells",
+						"Sorcerer Spells",
+						"Warlock Spells",
+						"Wizard Spells"
+					]
+				},
+				{
+					"name": "Spell Descriptions",
+					"headers": []
+				},
+				{
+					"name": "Magic Items",
+					"headers": [
+						"Attunement",
+						"Wearing and Wielding Items",
+						"Activating an Item"
+					]
+				},
+				{
+					"name": "Magic Items A-Z",
+					"headers": []
+				},
+				{
+					"name": "Monsters",
+					"headers": [
+						"Monsters (A)",
+						"Monsters (B)",
+						"Monsters (C)",
+						"Monsters (D)",
+						"Monsters (E)",
+						"Monsters (F)",
+						"Monsters (G)",
+						"Monsters (H)",
+						"Monsters (I)",
+						"Monsters (J)",
+						"Monsters (K)",
+						"Monsters (L)",
+						"Monsters (M)",
+						"Monsters (N)",
+						"Monsters (O)",
+						"Monsters (P)",
+						"Monsters (Q)",
+						"Monsters (R)",
+						"Monsters (S)",
+						"Monsters (T)",
+						"Monsters (U)",
+						"Monsters (V)",
+						"Monsters (W)",
+						"Monsters (X)",
+						"Monsters (Y)",
+						"Monsters (Z)"
+					]
+				},
+				{
+					"name": "Conditions",
+					"headers": [
+						"Blinded",
+						"Charmed",
+						"Deafened",
+						"Exhaustion",
+						"Frightened",
+						"Grappled",
+						"Incapacitated",
+						"Invisible",
+						"Paralyzed",
+						"Petrified",
+						"Poisoned",
+						"Prone",
+						"Restrained",
+						"Stunned",
+						"Unconscious"
+					]
+				},
+				{
+					"name": "Appendix PH-B: Fantasy-Historical Pantheons",
+					"headers": [
+						"The Celtic Pantheon",
+						"The Greek Pantheon",
+						"The Egyptian Pantheon",
+						"The Norse Pantheon"
+					]
+				},
+				{
+					"name": "Appendix PH-C: The Planes of Existence",
+					"headers": [
+						"The Material Plane",
+						"Beyond the Material"
+					]
+				},
+				{
+					"name": "Appendix MM-A: Miscellaneous Creatures",
+					"headers": []
+				},
+				{
+					"name": "Appendix MM-B: Nonplayer Characters",
+					"headers": [
+						"Customizing NPCs"
+					]
+				}
+			]
+		},
+		{
+			"name": "System Reference Document 5.2.1",
+			"id": "SRD52",
+			"source": "SRD52",
+			"group": "core",
+			"published": "2025-01-01",
+			"author": "Wizards of the Coast LLC (CC-BY-4.0)",
+			"contents": [
+				{
+					"name": "Legal Information",
+					"headers": []
+				},
+				{
+					"name": "Playing the Game",
+					"headers": [
+						"Rhythm of Play",
+						"The Six Abilities",
+						"D20 Tests",
+						"Proficiency",
+						"Actions",
+						"Social Interaction",
+						"Exploration",
+						"Combat",
+						"Damage and Healing"
+					]
+				},
+				{
+					"name": "Character Creation",
+					"headers": [
+						"Choose a Character Sheet",
+						"Create Your Character",
+						"Level Advancement",
+						"Starting at Higher Levels",
+						"Multiclassing",
+						"Trinkets"
+					]
+				},
+				{
+					"name": "Classes",
+					"headers": []
+				},
+				{
+					"name": "Character Origins",
+					"headers": [
+						"Character Backgrounds",
+						"Background Descriptions",
+						"Character Species",
+						"Species Descriptions"
+					]
+				},
+				{
+					"name": "Feats",
+					"headers": [
+						"Feat Descriptions",
+						"Origin Feats",
+						"General Feats",
+						"Fighting Style Feats",
+						"Epic Boon Feats"
+					]
+				},
+				{
+					"name": "Equipment",
+					"headers": [
+						"Selling Equipment",
+						"Coins",
+						"Weapons",
+						"Armor",
+						"Tools",
+						"Adventuring Gear",
+						"Mounts and Vehicles",
+						"Lifestyle Expenses",
+						"Food, Drink, and Lodging",
+						"Hirelings",
+						"Spellcasting",
+						"Magic Items",
+						"Crafting Nonmagical Items",
+						"Brewing Potions of Healing",
+						"Scribing Spell Scrolls"
+					]
+				},
+				{
+					"name": "Spells",
+					"headers": [
+						"Gaining Spells",
+						"Casting Spells"
+					]
+				},
+				{
+					"name": "Spell Descriptions",
+					"headers": []
+				},
+				{
+					"name": "Rules Glossary",
+					"headers": [
+						"Glossary Conventions",
+						"Rules Definitions"
+					]
+				},
+				{
+					"name": "Gameplay Toolbox",
+					"headers": [
+						"Travel Pace",
+						"Creating a Background",
+						"Curses and Magical Contagions",
+						"Environmental Effects",
+						"Fear and Mental Stress",
+						"Poison",
+						"Traps",
+						"Combat Encounters"
+					]
+				},
+				{
+					"name": "Magic Items",
+					"headers": [
+						"Magic Item Rules",
+						"Magic Item Categories",
+						"Magic Item Rarity",
+						"Activating a Magic Item",
+						"\"The Next Dawn\"",
+						"Cursed Items",
+						"Magic Item Resilience",
+						"Crafting Magic Items",
+						"Sentient Magic Items"
+					]
+				},
+				{
+					"name": "Magic Items A-Z",
+					"headers": []
+				},
+				{
+					"name": "Monsters",
+					"headers": [
+						"Stat Block Overview",
+						"Parts of a Stat Block"
+					]
+				},
+				{
+					"name": "Monsters A-Z",
+					"headers": []
+				},
+				{
+					"name": "Animals",
+					"headers": []
+				}
+			]
+		}
+	]
+}

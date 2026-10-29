@@ -1,0 +1,106 @@
+{
+  "id": "monster.plesiosaurus",
+  "name": "Plesiosaurus",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Dinosaurs"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "beast",
+      "tags": [
+        "dinosaur"
+      ]
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 68,
+      "formula": "8d10 + 24"
+    },
+    "speed": {
+      "walk": 20,
+      "swim": 40
+    },
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+4"
+    },
+    "passive": 13,
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Hold Breath",
+        "entries": [
+          "The plesiosaurus can hold its breath for 1 hour."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "underwater"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/plesiosaurus.opus"
+    },
+    "traitTags": [
+      "Hold Breath"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Plesiosaurus",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Plesiosaurus.webp"
+                  },
+                  "width": 1000,
+                  "height": 601
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

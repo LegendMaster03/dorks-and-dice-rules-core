@@ -1,0 +1,40 @@
+{
+  "id": "item.boots-of-elvenkind",
+  "name": "Boots of Elvenkind",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Boots of Elvenkind",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While you wear these boots, your steps make no sound, regardless of the surface you are moving across. You also have advantage on Dexterity ({@skill Stealth}) checks that rely on moving silently."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Boots of Elvenkind",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While you wear these boots, your steps make no sound, regardless of the surface you are moving across. You also have {@variantrule Advantage|SRD52} on Dexterity ({@skill Stealth|SRD52}) checks."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

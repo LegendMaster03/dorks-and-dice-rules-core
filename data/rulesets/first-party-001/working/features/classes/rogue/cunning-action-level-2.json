@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.rogue.cunning-action-level-2",
+  "name": "Cunning Action",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Cunning Action",
+    "description": "Native Rogue Cunning Action; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "bonus-action-choices",
+      "options": [
+        "dash",
+        "disengage",
+        "hide"
+      ],
+      "cost": "bonus-action"
+    }
+  }
+}

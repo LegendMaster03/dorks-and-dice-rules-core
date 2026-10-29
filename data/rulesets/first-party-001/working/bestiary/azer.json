@@ -1,0 +1,7 @@
+{
+  "id": "monster.azer",
+  "name": "Azer",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.azer-sentinel"
+}

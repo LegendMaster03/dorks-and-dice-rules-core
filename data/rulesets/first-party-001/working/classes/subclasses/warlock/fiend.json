@@ -1,0 +1,109 @@
+{
+  "id": "subclass.warlock.fiend",
+  "name": "The Fiend",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "The Fiend",
+        "shortName": "Fiend",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "additionalSpells": [
+          {
+            "expanded": {
+              "s1": [
+                "burning hands",
+                "command"
+              ],
+              "s2": [
+                "blindness/deafness",
+                "scorching ray"
+              ],
+              "s3": [
+                "fireball",
+                "stinking cloud"
+              ],
+              "s4": [
+                "fire shield",
+                "wall of fire"
+              ],
+              "s5": [
+                "flame strike",
+                "hallow"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "The Fiend|Warlock||Fiend||1",
+          "Dark One's Own Luck|Warlock||Fiend||6",
+          "Fiendish Resilience|Warlock||Fiend||10",
+          "Hurl Through Hell|Warlock||Fiend||14"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fiend Patron",
+        "shortName": "Fiend",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "3": [
+                "burning hands|srd52",
+                "command|srd52",
+                "scorching ray|srd52",
+                "suggestion|srd52"
+              ],
+              "5": [
+                "fireball|srd52",
+                "stinking cloud|srd52"
+              ],
+              "7": [
+                "fire shield|srd52",
+                "wall of fire|srd52"
+              ],
+              "9": [
+                "geas|srd52",
+                "insect plague|srd52"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Fiend Patron|Warlock|SRD52|Fiend|SRD52|3",
+          "Dark One's Own Luck|Warlock|SRD52|Fiend|SRD52|6",
+          "Fiendish Resilience|Warlock|SRD52|Fiend|SRD52|10",
+          "Hurl Through Hell|Warlock|SRD52|Fiend|SRD52|14"
+        ],
+        "lore": [
+          {
+            "name": "Fiend Patron",
+            "shortName": "Fiend",
+            "className": "Warlock",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Fiend Warlock.webp"
+                },
+                "credit": "Jodie Muir",
+                "width": 850,
+                "height": 2486
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock"
+}

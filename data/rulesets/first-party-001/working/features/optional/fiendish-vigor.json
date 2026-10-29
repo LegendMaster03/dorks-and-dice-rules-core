@@ -1,0 +1,62 @@
+{
+  "id": "optionalfeature.fiendish-vigor",
+  "name": "Fiendish Vigor",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fiendish Vigor",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "false life"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell false life} on yourself at will as a 1st-level spell, without expending a spell slot or material components."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fiendish Vigor",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 2,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "false life|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell False Life|SRD52} on yourself without expending a spell slot. When you cast the spell with this feature, you don't roll the die for the {@variantrule Temporary Hit Points|SRD52}; you automatically get the highest number on the die."
+        ]
+      }
+    }
+  ]
+}

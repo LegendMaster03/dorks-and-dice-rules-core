@@ -1,0 +1,41 @@
+{
+  "id": "optionalfeature.twinned-spell",
+  "name": "Twinned Spell",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Twinned Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point",
+          "amountMin": 1,
+          "amountMax": 9
+        },
+        "entries": [
+          "When you cast a spell that targets only one creature and doesn't have a range of self, you can spend a number of sorcery points equal to the spell's level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).",
+          "To be eligible, a spell must be incapable of targeting more than one creature at the spell's current level. For example, {@spell magic missile} and {@spell scorching ray} aren't eligible, but {@spell ray of frost} and {@spell chromatic orb} are."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Twinned Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point"
+        },
+        "entries": [
+          "When you cast a spell, such as {@spell Charm Person|SRD52}, that can be cast with a higher-level spell slot to target an additional creature, you can spend 1 Sorcery Point to increase the spell's effective level by 1."
+        ]
+      }
+    }
+  ]
+}

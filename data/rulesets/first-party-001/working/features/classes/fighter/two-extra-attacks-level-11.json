@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.two-extra-attacks-level-11",
+  "name": "Two Extra Attacks",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Two Extra Attacks",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 11,
+        "entries": [
+          "You can attack three times instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 11
+}

@@ -1,0 +1,36 @@
+{
+  "id": "item.eversmoking-bottle",
+  "name": "Eversmoking Bottle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Eversmoking Bottle",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "Smoke leaks from the lead-stoppered mouth of this brass bottle, which weighs 1 pound. When you use an action to remove the stopper, a cloud of thick smoke pours out in a 60-foot radius from the bottle. The cloud's area is heavily obscured. Each minute the bottle remains open and within the cloud, the radius increases by 10 feet until it reaches its maximum radius of 120 feet.",
+          "The cloud persists as long as the bottle is open. Closing the bottle requires you to speak its command word as an action. Once the bottle is closed, the cloud disperses after 10 minutes. A moderate wind (11 to 20 miles per hour) can also disperse the smoke after 1 minute, and a strong wind (21 or more miles per hour) can do so after 1 round."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eversmoking Bottle",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can open or close this bottle.",
+          "Opening the bottle causes thick smoke to billow out, forming a cloud that fills a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the bottle. The area within the smoke is {@variantrule Heavily Obscured|SRD52}.",
+          "Each minute the bottle remains open, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases by 10 feet until it reaches its maximum size of 120 feet.",
+          "Closing the bottle causes the cloud to become fixed in place until it disperses after 10 minutes. A strong wind (such as that created by the {@spell Gust of Wind|SRD52} spell) disperses the cloud after 1 minute."
+        ]
+      }
+    }
+  ]
+}

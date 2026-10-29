@@ -1,0 +1,114 @@
+{
+  "id": "spell.aid",
+  "name": "Aid",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Aid",
+        "level": 2,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a tiny strip of white cloth"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "entries": [
+          "Your spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target's hit point maximum and current hit points increase by 5 for the duration."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd."
+            ]
+          }
+        ],
+        "miscTags": [
+          "HL"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Aid",
+        "level": 2,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a strip of white cloth"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "entries": [
+          "Choose up to three creatures within range. Each target's {@variantrule Hit Points|SRD52|Hit Point} maximum and current {@variantrule Hit Points|SRD52} increase by 5 for the duration."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "Each target's {@variantrule Hit Points|SRD52} increase by 5 for each spell slot level above 2."
+            ]
+          }
+        ],
+        "miscTags": [
+          "HL"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    }
+  ]
+}

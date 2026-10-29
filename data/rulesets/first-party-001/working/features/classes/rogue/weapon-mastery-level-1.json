@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.rogue.weapon-mastery-level-1",
+  "name": "Weapon Mastery",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Weapon Mastery",
+    "description": "Native Rogue Weapon Mastery; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "weapon-mastery",
+      "choices": 2,
+      "requireProficiency": true,
+      "swapAfterLongRest": true,
+      "doesNotGrantSneakAttackEligibility": true
+    }
+  }
+}

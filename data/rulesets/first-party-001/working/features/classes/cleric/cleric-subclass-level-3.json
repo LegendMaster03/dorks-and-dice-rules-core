@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.cleric.cleric-subclass-level-3",
+  "name": "Cleric Subclass",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cleric Subclass",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "You gain a Cleric subclass of your choice. A subclass is a specialization that grants you features at certain Cleric levels. For the rest of your career, you gain each of your subclass's features that are of your Cleric level or lower."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 3
+}

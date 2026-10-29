@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.rogue.cunning-strike-level-5",
+  "name": "Cunning Strike",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Cunning Strike",
+    "description": "Native Rogue Cunning Strike; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "sneak-attack-dice-for-effects",
+      "appliesToEachQualifyingHit": true,
+      "subtractEffectDiceFromSneakAttackBeforeDamage": true,
+      "perHitSeparateCost": true,
+      "maximumEffectsPerHit": 1,
+      "saveDC": "8 + Dexterity modifier + proficiency bonus",
+      "initialOptions": [
+        "class-feature.rogue.poison-cost-1d6-level-5",
+        "class-feature.rogue.trip-cost-1d6-level-5",
+        "class-feature.rogue.withdraw-cost-1d6-level-5"
+      ],
+      "effectsAfterAttackDamage": true
+    }
+  }
+}

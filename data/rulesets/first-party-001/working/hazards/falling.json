@@ -1,0 +1,12 @@
+{
+  "id": "hazard.falling",
+  "name": "Falling",
+  "kind": "hazard",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "entries": [
+      "A creature that falls takes {@damage 1d6} Bludgeoning damage at the end of the fall for every 10 feet it fell, to a maximum of {@damage 20d6}. When the creature lands, it has the {@condition Prone|srd52} condition unless it avoids taking any damage from the fall.",
+      "A creature that falls into water or another liquid can use its {@variantrule Reaction|srd52} to make a {@dc 15} Strength ({@skill Athletics|srd52}) or Dexterity ({@skill Acrobatics|srd52}) check to hit the surface head or feet first. On a successful check, any damage resulting from the fall is halved."
+    ]
+  }
+}

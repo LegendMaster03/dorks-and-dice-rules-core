@@ -1,0 +1,59 @@
+{
+  "id": "item.lantern-of-revealing",
+  "name": "Lantern of Revealing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Lantern of Revealing",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 2,
+        "entries": [
+          "While lit, this {@item hooded lantern|srd51} burns for 6 hours on 1 pint of oil, shedding bright light in a 30-foot radius and dim light for an additional 30 feet. {@condition Invisible} creatures and objects are visible as long as they are in the lantern's bright light. You can use an action to lower the hood, reducing the light to dim light in a 5-foot radius."
+        ],
+        "light": [
+          {
+            "bright": 30,
+            "dim": 60
+          },
+          {
+            "dim": 5
+          }
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Lantern of Revealing",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While lit, this hooded lantern burns for 6 hours on 1 pint of oil, shedding {@variantrule Bright Light|SRD52} in a 30-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet. {@condition Invisible|SRD52} creatures and objects are visible as long as they are in the lantern's {@variantrule Bright Light|SRD52}. You can take a {@action Utilize|SRD52} action to lower the hood, reducing the lantern's light to {@variantrule Dim Light|SRD52} in a 5-foot radius."
+        ],
+        "light": [
+          {
+            "bright": 30,
+            "dim": 60
+          },
+          {
+            "dim": 5
+          }
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

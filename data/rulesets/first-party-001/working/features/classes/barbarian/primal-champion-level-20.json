@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.barbarian.primal-champion-level-20",
+  "name": "Primal Champion",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Primal Champion",
+    "description": "Permanently increase Strength and Constitution by 4; no permanent score cap.",
+    "mechanics": {
+      "kind": "permanent-ability-increase",
+      "strength": 4,
+      "constitution": 4,
+      "maximum": null
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "item.bit-and-bridle",
+  "name": "Bit and bridle",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 1,
+    "value": 200
+  }
+}

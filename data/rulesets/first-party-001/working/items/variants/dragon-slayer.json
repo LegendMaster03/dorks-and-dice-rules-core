@@ -1,0 +1,57 @@
+{
+  "id": "magicvariant.dragon-slayer",
+  "name": "Dragon Slayer",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dragon Slayer",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Dragon Slayer ",
+          "source": "SRD51",
+          "page": 219,
+          "rarity": "rare",
+          "bonusWeapon": "+1",
+          "entries": [
+            "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+            "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dragon Slayer",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "weaponCategory": "simple"
+          },
+          {
+            "weaponCategory": "martial"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Dragon Slayer ",
+          "source": "SRD52",
+          "page": 219,
+          "rarity": "rare",
+          "bonusWeapon": "+1",
+          "entries": [
+            "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+            "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "class-feature.monk.heightened-focus-level-10",
+  "name": "Heightened Focus",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Heightened Focus",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "Your Flurry of Blows, Patient Defense, and Step of the Wind gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Flurry of Blows",
+                "entries": [
+                  "You can expend 1 Focus Point to use Flurry of Blows and make three Unarmed Strikes with it instead of two."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Patient Defense",
+                "entries": [
+                  "When you expend a Focus Point to use Patient Defense, you gain a number of {@variantrule Temporary Hit Points|SRD52} equal to two rolls of your Martial Arts die."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Step of the Wind",
+                "entries": [
+                  "When you expend a Focus Point to use Step of the Wind, you can choose a willing creature within 5 feet of yourself that is Large or smaller. You move the creature with you until the end of your turn. The creature's movement doesn't provoke {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 10
+}

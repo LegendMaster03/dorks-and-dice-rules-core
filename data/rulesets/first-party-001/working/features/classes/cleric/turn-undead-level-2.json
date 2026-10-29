@@ -1,0 +1,38 @@
+{
+  "id": "class-feature.cleric.turn-undead-level-2",
+  "name": "Turn Undead",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Turn Undead",
+    "description": "Turn Undead is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "channel-divinity-modern-turn-undead",
+      "resource": "cleric.channel-divinity",
+      "cost": 1,
+      "action": "magic-action",
+      "rangeFeet": 30,
+      "eligibleTargets": "chosen-undead-within-range",
+      "savingThrow": "wisdom",
+      "saveDC": "cleric-spell-save-dc",
+      "onFailedSave": {
+        "conditions": [
+          "frightened",
+          "incapacitated"
+        ],
+        "durationMinutes": 1,
+        "forcedMovement": "as-far-away-as-possible-each-turn",
+        "endsOn": [
+          "target-takes-damage-other-than-sear-undead",
+          "cleric-becomes-incapacitated",
+          "cleric-dies"
+        ]
+      },
+      "historicalTurningCheck": "separate-choice-of-effect-in-same-resource",
+      "destroyUndeadThreshold": "determined-by-class-level-only-for-failed-modern-saving-throw",
+      "searUndeadDamageDoesNotEndEffect": true
+    }
+  }
+}

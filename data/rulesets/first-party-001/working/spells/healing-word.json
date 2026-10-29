@@ -1,0 +1,118 @@
+{
+  "id": "spell.healing-word",
+  "name": "Healing Word",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Healing Word",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A creature of your choice that you can see within range regains hit points equal to {@dice 1d4} + your spellcasting ability modifier. This spell has no effect on undead or constructs."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, the healing increases by {@scaledice 1d4|1-9|1d4} for each slot level above 1st."
+            ]
+          }
+        ],
+        "affectsCreatureType": [
+          "aberration",
+          "beast",
+          "celestial",
+          "dragon",
+          "elemental",
+          "fey",
+          "fiend",
+          "giant",
+          "humanoid",
+          "monstrosity",
+          "ooze",
+          "plant"
+        ],
+        "miscTags": [
+          "HL",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Healing Word",
+        "level": 1,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A creature of your choice that you can see within range regains {@variantrule Hit Points|SRD52} equal to {@dice 2d4} plus your spellcasting ability modifier."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The healing increases by {@scaledice 2d4|1-9|2d4} for each spell slot level above 1."
+            ]
+          }
+        ],
+        "miscTags": [
+          "HL",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

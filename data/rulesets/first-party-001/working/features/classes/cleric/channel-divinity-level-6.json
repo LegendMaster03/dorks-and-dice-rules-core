@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.cleric.channel-divinity-level-6",
+  "name": "Channel Divinity — Third Use",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 6,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Channel Divinity — Third Use",
+    "description": "Channel Divinity — Third Use is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "increase-channel-divinity-resource",
+      "resource": "cleric.channel-divinity",
+      "totalUses": 3,
+      "atClericLevel": 6,
+      "notAdditionalPool": true
+    }
+  }
+}

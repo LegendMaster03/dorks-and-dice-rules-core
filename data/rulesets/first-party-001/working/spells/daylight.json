@@ -1,0 +1,118 @@
+{
+  "id": "spell.daylight",
+  "name": "Daylight",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Daylight",
+        "level": 3,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "A 60-foot-radius sphere of light spreads out from a point you choose within range. The sphere is bright light and sheds dim light for an additional 60 feet.",
+          "If you chose a point on an object you are holding or one that isn't being worn or carried, the light shines from the object and moves with it. Completely covering the affected object with an opaque object, such as a bowl or a helm, blocks the light.",
+          "If any of this spell's area overlaps with an area of darkness created by a spell of 3rd level or lower, the spell that created the darkness is dispelled."
+        ],
+        "miscTags": [
+          "LGT",
+          "OBJ"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Daylight",
+        "level": 3,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "For the duration, sunlight spreads from a point within range and fills a 60-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere}. The sunlight's area is {@variantrule Bright Light|SRD52} and sheds {@variantrule Dim Light|SRD52} for an additional 60 feet.",
+          "Alternatively, you cast the spell on an object that isn't being worn or carried, causing the sunlight to fill a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from that object. Covering that object with something opaque, such as a bowl or helm, blocks the sunlight.",
+          "If any of this spell's area overlaps with an area of {@variantrule Darkness|SRD52} created by a spell of level 3 or lower, that other spell is dispelled."
+        ],
+        "miscTags": [
+          "LGT",
+          "LGTS",
+          "OBJ"
+        ],
+        "areaTags": [
+          "S"
+        ],
+        "lore": [
+          {
+            "name": "Daylight",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Daylight.webp"
+                },
+                "credit": "David Astruga",
+                "width": 2225,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

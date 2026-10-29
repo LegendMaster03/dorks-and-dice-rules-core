@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.wizard.scholar-level-2",
+  "name": "Scholar",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Scholar",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "skill-expertise-choice",
+      "choose": 1,
+      "from": [
+        "arcana",
+        "history",
+        "investigation",
+        "medicine",
+        "nature",
+        "religion"
+      ],
+      "mustAlreadyBeProficient": true,
+      "grant": "expertise"
+    }
+  }
+}

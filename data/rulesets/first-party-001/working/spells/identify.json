@@ -1,0 +1,100 @@
+{
+  "id": "spell.identify",
+  "name": "Identify",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Identify",
+        "level": 1,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a pearl worth at least 100 gp and an owl feather",
+            "cost": 10000
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "You choose one object that you must touch throughout the casting of the spell. If it is a magic item or some other magic-imbued object, you learn its properties and how to use them, whether it requires attunement to use, and how many charges it has, if any. You learn whether any spells are affecting the item and what they are. If the item was created by a spell, you learn which spell created it.",
+          "If you instead touch a creature throughout the casting, you learn what spells, if any, are currently affecting it."
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Identify",
+        "level": 1,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a pearl worth 100+ GP",
+            "cost": 10000
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "You touch an object throughout the spell's casting. If the object is a magic item or some other magical object, you learn its properties and how to use them, whether it requires {@variantrule Attunement|SRD52}, and how many charges it has, if any. You learn whether any ongoing spells are affecting the item and what they are. If the item was created by a spell, you learn that spell's name.",
+          "If you instead touch a creature throughout the casting, you learn which ongoing spells, if any, are currently affecting it."
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "subspecies.half-elf.unnamed-46a4597a60e25d66",
+  "name": "Section 5",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "raceName": "Half-Elf",
+        "raceSource": "SRD51"
+      }
+    }
+  ],
+  "parentSpecies": "species.half-elf"
+}

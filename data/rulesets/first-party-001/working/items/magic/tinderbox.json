@@ -1,0 +1,34 @@
+{
+  "id": "item.tinderbox",
+  "name": "Tinderbox",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Tinderbox",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50,
+        "entries": [
+          "This small container holds flint, fire steel, and tinder (usually dry cloth soaked in light oil) used to kindle a fire. Using it to light a torch—or anything else with abundant, exposed fuel—takes an action. Lighting any other fire takes 1 minute."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tinderbox",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50,
+        "entries": [
+          "A Tinderbox is a small container holding flint, fire steel, and tinder (usually dry cloth soaked in light oil) used to kindle a fire. Using it to light a {@item Candle|SRD52}, {@item Lamp|SRD52}, {@item Hooded Lantern|SRD52|Lantern}, or {@item Torch|SRD52}—or anything else with exposed fuel—takes a {@variantrule Bonus Action|SRD52}. Lighting any other fire takes 1 minute."
+        ]
+      }
+    }
+  ]
+}

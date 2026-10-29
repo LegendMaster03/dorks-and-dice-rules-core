@@ -1,0 +1,14 @@
+{
+	"barbarian": "fluff-class-barbarian.json",
+	"bard": "fluff-class-bard.json",
+	"cleric": "fluff-class-cleric.json",
+	"druid": "fluff-class-druid.json",
+	"fighter": "fluff-class-fighter.json",
+	"monk": "fluff-class-monk.json",
+	"paladin": "fluff-class-paladin.json",
+	"ranger": "fluff-class-ranger.json",
+	"rogue": "fluff-class-rogue.json",
+	"sorcerer": "fluff-class-sorcerer.json",
+	"warlock": "fluff-class-warlock.json",
+	"wizard": "fluff-class-wizard.json"
+}

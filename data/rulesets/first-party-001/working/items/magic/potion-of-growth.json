@@ -1,0 +1,45 @@
+{
+  "id": "item.potion-of-growth",
+  "name": "Potion of Growth",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Growth",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "entries": [
+          "When you drink this potion, you gain the \"enlarge\" effect of the {@spell enlarge/reduce} spell for {@dice 1d4} hours (no {@status concentration} required). The red in the potion's liquid continuously expands from a tiny bead to color the clear liquid around it and then contracts. Shaking the bottle fails to interrupt this process."
+        ],
+        "attachedSpells": [
+          "enlarge/reduce"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Growth",
+        "type": "P|SRD52",
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "entries": [
+          "When you drink this potion, you gain the \"enlarge\" effect of the {@spell Enlarge/Reduce|SRD52} spell for 10 minutes (no {@status Concentration|SRD52} required).",
+          "The red in the potion's liquid continuously expands from a tiny bead to color the clear liquid around it and then contracts. Shaking the bottle fails to interrupt this process."
+        ],
+        "attachedSpells": [
+          "enlarge/reduce|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

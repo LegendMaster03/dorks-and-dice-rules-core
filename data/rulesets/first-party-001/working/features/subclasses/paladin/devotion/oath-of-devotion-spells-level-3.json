@@ -1,0 +1,59 @@
+{
+  "id": "subclass-feature.paladin.devotion.oath-of-devotion-spells-level-3",
+  "name": "Oath of Devotion Spells",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Oath of Devotion Spells",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Devotion Spells table, you thereafter always have the listed spells prepared.",
+          {
+            "type": "table",
+            "caption": "Oath of Devotion Spells",
+            "colLabels": [
+              "Paladin Level",
+              "Spells"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Protection from Evil and Good|SRD52}, {@spell Shield of Faith|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Aid|SRD52}, {@spell Zone of Truth|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Beacon of Hope|SRD52}, {@spell Dispel Magic|SRD52}"
+              ],
+              [
+                "13th",
+                "{@spell Freedom of Movement|SRD52}, {@spell Guardian of Faith|SRD52}"
+              ],
+              [
+                "17th",
+                "{@spell Commune|SRD52}, {@spell Flame Strike|SRD52}"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "subclass.paladin.devotion",
+  "classLevel": 3
+}

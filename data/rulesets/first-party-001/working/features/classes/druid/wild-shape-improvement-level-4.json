@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.druid.wild-shape-improvement-level-4",
+  "name": "Wild Shape Improvement (4)",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 4,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Wild Shape Improvement (4)",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "wild-shape-modern-form-improvement",
+      "maxCR": 0.5,
+      "modernKnownForms": 6,
+      "allowsSwimming": true,
+      "flightNotYetAllowed": true
+    }
+  }
+}

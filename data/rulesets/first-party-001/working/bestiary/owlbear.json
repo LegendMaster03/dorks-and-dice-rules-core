@@ -1,0 +1,104 @@
+{
+  "id": "monster.owlbear",
+  "name": "Owlbear",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 59,
+      "formula": "7d10 + 21"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40
+    },
+    "str": 20,
+    "dex": 12,
+    "con": 17,
+    "int": 3,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "cr": "3",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The owlbear makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}14 ({@damage 2d8 + 5}) Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "forest"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/owlbear.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Owlbear",
+        "_copy": {
+          "name": "Owlbears",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Owlbears are tenacious hunters that might track prey over miles and rarely give up their hunts."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Sight and Smell",
+        "entries": [
+          "The owlbear has advantage on Wisdom ({@skill Perception}) checks that rely on sight or smell."
+        ]
+      }
+    ]
+  }
+}

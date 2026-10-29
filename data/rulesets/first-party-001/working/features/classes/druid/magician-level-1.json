@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.druid.magician-level-1",
+  "name": "Magician",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Magician",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "primal-order-option",
+      "extraDruidCantrips": 1,
+      "bonusSkills": [
+        "arcana",
+        "nature"
+      ],
+      "bonus": "max(1,wisdom-modifier)"
+    }
+  }
+}

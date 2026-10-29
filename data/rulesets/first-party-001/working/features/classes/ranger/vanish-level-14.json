@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.ranger.vanish-level-14",
+  "name": "Vanish",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Vanish",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "level": 14,
+        "entries": [
+          "Starting at 14th level, you can use the {@action Hide} action as a bonus action on your turn. Also, you can't be tracked by nonmagical means, unless you choose to leave a trail."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 14
+}

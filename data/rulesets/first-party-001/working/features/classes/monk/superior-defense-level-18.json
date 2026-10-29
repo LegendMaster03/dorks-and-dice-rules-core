@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.monk.superior-defense-level-18",
+  "name": "Superior Defense",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Superior Defense",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 18,
+        "consumes": {
+          "name": "Focus Point",
+          "amount": 3
+        },
+        "entries": [
+          "At the start of your turn, you can expend 3 Focus Points to bolster yourself against harm for 1 minute or until you have the {@condition Incapacitated|SRD52} condition. During that time, you have {@variantrule Resistance|SRD52} to all damage except Force damage."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 18
+}

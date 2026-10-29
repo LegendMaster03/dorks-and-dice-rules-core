@@ -1,0 +1,28 @@
+{
+  "id": "class-feature.wizard.signature-spells-level-20",
+  "name": "Signature Spells",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Signature Spells",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "wizard-signature-spells",
+      "choose": 2,
+      "spellLevel": 3,
+      "mustBeInOwnSpellbook": true,
+      "freeCasting": {
+        "castsPerChosenSpell": 1,
+        "castSpellLevel": 3,
+        "restoresOn": [
+          "short-rest",
+          "long-rest"
+        ]
+      },
+      "higherLevelCastingPaysNormalResourceCost": true,
+      "noDailyPreparationRestriction": true
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "subspecies.dwarf.hill",
+  "name": "Hill",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hill",
+        "raceName": "Dwarf",
+        "raceSource": "SRD51",
+        "ability": [
+          {
+            "wis": 1
+          }
+        ],
+        "heightAndWeight": {
+          "baseHeight": 44,
+          "heightMod": "2d4",
+          "baseWeight": 115,
+          "weightMod": "2d6"
+        },
+        "entries": [
+          {
+            "name": "Dwarven Toughness",
+            "entries": [
+              "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level."
+            ],
+            "type": "entries"
+          }
+        ]
+      }
+    }
+  ],
+  "parentSpecies": "species.dwarf"
+}

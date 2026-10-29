@@ -1,0 +1,45 @@
+{
+  "id": "item.circlet-of-blasting",
+  "name": "Circlet of Blasting",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Circlet of Blasting",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While wearing this circlet, you can use an action to cast the {@spell scorching ray} spell with it. When you make the spell's attacks, you do so with an attack bonus of {@hit 5}. The circlet can't be used this way again until the next dawn."
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1e": [
+              "scorching ray"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Circlet of Blasting",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While wearing this circlet, you can cast {@spell Scorching Ray|SRD52} with it ({@hit 5} to hit). The circlet can't cast this spell again until the next dawn."
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1e": [
+              "scorching ray|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

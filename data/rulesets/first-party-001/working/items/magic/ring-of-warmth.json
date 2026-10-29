@@ -1,0 +1,40 @@
+{
+  "id": "item.ring-of-warmth",
+  "name": "Ring of Warmth",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Warmth",
+        "type": "RG|SRD51",
+        "resist": [
+          "cold"
+        ],
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you have resistance to cold damage. In addition, you and everything you wear and carry are unharmed by temperatures as low as -50 degrees Fahrenheit."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Warmth",
+        "type": "RG|SRD52",
+        "resist": [
+          "cold"
+        ],
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "entries": [
+          "If you take Cold damage while wearing this ring, the ring reduces the damage you take by {@dice 2d8}.",
+          "In addition, while wearing this ring, you and everything you wear and carry are unharmed by temperatures of 0 degrees Fahrenheit or lower."
+        ]
+      }
+    }
+  ]
+}

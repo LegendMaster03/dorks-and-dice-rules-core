@@ -1,0 +1,41 @@
+{
+  "id": "item.waterskin",
+  "name": "Waterskin",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Waterskin",
+        "type": "G",
+        "rarity": "none",
+        "weight": 5,
+        "weightNote": "(full)",
+        "value": 20,
+        "entries": [
+          "A waterskin can hold up to 4 pints of liquid."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Waterskin",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "weightNote": "(full)",
+        "value": 20,
+        "entries": [
+          "A Waterskin holds up to 4 pints. If you don't drink sufficient water, you risk dehydration."
+        ],
+        "containerCapacity": {
+          "volume": [
+            0.08
+          ]
+        }
+      }
+    }
+  ]
+}

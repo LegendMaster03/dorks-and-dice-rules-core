@@ -1,0 +1,16 @@
+{
+  "id": "baseitem.orb",
+  "name": "Orb",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Arcane Focus"
+    ],
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 3,
+    "value": 2000
+  }
+}

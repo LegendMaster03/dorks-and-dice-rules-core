@@ -1,0 +1,11 @@
+{
+  "id": "item.soap",
+  "name": "Soap",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 2
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "monster.giant-poisonous-snake",
+  "name": "Giant Poisonous Snake",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.giant-venomous-snake"
+}

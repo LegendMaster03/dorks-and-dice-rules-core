@@ -1,0 +1,305 @@
+{
+  "status": "approved-source-to-native-reconciliation-decisions",
+  "decisions": [
+    {
+      "nativeRuleId": "condition.blinded",
+      "state": "reconciled-identical-mechanics",
+      "decision": "Both editions have identical sight and attack mechanics; remove renderer-only differences.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Blinded"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Blinded"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.charmed",
+      "state": "approved-native-rule",
+      "decision": "Retain the SRD 5.1 prohibition on harmful abilities and magical effects, including non-damaging harm, with shared social Advantage.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Charmed"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Charmed"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.deafened",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Deafened"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Deafened"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.exhaustion",
+      "adoptedVariant": "SRD 5.1 exhaustion",
+      "decision": "Use the six cumulative tier-based effects, including the SRD 5.1 rest/food/drink and raised-from-dead rules.",
+      "alternativeNotAdopted": "SRD 5.2.1 exhaustion's per-level D20 Test penalty and flat Speed reduction",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Exhaustion"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Exhaustion"
+        }
+      ],
+      "nativeLocation": "data/native/conditions.json",
+      "decisionBasis": "Explicit Dorks & Dice Owner ruling",
+      "state": "approved-native-rule"
+    },
+    {
+      "nativeRuleId": "condition.frightened",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Frightened"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Frightened"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.grappled",
+      "state": "approved-native-rule",
+      "adoptedVariant": "SRD 5.1 movement and ending rules with SRD 5.2.1 attack penalty",
+      "decision": "The Grappled creature's Speed is 0 and can not increase. Its attack rolls against targets other than the grappler have Disadvantage; this condition does not impose that penalty on attacks against the grappler. End the grapple if the grappler becomes Incapacitated or an effect moves the grappled creature out of the grappler's reach.",
+      "decisionBasis": "Explicit Dorks & Dice Owner ruling; existing native Grapple initiation and escape procedure retained.",
+      "unaffectedDecisions": [
+        "3.x-derived initiation: touch attack against Touch AC, followed by opposed grapple check to establish the hold",
+        "Forceful escape: opposed grapple check; skill-based escape: Dexterity-based Escape Artist against holder's grapple check"
+      ],
+      "notYetReconciled": [
+        "Dragging and carrying movement cost, including differences between the two SRDs",
+        "Action economy, provocation, multiple-grappler cases, pinning, and complete conditional defense interactions"
+      ],
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Grappled"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Grappled"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.incapacitated",
+      "state": "approved-native-rule",
+      "decision": "Prohibit Actions, Bonus Actions, and Reactions and end Concentration; do not inherently restrict movement, speech, awareness, or Initiative.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Incapacitated"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Incapacitated"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.invisible",
+      "state": "approved-native-rule",
+      "decision": "Combine concealment, sound/tracks and sight-dependent attack effects; no Initiative Advantage pending surprise-system reconciliation.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Invisible"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Invisible"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.paralyzed",
+      "state": "reconciled-equivalent-mechanics",
+      "decision": "Preserve Incapacitated, immobility, inability to speak, failed Strength/Dexterity saves, attacks against it with Advantage, and close-range automatic critical hits.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Paralyzed"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Paralyzed"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.petrified",
+      "state": "approved-native-rule",
+      "decision": "Preserve material transformation, immunity and suspension of existing poison/disease, while adopting SRD 5.2.1 awareness flexibility and explicit immunity to Poisoned.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Petrified"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Petrified"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.poisoned",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Poisoned"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Poisoned"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.prone",
+      "state": "reconciled-equivalent-mechanics",
+      "decision": "Preserve the same attack and crawling mechanics; explicitly state standing costs half Speed and is impossible with Speed 0.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Prone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Prone"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.restrained",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Restrained"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Restrained"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.stunned",
+      "state": "approved-native-rule",
+      "decision": "Use half Speed as the approved compromise; remain Incapacitated, speak falteringly, automatically fail Strength/Dexterity saves, and grant Advantage to attacks against it.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Stunned"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Stunned"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.unconscious",
+      "state": "reconciled-equivalent-mechanics",
+      "decision": "Preserve incapacity, Prone, dropping held objects, unawareness, immobilization, failed physical saves, and close-range automatic critical hits; explicitly keep Prone after awakening.",
+      "decisionBasis": "Approved Dorks & Dice unified conditions reconciliation",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Unconscious"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Unconscious"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.wet",
+      "state": "approved-house-rule",
+      "decision": "Approved Dorks & Dice Wet condition. Cold/lightning damage-effect and extreme-cold saving throws have Disadvantage; fire damage-effect saving throws have Advantage. Ends upon taking at least 5 fire damage in one instance, removing wet clothing/armor except when wet fur remains, or spending 1 hour around a heat source.",
+      "decisionBasis": "Explicit Dorks & Dice Owner addition; not an SRD 5.1 or SRD 5.2.1 condition.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "spell.power-word-stun",
+  "name": "Power Word Stun",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Power Word Stun",
+        "level": 8,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You speak a word of power that can overwhelm the mind of one creature you can see within range, leaving it dumbfounded. If the target has 150 hit points or fewer, it is {@condition stunned}. Otherwise, the spell has no effect.",
+          "The {@condition stunned} target must make a Constitution saving throw at the end of each of its turns. On a successful save, this stunning effect ends."
+        ],
+        "conditionInflict": [
+          "stunned"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Power Word Stun",
+        "level": 8,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You overwhelm the mind of one creature you can see within range. If the target has 150 {@variantrule Hit Points|SRD52} or fewer, it has the {@condition Stunned|SRD52} condition. Otherwise, its {@variantrule Speed|SRD52} is 0 until the start of your next turn.",
+          "The {@condition Stunned|SRD52} target makes a Constitution saving throw at the end of each of its turns, ending the condition on itself on a success."
+        ],
+        "conditionInflict": [
+          "stunned"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

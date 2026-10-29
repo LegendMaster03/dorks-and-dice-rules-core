@@ -1,0 +1,49 @@
+{
+  "id": "item.gauntlets-of-ogre-power",
+  "name": "Gauntlets of Ogre Power",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Gauntlets of Ogre Power",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "ability": {
+          "static": {
+            "str": 19
+          }
+        },
+        "entries": [
+          "Your Strength score is 19 while you wear these gauntlets. They have no effect on you if your Strength is already 19 or higher without them."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gauntlets of Ogre Power",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "ability": {
+          "static": {
+            "str": 19
+          }
+        },
+        "entries": [
+          "Your Strength score is 19 while you wear these gauntlets. They have no effect on you if your Strength is 19 or higher without them."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "subclass-feature.barbarian.berserker.frenzy-level-3",
+  "name": "Frenzy",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Frenzy",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "Starting when you choose this path at 3rd level, you can go into a frenzy when you rage. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of {@condition exhaustion}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Frenzy",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "If you use Reckless Attack while your Rage is active, you deal extra damage to the first target you hit on your turn with a Strength-based attack. To determine the extra damage, roll a number of d6s equal to your Rage Damage bonus, and add them together. The damage has the same type as the weapon or {@variantrule Unarmed Strike|SRD52} used for the attack."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "parentSubclass": "subclass.barbarian.berserker",
+  "classLevel": 3
+}

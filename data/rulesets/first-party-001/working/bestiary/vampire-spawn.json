@@ -1,0 +1,212 @@
+{
+  "id": "monster.vampire-spawn",
+  "name": "Vampire Spawn",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 90,
+      "formula": "12d8 + 36"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 16,
+    "con": 16,
+    "int": 11,
+    "wis": 10,
+    "cha": 12,
+    "save": {
+      "dex": "+6",
+      "wis": "+3"
+    },
+    "skill": {
+      "perception": "+3",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "resist": [
+      "necrotic"
+    ],
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The vampire can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "Vampire Weakness",
+        "entries": [
+          "The vampire has these weaknesses:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Forbiddance",
+                "entries": [
+                  "The vampire can't enter a residence without an invitation from an occupant."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Running Water",
+                "entries": [
+                  "The vampire takes 20 Acid damage if it ends its turn in running water."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Stake to the Heart",
+                "entries": [
+                  "The vampire is destroyed if a weapon that deals Piercing damage is driven into the vampire's heart while the vampire has the {@condition Incapacitated|SRD52} condition."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Sunlight",
+                "entries": [
+                  "The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has {@variantrule Disadvantage|SRD52} on attack rolls and ability checks."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Regeneration",
+        "entries": [
+          "The vampire regains 10 hit points at the start of its turn if it has at least 1 hit point and isn't in sunlight or running water. If the vampire takes radiant damage or damage from {@item Holy Water (Flask)|SRD51|holy water}, this trait doesn't function at the start of the vampire's next turn."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The vampire makes two Claw attacks and uses Bite."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}8 ({@damage 2d4 + 3}) Slashing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from one of two claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@actSave con} {@dc 14}, one creature within 5 feet that is willing or that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition. {@actSaveFail} 5 ({@damage 1d4 + 3}) Piercing damage plus 10 ({@damage 3d6}) Necrotic damage. The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the Necrotic damage taken, and the vampire regains {@variantrule Hit Points|SRD52} equal to that amount."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Deathless Agility",
+        "entries": [
+          "The vampire takes the {@action Dash|SRD52} or {@action Disengage|SRD52} action."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/vampire-spawn.opus"
+    },
+    "traitTags": [
+      "Spider Climb"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "A",
+      "N",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA"
+    ],
+    "conditionInflict": [
+      "grappled"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Vampire Spawn",
+        "_copy": {
+          "name": "Vampires",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Vampire spawn are newly created vampires. They have yet to fully master their abilities, and many are consumed by their thirst for blood. Vampire spawn might serve more powerful vampires or pursue their own depraved agendas."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Vampire Spawn.webp"
+                  },
+                  "credit": "Carlo Arellano",
+                  "width": 1500,
+                  "height": 1875
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

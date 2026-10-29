@@ -1,0 +1,20 @@
+{
+  "id": "deity.hecate",
+  "name": "Hecate",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "title": "Goddess of magic and the moon",
+    "domains": [
+      "Knowledge",
+      "Trickery",
+      "Arcana"
+    ],
+    "symbol": "Setting moon"
+  }
+}

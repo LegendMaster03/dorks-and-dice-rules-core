@@ -1,0 +1,76 @@
+{
+  "id": "subclass-feature.druid.land.nature-s-ward-level-10",
+  "name": "Nature's Ward",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Nature's Ward",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD51",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "When you reach 10th level, you can't be {@condition charmed} or {@condition frightened} by elementals or fey, and you are immune to poison and disease."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Nature's Ward",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD52",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "You are immune to the {@condition Poisoned|SRD52} condition, and you have {@variantrule Resistance|SRD52} to a damage type associated with your current land choice in the Circle Spells feature, as shown in the Nature's Ward table.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "table",
+                "caption": "Nature's Ward",
+                "colLabels": [
+                  "Land Type",
+                  "Resistance"
+                ],
+                "colStyles": [
+                  "col-6",
+                  "col-6"
+                ],
+                "rows": [
+                  [
+                    "Arid",
+                    "Fire"
+                  ],
+                  [
+                    "Polar",
+                    "Cold"
+                  ],
+                  [
+                    "Temperate",
+                    "Lightning"
+                  ],
+                  [
+                    "Tropical",
+                    "Poison"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "parentSubclass": "subclass.druid.land",
+  "classLevel": 10
+}

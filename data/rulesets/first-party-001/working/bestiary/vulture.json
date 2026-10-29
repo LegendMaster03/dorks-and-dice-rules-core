@@ -1,0 +1,104 @@
+{
+  "id": "monster.vulture",
+  "name": "Vulture",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 5,
+      "formula": "1d8 + 1"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 50
+    },
+    "str": 7,
+    "dex": 10,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 4,
+    "skill": {
+      "perception": "+3"
+    },
+    "passive": 13,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The vulture has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the vulture's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Keen Sight and Smell",
+        "entries": [
+          "The vulture has advantage on Wisdom ({@skill Perception}) checks that rely on sight or smell."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "grassland",
+      "hill"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/vulture.opus"
+    },
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Vulture",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Vulture.webp"
+                  },
+                  "width": 828,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

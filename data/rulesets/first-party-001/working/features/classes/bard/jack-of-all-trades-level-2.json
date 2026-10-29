@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.bard.jack-of-all-trades-level-2",
+  "name": "Jack of All Trades",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Jack of All Trades",
+    "description": "Jack of All Trades: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "untrained-skill-check-bonus",
+      "bonus": "floor(proficiency-bonus/2)",
+      "requires": "eligible-skill-check-with-no-other-proficiency-bonus",
+      "neverAddsTwice": true,
+      "notAddedToBardicKnowledgeSpecialCheck": true
+    }
+  }
+}

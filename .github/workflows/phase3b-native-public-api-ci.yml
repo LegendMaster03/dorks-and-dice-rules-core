@@ -1,0 +1,80 @@
+# Development-only checks; never deploy or merge.
+name: Rules Core Phase 3B Public Native API CI
+
+on:
+  push:
+    branches:
+      - feature/rules-core-phase3b-public-native-api
+      - feature/rules-core-rewrite
+  pull_request:
+    branches:
+      - feature/rules-core-rewrite
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-native-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore and build release
+        run: |
+          dotnet restore RulesCore.slnx
+          dotnet build RulesCore.slnx -c Release --no-restore
+      - name: Complete C# test suite (includes real HTTP public/private ingress tests)
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Existing Python SRD and migration validation suite
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Validate authoritative/working split
+        run: |
+          python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict
+          python3 tools/validate_ruleset_split.py
+      - name: Build native-only Docker image
+        run: docker build -t rules-core-phase3b:ci .
+      - name: Docker public/private and readiness smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --rm --name rules-core-phase3b-public -p 127.0.0.1:18765:8080 rules-core-phase3b:ci
+          docker run -d --rm --name rules-core-phase3b-private -e RulesCore__ApiSurface=PrivateOnly -p 127.0.0.1:18766:8080 rules-core-phase3b:ci
+          docker run -d --rm --name rules-core-phase3b-missing -e Rulesets__ContentRoot=/app/missing -p 127.0.0.1:18767:8080 rules-core-phase3b:ci
+          trap 'docker rm -f rules-core-phase3b-public rules-core-phase3b-private rules-core-phase3b-missing >/dev/null 2>&1 || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18765/ready >/dev/null && curl -fsS http://127.0.0.1:18766/ready >/dev/null; then break; fi
+            sleep 1
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/ready)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/ready)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18767/ready)" = 503
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/api/private/rulesets)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/api/rulesets)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/api/private/rulesets)" = 401
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/api/rulesets/first-party-001/rules)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/api/rulesets/first-party-001/rules/condition.blinded)" = 404
+          curl -fsS http://127.0.0.1:18765/api/rulesets | python3 -c 'import json,sys; assert json.load(sys.stdin)=={"rulesets": []}'
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/api/rules)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/health)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/health)" = 200
+          # This positive check is loopback-only and explicitly enables a CI snapshot.
+          # It is NOT rights approval for production distribution.
+          fingerprint=$(docker logs rules-core-phase3b-public 2>&1 | grep -oE 'fingerprint [0-9a-f]{64}' | tail -1 | cut -d ' ' -f2)
+          test "${#fingerprint}" = 64
+          docker run -d --rm --name rules-core-phase3b-ci-approved \
+            -e RulesCore__PublicDistribution__Packages__first-party-001__Enabled=true \
+            -e RulesCore__PublicDistribution__Packages__first-party-001__ApprovedFingerprint="$fingerprint" \
+            -e RulesCore__PublicDistribution__Packages__first-party-001__RightsReviewReference="CI-ISOLATED-SMOKE-ONLY" \
+            -e RulesCore__PublicDistribution__Packages__first-party-001__AttributionStatement="CI only; no distribution authorization" \
+            -p 127.0.0.1:18768:8080 rules-core-phase3b:ci
+          trap 'docker rm -f rules-core-phase3b-public rules-core-phase3b-private rules-core-phase3b-missing rules-core-phase3b-ci-approved >/dev/null 2>&1 || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18768/ready >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:18768/api/rulesets | python3 -c 'import json,sys; j=json.load(sys.stdin); assert len(j["rulesets"])==1 and j["rulesets"][0]["entityCount"]==35'
+          curl -fsS http://127.0.0.1:18768/api/rulesets/first-party-001/rules/condition.blinded | python3 -c 'import json,sys; j=json.load(sys.stdin); assert j["rule"]["id"]=="condition.blinded" and "definition" in j["rule"]'
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18768/api/private/rulesets)" = 404

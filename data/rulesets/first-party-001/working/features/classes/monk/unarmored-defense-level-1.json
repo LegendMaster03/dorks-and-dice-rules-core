@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.monk.unarmored-defense-level-1",
+  "name": "Unarmored Defense",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Unarmored Defense",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Unarmored Defense",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "While you aren't wearing armor or wielding a {@item Shield|SRD52}, your base {@variantrule Armor Class|SRD52} equals 10 plus your Dexterity and Wisdom modifiers."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 1
+}

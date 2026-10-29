@@ -1,0 +1,62 @@
+{
+  "id": "magicvariant.adamantine-armor",
+  "name": "Adamantine Armor",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Adamantine Armor",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "type": "HA|SRD51"
+          },
+          {
+            "type": "MA|SRD51"
+          }
+        ],
+        "excludes": {
+          "name": "Hide Armor"
+        },
+        "inherits": {
+          "namePrefix": "Adamantine ",
+          "source": "SRD51",
+          "page": 207,
+          "rarity": "uncommon",
+          "entries": [
+            "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Adamantine Armor",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "MA|SRD52"
+          },
+          {
+            "type": "HA|SRD52"
+          }
+        ],
+        "excludes": {
+          "name": "Hide Armor"
+        },
+        "inherits": {
+          "namePrefix": "Adamantine ",
+          "source": "SRD52",
+          "page": 209,
+          "rarity": "uncommon",
+          "entries": [
+            "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+          ]
+        }
+      }
+    }
+  ]
+}

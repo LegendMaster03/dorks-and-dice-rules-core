@@ -1,0 +1,146 @@
+{
+  "id": "spell.cloudkill",
+  "name": "Cloudkill",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloudkill",
+        "level": 5,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a 20-foot-radius sphere of poisonous, yellow-green fog centered on a point you choose within range. The fog spreads around corners. It lasts for the duration or until strong wind disperses the fog, ending the spell. Its area is {@quickref Vision and Light|SRD51|2||heavily obscured}.",
+          "When a creature enters the spell's area for the first time on a turn or starts its turn there, that creature must make a Constitution saving throw. The creature takes {@damage 5d8} poison damage on a failed save, or half as much damage on a successful one. Creatures are affected even if they hold their breath or don't need to breathe.",
+          "The fog moves 10 feet away from you at the start of each of your turns, rolling along the surface of the ground. The vapors, being heavier than air, sink to the lowest level of the land, even pouring down openings."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 6th level or higher, the damage increases by {@scaledamage 5d8|5-9|1d8} for each slot level above 5th."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "poison"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "OBS"
+        ],
+        "areaTags": [
+          "S"
+        ],
+        "lore": [
+          {
+            "name": "Cloudkill",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/PHB/Cloudkill.webp"
+                },
+                "width": 1000,
+                "height": 1375
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloudkill",
+        "level": 5,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} of yellow-green fog centered on a point within range. The fog lasts for the duration or until strong wind (such as the one created by {@spell Gust of Wind|SRD52}) disperses it, ending the spell. Its area is {@variantrule Heavily Obscured|SRD52}.",
+          "Each creature in the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} makes a Constitution saving throw, taking {@damage 5d8} Poison damage on a failed save or half as much damage on a successful one. A creature must also make this save when the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} moves into its space and when it enters the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} or ends its turn there. A creature makes this save only once per turn.",
+          "The {@variantrule Sphere [Area of Effect]|SRD52|Sphere} moves 10 feet away from you at the start of each of your turns."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 5d8|5-9|1d8} for each spell slot level above 5."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "poison"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "OBS"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

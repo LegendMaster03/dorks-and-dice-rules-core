@@ -1,0 +1,168 @@
+{
+  "id": "subspecies.dragonborn.unnamed-1a909417769c0dff",
+  "name": "Section 1",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "raceName": "Dragonborn",
+        "raceSource": "SRD51",
+        "_versions": [
+          {
+            "_abstract": {
+              "name": "Dragonborn ({{color}})",
+              "source": "SRD51",
+              "_mod": {
+                "entries": [
+                  {
+                    "mode": "removeArr",
+                    "names": "Draconic Ancestry"
+                  },
+                  {
+                    "mode": "replaceArr",
+                    "replace": "Breath Weapon",
+                    "items": {
+                      "type": "entries",
+                      "name": "Breath Weapon",
+                      "entries": [
+                        "You can use your action to exhale destructive energy in a {{area}}.",
+                        "When you use your breath weapon, each creature in the area of the exhalation must make a {{savingThrow}} saving throw. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes {@damage 2d6} {{damageType}} damage on a failed save, and half as much damage on a successful one. The damage increases to {@damage 3d6} at 6th level, {@damage 4d6} at 11th level, and {@damage 5d6} at 16th level.",
+                        "After you use your breath weapon, you can't use it again until you complete a short or long rest."
+                      ]
+                    }
+                  },
+                  {
+                    "mode": "replaceArr",
+                    "replace": "Damage Resistance",
+                    "items": {
+                      "type": "entries",
+                      "name": "Damage Resistance",
+                      "entries": [
+                        "You have resistance to {{damageType}} damage."
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "_implementations": [
+              {
+                "_variables": {
+                  "color": "Black",
+                  "damageType": "acid",
+                  "area": "5-foot-wide, 30-foot-long line",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "acid"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Blue",
+                  "damageType": "lightning",
+                  "area": "5-foot-wide, 30-foot-long line",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "lightning"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Brass",
+                  "damageType": "fire",
+                  "area": "5-foot-wide, 30-foot-long line",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "fire"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Bronze",
+                  "damageType": "lightning",
+                  "area": "5-foot-wide, 30-foot-long line",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "lightning"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Copper",
+                  "damageType": "acid",
+                  "area": "5-foot-wide, 30-foot-long line",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "acid"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Gold",
+                  "damageType": "fire",
+                  "area": "15-foot cone",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "fire"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Green",
+                  "damageType": "poison",
+                  "area": "15-foot cone",
+                  "savingThrow": "Constitution"
+                },
+                "resist": [
+                  "poison"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Red",
+                  "damageType": "fire",
+                  "area": "15-foot cone",
+                  "savingThrow": "Dexterity"
+                },
+                "resist": [
+                  "fire"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Silver",
+                  "damageType": "cold",
+                  "area": "15-foot cone",
+                  "savingThrow": "Constitution"
+                },
+                "resist": [
+                  "cold"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "White",
+                  "damageType": "cold",
+                  "area": "15-foot cone",
+                  "savingThrow": "Constitution"
+                },
+                "resist": [
+                  "cold"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentSpecies": "species.dragonborn"
+}

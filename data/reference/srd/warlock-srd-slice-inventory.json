@@ -1,0 +1,1382 @@
+{
+  "id": "warlock-srd51-srd52-integrated-vertical-slice",
+  "status": "source-inventory-and-acceptance-scope-not-native-reconciliation",
+  "scope": {
+    "band": [
+      1,
+      20
+    ],
+    "editions": [
+      "SRD51",
+      "SRD52"
+    ],
+    "subclasses": [
+      "Fiend"
+    ],
+    "historicalException": "Retain previously approved native 3.5e Warlock class feature decisions, but do not import non-SRD invocation or patron catalogs.",
+    "nonSrdPactReconciliationException": {
+      "names": [
+        "Pact of the Talisman"
+      ],
+      "sourceRulesNotImportedIntoSrdOptions": true,
+      "noNonSrdPlayablePatronAuthorized": true,
+      "initialFiendOnlyPatronSliceStillApplies": true
+    },
+    "disabledHistoricalPatronPactPackage": {
+      "patron": "The Seeker",
+      "pact": "Pact of the Star Chain",
+      "status": "disabled-together",
+      "archivedNotDeleted": true,
+      "noRuntimeAvailability": true,
+      "note": "Seeker can select existing Pact Boons (Blade, Chain, Tome) in the UA. Star Chain requires Seeker; inverse is not true. Both are disabled by native project decision."
+    }
+  },
+  "sources": [
+    "data/reference/srd/structured/class/class-warlock.json",
+    "data/reference/srd/structured/optionalfeatures.json"
+  ],
+  "editionCounts": {
+    "SRD51": {
+      "invocations": 32,
+      "separatePacts": 3
+    },
+    "SRD52": {
+      "invocationsIncludingPacts": 28
+    }
+  },
+  "uniqueSelectableNames": 42,
+  "options": [
+    {
+      "name": "Agonizing Blast",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Armor of Shadows",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ascendant Step",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beast Speech",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beguiling Influence",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bewitching Whispers",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Book of Ancient Secrets",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chains of Carceri",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Devil's Sight",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Devouring Blade",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dreadful Word",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Mind",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Sight",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Smite",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eldritch Spear",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eyes of the Rune Keeper",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fiendish Vigor",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gaze of Two Minds",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gift of the Depths",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gift of the Protectors",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Investment of the Chain Master",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lessons of the First Ones",
+      "editions": [
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lifedrinker",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mask of Many Faces",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Master of Myriad Forms",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Minions of Chaos",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mire the Mind",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Misty Visions",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "One with Shadows",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Otherworldly Leap",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pact of the Blade",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "PB"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pact of the Chain",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "PB"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pact of the Tome",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "PB"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Repelling Blast",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sculptor of Flesh",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sign of Ill Omen",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thief of Five Fates",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thirsting Blade",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Visions of Distant Realms",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Voice of the Chain Master",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Whispers of the Grave",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Witch Sight",
+      "editions": [
+        {
+          "source": "SRD51",
+          "sourceCategory": [
+            "EI"
+          ]
+        },
+        {
+          "source": "SRD52",
+          "sourceCategory": [
+            "EI"
+          ]
+        }
+      ]
+    }
+  ],
+  "outOfScope": [
+    "Hexblade Patron (not in SRD 5.1/5.2.1)",
+    "Non-SRD 3.5e invocation catalog (historical inventory retained as research)",
+    "Other non-SRD Patron subclasses",
+    "Band 2 level 21+ Warlock progression",
+    "Full-class migration beyond Warlock",
+    "Pact of the Star Chain and Seeker Patron (both disabled and deferred; archival UA research preserved)"
+  ],
+  "openDesignRulings": [
+    "Advanced additional Pacts remain conceptually available but are not unlocked by current native progression; defer eligibility, level, cost, maximum, and renegotiation mechanics",
+    "Invocation selection counts and budget compared with selected Pacts",
+    "Which Patron abilities are granted at level 1 versus later advancement",
+    "Native Eldritch Blast grant and improvements",
+    "How historical at-will and modern slot-based abilities coexist",
+    "Fiend feature edition reconciliation and repeatability/resource costs",
+    "Pact break effects and Invocation restoration/transfer details: preserve prior acquisitions and model Pact affiliation; decide timing, refund/replacement, ownership migration, and legal restoration costs later.",
+    "Invocation Pact/Patron requirements and Pact Patron requirements are supported; individual option restrictions are deferred to each option reconciliation. Do not impose blanket restrictions or assume waived prerequisites on transfer.",
+    "Per-Pact Patron willingness can be constrained by specific setting or inherited terms; determine detailed acceptance/negotiation UX and secret-Patron adjudication later without imposing universal live negotiation.",
+    "Level-5 Pact upgrades for Blade, Chain, Tome are owner-approved as a design; resolve Chain command/attack economy, Tome spell interaction, Thirsting Blade replacement and any post-level-5 progression before native activation.",
+    "Archived (not active): Seeker Patron and Star Chain Pact are a single bidirectionally-required package, disabled together pending future owner approval and substantive non-SRD playtest expansion.",
+    "Implement approved native Talisman at level 1 (unlimited untrained-skill d4 OR charge-limited failed-check d4, nonstacking) and level 5 (Shared Ward Reaction within 60 ft, shared PB/LR charges); validate no new Invocation charges, restoration exploits or conflicting reactions; do not treat these approved decisions as executable yet."
+  ],
+  "prerequisites": "Some options depend on Pact choices, specific invocations, class level, available spell/resource, or other class mechanics; never infer universality from common category tags.",
+  "approvedNativePactDirection": {
+    "status": "owner-approved-initial-pact-entitlement-and-level-one-acquisition",
+    "pillar": "Pacts",
+    "separateFromInvocationPillar": true,
+    "inScopeChoices": [
+      "Pact of the Blade",
+      "Pact of the Chain",
+      "Pact of the Tome",
+      "Pact of the Talisman"
+    ],
+    "everyWarlockReceivesDedicatedInitialPactChoice": true,
+    "initialPactEntitlement": "separate-class-pact-selection-not-eldritch-invocation",
+    "firstPactConsumesInvocationSelection": false,
+    "pactChoicesAreOrdinaryInvocations": false,
+    "pactEnhancementsCanBeInvocations": true,
+    "invocationMayRequirePact": true,
+    "existingPactSelectionIsNotDuplicatedByGuidedBuild": true,
+    "decisionsPending": {
+      "additionalPactsAllowed": null,
+      "additionalPactsAcquisitionCost": null,
+      "furtherPactEntitlementProgression": null,
+      "individualPactMechanicalReconciliation": [
+        "Pact of the Blade",
+        "Pact of the Chain",
+        "Pact of the Tome",
+        "Pact of the Talisman"
+      ]
+    },
+    "sourcePreservation": {
+      "SRD51": "Historical 2014 separate Pact Boon at class level 3 preserved; native first Pact uses its own entitlement at level 1",
+      "SRD52": "Historical 2024 Pact invocations preserved as source data; native first Pact consumes zero Invocation choices",
+      "EXTRAS": "Talisman (Tasha's, 2020, official published non-SRD) and Star Chain (UA The Faithful, 2016, playtest non-SRD) are independently documented source-based Pact review additions, not SRD51/SRD52 inventory entries."
+    },
+    "rationale": "Tester reports converting Pacts to Invocations increases build variety but weakens Pact identity. Dedicated Pact entitlements preserve a distinct meaningful Pact pillar while Pact-dependent Invocations retain customization. User approves first Pact at Warlock 1, with Patron as source, Pact as arrangement, and Invocations as additional clauses. This is a conceptual model, not a mandatory literal contract. Follow-up owner direction: a Pact is a major agreement and Invocations are pact-bound clauses that cease to function if their Pact breaks, subject to explicit restoration or transfer terms of a newly made Pact. Preserve optional additional Pacts and defer gating. Reaffirmed: individual Pacts may restrict eligible Patrons; individual Invocations may restrict the Pact they are attached to, the Patron of that Pact, or both. Evaluate the specific Pact-Patron pairing, especially when additional Pacts or transfers are eventually possible. Owner clarifies that this architecture gives the Patron discretion over the terms and clauses they are willing to accept, distinct from the character meeting general rules prerequisites. Owner approves SRD52 Pact of the Blade core mechanics as the native baseline while retaining separate examination of 2014 weapon-storage ritual and other discrepancies. Owner finds unchanged base Pact underwhelming for a standalone pillar; do not treat bare SRD52 Pact as complete progression or preapprove any automatic extra attacks. Owner approves intrinsic Blade Pact second attack at Warlock level 5, consuming no Invocation, after observing that requiring Thirsting Blade as an Invocation creates an underwhelming Pact. BG3's Deepened Pact independently corroborates the proposed mechanical direction; other BG3 changes remain comparison candidates, not approved native grants. Owner approves BG3-style automatic level-5 improvements for all three Pact categories (Blade attack already settled, Chain familiar extra attack, Tome three free third-level spells) without spending Invocations. User also approves BG3 mundane-weapon binding for Blade; that weapon-specific effect does not apply to Chain or Tome. Hexblade patron-to-Pact classification remains under consideration; lore/source research only, no new playable parts. Owner extends Pact reconciliation from three to five, adding non-SRD official Talisman and unpublished UA Star Chain as comparative design cases; Star Chain's original Seeker-linked Patron prerequisite remains explicit and may only be broadened by later approved exception. Earlier editions' source-oriented Pact types map to Patrons instead of the Pact specialization pillar. Subsequent owner decision suspends both Seeker Patron and Star Chain Pact as an inseparable pair because source is UA with insufficient development; preserve five-Pact research but actively reconcile only Blade, Chain, Tome, and Talisman. Native future design must require the pair bidirectionally, without asserting this reverse condition was a literal rule in the original UA. Original Unearthed Arcana The Faithful explicitly offers Seeker the Star Chain INSTEAD OF an existing Pact Boon; Star Chain depends on Seeker but Seeker does not depend on Star Chain. Both are independently disabled for now by owner direction; no historical source is deleted. Owner approves native Talisman Pact consolidation of 2019 UA unlimited 1d4 checks with untrained skill and 2020 Tasha's charge-limited 1d4 correction after failed ability checks; the two Talisman bonuses cannot stack on the same roll. One transferable Talisman, a 1-hour replacement ceremony and no recharge on replacement; shared PB/Long Rest charges. Warlock level 5 gains automatic Shared Ward Reaction within 60 ft for 2d6+CHA reduction, spending one charge, without using an Invocation. Rebuke, Protection, Bond remain selectable Pact-attached Invocations, with distinct resource ledgers where published. Talisman rules are approved as design, not yet native runtime active.",
+    "initialPactClassLevel": 1,
+    "pactEntitlementCountAtLevel1": 1,
+    "levelOnePillarRoles": {
+      "Patron": "who-provides-warlock-power",
+      "Pact": "terms-or-form-of-power-relationship",
+      "EldritchInvocations": "additional-clauses-and-capabilities"
+    },
+    "clauseAnalogyNotMandatoryLiteralContract": true,
+    "inheritedOrNoncontractualPowerRelationshipsRemainValid": true,
+    "levelOneAcquisition": {
+      "classLevel": 1,
+      "pactSelections": 1,
+      "usesDedicatedPactEntitlement": true,
+      "consumesInvocationSelection": false,
+      "acquiredAlongsidePatronIdentity": true,
+      "invocationChoicesRemainSeparate": true,
+      "patronPactSelectionOrder": "order-independent-with-final-prerequisite-validation"
+    },
+    "additionalPactDesignDirection": {
+      "status": "owner-approved-defer-as-advanced-option",
+      "additionalPactsCategoricallyForbidden": false,
+      "approvedAsDefaultNativeEntitlement": false,
+      "availableInCurrentWarlockVerticalSlice": false,
+      "futureAdvancedAcquisition": "candidate-to-design-later",
+      "eligibility": "undecided",
+      "minimumWarlockLevel": null,
+      "costOrEntitlement": null,
+      "maximumPacts": null,
+      "note": "Do not permanently prohibit additional Pacts; they represent significant new agreements and belong to future advanced rules. The native first Pact remains a dedicated level-1 choice. Leave the level, cost, eligibility, maximum and invocation transfer terms undecided."
+    },
+    "source2024MultiplePacts": {
+      "status": "verified-source-behavior-not-native-entitlement",
+      "method": "Pact of the Blade, Chain, and Tome are separate Eldritch Invocation selections and may coexist",
+      "prerequisites": "no additional level prerequisites on base Pact invocations",
+      "warlockLevel1InvocationSelections": 1,
+      "warlockLevel2InvocationSelections": 3,
+      "allThreeCouldBeChosenByWarlockLevel2": true,
+      "eachAdditionalPactCostsOneInvocationSelection": true,
+      "source": "https://www.dndbeyond.com/posts/1756-2024-warlock-vs-2014-warlock-whats-new",
+      "nativeDorksAndDiceDifference": "First Pact is free dedicated class-level-1 Pact choice; additional Pacts deferred to advanced rules, not automatically purchased as ordinary Invocations."
+    },
+    "pactInvocationLifecycle": {
+      "status": "owner-approved-design-direction-implementation-semantics-deferred",
+      "pactNature": "major-distinct-power-agreement",
+      "invocationNature": "additional-clauses-bound-to-a-specific-pact",
+      "invocationAlwaysAssociatedWithPact": true,
+      "invocationNotIndependentOfPact": true,
+      "pactTermination": {
+        "dependentInvocationsLoseAccess": true,
+        "defaultRetainInvocationUseAfterPactEnds": false,
+        "removeHistoricalAcquisitionRecords": false,
+        "historicalRecordRecommendation": "retain-source-and-acquisition-history-for-later-restoration-or-transfer",
+        "exactGameEffectsAndTiming": "deferred"
+      },
+      "newPactTerms": {
+        "canExplicitlyRestorePriorInvocations": true,
+        "canExplicitlyTransferPriorInvocations": true,
+        "automaticCarryoverWithoutNewTerms": false,
+        "transferEligibilityAndCosts": "deferred",
+        "replacementPactMayBeWithSameOrDifferentPowerSource": "setting-dependent-not-determined-by-this-rule"
+      },
+      "multiplePacts": {
+        "conceptualSupportRequired": true,
+        "eachPactMustBeDistinct": true,
+        "invocationsMustTrackPactAffiliation": true,
+        "canAccessAdditionalPactThroughCurrentDefaultProgression": false,
+        "acquisitionGates": "deferred-to-future-advanced-rule",
+        "switchingOrMultiPactAttachmentPolicy": "deferred"
+      },
+      "pactDependenceVsPrerequisite": "Every Invocation has Pact affiliation, even when it does not list an individual Pact type as its game-mechanical prerequisite.",
+      "preservePlayerChoice": "Pact loss should have identifiable Invocation effects, but rules for refunded selections, replacement clauses and negotiated restoration remain undecided.",
+      "sourceRulesPreserved": true,
+      "compatibilityRevalidation": "A Pact-bound Invocation cannot be enabled under an incompatible Pact or Patron merely by restoration/transfer terms. Revalidate explicit Pact/Patron-specific prerequisites when affiliation changes; rules for explicit exceptions or conversion remain deferred. The receiving Patron must also accept the restored or transferred clause (or inherited/previously-established terms must cover it); this does not waive explicit restrictions."
+    },
+    "compatibilityRules": {
+      "status": "owner-approved-pact-invocation-patron-eligibility-and-patron-acceptance",
+      "pactChoice": {
+        "mayRequireCompatiblePatron": true,
+        "restrictionScope": "specific-pact-definition-not-universal-for-all-pacts",
+        "requirementTargets": [
+          "patron-type",
+          "patron-trait",
+          "patron-feature",
+          "other-approved-patron-eligibility"
+        ],
+        "validatesPatronAssociatedWithPact": true,
+        "noMandatoryPatronRestrictionsOnEveryPact": true
+      },
+      "invocationChoice": {
+        "alwaysHasBoundPact": true,
+        "mayRestrictPactType": true,
+        "mayRestrictPatronOfBoundPact": true,
+        "mayRequireBothPactAndItsPatron": true,
+        "mayHaveAdditionalFeatureOrLevelRequirements": true,
+        "noMandatorySpecificPactTypeRestrictionOnEveryInvocation": true,
+        "noMandatoryPatronRestrictionOnEveryInvocation": true,
+        "validatesAgainstBoundPactNotAnyUnrelatedPact": true,
+        "validatesAgainstPatronOfBoundPactNotAnyOtherPatron": true
+      },
+      "pactAssociations": {
+        "pactHasPatronSourceOrRelationship": true,
+        "patronMayBeUnrevealedOrInherited": true,
+        "literalPersonalContractNotRequired": true,
+        "differentPactsMayHaveSeparatePatronRelationshipsConceptually": true,
+        "multiplePactAcquisitionGates": "deferred",
+        "pactToPatronRecordScope": "per-distinct-pact-not-solely-global-character-patron"
+      },
+      "validation": {
+        "validatePactPatronEligibilityOnAcquisition": true,
+        "validateInvocationPactAndPatronEligibilityOnAcquisition": true,
+        "revalidateOnInvocationRestorationOrTransfer": true,
+        "newPactTermsMustExplicitlyAuthorizeRestorationOrTransfer": true,
+        "newPactTermsNotAutomaticWaiverOfRequirements": true,
+        "explicitExceptionMechanism": "deferred-for-advanced-rules",
+        "noUnapprovedExceptionOrSourceSpecificRestriction": true,
+        "useSharedTypedPrerequisites": true,
+        "sameInGuidedAndCustomBuilds": true,
+        "explainIneligibilityToUser": true,
+        "historicalRecordsPreservedIfUnavailable": true,
+        "checkPatronAcceptanceWhenSpecified": true,
+        "acceptanceScopedToPatronOfBoundPact": true,
+        "revalidatePatronAcceptanceOnInvocationTransfer": true,
+        "inheritedTermsCanSatisfyWithoutNewNegotiation": true,
+        "doNotTreatGeneralMechanicalEligibilityAsProofOfPatronAgreement": true
+      },
+      "exampleEligibilityMatrixNonPlayable": [
+        {
+          "pact": "Blade",
+          "pactPatron": "Fiend",
+          "invocationRequiresPact": "Blade",
+          "invocationRequiresPatron": "Fiend",
+          "eligible": true
+        },
+        {
+          "pact": "Tome",
+          "pactPatron": "Fiend",
+          "invocationRequiresPact": "Blade",
+          "invocationRequiresPatron": "Fiend",
+          "eligible": false
+        },
+        {
+          "pact": "Blade",
+          "pactPatron": "Archfey",
+          "invocationRequiresPact": "Blade",
+          "invocationRequiresPatron": "Fiend",
+          "eligible": false
+        },
+        {
+          "pact": "Blade",
+          "pactPatron": "Archfey",
+          "invocationRequiresPact": null,
+          "invocationRequiresPatron": null,
+          "eligible": true
+        }
+      ],
+      "note": "Examples are eligibility fixtures only and do not create real Fiend-only or Pact-only Invocations. Actual restrictions are authored individually, not assigned by category globally.",
+      "patronTermsAndWillingness": {
+        "patronCanSpecifyAcceptablePacts": true,
+        "patronCanSpecifyAcceptableInvocationsOrClauses": true,
+        "patronTermsMayDependOnSelectedPact": true,
+        "patronAcceptanceDistinctFromMechanicalPrerequisites": true,
+        "bothMustBeSatisfiedWhenAcceptanceIsSpecified": true,
+        "individualPatronMayDeclineOtherwiseEligibleOption": true,
+        "noBlanketDefaultRejectionOfStandardPactsOrInvocations": true,
+        "pactMaySetPatronAcceptanceConditions": true,
+        "invocationsRequiringSpecificPatronBoundToSamePact": true,
+        "acceptanceMayBeEstablishedInInitialOrInheritedPactTerms": true,
+        "requiresActivePatronCommunicationForEveryChoice": false,
+        "requiresPersonallySignedAgreement": false,
+        "adjudication": "setting-or-gm-defined-patron-terms-and-willingness",
+        "patronCannotSilentlyOverrideExplicitMechanicalPrerequisites": true,
+        "sourceSpecificRestrictionsRemainPerOption": true,
+        "recordAcceptanceBasisWithoutRevealingHiddenPatronIdentity": true,
+        "note": "The Patron decides which agreements and clauses it will grant or accept, subject to the underlying game's explicit eligibility requirements. Inherited or indirect relationships may already have established terms without fresh direct negotiation."
+      }
+    },
+    "bladePactNativeBaseline": {
+      "status": "owner-approved-2024-base-and-intrinsic-level5-extra-attack",
+      "pact": "Pact of the Blade",
+      "sourceEdition": "SRD52",
+      "initialAcquisition": {
+        "classLevel": 1,
+        "entitlement": "dedicated-pact-choice",
+        "consumesInvocationSelection": false
+      },
+      "approvedBaseFeatures": {
+        "createConjuredWeapon": {
+          "activation": "bonus-action",
+          "weaponTypes": [
+            "simple-melee",
+            "martial-melee"
+          ],
+          "mustManifestInHand": true
+        },
+        "bondExistingMagicWeapon": {
+          "activation": "bonus-action",
+          "requiresTouch": true,
+          "forbidsAttunedToAnotherCreature": true,
+          "forbidsAlreadyBoundToAnotherWarlock": true
+        },
+        "proficientWithPactWeapon": true,
+        "weaponCanBeSpellcastingFocus": true,
+        "mayUseCharismaForAttackAndDamageInsteadOfStrengthOrDexterity": true,
+        "selectableDamageTypes": [
+          "normal-weapon-type",
+          "necrotic",
+          "psychic",
+          "radiant"
+        ],
+        "sourceBondTermination": [
+          "invoke-bond-bonus-action-again",
+          "more-than-five-feet-away-for-one-minute",
+          "death"
+        ],
+        "conjuredWeaponDisappearsWhenBondEnds": true,
+        "bondOrdinaryNonmagicalWeapons": {
+          "status": "owner-approved-for-blade-specific-weapon-bond",
+          "mayBindExistingNonmagicalMeleeWeapon": true,
+          "turnsBoundWeaponMagicalForDamageAndResistanceInteraction": true,
+          "action": "bonus-action-from-approved-2024-Pact-bond",
+          "requiresPactOfTheBlade": true,
+          "doesNotGrantWeaponBondingToChainOrTome": true,
+          "interactionWithSpecialMagicWeapons": "unchanged-existing-magic-weapon-exclusions-and-source-difference-review",
+          "droppingThrowingDisarm": "not-approved-yet"
+        }
+      },
+      "deferredSourceDifferences": {
+        "original2014HourRitualAndExtradimensionalMagicWeaponStorage": "review-separately",
+        "original2014ArtifactAndSentientWeaponExclusions": "review-separately",
+        "mixedEditionMagicalAttackResistanceBypass": "explicitly-treat-bound-mundane-weapons-as-magical-under-native-attack-resistance-rules-details-pending",
+        "existingMagicRangedWeaponNativeSupportAndExceptions": "clarify-separately",
+        "nativeSpecialItemAndBondReplacementInteractions": "review-separately"
+      },
+      "pactProgressionConcern": {
+        "status": "owner-approved-intrinsic-level5-attack-other-progression-open",
+        "issue": "The 2024 Blade entry gives weapon access, while essential martial attack growth at higher levels is gated by optional Invocations.",
+        "nativePactIntrinsicProgression": "partially-owner-approved-level5-extra-attack",
+        "specificPotentialLevel5SecondAttack": "owner-approved-intrinsic-pact-feature",
+        "thirstingBladeDisposition": "base-two-attack-benefit-superseded-by-approved-level5-pact-progression-replacement-option-unresolved",
+        "devouringBladeDisposition": "pending-reconciliation-needs-non-Thirsting-Blade-prerequisite-if-its-source-invocation-is-retired",
+        "invocationBudgetAndBalance": "pending-reconcile-source-Thirsting-Blade-and-Devouring-Blade-no-auto-invocation-refund-or-bonus-grant",
+        "guidingDistinction": "A Pact should deliver a meaningful self-sustaining specialization across class progression; Invocations should be optional specializations rather than unavoidable taxes to maintain baseline competence.",
+        "avoidsAutomaticStacking": true,
+        "approvedLevel5ExtraAttack": {
+          "status": "owner-approved",
+          "feature": "Blade Pact Extra Attack (Pact pillar advancement)",
+          "sourceConcept": "BG3 Deepened Pact: Pact of the Blade (level 5), functionally 2014/2024 Thirsting Blade",
+          "warlockClassLevel": 5,
+          "qualifyingWeapon": "weapon-currently-bound-or-conjured-by-pact-of-the-blade",
+          "action": "attack-action",
+          "totalAttacksWithPactWeapon": 2,
+          "grantsOneAdditionalAttackRatherThanTwoIndependentFeatures": true,
+          "consumesInvocationSelection": false,
+          "requiresThirstingBladeInvocation": false,
+          "grantedBy": "pact-of-the-blade",
+          "extraAttackStackingOrMulticlass": "follow-native-attack-economy-no-independent-additive-stacking-until-explicitly-approved",
+          "additionalHigherLevelBladeProgression": "unresolved"
+        }
+      },
+      "nativeExecutableActivation": false,
+      "externalBG3Research": {
+        "status": "comparison-only-not-SRD-not-blanket-native-grant",
+        "externalSource": "Baldur's Gate 3 (up to Warlock level 12, 2025 Patch 8 reviewed)",
+        "url": "https://bg3.wiki/wiki/D%26D_5e_Class_Changes",
+        "pactAcquisitionLevel": 3,
+        "deepenedPactLevel": 5,
+        "bladeExtraAttackViaDeepenedPact": true,
+        "appliesWithoutThirstingBladeInvocation": true,
+        "weaponSummonActivation": "action",
+        "bondExistingWeaponActivation": "action",
+        "bindsNonmagicalOrMagicalExistingWeapon": true,
+        "makesBondedWeaponMagical": true,
+        "charismaAttackAndDamage": true,
+        "pactWeaponImmuneToDisarmingAndDropping": true,
+        "preventsThrowingBoundWeapon": true,
+        "summonWeaponVariantsRestricted": true,
+        "battleImplementationOfExtraAttackMayStackOutsideHonourMode": true,
+        "stackingExploitNotAdopted": true,
+        "bg3NoNative2024DamageTypeSwap": true,
+        "lifedrinkerLevel12AndNotPactBladeRestricted": true,
+        "hexbladeIntroducedPatch8": true,
+        "futureOtherPactComparisons": {
+          "chain": "Level 5 Deepened Pact gives familiar extra attack",
+          "tome": "Level 5 Deepened Pact grants one free Long Rest cast each of Animate Dead, Haste, Call Lightning"
+        },
+        "candidatesRequiringOwnerApproval": [
+          "anti-disarm-bound-pact-weapon",
+          "handling-of-weapon-throwing",
+          "other-Pacts-equivalent-intrinsic-progression"
+        ]
+      }
+    },
+    "approvedLevelFivePactImprovements": {
+      "status": "owner-approved-design-not-executable-native-content",
+      "sourceInspiration": "Baldur's Gate 3 Deepened Pact",
+      "approvalInterpretation": "Intrinsic Warlock-level-5 upgrades approved for four distinct Pact choices: Blade second attack, Chain familiar extra attack, Tome three free third-level spells, Talisman Shared Ward; Star Chain and Seeker remain disabled.",
+      "warlockClassLevel": 5,
+      "consumesEldritchInvocationSelections": false,
+      "progressionPillar": "Pacts",
+      "appliesToEachPactSeparately": true,
+      "options": {
+        "blade": {
+          "approved": true,
+          "source": "already-owner-approved",
+          "nativePart": "pact-of-the-blade-intrinsic-extra-attack",
+          "level": 5,
+          "extraAttackUsingPactWeapon": true,
+          "totalAttacksOnAttackAction": 2,
+          "noStackingDuplicateThirstingBlade": true
+        },
+        "chain": {
+          "approved": true,
+          "nativePart": "pact-of-the-chain-intrinsic-familiar-extra-attack",
+          "level": 5,
+          "qualifyingCreature": "familiar-granted-through-this-Pact",
+          "extraAttackOnFamiliarAttackAction": true,
+          "totalAttacksIfOrdinarilyOne": 2,
+          "usesInvocationChoice": false,
+          "attackCommandAndTurnEconomy": "reconcile-with-native-controlled-creatures-and-2024-chain-pact-after-base-Chain-reconciliation",
+          "doesNotGrantWarlockExtraAttack": true
+        },
+        "tome": {
+          "approved": true,
+          "nativePart": "pact-of-the-tome-intrinsic-deepened-spell-grants",
+          "level": 5,
+          "spells": [
+            {
+              "name": "Animate Dead",
+              "spellLevel": 3,
+              "freeCastsPerLongRest": 1
+            },
+            {
+              "name": "Haste",
+              "spellLevel": 3,
+              "freeCastsPerLongRest": 1
+            },
+            {
+              "name": "Call Lightning",
+              "spellLevel": 3,
+              "freeCastsPerLongRest": 1
+            }
+          ],
+          "slotsConsumedForGrantedUses": 0,
+          "consumeRegularWarlockSpellsKnownEntitlement": false,
+          "usesInvocationChoice": false,
+          "noDailyPreparation": "native-no-daily-spell-preparation-policy",
+          "spellHandling": "reconcile-concentration-components-summons-and-level-native-spell-implementations"
+        },
+        "talisman": {
+          "approved": true,
+          "source": "Dorks-and-Dice-native-development-after-2019-UA-and-2020-published-reconciliation",
+          "nativePart": "pact-of-the-talisman-deepened-pact-shared-ward",
+          "level": 5,
+          "warlockReactionRequired": true,
+          "qualifyingTarget": "current-wearer-of-active-linked-talisman-within-60-feet",
+          "consumesSharedTalismanCharge": 1,
+          "damageReduced": "2d6-plus-warlock-charisma-modifier-minimum-zero",
+          "consumesInvocationSelection": false,
+          "competesWithRebukeReaction": true,
+          "noAdditionalChargePool": true,
+          "nativeExecutableActivation": false
+        }
+      },
+      "notApproved": [
+        "BG3-specific non-level5 Pact changes to Chain or Tome",
+        "BG3 extra attack multiclass stacking",
+        "automatic additional Pact acquisition",
+        "additional Pact improvements beyond level 5",
+        "Hexblade Patron-to-Pact reclassification"
+      ]
+    },
+    "hexbladeClassificationReview": {
+      "status": "research-only-no-owner-reclassification",
+      "inCurrentPlayableSRDVerticalSlice": false,
+      "ownerQuestion": "Should Hexblade be Pact rather than Patron given separate Patron/Pact/Invocation pillars?",
+      "original3x": "Hexblade was a separate base class in 3.5e Complete Warrior, not a Warlock Pact",
+      "xgte2014Lore": "Mysterious Shadowfell power behind sentient weapons is the Patron, potentially Raven Queen but not definitely; magic weapon is manifestation/intermediary rather than necessarily Patron",
+      "reclassificationCandidate": "Keep Patron as actual power source; martial bond is Blade Pact; curse/specter/defense may be Patron features or Pact/Patron-limited Invocation specialization pending owner review",
+      "importantCounterexample": "Published 2014 Hexblade Patron could select Tome or Chain and make nonweapon attacks; entire Patron is not intrinsically Blade-only",
+      "redundantHexWarriorElements": [
+        "Charisma weapon attack/damage",
+        "Pact weapon proficiency",
+        "magic weapon binding"
+      ],
+      "openIssues": [
+        "Hexblade Curse cross-Pact independence and critical-rules conversion",
+        "Accursed Specter classification",
+        "Armor of Hexes classification",
+        "Master of Hexes classification",
+        "Shadowfell Patron identity vs different Patrons granting curse power"
+      ],
+      "doesNotChangePlayablePatronMenu": true,
+      "sourceRefs": [
+        "Xanathar's Guide to Everything (2017)",
+        "Complete Warrior (2003)",
+        "https://www.dndbeyond.com/posts/356-heroes-of-hallows-eve-hexblade-warlock",
+        "https://bg3.wiki/wiki/Hexblade"
+      ]
+    },
+    "expandedFivePactReview": {
+      "status": "owner-disabled-seeker-and-star-chain-preserving-five-pact-historical-research",
+      "scopeInterpretation": "Four active Pact reconciliation choices (Blade, Chain, Tome, Talisman); the Talisman level-1 package and level-5 Shared Ward are owner-approved design rulings, while runtime integration remains pending. Star Chain and the Seeker Patron stay disabled/archived.",
+      "editionClarification": "3.5e Warlock had no discrete Pact Boons; 4e Fey, Infernal, Star, Vestige etc named Pacts represent Patron/power-source identity, not this Pact specialization pillar.",
+      "initialPactClassLevel": 1,
+      "initialPactEntitlementCount": 1,
+      "eachFirstPactConsumesInvocationChoice": false,
+      "totalDistinctPactCandidates": 5,
+      "nativeRuntimeImplementationStatus": "pending-individual-native-reconciliation",
+      "originalSrdOptionCountsMustRemainUnchanged": true,
+      "newSources": {
+        "talisman": {
+          "name": "Pact of the Talisman",
+          "source": "Tasha's Cauldron of Everything",
+          "year": 2020,
+          "sourceType": "published-official-non-SRD-2014-era-pact-boon",
+          "sourcePactLevel": 3,
+          "sourceCore": {
+            "magicalItem": "wearable-transferable-amulet",
+            "failureRollBonus": "1d4 on a failed ability check by the wearer",
+            "usesPerLongRest": "proficiency-bonus",
+            "replacementCeremonyHours": 1
+          },
+          "patronRestrictionInSource": "none-general-pact-choice",
+          "invocationNames": [
+            "Rebuke of the Talisman",
+            "Protection of the Talisman",
+            "Bond of the Talisman"
+          ],
+          "publishedInvocationLevelPrereqs": {
+            "Rebuke of the Talisman": null,
+            "Protection of the Talisman": 7,
+            "Bond of the Talisman": 12
+          },
+          "mechanicsApprovedForNative": true,
+          "level5IntrinsicAdvance": "owner-approved-deepened-pact-shared-ward",
+          "nativeFirstPactEligibility": "subject-to-per-patron-terms-and-normal-pact-restrictions",
+          "sourceRulesNotCoveredBySrdLicense": true,
+          "status": "owner-approved-native-talisman-design-pending-runtime-integration",
+          "nativeExecutableActivation": false,
+          "ownerApprovedNative": {
+            "status": "owner-approved-native-design-pending-runtime-integration",
+            "sourceFusion": [
+              "2019-unearthed-arcana-class-feature-variants",
+              "2020-tashas-cauldron-of-everything"
+            ],
+            "usesDedicatedFirstPactEntitlement": true,
+            "level1": {
+              "level": 1,
+              "artifact": {
+                "type": "transferable-magical-talisman",
+                "activePerPact": 1,
+                "mayBeWornByWarlock": true,
+                "mayBeWornByAlly": true,
+                "linkedToPact": true
+              },
+              "untrainedGuidance": {
+                "condition": "wearer-makes-ability-check-using-a-skill-in-which-wearer-is-not-proficient",
+                "dice": "1d4",
+                "chargesCost": 0,
+                "usageLimit": "none",
+                "excludes": [
+                  "non-skill-ability-checks",
+                  "saving-throws",
+                  "attack-rolls"
+                ],
+                "explicitSharedSkillCompetencyHandling": "use-native-skills-and-proficiencies"
+              },
+              "fortunateCorrection": {
+                "condition": "wearer-fails-any-ability-check",
+                "timing": "after-roll-is-determined-failure",
+                "dice": "1d4",
+                "chargesCost": 1,
+                "mayAffectChecksWithSkillProficiency": true,
+                "mayAffectChecksWithoutSkillProficiency": true,
+                "mayAffectOtherAbilityChecks": true,
+                "canTurnFailureIntoSuccess": true
+              },
+              "nonstacking": {
+                "forbidden": "untrained-guidance-and-fortunate-correction-on-same-ability-check",
+                "maxNativeTalismanDicePerCheck": 1,
+                "chargedAlternativeStillRequiresFailure": true
+              },
+              "charges": {
+                "maximum": "warlock-proficiency-bonus",
+                "currentPoolSharedBy": [
+                  "fortunate-correction",
+                  "shared-ward"
+                ],
+                "recharge": "long-rest",
+                "replacementDoesNotRecharge": true
+              },
+              "replacement": {
+                "ceremonyHours": 1,
+                "eligibleRestContext": [
+                  "short-rest",
+                  "long-rest"
+                ],
+                "previousTalismanDeactivates": true,
+                "rechargeChargesOnReplacement": false
+              }
+            },
+            "level5": {
+              "name": "Deepened Pact: Shared Ward",
+              "level": 5,
+              "trigger": "active-talisman-wearer-takes-damage",
+              "rangeFeet": 60,
+              "rangeMeasuredFrom": "warlock-to-current-wearer",
+              "selfWearerAllowed": true,
+              "actionCost": "reaction-of-warlock",
+              "chargesCost": 1,
+              "chargesResource": "level1-talisman-shared-charges",
+              "damageReductionDice": "2d6",
+              "damageReductionAdd": "warlock-charisma-modifier",
+              "minimumDamageReduction": 0,
+              "reductionCannotExceedIncomingDamage": true,
+              "noSightRequirementForAttacker": true,
+              "reducesSingleDamageInstance": true,
+              "consumesInvocationSelection": false,
+              "consumesSpellSlot": false,
+              "grantsRetaliation": false,
+              "reactionCompetition": [
+                "rebuke-of-the-talisman",
+                "other-reaction-abilities"
+              ],
+              "resolution": "reduce-triggering-damage-instance",
+              "furtherIntrinsicScaling": "not-approved"
+            },
+            "invocations": {
+              "eligibleSpecializations": [
+                {
+                  "name": "Rebuke of the Talisman",
+                  "classLevelPrerequisite": null,
+                  "role": "psychic-retaliation-and-push",
+                  "cost": "invocation-selection",
+                  "actionCompetition": "shared-ward-reaction"
+                },
+                {
+                  "name": "Protection of the Talisman",
+                  "classLevelPrerequisite": 7,
+                  "role": "failed-saving-throw-protection",
+                  "resource": "own-published-proficiency-bonus-per-long-rest-pool",
+                  "cost": "invocation-selection"
+                },
+                {
+                  "name": "Bond of the Talisman",
+                  "classLevelPrerequisite": 12,
+                  "role": "teleportation-between-warlock-and-another-talisman-wearer",
+                  "resource": "own-published-proficiency-bonus-per-long-rest-pool",
+                  "cost": "invocation-selection"
+                }
+              ],
+              "automaticInvocationGrants": [],
+              "allArePactAttached": true,
+              "subjectToPatronAndPactRestrictions": true,
+              "noAutomaticRebukeOrProtectionOrBond": true
+            },
+            "implementationNotes": {
+              "sourceIsNonSrd": true,
+              "doesNotReclassifySourceAsSrd": true,
+              "sameForGuidedAndAdvancedCreation": true,
+              "noSourceFileMutation": true,
+              "exactNativeImplementationAndIntegrationPending": true,
+              "runtimeImplemented": false,
+              "fiendOnlyPatronVerticalSliceUnchanged": true,
+              "starChainAndSeekerStillDisabled": true,
+              "otherThreePactsUnchanged": true,
+              "needBalanceTests": [
+                "guidance-stacking-and-proficiency-interaction",
+                "bounded-accuracy-and-exploration",
+                "reaction-attack-trigger-resolution",
+                "same-charge-pool-and-rest-recharge",
+                "ability-check-success-after-limited-die",
+                "wearer-transfer-and-range",
+                "no-double-dice-per-check",
+                "non-invocation-required-base",
+                "cross-pact-level5-equal-entitlement-comparison"
+              ]
+            }
+          }
+        },
+        "starChain": {
+          "name": "Pact of the Star Chain",
+          "source": "Unearthed Arcana: The Faithful",
+          "year": 2016,
+          "sourceType": "unpublished-wizards-of-the-coast-playtest-non-SRD",
+          "sourcePdf": "https://media.wizards.com/2016/dnd/downloads/UA%20Non-Divine%20Faithful%20SFG.pdf",
+          "sourcePactLevel": 3,
+          "sourceCore": {
+            "magicalItem": "star-chain-with-seven-motes",
+            "ritualSpell": "Augury",
+            "ritualSpellConsumesKnownSpellSelection": false,
+            "checkBenefit": "advantage-on-one-intelligence-check",
+            "checkBenefitRecharge": "short-or-long-rest",
+            "replacementCeremonyHours": 1,
+            "visualFormMayDifferWithPatron": true
+          },
+          "patronRestrictionInSource": "dedicated-to-the-Seeker",
+          "eligibility": {
+            "requiresSeekerLinkedPatron": true,
+            "requiresOriginalSeekerSubclassAsCurrentPlayablePatron": true,
+            "matchesOrdinaryFiendPatronByDefault": false,
+            "otherPatronSourceTraitOrSpecialException": "disabled-no-exceptions-under-current-owner-ruling",
+            "requiresIndividualPatronWillingnessWhenApplicable": true,
+            "namedPatronMayRemainUnrevealedWhenSeekerLinkCanBeValidated": true,
+            "playabilityWithFiendOnlyPatronSlice": "disabled-not-offered",
+            "nonPlayableSyntheticSeekerFixtureAllowed": true
+          },
+          "mechanicsApprovedForNative": false,
+          "level5IntrinsicAdvance": "deferred-alongside-Seeker",
+          "noUnapprovedSeekerPatronImport": true,
+          "sourceRulesNotCoveredBySrdLicense": true,
+          "status": "disabled-archived-for-future-coordinated-Seeker-research",
+          "inActiveReview": false,
+          "enabled": false,
+          "pairedSeekerEnabled": false,
+          "mustEnableTogetherWithSeeker": false,
+          "ownerNativeMutualDependency": "Current owner decision archives both Seeker and Star Chain, but this is a scope decision, NOT an original source rule requiring Seeker characters to choose Star Chain",
+          "seekerMayUseOtherPactsInOriginalUA": true,
+          "seekerOriginalPactChoice": "Star Chain is an alternative to the existing Blade, Chain, or Tome Pact Boon options, not a mandatory Seeker choice",
+          "starChainRequiresSeekerInOriginalUA": true,
+          "archivalPairingReason": "Both Seeker and Star Chain have playtest-only, underdeveloped sources; owner deferred their native implementation together"
+        }
+      },
+      "nativeFirstPactUpgradeApproval": {
+        "blade": 5,
+        "chain": 5,
+        "tome": 5,
+        "talisman": 5,
+        "starChain": null
+      },
+      "noPatronCatalogExpansion": true,
+      "noAdditionalPactAcquisitionRuleApproved": true,
+      "sourceInventoryAndOptionCountsUnmodified": true,
+      "activePactChoices": [
+        "Pact of the Blade",
+        "Pact of the Chain",
+        "Pact of the Tome",
+        "Pact of the Talisman"
+      ],
+      "activePactCount": 4,
+      "deferredPactChoices": [
+        "Pact of the Star Chain"
+      ]
+    },
+    "activeFourPactReconciliation": {
+      "status": "owner-approved-active-four-pact-review-star-chain-seeker-suspended",
+      "choices": [
+        "Pact of the Blade",
+        "Pact of the Chain",
+        "Pact of the Tome",
+        "Pact of the Talisman"
+      ],
+      "candidateCount": 4,
+      "includedNonSrdException": "Pact of the Talisman",
+      "separateDeferredPackage": "Seeker Patron + Pact of the Star Chain",
+      "disabledPairActive": false,
+      "invocationCostsAndAdditionalPactGates": "unchanged",
+      "firstPactWarlockLevel": 1,
+      "sourceReferencePreserved": true
+    },
+    "starChainSeekerPair": {
+      "status": "owner-directed-disabled-deferred-retain-all-prior-work",
+      "reason": "UA Seeker/Star Chain is an inseparable Patron-and-Pact package in the intended native architecture; playtest leaves insufficient material for current vertical slice.",
+      "patron": "The Seeker",
+      "pact": "Pact of the Star Chain",
+      "requiresCompanionPairBothWays": true,
+      "patronRequiresPact": "Pact of the Star Chain",
+      "pactRequiresPatron": "The Seeker",
+      "bothDisabledTogether": true,
+      "patronEnabled": false,
+      "pactEnabled": false,
+      "inCurrentActivePactReconciliation": false,
+      "inCurrentPlayablePatronCatalog": false,
+      "selectableInCharacterBuilder": false,
+      "applicableToGuidedAndCustomBuilds": true,
+      "substitutePatronOrPactNotAllowedWhileDisabled": true,
+      "exceptionOrManualBypass": "not-approved",
+      "preserveResearchNotes": true,
+      "preserveUAProvenance": true,
+      "preserveHistoricalFivePactComparison": true,
+      "archivalCompatibilityFixturesAllowed": true,
+      "reactivation": "requires-explicit-owner-approval-and-reconciliation-of-both-together",
+      "noActiveFifthPactGrant": true,
+      "oldSeekerOnlySourceRequirementStillRecorded": true,
+      "note": "Bidirectional dependency is an owner-approved native design intent, not an assertion that the original UA compelled every Seeker to choose Star Chain. Both members must be enabled in a future coordinated design pass."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "deity.goibhniu",
+  "name": "Goibhniu",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "God of smiths and healing",
+    "domains": [
+      "Forge",
+      "Knowledge",
+      "Life"
+    ],
+    "symbol": "Giant mallet over sword"
+  }
+}

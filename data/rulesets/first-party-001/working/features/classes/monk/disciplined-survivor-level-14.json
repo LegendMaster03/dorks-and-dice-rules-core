@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.monk.disciplined-survivor-level-14",
+  "name": "Disciplined Survivor",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Disciplined Survivor",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 14,
+        "consumes": {
+          "name": "Focus Point"
+        },
+        "entries": [
+          "Your physical and mental discipline grant you proficiency in all saving throws.",
+          "Additionally, whenever you make a saving throw and fail, you can expend 1 Focus Point to reroll it, and you must use the new roll."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 14
+}

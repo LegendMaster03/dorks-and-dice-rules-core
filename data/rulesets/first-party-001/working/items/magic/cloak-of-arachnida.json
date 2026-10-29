@@ -1,0 +1,101 @@
+{
+  "id": "item.cloak-of-arachnida",
+  "name": "Cloak of Arachnida",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloak of Arachnida",
+        "resist": [
+          "poison"
+        ],
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "equal": {
+            "climb": "walk"
+          }
+        },
+        "entries": [
+          "This fine garment is made of black silk interwoven with faint silvery threads. While wearing it, you gain the following benefits:",
+          {
+            "type": "list",
+            "items": [
+              "You have resistance to poison damage.",
+              "You have a climbing speed equal to your walking speed.",
+              "You can move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free.",
+              "You can't be caught in webs of any sort and can move through webs as if they were {@quickref difficult terrain||3}.",
+              "You can use an action to cast the {@spell web} spell (save {@dc 13}). The web created by the spell fills twice its normal area. Once used, this property of the cloak can't be used again until the next dawn."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1e": [
+              "web"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloak of Arachnida",
+        "resist": [
+          "poison"
+        ],
+        "rarity": "very rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "equal": {
+            "climb": "walk"
+          }
+        },
+        "entries": [
+          "This fine garment is made of black silk interwoven with faint, silvery threads. While wearing it, you gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "Poison Resistance",
+            "entries": [
+              "You have {@variantrule Resistance|SRD52} to Poison damage."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spider Climb",
+            "entries": [
+              "You have a {@variantrule Climb Speed|SRD52} equal to your {@variantrule Speed|SRD52} and can move up, down, and across vertical surfaces and along ceilings, while leaving your hands free."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spider Walk",
+            "entries": [
+              "You can't be caught in webs of any sort and can move through webs as if they were {@variantrule Difficult Terrain|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Web",
+            "entries": [
+              "You can cast {@spell Web|SRD52} (save {@dc 13}). The web created by the spell fills twice its normal area. Once used, this property can't be used again until the next dawn."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1e": [
+              "web|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

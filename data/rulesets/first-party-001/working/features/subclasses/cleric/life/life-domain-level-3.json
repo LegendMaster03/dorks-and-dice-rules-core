@@ -1,0 +1,39 @@
+{
+  "id": "subclass-feature.cleric.life.life-domain-level-3",
+  "name": "Life Domain",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Life Domain",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Soothe the Hurts of the World}",
+          "The Life Domain focuses on the positive energy that helps sustain all life in the multiverse. Clerics who tap into this domain are masters of healing, using that life force to cure many hurts.",
+          "Existence itself relies on the positive energy associated with this domain, so a Cleric of almost any religious tradition might choose it. This domain is particularly associated with agricultural deities, gods of healing or endurance, and gods of home and community. Religious orders of healing also seek the magic of this domain.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Life Domain Spells|Cleric|SRD52|Life|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Disciple of Life|Cleric|SRD52|Life|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Preserve Life|Cleric|SRD52|Life|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "subclass.cleric.life",
+  "classLevel": 3
+}

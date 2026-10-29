@@ -1,0 +1,18 @@
+{
+  "id": "deity.hel",
+  "name": "Hel",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "title": "Goddess of the underworld",
+    "domains": [
+      "Death"
+    ],
+    "symbol": "Woman's face, rotting on one side"
+  }
+}

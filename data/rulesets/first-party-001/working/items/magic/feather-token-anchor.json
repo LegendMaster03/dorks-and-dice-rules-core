@@ -1,0 +1,39 @@
+{
+  "id": "item.feather-token-anchor",
+  "name": "Feather Token, Anchor",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Feather Token, Anchor",
+        "tier": "minor",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "This tiny object looks like a feather. Different types of feather tokens exist, each with a different single-use effect.",
+          {
+            "name": "Anchor",
+            "type": "entries",
+            "entries": [
+              "You can use an action to touch the token to a boat or ship. For the next 24 hours, the vessel can't be moved by any means. Touching the token to the vessel again ends the effect. When the effect ends, the token disappears."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Feather Token, Anchor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This object looks like a feather.",
+          "You can take a {@action Magic|SRD52} action to touch the token to a boat or ship. For the next 24 hours, the vessel can't be moved by any means. Touching the token to the vessel again ends the effect. When the effect ends, the token disappears."
+        ]
+      }
+    }
+  ]
+}

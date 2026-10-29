@@ -1,0 +1,19 @@
+{
+  "id": "deity.sobek",
+  "name": "Sobek",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "title": "God of water and crocodiles",
+    "domains": [
+      "Nature",
+      "Tempest"
+    ],
+    "symbol": "Crocodile head with horns and plumes"
+  }
+}

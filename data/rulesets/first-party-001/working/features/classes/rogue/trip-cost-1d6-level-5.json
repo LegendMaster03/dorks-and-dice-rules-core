@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.rogue.trip-cost-1d6-level-5",
+  "name": "Trip (Cost: 1d6)",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Trip (Cost: 1d6)",
+    "description": "Native Rogue Trip (Cost: 1d6); uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "cunning-strike-effect",
+      "dieCost": 1,
+      "maxTargetSize": "large",
+      "save": "dexterity",
+      "saveDC": "8 + Dexterity modifier + proficiency bonus",
+      "onFailedSave": "prone"
+    }
+  }
+}

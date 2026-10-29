@@ -1,0 +1,160 @@
+{
+  "id": "monster.ice-mephit",
+  "name": "Ice Mephit",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 21,
+      "formula": "6d6"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 30
+    },
+    "str": 7,
+    "dex": 13,
+    "con": 10,
+    "int": 9,
+    "wis": 11,
+    "cha": 12,
+    "skill": {
+      "perception": "+2",
+      "stealth": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "immune": [
+      "cold",
+      "poison"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "Primordial (Aquan, Auran)"
+    ],
+    "cr": "1/2",
+    "spellcasting": [
+      {
+        "name": "Fog Cloud (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mephit casts {@spell Fog Cloud|SRD52}, requiring no spell components and using Charisma as the spellcasting ability."
+        ],
+        "daily": {
+          "1": [
+            "{@spell Fog Cloud|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The mephit explodes when it dies. {@actSave con} {@dc 10}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 5 ({@damage 2d4}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the mephit remains motionless, it is indistinguishable from an ordinary shard of ice."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Slashing damage plus 2 ({@damage 1d4}) Cold damage."
+        ]
+      },
+      {
+        "name": "Frost Breath {@recharge}",
+        "entries": [
+          "{@actSave con} {@dc 10}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 7 ({@damage 3d4}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, elemental"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/ice-mephit.opus"
+    },
+    "traitTags": [
+      "Death Burst"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "AQ",
+      "AU",
+      "P"
+    ],
+    "damageTags": [
+      "C",
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ice Mephit",
+        "_copy": {
+          "name": "Mephits",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ice mephits have bodies made of frigid air and frozen water. They delight in freezing things and dropping ice into peoples' clothes."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

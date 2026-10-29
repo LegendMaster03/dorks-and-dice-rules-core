@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.druid.druid-circle-level-2",
+  "name": "Druid Circle",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Druid Circle",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "At 2nd level, you choose to identify with a circle of druids from the list of available circles. Your choice grants you features at 2nd level and again at 6th, 10th, and 14th level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 2
+}

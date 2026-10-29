@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.cleric.destroy-undead-cr-1-2-level-5",
+  "name": "Destroy Undead (CR 1/2)",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Destroy Undead (CR 1/2)",
+    "description": "Destroy Undead (CR 1/2) is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "destroy-undead-threshold",
+      "when": "undead-fails-save-against-modern-turn-undead",
+      "maxChallengeRating": 0.5,
+      "thresholdReplacesPrevious": true,
+      "disposition": "immediately-destroy",
+      "notSeparateChannelDivinityUse": true,
+      "doesNotDoubleCount3xTurningBasedDestruction": true
+    }
+  }
+}

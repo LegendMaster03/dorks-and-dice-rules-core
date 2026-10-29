@@ -1,0 +1,25 @@
+{
+  "id": "class-feature.paladin.divine-sense-level-3",
+  "name": "Divine Sense",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divine Sense",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 3,
+        "consumes": {
+          "name": "Channel Divinity"
+        },
+        "entries": [
+          "As a {@variantrule Bonus Action|SRD52}, you can open your awareness to detect Celestials, Fiends, and Undead. For the next 10 minutes or until you have the {@condition Incapacitated|SRD52} condition, you know the location of any creature of those types within 60 feet of yourself, and you know its creature type. Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the {@spell Hallow|SRD52} spell."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 3
+}

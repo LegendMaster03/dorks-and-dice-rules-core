@@ -1,0 +1,18 @@
+{
+  "id": "deity.imhotep",
+  "name": "Imhotep",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "God of crafts and medicine",
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Step pyramid"
+  }
+}

@@ -1,0 +1,1343 @@
+{
+  "_meta": {
+    "status": "selected-native-3x-condition-catalog; runtime-integration-pending",
+    "note": "Thirty native conditions; two further historical 3.x concepts added: Held (Helpless without automatic Incapacitated, mental actions possible) and Pinned (Grappled, not Helpless; attacker-relative -4 AC, optional silence and source-specific escape). Previous approved conditions unchanged."
+  },
+  "conditions": [
+    {
+      "id": "condition.blinded",
+      "name": "Blinded",
+      "kind": "condition",
+      "description": "A Blinded creature cannot see, moves at half Speed, and suffers impaired physical defenses. Attack rolls by the creature still have Disadvantage, without an additional blindness miss-chance roll.",
+      "effects": [
+        {
+          "type": "sense",
+          "sense": "sight",
+          "availability": "none"
+        },
+        {
+          "type": "check",
+          "appliesTo": "ability-check",
+          "requiresSense": "sight",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature"
+        },
+        {
+          "type": "speed",
+          "operation": "multiply",
+          "factor": 0.5
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -2
+        }
+      ]
+    },
+    {
+      "id": "condition.charmed",
+      "name": "Charmed",
+      "kind": "condition",
+      "description": "A Charmed creature is unable to attack or deliberately target its charmer with harmful abilities or magical effects.",
+      "effects": [
+        {
+          "type": "targeting-restriction",
+          "subject": "affected-creature",
+          "protectedTarget": "charmer",
+          "prohibited": [
+            "attack",
+            "harmful-ability",
+            "harmful-magical-effect"
+          ]
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "ability-check",
+          "mode": "advantage",
+          "subject": "charmer",
+          "when": {
+            "purpose": "social-interaction-with-affected-creature"
+          }
+        }
+      ]
+    },
+    {
+      "id": "condition.cowering",
+      "name": "Cowering",
+      "kind": "condition",
+      "description": "A Cowering creature is frozen by fear and cannot move, take an Action, Bonus Action, or Reaction. It loses applicable positive Dexterity and dodge contributions to AC and takes an additional -2 AC penalty. It does not automatically become Unconscious, Helpless, or lose Concentration.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ]
+        },
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -2
+        }
+      ]
+    },
+    {
+      "id": "condition.dazed",
+      "name": "Dazed",
+      "kind": "condition",
+      "description": "A Dazed creature cannot take Actions, Bonus Actions, or Reactions, but otherwise defends itself normally. Dazed does not inherently prevent movement, suppress AC contributions, or end Concentration.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "condition.dazzled",
+      "name": "Dazzled",
+      "kind": "condition",
+      "description": "A Dazzled creature experiences overstimulated vision, suffering a -1 penalty on attacks and Search or Spot checks. Dazzled does not remove sight or impose the Blinded condition.",
+      "effects": [
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -1
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "skills": [
+            "skill.search",
+            "skill.spot"
+          ],
+          "operation": "add",
+          "value": -1,
+          "appliesOnceToComposedCheck": true
+        }
+      ]
+    },
+    {
+      "id": "condition.deafened",
+      "name": "Deafened",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "sense",
+          "sense": "hearing",
+          "availability": "none"
+        },
+        {
+          "type": "check",
+          "appliesTo": "ability-check",
+          "requiresSense": "hearing",
+          "result": "automatic-failure"
+        }
+      ]
+    },
+    {
+      "id": "condition.entangled",
+      "name": "Entangled",
+      "kind": "condition",
+      "description": "An Entangled creature is restrained by bonds or another ensnaring effect. Unless securely anchored, it moves at half Speed and cannot Run or Charge. It has a -2 attack penalty and a -4 penalty to effective Dexterity; anchored bonds prevent movement entirely. Spellcasting interference is preserved for later integration with the native spellcasting procedure.",
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "multiply",
+          "factor": 0.5,
+          "when": {
+            "anchored": false
+          }
+        },
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false,
+          "when": {
+            "anchored": true
+          }
+        },
+        {
+          "type": "movement-restriction",
+          "prohibited": [
+            "run",
+            "charge"
+          ]
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "effective-ability-score",
+          "ability": "dexterity",
+          "operation": "add",
+          "value": -4,
+          "minimum": 0,
+          "affectsDerivedStatistics": true
+        },
+        {
+          "type": "spellcasting-disruption",
+          "requiresCheck": "concentration",
+          "dc": {
+            "base": 15,
+            "perSpellLevel": 1
+          },
+          "onFailure": "spell-is-lost",
+          "integrationStatus": "awaiting-native-spellcasting-reconciliation"
+        }
+      ]
+    },
+    {
+      "id": "condition.exhaustion",
+      "name": "Exhaustion",
+      "kind": "leveled-condition",
+      "description": "Exhaustion measures cumulative weariness from environmental hazards, deprivation, special abilities, or other effects.",
+      "levelRules": {
+        "minimum": 0,
+        "maximum": 6,
+        "gain": "Increase the creature's exhaustion level by the number specified by the effect causing exhaustion.",
+        "stacking": "A creature suffers the effects of its current exhaustion level and every lower level.",
+        "endsAtLevel": 0
+      },
+      "levels": [
+        {
+          "level": 1,
+          "effects": [
+            {
+              "type": "roll-mode",
+              "appliesTo": "ability-check",
+              "mode": "disadvantage"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "effects": [
+            {
+              "type": "speed",
+              "operation": "multiply",
+              "factor": 0.5
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "effects": [
+            {
+              "type": "roll-mode",
+              "appliesTo": "attack-roll",
+              "mode": "disadvantage"
+            },
+            {
+              "type": "roll-mode",
+              "appliesTo": "saving-throw",
+              "mode": "disadvantage"
+            }
+          ]
+        },
+        {
+          "level": 4,
+          "effects": [
+            {
+              "type": "maximum-hit-points",
+              "operation": "multiply",
+              "factor": 0.5
+            }
+          ]
+        },
+        {
+          "level": 5,
+          "effects": [
+            {
+              "type": "speed",
+              "operation": "set",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "effects": [
+            {
+              "type": "death"
+            }
+          ]
+        }
+      ],
+      "recovery": {
+        "general": "An effect that removes exhaustion reduces the level by the amount specified by that effect.",
+        "longRest": {
+          "levelsRemoved": 1,
+          "requirements": [
+            "food-consumed",
+            "drink-consumed"
+          ]
+        },
+        "raisedFromDead": {
+          "levelsRemoved": 1
+        }
+      }
+    },
+    {
+      "id": "condition.fascinated",
+      "name": "Fascinated",
+      "kind": "condition",
+      "description": "A Fascinated creature devotes its attention to a compelling effect, remaining quiet and stationary. It cannot take actions other than attending to the effect, suffers -4 on reactive perception skill checks, and may resist a potential threat again. An obvious threat breaks the fascination; an ally may free it using an Action.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ],
+          "exceptions": [
+            "pay-attention-to-fascinating-effect"
+          ]
+        },
+        {
+          "type": "movement-restriction",
+          "restriction": "no-voluntary-movement",
+          "exceptions": [
+            "effect-expressly-allows"
+          ]
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "skills": [
+            "skill.listen",
+            "skill.spot"
+          ],
+          "operation": "add",
+          "value": -4,
+          "when": {
+            "purpose": "reaction-to-surroundings"
+          },
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "saving-throw-opportunity",
+          "when": {
+            "potentialThreatAppears": true
+          },
+          "against": "fascinating-effect",
+          "resultOnSuccess": "condition-ends"
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "obvious-threat-appears",
+          "examples": [
+            "weapon-drawn",
+            "spell-cast",
+            "ranged-weapon-aimed"
+          ]
+        },
+        {
+          "event": "ally-shakes-creature-free",
+          "actionCost": "action"
+        },
+        {
+          "event": "fascinating-effect-ends"
+        }
+      ]
+    },
+    {
+      "id": "condition.fatigued",
+      "name": "Fatigued",
+      "kind": "condition",
+      "description": "A Fatigued creature cannot Run or Charge and suffers a -2 effective adjustment to its Strength and Dexterity ability scores. The change affects checks, attacks, saves, and applicable derived statistics through normal ability-score calculations. Eight hours of complete rest ends Fatigued unless its source specifies otherwise. This condition does not itself apply a level of Exhaustion.",
+      "effects": [
+        {
+          "type": "movement-restriction",
+          "prohibited": [
+            "run",
+            "charge"
+          ]
+        },
+        {
+          "type": "effective-ability-score",
+          "ability": "strength",
+          "operation": "add",
+          "value": -2,
+          "minimum": 0,
+          "affectsDerivedStatistics": true
+        },
+        {
+          "type": "effective-ability-score",
+          "ability": "dexterity",
+          "operation": "add",
+          "value": -2,
+          "minimum": 0,
+          "affectsDerivedStatistics": true
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "complete-rest",
+          "durationHours": 8,
+          "unless": {
+            "imposingEffectOverridesRecovery": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "condition.flat-footed",
+      "name": "Flat-Footed",
+      "kind": "condition",
+      "description": "A Flat-Footed creature cannot use applicable positive Dexterity or dodge bonuses to Armor Class and cannot make opportunity attacks. This is distinct from a temporary denial of the same AC contributions without the full condition.",
+      "effects": [
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "reaction-restriction",
+          "prohibited": [
+            "opportunity-attack"
+          ],
+          "doesNotProhibitOtherReactions": true
+        }
+      ]
+    },
+    {
+      "id": "condition.frightened",
+      "name": "Frightened",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "roll-mode",
+          "appliesTo": "ability-check",
+          "mode": "disadvantage",
+          "when": {
+            "fearSourceWithinLineOfSight": true
+          }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "when": {
+            "fearSourceWithinLineOfSight": true
+          }
+        },
+        {
+          "type": "movement-restriction",
+          "restriction": "cannot-willingly-move-closer",
+          "relativeTo": "fear-source"
+        }
+      ]
+    },
+    {
+      "id": "condition.grappled",
+      "name": "Grappled",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature",
+          "when": {
+            "targetRelationToGrappler": "other-than-grappler"
+          }
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true,
+          "when": {
+            "attackerRelationToGrappler": "other-than-grappler"
+          }
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "grappler-becomes-incapacitated"
+        },
+        {
+          "event": "grappled-creature-moves-outside-grapple-reach",
+          "cause": "any-effect"
+        }
+      ]
+    },
+    {
+      "id": "condition.held",
+      "name": "Held",
+      "kind": "condition",
+      "description": "A Held creature is magically immobilized, remains conscious and able to breathe, and is Helpless. It cannot move, speak, or take physical actions, but may perform purely mental actions granted by its abilities. Held does not itself apply Incapacitated or automatically end Concentration.",
+      "appliesConditions": [
+        "condition.helpless"
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "action-restriction",
+          "scope": "physical-actions",
+          "prohibited": [
+            "physical-action"
+          ],
+          "exceptions": [
+            "purely-mental-action"
+          ],
+          "doesNotAutomaticallyEndConcentration": true
+        }
+      ]
+    },
+    {
+      "id": "condition.helpless",
+      "name": "Helpless",
+      "kind": "condition",
+      "description": "A Helpless creature is unable to defend itself effectively. For Armor Class, treat its Dexterity score as 0 (modifier -5). Against melee attacks, apply a -4 AC exposure penalty equivalent to the one for Prone; if both conditions apply, use that penalty only once. Helpless alone does not determine awareness, speech, movement, or action economy.",
+      "effects": [
+        {
+          "type": "defense-adjustment",
+          "operation": "set-effective-ability-score",
+          "ability": "dexterity",
+          "value": 0,
+          "modifier": -5,
+          "defense": "armor-class",
+          "supersedes": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "appliesTo": [
+            "normal",
+            "touch",
+            "flat-footed",
+            "touch-flat-footed"
+          ]
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -4,
+          "when": {
+            "incomingAttackType": "melee"
+          },
+          "nonStackingGroup": "prone-or-helpless-melee-exposure"
+        }
+      ]
+    },
+    {
+      "id": "condition.incapacitated",
+      "name": "Incapacitated",
+      "kind": "condition",
+      "description": "An Incapacitated creature can not take actions, Bonus Actions, or Reactions. The condition does not itself restrict movement, speech, or awareness.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ]
+        },
+        {
+          "type": "concentration",
+          "operation": "end"
+        }
+      ]
+    },
+    {
+      "id": "condition.invisible",
+      "name": "Invisible",
+      "kind": "condition",
+      "description": "An Invisible creature cannot be seen without magic or a special sense. Its location may still be detected by sound or tracks. Invisible attacks deny applicable Dexterity and dodge defenses to targets unable to see the attacker; this replaces the condition's previous attack Advantage rather than stacking with it. Attacks against the Invisible creature retain Disadvantage if the attacker cannot see it.",
+      "effects": [
+        {
+          "type": "visibility",
+          "availability": "invisible-to-ordinary-sight",
+          "canBeSeenWith": [
+            "magic",
+            "special-sense"
+          ],
+          "includesWornOrCarriedEquipment": true
+        },
+        {
+          "type": "obscuration",
+          "degree": "heavily-obscured",
+          "purpose": "hiding"
+        },
+        {
+          "type": "location-clue",
+          "detectableBy": [
+            "sound",
+            "tracks"
+          ]
+        },
+        {
+          "type": "targeting-protection",
+          "appliesTo": "effects-requiring-target-to-be-seen",
+          "unless": {
+            "effectCreatorCanSeeAffectedCreature": true
+          }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerCanSeeAffectedCreature": false
+          }
+        },
+        {
+          "type": "target-defense-adjustment",
+          "target": "target-of-attacks-by-affected-creature",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true,
+          "when": {
+            "targetCanSeeAffectedCreature": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "condition.nauseated",
+      "name": "Nauseated",
+      "kind": "condition",
+      "description": "A Nauseated creature cannot attack, cast spells, concentrate, or undertake other activities requiring focused attention. It may move or undertake one simple move-equivalent activity, but cannot act normally. Move-equivalent action costs require normalization in the shared native action economy.",
+      "effects": [
+        {
+          "type": "turn-activity-limit",
+          "allowed": [
+            "movement",
+            "one-simple-move-equivalent-activity"
+          ],
+          "prohibited": [
+            "attack",
+            "cast-spell",
+            "attention-requiring-activity"
+          ],
+          "maxMoveEquivalentActivitiesPerTurn": 1,
+          "nativeActionMapping": "pending-review"
+        },
+        {
+          "type": "concentration",
+          "operation": "end"
+        }
+      ]
+    },
+    {
+      "id": "condition.panicked",
+      "name": "Panicked",
+      "kind": "condition",
+      "description": "A Panicked creature must release held objects and flee at its fastest available pace from the source of its fear and other present dangers. Its path is uncontrolled, it cannot willingly fight or undertake unrelated activities, and it can use a spell or ability only to escape. It takes a -2 penalty on saving throws, skill checks, and ability checks. When prevented from fleeing, it also becomes Cowering until it can flee again.",
+      "onApply": [
+        {
+          "event": "drop-held-objects"
+        }
+      ],
+      "effects": [
+        {
+          "type": "compelled-movement",
+          "direction": "away-from-fear-and-other-dangers",
+          "speed": "maximum-available",
+          "route": "random-viable-escape-route",
+          "priority": "flee",
+          "cannotWillinglyApproachFearSource": true
+        },
+        {
+          "type": "turn-activity-limit",
+          "allowed": [
+            "flee",
+            "spell-or-feature-used-only-to-escape"
+          ],
+          "prohibited": [
+            "attack",
+            "other-non-escape-activities"
+          ],
+          "actionCosts": "use-normal-costs-of-permitted-options"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "saving-throw",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "ability-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        }
+      ],
+      "derivedConditions": [
+        {
+          "condition": "condition.cowering",
+          "when": {
+            "escapeRouteAvailable": false
+          },
+          "endsWhen": {
+            "escapeRouteAvailable": true
+          },
+          "doesNotOverwriteIndependentApplications": true
+        }
+      ]
+    },
+    {
+      "id": "condition.paralyzed",
+      "name": "Paralyzed",
+      "kind": "condition",
+      "description": "A Paralyzed creature is Incapacitated and Helpless, immobile, and unable to speak. Attacks that hit from within 5 feet are automatic critical hits, but do not count as natural 20s.",
+      "appliesConditions": [
+        "condition.incapacitated",
+        "condition.helpless"
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "critical-hit",
+          "result": "automatic-critical-hit",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerWithinFeet": 5,
+            "attackHits": true
+          },
+          "countsAsNatural20": false
+        }
+      ]
+    },
+    {
+      "id": "condition.petrified",
+      "name": "Petrified",
+      "kind": "condition",
+      "description": "A Petrified creature becomes an inanimate substance but does not inherently lose awareness; an additional condition or effect can remove awareness.",
+      "appliesConditions": [
+        "condition.incapacitated"
+      ],
+      "effects": [
+        {
+          "type": "transformation",
+          "into": "solid-inanimate-substance",
+          "typicalMaterial": "stone",
+          "includes": "nonmagical-worn-or-carried-objects"
+        },
+        {
+          "type": "weight",
+          "operation": "multiply",
+          "factor": 10
+        },
+        {
+          "type": "aging",
+          "operation": "suspend"
+        },
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "damage-resistance",
+          "damageTypes": "all"
+        },
+        {
+          "type": "immunity",
+          "damageType": "poison"
+        },
+        {
+          "type": "immunity",
+          "condition": "condition.poisoned"
+        },
+        {
+          "type": "immunity",
+          "category": "disease"
+        },
+        {
+          "type": "existing-affliction",
+          "afflictions": [
+            "poison",
+            "disease"
+          ],
+          "operation": "suspend-not-neutralize",
+          "resumeWhenConditionEnds": true
+        }
+      ]
+    },
+    {
+      "id": "condition.pinned",
+      "name": "Pinned",
+      "kind": "condition",
+      "description": "A Pinned creature is immobilized within a grapple but is not Helpless. Against attackers other than the creature pinning it, it takes a further -4 Armor Class penalty in addition to any applicable Grappled defense adjustments. The pinning creature may prevent it from speaking. The creature may attempt to escape the pin with an opposed grapple check or the native Dexterity-based Escape Artist option; breaking the pin does not by itself break the grapple.",
+      "appliesConditions": [
+        "condition.grappled"
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -4,
+          "when": {
+            "attackerRelationToPinner": "other-than-pinner"
+          },
+          "nonStackingGroup": "pin-exposure-per-attacker"
+        },
+        {
+          "type": "speech",
+          "availability": "none",
+          "when": {
+            "pinningCreatureElectsToSilence": true
+          }
+        },
+        {
+          "type": "movement-restriction",
+          "restriction": "held-immobile",
+          "exceptions": [
+            "successful-pin-escape",
+            "movement-by-pinner-under-grapple-rules"
+          ]
+        },
+        {
+          "type": "spellcasting-restriction",
+          "prohibitedComponents": [
+            "somatic"
+          ],
+          "materialComponents": "must-already-be-in-hand",
+          "focus": "must-already-be-in-hand",
+          "concentrationCheck": {
+            "baseDC": 20,
+            "perSpellLevel": 1
+          },
+          "runtimeMapping": "pending-native-spellcasting-reconciliation"
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "pin-duration-expires",
+          "durationRounds": 1,
+          "unless": {
+            "effectSpecifiesOtherwise": true
+          }
+        },
+        {
+          "event": "escapes-pin",
+          "result": "grappled-remains-unless-separately-ended"
+        },
+        {
+          "event": "pin-broken-by-another-creature",
+          "result": "grappled-remains-unless-separately-ended"
+        },
+        {
+          "event": "pinner-releases-hold",
+          "result": "grapple-with-pinner-ends"
+        },
+        {
+          "event": "pinner-becomes-incapacitated",
+          "result": "grapple-with-pinner-ends"
+        },
+        {
+          "event": "pinner-grapple-ends",
+          "result": "pin-ends"
+        }
+      ],
+      "escapeOptions": [
+        {
+          "method": "opposed-grapple-check",
+          "opposition": "pinning-creature-grapple-check",
+          "sourceActionCost": "replaces-one-attack",
+          "nativeActionMapping": "pending-combat-maneuver-reconciliation"
+        },
+        {
+          "method": "escape-artist",
+          "skill": "skill.escape-artist",
+          "ability": "dexterity",
+          "opposition": "pinning-creature-grapple-check",
+          "sourceActionCost": "standard-action",
+          "nativeActionMapping": "pending-combat-maneuver-reconciliation"
+        }
+      ],
+      "relationships": {
+        "pinner": "the-creature-maintaining-this-pin",
+        "preservesIndependentGrapples": true,
+        "helpless": false,
+        "requiresLinkedIndependentGrapple": true
+      },
+      "requiresConditions": [
+        {
+          "condition": "condition.grappled",
+          "sourceRelation": "same-pinner",
+          "mustBeIndependentlyActive": true
+        }
+      ]
+    },
+    {
+      "id": "condition.poisoned",
+      "name": "Poisoned",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "ability-check",
+          "mode": "disadvantage"
+        }
+      ]
+    },
+    {
+      "id": "condition.prone",
+      "name": "Prone",
+      "kind": "condition",
+      "description": "A Prone creature can crawl or spend movement to stand. Its own attacks have Disadvantage. Its effective Armor Class is 4 lower against melee attacks and 4 higher against ranged attacks, reflecting the attack's type rather than the attacker's distance.",
+      "effects": [
+        {
+          "type": "movement-restriction",
+          "allowed": [
+            "crawl",
+            "stand-up"
+          ]
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature"
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -4,
+          "when": {
+            "incomingAttackType": "melee"
+          },
+          "nonStackingGroup": "prone-or-helpless-melee-exposure"
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": 4,
+          "when": {
+            "incomingAttackType": "ranged"
+          }
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "stands-up",
+          "movementCost": {
+            "operation": "half-speed",
+            "round": "down"
+          },
+          "requiresPositiveSpeed": true
+        }
+      ]
+    },
+    {
+      "id": "condition.restrained",
+      "name": "Restrained",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "ability": "dexterity",
+          "mode": "disadvantage"
+        }
+      ]
+    },
+    {
+      "id": "condition.shaken",
+      "name": "Shaken",
+      "kind": "condition",
+      "description": "A Shaken creature is unsettled by fear and takes a -2 penalty on attack rolls, saving throws, skill checks, and ability checks. Shaken imposes no automatic flight, paralysis, or loss of action economy.",
+      "effects": [
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "saving-throw",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment"
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "ability-check",
+          "operation": "add",
+          "value": -2,
+          "nonStackingGroup": "fear-impairment",
+          "appliesOnceToComposedCheck": true
+        }
+      ]
+    },
+    {
+      "id": "condition.sickened",
+      "name": "Sickened",
+      "kind": "condition",
+      "description": "A Sickened creature takes a -2 penalty to attack rolls, weapon damage rolls, saving throws, skill checks, and ability checks. Sickened remains distinct from Poisoned and Nauseated; apply its numeric modifier once to a composed check.",
+      "effects": [
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "weapon-damage-roll",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "saving-throw",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "operation": "add",
+          "value": -2,
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "ability-check",
+          "operation": "add",
+          "value": -2,
+          "appliesOnceToComposedCheck": true
+        }
+      ]
+    },
+    {
+      "id": "condition.stunned",
+      "name": "Stunned",
+      "kind": "condition",
+      "description": "A Stunned creature is Incapacitated, staggers at half Speed, and can speak only falteringly. It loses applicable Dexterity and dodge defenses and suffers a -2 Armor Class penalty, in place of attacker Advantage. It does not automatically drop held objects.",
+      "appliesConditions": [
+        "condition.incapacitated"
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "multiply",
+          "factor": 0.5
+        },
+        {
+          "type": "speech",
+          "availability": "faltering-only"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "suppress-contributions",
+          "contributions": [
+            "positive-dexterity",
+            "dodge"
+          ],
+          "oncePerComponent": true
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -2
+        }
+      ]
+    },
+    {
+      "id": "condition.unconscious",
+      "name": "Unconscious",
+      "kind": "condition",
+      "description": "An Unconscious creature is Incapacitated, Helpless, and Prone; it is unaware of its surroundings, unable to move or speak, and vulnerable to close-range automatic critical hits. Its defensive penalties are calculated from Helpless and Prone without duplicating the prior attacker Advantage.",
+      "appliesConditions": [
+        "condition.incapacitated",
+        "condition.prone",
+        "condition.helpless"
+      ],
+      "onApply": [
+        {
+          "event": "drop-held-objects"
+        }
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "awareness",
+          "availability": "none"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "strength",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "saving-throw",
+          "ability": "dexterity",
+          "result": "automatic-failure"
+        },
+        {
+          "type": "critical-hit",
+          "result": "automatic-critical-hit",
+          "subject": "attacks-against-affected-creature",
+          "when": {
+            "attackerWithinFeet": 5,
+            "attackHits": true
+          },
+          "countsAsNatural20": false
+        }
+      ],
+      "persistsAfterEnding": [
+        "condition.prone"
+      ]
+    },
+    {
+      "id": "condition.wet",
+      "name": "Wet",
+      "kind": "condition",
+      "description": "A wet creature is one that has recently been swimming or soaked in water, or who has been affected by an effect. Wet creatures have disadvantage on saving throws against spells and effects that deal cold or lightning damage, disadvantage on saving throws made to resist the effects of extreme cold, and advantage on saving throws against spells or effects that deal fire damage. A creature that takes 5 or more fire damage in a single instance, removes its wet clothing or armor (creatures with wet fur remain wet even if they do this), or that spends 1 hour around a source of heat loses this condition.",
+      "appliedWhen": [
+        {
+          "event": "recently-swam"
+        },
+        {
+          "event": "soaked-in-water"
+        },
+        {
+          "event": "effect-applies-wet"
+        }
+      ],
+      "effects": [
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "mode": "disadvantage",
+          "when": {
+            "sourceKind": [
+              "spell",
+              "effect"
+            ],
+            "sourceDealsAnyDamageType": [
+              "cold",
+              "lightning"
+            ]
+          }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "mode": "disadvantage",
+          "when": {
+            "purpose": "resist-extreme-cold"
+          }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "mode": "advantage",
+          "when": {
+            "sourceKind": [
+              "spell",
+              "effect"
+            ],
+            "sourceDealsDamageType": "fire"
+          }
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "takes-damage",
+          "damageType": "fire",
+          "minimumDamageTaken": 5,
+          "sameDamageInstance": true
+        },
+        {
+          "event": "removes-wet-clothing-or-armor",
+          "unless": {
+            "hasWetFur": true
+          }
+        },
+        {
+          "event": "remains-around-heat-source",
+          "durationMinutes": 60
+        }
+      ]
+    }
+  ]
+}

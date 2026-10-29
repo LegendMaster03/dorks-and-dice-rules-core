@@ -1,0 +1,43 @@
+{
+  "id": "item.bracers-of-archery",
+  "name": "Bracers of Archery",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bracers of Archery",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "grantsProficiency": true,
+        "bonusWeaponDamage": "+2",
+        "entries": [
+          "While wearing these bracers, you have proficiency with the {@item longbow|SRD51} and {@item shortbow|SRD51}, and you gain a +2 bonus to damage rolls on ranged attacks made with such weapons."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bracers of Archery",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "grantsProficiency": true,
+        "bonusWeaponDamage": "+2",
+        "entries": [
+          "While wearing these bracers, you have proficiency with the {@item Longbow|SRD52} and {@item Shortbow|SRD52}, and you gain a +2 bonus to damage rolls made with such weapons."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

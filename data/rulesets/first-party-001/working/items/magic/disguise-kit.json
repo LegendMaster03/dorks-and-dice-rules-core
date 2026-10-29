@@ -1,0 +1,132 @@
+{
+  "id": "item.disguise-kit",
+  "name": "Disguise Kit",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Disguise Kit",
+        "type": "T",
+        "rarity": "none",
+        "weight": 3,
+        "value": 2500,
+        "entries": [
+          "This pouch of cosmetics, hair dye, and small props lets you create disguises that change your physical appearance. Proficiency with this kit lets you add your proficiency bonus to any ability checks you make to create a visual disguise."
+        ],
+        "additionalEntries": [
+          "The perfect tool for anyone who wants to engage in trickery, a disguise kit enables its owner to adopt a false identity.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "A disguise kit includes cosmetics, hair dye, small props, and a few pieces of clothing."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Deception",
+            "entries": [
+              "In certain cases, a disguise can improve your ability to weave convincing lies."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Intimidation",
+            "entries": [
+              "The right disguise can make you look more fearsome, whether you want to scare someone away by posing as a plague victim or intimidate a gang of thugs by taking the appearance of a bully."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Performance",
+            "entries": [
+              "A cunning disguise can enhance an audience's enjoyment of a performance, provided the disguise is properly designed to evoke the desired reaction."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Persuasion",
+            "entries": [
+              "Folk tend to trust a person in uniform. If you disguise yourself as an authority figure, your efforts to persuade others are often more effective."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Create Disguise",
+            "entries": [
+              "As part of a long rest, you can create a disguise. It takes you 1 minute to don such a disguise once you have created it. You can carry only one such disguise on you at a time without drawing undue attention, unless you have a bag of holding or a similar method to keep them hidden. Each disguise weighs 1 pound.",
+              "At other times, it takes 10 minutes to craft a disguise that involves moderate changes to your appearance, and 30 minutes for one that requires more extensive changes."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Disguise Kit",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Cover injuries or distinguishing marks",
+                "10"
+              ],
+              [
+                "Spot a disguise being used by someone else",
+                "15"
+              ],
+              [
+                "Copy a humanoid's appearance",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Disguise Kit",
+        "type": "T|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 2500,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Charisma"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Apply makeup ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Costume|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "item.jug",
+  "name": "Jug",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Jug",
+        "type": "G",
+        "rarity": "none",
+        "weight": 4,
+        "value": 2,
+        "entries": [
+          "A jug holds 1 gallon of liquid."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Jug",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 4,
+        "value": 2,
+        "entries": [
+          "A Jug holds up to 1 gallon."
+        ],
+        "containerCapacity": {
+          "volume": [
+            0.1
+          ]
+        }
+      }
+    }
+  ]
+}

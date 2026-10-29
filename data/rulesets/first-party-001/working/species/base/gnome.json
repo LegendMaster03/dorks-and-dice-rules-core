@@ -1,0 +1,229 @@
+{
+  "id": "species.gnome",
+  "name": "Gnome",
+  "kind": "species",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Gnome",
+        "size": [
+          "S"
+        ],
+        "speed": 25,
+        "ability": [
+          {
+            "int": 2
+          }
+        ],
+        "heightAndWeight": {
+          "baseHeight": 35,
+          "heightMod": "2d4",
+          "baseWeight": 35
+        },
+        "age": {
+          "mature": 40,
+          "max": 500
+        },
+        "darkvision": 60,
+        "traitTags": [
+          "Uncommon Race"
+        ],
+        "languageProficiencies": [
+          {
+            "common": true,
+            "gnomish": true
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/gnome.opus"
+        },
+        "entries": [
+          {
+            "name": "Age",
+            "type": "entries",
+            "entries": [
+              "Gnomes mature at the same rate humans do, and most are expected to settle down into an adult life by around age 40. They can live 350 to almost 500 years."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Size",
+            "entries": [
+              "Gnomes are between 3 and 4 feet tall and average about 40 pounds. Your size is Small."
+            ]
+          },
+          {
+            "name": "Darkvision",
+            "entries": [
+              "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Gnome Cunning",
+            "entries": [
+              "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Languages",
+            "entries": [
+              "You can speak, read, and write Common and Gnomish. The Gnomish language, which uses the Dwarvish script, is renowned for its technical treatises and its catalogs of knowledge about the natural world."
+            ],
+            "type": "entries"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gnome",
+        "creatureTypes": [
+          "humanoid"
+        ],
+        "size": [
+          "S"
+        ],
+        "speed": 30,
+        "darkvision": 60,
+        "soundClip": {
+          "type": "internal",
+          "path": "races/gnome.opus"
+        },
+        "sizeEntry": {
+          "type": "item",
+          "name": "Size:",
+          "entries": [
+            "Small (about 3-4 feet tall)"
+          ]
+        },
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Darkvision",
+            "entries": [
+              "You have {@sense Darkvision|SRD52} with a range of 60 feet."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Gnomish Cunning",
+            "entries": [
+              "You have {@variantrule Advantage|SRD52} on Intelligence, Wisdom, and Charisma saving throws."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Gnomish Lineage",
+            "entries": [
+              "You are part of a lineage that grants you supernatural abilities. Choose one of the following options; whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage):",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Forest Gnome",
+                    "entries": [
+                      "You know the {@spell Minor Illusion|SRD52} cantrip. You also always have the {@spell Speak with Animals|SRD52} spell prepared. You can cast it without a spell slot a number of times equal to your {@variantrule Proficiency|SRD52|Proficiency Bonus}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}. You can also use any spell slots you have to cast the spell."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Rock Gnome",
+                    "entries": [
+                      "You know the {@spell Mending|SRD52} and {@spell Prestidigitation|SRD52} cantrips. In addition, you can spend 10 minutes casting {@spell Prestidigitation|SRD52} to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter, or music box. When you create the device, you determine its function by choosing one effect from {@spell Prestidigitation|SRD52}; the device produces that effect whenever you or another creature takes a {@variantrule Bonus Action|SRD52} to activate it with a touch. If the chosen effect has options within it, you choose one of those options for the device when you create it. For example, if you choose the spell's ignite-extinguish effect, you determine whether the device ignites or extinguishes fire; the device doesn't do both. You can have three such devices in existence at a time, and each falls apart 8 hours after its creation or when you dismantle it with a touch as a {@action Utilize|SRD52} action."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "_versions": [
+          {
+            "name": "Gnome; Forest Gnome Lineage",
+            "source": "SRD52",
+            "_mod": {
+              "entries": {
+                "mode": "replaceArr",
+                "replace": "Gnomish Lineage",
+                "items": {
+                  "name": "Gnomish Lineage (Forest Gnome)",
+                  "type": "entries",
+                  "entries": [
+                    "You know the {@spell Minor Illusion|SRD52} cantrip. You also always have the {@spell Speak with Animals|SRD52} spell prepared. You can cast it without a spell slot a number of times equal to your {@variantrule Proficiency|SRD52|Proficiency Bonus}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}. You can also use any spell slots you have to cast the spell."
+                  ]
+                }
+              }
+            },
+            "additionalSpells": [
+              {
+                "innate": {
+                  "3": {
+                    "daily": {
+                      "pb": [
+                        "speak with animals|srd52"
+                      ]
+                    }
+                  }
+                },
+                "ability": {
+                  "choose": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ]
+                },
+                "known": {
+                  "1": [
+                    "minor illusion|srd52#c"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "Gnome; Rock Gnome Lineage",
+            "source": "SRD52",
+            "_mod": {
+              "entries": {
+                "mode": "replaceArr",
+                "replace": "Gnomish Lineage",
+                "items": {
+                  "name": "Gnomish Lineage (Rock Gnome)",
+                  "type": "entries",
+                  "entries": [
+                    "You know the {@spell Mending|SRD52} and {@spell Prestidigitation|SRD52} cantrips. In addition, you can spend 10 minutes casting {@spell Prestidigitation|SRD52} to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter, or music box. When you create the device, you determine its function by choosing one effect from {@spell Prestidigitation|SRD52}; the device produces that effect whenever you or another creature takes a {@variantrule Bonus Action|SRD52} to activate it with a touch. If the chosen effect has options within it, you choose one of those options for the device when you create it. For example, if you choose the spell's ignite-extinguish effect, you determine whether the device ignites or extinguishes fire; the device doesn't do both. You can have three such devices in existence at a time, and each falls apart 8 hours after its creation or when you dismantle it with a touch as a {@action Utilize|SRD52} action."
+                  ]
+                }
+              }
+            },
+            "additionalSpells": [
+              {
+                "ability": {
+                  "choose": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ]
+                },
+                "known": {
+                  "1": [
+                    "mending|srd52#c",
+                    "prestidigitation|srd52#c"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

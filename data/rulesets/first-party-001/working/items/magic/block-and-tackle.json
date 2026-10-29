@@ -1,0 +1,34 @@
+{
+  "id": "item.block-and-tackle",
+  "name": "Block and Tackle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Block and Tackle",
+        "type": "G",
+        "rarity": "none",
+        "weight": 5,
+        "value": 100,
+        "entries": [
+          "A set of pulleys with a cable threaded through them and a hook to attach to objects, a block and tackle allows you to hoist up to four times the weight you can normally lift."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Block and Tackle",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 100,
+        "entries": [
+          "A {@item Block and Tackle|SRD52} allows you to hoist up to four times the weight you can normally lift."
+        ]
+      }
+    }
+  ]
+}

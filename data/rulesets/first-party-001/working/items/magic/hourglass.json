@@ -1,0 +1,12 @@
+{
+  "id": "item.hourglass",
+  "name": "Hourglass",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 2500
+  }
+}

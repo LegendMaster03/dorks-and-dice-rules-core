@@ -1,0 +1,18 @@
+{
+  "id": "deity.nike",
+  "name": "Nike",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "title": "Goddess of victory",
+    "domains": [
+      "War"
+    ],
+    "symbol": "Winged woman"
+  }
+}

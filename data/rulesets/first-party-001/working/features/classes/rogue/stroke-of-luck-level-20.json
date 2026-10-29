@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.rogue.stroke-of-luck-level-20",
+  "name": "Stroke of Luck",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Stroke of Luck",
+    "description": "Native Rogue Stroke of Luck; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "failed-d20-result-replacement",
+      "on": "failed-d20-test",
+      "setResultTo": 20,
+      "refresh": "short-or-long-rest",
+      "notNatural20": true,
+      "noOptionalCriticalEscalation": true
+    }
+  }
+}

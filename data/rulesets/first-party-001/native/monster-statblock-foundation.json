@@ -1,0 +1,144 @@
+{
+  "id": "rule.monster-statblock-foundation",
+  "name": "Approved native monster stat-block mechanics",
+  "kind": "rule",
+  "status": "approved-design-data; runtime-integration-pending",
+  "description": "Captures approved rules not yet represented by executable rewrite systems. These mechanics apply through the same native rules used by characters; no monster-specific edition engine.",
+  "savingThrows": {
+    "abilitySaves": [
+      "strength",
+      "dexterity",
+      "constitution",
+      "intelligence",
+      "wisdom",
+      "charisma"
+    ],
+    "additionalSaves": [
+      {
+        "name": "Fortitude",
+        "key": "fortitude",
+        "baseAbility": "constitution"
+      },
+      {
+        "name": "Reflex",
+        "key": "reflex",
+        "baseAbility": "dexterity"
+      },
+      {
+        "name": "Will",
+        "key": "will",
+        "baseAbility": "wisdom"
+      }
+    ],
+    "policy": "All nine are independent saving throws with independently modifiable bonuses. Fortitude/Reflex/Will do not alias, replace, or automatically grant proficiency in corresponding ability saving throws.",
+    "attackRoll": "Ability modifier + applicable proficiency + other modifiers, with explicit creature-defined exceptions.",
+    "monsterProficiency": "Keep the existing 5.x CR-based proficiency scale for the initial bestiary; no new BAB engine."
+  },
+  "hitPoints": {
+    "hitDieSize": "Inherited creature-type default, overridable by creature definition.",
+    "hitDieCount": "Creature-specific; used for HP, source-compatible abilities, and other explicit rules, not a required leveling track.",
+    "constitution": "Constitution modifier contributes per Hit Die under the ordinary HP formula; additional explicit rules may modify it.",
+    "existingStatblocks": "Do not change previously reconciled HP formulas or CR automatically.",
+    "monsterAdvancement": "Optional future stat-block customization; not required for bestiary testing."
+  },
+  "damageMitigation": {
+    "percentage": {
+      "name": "Unified Resistance/Vulnerability",
+      "allowedValues": {
+        "minimum": -100,
+        "maximum": 100,
+        "step": 1,
+        "representation": "signed-8-bit-integer-when-typed; physical database representation undecided"
+      },
+      "storage": "Sparse by damage type: omit 0 entries; absent values resolve to 0.",
+      "formula": "damage * (1 - modifier / 100)",
+      "namedPresets": {
+        "minorResistance": 25,
+        "standardResistance": 50,
+        "majorResistance": 75,
+        "immunity": 100,
+        "minorVulnerability": -25,
+        "standardVulnerability": -50,
+        "majorVulnerability": -75,
+        "doubleDamage": -100
+      },
+      "immunity": "The +100% endpoint is displayed and treated as Immunity.",
+      "rounding": "Final fractional-damage rounding remains to be specified."
+    },
+    "damageReduction": {
+      "method": "Flat subtraction applicable to any damage type unless a specific grant says otherwise.",
+      "grants": "Each DR grant has a nonnegative flat value and optional arbitrarily expressible bypass condition; no codified bypass vocabulary.",
+      "stacking": "Sum all applicable, non-bypassed DR values.",
+      "order": "Apply signed percentage damage modification first, then subtract applicable flat DR.",
+      "minimumFinalDamage": 0
+    }
+  },
+  "magicalResistance": {
+    "name": "Magical Resistance",
+    "methods": [
+      "penetration",
+      "saving-throw-advantage"
+    ],
+    "selection": "Choose method based on what the creature ability narratively represents, not automatically by historical source edition.",
+    "penetration": "Qualifying magical effects must overcome a resistance value before taking effect; penetration scaling deferred to native spellcasting reconciliation.",
+    "savingThrowAdvantage": "Advantage on qualifying magical saving throws; does not add an independent penetration check.",
+    "merging": "Historical 3.x Spell Resistance and 5.x Magic Resistance do not automatically stack as two separate grants.",
+    "exceptions": "Use existing feature language and effect rules for unusual applicability or bypass."
+  },
+  "abilityClassifications": {
+    "labels": [
+      "Natural",
+      "Extraordinary",
+      "Supernatural",
+      "Spell-Like"
+    ],
+    "presentation": "Full names preferred; stat-block placement and formatting deferred.",
+    "summary": {
+      "Natural": "Ordinary inherent capability",
+      "Extraordinary": "Exceptional nonmagical capability",
+      "Supernatural": "Magical capability that is not a spell",
+      "Spell-Like": "Magical capability behaving similarly to a spell, without necessarily being spellcasting"
+    },
+    "mechanicalDefaults": "Fine-grained dispel, counterspell, magical penetration, and action-timing interactions remain subject to individual feature rules and magic-system reconciliation; no automatic conversion of all Spell-Like abilities into spells."
+  },
+  "automaticHealing": {
+    "foundation": "Recover specified HP at the defined interval, ordinarily start of turn; never above maximum.",
+    "names": [
+      "Fast Healing",
+      "Regeneration"
+    ],
+    "explicitExtras": [
+      "Healing suppression",
+      "Survival at 0 HP",
+      "Limb regrowth or reattachment",
+      "Special damage handling"
+    ],
+    "policy": "The name Regeneration does not implicitly grant all historical 3.x nonlethal-damage and survival consequences."
+  },
+  "attacks": {
+    "naturalWeapons": "Distinct attack capabilities using the shared attack framework; natural weapons can have their own damage, reach, and effects.",
+    "multiattack": "Explicitly authorized sequences may use natural and manufactured attacks together.",
+    "fullAttack": "No separate universal 3.x Full Attack action.",
+    "primarySecondary": "No automatic 3.x primary/secondary attack penalties.",
+    "specialMechanics": [
+      "Pounce",
+      "Rake",
+      "Rend",
+      "Constrict",
+      "Swallow Whole",
+      "Improved Grab (native Grapple integration)"
+    ],
+    "legacySequences": "Do not automatically stack historical Full Attack and modern Multiattack suites."
+  },
+  "feats": {
+    "policy": "Preserve feat identity and explicit creature grants for later character-system feat reconciliation.",
+    "runtime": "Feat prerequisites, progression, and mechanical effects deferred.",
+    "acquisition": "No automatic monster HD-based feat progression for initial bestiary."
+  },
+  "nonGoals": [
+    "Executable rewrite engine",
+    "Stat block visual layout",
+    "Automatic CR recalculation",
+    "Rebalancing existing monsters during data migration"
+  ]
+}

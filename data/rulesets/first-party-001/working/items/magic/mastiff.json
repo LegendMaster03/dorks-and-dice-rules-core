@@ -1,0 +1,13 @@
+{
+  "id": "item.mastiff",
+  "name": "Mastiff",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 2500,
+    "carryingCapacity": 195,
+    "speed": 40
+  }
+}

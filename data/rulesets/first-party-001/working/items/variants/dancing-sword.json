@@ -1,0 +1,56 @@
+{
+  "id": "magicvariant.dancing-sword",
+  "name": "Dancing Sword",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dancing Sword",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Dancing ",
+          "source": "SRD51",
+          "page": 215,
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+            "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+            "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dancing Sword",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Dancing ",
+          "source": "SRD52",
+          "page": 217,
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "You can take a {@variantrule Bonus Action|SRD52} to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+            "While the weapon hovers, you can take a {@variantrule Bonus Action|SRD52} to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same {@variantrule Bonus Action|SRD52}, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+            "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "id": "baseitem.lance",
+  "name": "Lance",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Lance",
+        "type": "M",
+        "rarity": "none",
+        "weight": 6,
+        "value": 1000,
+        "weaponCategory": "martial",
+        "property": [
+          "R",
+          "S"
+        ],
+        "dmg1": "1d12",
+        "dmgType": "P",
+        "lance": true,
+        "weapon": true,
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Special",
+            "entries": [
+              "You have disadvantage when you use a lance to attack a target within 5 feet of you. Also, a lance requires two hands to wield when you aren't mounted."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Lance",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 6,
+        "value": 1000,
+        "weaponCategory": "martial",
+        "property": [
+          "H|SRD52",
+          "R|SRD52",
+          {
+            "uid": "2H|SRD52",
+            "note": "unless mounted"
+          }
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d10",
+        "dmgType": "P",
+        "lance": true,
+        "weapon": true,
+        "entries": [
+          "A Lance requires two hands to wield when you aren't mounted."
+        ]
+      }
+    }
+  ]
+}

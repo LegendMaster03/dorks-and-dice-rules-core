@@ -1,0 +1,232 @@
+{
+  "id": "monster.djinni",
+  "name": "Djinni",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Genies"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "elemental",
+      "tags": [
+        "genie"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 218,
+      "formula": "19d10 + 114"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": {
+        "number": 90,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 21,
+    "dex": 15,
+    "con": 22,
+    "int": 15,
+    "wis": 16,
+    "cha": 20,
+    "save": {
+      "dex": "+6",
+      "wis": "+7"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 13,
+    "immune": [
+      "lightning",
+      "thunder"
+    ],
+    "languages": [
+      "Primordial (Auran)"
+    ],
+    "cr": "11",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The djinni casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 17}):"
+        ],
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell thunderwave}"
+        ],
+        "daily": {
+          "2e": [
+            "{@spell Create Food and Water|SRD52} (can create wine instead of water)",
+            "{@spell Tongues|SRD52}",
+            "{@spell Wind Walk|SRD52}"
+          ],
+          "1e": [
+            "{@spell Creation|SRD52}",
+            "{@spell Gaseous Form|SRD52}",
+            "{@spell Invisibility|SRD52}",
+            "{@spell Major Image|SRD52}",
+            "{@spell Plane Shift|SRD52}",
+            "{@spell conjure elemental} ({@creature air elemental} only)"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Elemental Restoration",
+        "entries": [
+          "If the djinni dies outside the Elemental Plane of Air, its body dissolves into mist, and it gains a new body in {@dice 1d4} days, reviving with all its {@variantrule Hit Points|SRD52} somewhere on the Plane of Air."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The djinni has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Wishes",
+        "entries": [
+          "The djinni has a 30 percent chance of knowing the {@spell Wish|SRD52} spell. If the djinni knows it, the djinni can cast it only on behalf of a non-genie creature who communicates a wish in a way the djinni can understand. If the djinni casts the spell for the creature, the djinni suffers none of the spell's stress. Once the djinni has cast it three times, the djinni can't do so again for 365 days."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The djinni makes three attacks, using Storm Blade or Storm Bolt in any combination."
+        ]
+      },
+      {
+        "name": "Storm Blade",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 5 feet. {@h}12 ({@damage 2d6 + 5}) Slashing damage plus 7 ({@damage 2d6}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Storm Bolt",
+        "entries": [
+          "{@atkr r} {@hit 9}, range 120 feet. {@h}13 ({@damage 3d8}) Thunder damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Create Whirlwind",
+        "entries": [
+          "The djinni conjures a whirlwind at a point it can see within 120 feet. The whirlwind fills a 20-foot-radius, 60-foot-high {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} centered on that point. The whirlwind lasts until the djinni's {@status Concentration|SRD52} on it ends. The djinni can move the whirlwind up to 20 feet at the start of each of its turns.",
+          "Whenever the whirlwind enters a creature's space or a creature enters the whirlwind, that creature is subjected to the following effect. {@actSave str} {@dc 17} (a creature makes this save only once per turn, and the djinni is unaffected). {@actSaveFail} While in the whirlwind, the target has the {@condition Restrained|SRD52} condition and moves with the whirlwind. At the start of each of its turns, the {@condition Restrained|SRD52} target takes 21 ({@damage 6d6}) Thunder damage. At the end of each of its turns, the target repeats the save, ending the effect on itself on a success."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "planar, air"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/djinni.opus"
+    },
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AU",
+      "P"
+    ],
+    "damageTags": [
+      "L",
+      "S",
+      "T"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "AOE",
+      "MA",
+      "RA"
+    ],
+    "conditionInflict": [
+      "prone",
+      "restrained"
+    ],
+    "conditionInflictSpell": [
+      "invisible",
+      "stunned"
+    ],
+    "savingThrowForced": [
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Djinni",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Djinni",
+            "entries": [
+              "{@i Genie of the Air}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Planar (Elemental Plane of Air)|bestiary|environment=planar, air}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Arcana"
+                  }
+                ]
+              },
+              "As genies of wind and skies, djinn personify freedom and might. They can control wind and travel as swiftly as a breeze. They might be as serene as drifting clouds or as tempestuous as storms, but most djinn relish their freedom and desire to discover the wonders of the multiverse. Djinn often know many stories, and they might share such lore with those who offer their own exciting stories in trade.",
+              "While many djinn create airy palaces on stormy coasts or high in the clouds, untold numbers dwell on the Elemental Plane of Air. In floating cities, djinn collect tales and experiences from across the planes of existence, sharing them in fabulous forums, libraries, and theaters. The greatest of these cities is the Citadel of Ice and Steel, in which wind-sculpted towers contain a city-size trove of incredible knowledge and treasures that defy belief."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Djinni.webp"
+            },
+            "credit": "Michael Broussard",
+            "width": 1122,
+            "height": 1432
+          }
+        ]
+      }
+    ]
+  }
+}

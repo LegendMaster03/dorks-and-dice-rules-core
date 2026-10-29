@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.ranger.precise-hunter-level-17",
+  "name": "Precise Hunter",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Precise Hunter",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 17,
+        "entries": [
+          "You have {@variantrule Advantage|SRD52} on attack rolls against the creature currently marked by your Hunter's Mark."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 17
+}

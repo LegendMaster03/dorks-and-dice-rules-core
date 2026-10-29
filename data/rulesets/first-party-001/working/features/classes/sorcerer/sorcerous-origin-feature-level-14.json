@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.sorcerer.sorcerous-origin-feature-level-14",
+  "name": "Sorcerous Origin feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sorcerous Origin feature",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "level": 14,
+        "entries": [
+          "At 14th level, you gain a feature granted by your Sorcerous Origin."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 14
+}

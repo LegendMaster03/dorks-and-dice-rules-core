@@ -1,0 +1,50 @@
+{
+  "id": "rule.monsters-b",
+  "name": "Monsters (B)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (B)",
+        "page": 265,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Baboon|srd51}",
+              "{@creature Badger|srd51}",
+              "{@creature Balor|srd51}",
+              "{@creature Bandit|srd51}",
+              "{@creature Bandit Captain|srd51}",
+              "{@creature Barbed Devil|srd51}",
+              "{@creature Basilisk|srd51}",
+              "{@creature Bat|srd51}",
+              "{@creature Bearded Devil|srd51}",
+              "{@creature Behir|srd51}",
+              "{@creature Berserker|srd51}",
+              "{@creature Black Bear|srd51}",
+              "{@creature Black Dragon Wyrmling|srd51}",
+              "{@creature Black Pudding|srd51}",
+              "{@creature Blink Dog|srd51}",
+              "{@creature Blood Hawk|srd51}",
+              "{@creature Blue Dragon Wyrmling|srd51}",
+              "{@creature Boar|srd51}",
+              "{@creature Bone Devil|srd51}",
+              "{@creature Brass Dragon Wyrmling|srd51}",
+              "{@creature Bronze Dragon Wyrmling|srd51}",
+              "{@creature Brown Bear|srd51}",
+              "{@creature Bugbear|srd51}",
+              "{@creature Bulette|srd51}"
+            ]
+          }
+        ],
+        "id": "1a4"
+      }
+    }
+  ]
+}

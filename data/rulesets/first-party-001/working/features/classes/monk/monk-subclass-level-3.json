@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.monk.monk-subclass-level-3",
+  "name": "Monk Subclass",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Monk Subclass",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "You gain a Monk subclass of your choice. A subclass is a specialization that grants you features at certain Monk levels. For the rest of your career, you gain each of your subclass's features that are of your Monk level or lower."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 3
+}

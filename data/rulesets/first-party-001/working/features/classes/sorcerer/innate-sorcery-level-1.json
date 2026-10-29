@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.sorcerer.innate-sorcery-level-1",
+  "name": "Innate Sorcery",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Innate Sorcery",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "innate-sorcery",
+      "activation": "bonus-action",
+      "durationMinutes": 1,
+      "usesPerLongRest": 2,
+      "sorcererSpellSaveDCBonus": 1,
+      "advantageOnSorcererSpellAttacks": true
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "monster.acolyte",
+  "name": "Acolyte",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.priest-acolyte"
+}

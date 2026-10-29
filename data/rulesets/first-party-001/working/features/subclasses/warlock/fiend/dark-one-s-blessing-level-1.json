@@ -1,0 +1,26 @@
+{
+  "id": "subclass-feature.warlock.fiend.dark-one-s-blessing-level-1",
+  "name": "Dark One's Blessing",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dark One's Blessing",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD51",
+        "level": 1,
+        "header": 1,
+        "entries": [
+          "Starting at 1st level, when you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1)."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "parentSubclass": "subclass.warlock.fiend",
+  "classLevel": 1
+}

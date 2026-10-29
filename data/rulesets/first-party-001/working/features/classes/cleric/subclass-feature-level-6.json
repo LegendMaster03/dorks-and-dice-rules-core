@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.cleric.subclass-feature-level-6",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 6,
+        "entries": [
+          "You gain a feature from your Cleric Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 6
+}

@@ -1,0 +1,184 @@
+{
+  "id": "species.dwarf",
+  "name": "Dwarf",
+  "kind": "species",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dwarf",
+        "size": [
+          "M"
+        ],
+        "speed": 25,
+        "ability": [
+          {
+            "con": 2
+          }
+        ],
+        "age": {
+          "mature": 20,
+          "max": 350
+        },
+        "darkvision": 60,
+        "languageProficiencies": [
+          {
+            "common": true,
+            "dwarvish": true
+          }
+        ],
+        "toolProficiencies": [
+          {
+            "choose": {
+              "from": [
+                "smith's tools",
+                "brewer's supplies",
+                "mason's tools"
+              ]
+            }
+          }
+        ],
+        "weaponProficiencies": [
+          {
+            "battleaxe|srd51": true,
+            "handaxe|srd51": true,
+            "light hammer|srd51": true,
+            "warhammer|srd51": true
+          }
+        ],
+        "resist": [
+          "poison"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/dwarf.opus"
+        },
+        "entries": [
+          {
+            "name": "Age",
+            "type": "entries",
+            "entries": [
+              "Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Size",
+            "entries": [
+              "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium."
+            ]
+          },
+          {
+            "name": "Speed",
+            "entries": [
+              "Your speed is not reduced by wearing heavy armor."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Darkvision",
+            "entries": [
+              "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Dwarven Resilience",
+            "entries": [
+              "You have advantage on saving throws against poison, and you have resistance against poison damage."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Dwarven Combat Training",
+            "entries": [
+              "You have proficiency with the {@item battleaxe|srd51}, {@item handaxe|srd51}, {@item light hammer|srd51}, and {@item warhammer|srd51}."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Tool Proficiency",
+            "entries": [
+              "You gain proficiency with the {@item artisan's tools|SRD51} of your choice: {@item Smith's tools|srd51}, {@item brewer's supplies|srd51}, or {@item mason's tools|srd51}."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Stonecunning",
+            "entries": [
+              "Whenever you make an Intelligence ({@skill History}) check related to the origin of stonework, you are considered proficient in the {@skill History} skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Languages",
+            "entries": [
+              "You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak."
+            ],
+            "type": "entries"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dwarf",
+        "creatureTypes": [
+          "humanoid"
+        ],
+        "size": [
+          "M"
+        ],
+        "speed": 30,
+        "darkvision": 120,
+        "resist": [
+          "poison"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/dwarf.opus"
+        },
+        "sizeEntry": {
+          "type": "item",
+          "name": "Size:",
+          "entries": [
+            "Medium (about 4-5 feet tall)"
+          ]
+        },
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Darkvision",
+            "entries": [
+              "You have {@sense Darkvision|SRD52} with a range of 120 feet."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Dwarven Resilience",
+            "entries": [
+              "You have {@variantrule Resistance|SRD52} to Poison damage. You also have {@variantrule Advantage|SRD52} on saving throws you make to avoid or end the {@condition Poisoned|SRD52} condition."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Dwarven Toughness",
+            "entries": [
+              "Your {@variantrule Hit Points|SRD52|Hit Point} maximum increases by 1, and it increases by 1 again whenever you gain a level."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Stonecunning",
+            "entries": [
+              "As a {@variantrule Bonus Action|SRD52}, you gain {@sense Tremorsense|SRD52} with a range of 60 feet for 10 minutes. You must be on a stone surface or touching a stone surface to use this {@sense Tremorsense|SRD52}. The stone can be natural or worked.",
+              "You can use this {@variantrule Bonus Action|SRD52} a number of times equal to your {@variantrule Proficiency|SRD52|Proficiency Bonus}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

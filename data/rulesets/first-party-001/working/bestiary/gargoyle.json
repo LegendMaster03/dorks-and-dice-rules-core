@@ -1,0 +1,261 @@
+{
+  "id": "monster.gargoyle",
+  "name": "Gargoyle",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 67,
+      "formula": "9d8 + 27"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 15,
+    "dex": 11,
+    "con": 16,
+    "int": 6,
+    "wis": 11,
+    "cha": 7,
+    "skill": {
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "petrified",
+      "poisoned"
+    ],
+    "languages": [
+      "Primordial (Terran)"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The gargoyle doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+        ]
+      },
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the gargoyle remains motionless, it is indistinguishable from an inanimate statue."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The gargoyle makes two Claw attacks."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 2d4 + 2}) Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/gargoyle.opus"
+    },
+    "traitTags": [
+      "Flyby"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "P",
+      "T"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Gargoyle",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Gargoyle",
+            "entries": [
+              "{@i Sculpted Sentinel Hidden in Plain Sight}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Gargoyles are sculptures inhabited by elemental spirits. Wings and magic allow their heavy stone bodies to fly, and they often perch where they can blend in amid ornate architecture, rock formations, or mundane statues. Gargoyles usually serve the magic-users who conjured them into their bodies, but if left to their own devices, they might play cruel pranks and steal treasures to hoard in lofty lairs.",
+              "Gargoyles have a variety of appearances. Roll on or choose a result from the Gargoyle Sculptures table to inspire how a gargoyle looks.",
+              {
+                "type": "table",
+                "caption": "Gargoyle Sculptures",
+                "colLabels": [
+                  "1d6",
+                  "The Gargoyle Is Sculpted to Appear..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Cherubic with perpetually smiling features."
+                  ],
+                  [
+                    "2",
+                    "Crudely hewed or naturally formed."
+                  ],
+                  [
+                    "3",
+                    "Damaged or marred by mismatched pieces."
+                  ],
+                  [
+                    "4",
+                    "Dragon-like with polished stone scales."
+                  ],
+                  [
+                    "5",
+                    "Gothically fiendish with horns and a tail."
+                  ],
+                  [
+                    "6",
+                    "Useful, like an ornate podium or a pillar."
+                  ]
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Gargoyle Ambushes",
+                "entries": [
+                  "Gargoyles seek to ambush foes or creatures that trespass on their territories. With no biological needs and supernatural patience, these monsters might wait unmoving for months, revealing themselves only when conditions are perfect to attack. They tend to lurk where statuary seems commonplace or where terrain obscures the shape and color of their bodies. Roll on or choose a result from the Gargoyle Camouflage table to inspire where a gargoyle sets up an ambush.",
+                  {
+                    "type": "table",
+                    "caption": "Gargoyle Camouflage",
+                    "colLabels": [
+                      "1d8",
+                      "The Gargoyle Conceals Itself Amid..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Burls and bark on a giant tree."
+                      ],
+                      [
+                        "2",
+                        "Monuments in a graveyard or memorial."
+                      ],
+                      [
+                        "3",
+                        "Outcroppings on a cliff or rock formation"
+                      ],
+                      [
+                        "4",
+                        "The {@condition petrified|SRD52} victims of a basilisk or medusa."
+                      ],
+                      [
+                        "5",
+                        "Reliefs on a sculpted gate or wall."
+                      ],
+                      [
+                        "6",
+                        "Rubble in a ruin or junkyard."
+                      ],
+                      [
+                        "7",
+                        "Stalactites or icicles on a cavern ceiling."
+                      ],
+                      [
+                        "8",
+                        "Statuary on a castle, mansion, or temple."
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Where evil passes in the Elemental Plane of Earth, it stains the rock and spoils the soil. Malice vanishes amid other elements, but in the dismal dark, the wicked shape it into nightmares."
+                    ],
+                    "by": "Tiv, Scholar of the Elemental Planes"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Gargoyle.webp"
+            },
+            "credit": "Kent Davis",
+            "width": 1800,
+            "height": 2250
+          }
+        ]
+      }
+    ]
+  }
+}

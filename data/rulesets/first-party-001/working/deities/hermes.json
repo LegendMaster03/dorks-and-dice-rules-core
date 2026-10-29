@@ -1,0 +1,18 @@
+{
+  "id": "deity.hermes",
+  "name": "Hermes",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "God of travel and commerce",
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Caduceus (winged staff and serpents)"
+  }
+}

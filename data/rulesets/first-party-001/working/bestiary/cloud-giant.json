@@ -1,0 +1,207 @@
+{
+  "id": "monster.cloud-giant",
+  "name": "Cloud Giant",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 200,
+      "formula": "16d12 + 96"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": {
+        "number": 20,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 22,
+    "int": 12,
+    "wis": 16,
+    "cha": 16,
+    "save": {
+      "con": "+10",
+      "wis": "+7"
+    },
+    "skill": {
+      "insight": "+7",
+      "perception": "+11"
+    },
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Giant"
+    ],
+    "cr": "9",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The giant casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 15}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Fog Cloud|SRD52}",
+          "{@spell Light|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Control Weather|SRD52}",
+            "{@spell Gaseous Form|SRD52}",
+            "{@spell Telekinesis|SRD52}"
+          ],
+          "3e": [
+            "{@spell feather fall}",
+            "{@spell fly}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      },
+      {
+        "name": "Misty Step",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The giant casts the {@spell Misty Step|SRD52} spell, using the same spellcasting ability as Spellcasting."
+        ],
+        "will": [
+          "{@spell Misty Step|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "bonus",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Thunderous Mace or Thundercloud in any combination. It can replace one attack with a use of Spellcasting to cast {@spell Fog Cloud|SRD52}."
+        ]
+      },
+      {
+        "name": "Thunderous Mace",
+        "entries": [
+          "{@atkr m} {@hit 12}, reach 10 ft. {@h}21 ({@damage 3d8 + 8}) Bludgeoning damage plus 7 ({@damage 2d6}) Thunder damage."
+        ]
+      },
+      {
+        "name": "Thundercloud",
+        "entries": [
+          "{@atkr r} {@hit 12}, range 240 ft. {@h}18 ({@damage 3d6 + 8}) Thunder damage, and the target has the {@condition Incapacitated|SRD52} condition until the end of its next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "mountain"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/cloud-giant.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "GI"
+    ],
+    "damageTags": [
+      "B",
+      "T"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "incapacitated"
+    ],
+    "conditionInflictSpell": [
+      "restrained"
+    ],
+    "savingThrowForcedSpell": [
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Cloud Giant",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Cloud Giant",
+            "entries": [
+              "{@i Giant of the Loftiest Heights}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Mountain|bestiary|environment=mountain}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Arcana"
+                  }
+                ]
+              },
+              "Cloud giants use the power of the skies to observe and subtly influence the world. These giants resemble humans with hair ranging from silver to blue and with skin in cloudlike shades from stark white to twilight hues. Curved canines grow in their upper jaws, extending past their lower lips. In battle, they attack with weapons wreathed in storm clouds and throw roaring thunderheads.",
+              "Most cloud giants inhabit citadels crowning tremendous mountains or magical palaces that drift amid the clouds. Many of these giants believe they possess similarly lofty status or purpose. Some view themselves as godlike beings who can manipulate and steal from terrestrial beings with impunity. Others claim their long lives and place among the clouds grant them unique perspectives, so they chronicle what they witness in the world below without interfering. In either case, cloud giants often possess fabulous magical treasures, either claimed from across the world or created by (and gigantically sized for) themselves."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Cloud Giant.webp"
+            },
+            "credit": "Taras Susak",
+            "width": 2550,
+            "height": 1704
+          }
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The giant has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ]
+  }
+}

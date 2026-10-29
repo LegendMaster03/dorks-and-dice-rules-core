@@ -1,0 +1,109 @@
+{
+  "id": "monster.noble",
+  "name": "Noble",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 9,
+      "formula": "2d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 12,
+    "con": 11,
+    "int": 12,
+    "wis": 14,
+    "cha": 16,
+    "skill": {
+      "deception": "+5",
+      "insight": "+4",
+      "persuasion": "+5"
+    },
+    "passive": 12,
+    "languages": [
+      "Common plus two other languages"
+    ],
+    "cr": "1/8",
+    "gear": [
+      "breastplate|srd52",
+      "rapier|srd52"
+    ],
+    "action": [
+      {
+        "name": "Rapier",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Piercing damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Parry",
+        "entries": [
+          "{@actTrigger} The noble is hit by a melee attack roll while holding a weapon. {@actResponse} The noble adds 2 to its AC against that attack, possibly causing it to miss."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/noble.opus"
+    },
+    "actionTags": [
+      "Parry"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Noble",
+        "_copy": {
+          "name": "Nobles",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "A noble's social advantages typically grant the noble access to greater education and training than most common folk, while nobles' experience with business or politics makes many adept negotiators."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

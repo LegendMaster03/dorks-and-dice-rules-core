@@ -1,0 +1,35 @@
+{
+  "id": "rule.monsters-o",
+  "name": "Monsters (O)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (O)",
+        "page": 336,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Ochre Jelly|srd51}",
+              "{@creature Octopus|srd51}",
+              "{@creature Ogre|srd51}",
+              "{@creature Ogre Zombie|srd51}",
+              "{@creature Oni|srd51}",
+              "{@creature Orc|srd51}",
+              "{@creature Otyugh|srd51}",
+              "{@creature Owl|srd51}",
+              "{@creature Owlbear|srd51}"
+            ]
+          }
+        ],
+        "id": "1b1"
+      }
+    }
+  ]
+}

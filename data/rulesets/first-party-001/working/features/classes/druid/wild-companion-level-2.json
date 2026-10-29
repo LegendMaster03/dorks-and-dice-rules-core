@@ -1,0 +1,32 @@
+{
+  "id": "class-feature.druid.wild-companion-level-2",
+  "name": "Wild Companion",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Wild Companion",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "temporary-fey-familiar",
+      "effect": "find-familiar",
+      "action": "magic-action",
+      "costs": [
+        {
+          "spellSlot": 1
+        },
+        {
+          "finiteWildShapeCharge": 1
+        }
+      ],
+      "spellPointMode": "native-cost-equivalence",
+      "noMaterialComponents": true,
+      "expires": "finish-long-rest",
+      "distinctFrom": "druid.animal-companion",
+      "bothMayCoexist": true,
+      "control": "native-controlled-creature-initiative-and-actions",
+      "unlimitedArchdruidTransformationsCannotPayCost": true
+    }
+  }
+}

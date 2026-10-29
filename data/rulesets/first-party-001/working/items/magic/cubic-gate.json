@@ -1,0 +1,62 @@
+{
+  "id": "item.cubic-gate",
+  "name": "Cubic Gate",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cubic Gate",
+        "tier": "major",
+        "rarity": "legendary",
+        "wondrous": true,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "This cube is 3 inches across and radiates palpable magical energy. The six sides of the cube are each keyed to a different plane of existence, one of which is the Material Plane. The other sides are linked to planes determined by the DM.",
+          "You can use an action to press one side of the cube to cast the {@spell gate} spell with it, opening a portal to the plane keyed to that side. Alternatively, if you use an action to press one side twice, you can cast the {@spell plane shift} spell (save {@dc 17}) with the cube and transport the targets to the plane keyed to that side.",
+          "The cube has 3 charges. Each use of the cube expends 1 charge. The cube regains {@dice 1d3} expended charges daily at dawn."
+        ],
+        "attachedSpells": [
+          "gate",
+          "plane shift"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cubic Gate",
+        "rarity": "legendary",
+        "wondrous": true,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "This cube is 3 inches across and radiates palpable magical energy. The six sides of the cube are each keyed to a different plane of existence, one of which is the Material Plane. The other sides are linked to planes determined by the DM.",
+          "The cube has 3 charges and regains {@dice 1d3} expended charges daily at dawn. As a {@action Magic|SRD52} action, you can expend 1 of the cube's charges to cast one of the following spells using the cube.",
+          {
+            "type": "entries",
+            "name": "Gate",
+            "entries": [
+              "Pressing one side of the cube, you cast {@spell Gate|SRD52}, opening a portal to the plane of existence keyed to that side."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Plane Shift",
+            "entries": [
+              "Pressing one side of the cube twice, you cast {@spell Plane Shift|SRD52}, transporting the targets to the plane of existence keyed to that side."
+            ]
+          }
+        ],
+        "attachedSpells": [
+          "gate|srd52",
+          "plane shift|srd52"
+        ]
+      }
+    }
+  ]
+}

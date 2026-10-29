@@ -1,0 +1,50 @@
+{
+  "id": "optionalfeature.armor-of-shadows",
+  "name": "Armor of Shadows",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Armor of Shadows",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "mage armor"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell mage armor} on yourself at will, without expending a spell slot or material components."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Armor of Shadows",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "mage armor|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell Mage Armor|SRD52} on yourself without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

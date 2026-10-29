@@ -1,0 +1,58 @@
+name: Rules Core Phase 3A Private Reference CI
+
+on:
+  push:
+    branches:
+      - feature/rules-core-phase3a-native-private-api
+      - feature/rules-core-rewrite
+  pull_request:
+    branches:
+      - feature/rules-core-rewrite
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-reference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build release
+        run: dotnet build RulesCore.slnx -c Release
+      - name: Test complete C# solution
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Test native migration and SRD audit suite
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Validate native authority
+        run: |
+          python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict
+          python3 tools/validate_ruleset_split.py
+      - name: Build Docker
+        run: docker build -t rules-core-phase3a:ci .
+      - name: Public ingress smoke test
+        run: |
+          set -euo pipefail
+          docker run -d --rm --name rules-core-phase3a-public -p 127.0.0.1:18765:8080 rules-core-phase3a:ci
+          trap 'docker rm -f rules-core-phase3a-public >/dev/null 2>&1 || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18765/ready >/dev/null; then break; fi
+            sleep 1
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/api/private/rulesets)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/health)" = 200
+      - name: Private ingress unauthenticated smoke test
+        run: |
+          set -euo pipefail
+          docker run -d --rm --name rules-core-phase3a-private -e RulesCore__ApiSurface=PrivateOnly \
+            -p 127.0.0.1:18766:8080 rules-core-phase3a:ci
+          trap 'docker rm -f rules-core-phase3a-private >/dev/null 2>&1 || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18766/ready >/dev/null; then break; fi
+            sleep 1
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/api/private/rulesets)" = 401
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/health)" = 200

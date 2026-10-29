@@ -1,0 +1,18 @@
+{
+  "id": "deity.apep",
+  "name": "Apep",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "title": "God of evil, fire, and serpents",
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Flaming snake"
+  }
+}

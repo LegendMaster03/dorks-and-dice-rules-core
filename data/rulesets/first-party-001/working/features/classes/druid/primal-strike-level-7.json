@@ -1,0 +1,28 @@
+{
+  "id": "class-feature.druid.primal-strike-level-7",
+  "name": "Primal Strike",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Primal Strike",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "elemental-fury-option",
+      "extraDamage": "1d8",
+      "damageTypes": [
+        "cold",
+        "fire",
+        "lightning",
+        "thunder"
+      ],
+      "triggers": [
+        "weapon-hit",
+        "beast-form-hit"
+      ],
+      "maxUsesPerTurn": 1,
+      "atLevel15": "2d8-instead-of-1d8"
+    }
+  }
+}

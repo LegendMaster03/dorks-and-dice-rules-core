@@ -1,0 +1,34 @@
+{
+  "id": "subclass-feature.wizard.evoker.evoker-level-3",
+  "name": "Evoker",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Evoker",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "subclassShortName": "Evoker",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Create Explosive Elemental Effects}",
+          "Your studies focus on magic that creates powerful elemental effects such as bitter cold, searing flame, rolling thunder, crackling lightning, and burning acid. Some Evokers find employment in military forces, serving as artillery to blast armies from afar. Others use their power to protect others, while some seek their own gain.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Evocation Savant|Wizard|SRD52|Evoker|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Potent Cantrip|Wizard|SRD52|Evoker|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "parentSubclass": "subclass.wizard.evoker",
+  "classLevel": 3
+}

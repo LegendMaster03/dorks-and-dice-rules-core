@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.monk.empowered-strikes-level-6",
+  "name": "Empowered Strikes",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Empowered Strikes",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 6,
+        "entries": [
+          "Whenever you deal damage with your {@variantrule Unarmed Strike|SRD52}, it can deal your choice of Force damage or its normal damage type."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 6
+}

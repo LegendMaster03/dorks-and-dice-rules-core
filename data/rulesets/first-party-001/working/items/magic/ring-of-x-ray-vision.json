@@ -1,0 +1,35 @@
+{
+  "id": "item.ring-of-x-ray-vision",
+  "name": "Ring of X-ray Vision",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of X-ray Vision",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can use an action to speak its command word. When you do so, you can see into and through solid matter for 1 minute. This vision has a radius of 30 feet. To you, solid objects within that radius appear transparent and don't prevent light from passing through them. The vision can penetrate 1 foot of stone, 1 inch of common metal, or up to 3 feet of wood or dirt. Thicker substances block the vision, as does a thin sheet of lead.",
+          "Whenever you use the ring again before taking a long rest, you must succeed on a {@dc 15} Constitution saving throw or gain one level of {@condition exhaustion}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of X-ray Vision",
+        "type": "RG|SRD52",
+        "rarity": "rare",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can take a {@action Magic|SRD52} action to gain X-ray vision with a range of 30 feet for 1 minute. To you, solid objects within that radius appear transparent and don't prevent light from passing through them. The vision can penetrate 1 foot of stone, 1 inch of common metal, or up to 3 feet of wood or dirt. Thicker substances or a thin sheet of lead block the vision.",
+          "Whenever you use the ring again before taking a {@variantrule Long Rest|SRD52}, you must succeed on a {@dc 15} Constitution saving throw or gain 1 {@condition Exhaustion|SRD52} level."
+        ]
+      }
+    }
+  ]
+}

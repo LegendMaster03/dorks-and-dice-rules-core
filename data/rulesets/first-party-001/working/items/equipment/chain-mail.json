@@ -1,0 +1,39 @@
+{
+  "id": "baseitem.chain-mail",
+  "name": "Chain Mail",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Chain Mail",
+        "type": "HA",
+        "rarity": "none",
+        "weight": 55,
+        "value": 7500,
+        "ac": 16,
+        "strength": "13",
+        "armor": true,
+        "stealth": true,
+        "entries": [
+          "Made of interlocking metal rings, chain mail includes a layer of quilted fabric worn underneath the mail to prevent chafing and to cushion the impact of blows. The suit includes gauntlets."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Chain Mail",
+        "type": "HA|SRD52",
+        "rarity": "none",
+        "weight": 55,
+        "value": 7500,
+        "ac": 16,
+        "strength": "13",
+        "armor": true,
+        "stealth": true
+      }
+    }
+  ]
+}

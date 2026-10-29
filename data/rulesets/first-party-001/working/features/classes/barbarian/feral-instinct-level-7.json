@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.barbarian.feral-instinct-level-7",
+  "name": "Feral Instinct",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Feral Instinct",
+    "description": "Advantage on initiative, plus a conditional first-turn surprise benefit when permitted by native Surprise rules.",
+    "mechanics": {
+      "kind": "initiative",
+      "mode": "advantage",
+      "historicalSurpriseBenefit": "can-act-when-surprised-if-rage-first-and-not-incapacitated"
+    }
+  }
+}

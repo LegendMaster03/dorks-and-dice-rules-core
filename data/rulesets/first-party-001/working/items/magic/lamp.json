@@ -1,0 +1,46 @@
+{
+  "id": "item.lamp",
+  "name": "Lamp",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Lamp",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50,
+        "entries": [
+          "A lamp casts bright light in a 15-foot radius and dim light for an additional 30 feet. Once lit, it burns for 6 hours on a flask (1 pint) of oil."
+        ],
+        "light": [
+          {
+            "bright": 15,
+            "dim": 45
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Lamp",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50,
+        "entries": [
+          "A Lamp burns {@item Oil|SRD52} as fuel to cast {@variantrule Bright Light|SRD52} in a 15-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet."
+        ],
+        "light": [
+          {
+            "bright": 15,
+            "dim": 45
+          }
+        ]
+      }
+    }
+  ]
+}

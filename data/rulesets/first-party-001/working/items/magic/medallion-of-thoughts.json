@@ -1,0 +1,61 @@
+{
+  "id": "item.medallion-of-thoughts",
+  "name": "Medallion of Thoughts",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Medallion of Thoughts",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "The medallion has 3 charges. While wearing it, you can use an action and expend 1 charge to cast the {@spell detect thoughts} spell (save {@dc 13}) from it. The medallion regains {@dice 1d3} expended charges daily at dawn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1e": [
+              "detect thoughts"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Medallion of Thoughts",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d4}",
+        "charges": 5,
+        "entries": [
+          "The medallion has 5 charges. While wearing it, you can expend 1 charge to cast {@spell Detect Thoughts|SRD52} (save {@dc 13}) from it. The medallion regains {@dice 1d4} expended charges daily at dawn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "detect thoughts|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

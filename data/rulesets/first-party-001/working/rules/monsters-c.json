@@ -1,0 +1,44 @@
+{
+  "id": "rule.monsters-c",
+  "name": "Monsters (C)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (C)",
+        "page": 267,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Camel|srd51}",
+              "{@creature Cat|srd51}",
+              "{@creature Centaur|srd51}",
+              "{@creature Chain Devil|srd51}",
+              "{@creature Chimera|srd51}",
+              "{@creature Chuul|srd51}",
+              "{@creature Clay Golem|srd51}",
+              "{@creature Cloaker|srd51}",
+              "{@creature Cloud Giant|srd51}",
+              "{@creature Cockatrice|srd51}",
+              "{@creature Commoner|srd51}",
+              "{@creature Constrictor Snake|srd51}",
+              "{@creature Copper Dragon Wyrmling|srd51}",
+              "{@creature Couatl|srd51}",
+              "{@creature Crab|srd51}",
+              "{@creature Crocodile|srd51}",
+              "{@creature Cult Fanatic|srd51}",
+              "{@creature Cultist|srd51}"
+            ]
+          }
+        ],
+        "id": "1a5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "item.quarterstaff-of-the-acrobat",
+  "name": "Quarterstaff of the Acrobat",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "baseItem": "quarterstaff|srd52",
+    "type": "M|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "range": "30/120",
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+2",
+    "bonusAc": "+5",
+    "staff": true,
+    "entries": [
+      "You have a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "While holding this weapon, you can cause it to emit green {@variantrule Dim Light|SRD52} out to 10 feet, either as a {@variantrule Bonus Action|SRD52} or after you roll {@variantrule Initiative|SRD52}, or you can extinguish the light as a {@variantrule Bonus Action|SRD52}.",
+      "While holding this weapon, you can take a {@variantrule Bonus Action|SRD52} to alter its form, turning it into a 6-inch rod (for ease of storage) or a 10-foot pole, or reverting it a Quarterstaff; the weapon will elongate only as far as the surrounding space allows.",
+      "In certain forms, the weapon has the following additional properties.",
+      {
+        "type": "entries",
+        "name": "Acrobatic Assist (Quarterstaff and 10-Foot Pole Forms Only)",
+        "entries": [
+          "While holding this weapon, you have {@variantrule Advantage|SRD52} on Dexterity ({@skill Acrobatics|SRD52}) checks."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Attack Deflection (Quarterstaff Form Only)",
+        "entries": [
+          "When you are hit by an attack while holding the weapon, you can take a {@variantrule Reaction|SRD52} to twirl the weapon around you, gaining a +5 bonus to your {@variantrule Armor Class|SRD52} against the triggering attack, potentially causing the attack to miss you. You can't use this property again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ranged Weapon (Quarterstaff Form Only)",
+        "entries": [
+          "This weapon has {@itemProperty T|SRD52|Thrown} with a normal range of 30 feet and a long range of 120 feet. Immediately after you make a ranged attack with the weapon, it flies back to your hand."
+        ]
+      }
+    ],
+    "light": [
+      {
+        "dim": 10
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "itementry.armor-of-resistance",
+  "name": "Armor of Resistance",
+  "kind": "itemEntry",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Armor of Resistance",
+        "entriesTemplate": [
+          "You have resistance to {{item.resist}} damage while you wear this armor."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Armor of Resistance",
+        "entriesTemplate": [
+          "You have {@variantrule Resistance|SRD52} to {{getFullImmRes item.resist}} damage while you wear this armor."
+        ]
+      }
+    }
+  ]
+}

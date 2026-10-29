@@ -1,0 +1,55 @@
+{
+  "id": "baseitem.light-crossbow",
+  "name": "Light Crossbow",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Light Crossbow",
+        "type": "R",
+        "rarity": "none",
+        "weight": 5,
+        "value": 2500,
+        "weaponCategory": "simple",
+        "property": [
+          "A",
+          "LD",
+          "2H"
+        ],
+        "range": "80/320",
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "crossbow": true,
+        "weapon": true,
+        "ammoType": "crossbow bolt|srd51"
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Light Crossbow",
+        "type": "R|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 2500,
+        "weaponCategory": "simple",
+        "property": [
+          "A|SRD52",
+          "LD|SRD52",
+          "2H|SRD52"
+        ],
+        "mastery": [
+          "Slow|SRD52"
+        ],
+        "range": "80/320",
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "crossbow": true,
+        "weapon": true,
+        "ammoType": "bolt|srd52"
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "item.hooded-lantern",
+  "name": "Hooded Lantern",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hooded Lantern",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 500,
+        "entries": [
+          "A hooded lantern casts bright light in a 30-foot radius and dim light for an additional 30 feet. Once lit, it burns for 6 hours on a flask (1 pint) of oil. As an action, you can lower the hood, reducing the light to dim light in a 5-foot radius."
+        ],
+        "light": [
+          {
+            "bright": 30,
+            "dim": 60
+          },
+          {
+            "dim": 5
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hooded Lantern",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 500,
+        "entries": [
+          "A Hooded Lantern burns Oil as fuel to cast {@variantrule Bright Light|SRD52} in a 30-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet. As a {@variantrule Bonus Action|SRD52}, you can lower the hood, reducing the light to {@variantrule Dim Light|SRD52} in a 5-foot radius, or raise it again."
+        ],
+        "light": [
+          {
+            "bright": 30,
+            "dim": 60
+          },
+          {
+            "dim": 5
+          }
+        ]
+      }
+    }
+  ]
+}

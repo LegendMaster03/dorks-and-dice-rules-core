@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.ranger.expertise-level-9",
+  "name": "Expertise",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Expertise",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 9,
+        "entries": [
+          "Choose two of your skill proficiencies with which you lack {@variantrule Expertise|SRD52}. You gain {@variantrule Expertise|SRD52} in those skills."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 9
+}

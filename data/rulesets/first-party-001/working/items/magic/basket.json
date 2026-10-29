@@ -1,0 +1,44 @@
+{
+  "id": "item.basket",
+  "name": "Basket",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Basket",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 40,
+        "entries": [
+          "A basket holds 2 cubic feet or 40 pounds of gear."
+        ],
+        "containerCapacity": {
+          "weight": [
+            40
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Basket",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 40,
+        "entries": [
+          "A Basket holds up to 40 pounds within 2 cubic feet."
+        ],
+        "containerCapacity": {
+          "weight": [
+            40
+          ]
+        }
+      }
+    }
+  ]
+}

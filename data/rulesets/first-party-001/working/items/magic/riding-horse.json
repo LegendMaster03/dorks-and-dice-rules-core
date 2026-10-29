@@ -1,0 +1,13 @@
+{
+  "id": "item.riding-horse",
+  "name": "Riding Horse",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 7500,
+    "carryingCapacity": 480,
+    "speed": 60
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.rogue.devious-strikes-level-14",
+  "name": "Devious Strikes",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Devious Strikes",
+    "description": "Native Rogue Devious Strikes; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "additional-cunning-strike-options",
+      "options": [
+        "class-feature.rogue.daze-cost-2d6-level-14",
+        "class-feature.rogue.knock-out-cost-6d6-level-14",
+        "class-feature.rogue.obscure-cost-3d6-level-14"
+      ],
+      "saveDC": "8 + Dexterity modifier + proficiency bonus"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "item.barrel",
+  "name": "Barrel",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Barrel",
+        "type": "G",
+        "rarity": "none",
+        "weight": 70,
+        "value": 200,
+        "entries": [
+          "A barrel can hold 40 gallons of liquid or 4 cubic feet of solids."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Barrel",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 70,
+        "value": 200,
+        "entries": [
+          "A Barrel holds up to 40 gallons of liquid or up to 4 cubic feet of dry goods."
+        ],
+        "containerCapacity": {
+          "volume": [
+            4
+          ]
+        }
+      }
+    }
+  ]
+}

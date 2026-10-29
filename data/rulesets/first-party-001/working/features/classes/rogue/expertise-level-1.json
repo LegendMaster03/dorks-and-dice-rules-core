@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.rogue.expertise-level-1",
+  "name": "Expertise",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Expertise",
+    "description": "Native Rogue Expertise; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "expertise",
+      "choose": 2,
+      "proficientSkillOrThievesTools": true,
+      "noDuplicateExpertise": true
+    }
+  }
+}

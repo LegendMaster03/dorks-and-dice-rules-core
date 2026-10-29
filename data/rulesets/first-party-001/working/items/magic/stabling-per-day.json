@@ -1,0 +1,26 @@
+{
+  "id": "item.stabling-per-day",
+  "name": "Stabling (per day)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Stabling (per day)",
+        "type": "TAH",
+        "rarity": "none",
+        "value": 50
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Stabling (per day)",
+        "type": "TAH|SRD52",
+        "rarity": "none",
+        "value": 5
+      }
+    }
+  ]
+}

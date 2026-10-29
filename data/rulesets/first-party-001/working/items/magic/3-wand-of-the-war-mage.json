@@ -1,0 +1,47 @@
+{
+  "id": "item.3-wand-of-the-war-mage",
+  "name": "+3 Wand of the War Mage",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "+3 Wand of the War Mage",
+        "type": "WD|SRD51",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": "by a spellcaster",
+        "reqAttuneTags": [
+          {
+            "spellcasting": true
+          }
+        ],
+        "weight": 1,
+        "bonusSpellAttack": "+3",
+        "entries": [
+          "While you are holding this wand, you gain a +3 bonus to spell attack rolls. In addition, you ignore {@quickref Cover||3||half cover} when making a spell attack."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "+3 Wand of the War Mage",
+        "type": "WD|SRD52",
+        "rarity": "very rare",
+        "reqAttune": "by a spellcaster",
+        "reqAttuneTags": [
+          {
+            "spellcasting": true
+          }
+        ],
+        "weight": 1,
+        "bonusSpellAttack": "+3",
+        "entries": [
+          "While holding this wand, you gain a +3 bonus to spell attack rolls. In addition, you ignore {@variantrule Cover|SRD52|Half Cover} when making a spell attack roll."
+        ]
+      }
+    }
+  ]
+}

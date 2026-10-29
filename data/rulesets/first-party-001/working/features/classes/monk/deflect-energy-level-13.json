@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.monk.deflect-energy-level-13",
+  "name": "Deflect Energy",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Deflect Energy",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 13,
+        "entries": [
+          "You can now use your Deflect Attacks feature against attacks that deal any damage type, not just Bludgeoning, Piercing, or Slashing."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 13
+}

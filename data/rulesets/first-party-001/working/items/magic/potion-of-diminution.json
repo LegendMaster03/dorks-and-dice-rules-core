@@ -1,0 +1,45 @@
+{
+  "id": "item.potion-of-diminution",
+  "name": "Potion of Diminution",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Diminution",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "rare",
+        "entries": [
+          "When you drink this potion, you gain the \"reduce\" effect of the {@spell enlarge/reduce} spell for {@dice 1d4} hours (no {@status concentration} required). The red in the potion's liquid continuously contracts to a tiny bead and then expands to color the clear liquid around it. Shaking the bottle fails to interrupt this process."
+        ],
+        "attachedSpells": [
+          "enlarge/reduce"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Diminution",
+        "type": "P|SRD52",
+        "rarity": "rare",
+        "weight": 0.5,
+        "entries": [
+          "When you drink this potion, you gain the \"reduce\" effect of the {@spell Enlarge/Reduce|SRD52} spell for {@dice 1d4} hours (no {@status Concentration|SRD52} required).",
+          "The red in the potion's liquid continuously contracts to a tiny bead and then expands to color the clear liquid around it. Shaking the bottle fails to interrupt this process."
+        ],
+        "attachedSpells": [
+          "enlarge/reduce|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

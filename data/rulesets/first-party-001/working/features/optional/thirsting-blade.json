@@ -1,0 +1,87 @@
+{
+  "id": "optionalfeature.thirsting-blade",
+  "name": "Thirsting Blade",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Thirsting Blade",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "pact": "Blade",
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can attack with your pact weapon twice, instead of once, whenever you take the {@action Attack} action on your turn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Thirsting Blade",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            },
+            "optionalfeature": [
+              "pact of the blade|srd52"
+            ]
+          }
+        ],
+        "entries": [
+          "You gain the Extra Attack feature for your pact weapon only. With that feature, you can attack twice with the weapon instead of once when you take the {@action Attack|SRD52} action on your turn."
+        ]
+      }
+    }
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.thirsting-blade",
+    "requiredPactType": "Blade",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "native-level5-second-attack-duplicate"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": false,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Blade",
+    "minimumWarlockLevel": 5,
+    "invocationSelectionCost": 0,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": null,
+    "effect": {
+      "kind": "historical-alias",
+      "intrinsicReplacement": "blade.pact-weapon-two-attacks-level-5",
+      "selectableInvocationEffect": false
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
+  }
+}

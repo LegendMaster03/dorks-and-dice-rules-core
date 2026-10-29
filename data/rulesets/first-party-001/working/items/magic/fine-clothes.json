@@ -1,0 +1,31 @@
+{
+  "id": "item.fine-clothes",
+  "name": "Fine Clothes",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fine Clothes",
+        "type": "G",
+        "rarity": "none",
+        "weight": 6,
+        "value": 1500
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fine Clothes",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 6,
+        "value": 1500,
+        "entries": [
+          "Fine Clothes are made of expensive fabrics and adorned with expertly crafted details. Some events and locations admit only people wearing these clothes."
+        ]
+      }
+    }
+  ]
+}

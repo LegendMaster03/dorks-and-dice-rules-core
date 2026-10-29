@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.warlock.otherworldly-patron-feature-level-6",
+  "name": "Otherworldly Patron feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Otherworldly Patron feature",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "level": 6,
+        "entries": [
+          "At 6th level, you gain a feature granted by your Otherworldly Patron."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 6
+}

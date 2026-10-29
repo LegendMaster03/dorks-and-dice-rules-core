@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.monk.slow-fall-level-4",
+  "name": "Slow Fall",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Slow Fall",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 4,
+        "entries": [
+          "Beginning at 4th level, you can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your monk level."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Slow Fall",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 4,
+        "entries": [
+          "You can take a {@variantrule Reaction|SRD52} when you fall to reduce any damage you take from the fall by an amount equal to five times your Monk level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 4
+}

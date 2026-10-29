@@ -1,0 +1,43 @@
+{
+  "id": "item.wings-of-flying",
+  "name": "Wings of Flying",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wings of Flying",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "fly": 60
+          }
+        },
+        "entries": [
+          "While wearing this cloak, you can use an action to speak its command word. This turns the cloak into a pair of bat wings or bird wings on your back for 1 hour or until you repeat the command word as an action. The wings give you a flying speed of 60 feet. When they disappear, you can't use them again for {@dice 1d12} hours."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wings of Flying",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "fly": 60
+          }
+        },
+        "entries": [
+          "While wearing this cloak, you can take a {@action Magic|SRD52} action to turn the cloak into a pair of wings on your back. The wings lasts for 1 hour or until you end the effect early as a {@action Magic|SRD52} action. The wings give you a {@variantrule Fly Speed|SRD52} of 60 feet. If you are aloft when the wings disappear, you fall. When the wings disappear, you can't use them again for {@dice 1d12} hours."
+        ]
+      }
+    }
+  ]
+}

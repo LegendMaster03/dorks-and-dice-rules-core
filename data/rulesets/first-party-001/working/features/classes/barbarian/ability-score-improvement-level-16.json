@@ -1,0 +1,28 @@
+{
+  "id": "class-feature.barbarian.ability-score-improvement-level-16",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 16,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Increase one ability score by 2, two scores by 1 each, or select a feat for which all requirements are met. An Epic Boon is eligible only when total character level is at least 21. No permanent ability-score ceiling is imposed.",
+    "mechanics": {
+      "kind": "ability-improvement-or-feat",
+      "abilityIncreases": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "featRequiresEligibility": true,
+      "epicBoonTotalCharacterLevelMinimum": 21,
+      "abilityScoreMaximum": null,
+      "featChoices": "any-eligible-feat"
+    }
+  }
+}

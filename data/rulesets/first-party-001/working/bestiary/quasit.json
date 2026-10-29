@@ -1,0 +1,202 @@
+{
+  "id": "monster.quasit",
+  "name": "Quasit",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Demons"
+    ],
+    "size": [
+      "T"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 25,
+      "formula": "10d4"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 5,
+    "dex": 17,
+    "con": 10,
+    "int": 7,
+    "wis": 10,
+    "cha": 10,
+    "skill": {
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 10,
+    "resist": [
+      "cold",
+      "fire",
+      "lightning"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Abyssal",
+      "Common"
+    ],
+    "cr": "1",
+    "spellcasting": [
+      {
+        "name": "Invisibility",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The quasit casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using Charisma as the spellcasting ability."
+        ],
+        "will": [
+          "{@spell Invisibility|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The quasit has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Slashing damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the quasit's next turn."
+        ]
+      },
+      {
+        "name": "Scare (1/Day)",
+        "entries": [
+          "{@actSave wis} {@dc 10}, one creature within 20 feet. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition. At the end of each of its turns, the target repeats the save, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      },
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The quasit shape-shifts to resemble a bat ({@variantrule Speed|SRD52} 10 ft., Fly 40 ft.), a centipede (40 ft., Climb 40 ft.), or a toad (40 ft., Swim 40 ft.), or it returns to its true form. Its game statistics are the same in each form, except for its {@variantrule Speed|SRD52}. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, abyss"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/quasit.opus"
+    },
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "languageTags": [
+      "AB",
+      "C"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "frightened",
+      "poisoned"
+    ],
+    "conditionInflictSpell": [
+      "invisible"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Quasit",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Quasit",
+            "entries": [
+              "{@i Demon of Discord and Disorder}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Abyss)|bestiary|environment=planar, abyss}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Tirelessly destructive, quasits sow discord through nasty pranks, sabotage, and ambushes. These tiny demons use chaos and violence to terrorize others. By shape-shifting into harmless but ill-omened creatures or by turning {@condition invisible|SRD52}, quasits sneak into places where they spy for villainous masters or set vicious traps. Quasits delight in hiding in dark places and—when least expected—bursting forth to slash foes with their {@condition poisoned|SRD52} claws.",
+              "Quasits are usually overlooked and underestimated by other demons. This drives them to prove themselves through cruel acts or by seeking paths to the Material Plane. Among mortals, quasits sow senseless chaos, and they might find kindred evil spirits among violent cultists and magic-users.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "A thing doesn't need to be big to be gut-flippingly dreadful. Just think of all the folks who're squeamish around spiders. Now imagine a spider as big as a cat and that wants to steal your tongue."
+                    ],
+                    "by": "Otto the Bard"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Quasit.webp"
+            },
+            "credit": "Eric Belisle",
+            "width": 1440,
+            "height": 1800
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1648 @@
+{
+  "id": "class.cleric",
+  "name": "Cleric",
+  "kind": "class",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 8
+    },
+    "description": "A divine spellcaster whose chosen faith, deity, pantheon or philosophical tradition grants full-list Cleric spells and two historical and modern ways to channel divine power. Domains and subclasses are not base-class entitlements.",
+    "spellcastingAbility": "wisdom",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "wisdom",
+      "charisma"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "heavy",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "simple"
+    ],
+    "skillChoices": {
+      "choose": 2,
+      "from": [
+        "history",
+        "insight",
+        "medicine",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "rankedClassSkills": [
+      "concentration",
+      "craft",
+      "diplomacy",
+      "heal",
+      "knowledge-arcana",
+      "knowledge-history",
+      "knowledge-religion",
+      "knowledge-planes",
+      "profession",
+      "spellcraft",
+      "scry"
+    ],
+    "skillPoints": {
+      "firstLevel": "4*(2+intelligence-modifier)",
+      "eachAdditionalLevel": "2+intelligence-modifier",
+      "rankedSkillsDistinctFromModernProficiency": true
+    },
+    "historicalAdditionalLanguageChoices": [
+      "celestial",
+      "abyssal",
+      "infernal"
+    ],
+    "historicalArmorArcaneSpellFailure": "apply-shared-spellcasting-rule-not-cleric-only",
+    "spellAccess": "entire-eligible-cleric-spell-list-for-castable-spell-levels",
+    "spellPreparation": "removed",
+    "spellKnownCapacity": "no-finite-leveled-spells-known-cap",
+    "cantripsKnownProgression": [
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "spellSlotsProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "spellResourceChoices": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "domainSpellSlots": "not-granted-until-later-domain-pass",
+    "domainSpellAccess": "not-granted-until-later-domain-pass",
+    "channelDivinityResource": "cleric.channel-divinity",
+    "channelDivinityUsesByLevel": [
+      [
+        1,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        18,
+        4
+      ]
+    ],
+    "channelDivinityAvailableAtClassLevel": 1,
+    "channelDivinityShortRestReturn": 1,
+    "channelDivinityLongRestReturn": "all",
+    "turningModes": [
+      "historical-turning-check",
+      "modern-saving-throw",
+      "historical-rebuke",
+      "historical-command",
+      "historical-bolster",
+      "historical-dispel"
+    ],
+    "legacyTurningDailyUses": "historical-3-plus-charisma-not-added",
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.cleric.divine-order-level-1",
+          "class-feature.cleric.spellcasting-level-1",
+          "cleric.historical-turn-undead",
+          "cleric.historical-rebuke-undead",
+          "cleric.historical-command-undead",
+          "cleric.historical-bolster-undead",
+          "cleric.historical-dispel-turning",
+          "cleric.divine-faith",
+          "cleric.channel-divinity-access"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel"
+        ],
+        "divineSparkDice": 0,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 0,
+          "will": 2
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.cleric.channel-divinity-level-2",
+          "class-feature.cleric.divine-spark-level-2",
+          "class-feature.cleric.turn-undead-level-2"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-4"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": null,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-1-2-level-5",
+          "class-feature.cleric.sear-undead-level-5"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 0.5
+          }
+        ],
+        "channelDivinityUses": 2,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": 0.5,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [
+          "class-feature.cleric.channel-divinity-level-6"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.channel-divinity",
+            "totalUses": 3
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 1,
+        "modernDestroyUndeadMaxCR": 0.5,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.cleric.blessed-strikes-level-7"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.cleric.divine-spark-level-2",
+            "damageOrHealingDice": "2d8"
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 0.5,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-8",
+          "class-feature.cleric.destroy-undead-cr-1-level-8"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 1
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 1,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 1,
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [
+          "class-feature.cleric.divine-intervention-level-10"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 1,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-2-level-11"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 2
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 2,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-12"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 2,
+        "modernDestroyUndeadMaxCR": 2,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "class-feature.cleric.divine-spark-level-2",
+            "damageOrHealingDice": "3d8"
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 2,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-3-level-14",
+          "class-feature.cleric.improved-blessed-strikes-level-14"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 3
+          },
+          {
+            "feature": "class-feature.cleric.blessed-strikes-level-7",
+            "upgrade": "improved-blessed-strikes"
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 3,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 3,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-16"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 3,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [
+          "class-feature.cleric.destroy-undead-cr-4-level-17"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.destroy-undead",
+            "maximumCR": 4
+          }
+        ],
+        "channelDivinityUses": 3,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 3,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.cleric.channel-divinity-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "cleric.channel-divinity",
+            "totalUses": 4
+          },
+          {
+            "feature": "class-feature.cleric.divine-spark-level-2",
+            "damageOrHealingDice": "4d8"
+          }
+        ],
+        "channelDivinityUses": 4,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 4,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.cleric.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "channelDivinityUses": 4,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 4,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.cleric.divine-intervention-improvement-level-20",
+          "class-feature.cleric.greater-divine-intervention-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.cleric.divine-intervention-level-10",
+            "supplicationAutoSuccess": true,
+            "greaterInterventionAdds": "wish"
+          }
+        ],
+        "channelDivinityUses": 4,
+        "availableChannelDivinityEffects": [
+          "legacy-turn",
+          "legacy-rebuke",
+          "legacy-command",
+          "legacy-bolster",
+          "legacy-dispel",
+          "modern-turn-undead",
+          "divine-spark"
+        ],
+        "divineSparkDice": 4,
+        "modernDestroyUndeadMaxCR": 4,
+        "cantripsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "leveledClericSpellAccess": "all-eligible-spells-of-castable-level",
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 12,
+          "reflex": 6,
+          "will": 12
+        }
+      }
+    ],
+    "inlineFeatures": [
+      {
+        "id": "cleric.historical-turn-undead",
+        "name": "Historical Turn Undead",
+        "classLevel": 1,
+        "description": "An alternate Turn Undead procedure using 3.x Charisma turning checks, total undead Hit Dice and distance; independent of modern Wisdom-save turning procedure but uses same Channel Divinity pool.",
+        "mechanics": {
+          "kind": "legacy-turn-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "effectOnSuccess": "undead-flee-for-10-rounds-or-cower-if-no-escape",
+          "durationRounds": 10,
+          "endsIfClericApproachesWithinFeet": 10,
+          "destroyThreshold": "cleric-class-level-at-least-twice-undead-hit-dice",
+          "notAdditionalModernSave": true
+        }
+      },
+      {
+        "id": "cleric.historical-rebuke-undead",
+        "name": "Rebuke Undead",
+        "classLevel": 1,
+        "description": "Use historical Charisma-based undead rebuking through shared Channel Divinity; rebuked undead cower for 10 rounds, with no moral-alignment requirement.",
+        "mechanics": {
+          "kind": "legacy-rebuke-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "onSuccessfulRebuke": "undead-cowers",
+          "durationRounds": 10,
+          "damageType": "none",
+          "commandThreshold": "cleric-class-level-at-least-twice-undead-hit-dice"
+        }
+      },
+      {
+        "id": "cleric.historical-command-undead",
+        "name": "Command Undead",
+        "classLevel": 1,
+        "description": "Control qualifying undead that would otherwise be commanded by an effective historical rebuke check; limited total HD.",
+        "mechanics": {
+          "kind": "legacy-command-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "requires": "legacy-rebuke-result-would-command-target",
+          "commandIf": "cleric-class-level-at-least-twice-undead-hit-dice",
+          "maximumTotalControlledHitDice": "cleric-class-level",
+          "mentalOrdersAction": "action",
+          "canVoluntarilyRelease": true,
+          "notAlignmentGated": true
+        }
+      },
+      {
+        "id": "cleric.historical-bolster-undead",
+        "name": "Bolster Undead",
+        "classLevel": 1,
+        "description": "Apply the historical rebuking check to bolster qualifying undead against later turning for 10 rounds; uses the shared channeling pool.",
+        "mechanics": {
+          "kind": "legacy-bolster-undead",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "effectiveUndeadHitDiceForTurning": "max(actual-hit-dice,turn-check-table-result)",
+          "durationRounds": 10
+        }
+      },
+      {
+        "id": "cleric.historical-dispel-turning",
+        "name": "Dispel Turning",
+        "classLevel": 1,
+        "description": "Use a historical turning check to counter an existing Turn Undead effect, subject to the opposing turning result and affected HD.",
+        "mechanics": {
+          "kind": "legacy-dispel-turning",
+          "resource": "cleric.channel-divinity",
+          "cost": 1,
+          "action": "action",
+          "rangeFeet": 60,
+          "requiresLineOfEffect": true,
+          "closestEligibleTargetsFirst": true,
+          "turnCheck": "d20+charisma-modifier+religion-rank-synergy",
+          "religionRankThreshold": 5,
+          "religionBonus": 2,
+          "turnCheckToMaximumHitDice": [
+            {
+              "checkMax": 0,
+              "delta": -4
+            },
+            {
+              "checkMax": 3,
+              "delta": -3
+            },
+            {
+              "checkMax": 6,
+              "delta": -2
+            },
+            {
+              "checkMax": 9,
+              "delta": -1
+            },
+            {
+              "checkMax": 12,
+              "delta": 0
+            },
+            {
+              "checkMax": 15,
+              "delta": 1
+            },
+            {
+              "checkMax": 18,
+              "delta": 2
+            },
+            {
+              "checkMax": 21,
+              "delta": 3
+            },
+            {
+              "checkMin": 22,
+              "delta": 4
+            }
+          ],
+          "maximumAffectedHitDice": "cleric-class-level + delta-from-turning-check",
+          "totalAffectedHitDice": "2d6+cleric-class-level+charisma-modifier",
+          "undeadControlLimitHD": "cleric-class-level",
+          "sourceDailyUses": "3+charisma-modifier is provenance-only; not a second native resource",
+          "doesNotRequireAlignment": true,
+          "comparison": "rebuke-check-equal-or-greater-than-existing-turn-check",
+          "limitTotalUndeadHitDice": "turning-damage-roll"
+        }
+      },
+      {
+        "id": "cleric.divine-faith",
+        "name": "Divine Faith",
+        "classLevel": 1,
+        "description": "A Cleric channels divine power through a deity, pantheon, principle, or spiritual vocation. Worship of a specific deity and alignment qualifications are not required.",
+        "mechanics": {
+          "kind": "divine-source-identity",
+          "deityOptional": true,
+          "faithOrSpiritualConvictionAllowed": true,
+          "noAlignmentPrerequisite": true,
+          "alignmentAuras": "historical-flavor-without-class-eligibility-restriction",
+          "noClassPowerLossForAlignmentChange": true
+        }
+      },
+      {
+        "id": "cleric.channel-divinity-access",
+        "name": "Initial Channel Divinity",
+        "classLevel": 1,
+        "description": "Gain the unified Channel Divinity pool with two uses at level one, initially permitting only historical Turn/Rebuke/Command/Bolster/Dispel procedures. Modern Turn Undead and Divine Spark unlock at level two.",
+        "mechanics": {
+          "kind": "initial-divine-resource-grant",
+          "resource": "cleric.channel-divinity",
+          "initialUses": 2,
+          "shortRestRestore": 1,
+          "longRestRestore": "all",
+          "startingEffects": [
+            "cleric.historical-turn-undead",
+            "cleric.historical-rebuke-undead",
+            "cleric.historical-command-undead",
+            "cleric.historical-bolster-undead",
+            "cleric.historical-dispel-turning"
+          ],
+          "modernEffectsUnlockAtClericLevel": 2
+        }
+      }
+    ],
+    "selectableOptionFeatures": [
+      "class-feature.cleric.protector-level-1",
+      "class-feature.cleric.thaumaturge-level-1",
+      "class-feature.cleric.divine-strike-level-7",
+      "class-feature.cleric.potent-spellcasting-level-7"
+    ],
+    "selectedDivineOrderChoices": 1,
+    "selectedBlessedStrikesChoices": 1,
+    "attackProgression": "three-quarter-BAB",
+    "iterativeAttackAndExtraAttack": "alternative-procedures-not-additive",
+    "multiclassWisdomPrerequisite": 13,
+    "multiclassProficienciesWhenEntering": {
+      "armor": [
+        "light",
+        "medium",
+        "shields"
+      ]
+    },
+    "startingEquipment": {
+      "chooseOne": [
+        "warhammer-or-mace-based-cleric-package",
+        "other-SRD51-cleric-package",
+        "SRD52-cleric-package",
+        "eligible-starting-gold"
+      ],
+      "holySymbolOrSacredFocus": "eligible-component-or-symbol",
+      "subjectToNativeEquipmentAndBackgroundRules": true
+    },
+    "deityRequired": false,
+    "alignmentRestriction": null,
+    "formerDeityAlignmentSpellRestrictions": "not-native-cleric-access-restrictions",
+    "historicalCureInflictConversion": "no-separate-prepared-spell-sacrifice-because-full-spell-access",
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonTotalCharacterLevelMinimum": 21,
+    "subclasses": "excluded-until-subclass-pass",
+    "domains": "excluded-until-domain-subclass-pass",
+    "prestigeClasses": "excluded-until-prestige-pass"
+  }
+}

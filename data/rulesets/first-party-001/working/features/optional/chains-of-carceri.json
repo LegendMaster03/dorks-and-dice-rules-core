@@ -1,0 +1,93 @@
+{
+  "id": "optionalfeature.chains-of-carceri",
+  "name": "Chains of Carceri",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Chains of Carceri",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "pact": "Chain",
+            "level": {
+              "level": 15,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": {
+                "daily": {
+                  "1e": [
+                    "hold monster"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell hold monster} at will—targeting a celestial, fiend, or elemental—without expending a spell slot or material components. You must finish a long rest before you can use this invocation on the same creature again."
+        ]
+      }
+    }
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.chains-of-carceri",
+    "requiredPactType": "Chain",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "per-target-rest-restriction"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Chain",
+    "minimumWarlockLevel": 15,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "slot-free-target-restricted-spell",
+      "spell": "hold-monster",
+      "allowedCreatureTypes": [
+        "celestial",
+        "fiend",
+        "elemental"
+      ],
+      "spellSlotCost": 0,
+      "materialCost": 0,
+      "lockout": {
+        "key": "target-identity",
+        "begins": "on-attempt-including-failure",
+        "ends": "warlock-long-rest"
+      },
+      "globalOncePerLongRestLimit": false
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
+  }
+}

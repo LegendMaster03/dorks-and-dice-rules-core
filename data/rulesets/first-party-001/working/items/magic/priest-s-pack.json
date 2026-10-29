@@ -1,0 +1,88 @@
+{
+  "id": "item.priest-s-pack",
+  "name": "Priest's Pack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Priest's Pack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 24,
+        "value": 1900,
+        "entries": [
+          "Includes:",
+          {
+            "type": "list",
+            "items": [
+              "a {@item backpack|srd51}",
+              "a {@item blanket|srd51}",
+              "10 {@item candle|srd51|candles}",
+              "a {@item tinderbox|srd51}",
+              "an alms box",
+              "2 blocks of incense",
+              "a censer",
+              "vestments",
+              "2 days of {@item Rations (1 day)|srd51|rations}",
+              "a {@item waterskin|srd51}."
+            ]
+          }
+        ],
+        "packContents": [
+          "backpack|srd51",
+          "blanket|srd51",
+          {
+            "item": "candle|srd51",
+            "quantity": 10
+          },
+          "tinderbox|srd51",
+          {
+            "item": "rations (1 day)|srd51",
+            "quantity": 2
+          },
+          "waterskin|srd51",
+          {
+            "special": "alms box"
+          },
+          {
+            "special": "block of incense",
+            "quantity": 2
+          },
+          {
+            "special": "censer"
+          },
+          {
+            "special": "vestments"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Priest's Pack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 29,
+        "value": 3300,
+        "entries": [
+          "A Priest's Pack contains the following items: {@item Backpack|SRD52}, {@item Blanket|SRD52}, {@item Holy Water|SRD52}, {@item Lamp|SRD52}, 7 days of {@item Rations|SRD52}, {@item Robe|SRD52}, and {@item Tinderbox|SRD52}."
+        ],
+        "packContents": [
+          "backpack|srd52",
+          "blanket|srd52",
+          "holy water|srd52",
+          "lamp|srd52",
+          {
+            "item": "rations|srd52",
+            "quantity": 7
+          },
+          "robe|srd52",
+          "tinderbox|srd52"
+        ]
+      }
+    }
+  ]
+}

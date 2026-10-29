@@ -1,0 +1,63 @@
+{
+  "id": "magicvariant.energy-bow",
+  "name": "Energy Bow",
+  "kind": "magicvariant",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GV|SRD52",
+    "requires": [
+      {
+        "name": "Longbow",
+        "source": "SRD52"
+      },
+      {
+        "name": "Shortbow",
+        "source": "SRD52"
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Energy ",
+      "source": "SRD52",
+      "page": 220,
+      "otherSources": [
+        {
+          "source": "UtHftLH"
+        }
+      ],
+      "rarity": "very rare",
+      "reqAttune": true,
+      "bonusWeapon": "+1",
+      "entries": [
+        "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon, which has no string. Each time you pull your arm back in a firing motion, a magical arrow made of golden energy appears nocked and ready to fire. An arrow produced by this weapon deals Force damage instead of Piercing damage on a hit, and it disappears after it hits or misses its target. Until it disappears, the arrow emits {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet.",
+        "This weapon has the following additional properties.",
+        {
+          "type": "entries",
+          "name": "Arrow of Restraint",
+          "entries": [
+            "Whenever you use this weapon to make a ranged attack against a creature, you can try to restrain the target instead of dealing damage to it. If the arrow hits, the target must succeed on a {@dc 15} Strength saving throw or have the {@condition Restrained|SRD52} condition for 1 minute. As an action, a creature {@condition Restrained|SRD52} by an arrow can make a {@dc 20} Strength ({@skill Athletics|SRD52}) check to try to break the restraint, ending the effect on itself on a successful check."
+          ]
+        },
+        {
+          "type": "entries",
+          "name": "Arrow of Transport",
+          "entries": [
+            "As a {@action Magic|SRD52} action, you can fire one energy arrow from this weapon at a target you can see within 60 feet of yourself. The target can be either a willing Medium or smaller creature or an object that isn't being worn or carried, provided the object is small enough to fit inside a 5-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. The arrow teleports the target to an unoccupied space you can see within 10 feet of you."
+          ]
+        },
+        {
+          "type": "entries",
+          "name": "Energy Ladder",
+          "entries": [
+            "As a {@action Magic|SRD52} action, you can loose a flurry of energy arrows from this weapon at a wall up to 60 feet away from yourself. The arrows become glowing rungs that stick out of the wall, forming a magical ladder up to 60 feet long on the wall. This ladder lasts for 1 minute before disappearing."
+          ]
+        }
+      ],
+      "light": [
+        {
+          "bright": 20,
+          "dim": 40
+        }
+      ]
+    }
+  }
+}

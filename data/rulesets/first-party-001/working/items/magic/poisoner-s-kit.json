@@ -1,0 +1,128 @@
+{
+  "id": "item.poisoner-s-kit",
+  "name": "Poisoner's Kit",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Poisoner's Kit",
+        "type": "T",
+        "rarity": "none",
+        "weight": 2,
+        "value": 5000,
+        "entries": [
+          "A poisoner's kit includes the vials, chemicals, and other equipment necessary for the creation of poisons. Proficiency with this kit lets you add your proficiency bonus to any ability checks you make to craft or use poisons.",
+          "Additionally, the {@book Crafting and Harvesting Poison|srd51|8|Crafting and Harvesting Poison} rules require the use of a poisoner's kit."
+        ],
+        "additionalEntries": [
+          "A poisoner's kit is a favored resource for thieves, assassins, and others who engage in skulduggery. It allows you to apply poisons and create them from various materials. Your knowledge of poisons also helps you treat them.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "A poisoner's kit includes glass vials, a mortar and pestle, chemicals, and a glass stirring rod."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "History",
+            "entries": [
+              "Your training with poisons can help you when you try to recall facts about infamous poisonings."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation, Perception",
+            "entries": [
+              "Your knowledge of poisons has taught you to handle those substances carefully, giving you an edge when you inspect {@condition poisoned} objects or try to extract clues from events that involve poison."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Medicine",
+            "entries": [
+              "When you treat the victim of a poison, your knowledge grants you added insight into how to provide the best care to your patient."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Nature, Survival",
+            "entries": [
+              "Working with poisons enables you to acquire lore about which plants and animals are poisonous."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Handle Poison",
+            "entries": [
+              "Your proficiency allows you to handle and apply a poison without risk of exposing yourself to its effects."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Poisoner's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Spot a {@condition poisoned} object",
+                "10"
+              ],
+              [
+                "Determine the effects of a poison",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Poisoner's Kit",
+        "type": "T|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 5000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Intelligence"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Detect a poisoned object ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Basic Poison|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

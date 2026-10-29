@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.bard.subclass-feature-level-6",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "level": 6,
+        "entries": [
+          "You gain a feature from your Bard Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 6
+}

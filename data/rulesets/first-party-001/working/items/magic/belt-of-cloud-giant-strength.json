@@ -1,0 +1,43 @@
+{
+  "id": "item.belt-of-cloud-giant-strength",
+  "name": "Belt of Cloud Giant Strength",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Belt of Cloud Giant Strength",
+        "tier": "major",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "ability": {
+          "static": {
+            "str": 27
+          }
+        },
+        "entries": [
+          "While wearing this belt, your Strength score changes to 27. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Belt of Cloud Giant Strength",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "ability": {
+          "static": {
+            "str": 27
+          }
+        },
+        "entries": [
+          "While wearing this belt, your Strength score changes to 27. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "class-feature.monk.step-of-the-wind-level-2",
+  "name": "Step of the Wind",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Step of the Wind",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 2,
+        "header": 2,
+        "consumes": {
+          "name": "Ki"
+        },
+        "entries": [
+          "You can spend 1 ki point to take the {@action Disengage} or {@action Dash} action as a bonus action on your turn, and your jump distance is doubled for the turn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Step of the Wind",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 2,
+        "header": 2,
+        "consumes": {
+          "name": "Focus Point"
+        },
+        "entries": [
+          "You can take the {@action Dash|SRD52} action as a {@variantrule Bonus Action|SRD52}. Alternatively, you can expend 1 Focus Point to take both the {@action Disengage|SRD52} and {@action Dash|SRD52} actions as a {@variantrule Bonus Action|SRD52}, and your jump distance is doubled for the turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 2
+}

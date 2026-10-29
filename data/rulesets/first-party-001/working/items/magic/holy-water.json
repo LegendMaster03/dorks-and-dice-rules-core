@@ -1,0 +1,18 @@
+{
+  "id": "item.holy-water",
+  "name": "Holy Water",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 2500,
+    "entries": [
+      "When you take the {@action Attack|SRD52} action, you can replace one of your attacks with throwing a flask of Holy Water. Target one creature you can see within 20 feet of yourself. The target must succeed on a Dexterity saving throw ({@dc 8} plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}) or take {@damage 2d8} Radiant damage if it is a Fiend or an Undead."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

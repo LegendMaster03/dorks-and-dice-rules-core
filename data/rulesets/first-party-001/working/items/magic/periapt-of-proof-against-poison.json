@@ -1,0 +1,43 @@
+{
+  "id": "item.periapt-of-proof-against-poison",
+  "name": "Periapt of Proof against Poison",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Periapt of Proof against Poison",
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "poisoned"
+        ],
+        "tier": "major",
+        "rarity": "rare",
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "This delicate silver chain has a brilliant-cut black gem pendant. While you wear it, poisons have no effect on you. You are immune to the {@condition poisoned} condition and have immunity to poison damage."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Periapt of Proof against Poison",
+        "immune": [
+          "poison"
+        ],
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "This delicate silver chain has a brilliant-cut black gem pendant. While you wear it, you have {@variantrule Immunity|SRD52} to the {@condition Poisoned|SRD52} condition and Poison damage."
+        ]
+      }
+    }
+  ]
+}

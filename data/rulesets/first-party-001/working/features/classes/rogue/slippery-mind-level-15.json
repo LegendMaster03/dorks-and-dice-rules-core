@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.rogue.slippery-mind-level-15",
+  "name": "Slippery Mind",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 15,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Slippery Mind",
+    "description": "Native Rogue Slippery Mind; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "saving-throw-proficiency",
+      "saves": [
+        "wisdom",
+        "charisma"
+      ],
+      "historicalSelectedRetry": "rogue.option.slippery-mind-retry"
+    }
+  }
+}

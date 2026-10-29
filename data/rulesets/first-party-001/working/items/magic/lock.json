@@ -1,0 +1,34 @@
+{
+  "id": "item.lock",
+  "name": "Lock",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Lock",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000,
+        "entries": [
+          "A key is provided with the lock. Without the key, a creature proficient with {@item thieves' tools|srd51} can pick this lock with a successful {@dc 15} Dexterity check. Your DM may decide that better locks are available for higher prices."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Lock",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000,
+        "entries": [
+          "A Lock comes with a key. Without the key, a creature can use {@item Thieves' Tools|SRD52} to pick this Lock with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check."
+        ]
+      }
+    }
+  ]
+}

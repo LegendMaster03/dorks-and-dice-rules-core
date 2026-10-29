@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.rogue.subclass-feature-level-13",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 13,
+        "entries": [
+          "You gain a feature from your Rogue Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 13
+}

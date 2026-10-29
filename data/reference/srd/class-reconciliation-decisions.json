@@ -1,0 +1,1125 @@
+{
+  "status": "approved-band-1-base-class-decisions",
+  "scope": "Approved Band 1 base-class decisions; does not authorize subclasses or prestige classes.",
+  "decisions": [
+    {
+      "nativeRuleId": "class.barbarian.rage-uses",
+      "state": "approved-native-rule",
+      "decision": "At Barbarian class level 20, the shared Rage resource has Unlimited uses; Primal Rage retains its once-per-encounter limit. Before level 20, uses are 2 at class level 1, 3 at 3, 4 at 6, 5 at 12, 6 at 17. One use returns on a Short Rest and all on a Long Rest.",
+      "decisionBasis": "Dorks & Dice Owner approval, 2026-10-19, following Band 1 base-class comparison. No general player-class edition precedence.",
+      "nativeLocation": "data/native/classes/base/barbarian.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Barbarian",
+          "detail": "level 20 Unlimited Rage"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Barbarian",
+          "detail": "level 20 6 Rages and rest recovery"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.barbarian.relentless-rage-level-11",
+      "state": "approved-native-rule",
+      "decision": "At Barbarian class level 11, when raging and reduced to 0 HP without being killed outright, a successful DC 10 Constitution save causes current HP to be twice Barbarian class level instead. Each subsequent use increases DC by 5; a Short or Long Rest resets DC to 10.",
+      "decisionBasis": "Dorks & Dice Owner approval, 2026-10-19, resolving SRD 5.1 (1 HP) versus SRD 5.2.1 (twice Barbarian class level).",
+      "nativeLocation": "data/native/features/classes/barbarian/relentless-rage-level-11.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Relentless Rage",
+          "detail": "1 HP after success"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-barbarian.json",
+          "name": "Relentless Rage",
+          "detail": "2 x Barbarian class level after success"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.bard.bardic-inspiration-level-1",
+      "state": "approved-native-rule",
+      "decision": "Use the SRD 5.2.1 Bardic Inspiration procedure: an artistic Bonus Action grants another eligible creature a die valid for 1 hour. After failing a d20 test the recipient can use that die. Retain 5.x die improvements and shared Charisma-based uses. Music is not compulsory.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, following four-way Bard base-class reconciliation.",
+      "nativeLocation": "data/native/features/classes/bard/bardic-inspiration-level-1.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Bardic Inspiration",
+          "detail": "before determination; 10 minutes"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Bardic Inspiration",
+          "detail": "after failing d20 test; 1 hour"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "bard.inspire-courage",
+      "state": "approved-native-rule",
+      "decision": "Retain 3.0 +2 protection versus charm/fear at Bard level 1; charm/fear saves remain +2 until class level 14, +3 at 14 and +4 at 20. Attack/damage bonus follows 3.5 +1 at level 1, +2 at 8, +3 at 14, +4 at 20. One historical performance effect.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, four-way Bard reconciliation.",
+      "nativeLocation": "data/native/classes/base/bard.json",
+      "evidence": [
+        {
+          "source": "3.0",
+          "path": "https://www.dragon.ee/30srd/bard.htm",
+          "name": "Inspire Courage",
+          "detail": "+2 charm/fear saves at start"
+        },
+        {
+          "source": "3.5",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Inspire Courage",
+          "detail": "increasing bonuses to attack, damage and saves"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.bard.spellcasting-level-1",
+      "state": "approved-native-rule",
+      "decision": "Replace multiple editions' Bard level 1–20 leveled spell-access counts with the greater documented count at each class level, without summing the counts. Use the single shared 5.x full-caster spell-slot progression or native spell points as chosen by player; never daily preparation.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, class-specific numeric reconciliation not universal edition precedence.",
+      "nativeLocation": "data/native/features/classes/bard/spellcasting-level-1.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "Spells Known progression"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "Prepared Spells count converted to accessible/known"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "bard.cantrips-known",
+      "state": "approved-native-rule",
+      "decision": "Retain 3.x Bard cantrips known 4 at Bard 1, 5 at Bard 2, and 6 from Bard 3 onward; cast them at will under native modern cantrip rules rather than importing historical cantrip slot limits.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, specific numerical and procedural Bard ruling.",
+      "nativeLocation": "data/native/classes/base/bard.json",
+      "evidence": [
+        {
+          "source": "3.5",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Bard Spells Known",
+          "detail": "4/5/6 cantrips at Bard levels 1/2/3"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "2/3/4 cantrip schedule"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "2/3/4 cantrip schedule"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.cleric.full-spell-access",
+      "state": "approved-native-rule",
+      "decision": "Clerics have access to all eligible Cleric spells of castable spell level; no prepared spells, Wisdom-based known cap or 2024 prepared-count limit; player chooses slots or points. Domain-only spells/slots deferred to later subclass work.",
+      "decisionBasis": "Owner approval, 2026-10-19, unified Cleric Band 1 proposal",
+      "nativeLocation": "data/native/classes/base/cleric.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Spells",
+          "detail": "Access all Cleric list via historical preparation"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Spellcasting",
+          "detail": "Prepared list based on Cleric level plus Wisdom"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Spellcasting",
+          "detail": "Prepared list progression"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.cleric.channel-divinity-unified",
+      "state": "approved-native-rule",
+      "decision": "Historical Turn/Rebuke/Command/Bolster/Dispel checks and modern Turn Undead/Divine Spark are separate effects sharing one Channel Divinity pool. Two uses from level 1, three at level 6, four at level 18; one use returned on Short Rest, all on Long Rest; historical 3+Charisma daily uses not additive. No alignment prerequisites. Preserve both historic turning check and modern save procedures as alternatives.",
+      "decisionBasis": "Owner approval, 2026-10-19, one resource with multiple effects and no forced alignment",
+      "nativeLocation": "data/native/classes/base/cleric.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Turn or Rebuke Undead"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Channel Divinity"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Channel Divinity"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.cleric.divine-intervention-level-10",
+      "state": "approved-native-rule",
+      "decision": "From level 10, Direct Intervention grants eligible level <=5 Cleric spell without slot/materials each Long Rest; Divine Supplication makes a percentile request with seven-day cooldown on success and Long Rest reset on failure. At level 20, Supplication success is automatic and Direct Intervention can invoke Wish with 2d4 Long Rest cooldown. Neither procedure removes the other.",
+      "decisionBasis": "Owner approval, 2026-10-19, two distinct modes with source recovery procedures",
+      "nativeLocation": "data/native/features/classes/cleric/divine-intervention-level-10.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Divine Intervention"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-cleric.json",
+          "name": "Divine Intervention"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.druid.wild-shape-size-eligibility",
+      "state": "approved-native-rule",
+      "decision": "Creature size is a normal, mandatory property in Wild Shape eligibility; it is not optional/advanced complexity. Incorporate source-supported historical size progression (3.5: Small/Medium L5, Large L8, Tiny L11, Huge L15) into base-class form eligibility while preserving modern L2 Wild Shape. Resolving exact combined CR, HD and size constraints and HP rules remains open.",
+      "decisionBasis": "Owner clarification and approval on Druid base-class reconciliation, 2026-10-19.",
+      "nativeLocation": "data/native/classes/base/druid.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Druid Wild Shape",
+          "detail": "Size-based progression at class levels 5, 8, 11, 15"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape",
+          "detail": "Beast forms and CR/movement restrictions from class level 2"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape",
+          "detail": "Known beast forms with CR and flight restrictions"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.druid.animal-companion-persistent",
+      "state": "approved-native-rule",
+      "decision": "Use the 3.5e persistent Animal Companion from Druid level 1; companion persists between encounters/rests, advances by its documented bonus Hit Dice, armor, abilities and tricks, and is released/replaced by the source ceremony. This is a base-class grant, not a Druid Circle feature, and is distinct from 5.5e temporary Wild Companion, whose simultaneous availability remains to be settled.",
+      "decisionBasis": "Owner approval, 2026-10-19: Animal Companion must be the 3.5e persistent companion.",
+      "nativeLocation": "data/native/classes/base/druid.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Animal Companion",
+          "detail": "Persistent druid animal companion with class-level scaling and replacement ceremony"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Companion",
+          "detail": "Temporary familiar from Find Familiar; not equivalent to persistent companion"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.druid.wild-shape-separate-hp",
+      "state": "approved-native-rule",
+      "decision": "Wild Shape uses a separate creature-form HP pool. A beast form reaching 0 HP immediately reverts, leaving normal Druid HP unchanged; NO overflow damage passes to normal HP. This intentionally differs from official 2014 excess-damage-carryover and 2024 temporary-HP behavior, and excludes stacking them.",
+      "decisionBasis": "Owner explicit preference and correction, 2026-10-20; Dorks & Dice custom house rule, not literal SRD 5.1",
+      "nativeLocation": "data/native/features/classes/druid/wild-shape-level-2.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape",
+          "detail": "separate beast HP; official 2014 excess damage carries over"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape",
+          "detail": "retains normal HP, gains temporary HP"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.druid.wild-shape-forms-resources-and-archdruid",
+      "state": "approved-native-rule",
+      "decision": "Use 2024 finite Wild Shape charges (2 from level 2, 3 at 6, 4 at 18), Short Rest restores one, Long Rest restores all. Historical familiar animal/plant/elemental forms use ordinary type/size/HD gates as an alternative to modern CR/known-beast gates, without intersecting incompatible restrictions; maintain separate 3.5e elemental limits. Archdruid at 20 transforms without spending finite charges, but Nature Magician and Wild Resurgence spell conversions require actual finite charges and never consume unlimited transformation permission.",
+      "decisionBasis": "Owner approved other four recommendations, 2026-10-20",
+      "nativeLocation": "data/native/features/classes/druid/wild-shape-level-2.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Wild Shape"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape and Archdruid"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Shape and Archdruid"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.druid.companions-can-coexist",
+      "state": "approved-native-rule",
+      "decision": "Persistent 3.5e Animal Companion and temporary 5.5e Wild Companion may both be present. Wild Companion requires its actual spell slot or finite Wild Shape charge; no free actions or attacks beyond native controlled-creature action and initiative rules. The temporary familiar never changes the persistent companion's lifetime or progression.",
+      "decisionBasis": "Owner approved remaining Druid recommendations, 2026-10-20",
+      "nativeLocation": "data/native/features/classes/druid/wild-companion-level-2.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Animal Companion"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Wild Companion"
+        }
+      ],
+      "supersededBy": "class.companion-path-exclusive-choice",
+      "supersededReason": "Later owner approval on 2026-10-23 supersedes automatic simultaneous Animal Companion and Wild Companion grants. Existing declarative Druid data still needs migration."
+    },
+    {
+      "nativeRuleId": "class.druid.metal-armor-no-class-power-loss",
+      "state": "approved-native-rule",
+      "decision": "Historical nonmetal armor and shields are optional cultural or personal commitments, not mandatory class limitations; wearing otherwise proficient metal armor or shields does not disable Druid spellcasting, Wild Shape, class progression or features.",
+      "decisionBasis": "Owner approved remaining Druid recommendations, 2026-10-20",
+      "nativeLocation": "data/native/classes/base/druid.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Weapon and Armor Proficiency",
+          "detail": "historical nonmetal limitation and spellcasting penalty"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Starting Proficiencies",
+          "detail": "modern armor proficiency without the historical power-loss text"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-every-qualifying-hit",
+      "state": "approved-native-rule",
+      "decision": "Remove the once-per-turn/round limit: apply one Sneak Attack damage instance on each separate successful qualifying attack, reevaluating eligibility on every attack. Qualification follows the approved detection-or-established-vulnerability principle, not Advantage by itself. This feature grants no additional attack actions; precise trigger and combat interactions remain pending.",
+      "decisionBasis": "Owner explicit ruling, 2026-10-23, applying one shared ruleset with player-selectable tactical complexity and meaningful advanced benefits.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue Sneak Attack",
+          "detail": "Bonus damage on qualifying hits; not limited to once per turn"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Once per turn"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Once per turn"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-detection-or-vulnerability",
+      "state": "approved-native-rule",
+      "decision": "A Rogue can apply Sneak Attack damage to a successful attack when the target has failed to detect or anticipate the attack, or when the target has an explicitly established vulnerability that the Rogue can exploit with a precision strike. Detection uses the shared awareness and detection mechanics. Other qualifying vulnerabilities are established by specific conditions, actions, features, or successful techniques. Advantage does not independently establish Sneak Attack eligibility. Each attack is evaluated separately.",
+      "decisionBasis": "Owner explicitly approved this wording, 2026-10-23. This conceptual rule authorizes neither a complete list of qualifying vulnerabilities nor a finished awareness/detection runtime.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue Sneak Attack",
+          "detail": "Historically exploits denied Dexterity defenses or flanking"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Modern advantage and nearby-enemy qualification"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Modern advantage and nearby-ally qualification"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-any-range-and-weapon",
+      "state": "approved-native-rule",
+      "decision": "There is no Sneak Attack-specific distance cap; an otherwise valid ranged attack may qualify at normal allowed range, including sniper attacks. A Rogue can Sneak Attack with **any weapon they are proficient with**, whether or not it has the Finesse or Ranged property, if the attack succeeds and meets the independently established detection-or-vulnerability requirement. No extra Disadvantage or Sneak Attack dice penalty is imposed solely for choosing another weapon type. Weapon Mastery retains its usual effects; it neither replaces proficiency nor independently creates Sneak Attack eligibility. Ordinary attack restrictions and modifiers still apply; weapon proficiency must be acquired normally. Spell attacks, unarmed strikes and unusual non-weapon attack categories remain for general-system reconciliation.",
+      "decisionBasis": "Owner approved the proficiency-only alternative on 2026-10-23, explicitly replacing the former proficiency-with-Disadvantage or Mastery bypass rule; review against Dorks & Dice simple-versus-advanced shared-combat principles.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sneak Attack",
+          "detail": "30-foot range limit for ranged precision attacks"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Finesse or Ranged weapon gate"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.sneak-attack-immunity-respected",
+      "state": "approved-native-rule",
+      "decision": "Undead, constructs and creatures with unusual anatomy are not categorically immune to Sneak Attack. Actual applicable damage-type immunity/resistance and any expressly granted precision-damage immunity still apply. Do not infer immunity from creature type, anatomy or immunity to critical hits alone.",
+      "decisionBasis": "Owner explicitly confirmed 2026-10-23 that historical undead/construct/unusual-anatomy exclusions are removed while genuine immunity remains effective.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sneak Attack",
+          "detail": "Historical creature-type/anatomy exclusions"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Sneak Attack",
+          "detail": "Bonus damage follows normal weapon damage type"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.historical-and-modern-uncanny-defense-distinct",
+      "state": "approved-native-rule",
+      "decision": "Retain historical Dexterity-based defensive awareness, including its later anti-flanking improvement, under the approved unified feature name 'Uncanny Awareness' at all improvement stages: improving a feature does not require renaming it. Modern Reaction-based damage reduction remains separately named 'Uncanny Dodge'. Exact class-level placements and cross-feature defense interactions remain to be finalized.",
+      "decisionBasis": "Owner approved 'Uncanny Awareness' and specified that its later improvement retains the same name, 2026-10-23; historical and modern non-equivalent defenses remain distinct.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Uncanny Dodge and Improved Uncanny Dodge",
+          "detail": "Defensive Dexterity and flanking"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Uncanny Dodge",
+          "detail": "Reaction-based damage reduction"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "rule.critical-escalation-optional-natural-die-only",
+      "state": "approved-native-rule",
+      "decision": "Critical escalation (consecutive natural critical results) is an optional campaign rule, not a mandatory rule for every table. Abilities that alter, substitute or set a numerical roll result do not count as natural die faces for starting or advancing an escalation chain. Ordinary criticals and explicit feature success effects remain separately governed; do not assume a feature-generated result 20 is a natural 20. Eligibility of independent reroll abilities on escalation dice remains a separate unresolved case.",
+      "decisionBasis": "Owner confirmation, 2026-10-23: roll-modifying abilities do not count toward escalation; crit escalation is optional.",
+      "nativeLocation": "docs/rewrite/native-rules-design-specification.md",
+      "evidence": [
+        {
+          "source": "DORKS-AND-DICE",
+          "path": "docs/rewrite/native-rules-design-specification.md",
+          "name": "Critical stacking — Fool's Gold-inspired foundation",
+          "detail": "Consecutive extreme natural d20 results, campaign-scoped optional application"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Stroke of Luck",
+          "detail": "A failed d20 Test is turned into a numerical result of 20"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.trapfinding",
+      "state": "approved-native-rule",
+      "decision": "Retain Rogue Trapfinding: advanced search, disabling, and studying/bypassing difficult and magical traps, including helping allies bypass traps without disabling them. Other characters remain capable of finding/disarming eligible traps using ordinary Competencies or their granted features; no blanket Rogue-only access for high-DC or magical traps. Exact native checks and DC are pending.",
+      "decisionBasis": "Owner approved retention of both Rogue trap features, 2026-10-23, expressly rejecting Rogue-only access to ordinary trap-handling opportunities; feature-level numeric integration to be finalized.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD30",
+          "path": "https://www.dragon.ee/30srd/rogue.htm",
+          "name": "Traps"
+        },
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Trapfinding"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.trap-sense",
+      "state": "approved-native-rule",
+      "decision": "Retain the distinct 3.x Rogue Trap Sense defensive progression using native trap-related saves and AC. Source-reference schedule is 3.5e +1 at class level 3, +2 at 6, +3 at 9, +4 at 12, +5 at 15, and +6 at 18; reconcile 3.0's older Uncanny Dodge trap bonuses without duplicate stacking. Exact advancement placement and conversion to native numeric defenses remain pending.",
+      "decisionBasis": "Owner approved retention of both Rogue trap features, 2026-10-23, expressly rejecting Rogue-only access to ordinary trap-handling opportunities; feature-level numeric integration to be finalized.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD30",
+          "path": "https://www.dragon.ee/30srd/rogue.htm",
+          "name": "Uncanny Dodge trap bonuses"
+        },
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Trap Sense"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.historical-special-choice-levels",
+      "state": "approved-native-rule",
+      "decision": "Retain selectable 3.5e Rogue special-ability grants at class levels 10, 13, 16 and 19. These are choices at level-up, not automatic grants of all choices. The complete effects of Defensive Roll remain unapproved; none of the four slots is removed by absorbing obsolete Improved Evasion.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Preserves selectable progression.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.crippling-strike",
+      "state": "approved-native-rule",
+      "decision": "Selected Crippling Strike adds 2 points of Strength ability damage to each qualifying Sneak Attack hit; no additional once-per-turn cap is imposed. General ability-damage recovery/immunity and stacking are shared-rule dependencies.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Retains 3.5e amount after owner rejected unsubstantiated reduction to the 3.0 amount.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.evasion-and-improved-evasion",
+      "state": "approved-native-rule",
+      "decision": "Baseline Evasion is granted at Rogue level 2 and gives no damage on successful eligible save, half damage on failure (subject to normal incapacity limits). Improved Evasion's source benefit is thereby absorbed and is not a selectable special ability; its redundancy must not consume a selection.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Avoids a nonfunctional historical pick.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.opportunist",
+      "state": "approved-native-rule",
+      "decision": "Selected Opportunist allows one reaction-based opportunity attack per round when an ally damages a foe in melee, respecting the shared Reaction budget; no bonus Reaction or automatic Sneak Attack eligibility.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Keeps the historical additional trigger.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.skill-mastery",
+      "state": "approved-native-rule",
+      "decision": "Selected Skill Mastery grants two additional Expertise choices in eligible skills or native competencies; do not duplicate Expertise already possessed for the same choice. Reliable Talent remains a separate baseline feature.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Replaces overlapping take-10 feature with a useful specialization.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.slippery-mind-reconciled",
+      "state": "approved-native-rule",
+      "decision": "At Rogue level 15, baseline Slippery Mind grants Wisdom and Charisma saving throw proficiencies. Separately selecting historical Slippery Mind's special-ability option grants one retry one round after a failed qualifying enchantment/control save; the two different effects coexist under one name without duplicating proficiency.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Preserves distinct 3.5e and 2024 grants.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.special-choice-bonus-feat",
+      "state": "approved-native-rule",
+      "decision": "An eligible Bonus Feat can be selected as one of the four special-ability options, in addition to—not instead of—the Rogue's independently scheduled ASI/feat grants. Feat prerequisites apply; Epic Boons require total character level 21 or higher.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Keeps original level-up choice.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.cunning-strike-per-qualifying-hit",
+      "state": "approved-native-rule",
+      "decision": "Cunning Strike applies on each independently qualifying Sneak Attack hit, paying per-hit Sneak Attack damage dice costs for Poison, Trip or Withdraw. Improved Cunning Strike at level 11 permits up to two effects per hit with both costs paid. Devious Strikes at level 14 adds Daze, Knock Out and Obscure with normal costs, saves and prerequisites. Steady Aim remains an accuracy action and its Advantage alone does not qualify Sneak Attack.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Adopts beneficial 2024 additions without undermining per-hit native Sneak Attack.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.band1-levels",
+      "state": "approved-native-rule",
+      "decision": "Approve the merged Rogue Band 1 levels and placements documented in docs/rewrite/rogue-band-1-reconciliation.md: d8 Hit Die, level 1 Weapon Mastery, level 2 Evasion, level 3 Steady Aim, level 4 and 8 Uncanny Awareness, level 5 Uncanny Dodge/Cunning Strike, level 7 Reliable Talent, level 10/13/16/19 special choices, level 11 Improved Cunning Strike, level 14 restored 2014 Blindsense and Devious Strikes, level 15 modern Slippery Mind, level 18 Elusive, level 20 Stroke of Luck, plus Trap Sense, Expertise, ASIs and subclass placeholders as shown. Defensive Roll's effect is not included as approved.",
+      "decisionBasis": "Owner approved all remaining Rogue proposals except the precise Defensive Roll mechanics, 2026-10-23. Reconciles approved historical and modern class grants while deferring shared execution and subclass work.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue special abilities and progression"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2014 Rogue"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "2024 Rogue"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.rogue.defensive-roll-survival",
+      "state": "approved-native-rule",
+      "decision": "Defensive Roll is a Rogue special-ability choice at one of the historical choice levels 10/13/16/19. If an attack would reduce the Rogue to 0 HP, the Rogue may expend their Reaction and the feature's single use to attempt a Dexterity saving throw. On success they remain at 1 HP instead of dropping to 0 HP from that attack. The use returns on completing a Long Rest, not a calendar-day reset. Because Uncanny Dodge also normally spends the Reaction, neither can use the same Reaction on one triggering hit. The numerical save DC and special zero-HP interactions are NOT approved here: these must be supplied by the shared resolution system before the feature is executable.",
+      "decisionBasis": "Owner approved the assistant's proposed one-per-Long-Rest Reaction-based 1-HP Defensive Roll emergency-survival design on 2026-10-23. The proposal explicitly left the exact Dexterity save DC and special restrictions pending.",
+      "nativeLocation": "docs/rewrite/rogue-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Rogue Defensive Roll",
+          "detail": "Historical emergency Reflex save against potentially lethal combat damage; once per day in source"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-rogue.json",
+          "name": "Uncanny Dodge",
+          "detail": "Reaction-based halving of attack damage, which the new native Defensive Roll remains distinct from"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-unified-class-feature",
+      "state": "approved-native-rule",
+      "decision": "Use Sorcerer class-granted Metamagic options fueled by the separate Sorcery Points resource; retain this modern class-specific mechanism rather than importing 3.x Metamagic feats as a parallel Sorcerer feat track. Sorcery Points are separate from spell slots and the optional spell-point casting resource. Historical capabilities not otherwise represented are adapted into options in this same class feature, not automatically granted as generic feats or to other classes.",
+      "decisionBasis": "Owner explicitly preferred the modern class-specific Metamagic mechanic over reusing historical feats, 2026-10-23. Numerical costs, progression and inter-option stacking were not approved.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sorcerer historical casting and feat-based Metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-recover-unrepresented-3x-effects",
+      "state": "approved-native-rule",
+      "decision": "Extend the unified Sorcerer Metamagic option repertoire with meaningful 3.x-only functions that modern Sorcerer options lack. Specifically include adapted Widen Spell (expand qualifying areas) and Maximize Spell (maximize eligible variable numerical effects). Historical Empower Spell (multiply eligible variable numerical effects) and Heighten Spell (increase effective spell level) remain distinct from modern Empowered Spell (reroll selected dice) and Heightened Spell (saving throw Disadvantage) and must receive distinct, nonredundant treatment under the same approved adaptation principle. Do not assign any native Sorcery Point costs, stack permissions, names, or eligibility rules by inference; those details remain for reconciliation.",
+      "decisionBasis": "Owner explicitly instructed adapting 3.x functions not already represented, using Widen and Maximize as examples, 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sorcerer historical casting and feat-based Metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Sorcerer Metamagic"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-approved-legacy-options",
+      "state": "approved-native-rule",
+      "decision": "The unified Sorcerer Metamagic class feature adds four owner-approved options with Sorcery Point prices: Amplified Spell (3; raise one eligible initial-resolution rolled variable numerical effect by 50% rounded down on a spell cast at level <=7); Ascendant Spell (2 per effective spell level, adding one or two effective spell levels but not above level 9 or highest Sorcerer castable level; +1 save DC per level, affects level-dependent interactions but not upcast benefits); Widened Spell (4; double eligible dimensions of one continuous spell area, not range or separate-area count; spell cast at level <=6); Maximized Spell (5; maximize one eligible variable numerical roll in initial resolution, including damage/healing but not attack/save/opposed rolls or later recurring rolls; spell cast at level <=6). Restrictions use actual casting level including ordinary upcasting. Amplified + Maximized, if both options are allowed, costs 8 Sorcery Points and yields maximum base result plus half a separately rolled eligible result, rounded down. Exact unusual spell geometry delegated to shared effects implementation.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-twinned-two-modes",
+      "state": "approved-native-rule",
+      "decision": "One learned Twinned Spell option has two mutually exclusive modes. Twin (2014-derived) costs Sorcery Points equal to actual spell casting level, minimum 1, and adds a second creature in range if the spell targets one creature, is not Self-range and cannot target multiple creatures at its current level. Expanded Targeting (2024-derived) costs 1 Sorcery Point, treating a spell as one level higher solely to gain an additional target when its upcasting rules explicitly add targets; no other upcast benefit. Pick one mode per casting; do not use either twice or both together.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.metamagic-option-learning-and-combination",
+      "state": "approved-native-rule",
+      "decision": "Sorcerers know two Metamagic options at class level 2, four at 10, and six at 17, drawing both modern options and adapted historical ones from one pool. On gaining a Sorcerer level, one known option can be replaced with an eligible one. Ordinarily one option affects a spell; the explicit Empowered Spell and Seeking Spell exceptions allow them alongside another option. During active Innate Sorcery with Sorcery Incarnate, at most two different options may affect one spell, paying both costs. No option can be applied twice on the same casting; modern casting-time rules apply, without the generic historical spontaneous-casting full-round penalty.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.arcane-apotheosis-metamagic-cap",
+      "state": "approved-native-rule",
+      "decision": "At Sorcerer class level 20, while Innate Sorcery is active, Arcane Apotheosis discounts at most 2 Sorcery Points from ONE Metamagic option EACH turn, minimum resulting cost 0; it does not make arbitrarily costly options free. The second applied option, if permitted by Sorcery Incarnate, pays full cost. This approval resolves only the capstone Metamagic subsidy; Sorcerous Restoration is separately resolved by the owner-approved additive level-20 recovery rule, without changing this capstone's Metamagic discount.",
+      "decisionBasis": "Owner approved the complete preceding Sorcerer Metamagic proposal (including naming, numeric costs, restrictions, Twinned modes, combination limits, progression and capstone discount) on 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-metamagic-cross-edition-comparison.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Historical sorcerer and metamagic"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2014 sorcerer Metamagic and capstone"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "2024 Metamagic and Arcane Apotheosis"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/optionalfeatures.json",
+          "name": "Named modern Metamagic options"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.optional-open-spell-access",
+      "state": "approved-native-rule",
+      "decision": "Open Spell Access is an optional GM/campaign spellcasting policy separate from the general removal of daily spell preparation. If enabled for an eligible spellcaster, it removes finite known/prepared spell selection counts, granting access to all spells (including cantrips) on the character's class spell list at levels the class permits. No higher class spell level, off-list spells, added casting resources or free castings are thereby conferred. If the option is off, class-specific known-spell progressions remain in force and daily preparation is still removed; Bard retains its currently approved finite known progression, while Cleric and Druid already have separately approved full-list access. Sorcerer's finite option-off default is the 2024 level 1–20 progression, reaching 22 leveled known spells at Sorcerer level 20. Executable campaign-policy controls remain separate implementation work. This optional spell-access policy does not remove or change selected Metamagic option limits.",
+      "decisionBasis": "Owner reaffirmed that the system has an optional rule to remove spells-known selection limits, leaving only class and level restrictions, 2026-10-23. Consistent with established independent daily-preparation removal, spell-slot/spell-point resource choice and class-specific spellcasting.",
+      "nativeLocation": "docs/rewrite/native-rules-design-specification.md",
+      "evidence": [
+        {
+          "source": "NATIVE-BASELINE",
+          "path": "docs/baseline-bootstrap.md",
+          "name": "Spell Preparation and Spellcasting Resource Choice"
+        },
+        {
+          "source": "NATIVE-CLASS",
+          "path": "data/native/classes/base/bard.json",
+          "name": "Finite Bard spells known"
+        },
+        {
+          "source": "NATIVE-CLASS",
+          "path": "data/native/classes/base/cleric.json",
+          "name": "Cleric full eligible list"
+        },
+        {
+          "source": "NATIVE-CLASS",
+          "path": "data/native/classes/base/druid.json",
+          "name": "Druid full eligible list"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.sorcerous-restoration-additive-at-20",
+      "state": "approved-native-rule",
+      "decision": "At Sorcerer class level 5 gain 2024 Sorcerous Restoration: regain spent Sorcery Points up to floor(Sorcerer level/2) at the end of one Short Rest, once per Long Rest. At Sorcerer class level 20, ADD the historical 2014 benefit of 4 additional spent Sorcery Points at the end of EVERY Short Rest. These amounts explicitly stack when the first feature is available: up to 14 points on that qualifying level-20 Short Rest, and 4 on later Short Rests while the once-per-Long-Rest component is unavailable. Never exceed the Sorcery Point maximum. Do not alter Long Rest Sorcery Point refresh, conversion with spell slots / optional spell points, or Arcane Apotheosis's separately approved Metamagic discount.",
+      "decisionBasis": "Owner explicitly instructed additive recovery, not mutually exclusive restoration, because the extra four points are a level-20 feature, 2026-10-23.",
+      "nativeLocation": "docs/rewrite/sorcerer-band-1-reconciliation.md",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "Sorcerous Restoration at level 20"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "Sorcerous Restoration at level 5"
+        },
+        {
+          "source": "SRD51-SRD52",
+          "path": "data/reference/srd/structured/class/class-sorcerer.json",
+          "name": "Sorcery Point pool and Flexible Casting"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.companion-path-exclusive-choice",
+      "state": "approved-native-rule",
+      "decision": "Eligible base classes that grant a persistent/bonded versus ephemeral/conjured companion pathway provide an EXCLUSIVE class-grant choice by default, instead of both paths automatically. Sorcerer and Wizard true familiar paths are bonded/persistent or ephemeral/conjured. Druid's paths are historical persistent Animal Companion and the 2024 temporary Wild Companion familiar; the historical Animal Companion is not itself a familiar and retains its distinct progression. This newer rule explicitly supersedes class.druid.companions-can-coexist: the old Druid native data remains to be migrated with regression tests and historical grant timing reviewed. Additional creatures require separately explicit grants, and independently learning Find Familiar does not itself grant extra companion-class paths. Companion roster size, deployment limits, swapping/storage, bond progression, and Tamer-specific privileges have NOT been approved by this choice and are deferred to cross-class companion design.",
+      "decisionBasis": "Owner expressly approved the shared cross-class mutually exclusive companion-path structure, including reconsidering the prior Druid double grant, 2026-10-23. Source timing and mechanics are not rewritten by this structural approval.",
+      "nativeLocation": "docs/rewrite/native-rules-design-specification.md",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Druid Animal Companion"
+        },
+        {
+          "source": "SRD35",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-ii.md",
+          "name": "Sorcerer and Wizard familiars"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-druid.json",
+          "name": "Druid Wild Companion"
+        },
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/druid-band-1-reconciliation.md",
+          "name": "Former Druid companion co-existence; superseded by this owner decision"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.sorcerer.defer-familiar-mechanics",
+      "state": "approved-native-rule",
+      "decision": "Sorcerer's base class declares one exclusive companion path (bonded/persistent or self-focused/ephemeral), but does not specify or grant invented familiar statistics, bond advancement, summons, storage, replacement rules, or power allocation during Sorcerer Band 1 class reconciliation. Defer all detailed familiar mechanics to the shared companion-system pass together with Druid companion revisions and Wizard familiars. This deferral does not block declaring the remaining approved Sorcerer class levels and features.",
+      "decisionBasis": "Owner specifically directed that Sorcerer Familiar details, like Druid companion mechanics, must be revisited when the shared companion system is worked on, 2026-10-24.",
+      "nativeLocation": "data/native/classes/base/sorcerer.json",
+      "evidence": [
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/companion-path-and-tamer-mechanics-analysis.md",
+          "name": "Owner companion path decision and deferred bond design"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.wizard.specialization-selections",
+      "state": "approved-native-rule",
+      "decision": "At Wizard class levels 5, 10, 15, and 20 gain one additional Wizard Specialization option from Metamagic or Item Creation. General feat selections may be spent instead on an eligible specialization option, consuming the feat; an ASI must separately permit feat choice. Prerequisites and repetition limits apply. Historical 3.5 Spell Mastery feat is excluded in favor of the 2014 Wizard class feature. No Sorcery Points or Sorcerer class Metamagic are granted. Scribe Scroll is a separate automatic Wizard level-1 feature.",
+      "decisionBasis": "Owner approved additional Wizard specialization choices, feat substitution, and exclusion of the historical Spell Mastery feat, on 2026-10-24.",
+      "nativeLocation": "data/native/classes/base/wizard.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "https://www.d20srd.org/srd/classes/sorcererWizard.htm",
+          "name": "Wizard bonus feats at 5/10/15/20 and separate Scribe Scroll at 1"
+        },
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/native-rules-design-specification.md",
+          "name": "Shared feats, no daily spell preparation, class Band 1 constraints"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.wizard.band1-spell-mastery-and-spellbook",
+      "state": "approved-native-rule",
+      "decision": "Use 2014 level-18 Spell Mastery, choosing one level-1 and one level-2 spell in own spellbook, casting each at its lowest level without a slot, replacing one or both after eight hours of study. No daily spell preparation. Omit historical Spell Mastery feat and the redundant 2024 level-5 Memorize Spell. Learned Wizard spells remain ordinarily castable without the physical book; explicitly book-dependent rituals and copying still require the book.",
+      "decisionBasis": "Owner approval on 2026-10-24.",
+      "nativeLocation": "data/native/classes/base/wizard.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-wizard.json",
+          "name": "2014 Spell Mastery"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-wizard.json",
+          "name": "Ritual Adept and Memorize Spell"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.wizard.automatic-scribe-scroll-level-1",
+      "state": "approved-native-rule",
+      "decision": "Wizard automatically gains Scribe Scroll class entitlement at level 1 without consuming any general feat or Wizard Specialization choice; scroll crafting remains in shared system.",
+      "decisionBasis": "Owner approval on 2026-10-24.",
+      "nativeLocation": "data/native/features/classes/wizard/scribe-scroll-level-1.json",
+      "evidence": [
+        {
+          "source": "SRD35",
+          "path": "https://www.d20srd.org/srd/classes/sorcererWizard.htm",
+          "name": "3.5 Wizard Scribe Scroll"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class.warlock.historical-class-features-band1",
+      "state": "approved-native-rule",
+      "decision": "Warlock retains 4 historical 3.5e base-class feature families as additive native grants: Damage Reduction (1/2/3/4/5 at levels 3/7/11/15/19, bypassed by cold iron), Deceive Item (level 4, historical take 10 on eligible magic-item competency checks even when distracted/threatened, without waiving prerequisites), Energy Resistance (level 10 choose two historical energy types for flat 5 damage mitigation, improving to 10 at level 20; electricity/lightning and sonic/thunder mapping), and Imbue Item (level 12, appropriate item-creation entitlement required, allow shared magic-item competency substitution for missing prerequisite spells at historical DC 15+spell level arcane or 25+spell level divine, respecting historical failed-check restrictions). Reuse existing shared damage reduction, recovery, competency and crafting systems rather than inventing separate implementations. Historical automatic level-2 Detect Magic is EXCLUDED: at-will Detect Magic remains an optional Eldritch Sight invocation, using a normal invocation selection. These rules do not automatically activate any specific invocation or patron subclass.",
+      "decisionBasis": "Owner approval on 2026-10-24: accepted five historical feature families as outlined in Case 1; explicitly rejected an automatic at-will Detect Magic feature because it would devalue the overlapping Eldritch Sight invocation. Confirmed maintaining Detect Magic through the invocation only. Owner clarification on 2026-10-24 supersedes ONLY the fast-healing base-class grant: Fiendish Resilience fast healing becomes one available effect of the Fiend Patron's single Infernal Retaliation feature, which has one shared use per Long Rest.",
+      "nativeLocation": "data/native/classes/base/warlock.json",
+      "implementationStatus": "owner-approved-awaiting-native-band1-reconciliation",
+      "evidence": [
+        {
+          "source": "SRD35-NONOPEN",
+          "path": "data/reference/3x/warlock-complete-arcane-research.json",
+          "name": "Historical Complete Arcane Warlock feature progression (research provenance; no copyright license implied)"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/native/features/optional/eldritch-sight.json",
+          "name": "2014 Eldritch Sight invocation"
+        },
+        {
+          "source": "NATIVE",
+          "path": "docs/rewrite/native-rules-design-specification.md",
+          "name": "Shared source reconciliation and rest-based recharge policy"
+        }
+      ],
+      "reviewClarification": {
+        "requestedOn": "2026-10-24",
+        "feature": "3.5e base-class Fiendish Resilience (fast healing)",
+        "status": "resolved-owner-approved-fiend-patron-infernal-retaliation",
+        "question": "Retain as automatic base-class grant, convert to optional Eldritch Invocation, or retire after considering 5.x defenses; the historical approval is recorded but is no longer final for Warlock implementation.",
+        "unaffectedApprovedFeatureFamilies": [
+          "Damage Reduction",
+          "Deceive Item",
+          "Energy Resistance",
+          "Imbue Item"
+        ],
+        "historicalValuesPreserved": "Fast healing 1/2/5 at Warlock levels 8/13/18 for up to 20 rounds once per Long Rest",
+        "warning": "Original base-class provenance and approval are retained above for history; superseded fast healing must not appear as a native base-class grant. Remaining four historical base-class families stay approved.",
+        "resolution": "Native Fiend Infernal Retaliation is ONE Patron feature with two selectable Reaction effects: Fiendish Resilience fast healing and Fiendish Flamewreath, acquired at level 8 and improved at 13 and 18. One use per Long Rest is shared. While fast healing is active and Warlock reaches 0 HP, it stabilizes the Warlock once without healing at 0 HP or restoring consciousness; later damage follows ordinary death rules with no automatic restabilization. Hellfire Shield is REMOVED from the shared feature and considered only as an optional Hellfire specialization with separate acquisition and pending resources.",
+        "nativeFeatureId": "warlock.patron.fiend.infernal-retaliation",
+        "shieldDisposition": "Optional Hellfire specialization candidate; not an Infernal Retaliation mode or a native base-class Warlock grant."
+      },
+      "priorApproval": {
+        "decision": "Warlock retains 5 historical 3.5e base-class feature families as additive native grants: Damage Reduction (1/2/3/4/5 at levels 3/7/11/15/19, bypassed by cold iron), Deceive Item (level 4, historical take 10 on eligible magic-item competency checks even when distracted/threatened, without waiving prerequisites), Fiendish Resilience (levels 8/13/18, heal 1/2/5 HP per round for up to 20 rounds, one activation per Long Rest), Energy Resistance (level 10 choose two historical energy types for flat 5 damage mitigation, improving to 10 at level 20; electricity/lightning and sonic/thunder mapping), and Imbue Item (level 12, appropriate item-creation entitlement required, allow shared magic-item competency substitution for missing prerequisite spells at historical DC 15+spell level arcane or 25+spell level divine, respecting historical failed-check restrictions). Reuse existing shared damage reduction, recovery, competency and crafting systems rather than inventing separate implementations. Historical automatic level-2 Detect Magic is EXCLUDED: at-will Detect Magic remains an optional Eldritch Sight invocation, using a normal invocation selection. These rules do not automatically activate any specific invocation or patron subclass.",
+        "decisionBasis": "Owner approval on 2026-10-24: accepted five historical feature families as outlined in Case 1; explicitly rejected an automatic at-will Detect Magic feature because it would devalue the overlapping Eldritch Sight invocation. Confirmed maintaining Detect Magic through the invocation only.",
+        "status": "historical-owner-approval-superseded-for-fast-healing-only"
+      }
+    }
+  ]
+}

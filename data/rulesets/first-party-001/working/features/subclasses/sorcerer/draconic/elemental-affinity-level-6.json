@@ -1,0 +1,45 @@
+{
+  "id": "subclass-feature.sorcerer.draconic.elemental-affinity-level-6",
+  "name": "Elemental Affinity",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Elemental Affinity",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD51",
+        "level": 6,
+        "header": 2,
+        "consumes": {
+          "name": "Sorcery Point"
+        },
+        "entries": [
+          "Starting at 6th level, when you cast a spell that deals damage of the type associated with your draconic ancestry, you can add your Charisma modifier to one damage roll of that spell. At the same time, you can spend 1 sorcery point to gain resistance to that damage type for 1 hour."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Elemental Affinity",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD52",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "Your draconic magic has an affinity with a damage type associated with dragons. Choose one of those types: Acid, Cold, Fire, Lightning, or Poison.",
+          "You have {@variantrule Resistance|SRD52} to that damage type, and when you cast a spell that deals damage of that type, you can add your Charisma modifier to one damage roll of that spell."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "parentSubclass": "subclass.sorcerer.draconic",
+  "classLevel": 6
+}

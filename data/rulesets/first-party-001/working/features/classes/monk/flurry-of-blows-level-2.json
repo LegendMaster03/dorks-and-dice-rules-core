@@ -1,0 +1,42 @@
+{
+  "id": "class-feature.monk.flurry-of-blows-level-2",
+  "name": "Flurry of Blows",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Flurry of Blows",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 2,
+        "header": 2,
+        "consumes": {
+          "name": "Ki"
+        },
+        "entries": [
+          "Immediately after you take the {@action Attack} action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Flurry of Blows",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 2,
+        "header": 2,
+        "consumes": {
+          "name": "Focus Point"
+        },
+        "entries": [
+          "You can expend 1 Focus Point to make two Unarmed Strikes as a {@variantrule Bonus Action|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 2
+}

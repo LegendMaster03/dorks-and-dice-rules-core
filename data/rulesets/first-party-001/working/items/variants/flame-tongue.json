@@ -1,0 +1,64 @@
+{
+  "id": "magicvariant.flame-tongue",
+  "name": "Flame Tongue",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Flame Tongue",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Flame Tongue ",
+          "source": "SRD51",
+          "page": 223,
+          "rarity": "rare",
+          "reqAttune": true,
+          "entries": [
+            "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+          ],
+          "light": [
+            {
+              "bright": 40,
+              "dim": 80
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Flame Tongue",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "M|SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Flame Tongue ",
+          "source": "SRD52",
+          "page": 223,
+          "rarity": "rare",
+          "reqAttune": true,
+          "entries": [
+            "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+          ],
+          "light": [
+            {
+              "bright": 40,
+              "dim": 80
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1049 @@
+{
+  "id": "class.sorcerer",
+  "name": "Sorcerer",
+  "kind": "class",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 6
+    },
+    "spellcastingAbility": "charisma",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "constitution",
+      "charisma"
+    ],
+    "armorProficiencies": [],
+    "weaponProficiencies": [
+      "simple"
+    ],
+    "skillChoices": {
+      "count": 2,
+      "from": [
+        "arcana",
+        "deception",
+        "insight",
+        "intimidation",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "rankedClassSkills": [
+      "bluff",
+      "concentration",
+      "craft",
+      "knowledge-arcana",
+      "profession",
+      "spellcraft"
+    ],
+    "rankedSkillPoints": {
+      "firstLevel": "4*(2+Int-modifier)",
+      "eachAdditionalLevel": "2+Int-modifier"
+    },
+    "alignmentRestriction": null,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonMinimumTotalCharacterLevel": 21,
+    "multiclassCharismaPrerequisite": 13,
+    "attackProgression": "half-BAB",
+    "iterativeAttackPolicy": "shared-native-attack-procedures",
+    "spellPreparation": "none",
+    "spellAccess": "finite-known-by-default",
+    "optionalOpenSpellAccess": {
+      "policy": "open-spell-access",
+      "allClassSpellsIncludingCantripsWhenEnabled": true,
+      "noAddedCastingResources": true,
+      "noMetamagicEntitlements": true
+    },
+    "spellKnownProgression": [
+      2,
+      4,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      16,
+      17,
+      17,
+      18,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "cantripsKnownProgression": [
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "spellSlotsProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "spellResourceModes": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "sorceryPointMaximumByLevel": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "metamagicOptionsKnownBySorcererLevel": [
+      [
+        2,
+        2
+      ],
+      [
+        10,
+        4
+      ],
+      [
+        17,
+        6
+      ]
+    ],
+    "companionPathChoice": {
+      "exclusive": true,
+      "paths": [
+        "bonded-persistent",
+        "self-focused-ephemeral"
+      ],
+      "selectionFromSorcererLevel": 1,
+      "implementation": "deferred-to-shared-companion-system",
+      "noMechanicalPowersInvented": true
+    },
+    "subclassFeatureLevels": [
+      3,
+      6,
+      14,
+      18
+    ],
+    "subclasses": "excluded-until-subclass-pass",
+    "prestigeClasses": "excluded-until-prestige-pass",
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.sorcerer.spellcasting-level-1",
+          "class-feature.sorcerer.innate-sorcery-level-1"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": true,
+        "sorceryPointMaximum": 0,
+        "metamagicOptionsKnown": 0,
+        "cantripsKnown": 4,
+        "leveledSpellsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 0,
+          "will": 2
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.sorcerer.font-of-magic-level-2",
+          "class-feature.sorcerer.sorcery-points-level-2",
+          "class-feature.sorcerer.flexible-casting-level-2",
+          "class-feature.sorcerer.metamagic-level-2",
+          "class-feature.sorcerer.metamagic-options-level-2"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 2,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 4,
+        "leveledSpellsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 3,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 4,
+        "leveledSpellsKnown": 6,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.sorcerer.ability-score-improvement-level-4"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 4,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 7,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.sorcerer.sorcerous-restoration-level-5"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 5,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 9,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 6,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 10,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.sorcerer.sorcery-incarnate-level-7"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 7,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 11,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.sorcerer.ability-score-improvement-level-8"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 8,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 12,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 9,
+        "metamagicOptionsKnown": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 14,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [
+          "class-feature.sorcerer.metamagic-level-10"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 10,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 15,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 11,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 16,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.sorcerer.ability-score-improvement-level-12"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 12,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 16,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 13,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 17,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 14,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 17,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 15,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 18,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.sorcerer.ability-score-improvement-level-16"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 16,
+        "metamagicOptionsKnown": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 18,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [
+          "class-feature.sorcerer.metamagic-level-17"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 17,
+        "metamagicOptionsKnown": 6,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 19,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 18,
+        "metamagicOptionsKnown": 6,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 20,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.sorcerer.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 19,
+        "metamagicOptionsKnown": 6,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 21,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.sorcerer.sorcerous-restoration-level-20",
+          "class-feature.sorcerer.arcane-apotheosis-level-20"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "sorceryPointMaximum": 20,
+        "metamagicOptionsKnown": 6,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 22,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 12
+        }
+      }
+    ],
+    "inlineFeatures": []
+  }
+}

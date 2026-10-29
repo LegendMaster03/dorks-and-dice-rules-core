@@ -1,0 +1,497 @@
+{
+  "_meta": {
+    "status": "SRD-derived-native-baseline-pending-reconciliation",
+    "note": "Candidate definitions are imported content, not adopted executable rules."
+  },
+  "records": [
+    {
+      "id": "language.abyssal",
+      "name": "Abyssal",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Abyssal",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Demons"
+            ],
+            "script": "Infernal"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Abyssal",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.celestial",
+      "name": "Celestial",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Celestial",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Celestials"
+            ],
+            "script": "Celestial"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Celestial",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.common",
+      "name": "Common",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Common",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Humans"
+            ],
+            "script": "Common"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Common",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.common-sign-language",
+      "name": "Common Sign Language",
+      "kind": "language",
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "type": "standard"
+      }
+    },
+    {
+      "id": "language.deep-speech",
+      "name": "Deep Speech",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Deep Speech",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Aboleths, cloakers"
+            ],
+            "script": "none"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Deep Speech",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.draconic",
+      "name": "Draconic",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Draconic",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Dragons, dragonborn"
+            ],
+            "script": "Draconic"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Draconic",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.druidic",
+      "name": "Druidic",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Druidic",
+            "type": "secret",
+            "typicalSpeakers": [
+              "{@class druid||druids}/{@creature druid||druids}",
+              "{@creature treant||treants}"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Druidic",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.dwarvish",
+      "name": "Dwarvish",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Dwarvish",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Dwarves"
+            ],
+            "script": "Dwarvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Dwarvish",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.elvish",
+      "name": "Elvish",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Elvish",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Elves"
+            ],
+            "script": "Elvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Elvish",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.giant",
+      "name": "Giant",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Giant",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Ogres, giants"
+            ],
+            "script": "Dwarvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Giant",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.gnomish",
+      "name": "Gnomish",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Gnomish",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Gnomes"
+            ],
+            "script": "Dwarvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Gnomish",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.goblin",
+      "name": "Goblin",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Goblin",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Goblinoids"
+            ],
+            "script": "Dwarvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Goblin",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.halfling",
+      "name": "Halfling",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Halfling",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Halflings"
+            ],
+            "script": "Common"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Halfling",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.infernal",
+      "name": "Infernal",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Infernal",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Devils"
+            ],
+            "script": "Infernal"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Infernal",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.orc",
+      "name": "Orc",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Orc",
+            "type": "standard",
+            "typicalSpeakers": [
+              "Orcs"
+            ],
+            "script": "Dwarvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Orc",
+            "type": "standard"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.primordial",
+      "name": "Primordial",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Primordial",
+            "dialects": [
+              "Auran",
+              "Aquan",
+              "Ignan",
+              "Terran"
+            ],
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Elementals"
+            ],
+            "script": "Dwarvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Primordial",
+            "dialects": [
+              "Auran",
+              "Aquan",
+              "Ignan",
+              "Terran"
+            ],
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.sylvan",
+      "name": "Sylvan",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Sylvan",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Fey creatures"
+            ],
+            "script": "Elvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Sylvan",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.thieves-cant",
+      "name": "Thieves' Cant",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Thieves' Cant",
+            "type": "secret",
+            "typicalSpeakers": [
+              "{@creature assassin||assassins}",
+              "{@class rogue||rogues}"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Thieves' Cant",
+            "type": "rare"
+          }
+        }
+      ]
+    },
+    {
+      "id": "language.undercommon",
+      "name": "Undercommon",
+      "kind": "language",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Undercommon",
+            "type": "exotic",
+            "typicalSpeakers": [
+              "Underworld traders"
+            ],
+            "script": "Elvish"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Undercommon",
+            "type": "rare"
+          }
+        }
+      ]
+    }
+  ]
+}

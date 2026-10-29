@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.barbarian.unarmored-defense-level-1",
+  "name": "Unarmored Defense",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Unarmored Defense",
+    "description": "Without armor base AC = 10 + Dexterity modifier + Constitution modifier; shield allowed.",
+    "mechanics": {
+      "kind": "base-ac",
+      "formula": "10 + dex-mod + con-mod",
+      "requires": "no-armor",
+      "shieldAllowed": true
+    }
+  }
+}

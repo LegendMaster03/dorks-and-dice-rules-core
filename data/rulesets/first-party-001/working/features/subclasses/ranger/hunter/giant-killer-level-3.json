@@ -1,0 +1,26 @@
+{
+  "id": "subclass-feature.ranger.hunter.giant-killer-level-3",
+  "name": "Giant Killer",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Killer",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "When a Large or larger creature within 5 feet of you hits or misses you with an attack, you can use your reaction to attack that creature immediately after its attack, provided that you can see the creature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "subclass.ranger.hunter",
+  "classLevel": 3
+}

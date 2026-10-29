@@ -1,0 +1,178 @@
+{
+  "id": "monster.wererat",
+  "name": "Wererat",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Lycanthropes"
+    ],
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "monstrosity",
+      "tags": [
+        "lycanthrope"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 60,
+      "formula": "11d8 + 11"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 10,
+    "dex": 16,
+    "con": 12,
+    "int": 11,
+    "wis": 10,
+    "cha": 8,
+    "skill": {
+      "perception": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Common (can't speak in rat form)"
+    ],
+    "cr": "2",
+    "gear": [
+      "hand crossbow|srd52"
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The wererat makes two attacks, using Scratch or Hand Crossbow in any combination. It can replace one attack with a Bite attack."
+        ]
+      },
+      {
+        "name": "Bite (Rat or Hybrid Form Only)",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}8 ({@damage 2d4 + 3}) Piercing damage. If the target is a Humanoid, it is subjected to the following effect. {@actSave con} {@dc 11}. {@actSaveFail} The target is cursed. If the cursed target drops to 0 {@variantrule Hit Points|SRD52}, it instead becomes a Wererat under the DM's control and has 10 {@variantrule Hit Points|SRD52}. {@actSaveSuccess} The target is immune to this wererat's curse for 24 hours."
+        ]
+      },
+      {
+        "name": "Scratch",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Hand Crossbow (Humanoid or Hybrid Form Only)",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 30/120 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The wererat shape-shifts into a Medium rat-humanoid hybrid or a Small rat, or it returns to its true humanoid form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "urban"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/wererat.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "CS"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "CUR",
+      "MA",
+      "RA",
+      "RNG"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Wererat",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Wererat",
+            "entries": [
+              "{@i Changed by the Deviousness of the Rat}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Individual"
+                  }
+                ]
+              },
+              "Wererats can shape-shift from their humanoid forms into giant rats or humanoid-rat hybrids. These creatures can transform voluntarily, but some are magically compelled to shape-shift when exposed to complete darkness or during nights of a new moon. Often, wererats' nature results from a divine curse—punishment for their deceitful natures or the crimes of their treacherous families. Wererats frequently work in groups, forming bandit gangs or thieves' guilds."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Werebear, Wereboar, and Wererat.webp"
+            },
+            "title": "A werebear chases a wereboar and wererat out of its territory",
+            "credit": "Slawomir Maniak",
+            "width": 1047,
+            "height": 2560
+          }
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The wererat has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ]
+  }
+}

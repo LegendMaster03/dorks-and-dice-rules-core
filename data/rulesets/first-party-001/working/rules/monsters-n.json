@@ -1,0 +1,30 @@
+{
+  "id": "rule.monsters-n",
+  "name": "Monsters (N)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (N)",
+        "page": 335,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Nalfeshnee|srd51}",
+              "{@creature Night Hag|srd51}",
+              "{@creature Nightmare|srd51}",
+              "{@creature Noble|srd51}"
+            ]
+          }
+        ],
+        "id": "1b0"
+      }
+    }
+  ]
+}

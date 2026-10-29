@@ -1,0 +1,73 @@
+{
+  "id": "subclass.monk.open-hand",
+  "name": "Way of the Open Hand",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Way of the Open Hand",
+        "shortName": "Open Hand",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "additionalSpells": [
+          {
+            "innate": {
+              "11": {
+                "daily": {
+                  "1": [
+                    "sanctuary"
+                  ]
+                }
+              }
+            },
+            "ability": "wis"
+          }
+        ],
+        "subclassFeatures": [
+          "Way of the Open Hand|Monk||Open Hand||3",
+          "Wholeness of Body|Monk||Open Hand||6",
+          "Tranquility|Monk||Open Hand||11",
+          "Quivering Palm|Monk||Open Hand||17"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Warrior of the Open Hand",
+        "shortName": "Open Hand",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "subclassFeatures": [
+          "Warrior of the Open Hand|Monk|SRD52|Open Hand|SRD52|3",
+          "Wholeness of Body|Monk|SRD52|Open Hand|SRD52|6",
+          "Fleet Step|Monk|SRD52|Open Hand|SRD52|11",
+          "Quivering Palm|Monk|SRD52|Open Hand|SRD52|17"
+        ],
+        "lore": [
+          {
+            "name": "Warrior of the Open Hand",
+            "shortName": "Open Hand",
+            "className": "Monk",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Open Hand Monk.webp"
+                },
+                "credit": "Katerina Ladon",
+                "width": 850,
+                "height": 2005
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk"
+}

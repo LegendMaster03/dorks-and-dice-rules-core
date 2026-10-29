@@ -1,0 +1,18 @@
+{
+  "id": "deity.sif",
+  "name": "Sif",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "Goddess of war",
+    "domains": [
+      "War"
+    ],
+    "symbol": "Upraised sword"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "class-feature.cleric.channel-divinity-level-2",
+  "name": "Channel Divinity",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Channel Divinity",
+    "description": "Channel Divinity is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "shared-divine-resource",
+      "resource": "cleric.channel-divinity",
+      "availableFromClericLevel": 1,
+      "usesByLevel": [
+        [
+          1,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          18,
+          4
+        ]
+      ],
+      "atLevelOneAvailableEffects": [
+        "cleric.historical-turn-undead",
+        "cleric.historical-rebuke-undead",
+        "cleric.historical-command-undead",
+        "cleric.historical-bolster-undead",
+        "cleric.historical-dispel-turning"
+      ],
+      "atLevelTwoAddEffects": [
+        "class-feature.cleric.turn-undead-level-2",
+        "class-feature.cleric.divine-spark-level-2"
+      ],
+      "effectsCostUses": 1,
+      "shortRestRestore": 1,
+      "longRestRestore": "all",
+      "saveDC": "cleric-spell-save-dc",
+      "legacy3xSeparatePool": "not-granted",
+      "historicalUsesPerDay": "3+Charisma-modifier is source provenance, replaced by the approved one shared pool",
+      "domainEffects": "added-only-by-later-subclass-or-domain-rules",
+      "levelOneAvailability": "unifies-3x-level-one-turning-with-modern-resource"
+    }
+  }
+}

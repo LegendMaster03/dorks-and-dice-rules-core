@@ -1,0 +1,484 @@
+{
+  "id": "species.tiefling",
+  "name": "Tiefling",
+  "kind": "species",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Tiefling",
+        "size": [
+          "M"
+        ],
+        "speed": 30,
+        "ability": [
+          {
+            "cha": 2,
+            "int": 1
+          }
+        ],
+        "heightAndWeight": {
+          "baseHeight": 57,
+          "heightMod": "2d8",
+          "baseWeight": 110,
+          "weightMod": "2d4"
+        },
+        "age": {
+          "mature": 20,
+          "max": 100
+        },
+        "darkvision": 60,
+        "traitTags": [
+          "Uncommon Race"
+        ],
+        "languageProficiencies": [
+          {
+            "common": true,
+            "infernal": true
+          }
+        ],
+        "resist": [
+          "fire"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/tiefling.opus"
+        },
+        "additionalSpells": [
+          {
+            "innate": {
+              "3": {
+                "daily": {
+                  "1": [
+                    "hellish rebuke#2"
+                  ]
+                }
+              },
+              "5": {
+                "daily": {
+                  "1": [
+                    "darkness"
+                  ]
+                }
+              }
+            },
+            "ability": "cha",
+            "known": {
+              "1": [
+                "thaumaturgy#c"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          {
+            "name": "Age",
+            "type": "entries",
+            "entries": [
+              "Tieflings mature at the same rate as humans but live a few years longer."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Size",
+            "entries": [
+              "Tieflings are about the same size and build as humans. Your size is Medium."
+            ]
+          },
+          {
+            "name": "Darkvision",
+            "entries": [
+              "Thanks to your infernal heritage, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Hellish Resistance",
+            "entries": [
+              "You have resistance to fire damage."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Infernal Legacy",
+            "entries": [
+              "You know the {@spell thaumaturgy} cantrip. Once you reach 3rd level, you can cast the {@spell hellish rebuke} spell as a 2nd-level spell with this trait; you regain the ability to cast it when you finish a long rest. Once you reach 5th level, you can also cast the {@spell darkness} spell once per day with this trait; you regain the ability to cast it when you finish a long rest. Charisma is your spellcasting ability for these spells."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Languages",
+            "entries": [
+              "You can speak, read, and write Common and Infernal."
+            ],
+            "type": "entries"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tiefling",
+        "creatureTypes": [
+          "humanoid"
+        ],
+        "size": [
+          "S",
+          "M"
+        ],
+        "speed": 30,
+        "darkvision": 60,
+        "resist": [
+          {
+            "choose": {
+              "from": [
+                "poison",
+                "necrotic",
+                "fire"
+              ]
+            }
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/tiefling.opus"
+        },
+        "additionalSpells": [
+          {
+            "name": "Abyssal",
+            "ability": {
+              "choose": [
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "known": {
+              "1": [
+                "thaumaturgy|srd52#c",
+                "poison spray|srd52#c"
+              ]
+            },
+            "innate": {
+              "3": {
+                "daily": {
+                  "1": [
+                    "ray of sickness|srd52"
+                  ]
+                }
+              },
+              "5": {
+                "daily": {
+                  "1": [
+                    "hold person|srd52"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "Chthonic",
+            "ability": {
+              "choose": [
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "known": {
+              "1": [
+                "thaumaturgy|srd52#c",
+                "chill touch|srd52#c"
+              ]
+            },
+            "innate": {
+              "3": {
+                "daily": {
+                  "1": [
+                    "false life|srd52"
+                  ]
+                }
+              },
+              "5": {
+                "daily": {
+                  "1": [
+                    "ray of enfeeblement|srd52"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "name": "Infernal",
+            "ability": {
+              "choose": [
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "known": {
+              "1": [
+                "thaumaturgy|srd52#c",
+                "fire bolt|srd52#c"
+              ]
+            },
+            "innate": {
+              "3": {
+                "daily": {
+                  "1": [
+                    "hellish rebuke|srd52"
+                  ]
+                }
+              },
+              "5": {
+                "daily": {
+                  "1": [
+                    "darkness|srd52"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "sizeEntry": {
+          "type": "item",
+          "name": "Size:",
+          "entries": [
+            "Medium (about 4-7 feet tall) or Small (about 3-4 feet tall), chosen when you select this species"
+          ]
+        },
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Darkvision",
+            "entries": [
+              "You have {@sense Darkvision|SRD52} with a range of 60 feet."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Fiendish Legacy",
+            "entries": [
+              "You are the recipient of a legacy that grants you supernatural abilities. Choose a legacy from the Fiendish Legacies table. You gain the level 1 benefit of the chosen legacy.",
+              "When you reach character levels 3 and 5, you learn a higher-level spell, as shown on the table. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy).",
+              {
+                "type": "table",
+                "caption": "Fiendish Legacies",
+                "colLabels": [
+                  "Legacy",
+                  "Level 1",
+                  "Level 3",
+                  "Level 5"
+                ],
+                "colStyles": [
+                  "col-2",
+                  "col-6",
+                  "col-2",
+                  "col-2"
+                ],
+                "rows": [
+                  [
+                    "Abyssal",
+                    "You have {@variantrule Resistance|SRD52} to Poison damage. You also know the {@spell Poison Spray|SRD52} cantrip.",
+                    "{@spell Ray of Sickness|SRD52}",
+                    "{@spell Hold Person|SRD52}"
+                  ],
+                  [
+                    "Chthonic",
+                    "You have {@variantrule Resistance|SRD52} to Necrotic damage. You also know the {@spell Chill Touch|SRD52} cantrip.",
+                    "{@spell False Life|SRD52}",
+                    "{@spell Ray of Enfeeblement|SRD52}"
+                  ],
+                  [
+                    "Infernal",
+                    "You have {@variantrule Resistance|SRD52} to Fire damage. You also know the {@spell Fire Bolt|SRD52} cantrip.",
+                    "{@spell Hellish Rebuke|SRD52}",
+                    "{@spell Darkness|SRD52}"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Otherworldly Presence",
+            "entries": [
+              "You know the {@spell Thaumaturgy|SRD52} cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy Trait."
+            ]
+          }
+        ],
+        "_versions": [
+          {
+            "name": "Tiefling; Abyssal Legacy",
+            "source": "SRD52",
+            "_mod": {
+              "entries": {
+                "mode": "replaceArr",
+                "replace": "Fiendish Legacy",
+                "items": {
+                  "name": "Fiendish Legacy (Abyssal)",
+                  "type": "entries",
+                  "entries": [
+                    "You are the recipient of a legacy that grants you supernatural abilities. You have {@variantrule Resistance|SRD52} to Poison damage. You also know the {@spell Poison Spray|SRD52} cantrip.",
+                    "When you reach character level 3, you learn the {@spell Ray of Sickness|SRD52} spell. When you reach character level 5, you also learn the {@spell Hold Person|SRD52} spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have of the appropriate level.",
+                    "Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+                  ]
+                }
+              }
+            },
+            "darkvision": 120,
+            "resist": [
+              "poison"
+            ],
+            "additionalSpells": [
+              {
+                "innate": {
+                  "3": {
+                    "daily": {
+                      "1": [
+                        "ray of sickness|srd52"
+                      ]
+                    }
+                  },
+                  "5": {
+                    "daily": {
+                      "1": [
+                        "hold person|srd52"
+                      ]
+                    }
+                  }
+                },
+                "ability": {
+                  "choose": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ]
+                },
+                "known": {
+                  "1": [
+                    "thaumaturgy|srd52#c",
+                    "poison spray|srd52#c"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "Tiefling; Chthonic Legacy",
+            "source": "SRD52",
+            "_mod": {
+              "entries": {
+                "mode": "replaceArr",
+                "replace": "Fiendish Legacy",
+                "items": {
+                  "name": "Fiendish Legacy (Chthonic)",
+                  "type": "entries",
+                  "entries": [
+                    "You are the recipient of a legacy that grants you supernatural abilities. You have {@variantrule Resistance|SRD52} to Necrotic damage. You also know the {@spell Chill Touch|SRD52} cantrip.",
+                    "When you reach character level 3, you learn the {@spell False Life|SRD52} spell. When you reach character level 5, you also learn the {@spell Ray of Enfeeblement|SRD52} spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have of the appropriate level.",
+                    "Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+                  ]
+                }
+              }
+            },
+            "resist": [
+              "necrotic"
+            ],
+            "additionalSpells": [
+              {
+                "innate": {
+                  "3": {
+                    "daily": {
+                      "1": [
+                        "false life|srd52"
+                      ]
+                    }
+                  },
+                  "5": {
+                    "daily": {
+                      "1": [
+                        "ray of enfeeblement|srd52"
+                      ]
+                    }
+                  }
+                },
+                "ability": {
+                  "choose": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ]
+                },
+                "known": {
+                  "1": [
+                    "thaumaturgy|srd52#c",
+                    "chill touch|srd52#c"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "Tiefling; Infernal Legacy",
+            "source": "SRD52",
+            "_mod": {
+              "entries": {
+                "mode": "replaceArr",
+                "replace": "Fiendish Legacy",
+                "items": {
+                  "name": "Fiendish Legacy (Infernal)",
+                  "type": "entries",
+                  "entries": [
+                    "You are the recipient of a legacy that grants you supernatural abilities. You have {@variantrule Resistance|SRD52} to Fire damage. You also know the {@spell Fire Bolt|SRD52} cantrip.",
+                    "When you reach character level 3, you learn the {@spell Hellish Rebuke|SRD52} spell. When you reach character level 5, you also learn the {@spell Darkness|SRD52} spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have of the appropriate level.",
+                    "Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+                  ]
+                }
+              }
+            },
+            "resist": [
+              "fire"
+            ],
+            "additionalSpells": [
+              {
+                "innate": {
+                  "3": {
+                    "daily": {
+                      "1": [
+                        "hellish rebuke|srd52"
+                      ]
+                    }
+                  },
+                  "5": {
+                    "daily": {
+                      "1": [
+                        "darkness|srd52"
+                      ]
+                    }
+                  }
+                },
+                "ability": {
+                  "choose": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ]
+                },
+                "known": {
+                  "1": [
+                    "thaumaturgy|srd52#c",
+                    "fire bolt|srd52#c"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "scope": "3x-standalone-conditions",
+  "status": "native-data-first-pass; spellcasting-and-action-economy-integration-pending",
+  "sourceMaterials": [
+    {
+      "edition": "D&D 3.0",
+      "name": "Condition Summary",
+      "url": "https://opengamecontent.fandom.com/wiki/D20_System_v3.0_SRD/Condition_Summary",
+      "sourceType": "third-party-transcription",
+      "verification": "search-index transcription, not checked against official edition document"
+    },
+    {
+      "edition": "D&D 3.5",
+      "name": "Condition Summary",
+      "url": "https://www.d20srd.org/srd/conditionSummary.htm",
+      "sourceType": "third-party-transcription",
+      "verification": "direct public SRD transcription"
+    }
+  ],
+  "copyrightBoundary": "Record only original paraphrases and mechanics in native data. Any imported 3.x SRD passage must retain appropriate OGL/provenance records distinct from the CC BY 5.x source archive.",
+  "decisions": [
+    {
+      "id": "condition.dazed",
+      "status": "adopted",
+      "rationale": "Keep restriction on actions but no AC penalty. Do not simply inherit native Incapacitated because that would automatically end Concentration, which is not a source Dazed consequence."
+    },
+    {
+      "id": "condition.dazzled",
+      "status": "adopted",
+      "rationale": "Adopt expanded 3.5 scope: -1 attacks plus Search and Spot; 3.0 specified -1 attacks alone. Keep Search/Spot as canonical native skill identities without imposing duplicate penalty on parent Perception."
+    },
+    {
+      "id": "condition.entangled",
+      "status": "partial-native-with-deferred-spellcasting",
+      "rationale": "Both editions halve unanchored movement, prohibit run/charge and penalize attack -2/effective Dexterity -4; anchored bonds set movement zero. 3.0 spell check typically DC 15, 3.5 specifies DC 15 plus spell level; record newer formula as candidate while preventing accidental application to 5.x Concentration saves.",
+      "deferred": [
+        "native spellcasting interruption check identification",
+        "cross-edition effective Dexterity score vs dexterity modifier ordering and cap semantics"
+      ]
+    },
+    {
+      "id": "condition.fascinated",
+      "status": "adopted-from-3.5",
+      "rationale": "3.5 defines the attentive, stationary state, -4 to reactive perception checks, renewed save when potential threats appear, obvious-threat ending, and standard-action ally intervention."
+    },
+    {
+      "id": "condition.nauseated",
+      "status": "partial-native-with-deferred-action-economy",
+      "rationale": "Both versions prevent offensive/casting/concentration or attentive activities while allowing a move/move-equivalent activity. The full 3.x move action does not equal just movement distance in native 5.x, so no executable action conversion is asserted.",
+      "deferred": [
+        "mapping one 3.x move-equivalent activity onto Action/Bonus Action and movement budgets"
+      ]
+    },
+    {
+      "id": "condition.sickened",
+      "status": "adopted-from-3.5",
+      "rationale": "Apply -2 to attacks, weapon damage, saving throws, skill checks and ability checks. Remains distinct from Poisoned or Nauseated; do not convert numeric -2 automatically to Disadvantage."
+    }
+  ],
+  "remainingCandidates": [
+    "Confused",
+    "Cowering",
+    "Fatigued",
+    "Panicked",
+    "Pinned",
+    "Shaken",
+    "Staggered",
+    "Turned",
+    "Held"
+  ],
+  "pendingReclassification": [
+    "3.x Exhaused vs 5.x six-tier Exhaustion",
+    "Dying, Stable, Disabled, Dead, Ability Damage, Ability Drain, Energy Drain, Incorporeal",
+    "environmental displacement (Blown Away, Checked, Knocked Down)"
+  ],
+  "alreadyReviewedDefenses": "data/reference/3x/condition-defense-reconciliation.json",
+  "rulesBoundary": "All six definitions are adopted as native data; Entangled and Nauseated include explicitly deferred integration fields, not working runtime effects."
+}

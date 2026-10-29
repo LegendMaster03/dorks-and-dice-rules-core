@@ -1,0 +1,11 @@
+{
+  "id": "item.parchment-one-sheet",
+  "name": "Parchment (one sheet)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 10
+  }
+}

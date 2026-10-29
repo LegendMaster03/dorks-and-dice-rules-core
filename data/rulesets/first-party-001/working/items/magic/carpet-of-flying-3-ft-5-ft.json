@@ -1,0 +1,33 @@
+{
+  "id": "item.carpet-of-flying-3-ft-5-ft",
+  "name": "Carpet of Flying, 3 ft. × 5 ft.",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Carpet of Flying, 3 ft. × 5 ft.",
+        "tier": "major",
+        "rarity": "very rare",
+        "wondrous": true,
+        "entries": [
+          "You can speak the carpet's command word as an action to make the carpet hover and fly. It moves according to your spoken directions, provided that you are within 30 feet of it.",
+          "A 3 ft. × 5 ft. carpet can carry up to 200 lb. at a fly speed of 80 feet. A carpet can carry up to twice this weight, but it flies at half speed if it carries more than its normal capacity."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Carpet of Flying, 3 ft. × 5 ft.",
+        "rarity": "very rare",
+        "wondrous": true,
+        "entries": [
+          "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+          "A 3 ft. × 5 ft. carpet can carry up to 200 lb. at a fly speed of 80 feet. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity."
+        ]
+      }
+    }
+  ]
+}

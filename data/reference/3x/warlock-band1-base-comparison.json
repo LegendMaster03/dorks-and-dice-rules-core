@@ -1,0 +1,983 @@
+{
+  "id": "warlock-band1-base-only-comparison",
+  "status": "source-comparison-complete-owner-decisions-open",
+  "scope": "Base class levels 1–20: class progression, source-chassis, system grant structure only",
+  "editionSources": [
+    {
+      "name": "D&D 3.5 Complete Arcane plus 2005 errata",
+      "evidence": [
+        "data/reference/3x/warlock-complete-arcane-research.json",
+        "data/reference/3x/warlock-invocations-research-index.json"
+      ],
+      "web": "https://srd.dndtools.org/srd/classes/baseCarc/warlock.html"
+    },
+    {
+      "name": "D&D 2014 SRD 5.1",
+      "evidence": [
+        "data/native/classes/base/warlock.json: candidate-a",
+        "data/reference/srd/structured/class/class-warlock.json"
+      ]
+    },
+    {
+      "name": "D&D 2024 SRD 5.2.1",
+      "evidence": [
+        "data/native/classes/base/warlock.json: candidate-b",
+        "data/reference/srd/structured/class/class-warlock.json"
+      ]
+    }
+  ],
+  "existingNativeRulesRetained": [
+    "no-daily-spell-preparation",
+    "open-spell-access-campaign-option-if-eligible",
+    "pact-magic-distinct-from-standard-full-caster-progression",
+    "epic-boon-only-at-total-character-level-21-plus",
+    "subclasses-separate-later-band-1-pass"
+  ],
+  "decisions": [
+    {
+      "id": "invocation-selection-progression",
+      "status": "owner-decision-needed",
+      "subject": "Native invocation choices at each class level",
+      "sourceDifferences": "3.5 1→12 known; 2014 0→8; 2024 1→10",
+      "recommendation": "Use one native selection track; do not add the counts or reconcile individual options in Band 1",
+      "minimumImplementation": "Define selection events, eligibility and replacement rules; reference shared later-reconciled catalog"
+    },
+    {
+      "id": "eldritch-blast",
+      "status": "owner-decision-needed",
+      "subject": "Automatic blast access, attack method and scaling",
+      "sourceDifferences": "3.5 automatically grants a spell-like invocation (1–9d6; ranged touch); 5.x Eldritch Blast is selectable cantrip scaling by total character level and beams",
+      "recommendation": "Choose one native attack/damage progression; do not add 3.5 dice to modern beams",
+      "minimumImplementation": "Baseline entitlement and scaling; option-specific shapes and essences deferred"
+    },
+    {
+      "id": "pact-boons",
+      "status": "owner-decision-needed",
+      "subject": "Choice classification and grant timing",
+      "sourceDifferences": "2014 one independent Pact Boon choice at class level 3; 2024 Blade/Chain/Tome included in invocation choice catalog from class level 1",
+      "recommendation": "Select either independent class-granted boon or invocation-path boon; do not grant both automatically",
+      "minimumImplementation": "Define timing, count, prerequisites, replacement policy, option details deferred"
+    },
+    {
+      "id": "historical-defense-utility",
+      "status": "approved-native-rule",
+      "subject": "Whether to retain additive distinct 3.5 class features",
+      "sourceDifferences": "3.5 Detect Magic at 2, damage reduction 3/7/11/15/19, Deceive Item 4, Fiendish Resilience 8/13/18, Energy Resistance 10/20, Imbue Item 12; not matched by modern base features",
+      "recommendation": "Approved: retain four Warlock universal base-class feature families; fast healing now appears only as one of TWO Fiend-specific Infernal Retaliation effects (with Flamewreath), one use per Long Rest; 8/13/18 progression; stabilization once without recovery of consciousness at 0 HP. Hellfire Shield is separate optional Hellfire specialization; automatic Detect Magic excluded.",
+      "minimumImplementation": "Grant only four retained base-class families. For the Fiend Patron, implement one Infernal Retaliation feature at Warlock level 8, upgrading 13 and 18, with TWO effects using one shared Long Rest use; active fast healing stabilizes once at 0 HP but does not heal or restore consciousness there. Hellfire Shield is a separate optional Hellfire specialization candidate requiring its own design.",
+      "approvedDisposition": {
+        "retainedClassFeatureFamilies": [
+          "damage-reduction",
+          "deceive-item",
+          "energy-resistance",
+          "imbue-item"
+        ],
+        "detectMagic": "not-automatic; retained through optional Eldritch Sight invocation selection",
+        "damageReduction": [
+          {
+            "classLevel": 3,
+            "value": 1
+          },
+          {
+            "classLevel": 7,
+            "value": 2
+          },
+          {
+            "classLevel": 11,
+            "value": 3
+          },
+          {
+            "classLevel": 15,
+            "value": 4
+          },
+          {
+            "classLevel": 19,
+            "value": 5
+          }
+        ],
+        "damageReductionException": "cold-iron",
+        "damageReductionMechanic": "native-flat-damage-reduction-not-half-damage-resistance",
+        "deceiveItem": {
+          "classLevel": 4,
+          "benefit": "historical-take-10-when-distracted-or-threatened",
+          "check": "native-shared-magical-item-competency",
+          "doesNotWaiveRequirements": true
+        },
+        "energyResistance": {
+          "classLevels": [
+            10,
+            20
+          ],
+          "choices": 2,
+          "sourceTypes": [
+            "acid",
+            "cold",
+            "electricity",
+            "fire",
+            "sonic"
+          ],
+          "nativeTypeMappings": {
+            "electricity": "lightning",
+            "sonic": "thunder"
+          },
+          "values": [
+            5,
+            10
+          ],
+          "mechanic": "fixed-damage-mitigation-not-half-damage-resistance"
+        },
+        "imbueItem": {
+          "classLevel": 12,
+          "requiresAppropriateItemCreationEntitlement": true,
+          "substitutesMissingSpellPrerequisiteThroughSharedMagicalItemCheck": true,
+          "sourceDcs": {
+            "arcane": "15 + spell level",
+            "divine": "25 + spell level"
+          },
+          "failedCheck": "crafting stopped with creation costs unspent; cannot reattempt missing spell substitution until new Warlock level",
+          "implementation": "use-shared-item-creation-and-competency-systems"
+        },
+        "notApproved": [
+          "individual-eldritch-invocation-reconciliation",
+          "other-warlock-base-class-decisions",
+          "patron-subclasses"
+        ],
+        "fiendPatronInfernalRetaliation": {
+          "featureId": "warlock.patron.fiend.infernal-retaliation",
+          "scope": "Fiend Patron only",
+          "singleFeatureEntitlement": true,
+          "effects": [
+            "fiendish-resilience-fast-healing",
+            "fiendish-flamewreath"
+          ],
+          "sharedUses": 1,
+          "recovery": "long-rest",
+          "needsNativeAcquisitionAndEffectDetails": false,
+          "grantClassLevel": 8,
+          "upgradeClassLevels": [
+            13,
+            18
+          ],
+          "fastHealingAtZeroHp": "stabilize-once-remain-unconscious-no-healing-or-repeat-stabilization",
+          "effectDurationRounds": 20,
+          "needsNativeEffectResolutionAndImplementation": true
+        },
+        "hellfireShieldNativeDisposition": "Removed from Infernal Retaliation; optional Hellfire specialization candidate with independent acquisition and resource to be decided during Invocations."
+      },
+      "priorApprovedBaseHealing": {
+        "sourceFeature": "fiendish-resilience",
+        "historicalCandidateValues": {
+          "classLevels": [
+            8,
+            13,
+            18
+          ],
+          "healingPerRound": [
+            1,
+            2,
+            5
+          ],
+          "durationRounds": 20,
+          "uses": 1,
+          "recharge": "long-rest",
+          "activationTiming": "shared-action-rules"
+        },
+        "originalClassification": "3.5e universal base Warlock",
+        "status": "superseded-as-native-base-class-grant"
+      }
+    },
+    {
+      "id": "invocation-grade-gating",
+      "status": "follow-on-to-invocation-progression",
+      "subject": "Legacy grades least/lesser/greater/dark",
+      "sourceDifferences": "3.5 levels 1/6/11/16; modern 5.x option-specific prerequisites",
+      "recommendation": "Track historical grade eligibility as source data; if merged into one pool use underlying prerequisites rather than a second gated selection list",
+      "minimumImplementation": "Store grade unlock metadata and implement applicability in shared option catalog later"
+    },
+    {
+      "id": "recovery-capstone",
+      "status": "source-equivalence-check",
+      "subject": "Eldritch Master and Magical Cunning",
+      "sourceDifferences": "2014 level-20 1-minute restore all Pact slots once per Long Rest; 2024 level-2 1-minute restore up to half once per Long Rest, upgrading to all at level 20",
+      "recommendation": "Retain 2024 single progressive feature without awarding a duplicated additional full recharge unless separately approved",
+      "minimumImplementation": "Magical Cunning at 2 and level-20 Eldritch Master upgrade to full recovery"
+    },
+    {
+      "id": "subclass-milestones",
+      "status": "shared-class-rule-already-established",
+      "subject": "Patron subclass grant timing",
+      "sourceDifferences": "2014 patron feature starting level 1; 2024 patron subclass first level 3",
+      "recommendation": "Use modern subclass milestone levels 3/6/10/14; actual subclass powers deferred",
+      "minimumImplementation": "Only create subclass milestones, not patron subclass effects"
+    },
+    {
+      "id": "spells-and-rest-resources",
+      "status": "shared-casting-constraints-already-established",
+      "subject": "Pact Magic distinctness and no daily preparation",
+      "sourceDifferences": "3.5 Warlock has spell-like invocations, no Pact slots; 2014 and 2024 use Pact slots with Short Rest recharge and Mystic Arcanum 11/13/15/17",
+      "recommendation": "Keep Pact Magic distinct from ordinary full caster and Warlock spell list finite-known without preparation; do not derive unapproved spell-point conversion",
+      "minimumImplementation": "Reconcile source Pact slot progression, spells known and Mystic Arcanum levels"
+    },
+    {
+      "id": "level19-feat",
+      "status": "shared-epic-boon-rule-already-established",
+      "subject": "2024 Epic Boon versus level 19 ASI",
+      "sourceDifferences": "2014 ASI/eligible feat at class level 19; 2024 Epic Boon feat at 19",
+      "recommendation": "ASI or other eligible feat at level 19; Epic Boons only total character level 21+",
+      "minimumImplementation": "Use existing normal level-19 feat eligibility"
+    }
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "historical3x": {
+        "features": [
+          "Eldritch Blast 1d6; Least invocations"
+        ],
+        "invocationsKnown": 1,
+        "baseAttackBonus": 0,
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 0,
+          "will": 2
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Pact Magic"
+        ],
+        "subclassFeaturesOrMilestones": [
+          "Otherworldly Patron"
+        ],
+        "invocationsKnown": 0,
+        "pactSlots": 1,
+        "pactSlotLevel": 1,
+        "cantripsKnown": 2,
+        "spellsKnown": 2
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Eldritch Invocations",
+          "Pact Magic",
+          "Eldritch Invocation Options"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 1,
+        "pactSlots": 1,
+        "pactSlotLevel": 1,
+        "cantripsKnown": 2,
+        "finiteSpellChoices": 2
+      }
+    },
+    {
+      "level": 2,
+      "historical3x": {
+        "features": [
+          "Detect Magic"
+        ],
+        "invocationsKnown": 2,
+        "baseAttackBonus": 1,
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Eldritch Invocations"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 2,
+        "pactSlots": 2,
+        "pactSlotLevel": 1,
+        "cantripsKnown": 2,
+        "spellsKnown": 3
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Magical Cunning"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 3,
+        "pactSlots": 2,
+        "pactSlotLevel": 1,
+        "cantripsKnown": 2,
+        "finiteSpellChoices": 3
+      }
+    },
+    {
+      "level": 3,
+      "historical3x": {
+        "features": [
+          "Damage Reduction 1/cold iron; Eldritch Blast 2d6"
+        ],
+        "invocationsKnown": 2,
+        "baseAttackBonus": 2,
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Pact Boon"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 2,
+        "pactSlots": 2,
+        "pactSlotLevel": 2,
+        "cantripsKnown": 2,
+        "spellsKnown": 4
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Warlock Subclass"
+        ],
+        "invocationsKnown": 3,
+        "pactSlots": 2,
+        "pactSlotLevel": 2,
+        "cantripsKnown": 2,
+        "finiteSpellChoices": 4
+      }
+    },
+    {
+      "level": 4,
+      "historical3x": {
+        "features": [
+          "Deceive Item"
+        ],
+        "invocationsKnown": 3,
+        "baseAttackBonus": 3,
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 2,
+        "pactSlots": 2,
+        "pactSlotLevel": 2,
+        "cantripsKnown": 3,
+        "spellsKnown": 5
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 3,
+        "pactSlots": 2,
+        "pactSlotLevel": 2,
+        "cantripsKnown": 3,
+        "finiteSpellChoices": 5
+      }
+    },
+    {
+      "level": 5,
+      "historical3x": {
+        "features": [
+          "Eldritch Blast 3d6"
+        ],
+        "invocationsKnown": 3,
+        "baseAttackBonus": 3,
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 3,
+        "pactSlots": 2,
+        "pactSlotLevel": 3,
+        "cantripsKnown": 3,
+        "spellsKnown": 6
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 5,
+        "pactSlots": 2,
+        "pactSlotLevel": 3,
+        "cantripsKnown": 3,
+        "finiteSpellChoices": 6
+      }
+    },
+    {
+      "level": 6,
+      "historical3x": {
+        "features": [
+          "Lesser invocation grade unlock"
+        ],
+        "invocationsKnown": 4,
+        "baseAttackBonus": 4,
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Otherworldly Patron feature"
+        ],
+        "invocationsKnown": 3,
+        "pactSlots": 2,
+        "pactSlotLevel": 3,
+        "cantripsKnown": 3,
+        "spellsKnown": 7
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Subclass Feature"
+        ],
+        "invocationsKnown": 5,
+        "pactSlots": 2,
+        "pactSlotLevel": 3,
+        "cantripsKnown": 3,
+        "finiteSpellChoices": 7
+      }
+    },
+    {
+      "level": 7,
+      "historical3x": {
+        "features": [
+          "Damage Reduction 2/cold iron; Eldritch Blast 4d6"
+        ],
+        "invocationsKnown": 4,
+        "baseAttackBonus": 5,
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 4,
+        "pactSlots": 2,
+        "pactSlotLevel": 4,
+        "cantripsKnown": 3,
+        "spellsKnown": 8
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 6,
+        "pactSlots": 2,
+        "pactSlotLevel": 4,
+        "cantripsKnown": 3,
+        "finiteSpellChoices": 8
+      }
+    },
+    {
+      "level": 8,
+      "historical3x": {
+        "features": [
+          "Fiendish Resilience 1"
+        ],
+        "invocationsKnown": 5,
+        "baseAttackBonus": 6,
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 4,
+        "pactSlots": 2,
+        "pactSlotLevel": 4,
+        "cantripsKnown": 3,
+        "spellsKnown": 9
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 6,
+        "pactSlots": 2,
+        "pactSlotLevel": 4,
+        "cantripsKnown": 3,
+        "finiteSpellChoices": 9
+      }
+    },
+    {
+      "level": 9,
+      "historical3x": {
+        "features": [
+          "Eldritch Blast 5d6"
+        ],
+        "invocationsKnown": 5,
+        "baseAttackBonus": 6,
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 5,
+        "pactSlots": 2,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 3,
+        "spellsKnown": 10
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Contact Patron"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 7,
+        "pactSlots": 2,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 3,
+        "finiteSpellChoices": 10
+      }
+    },
+    {
+      "level": 10,
+      "historical3x": {
+        "features": [
+          "Energy Resistance 5"
+        ],
+        "invocationsKnown": 6,
+        "baseAttackBonus": 7,
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Otherworldly Patron feature"
+        ],
+        "invocationsKnown": 5,
+        "pactSlots": 2,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 10
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Subclass Feature"
+        ],
+        "invocationsKnown": 7,
+        "pactSlots": 2,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 10
+      }
+    },
+    {
+      "level": 11,
+      "historical3x": {
+        "features": [
+          "Damage Reduction 3/cold iron; Eldritch Blast 6d6; Greater invocation grade unlock"
+        ],
+        "invocationsKnown": 7,
+        "baseAttackBonus": 8,
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Mystic Arcanum (6th level)"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 5,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 11
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Mystic Arcanum"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 7,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 11
+      }
+    },
+    {
+      "level": 12,
+      "historical3x": {
+        "features": [
+          "Imbue Item"
+        ],
+        "invocationsKnown": 7,
+        "baseAttackBonus": 9,
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 6,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 11
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 8,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 11
+      }
+    },
+    {
+      "level": 13,
+      "historical3x": {
+        "features": [
+          "Fiendish Resilience 2"
+        ],
+        "invocationsKnown": 8,
+        "baseAttackBonus": 9,
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Mystic Arcanum (7th level)"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 6,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 12
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Mystic Arcanum"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 8,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 12
+      }
+    },
+    {
+      "level": 14,
+      "historical3x": {
+        "features": [
+          "Eldritch Blast 7d6"
+        ],
+        "invocationsKnown": 8,
+        "baseAttackBonus": 10,
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Otherworldly Patron feature"
+        ],
+        "invocationsKnown": 6,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 12
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [
+          "Subclass Feature"
+        ],
+        "invocationsKnown": 8,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 12
+      }
+    },
+    {
+      "level": 15,
+      "historical3x": {
+        "features": [
+          "Damage Reduction 4/cold iron"
+        ],
+        "invocationsKnown": 9,
+        "baseAttackBonus": 11,
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Mystic Arcanum (8th level)"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 7,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 13
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Mystic Arcanum"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 9,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 13
+      }
+    },
+    {
+      "level": 16,
+      "historical3x": {
+        "features": [
+          "Dark invocation grade unlock"
+        ],
+        "invocationsKnown": 10,
+        "baseAttackBonus": 12,
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 7,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 13
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 9,
+        "pactSlots": 3,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 13
+      }
+    },
+    {
+      "level": 17,
+      "historical3x": {
+        "features": [
+          "Eldritch Blast 8d6"
+        ],
+        "invocationsKnown": 10,
+        "baseAttackBonus": 12,
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Mystic Arcanum (9th level)"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 7,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 14
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Mystic Arcanum"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 9,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 14
+      }
+    },
+    {
+      "level": 18,
+      "historical3x": {
+        "features": [
+          "Fiendish Resilience 5"
+        ],
+        "invocationsKnown": 11,
+        "baseAttackBonus": 13,
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 8,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 14
+      },
+      "srd52": {
+        "baseClassFeatures": [],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 10,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 14
+      }
+    },
+    {
+      "level": 19,
+      "historical3x": {
+        "features": [
+          "Damage Reduction 5/cold iron"
+        ],
+        "invocationsKnown": 11,
+        "baseAttackBonus": 14,
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Ability Score Improvement"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 8,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 15
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Epic Boon"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 10,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 15
+      }
+    },
+    {
+      "level": 20,
+      "historical3x": {
+        "features": [
+          "Eldritch Blast 9d6; Energy Resistance 10"
+        ],
+        "invocationsKnown": 12,
+        "baseAttackBonus": 15,
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 12
+        }
+      },
+      "srd51": {
+        "baseClassFeatures": [
+          "Eldritch Master"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 8,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "spellsKnown": 15
+      },
+      "srd52": {
+        "baseClassFeatures": [
+          "Eldritch Master"
+        ],
+        "subclassFeaturesOrMilestones": [],
+        "invocationsKnown": 10,
+        "pactSlots": 4,
+        "pactSlotLevel": 5,
+        "cantripsKnown": 4,
+        "finiteSpellChoices": 15
+      }
+    }
+  ],
+  "expresslyOutOfScope": [
+    "individual-eldritch-invocation-descriptions",
+    "ninety-supplement-invocation-crosswalk",
+    "patron-subclass-feature-effects",
+    "prestige-classes",
+    "source-specific-alternative-class-features",
+    "spell-and-item-catalog-reconciliation",
+    "player-facing-warlock-pdf-before-feedback"
+  ],
+  "nativeWarlockDefinitionUnmodified": true,
+  "approvalProgress": {
+    "approvedCases": [
+      "historical-defense-utility"
+    ],
+    "stillOpenCases": [
+      "invocation-selection-progression",
+      "eldritch-blast",
+      "pact-boons"
+    ],
+    "status": "partial-approval-only"
+  }
+}

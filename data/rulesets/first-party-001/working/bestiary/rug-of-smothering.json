@@ -1,0 +1,7 @@
+{
+  "id": "monster.rug-of-smothering",
+  "name": "Rug of Smothering",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.animated-rug-of-smothering"
+}

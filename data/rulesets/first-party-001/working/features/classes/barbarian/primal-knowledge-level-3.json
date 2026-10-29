@@ -1,0 +1,32 @@
+{
+  "id": "class-feature.barbarian.primal-knowledge-level-3",
+  "name": "Primal Knowledge",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 3,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Primal Knowledge",
+    "description": "Gain one Barbarian skill proficiency; during Rage use Strength for designated skill checks.",
+    "mechanics": {
+      "kind": "skill-training-and-ability-substitution",
+      "extraProficiency": 1,
+      "options": [
+        "animal-handling",
+        "athletics",
+        "intimidation",
+        "nature",
+        "perception",
+        "survival"
+      ],
+      "during": "rage",
+      "strengthSubstitution": [
+        "acrobatics",
+        "intimidation",
+        "perception",
+        "stealth",
+        "survival"
+      ]
+    }
+  }
+}

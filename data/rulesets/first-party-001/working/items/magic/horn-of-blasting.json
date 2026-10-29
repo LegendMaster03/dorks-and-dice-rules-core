@@ -1,0 +1,44 @@
+{
+  "id": "item.horn-of-blasting",
+  "name": "Horn of Blasting",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Horn of Blasting",
+        "baseItem": "horn|srd51",
+        "type": "INS",
+        "tier": "major",
+        "rarity": "rare",
+        "wondrous": true,
+        "weight": 2,
+        "entries": [
+          "You can use an action to speak the horn's command word and then blow the horn, which emits a thunderous blast in a 30-foot cone that is audible 600 feet away. Each creature in the cone must make a {@dc 15} Constitution saving throw. On a failed save, a creature takes {@damage 5d6} thunder damage and is {@condition deafened} for 1 minute. On a successful save, a creature takes half as much damage and isn't {@condition deafened}. Creatures and objects made of glass or crystal have disadvantage on the saving throw and take {@damage 10d6} thunder damage instead of {@damage 5d6}.",
+          "Each use of the horn's magic has a {@chance 20} chance of causing the horn to explode. The explosion deals {@damage 10d6} fire damage to the blower and destroys the horn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Horn of Blasting",
+        "baseItem": "horn|srd52",
+        "type": "INS|SRD52",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to blow the horn, which emits a thunderous blast in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone} that is audible out to 600 feet. Each creature in the {@variantrule Cone [Area of Effect]|SRD52|Cone} makes a {@dc 15} Constitution saving throw. On a failed save, a creature takes {@damage 5d8} Thunder damage and has the {@condition Deafened|SRD52} condition for 1 minute. On a successful save, a creature takes half as much damage only. Glass or crystal objects in the {@variantrule Cone [Area of Effect]|SRD52|Cone} that aren't being worn or carried take {@damage 10d8} Thunder damage.",
+          "Each use of the horn's magic has a {@chance 20} chance of causing the horn to explode. The explosion deals {@damage 10d6} Force damage to the user and destroys the horn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

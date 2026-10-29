@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.rogue.roguish-archetype-feature-level-17",
+  "name": "Roguish Archetype feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Roguish Archetype feature",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, you gain a feature granted by your Roguish Archetype."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 17
+}

@@ -1,0 +1,50 @@
+{
+  "id": "item.boots-of-striding-and-springing",
+  "name": "Boots of Striding and Springing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Boots of Striding and Springing",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "walk": 30
+          }
+        },
+        "entries": [
+          "While you wear these boots, your walking speed becomes 30 feet, unless your walking speed is higher, and your speed isn't reduced if you are encumbered or wearing heavy armor. In addition, you can jump three times the normal distance, though you can't jump farther than your remaining movement would allow."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Boots of Striding and Springing",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "walk": 30
+          }
+        },
+        "entries": [
+          "While you wear these boots, your {@variantrule Speed|SRD52} becomes 30 feet unless your {@variantrule Speed|SRD52} is higher, and your {@variantrule Speed|SRD52} isn't reduced by you carrying weight in excess of your carrying capacity or wearing Heavy Armor.",
+          "Once on each of your turns, you can jump up to 30 feet by spending only 10 feet of movement."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

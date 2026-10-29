@@ -1,0 +1,46 @@
+{
+  "id": "item.malice",
+  "name": "Malice",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Malice",
+        "type": "G",
+        "rarity": "none",
+        "value": 25000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 15} Constitution saving throw or become {@condition poisoned} for 1 hour. The {@condition poisoned} creature is {@condition blinded}."
+        ],
+        "poisonTypes": [
+          "inhaled"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Malice",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 25000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Malice must succeed on a {@dc 15} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 hour. The creature also has the {@condition Blinded|SRD52} condition while {@condition Poisoned|SRD52} in this way."
+        ],
+        "poisonTypes": [
+          "inhaled"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

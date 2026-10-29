@@ -1,0 +1,24 @@
+{
+  "id": "baseitem.shortsword",
+  "name": "Shortsword",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1000,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "sword": true,
+    "weapon": true
+  }
+}

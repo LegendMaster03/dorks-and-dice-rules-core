@@ -1,0 +1,125 @@
+{
+  "id": "monster.kobold-warrior",
+  "name": "Kobold Warrior",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 7,
+      "formula": "3d6 - 3"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 7,
+    "dex": 15,
+    "con": 9,
+    "int": 8,
+    "wis": 7,
+    "cha": 8,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 8,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "1/8",
+    "gear": [
+      {
+        "item": "dagger|srd52",
+        "quantity": 3
+      }
+    ],
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The kobold has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the kobold's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "entries": [
+          "While in sunlight, the kobold has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Dagger",
+        "entries": [
+          "{@atkr m,r} {@hit 4}, reach 5 ft. or range 20/60 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "coastal",
+      "desert",
+      "forest",
+      "hill",
+      "mountain",
+      "swamp",
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "traitTags": [
+      "Pack Tactics",
+      "Sunlight Sensitivity"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "THW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Kobold Warrior",
+        "_copy": {
+          "name": "Kobolds",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Kobold warriors use hit-and-run tactics to raid their enemies and defend their homes. To avoid danger, they frequently employ haphazard traps."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

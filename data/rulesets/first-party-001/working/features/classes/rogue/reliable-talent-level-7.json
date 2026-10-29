@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.rogue.reliable-talent-level-7",
+  "name": "Reliable Talent",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Reliable Talent",
+    "description": "Native Rogue Reliable Talent; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "minimum-proficient-check-roll",
+      "minimumD20Result": 10,
+      "skillOrToolProficiencyRequired": true
+    }
+  }
+}

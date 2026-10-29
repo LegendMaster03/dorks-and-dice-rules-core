@@ -1,0 +1,12 @@
+{
+  "id": "item.piton",
+  "name": "Piton",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 0.25,
+    "value": 5
+  }
+}

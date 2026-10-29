@@ -1,0 +1,134 @@
+{
+  "id": "spell.fire-bolt",
+  "name": "Fire Bolt",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fire Bolt",
+        "alias": [
+          "Firebolt"
+        ],
+        "level": 0,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes {@damage 1d10} fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
+          "This spell's damage increases by {@damage 1d10} when you reach 5th level ({@damage 2d10}), 11th level ({@damage 3d10}), and 17th level ({@damage 4d10})."
+        ],
+        "scalingLevelDice": {
+          "label": "fire damage",
+          "scaling": {
+            "1": "1d10",
+            "5": "2d10",
+            "11": "3d10",
+            "17": "4d10"
+          }
+        },
+        "damageInflict": [
+          "fire"
+        ],
+        "spellAttack": [
+          "R"
+        ],
+        "miscTags": [
+          "OBJ",
+          "SCL"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fire Bolt",
+        "alias": [
+          "Firebolt"
+        ],
+        "level": 0,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You hurl a mote of fire at a creature or an object within range. Make a ranged spell attack against the target. On a hit, the target takes {@damage 1d10} Fire damage. A flammable object hit by this spell starts {@hazard burning|SRD52} if it isn't being worn or carried."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Cantrip Upgrade",
+            "entries": [
+              "The damage increases by {@damage 1d10} when you reach levels 5 ({@damage 2d10}), 11 ({@damage 3d10}), and 17 ({@damage 4d10})."
+            ]
+          }
+        ],
+        "scalingLevelDice": {
+          "label": "Fire damage",
+          "scaling": {
+            "1": "1d10",
+            "5": "2d10",
+            "11": "3d10",
+            "17": "4d10"
+          }
+        },
+        "damageInflict": [
+          "fire"
+        ],
+        "spellAttack": [
+          "R"
+        ],
+        "miscTags": [
+          "OBJ",
+          "SCL"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

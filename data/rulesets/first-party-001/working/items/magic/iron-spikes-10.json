@@ -1,0 +1,18 @@
+{
+  "id": "item.iron-spikes-10",
+  "name": "Iron Spikes (10)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 5,
+    "value": 100,
+    "packContents": [
+      {
+        "item": "iron spike|srd51",
+        "quantity": 10
+      }
+    ]
+  }
+}

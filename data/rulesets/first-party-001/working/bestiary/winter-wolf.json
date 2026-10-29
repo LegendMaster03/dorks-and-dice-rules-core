@@ -1,0 +1,167 @@
+{
+  "id": "monster.winter-wolf",
+  "name": "Winter Wolf",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 75,
+      "formula": "10d10 + 20"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 18,
+    "dex": 13,
+    "con": 14,
+    "int": 7,
+    "wis": 12,
+    "cha": 8,
+    "skill": {
+      "perception": "+5",
+      "stealth": "+5"
+    },
+    "passive": 15,
+    "immune": [
+      "cold"
+    ],
+    "languages": [
+      "Common",
+      "Giant"
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The wolf has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Keen Hearing and Smell",
+        "entries": [
+          "The wolf has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+        ]
+      },
+      {
+        "name": "Snow Camouflage",
+        "entries": [
+          "The wolf has advantage on Dexterity ({@skill Stealth}) checks made to hide in snowy terrain."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 12}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 18 ({@damage 4d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/winter-wolf.opus"
+    },
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "C",
+      "GI"
+    ],
+    "damageTags": [
+      "C",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Winter Wolf",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Winter Wolf",
+            "entries": [
+              "{@i Cold-hearted Pack Hunter}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Arctic|bestiary|environment=arctic}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Winter wolves are horse-size, supernatural predators that prowl frigid wildernesses in deadly packs. With their great size and chilling breath, winter wolves pursue megafauna, arctic travelers, and any other creatures they catch on the tundra.",
+              "Winter wolves are more intelligent than natural wolves and can speak. Most are predominantly concerned with their next meal, and while they might converse with other creatures in exchange for food, few concern themselves with long-term bargains or keeping their word unless they have something to gain. Winter wolves often hunt alongside frost giants that indulge them with frequent hunts and reliable meals.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Snowdrifts, driving hail, and wind fierce enough to strip the hairless skin off your bones—you lot have been through it all. But good news, there's a town full of warm hearths right over this rise.",
+                      "You'll never reach it, but at least your last thoughts will be warm."
+                    ],
+                    "by": "Koran, Winter Wolf"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Winter Wolf.webp"
+            },
+            "credit": "Jonathan Kuo",
+            "width": 1800,
+            "height": 1440
+          }
+        ]
+      }
+    ]
+  }
+}

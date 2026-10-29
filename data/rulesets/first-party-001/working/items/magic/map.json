@@ -1,0 +1,14 @@
+{
+  "id": "item.map",
+  "name": "Map",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 100,
+    "entries": [
+      "If you consult an accurate Map, you gain a +5 bonus to Wisdom ({@skill Survival|SRD52}) checks you make to find your way in the place represented on it."
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "item.cloak-of-the-manta-ray",
+  "name": "Cloak of the Manta Ray",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloak of the Manta Ray",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "swim": 60
+          }
+        },
+        "entries": [
+          "While wearing this cloak with its hood up, you can breathe underwater, and you have a swimming speed of 60 feet. Pulling the hood up or down requires an action."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloak of the Manta Ray",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "swim": 60
+          }
+        },
+        "entries": [
+          "While wearing this cloak, you can breathe underwater, and you have a {@variantrule Swim Speed|SRD52} of 60 feet."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

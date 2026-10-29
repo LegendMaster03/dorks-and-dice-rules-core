@@ -1,0 +1,56 @@
+{
+  "id": "item.scimitar-of-speed",
+  "name": "Scimitar of Speed",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Scimitar of Speed",
+        "baseItem": "scimitar|srd51",
+        "type": "M",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 3,
+        "weaponCategory": "martial",
+        "property": [
+          "F",
+          "L"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "S",
+        "bonusWeapon": "+2",
+        "entries": [
+          "You gain a +2 bonus to attack and damage rolls made with this magic weapon. In addition, you can make one attack with it as a bonus action on each of your turns."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Scimitar of Speed",
+        "baseItem": "scimitar|srd52",
+        "type": "M|SRD52",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 3,
+        "weaponCategory": "martial",
+        "property": [
+          "F|SRD52",
+          "L|SRD52"
+        ],
+        "mastery": [
+          "Nick|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "S",
+        "bonusWeapon": "+2",
+        "entries": [
+          "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon. In addition, you can make one attack with it as a {@variantrule Bonus Action|SRD52} on each of your turns."
+        ]
+      }
+    }
+  ]
+}

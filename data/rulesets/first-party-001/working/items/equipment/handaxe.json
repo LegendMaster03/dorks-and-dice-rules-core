@@ -1,0 +1,25 @@
+{
+  "id": "baseitem.handaxe",
+  "name": "Handaxe",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 500,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "range": "20/60",
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "axe": true,
+    "weapon": true
+  }
+}

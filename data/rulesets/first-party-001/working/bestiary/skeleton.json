@@ -1,0 +1,118 @@
+{
+  "id": "monster.skeleton",
+  "name": "Skeleton",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "2d8 + 4"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 10,
+    "dex": 16,
+    "con": 15,
+    "int": 6,
+    "wis": 8,
+    "cha": 5,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "immune": [
+      "poison"
+    ],
+    "vulnerable": [
+      "bludgeoning"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1/4",
+    "gear": [
+      "shortbow|srd52",
+      "shortsword|srd52"
+    ],
+    "action": [
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Shortbow",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 80/320 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, shadowfell",
+      "underdark",
+      "urban"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/skeleton.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RNG"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Skeleton",
+        "_copy": {
+          "name": "Skeletons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Skeletons are reanimated Humanoid bones bearing the equipment they had in life. They have rudimentary faculties and greater agility than zombies and similar shambling corpses. While they aren't capable of creating plans of their own, they avoid obvious barriers and self-destructive situations."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

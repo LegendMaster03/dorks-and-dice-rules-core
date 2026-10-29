@@ -1,0 +1,13 @@
+{
+  "id": "item.elephant",
+  "name": "Elephant",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 20000,
+    "carryingCapacity": 1320,
+    "speed": 40
+  }
+}

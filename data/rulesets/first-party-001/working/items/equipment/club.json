@@ -1,0 +1,23 @@
+{
+  "id": "baseitem.club",
+  "name": "Club",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "club": true,
+    "weapon": true
+  }
+}

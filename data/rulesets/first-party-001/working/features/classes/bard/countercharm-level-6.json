@@ -1,0 +1,29 @@
+{
+  "id": "class-feature.bard.countercharm-level-6",
+  "name": "Countercharm — Protection",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 6,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Countercharm — Protection",
+    "description": "Countercharm — Protection: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "countercharm-protection",
+      "action": "action",
+      "duration": "until-end-of-next-turn",
+      "rangeFeet": 30,
+      "target": "bard-and-friendly-creatures-perceiving-artistic-expression",
+      "advantageOnSavingThrowsAgainst": [
+        "charmed",
+        "frightened"
+      ],
+      "endsEarlyOn": [
+        "incapacitated",
+        "expression-interrupted",
+        "voluntary-ending"
+      ],
+      "noMusicRequirement": true
+    }
+  }
+}

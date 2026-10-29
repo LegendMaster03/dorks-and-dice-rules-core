@@ -1,0 +1,44 @@
+{
+  "id": "item.necklace-of-adaptation",
+  "name": "Necklace of Adaptation",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Necklace of Adaptation",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "While wearing this necklace, you can breathe normally in any environment, and you have advantage on saving throws made against harmful gases and vapors (such as {@spell cloudkill} and {@spell stinking cloud} effects, inhaled poisons, and the breath weapons of some dragons)."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Necklace of Adaptation",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "While wearing this necklace, you can breathe normally in any environment, and you have {@variantrule Advantage|SRD52} on saving throws made to avoid or end the {@condition Poisoned|SRD52} condition."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

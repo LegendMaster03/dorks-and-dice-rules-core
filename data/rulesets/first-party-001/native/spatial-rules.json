@@ -1,0 +1,164 @@
+{
+  "id": "rule.spatial-foundation",
+  "name": "Creature size, space, reach, and movement",
+  "kind": "rule",
+  "status": "approved-native-data-contract; runtime-evaluator-pending",
+  "description": "Retains the previously approved nine-category universal size system and shared spatial mechanics from the legacy Rules Core; does not reintroduce source-edition-specific combat engines.",
+  "size": {
+    "categories": [
+      {
+        "id": "size.fine",
+        "name": "Fine",
+        "sourceCode": "F",
+        "defaultSpace": {
+          "widthFeet": 0.5,
+          "lengthFeet": 0.5
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": 8,
+          "grapple": -16
+        }
+      },
+      {
+        "id": "size.diminutive",
+        "name": "Diminutive",
+        "sourceCode": "D",
+        "defaultSpace": {
+          "widthFeet": 1,
+          "lengthFeet": 1
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": 4,
+          "grapple": -12
+        }
+      },
+      {
+        "id": "size.tiny",
+        "name": "Tiny",
+        "sourceCode": "T",
+        "defaultSpace": {
+          "widthFeet": 2.5,
+          "lengthFeet": 2.5
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": 2,
+          "grapple": -8
+        }
+      },
+      {
+        "id": "size.small",
+        "name": "Small",
+        "sourceCode": "S",
+        "defaultSpace": {
+          "widthFeet": 5,
+          "lengthFeet": 5
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": 1,
+          "grapple": -4
+        }
+      },
+      {
+        "id": "size.medium",
+        "name": "Medium",
+        "sourceCode": "M",
+        "defaultSpace": {
+          "widthFeet": 5,
+          "lengthFeet": 5
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": 0,
+          "grapple": 0
+        }
+      },
+      {
+        "id": "size.large",
+        "name": "Large",
+        "sourceCode": "L",
+        "defaultSpace": {
+          "widthFeet": 10,
+          "lengthFeet": 10
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": -1,
+          "grapple": 4
+        }
+      },
+      {
+        "id": "size.huge",
+        "name": "Huge",
+        "sourceCode": "H",
+        "defaultSpace": {
+          "widthFeet": 15,
+          "lengthFeet": 15
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": -2,
+          "grapple": 8
+        }
+      },
+      {
+        "id": "size.gargantuan",
+        "name": "Gargantuan",
+        "sourceCode": "G",
+        "defaultSpace": {
+          "widthFeet": 20,
+          "lengthFeet": 20
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": -4,
+          "grapple": 12
+        }
+      },
+      {
+        "id": "size.colossal",
+        "name": "Colossal",
+        "sourceCode": "C",
+        "defaultSpace": {
+          "widthFeet": 30,
+          "lengthFeet": 30
+        },
+        "historicalThreeXModifiers": {
+          "armorClass": -8,
+          "grapple": 16
+        }
+      }
+    ],
+    "rule": "Size supplies a default combat footprint, not a mandatory body geometry or reach. Creatures can specify their effective occupied space.",
+    "modifierPolicy": "Historical 3.x AC and grapple modifiers are preserved for compatibility; applying them as native modifiers requires the applicable approved combat rule, not merely presence in this catalog.",
+    "nonSquareFootprints": true
+  },
+  "reach": {
+    "naturalReach": "Defined by the creature or an inherited definition, independently of size; no universal numeric reach inferred here.",
+    "attackReach": "An individual natural or manufactured attack may define its own reach.",
+    "opportunityAttacks": "Use the native shared opportunity-attack rules; reach is not a separate edition-specific action system."
+  },
+  "movement": {
+    "modes": [
+      "walk",
+      "climb",
+      "swim",
+      "fly",
+      "burrow"
+    ],
+    "resolution": "Use one movement budget/action framework; speeds are per mode and may be inherited or overridden.",
+    "splitMovement": "Movement can be split around permitted actions under the adopted native 5.x-style baseline.",
+    "flight": "Flight speed is distinct from hover and special maneuverability restrictions; additional restrictions belong to an ability when applicable.",
+    "burrowing": "Burrow speed does not universally permit passage through every solid material.",
+    "swimming": "Swim speed does not grant breathing underwater.",
+    "climbing": "Climb speed does not automatically include specialized surface permissions such as Spider Climb.",
+    "specialPermissions": "Movement through solid objects, unusual materials, occupied areas, and similar exceptions comes from explicit capabilities."
+  },
+  "positioning": {
+    "squeezing": "Use one native narrow-space/occupied-footprint procedure; special restrictions are ability-specific.",
+    "occupiedSpaces": "Use the approved common size/occupancy framework.",
+    "gridIndependence": "Distance and occupied space are game measurements; do not require square-grid-only resolution.",
+    "fiveFootStep": "Not restored as a separate universal movement action.",
+    "historicalFlightManeuverability": "Not a universal second flight subsystem; represent meaningful limitations as applicable creature features."
+  },
+  "compatibility": {
+    "existingMonsters": "Preserve current stat-block sizes, speeds, and attack reach during data migration unless explicitly reconciled.",
+    "presentation": "Stat-block layout and formatting remain deferred.",
+    "runtime": "No executable evaluator is present in the rewrite branch."
+  }
+}

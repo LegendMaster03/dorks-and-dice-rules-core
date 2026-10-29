@@ -1,0 +1,117 @@
+{
+  "id": "spell.prayer-of-healing",
+  "name": "Prayer of Healing",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Prayer of Healing",
+        "level": 2,
+        "school": "V",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "Up to six creatures of your choice that you can see within range each regain hit points equal to {@dice 2d8} + your spellcasting ability modifier. This spell has no effect on undead or constructs."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 3rd level or higher, the healing increases by {@scaledice 2d8|2-9|1d8} for each slot level above 2nd."
+            ]
+          }
+        ],
+        "affectsCreatureType": [
+          "aberration",
+          "beast",
+          "celestial",
+          "dragon",
+          "elemental",
+          "fey",
+          "fiend",
+          "giant",
+          "humanoid",
+          "monstrosity",
+          "ooze",
+          "plant"
+        ],
+        "miscTags": [
+          "HL",
+          "SGT"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Prayer of Healing",
+        "level": 2,
+        "school": "A",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "Up to five creatures of your choice who remain within range for the spell's entire casting gain the benefits of a {@variantrule Short Rest|SRD52} and also regain {@dice 2d8} {@variantrule Hit Points|SRD52}. A creature can't be affected by this spell again until that creature finishes a {@variantrule Long Rest|SRD52}."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The healing increases by {@scaledice 2d8|2-9|1d8} for each spell slot level above 2."
+            ]
+          }
+        ],
+        "miscTags": [
+          "HL"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    }
+  ]
+}

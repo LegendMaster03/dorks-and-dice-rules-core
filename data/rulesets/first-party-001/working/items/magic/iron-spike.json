@@ -1,0 +1,31 @@
+{
+  "id": "item.iron-spike",
+  "name": "Iron Spike",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Iron Spike",
+        "type": "G",
+        "rarity": "none",
+        "weight": 0.5,
+        "value": 10
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Iron Spike",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 0.5,
+        "value": 10,
+        "entries": [
+          "Iron Spikes come in bundles of ten. As a {@action Utilize|SRD52} action, you can use a blunt object, such as a {@item Light Hammer|SRD52}, to hammer a spike into wood, earth, or a similar material. You can do so to jam a door shut or to then tie a {@item Rope|SRD52} or {@item Chain|SRD52} to the Spike."
+        ]
+      }
+    }
+  ]
+}

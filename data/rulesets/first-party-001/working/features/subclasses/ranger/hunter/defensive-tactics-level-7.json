@@ -1,0 +1,78 @@
+{
+  "id": "subclass-feature.ranger.hunter.defensive-tactics-level-7",
+  "name": "Defensive Tactics",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Defensive Tactics",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "At 7th level, you gain one of the following features of your choice.",
+          {
+            "type": "options",
+            "count": 1,
+            "entries": [
+              {
+                "type": "refSubclassFeature",
+                "subclassFeature": "Escape the Horde|Ranger||Hunter||7"
+              },
+              {
+                "type": "refSubclassFeature",
+                "subclassFeature": "Multiattack Defense|Ranger||Hunter||7"
+              },
+              {
+                "type": "refSubclassFeature",
+                "subclassFeature": "Steel Will|Ranger||Hunter||7"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Defensive Tactics",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD52",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "You gain one of the following feature options of your choice. Whenever you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}, you can replace the chosen option with the other one.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Escape the Horde",
+                "entries": [
+                  "{@action Opportunity Attack|SRD52|Opportunity Attacks} have {@variantrule Disadvantage|SRD52} against you."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Multiattack Defense",
+                "entries": [
+                  "When a creature hits you with an attack roll, that creature has {@variantrule Disadvantage|SRD52} on all other attack rolls against you this turn."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "subclass.ranger.hunter",
+  "classLevel": 7
+}

@@ -1,0 +1,86 @@
+{
+  "id": "spell.goodberry",
+  "name": "Goodberry",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Goodberry",
+        "level": 1,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a sprig of mistletoe"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "Up to ten berries appear in your hand and are infused with magic for the duration. A creature can use its action to eat one berry. Eating a berry restores 1 hit point, and the berry provides enough nourishment to sustain a creature for one day.",
+          "The berries lose their potency if they have not been consumed within 24 hours of the casting of this spell."
+        ],
+        "miscTags": [
+          "HL"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Goodberry",
+        "level": 1,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a sprig of mistletoe"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "Ten berries appear in your hand and are infused with magic for the duration. A creature can take a {@variantrule Bonus Action|SRD52} to eat one berry. Eating a berry restores 1 {@variantrule Hit Points|SRD52|Hit Point}, and the berry provides enough nourishment to sustain a creature for one day.",
+          "Uneaten berries disappear when the spell ends."
+        ],
+        "miscTags": [
+          "HL"
+        ]
+      }
+    }
+  ]
+}

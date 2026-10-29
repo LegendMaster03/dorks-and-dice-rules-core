@@ -1,0 +1,27 @@
+{
+  "id": "class-feature.bard.words-of-creation-level-20",
+  "name": "Words of Creation",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Words of Creation",
+    "description": "Words of Creation: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "extra-accessible-spells-and-targets",
+      "additionalKnownSpells": [
+        "power-word-heal",
+        "power-word-kill"
+      ],
+      "countAgainstKnownSpells": false,
+      "noPreparedSpells": true,
+      "castingResourceCost": "normal",
+      "secondTarget": {
+        "availableOn": "either-granted-spell",
+        "withinFeetOfFirstTarget": 10,
+        "mustBeEligibleTarget": true
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "id": "feat.grappler",
+  "name": "Grappler",
+  "kind": "feat",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Grappler",
+        "prerequisite": [
+          {
+            "ability": [
+              {
+                "str": 13
+              }
+            ]
+          }
+        ],
+        "entries": [
+          "You've developed the skills necessary to hold your own in close-quarters grappling. You gain the following benefits:",
+          {
+            "type": "list",
+            "items": [
+              "You have advantage on attack rolls against a creature you are grappling.",
+              "You can use your action to try to pin a creature {@condition grappled} by you. To do so, make another grapple check. If you succeed, you and the creature are both {@condition restrained} until the grapple ends."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Grappler",
+        "category": "G",
+        "prerequisite": [
+          {
+            "level": 4,
+            "ability": [
+              {
+                "str": 13
+              }
+            ]
+          },
+          {
+            "level": 4,
+            "ability": [
+              {
+                "dex": 13
+              }
+            ]
+          }
+        ],
+        "ability": [
+          {
+            "choose": {
+              "from": [
+                "str",
+                "dex"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "Punch and Grab",
+            "entries": [
+              "When you hit a creature with an {@variantrule Unarmed Strike|SRD52} as part of the {@action Attack|SRD52} action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Attack Advantage",
+            "entries": [
+              "You have {@variantrule Advantage|SRD52} on attack rolls against a creature {@condition Grappled|SRD52} by you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Fast Wrestler",
+            "entries": [
+              "You don't have to spend extra movement to move a creature {@condition Grappled|SRD52} by you if the creature is your size or smaller."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

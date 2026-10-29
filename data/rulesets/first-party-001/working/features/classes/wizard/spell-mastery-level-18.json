@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.wizard.spell-mastery-level-18",
+  "name": "Spell Mastery",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Spell Mastery",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "wizard-at-will-spell-mastery",
+      "sourceEdition": "SRD51-2014",
+      "choices": [
+        {
+          "level": 1,
+          "count": 1
+        },
+        {
+          "level": 2,
+          "count": 1
+        }
+      ],
+      "mustBeInOwnSpellbookWhenSelected": true,
+      "castSelectedSpellsAtLowestSpellLevelWithoutSpellSlot": true,
+      "noDailyPreparationRestriction": true,
+      "higherLevelCastingPaysNormalResourceCost": true,
+      "replacementStudyHours": 8,
+      "mayReplaceOneOrBoth": true,
+      "replacementSameLevelAndEligible": true,
+      "notEquivalentToHistoricalSpellMasteryFeat": true
+    }
+  }
+}

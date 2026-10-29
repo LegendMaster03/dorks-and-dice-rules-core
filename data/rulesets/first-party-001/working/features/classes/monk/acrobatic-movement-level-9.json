@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.monk.acrobatic-movement-level-9",
+  "name": "Acrobatic Movement",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Acrobatic Movement",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 9,
+        "entries": [
+          "While you aren't wearing armor or wielding a {@item Shield|SRD52}, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the movement."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 9
+}

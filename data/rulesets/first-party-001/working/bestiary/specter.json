@@ -1,0 +1,211 @@
+{
+  "id": "monster.specter",
+  "name": "Specter",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "5d8"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 1,
+    "dex": 14,
+    "con": 11,
+    "int": 10,
+    "wis": 10,
+    "cha": 11,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "resist": [
+      "acid",
+      "bludgeoning",
+      "cold",
+      "fire",
+      "lightning",
+      "piercing",
+      "slashing",
+      "thunder"
+    ],
+    "immune": [
+      "necrotic",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Incorporeal Movement",
+        "entries": [
+          "The specter can move through other creatures and objects as if they were {@variantrule Difficult Terrain|SRD52}. It takes 5 ({@damage 1d10}) Force damage if it ends its turn inside an object."
+        ]
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "entries": [
+          "While in sunlight, the specter has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Life Drain",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 2d6}) Necrotic damage. If the target is a creature, its {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/specter.opus"
+    },
+    "traitTags": [
+      "Incorporeal Movement",
+      "Sunlight Sensitivity"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "N",
+      "O"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Specter",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Specter",
+            "entries": [
+              "{@i Spirit of Wrath and Servant of Death}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Specters are bodiless, life-devouring spirits drawn to darkness and negative emotions. Having lost all connection to the beings they once were, these hateful spirits drain mortal essence to steal fleeting tastes of life and warmth.",
+              "Specters seek creatures and locations that exude evil and feed on the suffering they inspire. Roll on or choose a result from the Specter Haunts table to inspire where a specter lurks.",
+              {
+                "type": "table",
+                "caption": "Specter Haunts",
+                "colLabels": [
+                  "1d8",
+                  "The Specter Lurks Near..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "A community afflicted by curses, grudges, plagues, or tragedies."
+                  ],
+                  [
+                    "2",
+                    "An evil Artifact or a deadly magical device."
+                  ],
+                  [
+                    "3",
+                    "The lair of a Fiend or an Undead."
+                  ],
+                  [
+                    "4",
+                    "The place where a villain died or is buried."
+                  ],
+                  [
+                    "5",
+                    "A portal to the Lower Planes, Negative Plane, or Shadowfell."
+                  ],
+                  [
+                    "6",
+                    "The sanctuary of a necromancer or death cult."
+                  ],
+                  [
+                    "7",
+                    "A secluded monument binding wicked souls."
+                  ],
+                  [
+                    "8",
+                    "The site of a disaster or mass death."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Specter.webp"
+            },
+            "credit": "Aaron J. Riley",
+            "width": 2560,
+            "height": 1656
+          }
+        ]
+      }
+    ]
+  }
+}

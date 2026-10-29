@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.rogue.obscure-cost-3d6-level-14",
+  "name": "Obscure (Cost: 3d6)",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Obscure (Cost: 3d6)",
+    "description": "Native Rogue Obscure (Cost: 3d6); uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "cunning-strike-effect",
+      "dieCost": 3,
+      "save": "dexterity",
+      "saveDC": "8 + Dexterity modifier + proficiency bonus",
+      "onFailedSave": "blinded",
+      "duration": "until-end-of-targets-next-turn"
+    }
+  }
+}

@@ -1,11 +1,13 @@
+# Phase 3A review-only deployment definition. Do not run without approval.
 services:
-  rules-core:
-    image: dorks-and-dice-rules-core:latest
+  rules-core-public:
+    image: dorks-and-dice-rules-core:phase3a
+    build: .
     container_name: dorks-and-dice-rules-core
     restart: unless-stopped
     environment:
-      ConnectionStrings__RulesCore: "${ConnectionStrings__RulesCore:?ConnectionStrings__RulesCore must be configured}"
-      ToolHost__BaseUrl: "http://dorks-and-dice-site:8080"
+      RulesCore__ApiSurface: PublicOnly
+      Rulesets__ContentRoot: /app/data/rulesets
     networks:
       - dorks-and-dice-backend
 

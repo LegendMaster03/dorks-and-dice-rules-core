@@ -1,0 +1,151 @@
+{
+  "id": "spell.eyebite",
+  "name": "Eyebite",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Eyebite",
+        "level": 6,
+        "school": "N",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "For the spell's duration, your eyes become an inky void imbued with dread power. One creature of your choice within 60 feet of you that you can see must succeed on a Wisdom saving throw or be affected by one of the following effects of your choice for the duration. On each of your turns until the spell ends, you can use your action to target another creature but can't target a creature again if it has succeeded on a saving throw against this casting of eyebite.",
+          {
+            "type": "entries",
+            "name": "Asleep",
+            "entries": [
+              "The target falls {@condition unconscious}. It wakes up if it takes any damage or if another creature uses its action to shake the sleeper awake."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Panicked",
+            "entries": [
+              "The target is {@condition frightened} of you. On each of its turns, the {@condition frightened} creature must take the {@action Dash} action and move away from you by the safest and shortest available route, unless there is nowhere to move. If the target moves to a place at least 60 feet away from you where it can no longer see you, this effect ends."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Sickened",
+            "entries": [
+              "The target has disadvantage on attack rolls and ability checks. At the end of each of its turns, it can make another Wisdom saving throw. If it succeeds, the effect ends."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "frightened",
+          "unconscious"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eyebite",
+        "level": 6,
+        "school": "N",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "For the duration, your eyes become an inky void. One creature of your choice within 60 feet of you that you can see must succeed on a Wisdom saving throw or be affected by one of the following effects of your choice for the duration.",
+          "On each of your turns until the spell ends, you can take a {@action Magic|SRD52} action to target another creature but can't target a creature again if it has succeeded on a save against this casting of the spell.",
+          {
+            "type": "entries",
+            "name": "Asleep",
+            "entries": [
+              "The target has the {@condition Unconscious|SRD52} condition. It wakes up if it takes any damage or if another creature takes an action to shake it awake."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Panicked",
+            "entries": [
+              "The target has the {@condition Frightened|SRD52} condition. On each of its turns, the {@condition Frightened|SRD52} target must take the {@action Dash|SRD52} action and move away from you by the safest and shortest route available. If the target moves to a space at least 60 feet away from you where it can't see you, this effect ends."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Sickened",
+            "entries": [
+              "The target has the {@condition Poisoned|SRD52} condition."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "frightened",
+          "unconscious"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

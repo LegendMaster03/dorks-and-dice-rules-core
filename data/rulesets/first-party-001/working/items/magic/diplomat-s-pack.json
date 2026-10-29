@@ -1,0 +1,100 @@
+{
+  "id": "item.diplomat-s-pack",
+  "name": "Diplomat's Pack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Diplomat's Pack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 36,
+        "value": 3900,
+        "entries": [
+          "Includes:",
+          {
+            "type": "list",
+            "items": [
+              "a {@item chest|srd51}",
+              "2 {@item Map or Scroll Case|srd51|cases for maps and scrolls}",
+              "a set of {@item fine clothes|srd51}",
+              "a {@item Ink (1-ounce bottle)|srd51|bottle of ink}",
+              "an {@item ink pen|srd51}",
+              "a {@item lamp|srd51}",
+              "2 {@item Oil (flask)|srd51|flasks of oil}",
+              "5 {@item Paper (one sheet)|srd51|sheets of paper}",
+              "a {@item Perfume (vial)|srd51|vial of perfume}",
+              "{@item sealing wax|srd51}",
+              "{@item soap|srd51}"
+            ]
+          }
+        ],
+        "packContents": [
+          "chest|srd51",
+          {
+            "item": "map or scroll case|srd51",
+            "quantity": 2
+          },
+          "fine clothes|srd51",
+          "ink (1-ounce bottle)|srd51",
+          "ink pen|srd51",
+          "lamp|srd51",
+          {
+            "item": "oil (flask)|srd51",
+            "quantity": 2
+          },
+          {
+            "item": "paper (one sheet)|srd51",
+            "quantity": 5
+          },
+          "perfume (vial)|srd51",
+          "sealing wax|srd51",
+          "soap|srd51"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Diplomat's Pack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 39,
+        "value": 3900,
+        "entries": [
+          "A Diplomat's Pack contains the following items: {@item Chest|SRD52}, {@item Fine Clothes|SRD52}, {@item Ink|SRD52}, 5 {@item Ink Pen|SRD52|Ink Pens}, {@item Lamp|SRD52}, 2 {@item Map or Scroll Case|SRD52|Map or Scroll Cases}, 4 flasks of {@item Oil|SRD52}, 5 sheets of {@item Paper|SRD52}, 5 sheets of {@item Parchment|SRD52}, {@item Perfume|SRD52}, and {@item Tinderbox|SRD52}."
+        ],
+        "packContents": [
+          "chest|srd52",
+          "fine clothes|srd52",
+          "ink|srd52",
+          {
+            "item": "ink pen|srd52",
+            "quantity": 5
+          },
+          "lamp|srd52",
+          {
+            "item": "map or scroll case|srd52",
+            "quantity": 2
+          },
+          {
+            "item": "oil|srd52",
+            "quantity": 4
+          },
+          {
+            "item": "paper|srd52",
+            "quantity": 5
+          },
+          {
+            "item": "parchment|srd52",
+            "quantity": 5
+          },
+          "perfume|srd52",
+          "tinderbox|srd52"
+        ]
+      }
+    }
+  ]
+}

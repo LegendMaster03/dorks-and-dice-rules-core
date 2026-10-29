@@ -1,0 +1,224 @@
+{
+  "id": "class-feature.warlock.eldritch-invocation-options-level-1",
+  "name": "Eldritch Invocation Options",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eldritch Invocation Options",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "Eldritch Invocation options appear in alphabetical order.",
+          {
+            "type": "options",
+            "count": 1,
+            "entries": [
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Agonizing Blast|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Armor of Shadows|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Ascendant Step|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Devil's Sight|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Devouring Blade|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Eldritch Mind|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Eldritch Smite|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Eldritch Spear|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Fiendish Vigor|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Gaze of Two Minds|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Gift of the Depths|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Gift of the Protectors|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Investment of the Chain Master|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Lessons of the First Ones|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Lifedrinker|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Mask of Many Faces|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Master of Myriad Forms|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Misty Visions|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "One with Shadows|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Otherworldly Leap|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Pact of the Blade|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Pact of the Chain|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Pact of the Tome|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Repelling Blast|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Thirsting Blade|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Visions of Distant Realms|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Whispers of the Grave|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Witch Sight|SRD52",
+                "preserve": {
+                  "prerequisite": true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 1
+}

@@ -1,0 +1,95 @@
+{
+  "id": "spell.foresight",
+  "name": "Foresight",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Foresight",
+        "level": 9,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a hummingbird feather"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "entries": [
+          "You touch a willing creature and bestow a limited ability to see into the immediate future. For the duration, the target can't be {@status surprised} and has advantage on attack rolls, ability checks, and saving throws. Additionally, other creatures have disadvantage on attack rolls against the target for the duration.",
+          "This spell immediately ends if you cast it again before its duration ends."
+        ],
+        "miscTags": [
+          "ADV"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Foresight",
+        "level": 9,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a hummingbird feather"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "entries": [
+          "You touch a willing creature and bestow a limited ability to see into the immediate future. For the duration, the target has {@variantrule Advantage|SRD52} on {@variantrule D20 Test|SRD52|D20 Tests}, and other creatures have {@variantrule Disadvantage|SRD52} on attack rolls against it. The spell ends early if you cast it again."
+        ],
+        "miscTags": [
+          "ADV"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

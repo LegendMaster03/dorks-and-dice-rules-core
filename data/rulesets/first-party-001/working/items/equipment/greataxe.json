@@ -1,0 +1,24 @@
+{
+  "id": "baseitem.greataxe",
+  "name": "Greataxe",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 7,
+    "value": 3000,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "axe": true,
+    "weapon": true
+  }
+}

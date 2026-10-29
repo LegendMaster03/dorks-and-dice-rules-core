@@ -1,0 +1,11 @@
+{
+  "id": "item.canvas-1-sq-yd",
+  "name": "Canvas (1 sq. yd.)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 10
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "subclass-feature.ranger.hunter.hunter-level-3",
+  "name": "Hunter",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hunter",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "Emulating the Hunter archetype means accepting your place as a bulwark between civilization and the terrors of the wilderness. As you walk the Hunter's path, you learn specialized techniques for fighting the threats you face, from rampaging ogres and hordes of orcs to towering giants and terrifying dragons.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Hunter's Prey|Ranger||Hunter||3"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hunter",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Protect Nature and People from Destruction}",
+          "You stalk prey in the wilds and elsewhere, using your abilities as a Hunter to protect nature and people everywhere from forces that would destroy them.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Hunter's Prey|Ranger|SRD52|Hunter|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Hunter's Lore|Ranger|SRD52|Hunter|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "subclass.ranger.hunter",
+  "classLevel": 3
+}

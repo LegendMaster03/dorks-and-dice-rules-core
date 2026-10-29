@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.druid.potent-spellcasting-level-7",
+  "name": "Potent Spellcasting",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Potent Spellcasting",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "elemental-fury-option",
+      "damageToDruidCantrips": "wisdom-modifier",
+      "atLevel15": "+300-feet-range-if-original-range-at-least-10-feet"
+    }
+  }
+}

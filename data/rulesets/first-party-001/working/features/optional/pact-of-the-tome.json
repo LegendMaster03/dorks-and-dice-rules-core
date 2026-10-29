@@ -1,0 +1,85 @@
+{
+  "id": "optionalfeature.pact-of-the-tome",
+  "name": "Pact of the Tome",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pact of the Tome",
+        "featureType": [
+          "PB"
+        ],
+        "additionalSpells": [
+          {
+            "ability": "cha",
+            "known": {
+              "_": [
+                {
+                  "choose": "level=0",
+                  "count": 3
+                }
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "Your patron gives you a grimoire called a Book of Shadows. When you gain this feature, choose three {@filter cantrips|spells|level=0} from any class's spell list. The cantrips do not need to be from the same spell list. While the book is on your person, you can cast those cantrips at will. They don't count against your number of cantrips known. Any cantrip you cast with this feature is considered a warlock cantrip for you. If you lose your Book of Shadows, you can perform a 1-hour ceremony to receive a replacement from your patron. This ceremony can be performed during a short or long rest, and it destroys the previous book. The book turns to ash when you die."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pact of the Tome",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "ability": "cha",
+            "known": {
+              "_": [
+                {
+                  "choose": "level=0",
+                  "count": 3
+                }
+              ]
+            },
+            "prepared": {
+              "_": [
+                {
+                  "choose": "level=1|components & miscellaneous=ritual",
+                  "count": 2
+                }
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "Stitching together strands of shadow, you conjure forth a book in your hand at the end of a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. This Book of Shadows (you determine its appearance) contains eldritch magic that only you can access, granting you the benefits below. The book disappears if you conjure another book with this feature or if you die.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Cantrips and Rituals",
+                "entries": [
+                  "When the book appears, choose three {@filter cantrips|spells|level=0}, and choose two {@filter level 1 spells|spells|level=1|components & miscellaneous=ritual} that have the {@variantrule Ritual|SRD52} tag. The spells can be from any class's spell list, and they must be spells you don't already have prepared. While the book is on your person, you have the chosen spells prepared, and they function as Warlock spells for you."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spellcasting Focus",
+                "entries": [
+                  "You can use the book as a {@variantrule Spellcasting Focus|SRD52}."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

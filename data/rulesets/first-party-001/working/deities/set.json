@@ -1,0 +1,20 @@
+{
+  "id": "deity.set",
+  "name": "Set",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "title": "God of darkness and desert storms",
+    "domains": [
+      "Death",
+      "Tempest",
+      "Trickery"
+    ],
+    "symbol": "Coiled cobra"
+  }
+}

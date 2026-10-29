@@ -1,0 +1,7 @@
+{
+  "id": "monster.merfolk",
+  "name": "Merfolk",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.merfolk-skirmisher"
+}

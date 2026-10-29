@@ -1,0 +1,14 @@
+{
+  "id": "item.fine-wine-bottle",
+  "name": "Fine Wine (bottle)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "FD",
+    "rarity": "none",
+    "value": 1000,
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

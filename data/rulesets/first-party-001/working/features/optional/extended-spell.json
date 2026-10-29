@@ -1,0 +1,41 @@
+{
+  "id": "optionalfeature.extended-spell",
+  "name": "Extended Spell",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Extended Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 1
+        },
+        "entries": [
+          "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Extended Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 1
+        },
+        "entries": [
+          "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 Sorcery Point to double its duration to a maximum duration of 24 hours.",
+          "If the affected spell requires {@status Concentration|SRD52}, you have {@variantrule Advantage|SRD52} on any saving throw you make to maintain that {@status Concentration|SRD52}."
+        ]
+      }
+    }
+  ]
+}

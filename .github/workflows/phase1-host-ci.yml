@@ -1,0 +1,52 @@
+# Isolated verification of the Phase 1B foundation. Never deploys.
+name: Rules Core Phase 1B Host CI
+
+on:
+  push:
+    branches:
+      - feature/rules-core-phase1-host
+      - feature/rules-core-rewrite
+      - integration/rules-core-phase1
+  pull_request:
+    branches:
+      - feature/rules-core-rewrite
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Restore
+        run: dotnet restore RulesCore.slnx
+      - name: Build
+        run: dotnet build RulesCore.slnx -c Release --no-restore
+      - name: Test
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Docker build
+        run: docker build -t rules-core-phase1:ci .
+      - name: Docker runtime smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Validate the Phase 1B unready startup contract even after Phase 2 adds real content.
+          docker run --rm -d -p 127.0.0.1:18765:8080 \
+            -e Rulesets__ContentRoot=/app/absent-rulesets \
+            --name rules-core-phase1-smoke rules-core-phase1:ci
+          trap 'docker rm -f rules-core-phase1-smoke >/dev/null 2>&1 || true' EXIT
+          for attempt in $(seq 1 30); do
+            health=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18765/health || true)
+            if [ "$health" = "200" ]; then break; fi
+            sleep 1
+          done
+          test "$health" = "200"
+          ready=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18765/ready)
+          test "$ready" = "503"
+          public=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18765/api/rules)
+          test "$public" = "404"

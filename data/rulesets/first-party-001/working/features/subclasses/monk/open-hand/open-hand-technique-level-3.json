@@ -1,0 +1,69 @@
+{
+  "id": "subclass-feature.monk.open-hand.open-hand-technique-level-3",
+  "name": "Open Hand Technique",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Open Hand Technique",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "subclassShortName": "Open Hand",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "You can manipulate your enemy's ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target.",
+          {
+            "type": "list",
+            "items": [
+              "It must succeed on a Dexterity saving throw or be knocked {@condition prone}.",
+              "It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.",
+              "It can't take reactions until the end of your next turn."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Open Hand Technique",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "subclassShortName": "Open Hand",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "Whenever you hit a creature with an attack granted by your Flurry of Blows, you can impose one of the following effects on that target.",
+          {
+            "type": "entries",
+            "name": "Addle",
+            "entries": [
+              "The target can't make {@action Opportunity Attack|SRD52|Opportunity Attacks} until the start of its next turn."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Push",
+            "entries": [
+              "The target must succeed on a Strength saving throw or be pushed up to 15 feet away from you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Topple",
+            "entries": [
+              "The target must succeed on a Dexterity saving throw or have the {@condition Prone|SRD52} condition."
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "parentSubclass": "subclass.monk.open-hand",
+  "classLevel": 3
+}

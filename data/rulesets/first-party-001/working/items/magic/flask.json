@@ -1,0 +1,39 @@
+{
+  "id": "item.flask",
+  "name": "Flask",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Flask",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 2,
+        "entries": [
+          "A flask holds 1 pint of liquid."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Flask",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 2,
+        "entries": [
+          "A Flask holds up to 1 pint."
+        ],
+        "containerCapacity": {
+          "volume": [
+            0.02
+          ]
+        }
+      }
+    }
+  ]
+}

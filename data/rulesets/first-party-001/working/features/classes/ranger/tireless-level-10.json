@@ -1,0 +1,41 @@
+{
+  "id": "class-feature.ranger.tireless-level-10",
+  "name": "Tireless",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tireless",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "Primal forces now help fuel you on your journeys, granting you the following benefits.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Temporary Hit Points",
+                "entries": [
+                  "As a {@action Magic|SRD52} action, you can give yourself a number of {@variantrule Temporary Hit Points|SRD52} equal to {@dice 1d8} plus your Wisdom modifier (minimum of 1). You can use this action a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Decrease Exhaustion",
+                "entries": [
+                  "Whenever you finish a {@variantrule Short Rest|SRD52}, your {@condition Exhaustion|SRD52} level, if any, decreases by 1."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 10
+}

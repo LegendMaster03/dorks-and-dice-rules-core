@@ -1,0 +1,50 @@
+{
+  "id": "baseitem.lyre",
+  "name": "Lyre",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Lyre",
+        "type": "INS",
+        "rarity": "none",
+        "weight": 2,
+        "value": 3000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Lyre",
+        "type": "INS|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 3000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Charisma"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Play a known tune ({@dc 10}), or improvise a song ({@dc 15})"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

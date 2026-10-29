@@ -1,0 +1,232 @@
+{
+  "id": "monster.flesh-golem",
+  "name": "Flesh Golem",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "construct",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      9
+    ],
+    "hp": {
+      "average": 127,
+      "formula": "15d8 + 60"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 19,
+    "dex": 9,
+    "con": 18,
+    "int": 6,
+    "wis": 10,
+    "cha": 5,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Aversion to Fire",
+        "entries": [
+          "If the golem takes Fire damage, it has {@variantrule Disadvantage|SRD52} on attack rolls and ability checks until the end of its next turn."
+        ]
+      },
+      {
+        "name": "Berserk",
+        "entries": [
+          "Whenever the golem starts its turn {@status Bloodied|SRD52}, roll {@dice 1d6}. On a 6, the golem goes berserk. On each of its turns while berserk, the golem attacks the nearest creature it can see. If no creature is near enough to move to and attack, the golem attacks an object. Once the golem goes berserk, it remains so until it is destroyed or it is no longer {@status Bloodied|SRD52}.",
+          "The golem's creator, if within 60 feet of the berserk golem, can try to calm it by taking an action to make a {@dc 15} Charisma ({@skill Persuasion|SRD52}) check; the golem must be able to hear its creator. If this check succeeds, the golem ceases being berserk until the start of its next turn, at which point it resumes rolling for the Berserk trait again if it is still {@status Bloodied|SRD52}."
+        ]
+      },
+      {
+        "name": "Immutable Form",
+        "entries": [
+          "The golem can't shape-shift."
+        ]
+      },
+      {
+        "name": "Lightning Absorption",
+        "entries": [
+          "Whenever the golem is subjected to Lightning damage, it regains a number of {@variantrule Hit Points|SRD52} equal to the Lightning damage dealt."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The golem has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The golem's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The golem makes two Slam attacks."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Bludgeoning damage plus 4 ({@damage 1d8}) Lightning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/flesh-golem.opus"
+    },
+    "traitTags": [
+      "Damage Absorption",
+      "Immutable Form",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "B",
+      "L"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Flesh Golem",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Flesh Golem",
+            "entries": [
+              "{@i Dead Flesh Given New Life}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Arcana"
+                  }
+                ]
+              },
+              "Flesh golems are roughly human-shaped collections of body parts bound together by misused magic or strange science. They serve their reckless creators, but many possess disjointed memories and instincts from their component parts. If wounded, these golems might go berserk and vent their confusion on anything in their sight, including their creators.",
+              "Flesh golems appear in varied forms. Roll on or choose a result from the Flesh Golem Characteristics table to inspire a flesh golem's features.",
+              {
+                "type": "table",
+                "caption": "Flesh Golem Characteristics",
+                "colLabels": [
+                  "1d6",
+                  "The Flesh Golem Has..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Animal parts among its humanlike pieces."
+                  ],
+                  [
+                    "2",
+                    "A disguise of makeup and heavy clothing."
+                  ],
+                  [
+                    "3",
+                    "Missing parts and exposed insides."
+                  ],
+                  [
+                    "4",
+                    "Parts serving unintended roles, like a body composed of dozens of hands."
+                  ],
+                  [
+                    "5",
+                    "Perfect features accented by beautiful stitching."
+                  ],
+                  [
+                    "6",
+                    "Visible mechanisms, bellows, and engines."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "The barrier between the mortal and the divine lies shattered—open is the mold for new gods. It was I who invaded the divine. Not with a spear but with a stitch. Not with my heresies but with my heart."
+                    ],
+                    "by": "Viktra Mordenheim, Darklord of Lamordia"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Flesh Golem.webp"
+            },
+            "credit": "Bjorn Hurri",
+            "width": 1113,
+            "height": 2040
+          }
+        ]
+      }
+    ]
+  }
+}

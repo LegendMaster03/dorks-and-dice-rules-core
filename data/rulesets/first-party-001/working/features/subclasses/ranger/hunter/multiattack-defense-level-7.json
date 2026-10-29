@@ -1,0 +1,26 @@
+{
+  "id": "subclass-feature.ranger.hunter.multiattack-defense-level-7",
+  "name": "Multiattack Defense",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Multiattack Defense",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "When a creature hits you with an attack, you gain a +4 bonus to AC against all subsequent attacks made by that creature for the rest of the turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "subclass.ranger.hunter",
+  "classLevel": 7
+}

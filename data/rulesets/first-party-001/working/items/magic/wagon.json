@@ -1,0 +1,12 @@
+{
+  "id": "item.wagon",
+  "name": "Wagon",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "VEH",
+    "rarity": "none",
+    "weight": 400,
+    "value": 3500
+  }
+}

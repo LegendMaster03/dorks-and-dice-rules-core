@@ -1,0 +1,18 @@
+{
+  "id": "deity.bast",
+  "name": "Bast",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "Goddess of cats and vengeance",
+    "domains": [
+      "War"
+    ],
+    "symbol": "Cat"
+  }
+}

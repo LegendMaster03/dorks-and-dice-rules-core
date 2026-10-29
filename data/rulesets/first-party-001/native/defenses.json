@@ -1,0 +1,115 @@
+{
+  "id": "rule.defenses",
+  "name": "Armor Class: Normal, Touch, Flat-Footed and condition adjustments",
+  "kind": "rule",
+  "status": "approved-native-data-contract; runtime-evaluator-pending",
+  "description": "The attack chooses normal or Touch AC. Target states independently alter eligible AC contributions, including Flat-Footed and Helpless. An attack can target Touch AC against a Flat-Footed or Helpless creature.",
+  "baseArmorClass": 10,
+  "contributions": {
+    "core": [
+      "armor",
+      "shield",
+      "natural-armor",
+      "dexterity",
+      "dodge",
+      "size",
+      "deflection"
+    ],
+    "other": "Additional legitimate typed or untyped AC contributions remain effective unless the incoming attack or an effect expressly removes them.",
+    "dexterity": "Use the applicable effective Dexterity modifier after armor caps and feature exceptions. A negative modifier is a penalty and persists when a positive Dexterity bonus is denied.",
+    "dodge": "Dodge contributions are unavailable whenever applicable Dexterity defenses are denied, unless a specific rule explicitly overrides this."
+  },
+  "attackTargeting": {
+    "default": "normal",
+    "supported": [
+      "normal",
+      "touch"
+    ],
+    "touch": {
+      "ignores": [
+        "armor",
+        "shield",
+        "natural-armor"
+      ],
+      "doesNotIgnore": [
+        "dexterity",
+        "dodge",
+        "size",
+        "deflection"
+      ],
+      "onlyWhenAttackExplicitlyTargetsTouch": true
+    },
+    "normal": {
+      "ignores": []
+    }
+  },
+  "derivedProfiles": {
+    "normal": {
+      "targeting": "normal",
+      "deniedDefenses": []
+    },
+    "touch": {
+      "targeting": "touch",
+      "deniedDefenses": []
+    },
+    "flat-footed": {
+      "targeting": "normal",
+      "deniedDefenses": [
+        "positive-dexterity",
+        "dodge"
+      ]
+    },
+    "touch-flat-footed": {
+      "targeting": "touch",
+      "deniedDefenses": [
+        "positive-dexterity",
+        "dodge"
+      ]
+    }
+  },
+  "defensiveEffectOperations": {
+    "suppress-contributions": {
+      "application": "Remove each targeted contribution at most once per incoming attack; suppress only positive Dexterity bonuses, not Dexterity penalties. Remove dodge bonuses while Dexterity defense is denied."
+    },
+    "set-effective-ability-score": {
+      "application": "Replace the defender's effective Dexterity modifier for AC with the modifier implied by the specified score, including negative values. Do not also apply positive-Dexterity suppression as an additional numerical penalty."
+    },
+    "add-modifier": {
+      "application": "Apply the value to the effective AC only when its attack-relative predicate is true. Identical nonStackingGroup effects from related conditions contribute only once, at the most severe penalty or bonus."
+    }
+  },
+  "stacking": [
+    "Resolve the attack's requested defense category first; a condition never changes ordinary targeting into Touch targeting.",
+    "Apply the defense's included contributions, then the attack-relative status restrictions. The resulting effective AC is calculated for each incoming attack.",
+    "Repeated loss of Dexterity or dodge bonuses from multiple conditions is not cumulative.",
+    "When Helpless sets Dexterity to 0, use its effective AC Dexterity modifier (-5) rather than first removing positive Dexterity and then subtracting another 5.",
+    "An effect's source-scoped attack roll Advantage is separate from defender-side AC impairment when independently granted. Do not retain an attack Advantage from a condition that has been reconciled into an equivalent defender-side AC effect.",
+    "Prone and Helpless both supply melee exposure penalties in a common nonStackingGroup; use -4 once rather than -8 when both apply.",
+    "Defender-specific exceptions such as Uncanny Dodge or source-granted ability to retain an AC component are evaluated before finalizing the suppressed components, to the exact extent granted.",
+    "No implicit negative/positive Dexterity conversion, source edition toggle, hidden attack bonus or unlisted AC component is permitted."
+  ],
+  "excludedOrDeferred": [
+    "Imported 3.x +2 attack bonus while Invisible is not added on top of denial of Dexterity defense; detailed attack accuracy balancing remains a separate review.",
+    "Deafened's 3.x initiative and verbal spellcasting penalties are deferred to initiative/spellcasting reconciliation.",
+    "Mandatory flight under 3.x Frightened is deferred to the fear-condition family.",
+    "Coup de grace is a separate advanced combat procedure, not an automatic side effect of Helpless.",
+    "Full source-specific touch attack and Flat-Footed exceptions beyond the approved shared semantics require explicit feature grants.",
+    "No runtime code is implemented in this data-only baseline."
+  ],
+  "sample": {
+    "base": 10,
+    "components": {
+      "armor": 4,
+      "shield": 2,
+      "natural-armor": 0,
+      "dexterity": 3,
+      "dodge": 0,
+      "size": 0,
+      "deflection": 0
+    },
+    "normal": 19,
+    "touch": 13,
+    "flat-footed": 16,
+    "touch-flat-footed": 10
+  }
+}

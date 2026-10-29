@@ -1,0 +1,28 @@
+{
+  "id": "class-feature.barbarian.improved-brutal-strike-level-13",
+  "name": "Improved Brutal Strike",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 13,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Improved Brutal Strike",
+    "description": "Add Staggering Blow and Sundering Blow to Brutal Strike.",
+    "mechanics": {
+      "kind": "brutal-strike-options",
+      "newOptions": [
+        {
+          "name": "Staggering Blow",
+          "disadvantageNextSave": true,
+          "noOpportunityAttacksUntil": "start-of-next-turn"
+        },
+        {
+          "name": "Sundering Blow",
+          "nextOtherAttackerBonus": 5,
+          "until": "start-of-next-turn",
+          "nonstacking": true
+        }
+      ]
+    }
+  }
+}

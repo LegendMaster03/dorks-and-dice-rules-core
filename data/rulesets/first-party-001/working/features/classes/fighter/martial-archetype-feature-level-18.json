@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.martial-archetype-feature-level-18",
+  "name": "Martial Archetype feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Martial Archetype feature",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 18,
+        "entries": [
+          "At 18th level, you gain a feature granted by your Martial Archetype."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 18
+}

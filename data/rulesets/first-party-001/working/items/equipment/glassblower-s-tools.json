@@ -1,0 +1,110 @@
+{
+  "id": "baseitem.glassblower-s-tools",
+  "name": "Glassblower's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Glassblower's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 5,
+        "value": 3000,
+        "additionalEntries": [
+          "Someone who is proficient with glassblower's tools has not only the ability to shape glass, but also specialized knowledge of the methods used to produce glass objects.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "The tools include a blowpipe, a small marver, blocks, and tweezers. You need a source of heat to work glass."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana, History",
+            "entries": [
+              "Your knowledge of glassmaking techniques aids you when you examine glass objects, such as potion bottles or glass items found in a treasure hoard. For instance, you can study how a glass potion bottle has been changed by its contents to help determine a potion's effects. (A potion might leave behind a residue, deform the glass, or stain it.)"
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "When you study an area, your knowledge can aid you if the clues include broken glass or glass objects."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Identify Weakness",
+            "entries": [
+              "With 1 minute of study, you can identify the weak points in a glass object. Any damage dealt to the object by striking a weak spot is doubled."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Glassblower's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Identify source of glass",
+                "10"
+              ],
+              [
+                "Determine what a glass object once held",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Glassblower's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 3000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Intelligence"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Discern what a glass object held in the past 24 hours ({@dc 15})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Glass Bottle|SRD52}, {@item Magnifying Glass|SRD52}, {@item Spyglass|SRD52}, {@item Vial|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

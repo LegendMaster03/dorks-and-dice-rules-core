@@ -1,0 +1,107 @@
+{
+  "id": "monster.giant-goat",
+  "name": "Giant Goat",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 30
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 12,
+    "int": 3,
+    "wis": 12,
+    "cha": 6,
+    "save": {
+      "str": "+5"
+    },
+    "skill": {
+      "perception": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "cr": "1/2",
+    "action": [
+      {
+        "name": "Ram",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage. If the target is a Large or smaller creature and the goat moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 ({@damage 2d4}) Bludgeoning damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "grassland",
+      "hill",
+      "mountain"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-goat.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Giant Goat",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Giant Goat.webp"
+                  },
+                  "credit": "Pindurski",
+                  "width": 1000,
+                  "height": 845
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Sure-Footed",
+        "entries": [
+          "The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it {@condition prone}."
+        ]
+      }
+    ]
+  }
+}

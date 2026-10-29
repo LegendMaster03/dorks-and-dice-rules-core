@@ -1,0 +1,76 @@
+{
+  "id": "rule.monsters-g",
+  "name": "Monsters (G)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (G)",
+        "page": 309,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Gargoyle|srd51}",
+              "{@creature Gelatinous Cube|srd51}",
+              "{@creature Ghast|srd51}",
+              "{@creature Ghost|srd51}",
+              "{@creature Ghoul|srd51}",
+              "{@creature Giant Ape|srd51}",
+              "{@creature Giant Badger|srd51}",
+              "{@creature Giant Bat|srd51}",
+              "{@creature Giant Boar|srd51}",
+              "{@creature Giant Centipede|srd51}",
+              "{@creature Giant Constrictor Snake|srd51}",
+              "{@creature Giant Crab|srd51}",
+              "{@creature Giant Crocodile|srd51}",
+              "{@creature Giant Eagle|srd51}",
+              "{@creature Giant Elk|srd51}",
+              "{@creature Giant Fire Beetle|srd51}",
+              "{@creature Giant Frog|srd51}",
+              "{@creature Giant Goat|srd51}",
+              "{@creature Giant Hyena|srd51}",
+              "{@creature Giant Lizard|srd51}",
+              "{@creature Giant Octopus|srd51}",
+              "{@creature Giant Owl|srd51}",
+              "{@creature Giant Poisonous Snake|srd51}",
+              "{@creature Giant Rat|srd51}",
+              "{@creature Giant Scorpion|srd51}",
+              "{@creature Giant Sea Horse|srd51}",
+              "{@creature Giant Shark|srd51}",
+              "{@creature Giant Spider|srd51}",
+              "{@creature Giant Toad|srd51}",
+              "{@creature Giant Vulture|srd51}",
+              "{@creature Giant Wasp|srd51}",
+              "{@creature Giant Weasel|srd51}",
+              "{@creature Giant Wolf Spider|srd51}",
+              "{@creature Gibbering Mouther|srd51}",
+              "{@creature Glabrezu|srd51}",
+              "{@creature Gladiator|srd51}",
+              "{@creature Gnoll|srd51}",
+              "{@creature Goat|srd51}",
+              "{@creature Goblin|srd51}",
+              "{@creature Gold Dragon Wyrmling|srd51}",
+              "{@creature Gorgon|srd51}",
+              "{@creature Gray Ooze|srd51}",
+              "{@creature Green Dragon Wyrmling|srd51}",
+              "{@creature Green Hag|srd51}",
+              "{@creature Grick|srd51}",
+              "{@creature Griffon|srd51}",
+              "{@creature Grimlock|srd51}",
+              "{@creature Guard|srd51}",
+              "{@creature Guardian Naga|srd51}",
+              "{@creature Gynosphinx|srd51}"
+            ]
+          }
+        ],
+        "id": "1a9"
+      }
+    }
+  ]
+}

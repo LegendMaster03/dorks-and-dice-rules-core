@@ -1,0 +1,26 @@
+{
+  "id": "subclass-feature.wizard.evocation.empowered-evocation-level-10",
+  "name": "Empowered Evocation",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Empowered Evocation",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "subclassShortName": "Evocation",
+        "subclassSource": "SRD51",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "Beginning at 10th level, you can add your Intelligence modifier to one damage roll of any wizard evocation spell you cast."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "parentSubclass": "subclass.wizard.evocation",
+  "classLevel": 10
+}

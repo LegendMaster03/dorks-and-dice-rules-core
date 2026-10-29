@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.paladin.subclass-feature-level-7",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 7,
+        "entries": [
+          "You gain a feature from your Paladin Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 7
+}

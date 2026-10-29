@@ -1,0 +1,125 @@
+{
+  "id": "monster.swarm-of-ravens",
+  "name": "Swarm of Ravens",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "beast",
+      "swarmSize": "T"
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 50
+    },
+    "str": 6,
+    "dex": 14,
+    "con": 12,
+    "int": 5,
+    "wis": 12,
+    "cha": 6,
+    "skill": {
+      "perception": "+5"
+    },
+    "passive": 15,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "prone",
+      "restrained",
+      "stunned"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Swarm",
+        "entries": [
+          "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny raven. The swarm can't regain {@variantrule Hit Points|SRD52} or gain {@variantrule Temporary Hit Points|SRD52}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Beaks",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage, or 2 ({@damage 1d4}) Piercing damage if the swarm is {@status Bloodied|SRD52}."
+        ]
+      },
+      {
+        "name": "Cacophony {@recharge}",
+        "entries": [
+          "{@actSave wis} {@dc 10}, one creature in the swarm's space. {@actSaveFail} The target has the {@condition Deafened|SRD52} condition until the start of the swarm's next turn. While {@condition Deafened|SRD52}, the target also has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "swamp",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/swarm-of-ravens.opus"
+    },
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "deafened"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Swarm of Ravens",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Swarm of Ravens.webp"
+                  },
+                  "credit": "Rowan Holloway",
+                  "width": 963,
+                  "height": 1072
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

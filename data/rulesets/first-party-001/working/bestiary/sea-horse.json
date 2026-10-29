@@ -1,0 +1,7 @@
+{
+  "id": "monster.sea-horse",
+  "name": "Sea Horse",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.seahorse"
+}

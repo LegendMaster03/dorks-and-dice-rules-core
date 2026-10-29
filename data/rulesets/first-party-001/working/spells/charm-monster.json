@@ -1,0 +1,61 @@
+{
+  "id": "spell.charm-monster",
+  "name": "Charm Monster",
+  "kind": "spell",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "level": 4,
+    "school": "E",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "One creature you can see within range makes a Wisdom saving throw. It does so with {@variantrule Advantage|SRD52} if you or your allies are fighting it. On a failed save, the target has the {@condition Charmed|SRD52} condition until the spell ends or until you or your allies damage it. The {@condition Charmed|SRD52} creature is {@variantrule Friendly [Attitude]|SRD52|Friendly} to you. When the spell ends, the target knows it was {@condition Charmed|SRD52} by you."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional creature for each spell slot level above 4."
+        ]
+      }
+    ],
+    "conditionInflict": [
+      "charmed"
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SCT",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  }
+}

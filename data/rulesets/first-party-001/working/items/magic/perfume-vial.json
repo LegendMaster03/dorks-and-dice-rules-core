@@ -1,0 +1,14 @@
+{
+  "id": "item.perfume-vial",
+  "name": "Perfume (vial)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 500,
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

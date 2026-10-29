@@ -1,0 +1,76 @@
+{
+  "id": "magicvariant.sword-of-sharpness",
+  "name": "Sword of Sharpness",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sword of Sharpness",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true,
+            "dmgType": "S"
+          }
+        ],
+        "inherits": {
+          "nameSuffix": " of Sharpness",
+          "source": "SRD51",
+          "page": 246,
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "When you attack an object with this magic sword and hit, maximize your weapon damage dice against the target.",
+            "When you attack a creature with this weapon and roll a 20 on the attack roll, that target takes an extra 14 slashing damage. Then roll another {@dice d20}. If you roll a 20, you lop off one of the target's limbs, with the effect of such loss determined by the DM. If the creature has no limb to sever, you lop off a portion of its body instead.",
+            "{@note Note: According to the SRD, it is an extra {@damage 4d6} slashing damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}}.",
+            "In addition, you can speak the sword's command to cause the blade to shed bright light in a 10-foot radius and dim light for an additional 10 feet. Speaking the command word again or sheathing the sword puts out the light."
+          ],
+          "light": [
+            {
+              "bright": 10,
+              "dim": 20
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sword of Sharpness",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "name": "Glaive",
+            "source": "SRD52"
+          },
+          {
+            "name": "Greatsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Longsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Scimitar",
+            "source": "SRD52"
+          }
+        ],
+        "inherits": {
+          "nameSuffix": " of Sharpness",
+          "source": "SRD52",
+          "page": 248,
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "When you attack an object with this magic weapon and hit, maximize your weapon damage dice against the target.",
+            "When you attack a creature with this weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 14 Slashing damage and gains 1 {@condition Exhaustion|SRD52} level."
+          ]
+        }
+      }
+    }
+  ]
+}

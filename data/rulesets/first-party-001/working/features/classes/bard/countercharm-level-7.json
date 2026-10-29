@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.bard.countercharm-level-7",
+  "name": "Countercharm — Reprieve",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Countercharm — Reprieve",
+    "description": "Countercharm — Reprieve: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "countercharm-reaction",
+      "action": "reaction",
+      "rangeFeet": 30,
+      "trigger": "bard-or-creature-fails-save-versus-effect-imposing-charmed-or-frightened",
+      "result": "reroll-save-with-advantage",
+      "sameFeatureAs": "class-feature.bard.countercharm-level-6",
+      "noNewResource": true
+    }
+  }
+}

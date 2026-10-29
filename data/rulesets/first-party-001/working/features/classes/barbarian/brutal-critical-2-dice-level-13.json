@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.barbarian.brutal-critical-2-dice-level-13",
+  "name": "Brutal Critical",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 13,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Brutal Critical",
+    "description": "Brutal Critical grants 2 additional weapon damage dice in the native critical escalation procedure, replacing the preceding quantity.",
+    "mechanics": {
+      "kind": "critical-escalation-bonus-dice",
+      "additionalWeaponDiceTotal": 2,
+      "notStackingBetweenLevels": true
+    }
+  }
+}

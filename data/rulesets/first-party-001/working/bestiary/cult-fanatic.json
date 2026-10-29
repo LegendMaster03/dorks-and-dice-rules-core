@@ -1,0 +1,7 @@
+{
+  "id": "monster.cult-fanatic",
+  "name": "Cult Fanatic",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.cultist-fanatic"
+}

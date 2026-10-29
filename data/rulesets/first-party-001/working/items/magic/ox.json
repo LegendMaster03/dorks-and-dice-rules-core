@@ -1,0 +1,11 @@
+{
+  "id": "item.ox",
+  "name": "Ox",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 1500
+  }
+}

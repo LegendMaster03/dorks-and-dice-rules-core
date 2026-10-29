@@ -1,0 +1,19 @@
+{
+  "id": "deity.arawn",
+  "name": "Arawn",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "title": "God of life and death",
+    "domains": [
+      "Life",
+      "Death"
+    ],
+    "symbol": "Black star on gray background"
+  }
+}

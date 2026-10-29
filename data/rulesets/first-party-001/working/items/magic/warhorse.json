@@ -1,0 +1,13 @@
+{
+  "id": "item.warhorse",
+  "name": "Warhorse",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 40000,
+    "carryingCapacity": 540,
+    "speed": 60
+  }
+}

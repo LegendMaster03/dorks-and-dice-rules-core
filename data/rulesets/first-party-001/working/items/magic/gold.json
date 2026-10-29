@@ -1,0 +1,12 @@
+{
+  "id": "item.gold",
+  "name": "Gold",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 5000
+  }
+}

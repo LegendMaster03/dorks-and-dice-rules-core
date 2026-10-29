@@ -1,0 +1,120 @@
+{
+  "id": "spell.sunbeam",
+  "name": "Sunbeam",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sunbeam",
+        "level": 6,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "line",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a magnifying glass"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A beam of brilliant light flashes out from your hand in a 5-foot-wide, 60-foot-long line. Each creature in the line must make a Constitution saving throw. On a failed save, a creature takes {@damage 6d8} radiant damage and is {@condition blinded} until your next turn. On a successful save, it takes half as much damage and isn't {@condition blinded} by this spell. Undead and oozes have disadvantage on this saving throw.",
+          "You can create a new line of radiance as your action on any turn until the spell ends.",
+          "For the duration, a mote of brilliant radiance shines in your hand. It sheds bright light in a 30-foot radius and dim light for an additional 30 feet. This light is sunlight."
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "LGTS"
+        ],
+        "areaTags": [
+          "L"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sunbeam",
+        "level": 6,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "line",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a magnifying glass"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You launch a sunbeam in a 5-foot-wide, 60-foot-long {@variantrule Line [Area of Effect]|SRD52|Line}. Each creature in the {@variantrule Line [Area of Effect]|SRD52|Line} makes a Constitution saving throw. On a failed save, a creature takes {@damage 6d8} Radiant damage and has the {@condition Blinded|SRD52} condition until the start of your next turn. On a successful save, it takes half as much damage only.",
+          "Until the spell ends, you can take a {@action Magic|SRD52} action to create a new {@variantrule Line [Area of Effect]|SRD52|Line} of radiance.",
+          "For the duration, a mote of brilliant radiance shines above you. It sheds {@variantrule Bright Light|SRD52} in a 30-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet. This light is sunlight."
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "LGTS"
+        ],
+        "areaTags": [
+          "L"
+        ]
+      }
+    }
+  ]
+}

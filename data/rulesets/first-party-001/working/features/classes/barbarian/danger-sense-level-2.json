@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.barbarian.danger-sense-level-2",
+  "name": "Danger Sense",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Danger Sense",
+    "description": "Advantage on Dexterity saves unless Incapacitated.",
+    "mechanics": {
+      "kind": "roll-mode",
+      "mode": "advantage",
+      "checks": [
+        "dexterity-save"
+      ],
+      "unless": "condition.incapacitated"
+    }
+  }
+}

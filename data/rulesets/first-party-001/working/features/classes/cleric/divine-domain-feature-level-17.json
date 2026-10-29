@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.cleric.divine-domain-feature-level-17",
+  "name": "Divine Domain feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Domain feature",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, you gain a feature from your Divine Domain."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 17
+}

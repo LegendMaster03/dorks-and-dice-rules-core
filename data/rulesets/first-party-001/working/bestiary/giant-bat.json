@@ -1,0 +1,103 @@
+{
+  "id": "monster.giant-bat",
+  "name": "Giant Bat",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "4d10"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 60
+    },
+    "str": 15,
+    "dex": 16,
+    "con": 11,
+    "int": 2,
+    "wis": 12,
+    "cha": 6,
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 11,
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "mountain",
+      "underdark"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-bat.opus"
+    },
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Giant Bat",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Giant Ape and Giant Bat.webp"
+                  },
+                  "width": 1047,
+                  "height": 2560
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Echolocation",
+        "entries": [
+          "The bat can't use its blindsight while {@condition deafened}."
+        ]
+      },
+      {
+        "name": "Keen Hearing",
+        "entries": [
+          "The bat has advantage on Wisdom ({@skill Perception}) checks that rely on hearing."
+        ]
+      }
+    ]
+  }
+}

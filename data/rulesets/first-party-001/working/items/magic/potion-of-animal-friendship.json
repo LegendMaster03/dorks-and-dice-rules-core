@@ -1,0 +1,45 @@
+{
+  "id": "item.potion-of-animal-friendship",
+  "name": "Potion of Animal Friendship",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Animal Friendship",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "entries": [
+          "When you drink this potion, you can cast the {@spell animal friendship} spell (save {@dc 13}) for 1 hour at will. Agitating this muddy liquid brings little bits into view: a fish scale, a hummingbird tongue, a cat claw, or a squirrel hair."
+        ],
+        "attachedSpells": [
+          "animal friendship"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Animal Friendship",
+        "type": "P|SRD52",
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "entries": [
+          "When you drink this potion, you can cast the level 3 version of the {@spell Animal Friendship|SRD52} spell (save {@dc 13}).",
+          "Agitating this potion's muddy liquid brings little bits into view: a fish scale, a hummingbird feather, a cat claw, or a squirrel hair."
+        ],
+        "attachedSpells": [
+          "animal friendship|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

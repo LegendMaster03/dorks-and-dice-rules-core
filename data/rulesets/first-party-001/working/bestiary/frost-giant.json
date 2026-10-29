@@ -1,0 +1,164 @@
+{
+  "id": "monster.frost-giant",
+  "name": "Frost Giant",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 149,
+      "formula": "13d12 + 65"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 9,
+    "con": 21,
+    "int": 9,
+    "wis": 10,
+    "cha": 12,
+    "save": {
+      "con": "+8",
+      "wis": "+3",
+      "cha": "+4"
+    },
+    "skill": {
+      "athletics": "+9",
+      "perception": "+3"
+    },
+    "passive": 13,
+    "immune": [
+      "cold"
+    ],
+    "languages": [
+      "Giant"
+    ],
+    "cr": "8",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Frost Axe or Great Bow in any combination."
+        ]
+      },
+      {
+        "name": "Frost Axe",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 10 ft. {@h}19 ({@damage 2d12 + 6}) Slashing damage plus 9 ({@damage 2d8}) Cold damage."
+        ]
+      },
+      {
+        "name": "Great Bow",
+        "entries": [
+          "{@atkr r} {@hit 9}, range 150/600 ft. {@h}17 ({@damage 2d10 + 6}) Piercing damage plus 7 ({@damage 2d6}) Cold damage, and the target's {@variantrule Speed|SRD52} decreases by 10 feet until the end of its next turn."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "War Cry {@recharge 5}",
+        "entries": [
+          "The giant or one creature of its choice that can see or hear it gains 16 ({@dice 2d10 + 5}) {@variantrule Temporary Hit Points|SRD52} and has {@variantrule Advantage|SRD52} on attack rolls until the start of the giant's next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "mountain"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/frost-giant.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "GI"
+    ],
+    "damageTags": [
+      "C",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Frost Giant",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Frost Giant",
+            "entries": [
+              "{@i Giant of the Ice and Snow}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Arctic|bestiary|environment=arctic}, {@filter Mountain|bestiary|environment=mountain}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "From glacial mountain heights and vast tundras rise the homes of frost giants. These giants have skin and hair of icy hues. Their natural immunity to cold allows them to flourish in places inhospitable to most other creatures. They use this resilience to aid them when hunting and in combat, bolstering their allies with chilling war cries.",
+              "Frost giants often travel far to find food and goods. This leads many to become raiders and earn violent reputations. Others live more peaceably by hunting titanic game or creating sanctuaries from the cold (frequently featuring hot springs or snowy contests). Frost giants sometimes forge partnerships with icy Fey or fire giants dwelling underground, serving as guardians to their realms in exchange for treasure, weapons, and crafts.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "The small folk have barely anything worth looting, so they shouldn't much mind when we take it from them."
+                    ],
+                    "by": "Jarl Grugnur, Frost Giant"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Frost Giant.webp"
+            },
+            "credit": "Robson Michel",
+            "width": 2550,
+            "height": 1704
+          }
+        ]
+      }
+    ]
+  }
+}

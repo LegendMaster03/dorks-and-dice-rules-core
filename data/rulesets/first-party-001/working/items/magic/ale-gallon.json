@@ -1,0 +1,14 @@
+{
+  "id": "item.ale-gallon",
+  "name": "Ale (gallon)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "FD",
+    "rarity": "none",
+    "value": 20,
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

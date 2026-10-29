@@ -1,0 +1,90 @@
+{
+  "id": "spell.true-seeing",
+  "name": "True Seeing",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "True Seeing",
+        "level": 6,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "an ointment for the eyes that costs 25 gp; is made from mushroom powder, saffron, and fat; and is consumed by the spell",
+            "cost": 2500,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "This spell gives the willing creature you touch the ability to see things as they actually are. For the duration, the creature has {@sense truesight}, notices secret doors hidden by magic, and can see into the Ethereal Plane, all out to a range of 120 feet."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "True Seeing",
+        "level": 6,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "mushroom powder worth 25+ GP, which the spell consumes",
+            "cost": 2500,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "For the duration, the willing creature you touch has {@sense Truesight|SRD52} with a range of 120 feet."
+        ]
+      }
+    }
+  ]
+}

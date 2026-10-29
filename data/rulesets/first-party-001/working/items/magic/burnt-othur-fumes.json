@@ -1,0 +1,46 @@
+{
+  "id": "item.burnt-othur-fumes",
+  "name": "Burnt Othur Fumes",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Burnt Othur Fumes",
+        "type": "G",
+        "rarity": "none",
+        "value": 50000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 13} Constitution saving throw or take 10 ({@damage 3d6}) poison damage, and must repeat the saving throw at the start of each of its turns. On each successive failed save, the character takes 3 ({@damage 1d6}) poison damage. After three successful saves, the poison ends."
+        ],
+        "poisonTypes": [
+          "inhaled"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Burnt Othur Fumes",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 50000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Burnt Othur Fumes must succeed on a {@dc 13} Constitution saving throw or take 10 ({@damage 3d6}) Poison damage, and it must repeat the save at the start of each of its turns. On each successive failed save, the creature takes 3 ({@damage 1d6}) Poison damage. After three successful saves, the poison ends."
+        ],
+        "poisonTypes": [
+          "inhaled"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

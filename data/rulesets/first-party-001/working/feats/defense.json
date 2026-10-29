@@ -1,0 +1,19 @@
+{
+  "id": "feat.defense",
+  "name": "Defense",
+  "kind": "feat",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "category": "FS",
+    "prerequisite": [
+      {
+        "feature": [
+          "Fighting Style"
+        ]
+      }
+    ],
+    "entries": [
+      "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}."
+    ]
+  }
+}

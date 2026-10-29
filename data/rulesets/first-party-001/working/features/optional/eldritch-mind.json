@@ -1,0 +1,20 @@
+{
+  "id": "optionalfeature.eldritch-mind",
+  "name": "Eldritch Mind",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eldritch Mind",
+        "featureType": [
+          "EI"
+        ],
+        "entries": [
+          "You have {@variantrule Advantage|SRD52} on Constitution saving throws that you make to maintain {@variantrule Concentration|SRD52}."
+        ]
+      }
+    }
+  ]
+}

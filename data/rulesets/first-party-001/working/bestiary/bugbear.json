@@ -1,0 +1,8 @@
+{
+  "id": "monster.bugbear",
+  "name": "Bugbear",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "familyId": "monster-family.bugbear",
+  "aliasOf": "monster.bugbear-warrior"
+}

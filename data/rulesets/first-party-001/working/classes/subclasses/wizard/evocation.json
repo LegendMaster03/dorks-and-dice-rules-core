@@ -1,0 +1,24 @@
+{
+  "id": "subclass.wizard.evocation",
+  "name": "School of Evocation",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "School of Evocation",
+        "shortName": "Evocation",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "subclassFeatures": [
+          "School of Evocation|Wizard||Evocation||2",
+          "Potent Cantrip|Wizard||Evocation||6",
+          "Empowered Evocation|Wizard||Evocation||10",
+          "Overchannel|Wizard||Evocation||14"
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard"
+}

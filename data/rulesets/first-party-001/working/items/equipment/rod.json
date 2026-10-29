@@ -1,0 +1,16 @@
+{
+  "id": "baseitem.rod",
+  "name": "Rod",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Arcane Focus"
+    ],
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1000
+  }
+}

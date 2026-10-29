@@ -1,0 +1,433 @@
+{
+  "id": "species.dragonborn",
+  "name": "Dragonborn",
+  "kind": "species",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dragonborn",
+        "size": [
+          "M"
+        ],
+        "speed": 30,
+        "ability": [
+          {
+            "str": 2,
+            "cha": 1
+          }
+        ],
+        "heightAndWeight": {
+          "baseHeight": 66,
+          "heightMod": "2d8",
+          "baseWeight": 175,
+          "weightMod": "2d6"
+        },
+        "age": {
+          "mature": 15,
+          "max": 80
+        },
+        "traitTags": [
+          "Uncommon Race"
+        ],
+        "languageProficiencies": [
+          {
+            "common": true,
+            "draconic": true
+          }
+        ],
+        "resist": [
+          {
+            "choose": {
+              "from": [
+                "acid",
+                "cold",
+                "fire",
+                "lightning",
+                "poison"
+              ]
+            }
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/dragonborn.opus"
+        },
+        "entries": [
+          {
+            "name": "Age",
+            "type": "entries",
+            "entries": [
+              "Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Size",
+            "entries": [
+              "Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium."
+            ]
+          },
+          {
+            "name": "Draconic Ancestry",
+            "entries": [
+              "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
+              {
+                "type": "table",
+                "caption": "Draconic Ancestry",
+                "colLabels": [
+                  "Dragon",
+                  "Damage Type",
+                  "Breath Weapon"
+                ],
+                "colStyles": [
+                  "col-3 text-center",
+                  "col-3 text-center",
+                  "col-6"
+                ],
+                "rows": [
+                  [
+                    "Black",
+                    "Acid",
+                    "5 by 30 ft. line (Dex. save)"
+                  ],
+                  [
+                    "Blue",
+                    "Lightning",
+                    "5 by 30 ft. line (Dex. save)"
+                  ],
+                  [
+                    "Brass",
+                    "Fire",
+                    "5 by 30 ft. line (Dex. save)"
+                  ],
+                  [
+                    "Bronze",
+                    "Lightning",
+                    "5 by 30 ft. line (Dex. save)"
+                  ],
+                  [
+                    "Copper",
+                    "Acid",
+                    "5 by 30 ft. line (Dex. save)"
+                  ],
+                  [
+                    "Gold",
+                    "Fire",
+                    "15 ft. cone (Dex. save)"
+                  ],
+                  [
+                    "Green",
+                    "Poison",
+                    "15 ft. cone (Con. save)"
+                  ],
+                  [
+                    "Red",
+                    "Fire",
+                    "15 ft. cone (Dex. save)"
+                  ],
+                  [
+                    "Silver",
+                    "Cold",
+                    "15 ft. cone (Con. save)"
+                  ],
+                  [
+                    "White",
+                    "Cold",
+                    "15 ft. cone (Con. save)"
+                  ]
+                ]
+              }
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Breath Weapon",
+            "entries": [
+              "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.",
+              "When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes {@damage 2d6} damage on a failed save, and half as much damage on a successful one. The damage increases to {@damage 3d6} at 6th level, {@damage 4d6} at 11th level, and {@damage 5d6} at 16th level.",
+              "After you use your breath weapon, you can't use it again until you complete a short or long rest."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Damage Resistance",
+            "entries": [
+              "You have resistance to the damage type associated with your draconic ancestry."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Languages",
+            "entries": [
+              "You can speak, read, and write Common and Draconic. Draconic is thought to be one of the oldest languages and is often used in the study of magic. The language sounds harsh to most other creatures and includes numerous hard consonants and sibilants."
+            ],
+            "type": "entries"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dragonborn",
+        "creatureTypes": [
+          "humanoid"
+        ],
+        "size": [
+          "M"
+        ],
+        "speed": 30,
+        "darkvision": 60,
+        "resist": [
+          {
+            "choose": {
+              "from": [
+                "acid",
+                "lightning",
+                "fire",
+                "poison",
+                "cold"
+              ]
+            }
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "races/dragonborn.opus"
+        },
+        "sizeEntry": {
+          "type": "item",
+          "name": "Size:",
+          "entries": [
+            "Medium (about 5-7 feet tall)"
+          ]
+        },
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Draconic Ancestry",
+            "entries": [
+              "Your lineage stems from a dragon progenitor. Choose the kind of dragon from the Draconic Ancestors table. Your choice affects your Breath Weapon and {@variantrule Damage|SRD52} {@variantrule Resistance|SRD52} traits as well as your appearance.",
+              {
+                "type": "table",
+                "caption": "Draconic Ancestors",
+                "colLabels": [
+                  "Dragon",
+                  "Damage Type"
+                ],
+                "colStyles": [
+                  "col-6",
+                  "col-6"
+                ],
+                "rows": [
+                  [
+                    "Black",
+                    "Acid"
+                  ],
+                  [
+                    "Blue",
+                    "Lightning"
+                  ],
+                  [
+                    "Brass",
+                    "Fire"
+                  ],
+                  [
+                    "Bronze",
+                    "Lightning"
+                  ],
+                  [
+                    "Copper",
+                    "Acid"
+                  ],
+                  [
+                    "Gold",
+                    "Fire"
+                  ],
+                  [
+                    "Green",
+                    "Poison"
+                  ],
+                  [
+                    "Red",
+                    "Fire"
+                  ],
+                  [
+                    "Silver",
+                    "Cold"
+                  ],
+                  [
+                    "White",
+                    "Cold"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Breath Weapon",
+            "entries": [
+              "When you take the {@action Attack|SRD52} action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone} or a 30-foot {@variantrule Line [Area of Effect]|SRD52|Line} that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw ({@dc 8} plus your Constitution modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}). On a failed save, a creature takes {@damage 1d10} damage of the type determined by your Draconic Ancestry trait. On a successful save, a creature takes half as much damage. This damage increases by {@damage 1d10} when you reach character levels 5 ({@damage 2d10}), 11 ({@damage 3d10}), and 17 ({@damage 4d10}).",
+              "You can use this Breath Weapon a number of times equal to your {@variantrule Proficiency|SRD52|Proficiency Bonus}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Damage Resistance",
+            "entries": [
+              "You have {@variantrule Resistance|SRD52} to the damage type determined by your Draconic Ancestry trait."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Darkvision",
+            "entries": [
+              "You have {@sense Darkvision|SRD52} with a range of 60 feet."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Draconic Flight",
+            "entries": [
+              "When you reach character level 5, you can channel draconic magic to give yourself temporary flight. As a {@variantrule Bonus Action|SRD52}, you sprout spectral wings on your back that last for 10 minutes or until you retract the wings (no action required) or have the {@condition Incapacitated|SRD52} condition. During that time, you have a {@variantrule Fly Speed|SRD52} equal to your {@variantrule Speed|SRD52}. Your wings appear to be made of the same energy as your Breath Weapon. Once you use this trait, you can't use it again until you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          }
+        ],
+        "_versions": [
+          {
+            "_abstract": {
+              "name": "Dragonborn ({{color}})",
+              "source": "SRD52",
+              "_mod": {
+                "entries": [
+                  {
+                    "mode": "removeArr",
+                    "names": "Draconic Ancestry"
+                  },
+                  {
+                    "mode": "replaceArr",
+                    "replace": "Breath Weapon",
+                    "items": {
+                      "type": "entries",
+                      "name": "Breath Weapon",
+                      "entries": [
+                        "When you take the {@action Attack|SRD52} action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone} or a 30-foot {@variantrule Line [Area of Effect]|SRD52|Line} that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw ({@dc 8} plus your Constitution modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}). On a failed save, a creature takes {@damage 1d10} {{damageType}} damage. On a successful save, a creature takes half as much damage. This damage increases by {@damage 1d10} when you reach character levels 5 ({@damage 2d10}), 11 ({@damage 3d10}), and 17 ({@damage 4d10}).",
+                        "You can use this Breath Weapon a number of times equal to your {@variantrule Proficiency|SRD52|Proficiency Bonus}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+                      ]
+                    }
+                  },
+                  {
+                    "mode": "replaceArr",
+                    "replace": "Damage Resistance",
+                    "items": {
+                      "type": "entries",
+                      "name": "Damage Resistance",
+                      "entries": [
+                        "You have {@variantrule Resistance|SRD52} to {{damageType}} damage."
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "_implementations": [
+              {
+                "_variables": {
+                  "color": "Black",
+                  "damageType": "Acid"
+                },
+                "resist": [
+                  "acid"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Blue",
+                  "damageType": "Lightning"
+                },
+                "resist": [
+                  "lightning"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Brass",
+                  "damageType": "Fire"
+                },
+                "resist": [
+                  "fire"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Bronze",
+                  "damageType": "Lightning"
+                },
+                "resist": [
+                  "lightning"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Copper",
+                  "damageType": "Acid"
+                },
+                "resist": [
+                  "acid"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Gold",
+                  "damageType": "Fire"
+                },
+                "resist": [
+                  "fire"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Green",
+                  "damageType": "Poison"
+                },
+                "resist": [
+                  "poison"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Red",
+                  "damageType": "Fire"
+                },
+                "resist": [
+                  "fire"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "Silver",
+                  "damageType": "Cold"
+                },
+                "resist": [
+                  "cold"
+                ]
+              },
+              {
+                "_variables": {
+                  "color": "White",
+                  "damageType": "Cold"
+                },
+                "resist": [
+                  "cold"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

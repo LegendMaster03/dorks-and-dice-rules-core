@@ -1,0 +1,57 @@
+{
+  "id": "item.pouch",
+  "name": "Pouch",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pouch",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50,
+        "entries": [
+          "A cloth or leather pouch can hold up to 20 {@item sling bullet|srd51|sling bullets} or 50 {@item blowgun needle|srd51|blowgun needles}, among other things. A compartmentalized pouch for holding spell components is called a {@item component pouch|srd51}. A pouch can hold up to ⅕ cubic foot or 6 pounds of gear."
+        ],
+        "containerCapacity": {
+          "weight": [
+            6
+          ],
+          "item": [
+            {
+              "sling bullet|srd51": 20,
+              "blowgun needle|srd51": 50
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pouch",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50,
+        "entries": [
+          "A Pouch holds up to 6 pounds within one-fifth of a cubic foot."
+        ],
+        "containerCapacity": {
+          "weight": [
+            6
+          ],
+          "item": [
+            {
+              "firearm bullet|srd52": 10,
+              "sling bullet|srd52": 20,
+              "needle|srd52": 50
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "monster.thug",
+  "name": "Thug",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.tough"
+}

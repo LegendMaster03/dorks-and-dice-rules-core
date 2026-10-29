@@ -1,0 +1,106 @@
+{
+  "id": "spell.fear",
+  "name": "Fear",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fear",
+        "level": 3,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "cone",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a white feather or the heart of a hen"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You project a phantasmal image of a creature's worst fears. Each creature in a 30-foot cone must succeed on a Wisdom saving throw or drop whatever it is holding and become {@condition frightened} for the duration.",
+          "While {@condition frightened} by this spell, a creature must take the {@action Dash} action and move away from you by the safest available route on each of its turns, unless there is nowhere to move. If the creature ends its turn in a location where it doesn't have line of sight to you, the creature can make a Wisdom saving throw. On a successful save, the spell ends for that creature."
+        ],
+        "conditionInflict": [
+          "frightened"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "areaTags": [
+          "N"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fear",
+        "level": 3,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "cone",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a white feather"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone} must succeed on a Wisdom saving throw or drop whatever it is holding and have the {@condition Frightened|SRD52} condition for the duration.",
+          "A {@condition Frightened|SRD52} creature takes the {@action Dash|SRD52} action and moves away from you by the safest route on each of its turns unless there is nowhere to move. If the creature ends its turn in a space where it doesn't have line of sight to you, the creature makes a Wisdom saving throw. On a successful save, the spell ends on that creature."
+        ],
+        "conditionInflict": [
+          "frightened"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "areaTags": [
+          "N"
+        ]
+      }
+    }
+  ]
+}

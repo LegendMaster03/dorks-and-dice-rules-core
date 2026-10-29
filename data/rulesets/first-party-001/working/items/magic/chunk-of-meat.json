@@ -1,0 +1,14 @@
+{
+  "id": "item.chunk-of-meat",
+  "name": "Chunk of Meat",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "FD",
+    "rarity": "none",
+    "value": 30,
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

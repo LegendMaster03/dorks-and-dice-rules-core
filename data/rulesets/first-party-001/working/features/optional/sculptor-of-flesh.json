@@ -1,0 +1,43 @@
+{
+  "id": "optionalfeature.sculptor-of-flesh",
+  "name": "Sculptor of Flesh",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sculptor of Flesh",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 7,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": {
+                "daily": {
+                  "1e": [
+                    "polymorph"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell polymorph} once using a warlock spell slot. You can't do so again until you finish a long rest."
+        ]
+      }
+    }
+  ]
+}

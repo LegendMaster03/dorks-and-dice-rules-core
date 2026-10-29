@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.druid.wild-shape-improvement-level-8",
+  "name": "Wild Shape Improvement (8)",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 8,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Wild Shape Improvement (8)",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "wild-shape-modern-form-improvement",
+      "maxCR": 1,
+      "modernKnownForms": 8,
+      "flightAllowed": true,
+      "legacyLargeSizeAlsoUnlocked": true
+    }
+  }
+}

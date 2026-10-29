@@ -1,0 +1,12 @@
+{
+  "id": "item.silver",
+  "name": "Silver",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 500
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "id": "baseitem.leatherworker-s-tools",
+  "name": "Leatherworker's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Leatherworker's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 5,
+        "value": 500,
+        "additionalEntries": [
+          "Knowledge of leatherworking extends to lore concerning animal hides and their properties. It also confers knowledge of leather armor and similar goods.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Leatherworker's tools include a knife, a small mallet, an edger, a hole punch, thread, and leather scraps."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana",
+            "entries": [
+              "Your expertise in working with leather grants you added insight when you inspect magic items crafted from leather, such as boots and some cloaks."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "You gain added insight when studying leather items or clues related to them, as you draw on your knowledge of leather to pick out details that others would overlook."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Identify Hides",
+            "entries": [
+              "When looking at a hide or a leather item, you can determine the source of the leather and any special techniques used to treat it. For example, you can spot the difference between leather crafted using dwarven methods and leather crafted using halfling methods."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Leatherworker's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Modify a leather item's appearance",
+                "10"
+              ],
+              [
+                "Determine a leather item's history",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Leatherworker's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 500,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Dexterity"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Add a design to a leather item ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Sling|SRD52}, {@item Whip|SRD52}, {@item Hide Armor|SRD52}, {@item Leather Armor|SRD52}, {@item Studded Leather Armor|SRD52}, {@item Backpack|SRD52}, {@item Crossbow Bolt Case|SRD52}, {@item Map or Scroll Case|SRD52}, {@item Parchment|SRD52}, {@item Pouch|SRD52}, {@item Quiver|SRD52}, {@item Waterskin|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

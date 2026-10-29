@@ -1,0 +1,33 @@
+{
+  "id": "baseitem.shield",
+  "name": "Shield",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Shield",
+        "type": "S",
+        "rarity": "none",
+        "weight": 6,
+        "value": 1000,
+        "ac": 2,
+        "entries": [
+          "A shield is made from wood or metal and is carried in one hand. Wielding a shield increases your Armor Class by 2. You can benefit from only one shield at a time."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Shield",
+        "type": "S|SRD52",
+        "rarity": "none",
+        "weight": 6,
+        "value": 1000,
+        "ac": 2
+      }
+    }
+  ]
+}

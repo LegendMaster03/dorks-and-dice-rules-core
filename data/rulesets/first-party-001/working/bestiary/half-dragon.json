@@ -1,0 +1,179 @@
+{
+  "id": "monster.half-dragon",
+  "name": "Half-Dragon",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 105,
+      "formula": "14d8 + 42"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 16,
+    "int": 10,
+    "wis": 15,
+    "cha": 14,
+    "save": {
+      "dex": "+5",
+      "wis": "+5"
+    },
+    "skill": {
+      "athletics": "+7",
+      "perception": "+5",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "resist": [
+      {
+        "special": "Damage type chosen for the Draconic Origin trait below"
+      }
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Draconic Origin",
+        "entries": [
+          "The half-dragon is related to a type of dragon associated with one of the following damage types (DM's choice): Acid, Cold, Fire, Lightning, or Poison. This choice affects other aspects of the stat block."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The half-dragon makes two Claw attacks."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}6 ({@damage 1d4 + 4}) Slashing damage plus 7 ({@damage 2d6}) damage of the type chosen for the Draconic Origin trait."
+        ]
+      },
+      {
+        "name": "Dragon's Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 28 ({@damage 8d6}) damage of the type chosen for the Draconic Origin trait. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Leap",
+        "entries": [
+          "The half-dragon jumps up to 30 feet by spending 10 feet of movement."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "senseTags": [
+      "B",
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Half-Dragon",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Half-Dragon",
+            "entries": [
+              "{@i Warrior Created by Dragons}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Born through magical rites involving the essences of dragons, half-dragons serve their creators and their own draconic whims. Most half-dragons are created by chromatic dragons who desire servants with some trace of their own might and grandeur. Half-dragons frequently command other servants of a villainous dragon or act as agents in lands where their draconic master would attract unwanted attention.",
+              "Half-dragons share personality traits and agendas with the dragon who spawned them. Those resembling chromatic dragons typically loathe their creator even as they seek the same ends. Half-dragons with the traits of metallic dragons are especially rare, but they might arise through magical accidents, the efforts of reckless magic-users, or the last act of a dying dragon.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "What blessing demands more yet inspires greater works than the blood of Tiamat?"
+                    ],
+                    "by": "Wyrmlord Azarr Kul, Half–Dragon"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Half-Dragon.webp"
+            },
+            "credit": "Mathias Kollros",
+            "width": 2550,
+            "height": 1704
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.extra-attack-2-level-11",
+  "name": "Extra Attack (2)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Extra Attack (2)",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 11,
+        "entries": [
+          "At 11th level, you can attack three times whenever you take the {@action Attack} action on your turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 11
+}

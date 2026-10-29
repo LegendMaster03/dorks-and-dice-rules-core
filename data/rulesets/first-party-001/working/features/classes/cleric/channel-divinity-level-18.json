@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.cleric.channel-divinity-level-18",
+  "name": "Channel Divinity — Fourth Use",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Channel Divinity — Fourth Use",
+    "description": "Channel Divinity — Fourth Use is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "increase-channel-divinity-resource",
+      "resource": "cleric.channel-divinity",
+      "totalUses": 4,
+      "atClericLevel": 18,
+      "notAdditionalPool": true
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "class-feature.fighter.action-surge-level-2",
+  "name": "Action Surge",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Action Surge",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.",
+          "Once you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Action Surge",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action, except the {@action Magic|SRD52} action.",
+          "Once you use this feature, you can't do so again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. Starting at level 17, you can use it twice before a rest but only once on a turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 2
+}

@@ -1,0 +1,18 @@
+{
+  "id": "deity.brigantia",
+  "name": "Brigantia",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "Goddess of rivers and livestock",
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Footbridge"
+  }
+}

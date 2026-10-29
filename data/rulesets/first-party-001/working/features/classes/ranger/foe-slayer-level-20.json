@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.ranger.foe-slayer-level-20",
+  "name": "Foe Slayer",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Foe Slayer",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "level": 20,
+        "entries": [
+          "At 20th level, you become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Foe Slayer",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "The damage die of your Hunter's Mark is a {@damage d10} rather than a {@damage d6}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 20
+}

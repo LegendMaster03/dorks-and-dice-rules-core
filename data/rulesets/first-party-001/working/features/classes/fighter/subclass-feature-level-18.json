@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.subclass-feature-level-18",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 18,
+        "entries": [
+          "You gain a feature from your Fighter Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 18
+}

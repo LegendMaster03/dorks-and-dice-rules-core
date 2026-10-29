@@ -1,0 +1,12 @@
+{
+  "id": "item.pole-10-foot",
+  "name": "Pole (10-foot)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 7,
+    "value": 5
+  }
+}

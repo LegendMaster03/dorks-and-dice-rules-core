@@ -1,0 +1,11 @@
+{
+  "id": "item.sheep",
+  "name": "Sheep",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 200
+  }
+}

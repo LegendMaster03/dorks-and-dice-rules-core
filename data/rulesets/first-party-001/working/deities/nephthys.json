@@ -1,0 +1,18 @@
+{
+  "id": "deity.nephthys",
+  "name": "Nephthys",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "Goddess of death and grief",
+    "domains": [
+      "Death"
+    ],
+    "symbol": "Horns around a lunar disk"
+  }
+}

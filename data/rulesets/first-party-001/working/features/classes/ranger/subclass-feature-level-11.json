@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.ranger.subclass-feature-level-11",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 11,
+        "entries": [
+          "You gain a feature from your Ranger Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 11
+}

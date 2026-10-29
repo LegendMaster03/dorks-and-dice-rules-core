@@ -1,0 +1,19 @@
+{
+  "id": "deity.hephaestus",
+  "name": "Hephaestus",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "God of smithing and craft",
+    "domains": [
+      "Forge",
+      "Knowledge"
+    ],
+    "symbol": "Hammer and anvil"
+  }
+}

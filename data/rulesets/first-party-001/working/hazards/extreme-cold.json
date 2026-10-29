@@ -1,0 +1,12 @@
+{
+  "id": "hazard.extreme-cold",
+  "name": "Extreme Cold",
+  "kind": "hazard",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "ENV",
+    "entries": [
+      "When the temperature is 0 degrees Fahrenheit or lower, a creature exposed to the extreme cold must succeed on a {@dc 10} Constitution saving throw at the end of each hour or gain 1 {@condition Exhaustion|SRD52} level. Creatures that have {@variantrule Resistance|SRD52} or {@variantrule Immunity|SRD52} to Cold damage automatically succeed on the save."
+    ]
+  }
+}

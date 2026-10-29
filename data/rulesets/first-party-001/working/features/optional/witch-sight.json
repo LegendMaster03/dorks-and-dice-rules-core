@@ -1,0 +1,59 @@
+{
+  "id": "optionalfeature.witch-sight",
+  "name": "Witch Sight",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Witch Sight",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 15,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Witch Sight",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 15,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "senses": [
+          {
+            "truesight": 30
+          }
+        ],
+        "entries": [
+          "You have {@sense Truesight|SRD52} with a range of 30 feet."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.ranger.feral-senses-level-18",
+  "name": "Feral Senses",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Feral Senses",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "level": 18,
+        "entries": [
+          "At 18th level, you gain preternatural senses that help you fight creatures you can't see. When you attack a creature you can't see, your inability to see it doesn't impose disadvantage on your attack rolls against it. You are also aware of the location of any {@condition invisible} creature within 30 feet of you, provided that the creature isn't hidden from you and you aren't {@condition blinded} or {@condition deafened}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Feral Senses",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 18,
+        "entries": [
+          "Your connection to the forces of nature grants you {@sense Blindsight|SRD52} with a range of 30 feet."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 18
+}

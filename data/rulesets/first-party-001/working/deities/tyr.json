@@ -1,0 +1,43 @@
+{
+  "id": "deity.tyr",
+  "name": "Tyr",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a-1",
+      "content": {
+        "name": "Tyr",
+        "pantheon": "Forgotten Realms",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "title": "God of justice",
+        "domains": [
+          "War",
+          "Order"
+        ],
+        "symbol": "Balanced scales resting on a warhammer"
+      }
+    },
+    {
+      "key": "candidate-a-2",
+      "content": {
+        "name": "Tyr",
+        "pantheon": "Norse",
+        "alignment": [
+          "L",
+          "N"
+        ],
+        "title": "God of courage and strategy",
+        "domains": [
+          "Knowledge",
+          "War",
+          "Order"
+        ],
+        "symbol": "Sword"
+      }
+    }
+  ]
+}

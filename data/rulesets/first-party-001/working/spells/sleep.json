@@ -1,0 +1,129 @@
+{
+  "id": "spell.sleep",
+  "name": "Sleep",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sleep",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 90
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a pinch of fine sand, rose petals, or a cricket"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "This spell sends creatures into a magical slumber. Roll {@dice 5d8}; the total is how many hit points of creatures this spell can affect. Creatures within 20 feet of a point you choose within range are affected in ascending order of their current hit points (ignoring {@condition unconscious} creatures).",
+          "Starting with the creature that has the lowest current hit points, each creature affected by this spell falls {@condition unconscious} until the spell ends, the sleeper takes damage, or someone uses an action to shake or slap the sleeper awake. Subtract each creature's hit points from the total before moving on to the creature with the next lowest hit points. A creature's hit points must be equal to or less than the remaining total for that creature to be affected.",
+          "Undead and creatures immune to being {@condition charmed} aren't affected by this spell."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, roll an additional {@scaledice 5d8|1-9|2d8} for each slot level above 1st."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "unconscious"
+        ],
+        "affectsCreatureType": [
+          "aberration",
+          "beast",
+          "celestial",
+          "construct",
+          "dragon",
+          "elemental",
+          "fey",
+          "fiend",
+          "giant",
+          "humanoid",
+          "monstrosity",
+          "ooze",
+          "plant",
+          "undead"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sleep",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a pinch of sand or rose petals"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Each creature of your choice in a 5-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point within range must succeed on a Wisdom saving throw or have the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it must repeat the save. If the target fails the second save, the target has the {@condition Unconscious|SRD52} condition for the duration. The spell ends on a target if it takes damage or someone within 5 feet of it takes an action to shake it out of the spell's effect.",
+          "Creatures that don't sleep, such as elves, or that have {@variantrule Immunity|SRD52} to the {@condition Exhaustion|SRD52} condition automatically succeed on saves against this spell."
+        ],
+        "conditionInflict": [
+          "incapacitated",
+          "unconscious"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

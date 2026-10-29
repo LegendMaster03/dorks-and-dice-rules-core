@@ -1,0 +1,101 @@
+{
+  "id": "monster.giant-badger",
+  "name": "Giant Badger",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 15,
+      "formula": "2d8 + 6"
+    },
+    "speed": {
+      "walk": 30,
+      "burrow": 10
+    },
+    "str": 13,
+    "dex": 10,
+    "con": 17,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "skill": {
+      "perception": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "resist": [
+      "poison"
+    ],
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}6 ({@damage 2d4 + 1}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "forest"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-badger.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Giant Badger",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Giant Badger.webp"
+                  },
+                  "width": 938,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The badger has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ]
+  }
+}

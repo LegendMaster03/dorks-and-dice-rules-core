@@ -1,0 +1,153 @@
+{
+  "id": "monster.magma-mephit",
+  "name": "Magma Mephit",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 18,
+      "formula": "4d6 + 4"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 30
+    },
+    "str": 8,
+    "dex": 12,
+    "con": 12,
+    "int": 7,
+    "wis": 10,
+    "cha": 10,
+    "skill": {
+      "stealth": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "vulnerable": [
+      "cold"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "Primordial (Ignan, Terran)"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The mephit explodes when it dies. {@actSave dex} {@dc 11}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 7 ({@damage 2d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the mephit remains motionless, it is indistinguishable from an ordinary mound of magma."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Slashing damage plus 3 ({@damage 1d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge}",
+        "entries": [
+          "{@actSave dex} {@dc 11}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 7 ({@damage 2d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, elemental"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/magma-mephit.opus"
+    },
+    "traitTags": [
+      "Death Burst"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "IG",
+      "P",
+      "T"
+    ],
+    "damageTags": [
+      "F",
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Magma Mephit",
+        "_copy": {
+          "name": "Mephits",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "These mephits embody the merging of earth and fire as glowing magma. They love melting things, but they loathe magmins and attack them on sight."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Innate Spellcasting (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mephit can innately cast {@spell heat metal} (spell save {@dc 10}), requiring no material components. Its innate spellcasting ability is Charisma."
+        ],
+        "will": [
+          "{@spell heat metal}"
+        ],
+        "ability": "cha",
+        "hidden": [
+          "will"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "scope": "3x-fatigue-versus-native-exhaustion",
+  "status": "fatigued-native-definition-adopted; repeated-fatigue-and-3x-exhausted-mapping-deferred",
+  "sourceMaterials": [
+    {
+      "edition": "D&D 3.0",
+      "title": "Condition Summary",
+      "url": "https://opengamecontent.fandom.com/wiki/D20_System_v3.0_SRD/Condition_Summary",
+      "verification": "third-party 3.0 SRD transcription, not independently verified against source release"
+    },
+    {
+      "edition": "D&D 3.5",
+      "title": "Condition Summary",
+      "url": "https://www.d20srd.org/srd/conditionSummary.htm",
+      "verification": "public 3.5 SRD transcription"
+    },
+    {
+      "edition": "D&D 5e",
+      "title": "Native six-level Exhaustion",
+      "path": "data/native/conditions.json",
+      "verification": "previously adopted Dorks & Dice SRD 5.1 rule"
+    }
+  ],
+  "sourceEquivalence": {
+    "fatigued": {
+      "edition3x": [
+        "-2 Strength",
+        "-2 Dexterity",
+        "cannot Run or Charge",
+        "8 hours complete rest ends condition"
+      ],
+      "native": "condition.fatigued"
+    },
+    "exhausted": {
+      "edition3x": [
+        "-6 effective Strength",
+        "-6 effective Dexterity",
+        "half Speed",
+        "after one hour complete rest changes to Fatigued"
+      ],
+      "nativeCandidate": "condition.exhaustion",
+      "equivalent": false
+    },
+    "native-Exhaustion": {
+      "edition5x": "six cumulative tiers for checks, Speed, attacks, saving throws, HP maximum, and death",
+      "native": "condition.exhaustion"
+    }
+  },
+  "decisions": [
+    {
+      "id": "condition.fatigued",
+      "state": "adopted-native",
+      "decision": "Independent condition: Run/Charge prohibited, effective Str/Dex -2 and associated derived statistics, 8-hour complete rest ends it unless source specifies otherwise."
+    },
+    {
+      "id": "condition.exhaustion",
+      "state": "preserved-native",
+      "decision": "Maintain six-tier SRD 5.1 rule and existing recovery. Do not map the 3.x Exhausted mechanics to a specific tier without explicit native reconciliation."
+    },
+    {
+      "id": "3x.exhausted-conversion",
+      "state": "deferred",
+      "decision": "The 3.x second Fatigue consequence/Exhausted condition is not numerically or narratively equivalent to a single native Exhaustion level; conversion needs an explicit rule."
+    },
+    {
+      "id": "3x.fatigue-repeat",
+      "state": "deferred",
+      "decision": "The older rule escalates additional Fatigue to Exhausted. Do not change the shared condition-stacking semantics or remove native Exhaustion levels automatically."
+    }
+  ],
+  "nonGoals": [
+    "Introduce a second parallel Exhaustion condition with an equivalent name",
+    "Change six-level Exhaustion or Wet",
+    "Automatically equate 3.x +5.x ability penalties to Disadvantage",
+    "Implement rest scheduling or core gameplay runtime"
+  ],
+  "rights": "Only independently paraphrased native condition mechanics are stored. Historical SRD excerpts, if imported, must preserve OGL scope independently from SRD 5.x CC BY.",
+  "nativeLocation": "data/native/conditions.json",
+  "decisionLocation": "data/reference/3x/fatigue-exhaustion-reconciliation.json"
+}

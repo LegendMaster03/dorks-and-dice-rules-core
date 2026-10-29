@@ -1,0 +1,31 @@
+{
+  "id": "item.riding-saddle",
+  "name": "Riding Saddle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Riding Saddle",
+        "type": "TAH",
+        "rarity": "none",
+        "weight": 25,
+        "value": 1000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Riding Saddle",
+        "type": "TAH|SRD52",
+        "rarity": "none",
+        "weight": 25,
+        "value": 1000,
+        "entries": [
+          "A saddle comes with a bit, a bridle, reins, and any other equipment needed to use the saddle."
+        ]
+      }
+    }
+  ]
+}

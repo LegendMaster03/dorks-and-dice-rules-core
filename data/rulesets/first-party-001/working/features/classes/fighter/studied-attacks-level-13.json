@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.studied-attacks-level-13",
+  "name": "Studied Attacks",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Studied Attacks",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 13,
+        "entries": [
+          "You study your opponents and learn from each attack you make. If you make an attack roll against a creature and miss, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 13
+}

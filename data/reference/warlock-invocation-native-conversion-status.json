@@ -1,0 +1,120 @@
+{
+  "id": "warlock.pact-specific-invocation-native-contract-status",
+  "status": "native-mechanics-described-without-runtime",
+  "approvalDate": "2026-10-25",
+  "referenceInventory": "data/reference/warlock-pact-specific-invocations.json",
+  "activePacts": [
+    "Blade",
+    "Chain",
+    "Tome",
+    "Talisman"
+  ],
+  "files": [
+    {
+      "invocationId": "invocation.thirsting-blade",
+      "path": "data/rulesets/first-party-001/working/features/optional/thirsting-blade.json",
+      "selectable": false,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.devouring-blade",
+      "path": "data/rulesets/first-party-001/working/features/optional/devouring-blade.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.lifedrinker",
+      "path": "data/rulesets/first-party-001/working/features/optional/lifedrinker.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.eldritch-smite",
+      "path": "data/rulesets/first-party-001/working/features/optional/eldritch-smite.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.improved-pact-weapon",
+      "path": "data/rulesets/first-party-001/working/features/optional/improved-pact-weapon.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    },
+    {
+      "invocationId": "invocation.voice-of-the-chain-master",
+      "path": "data/rulesets/first-party-001/working/features/optional/voice-of-the-chain-master.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.chains-of-carceri",
+      "path": "data/rulesets/first-party-001/working/features/optional/chains-of-carceri.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.investment-of-the-chain-master",
+      "path": "data/rulesets/first-party-001/working/features/optional/investment-of-the-chain-master.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.gift-of-the-ever-living-ones",
+      "path": "data/rulesets/first-party-001/working/features/optional/gift-of-the-ever-living-ones.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    },
+    {
+      "invocationId": "invocation.book-of-ancient-secrets",
+      "path": "data/rulesets/first-party-001/working/features/optional/book-of-ancient-secrets.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.gift-of-the-protectors",
+      "path": "data/rulesets/first-party-001/working/features/optional/gift-of-the-protectors.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": false
+    },
+    {
+      "invocationId": "invocation.aspect-of-the-moon",
+      "path": "data/rulesets/first-party-001/working/features/optional/aspect-of-the-moon.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    },
+    {
+      "invocationId": "invocation.far-scribe",
+      "path": "data/rulesets/first-party-001/working/features/optional/far-scribe.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    },
+    {
+      "invocationId": "invocation.rebuke-of-the-talisman",
+      "path": "data/rulesets/first-party-001/working/features/optional/rebuke-of-the-talisman.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    },
+    {
+      "invocationId": "invocation.protection-of-the-talisman",
+      "path": "data/rulesets/first-party-001/working/features/optional/protection-of-the-talisman.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    },
+    {
+      "invocationId": "invocation.bond-of-the-talisman",
+      "path": "data/rulesets/first-party-001/working/features/optional/bond-of-the-talisman.json",
+      "selectable": true,
+      "nonSrdRightsReviewPending": true
+    }
+  ],
+  "count": {
+    "total": 16,
+    "selectable": 15,
+    "historicalOnly": 1,
+    "nonSrdRightsReviewPending": 7
+  },
+  "runtimeImplemented": false,
+  "invocationProgressionApproved": false,
+  "linkedPactCommandDefinitionFile": "data/rulesets/first-party-001/working/features/optional/pact-of-the-chain.json",
+  "noWarlockExecutableEngine": true
+}

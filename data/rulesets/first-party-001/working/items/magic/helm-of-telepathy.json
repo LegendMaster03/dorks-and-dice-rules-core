@@ -1,0 +1,60 @@
+{
+  "id": "item.helm-of-telepathy",
+  "name": "Helm of Telepathy",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Helm of Telepathy",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While wearing this helm, you can use an action to cast the {@spell detect thoughts} spell (save {@dc 13}) from it. As long as you maintain {@status concentration} on the spell, you can use a bonus action to send a telepathic message to a creature you are focused on. It can reply—using a bonus action to do so—while your focus on it continues.",
+          "While focusing on a creature with {@spell detect thoughts}, you can use an action to cast the {@spell suggestion} spell (save {@dc 13}) from the helm on that creature. Once used, the suggestion property can't be used again until the next dawn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "detect thoughts"
+          ],
+          "daily": {
+            "1e": [
+              "suggestion"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Helm of Telepathy",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While wearing this helm, you have telepathy with a range of 30 feet, and you can cast {@spell Detect Thoughts|SRD52} or {@spell Suggestion|SRD52} (save {@dc 13}) from the helm. Once either spell is cast from the helm, that spell can't be cast from it again until the next dawn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "detect thoughts|srd52"
+          ],
+          "daily": {
+            "1e": [
+              "suggestion|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

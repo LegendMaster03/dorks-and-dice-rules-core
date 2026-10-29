@@ -1,0 +1,60 @@
+{
+  "id": "subclass-feature.rogue.thief.second-story-work-level-3",
+  "name": "Second-Story Work",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Second-Story Work",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "When you choose this archetype at 3rd level, you gain the ability to climb faster than normal; climbing no longer costs you extra movement.",
+          "In addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Second-Story Work",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "You've trained to get into especially hard-to-reach places, granting you these benefits.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Climber",
+                "entries": [
+                  "You gain a {@variantrule Climb Speed|SRD52} equal to your {@variantrule Speed|SRD52}."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Jumper",
+                "entries": [
+                  "You can determine your jump distance using your Dexterity rather than your Strength."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "parentSubclass": "subclass.rogue.thief",
+  "classLevel": 3
+}

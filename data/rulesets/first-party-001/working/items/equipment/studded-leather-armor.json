@@ -1,0 +1,35 @@
+{
+  "id": "baseitem.studded-leather-armor",
+  "name": "Studded Leather Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Studded Leather Armor",
+        "type": "LA",
+        "rarity": "none",
+        "weight": 13,
+        "value": 4500,
+        "ac": 12,
+        "armor": true,
+        "entries": [
+          "Made from tough but flexible leather, studded leather is reinforced with close-set rivets or spikes."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Studded Leather Armor",
+        "type": "LA|SRD52",
+        "rarity": "none",
+        "weight": 13,
+        "value": 4500,
+        "ac": 12,
+        "armor": true
+      }
+    }
+  ]
+}

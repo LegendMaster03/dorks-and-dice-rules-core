@@ -1,0 +1,262 @@
+{
+  "id": "monster.unicorn",
+  "name": "Unicorn",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 97,
+      "formula": "13d10 + 26"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 18,
+    "dex": 14,
+    "con": 15,
+    "int": 11,
+    "wis": 17,
+    "cha": 16,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "paralyzed",
+      "poisoned"
+    ],
+    "languages": [
+      "Celestial",
+      "Elvish",
+      "Sylvan; telepathy 120 ft."
+    ],
+    "cr": "5",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The unicorn casts one of the following spells, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 14}):"
+        ],
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}",
+          "{@spell Druidcraft|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Calm Emotions|SRD52}",
+            "{@spell Dispel Evil and Good|SRD52}",
+            "{@spell Entangle|SRD52}",
+            "{@spell Pass without Trace|SRD52}",
+            "{@spell Word of Recall|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      },
+      {
+        "name": "Unicorn's Blessing (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The unicorn touches another creature with its horn and casts {@spell Cure Wounds|SRD52} or {@spell Lesser Restoration|SRD52} on that creature, using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "3": [
+            "{@spell Cure Wounds|SRD52}",
+            "{@spell Lesser Restoration|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the unicorn fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The unicorn has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The unicorn's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The unicorn makes one Hooves attack and one Radiant Horn attack."
+        ]
+      },
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Radiant Horn",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}9 ({@damage 1d10 + 4}) Radiant damage."
+        ]
+      },
+      {
+        "name": "Healing Touch (3/Day)",
+        "entries": [
+          "The unicorn touches another creature with its horn. The target magically regains 11 ({@dice 2d8 + 2}) hit points. In addition, the touch removes all diseases and neutralizes all poisons afflicting the target."
+        ]
+      },
+      {
+        "name": "Teleport (1/Day)",
+        "entries": [
+          "The unicorn magically teleports itself and up to three willing creatures it can see within 5 feet of it, along with any equipment they are wearing or carrying, to a location the unicorn is familiar with, up to 1 mile away."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Charging Horn",
+        "entries": [
+          "The unicorn moves up to half its {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}, and it makes one Radiant Horn attack."
+        ]
+      },
+      {
+        "name": "Shimmering Shield",
+        "entries": [
+          "The unicorn targets itself or one creature it can see within 60 feet of itself. The target gains 10 ({@dice 3d6}) {@variantrule Temporary Hit Points|SRD52}, and its AC increases by 2 until the end of the unicorn's next turn. The unicorn can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Heal Self (Costs 3 Actions)",
+        "entries": [
+          "The unicorn magically regains 11 ({@dice 2d8 + 2}) hit points."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "planar, feywild"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/unicorn.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "CE",
+      "E",
+      "S",
+      "TP"
+    ],
+    "damageTags": [
+      "B",
+      "R"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflictSpell": [
+      "restrained"
+    ],
+    "savingThrowForcedSpell": [
+      "charisma",
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Unicorn",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Unicorn",
+            "entries": [
+              "{@i Majestic and Magical Forest Master}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Planar (Feywild)|bestiary|environment=planar, feywild}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Unicorns are majestic defenders of forests. They are revered by many Fey and other forest dwellers, and they do whatever they can to ensure the peace and health of those who shelter in their wooded realms.",
+              {
+                "type": "entries",
+                "name": "Unicorn Lairs",
+                "entries": [
+                  "Unicorns dwell in unspoiled forests, particularly where benevolent Fey creatures live."
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Unicorn.webp"
+            },
+            "credit": "Nikki Dawes",
+            "width": 2048,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  }
+}

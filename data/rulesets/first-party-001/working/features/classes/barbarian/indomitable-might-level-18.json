@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.barbarian.indomitable-might-level-18",
+  "name": "Indomitable Might",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Indomitable Might",
+    "description": "On Strength checks and Strength saving throws, replace a lower total with the Strength score.",
+    "mechanics": {
+      "kind": "minimum-strength-total",
+      "minimum": "strength-score",
+      "appliesTo": [
+        "ability-check",
+        "saving-throw"
+      ]
+    }
+  }
+}

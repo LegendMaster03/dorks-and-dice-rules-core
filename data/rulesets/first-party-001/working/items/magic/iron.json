@@ -1,0 +1,12 @@
+{
+  "id": "item.iron",
+  "name": "Iron",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 10
+  }
+}

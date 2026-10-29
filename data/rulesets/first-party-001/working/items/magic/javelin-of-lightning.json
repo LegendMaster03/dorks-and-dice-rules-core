@@ -1,0 +1,60 @@
+{
+  "id": "item.javelin-of-lightning",
+  "name": "Javelin of Lightning",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Javelin of Lightning",
+        "baseItem": "javelin|srd51",
+        "type": "M",
+        "tier": "major",
+        "rarity": "uncommon",
+        "weight": 2,
+        "weaponCategory": "simple",
+        "property": [
+          "T"
+        ],
+        "range": "30/120",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "entries": [
+          "This javelin is a magic weapon. When you hurl it and speak its command word, it transforms into a bolt of lightning, forming a line 5 feet wide that extends out from you to a target within 120 feet. Each creature in the line excluding you and the target must make a {@dc 13} Dexterity saving throw, taking {@damage 4d6} lightning damage on a failed save, and half as much damage on a successful one. The lightning bolt turns back into a javelin when it reaches the target. Make a ranged weapon attack against the target. On a hit, the target takes damage from the javelin plus {@damage 4d6} lightning damage.",
+          "The javelin's property can't be used again until the next dawn. In the meantime, the javelin can still be used as a magic weapon."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Javelin of Lightning",
+        "baseItem": "javelin|srd52",
+        "type": "M|SRD52",
+        "rarity": "uncommon",
+        "weight": 2,
+        "weaponCategory": "simple",
+        "property": [
+          "T|SRD52"
+        ],
+        "mastery": [
+          "Slow|SRD52"
+        ],
+        "range": "30/120",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "entries": [
+          "Each time you make an attack roll with this magic weapon and hit, you can have it deal Lightning damage instead of Piercing damage.",
+          {
+            "type": "entries",
+            "name": "Lightning Bolt",
+            "entries": [
+              "When you throw this weapon at a target no farther than 120 feet from you, you can forgo making a ranged attack roll and instead turn the weapon into a bolt of lightning. This bolt forms a 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line} between you and the target. The target and each other creature in the {@variantrule Line [Area of Effect]|SRD52|Line} (excluding you) makes a {@dc 13} Dexterity saving throw, taking {@damage 4d6} Lightning damage on a failed save or half as much damage on a successful one. Immediately after dealing this damage, the weapon reappears in your hand. This property can't be used again until the next dawn."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

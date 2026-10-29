@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.sorcerer.subclass-feature-level-18",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "level": 18,
+        "entries": [
+          "You gain a feature from your Sorcerer subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 18
+}

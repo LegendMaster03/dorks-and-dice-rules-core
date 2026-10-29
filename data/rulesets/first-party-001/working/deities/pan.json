@@ -1,0 +1,18 @@
+{
+  "id": "deity.pan",
+  "name": "Pan",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "title": "God of nature",
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Syrinx (pan pipes)"
+  }
+}

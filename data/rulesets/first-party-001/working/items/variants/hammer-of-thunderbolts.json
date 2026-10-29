@@ -1,0 +1,65 @@
+{
+  "id": "magicvariant.hammer-of-thunderbolts",
+  "name": "Hammer of Thunderbolts",
+  "kind": "magicvariant",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GV|SRD52",
+    "requires": [
+      {
+        "name": "Maul",
+        "source": "SRD52"
+      },
+      {
+        "name": "Warhammer",
+        "source": "SRD52"
+      }
+    ],
+    "inherits": {
+      "nameSuffix": " of Thunderbolts",
+      "source": "SRD52",
+      "page": 224,
+      "rarity": "legendary",
+      "reqAttune": true,
+      "ability": {
+        "str": 4
+      },
+      "bonusWeapon": "+1",
+      "recharge": "dawn",
+      "rechargeAmount": "{@dice 1d4 + 1}",
+      "charges": 5,
+      "entries": [
+        "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+        "The weapon has 5 charges. You can expend 1 charge and make a ranged attack with the weapon, hurling it as if it had {@itemProperty T|SRD52|Thrown} with a normal range of 20 feet and a long range of 60 feet.",
+        "If the attack hits, the weapon unleashes a thunderclap audible out to 300 feet. The target and every creature within 30 feet of it other than you must succeed on a {@dc 17} Constitution saving throw or have the {@condition Stunned|SRD52} condition until the end of your next turn. Immediately after hitting or missing, the weapon flies back to your hand. The weapon regains {@dice 1d4 + 1} expended charges daily at dawn.",
+        {
+          "type": "entries",
+          "name": "Giant's Bane",
+          "entries": [
+            "While you are attuned to the weapon and wearing either a {@item Belt of Giant Strength|SRD52} or {@item Gauntlets of Ogre Power|SRD52} to which you are also attuned, you gain the following benefits:",
+            {
+              "type": "list",
+              "style": "list-hang-notitle",
+              "items": [
+                {
+                  "type": "item",
+                  "name": "Giants' Bane",
+                  "entries": [
+                    "When you roll a 20 on the {@dice d20} for an attack roll made with this weapon against a Giant, the creature must succeed on a {@dc 17} Constitution saving throw or die."
+                  ]
+                },
+                {
+                  "type": "item",
+                  "name": "Might of Giants",
+                  "entries": [
+                    "The Strength score bestowed by your {@item Belt of Giant Strength|SRD52} or {@item Gauntlets of Ogre Power|SRD52} increases by 4, to a maximum of 30."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

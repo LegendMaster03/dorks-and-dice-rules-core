@@ -1,0 +1,48 @@
+{
+  "id": "item.quiver",
+  "name": "Quiver",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Quiver",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "entries": [
+          "A quiver can hold up to 20 {@item arrow|srd51|arrows}."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "arrow|srd51": 20
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Quiver",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "entries": [
+          "A Quiver holds up to 20 Arrows."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "arrow|srd52": 20
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

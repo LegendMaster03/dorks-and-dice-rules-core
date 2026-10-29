@@ -1,0 +1,234 @@
+{
+  "description": "Rule status counts for the pinned staged source pack; not a runtime readiness certificate.",
+  "baselineEntries": 2522,
+  "statuses": {
+    "single-candidate": 509,
+    "multiple-candidates": 992,
+    "native-single-source-retained": 528,
+    "native-compatible-merged": 108,
+    "native-equivalent-reconciled": 34,
+    "existing-native-covered": 24,
+    "matching-candidates": 19,
+    "native-monster-role-default": 285,
+    "native-monster-identity-alias": 23
+  },
+  "nativeCatalogRecords": 2522,
+  "reconciledByApprovedGeneralRules": {
+    "native-compatible-merged": 108,
+    "native-equivalent-reconciled": 34,
+    "native-single-source-retained": 528
+  },
+  "remainingWithMultipleCandidates": 992,
+  "remainingWithOneCandidate": 509,
+  "retainedDefinitionsNeedingNativeShaping": 833,
+  "previouslyMatchingItemTypes": 19,
+  "preexistingApprovedNativeCoverage": 24,
+  "candidateRecordsStillUnresolved": 1501,
+  "remainingQuestions": [
+    "Conflicting numeric values require field- and family-level decisions.",
+    "Substantively different procedures require explicit decisions.",
+    "Class features, progression and core actions require entitlement-aware review.",
+    "Retained records may include imported inline markup; conversion to final typed native execution schemas remains necessary."
+  ],
+  "nativeMonsterRoleDefaults": 285,
+  "nativeMonsterIdentityAliases": 23,
+  "monsterFamilyDefinitions": 3,
+  "monsterLegacyVariantReviewEntries": 249,
+  "monsterCompatibleTraitsTransferred": 84,
+  "monsterOlderOnlySourceEntriesStillRetained": 63,
+  "originalUnresolvedCandidateCount": 2479,
+  "reducedUnresolvedCandidateCount": 815,
+  "monsterReviewCaveat": "Selected 5.5e stat blocks are retained. Independent missing older abilities restored with exact original restrictions; revised attack suites are not duplicated. Remaining differences are tracked per feature in the reference ledger. Imported markup still needs native typing.",
+  "monsterAdditionalOlderFeaturesRestored": 146,
+  "monsterOlderFeaturesPreviouslyTransferred": 84,
+  "monsterRemainingFeatureQuestions": 1,
+  "monsterReviewEntriesWithOpenQuestions": 1,
+  "monsterFeatureDispositions": {
+    "newer-successor": 95,
+    "revised-attack-suite": 333,
+    "restored": 146,
+    "already-present": 84,
+    "review-needed": 1,
+    "spell-access-extended": 15
+  },
+  "monsterAdditionalSpellsRestored": 33,
+  "monsterPartiallyRestoredAbilitiesAwaitingRuling": 1,
+  "officialSourceReconciliationCorrections": {
+    "avatarOfDeath": "5.5e creature selected with unique older Turning Immunity retained",
+    "plateArmorOfEtherealness": "two nonequivalent sources preserved pending item decision"
+  },
+  "approvedBarbarianBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureRecords": 25,
+    "inertHistoricalSourceAndSubclassRecords": 9
+  },
+  "approvedBardBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureRecords": 25,
+    "stagedHistoricalAndSubclassRecords": 10,
+    "legacyInlineFeatures": 12,
+    "leveledSpellsKnownByLevel": [
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      16,
+      17,
+      18,
+      19,
+      19,
+      20,
+      22,
+      22,
+      22
+    ],
+    "cantripsKnownByLevel": [
+      4,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ]
+  },
+  "approvedClericBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureRecords": 27,
+    "inertDomainsSubclassesSupersededRecords": 10,
+    "historicalInlineFeatures": 7,
+    "domainFeaturesActivated": 0,
+    "channelDivinityUsesByLevel": [
+      [
+        1,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        18,
+        4
+      ]
+    ],
+    "spellAccess": "all-eligible-cleric-spells",
+    "divineInterventionModes": [
+      "direct",
+      "supplication"
+    ]
+  },
+  "approvedDruidBand1": {
+    "levels": [
+      1,
+      20
+    ],
+    "activeFeatureFiles": 22,
+    "inactiveStagedRecords": 9,
+    "historicalInlineFeatures": 12,
+    "persistentAnimalCompanion": true,
+    "wildShapeHp": "2014-independent-form-pool-no-overflow-house-rule",
+    "finiteTransformConversionChargesAt20": 4
+  },
+  "approvedRogueBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureFiles": 28,
+    "inactiveSourceAndSubclassFiles": 11,
+    "inlineMechanics": 14,
+    "moreComplexSourceFeaturesDoNotGrantAdditionalActions": true,
+    "sneakAttackEachQualifyingHit": true,
+    "cunningStrikeCostsPaidPerHit": true,
+    "defensiveRollSaveDC": "pending-shared-resolution",
+    "declarativeOnly": true
+  },
+  "approvedSorcererBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureFiles": 18,
+    "inactiveHistoricalAndSubclassRecords": 10,
+    "finiteSpellsKnown2024TotalAt20": 22,
+    "metamagicOptionsKnownAtLevels": [
+      [
+        2,
+        2
+      ],
+      [
+        10,
+        4
+      ],
+      [
+        17,
+        6
+      ]
+    ],
+    "additiveSorceryPointRestorationAtLevel20": "10 once per long rest plus additional 4 on every short rest, capped by pool",
+    "familiarPathStructure": "exclusive",
+    "familiarPathMechanics": "deferred-to-shared-companion-subsystem",
+    "subclassesActive": false,
+    "declarativeOnly": true
+  },
+  "approvedWizardBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureFiles": 16,
+    "inactiveHistoricalAndSubclassRecords": 10,
+    "initialSpellbookLevelOneSpells": 6,
+    "baseMinimumLeveledSpellsAt20": 44,
+    "specializationChoicesAtWizardLevels": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "specializationOptionFamilies": [
+      "metamagic",
+      "item-creation"
+    ],
+    "optionalFeatSubstitution": true,
+    "automaticScribeScrollLevel": 1,
+    "spellMasteryProfile": "2014-class-feature-level-18",
+    "removedHistoricalSpellMasteryFeat": true,
+    "memorizeSpellLevel5": "inactive",
+    "noDailyPreparation": true,
+    "lostSpellbook": "previously-acquired-spells-still-ordinarily-castable",
+    "familiarPath": "exclusive-mechanics-deferred",
+    "subclassesActive": false,
+    "declarativeOnly": true
+  }
+}

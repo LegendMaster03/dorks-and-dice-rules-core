@@ -1,0 +1,64 @@
+{
+  "id": "magicvariant.2-ammunition",
+  "name": "+2 Ammunition",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "+2 Ammunition",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "type": "A|SRD51"
+          },
+          {
+            "type": "AF|SRD51"
+          }
+        ],
+        "ammo": true,
+        "inherits": {
+          "namePrefix": "+2 ",
+          "source": "SRD51",
+          "page": 207,
+          "rarity": "rare",
+          "bonusWeapon": "+2",
+          "entries": [
+            "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "+2 Ammunition",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "A|SRD52"
+          },
+          {
+            "type": "AF|SRD52"
+          }
+        ],
+        "ammo": true,
+        "entries": [
+          "You have a +2 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+          "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity {@note ({@table Magic Item Values by Rarity; Magic Item Rarities and Values|SRD52|2,000 GP})}."
+        ],
+        "inherits": {
+          "namePrefix": "+2 ",
+          "source": "SRD52",
+          "page": 209,
+          "rarity": "rare",
+          "bonusWeapon": "+2",
+          "entries": [
+            "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+          ]
+        }
+      }
+    }
+  ]
+}

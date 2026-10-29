@@ -1,0 +1,16 @@
+{
+  "id": "subspecies.tiefling.unnamed-77c4d3f18398af4b",
+  "name": "Section 9",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "raceName": "Tiefling",
+        "raceSource": "SRD51"
+      }
+    }
+  ],
+  "parentSpecies": "species.tiefling"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.tactical-shift-level-5",
+  "name": "Tactical Shift",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tactical Shift",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "Whenever you activate your Second Wind with a {@variantrule Bonus Action|SRD52}, you can move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 5
+}

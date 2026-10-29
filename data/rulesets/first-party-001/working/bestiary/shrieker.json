@@ -1,0 +1,7 @@
+{
+  "id": "monster.shrieker",
+  "name": "Shrieker",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.shrieker-fungus"
+}

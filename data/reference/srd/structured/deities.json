@@ -1,0 +1,1119 @@
+{
+	"_meta": {
+		"internalCopies": [
+			"deity"
+		]
+	},
+	"deity": [
+		{
+			"name": "Aegir",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"E"
+			],
+			"title": "God of the sea and storms",
+			"domains": [
+				"Tempest"
+			],
+			"symbol": "Rough ocean waves"
+		},
+		{
+			"name": "Anubis",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"L",
+				"N"
+			],
+			"title": "God of judgment and death",
+			"domains": [
+				"Death",
+				"Grave",
+				"Order"
+			],
+			"symbol": "Black jackal"
+		},
+		{
+			"name": "Apep",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"N",
+				"E"
+			],
+			"title": "God of evil, fire, and serpents",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Flaming snake"
+		},
+		{
+			"name": "Aphrodite",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "Goddess of love and beauty",
+			"domains": [
+				"Light"
+			],
+			"symbol": "Sea shell"
+		},
+		{
+			"name": "Apollo",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "God of light, music, and healing",
+			"domains": [
+				"Knowledge",
+				"Life",
+				"Light"
+			],
+			"symbol": "Lyre"
+		},
+		{
+			"name": "Arawn",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N",
+				"E"
+			],
+			"title": "God of life and death",
+			"domains": [
+				"Life",
+				"Death"
+			],
+			"symbol": "Black star on gray background"
+		},
+		{
+			"name": "Ares",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "God of war and strife",
+			"domains": [
+				"War"
+			],
+			"symbol": "Spear"
+		},
+		{
+			"name": "Artemis",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of hunting and childbirth",
+			"domains": [
+				"Life",
+				"Nature"
+			],
+			"symbol": "Bow and arrow on lunar disk"
+		},
+		{
+			"name": "Athena",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"L",
+				"G"
+			],
+			"title": "Goddess of wisdom and civilization",
+			"domains": [
+				"Knowledge",
+				"War",
+				"Order"
+			],
+			"symbol": "Owl"
+		},
+		{
+			"name": "Balder",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of beauty and poetry",
+			"domains": [
+				"Life",
+				"Light"
+			],
+			"symbol": "Gem-encrusted silver chalice"
+		},
+		{
+			"name": "Bast",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "Goddess of cats and vengeance",
+			"domains": [
+				"War"
+			],
+			"symbol": "Cat"
+		},
+		{
+			"name": "Belenus",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of sun, light, and warmth",
+			"domains": [
+				"Light"
+			],
+			"symbol": "Solar disk and standing stones"
+		},
+		{
+			"name": "Bes",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of luck and music",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Image of the misshapen deity"
+		},
+		{
+			"name": "Brigantia",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of rivers and livestock",
+			"domains": [
+				"Life"
+			],
+			"symbol": "Footbridge"
+		},
+		{
+			"name": "Demeter",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of agriculture",
+			"domains": [
+				"Life"
+			],
+			"symbol": "Mare's head"
+		},
+		{
+			"name": "Diancecht",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"L",
+				"G"
+			],
+			"title": "God of medicine and healing",
+			"domains": [
+				"Life"
+			],
+			"symbol": "Crossed oak and mistletoe branches"
+		},
+		{
+			"name": "Dionysus",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of mirth and wine",
+			"domains": [
+				"Life"
+			],
+			"symbol": "Thyrsus (staff tipped with pine cone)"
+		},
+		{
+			"name": "Dunatis",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N"
+			],
+			"title": "God of mountains and peaks",
+			"domains": [
+				"Nature"
+			],
+			"symbol": "Red sun-capped mountain peak"
+		},
+		{
+			"name": "Forseti",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N"
+			],
+			"title": "God of justice and law",
+			"domains": [
+				"Light",
+				"Order"
+			],
+			"symbol": "Head of a bearded man"
+		},
+		{
+			"name": "Frey",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of fertility and the sun",
+			"domains": [
+				"Life",
+				"Light"
+			],
+			"symbol": "Ice-blue greatsword"
+		},
+		{
+			"name": "Freya",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of fertility and love",
+			"domains": [
+				"Life"
+			],
+			"symbol": "Falcon"
+		},
+		{
+			"name": "Frigga",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N"
+			],
+			"title": "Goddess of birth and fertility",
+			"domains": [
+				"Life",
+				"Light"
+			],
+			"symbol": "Cat"
+		},
+		{
+			"name": "Goibhniu",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of smiths and healing",
+			"domains": [
+				"Forge",
+				"Knowledge",
+				"Life"
+			],
+			"symbol": "Giant mallet over sword"
+		},
+		{
+			"name": "Hades",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"L",
+				"E"
+			],
+			"title": "God of the underworld",
+			"domains": [
+				"Death",
+				"Grave"
+			],
+			"symbol": "Black ram"
+		},
+		{
+			"name": "Hathor",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of love, music, and motherhood",
+			"domains": [
+				"Life",
+				"Light"
+			],
+			"symbol": "Horned cow's head with lunar disk"
+		},
+		{
+			"name": "Hecate",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "Goddess of magic and the moon",
+			"domains": [
+				"Knowledge",
+				"Trickery",
+				"Arcana"
+			],
+			"symbol": "Setting moon"
+		},
+		{
+			"name": "Heimdall",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"L",
+				"G"
+			],
+			"title": "God of watchfulness and loyalty",
+			"domains": [
+				"Light",
+				"War"
+			],
+			"symbol": "Curling musical horn"
+		},
+		{
+			"name": "Hel",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"E"
+			],
+			"title": "Goddess of the underworld",
+			"domains": [
+				"Death"
+			],
+			"symbol": "Woman's face, rotting on one side"
+		},
+		{
+			"name": "Hephaestus",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of smithing and craft",
+			"domains": [
+				"Forge",
+				"Knowledge"
+			],
+			"symbol": "Hammer and anvil"
+		},
+		{
+			"name": "Hera",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "Goddess of marriage and intrigue",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Fan of peacock feathers"
+		},
+		{
+			"name": "Hercules",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "God of strength and adventure",
+			"domains": [
+				"Tempest",
+				"War"
+			],
+			"symbol": "Lion's head"
+		},
+		{
+			"name": "Hermes",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "God of travel and commerce",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Caduceus (winged staff and serpents)"
+		},
+		{
+			"name": "Hermod",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of luck",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Winged scroll"
+		},
+		{
+			"name": "Hestia",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of home and family",
+			"domains": [
+				"Life"
+			],
+			"symbol": "Hearth"
+		},
+		{
+			"name": "Imhotep",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of crafts and medicine",
+			"domains": [
+				"Knowledge"
+			],
+			"symbol": "Step pyramid"
+		},
+		{
+			"name": "Isis",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "Goddess of fertility and magic",
+			"domains": [
+				"Knowledge",
+				"Life",
+				"Arcana"
+			],
+			"symbol": "Ankh and star"
+		},
+		{
+			"name": "Loki",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "God of thieves and trickery",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Flame"
+		},
+		{
+			"name": "Lugh",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of arts, travel, and commerce",
+			"domains": [
+				"Knowledge",
+				"Life"
+			],
+			"symbol": "Pair of long hands"
+		},
+		{
+			"name": "Manannan mac Lir",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"L",
+				"N"
+			],
+			"title": "God of oceans and sea creatures",
+			"domains": [
+				"Nature",
+				"Tempest"
+			],
+			"symbol": "Wave of white water on green"
+		},
+		{
+			"name": "Math Mathonwy",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N",
+				"E"
+			],
+			"title": "God of magic",
+			"domains": [
+				"Knowledge",
+				"Arcana"
+			],
+			"symbol": "Staff"
+		},
+		{
+			"name": "Morrigan",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "Goddess of battle",
+			"domains": [
+				"War"
+			],
+			"symbol": "Two crossed spears"
+		},
+		{
+			"name": "Nephthys",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "Goddess of death and grief",
+			"domains": [
+				"Death"
+			],
+			"symbol": "Horns around a lunar disk"
+		},
+		{
+			"name": "Nike",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"L",
+				"N"
+			],
+			"title": "Goddess of victory",
+			"domains": [
+				"War"
+			],
+			"symbol": "Winged woman"
+		},
+		{
+			"name": "Njord",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of sea and wind",
+			"domains": [
+				"Nature",
+				"Tempest"
+			],
+			"symbol": "Gold coin"
+		},
+		{
+			"name": "Nuada",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N"
+			],
+			"title": "God of war and warriors",
+			"domains": [
+				"War",
+				"Order"
+			],
+			"symbol": "Silver hand on black background"
+		},
+		{
+			"name": "Odin",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of knowledge and war",
+			"domains": [
+				"Knowledge",
+				"War"
+			],
+			"symbol": "Watching blue eye"
+		},
+		{
+			"name": "Odur",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "God of light and the sun",
+			"domains": [
+				"Light"
+			],
+			"symbol": "Solar disk"
+		},
+		{
+			"name": "Oghma",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N",
+				"G"
+			],
+			"title": "God of speech and writing",
+			"domains": [
+				"Knowledge"
+			],
+			"symbol": "Unfurled scroll"
+		},
+		{
+			"name": "Oghma",
+			"source": "SRD51",
+			"page": 294,
+			"pantheon": "Forgotten Realms",
+			"alignment": [
+				"N"
+			],
+			"title": "God of knowledge",
+			"domains": [
+				"Knowledge"
+			],
+			"symbol": "Blank scroll"
+		},
+		{
+			"name": "Osiris",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"L",
+				"G"
+			],
+			"title": "God of nature and the underworld",
+			"domains": [
+				"Grave",
+				"Life",
+				"Nature"
+			],
+			"symbol": "Crook and flail"
+		},
+		{
+			"name": "Pan",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of nature",
+			"domains": [
+				"Nature"
+			],
+			"symbol": "Syrinx (pan pipes)"
+		},
+		{
+			"name": "Poseidon",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of the sea and earthquakes",
+			"domains": [
+				"Tempest"
+			],
+			"symbol": "Trident"
+		},
+		{
+			"name": "Ptah",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"L",
+				"N"
+			],
+			"title": "God of crafts, knowledge, and secrets",
+			"domains": [
+				"Knowledge"
+			],
+			"symbol": "Bull"
+		},
+		{
+			"name": "Re-Horakhty",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"L",
+				"G"
+			],
+			"title": "God of the sun, ruler of the gods",
+			"domains": [
+				"Life",
+				"Light"
+			],
+			"symbol": "Solar disk encircled by serpent"
+		},
+		{
+			"name": "Set",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "God of darkness and desert storms",
+			"domains": [
+				"Death",
+				"Tempest",
+				"Trickery"
+			],
+			"symbol": "Coiled cobra"
+		},
+		{
+			"name": "Sif",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "Goddess of war",
+			"domains": [
+				"War"
+			],
+			"symbol": "Upraised sword"
+		},
+		{
+			"name": "Silvanus",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"N"
+			],
+			"title": "God of nature and forests",
+			"domains": [
+				"Nature"
+			],
+			"symbol": "Summer oak tree"
+		},
+		{
+			"name": "Silvanus",
+			"source": "SRD51",
+			"page": 294,
+			"pantheon": "Forgotten Realms",
+			"alignment": [
+				"N"
+			],
+			"title": "God of wild nature",
+			"domains": [
+				"Nature"
+			],
+			"symbol": "Oak leaf"
+		},
+		{
+			"name": "Skadi",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"N"
+			],
+			"title": "God of earth and mountains",
+			"domains": [
+				"Nature"
+			],
+			"symbol": "Mountain peak"
+		},
+		{
+			"name": "Sobek",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"L",
+				"E"
+			],
+			"title": "God of water and crocodiles",
+			"domains": [
+				"Nature",
+				"Tempest"
+			],
+			"symbol": "Crocodile head with horns and plumes"
+		},
+		{
+			"name": "Surtur",
+			"source": "SRD51",
+			"page": 296,
+			"pantheon": "Nonhuman",
+			"alignment": [
+				"L",
+				"E"
+			],
+			"title": "God of fire giants and craft",
+			"domains": [
+				"Knowledge",
+				"War"
+			],
+			"symbol": "Flaming sword"
+		},
+		{
+			"name": "Surtur",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"L",
+				"E"
+			],
+			"title": "God of fire giants and war",
+			"domains": [
+				"War"
+			],
+			"symbol": "Flaming sword"
+		},
+		{
+			"name": "The Daghdha",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Celtic",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "God of weather and crops",
+			"domains": [
+				"Nature",
+				"Trickery"
+			],
+			"symbol": "Bubbling cauldron or shield"
+		},
+		{
+			"name": "Thor",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"G"
+			],
+			"title": "God of storms and thunder",
+			"domains": [
+				"Tempest",
+				"War"
+			],
+			"symbol": "Hammer"
+		},
+		{
+			"name": "Thoth",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Egyptian",
+			"alignment": [
+				"N"
+			],
+			"title": "God of knowledge and wisdom",
+			"domains": [
+				"Knowledge"
+			],
+			"symbol": "Ibis"
+		},
+		{
+			"name": "Thrym",
+			"source": "SRD51",
+			"page": 296,
+			"pantheon": "Nonhuman",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "God of frost giants and strength",
+			"domains": [
+				"War"
+			],
+			"symbol": "White double-bladed axe"
+		},
+		{
+			"name": "Thrym",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"E"
+			],
+			"title": "God of frost giants and cold",
+			"domains": [
+				"War"
+			],
+			"symbol": "White double-bladed axe"
+		},
+		{
+			"name": "Tyche",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"N"
+			],
+			"title": "Goddess of good fortune",
+			"domains": [
+				"Trickery"
+			],
+			"symbol": "Red pentagram"
+		},
+		{
+			"name": "Tyr",
+			"source": "SRD51",
+			"page": 294,
+			"pantheon": "Forgotten Realms",
+			"alignment": [
+				"L",
+				"G"
+			],
+			"title": "God of justice",
+			"domains": [
+				"War",
+				"Order"
+			],
+			"symbol": "Balanced scales resting on a warhammer"
+		},
+		{
+			"name": "Tyr",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"L",
+				"N"
+			],
+			"title": "God of courage and strategy",
+			"domains": [
+				"Knowledge",
+				"War",
+				"Order"
+			],
+			"symbol": "Sword"
+		},
+		{
+			"name": "Uller",
+			"source": "SRD51",
+			"page": 299,
+			"pantheon": "Norse",
+			"alignment": [
+				"C",
+				"N"
+			],
+			"title": "God of hunting and winter",
+			"domains": [
+				"Nature"
+			],
+			"symbol": "Longbow"
+		},
+		{
+			"name": "Zeus",
+			"source": "SRD51",
+			"page": 298,
+			"pantheon": "Greek",
+			"alignment": [
+				"N"
+			],
+			"title": "God of the sky, ruler of the gods",
+			"domains": [
+				"Tempest"
+			],
+			"symbol": "Fist full of lightning bolts"
+		}
+	]
+}

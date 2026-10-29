@@ -1,0 +1,227 @@
+{
+  "id": "monster.wight",
+  "name": "Wight",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 82,
+      "formula": "11d8 + 33"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 15,
+    "dex": 14,
+    "con": 16,
+    "int": 10,
+    "wis": 13,
+    "cha": 15,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "resist": [
+      "necrotic"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "3",
+    "gear": [
+      "studded leather armor|srd52"
+    ],
+    "trait": [
+      {
+        "name": "Sunlight Sensitivity",
+        "entries": [
+          "While in sunlight, the wight has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The wight makes two attacks, using Necrotic Sword or Necrotic Bow in any combination. It can replace one attack with a use of Life Drain."
+        ]
+      },
+      {
+        "name": "Necrotic Sword",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Slashing damage plus 4 ({@damage 1d8}) Necrotic damage."
+        ]
+      },
+      {
+        "name": "Necrotic Bow",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 150/600 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage plus 4 ({@damage 1d8}) Necrotic damage."
+        ]
+      },
+      {
+        "name": "Life Drain",
+        "entries": [
+          "{@actSave con} {@dc 13}, one creature within 5 feet. {@actSaveFail} 6 ({@damage 1d8 + 2}) Necrotic damage, and the target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken.",
+          "A Humanoid slain by this attack rises 24 hours later as a {@creature Zombie|SRD52} under the wight's control, unless the Humanoid is restored to life or its body is destroyed. The wight can have no more than twelve zombies under its control at a time."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "planar, shadowfell",
+      "swamp",
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/wight.opus"
+    },
+    "traitTags": [
+      "Sunlight Sensitivity"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "N",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA",
+      "RA"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Wight",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Wight",
+            "entries": [
+              "{@i Life-Leeching Corpse Warrior}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Planar (Shadowfell)|bestiary|environment=planar, shadowfell}, {@filter Swamp|bestiary|environment=swamp}, {@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Wights are the withered corpses of relentless warriors whose wickedness sustains them beyond death. Unlike mere zombies, they retain the memories and evil agendas they harbored in life.",
+              "After dying and returning from the grave, a wight continues its villainous ways, but it is now driven by a hunger for life. A wight drains living essence through its attacks. Humanoids slain by a wight's life-sapping grip reanimate a day later and serve the wight as obedient zombies.",
+              "Wights might return from the dead for a multitude of sinister reasons. Roll on or choose a result from the Wight Motives table to inspire why a wight plagues the living.",
+              {
+                "type": "table",
+                "caption": "Wight Motives",
+                "colLabels": [
+                  "1d8",
+                  "The Wight Returned from the Dead To..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Challenge anyone who passes near its grave on a certain cursed night."
+                  ],
+                  [
+                    "2",
+                    "Conquer the land it believes it should rule."
+                  ],
+                  [
+                    "3",
+                    "Continue the crimes it was executed for."
+                  ],
+                  [
+                    "4",
+                    "Follow the foul master it served in life."
+                  ],
+                  [
+                    "5",
+                    "Honor an oath it left unfulfilled in life."
+                  ],
+                  [
+                    "6",
+                    "Obey the cult or deity that gave it unlife."
+                  ],
+                  [
+                    "7",
+                    "Prove it was the greatest warrior to ever live."
+                  ],
+                  [
+                    "8",
+                    "Seek its stolen heart or other treasure."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Wight.webp"
+            },
+            "credit": "Valera Luftullina",
+            "width": 1392,
+            "height": 1740
+          }
+        ]
+      }
+    ]
+  }
+}

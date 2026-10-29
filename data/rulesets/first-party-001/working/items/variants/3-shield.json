@@ -1,0 +1,60 @@
+{
+  "id": "magicvariant.3-shield",
+  "name": "+3 Shield",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "+3 Shield",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "type": "S|SRD51"
+          }
+        ],
+        "entries": [
+          "{@note * This generic variant has the same name and source as the item {@item +3 shield}}.",
+          "While holding this shield, you have a +3 bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+        ],
+        "inherits": {
+          "namePrefix": "+3 ",
+          "source": "SRD51",
+          "page": 242,
+          "rarity": "very rare",
+          "bonusAc": "+3",
+          "entries": [
+            "While holding this shield, you have a {=bonusAc} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "+3 Shield",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "S|SRD52"
+          }
+        ],
+        "entries": [
+          "{@note * This generic variant has the same name and source as the item {@item +3 Shield|SRD52}}.",
+          "While holding this Shield, you have a +3 bonus to {@variantrule Armor Class|SRD52}, in addition to the Shield's normal bonus to AC."
+        ],
+        "inherits": {
+          "namePrefix": "+3 ",
+          "source": "SRD52",
+          "page": 243,
+          "rarity": "very rare",
+          "bonusAc": "+3",
+          "entries": [
+            "While holding this Shield, you have a {=bonusAc} bonus to {@variantrule Armor Class|SRD52}, in addition to the Shield's normal bonus to AC."
+          ]
+        }
+      }
+    }
+  ]
+}

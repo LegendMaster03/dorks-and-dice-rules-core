@@ -1,0 +1,71 @@
+{
+  "id": "item.scarab-of-protection",
+  "name": "Scarab of Protection",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Scarab of Protection",
+        "tier": "major",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "charges": 12,
+        "entries": [
+          "If you hold this beetle-shaped medallion in your hand for 1 round, an inscription appears on its surface revealing its magical nature. It provides two benefits while it is on your person:",
+          {
+            "type": "list",
+            "items": [
+              "You have advantage on saving throws against spells.",
+              "The scarab has 12 charges. If you fail a saving throw against a necromancy spell or a harmful effect originating from an undead creature, you can use your reaction to expend 1 charge and turn the failed save into a successful one. The scarab crumbles into powder and is destroyed when its last charge is expended."
+            ]
+          }
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Scarab of Protection",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "bonusAc": "+1",
+        "charges": 12,
+        "entries": [
+          "This beetle-shaped medallion provides three benefits while it is on your person.",
+          {
+            "type": "entries",
+            "name": "Defense",
+            "entries": [
+              "You gain a +1 bonus to {@variantrule Armor Class|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Preservation",
+            "entries": [
+              "The scarab has 12 charges. If you fail a saving throw against a Necromancy spell or a harmful effect originating from an Undead, you can take a {@variantrule Reaction|SRD52} to expend 1 charge and turn the failed save into a successful one. The scarab crumbles into powder and is destroyed when its last charge is expended."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spell Resistance",
+            "entries": [
+              "You have {@variantrule Advantage|SRD52} on saving throws against spells."
+            ]
+          }
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

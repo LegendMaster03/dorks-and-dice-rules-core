@@ -1,0 +1,12 @@
+{
+  "id": "item.silk",
+  "name": "Silk",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000
+  }
+}

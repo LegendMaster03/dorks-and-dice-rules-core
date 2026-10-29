@@ -1,0 +1,29 @@
+{
+  "id": "subclass-feature.cleric.life.preserve-life-level-3",
+  "name": "Preserve Life",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Preserve Life",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "consumes": {
+          "name": "Channel Divinity"
+        },
+        "entries": [
+          "As a {@action Magic|SRD52} action, you present your {@item Holy Symbol|SRD52} and expend a use of your Channel Divinity to evoke healing energy that can restore a number of {@variantrule Hit Points|SRD52} equal to five times your Cleric level. Choose {@status Bloodied|SRD52} creatures within 30 feet of yourself (which can include you), and divide those {@variantrule Hit Points|SRD52} among them. This feature can restore a creature to no more than half its {@variantrule Hit Points|SRD52|Hit Point} maximum."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "subclass.cleric.life",
+  "classLevel": 3
+}

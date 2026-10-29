@@ -1,0 +1,130 @@
+{
+  "id": "monster.giant-octopus",
+  "name": "Giant Octopus",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "7d10 + 7"
+    },
+    "speed": {
+      "walk": 10,
+      "swim": 60
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 13,
+    "int": 5,
+    "wis": 10,
+    "cha": 4,
+    "skill": {
+      "perception": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The octopus can breathe only underwater. It can hold its breath for 1 hour outside water."
+        ]
+      },
+      {
+        "name": "Hold Breath",
+        "entries": [
+          "While out of water, the octopus can hold its breath for 1 hour."
+        ]
+      },
+      {
+        "name": "Underwater Camouflage",
+        "entries": [
+          "The octopus has advantage on Dexterity ({@skill Stealth}) checks made while underwater."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Tentacles",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 10 ft. {@h}10 ({@damage 2d6 + 3}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from all eight tentacles. While {@condition Grappled|SRD52}, the target has the {@condition Restrained|SRD52} condition."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Ink Cloud (1/Day)",
+        "entries": [
+          "{@actTrigger} The octopus takes damage while underwater. {@actResponse} The octopus releases ink that fills a 10-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} centered on itself, and the octopus moves up to its {@variantrule Swim Speed|SRD52}. The {@variantrule Cube [Area of Effect]|SRD52|Cube} is {@variantrule Heavily Obscured|SRD52} for 1 minute or until a strong current or similar effect disperses the ink."
+        ]
+      }
+    ],
+    "environment": [
+      "underwater"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-octopus.opus"
+    },
+    "traitTags": [
+      "Water Breathing"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Tentacles"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "restrained"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Giant Octopus",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Octopus.webp"
+                  },
+                  "width": 1000,
+                  "height": 875
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

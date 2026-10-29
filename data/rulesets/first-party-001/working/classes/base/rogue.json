@@ -1,0 +1,869 @@
+{
+  "id": "class.rogue",
+  "name": "Rogue",
+  "kind": "class",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 8
+    },
+    "savingThrowProficiencies": [
+      "dexterity",
+      "intelligence"
+    ],
+    "armorProficiencies": [
+      "light"
+    ],
+    "weaponProficiencies": [
+      "simple",
+      "hand-crossbow",
+      "longsword",
+      "rapier",
+      "sap",
+      "shortbow",
+      "shortsword",
+      "martial-with-finesse-or-light-property"
+    ],
+    "toolProficiencies": [
+      "thieves-tools"
+    ],
+    "skillChoices": {
+      "choose": 4,
+      "from": [
+        "acrobatics",
+        "athletics",
+        "deception",
+        "insight",
+        "intimidation",
+        "investigation",
+        "perception",
+        "performance",
+        "persuasion",
+        "sleight-of-hand",
+        "stealth"
+      ]
+    },
+    "rankedClassSkills": [
+      "appraise",
+      "balance",
+      "bluff",
+      "climb",
+      "craft",
+      "decipher-script",
+      "diplomacy",
+      "disable-device",
+      "disguise",
+      "escape-artist",
+      "forgery",
+      "gather-information",
+      "hide",
+      "intimidate",
+      "jump",
+      "knowledge-local",
+      "listen",
+      "move-silently",
+      "open-lock",
+      "perform",
+      "profession",
+      "search",
+      "sense-motive",
+      "sleight-of-hand",
+      "spot",
+      "swim",
+      "tumble",
+      "use-magic-device",
+      "use-rope"
+    ],
+    "rankedSkillPoints": {
+      "firstLevel": "4*(8+Int-modifier)",
+      "eachAdditionalLevel": "8+Int-modifier"
+    },
+    "startingEquipment": {
+      "choices": [
+        "rapier-or-shortsword",
+        "shortbow-and-20-arrows-or-shortsword",
+        "burglar-dungeoneer-or-explorer-pack"
+      ],
+      "additional": [
+        "leather-armor",
+        "two-daggers",
+        "thieves-tools"
+      ],
+      "goldAlternative": "4d4*10"
+    },
+    "multiclassDexterityPrerequisite": 13,
+    "multiclassProficienciesOnEntering": {
+      "armor": [
+        "light"
+      ],
+      "tools": [
+        "thieves-tools"
+      ],
+      "skills": {
+        "choose": 1,
+        "from": "eligible-rogue-skills"
+      }
+    },
+    "attackProgression": "three-quarter-BAB",
+    "iterativeAttackPolicy": "shared-native-alternative-attack-procedures",
+    "specialAbilityChoiceLevels": [
+      10,
+      13,
+      16,
+      19
+    ],
+    "specialAbilityOptionIds": [
+      "rogue.option.crippling-strike",
+      "rogue.option.defensive-roll",
+      "rogue.option.opportunist",
+      "rogue.option.skill-mastery",
+      "rogue.option.slippery-mind-retry",
+      "rogue.option.bonus-feat"
+    ],
+    "choiceOnlyFeatureIds": [
+      "rogue.option.crippling-strike",
+      "rogue.option.defensive-roll",
+      "rogue.option.opportunist",
+      "rogue.option.skill-mastery",
+      "rogue.option.slippery-mind-retry",
+      "rogue.option.bonus-feat",
+      "class-feature.rogue.poison-cost-1d6-level-5",
+      "class-feature.rogue.trip-cost-1d6-level-5",
+      "class-feature.rogue.withdraw-cost-1d6-level-5",
+      "class-feature.rogue.daze-cost-2d6-level-14",
+      "class-feature.rogue.knock-out-cost-6d6-level-14",
+      "class-feature.rogue.obscure-cost-3d6-level-14"
+    ],
+    "sneakAttack": "class-feature.rogue.sneak-attack-level-1",
+    "cunningStrike": "class-feature.rogue.cunning-strike-level-5",
+    "cunningStrikeOptionIds": [
+      "class-feature.rogue.poison-cost-1d6-level-5",
+      "class-feature.rogue.trip-cost-1d6-level-5",
+      "class-feature.rogue.withdraw-cost-1d6-level-5",
+      "class-feature.rogue.daze-cost-2d6-level-14",
+      "class-feature.rogue.knock-out-cost-6d6-level-14",
+      "class-feature.rogue.obscure-cost-3d6-level-14"
+    ],
+    "trapfinding": "rogue.trapfinding",
+    "trapSense": "rogue.trap-sense",
+    "evasion": "rogue.evasion",
+    "uncannyAwareness": "rogue.uncanny-awareness",
+    "uncannyDodge": "class-feature.rogue.uncanny-dodge-level-5",
+    "weaponMasteryChoices": 2,
+    "defensiveRollDCState": "deferred-to-shared-saving-throw-system",
+    "subclassFeatureLevels": [
+      3,
+      9,
+      13,
+      17
+    ],
+    "subclasses": "deferred",
+    "prestigeClasses": "deferred",
+    "alignmentRestriction": null,
+    "illiteracyRestriction": null,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonMinimumTotalCharacterLevel": 21,
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.rogue.expertise-level-1",
+          "class-feature.rogue.sneak-attack-level-1",
+          "class-feature.rogue.thieves-cant-level-1",
+          "class-feature.rogue.weapon-mastery-level-1",
+          "rogue.trapfinding"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "1d6",
+        "trapSense": 0,
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 2,
+          "will": 0
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.rogue.cunning-action-level-2",
+          "rogue.evasion"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "1d6",
+        "trapSense": 0,
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 3,
+          "will": 0
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 3,
+        "featureGrants": [
+          "rogue.trap-sense",
+          "class-feature.rogue.steady-aim-level-3"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "2d6"
+          }
+        ],
+        "sneakAttackDice": "2d6",
+        "trapSense": 1,
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 3,
+          "will": 1
+        },
+        "subclassMilestone": true
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "rogue.uncanny-awareness",
+          "class-feature.rogue.ability-score-improvement-level-4"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "2d6",
+        "trapSense": 1,
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 4,
+          "will": 1
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.rogue.uncanny-dodge-level-5",
+          "class-feature.rogue.cunning-strike-level-5"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "3d6"
+          }
+        ],
+        "sneakAttackDice": "3d6",
+        "trapSense": 1,
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 4,
+          "will": 1
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 6,
+        "featureGrants": [
+          "class-feature.rogue.expertise-level-6"
+        ],
+        "improvements": [
+          {
+            "feature": "rogue.trap-sense",
+            "value": 2
+          }
+        ],
+        "sneakAttackDice": "3d6",
+        "trapSense": 2,
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 5,
+          "will": 2
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.rogue.reliable-talent-level-7"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "4d6"
+          }
+        ],
+        "sneakAttackDice": "4d6",
+        "trapSense": 2,
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 5,
+          "will": 2
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.rogue.ability-score-improvement-level-8"
+        ],
+        "improvements": [
+          {
+            "feature": "rogue.uncanny-awareness",
+            "antiFlanking": true
+          }
+        ],
+        "sneakAttackDice": "4d6",
+        "trapSense": 2,
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 6,
+          "will": 2
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 9,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "rogue.trap-sense",
+            "value": 3
+          },
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "5d6"
+          }
+        ],
+        "sneakAttackDice": "5d6",
+        "trapSense": 3,
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 6,
+          "will": 3
+        },
+        "subclassMilestone": true
+      },
+      {
+        "level": 10,
+        "featureGrants": [
+          "class-feature.rogue.ability-score-improvement-level-10",
+          "rogue.special-selection-10"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "5d6",
+        "trapSense": 3,
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 7,
+          "will": 3
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 11,
+        "featureGrants": [
+          "class-feature.rogue.improved-cunning-strike-level-11"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "6d6"
+          }
+        ],
+        "sneakAttackDice": "6d6",
+        "trapSense": 3,
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 7,
+          "will": 3
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.rogue.ability-score-improvement-level-12"
+        ],
+        "improvements": [
+          {
+            "feature": "rogue.trap-sense",
+            "value": 4
+          }
+        ],
+        "sneakAttackDice": "6d6",
+        "trapSense": 4,
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 8,
+          "will": 4
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 13,
+        "featureGrants": [
+          "rogue.special-selection-13"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "7d6"
+          }
+        ],
+        "sneakAttackDice": "7d6",
+        "trapSense": 4,
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 8,
+          "will": 4
+        },
+        "subclassMilestone": true
+      },
+      {
+        "level": 14,
+        "featureGrants": [
+          "class-feature.rogue.blindsense-level-14",
+          "class-feature.rogue.devious-strikes-level-14"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "7d6",
+        "trapSense": 4,
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 9,
+          "will": 4
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.rogue.slippery-mind-level-15"
+        ],
+        "improvements": [
+          {
+            "feature": "rogue.trap-sense",
+            "value": 5
+          },
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "8d6"
+          }
+        ],
+        "sneakAttackDice": "8d6",
+        "trapSense": 5,
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 9,
+          "will": 5
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.rogue.ability-score-improvement-level-16",
+          "rogue.special-selection-16"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "8d6",
+        "trapSense": 5,
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 10,
+          "will": 5
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 17,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "9d6"
+          }
+        ],
+        "sneakAttackDice": "9d6",
+        "trapSense": 5,
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 10,
+          "will": 5
+        },
+        "subclassMilestone": true
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.rogue.elusive-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "rogue.trap-sense",
+            "value": 6
+          }
+        ],
+        "sneakAttackDice": "9d6",
+        "trapSense": 6,
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 11,
+          "will": 6
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.rogue.ability-score-improvement-level-19",
+          "rogue.special-selection-19"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.rogue.sneak-attack-level-1",
+            "dice": "10d6"
+          }
+        ],
+        "sneakAttackDice": "10d6",
+        "trapSense": 6,
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 11,
+          "will": 6
+        },
+        "subclassMilestone": false
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.rogue.stroke-of-luck-level-20"
+        ],
+        "improvements": [],
+        "sneakAttackDice": "10d6",
+        "trapSense": 6,
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 12,
+          "will": 6
+        },
+        "subclassMilestone": false
+      }
+    ],
+    "inlineFeatures": [
+      {
+        "id": "rogue.trapfinding",
+        "name": "Trapfinding",
+        "mechanics": {
+          "kind": "trap-expertise",
+          "otherClassesStillCanSearchAndDisable": true,
+          "advancedOrMagicalTrapWork": true,
+          "bypassTrapForPartyWithoutDisarmingIfDisableCheckExceedsDCBy": 10,
+          "checkMapping": "shared-competencies"
+        }
+      },
+      {
+        "id": "rogue.trap-sense",
+        "name": "Trap Sense",
+        "mechanics": {
+          "kind": "trap-defense",
+          "bonuses": [
+            [
+              3,
+              1
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              9,
+              3
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              18,
+              6
+            ]
+          ],
+          "appliesTo": [
+            "trap-avoidance-saves",
+            "dodge-ac-against-trap-attack"
+          ],
+          "defenseConversion": "shared-native-defenses"
+        }
+      },
+      {
+        "id": "rogue.evasion",
+        "name": "Evasion",
+        "mechanics": {
+          "kind": "evasion",
+          "level": 2,
+          "save": "dexterity-for-half-damage",
+          "onSuccess": "no-damage",
+          "onFailure": "half-damage",
+          "unavailableIf": "incapacitated",
+          "absorbsHistoricalImprovedEvasion": true
+        }
+      },
+      {
+        "id": "rogue.uncanny-awareness",
+        "name": "Uncanny Awareness",
+        "mechanics": {
+          "kind": "historical-defensive-awareness",
+          "level": 4,
+          "retainDexterityACWhen": [
+            "flat-footed",
+            "unseen-attacker"
+          ],
+          "exception": "immobilized",
+          "improvesAtLevel8": "anti-flanking",
+          "improvementKeepsSameName": true,
+          "rogueLevelException": "enemy-at-least-four-rogue-levels-higher-where-applicable"
+        }
+      },
+      {
+        "id": "rogue.option.crippling-strike",
+        "name": "Crippling Strike",
+        "mechanics": {
+          "kind": "selectable-strength-ability-damage",
+          "damagePerQualifyingSneakAttackHit": 2,
+          "appliesOnEveryQualifyingHit": true,
+          "abilityDamageRules": "shared"
+        }
+      },
+      {
+        "id": "rogue.option.defensive-roll",
+        "name": "Defensive Roll",
+        "mechanics": {
+          "kind": "selectable-emergency-survival",
+          "when": "attack-would-reduce-to-zero-hp",
+          "cost": "reaction",
+          "uses": 1,
+          "refresh": "long-rest",
+          "save": "dexterity",
+          "saveDC": null,
+          "saveDCSource": "pending-shared-rule",
+          "onSuccessHP": 1,
+          "onFailure": "damage-normally",
+          "cannotShareReactionWith": "uncanny-dodge",
+          "specialZeroHPInteractions": "pending-shared-rules",
+          "executable": false
+        }
+      },
+      {
+        "id": "rogue.option.opportunist",
+        "name": "Opportunist",
+        "mechanics": {
+          "kind": "selectable-reaction-attack",
+          "when": "ally-damages-enemy-in-melee",
+          "cost": "reaction",
+          "oncePerRound": true,
+          "requiresOwnSneakAttackEligibility": true
+        }
+      },
+      {
+        "id": "rogue.option.skill-mastery",
+        "name": "Skill Mastery",
+        "mechanics": {
+          "kind": "selectable-two-additional-expertise",
+          "choices": 2,
+          "skillsOrCompetencies": true,
+          "doNotDuplicateExpertise": true
+        }
+      },
+      {
+        "id": "rogue.option.slippery-mind-retry",
+        "name": "Slippery Mind — Historical Retry",
+        "mechanics": {
+          "kind": "selectable-saving-throw-retry",
+          "after": "failed-enchantment-or-control-save",
+          "retry": "one-round-later",
+          "oneRetryPerEffect": true
+        }
+      },
+      {
+        "id": "rogue.option.bonus-feat",
+        "name": "Bonus Feat",
+        "mechanics": {
+          "kind": "selectable-eligible-feat",
+          "choices": 1,
+          "normalPrerequisites": true,
+          "epicBoonMinimumTotalCharacterLevel": 21,
+          "distinctFromAsi": true
+        }
+      },
+      {
+        "id": "rogue.special-selection-10",
+        "name": "Rogue Special Ability Selection",
+        "mechanics": {
+          "kind": "choose-one-upon-level-up",
+          "rogueLevel": 10,
+          "optionIds": [
+            "rogue.option.crippling-strike",
+            "rogue.option.defensive-roll",
+            "rogue.option.opportunist",
+            "rogue.option.skill-mastery",
+            "rogue.option.slippery-mind-retry",
+            "rogue.option.bonus-feat"
+          ]
+        }
+      },
+      {
+        "id": "rogue.special-selection-13",
+        "name": "Rogue Special Ability Selection",
+        "mechanics": {
+          "kind": "choose-one-upon-level-up",
+          "rogueLevel": 13,
+          "optionIds": [
+            "rogue.option.crippling-strike",
+            "rogue.option.defensive-roll",
+            "rogue.option.opportunist",
+            "rogue.option.skill-mastery",
+            "rogue.option.slippery-mind-retry",
+            "rogue.option.bonus-feat"
+          ]
+        }
+      },
+      {
+        "id": "rogue.special-selection-16",
+        "name": "Rogue Special Ability Selection",
+        "mechanics": {
+          "kind": "choose-one-upon-level-up",
+          "rogueLevel": 16,
+          "optionIds": [
+            "rogue.option.crippling-strike",
+            "rogue.option.defensive-roll",
+            "rogue.option.opportunist",
+            "rogue.option.skill-mastery",
+            "rogue.option.slippery-mind-retry",
+            "rogue.option.bonus-feat"
+          ]
+        }
+      },
+      {
+        "id": "rogue.special-selection-19",
+        "name": "Rogue Special Ability Selection",
+        "mechanics": {
+          "kind": "choose-one-upon-level-up",
+          "rogueLevel": 19,
+          "optionIds": [
+            "rogue.option.crippling-strike",
+            "rogue.option.defensive-roll",
+            "rogue.option.opportunist",
+            "rogue.option.skill-mastery",
+            "rogue.option.slippery-mind-retry",
+            "rogue.option.bonus-feat"
+          ]
+        }
+      }
+    ]
+  }
+}

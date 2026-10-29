@@ -1,0 +1,63 @@
+{
+  "id": "optionalfeature.one-with-shadows",
+  "name": "One with Shadows",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "One with Shadows",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "entries": [
+          "When you are in an area of dim light or darkness, you can use your action to become {@condition invisible} until you move or take an action or a reaction."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "One with Shadows",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "invisibility|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "While you're in an area of {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you can cast {@spell Invisibility|SRD52} on yourself without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

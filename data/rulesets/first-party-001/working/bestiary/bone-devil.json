@@ -1,0 +1,236 @@
+{
+  "id": "monster.bone-devil",
+  "name": "Bone Devil",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 161,
+      "formula": "17d10 + 68"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 18,
+    "dex": 16,
+    "con": 18,
+    "int": 13,
+    "wis": 14,
+    "cha": 16,
+    "save": {
+      "str": "+8",
+      "int": "+5",
+      "wis": "+6",
+      "cha": "+7"
+    },
+    "skill": {
+      "deception": "+7",
+      "insight": "+6"
+    },
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 12,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "9",
+    "trait": [
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes two Claw attacks and one Infernal Sting attack."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}13 ({@damage 2d8 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Infernal Sting",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}15 ({@damage 2d10 + 4}) Piercing damage plus 18 ({@damage 4d8}) Poison damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the devil's next turn. While {@condition Poisoned|SRD52}, the target can't regain {@variantrule Hit Points|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "treasure": [
+      "implements"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/bone-devil.opus"
+    },
+    "traitTags": [
+      "Devil's Sight",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "I",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Bone Devil",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Bone Devil",
+            "entries": [
+              "{@i Devil of Dread and Obedience}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Implements"
+                  }
+                ]
+              },
+              "Bone devils are gaunt, nightmarish Fiends with pallid skin stretched tight over frames that combine human and insectile features. Also known as osyluths, these Fiends command weaker devils and other beings aligned with infernal legions. Bone devils ensure that the commands of hellish sovereigns are exacted efficiently and that non-devils fulfill their commitments to the Nine Hells. They slay those who renege on infernal deals, sending treacherous mortal souls to face unspeakable punishments.",
+              "When not serving their diabolical masters, bone devils tempt self-obsessed mortals with promises of other creatures' adulation and obedience. These devils prop up petty tyrants, helping them grow increasingly calloused and amoral.",
+              "Bone devils travel across the multiverse to fulfill diabolical orders. If left with no other choices, they might conscript mortals to aid them in their vicious goals. Roll on or choose a result from the Bone Devil Objectives table to inspire a bone devil's goals.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Bone devils are just one of a thousand reasons never to make a deal with a devil, but they're a significant one. Break said deal, and it'll likely be one of these nightmares that drags you down to the Nine Hells."
+                    ],
+                    "by": "Sylvira Savikas, Candlekeep Sage"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "caption": "Bone Devil Objectives",
+                "colLabels": [
+                  "1d4",
+                  "The Bone Devil Seeks To..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Capture a soul that escaped the Nine Hells."
+                  ],
+                  [
+                    "2",
+                    "Convey a message or make an example of someone in the name of an archdevil."
+                  ],
+                  [
+                    "3",
+                    "Find someone who broke a deal with a devil."
+                  ],
+                  [
+                    "4",
+                    "Slay someone or steal something as part of its pact with a wicked magic-user."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Bone Devil.webp"
+            },
+            "credit": "Nils Hamm",
+            "width": 2060,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  }
+}

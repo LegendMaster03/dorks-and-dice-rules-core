@@ -1,0 +1,88 @@
+{
+  "id": "spell.locate-animals-or-plants",
+  "name": "Locate Animals or Plants",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Locate Animals or Plants",
+        "level": 2,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a bit of fur from a bloodhound"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "Describe or name a specific kind of beast or plant. Concentrating on the voice of nature in your surroundings, you learn the direction and distance to the closest creature or plant of that kind within 5 miles, if any are present."
+        ],
+        "affectsCreatureType": [
+          "beast",
+          "plant"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Locate Animals or Plants",
+        "level": 2,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "fur from a bloodhound"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "Describe or name a specific kind of Beast, Plant creature, or nonmagical plant. You learn the direction and distance to the closest creature or plant of that kind within 5 miles, if any are present."
+        ],
+        "affectsCreatureType": [
+          "beast",
+          "plant"
+        ]
+      }
+    }
+  ]
+}

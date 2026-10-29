@@ -1,0 +1,62 @@
+{
+  "id": "rule.monsters-s",
+  "name": "Monsters (S)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (S)",
+        "page": 343,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Saber-Toothed Tiger|srd51}",
+              "{@creature Sahuagin|srd51}",
+              "{@creature Salamander|srd51}",
+              "{@creature Satyr|srd51}",
+              "{@creature Scorpion|srd51}",
+              "{@creature Scout|srd51}",
+              "{@creature Sea Hag|srd51}",
+              "{@creature Sea Horse|srd51}",
+              "{@creature Shadow|srd51}",
+              "{@creature Shambling Mound|srd51}",
+              "{@creature Shield Guardian|srd51}",
+              "{@creature Shrieker|srd51}",
+              "{@creature Silver Dragon Wyrmling|srd51}",
+              "{@creature Skeleton|srd51}",
+              "{@creature Solar|srd51}",
+              "{@creature Specter|srd51}",
+              "{@creature Spider|srd51}",
+              "{@creature Spirit Naga|srd51}",
+              "{@creature Sprite|srd51}",
+              "{@creature Spy|srd51}",
+              "{@creature Steam Mephit|srd51}",
+              "{@creature Stirge|srd51}",
+              "{@creature Stone Giant|srd51}",
+              "{@creature Stone Golem|srd51}",
+              "{@creature Storm Giant|srd51}",
+              "{@creature Succubus|srd51}",
+              "{@creature Swarm of Bats|srd51}",
+              "{@creature Swarm of Beetles|srd51}",
+              "{@creature Swarm of Centipedes|srd51}",
+              "{@creature Swarm of Insects|srd51}",
+              "{@creature Swarm of Poisonous Snakes|srd51}",
+              "{@creature Swarm of Quippers|srd51}",
+              "{@creature Swarm of Rats|srd51}",
+              "{@creature Swarm of Ravens|srd51}",
+              "{@creature Swarm of Spiders|srd51}",
+              "{@creature Swarm of Wasps|srd51}"
+            ]
+          }
+        ],
+        "id": "1b5"
+      }
+    }
+  ]
+}

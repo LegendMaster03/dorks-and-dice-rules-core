@@ -1,38 +1,23 @@
+# Phase 3A isolated private ingress, started only through an approved deployment.
+# It must not join dorks-and-dice-backend or a shared database network.
 services:
-  # When this overlay is enabled, the existing Rules Core service becomes the stable
-  # public consumer ingress. It remains on the normal backend network but can not serve
-  # private API routes even if a private target credential is presented to it.
-  rules-core:
-    environment:
-      RulesCore__ApiSurface: "PublicOnly"
-
-  # The private ingress uses the same Rules Core image and database, but it is not
-  # attached to dorks-and-dice-backend. The source Tool reaches it only through the
-  # explicitly configured private network. The restricted control-plane network exists
-  # solely so the private instance can redeem Site-issued target tickets. Database
-  # access uses a separate dependency network so the private ingress does not need the
-  # shared Tool backend merely to reach PostgreSQL.
   rules-core-private:
-    image: dorks-and-dice-rules-core:latest
+    image: dorks-and-dice-rules-core:phase3a
+    build: .
     container_name: dorks-and-dice-rules-core-private
     restart: unless-stopped
     environment:
-      ConnectionStrings__RulesCore: "${ConnectionStrings__RulesCore:?ConnectionStrings__RulesCore must be configured}"
-      ToolHost__BaseUrl: "${RulesCorePrivate__ToolHostBaseUrl:-http://dorks-and-dice-site:8080}"
-      RulesCore__ApiSurface: "PrivateOnly"
-      RulesCore__BootstrapBaseline: "false"
+      RulesCore__ApiSurface: PrivateOnly
+      Rulesets__ContentRoot: /app/data/rulesets
+      ToolHost__BaseUrl: ${TOOL_HOST_BASE_URL:-http://dorks-and-dice-site:8080}
     networks:
       - rules-core-private-tunnel
       - dorks-and-dice-tool-control-plane
-      - rules-core-database
 
 networks:
   rules-core-private-tunnel:
     external: true
-    name: "${RulesCorePrivate__Network:?RulesCorePrivate__Network must be configured}"
+    name: "${RulesCorePrivate__Network:?RulesCorePrivate__Network must be set}"
   dorks-and-dice-tool-control-plane:
     external: true
     name: "${ToolHosting__ControlPlaneNetwork:-dorks-and-dice-tool-control-plane}"
-  rules-core-database:
-    external: true
-    name: "${RulesCorePrivate__DatabaseNetwork:-dorks-and-dice-rules-core-db}"

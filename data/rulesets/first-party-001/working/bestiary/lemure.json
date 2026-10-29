@@ -1,0 +1,143 @@
+{
+  "id": "monster.lemure",
+  "name": "Lemure",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      9
+    ],
+    "hp": {
+      "average": 9,
+      "formula": "2d8"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 10,
+    "dex": 5,
+    "con": 11,
+    "int": 1,
+    "wis": 11,
+    "cha": 3,
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 10,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Infernal but can't speak"
+    ],
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Hellish Restoration",
+        "entries": [
+          "If the lemure dies in the Nine Hells, it revives with all its {@variantrule Hit Points|SRD52} in {@dice 1d10} days unless it is killed by a creature under the effects of a {@spell Bless|SRD52} spell or its remains are sprinkled with {@item Holy Water|SRD52}."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the lemure's darkvision."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Vile Slime",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Poison damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/lemure.opus"
+    },
+    "traitTags": [
+      "Devil's Sight"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "languageTags": [
+      "CS",
+      "I"
+    ],
+    "damageTags": [
+      "I"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Lemure",
+        "_copy": {
+          "name": "Lemures",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Lemures torment weaker creatures, but in the Nine Hells, few such beings exist. To avoid greater suffering, they obey the orders of more powerful devils."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Lemure.webp"
+                  },
+                  "credit": "John Tedrick",
+                  "width": 1422,
+                  "height": 1786
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "class-feature.monk.bonus-unarmed-strike-level-1",
+  "name": "Bonus Unarmed Strike",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bonus Unarmed Strike",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 1,
+        "header": 2,
+        "entries": [
+          "You can make an {@variantrule Unarmed Strike|SRD52} as a {@variantrule Bonus Action|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 1
+}

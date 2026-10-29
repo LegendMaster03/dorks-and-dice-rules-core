@@ -1,0 +1,43 @@
+{
+  "id": "item.belt-of-storm-giant-strength",
+  "name": "Belt of Storm Giant Strength",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Belt of Storm Giant Strength",
+        "tier": "major",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "ability": {
+          "static": {
+            "str": 29
+          }
+        },
+        "entries": [
+          "While wearing this belt, your Strength score changes to 29. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Belt of Storm Giant Strength",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "ability": {
+          "static": {
+            "str": 29
+          }
+        },
+        "entries": [
+          "While wearing this belt, your Strength score changes to 29. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+        ]
+      }
+    }
+  ]
+}

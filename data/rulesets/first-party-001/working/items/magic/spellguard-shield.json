@@ -1,0 +1,38 @@
+{
+  "id": "item.spellguard-shield",
+  "name": "Spellguard Shield",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spellguard Shield",
+        "type": "S",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 6,
+        "ac": 2,
+        "entries": [
+          "While holding this shield, you have advantage on saving throws against spells and other magical effects, and spell attacks have disadvantage against you."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spellguard Shield",
+        "baseItem": "shield|srd52",
+        "type": "S|SRD52",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 6,
+        "ac": 2,
+        "entries": [
+          "While holding this Shield, you have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects, and spell attack rolls have {@variantrule Disadvantage|SRD52} against you."
+        ]
+      }
+    }
+  ]
+}

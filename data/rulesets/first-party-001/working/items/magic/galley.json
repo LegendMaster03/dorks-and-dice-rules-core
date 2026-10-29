@@ -1,0 +1,20 @@
+{
+  "id": "item.galley",
+  "name": "Galley",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "SHP",
+    "rarity": "none",
+    "value": 3000000,
+    "crew": 80,
+    "vehAc": 15,
+    "vehHp": 500,
+    "vehDmgThresh": 20,
+    "vehSpeed": 4,
+    "capCargo": 150,
+    "seeAlsoVehicle": [
+      "Galley"
+    ]
+  }
+}

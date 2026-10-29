@@ -1,0 +1,38 @@
+{
+  "id": "item.glamoured-studded-leather",
+  "name": "Glamoured Studded Leather",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Glamoured Studded Leather",
+        "type": "LA",
+        "tier": "major",
+        "rarity": "rare",
+        "weight": 13,
+        "ac": 12,
+        "bonusAc": "+1",
+        "entries": [
+          "While wearing this armor, you gain a +1 bonus to AC. You can also use a bonus action to speak the armor's command word and cause the armor to assume the appearance of a normal set of clothing or some other kind of armor. You decide what it looks like, including color, style, and accessories, but the armor retains its normal bulk and weight. The illusory appearance lasts until you use this property again or remove the armor."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Glamoured Studded Leather",
+        "baseItem": "studded leather armor|srd52",
+        "type": "LA|SRD52",
+        "rarity": "rare",
+        "weight": 13,
+        "ac": 12,
+        "bonusAc": "+1",
+        "entries": [
+          "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}. You can also take a {@variantrule Bonus Action|SRD52} to cause the armor to assume the appearance of a normal set of clothing or some other kind of armor. You decide what it looks like—including color, style, and accessories—but the armor retains its normal bulk and weight. The illusory appearance lasts until you use this property again or doff the armor."
+        ]
+      }
+    }
+  ]
+}

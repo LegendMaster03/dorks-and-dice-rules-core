@@ -1,0 +1,12 @@
+{
+  "id": "item.steel-mirror",
+  "name": "Steel Mirror",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 0.5,
+    "value": 500
+  }
+}

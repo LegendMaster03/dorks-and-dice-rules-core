@@ -1,0 +1,77 @@
+{
+  "id": "trap.poisoned-needle",
+  "name": "Poisoned Needle",
+  "kind": "trap",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "TRP",
+    "rating": [
+      {
+        "tier": 1,
+        "threat": "nuisance"
+      }
+    ],
+    "trigger": [
+      "A creature opens the trap's lock improperly or fails to disarm the trap"
+    ],
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A poisoned needle is hidden in a lock. When a creature opens the lock with any object other than the proper key, the needle springs out and stabs the creature. The creature makes a {@dc 11} Constitution saving throw. On a failed save, the creature takes 5 ({@damage 1d10}) Poison damage and has the {@condition Poisoned|SRD52} condition for 1 hour. On a successful save, the creature takes half as much damage only.",
+      {
+        "type": "entries",
+        "name": "Avoid",
+        "entries": [
+          "The trap doesn't trigger if the lock is opened using a {@spell Knock|SRD52} spell or similar magic."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Detect and Disarm",
+        "entries": [
+          "As a {@action Search|SRD52} action, a creature can examine the trapped lock and make a {@dc 15} Wisdom ({@skill Perception|SRD52}) check, detecting the needle on a successful check. Once the trap is detected, a character can take an action to try to disarm the trap, doing so with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check. On a failed check, the creature triggers the trap."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "You can scale the trap for higher levels by increasing the damage and the save DC, as shown in the following table.",
+          {
+            "type": "table",
+            "colLabels": [
+              "Levels",
+              "Poison Damage",
+              "Save DC"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-5 text-center",
+              "col-5 text-center"
+            ],
+            "rows": [
+              [
+                "5–10",
+                "11 ({@damage 2d10})",
+                "13"
+              ],
+              [
+                "11–16",
+                "22 ({@damage 4d10})",
+                "15"
+              ],
+              [
+                "17–20",
+                "55 ({@damage 10d10})",
+                "17"
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

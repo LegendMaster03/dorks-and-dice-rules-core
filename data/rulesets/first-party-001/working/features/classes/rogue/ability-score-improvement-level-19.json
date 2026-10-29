@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.rogue.ability-score-improvement-level-19",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 19,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Native Rogue Ability Score Improvement; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "asi-or-eligible-feat",
+      "abilityIncreaseOptions": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "permanentMaximum": null,
+      "epicBoonMinimumTotalCharacterLevel": 21
+    }
+  }
+}

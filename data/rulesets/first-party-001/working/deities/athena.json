@@ -1,0 +1,20 @@
+{
+  "id": "deity.athena",
+  "name": "Athena",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "title": "Goddess of wisdom and civilization",
+    "domains": [
+      "Knowledge",
+      "War",
+      "Order"
+    ],
+    "symbol": "Owl"
+  }
+}

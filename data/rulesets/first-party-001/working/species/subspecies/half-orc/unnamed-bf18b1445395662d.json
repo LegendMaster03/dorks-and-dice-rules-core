@@ -1,0 +1,16 @@
+{
+  "id": "subspecies.half-orc.unnamed-bf18b1445395662d",
+  "name": "Section 6",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "raceName": "Half-Orc",
+        "raceSource": "SRD51"
+      }
+    }
+  ],
+  "parentSpecies": "species.half-orc"
+}

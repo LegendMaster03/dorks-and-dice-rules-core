@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.rogue.uncanny-dodge-level-5",
+  "name": "Uncanny Dodge",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Uncanny Dodge",
+    "description": "Native Rogue Uncanny Dodge; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "reaction-damage-halving",
+      "trigger": "visible-attacker-hits-you",
+      "cost": "reaction",
+      "divideDamageBy": 2,
+      "roundDown": true,
+      "competesWithDefensiveRollReaction": true
+    }
+  }
+}

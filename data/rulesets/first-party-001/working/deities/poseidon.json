@@ -1,0 +1,18 @@
+{
+  "id": "deity.poseidon",
+  "name": "Poseidon",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "title": "God of the sea and earthquakes",
+    "domains": [
+      "Tempest"
+    ],
+    "symbol": "Trident"
+  }
+}

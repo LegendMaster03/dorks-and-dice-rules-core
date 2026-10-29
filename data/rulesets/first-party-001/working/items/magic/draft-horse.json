@@ -1,0 +1,13 @@
+{
+  "id": "item.draft-horse",
+  "name": "Draft Horse",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 5000,
+    "carryingCapacity": 540,
+    "speed": 40
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.fighter.tactical-master-level-9",
+  "name": "Tactical Master",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tactical Master",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 9,
+        "entries": [
+          "When you attack with a weapon whose mastery property you can use, you can replace that property with the {@itemMastery Push|SRD52}, {@itemMastery Sap|SRD52}, or {@itemMastery Slow|SRD52} property for that attack."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 9
+}

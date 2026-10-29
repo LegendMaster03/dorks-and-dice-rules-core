@@ -1,0 +1,25 @@
+{
+  "id": "baseitem.light-hammer",
+  "name": "Light Hammer",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 200,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "range": "20/60",
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "hammer": true,
+    "weapon": true
+  }
+}

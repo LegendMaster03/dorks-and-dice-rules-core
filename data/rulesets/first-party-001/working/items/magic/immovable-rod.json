@@ -1,0 +1,33 @@
+{
+  "id": "item.immovable-rod",
+  "name": "Immovable Rod",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Immovable Rod",
+        "type": "RD|SRD51",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "weight": 2,
+        "entries": [
+          "This flat iron rod has a button on one end. You can use an action to press the button, which causes the rod to become magically fixed in place. Until you or another creature uses an action to push the button again, the rod doesn't move, even if it is defying gravity. The rod can hold up to 8,000 pounds of weight. More weight causes the rod to deactivate and fall. A creature can use an action to make a {@dc 30} Strength check, moving the fixed rod up to 10 feet on a success."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Immovable Rod",
+        "type": "RD|SRD52",
+        "rarity": "uncommon",
+        "weight": 2,
+        "entries": [
+          "This iron rod has a button on one end. You can take a {@action Utilize|SRD52} action to press the button, which causes the rod to become magically fixed in place. Until you or another creature takes a {@action Utilize|SRD52} action to push the button again, the rod doesn't move, even if it defies gravity. The rod can hold up to 8,000 pounds of weight. More weight causes the rod to deactivate and fall. A creature can take a {@action Utilize|SRD52} action to make a {@dc 30} Strength ({@skill Athletics|SRD52}) check, moving the fixed rod up to 10 feet on a successful check."
+        ]
+      }
+    }
+  ]
+}

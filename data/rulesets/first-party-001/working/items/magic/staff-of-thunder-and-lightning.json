@@ -1,0 +1,125 @@
+{
+  "id": "item.staff-of-thunder-and-lightning",
+  "name": "Staff of Thunder and Lightning",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of Thunder and Lightning",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "bonusWeapon": "+2",
+        "staff": true,
+        "entries": [
+          "This staff can be wielded as a magic quarterstaff that grants a +2 bonus to attack and damage rolls made with it. It also has the following additional properties. When one of these properties is used, it can't be used again until the next dawn.",
+          {
+            "type": "entries",
+            "name": "Lightning",
+            "entries": [
+              "When you hit with a melee attack using the staff, you can cause the target to take an extra {@damage 2d6} lightning damage."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thunder",
+            "entries": [
+              "When you hit with a melee attack using the staff, you can cause the staff to emit a crack of thunder, audible out to 300 feet. The target you hit must succeed on a {@dc 17} Constitution saving throw or become {@condition stunned} until the end of your next turn."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Lightning Strike",
+            "entries": [
+              "You can use an action to cause a bolt of lightning to leap from the staff's tip in a line that is 5 feet wide and 120 feet long. Each creature in that line must make a {@dc 17} Dexterity saving throw, taking {@damage 9d6} lightning damage on a failed save, or half as much damage on a successful one."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thunderclap",
+            "entries": [
+              "You can use an action to cause the staff to issue a deafening thunderclap, audible out to 600 feet. Each creature within 60 feet of you (not including you) must make a {@dc 17} Constitution saving throw. On a failed save, a creature takes {@damage 2d6} thunder damage and becomes {@condition deafened} for 1 minute. On a successful save, a creature takes half damage and isn't {@condition deafened}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thunder and Lightning",
+            "entries": [
+              "You can use an action to use the Lightning Strike and Thunderclap properties at the same time. Doing so doesn't expend the daily use of those properties, only the use of this one."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of Thunder and Lightning",
+        "type": "M|SRD52",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "bonusWeapon": "+2",
+        "staff": true,
+        "entries": [
+          "This staff can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. It also has the following additional properties. Once one of these properties is used, it can't be used again until the next dawn.",
+          {
+            "type": "entries",
+            "name": "Lightning",
+            "entries": [
+              "When you hit with a melee attack using the staff, you can cause the target to take an extra {@damage 2d6} Lightning damage (no action required)."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thunder",
+            "entries": [
+              "When you hit with a melee attack using the staff, you can cause the staff to emit a crack of thunder audible out to 300 feet (no action required). The target you hit must succeed on a {@dc 17} Constitution saving throw or have the {@condition Stunned|SRD52} condition until the end of your next turn."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thunder and Lightning",
+            "entries": [
+              "Immediately after you hit with a melee attack using the staff, you can take a {@variantrule Bonus Action|SRD52} to use the Lightning and Thunder properties (see above) at the same time. Doing so doesn't expend the daily use of those properties, only the use of this one."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Lightning Strike",
+            "entries": [
+              "You can take a {@action Magic|SRD52} action to cause a bolt of lightning to leap from the staff's tip in a {@variantrule Line [Area of Effect]|SRD52|Line} that is 5 feet wide and 120 feet long. Each creature in that {@variantrule Line [Area of Effect]|SRD52|Line} makes a {@dc 17} Dexterity saving throw, taking {@damage 9d6} Lightning damage on a failed save or half as much damage on a successful one."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thunderclap",
+            "entries": [
+              "You can take a {@action Magic|SRD52} action to cause the staff to produce a thunderclap audible out to 600 feet. Every creature within a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you makes a {@dc 17} Constitution saving throw. On a failed save, a creature takes {@damage 2d6} Thunder damage and has the {@condition Deafened|SRD52} condition for 1 minute. On a successful save, a creature takes half as much damage only."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.druid.beast-spells-level-18",
+  "name": "Beast Spells",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Beast Spells",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "wild-shape-casting",
+      "canCastEligibleDruidSpells": true,
+      "verbalSomaticAllowed": true,
+      "materialComponentsAllowedIfNotCostlyAndNotConsumed": true,
+      "noFreeCast": true
+    }
+  }
+}

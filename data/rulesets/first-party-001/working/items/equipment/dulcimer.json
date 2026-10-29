@@ -1,0 +1,50 @@
+{
+  "id": "baseitem.dulcimer",
+  "name": "Dulcimer",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dulcimer",
+        "type": "INS",
+        "rarity": "none",
+        "weight": 10,
+        "value": 2500
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dulcimer",
+        "type": "INS|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 2500,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Charisma"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Play a known tune ({@dc 10}), or improvise a song ({@dc 15})"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rule.monsters-q",
+  "name": "Monsters (Q)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (Q)",
+        "page": 261,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Quasit|srd51}",
+              "{@creature Quipper|srd51}"
+            ]
+          }
+        ],
+        "id": "1b3"
+      }
+    }
+  ]
+}

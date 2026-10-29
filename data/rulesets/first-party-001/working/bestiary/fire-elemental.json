@@ -1,0 +1,230 @@
+{
+  "id": "monster.fire-elemental",
+  "name": "Fire Elemental",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 93,
+      "formula": "11d10 + 33"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 10,
+    "dex": 17,
+    "con": 16,
+    "int": 6,
+    "wis": 10,
+    "cha": 7,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "languages": [
+      "Primordial (Ignan)"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Fire Aura",
+        "entries": [
+          "At the end of each of the elemental's turns, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the elemental takes 5 ({@damage 1d10}) Fire damage. Creatures and flammable objects in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} start {@hazard burning|SRD52}."
+        ]
+      },
+      {
+        "name": "Fire Form",
+        "entries": [
+          "The elemental can move through a space as narrow as 1 inch without expending extra movement to do so, and it can enter a creature's space and stop there. The first time it enters a creature's space on a turn, that creature takes 5 ({@damage 1d10}) Fire damage."
+        ]
+      },
+      {
+        "name": "Illumination",
+        "entries": [
+          "The elemental sheds {@variantrule Bright Light|SRD52} in a 30-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet."
+        ]
+      },
+      {
+        "name": "Water Susceptibility",
+        "entries": [
+          "The elemental takes 3 ({@damage 1d6}) Cold damage for every 5 feet the elemental moves in water or for every gallon of water splashed on it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The elemental makes two Burn attacks."
+        ]
+      },
+      {
+        "name": "Burn",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Fire damage. If the target is a creature or a flammable object, it starts {@hazard burning|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "planar, fire"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/fire-elemental.opus"
+    },
+    "traitTags": [
+      "Illumination"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "IG",
+      "P"
+    ],
+    "damageTags": [
+      "C",
+      "F"
+    ],
+    "miscTags": [
+      "AOE",
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Fire Elemental",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Fire Elemental",
+            "entries": [
+              "{@i Primal Spirit of Heat and Flame}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Planar (Elemental Plane of Fire)|bestiary|environment=planar, fire}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Fire elementals arise when spirits of the Elemental Plane of Fire inhabit flames, burning cinders, and heated smoke. These beings are tangible despite largely being made of flames and particles, and they can uses their vague limbs to ignite foes and flammable materials. Fire elementals typically burn in shades of orange and red, but other colors are possible. Most on the Material Plane are summoned by magical means, or they might appear near rifts amid desert depths, volcanoes, wildfires, or magma flows that connect to their home plane.",
+              "Fire elementals might burn in distinctive ways. Roll on or choose a result from the Fire Elemental Compositions table to inspire a fire elemental's features.",
+              {
+                "type": "table",
+                "caption": "Fire Elemental Compositions",
+                "colLabels": [
+                  "1d8",
+                  "The Fire Elemental's Body Features..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Colorful, superheated gases."
+                  ],
+                  [
+                    "2",
+                    "A column of diabolical or divine flame."
+                  ],
+                  [
+                    "3",
+                    "Crackling shapes that look like animals, fiends, skeletons, sprites, or other beings."
+                  ],
+                  [
+                    "4",
+                    "Flames that are predominantly white, blue, or a more unusual color."
+                  ],
+                  [
+                    "5",
+                    "The form of a calm or tormented humanoid."
+                  ],
+                  [
+                    "6",
+                    "Smoke that forms eerie shapes or symbols."
+                  ],
+                  [
+                    "7",
+                    "Soot that smells like cedar, cloves, incense, or burning meat."
+                  ],
+                  [
+                    "8",
+                    "Swirls of cinders and burning debris."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "All the elements bow to fire. The strongest earth melts. Water boils. Even air ignites. We are all souls of flame, and we know what it is to burn."
+                    ],
+                    "by": "Marrake the Incandescent, Ruler of Efreet"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Fire Elemental.webp"
+            },
+            "credit": "Chris Cold",
+            "width": 1320,
+            "height": 1650
+          }
+        ]
+      }
+    ]
+  }
+}

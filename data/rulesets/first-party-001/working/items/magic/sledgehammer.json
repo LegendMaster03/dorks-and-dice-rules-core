@@ -1,0 +1,12 @@
+{
+  "id": "item.sledgehammer",
+  "name": "Sledgehammer",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 10,
+    "value": 200
+  }
+}

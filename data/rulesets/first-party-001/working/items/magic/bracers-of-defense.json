@@ -1,0 +1,41 @@
+{
+  "id": "item.bracers-of-defense",
+  "name": "Bracers of Defense",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bracers of Defense",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "bonusAc": "+2",
+        "entries": [
+          "While wearing these bracers, you gain a +2 bonus to AC if you are wearing no armor and using no {@item shield|SRD51}."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bracers of Defense",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "bonusAc": "+2",
+        "entries": [
+          "While wearing these bracers, you gain a +2 bonus to {@variantrule Armor Class|SRD52} if you are wearing no armor and using no {@item Shield|SRD52}."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

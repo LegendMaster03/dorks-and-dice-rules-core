@@ -1,0 +1,98 @@
+{
+  "id": "spell.mind-blank",
+  "name": "Mind Blank",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mind Blank",
+        "level": 8,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "Until the spell ends, one willing creature you touch is immune to psychic damage, any effect that would sense its emotions or read its thoughts, divination spells, and the {@condition charmed} condition. The spell even foils {@spell wish} spells and spells or effects of similar power used to affect the target's mind or to gain information about the target."
+        ],
+        "damageImmune": [
+          "psychic"
+        ],
+        "conditionImmune": [
+          "charmed"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mind Blank",
+        "level": 8,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "Until the spell ends, one willing creature you touch has {@variantrule Immunity|SRD52} to Psychic damage and the {@condition Charmed|SRD52} condition. The target is also unaffected by anything that would sense its emotions or alignment, read its thoughts, or magically detect its location, and no spell—not even {@spell Wish|SRD52}—can gather information about the target, observe it remotely, or control its mind."
+        ],
+        "damageImmune": [
+          "psychic"
+        ],
+        "conditionImmune": [
+          "charmed"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

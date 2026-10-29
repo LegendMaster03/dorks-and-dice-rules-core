@@ -1,0 +1,38 @@
+{
+  "id": "item.potion-of-superior-healing",
+  "name": "Potion of Superior Healing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Superior Healing",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "rare",
+        "entries": [
+          "You regain {@dice 8d4 + 8} hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Superior Healing",
+        "type": "P|SRD52",
+        "rarity": "rare",
+        "weight": 0.5,
+        "entries": [
+          "You regain {@dice 8d4 + 8} {@variantrule Hit Points|SRD52} when you drink this potion. The potion's red liquid glimmers when agitated."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

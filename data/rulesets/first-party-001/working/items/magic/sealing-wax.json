@@ -1,0 +1,11 @@
+{
+  "id": "item.sealing-wax",
+  "name": "Sealing Wax",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 50
+  }
+}

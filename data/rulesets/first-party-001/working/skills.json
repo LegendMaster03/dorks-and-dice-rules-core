@@ -1,0 +1,689 @@
+{
+  "_meta": {
+    "status": "provisional",
+    "note": "Native skills only; edition, renamed aliases and imported source history do not belong to this rules catalog."
+  },
+  "skills": [
+    {
+      "id": "skill.acrobatics",
+      "name": "Acrobatics",
+      "kind": "skill",
+      "defaultAbility": "dexterity",
+      "description": [
+        "Stay on your feet in a tricky situation, or perform an acrobatic stunt."
+      ],
+      "childSkills": [
+        "skill.balance",
+        "skill.tumble"
+      ],
+      "composition": {
+        "operation": "arithmetic-mean",
+        "direction": "components-to-parent",
+        "rounding": "truncate-toward-zero",
+        "componentModifiers": "before-mean",
+        "parentModifiers": "after-mean"
+      }
+    },
+    {
+      "id": "skill.animal-empathy",
+      "name": "Animal Empathy",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.animal-handling",
+      "name": "Animal Handling",
+      "kind": "skill",
+      "defaultAbility": "wisdom",
+      "description": [
+        "Calm or train an animal, or get an animal to behave in a certain way."
+      ]
+    },
+    {
+      "id": "skill.appraise",
+      "name": "Appraise",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.arcana",
+      "name": "Arcana",
+      "kind": "skill",
+      "defaultAbility": "intelligence",
+      "description": [
+        "Recall lore about spells, magic items, and the planes of existence."
+      ]
+    },
+    {
+      "id": "skill.athletics",
+      "name": "Athletics",
+      "kind": "skill",
+      "defaultAbility": "strength",
+      "description": [
+        "Jump farther than normal, stay afloat in rough water, or break something."
+      ],
+      "childSkills": [
+        "skill.climb",
+        "skill.jump",
+        "skill.swim"
+      ],
+      "composition": {
+        "operation": "arithmetic-mean",
+        "direction": "components-to-parent",
+        "rounding": "truncate-toward-zero",
+        "componentModifiers": "before-mean",
+        "parentModifiers": "after-mean"
+      }
+    },
+    {
+      "id": "skill.autohypnosis",
+      "name": "Autohypnosis",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.balance",
+      "name": "Balance",
+      "kind": "skill",
+      "parentSkill": "skill.acrobatics",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.climb",
+      "name": "Climb",
+      "kind": "skill",
+      "parentSkill": "skill.athletics",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.concentration",
+      "name": "Concentration",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.deception",
+      "name": "Deception",
+      "kind": "skill",
+      "defaultAbility": "charisma",
+      "description": [
+        "Tell a convincing lie, or wear a disguise convincingly."
+      ]
+    },
+    {
+      "id": "skill.decipher-script",
+      "name": "Decipher Script",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.disable-device",
+      "name": "Disable Device",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.disguise",
+      "name": "Disguise",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.escape-artist",
+      "name": "Escape Artist",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.forgery",
+      "name": "Forgery",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.gather-information",
+      "name": "Gather Information",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.hide",
+      "name": "Hide",
+      "kind": "skill",
+      "parentSkill": "skill.stealth",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.history",
+      "name": "History",
+      "kind": "skill",
+      "defaultAbility": "intelligence",
+      "description": [
+        "Recall lore about historical events, people, nations, and cultures."
+      ]
+    },
+    {
+      "id": "skill.innuendo",
+      "name": "Innuendo",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.insight",
+      "name": "Insight",
+      "kind": "skill",
+      "defaultAbility": "wisdom",
+      "description": [
+        "Discern a person's mood and intentions."
+      ]
+    },
+    {
+      "id": "skill.intimidation",
+      "name": "Intimidation",
+      "kind": "skill",
+      "defaultAbility": "charisma",
+      "description": [
+        "Awe or threaten someone into doing what you want."
+      ]
+    },
+    {
+      "id": "skill.intuit-direction",
+      "name": "Intuit Direction",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.investigation",
+      "name": "Investigation",
+      "kind": "skill",
+      "defaultAbility": "intelligence",
+      "description": [
+        "Find obscure information in books, or deduce how something works."
+      ]
+    },
+    {
+      "id": "skill.jump",
+      "name": "Jump",
+      "kind": "skill",
+      "parentSkill": "skill.athletics",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.knowledge-psionics",
+      "name": "Knowledge (Psionics)",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.listen",
+      "name": "Listen",
+      "kind": "skill",
+      "parentSkill": "skill.perception",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.medicine",
+      "name": "Medicine",
+      "kind": "skill",
+      "defaultAbility": "wisdom",
+      "description": [
+        "Diagnose an illness, or determine what killed the recently slain."
+      ]
+    },
+    {
+      "id": "skill.move-silently",
+      "name": "Move Silently",
+      "kind": "skill",
+      "parentSkill": "skill.stealth",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.nature",
+      "name": "Nature",
+      "kind": "skill",
+      "defaultAbility": "intelligence",
+      "description": [
+        "Recall lore about terrain, plants, animals, and weather."
+      ]
+    },
+    {
+      "id": "skill.open-lock",
+      "name": "Open Lock",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.perception",
+      "name": "Perception",
+      "kind": "skill",
+      "defaultAbility": "wisdom",
+      "description": [
+        "Using a combination of senses, notice something that's easy to miss."
+      ],
+      "childSkills": [
+        "skill.listen",
+        "skill.spot"
+      ],
+      "composition": {
+        "operation": "arithmetic-mean",
+        "direction": "components-to-parent",
+        "rounding": "truncate-toward-zero",
+        "componentModifiers": "before-mean",
+        "parentModifiers": "after-mean"
+      }
+    },
+    {
+      "id": "skill.perform",
+      "name": "Perform",
+      "kind": "skill-family",
+      "defaultAbility": "charisma",
+      "independentChildren": true
+    },
+    {
+      "id": "skill.perform-act",
+      "name": "Perform (Act)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-comedy",
+      "name": "Perform (Comedy)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-dance",
+      "name": "Perform (Dance)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-keyboard-instruments",
+      "name": "Perform (Keyboard Instruments)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-oratory",
+      "name": "Perform (Oratory)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-percussion-instruments",
+      "name": "Perform (Percussion Instruments)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-sing",
+      "name": "Perform (Sing)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-string-instruments",
+      "name": "Perform (String Instruments)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.perform-wind-instruments",
+      "name": "Perform (Wind Instruments)",
+      "kind": "skill",
+      "family": "skill.perform",
+      "independentlyRanked": true,
+      "defaultAbility": "charisma"
+    },
+    {
+      "id": "skill.performance",
+      "name": "Performance",
+      "kind": "skill",
+      "defaultAbility": "charisma",
+      "description": [
+        "Act, tell a story, perform music, or dance."
+      ]
+    },
+    {
+      "id": "skill.persuasion",
+      "name": "Persuasion",
+      "kind": "skill",
+      "defaultAbility": "charisma",
+      "description": [
+        "Honestly and graciously convince someone of something."
+      ]
+    },
+    {
+      "id": "skill.profession",
+      "name": "Profession",
+      "kind": "skill-family",
+      "defaultAbility": "wisdom",
+      "independentChildren": true
+    },
+    {
+      "id": "skill.profession-apothecary",
+      "name": "Profession (Apothecary)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-boater",
+      "name": "Profession (Boater)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-bookkeeper",
+      "name": "Profession (Bookkeeper)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-brewer",
+      "name": "Profession (Brewer)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-cook",
+      "name": "Profession (Cook)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-driver",
+      "name": "Profession (Driver)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-farmer",
+      "name": "Profession (Farmer)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-fisher",
+      "name": "Profession (Fisher)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-guide",
+      "name": "Profession (Guide)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-herbalist",
+      "name": "Profession (Herbalist)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-herder",
+      "name": "Profession (Herder)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-hunter",
+      "name": "Profession (Hunter)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-innkeeper",
+      "name": "Profession (Innkeeper)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-lumberjack",
+      "name": "Profession (Lumberjack)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-miller",
+      "name": "Profession (Miller)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-miner",
+      "name": "Profession (Miner)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-porter",
+      "name": "Profession (Porter)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-rancher",
+      "name": "Profession (Rancher)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-sailor",
+      "name": "Profession (Sailor)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-scribe",
+      "name": "Profession (Scribe)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-siege-engineer",
+      "name": "Profession (Siege Engineer)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-stablehand",
+      "name": "Profession (Stablehand)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-tanner",
+      "name": "Profession (Tanner)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-teamster",
+      "name": "Profession (Teamster)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.profession-woodcutter",
+      "name": "Profession (Woodcutter)",
+      "kind": "skill",
+      "family": "skill.profession",
+      "independentlyRanked": true,
+      "defaultAbility": "wisdom"
+    },
+    {
+      "id": "skill.psicraft",
+      "name": "Psicraft",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.psionics",
+      "name": "Psionics",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.read-lips",
+      "name": "Read Lips",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.religion",
+      "name": "Religion",
+      "kind": "skill",
+      "defaultAbility": "intelligence",
+      "description": [
+        "Recall lore about gods, religious rituals, and holy symbols."
+      ]
+    },
+    {
+      "id": "skill.ride",
+      "name": "Ride",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.scry",
+      "name": "Scry",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.search",
+      "name": "Search",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.sleight-of-hand",
+      "name": "Sleight of Hand",
+      "kind": "skill",
+      "defaultAbility": "dexterity",
+      "description": [
+        "Pick a pocket, conceal a handheld object, or perform legerdemain."
+      ]
+    },
+    {
+      "id": "skill.spellcraft",
+      "name": "Spellcraft",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.spot",
+      "name": "Spot",
+      "kind": "skill",
+      "parentSkill": "skill.perception",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.stealth",
+      "name": "Stealth",
+      "kind": "skill",
+      "defaultAbility": "dexterity",
+      "description": [
+        "Escape notice by moving quietly and hiding behind things."
+      ],
+      "childSkills": [
+        "skill.hide",
+        "skill.move-silently"
+      ],
+      "composition": {
+        "operation": "arithmetic-mean",
+        "direction": "components-to-parent",
+        "rounding": "truncate-toward-zero",
+        "componentModifiers": "before-mean",
+        "parentModifiers": "after-mean"
+      }
+    },
+    {
+      "id": "skill.survival",
+      "name": "Survival",
+      "kind": "skill",
+      "defaultAbility": "wisdom",
+      "description": [
+        "Follow tracks, forage, find a trail, or avoid natural hazards."
+      ]
+    },
+    {
+      "id": "skill.swim",
+      "name": "Swim",
+      "kind": "skill",
+      "parentSkill": "skill.athletics",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.the-planes",
+      "name": "The Planes",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.tumble",
+      "name": "Tumble",
+      "kind": "skill",
+      "parentSkill": "skill.acrobatics",
+      "independentlyRanked": true
+    },
+    {
+      "id": "skill.use-magic-device",
+      "name": "Use Magic Device",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.use-psionic-device",
+      "name": "Use Psionic Device",
+      "kind": "skill"
+    },
+    {
+      "id": "skill.use-rope",
+      "name": "Use Rope",
+      "kind": "skill"
+    }
+  ]
+}

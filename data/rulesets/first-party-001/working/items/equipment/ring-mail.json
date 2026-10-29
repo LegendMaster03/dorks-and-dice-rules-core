@@ -1,0 +1,37 @@
+{
+  "id": "baseitem.ring-mail",
+  "name": "Ring Mail",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring Mail",
+        "type": "HA",
+        "rarity": "none",
+        "weight": 40,
+        "value": 3000,
+        "ac": 14,
+        "armor": true,
+        "stealth": true,
+        "entries": [
+          "This armor is leather armor with heavy rings sewn into it. The rings help reinforce the armor against blows from swords and axes. Ring mail is inferior to chain mail, and it's usually worn only by those who can't afford better armor."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring Mail",
+        "type": "HA|SRD52",
+        "rarity": "none",
+        "weight": 40,
+        "value": 3000,
+        "ac": 14,
+        "armor": true,
+        "stealth": true
+      }
+    }
+  ]
+}

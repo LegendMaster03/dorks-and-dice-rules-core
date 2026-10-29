@@ -1,0 +1,18 @@
+{
+  "id": "item.alchemist-s-fire",
+  "name": "Alchemist's Fire",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 5000,
+    "entries": [
+      "When you take the {@action Attack|SRD52} action, you can replace one of your attacks with throwing a flask of Alchemist's Fire. Target one creature or object you can see within 20 feet of yourself. The target must succeed on a Dexterity saving throw ({@dc 8} plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}) or take {@damage 1d4} Fire damage and start {@hazard burning|SRD52}."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

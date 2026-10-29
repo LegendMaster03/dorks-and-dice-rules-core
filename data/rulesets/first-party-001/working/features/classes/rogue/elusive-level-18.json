@@ -1,0 +1,16 @@
+{
+  "id": "class-feature.rogue.elusive-level-18",
+  "name": "Elusive",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Elusive",
+    "description": "Native Rogue Elusive; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "deny-attacker-advantage",
+      "appliesUnless": "incapacitated"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "baseitem.crystal",
+  "name": "Crystal",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Arcane Focus"
+    ],
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000
+  }
+}

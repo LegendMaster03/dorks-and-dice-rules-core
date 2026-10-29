@@ -1,0 +1,13 @@
+{
+  "id": "item.pony",
+  "name": "Pony",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 3000,
+    "carryingCapacity": 225,
+    "speed": 40
+  }
+}

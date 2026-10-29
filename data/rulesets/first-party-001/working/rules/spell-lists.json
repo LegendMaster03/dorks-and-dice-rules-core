@@ -1,0 +1,1421 @@
+{
+  "id": "rule.spell-lists",
+  "name": "Spell Lists",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Spell Lists",
+        "page": 105,
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Bard Spells",
+            "page": 105,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "Cantrips (0 Level)",
+                "columns": 4,
+                "items": [
+                  "{@spell Dancing Lights|srd51}",
+                  "{@spell Light|srd51}",
+                  "{@spell Mage Hand|srd51}",
+                  "{@spell Mending|srd51}",
+                  "{@spell Message|srd51}",
+                  "{@spell Minor Illusion|srd51}",
+                  "{@spell Prestidigitation|srd51}",
+                  "{@spell True Strike|srd51}",
+                  "{@spell Vicious Mockery|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animal Friendship|srd51}",
+                  "{@spell Bane|srd51}",
+                  "{@spell Charm Person|srd51}",
+                  "{@spell Comprehend Languages|srd51}",
+                  "{@spell Cure Wounds|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Disguise Self|srd51}",
+                  "{@spell Faerie Fire|srd51}",
+                  "{@spell Feather Fall|srd51}",
+                  "{@spell Healing Word|srd51}",
+                  "{@spell Heroism|srd51}",
+                  "{@spell Identify|srd51}",
+                  "{@spell Illusory Script|srd51}",
+                  "{@spell Longstrider|srd51}",
+                  "{@spell Silent Image|srd51}",
+                  "{@spell Sleep|srd51}",
+                  "{@spell Speak with Animals|srd51}",
+                  "{@spell Hideous Laughter|srd51}",
+                  "{@spell Thunderwave|srd51}",
+                  "{@spell Unseen Servant|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animal Messenger|srd51}",
+                  "{@spell Blindness/Deafness|srd51}",
+                  "{@spell Calm Emotions|srd51}",
+                  "{@spell Detect Thoughts|srd51}",
+                  "{@spell Enhance Ability|srd51}",
+                  "{@spell Enthrall|srd51}",
+                  "{@spell Heat Metal|srd51}",
+                  "{@spell Hold Person|srd51}",
+                  "{@spell Invisibility|srd51}",
+                  "{@spell Knock|srd51}",
+                  "{@spell Lesser Restoration|srd51}",
+                  "{@spell Locate Animals or Plants|srd51}",
+                  "{@spell Locate Object|srd51}",
+                  "{@spell Magic Mouth|srd51}",
+                  "{@spell See Invisibility|srd51}",
+                  "{@spell Shatter|srd51}",
+                  "{@spell Silence|srd51}",
+                  "{@spell Suggestion|srd51}",
+                  "{@spell Zone of Truth|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Bestow Curse|srd51}",
+                  "{@spell Clairvoyance|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Fear|srd51}",
+                  "{@spell Glyph of Warding|srd51}",
+                  "{@spell Hypnotic Pattern|srd51}",
+                  "{@spell Tiny Hut|srd51}",
+                  "{@spell Major Image|srd51}",
+                  "{@spell Nondetection|srd51}",
+                  "{@spell Plant Growth|srd51}",
+                  "{@spell Sending|srd51}",
+                  "{@spell Speak with Dead|srd51}",
+                  "{@spell Speak with Plants|srd51}",
+                  "{@spell Stinking Cloud|srd51}",
+                  "{@spell Tongues|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Compulsion|srd51}",
+                  "{@spell Confusion|srd51}",
+                  "{@spell Dimension Door|srd51}",
+                  "{@spell Freedom of Movement|srd51}",
+                  "{@spell Greater Invisibility|srd51}",
+                  "{@spell Hallucinatory Terrain|srd51}",
+                  "{@spell Locate Creature|srd51}",
+                  "{@spell Polymorph|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animate Objects|srd51}",
+                  "{@spell Awaken|srd51}",
+                  "{@spell Dominate Person|srd51}",
+                  "{@spell Dream|srd51}",
+                  "{@spell Geas|srd51}",
+                  "{@spell Greater Restoration|srd51}",
+                  "{@spell Hold Monster|srd51}",
+                  "{@spell Legend Lore|srd51}",
+                  "{@spell Mass Cure Wounds|srd51}",
+                  "{@spell Mislead|srd51}",
+                  "{@spell Modify Memory|srd51}",
+                  "{@spell Planar Binding|srd51}",
+                  "{@spell Raise Dead|srd51}",
+                  "{@spell Scrying|srd51}",
+                  "{@spell Seeming|srd51}",
+                  "{@spell Teleportation Circle|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "6th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Eyebite|srd51}",
+                  "{@spell Find the Path|srd51}",
+                  "{@spell Guards and Wards|srd51}",
+                  "{@spell Mass Suggestion|srd51}",
+                  "{@spell Irresistible Dance|srd51}",
+                  "{@spell Programmed Illusion|srd51}",
+                  "{@spell True Seeing|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "7th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Etherealness|srd51}",
+                  "{@spell Forcecage|srd51}",
+                  "{@spell Mirage Arcane|srd51}",
+                  "{@spell Magnificent Mansion|srd51}",
+                  "{@spell Arcane Sword|srd51}",
+                  "{@spell Project Image|srd51}",
+                  "{@spell Regenerate|srd51}",
+                  "{@spell Resurrection|srd51}",
+                  "{@spell Symbol|srd51}",
+                  "{@spell Teleport|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "8th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Dominate Monster|srd51}",
+                  "{@spell Feeblemind|srd51}",
+                  "{@spell Glibness|srd51}",
+                  "{@spell Mind Blank|srd51}",
+                  "{@spell Power Word Stun|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "9th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Foresight|srd51}",
+                  "{@spell Power Word Kill|srd51}",
+                  "{@spell True Polymorph|srd51}"
+                ]
+              }
+            ],
+            "id": "18f"
+          },
+          {
+            "type": "entries",
+            "name": "Cleric Spells",
+            "page": 106,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "Cantrips (0 Level)",
+                "columns": 4,
+                "items": [
+                  "{@spell Guidance|srd51}",
+                  "{@spell Light|srd51}",
+                  "{@spell Mending|srd51}",
+                  "{@spell Resistance|srd51}",
+                  "{@spell Sacred Flame|srd51}",
+                  "{@spell Spare the Dying|srd51}",
+                  "{@spell Thaumaturgy|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Bane|srd51}",
+                  "{@spell Bless|srd51}",
+                  "{@spell Command|srd51}",
+                  "{@spell Create or Destroy Water|srd51}",
+                  "{@spell Cure Wounds|srd51}",
+                  "{@spell Detect Evil and Good|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Detect Poison and Disease|srd51}",
+                  "{@spell Guiding Bolt|srd51}",
+                  "{@spell Healing Word|srd51}",
+                  "{@spell Inflict Wounds|srd51}",
+                  "{@spell Protection from Evil and Good|srd51}",
+                  "{@spell Purify Food and Drink|srd51}",
+                  "{@spell Sanctuary|srd51}",
+                  "{@spell Shield of Faith|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Aid|srd51}",
+                  "{@spell Augury|srd51}",
+                  "{@spell Blindness/Deafness|srd51}",
+                  "{@spell Calm Emotions|srd51}",
+                  "{@spell Continual Flame|srd51}",
+                  "{@spell Enhance Ability|srd51}",
+                  "{@spell Find Traps|srd51}",
+                  "{@spell Gentle Repose|srd51}",
+                  "{@spell Hold Person|srd51}",
+                  "{@spell Lesser Restoration|srd51}",
+                  "{@spell Locate Object|srd51}",
+                  "{@spell Prayer of Healing|srd51}",
+                  "{@spell Protection from Poison|srd51}",
+                  "{@spell Silence|srd51}",
+                  "{@spell Spiritual Weapon|srd51}",
+                  "{@spell Warding Bond|srd51}",
+                  "{@spell Zone of Truth|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animate Dead|srd51}",
+                  "{@spell Beacon of Hope|srd51}",
+                  "{@spell Bestow Curse|srd51}",
+                  "{@spell Clairvoyance|srd51}",
+                  "{@spell Create Food and Water|srd51}",
+                  "{@spell Daylight|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Glyph of Warding|srd51}",
+                  "{@spell Magic Circle|srd51}",
+                  "{@spell Mass Healing Word|srd51}",
+                  "{@spell Meld into Stone|srd51}",
+                  "{@spell Protection from Energy|srd51}",
+                  "{@spell Remove Curse|srd51}",
+                  "{@spell Revivify|srd51}",
+                  "{@spell Sending|srd51}",
+                  "{@spell Speak with Dead|srd51}",
+                  "{@spell Spirit Guardians|srd51}",
+                  "{@spell Tongues|srd51}",
+                  "{@spell Water Walk|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Banishment|srd51}",
+                  "{@spell Control Water|srd51}",
+                  "{@spell Death Ward|srd51}",
+                  "{@spell Divination|srd51}",
+                  "{@spell Freedom of Movement|srd51}",
+                  "{@spell Guardian of Faith|srd51}",
+                  "{@spell Locate Creature|srd51}",
+                  "{@spell Stone Shape|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Commune|srd51}",
+                  "{@spell Contagion|srd51}",
+                  "{@spell Dispel Evil and Good|srd51}",
+                  "{@spell Flame Strike|srd51}",
+                  "{@spell Geas|srd51}",
+                  "{@spell Greater Restoration|srd51}",
+                  "{@spell Hallow|srd51}",
+                  "{@spell Insect Plague|srd51}",
+                  "{@spell Legend Lore|srd51}",
+                  "{@spell Mass Cure Wounds|srd51}",
+                  "{@spell Planar Binding|srd51}",
+                  "{@spell Raise Dead|srd51}",
+                  "{@spell Scrying|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "6th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Blade Barrier|srd51}",
+                  "{@spell Create Undead|srd51}",
+                  "{@spell Find the Path|srd51}",
+                  "{@spell Forbiddance|srd51}",
+                  "{@spell Harm|srd51}",
+                  "{@spell Heal|srd51}",
+                  "{@spell Heroes' Feast|srd51}",
+                  "{@spell Planar Ally|srd51}",
+                  "{@spell True Seeing|srd51}",
+                  "{@spell Word of Recall|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "7th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Conjure Celestial|srd51}",
+                  "{@spell Divine Word|srd51}",
+                  "{@spell Etherealness|srd51}",
+                  "{@spell Fire Storm|srd51}",
+                  "{@spell Plane Shift|srd51}",
+                  "{@spell Regenerate|srd51}",
+                  "{@spell Resurrection|srd51}",
+                  "{@spell Symbol|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "8th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Antimagic Field|srd51}",
+                  "{@spell Control Weather|srd51}",
+                  "{@spell Earthquake|srd51}",
+                  "{@spell Holy Aura|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "9th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Astral Projection|srd51}",
+                  "{@spell Gate|srd51}",
+                  "{@spell Mass Heal|srd51}",
+                  "{@spell True Resurrection|srd51}"
+                ]
+              }
+            ],
+            "id": "190"
+          },
+          {
+            "type": "entries",
+            "name": "Druid Spells",
+            "page": 107,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "Cantrips (0 Level)",
+                "columns": 4,
+                "items": [
+                  "{@spell Druidcraft|srd51}",
+                  "{@spell Guidance|srd51}",
+                  "{@spell Mending|srd51}",
+                  "{@spell Poison Spray|srd51}",
+                  "{@spell Produce Flame|srd51}",
+                  "{@spell Resistance|srd51}",
+                  "{@spell Shillelagh|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animal Friendship|srd51}",
+                  "{@spell Charm Person|srd51}",
+                  "{@spell Create or Destroy Water|srd51}",
+                  "{@spell Cure Wounds|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Detect Poison and Disease|srd51}",
+                  "{@spell Entangle|srd51}",
+                  "{@spell Faerie Fire|srd51}",
+                  "{@spell Fog Cloud|srd51}",
+                  "{@spell Goodberry|srd51}",
+                  "{@spell Healing Word|srd51}",
+                  "{@spell Jump|srd51}",
+                  "{@spell Longstrider|srd51}",
+                  "{@spell Purify Food and Drink|srd51}",
+                  "{@spell Speak with Animals|srd51}",
+                  "{@spell Thunderwave|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animal Messenger|srd51}",
+                  "{@spell Barkskin|srd51}",
+                  "{@spell Darkvision|srd51}",
+                  "{@spell Enhance Ability|srd51}",
+                  "{@spell Find Traps|srd51}",
+                  "{@spell Flame Blade|srd51}",
+                  "{@spell Flaming Sphere|srd51}",
+                  "{@spell Gust of Wind|srd51}",
+                  "{@spell Heat Metal|srd51}",
+                  "{@spell Hold Person|srd51}",
+                  "{@spell Lesser Restoration|srd51}",
+                  "{@spell Locate Animals or Plants|srd51}",
+                  "{@spell Locate Object|srd51}",
+                  "{@spell Moonbeam|srd51}",
+                  "{@spell Pass without Trace|srd51}",
+                  "{@spell Protection from Poison|srd51}",
+                  "{@spell Spike Growth|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Call Lightning|srd51}",
+                  "{@spell Conjure Animals|srd51}",
+                  "{@spell Daylight|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Meld into Stone|srd51}",
+                  "{@spell Plant Growth|srd51}",
+                  "{@spell Protection from Energy|srd51}",
+                  "{@spell Sleet Storm|srd51}",
+                  "{@spell Speak with Plants|srd51}",
+                  "{@spell Water Breathing|srd51}",
+                  "{@spell Water Walk|srd51}",
+                  "{@spell Wind Wall|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Blight|srd51}",
+                  "{@spell Confusion|srd51}",
+                  "{@spell Conjure Minor Elementals|srd51}",
+                  "{@spell Conjure Woodland Beings|srd51}",
+                  "{@spell Control Water|srd51}",
+                  "{@spell Dominate Beast|srd51}",
+                  "{@spell Freedom of Movement|srd51}",
+                  "{@spell Giant Insect|srd51}",
+                  "{@spell Hallucinatory Terrain|srd51}",
+                  "{@spell Ice Storm|srd51}",
+                  "{@spell Locate Creature|srd51}",
+                  "{@spell Polymorph|srd51}",
+                  "{@spell Stone Shape|srd51}",
+                  "{@spell Stoneskin|srd51}",
+                  "{@spell Wall of Fire|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Antilife Shell|srd51}",
+                  "{@spell Awaken|srd51}",
+                  "{@spell Commune with Nature|srd51}",
+                  "{@spell Conjure Elemental|srd51}",
+                  "{@spell Contagion|srd51}",
+                  "{@spell Geas|srd51}",
+                  "{@spell Greater Restoration|srd51}",
+                  "{@spell Insect Plague|srd51}",
+                  "{@spell Mass Cure Wounds|srd51}",
+                  "{@spell Planar Binding|srd51}",
+                  "{@spell Reincarnate|srd51}",
+                  "{@spell Scrying|srd51}",
+                  "{@spell Tree Stride|srd51}",
+                  "{@spell Wall of Stone|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "6th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Conjure Fey|srd51}",
+                  "{@spell Find the Path|srd51}",
+                  "{@spell Heal|srd51}",
+                  "{@spell Heroes' Feast|srd51}",
+                  "{@spell Move Earth|srd51}",
+                  "{@spell Sunbeam|srd51}",
+                  "{@spell Transport via Plants|srd51}",
+                  "{@spell Wall of Thorns|srd51}",
+                  "{@spell Wind Walk|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "7th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Fire Storm|srd51}",
+                  "{@spell Mirage Arcane|srd51}",
+                  "{@spell Plane Shift|srd51}",
+                  "{@spell Regenerate|srd51}",
+                  "{@spell Reverse Gravity|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "8th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animal Shapes|srd51}",
+                  "{@spell Antipathy/Sympathy|srd51}",
+                  "{@spell Control Weather|srd51}",
+                  "{@spell Earthquake|srd51}",
+                  "{@spell Feeblemind|srd51}",
+                  "{@spell Sunburst|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "9th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Foresight|srd51}",
+                  "{@spell Shapechange|srd51}",
+                  "{@spell Storm of Vengeance|srd51}",
+                  "{@spell True Resurrection|srd51}"
+                ]
+              }
+            ],
+            "id": "191"
+          },
+          {
+            "type": "entries",
+            "name": "Paladin Spells",
+            "page": 108,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Bless|srd51}",
+                  "{@spell Command|srd51}",
+                  "{@spell Cure Wounds|srd51}",
+                  "{@spell Detect Evil and Good|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Detect Poison and Disease|srd51}",
+                  "{@spell Divine Favor|srd51}",
+                  "{@spell Heroism|srd51}",
+                  "{@spell Protection from Evil and Good|srd51}",
+                  "{@spell Purify Food and Drink|srd51}",
+                  "{@spell Shield of Faith|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Aid|srd51}",
+                  "{@spell Branding Smite|srd51}",
+                  "{@spell Find Steed|srd51}",
+                  "{@spell Lesser Restoration|srd51}",
+                  "{@spell Locate Object|srd51}",
+                  "{@spell Magic Weapon|srd51}",
+                  "{@spell Protection from Poison|srd51}",
+                  "{@spell Zone of Truth|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Create Food and Water|srd51}",
+                  "{@spell Daylight|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Magic Circle|srd51}",
+                  "{@spell Remove Curse|srd51}",
+                  "{@spell Revivify|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Banishment|srd51}",
+                  "{@spell Death Ward|srd51}",
+                  "{@spell Locate Creature|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Dispel Evil and Good|srd51}",
+                  "{@spell Geas|srd51}",
+                  "{@spell Raise Dead|srd51}"
+                ]
+              }
+            ],
+            "id": "192"
+          },
+          {
+            "type": "entries",
+            "name": "Ranger Spells",
+            "page": 109,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Alarm|srd51}",
+                  "{@spell Animal Friendship|srd51}",
+                  "{@spell Cure Wounds|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Detect Poison and Disease|srd51}",
+                  "{@spell Fog Cloud|srd51}",
+                  "{@spell Goodberry|srd51}",
+                  "{@spell Hunter's Mark|srd51}",
+                  "{@spell Jump|srd51}",
+                  "{@spell Longstrider|srd51}",
+                  "{@spell Speak with Animals|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animal Messenger|srd51}",
+                  "{@spell Barkskin|srd51}",
+                  "{@spell Darkvision|srd51}",
+                  "{@spell Find Traps|srd51}",
+                  "{@spell Lesser Restoration|srd51}",
+                  "{@spell Locate Animals or Plants|srd51}",
+                  "{@spell Locate Object|srd51}",
+                  "{@spell Pass without Trace|srd51}",
+                  "{@spell Protection from Poison|srd51}",
+                  "{@spell Silence|srd51}",
+                  "{@spell Spike Growth|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Conjure Animals|srd51}",
+                  "{@spell Daylight|srd51}",
+                  "{@spell Nondetection|srd51}",
+                  "{@spell Plant Growth|srd51}",
+                  "{@spell Protection from Energy|srd51}",
+                  "{@spell Speak with Plants|srd51}",
+                  "{@spell Water Breathing|srd51}",
+                  "{@spell Water Walk|srd51}",
+                  "{@spell Wind Wall|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Conjure Woodland Beings|srd51}",
+                  "{@spell Freedom of Movement|srd51}",
+                  "{@spell Locate Creature|srd51}",
+                  "{@spell Stoneskin|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Commune with Nature|srd51}",
+                  "{@spell Tree Stride|srd51}"
+                ]
+              }
+            ],
+            "id": "193"
+          },
+          {
+            "type": "entries",
+            "name": "Sorcerer Spells",
+            "page": 109,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "Cantrips (0 Level)",
+                "columns": 4,
+                "items": [
+                  "{@spell Acid Splash|srd51}",
+                  "{@spell Chill Touch|srd51}",
+                  "{@spell Dancing Lights|srd51}",
+                  "{@spell Fire Bolt|srd51}",
+                  "{@spell Light|srd51}",
+                  "{@spell Mage Hand|srd51}",
+                  "{@spell Mending|srd51}",
+                  "{@spell Message|srd51}",
+                  "{@spell Minor Illusion|srd51}",
+                  "{@spell Poison Spray|srd51}",
+                  "{@spell Prestidigitation|srd51}",
+                  "{@spell Ray of Frost|srd51}",
+                  "{@spell Shocking Grasp|srd51}",
+                  "{@spell True Strike|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Burning Hands|srd51}",
+                  "{@spell Charm Person|srd51}",
+                  "{@spell Color Spray|srd51}",
+                  "{@spell Comprehend Languages|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Disguise Self|srd51}",
+                  "{@spell Expeditious Retreat|srd51}",
+                  "{@spell False Life|srd51}",
+                  "{@spell Feather Fall|srd51}",
+                  "{@spell Fog Cloud|srd51}",
+                  "{@spell Jump|srd51}",
+                  "{@spell Mage Armor|srd51}",
+                  "{@spell Magic Missile|srd51}",
+                  "{@spell Shield|srd51}",
+                  "{@spell Silent Image|srd51}",
+                  "{@spell Sleep|srd51}",
+                  "{@spell Thunderwave|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Alter Self|srd51}",
+                  "{@spell Blindness/Deafness|srd51}",
+                  "{@spell Blur|srd51}",
+                  "{@spell Darkness|srd51}",
+                  "{@spell Darkvision|srd51}",
+                  "{@spell Detect Thoughts|srd51}",
+                  "{@spell Enhance Ability|srd51}",
+                  "{@spell Enlarge/Reduce|srd51}",
+                  "{@spell Gust of Wind|srd51}",
+                  "{@spell Hold Person|srd51}",
+                  "{@spell Invisibility|srd51}",
+                  "{@spell Knock|srd51}",
+                  "{@spell Levitate|srd51}",
+                  "{@spell Mirror Image|srd51}",
+                  "{@spell Misty Step|srd51}",
+                  "{@spell Scorching Ray|srd51}",
+                  "{@spell See Invisibility|srd51}",
+                  "{@spell Shatter|srd51}",
+                  "{@spell Spider Climb|srd51}",
+                  "{@spell Suggestion|srd51}",
+                  "{@spell Web|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Blink|srd51}",
+                  "{@spell Clairvoyance|srd51}",
+                  "{@spell Counterspell|srd51}",
+                  "{@spell Daylight|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Fear|srd51}",
+                  "{@spell Fireball|srd51}",
+                  "{@spell Fly|srd51}",
+                  "{@spell Gaseous Form|srd51}",
+                  "{@spell Haste|srd51}",
+                  "{@spell Hypnotic Pattern|srd51}",
+                  "{@spell Lightning Bolt|srd51}",
+                  "{@spell Major Image|srd51}",
+                  "{@spell Protection from Energy|srd51}",
+                  "{@spell Sleet Storm|srd51}",
+                  "{@spell Slow|srd51}",
+                  "{@spell Stinking Cloud|srd51}",
+                  "{@spell Tongues|srd51}",
+                  "{@spell Water Breathing|srd51}",
+                  "{@spell Water Walk|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Banishment|srd51}",
+                  "{@spell Blight|srd51}",
+                  "{@spell Confusion|srd51}",
+                  "{@spell Dimension Door|srd51}",
+                  "{@spell Dominate Beast|srd51}",
+                  "{@spell Greater Invisibility|srd51}",
+                  "{@spell Ice Storm|srd51}",
+                  "{@spell Polymorph|srd51}",
+                  "{@spell Stoneskin|srd51}",
+                  "{@spell Wall of Fire|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animate Objects|srd51}",
+                  "{@spell Cloudkill|srd51}",
+                  "{@spell Cone of Cold|srd51}",
+                  "{@spell Creation|srd51}",
+                  "{@spell Dominate Person|srd51}",
+                  "{@spell Hold Monster|srd51}",
+                  "{@spell Insect Plague|srd51}",
+                  "{@spell Seeming|srd51}",
+                  "{@spell Telekinesis|srd51}",
+                  "{@spell Teleportation Circle|srd51}",
+                  "{@spell Wall of Stone|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "6th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Chain Lightning|srd51}",
+                  "{@spell Circle of Death|srd51}",
+                  "{@spell Disintegrate|srd51}",
+                  "{@spell Eyebite|srd51}",
+                  "{@spell Globe of Invulnerability|srd51}",
+                  "{@spell Mass Suggestion|srd51}",
+                  "{@spell Move Earth|srd51}",
+                  "{@spell Sunbeam|srd51}",
+                  "{@spell True Seeing|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "7th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Delayed Blast Fireball|srd51}",
+                  "{@spell Etherealness|srd51}",
+                  "{@spell Finger of Death|srd51}",
+                  "{@spell Fire Storm|srd51}",
+                  "{@spell Plane Shift|srd51}",
+                  "{@spell Prismatic Spray|srd51}",
+                  "{@spell Reverse Gravity|srd51}",
+                  "{@spell Teleport|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "8th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Dominate Monster|srd51}",
+                  "{@spell Earthquake|srd51}",
+                  "{@spell Incendiary Cloud|srd51}",
+                  "{@spell Power Word Stun|srd51}",
+                  "{@spell Sunburst|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "9th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Gate|srd51}",
+                  "{@spell Meteor Swarm|srd51}",
+                  "{@spell Power Word Kill|srd51}",
+                  "{@spell Time Stop|srd51}",
+                  "{@spell Wish|srd51}"
+                ]
+              }
+            ],
+            "id": "194"
+          },
+          {
+            "type": "entries",
+            "name": "Warlock Spells",
+            "page": 110,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "Cantrips (0 Level)",
+                "columns": 4,
+                "items": [
+                  "{@spell Chill Touch|srd51}",
+                  "{@spell Eldritch Blast|srd51}",
+                  "{@spell Mage Hand|srd51}",
+                  "{@spell Minor Illusion|srd51}",
+                  "{@spell Poison Spray|srd51}",
+                  "{@spell Prestidigitation|srd51}",
+                  "{@spell True Strike|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Charm Person|srd51}",
+                  "{@spell Comprehend Languages|srd51}",
+                  "{@spell Expeditious Retreat|srd51}",
+                  "{@spell Hellish Rebuke|srd51}",
+                  "{@spell Illusory Script|srd51}",
+                  "{@spell Protection from Evil and Good|srd51}",
+                  "{@spell Unseen Servant|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Darkness|srd51}",
+                  "{@spell Enthrall|srd51}",
+                  "{@spell Hold Person|srd51}",
+                  "{@spell Invisibility|srd51}",
+                  "{@spell Mirror Image|srd51}",
+                  "{@spell Misty Step|srd51}",
+                  "{@spell Ray of Enfeeblement|srd51}",
+                  "{@spell Shatter|srd51}",
+                  "{@spell Spider Climb|srd51}",
+                  "{@spell Suggestion|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Counterspell|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Fear|srd51}",
+                  "{@spell Fly|srd51}",
+                  "{@spell Gaseous Form|srd51}",
+                  "{@spell Hypnotic Pattern|srd51}",
+                  "{@spell Magic Circle|srd51}",
+                  "{@spell Major Image|srd51}",
+                  "{@spell Remove Curse|srd51}",
+                  "{@spell Tongues|srd51}",
+                  "{@spell Vampiric Touch|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Banishment|srd51}",
+                  "{@spell Blight|srd51}",
+                  "{@spell Dimension Door|srd51}",
+                  "{@spell Hallucinatory Terrain|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Contact Other Plane|srd51}",
+                  "{@spell Dream|srd51}",
+                  "{@spell Hold Monster|srd51}",
+                  "{@spell Scrying|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "6th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Circle of Death|srd51}",
+                  "{@spell Conjure Fey|srd51}",
+                  "{@spell Create Undead|srd51}",
+                  "{@spell Eyebite|srd51}",
+                  "{@spell Flesh to Stone|srd51}",
+                  "{@spell Mass Suggestion|srd51}",
+                  "{@spell True Seeing|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "7th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Etherealness|srd51}",
+                  "{@spell Finger of Death|srd51}",
+                  "{@spell Forcecage|srd51}",
+                  "{@spell Plane Shift|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "8th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Demiplane|srd51}",
+                  "{@spell Dominate Monster|srd51}",
+                  "{@spell Feeblemind|srd51}",
+                  "{@spell Glibness|srd51}",
+                  "{@spell Power Word Stun|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "9th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Astral Projection|srd51}",
+                  "{@spell Foresight|srd51}",
+                  "{@spell Imprisonment|srd51}",
+                  "{@spell Power Word Kill|srd51}",
+                  "{@spell True Polymorph|srd51}"
+                ]
+              }
+            ],
+            "id": "195"
+          },
+          {
+            "type": "entries",
+            "name": "Wizard Spells",
+            "page": 111,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "Cantrips (0 Level)",
+                "columns": 4,
+                "items": [
+                  "{@spell Acid Splash|srd51}",
+                  "{@spell Chill Touch|srd51}",
+                  "{@spell Dancing Lights|srd51}",
+                  "{@spell Fire Bolt|srd51}",
+                  "{@spell Light|srd51}",
+                  "{@spell Mage Hand|srd51}",
+                  "{@spell Mending|srd51}",
+                  "{@spell Message|srd51}",
+                  "{@spell Minor Illusion|srd51}",
+                  "{@spell Poison Spray|srd51}",
+                  "{@spell Prestidigitation|srd51}",
+                  "{@spell Ray of Frost|srd51}",
+                  "{@spell Shocking Grasp|srd51}",
+                  "{@spell True Strike|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "1st Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Alarm|srd51}",
+                  "{@spell Burning Hands|srd51}",
+                  "{@spell Charm Person|srd51}",
+                  "{@spell Color Spray|srd51}",
+                  "{@spell Comprehend Languages|srd51}",
+                  "{@spell Detect Magic|srd51}",
+                  "{@spell Disguise Self|srd51}",
+                  "{@spell Expeditious Retreat|srd51}",
+                  "{@spell False Life|srd51}",
+                  "{@spell Feather Fall|srd51}",
+                  "{@spell Find Familiar|srd51}",
+                  "{@spell Fog Cloud|srd51}",
+                  "{@spell Grease|srd51}",
+                  "{@spell Identify|srd51}",
+                  "{@spell Illusory Script|srd51}",
+                  "{@spell Jump|srd51}",
+                  "{@spell Longstrider|srd51}",
+                  "{@spell Mage Armor|srd51}",
+                  "{@spell Magic Missile|srd51}",
+                  "{@spell Protection from Evil and Good|srd51}",
+                  "{@spell Shield|srd51}",
+                  "{@spell Silent Image|srd51}",
+                  "{@spell Sleep|srd51}",
+                  "{@spell Hideous Laughter|srd51}",
+                  "{@spell Floating Disk|srd51}",
+                  "{@spell Thunderwave|srd51}",
+                  "{@spell Unseen Servant|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "2nd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Alter Self|srd51}",
+                  "{@spell Arcane Lock|srd51}",
+                  "{@spell Blindness/Deafness|srd51}",
+                  "{@spell Blur|srd51}",
+                  "{@spell Continual Flame|srd51}",
+                  "{@spell Darkness|srd51}",
+                  "{@spell Darkvision|srd51}",
+                  "{@spell Detect Thoughts|srd51}",
+                  "{@spell Enlarge/Reduce|srd51}",
+                  "{@spell Flaming Sphere|srd51}",
+                  "{@spell Gentle Repose|srd51}",
+                  "{@spell Gust of Wind|srd51}",
+                  "{@spell Hold Person|srd51}",
+                  "{@spell Invisibility|srd51}",
+                  "{@spell Knock|srd51}",
+                  "{@spell Levitate|srd51}",
+                  "{@spell Locate Object|srd51}",
+                  "{@spell Magic Mouth|srd51}",
+                  "{@spell Magic Weapon|srd51}",
+                  "{@spell Acid Arrow|srd51}",
+                  "{@spell Mirror Image|srd51}",
+                  "{@spell Misty Step|srd51}",
+                  "{@spell Arcanist's Magic Aura|srd51}",
+                  "{@spell Ray of Enfeeblement|srd51}",
+                  "{@spell Rope Trick|srd51}",
+                  "{@spell Scorching Ray|srd51}",
+                  "{@spell See Invisibility|srd51}",
+                  "{@spell Shatter|srd51}",
+                  "{@spell Spider Climb|srd51}",
+                  "{@spell Suggestion|srd51}",
+                  "{@spell Web|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "3rd Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animate Dead|srd51}",
+                  "{@spell Bestow Curse|srd51}",
+                  "{@spell Blink|srd51}",
+                  "{@spell Clairvoyance|srd51}",
+                  "{@spell Counterspell|srd51}",
+                  "{@spell Dispel Magic|srd51}",
+                  "{@spell Fear|srd51}",
+                  "{@spell Fireball|srd51}",
+                  "{@spell Fly|srd51}",
+                  "{@spell Gaseous Form|srd51}",
+                  "{@spell Glyph of Warding|srd51}",
+                  "{@spell Haste|srd51}",
+                  "{@spell Hypnotic Pattern|srd51}",
+                  "{@spell Tiny Hut|srd51}",
+                  "{@spell Lightning Bolt|srd51}",
+                  "{@spell Magic Circle|srd51}",
+                  "{@spell Major Image|srd51}",
+                  "{@spell Nondetection|srd51}",
+                  "{@spell Phantom Steed|srd51}",
+                  "{@spell Protection from Energy|srd51}",
+                  "{@spell Remove Curse|srd51}",
+                  "{@spell Sending|srd51}",
+                  "{@spell Sleet Storm|srd51}",
+                  "{@spell Slow|srd51}",
+                  "{@spell Stinking Cloud|srd51}",
+                  "{@spell Tongues|srd51}",
+                  "{@spell Vampiric Touch|srd51}",
+                  "{@spell Water Breathing|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "4th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Arcane Eye|srd51}",
+                  "{@spell Banishment|srd51}",
+                  "{@spell Blight|srd51}",
+                  "{@spell Confusion|srd51}",
+                  "{@spell Conjure Minor Elementals|srd51}",
+                  "{@spell Control Water|srd51}",
+                  "{@spell Dimension Door|srd51}",
+                  "{@spell Black Tentacles|srd51}",
+                  "{@spell Fabricate|srd51}",
+                  "{@spell Fire Shield|srd51}",
+                  "{@spell Greater Invisibility|srd51}",
+                  "{@spell Hallucinatory Terrain|srd51}",
+                  "{@spell Ice Storm|srd51}",
+                  "{@spell Secret Chest|srd51}",
+                  "{@spell Locate Creature|srd51}",
+                  "{@spell Faithful Hound|srd51}",
+                  "{@spell Private Sanctum|srd51}",
+                  "{@spell Resilient Sphere|srd51}",
+                  "{@spell Phantasmal Killer|srd51}",
+                  "{@spell Polymorph|srd51}",
+                  "{@spell Stone Shape|srd51}",
+                  "{@spell Stoneskin|srd51}",
+                  "{@spell Wall of Fire|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "5th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Animate Objects|srd51}",
+                  "{@spell Arcane Hand|srd51}",
+                  "{@spell Cloudkill|srd51}",
+                  "{@spell Cone of Cold|srd51}",
+                  "{@spell Conjure Elemental|srd51}",
+                  "{@spell Contact Other Plane|srd51}",
+                  "{@spell Creation|srd51}",
+                  "{@spell Dominate Person|srd51}",
+                  "{@spell Dream|srd51}",
+                  "{@spell Geas|srd51}",
+                  "{@spell Hold Monster|srd51}",
+                  "{@spell Legend Lore|srd51}",
+                  "{@spell Mislead|srd51}",
+                  "{@spell Modify Memory|srd51}",
+                  "{@spell Passwall|srd51}",
+                  "{@spell Planar Binding|srd51}",
+                  "{@spell Telepathic Bond|srd51}",
+                  "{@spell Scrying|srd51}",
+                  "{@spell Seeming|srd51}",
+                  "{@spell Telekinesis|srd51}",
+                  "{@spell Teleportation Circle|srd51}",
+                  "{@spell Wall of Force|srd51}",
+                  "{@spell Wall of Stone|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "6th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Chain Lightning|srd51}",
+                  "{@spell Circle of Death|srd51}",
+                  "{@spell Contingency|srd51}",
+                  "{@spell Create Undead|srd51}",
+                  "{@spell Disintegrate|srd51}",
+                  "{@spell Instant Summons|srd51}",
+                  "{@spell Eyebite|srd51}",
+                  "{@spell Flesh to Stone|srd51}",
+                  "{@spell Globe of Invulnerability|srd51}",
+                  "{@spell Guards and Wards|srd51}",
+                  "{@spell Magic Jar|srd51}",
+                  "{@spell Mass Suggestion|srd51}",
+                  "{@spell Move Earth|srd51}",
+                  "{@spell Freezing Sphere|srd51}",
+                  "{@spell Irresistible Dance|srd51}",
+                  "{@spell Programmed Illusion|srd51}",
+                  "{@spell Sunbeam|srd51}",
+                  "{@spell True Seeing|srd51}",
+                  "{@spell Wall of Ice|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "7th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Delayed Blast Fireball|srd51}",
+                  "{@spell Etherealness|srd51}",
+                  "{@spell Finger of Death|srd51}",
+                  "{@spell Forcecage|srd51}",
+                  "{@spell Mirage Arcane|srd51}",
+                  "{@spell Magnificent Mansion|srd51}",
+                  "{@spell Arcane Sword|srd51}",
+                  "{@spell Plane Shift|srd51}",
+                  "{@spell Prismatic Spray|srd51}",
+                  "{@spell Project Image|srd51}",
+                  "{@spell Reverse Gravity|srd51}",
+                  "{@spell Sequester|srd51}",
+                  "{@spell Simulacrum|srd51}",
+                  "{@spell Symbol|srd51}",
+                  "{@spell Teleport|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "8th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Antimagic Field|srd51}",
+                  "{@spell Antipathy/Sympathy|srd51}",
+                  "{@spell Clone|srd51}",
+                  "{@spell Control Weather|srd51}",
+                  "{@spell Demiplane|srd51}",
+                  "{@spell Dominate Monster|srd51}",
+                  "{@spell Feeblemind|srd51}",
+                  "{@spell Incendiary Cloud|srd51}",
+                  "{@spell Maze|srd51}",
+                  "{@spell Mind Blank|srd51}",
+                  "{@spell Power Word Stun|srd51}",
+                  "{@spell Sunburst|srd51}"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang",
+                "name": "9th Level",
+                "columns": 4,
+                "items": [
+                  "{@spell Astral Projection|srd51}",
+                  "{@spell Foresight|srd51}",
+                  "{@spell Gate|srd51}",
+                  "{@spell Imprisonment|srd51}",
+                  "{@spell Meteor Swarm|srd51}",
+                  "{@spell Power Word Kill|srd51}",
+                  "{@spell Prismatic Wall|srd51}",
+                  "{@spell Shapechange|srd51}",
+                  "{@spell Time Stop|srd51}",
+                  "{@spell True Polymorph|srd51}",
+                  "{@spell Weird|srd51}",
+                  "{@spell Wish|srd51}"
+                ]
+              }
+            ],
+            "id": "196"
+          }
+        ],
+        "id": "18e"
+      }
+    }
+  ]
+}

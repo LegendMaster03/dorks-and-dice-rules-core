@@ -1,0 +1,17 @@
+{
+  "id": "deity.dunatis",
+  "name": "Dunatis",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of mountains and peaks",
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Red sun-capped mountain peak"
+  }
+}

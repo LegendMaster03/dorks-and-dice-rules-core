@@ -1,0 +1,23 @@
+{
+  "id": "class-feature.monk.self-restoration-level-10",
+  "name": "Self-Restoration",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Self-Restoration",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "Through sheer force of will, you can remove one of the following conditions from yourself at the end of each of your turns: {@condition Charmed|SRD52}, {@condition Frightened|SRD52}, or {@condition Poisoned|SRD52}.",
+          "In addition, forgoing food and drink doesn't give you levels of {@condition Exhaustion|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 10
+}

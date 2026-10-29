@@ -1,0 +1,34 @@
+{
+  "id": "rule.monsters-t",
+  "name": "Monsters (T)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (T)",
+        "page": 350,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Tarrasque|srd51}",
+              "{@creature Thug|srd51}",
+              "{@creature Tiger|srd51}",
+              "{@creature Treant|srd51}",
+              "{@creature Tribal Warrior|srd51}",
+              "{@creature Triceratops|srd51}",
+              "{@creature Troll|srd51}",
+              "{@creature Tyrannosaurus Rex|srd51}"
+            ]
+          }
+        ],
+        "id": "1b6"
+      }
+    }
+  ]
+}

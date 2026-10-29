@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.druid.elemental-fury-level-7",
+  "name": "Elemental Fury",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Elemental Fury",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "choice",
+      "choose": 1,
+      "options": [
+        "class-feature.druid.potent-spellcasting-level-7",
+        "class-feature.druid.primal-strike-level-7"
+      ],
+      "notBothGranted": true
+    }
+  }
+}

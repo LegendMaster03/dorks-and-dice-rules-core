@@ -1,0 +1,49 @@
+{
+  "id": "item.slippers-of-spider-climbing",
+  "name": "Slippers of Spider Climbing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Slippers of Spider Climbing",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "equal": {
+            "climb": "walk"
+          }
+        },
+        "entries": [
+          "While you wear these light shoes, you can move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free. You have a climbing speed equal to your walking speed. However, the slippers don't allow you to move this way on a slippery surface, such as one covered by ice or oil."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Slippers of Spider Climbing",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "equal": {
+            "climb": "walk"
+          }
+        },
+        "entries": [
+          "While you wear these light shoes, you can move up, down, and across vertical surfaces and along ceilings, while leaving your hands free. You have a {@variantrule Climb Speed|SRD52} equal to your {@variantrule Speed|SRD52}. However, the slippers don't allow you to move this way on a slippery surface, such as one covered by ice or oil."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "subclass-feature.wizard.evoker.overchannel-level-14",
+  "name": "Overchannel",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Overchannel",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "subclassShortName": "Evoker",
+        "subclassSource": "SRD52",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "You can increase the power of your spells. When you cast a Wizard spell with a spell slot of levels 1–5 that deals damage, you can deal maximum damage with that spell on the turn you cast it.",
+          "The first time you do so, you suffer no adverse effect. If you use this feature again before you finish a {@variantrule Long Rest|SRD52}, you take {@damage 2d12} Necrotic damage for each level of the spell slot immediately after you cast it. This damage ignores {@variantrule Resistance|SRD52} and {@variantrule Immunity|SRD52}.",
+          "Each time you use this feature again before finishing a {@variantrule Long Rest|SRD52}, the Necrotic damage per spell level increases by {@damage 1d12}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "parentSubclass": "subclass.wizard.evoker",
+  "classLevel": 14
+}

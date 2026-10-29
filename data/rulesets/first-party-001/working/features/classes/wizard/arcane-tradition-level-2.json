@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.wizard.arcane-tradition-level-2",
+  "name": "Arcane Tradition",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Arcane Tradition",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "When you reach 2nd level, you choose an arcane tradition from the list of available traditions, shaping your practice of magic. Your choice grants you features at 2nd level and again at 6th, 10th, and 14th level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 2
+}

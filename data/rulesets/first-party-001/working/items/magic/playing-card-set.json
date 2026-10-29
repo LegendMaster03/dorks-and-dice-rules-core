@@ -1,0 +1,11 @@
+{
+  "id": "item.playing-card-set",
+  "name": "Playing Card Set",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GS",
+    "rarity": "none",
+    "value": 50
+  }
+}

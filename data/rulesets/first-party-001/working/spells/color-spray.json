@@ -1,0 +1,105 @@
+{
+  "id": "spell.color-spray",
+  "name": "Color Spray",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Color Spray",
+        "level": 1,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "cone",
+          "distance": {
+            "type": "feet",
+            "amount": 15
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a pinch of powder or sand that is colored red, yellow, and blue"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "round",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "A dazzling array of flashing, colored light springs from your hand. Roll {@dice 6d10}; the total is how many hit points of creatures this spell can effect. Creatures in a 15-foot cone originating from you are affected in ascending order of their current hit points (ignoring {@condition unconscious} creatures and creatures that can't see).",
+          "Starting with the creature that has the lowest current hit points, each creature affected by this spell is {@condition blinded} until the end of your next turn. Subtract each creature's hit points from the total before moving on to the creature with the next lowest hit points. A creature's hit points must be equal to or less than the remaining total for that creature to be affected."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, roll an additional {@scaledice 6d10|1-9|2d10} for each slot level above 1st."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "areaTags": [
+          "N"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Color Spray",
+        "level": 1,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "cone",
+          "distance": {
+            "type": "feet",
+            "amount": 15
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a pinch of colorful sand"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You launch a dazzling array of flashing, colorful light. Each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone} originating from you must succeed on a Constitution saving throw or have the {@condition Blinded|SRD52} condition until the end of your next turn."
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "areaTags": [
+          "N"
+        ]
+      }
+    }
+  ]
+}

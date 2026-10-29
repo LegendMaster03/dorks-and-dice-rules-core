@@ -1,0 +1,75 @@
+{
+  "id": "item.scholar-s-pack",
+  "name": "Scholar's Pack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Scholar's Pack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 10,
+        "value": 4000,
+        "entries": [
+          "Includes:",
+          {
+            "type": "list",
+            "items": [
+              "a {@item backpack|srd51}",
+              "a {@item book|srd51} of lore",
+              "a {@item Ink (1-ounce bottle)|srd51|bottle of ink}",
+              "an {@item ink pen|srd51}",
+              "10 {@item Parchment (one sheet)|srd51|sheets of parchment}",
+              "a little bag of sand",
+              "a small knife."
+            ]
+          }
+        ],
+        "packContents": [
+          "backpack|srd51",
+          "book|srd51",
+          "ink (1-ounce bottle)|srd51",
+          "ink pen|srd51",
+          "parchment (one sheet)|srd51",
+          {
+            "special": "little bag of sand"
+          },
+          {
+            "special": "small knife"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Scholar's Pack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 22,
+        "value": 4000,
+        "entries": [
+          "A Scholar's Pack contains the following items: {@item Backpack|SRD52}, {@item Book|SRD52}, {@item Ink|SRD52}, {@item Ink Pen|SRD52}, {@item Lamp|SRD52}, 10 flasks of {@item Oil|SRD52}, 10 sheets of {@item Parchment|SRD52}, and {@item Tinderbox|SRD52}."
+        ],
+        "packContents": [
+          "backpack|srd52",
+          "book|srd52",
+          "ink|srd52",
+          "ink pen|srd52",
+          "lamp|srd52",
+          {
+            "item": "oil|srd52",
+            "quantity": 10
+          },
+          {
+            "item": "parchment|srd52",
+            "quantity": 10
+          },
+          "tinderbox|srd52"
+        ]
+      }
+    }
+  ]
+}

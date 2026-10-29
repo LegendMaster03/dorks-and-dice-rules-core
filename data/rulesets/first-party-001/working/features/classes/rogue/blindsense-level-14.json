@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.rogue.blindsense-level-14",
+  "name": "Blindsense",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Blindsense",
+    "description": "Native Rogue Blindsense; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "auditory-location-detection",
+      "rangeFeet": 10,
+      "hearingRequired": true,
+      "locatesHiddenOrInvisibleCreatures": true,
+      "doesNotConferSight": true,
+      "restoredFrom": "2014"
+    }
+  }
+}

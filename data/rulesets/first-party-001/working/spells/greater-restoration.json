@@ -1,0 +1,107 @@
+{
+  "id": "spell.greater-restoration",
+  "name": "Greater Restoration",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Greater Restoration",
+        "level": 5,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "diamond dust worth at least 100 gp, which the spell consumes",
+            "cost": 10000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You imbue a creature you touch with positive energy to undo a debilitating effect. You can reduce the target's {@condition exhaustion} level by one, or end one of the following effects on the target:",
+          {
+            "type": "list",
+            "items": [
+              "One effect that {@condition charmed} or {@condition petrified} the target",
+              "One curse, including the target's attunement to a cursed magic item",
+              "Any reduction to one of the target's ability scores",
+              "One effect reducing the target's hit point maximum"
+            ]
+          }
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Greater Restoration",
+        "level": 5,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "diamond dust worth 100+ GP, which the spell consumes",
+            "cost": 10000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You touch a creature and magically remove one of the following effects from it:",
+          {
+            "type": "list",
+            "items": [
+              "1 {@condition Exhaustion|SRD52} level",
+              "The {@condition Charmed|SRD52} or {@condition Petrified|SRD52} condition",
+              "A curse, including the target's {@variantrule Attunement|SRD52} to a cursed magic item",
+              "Any reduction to one of the target's ability scores",
+              "Any reduction to the target's {@variantrule Hit Points|SRD52|Hit Point} maximum"
+            ]
+          }
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

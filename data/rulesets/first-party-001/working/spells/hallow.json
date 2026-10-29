@@ -1,0 +1,317 @@
+{
+  "id": "spell.hallow",
+  "name": "Hallow",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hallow",
+        "level": 5,
+        "school": "V",
+        "time": [
+          {
+            "number": 24,
+            "unit": "hour"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "herbs, oils, and incense worth at least 1,000 gp, which the spell consumes",
+            "cost": 100000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "permanent",
+            "ends": [
+              "dispel"
+            ]
+          }
+        ],
+        "entries": [
+          "You touch a point and infuse an area around it with holy (or unholy) power. The area can have a radius up to 60 feet, and the spell fails if the radius includes an area already under the effect a hallow spell. The affected area is subject to the following effects.",
+          "First, celestials, elementals, fey, fiends, and undead can't enter the area, nor can such creatures charm, frighten, or possess creatures within it. Any creature {@condition charmed}, {@condition frightened}, or possessed by such a creature is no longer {@condition charmed}, {@condition frightened}, or possessed upon entering the area. You can exclude one or more of those types of creatures from this effect.",
+          "Second, you can bind an extra effect to the area. Choose the effect from the following list, or choose an effect offered by the DM. Some of these effects apply to creatures in the area; you can designate whether the effect applies to all creatures, creatures that follow a specific deity or leader, or creatures of a specific sort, such as orcs or trolls. When a creature that would be affected enters the spell's area for the first time on a turn or starts its turn there, it can make a Charisma saving throw. On a success, the creature ignores the extra effect until it leaves the area.",
+          {
+            "type": "entries",
+            "name": "Courage",
+            "entries": [
+              "Affected creatures can't be {@condition frightened} while in the area."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Darkness",
+            "entries": [
+              "Darkness fills the area. Normal light, as well as magical light created by spells of a lower level than the slot you used to cast this spell, can't illuminate the area."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Daylight",
+            "entries": [
+              "Bright light fills the area. Magical darkness created by spells of a lower level than the slot you used to cast this spell can't extinguish the light."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Energy Protection",
+            "entries": [
+              "Affected creatures in the area have resistance to one damage type of your choice, except for bludgeoning, piercing, or slashing."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Energy Vulnerability",
+            "entries": [
+              "Affected creatures in the area have vulnerability to one damage type of your choice, except for bludgeoning, piercing, or slashing."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Everlasting Rest",
+            "entries": [
+              "Dead bodies interred in the area can't be turned into undead."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Extradimensional Interference",
+            "entries": [
+              "Affected creatures can't move or travel using teleportation or by extradimensional or interplanar means."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Fear",
+            "entries": [
+              "Affected creatures are {@condition frightened} while in the area."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Silence",
+            "entries": [
+              "No sound can emanate from within the area, and no sound can reach into it."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Tongues",
+            "entries": [
+              "Affected creatures can communicate with any other creature in the area, even if they don't share a common language."
+            ]
+          }
+        ],
+        "damageResist": [
+          "acid",
+          "cold",
+          "fire",
+          "force",
+          "lightning",
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "damageVulnerable": [
+          "acid",
+          "cold",
+          "fire",
+          "force",
+          "lightning",
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "miscTags": [
+          "LGT",
+          "OBS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hallow",
+        "level": 5,
+        "school": "A",
+        "time": [
+          {
+            "number": 24,
+            "unit": "hour"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "incense worth 1,000+ GP, which the spell consumes",
+            "cost": 100000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "permanent",
+            "ends": [
+              "dispel"
+            ]
+          }
+        ],
+        "entries": [
+          "You touch a point and infuse an area around it with holy or unholy power. The area can have a radius up to 60 feet, and the spell fails if the radius includes an area already under the effect of Hallow. The affected area has the following effects.",
+          {
+            "type": "entries",
+            "name": "Hallowed Ward",
+            "entries": [
+              "Choose any of these creature types: Aberration, Celestial, Elemental, Fey, Fiend, or Undead. Creatures of the chosen types can't willingly enter the area, and any creature that is possessed by or that has the {@condition Charmed|SRD52} or {@condition Frightened|SRD52} condition from such creatures isn't possessed, {@condition Charmed|SRD52}, or {@condition Frightened|SRD52} by them while in the area."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Extra Effect",
+            "entries": [
+              "You bind an extra effect to the area from the list below:",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Courage",
+                    "entries": [
+                      "Creatures of any types you choose can't gain the {@condition Frightened|SRD52} condition while in the area."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Darkness",
+                    "entries": [
+                      "{@variantrule Darkness|SRD52} fills the area. Normal light, as well as magical light created by spells of a level lower than this spell, can't illuminate the area."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Daylight",
+                    "entries": [
+                      "Bright light fills the area. Magical {@variantrule Darkness|SRD52} created by spells of a level lower than this spell can't extinguish the light."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Peaceful Rest",
+                    "entries": [
+                      "{@variantrule Dead|SRD52} bodies interred in the area can't be turned into Undead."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Extradimensional Interference",
+                    "entries": [
+                      "Creatures of any types you choose can't enter or exit the area using teleportation or interplanar travel."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Fear",
+                    "entries": [
+                      "Creatures of any types you choose have the {@condition Frightened|SRD52} condition while in the area."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Resistance",
+                    "entries": [
+                      "Creatures of any types you choose have {@variantrule Resistance|SRD52} to one damage type of your choice while in the area."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Silence",
+                    "entries": [
+                      "No sound can emanate from within the area, and no sound can reach into it."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Tongues",
+                    "entries": [
+                      "Creatures of any types you choose can communicate with any other creature in the area even if they don't share a common language."
+                    ]
+                  },
+                  {
+                    "type": "item",
+                    "name": "Vulnerability",
+                    "entries": [
+                      "Creatures of any types you choose have {@variantrule Vulnerability|SRD52} to one damage type of your choice while in the area."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "damageResist": [
+          "acid",
+          "cold",
+          "fire",
+          "force",
+          "lightning",
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "damageVulnerable": [
+          "acid",
+          "cold",
+          "fire",
+          "force",
+          "lightning",
+          "necrotic",
+          "poison",
+          "psychic",
+          "radiant",
+          "thunder"
+        ],
+        "affectsCreatureType": [
+          "aberration",
+          "celestial",
+          "elemental",
+          "fey",
+          "fiend",
+          "undead"
+        ],
+        "miscTags": [
+          "LGT",
+          "OBS"
+        ]
+      }
+    }
+  ]
+}

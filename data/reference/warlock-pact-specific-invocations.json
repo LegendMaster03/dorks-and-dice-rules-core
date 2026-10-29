@@ -1,0 +1,731 @@
+{
+  "id": "warlock.pact-specific-invocation-codification",
+  "status": "source-staged-conflicts-not-resolved",
+  "revisionScope": "Pact-specific Invocation pass 1, no native activation",
+  "branch": "feature/rules-core-rewrite",
+  "decisionOrder": [
+    "codify-known-pact-specific-invocations",
+    "resolve-mechanical-overlap-and-source-version-conflicts",
+    "choose-3.5-invocation-research-or-invocation-progression"
+  ],
+  "counts": {
+    "srdUnique": 9,
+    "talismanPublished": 3,
+    "otherNonSrdPublished": 4,
+    "total": 16,
+    "byPact": {
+      "Blade": 5,
+      "Chain": 4,
+      "Tome": 4,
+      "Talisman": 3
+    }
+  },
+  "authority": {
+    "fourPacts": [
+      "Blade",
+      "Chain",
+      "Tome",
+      "Talisman"
+    ],
+    "starChainSeekerDisabled": true,
+    "firstPactFreeAtWarlockLevel1": true,
+    "eachInvocationAttachedToExactlyOnePact": true,
+    "pactPatronAgreementMustAccept": true,
+    "noInvocationSelectionsGrantedOrConsumedYet": true,
+    "noExistingIntrinsicPactAbilitiesModified": true,
+    "nativeSelectableOptionsNotEnabledByThisCodification": true,
+    "sourceCategoriesNotRelicensed": true,
+    "selectionProgressionUndecided": true,
+    "threeFiveImportNotStarted": true
+  },
+  "entries": [
+    {
+      "id": "invocation.thirsting-blade",
+      "name": "Thirsting Blade",
+      "requiredPactType": "Blade",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD51",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 5,
+          "originalPrerequisites": [
+            {
+              "pact": "Blade",
+              "level": {
+                "level": 5,
+                "class": {
+                  "name": "Warlock"
+                }
+              }
+            }
+          ],
+          "sourceCandidateKey": "candidate-a"
+        },
+        {
+          "source": "SRD52",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 5,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 5,
+                "class": {
+                  "name": "Warlock",
+                  "source": "SRD52",
+                  "visibleStats": true
+                }
+              },
+              "optionalfeature": [
+                "pact of the blade|srd52"
+              ]
+            }
+          ],
+          "sourceCandidateKey": "candidate-b"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/thirsting-blade.json",
+      "openConflict": "native-level5-second-attack-duplicate",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retire-native-selectable-option-keep-historical-source",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.devouring-blade",
+      "name": "Devouring Blade",
+      "requiredPactType": "Blade",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD52",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 12,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 12,
+                "class": {
+                  "name": "Warlock",
+                  "source": "SRD52",
+                  "visibleStats": true
+                }
+              },
+              "optionalfeature": [
+                "thirsting blade|srd52"
+              ]
+            }
+          ],
+          "sourceCandidateKey": "candidate-b"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/devouring-blade.json",
+      "openConflict": "thirsting-blade-prerequisite-becomes-stale",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "warlock-12-elective-require-intrinsic-blade-level5-attack-three-attacks-total",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.lifedrinker",
+      "name": "Lifedrinker",
+      "requiredPactType": "Blade",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD51",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 12,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 12,
+                "class": {
+                  "name": "Warlock"
+                }
+              },
+              "pact": "Blade"
+            }
+          ],
+          "sourceCandidateKey": "candidate-a"
+        },
+        {
+          "source": "SRD52",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 9,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 9,
+                "class": {
+                  "name": "Warlock",
+                  "source": "SRD52",
+                  "visibleStats": true
+                }
+              },
+              "optionalfeature": [
+                "pact of the blade|srd52"
+              ]
+            }
+          ],
+          "sourceCandidateKey": "candidate-b"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/lifedrinker.json",
+      "openConflict": "2014-vs-2024-damage-frequency-and-healing",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "2024-level9-once-per-turn-d6-and-hit-die-heal-no-2014-stacking",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.eldritch-smite",
+      "name": "Eldritch Smite",
+      "requiredPactType": "Blade",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD52",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 5,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 5,
+                "class": {
+                  "name": "Warlock",
+                  "source": "SRD52",
+                  "visibleStats": true
+                }
+              },
+              "optionalfeature": [
+                "pact of the blade|srd52"
+              ]
+            }
+          ],
+          "sourceCandidateKey": "candidate-b"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/eldritch-smite.json",
+      "openConflict": "none-yet-confirmed",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "2024-level5-elective-pact-magic-slot-force-damage-and-optional-prone",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.voice-of-the-chain-master",
+      "name": "Voice of the Chain Master",
+      "requiredPactType": "Chain",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD51",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": null,
+          "originalPrerequisites": [
+            {
+              "pact": "Chain"
+            }
+          ],
+          "sourceCandidateKey": "candidate-a"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/voice-of-the-chain-master.json",
+      "openConflict": "none-yet-confirmed",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2014-same-plane-familiar-senses-voice-and-telepathy",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.chains-of-carceri",
+      "name": "Chains of Carceri",
+      "requiredPactType": "Chain",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD51",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 15,
+          "originalPrerequisites": [
+            {
+              "pact": "Chain",
+              "level": {
+                "level": 15,
+                "class": {
+                  "name": "Warlock"
+                }
+              }
+            }
+          ],
+          "sourceCandidateKey": "candidate-a"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/chains-of-carceri.json",
+      "openConflict": "per-target-rest-restriction",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2014-level15-per-target-long-rest-lockout",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.investment-of-the-chain-master",
+      "name": "Investment of the Chain Master",
+      "requiredPactType": "Chain",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD52",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 5,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 5,
+                "class": {
+                  "name": "Warlock",
+                  "source": "SRD52",
+                  "visibleStats": true
+                }
+              },
+              "optionalfeature": [
+                "pact of the chain|srd52"
+              ]
+            }
+          ],
+          "sourceCandidateKey": "candidate-b"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/investment-of-the-chain-master.json",
+      "openConflict": "native-familiar-command-economy-vs-intrinsic-second-attack",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2024-level5-with-alternate-bonus-action-command-one-familiar-attack-action",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.book-of-ancient-secrets",
+      "name": "Book of Ancient Secrets",
+      "requiredPactType": "Tome",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD51",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": null,
+          "originalPrerequisites": [
+            {
+              "pact": "Tome"
+            }
+          ],
+          "sourceCandidateKey": "candidate-a"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/book-of-ancient-secrets.json",
+      "openConflict": "2024-tome-two-starter-ritual-overlap",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "elective-advanced-ritual-inscription-no-free-duplicate-starter-rituals",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.gift-of-the-protectors",
+      "name": "Gift of the Protectors",
+      "requiredPactType": "Tome",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "native-pending-source-options",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "SRD52",
+          "sourcePath": "data/reference/srd/structured/optionalfeatures.json",
+          "licenseCategory": "srd-reference",
+          "minimumWarlockLevel": 9,
+          "originalPrerequisites": [
+            {
+              "level": {
+                "level": 9,
+                "class": {
+                  "name": "Warlock",
+                  "source": "SRD52",
+                  "visibleStats": true
+                }
+              },
+              "optionalfeature": [
+                "pact of the tome|srd52"
+              ]
+            }
+          ],
+          "sourceCandidateKey": "candidate-b"
+        }
+      ],
+      "existingNativeFile": "data/rulesets/first-party-001/working/features/optional/gift-of-the-protectors.json",
+      "openConflict": "none-yet-confirmed",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2024-level9-charisma-name-cap-one-shared-rescue-per-long-rest",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.rebuke-of-the-talisman",
+      "name": "Rebuke of the Talisman",
+      "requiredPactType": "Talisman",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "published-option-optional-by-owner-approval",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "TCOE",
+          "publicationYear": 2020,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": null,
+          "mechanicalSynopsis": "Reactive psychic retaliation and pushing a visible attacker who hits the wearer.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "shared-ward-reaction-competition",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2020-reaction-retaliation-vs-shared-ward-pick-one",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.protection-of-the-talisman",
+      "name": "Protection of the Talisman",
+      "requiredPactType": "Talisman",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "published-option-optional-by-owner-approval",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "TCOE",
+          "publicationYear": 2020,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": 7,
+          "mechanicalSynopsis": "One d4 after a failed saving throw by wearer, PB uses/Long Rest in an Invocation-specific resource pool.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "separate-protection-invocation-charge-pool",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2020-level7-separate-proficiency-based-save-d4-uses",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.bond-of-the-talisman",
+      "name": "Bond of the Talisman",
+      "requiredPactType": "Talisman",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "published-option-optional-by-owner-approval",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "TCOE",
+          "publicationYear": 2020,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": 12,
+          "mechanicalSynopsis": "Same-plane teleportation between Warlock and other talisman wearer, separate PB uses/Long Rest.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "separate-bond-invocation-charge-pool",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-2020-level12-one-shared-directional-teleport-pool",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.improved-pact-weapon",
+      "name": "Improved Pact Weapon",
+      "requiredPactType": "Blade",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "non-srd-candidate-only",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "XGTE",
+          "publicationYear": 2017,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": null,
+          "mechanicalSynopsis": "Pact weapon bonus and additional conjurable weapon types; source focus bonus overlaps native Blade.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "native-blade-weapon-focus-overlap",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "elective-conditional-plus1-and-ranged-conjuration-no-duplicate-focus",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.gift-of-the-ever-living-ones",
+      "name": "Gift of the Ever-Living Ones",
+      "requiredPactType": "Chain",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "non-srd-candidate-only",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "XGTE",
+          "publicationYear": 2017,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": null,
+          "mechanicalSynopsis": "If Pact familiar nearby, maximize dice rolled to restore Warlock HP.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "fast-healing-and-healing-dice-interaction",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-source-max-healing-dice-to-warlock-with-familiar-within100ft",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.aspect-of-the-moon",
+      "name": "Aspect of the Moon",
+      "requiredPactType": "Tome",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "non-srd-candidate-only",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "XGTE",
+          "publicationYear": 2017,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": null,
+          "mechanicalSynopsis": "No need to sleep; may complete Long Rest through light activity, with sleep protections.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "rest-and-sleep-semantics",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-source-no-sleep-requirement-rest-rules-still-apply",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    },
+    {
+      "id": "invocation.far-scribe",
+      "name": "Far Scribe",
+      "requiredPactType": "Tome",
+      "attachment": {
+        "belongsToSpecificPact": true,
+        "sourcePatronIsPatronOfThatPact": true,
+        "requiresOwnerApprovedInvocationChoice": true,
+        "automaticallyGrantedByPact": false
+      },
+      "candidateStatus": "non-srd-candidate-only",
+      "nativeExecutable": false,
+      "sourceVariants": [
+        {
+          "source": "TCOE",
+          "publicationYear": 2020,
+          "licenseCategory": "non-srd-copyrighted-published-reference",
+          "minimumWarlockLevel": 5,
+          "mechanicalSynopsis": "Use Book of Shadows as limited named-correspondent list for free Sending.",
+          "fullSourceTextImported": false
+        }
+      ],
+      "existingNativeFile": null,
+      "openConflict": "sending-and-book-name-limit",
+      "mechanicsReconciliation": "deferred-until-after-codification",
+      "ownerApprovedDisposition": {
+        "status": "approved-mechanics-pending-native-conversion",
+        "key": "retain-source-level5-proficiency-limited-sending-correspondents",
+        "decisionDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+        "doesNotChangeSourceVariants": true,
+        "runtimeEnabled": false
+      }
+    }
+  ],
+  "ownerApprovedConflictResolution": {
+    "status": "owner-approved-native-design-not-implemented",
+    "approvalDate": "2026-10-25",
+    "authority": "Owner's explicit 'Approved' of complete 16-option conflict-resolution proposal",
+    "sourceDocument": "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+    "approvedOptionsCount": 16,
+    "selectableCandidateCountAfterRetiringThirsting": 15,
+    "historicalThirstingOnly": true,
+    "chainBaselineCommandRuleApproved": true,
+    "preserve2014And2024Variants": true,
+    "preservePreviouslyApprovedPactFeatures": true,
+    "nonSrdRightsReviewAndNativeConversionStillRequired": true,
+    "invocationSelectionProgressionApproved": false,
+    "threeFiveInvocationCatalogImportApproved": false,
+    "noPlayableRuntimeImplementationYet": true,
+    "noMainMergeAuthorized": true,
+    "phases": [
+      "codification-complete",
+      "conflict-resolutions-approved-not-executable",
+      "then-choose-3.5e-invocations-vs-invocation-progression"
+    ]
+  }
+}

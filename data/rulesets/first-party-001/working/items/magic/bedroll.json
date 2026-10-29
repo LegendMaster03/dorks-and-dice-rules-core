@@ -1,0 +1,31 @@
+{
+  "id": "item.bedroll",
+  "name": "Bedroll",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bedroll",
+        "type": "G",
+        "rarity": "none",
+        "weight": 7,
+        "value": 100
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bedroll",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 7,
+        "value": 100,
+        "entries": [
+          "A Bedroll sleeps one Small or Medium creature. While in a Bedroll, you automatically succeed on saving throws against {@hazard extreme cold|SRD52} (see the {@book Dungeon Master's Guide|SRD52})."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "magicvariant.giant-slayer",
+  "name": "Giant Slayer",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Slayer",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "axe": true
+          },
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Giant Slayer ",
+          "source": "SRD51",
+          "page": 224,
+          "rarity": "rare",
+          "bonusWeapon": "+1",
+          "entries": [
+            "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+            "When you hit a giant with it, the giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or fall {@condition prone}. For the purpose of this weapon, \"giant\" refers to any creature with the giant type, including ettins and trolls."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Slayer",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "weaponCategory": "simple"
+          },
+          {
+            "weaponCategory": "martial"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Giant Slayer ",
+          "source": "SRD52",
+          "page": 223,
+          "rarity": "rare",
+          "bonusWeapon": "+1",
+          "entries": [
+            "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+            "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+          ]
+        }
+      }
+    }
+  ]
+}

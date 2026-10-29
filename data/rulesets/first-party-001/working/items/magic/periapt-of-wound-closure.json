@@ -1,0 +1,55 @@
+{
+  "id": "item.periapt-of-wound-closure",
+  "name": "Periapt of Wound Closure",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Periapt of Wound Closure",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "While you wear this pendant, you stabilize whenever you are dying at the start of your turn. In addition, whenever you roll a Hit Die to regain hit points, double the number of hit points it restores."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Periapt of Wound Closure",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "While wearing this pendant, you gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "Life Preservation",
+            "entries": [
+              "Whenever you make a {@variantrule Death Saving Throw|SRD52}, you can change a roll of 9 or lower to a 10, turning a failed save into a successful one."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Natural Healing Boost",
+            "entries": [
+              "Whenever you roll a {@variantrule Hit Point Dice|SRD52|Hit Point Die} to regain {@variantrule Hit Points|SRD52}, double the number of {@variantrule Hit Points|SRD52} it restores."
+            ]
+          }
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

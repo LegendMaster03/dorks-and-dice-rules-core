@@ -1,0 +1,26 @@
+{
+  "id": "subspecies.human.unnamed-a946fbc1fd2bf612",
+  "name": "Section 8",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "raceName": "Human",
+        "raceSource": "SRD51",
+        "ability": [
+          {
+            "str": 1,
+            "dex": 1,
+            "con": 1,
+            "int": 1,
+            "wis": 1,
+            "cha": 1
+          }
+        ]
+      }
+    }
+  ],
+  "parentSpecies": "species.human"
+}

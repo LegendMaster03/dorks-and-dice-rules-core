@@ -1,0 +1,44 @@
+{
+  "id": "class-feature.cleric.divine-intervention-level-10",
+  "name": "Divine Intervention",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 10,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Divine Intervention",
+    "description": "Divine Intervention is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "dual-divine-intervention",
+      "acquireAtLevel": 10,
+      "chooseOneProcedurePerActivation": true,
+      "direct": {
+        "name": "Direct Intervention",
+        "action": "magic-action",
+        "castOne": "eligible-cleric-spell",
+        "spellLevelMaximum": 5,
+        "excludedCastingTime": "reaction",
+        "slotOrPointCost": 0,
+        "materialComponentsRequired": false,
+        "requiresKnownSpell": false,
+        "regain": "long-rest",
+        "onLevel20WishAllowed": true,
+        "wishRecovery": "2d4-long-rests-after-casting-wish"
+      },
+      "supplication": {
+        "name": "Divine Supplication",
+        "action": "action",
+        "ask": "describe-requested-assistance",
+        "successCheck": "d100<=cleric-class-level",
+        "onSuccess": "DM-determines-divine-assistance",
+        "suggestedPower": "cleric-or-domain-spell-effect",
+        "successCooldownDays": 7,
+        "failureRecovery": "long-rest",
+        "atClericLevel20": "automatic-success-no-percentile-roll"
+      },
+      "modeLimits": "each-mode-retains-its-own-source-defined-recovery-limit",
+      "noSecondSimultaneousIntervention": "one-procedure-per-activation",
+      "deityOptional": true
+    }
+  }
+}

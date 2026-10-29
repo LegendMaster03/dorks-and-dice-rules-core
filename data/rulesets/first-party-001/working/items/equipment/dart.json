@@ -1,0 +1,24 @@
+{
+  "id": "baseitem.dart",
+  "name": "Dart",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "R|SRD52",
+    "rarity": "none",
+    "weight": 0.25,
+    "value": 5,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "range": "20/60",
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "weapon": true
+  }
+}

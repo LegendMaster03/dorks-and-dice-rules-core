@@ -1,0 +1,42 @@
+{
+  "id": "item.ring-of-free-action",
+  "name": "Ring of Free Action",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Free Action",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "entries": [
+          "While you wear this ring, {@quickref difficult terrain||3} doesn't cost you extra movement. In addition, magic can neither reduce your speed nor cause you to be {@condition paralyzed} or {@condition restrained}."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Free Action",
+        "type": "RG|SRD52",
+        "rarity": "rare",
+        "reqAttune": true,
+        "entries": [
+          "While you wear this ring, {@variantrule Difficult Terrain|SRD52} doesn't cost you extra movement. In addition, magic can neither reduce any of your Speeds nor cause you to have the {@condition Paralyzed|SRD52} or {@condition Restrained|SRD52} condition."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "item.ring-of-force-resistance",
+  "name": "Ring of Force Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Force Resistance",
+        "type": "RG|SRD51",
+        "resist": [
+          "force"
+        ],
+        "detail1": "sapphire",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance}"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Force Resistance",
+        "type": "RG|SRD52",
+        "resist": [
+          "force"
+        ],
+        "detail1": "sapphire",
+        "rarity": "rare",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance|SRD52}"
+        ]
+      }
+    }
+  ]
+}

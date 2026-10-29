@@ -1,0 +1,32 @@
+{
+  "id": "rule.monsters-v",
+  "name": "Monsters (V)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (V)",
+        "page": 352,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Vampire|srd51}",
+              "{@creature Vampire Spawn|srd51}",
+              "{@creature Veteran|srd51}",
+              "{@creature Violet Fungus|srd51}",
+              "{@creature Vrock|srd51}",
+              "{@creature Vulture|srd51}"
+            ]
+          }
+        ],
+        "id": "1b8"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "item.net",
+  "name": "Net",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 3,
+    "value": 100,
+    "entries": [
+      "When you take the {@action Attack|SRD52} action, you can replace one of your attacks with throwing a Net. Target a creature you can see within 15 feet of yourself. The target must succeed on a Dexterity saving throw ({@dc 8} plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}) or have the {@condition Restrained|SRD52} condition until it escapes. The target succeeds automatically if it is Huge or larger.",
+      "To escape, the target or a creature within 5 feet of it must take an action to make a {@dc 10} Strength ({@skill Athletics|SRD52}) check, freeing the {@condition Restrained|SRD52} creature on a success. Destroying the Net (AC 10; 5 HP; {@variantrule Immunity|SRD52} to Bludgeoning, Poison, and Psychic damage) also frees the target, ending the effect."
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.barbarian.path-feature-level-10",
+  "name": "Path feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Path feature",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "level": 10,
+        "entries": [
+          "At 10th level, you gain a feature from your Primal Path."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 10
+}

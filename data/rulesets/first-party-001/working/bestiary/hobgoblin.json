@@ -1,0 +1,8 @@
+{
+  "id": "monster.hobgoblin",
+  "name": "Hobgoblin",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "familyId": "monster-family.hobgoblin",
+  "aliasOf": "monster.hobgoblin-warrior"
+}

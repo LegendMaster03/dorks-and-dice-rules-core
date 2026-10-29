@@ -1,0 +1,36 @@
+{
+  "id": "class-feature.sorcerer.metamagic-level-2",
+  "name": "Metamagic",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 2,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Metamagic",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "metamagic",
+      "resource": "sorcery-points",
+      "optionsKnownByClassLevel": [
+        [
+          2,
+          2
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          17,
+          6
+        ]
+      ],
+      "optionReplacementOnLevelGain": 1,
+      "normallyOneOptionPerSpell": true,
+      "empoweredAndSeekingExceptions": true,
+      "twoDifferentOptionsDuringInnateWithSorceryIncarnate": true,
+      "noSameOptionTwice": true,
+      "noHistoricalFullRoundCastingPenalty": true
+    }
+  }
+}

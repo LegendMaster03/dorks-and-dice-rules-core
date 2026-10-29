@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.warlock.mystic-arcanum-level-15",
+  "name": "Mystic Arcanum",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mystic Arcanum",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "level": 15,
+        "entries": [
+          "You gain a level 8 Warlock Spell of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 15
+}

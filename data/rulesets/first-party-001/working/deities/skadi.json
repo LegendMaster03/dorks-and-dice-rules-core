@@ -1,0 +1,17 @@
+{
+  "id": "deity.skadi",
+  "name": "Skadi",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of earth and mountains",
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Mountain peak"
+  }
+}

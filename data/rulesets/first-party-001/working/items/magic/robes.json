@@ -1,0 +1,12 @@
+{
+  "id": "item.robes",
+  "name": "Robes",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 4,
+    "value": 100
+  }
+}

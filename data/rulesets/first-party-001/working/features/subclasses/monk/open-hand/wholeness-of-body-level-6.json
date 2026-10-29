@@ -1,0 +1,42 @@
+{
+  "id": "subclass-feature.monk.open-hand.wholeness-of-body-level-6",
+  "name": "Wholeness of Body",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wholeness of Body",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "subclassShortName": "Open Hand",
+        "subclassSource": "SRD51",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "You gain the ability to heal yourself. As an action, you can regain hit points equal to three times your monk level. You must finish a long rest before you can use this feature again."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wholeness of Body",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "subclassShortName": "Open Hand",
+        "subclassSource": "SRD52",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "You gain the ability to heal yourself. As a {@variantrule Bonus Action|SRD52}, you can roll your Martial Arts die. You regain a number of {@variantrule Hit Points|SRD52} equal to the number rolled plus your Wisdom modifier (minimum of 1 {@variantrule Hit Points|SRD52|Hit Point} regained).",
+          "You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "parentSubclass": "subclass.monk.open-hand",
+  "classLevel": 6
+}

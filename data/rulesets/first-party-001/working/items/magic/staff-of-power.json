@@ -1,0 +1,249 @@
+{
+  "id": "item.staff-of-power",
+  "name": "Staff of Power",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of Power",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": "by a sorcerer, warlock, or wizard",
+        "reqAttuneTags": [
+          {
+            "class": "sorcerer"
+          },
+          {
+            "class": "warlock"
+          },
+          {
+            "class": "wizard"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "bonusWeapon": "+2",
+        "bonusSpellAttack": "+2",
+        "bonusAc": "+2",
+        "bonusSavingThrow": "+2",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 2d8 + 4}",
+        "charges": 20,
+        "staff": true,
+        "entries": [
+          "This staff can be wielded as a magic quarterstaff that grants a +2 bonus to attack and damage rolls made with it. While holding it, you gain a +2 bonus to Armor Class, saving throws, and spell attack rolls.",
+          "The staff has 20 charges for the following properties. The staff regains {@dice 2d8 + 4} expended charges daily at dawn. If you expend the last charge, roll a {@dice d20}. On a 1, the staff retains its +2 bonus to attack and damage roll but loses all other properties. On a 20, the staff regain {@dice 1d8 + 2} charges.",
+          {
+            "name": "Power Strike",
+            "type": "entries",
+            "entries": [
+              "When you hit with a melee attack using the staff, you can expend 1 charge to deal an extra {@damage 1d6} force damage to the target."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spells",
+            "entries": [
+              "While holding this staff, you can use an action to expend 1 or more of its charges to cast one of the following spells from it, using your spell save DC and spell attack bonus: {@spell cone of cold} (5 charges), {@spell fireball} (5th-level version, 5 charges), {@spell globe of invulnerability} (6 charges), {@spell hold monster} (5 charges), {@spell levitate} (2 charges), {@spell lightning bolt} (5th-level version, 5 charges), {@spell magic missile} (1 charge), {@spell ray of enfeeblement} (1 charge), or {@spell wall of force} (5 charges)."
+            ]
+          },
+          {
+            "name": "Retributive Strike",
+            "type": "entries",
+            "entries": [
+              "You can use an action to break the staff over your knee or against a solid surface, performing a retributive strike. The staff is destroyed and releases its remaining magic in an explosion that expands to fill a 30-foot-radius sphere centered on it.",
+              "You have a {@chance 50} chance to instantly travel to a random plane of existence, avoiding the explosion. If you fail to avoid the effect, you take force damage equal to 16 × the number of charges in the staff. Every other creature in the area must make a {@dc 17} Dexterity saving throw. On a failed save, a creature takes an amount of damage based on how far away it is from the point of origin, as shown in the following table. On a successful save, a creature takes half as much damage.",
+              {
+                "type": "table",
+                "colLabels": [
+                  "Distance from Origin",
+                  "Effect"
+                ],
+                "colStyles": [
+                  "col-3",
+                  "col-9"
+                ],
+                "rows": [
+                  [
+                    "10 ft. away or closer",
+                    "8 × the number of charges in the staff"
+                  ],
+                  [
+                    "11 to 20 ft. away",
+                    "6 × the number of charges in the staff"
+                  ],
+                  [
+                    "21 to 30 ft. away",
+                    "4 × the number of charges in the staff"
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "magic missile",
+              "ray of enfeeblement"
+            ],
+            "2": [
+              "levitate"
+            ],
+            "5": [
+              "cone of cold",
+              "fireball#5",
+              "hold monster",
+              "lightning bolt#5",
+              "wall of force"
+            ],
+            "6": [
+              "globe of invulnerability"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of Power",
+        "type": "M|SRD52",
+        "rarity": "very rare",
+        "reqAttune": "by a sorcerer, warlock, or wizard",
+        "reqAttuneTags": [
+          {
+            "class": "sorcerer"
+          },
+          {
+            "class": "warlock"
+          },
+          {
+            "class": "wizard"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "bonusWeapon": "+2",
+        "bonusSpellAttack": "+2",
+        "bonusAc": "+2",
+        "bonusSavingThrow": "+2",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 2d8 + 4}",
+        "charges": 20,
+        "staff": true,
+        "entries": [
+          "This staff has 20 charges and can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. While holding it, you gain a +2 bonus to {@variantrule Armor Class|SRD52}, saving throws, and spell attack rolls.",
+          {
+            "type": "entries",
+            "name": "Spells",
+            "entries": [
+              "While holding the staff , you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-10",
+                  "col-2 text-center"
+                ],
+                "colLabels": [
+                  "Spell",
+                  "Charge Cost"
+                ],
+                "rows": [
+                  [
+                    "{@spell Cone of Cold|SRD52}",
+                    "5"
+                  ],
+                  [
+                    "{@spell Fireball|SRD52} (level 5 version)",
+                    "5"
+                  ],
+                  [
+                    "{@spell Globe of Invulnerability|SRD52}",
+                    "6"
+                  ],
+                  [
+                    "{@spell Hold Monster|SRD52}",
+                    "5"
+                  ],
+                  [
+                    "{@spell Levitate|SRD52}",
+                    "2"
+                  ],
+                  [
+                    "{@spell Lightning Bolt|SRD52} (level 5 version)",
+                    "5"
+                  ],
+                  [
+                    "{@spell Magic Missile|SRD52}",
+                    "1"
+                  ],
+                  [
+                    "{@spell Ray of Enfeeblement|SRD52}",
+                    "1"
+                  ],
+                  [
+                    "{@spell Wall of Force|SRD52}",
+                    "5"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Regaining Charges",
+            "entries": [
+              "The staff regains {@dice 2d8 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff retains its +2 bonus to attack rolls and damage rolls but loses all other properties. On a 20, the staff regains {@dice 1d8 + 2} charges."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Retributive Strike",
+            "entries": [
+              "You can take a {@action Magic|SRD52} action to break the staff over your knee or against a solid surface. The staff is destroyed and releases its magic in an explosion that fills a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from itself. You have a {@chance 50} chance to instantly travel to a random plane of existence, avoiding the explosion. If you fail to avoid the effect, you take Force damage equal to 16 times the number of charges in the staff. Each other creature in the area makes a {@dc 17} Dexterity saving throw. On a failed save, a creature takes Force damage equal to 4 times the number of charges in the staff. On a successful save, a creature takes half as much damage."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "magic missile|srd52",
+              "ray of enfeeblement|srd52"
+            ],
+            "2": [
+              "levitate|srd52"
+            ],
+            "5": [
+              "cone of cold|srd52",
+              "fireball|srd52",
+              "hold monster|srd52",
+              "lightning bolt|srd52",
+              "wall of force|srd52"
+            ],
+            "6": [
+              "globe of invulnerability|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

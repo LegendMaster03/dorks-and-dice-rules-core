@@ -1,0 +1,2043 @@
+{
+	"optionalfeature": [
+		{
+			"name": "Agonizing Blast",
+			"source": "SRD51",
+			"effects": [
+				{
+					"name": "Bonus Damage",
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.bonuses.rsak.damage",
+							"mode": "ADD",
+							"value": "+(@srd5e.name.eldritchblast * @abilities.cha.mod)"
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Agonizing Blast",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Make Agonizing",
+					"type": "enchant",
+					"activation": {
+						"type": ""
+					},
+					"restrictions": {
+						"allowMagical": true
+					},
+					"effects": [
+						{
+							"foundryId": "agonizingBlast"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "agonizingBlast",
+					"type": "enchantment",
+					"disabled": true,
+					"transfer": true,
+					"changes": [
+						{
+							"key": "name",
+							"mode": "ADD",
+							"value": ", Agonizing"
+						},
+						{
+							"key": "system.damage.bonus",
+							"mode": "ADD",
+							"value": "@abilities.cha.mod"
+						}
+					],
+					"description": "Choose one of your known Warlock cantrips that deals damage. You can add your Charisma modifier to that spell's damage rolls."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Armor of Shadows",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Armor of Shadows",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Mage Armor",
+					"type": "utility",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"value": "8"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"range": {
+						"units": "touch"
+					},
+					"effects": [
+						{
+							"foundryId": "armorOfShadows"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "armorOfShadows",
+					"name": "Mage Armor",
+					"disabled": true,
+					"transfer": true,
+					"duration": {
+						"seconds": 28800
+					},
+					"changes": [
+						{
+							"key": "system.attributes.ac.calc",
+							"mode": "OVERRIDE",
+							"value": "mage"
+						}
+					],
+					"description": "The target's base AC becomes 13 + its Dexterity modifier."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Ascendant Step",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Ascendant Step",
+			"source": "SRD52",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "minute",
+						"concentration": true,
+						"value": "10"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "ascendantStep"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "ascendantStep",
+					"name": "Levitating",
+					"disabled": true,
+					"transfer": true,
+					"duration": {
+						"seconds": 600
+					},
+					"description": "The target can move only by pushing or pulling against a fixed object or surface within reach (such as a wall or a ceiling), which allows it to move as if it were climbing."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Beast Speech",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Bewitching Whispers",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Book of Ancient Secrets",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Careful Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Careful Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell that forces other creatures to make a saving throw"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"count": "@abilities.cha.mod",
+							"type": "creature"
+						}
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Chains of Carceri",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Devil's Sight",
+			"source": "SRD51",
+			"effects": [
+				{
+					"name": "Enhanced Vision",
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.attributes.senses.darkvision",
+							"mode": "OVERRIDE",
+							"value": "120"
+						},
+						{
+							"key": "system.attributes.senses.special",
+							"mode": "ADD",
+							"value": "Devil's Sight"
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Devil's Sight",
+			"source": "SRD52",
+			"effects": [
+				{
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.attributes.senses.darkvision",
+							"mode": "UPGRADE",
+							"value": 120
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Distant Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Distant Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell that has a range of at least 5 feet or when you cast a spell that has a range of Touch"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Dreadful Word",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Eldritch Sight",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Eldritch Smite",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Smite",
+					"type": "damage",
+					"activation": {
+						"type": "",
+						"condition": "Hit a creature with your pact weapon"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "attribute",
+								"value": "1",
+								"target": "spells.pact.value"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "creature"
+						}
+					},
+					"damage": {
+						"parts": [
+							{
+								"custom": {
+									"enabled": true,
+									"formula": "(1 + @spells.pact.level)d8"
+								},
+								"types": [
+									"force"
+								]
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Eldritch Spear",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Increase Range",
+					"type": "enchant",
+					"activation": {
+						"type": ""
+					},
+					"restrictions": {
+						"allowMagical": true
+					},
+					"effects": [
+						{
+							"foundryId": "eldritchSpear"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "eldritchSpear",
+					"type": "enchantment",
+					"disabled": true,
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.range.value",
+							"mode": "ADD",
+							"value": "@classes.warlock.levels * 30"
+						},
+						{
+							"key": "name",
+							"mode": "ADD",
+							"value": ", Eldritch Spear"
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Empowered Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Empowered Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you roll damage for a spell"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Extended Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Extended Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell that has a duration of 1 minute or longer"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Fiendish Vigor",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Fiendish Vigor",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "False Life",
+					"type": "heal",
+					"activation": {
+						"type": "action"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"healing": {
+						"types": [
+							"temphp"
+						],
+						"custom": {
+							"enabled": true,
+							"formula": "8 + 4"
+						},
+						"scaling": {
+							"number": 1
+						}
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Gaze of Two Minds",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Gaze of Two Minds",
+					"type": "utility",
+					"activation": {
+						"type": "bonus"
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "willing",
+							"special": "Touch"
+						}
+					},
+					"range": {
+						"units": "ft",
+						"value": "60"
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Gift of the Depths",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Gift Water Breathing",
+					"type": "utility",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"value": "24"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"count": "10",
+							"type": "creature"
+						}
+					},
+					"range": {
+						"units": "ft",
+						"value": "30"
+					},
+					"effects": [
+						{
+							"foundryId": "giftOfTheDepths"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "giftOfTheDepths",
+					"name": "Water Breathing",
+					"duration": {
+						"seconds": 86400
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Gift of the Protectors",
+			"source": "SRD52",
+			"system": {
+				"uses.max": "(max(1,@abilities.cha.mod))"
+			},
+			"activities": [
+				{
+					"name": "Protect",
+					"type": "utility",
+					"img": "systems/dnd5e/icons/svg/activity/save.svg",
+					"activation": {
+						"type": "",
+						"condition": "When any creature whose name is on the page is reduced to 0 Hit Points but not killed outright"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "activityUses",
+								"value": "1"
+							}
+						]
+					},
+					"uses": {
+						"recovery": [
+							{
+								"period": "lr",
+								"type": "recoverAll"
+							}
+						],
+						"max": "1"
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "creature"
+						}
+					}
+				},
+				{
+					"name": "Write Name",
+					"type": "utility",
+					"img": "systems/dnd5e/icons/svg/trait.svg",
+					"activation": {
+						"type": "action"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1"
+							}
+						]
+					}
+				},
+				{
+					"name": "Erase Name",
+					"type": "utility",
+					"img": "systems/dnd5e/icons/svg/trait-languages.svg",
+					"activation": {
+						"type": "action"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "-1"
+							}
+						]
+					},
+					"range": {
+						"units": "touch"
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Heightened Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Heightened Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell that forces a creature to make a saving throw"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "2",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Investment of the Chain Master",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Find Familiar with Flight",
+					"type": "summon",
+					"activation": {
+						"type": "hour",
+						"value": 1
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "attribute",
+								"value": "1",
+								"target": "spells.pact.value"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "space"
+						}
+					},
+					"range": {
+						"units": "ft",
+						"value": "10"
+					},
+					"profiles": [
+						{
+							"cr": "0",
+							"name": "CR 0 Beast",
+							"types": [
+								"beast"
+							]
+						}
+					],
+					"summon": {
+						"mode": "cr"
+					},
+					"creatureTypes": [
+						"celestial",
+						"fey",
+						"fiend"
+					],
+					"match": {
+						"saves": true
+					},
+					"effects": [
+						{
+							"foundryId": "investmentOfTheC"
+						}
+					]
+				},
+				{
+					"name": "Find Familiar with Swimming",
+					"type": "summon",
+					"activation": {
+						"type": "hour",
+						"value": 1
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "attribute",
+								"value": "1",
+								"target": "spells.pact.value"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "space"
+						}
+					},
+					"range": {
+						"value": "10",
+						"units": "ft"
+					},
+					"profiles": [
+						{
+							"cr": "0",
+							"name": "CR 0 Beast",
+							"types": [
+								"beast"
+							]
+						}
+					],
+					"summon": {
+						"mode": "cr"
+					},
+					"creatureTypes": [
+						"celestial",
+						"fey",
+						"fiend"
+					],
+					"match": {
+						"saves": true
+					},
+					"effects": [
+						{
+							"foundryId": "investmentOfTheC"
+						}
+					]
+				},
+				{
+					"name": "Invest with Resistance",
+					"type": "utility",
+					"img": "systems/dnd5e/icons/svg/trait-damage-resistances.svg",
+					"activation": {
+						"type": "reaction"
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "creature",
+							"special": "Your familiar"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "investmentOfThe1"
+						},
+						{
+							"foundryId": "investmentOfThe2"
+						},
+						{
+							"foundryId": "investmentOfThe3"
+						},
+						{
+							"foundryId": "investmentOfThe4"
+						},
+						{
+							"foundryId": "investmentOfThe5"
+						},
+						{
+							"foundryId": "investmentOfThe6"
+						},
+						{
+							"foundryId": "investmentOfThe7"
+						},
+						{
+							"foundryId": "investmentOfThe8"
+						},
+						{
+							"foundryId": "investmentOfThe9"
+						},
+						{
+							"foundryId": "investmentOfTh10"
+						},
+						{
+							"foundryId": "investmentOfTh11"
+						},
+						{
+							"foundryId": "investmentOfTh12"
+						},
+						{
+							"foundryId": "investmentOfTh13"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "investmentOfTheC",
+					"name": "Investment of Flight",
+					"changes": [
+						{
+							"key": "system.attributes.movement.fly",
+							"mode": "UPGRADE",
+							"value": 40
+						}
+					]
+				},
+				{
+					"name": "Investment of Swimming",
+					"changes": [
+						{
+							"key": "system.attributes.movement.swim",
+							"mode": "UPGRADE",
+							"value": 40
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe1",
+					"name": "Resist Acid",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "acid"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe2",
+					"name": "Resist Bludgeoning",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "bludgeoning"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe3",
+					"name": "Resist Cold",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "cold"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe4",
+					"name": "Resist Fire",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "fire"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe5",
+					"name": "Resist Force",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "force"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe6",
+					"name": "Resist Lightning",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "lightning"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe7",
+					"name": "Resist Necrotic",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "necrotic"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe8",
+					"name": "Resist Piercing",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "piercing"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfThe9",
+					"name": "Resist Poison",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "poison"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfTh10",
+					"name": "Resist Psychic",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "psychic"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfTh11",
+					"name": "Resist Radiant",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "radiant"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfTh12",
+					"name": "Resist Slashing",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "slashing"
+						}
+					]
+				},
+				{
+					"foundryId": "investmentOfTh13",
+					"name": "Resist Thunder",
+					"duration": {
+						"turns": 1
+					},
+					"changes": [
+						{
+							"key": "system.traits.dr.value",
+							"mode": "ADD",
+							"value": "thunder"
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Lifedrinker",
+			"source": "SRD52",
+			"activities": [
+				{
+					"type": "damage",
+					"activation": {
+						"type": "",
+						"condition": "Once per turn when you hit a creature with your pact weapon"
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "creature"
+						}
+					},
+					"damage": {
+						"parts": [
+							{
+								"number": 1,
+								"denomination": 6,
+								"types": [
+									"necrotic",
+									"psychic",
+									"radiant"
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "Heal (Largest Hit Die)",
+					"type": "heal",
+					"activation": {
+						"type": "",
+						"condition": "Once per turn when you hit a creature with your pact weapon"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "hitDice",
+								"value": "1",
+								"target": "largest"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"healing": {
+						"types": [
+							"healing"
+						],
+						"custom": {
+							"enabled": true,
+							"formula": "@attributes.hd.largestAvailable + (max(1,@abilities.con.mod))"
+						},
+						"scaling": {
+							"number": 1
+						}
+					}
+				},
+				{
+					"name": "Heal (Smallest Hit Die)",
+					"type": "heal",
+					"activation": {
+						"type": "",
+						"condition": "Once per turn when you hit a creature with your pact weapon"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "hitDice",
+								"value": "1",
+								"target": "smallest"
+							}
+						]
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"healing": {
+						"types": [
+							"healing"
+						],
+						"custom": {
+							"enabled": true,
+							"formula": "@attributes.hd.smallestAvailable + (max(1,@abilities.con.mod))"
+						},
+						"scaling": {
+							"number": 1
+						}
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Mask of Many Faces",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Mask of Many Faces",
+			"source": "SRD52",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"value": "1"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "maskOfManyFaces"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "maskOfManyFaces",
+					"name": "Disguised",
+					"duration": {
+						"seconds": 3600
+					},
+					"description": "To discern that you are disguised, a creature must take the Study action to inspect your appearance and succeed on an [[/check ability=int skill=inv]] check against your spell save DC."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Master of Myriad Forms",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Master of Myriad Forms",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Aquatic Adaptation",
+					"type": "utility",
+					"img": "icons/creatures/fish/fish-bluefin-yellow-blue.webp",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"concentration": true,
+						"value": "1"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "masterOfMyriadFo"
+						}
+					]
+				},
+				{
+					"name": "Change Appearance",
+					"type": "utility",
+					"img": "icons/creatures/magical/spirit-undead-ghost-blue.webp",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"concentration": true,
+						"value": "1"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "masterOfMyriadF1"
+						}
+					]
+				},
+				{
+					"name": "Natural Weapons",
+					"type": "utility",
+					"img": "icons/creatures/abilities/fang-tooth-blood-red.webp",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"concentration": true,
+						"value": "1"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"effects": [
+						{
+							"foundryId": "masterOfMyriadF2"
+						}
+					]
+				},
+				{
+					"name": "Attack: Claws",
+					"type": "attack",
+					"activation": {
+						"type": "action"
+					},
+					"range": {
+						"units": "ft",
+						"value": "5"
+					},
+					"attack": {
+						"type": {
+							"value": "melee",
+							"classification": "unarmed"
+						},
+						"ability": "spellcasting"
+					},
+					"damage": {
+						"includeBase": true,
+						"parts": [
+							{
+								"number": 1,
+								"denomination": 6,
+								"bonus": "@mod",
+								"types": [
+									"slashing"
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "Attack: Fangs/Horns",
+					"type": "attack",
+					"activation": {
+						"type": "action"
+					},
+					"range": {
+						"value": "5",
+						"units": "ft"
+					},
+					"attack": {
+						"type": {
+							"value": "melee",
+							"classification": "unarmed"
+						},
+						"ability": "spellcasting"
+					},
+					"damage": {
+						"includeBase": true,
+						"parts": [
+							{
+								"number": 1,
+								"denomination": 6,
+								"bonus": "@mod",
+								"types": [
+									"piercing"
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "Attack: Hooves",
+					"type": "attack",
+					"activation": {
+						"type": "action"
+					},
+					"range": {
+						"value": "5",
+						"units": "ft"
+					},
+					"attack": {
+						"type": {
+							"value": "melee",
+							"classification": "unarmed"
+						},
+						"ability": "spellcasting"
+					},
+					"damage": {
+						"includeBase": true,
+						"parts": [
+							{
+								"number": 1,
+								"denomination": 6,
+								"bonus": "@mod",
+								"types": [
+									"bludgeoning"
+								]
+							}
+						]
+					}
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "masterOfMyriadFo",
+					"name": "Aquatic Adaptation",
+					"duration": {
+						"seconds": 3600
+					},
+					"changes": [
+						{
+							"key": "system.attributes.movement.swim",
+							"mode": "UPGRADE",
+							"value": 1
+						}
+					],
+					"description": "You can breathe underwater and gain a Swim Speed equal to your Speed."
+				},
+				{
+					"foundryId": "masterOfMyriadF1",
+					"name": "Altered Appearance",
+					"duration": {
+						"seconds": 3600
+					}
+				},
+				{
+					"foundryId": "masterOfMyriadF2",
+					"name": "Natural Weapon",
+					"duration": {
+						"seconds": 3600
+					},
+					"description": "When you use your Unarmed Strike to deal damage with that new growth, it deals 1d6 damage of the type in parentheses instead of dealing the normal damage for your Unarmed Strike, and you use your spellcasting ability modifier for the attack and damage rolls rather than using Strength."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Minions of Chaos",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Mire the Mind",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Misty Visions",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "One with Shadows",
+			"source": "SRD52",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "hour",
+						"concentration": true,
+						"value": "1"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"range": {
+						"units": "touch"
+					},
+					"effects": [
+						{
+							"foundryId": "oneWithShadows"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "oneWithShadows",
+					"name": "Invisible",
+					"duration": {
+						"seconds": 3600
+					},
+					"statuses": [
+						"invisible"
+					],
+					"description": "The spell ends early immediately after the target makes an attack roll, deals damage, or casts a spell."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Otherworldly Leap",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Otherworldly Leap",
+			"source": "SRD52",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"type": "bonus"
+					},
+					"duration": {
+						"units": "minute",
+						"value": "1"
+					},
+					"target": {
+						"affects": {
+							"type": "self"
+						}
+					},
+					"range": {
+						"units": "touch"
+					},
+					"effects": [
+						{
+							"foundryId": "otherworldlyLeap"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "otherworldlyLeap",
+					"name": "Jump",
+					"duration": {
+						"rounds": 1,
+						"seconds": 60
+					},
+					"description": "Once on each of its turns until the spell ends, that creature can jump up to 30 feet by spending 10 feet of movement."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Pact of the Blade",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"type": "action",
+						"value": 1
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Pact of the Blade",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Forge Pact Weapon",
+					"type": "enchant",
+					"activation": {
+						"type": "bonus"
+					},
+					"restrictions": {
+						"allowMagical": true,
+						"categories": [
+							"simpleM",
+							"martialM"
+						],
+						"type": "weapon"
+					},
+					"effects": [
+						{
+							"foundryId": "pactOfTheBlade",
+							"riders": {
+								"activity": [
+									{
+										"foundryId": "pactOfTheBlade"
+									}
+								]
+							}
+						}
+					]
+				},
+				{
+					"foundryId": "pactOfTheBlade",
+					"name": "Spellcasting Attack",
+					"type": "attack",
+					"img": "systems/dnd5e/icons/svg/properties/magical.svg",
+					"activation": {
+						"type": "action"
+					},
+					"attack": {
+						"type": {
+							"value": "melee",
+							"classification": "weapon"
+						},
+						"ability": "spellcasting"
+					},
+					"damage": {
+						"includeBase": true
+					}
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "pactOfTheBlade",
+					"name": "Pact Weapon",
+					"type": "enchantment",
+					"disabled": true,
+					"transfer": true,
+					"changes": [
+						{
+							"key": "name",
+							"mode": "ADD",
+							"value": ", Pact Weapon"
+						},
+						{
+							"key": "system.proficient",
+							"mode": "OVERRIDE",
+							"value": 1
+						},
+						{
+							"key": "system.properties",
+							"mode": "ADD",
+							"value": "foc"
+						},
+						{
+							"key": "system.damage.base.types",
+							"mode": "ADD",
+							"value": "necrotic"
+						},
+						{
+							"key": "system.damage.base.types",
+							"mode": "ADD",
+							"value": "psychic"
+						},
+						{
+							"key": "system.damage.base.types",
+							"mode": "ADD",
+							"value": "radiant"
+						},
+						{
+							"key": "system.damage.versatile.types",
+							"mode": "ADD",
+							"value": "necrotic"
+						},
+						{
+							"key": "system.damage.versatile.types",
+							"mode": "ADD",
+							"value": "psychic"
+						},
+						{
+							"key": "system.damage.versatile.types",
+							"mode": "ADD",
+							"value": "radiant"
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Pact of the Chain",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Find Familiar",
+					"type": "summon",
+					"activation": {
+						"type": "action",
+						"value": 1
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "space"
+						}
+					},
+					"range": {
+						"value": "10",
+						"units": "ft"
+					},
+					"profiles": [
+						{
+							"cr": "0",
+							"name": "CR 0 Beast",
+							"types": [
+								"beast"
+							]
+						}
+					],
+					"summon": {
+						"mode": "cr"
+					},
+					"creatureTypes": [
+						"celestial",
+						"fey",
+						"fiend"
+					]
+				},
+				{
+					"name": "Find Familiar (Expanded Options)",
+					"type": "summon",
+					"activation": {
+						"type": "action",
+						"value": 1
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "space"
+						}
+					},
+					"range": {
+						"value": "10",
+						"units": "ft"
+					},
+					"profiles": [
+						{
+							"uuid": "@creature[imp|srd52]"
+						},
+						{
+							"uuid": "@creature[pseudodragon|srd52]"
+						},
+						{
+							"uuid": "@creature[quasit|srd52]"
+						},
+						{
+							"uuid": "@creature[sphinx of wonder|srd52]"
+						},
+						{
+							"uuid": "@creature[skeleton|srd52]"
+						},
+						{
+							"uuid": "@creature[slaad tadpole|srd52]"
+						},
+						{
+							"uuid": "@creature[sprite|srd52]"
+						},
+						{
+							"uuid": "@creature[venomous snake|srd52]"
+						}
+					],
+					"creatureTypes": [
+						"celestial",
+						"fey",
+						"fiend"
+					]
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Quickened Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Quickened Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell that has a casting time of an action"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "2",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Repelling Blast",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Make Repelling",
+					"type": "enchant",
+					"activation": {
+						"type": ""
+					},
+					"restrictions": {
+						"allowMagical": true
+					},
+					"effects": [
+						{
+							"foundryId": "repellingBlast"
+						}
+					]
+				}
+			],
+			"effects": [
+				{
+					"foundryId": "repellingBlast",
+					"type": "enchantment",
+					"disabled": true,
+					"transfer": true,
+					"changes": [
+						{
+							"key": "name",
+							"mode": "ADD",
+							"value": ", Repelling"
+						}
+					],
+					"description": "Choose one of your known Warlock cantrips that requires an attack roll. When you hit a Large or smaller creature with that cantrip, you can push the creature up to 10 feet straight away from you."
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Sculptor of Flesh",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Sign of Ill Omen",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Subtle Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Subtle Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Thief of Five Fates",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Twinned Spell",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Twinned Spell",
+					"type": "utility",
+					"activation": {
+						"type": "",
+						"condition": "When you cast a spell that can be upcast to target an additional creature"
+					},
+					"consumption": {
+						"targets": [
+							{
+								"type": "itemUses",
+								"value": "1",
+								"target": {
+									"consumes": {
+										"name": "Sorcery Point"
+									}
+								}
+							}
+						]
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Visions of Distant Realms",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Whispers of the Grave",
+			"source": "SRD51",
+			"activities": [
+				{
+					"type": "utility",
+					"activation": {
+						"value": null
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Whispers of the Grave",
+			"source": "SRD52",
+			"activities": [
+				{
+					"name": "Whisper",
+					"type": "utility",
+					"activation": {
+						"type": "action"
+					},
+					"duration": {
+						"units": "minute",
+						"value": "10"
+					},
+					"target": {
+						"affects": {
+							"count": "1",
+							"type": "object",
+							"special": "Corpse"
+						}
+					}
+				}
+			],
+			"migrationVersion": 3
+		},
+		{
+			"name": "Witch Sight",
+			"source": "SRD52",
+			"effects": [
+				{
+					"transfer": true,
+					"changes": [
+						{
+							"key": "system.attributes.senses.truesight",
+							"mode": "UPGRADE",
+							"value": 30
+						}
+					]
+				}
+			],
+			"migrationVersion": 3
+		}
+	]
+}

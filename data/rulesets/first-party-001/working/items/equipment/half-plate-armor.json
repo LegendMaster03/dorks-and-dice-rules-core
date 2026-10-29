@@ -1,0 +1,37 @@
+{
+  "id": "baseitem.half-plate-armor",
+  "name": "Half Plate Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Half Plate Armor",
+        "type": "MA",
+        "rarity": "none",
+        "weight": 40,
+        "value": 75000,
+        "ac": 15,
+        "armor": true,
+        "stealth": true,
+        "entries": [
+          "Half plate consists of shaped metal plates that cover most of the wearer's body. It does not include leg protection beyond simple greaves that are attached with leather straps."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Half Plate Armor",
+        "type": "MA|SRD52",
+        "rarity": "none",
+        "weight": 40,
+        "value": 75000,
+        "ac": 15,
+        "armor": true,
+        "stealth": true
+      }
+    }
+  ]
+}

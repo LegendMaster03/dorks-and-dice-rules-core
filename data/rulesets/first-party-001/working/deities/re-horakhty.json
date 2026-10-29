@@ -1,0 +1,19 @@
+{
+  "id": "deity.re-horakhty",
+  "name": "Re-Horakhty",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "title": "God of the sun, ruler of the gods",
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Solar disk encircled by serpent"
+  }
+}

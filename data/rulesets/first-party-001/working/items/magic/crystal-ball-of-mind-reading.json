@@ -1,0 +1,19 @@
+{
+  "id": "item.crystal-ball-of-mind-reading",
+  "name": "Crystal Ball of Mind Reading",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "entries": [
+      "While touching this crystal orb, you can cast {@spell Scrying|SRD52} (save {@dc 17}) with it. In addition, you can cast {@spell Detect Thoughts|SRD52} (save {@dc 17}) targeting creatures you can see within 30 feet of the spell's sensor. You don't need to concentrate on this {@spell Detect Thoughts|SRD52} spell to maintain it during its duration, but it ends if the {@spell Scrying|SRD52} spell ends."
+    ],
+    "attachedSpells": [
+      "detect thoughts|srd52",
+      "scrying|srd52"
+    ]
+  }
+}

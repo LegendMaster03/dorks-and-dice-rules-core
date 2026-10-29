@@ -1,0 +1,1051 @@
+{
+  "id": "class.wizard",
+  "name": "Wizard",
+  "kind": "class",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 6
+    },
+    "spellcastingAbility": "intelligence",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "intelligence",
+      "wisdom"
+    ],
+    "armorProficiencies": [],
+    "weaponProficiencies": [
+      "simple"
+    ],
+    "skillChoices": {
+      "count": 2,
+      "from": [
+        "arcana",
+        "history",
+        "insight",
+        "investigation",
+        "medicine",
+        "nature",
+        "religion"
+      ]
+    },
+    "rankedClassSkills": [
+      "concentration",
+      "craft",
+      "decipher-script",
+      "knowledge",
+      "profession",
+      "spellcraft"
+    ],
+    "rankedSkillPoints": {
+      "firstLevel": "4*(2+Int-modifier)",
+      "eachAdditionalLevel": "2+Int-modifier"
+    },
+    "multiclassIntelligencePrerequisite": 13,
+    "alignmentRestriction": null,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonMinimumTotalCharacterLevel": 21,
+    "attackProgression": "half-BAB",
+    "iterativeAttackPolicy": "shared-native-attack-procedures",
+    "spellPreparation": "none",
+    "spellAccess": "learned-spellbook-repertoire",
+    "optionalOpenSpellAccess": {
+      "policy": "open-spell-access",
+      "allClassSpellsIncludingCantripsWhenEnabled": true,
+      "noAdditionalCastingResources": true,
+      "noOffListSpellsOrFreeCastings": true
+    },
+    "spellbook": {
+      "initialLevelOneSpells": 6,
+      "additionalWizardSpellsAtEachHigherWizardLevel": 2,
+      "learnedLeveledSpellsByLevelWithoutAddedCopies": [
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44
+      ],
+      "eligibleAcquisition": "wizard-list-spells-of-castable-levels-via-leveling-or-source-spell-copying",
+      "eligibleAlreadyLearnedSpellsRemainCastableWithoutPhysicalBook": true,
+      "missingBookRestrictsExplicitBookDependentProcedures": true,
+      "requiresPhysicalBookForRitualAdept": true,
+      "copyingNewSpell": {
+        "hoursPerSpellLevel": 2,
+        "goldPiecesPerSpellLevel": 50
+      },
+      "copyingExistingSpellIntoBackup": {
+        "hoursPerSpellLevel": 1,
+        "goldPiecesPerSpellLevel": 10
+      },
+      "lostBookRestoration": "published-source-copying-and-replacement-procedures",
+      "spellbookAsArcaneFocus": true
+    },
+    "spellKnownCapacity": "spellbook-learned-no-daily-prepared-subset",
+    "cantripsKnownProgression": [
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "spellSlotsProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "spellResourceModes": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "wizardSpecialization": {
+      "selectionListId": "wizard-specialization",
+      "eligibleOptionFamilies": [
+        "metamagic",
+        "item-creation"
+      ],
+      "classLevelGrants": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "selectionsPerClassLevelGrant": 1,
+      "additionalToOtherClassGrants": true,
+      "ordinaryGeneralFeatMayBeReplacedByOneEligibleSpecializationOption": true,
+      "usingFeatPathConsumesGeneralFeatChoice": true,
+      "ordinaryAsiAllowsFeatSubstitutionOnlyIfItAlreadyPermitsFeats": true,
+      "optionPrerequisitesApply": true,
+      "repeatOptionOnlyIfItsOwnRulesAllow": true,
+      "effectDefinitions": "shared-option-catalog",
+      "underlyingMetamagicAndCraftingDetails": "deferred-to-shared-mechanics",
+      "historicalSpellMasteryFeat": "excluded",
+      "doesNotGrantSorceryPoints": true,
+      "doesNotGrantSorcererMetamagicClassFeature": true
+    },
+    "scribeScrollLevel1": "automatic-class-feature-no-feat-or-specialization-choice",
+    "companionPathChoice": {
+      "exclusive": true,
+      "paths": [
+        "bonded-persistent",
+        "self-focused-ephemeral"
+      ],
+      "selectionFromWizardLevel": 1,
+      "implementation": "deferred-to-shared-companion-system",
+      "noMechanicalPowersInvented": true
+    },
+    "subclassFeatureLevels": [
+      3,
+      6,
+      10,
+      14
+    ],
+    "subclasses": "excluded-until-subclass-pass",
+    "prestigeClasses": "excluded-until-prestige-pass",
+    "memorizeSpellLevel5": "inactive-preparation-only-source-feature",
+    "startingEquipment": {
+      "sourceProfile": "SRD52",
+      "optionA": [
+        "two-daggers",
+        "quarterstaff-arcane-focus",
+        "robe",
+        "spellbook",
+        "scholars-pack",
+        "5-gp"
+      ],
+      "optionB": "55-gp",
+      "additionalFromBackground": true
+    },
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.wizard.arcane-recovery-level-1",
+          "class-feature.wizard.ritual-adept-level-1",
+          "class-feature.wizard.spellcasting-level-1",
+          "class-feature.wizard.scribe-scroll-level-1"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": true,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 3,
+        "minimumLeveledSpellsAcquired": 6,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 0,
+          "will": 2
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.wizard.scholar-level-2"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 3,
+        "minimumLeveledSpellsAcquired": 8,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 3,
+        "minimumLeveledSpellsAcquired": 10,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.wizard.ability-score-improvement-level-4"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 4,
+        "minimumLeveledSpellsAcquired": 12,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.wizard.wizard-specialization-level-5"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 1,
+        "cantripsKnown": 4,
+        "minimumLeveledSpellsAcquired": 14,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 4,
+        "minimumLeveledSpellsAcquired": 16,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 4,
+        "minimumLeveledSpellsAcquired": 18,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.wizard.ability-score-improvement-level-8"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 4,
+        "minimumLeveledSpellsAcquired": 20,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 4,
+        "minimumLeveledSpellsAcquired": 22,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [
+          "class-feature.wizard.wizard-specialization-level-10"
+        ],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 1,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 24,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 26,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.wizard.ability-score-improvement-level-12"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 28,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 30,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": true,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 32,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.wizard.wizard-specialization-level-15"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 1,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 34,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.wizard.ability-score-improvement-level-16"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 36,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 38,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.wizard.spell-mastery-level-18"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 40,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.wizard.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 0,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 42,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.wizard.signature-spells-level-20",
+          "class-feature.wizard.wizard-specialization-level-20"
+        ],
+        "improvements": [],
+        "subclassMilestone": false,
+        "pendingCompanionPathChoice": false,
+        "wizardSpecializationChoicesGranted": 1,
+        "cantripsKnown": 5,
+        "minimumLeveledSpellsAcquired": 44,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 6,
+          "will": 12
+        }
+      }
+    ],
+    "inlineFeatures": []
+  }
+}

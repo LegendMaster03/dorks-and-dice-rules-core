@@ -1,0 +1,39 @@
+{
+  "id": "item.iron-pot",
+  "name": "Iron Pot",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Iron Pot",
+        "type": "G",
+        "rarity": "none",
+        "weight": 10,
+        "value": 200,
+        "entries": [
+          "An iron pot holds 1 gallon of liquid."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Iron Pot",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 200,
+        "entries": [
+          "An Iron Pot holds up to 1 gallon."
+        ],
+        "containerCapacity": {
+          "volume": [
+            0.1
+          ]
+        }
+      }
+    }
+  ]
+}

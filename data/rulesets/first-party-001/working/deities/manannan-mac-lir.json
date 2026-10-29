@@ -1,0 +1,19 @@
+{
+  "id": "deity.manannan-mac-lir",
+  "name": "Manannan mac Lir",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "title": "God of oceans and sea creatures",
+    "domains": [
+      "Nature",
+      "Tempest"
+    ],
+    "symbol": "Wave of white water on green"
+  }
+}

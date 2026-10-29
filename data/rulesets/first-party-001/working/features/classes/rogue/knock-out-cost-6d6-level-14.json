@@ -1,0 +1,23 @@
+{
+  "id": "class-feature.rogue.knock-out-cost-6d6-level-14",
+  "name": "Knock Out (Cost: 6d6)",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 14,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Knock Out (Cost: 6d6)",
+    "description": "Native Rogue Knock Out (Cost: 6d6); uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "cunning-strike-effect",
+      "dieCost": 6,
+      "save": "constitution",
+      "saveDC": "8 + Dexterity modifier + proficiency bonus",
+      "onFailedSave": "unconscious",
+      "duration": "1-minute",
+      "endOnDamage": true,
+      "repeatSave": "end-of-each-turn",
+      "endOnSuccess": true
+    }
+  }
+}

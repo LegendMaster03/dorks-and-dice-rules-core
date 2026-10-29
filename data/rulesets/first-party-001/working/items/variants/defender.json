@@ -1,0 +1,58 @@
+{
+  "id": "magicvariant.defender",
+  "name": "Defender",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Defender",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Defender ",
+          "source": "SRD51",
+          "page": 218,
+          "rarity": "legendary",
+          "reqAttune": true,
+          "bonusWeapon": "+3",
+          "bonusAc": "+1",
+          "entries": [
+            "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+            "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Defender",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "M|SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Defender ",
+          "source": "SRD52",
+          "page": 218,
+          "rarity": "legendary",
+          "reqAttune": true,
+          "bonusWeapon": "+3",
+          "bonusAc": "+1",
+          "entries": [
+            "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+            "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to {=bonusAc} and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+          ]
+        }
+      }
+    }
+  ]
+}

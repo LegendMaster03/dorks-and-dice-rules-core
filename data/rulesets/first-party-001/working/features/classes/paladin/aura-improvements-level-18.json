@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.paladin.aura-improvements-level-18",
+  "name": "Aura improvements",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Aura improvements",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "level": 18,
+        "entries": [
+          "At 18th level, the range of your Aura of Protection increases to 30 feet."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 18
+}

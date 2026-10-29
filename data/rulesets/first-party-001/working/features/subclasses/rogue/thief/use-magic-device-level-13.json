@@ -1,0 +1,62 @@
+{
+  "id": "subclass-feature.rogue.thief.use-magic-device-level-13",
+  "name": "Use Magic Device",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Use Magic Device",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD51",
+        "level": 13,
+        "header": 2,
+        "entries": [
+          "By 13th level, you have learned enough about the workings of magic that you can improvise the use of items even when they are not intended for you. You ignore all class, race, and level requirements on the use of magic items."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Use Magic Device",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD52",
+        "level": 13,
+        "header": 2,
+        "entries": [
+          "You've learned how to maximize use of magic items, granting you the following benefits.",
+          {
+            "type": "entries",
+            "name": "Attunement",
+            "entries": [
+              "You can attune to up to four magic items at once."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Charges",
+            "entries": [
+              "Whenever you use a magic item property that expends charges, roll {@dice 1d6}. On a roll of 6, you use the property without expending the charges."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Scrolls",
+            "entries": [
+              "You can use any {@item Spell Scroll|SRD52}, using Intelligence as your spellcasting ability for the spell. If the spell is a cantrip or a level 1 spell, you can cast it reliably. If the scroll contains a higher-level spell, you must first succeed on an Intelligence ({@skill Arcana|SRD52}) check ({@dc 10} plus the spell's level). On a successful check, you cast the spell from the scroll. On a failed check, the scroll disintegrates."
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "parentSubclass": "subclass.rogue.thief",
+  "classLevel": 13
+}

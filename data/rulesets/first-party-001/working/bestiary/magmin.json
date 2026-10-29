@@ -1,0 +1,139 @@
+{
+  "id": "monster.magmin",
+  "name": "Magmin",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "3d6 + 3"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 7,
+    "dex": 15,
+    "con": 12,
+    "int": 8,
+    "wis": 11,
+    "cha": 10,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Primordial (Ignan)"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The magmin explodes when it dies. {@actSave dex} {@dc 11}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the magmin. {@actSaveFail} 7 ({@damage 2d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Touch",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 2d4 + 2}) Fire damage. If the target is a creature or a flammable object that isn't being worn or carried, it starts {@hazard burning|SRD52}."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Ignited Illumination",
+        "entries": [
+          "The magmin sets itself ablaze or extinguishes its flames. While ablaze, the magmin sheds {@variantrule Bright Light|SRD52} in a 10-foot radius and {@variantrule Dim Light|SRD52} for an additional 10 feet."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, fire"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/magmin.opus"
+    },
+    "traitTags": [
+      "Death Burst"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "IG",
+      "P"
+    ],
+    "damageTags": [
+      "F"
+    ],
+    "miscTags": [
+      "AOE",
+      "MA"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Magmin",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Magmin",
+            "entries": [
+              "{@i Reckless Elemental Arsonist}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Elemental Plane of Fire)|bestiary|environment=planar, fire}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Magmins divide all things into two categories: things that are on fire and things that should be on fire. With bodies of flame and magmatic rock, these halfling-size creatures delight in setting fires. They do so not out of malice but out of enthusiasm for primal fire. They don't consider that objects have value beyond kindling or that creatures can be harmed by flames. If such concepts are explained to them, they find the ideas difficult to grasp and don't remember them for long. Rather, they relish every opportunity to set flammable things alight, delighting in igniting paper, wooden structures, and explosives. Magmins are dangerous even in death, since they explode when they're destroyed, their flames igniting combustible materials nearby.",
+              "Magmins might be conjured by magic-users to harry foes or might escape the Elemental Plane of Fire through portals or rifts that lead to other realms. They're attracted to places of intense heat, such as volcanoes and rivers of magma. If they can't find such favored conditions, magmins eagerly burn structures or start wildfires to entertain themselves."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Magmin.webp"
+            },
+            "credit": "Hinchel Or",
+            "width": 2550,
+            "height": 1650
+          }
+        ]
+      }
+    ]
+  }
+}

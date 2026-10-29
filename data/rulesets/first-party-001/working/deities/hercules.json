@@ -1,0 +1,19 @@
+{
+  "id": "deity.hercules",
+  "name": "Hercules",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "God of strength and adventure",
+    "domains": [
+      "Tempest",
+      "War"
+    ],
+    "symbol": "Lion's head"
+  }
+}

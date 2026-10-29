@@ -1,0 +1,46 @@
+{
+  "id": "item.midnight-tears",
+  "name": "Midnight Tears",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Midnight Tears",
+        "type": "G",
+        "rarity": "none",
+        "value": 150000,
+        "poison": true,
+        "entries": [
+          "A creature that ingests this poison suffers no effect until the stroke of midnight. If the poison has not been neutralized before then, the creature must succeed on a {@dc 17} Constitution saving throw, taking 31 ({@damage 9d6}) poison damage on a failed save, or half as much damage on a successful one."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Midnight Tears",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 150000,
+        "poison": true,
+        "entries": [
+          "A creature that ingests Midnight Tears suffers no effect until the stroke of midnight. Any effect that ends the {@condition Poisoned|SRD52} condition neutralizes this poison. If the poison hasn't been neutralized before midnight, the creature makes a {@dc 17} Constitution saving throw, taking 31 ({@damage 9d6}) Poison damage on a failed save or half as much damage on a successful one."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

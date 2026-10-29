@@ -1,0 +1,145 @@
+{
+  "id": "subclass-feature.druid.land.circle-of-the-land-spells-level-3",
+  "name": "Circle of the Land Spells",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Circle of the Land Spells",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "Whenever you finish a {@variantrule Long Rest|SRD52}, choose one type of land: arid, polar, temperate, or tropical. Consult the table below that corresponds to the chosen type; you have the spells listed for your Druid level and lower prepared.",
+          {
+            "type": "table",
+            "caption": "Arid Land",
+            "colLabels": [
+              "Druid Level",
+              "Circle Spells"
+            ],
+            "colStyles": [
+              "col-1 text-center",
+              "col-11"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Blur|SRD52}, {@spell Burning Hands|SRD52}, {@spell Fire Bolt|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Fireball|SRD52}"
+              ],
+              [
+                "7th",
+                "{@spell Blight|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Wall of Stone|SRD52}"
+              ]
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Polar Land",
+            "colLabels": [
+              "Druid Level",
+              "Circle Spells"
+            ],
+            "colStyles": [
+              "col-1 text-center",
+              "col-11"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Fog Cloud|SRD52}, {@spell Hold Person|SRD52}, {@spell Ray of Frost|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Sleet Storm|SRD52}"
+              ],
+              [
+                "7th",
+                "{@spell Ice Storm|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Cone of Cold|SRD52}"
+              ]
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Temperate Land",
+            "colLabels": [
+              "Druid Level",
+              "Circle Spells"
+            ],
+            "colStyles": [
+              "col-1 text-center",
+              "col-11"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Misty Step|SRD52}, {@spell Shocking Grasp|SRD52}, {@spell Sleep|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Lightning Bolt|SRD52}"
+              ],
+              [
+                "7th",
+                "{@spell Freedom of Movement|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Tree Stride|SRD52}"
+              ]
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Tropical Land",
+            "colLabels": [
+              "Druid Level",
+              "Circle Spells"
+            ],
+            "colStyles": [
+              "col-1 text-center",
+              "col-11"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Acid Splash|SRD52}, {@spell Ray of Sickness|SRD52}, {@spell Web|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Stinking Cloud|SRD52}"
+              ],
+              [
+                "7th",
+                "{@spell Polymorph|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Insect Plague|SRD52}"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "parentSubclass": "subclass.druid.land",
+  "classLevel": 3
+}

@@ -1,0 +1,23 @@
+{
+  "id": "baseitem.sling",
+  "name": "Sling",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "R|SRD52",
+    "rarity": "none",
+    "value": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "range": "30/120",
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "ammoType": "sling bullet|srd52"
+  }
+}

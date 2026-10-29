@@ -1,0 +1,39 @@
+{
+  "id": "deity.oghma",
+  "name": "Oghma",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a-1",
+      "content": {
+        "name": "Oghma",
+        "pantheon": "Celtic",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "God of speech and writing",
+        "domains": [
+          "Knowledge"
+        ],
+        "symbol": "Unfurled scroll"
+      }
+    },
+    {
+      "key": "candidate-a-2",
+      "content": {
+        "name": "Oghma",
+        "pantheon": "Forgotten Realms",
+        "alignment": [
+          "N"
+        ],
+        "title": "God of knowledge",
+        "domains": [
+          "Knowledge"
+        ],
+        "symbol": "Blank scroll"
+      }
+    }
+  ]
+}

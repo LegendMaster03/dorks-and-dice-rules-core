@@ -1,0 +1,72 @@
+{
+  "id": "optionalfeature.otherworldly-leap",
+  "name": "Otherworldly Leap",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Otherworldly Leap",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 9,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "jump"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell jump} on yourself at will, without expending a spell slot or material components."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Otherworldly Leap",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 2,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "jump|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell Jump|SRD52} on yourself without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

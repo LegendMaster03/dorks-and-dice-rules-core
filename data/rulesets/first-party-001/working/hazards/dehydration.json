@@ -1,0 +1,49 @@
+{
+  "id": "hazard.dehydration",
+  "name": "Dehydration",
+  "kind": "hazard",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "entries": [
+      "A creature requires an amount of water per day based on its size, as shown in the Water Needs per Day table. A creature that drinks less than half the required water for a day gains 1 {@condition Exhaustion|srd52} level at the day's end. {@condition Exhaustion|srd52} caused by dehydration can't be removed until the creature drinks the full amount of water required for a day.",
+      {
+        "type": "table",
+        "caption": "Water Needs per Day",
+        "colLabels": [
+          "Size",
+          "Water"
+        ],
+        "colStyles": [
+          "col-6",
+          "col-6"
+        ],
+        "rows": [
+          [
+            "Tiny",
+            "1/4 gallon"
+          ],
+          [
+            "Small",
+            "1 gallon"
+          ],
+          [
+            "Medium",
+            "1 gallon"
+          ],
+          [
+            "Large",
+            "4 gallons"
+          ],
+          [
+            "Huge",
+            "16 gallons"
+          ],
+          [
+            "Gargantuan",
+            "64 gallons"
+          ]
+        ]
+      }
+    ]
+  }
+}

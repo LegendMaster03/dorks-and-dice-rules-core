@@ -1,0 +1,35 @@
+{
+  "id": "item.manacles",
+  "name": "Manacles",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Manacles",
+        "type": "G",
+        "rarity": "none",
+        "weight": 6,
+        "value": 200,
+        "entries": [
+          "These metal restraints can bind a Small or Medium creature. Escaping the manacles requires a successful {@dc 20} Dexterity check. Breaking them requires a successful {@dc 20} Strength check. Each set of manacles comes with one key. Without the key, a creature proficient with {@item thieves' tools|SRD51} can pick the manacles' lock with a successful {@dc 15} Dexterity check. Manacles have 15 hit points."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Manacles",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 6,
+        "value": 200,
+        "entries": [
+          "As a {@action Utilize|SRD52} action, you can use Manacles to bind an unwilling Small or Medium creature within 5 feet of yourself that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition if you succeed on a {@dc 13} Dexterity ({@skill Sleight of Hand|SRD52}) check. While bound, a creature has {@variantrule Disadvantage|SRD52} on attack rolls, and the creature is {@condition Restrained|SRD52} if the Manacles are attached to a chain or hook that is fixed in place. Escaping the Manacles requires a successful {@dc 20} Dexterity ({@skill Sleight of Hand|SRD52}) check as an action. Bursting them requires a successful {@dc 25} Strength ({@skill Athletics|SRD52}) check as an action.",
+          "Each set of Manacles comes with a key. Without the key, a creature can use {@item Thieves' Tools|SRD52} to pick the Manacles' lock with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check."
+        ]
+      }
+    }
+  ]
+}

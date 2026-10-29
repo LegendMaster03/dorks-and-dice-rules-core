@@ -1,0 +1,42 @@
+{
+  "id": "item.cloak-of-elvenkind",
+  "name": "Cloak of Elvenkind",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloak of Elvenkind",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While you wear this cloak with its hood up, Wisdom ({@skill Perception}) checks made to see you have disadvantage, and you have advantage on Dexterity ({@skill Stealth}) checks made to hide, as the cloak's color shifts to camouflage you. Pulling the hood up or down requires an action."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloak of Elvenkind",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While you wear this cloak, Wisdom ({@skill Perception|SRD52}) checks made to perceive you have {@variantrule Disadvantage|SRD52}, and you have {@variantrule Advantage|SRD52} on Dexterity ({@skill Stealth|SRD52}) checks."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

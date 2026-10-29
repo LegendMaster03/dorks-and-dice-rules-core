@@ -1,0 +1,68 @@
+{
+  "id": "optionalfeature.voice-of-the-chain-master",
+  "name": "Voice of the Chain Master",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Voice of the Chain Master",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "pact": "Chain"
+          }
+        ],
+        "entries": [
+          "You can communicate telepathically with your familiar and perceive through your familiar's senses as long as you are on the same plane of existence. Additionally, while perceiving through your familiar's senses, you can also speak through your familiar in your own voice, even if your familiar is normally incapable of speech."
+        ]
+      }
+    }
+  ],
+  "pactInvocationCodification": {
+    "status": "source-staged-unresolved-not-runtime",
+    "invocationRef": "invocation.voice-of-the-chain-master",
+    "requiredPactType": "Chain",
+    "bindsToOneConcretePact": true,
+    "usesSeparateInvocationEntitlement": true,
+    "neverGrantedAutomaticallyByPact": true,
+    "associatedPatronMustAccept": true,
+    "sourceVersionsRetained": true,
+    "conflictGate": "none-yet-confirmed"
+  },
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Chain",
+    "minimumWarlockLevel": null,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "familiar-communication",
+      "requiresFamiliarFromAttachedPact": true,
+      "planeRestriction": "same-plane",
+      "grants": [
+        "telepathic-communication",
+        "remote-familiar-senses",
+        "speech-through-familiar-in-warlock-voice"
+      ],
+      "baseSensoryActionIsNotDuplicated": true
+    },
+    "sourceRightsReview": "srd-reconciled",
+    "originalSourceVersionsUnaffected": true
+  }
+}

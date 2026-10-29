@@ -1,0 +1,92 @@
+{
+  "id": "spell.contingency",
+  "name": "Contingency",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Contingency",
+        "level": 6,
+        "school": "V",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a statuette of yourself carved from ivory and decorated with gems worth at least 1,500 gp",
+            "cost": 150000
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "day",
+              "amount": 10
+            }
+          }
+        ],
+        "entries": [
+          "Choose a spell of 5th level or lower that you can cast, that has a casting time of 1 action, and that can target you. You cast that spell—called the contingent spell—as part of casting contingency, expending spell slots for both, but the contingent spell doesn't come into effect. Instead, it takes effect when a certain circumstance occurs. You describe that circumstance when you cast the two spells. For example, a contingency cast with {@spell water breathing} might stipulate that {@spell water breathing} comes into effect when you are engulfed in water or a similar liquid.",
+          "The contingent spell takes effect immediately after the circumstance is met for the first time, whether or not you want it to, and then contingency ends.",
+          "The contingent spell takes effect only on you, even if it can normally target others. You can use only one contingency spell at a time. If you cast this spell again, the effect of another contingency spell on you ends. Also, contingency ends on you if its material component is ever not on your person."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Contingency",
+        "level": 6,
+        "school": "A",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a gem-encrusted statuette of yourself worth 1,500+ GP",
+            "cost": 150000
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "day",
+              "amount": 10
+            }
+          }
+        ],
+        "entries": [
+          "Choose a spell of level 5 or lower that you can cast, that has a casting time of an action, and that can target you. You cast that spell—called the contingent spell—as part of casting Contingency, expending spell slots for both, but the contingent spell doesn't come into effect. Instead, it takes effect when a certain trigger occurs. You describe that trigger when you cast the two spells. For example, a Contingency cast with {@spell Water Breathing|SRD52} might stipulate that Water Breathing comes into effect when you are engulfed in water or a similar liquid.",
+          "The contingent spell takes effect immediately after the trigger occurs for the first time, whether or not you want it to, and then Contingency ends.",
+          "The contingent spell takes effect only on you, even if it can normally target others. You can use only one Contingency spell at a time. If you cast this spell again, the effect of another Contingency spell on you ends. Also, Contingency ends on you if its material component is ever not on your person."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "id": "spell.poison-spray",
+  "name": "Poison Spray",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Poison Spray",
+        "level": 0,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 10
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You extend your hand toward a creature you can see within range and project a puff of noxious gas from your palm. The creature must succeed on a Constitution saving throw or take {@damage 1d12} poison damage.",
+          "This spell's damage increases by {@damage 1d12} when you reach 5th level ({@damage 2d12}), 11th level ({@damage 3d12}), and 17th level ({@damage 4d12})."
+        ],
+        "scalingLevelDice": {
+          "label": "poison damage",
+          "scaling": {
+            "1": "1d12",
+            "5": "2d12",
+            "11": "3d12",
+            "17": "4d12"
+          }
+        },
+        "damageInflict": [
+          "poison"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "SCL",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Poison Spray",
+        "level": 0,
+        "school": "N",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You spray toxic mist at a creature within range. Make a ranged spell attack against the target. On a hit, the target takes {@damage 1d12} Poison damage."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Cantrip Upgrade",
+            "entries": [
+              "The damage increases by {@damage 1d12} when you reach levels 5 ({@damage 2d12}), 11 ({@damage 3d12}), and 17 ({@damage 4d12})."
+            ]
+          }
+        ],
+        "scalingLevelDice": {
+          "label": "Poison damage",
+          "scaling": {
+            "1": "1d12",
+            "5": "2d12",
+            "11": "3d12",
+            "17": "4d12"
+          }
+        },
+        "damageInflict": [
+          "poison"
+        ],
+        "spellAttack": [
+          "R"
+        ],
+        "miscTags": [
+          "SCL"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

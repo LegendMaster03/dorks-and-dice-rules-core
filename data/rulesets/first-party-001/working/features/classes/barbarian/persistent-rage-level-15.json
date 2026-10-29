@@ -1,0 +1,28 @@
+{
+  "id": "class-feature.barbarian.persistent-rage-level-15",
+  "name": "Persistent Rage",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 15,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Persistent Rage",
+    "description": "Both Rage forms self-maintain for up to 10 minutes. Recover all spent Rage uses upon initiative once per Long Rest.",
+    "mechanics": {
+      "kind": "rage-upgrade",
+      "forms": [
+        "battle",
+        "primal"
+      ],
+      "durationMinutes": 10,
+      "requireExtensions": false,
+      "endsOn": [
+        "unconscious",
+        "heavy-armor",
+        "voluntary"
+      ],
+      "initiativeResourceRefill": "all",
+      "refillFrequency": "once-per-long-rest"
+    }
+  }
+}

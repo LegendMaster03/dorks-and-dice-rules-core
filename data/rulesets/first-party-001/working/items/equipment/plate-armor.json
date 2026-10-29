@@ -1,0 +1,39 @@
+{
+  "id": "baseitem.plate-armor",
+  "name": "Plate Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Plate Armor",
+        "type": "HA",
+        "rarity": "none",
+        "weight": 65,
+        "value": 150000,
+        "ac": 18,
+        "strength": "15",
+        "armor": true,
+        "stealth": true,
+        "entries": [
+          "Plate consists of shaped, interlocking metal plates to cover the entire body. A suit of plate includes gauntlets, heavy leather boots, a visored helmet, and thick layers of padding underneath the armor. Buckles and straps distribute the weight over the body."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Plate Armor",
+        "type": "HA|SRD52",
+        "rarity": "none",
+        "weight": 65,
+        "value": 150000,
+        "ac": 18,
+        "strength": "15",
+        "armor": true,
+        "stealth": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "optionalfeature.dueling",
+  "name": "Dueling",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dueling",
+        "featureType": [
+          "FS:F",
+          "FS:B",
+          "FS:P",
+          "FS:R"
+        ],
+        "entries": [
+          "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon."
+        ]
+      }
+    }
+  ]
+}

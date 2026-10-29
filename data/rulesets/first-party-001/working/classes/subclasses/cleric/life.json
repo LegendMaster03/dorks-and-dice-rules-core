@@ -1,0 +1,109 @@
+{
+  "id": "subclass.cleric.life",
+  "name": "Life Domain",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Life Domain",
+        "shortName": "Life",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "1": [
+                "bless",
+                "cure wounds"
+              ],
+              "3": [
+                "lesser restoration",
+                "spiritual weapon"
+              ],
+              "5": [
+                "beacon of hope",
+                "revivify"
+              ],
+              "7": [
+                "death ward",
+                "guardian of faith"
+              ],
+              "9": [
+                "mass cure wounds",
+                "raise dead"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Life Domain|Cleric||Life||1",
+          "Channel Divinity: Preserve Life|Cleric||Life||2",
+          "Blessed Healer|Cleric||Life||6",
+          "Divine Strike|Cleric||Life||8",
+          "Supreme Healing|Cleric||Life||17"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Life Domain",
+        "shortName": "Life",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "3": [
+                "aid|srd52",
+                "bless|srd52",
+                "cure wounds|srd52",
+                "lesser restoration|srd52"
+              ],
+              "5": [
+                "mass healing word|srd52",
+                "revivify|srd52"
+              ],
+              "7": [
+                "aura of life|srd52",
+                "death ward|srd52"
+              ],
+              "9": [
+                "greater restoration|srd52",
+                "mass cure wounds|srd52"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Life Domain|Cleric|SRD52|Life|SRD52|3",
+          "Blessed Healer|Cleric|SRD52|Life|SRD52|6",
+          "Supreme Healing|Cleric|SRD52|Life|SRD52|17"
+        ],
+        "lore": [
+          {
+            "name": "Life Domain",
+            "shortName": "Life",
+            "className": "Cleric",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Life Cleric.webp"
+                },
+                "credit": "Tomas Duchek",
+                "width": 850,
+                "height": 1838
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric"
+}

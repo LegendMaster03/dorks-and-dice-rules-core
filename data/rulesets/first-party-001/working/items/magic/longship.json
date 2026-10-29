@@ -1,0 +1,21 @@
+{
+  "id": "item.longship",
+  "name": "Longship",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "SHP",
+    "rarity": "none",
+    "value": 1000000,
+    "crew": 40,
+    "vehAc": 15,
+    "vehHp": 300,
+    "vehDmgThresh": 15,
+    "vehSpeed": 3,
+    "capPassenger": 150,
+    "capCargo": 10,
+    "seeAlsoVehicle": [
+      "Longship"
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "id": "monster.killer-whale",
+  "name": "Killer Whale",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 90,
+      "formula": "12d12 + 12"
+    },
+    "speed": {
+      "walk": 5,
+      "swim": 60
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 13,
+    "int": 3,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 13,
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Hold Breath",
+        "entries": [
+          "The whale can hold its breath for 30 minutes."
+        ]
+      },
+      {
+        "name": "Echolocation",
+        "entries": [
+          "The whale can't use its blindsight while {@condition deafened}."
+        ]
+      },
+      {
+        "name": "Keen Hearing",
+        "entries": [
+          "The whale has advantage on Wisdom ({@skill Perception}) checks that rely on hearing."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}21 ({@damage 5d6 + 4}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "underwater"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/killer-whale.opus"
+    },
+    "traitTags": [
+      "Hold Breath"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Killer Whale",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52"
+        }
+      }
+    ]
+  }
+}

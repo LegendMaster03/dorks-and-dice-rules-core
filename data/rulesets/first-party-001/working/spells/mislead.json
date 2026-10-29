@@ -1,0 +1,99 @@
+{
+  "id": "spell.mislead",
+  "name": "Mislead",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mislead",
+        "level": 5,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You become {@condition invisible} at the same time that an illusory double of you appears where you are standing. The double lasts for the duration, but the invisibility ends if you attack or cast a spell.",
+          "You can use your action to move your illusory double up to twice your speed and make it gesture, speak, and behave in whatever way you choose.",
+          "You can see through its eyes and hear through its ears as if you were located where it is. On each of your turns as a bonus action, you can switch from using its senses to using your own, or back again. While you are using its senses, you are {@condition blinded} and {@condition deafened} in regard to your own surroundings."
+        ],
+        "conditionInflict": [
+          "blinded",
+          "deafened",
+          "invisible"
+        ],
+        "miscTags": [
+          "SGT",
+          "UBA"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mislead",
+        "level": 5,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You gain the {@condition Invisible|SRD52} condition at the same time that an illusory double of you appears where you are standing. The double lasts for the duration, but the invisibility ends immediately after you make an attack roll, deal damage, or cast a spell.",
+          "As a {@action Magic|SRD52} action, you can move the illusory double up to twice your {@variantrule Speed|SRD52} and make it gesture, speak, and behave in whatever way you choose. It is intangible and invulnerable.",
+          "You can see through its eyes and hear through its ears as if you were located where it is."
+        ],
+        "conditionInflict": [
+          "invisible"
+        ],
+        "miscTags": [
+          "SGT"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "item.paper",
+  "name": "Paper",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 20,
+    "entries": [
+      "One sheet of Paper can hold about 250 handwritten words."
+    ]
+  }
+}

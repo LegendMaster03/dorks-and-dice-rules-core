@@ -1,0 +1,18 @@
+{
+  "id": "deity.nuada",
+  "name": "Nuada",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of war and warriors",
+    "domains": [
+      "War",
+      "Order"
+    ],
+    "symbol": "Silver hand on black background"
+  }
+}

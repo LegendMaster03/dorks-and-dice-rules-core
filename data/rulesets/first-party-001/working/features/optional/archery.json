@@ -1,0 +1,21 @@
+{
+  "id": "optionalfeature.archery",
+  "name": "Archery",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Archery",
+        "featureType": [
+          "FS:F",
+          "FS:R"
+        ],
+        "entries": [
+          "You gain a +2 bonus to attack rolls you make with ranged weapons."
+        ]
+      }
+    }
+  ]
+}

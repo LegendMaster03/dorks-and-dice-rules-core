@@ -1,0 +1,23 @@
+{
+  "id": "class-feature.monk.uncanny-metabolism-level-2",
+  "name": "Uncanny Metabolism",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Uncanny Metabolism",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "When you roll {@variantrule Initiative|SRD52}, you can regain all expended Focus Points. When you do so, roll your Martial Arts die, and regain a number of {@variantrule Hit Points|SRD52} equal to your Monk level plus the number rolled.",
+          "Once you use this feature, you can't use it again until you finish a {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 2
+}

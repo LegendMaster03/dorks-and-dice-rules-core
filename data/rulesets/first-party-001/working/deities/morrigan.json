@@ -1,0 +1,18 @@
+{
+  "id": "deity.morrigan",
+  "name": "Morrigan",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "title": "Goddess of battle",
+    "domains": [
+      "War"
+    ],
+    "symbol": "Two crossed spears"
+  }
+}

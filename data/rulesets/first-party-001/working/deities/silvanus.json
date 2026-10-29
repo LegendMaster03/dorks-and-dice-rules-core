@@ -1,0 +1,38 @@
+{
+  "id": "deity.silvanus",
+  "name": "Silvanus",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a-1",
+      "content": {
+        "name": "Silvanus",
+        "pantheon": "Celtic",
+        "alignment": [
+          "N"
+        ],
+        "title": "God of nature and forests",
+        "domains": [
+          "Nature"
+        ],
+        "symbol": "Summer oak tree"
+      }
+    },
+    {
+      "key": "candidate-a-2",
+      "content": {
+        "name": "Silvanus",
+        "pantheon": "Forgotten Realms",
+        "alignment": [
+          "N"
+        ],
+        "title": "God of wild nature",
+        "domains": [
+          "Nature"
+        ],
+        "symbol": "Oak leaf"
+      }
+    }
+  ]
+}

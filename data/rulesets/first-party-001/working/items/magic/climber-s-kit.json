@@ -1,0 +1,34 @@
+{
+  "id": "item.climber-s-kit",
+  "name": "Climber's Kit",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Climber's Kit",
+        "type": "G",
+        "rarity": "none",
+        "weight": 12,
+        "value": 2500,
+        "entries": [
+          "A climber's kit includes special pitons, boot tips, gloves, and a harness. You can use the climber's kit as an action to anchor yourself; when you do, you can't fall more than 25 feet from the point where you anchored yourself, and you can't climb more than 25 feet away from that point without undoing the anchor."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Climber's Kit",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 12,
+        "value": 2500,
+        "entries": [
+          "A Climber's Kit includes boot tips, gloves, pitons, and a harness. As a {@action Utilize|SRD52} action, you can use the Climber's Kit to anchor yourself; when you do, you can't fall more than 25 feet from the anchor point, and you can't move more than 25 feet from there without undoing the anchor as a {@variantrule Bonus Action|SRD52}."
+        ]
+      }
+    }
+  ]
+}

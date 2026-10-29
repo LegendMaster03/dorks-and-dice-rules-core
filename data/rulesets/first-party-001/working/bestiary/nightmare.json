@@ -1,0 +1,182 @@
+{
+  "id": "monster.nightmare",
+  "name": "Nightmare",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 68,
+      "formula": "8d10 + 24"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 90,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 10,
+    "wis": 13,
+    "cha": 15,
+    "passive": 11,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "understands Abyssal",
+      "Common",
+      "and Infernal but can't speak"
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Confer Fire Resistance",
+        "entries": [
+          "The nightmare can grant {@variantrule Resistance|SRD52} to Fire damage to a rider while it is on the nightmare."
+        ]
+      },
+      {
+        "name": "Illumination",
+        "entries": [
+          "The nightmare sheds {@variantrule Bright Light|SRD52} in a 10-foot radius and {@variantrule Dim Light|SRD52} for an additional 10 feet."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Bludgeoning damage plus 10 ({@damage 3d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Ethereal Stride",
+        "entries": [
+          "The nightmare and up to three willing creatures within 5 feet of it teleport to the Ethereal Plane from the Material Plane or vice versa."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, lower"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/nightmare.opus"
+    },
+    "traitTags": [
+      "Illumination"
+    ],
+    "languageTags": [
+      "AB",
+      "C",
+      "CS",
+      "I"
+    ],
+    "damageTags": [
+      "B",
+      "F"
+    ],
+    "miscTags": [
+      "AOE",
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Nightmare",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Nightmare",
+            "entries": [
+              "{@i Dread Steed of the Lower Planes}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Lower Planes)|bestiary|environment=planar, lower}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Nightmares resemble horses with flaming manes, burning hooves, and smoldering eyes. They terrorize weaker creatures and often ally with denizens of the Lower Planes in committing evil acts. These supernatural horses can innately travel between the Ethereal Plane and the Material Plane, and many know the locations of portals to the Lower Planes, the Shadowfell, and other sinister realms.",
+              "Nightmares' speed, resilience, and ability to gallop between planes of existence make them steeds coveted by evildoers. Roll on or choose a result from the Nightmare Riders table to inspire what might employ a nightmare steed.",
+              {
+                "type": "table",
+                "caption": "Nightmare Riders",
+                "colLabels": [
+                  "1d6",
+                  "The Nightmare Carries..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "The champion or messenger of an evil deity."
+                  ],
+                  [
+                    "2",
+                    "A group of joyriding imps or quasits."
+                  ],
+                  [
+                    "3",
+                    "An innocent soul trapped on the wild Fiend."
+                  ],
+                  [
+                    "4",
+                    "A lore-hunting mage, cultist, or lich."
+                  ],
+                  [
+                    "5",
+                    "A night hag herding larvae between planes."
+                  ],
+                  [
+                    "6",
+                    "A wicked cavalier, such as a death knight, an erinyes, an incubus, or a vampire."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Nightmare.webp"
+            },
+            "credit": "Alejandro Pacheco",
+            "width": 2550,
+            "height": 1650
+          }
+        ]
+      }
+    ]
+  }
+}

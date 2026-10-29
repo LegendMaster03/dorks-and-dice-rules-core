@@ -1,0 +1,35 @@
+{
+  "id": "class-feature.fighter.extra-attack-level-5",
+  "name": "Extra Attack",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Extra Attack",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 5,
+        "entries": [
+          "Beginning at 5th level, you can attack twice, instead of once, whenever you take the {@action Attack} action on your turn.",
+          "The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Extra Attack",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "You can attack twice instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 5
+}

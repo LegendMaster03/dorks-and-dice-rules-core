@@ -1,0 +1,16 @@
+{
+  "id": "class-feature.barbarian.instinctive-pounce-level-7",
+  "name": "Instinctive Pounce",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Instinctive Pounce",
+    "description": "Move up to half Speed when activating Rage as part of the same Bonus Action.",
+    "mechanics": {
+      "kind": "rage-activation-movement",
+      "fractionOfSpeed": 0.5
+    }
+  }
+}

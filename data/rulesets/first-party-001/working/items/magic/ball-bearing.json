@@ -1,0 +1,15 @@
+{
+  "id": "item.ball-bearing",
+  "name": "Ball Bearing",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 0.002,
+    "value": 0.1,
+    "entries": [
+      "Most commonly found inside a {@item Ball Bearings (Bag of 1,000)|srd51|bag of ball bearings}."
+    ]
+  }
+}

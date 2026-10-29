@@ -1,0 +1,46 @@
+{
+  "id": "item.oil-of-taggit",
+  "name": "Oil of Taggit",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Oil of Taggit",
+        "type": "G",
+        "rarity": "none",
+        "value": 40000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 13} Constitution saving throw or become {@condition poisoned} for 24 hours. The {@condition poisoned} creature is {@condition unconscious}. The creature wakes up if it takes damage."
+        ],
+        "poisonTypes": [
+          "contact"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Oil of Taggit",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 40000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Oil of Taggit must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 24 hours. The creature also has the {@condition Unconscious|SRD52} condition while {@condition Poisoned|SRD52} in this way. It wakes up if it takes damage."
+        ],
+        "poisonTypes": [
+          "contact"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "item.truth-serum",
+  "name": "Truth Serum",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Truth Serum",
+        "type": "G",
+        "rarity": "none",
+        "value": 15000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 11} Constitution saving throw or become {@condition poisoned} for 1 hour. The {@condition poisoned} creature can't knowingly speak a lie, as if under the effect of a {@spell zone of truth} spell."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "attachedSpells": [
+          "zone of truth"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Truth Serum",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 15000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Truth Serum must succeed on a {@dc 11} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 hour. The {@condition Poisoned|SRD52} creature can't knowingly communicate a lie."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

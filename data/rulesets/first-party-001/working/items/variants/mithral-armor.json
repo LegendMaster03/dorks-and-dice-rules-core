@@ -1,0 +1,65 @@
+{
+  "id": "magicvariant.mithral-armor",
+  "name": "Mithral Armor",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mithral Armor",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "type": "HA|SRD51"
+          },
+          {
+            "type": "MA|SRD51"
+          }
+        ],
+        "excludes": {
+          "name": "Hide Armor"
+        },
+        "inherits": {
+          "namePrefix": "Mithral ",
+          "source": "SRD51",
+          "page": 231,
+          "rarity": "uncommon",
+          "strength": null,
+          "stealth": false,
+          "entries": [
+            "Mithral is a light, flexible metal. A mithral chain shirt or breastplate can be worn under normal clothes. If the armor normally imposes disadvantage on Dexterity ({@skill Stealth}) checks or has a Strength requirement, the mithral version of the armor doesn't."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mithral Armor",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "MA|SRD52"
+          },
+          {
+            "type": "HA|SRD52"
+          }
+        ],
+        "excludes": {
+          "name": "Hide Armor"
+        },
+        "inherits": {
+          "namePrefix": "Mithral ",
+          "source": "SRD52",
+          "page": 231,
+          "rarity": "uncommon",
+          "entries": [
+            "Mithral is a light, flexible metal. A mithral chain shirt or breastplate can be worn under normal clothes.",
+            "If the armor normally imposes disadvantage on Dexterity ({@skill Stealth|SRD52}) checks or has a Strength requirement, the mithral version of the armor doesn't."
+          ]
+        }
+      }
+    }
+  ]
+}

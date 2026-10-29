@@ -1,0 +1,58 @@
+{
+  "id": "magicvariant.2-armor",
+  "name": "+2 Armor",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "+2 Armor",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "armor": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "+2 ",
+          "source": "SRD51",
+          "page": 208,
+          "rarity": "very rare",
+          "bonusAc": "+2",
+          "entries": [
+            "You have a {=bonusAc} bonus to AC while wearing this armor."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "+2 Armor",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "LA|SRD52"
+          },
+          {
+            "type": "MA|SRD52"
+          },
+          {
+            "type": "HA|SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "+2 ",
+          "source": "SRD52",
+          "page": 210,
+          "rarity": "very rare",
+          "bonusAc": "+2",
+          "entries": [
+            "You have a {=bonusAc} bonus to AC while wearing this armor."
+          ]
+        }
+      }
+    }
+  ]
+}

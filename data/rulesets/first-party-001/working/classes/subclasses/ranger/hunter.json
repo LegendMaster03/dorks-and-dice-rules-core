@@ -1,0 +1,59 @@
+{
+  "id": "subclass.ranger.hunter",
+  "name": "Hunter",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hunter",
+        "shortName": "Hunter",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassFeatures": [
+          "Hunter|Ranger||Hunter||3",
+          "Defensive Tactics|Ranger||Hunter||7",
+          "Multiattack|Ranger||Hunter||11",
+          "Superior Hunter's Defense|Ranger||Hunter||15"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hunter",
+        "shortName": "Hunter",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "subclassFeatures": [
+          "Hunter|Ranger|SRD52|Hunter|SRD52|3",
+          "Defensive Tactics|Ranger|SRD52|Hunter|SRD52|7",
+          "Superior Hunter's Prey|Ranger|SRD52|Hunter|SRD52|11",
+          "Superior Hunter's Defense|Ranger|SRD52|Hunter|SRD52|15"
+        ],
+        "lore": [
+          {
+            "name": "Hunter",
+            "shortName": "Hunter",
+            "className": "Ranger",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Hunter Ranger.webp"
+                },
+                "credit": "Katerina Ladon",
+                "width": 850,
+                "height": 1752
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger"
+}

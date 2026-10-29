@@ -1,0 +1,7 @@
+{
+  "id": "monster.flying-sword",
+  "name": "Flying Sword",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.animated-flying-sword"
+}

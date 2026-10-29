@@ -1,0 +1,18 @@
+{
+  "id": "deity.hera",
+  "name": "Hera",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "title": "Goddess of marriage and intrigue",
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Fan of peacock feathers"
+  }
+}

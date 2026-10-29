@@ -1,0 +1,38 @@
+{
+  "id": "item.ring-of-djinni-summoning",
+  "name": "Ring of Djinni Summoning",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Djinni Summoning",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can speak its command word as an action to summon a particular {@creature djinni} from the Elemental Plane of Air. The {@creature djinni} appears in an unoccupied space you choose within 120 feet of you. It remains as long as you concentrate (as if {@status concentration||concentrating} on a spell), to a maximum of 1 hour, or until it drops to 0 hit points. It then returns to its home plane.",
+          "While summoned, the {@creature djinni} is friendly to you and your companions. It obeys any commands you give it, no matter what language you use. If you fail to command it, the {@creature djinni} defends itself against attackers but takes no other actions.",
+          "After the {@creature djinni} departs, it can't be summoned again for 24 hours, and the ring becomes nonmagical if the {@creature djinni} dies."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Djinni Summoning",
+        "type": "RG|SRD52",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can take a {@action Magic|SRD52} action to summon a particular {@creature Djinni|SRD52} from the Elemental Plane of Air. The djinni appears in an unoccupied space you choose within 120 feet of yourself. It remains as long as you maintain {@status Concentration|SRD52}, to a maximum of 1 hour, or until it drops to 0 {@variantrule Hit Points|SRD52}.",
+          "While summoned, the djinni is {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies, and it obeys your commands. If you fail to command it, the djinni defends itself against attackers but takes no other actions.",
+          "After the djinni departs, it can't be summoned again for 24 hours, and the ring becomes nonmagical if the djinni dies.",
+          "Rings of Djinni Summoning are often created by the djinn they summon and given to mortals as gifts of friendship or tokens of esteem."
+        ]
+      }
+    }
+  ]
+}

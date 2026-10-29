@@ -1,0 +1,23 @@
+{
+  "id": "baseitem.greatclub",
+  "name": "Greatclub",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 10,
+    "value": 20,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "club": true,
+    "weapon": true
+  }
+}

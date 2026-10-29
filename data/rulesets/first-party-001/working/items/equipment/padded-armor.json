@@ -1,0 +1,37 @@
+{
+  "id": "baseitem.padded-armor",
+  "name": "Padded Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Padded Armor",
+        "type": "LA",
+        "rarity": "none",
+        "weight": 8,
+        "value": 500,
+        "ac": 11,
+        "armor": true,
+        "stealth": true,
+        "entries": [
+          "Padded armor consists of quilted layers of cloth and batting."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Padded Armor",
+        "type": "LA|SRD52",
+        "rarity": "none",
+        "weight": 8,
+        "value": 500,
+        "ac": 11,
+        "armor": true,
+        "stealth": true
+      }
+    }
+  ]
+}

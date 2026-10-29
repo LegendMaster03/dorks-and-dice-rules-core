@@ -1,0 +1,15 @@
+{
+  "id": "item.sprig-of-mistletoe",
+  "name": "Sprig of Mistletoe",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Druidic Focus"
+    ],
+    "type": "SCF",
+    "scfType": "druid",
+    "rarity": "none",
+    "value": 100
+  }
+}

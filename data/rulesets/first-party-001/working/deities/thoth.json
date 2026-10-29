@@ -1,0 +1,17 @@
+{
+  "id": "deity.thoth",
+  "name": "Thoth",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of knowledge and wisdom",
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Ibis"
+  }
+}

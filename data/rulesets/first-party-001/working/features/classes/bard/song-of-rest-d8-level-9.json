@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.bard.song-of-rest-d8-level-9",
+  "name": "Song of Rest (d8)",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 9,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Song of Rest (d8)",
+    "description": "Song of Rest (d8): unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "rest-healing-upgrade",
+      "extraHealingDie": "d8",
+      "trigger": "end-short-rest-after-spending-hit-die",
+      "targets": "bard-or-friendly-creature-perceiving-rest-expression",
+      "noMandatoryMusic": true,
+      "replacePreviousDie": true
+    }
+  }
+}

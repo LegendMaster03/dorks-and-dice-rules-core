@@ -1,0 +1,38 @@
+{
+  "id": "rule.monsters-r",
+  "name": "Monsters (R)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (R)",
+        "page": 341,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Rakshasa|srd51}",
+              "{@creature Rat|srd51}",
+              "{@creature Raven|srd51}",
+              "{@creature Red Dragon Wyrmling|srd51}",
+              "{@creature Reef Shark|srd51}",
+              "{@creature Remorhaz|srd51}",
+              "{@creature Rhinoceros|srd51}",
+              "{@creature Riding Horse|srd51}",
+              "{@creature Roc|srd51}",
+              "{@creature Roper|srd51}",
+              "{@creature Rug of Smothering|srd51}",
+              "{@creature Rust Monster|srd51}"
+            ]
+          }
+        ],
+        "id": "1b4"
+      }
+    }
+  ]
+}

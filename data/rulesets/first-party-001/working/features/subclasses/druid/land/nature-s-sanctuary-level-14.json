@@ -1,0 +1,43 @@
+{
+  "id": "subclass-feature.druid.land.nature-s-sanctuary-level-14",
+  "name": "Nature's Sanctuary",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Nature's Sanctuary",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD51",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "When you reach 14th level, creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.",
+          "The creature is aware of this effect before it makes its attack against you."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Nature's Sanctuary",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD52",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can expend a use of your Wild Shape and cause spectral trees and vines to appear in a 15-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} on the ground within 120 feet of yourself. They last there for 1 minute or until you have the {@condition Incapacitated|SRD52} condition or die. You and your allies have {@variantrule Cover|SRD52|Half Cover} while in that area, and your allies gain the current {@variantrule Resistance|SRD52} of your Nature's Ward while there.",
+          "As a {@variantrule Bonus Action|SRD52}, you can move the {@variantrule Cube [Area of Effect]|SRD52|Cube} up to 60 feet to ground within 120 feet of yourself."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "parentSubclass": "subclass.druid.land",
+  "classLevel": 14
+}

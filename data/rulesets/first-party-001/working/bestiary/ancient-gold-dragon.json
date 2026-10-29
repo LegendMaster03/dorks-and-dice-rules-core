@@ -1,0 +1,271 @@
+{
+  "id": "monster.ancient-gold-dragon",
+  "name": "Ancient Gold Dragon",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Metallic Dragons"
+    ],
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 546,
+      "formula": "28d20 + 252"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 14,
+    "con": 29,
+    "int": 18,
+    "wis": 17,
+    "cha": 28,
+    "save": {
+      "dex": "+9",
+      "wis": "+10"
+    },
+    "skill": {
+      "insight": "+10",
+      "perception": "+17",
+      "persuasion": "+16",
+      "stealth": "+9"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "24",
+      "xpLair": 75000
+    },
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 24}, {@hit 16} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Guiding Bolt|SRD52} (level 4 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Flame Strike|SRD52} (level 6 version)",
+            "{@spell Word of Recall|SRD52}",
+            "{@spell Zone of Truth|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 4 version) or (B) Weakening Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 17} to hit, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 9 ({@damage 2d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 71 ({@damage 13d10}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Weakening Breath",
+        "entries": [
+          "{@actSave str} {@dc 24}, each creature that isn't currently affected by this breath in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has {@variantrule Disadvantage|SRD52} on Strength-based {@variantrule D20 Test|SRD52|D20 Tests} and subtracts 5 ({@dice 1d10}) from its damage rolls. It repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 24} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Banish",
+        "entries": [
+          "{@actSave cha} {@dc 24}, one creature the dragon can see within 120 feet. {@actSaveFail} 24 ({@damage 7d6}) Force damage, and the target has the {@condition Incapacitated|SRD52} condition and is transported to a harmless demiplane until the start of the dragon's next turn, at which point it reappears in an unoccupied space of the dragon's choice within 120 feet of the dragon. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Guiding Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 4 version)."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "grassland"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "dragonAge": "ancient",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/gold-dragon.opus"
+    },
+    "traitTags": [
+      "Amphibious",
+      "Legendary Resistances"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "F",
+      "O",
+      "S"
+    ],
+    "damageTagsSpell": [
+      "F",
+      "R"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "incapacitated"
+    ],
+    "savingThrowForced": [
+      "charisma",
+      "dexterity",
+      "strength"
+    ],
+    "savingThrowForcedLegendary": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "charisma",
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ancient Gold Dragon",
+        "_copy": {
+          "name": "Gold Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ancient gold dragons are wise and mysterious. Many aid virtuous groups, guiding them in secret or patronizing them from afar. Only when stakes are at their highest do ancient gold dragons reveal themselves in all their majesty."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Ancient Gold Dragon.webp"
+                  },
+                  "title": "The pure of heart have nothing to fear in the presence of an ancient gold dragon",
+                  "credit": "Alexander Ostrowski",
+                  "width": 1979,
+                  "height": 2560
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

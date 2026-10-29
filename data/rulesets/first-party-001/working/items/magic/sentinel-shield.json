@@ -1,0 +1,19 @@
+{
+  "id": "item.sentinel-shield",
+  "name": "Sentinel Shield",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "baseItem": "shield|srd52",
+    "type": "S|SRD52",
+    "rarity": "uncommon",
+    "weight": 6,
+    "ac": 2,
+    "entries": [
+      "While holding this Shield, you have {@variantrule Advantage|SRD52} on {@variantrule Initiative|SRD52} rolls and Wisdom ({@skill Perception|SRD52}) checks. The Shield is emblazoned with a symbol of an eye."
+    ],
+    "classFeatures": [
+      "replicate magic item|artificer|efa|2|efa"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.cleric.divine-intervention-improvement-level-20",
+  "name": "Divine Intervention — Certain Supplication",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 20,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Divine Intervention — Certain Supplication",
+    "description": "Divine Intervention — Certain Supplication is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "supplication-capstone",
+      "improves": "class-feature.cleric.divine-intervention-level-10",
+      "atLevel": 20,
+      "supplicationAutomaticSuccess": true,
+      "retainsSuccessCooldownDays": 7,
+      "doesNotReduceDirectInterventionCooldown": true
+    }
+  }
+}

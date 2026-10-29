@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.cleric.divine-order-level-1",
+  "name": "Divine Order",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Divine Order",
+    "description": "Divine Order is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "choose-one-divine-order",
+      "choose": 1,
+      "options": [
+        "class-feature.cleric.protector-level-1",
+        "class-feature.cleric.thaumaturge-level-1"
+      ],
+      "choiceFeaturesNotAutomaticallyBothGranted": true,
+      "noSubclassRequirement": true
+    }
+  }
+}

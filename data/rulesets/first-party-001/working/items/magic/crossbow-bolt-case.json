@@ -1,0 +1,48 @@
+{
+  "id": "item.crossbow-bolt-case",
+  "name": "Crossbow Bolt Case",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Crossbow Bolt Case",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "entries": [
+          "This wooden case can hold up to twenty {@item crossbow bolt|srd51|crossbow bolts}."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "crossbow bolt|srd51": 20
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Crossbow Bolt Case",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "entries": [
+          "A {@item Crossbow Bolt Case|SRD52} holds up to 20 Bolts."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "bolt|srd52": 20
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

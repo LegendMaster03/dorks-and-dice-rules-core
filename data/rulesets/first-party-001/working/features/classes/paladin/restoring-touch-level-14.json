@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.paladin.restoring-touch-level-14",
+  "name": "Restoring Touch",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Restoring Touch",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 14,
+        "entries": [
+          "When you use Lay On Hands on a creature, you can also remove one or more of the following conditions from the creature: {@condition Blinded|SRD52}, {@condition Charmed|SRD52}, {@condition Deafened|SRD52}, {@condition Frightened|SRD52}, {@condition Paralyzed|SRD52}, or {@condition Stunned|SRD52}. You must expend 5 {@variantrule Hit Points|SRD52} from the healing pool of Lay On Hands for each of these conditions you remove; those points don't also restore {@variantrule Hit Points|SRD52} to the creature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 14
+}

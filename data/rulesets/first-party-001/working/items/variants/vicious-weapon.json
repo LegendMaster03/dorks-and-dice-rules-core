@@ -1,0 +1,61 @@
+{
+  "id": "magicvariant.vicious-weapon",
+  "name": "Vicious Weapon",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Vicious Weapon",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "weapon": true
+          }
+        ],
+        "excludes": {
+          "net": true
+        },
+        "entries": [
+          "When you roll a 20 with this magic weapon, the target takes an extra 7 damage of the weapon's type.",
+          "{@note Note: According to the SRD, it is an extra {@damage 2d6} damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+        ],
+        "inherits": {
+          "namePrefix": "Vicious ",
+          "source": "SRD51",
+          "page": 248,
+          "rarity": "rare",
+          "entries": [
+            "When you roll a 20 with this magic weapon, the target takes an extra 7 {=dmgType} damage.",
+            "{@note Note: According to the SRD, it is an extra {@damage 2d6} {=dmgType} damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Vicious Weapon",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "weaponCategory": "simple"
+          },
+          {
+            "weaponCategory": "martial"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Vicious ",
+          "source": "SRD52",
+          "page": 250,
+          "rarity": "rare",
+          "entries": [
+            "This magic weapon deals an extra {@damage 2d6} damage to any creature it hits. This extra damage is of the same type as the weapon's normal damage."
+          ]
+        }
+      }
+    }
+  ]
+}

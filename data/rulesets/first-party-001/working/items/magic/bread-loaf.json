@@ -1,0 +1,14 @@
+{
+  "id": "item.bread-loaf",
+  "name": "Bread (loaf)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "FD|SRD52",
+    "rarity": "none",
+    "value": 2,
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

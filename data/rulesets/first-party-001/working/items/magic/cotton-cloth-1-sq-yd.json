@@ -1,0 +1,11 @@
+{
+  "id": "item.cotton-cloth-1-sq-yd",
+  "name": "Cotton Cloth (1 sq. yd.)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 50
+  }
+}

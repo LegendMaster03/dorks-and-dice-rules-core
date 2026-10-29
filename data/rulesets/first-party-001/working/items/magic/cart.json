@@ -1,0 +1,12 @@
+{
+  "id": "item.cart",
+  "name": "Cart",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "VEH",
+    "rarity": "none",
+    "weight": 200,
+    "value": 1500
+  }
+}

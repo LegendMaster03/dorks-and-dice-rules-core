@@ -1,0 +1,62 @@
+{
+  "id": "optionalfeature.mask-of-many-faces",
+  "name": "Mask of Many Faces",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mask of Many Faces",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "disguise self"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell disguise self} at will, without expending a spell slot."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mask of Many Faces",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 2,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "disguise self|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell Disguise Self|SRD52} without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

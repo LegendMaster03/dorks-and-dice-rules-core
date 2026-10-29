@@ -1,0 +1,14 @@
+{
+  "id": "item.ink-1-ounce-bottle",
+  "name": "Ink (1-ounce bottle)",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 1000,
+    "miscTags": [
+      "CNS"
+    ]
+  }
+}

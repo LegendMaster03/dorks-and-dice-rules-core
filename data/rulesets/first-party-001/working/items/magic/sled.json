@@ -1,0 +1,12 @@
+{
+  "id": "item.sled",
+  "name": "Sled",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "VEH",
+    "rarity": "none",
+    "weight": 300,
+    "value": 2000
+  }
+}

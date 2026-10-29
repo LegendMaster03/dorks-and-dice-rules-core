@@ -1,0 +1,59 @@
+{
+  "id": "subclass.rogue.thief",
+  "name": "Thief",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Thief",
+        "shortName": "Thief",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "subclassFeatures": [
+          "Thief|Rogue||Thief||3",
+          "Supreme Sneak|Rogue||Thief||9",
+          "Use Magic Device|Rogue||Thief||13",
+          "Thief's Reflexes|Rogue||Thief||17"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Thief",
+        "shortName": "Thief",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "subclassFeatures": [
+          "Thief|Rogue|SRD52|Thief|SRD52|3",
+          "Supreme Sneak|Rogue|SRD52|Thief|SRD52|9",
+          "Use Magic Device|Rogue|SRD52|Thief|SRD52|13",
+          "Thief's Reflexes|Rogue|SRD52|Thief|SRD52|17"
+        ],
+        "lore": [
+          {
+            "name": "Thief",
+            "shortName": "Thief",
+            "className": "Rogue",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Thief Rogue.webp"
+                },
+                "credit": "Jodie Muir",
+                "width": 850,
+                "height": 2360
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue"
+}

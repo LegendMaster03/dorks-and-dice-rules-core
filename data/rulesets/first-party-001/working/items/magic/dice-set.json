@@ -1,0 +1,48 @@
+{
+  "id": "item.dice-set",
+  "name": "Dice Set",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dice Set",
+        "type": "GS",
+        "rarity": "none",
+        "value": 10
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dice Set",
+        "type": "GS|SRD52",
+        "rarity": "none",
+        "value": 10,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Wisdom"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Discern whether someone is cheating ({@dc 10}), or win the game ({@dc 20})"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

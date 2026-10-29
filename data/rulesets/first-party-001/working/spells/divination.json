@@ -1,0 +1,91 @@
+{
+  "id": "spell.divination",
+  "name": "Divination",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divination",
+        "level": 4,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "incense and a sacrificial offering appropriate to your religion, together worth at least 25 gp, which the spell consumes",
+            "cost": 2500,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "Your magic and an offering put you in contact with a god or a god's servants. You ask a single question concerning a specific goal, event, or activity to occur within 7 days. The DM offers a truthful reply. The reply might be a short phrase, a cryptic rhyme, or an omen.",
+          "The spell doesn't take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.",
+          "If you cast the spell two or more times before finishing your next long rest, there is a cumulative {@chance 25|||Random reading!|Regular reading} chance for each casting after the first that you get a random reading. The DM makes this roll in secret."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divination",
+        "level": 4,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "incense worth 25+ GP, which the spell consumes",
+            "cost": 2500,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "This spell puts you in contact with a god or a god's servants. You ask one question about a specific goal, event, or activity to occur within 7 days. The DM offers a truthful reply, which might be a short phrase or cryptic rhyme. The spell doesn't account for circumstances that might change the answer, such as the casting of other spells.",
+          "If you cast the spell more than once before finishing a {@variantrule Long Rest|SRD52}, there is a cumulative {@chance 25|||Random reading!|Regular reading} chance for each casting after the first that you get no answer."
+        ]
+      }
+    }
+  ]
+}

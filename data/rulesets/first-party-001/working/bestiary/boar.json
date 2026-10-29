@@ -1,0 +1,99 @@
+{
+  "id": "monster.boar",
+  "name": "Boar",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "2d8 + 4"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 13,
+    "dex": 11,
+    "con": 14,
+    "int": 2,
+    "wis": 9,
+    "cha": 5,
+    "passive": 9,
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Bloodied Fury",
+        "entries": [
+          "While {@status Bloodied|SRD52}, the boar has {@variantrule Advantage|SRD52} on attack rolls."
+        ]
+      },
+      {
+        "name": "Relentless (Recharges after a Short or Long Rest)",
+        "entries": [
+          "If the boar takes 7 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Piercing damage. If the target is a Medium or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 ({@damage 1d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "grassland",
+      "hill"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/boar.opus"
+    },
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Boar",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Boar.webp"
+                  },
+                  "width": 1370,
+                  "height": 1440
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "class-feature.paladin.weapon-mastery-level-1",
+  "name": "Weapon Mastery",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Weapon Mastery",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of two kinds of {@filter weapons|items|type=simple weapon;martial weapon} of your choice with which you have proficiency, such as {@item Longsword|SRD52|Longswords} and {@item Javelin|SRD52|Javelins}.",
+          "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change the kinds of weapons you chose. For example, you could switch to using the {@variantrule weapon mastery properties|SRD52|mastery properties} of {@item Halberd|SRD52|Halberds} and {@item Flail|SRD52|Flails}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 1
+}

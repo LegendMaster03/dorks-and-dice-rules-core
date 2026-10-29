@@ -1,0 +1,55 @@
+{
+  "id": "baseitem.hand-crossbow",
+  "name": "Hand Crossbow",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hand Crossbow",
+        "type": "R",
+        "rarity": "none",
+        "weight": 3,
+        "value": 7500,
+        "weaponCategory": "martial",
+        "property": [
+          "A",
+          "L",
+          "LD"
+        ],
+        "range": "30/120",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "crossbow": true,
+        "weapon": true,
+        "ammoType": "crossbow bolt|srd51"
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hand Crossbow",
+        "type": "R|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 7500,
+        "weaponCategory": "martial",
+        "property": [
+          "A|SRD52",
+          "L|SRD52",
+          "LD|SRD52"
+        ],
+        "mastery": [
+          "Vex|SRD52"
+        ],
+        "range": "30/120",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "crossbow": true,
+        "weapon": true,
+        "ammoType": "bolt|srd52"
+      }
+    }
+  ]
+}

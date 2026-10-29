@@ -1,0 +1,26 @@
+{
+  "id": "subclass-feature.ranger.hunter.steel-will-level-7",
+  "name": "Steel Will",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Steel Will",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "You have advantage on saving throws against being {@condition frightened}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "subclass.ranger.hunter",
+  "classLevel": 7
+}

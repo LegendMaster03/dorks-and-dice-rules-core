@@ -1,0 +1,229 @@
+{
+  "status": "review-audit-only",
+  "source": "previous Rules Core main: docs/competency-reconciliation-audit.md",
+  "reviewed": [
+    {
+      "name": "Alchemy (3e)",
+      "disposition": "native-competency",
+      "nativeCompetency": "competency.alchemy"
+    },
+    {
+      "name": "Animal Empathy",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.animal-empathy"
+    },
+    {
+      "name": "Appraise",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.appraise"
+    },
+    {
+      "name": "Balance",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.balance"
+    },
+    {
+      "name": "Bluff",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.deception"
+    },
+    {
+      "name": "Climb",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.climb"
+    },
+    {
+      "name": "Concentration",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.concentration"
+    },
+    {
+      "name": "Craft",
+      "disposition": "competency-crafting-family"
+    },
+    {
+      "name": "Decipher Script",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.decipher-script"
+    },
+    {
+      "name": "Diplomacy",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.persuasion"
+    },
+    {
+      "name": "Disable Device",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.disable-device"
+    },
+    {
+      "name": "Disguise",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.disguise"
+    },
+    {
+      "name": "Escape Artist",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.escape-artist"
+    },
+    {
+      "name": "Forgery",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.forgery"
+    },
+    {
+      "name": "Gather Information",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.gather-information"
+    },
+    {
+      "name": "Handle Animal",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.animal-handling"
+    },
+    {
+      "name": "Heal",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.medicine"
+    },
+    {
+      "name": "Hide",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.hide"
+    },
+    {
+      "name": "Innuendo",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.innuendo"
+    },
+    {
+      "name": "Intimidate",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.intimidation"
+    },
+    {
+      "name": "Intuit Direction",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.intuit-direction"
+    },
+    {
+      "name": "Jump",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.jump"
+    },
+    {
+      "name": "Listen",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.listen"
+    },
+    {
+      "name": "Move Silently",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.move-silently"
+    },
+    {
+      "name": "Open Lock",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.open-lock"
+    },
+    {
+      "name": "Perform",
+      "disposition": "native-skill-family",
+      "nativeSkill": "skill.perform"
+    },
+    {
+      "name": "Pick Pocket (3e)",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.sleight-of-hand"
+    },
+    {
+      "name": "Profession",
+      "disposition": "native-skill-family",
+      "nativeSkill": "skill.profession"
+    },
+    {
+      "name": "Read Lips",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.read-lips"
+    },
+    {
+      "name": "Ride",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.ride"
+    },
+    {
+      "name": "Scry",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.scry"
+    },
+    {
+      "name": "Search",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.search"
+    },
+    {
+      "name": "Sense Motive",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.insight"
+    },
+    {
+      "name": "Speak Language",
+      "disposition": "language-proficiency"
+    },
+    {
+      "name": "Spellcraft",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.spellcraft"
+    },
+    {
+      "name": "Spot",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.spot"
+    },
+    {
+      "name": "Swim",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.swim"
+    },
+    {
+      "name": "Tumble",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.tumble"
+    },
+    {
+      "name": "Use Magic Device",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.use-magic-device"
+    },
+    {
+      "name": "Use Rope",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.use-rope"
+    },
+    {
+      "name": "Wilderness Lore (3e)",
+      "disposition": "import-alias",
+      "nativeSkill": "skill.survival"
+    },
+    {
+      "name": "Autohypnosis",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.autohypnosis"
+    },
+    {
+      "name": "Knowledge (Psionics)",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.knowledge-psionics"
+    },
+    {
+      "name": "Psicraft",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.psicraft"
+    },
+    {
+      "name": "Use Psionic Device",
+      "disposition": "native-skill",
+      "nativeSkill": "skill.use-psionic-device"
+    }
+  ]
+}

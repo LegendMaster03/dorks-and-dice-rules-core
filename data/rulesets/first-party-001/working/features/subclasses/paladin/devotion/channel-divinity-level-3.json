@@ -1,0 +1,34 @@
+{
+  "id": "subclass-feature.paladin.devotion.channel-divinity-level-3",
+  "name": "Channel Divinity",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Channel Divinity",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "When you take this oath at 3rd level, you gain the following two Channel Divinity options.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Sacred Weapon|Paladin||Devotion||3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Turn the Unholy|Paladin||Devotion||3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "subclass.paladin.devotion",
+  "classLevel": 3
+}

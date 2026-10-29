@@ -1,0 +1,851 @@
+{
+  "id": "warlock-patron-fiend-source-reconciliation",
+  "kind": "patron-pillar-source-crosswalk",
+  "status": "source-mapped-native-mechanics-not-yet-reconciled",
+  "parentClass": "class.warlock",
+  "pillar": "Patron",
+  "scope": {
+    "sources": [
+      "SRD51",
+      "SRD52"
+    ],
+    "levels": [
+      1,
+      20
+    ],
+    "includedPatron": "Fiend"
+  },
+  "authoritativePatronIdentity": {
+    "id": "warlock.patron.fiend.identity",
+    "name": "Fiend Patron",
+    "classLevel": 1,
+    "status": "approved-native-design-direction",
+    "sourceNote": "2014 subclass chooses Fiend at level 1; 2024 source describes subclass at level 3. Native Patron identity still begins at level 1; the timing of granted powers is separate."
+  },
+  "parts": [
+    {
+      "id": "warlock.patron.fiend.spell-access",
+      "name": "Fiend Spell Access",
+      "kind": "spell-access",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "The Fiend",
+          "Expanded Spell List"
+        ],
+        "SRD52": [
+          "Fiend Spells"
+        ]
+      },
+      "common": "Patron alters spells available to the Warlock.",
+      "differences": [
+        "2014 adds spell choices to the Warlock spell list without automatically granting them; 2024 grants specified spells via always-prepared terminology, requiring the approved native no-daily-preparation conversion.",
+        "The two spell lists are not identical.",
+        "2014 source feature appears at Warlock 1; 2024 at Warlock 3."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.dark-ones-blessing",
+      "name": "Dark One's Blessing",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Dark One's Blessing"
+        ],
+        "SRD52": [
+          "Dark One's Blessing"
+        ]
+      },
+      "common": "Temporary Hit Points equal to Charisma modifier plus Warlock class level, minimum 1, when a qualifying enemy is reduced to 0 Hit Points.",
+      "differences": [
+        "2014: Warlock personally reduces a hostile creature to 0 HP.",
+        "2024: also triggers when another creature reduces an enemy within 10 feet of the Warlock to 0 HP.",
+        "Acquisition level differs: 2014 level 1; 2024 level 3."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.dark-ones-own-luck",
+      "name": "Dark One's Own Luck",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Dark One's Own Luck"
+        ],
+        "SRD52": [
+          "Dark One's Own Luck"
+        ]
+      },
+      "common": "At Warlock level 6, add 1d10 to an ability check or saving throw after the roll and before its effects.",
+      "differences": [
+        "2014: one use, restored after Short or Long Rest.",
+        "2024: Charisma modifier uses (minimum one), no more than once per roll; all uses restored after Long Rest."
+      ]
+    },
+    {
+      "id": "warlock.patron.fiend.damage-resilience",
+      "name": "Fiendish Resilience (Fiend Patron)",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Fiendish Resilience"
+        ],
+        "SRD52": [
+          "Fiendish Resilience"
+        ]
+      },
+      "common": "At Warlock level 10, select a damage type at the end of a Short or Long Rest and gain Resistance until changed on a later rest.",
+      "differences": [
+        "2014: magical or silvered weapon damage ignores this Resistance, no force-damage exclusion is stated.",
+        "2024: cannot select Force damage; no magical/silvered weapon bypass is stated.",
+        "Distinct from previously approved historical Warlock BASE CLASS fast healing; the owner has reopened that base-class grant for review. The Patron resistance feature remains independent."
+      ],
+      "nativeDisposition": "retired-source-only",
+      "nativeProgressionGrant": false
+    },
+    {
+      "id": "warlock.patron.fiend.hurl-through-hell",
+      "name": "Hurl Through Hell",
+      "kind": "feature",
+      "dependencies": [
+        "warlock.patron.fiend.identity"
+      ],
+      "sourceNames": {
+        "SRD51": [
+          "Hurl Through Hell"
+        ],
+        "SRD52": [
+          "Hurl Through Hell"
+        ]
+      },
+      "common": "At Warlock level 14, on a qualifying attack hit, send a creature through the Lower Planes and return it at the end of the next turn; damage is Psychic for non-Fiends.",
+      "differences": [
+        "2014: no saving throw, deals 10d10 damage on return, once per Long Rest.",
+        "2024: Charisma saving throw negates the effect; on a failure deals 8d10 on application and Incapacitates until return; once per Long Rest, but expending a Pact Magic slot can restore a use.",
+        "The native ruling must resolve saving throw, damage timing/dice, status, and slot-spending recovery together."
+      ]
+    }
+  ],
+  "sourceSpellAccess": {
+    "SRD51": {
+      "sourceName": "Expanded Spell List",
+      "grantMode": "expanded-choices-not-automatic",
+      "sourceFeature": "The Fiend",
+      "sourceAcquisitionClassLevel": 1,
+      "spellLevelGroups": {
+        "1": [
+          "burning hands",
+          "command"
+        ],
+        "2": [
+          "blindness/deafness",
+          "scorching ray"
+        ],
+        "3": [
+          "fireball",
+          "stinking cloud"
+        ],
+        "4": [
+          "fire shield",
+          "wall of fire"
+        ],
+        "5": [
+          "flame strike",
+          "hallow"
+        ]
+      }
+    },
+    "SRD52": {
+      "sourceName": "Fiend Spells",
+      "grantMode": "always-prepared-in-source-requires-native-no-preparation-reconciliation",
+      "sourceFeature": "Fiend Spells",
+      "sourceAcquisitionClassLevel": 3,
+      "classLevelGroups": {
+        "3": [
+          "burning hands",
+          "command",
+          "scorching ray",
+          "suggestion"
+        ],
+        "5": [
+          "fireball",
+          "stinking cloud"
+        ],
+        "7": [
+          "fire shield",
+          "wall of fire"
+        ],
+        "9": [
+          "geas",
+          "insect plague"
+        ]
+      }
+    }
+  },
+  "sourcePresets": {
+    "SRD51": {
+      "id": "warlock.patron.fiend.preset.srd51",
+      "sourceSubclassName": "The Fiend",
+      "sourceSubclassChoiceLevel": 1,
+      "nativeIdentityChoiceLevel": 1,
+      "milestones": [
+        {
+          "level": 1,
+          "parts": [
+            "warlock.patron.fiend.spell-access",
+            "warlock.patron.fiend.dark-ones-blessing"
+          ]
+        },
+        {
+          "level": 6,
+          "parts": [
+            "warlock.patron.fiend.dark-ones-own-luck"
+          ]
+        },
+        {
+          "level": 10,
+          "parts": [
+            "warlock.patron.fiend.damage-resilience"
+          ]
+        },
+        {
+          "level": 14,
+          "parts": [
+            "warlock.patron.fiend.hurl-through-hell"
+          ]
+        }
+      ]
+    },
+    "SRD52": {
+      "id": "warlock.patron.fiend.preset.srd52",
+      "sourceSubclassName": "Fiend Patron",
+      "sourceSubclassChoiceLevel": 3,
+      "nativeIdentityChoiceLevel": 1,
+      "milestones": [
+        {
+          "level": 3,
+          "parts": [
+            "warlock.patron.fiend.spell-access",
+            "warlock.patron.fiend.dark-ones-blessing"
+          ]
+        },
+        {
+          "level": 6,
+          "parts": [
+            "warlock.patron.fiend.dark-ones-own-luck"
+          ]
+        },
+        {
+          "level": 10,
+          "parts": [
+            "warlock.patron.fiend.damage-resilience"
+          ]
+        },
+        {
+          "level": 14,
+          "parts": [
+            "warlock.patron.fiend.hurl-through-hell"
+          ]
+        }
+      ]
+    }
+  },
+  "sourceFeatureCoverage": {
+    "SRD51": [
+      "The Fiend",
+      "Dark One's Blessing",
+      "Dark One's Own Luck",
+      "Fiendish Resilience",
+      "Hurl Through Hell"
+    ],
+    "SRD52": [
+      "Fiend Patron",
+      "Fiend Spells",
+      "Dark One's Blessing",
+      "Dark One's Own Luck",
+      "Fiendish Resilience",
+      "Hurl Through Hell"
+    ]
+  },
+  "openNativeDecisions": [
+    {
+      "id": "patron-initial-mechanical-grant",
+      "question": "Which Fiend powers, if any, begin at Warlock level 1 in the authoritative native progression (beyond identity)?",
+      "status": "owner-approved-design-direction",
+      "resolution": "Patron identity and spell-access feature begin at Warlock level 1, with Dark One's Blessing using the approved 2024 cooperative trigger. The default native Fiend spell system automatically grants spells at Warlock levels 3/5/7/9 using the 2024 schedule with the 2014-only spells restored. No automatic Fiend spell grant at level 1. Preserve the two source-era projections for optional edition rules."
+    },
+    {
+      "id": "patron-fiend-spell-entitlement",
+      "question": "Which source spell lists and spell-access grants are unified, and what native entitlement replaces source always-prepared versus expanded-choice rules?",
+      "status": "owner-approved-design-direction",
+      "resolution": "APPROVED: BOTH modes use the SAME merged 13-spell Fiend list. Native default automatically grants all thirteen at Warlock levels 3/5/7/9 (5/2/2/4), restoring Blindness/Deafness at 3 and Flame Strike/Hallow at 9. The SINGLE OPTIONAL 2014-style expanded-list rule makes those SAME thirteen spells available as regular Warlock spell selections, with no automatic acquisition. Unmodified 2024 is not a separate optional profile. Modes are mutually exclusive and use normal no-preparation casting, with no duplicate spell grants, extra slots, or free casts. Patron identity/spell access begins at Warlock 1; automatic spells begin at Warlock 3. Original SRD lists remain preserved as source evidence only.",
+      "priorResolution": "Owner approves Option C as the default native Fiend spell-access rule: level-1 Patron expands the eligible spell list to the union of SRD 5.1 and 5.2.1 (13 distinct spells), while the 2024 ten spells are automatically known/access-granted in addition to normal Warlock selections at class levels 3/5/7/9. Only 2014-specific Blindness/Deafness, Flame Strike, and Hallow remain regular optional selections under the default. Owner also approves optional mutually exclusive rules A (expanded choices only: all 13 eligible, no automatic Patron spells) and B (all 13 automatically learned at corresponding Warlock spell-level unlocks 1/3/5/7/9). No preparation, no duplicate known/grants, restore a normal choice if a previously selected spell becomes automatic, and no extra free casting/slots. These are campaign rule modes, not cumulative effects.",
+      "previousResolutionBeforeMergedProfiles": "Owner supersedes earlier default C. Native default follows the 2024 automatic Patron-spell grant system, restoring the 2014-only Blindness/Deafness at Warlock level 3 and Flame Strike and Hallow at Warlock level 9. All 13 union spells are automatically known at levels 3/5/7/9 (5/2/2/4) in addition to ordinary selections, no daily preparation, and no added slots or free casts. Patron identity/spell access begins at level 1; no automatic Fiend spells before level 3. Faithful original optional 2014 profile = ten expanded choices (not automatic). Faithful original optional 2024 profile = ten automatically granted spells. Profiles are mutually exclusive and must not double-grant already known spells."
+    },
+    {
+      "id": "patron-fiend-blessing-trigger",
+      "question": "At the established native level-1 grant, adopt the 2014 self-defeat trigger or 2024 expanded nearby-other-creature trigger?",
+      "status": "owner-approved-design-direction",
+      "resolution": "At Warlock level 1, grant temporary HP equal to max(1, Charisma modifier + Warlock level) when the Warlock reduces a hostile creature to 0 HP, or when another creature reduces an enemy within 10 feet of the Warlock to 0 HP, following the 2024 expanded cooperative trigger and ordinary nonstacking temporary-HP rules."
+    },
+    {
+      "id": "patron-fiend-luck-recovery",
+      "question": "Recovery cadence remains open: 2024 Long Rest refill is recommended; 2014 used a single use restored after Short/Long Rest. Do not silently treat Charisma modifier uses as recharging on every Short Rest.",
+      "status": "owner-approved-design-direction",
+      "resolution": "At Warlock level 6, Dark One's Own Luck adds 1d10 to an ability check or saving throw after the roll and before its effects, at most once per roll; uses equal max(1, Charisma modifier) and all expended uses recover on a Long Rest. Approves the previously recommended 2024 recovery schedule."
+    },
+    {
+      "id": "patron-fiend-damage-resilience",
+      "question": "Select force eligibility and magical/silvered damage bypass rules?",
+      "status": "owner-approved-design-direction",
+      "resolution": "Approve option A: retire the Fiend Patron level-10 selected-type damage-resistance feature from native advancement without replacement. Preserve 2014 and 2024 source feature definitions and source-era preset provenance. The universal base Warlock Energy Resistance at class level 10 remains unchanged, mitigating 5 damage from two chosen energy types and improving to 10 at level 20. Fiend Infernal Retaliation at levels 8, 13 and 18 is unchanged."
+    },
+    {
+      "id": "patron-fiend-hurl-through-hell",
+      "question": "Resolve save, 10d10 versus 8d10, damage timing, Incapacitated, and Pact-slot recovery.",
+      "status": "owner-approved-design-direction",
+      "resolution": "At Warlock level 14, once per turn on a qualifying attack-roll hit, expend a use to force the target to make a Charisma saving throw against Warlock spell save DC. On failure, transport it through the Lower Planes, immediately deal 8d10 Psychic damage if the target is not a Fiend, and apply Incapacitated until it returns at the end of the Warlock's next turn. A use returns after a Long Rest; expending a Pact Magic spell slot can restore a use. A successful save still consumes the attempted use. Use the coherent 2024 feature package."
+    },
+    {
+      "id": "warlock-historical-base-fiendish-resilience-reconsideration",
+      "status": "owner-approved-design-direction",
+      "question": "Should the previously approved 3.5e BASE-CLASS Fiendish Resilience fast healing at class levels 8/13/18 remain as an automatic Warlock grant, become an optional Invocation, or be retired after reviewing 5.x defensive features? No replacement was approved; other historical base-class rulings remain in place.",
+      "sourceDecision": "class.warlock.historical-class-features-band1",
+      "resolution": "Historical 3.5e base Warlock Fiendish Resilience fast healing is NOT an automatic native base Warlock grant. It belongs to one Fiend-only Infernal Retaliation feature, alongside Fiendish Flamewreath ONLY. The feature is granted at Warlock level 8, improves at 13 and 18, and permits one player-chosen Reaction activation per Long Rest of either 20-round effect. At 0 HP while active, fast healing stabilizes once without healing or waking the Warlock; no repeated automatic stabilization. Hellfire Shield is excluded and its acquisition method deferred to Eldritch Invocations pillar. Other historical base-class rulings remain unchanged."
+    },
+    {
+      "id": "patron-custom-combinations",
+      "question": "How much interchange among different Patrons is permitted and costed? Real multi-Patron validation deferred because only Fiend is in the SRDs.",
+      "status": "deferred-outside-srd"
+    }
+  ],
+  "explicitExclusions": [
+    "Pacts acquisition and budgets",
+    "Eldritch Invocation selection numbers",
+    "Non-SRD Patron subclasses",
+    "3.5e heritage-feat and invocation catalogs",
+    "Activating unreconciled mechanics as native rules"
+  ],
+  "approvedNativeDirections": {
+    "patronInitialFiendMilestone": {
+      "classLevel": 1,
+      "partIds": [
+        "warlock.patron.fiend.spell-access",
+        "warlock.patron.fiend.dark-ones-blessing"
+      ],
+      "sourceModel": "SRD51",
+      "qualification": "Level-1 Patron spell-access feature and Dark One's Blessing approved. Spell access uses owner-approved default C (all 13 spells eligible, ten 2024 spells granted automatically at levels 3/5/7/9), with optional campaign modes A and B; the spell-access identity starts at 1 and does not automatically grant 2024 spells at level 1 under default C."
+    },
+    "luckUses": {
+      "classLevel": 6,
+      "usesExpression": "max(1, charisma_modifier)",
+      "perRollLimit": 1,
+      "reset": "long-rest",
+      "qualification": "Owner approved both Charisma-modifier uses and the 2024 Long Rest recovery schedule."
+    },
+    "baseEldritchBlast": {
+      "classLevel": 1,
+      "grantMode": "automatic-warlock-base-class-feature",
+      "requiresCantripSelection": false,
+      "qualification": "Eldritch Blast is automatically granted as a base Warlock class feature at level 1. Exact damage scaling, spell/cantrip count representation, Patron Imprint behavior and Invocation compatibility remain to be reconciled; do not create duplicate grants."
+    },
+    "darkOnesBlessing": {
+      "classLevel": 1,
+      "temporaryHitPoints": "max(1, charisma_modifier + warlock_level)",
+      "triggers": [
+        "warlock-reduces-hostile-creature-to-zero-hp",
+        "other-creature-reduces-enemy-within-10-feet-of-warlock-to-zero-hp"
+      ],
+      "recovery": "trigger-based-no-use-limit",
+      "qualification": "Owner approves the 2024 cooperative trigger at the approved native level-1 feature milestone; standard temporary hit points do not stack."
+    },
+    "hurlThroughHell": {
+      "classLevel": 14,
+      "frequency": "once-per-turn",
+      "prerequisite": "qualifying-attack-roll-hit",
+      "savingThrow": "charisma-vs-warlock-spell-save-dc",
+      "onFailedSave": {
+        "target": "transported-through-lower-planes",
+        "nonFiendDamage": "8d10 psychic immediately",
+        "condition": "incapacitated-until-return",
+        "returnTime": "end-of-warlocks-next-turn"
+      },
+      "uses": "one-per-long-rest; spend a pact-magic spell slot to restore a use",
+      "spentOnAttempt": true,
+      "qualification": "Owner approved the entire previously proposed SRD 5.2.1-style Hurl Through Hell package."
+    },
+    "infernalRetaliation": {
+      "featureId": "warlock.patron.fiend.infernal-retaliation",
+      "patronId": "warlock.patron.fiend.identity",
+      "grantedAs": "one-fiend-patron-feature",
+      "availableEffects": [
+        "fiendish-resilience-fast-healing",
+        "fiendish-flamewreath"
+      ],
+      "effectsAreSeparateEntitlements": false,
+      "choiceTiming": "on-activation",
+      "sharedResource": {
+        "uses": 1,
+        "recovery": "long-rest",
+        "consumesOnAnyEffect": true
+      },
+      "automaticForAllWarlocks": false,
+      "historicalFastHealing": {
+        "source": "3.5e Complete Arcane base Warlock",
+        "nativeDisposition": "absorbed-as-fiend-patron-effect-not-base-class-grant",
+        "sourceLevelSteps": [
+          8,
+          13,
+          18
+        ],
+        "sourceHealingPerRound": [
+          1,
+          2,
+          5
+        ],
+        "sourceDurationRounds": 20
+      },
+      "pending": [
+        "precise handling of fast healing tick timing while above 0 HP",
+        "Flamewreath retaliation damage application against attacks during its duration",
+        "Fiend-specific implementation and source-conversion validation; exact shield costs belong to separate optional Hellfire specialization"
+      ],
+      "qualification": "One Fiend Patron feature with TWO player-chosen Reaction effects, Fiendish Resilience fast healing and Fiendish Flamewreath. One shared use per Long Rest; acquire at Warlock level 8 and improve at levels 13/18. Each sustained mode lasts 20 rounds. If active fast healing encounters 0 HP, stabilize the Warlock once but do not heal at 0 HP or restore consciousness, and do not automatically restabilize after further damage. Hellfire Shield is REMOVED from this feature and is a separate optional Hellfire specialization candidate, not an automatic Fiend grant. Patron level-10 damage resistance remains distinct. Native feature executable definition is still pending.",
+      "activation": {
+        "actionType": "reaction",
+        "modes": {
+          "fiendish-resilience-fast-healing": {
+            "actionType": "reaction",
+            "requiresExternalTrigger": false,
+            "activation": "player-choice"
+          },
+          "fiendish-flamewreath": {
+            "actionType": "reaction",
+            "requiresExternalTrigger": false,
+            "activation": "player-choice"
+          }
+        },
+        "actionCost": "one-reaction",
+        "clarification": "Native Dorks & Dice Reactions do not require a trigger: the player chooses when to activate either eligible effect while a Reaction is available. Activating either mode spends that Reaction and the one shared Infernal Retaliation use per Long Rest; ongoing effects do not consume further Reactions.",
+        "actionTiming": "player-chosen-when-reaction-available",
+        "requiresExternalTrigger": false
+      },
+      "historicalEffectScaling": {
+        "sourceDistinction": "Historical 3.5e 1/2/5 fast healing and 1d6/2d6/5d6 Flamewreath tiers inform the approved native two-effect Fiend feature; Hellfire Shield history is separately preserved under optional Hellfire specialization, not the feature.",
+        "fiendishResilience": {
+          "source": "Complete Arcane",
+          "sourceWarlockLevels": [
+            8,
+            13,
+            18
+          ],
+          "fastHealingPerRound": [
+            1,
+            2,
+            5
+          ],
+          "durationRounds": 20,
+          "sourceScaling": "three-explicit-tiers"
+        },
+        "fiendishFlamewreath": {
+          "source": "Player's Handbook II",
+          "sourceWarlockLevels": [
+            8,
+            13,
+            18
+          ],
+          "retaliationFireDamage": [
+            "1d6",
+            "2d6",
+            "5d6"
+          ],
+          "durationRounds": 20,
+          "sourceScaling": "three-explicit-tiers"
+        }
+      },
+      "nativeProgression": {
+        "status": "owner-approved-design-direction",
+        "grantClassLevel": 8,
+        "upgradeClassLevels": [
+          13,
+          18
+        ],
+        "sourceGrant": "one-fiend-patron-feature-with-two-mode-options",
+        "doesNotGrantAdditionalResourceUsesOnUpgrade": true,
+        "milestones": [
+          {
+            "warlockClassLevel": 8,
+            "kind": "initial-grant",
+            "fiendishResilienceFastHealingPerRound": 1,
+            "fiendishFlamewreathRetaliationDamage": "1d6 fire"
+          },
+          {
+            "warlockClassLevel": 13,
+            "kind": "upgrade-existing-feature",
+            "fiendishResilienceFastHealingPerRound": 2,
+            "fiendishFlamewreathRetaliationDamage": "2d6 fire"
+          },
+          {
+            "warlockClassLevel": 18,
+            "kind": "upgrade-existing-feature",
+            "fiendishResilienceFastHealingPerRound": 5,
+            "fiendishFlamewreathRetaliationDamage": "5d6 fire"
+          }
+        ]
+      },
+      "effectRules": {
+        "fiendishResilience": {
+          "effectId": "fiendish-resilience-fast-healing",
+          "durationRounds": 20,
+          "fastHealingPerRoundByWarlockLevel": {
+            "8": 1,
+            "13": 2,
+            "18": 5
+          },
+          "atZeroHitPoints": {
+            "whenReducedToZeroWhileActive": "stabilize-once",
+            "remainsUnconscious": true,
+            "healingWhileAtZero": false,
+            "restoresConsciousnessByOngoingHealing": false,
+            "requiresEffectActiveBeforeIncapacitation": true,
+            "subsequentDamageAtZero": "normal-damage-and-death-saving-throw-rules",
+            "repeatedAutomaticStabilization": false,
+            "doesNotReviveDead": true,
+            "clarification": "The active resilience effect can stabilize the Warlock when reduced to 0 HP once during that activation, without restoring HP or consciousness. Further damage at 0 HP follows ordinary stabilization/death rules; the feature does not repeatedly stabilize."
+          }
+        },
+        "fiendishFlamewreath": {
+          "effectId": "fiendish-flamewreath",
+          "durationRounds": 20,
+          "meleeRetaliationFireDamageByWarlockLevel": {
+            "8": "1d6",
+            "13": "2d6",
+            "18": "5d6"
+          },
+          "preciseTriggerForRetaliationDamage": "pending-resolution-only; activation-reaction-is-player-chosen-and-triggerless"
+        }
+      }
+    },
+    "hellfireSpecialization": {
+      "disposition": "deferred-to-eldritch-invocations-pillar-not-infernal-retaliation",
+      "shield": {
+        "name": "Hellfire Shield",
+        "placement": "fiend-associated-specialization-acquisition-undecided",
+        "automaticallyGrantedAtFiendLevel8": false,
+        "requiresSeparateAcquisition": null,
+        "relatedEnhancements": [
+          "hellfire-blast",
+          "eldritch-blast"
+        ],
+        "actionType": "reaction",
+        "requiresMandatoryTrigger": false,
+        "consumesInfernalRetaliationResource": false,
+        "nativeDamageDesign": {
+          "progressionType": "derived-not-fixed-tiers",
+          "derivesFrom": "warlock-current-eldritch-blast-damage",
+          "includesHellfireBlastEnhancement": "only-if-acquired-and-applicable-under-future-compatibility-rules",
+          "automaticHellfireBlastEntitlement": false,
+          "fixedBonusesAtLevels8_13_18": false,
+          "noStackedAllBeamAssumption": true,
+          "qualification": "Derived damage reflects current Eldritch Blast and eligible Hellfire modifications; no invented numeric tiers. Eldritch Blast's final attack/beam calculation, Hellfire eligibility, Constitution damage, targeting, and resolution timing remain open."
+        },
+        "historicalSource": {
+          "source": "Fiendish Codex II",
+          "sourceHellfireWarlockLevel": 3,
+          "sourceScaling": "one-acquisition-tier; damage scales indirectly with Eldritch Blast including Hellfire Blast enhancement",
+          "sourceDamage": "eldritch-blast-damage-plus-hellfire-blast-bonus-when-applicable",
+          "sourceAbilityDamageCost": "1 Constitution damage per activation",
+          "nativeThreeTierProgression": "not-part-of-infernal-retaliation; own acquisition level undecided",
+          "compatibilityWithNativeHellfireEnhancement": "not-yet-reconciled"
+        },
+        "unresolved": [
+          "DEFERRED to Eldritch Invocations pillar: select automatic Fiend Patron grant, Fiend Patron feature choice, or Fiend-prerequisite Eldritch Invocation; assign level and entitlement",
+          "own resource/cost and original Constitution ability damage",
+          "derived damage and multi-beam/critical compatibility",
+          "eligible targets and effect resolution"
+        ],
+        "acquisitionCandidates": [
+          {
+            "id": "fiend-patron-grant",
+            "route": "automatic-patron-feature",
+            "requiresPatron": "fiend",
+            "status": "owner-proposed-option",
+            "classLevel": "undecided",
+            "chargesSelectionEntitlement": false
+          },
+          {
+            "id": "fiend-patron-choice",
+            "route": "selectable-patron-feature",
+            "requiresPatron": "fiend",
+            "status": "owner-proposed-option",
+            "choiceLevel": "undecided",
+            "entitlementBudget": "undecided"
+          },
+          {
+            "id": "fiend-eldritch-invocation",
+            "route": "eldritch-invocation",
+            "requiresPatron": "fiend",
+            "status": "owner-proposed-option",
+            "invocationLevelPrerequisite": "undecided",
+            "usesNormalInvocationSelection": true
+          }
+        ],
+        "acquisitionStatus": "deferred-to-eldritch-invocations-pillar",
+        "acquisitionRule": "Defer acquisition selection to Eldritch Invocations pillar. Preserve three Fiend-only possibilities (automatic Patron grant, Patron choice, or Fiend-prerequisite Invocation), with no grant or resource expenditure selected yet. Whichever mechanism is selected later must use one native Shield ability definition and prevent duplicate entitlements."
+      },
+      "qualification": "Owner explicitly defers Hellfire Shield's acquisition method and remaining costs to the Eldritch Invocations pillar. Three Fiend-only routes remain candidate models, not approved grants: Patron automatic grant, Patron choice, and Invocation with Fiend prerequisite. Never count Hellfire Shield as an Infernal Retaliation mode or grant it within the current Fiend Patron package. Its Reaction and derived Eldritch Blast damage direction are preserved for next-pillar review."
+    },
+    "fiendSpellAccess": {
+      "status": "owner-approved-merged-thirteen-spells-two-acquisition-modes",
+      "featureId": "warlock.patron.fiend.spell-access",
+      "startsAtWarlockLevel": 1,
+      "spellNamesBySpellLevel": {
+        "1": [
+          "burning hands",
+          "command"
+        ],
+        "2": [
+          "blindness/deafness",
+          "scorching ray",
+          "suggestion"
+        ],
+        "3": [
+          "fireball",
+          "stinking cloud"
+        ],
+        "4": [
+          "fire shield",
+          "wall of fire"
+        ],
+        "5": [
+          "flame strike",
+          "hallow",
+          "geas",
+          "insect plague"
+        ]
+      },
+      "modesMutuallyExclusive": true,
+      "chooseModeAt": "campaign-rules-configuration",
+      "defaultMode": "native-2024-plus-restored-2014",
+      "availableModes": {
+        "native-2024-plus-restored-2014": {
+          "designation": "DEFAULT native Dorks & Dice: 2024 automatic Patron spells plus 2014 restorations",
+          "expandedEligibleSpells": [
+            "burning hands",
+            "command",
+            "scorching ray",
+            "suggestion",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "geas",
+            "insect plague",
+            "blindness/deafness",
+            "flame strike",
+            "hallow"
+          ],
+          "automaticallyKnownAtWarlockLevel": {
+            "3": [
+              "burning hands",
+              "command",
+              "scorching ray",
+              "suggestion",
+              "blindness/deafness"
+            ],
+            "5": [
+              "fireball",
+              "stinking cloud"
+            ],
+            "7": [
+              "fire shield",
+              "wall of fire"
+            ],
+            "9": [
+              "geas",
+              "insect plague",
+              "flame strike",
+              "hallow"
+            ]
+          },
+          "choicesOnlySpells": [],
+          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true
+        },
+        "optional-2014-style-expanded-merged": {
+          "designation": "OPTIONAL 2014-style expanded choices using all thirteen reconciled Fiend spells",
+          "expandedEligibleSpells": [
+            "burning hands",
+            "command",
+            "scorching ray",
+            "suggestion",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "geas",
+            "insect plague",
+            "blindness/deafness",
+            "flame strike",
+            "hallow"
+          ],
+          "automaticallyKnownAtWarlockLevel": {},
+          "choicesOnlySpells": [
+            "burning hands",
+            "command",
+            "scorching ray",
+            "suggestion",
+            "fireball",
+            "stinking cloud",
+            "fire shield",
+            "wall of fire",
+            "geas",
+            "insect plague",
+            "blindness/deafness",
+            "flame strike",
+            "hallow"
+          ],
+          "automaticGrantsDoNotConsumeOrdinarySpellSelections": true,
+          "normalSpellSelectionRequiredForLearnedSpells": true,
+          "note": "All thirteen merged Fiend spells become eligible Warlock learned-spell choices from Patron level 1, subject to ordinary spell-level restrictions. None is automatically known."
+        }
+      },
+      "sharedCastingRules": {
+        "usesNativeNoPreparation": true,
+        "accessStartsAtPatronLevel1": true,
+        "castSpellsUsing": "ordinary-eligible-Pact-Magic-or-other-valid-casting-resource",
+        "patronAccessGrantsFreeCastings": false,
+        "patronAccessGrantsExtraPactSlots": false,
+        "deduplicateAlreadyKnownSpells": true,
+        "previouslySelectedSpellBecomesAutomaticallyKnown": "refund-or-replace-that-ordinary-warlock-spell-choice-with-other-eligible-choice",
+        "optionalModesStack": false,
+        "specialModeChangesMidCampaign": "resolve-existing-learned-and-automatic-grants-without-duplicates-and-with-DM-approved-migration",
+        "note": "No daily spell preparation. Spells must still be of a level the Warlock can learn or cast; expanded availability does not bypass normal eligibility."
+      },
+      "spellListComparison": {
+        "distinctAcrossSources": 13,
+        "sharedAcrossSources": 7,
+        "source51Only": [
+          "blindness/deafness",
+          "flame strike",
+          "hallow"
+        ],
+        "source52Only": [
+          "suggestion",
+          "geas",
+          "insect plague"
+        ],
+        "source51AutomaticGrants": 0,
+        "source52AutomaticGrants": 10
+      },
+      "restoredFrom2014": [
+        {
+          "spell": "blindness/deafness",
+          "spellLevel": 2,
+          "automaticWarlockClassLevel": 3
+        },
+        {
+          "spell": "flame strike",
+          "spellLevel": 5,
+          "automaticWarlockClassLevel": 9
+        },
+        {
+          "spell": "hallow",
+          "spellLevel": 5,
+          "automaticWarlockClassLevel": 9
+        }
+      ],
+      "sourceRosterSeparation": "Original SRD 5.1 and 5.2.1 ten-spell rosters remain preserved as historical source projections. Both playable campaign modes use one merged thirteen-spell Fiend list; only acquisition semantics differ. The redundant 2024-only optional profile is removed.",
+      "priorApprovedDesign": {
+        "defaultMode": "C-reconciled-native",
+        "status": "owner-approved-native-rule-with-two-campaign-options",
+        "rationale": "Superseded by explicit approval of 2024 automatic grants with missing 2014 spells restored."
+      },
+      "rulesScope": "same-merged-spell-list-in-both-modes; only-acquisition-differs",
+      "priorRuleVersion": {
+        "status": "owner-approved-native-default-2024-plus-restored-2014-with-two-edition-options",
+        "removedOptionalProfiles": [
+          "optional-srd51-2014-expanded",
+          "optional-srd52-2024-automatic"
+        ],
+        "reason": "Superseded by owner's final request for one roster shared by default automatic and optional 2014-style spell selection."
+      }
+    },
+    "fiendPatronDamageResistance": {
+      "nativeStatus": "retired-without-replacement",
+      "sourcePartId": "warlock.patron.fiend.damage-resilience",
+      "nativeGrant": false,
+      "classLevel": 10,
+      "replacementPatronFeature": null,
+      "compensatingPatronEntitlement": false,
+      "sourcePresetsRetainedForHistoricalComparison": true,
+      "baseWarlockEnergyResistanceUnaffected": true
+    }
+  },
+  "fiendPatronConsolidatedDecision": {
+    "status": "owner-approved-fiend-design-awaiting-native-implementation",
+    "document": "docs/rewrite/warlock-fiend-patron-consolidated-decision.md",
+    "patronClassLevel": 1,
+    "approvedPatronMilestones": [
+      {
+        "classLevel": 1,
+        "feature": "Dark One's Blessing",
+        "status": "approved"
+      },
+      {
+        "classLevel": 1,
+        "feature": "Fiend Patron spell access",
+        "status": "approved-merged-13-spell-roster-default-automatic-optional-expanded"
+      },
+      {
+        "classLevel": 6,
+        "feature": "Dark One's Own Luck",
+        "status": "approved"
+      },
+      {
+        "classLevel": 8,
+        "feature": "Infernal Retaliation",
+        "status": "approved"
+      },
+      {
+        "classLevel": 13,
+        "feature": "Infernal Retaliation upgrade",
+        "status": "approved"
+      },
+      {
+        "classLevel": 14,
+        "feature": "Hurl Through Hell",
+        "status": "approved"
+      },
+      {
+        "classLevel": 18,
+        "feature": "Infernal Retaliation upgrade",
+        "status": "approved"
+      }
+    ],
+    "unresolvedNativeFiendRules": [],
+    "implementationNotes": [
+      "No automatic Hellfire Shield grant; Shield acquisition decision deferred to Invocations pillar",
+      "Do not activate pending-native-reconciliation subclass until the remaining mechanical decisions are resolved",
+      "Outstanding procedural details of sustained Infernal Retaliation effects require shared mechanics implementation",
+      "Fiend spell access uses one merged 13-spell repertoire in both campaign profiles: native automatic grants 5/2/2/4 at 3/5/7/9, or optional 2014-style expanded choices with all 13 learned via ordinary spell entitlements. Remove unmodified 2024-only optional profile.",
+      "Level-10 Fiend Patron resistance retired without replacement, while base Warlock Energy Resistance remains and both SRD source records remain historical."
+    ],
+    "retiredPatronFeatures": [
+      {
+        "classLevel": 10,
+        "feature": "warlock.patron.fiend.damage-resilience",
+        "disposition": "retired-without-replacement"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "monster.swarm-of-quippers",
+  "name": "Swarm of Quippers",
+  "kind": "monster",
+  "baselineStatus": "native-identity-alias",
+  "aliasOf": "monster.swarm-of-piranhas"
+}

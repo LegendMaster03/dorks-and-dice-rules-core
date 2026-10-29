@@ -1,0 +1,19 @@
+{
+  "id": "deity.hathor",
+  "name": "Hathor",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "Goddess of love, music, and motherhood",
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Horned cow's head with lunar disk"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "id": "subclass.wizard.evoker",
+  "name": "Evoker",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Evoker",
+        "shortName": "Evoker",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "known": {
+              "3": [
+                {
+                  "choose": "level=0;1;2|class=Wizard|school=V"
+                },
+                {
+                  "choose": "level=0;1;2|class=Wizard|school=V"
+                }
+              ],
+              "5": [
+                {
+                  "choose": "level=0;1;2;3|class=Wizard|school=V"
+                }
+              ],
+              "7": [
+                {
+                  "choose": "level=0;1;2;3;4|class=Wizard|school=V"
+                }
+              ],
+              "9": [
+                {
+                  "choose": "level=0;1;2;3;4;5|class=Wizard|school=V"
+                }
+              ],
+              "11": [
+                {
+                  "choose": "level=0;1;2;3;4;5;6|class=Wizard|school=V"
+                }
+              ],
+              "13": [
+                {
+                  "choose": "level=0;1;2;3;4;5;6;7|class=Wizard|school=V"
+                }
+              ],
+              "15": [
+                {
+                  "choose": "level=0;1;2;3;4;5;6;7;8|class=Wizard|school=V"
+                }
+              ],
+              "17": [
+                {
+                  "choose": "level=0;1;2;3;4;5;6;7;8;9|class=Wizard|school=V"
+                }
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Evoker|Wizard|SRD52|Evoker|SRD52|3",
+          "Sculpt Spells|Wizard|SRD52|Evoker|SRD52|6",
+          "Empowered Evocation|Wizard|SRD52|Evoker|SRD52|10",
+          "Overchannel|Wizard|SRD52|Evoker|SRD52|14"
+        ],
+        "lore": [
+          {
+            "name": "Evoker",
+            "shortName": "Evoker",
+            "className": "Wizard",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Evoker Wizard.webp"
+                },
+                "credit": "Caroline Gariba",
+                "width": 803,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard"
+}

@@ -1,0 +1,133 @@
+{
+  "id": "monster.saber-toothed-tiger",
+  "name": "Saber-Toothed Tiger",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "7d10 + 14"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 18,
+    "dex": 17,
+    "con": 15,
+    "int": 3,
+    "wis": 12,
+    "cha": 8,
+    "save": {
+      "str": "+6",
+      "dex": "+5"
+    },
+    "skill": {
+      "perception": "+5",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Running Leap",
+        "entries": [
+          "With a 10-foot running start, the tiger can {@variantrule Long Jump|SRD52} up to 25 feet."
+        ]
+      },
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The tiger has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "If the tiger moves at least 20 feet straight toward a creature and then hits it with a Rend attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the tiger can make one Rend attack against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The tiger makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Slashing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Nimble Escape",
+        "entries": [
+          "The tiger takes the {@action Disengage|SRD52} or {@action Hide|SRD52} action."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "hill",
+      "mountain"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/saber-toothed-tiger.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Saber-Toothed Tiger",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Saber-Toothed Tiger.webp"
+                  },
+                  "width": 1000,
+                  "height": 940
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

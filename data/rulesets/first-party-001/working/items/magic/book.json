@@ -1,0 +1,34 @@
+{
+  "id": "item.book",
+  "name": "Book",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Book",
+        "type": "G",
+        "rarity": "none",
+        "weight": 5,
+        "value": 2500,
+        "entries": [
+          "A book might contain poetry, historical accounts, information pertaining to a particular field of lore, diagrams and notes on gnomish contraptions, or just about anything else that can be represented using text or pictures. A book of spells is a {@item spellbook|srd51}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Book",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 2500,
+        "entries": [
+          "A Book contains fiction or nonfiction. If you consult an accurate nonfiction Book about its topic, you gain a +5 bonus to Intelligence ({@skill Arcana|SRD52}, {@skill History|SRD52}, {@skill Nature|SRD52}, or {@skill Religion|SRD52}) checks you make about that topic."
+        ]
+      }
+    }
+  ]
+}

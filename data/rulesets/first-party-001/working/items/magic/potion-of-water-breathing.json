@@ -1,0 +1,39 @@
+{
+  "id": "item.potion-of-water-breathing",
+  "name": "Potion of Water Breathing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Water Breathing",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "entries": [
+          "You can breathe underwater for 1 hour after drinking this potion. Its cloudy green fluid smells of the sea and has a jellyfish-like bubble floating in it."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Water Breathing",
+        "type": "P|SRD52",
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "entries": [
+          "You can breathe underwater for 24 hours after drinking this potion.",
+          "This potion's cloudy green fluid smells of the sea and has a jellyfish-like bubble floating in it."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

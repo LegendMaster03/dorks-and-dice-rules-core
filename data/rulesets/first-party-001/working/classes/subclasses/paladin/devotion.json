@@ -1,0 +1,111 @@
+{
+  "id": "subclass.paladin.devotion",
+  "name": "Oath of Devotion",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Oath of Devotion",
+        "shortName": "Devotion",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "3": [
+                "protection from evil and good",
+                "sanctuary"
+              ],
+              "5": [
+                "lesser restoration",
+                "zone of truth"
+              ],
+              "9": [
+                "beacon of hope",
+                "dispel magic"
+              ],
+              "13": [
+                "freedom of movement",
+                "guardian of faith"
+              ],
+              "17": [
+                "commune",
+                "flame strike"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Oath of Devotion|Paladin||Devotion||3",
+          "Aura of Devotion|Paladin||Devotion||7",
+          "Purity of Spirit|Paladin||Devotion||15",
+          "Holy Nimbus|Paladin||Devotion||20"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Oath of Devotion",
+        "shortName": "Devotion",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "3": [
+                "protection from evil and good|srd52",
+                "shield of faith|srd52"
+              ],
+              "5": [
+                "aid|srd52",
+                "zone of truth|srd52"
+              ],
+              "9": [
+                "beacon of hope|srd52",
+                "dispel magic|srd52"
+              ],
+              "13": [
+                "freedom of movement|srd52",
+                "guardian of faith|srd52"
+              ],
+              "17": [
+                "commune|srd52",
+                "flame strike|srd52"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Oath of Devotion|Paladin|SRD52|Devotion|SRD52|3",
+          "Aura of Devotion|Paladin|SRD52|Devotion|SRD52|7",
+          "Smite of Protection|Paladin|SRD52|Devotion|SRD52|15",
+          "Holy Nimbus|Paladin|SRD52|Devotion|SRD52|20"
+        ],
+        "lore": [
+          {
+            "name": "Oath of Devotion",
+            "shortName": "Devotion",
+            "className": "Paladin",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Devotion Paladin.webp"
+                },
+                "credit": "Katerina Ladon",
+                "width": 850,
+                "height": 1501
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "baseitem.breastplate",
+  "name": "Breastplate",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Breastplate",
+        "type": "MA",
+        "rarity": "none",
+        "weight": 20,
+        "value": 40000,
+        "ac": 14,
+        "armor": true,
+        "entries": [
+          "This armor consists of a fitted metal chest piece worn with supple leather. Although it leaves the legs and arms relatively unprotected, this armor provides good protection for the wearer's vital organs while leaving the wearer relatively unencumbered."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Breastplate",
+        "type": "MA|SRD52",
+        "rarity": "none",
+        "weight": 20,
+        "value": 40000,
+        "ac": 14,
+        "armor": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "baseitem.drum",
+  "name": "Drum",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Drum",
+        "type": "INS",
+        "rarity": "none",
+        "weight": 3,
+        "value": 600
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Drum",
+        "type": "INS|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 600,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Charisma"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Play a known tune ({@dc 10}), or improvise a song ({@dc 15})"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

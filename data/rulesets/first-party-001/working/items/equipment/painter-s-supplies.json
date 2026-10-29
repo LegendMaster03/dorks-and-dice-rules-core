@@ -1,0 +1,110 @@
+{
+  "id": "baseitem.painter-s-supplies",
+  "name": "Painter's Supplies",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Painter's Supplies",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 5,
+        "value": 1000,
+        "additionalEntries": [
+          "Proficiency with painter's supplies represents your ability to paint and draw. You also acquire an understanding of art history, which can aid you in examining works of art.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Painter's supplies include an easel, canvas, paints, brushes, charcoal sticks, and a palette."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana, History, Religion",
+            "entries": [
+              "Your expertise aids you in uncovering lore of any sort that is attached to a work of art, such as the magical properties of a painting or the origins of a strange mural found in a dungeon."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation, Perception",
+            "entries": [
+              "When you inspect a painting or a similar work of visual art, your knowledge of the practices behind creating it can grant you additional insight."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Painting and Drawing",
+            "entries": [
+              "As part of a short or long rest, you can produce a simple work of art. Although your work might lack precision, you can capture an image or a scene, or make a quick copy of a piece of art you saw."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Painter's Supplies",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Paint an accurate portrait",
+                "10"
+              ],
+              [
+                "Create a painting with a hidden message",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Painter's Supplies",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 1000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Wisdom"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Paint a recognizable image of something you've seen ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Druidic Focus|SRD52}, {@item Holy Symbol|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "baseitem.greatsword",
+  "name": "Greatsword",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 6,
+    "value": 5000,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "sword": true,
+    "weapon": true
+  }
+}

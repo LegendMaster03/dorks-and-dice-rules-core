@@ -1,0 +1,24 @@
+{
+  "id": "baseitem.javelin",
+  "name": "Javelin",
+  "kind": "baseitem",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 50,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "range": "30/120",
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "spear": true,
+    "weapon": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "item.bell",
+  "name": "Bell",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bell",
+        "type": "G",
+        "rarity": "none",
+        "value": 100
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bell",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 100,
+        "entries": [
+          "When rung as a {@action Utilize|SRD52} action, a Bell produces a sound that can be heard up to 60 feet away."
+        ]
+      }
+    }
+  ]
+}

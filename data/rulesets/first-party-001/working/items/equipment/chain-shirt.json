@@ -1,0 +1,35 @@
+{
+  "id": "baseitem.chain-shirt",
+  "name": "Chain Shirt",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Chain Shirt",
+        "type": "MA",
+        "rarity": "none",
+        "weight": 20,
+        "value": 5000,
+        "ac": 13,
+        "armor": true,
+        "entries": [
+          "Made of interlocking metal rings, a chain shirt is worn between layers of clothing or leather. This armor offers modest protection to the wearer's upper body and allows the sound of the rings rubbing against one another to be muffled by outer layers."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Chain Shirt",
+        "type": "MA|SRD52",
+        "rarity": "none",
+        "weight": 20,
+        "value": 5000,
+        "ac": 13,
+        "armor": true
+      }
+    }
+  ]
+}

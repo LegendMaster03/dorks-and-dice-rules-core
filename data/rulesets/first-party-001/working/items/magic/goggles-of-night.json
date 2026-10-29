@@ -1,0 +1,40 @@
+{
+  "id": "item.goggles-of-night",
+  "name": "Goggles of Night",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Goggles of Night",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While wearing these dark lenses, you have {@sense darkvision} out to a range of 60 feet. If you already have {@sense darkvision}, wearing the goggles increases its range by 60 feet."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Goggles of Night",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While wearing these dark lenses, you have {@sense Darkvision|SRD52} out to 60 feet. If you already have {@sense Darkvision|SRD52}, wearing the goggles increases its range by 60 feet."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

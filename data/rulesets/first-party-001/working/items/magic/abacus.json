@@ -1,0 +1,12 @@
+{
+  "id": "item.abacus",
+  "name": "Abacus",
+  "kind": "item",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 2,
+    "value": 200
+  }
+}

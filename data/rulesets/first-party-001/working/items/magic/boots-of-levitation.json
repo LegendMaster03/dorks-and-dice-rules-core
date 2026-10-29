@@ -1,0 +1,49 @@
+{
+  "id": "item.boots-of-levitation",
+  "name": "Boots of Levitation",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Boots of Levitation",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While you wear these boots, you can use an action to cast the {@spell levitate} spell on yourself at will."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "levitate"
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Boots of Levitation",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While you wear these boots, you can cast {@spell Levitate|SRD52} on yourself."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "levitate|srd52"
+          ]
+        }
+      }
+    }
+  ]
+}

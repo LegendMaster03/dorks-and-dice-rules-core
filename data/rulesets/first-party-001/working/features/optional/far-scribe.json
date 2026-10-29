@@ -1,0 +1,43 @@
+{
+  "id": "optionalfeature.far-scribe",
+  "name": "Far Scribe",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "nativeInvocationDefinition": {
+    "status": "owner-approved-native-data-contract-not-executable",
+    "nativeExecutable": false,
+    "selectable": true,
+    "requiredClass": "class.warlock",
+    "requiredPactType": "Tome",
+    "minimumWarlockLevel": 5,
+    "invocationSelectionCost": 1,
+    "invocationProgressionSchedule": "undecided",
+    "ownership": {
+      "bindsToExactlyOneConcretePact": true,
+      "patronMustMatchAttachedPact": true,
+      "patronAcceptanceRequired": true,
+      "pactMustBeActiveForEffects": true,
+      "retainPurchaseHistoryOnPactSeverance": true,
+      "revalidateBeforeRestoringOrTransferring": true,
+      "noAutomaticRefundOrFreeGrant": true
+    },
+    "effect": {
+      "kind": "book-of-shadows-correspondence",
+      "nameCapacity": "warlock-proficiency-bonus",
+      "consentRequired": true,
+      "spell": "sending",
+      "pactMagicSlotCost": 0,
+      "messageAndReply": "book-mediated",
+      "enrollmentAndRemoval": "source-defined-actions",
+      "independentNameListFrom": "gift-of-the-protectors",
+      "extraTomeLevelFiveFreeCasting": false
+    },
+    "sourceRightsReview": "non-srd-review-pending",
+    "originalSourceVersionsUnaffected": true
+  },
+  "publishedSourceBoundary": {
+    "sourceRecord": "data/reference/warlock-pact-specific-invocations.json",
+    "fullProtectedTextImported": false,
+    "historicalSourceOnlyInReference": true
+  }
+}

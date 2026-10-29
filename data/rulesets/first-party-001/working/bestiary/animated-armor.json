@@ -1,0 +1,122 @@
+{
+  "id": "monster.animated-armor",
+  "name": "Animated Armor",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 33,
+      "formula": "6d8 + 6"
+    },
+    "speed": {
+      "walk": 25
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 14,
+    "dex": 11,
+    "con": 13,
+    "int": 1,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 6,
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "cr": "1",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The armor makes two Slam attacks."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/animated-armor.opus"
+    },
+    "senseTags": [
+      "B"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Animated Armor",
+        "_copy": {
+          "name": "Animated Objects",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Animated suits of armor might move with steady deliberateness or awkward gaits. They're often constructed from plate armor, making them easy to mistake for soldiers or helmed horrors. Other types of armor or even metal statuary might also become animated armor."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the armor remains motionless, it is indistinguishable from a normal suit of armor."
+        ]
+      },
+      {
+        "name": "Antimagic Susceptibility",
+        "entries": [
+          "The armor is {@condition incapacitated} while in the area of an {@spell antimagic field}. If targeted by {@spell dispel magic}, the armor must succeed on a Constitution saving throw against the caster's spell save DC or fall {@condition unconscious} for 1 minute."
+        ]
+      }
+    ]
+  }
+}

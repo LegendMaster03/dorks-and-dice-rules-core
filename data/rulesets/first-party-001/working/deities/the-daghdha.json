@@ -1,0 +1,19 @@
+{
+  "id": "deity.the-daghdha",
+  "name": "The Daghdha",
+  "kind": "deity",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "God of weather and crops",
+    "domains": [
+      "Nature",
+      "Trickery"
+    ],
+    "symbol": "Bubbling cauldron or shield"
+  }
+}

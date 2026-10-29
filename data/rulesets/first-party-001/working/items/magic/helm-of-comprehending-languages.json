@@ -1,0 +1,41 @@
+{
+  "id": "item.helm-of-comprehending-languages",
+  "name": "Helm of Comprehending Languages",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Helm of Comprehending Languages",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While wearing this helm, you can use an action to cast the {@spell comprehend languages} spell from it at will."
+        ],
+        "attachedSpells": {
+          "will": [
+            "comprehend languages"
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Helm of Comprehending Languages",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "While wearing this helm, you can cast {@spell Comprehend Languages|SRD52} from it."
+        ],
+        "attachedSpells": {
+          "will": [
+            "comprehend languages|srd52"
+          ]
+        }
+      }
+    }
+  ]
+}

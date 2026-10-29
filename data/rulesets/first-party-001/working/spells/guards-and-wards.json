@@ -1,0 +1,186 @@
+{
+  "id": "spell.guards-and-wards",
+  "name": "Guards and Wards",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Guards and Wards",
+        "level": 6,
+        "school": "A",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "burning incense, a small measure of brimstone and oil, a knotted string, a small amount of umber hulk blood, and a small silver rod worth at least 10 gp",
+            "cost": 1000
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "You create a ward that protects up to 2,500 square feet of floor space (an area 50 feet square, or one hundred 5-foot squares or twenty-five 10-foot squares). The warded area can be up to 20 feet tall, and shaped as you desire. You can ward several stories of a stronghold by dividing the area among them, as long as you can walk into each contiguous area while you are casting the spell.",
+          "When you cast this spell, you can specify individuals that are unaffected by any or all of the effects that you choose. You can also specify a password that, when spoken aloud, makes the speaker immune to these effects.",
+          "Guards and wards creates the following effects within the warded area.",
+          {
+            "type": "entries",
+            "name": "Corridors",
+            "entries": [
+              "Fog fills all the warded corridors, making them {@quickref Vision and Light|SRD51|2||heavily obscured}. In addition, at each intersection or branching passage offering a choice of direction, there is a {@chance 50|||Disoriented!|No effect} chance that a creature other than you will believe it is going in the opposite direction from the one it chooses."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Doors",
+            "entries": [
+              "All doors in the warded area are magically locked, as if sealed by an {@spell arcane lock} spell. In addition, you can cover up to ten doors with an illusion (equivalent to the illusory object function of the {@spell minor illusion} spell) to make them appear as plain sections of wall."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Stairs",
+            "entries": [
+              "Webs fill all stairs in the warded area from top to bottom, as the {@spell web} spell. These strands regrow in 10 minutes if they are burned or torn away while guards and wards lasts."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Other Spell Effect",
+            "entries": [
+              "You can place your choice of one of the following magical effects within the warded area of the stronghold.",
+              {
+                "type": "list",
+                "items": [
+                  "Place {@spell dancing lights} in four corridors. You can designate a simple program that the lights repeat as long as guards and wards lasts.",
+                  "Place {@spell magic mouth} in two locations.",
+                  "Place {@spell stinking cloud} in two locations. The vapors appear in the places you designate; they return within 10 minutes if dispersed by wind while guards and wards lasts.",
+                  "Place a constant {@spell gust of wind} in one corridor or room.",
+                  "Place a {@spell suggestion} in one location. You select an area of up to 5 feet square, and any creature that enters or passes through the area receives the suggestion mentally."
+                ]
+              }
+            ]
+          },
+          "The whole warded area radiates magic. A {@spell dispel magic} cast on a specific effect, if successful, removes only that effect.",
+          "You can create a permanently guarded and warded structure by casting this spell there every day for one year."
+        ],
+        "miscTags": [
+          "OBS",
+          "PIR",
+          "PRM"
+        ],
+        "areaTags": [
+          "Q"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Guards and Wards",
+        "level": 6,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "hour"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a silver rod worth 10+ GP",
+            "cost": 1000
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "You create a ward that protects up to 2,500 square feet of floor space. The warded area can be up to 20 feet tall, and you shape it as one 50-foot square, one hundred 5-foot squares that are contiguous, or twenty-five 10-foot squares that are contiguous.",
+          "When you cast this spell, you can specify individuals that are unaffected by the spell's effects. You can also specify a password that, when spoken aloud within 5 feet of the warded area, makes the speaker immune to its effects.",
+          "The spell creates the effects below within the warded area. {@spell Dispel Magic|SRD52} has no effect on Guards and Wards itself, but each of the following effects can be dispelled. If all four are dispelled, Guards and Wards ends. If you cast the spell every day for 365 days on the same area, the spell thereafter lasts until all its effects are dispelled.",
+          {
+            "type": "entries",
+            "name": "Corridors",
+            "entries": [
+              "Fog fills all the warded corridors, making them {@variantrule Heavily Obscured|SRD52}. In addition, at each intersection or branching passage offering a choice of direction, there is a {@chance 50|||Disoriented!|No effect} chance that a creature other than you believes it is going in the opposite direction from the one it chooses."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Doors",
+            "entries": [
+              "All doors in the warded area are magically locked, as if sealed by the {@spell Arcane Lock|SRD52} spell. In addition, you can cover up to ten doors with an illusion to make them appear as plain sections of wall."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Stairs",
+            "entries": [
+              "Webs fill all stairs in the warded area from top to bottom, as in the {@spell Web|SRD52} spell. These strands regrow in 10 minutes if they are destroyed while Guards and Wards lasts."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Other Spell Effect",
+            "entries": [
+              "Place one of the following magical effects within the warded area:",
+              {
+                "type": "list",
+                "items": [
+                  "{@spell Dancing Lights|SRD52} in four corridors, with a simple program that the lights repeat as long as Guards and Wards lasts",
+                  "{@spell Magic Mouth|SRD52} in two locations",
+                  "{@spell Stinking Cloud|SRD52} in two locations (the vapors return within 10 minutes if dispersed while Guards and Wards lasts)",
+                  "{@spell Gust of Wind|SRD52} in one corridor or room (the wind blows continuously while the spell lasts)",
+                  "{@spell Suggestion|SRD52} in one 5-foot square; any creature that enters that square receives the suggestion mentally"
+                ]
+              }
+            ]
+          }
+        ],
+        "miscTags": [
+          "OBS",
+          "PIR",
+          "PRM"
+        ],
+        "areaTags": [
+          "Q"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "id": "monster.swarm-of-insects",
+  "name": "Swarm of Insects",
+  "kind": "monster",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "beast",
+      "swarmSize": "T"
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d8 + 6"
+    },
+    "speed": {
+      "walk": 20,
+      "choose": {
+        "from": [
+          "climb",
+          "fly"
+        ],
+        "amount": 20,
+        "note": "(DM's choice)"
+      }
+    },
+    "str": 3,
+    "dex": 13,
+    "con": 14,
+    "int": 1,
+    "wis": 7,
+    "cha": 1,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 8,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "prone",
+      "restrained",
+      "stunned"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "If the swarm has a {@variantrule Climb Speed|SRD52}, the swarm can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "Swarm",
+        "entries": [
+          "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny insect. The swarm can't regain {@variantrule Hit Points|SRD52} or gain {@variantrule Temporary Hit Points|SRD52}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bites",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}6 ({@damage 2d4 + 1}) Poison damage, or 3 ({@damage 1d4 + 1}) Poison damage if the swarm is {@status Bloodied|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "grassland",
+      "hill",
+      "swamp",
+      "underdark",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/swarm-of-insects.opus"
+    },
+    "traitTags": [
+      "Spider Climb"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "I"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Swarm of Insects",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Swarm of Insects.webp"
+                  },
+                  "width": 1000,
+                  "height": 753
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}
