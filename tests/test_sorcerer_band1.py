@@ -7,10 +7,10 @@ def load(x): return json.loads((R/x).read_text(encoding="utf-8"))
 class SorcererBand1Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.obj=load("data/native/classes/base/sorcerer.json")
+        cls.obj=load("data/rulesets/first-party-001/working/classes/base/sorcerer.json")
         cls.rule=cls.obj["definition"]
         cls.rows=cls.rule["progression"]
-        cls.feats={p.stem:load(p.relative_to(R)) for p in (R/"data/native/features/classes/sorcerer").glob("*.json")}
+        cls.feats={p.stem:load(p.relative_to(R)) for p in (R/"data/rulesets/first-party-001/working/features/classes/sorcerer").glob("*.json")}
     def mech(self,k): return self.feats[k]["definition"]["mechanics"]
     def test_grants_and_band(self):
         self.assertEqual("retained-native-definition",self.obj["baselineStatus"])
@@ -55,7 +55,7 @@ class SorcererBand1Tests(unittest.TestCase):
         self.assertEqual({"fortitude":6,"reflex":6,"will":12},self.rows[19]["baseSaves"])
     def test_manifest(self):
         rows={x.get("path"):x for x in load("data/reference/srd/native-coverage-manifest.json")["coverage"]}
-        for p in [R/"data/native/classes/base/sorcerer.json",*(R/"data/native/features/classes/sorcerer").glob("*.json")]:
+        for p in [R/"data/rulesets/first-party-001/working/classes/base/sorcerer.json",*(R/"data/rulesets/first-party-001/working/features/classes/sorcerer").glob("*.json")]:
             obj=load(p.relative_to(R)); status=rows[p.relative_to(R).as_posix()]["status"]
             if obj["baselineStatus"]=="retained-native-definition":
                 self.assertIn(status,{"native-single-source-retained","native-compatible-merged"})

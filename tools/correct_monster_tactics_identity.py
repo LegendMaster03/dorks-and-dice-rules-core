@@ -13,7 +13,7 @@ from reconcile_monster_families import legacy_differences
 
 REF = ROOT / "data/reference/srd"
 LEDGER = REF / "monster-legacy-variant-review.json"
-FAMILIES = ROOT / "data/native/monster-families.json"
+FAMILIES = ROOT / "data/rulesets/first-party-001/working/monster-families.json"
 MAPPINGS = {
     "Hobgoblin": "Hobgoblin Warrior",
     "Bugbear": "Bugbear Warrior",

@@ -5,7 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 
 def item(name):
-    return json.loads((ROOT / ("data/native/bestiary/" + name + ".json")).read_text())
+    return json.loads((ROOT / ("data/rulesets/first-party-001/working/bestiary/" + name + ".json")).read_text())
 
 class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
     def test_magic_attacks_and_vampire_regeneration_preserved(self):

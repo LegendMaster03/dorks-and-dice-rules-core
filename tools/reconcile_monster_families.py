@@ -17,7 +17,7 @@ from reconcile_native_baseline import ROOT, MANIFEST, REPORT, load, write, retai
 
 REF = ROOT / "data/reference/srd"
 REVIEW = REF / "monster-legacy-variant-review.json"
-FAMILIES = ROOT / "data/native/monster-families.json"
+FAMILIES = ROOT / "data/rulesets/first-party-001/working/monster-families.json"
 ALIAS_PAIRS = {
     "Acolyte": "Priest Acolyte",
     "Azer": "Azer Sentinel",

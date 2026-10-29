@@ -23,10 +23,10 @@ jobs:
           import json
           from pathlib import Path
           expected = [
-              "data/native", "data/native/classes/base", "data/native/classes/subclasses",
-              "data/native/classes/prestige", "data/native/classes/npc", "data/native/classes/sidekick",
-              "data/native/species/base", "data/native/species/subspecies",
-              "data/native/bestiary", "data/native/spells", "data/native/feats",
+              "data/rulesets/first-party-001/native", "data/rulesets/first-party-001/working", "data/rulesets/first-party-001/working/classes/base", "data/rulesets/first-party-001/working/classes/subclasses",
+              "data/rulesets/first-party-001/working/classes/prestige", "data/rulesets/first-party-001/working/classes/npc", "data/rulesets/first-party-001/working/classes/sidekick",
+              "data/rulesets/first-party-001/working/species/base", "data/rulesets/first-party-001/working/species/subspecies",
+              "data/rulesets/first-party-001/working/bestiary", "data/rulesets/first-party-001/working/spells", "data/rulesets/first-party-001/working/feats",
               "data/conversions", "data/schemas", "data/reference",
               "src", "docs/rewrite", "tests", "tools",
           ]
@@ -52,5 +52,11 @@ jobs:
       - name: Verify native data and pinned structured SRD reference integrity
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
 
-      - name: Audit native definition consistency (informational until normalized)
-        run: python3 tools/audit_native_baseline.py
+      - name: Audit authoritative native definitions (strict)
+        run: python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict
+
+      - name: Audit inert working definitions without granting authority
+        run: python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/working
+
+      - name: Verify authoritative boundary, SRD coverage and original migration ledger
+        run: python3 tools/validate_ruleset_split.py

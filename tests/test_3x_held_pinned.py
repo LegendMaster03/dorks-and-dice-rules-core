@@ -13,9 +13,9 @@ def load(path):
 class HeldPinnedTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.native = {x["id"]: x for x in load("data/native/conditions.json")["conditions"]}
-        cls.chapter = load("data/native/rules/conditions.json")
-        cls.rules = load("data/native/held-pinned.json")
+        cls.native = {x["id"]: x for x in load("data/rulesets/first-party-001/native/conditions.json")["conditions"]}
+        cls.chapter = load("data/rulesets/first-party-001/native/rules/conditions.json")
+        cls.rules = load("data/rulesets/first-party-001/native/held-pinned.json")
         cls.sources = load("data/reference/3x/held-pinned-reconciliation.json")
 
     def test_catalog_ids_and_shared_conditions(self):

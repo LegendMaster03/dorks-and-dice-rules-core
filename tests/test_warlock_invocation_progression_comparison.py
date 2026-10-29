@@ -62,7 +62,7 @@ class WarlockInvocationBand1ProvisionalProgressionTests(unittest.TestCase):
         self.assertEqual(1, self.model["model"]["levelOneElectiveInvocations"])
         self.assertEqual(0, self.model["deferredAlternatives"][0]["levelOneElectiveInvocations"])
         self.assertEqual("independently-granted-first-Pact", self.model["model"]["levelOnePact"])
-        native = load("data/native/classes/base/warlock.json")
+        native = load("data/rulesets/first-party-001/working/classes/base/warlock.json")
         self.assertEqual("pending-native-reconciliation", native["baselineStatus"])
 
 

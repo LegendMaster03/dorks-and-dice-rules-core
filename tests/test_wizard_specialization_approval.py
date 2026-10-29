@@ -5,7 +5,7 @@ import unittest
 R=Path(__file__).resolve().parents[1]
 class WizardApprovalTests(unittest.TestCase):
     def test_selection_policy(self):
-        w=json.loads((R/"data/native/classes/base/wizard.json").read_text(encoding="utf-8"))
+        w=json.loads((R/"data/rulesets/first-party-001/working/classes/base/wizard.json").read_text(encoding="utf-8"))
         self.assertEqual("retained-native-definition",w["baselineStatus"])
         s=w["definition"]["wizardSpecialization"]
         self.assertEqual([5,10,15,20],s["classLevelGrants"])

@@ -4,8 +4,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = ROOT / "data/native/classes/base/bard.json"
-FEATURE_DIR = ROOT / "data/native/features/classes/bard"
+BASE = ROOT / "data/rulesets/first-party-001/working/classes/base/bard.json"
+FEATURE_DIR = ROOT / "data/rulesets/first-party-001/working/features/classes/bard"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
 

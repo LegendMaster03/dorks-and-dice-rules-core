@@ -7,8 +7,8 @@ def read(p): return json.loads((R/p).read_text(encoding="utf-8"))
 class WizardBand1Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.w=read("data/native/classes/base/wizard.json")["definition"]
-        cls.f={p.stem:read(p.relative_to(R)) for p in (R/"data/native/features/classes/wizard").glob("*.json")}
+        cls.w=read("data/rulesets/first-party-001/working/classes/base/wizard.json")["definition"]
+        cls.f={p.stem:read(p.relative_to(R)) for p in (R/"data/rulesets/first-party-001/working/features/classes/wizard").glob("*.json")}
     def test_full_progression(self):
         rows=self.w["progression"]
         self.assertEqual(list(range(1,21)),[x["level"] for x in rows])
@@ -51,7 +51,7 @@ class WizardBand1Tests(unittest.TestCase):
         m=read("data/reference/srd/native-coverage-manifest.json")
         rows={x["path"]:x for x in m["coverage"] if "path" in x}
         self.assertEqual(2522,len(m["coverage"]))
-        for p in [R/"data/native/classes/base/wizard.json",*(R/"data/native/features/classes/wizard").glob("*.json")]:
+        for p in [R/"data/rulesets/first-party-001/working/classes/base/wizard.json",*(R/"data/rulesets/first-party-001/working/features/classes/wizard").glob("*.json")]:
             x=read(p.relative_to(R));entry=rows.get(p.relative_to(R).as_posix())
             if entry is None:self.assertIn(p.stem,{"scribe-scroll-level-1","wizard-specialization-level-5","wizard-specialization-level-10","wizard-specialization-level-15","wizard-specialization-level-20"})
             elif x["baselineStatus"]=="retained-native-definition":self.assertIn(entry["status"],{"native-single-source-retained","native-compatible-merged"})

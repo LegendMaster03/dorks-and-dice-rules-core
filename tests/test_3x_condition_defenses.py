@@ -19,8 +19,8 @@ def evaluate(defender_conditions=(), attacker_conditions=(), *,
              attacker_is_grappler=False, dexterity=3, dodge=0, armor=4, shield=2,
              natural_armor=0, size=0, deflection=0, other=0):
     """Test the declared contribution and stacking model, not production code."""
-    by_id = {e["id"]: e for e in load("data/native/conditions.json")["conditions"]}
-    defenses = load("data/native/defenses.json")
+    by_id = {e["id"]: e for e in load("data/rulesets/first-party-001/native/conditions.json")["conditions"]}
+    defenses = load("data/rulesets/first-party-001/native/defenses.json")
     assert target in defenses["attackTargeting"]["supported"]
 
     active = set(defender_conditions)
@@ -80,8 +80,8 @@ def evaluate(defender_conditions=(), attacker_conditions=(), *,
 class ThreeXConditionDefenseTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data = load("data/native/defenses.json")
-        cls.conditions = {e["id"]: e for e in load("data/native/conditions.json")["conditions"]}
+        cls.data = load("data/rulesets/first-party-001/native/defenses.json")
+        cls.conditions = {e["id"]: e for e in load("data/rulesets/first-party-001/native/conditions.json")["conditions"]}
         cls.source = load("data/reference/3x/condition-defense-reconciliation.json")
 
     def test_normal_touch_flat_footed_and_combined_profiles(self):

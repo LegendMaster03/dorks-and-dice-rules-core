@@ -9,7 +9,7 @@ def get(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 def monster(name):
-    return get("data/native/bestiary/" + name + ".json")["definition"]
+    return get("data/rulesets/first-party-001/working/bestiary/" + name + ".json")["definition"]
 
 class MonsterSecondPassTests(unittest.TestCase):
     def test_dragon_unique_actions_restored_without_old_multiattack(self):
@@ -49,7 +49,7 @@ class MonsterSecondPassTests(unittest.TestCase):
 
     def test_retained_5_5_only_creatures_still_unchanged(self):
         for name in ("pirate", "pirate-captain"):
-            item = get("data/native/bestiary/" + name + ".json")
+            item = get("data/rulesets/first-party-001/working/bestiary/" + name + ".json")
             self.assertEqual("retained-native-definition", item["baselineStatus"])
             self.assertNotIn("candidateDefinitions", item)
 

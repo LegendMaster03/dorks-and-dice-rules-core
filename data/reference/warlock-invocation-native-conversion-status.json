@@ -12,97 +12,97 @@
   "files": [
     {
       "invocationId": "invocation.thirsting-blade",
-      "path": "data/native/features/optional/thirsting-blade.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/thirsting-blade.json",
       "selectable": false,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.devouring-blade",
-      "path": "data/native/features/optional/devouring-blade.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/devouring-blade.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.lifedrinker",
-      "path": "data/native/features/optional/lifedrinker.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/lifedrinker.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.eldritch-smite",
-      "path": "data/native/features/optional/eldritch-smite.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/eldritch-smite.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.improved-pact-weapon",
-      "path": "data/native/features/optional/improved-pact-weapon.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/improved-pact-weapon.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     },
     {
       "invocationId": "invocation.voice-of-the-chain-master",
-      "path": "data/native/features/optional/voice-of-the-chain-master.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/voice-of-the-chain-master.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.chains-of-carceri",
-      "path": "data/native/features/optional/chains-of-carceri.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/chains-of-carceri.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.investment-of-the-chain-master",
-      "path": "data/native/features/optional/investment-of-the-chain-master.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/investment-of-the-chain-master.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.gift-of-the-ever-living-ones",
-      "path": "data/native/features/optional/gift-of-the-ever-living-ones.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/gift-of-the-ever-living-ones.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     },
     {
       "invocationId": "invocation.book-of-ancient-secrets",
-      "path": "data/native/features/optional/book-of-ancient-secrets.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/book-of-ancient-secrets.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.gift-of-the-protectors",
-      "path": "data/native/features/optional/gift-of-the-protectors.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/gift-of-the-protectors.json",
       "selectable": true,
       "nonSrdRightsReviewPending": false
     },
     {
       "invocationId": "invocation.aspect-of-the-moon",
-      "path": "data/native/features/optional/aspect-of-the-moon.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/aspect-of-the-moon.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     },
     {
       "invocationId": "invocation.far-scribe",
-      "path": "data/native/features/optional/far-scribe.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/far-scribe.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     },
     {
       "invocationId": "invocation.rebuke-of-the-talisman",
-      "path": "data/native/features/optional/rebuke-of-the-talisman.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/rebuke-of-the-talisman.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     },
     {
       "invocationId": "invocation.protection-of-the-talisman",
-      "path": "data/native/features/optional/protection-of-the-talisman.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/protection-of-the-talisman.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     },
     {
       "invocationId": "invocation.bond-of-the-talisman",
-      "path": "data/native/features/optional/bond-of-the-talisman.json",
+      "path": "data/rulesets/first-party-001/working/features/optional/bond-of-the-talisman.json",
       "selectable": true,
       "nonSrdRightsReviewPending": true
     }
@@ -115,6 +115,6 @@
   },
   "runtimeImplemented": false,
   "invocationProgressionApproved": false,
-  "linkedPactCommandDefinitionFile": "data/native/features/optional/pact-of-the-chain.json",
+  "linkedPactCommandDefinitionFile": "data/rulesets/first-party-001/working/features/optional/pact-of-the-chain.json",
   "noWarlockExecutableEngine": true
 }

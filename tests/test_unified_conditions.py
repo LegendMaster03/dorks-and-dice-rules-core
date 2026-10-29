@@ -13,9 +13,9 @@ def load(path):
 class UnifiedConditionsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data = load("data/native/conditions.json")
+        cls.data = load("data/rulesets/first-party-001/native/conditions.json")
         cls.conditions = {x["id"]: x for x in cls.data["conditions"]}
-        cls.chapter = load("data/native/rules/conditions.json")
+        cls.chapter = load("data/rulesets/first-party-001/native/rules/conditions.json")
         cls.decisions = {
             x["nativeRuleId"]: x for x in
             load("data/reference/srd/reconciliation-decisions.json")["decisions"]

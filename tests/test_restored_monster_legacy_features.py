@@ -40,8 +40,8 @@ class LegacyMonsterAbilityTests(unittest.TestCase):
             self.report["monsterRemainingFeatureQuestions"])
 
     def test_old_hobgoblin_and_bugbear_not_separate_creatures(self):
-        hobgoblin = read("data/native/bestiary/hobgoblin-warrior.json")
-        bugbear = read("data/native/bestiary/bugbear-warrior.json")
+        hobgoblin = read("data/rulesets/first-party-001/working/bestiary/hobgoblin-warrior.json")
+        bugbear = read("data/rulesets/first-party-001/working/bestiary/bugbear-warrior.json")
         self.assertIn("Martial Advantage",
                       [x["name"] for x in hobgoblin["definition"]["trait"]])
         self.assertIn("Pack Tactics",
@@ -52,40 +52,40 @@ class LegacyMonsterAbilityTests(unittest.TestCase):
                          [x["name"] for x in bugbear["definition"]["trait"]])
         self.assertEqual(
             "monster.hobgoblin-warrior",
-            read("data/native/bestiary/hobgoblin.json")["aliasOf"])
+            read("data/rulesets/first-party-001/working/bestiary/hobgoblin.json")["aliasOf"])
         self.assertEqual(
             "monster.bugbear-warrior",
-            read("data/native/bestiary/bugbear.json")["aliasOf"])
+            read("data/rulesets/first-party-001/working/bestiary/bugbear.json")["aliasOf"])
 
     def test_transferred_abilities_do_not_duplicate_newer_mechanics(self):
-        aboleth = read("data/native/bestiary/aboleth.json")["definition"]
+        aboleth = read("data/rulesets/first-party-001/working/bestiary/aboleth.json")["definition"]
         self.assertEqual(1, sum(x["name"] == "Mucus Cloud"
                                 for x in aboleth["trait"]))
         self.assertEqual(0, sum(x["name"] == "Mucous Cloud"
                                 for x in aboleth["trait"]))
-        basilisk = read("data/native/bestiary/basilisk.json")["definition"]
+        basilisk = read("data/rulesets/first-party-001/working/bestiary/basilisk.json")["definition"]
         self.assertEqual([], basilisk.get("trait", []))
         self.assertTrue(any(x["name"].startswith("Petrifying Gaze")
                             for x in basilisk["bonus"]))
-        cloaker = read("data/native/bestiary/cloaker.json")["definition"]
+        cloaker = read("data/rulesets/first-party-001/working/bestiary/cloaker.json")["definition"]
         self.assertFalse(any(x["name"] == "Damage Transfer"
                              for x in cloaker.get("trait", [])))
         self.assertIn("halves the damage",
                       json.dumps(cloaker["action"]))
 
     def test_mephit_spell_access_reconciled_without_duplicates(self):
-        magma = read("data/native/bestiary/magma-mephit.json")["definition"]
+        magma = read("data/rulesets/first-party-001/working/bestiary/magma-mephit.json")["definition"]
         self.assertEqual(
             ["Innate Spellcasting (1/Day)"],
             [s["name"] for s in magma.get("spellcasting", [])])
-        steam = read("data/native/bestiary/steam-mephit.json")["definition"]
+        steam = read("data/rulesets/first-party-001/working/bestiary/steam-mephit.json")["definition"]
         self.assertFalse(steam.get("spellcasting"))
         self.assertIn(
             "Blurred Form", [t["name"] for t in steam.get("trait", [])])
 
     def test_5_5_only_monsters_are_not_reconciled_against_missing_sources(self):
-        pirate = read("data/native/bestiary/pirate.json")
-        captain = read("data/native/bestiary/pirate-captain.json")
+        pirate = read("data/rulesets/first-party-001/working/bestiary/pirate.json")
+        captain = read("data/rulesets/first-party-001/working/bestiary/pirate-captain.json")
         for record in (pirate, captain):
             self.assertEqual("retained-native-definition",
                              record["baselineStatus"])
@@ -94,7 +94,7 @@ class LegacyMonsterAbilityTests(unittest.TestCase):
         self.assertEqual("6", captain["definition"]["cr"])
 
     def test_no_legacy_attack_suite_duplicate(self):
-        dragon = read("data/native/bestiary/adult-black-dragon.json")["definition"]
+        dragon = read("data/rulesets/first-party-001/working/bestiary/adult-black-dragon.json")["definition"]
         action_names = [x["name"] for x in dragon["action"]]
         self.assertIn("Rend", action_names)
         self.assertNotIn("Claw", action_names)

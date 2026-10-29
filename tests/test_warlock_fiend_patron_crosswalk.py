@@ -13,7 +13,7 @@ class WarlockFiendPatronCrosswalkTests(unittest.TestCase):
     def setUpClass(cls):
         cls.crosswalk = load("data/reference/srd/warlock-fiend-patron-crosswalk.json")
         cls.source = load("data/reference/srd/structured/class/class-warlock.json")
-        cls.native = load("data/native/classes/subclasses/warlock/fiend.json")
+        cls.native = load("data/rulesets/first-party-001/working/classes/subclasses/warlock/fiend.json")
 
     def test_pillar_identity_and_no_premature_approval(self):
         x = self.crosswalk

@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "data/native"
+NATIVE = ROOT / "data/rulesets/first-party-001/working"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 REPORT = ROOT / "docs/rewrite/native-reconciliation-statistics.json"
 

@@ -13,9 +13,9 @@ def load(path):
 class FearConditionsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.native = {x["id"]: x for x in load("data/native/conditions.json")["conditions"]}
-        cls.chapter = load("data/native/rules/conditions.json")
-        cls.family = load("data/native/fear.json")
+        cls.native = {x["id"]: x for x in load("data/rulesets/first-party-001/native/conditions.json")["conditions"]}
+        cls.chapter = load("data/rulesets/first-party-001/native/rules/conditions.json")
+        cls.family = load("data/rulesets/first-party-001/working/fear.json")
         cls.evidence = load("data/reference/3x/fear-conditions.json")
 
     def condition(self, name):

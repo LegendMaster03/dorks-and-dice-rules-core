@@ -12,7 +12,7 @@ class InvocationResolutionApprovalTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.catalog=read("data/reference/warlock-pact-specific-invocations.json")
-        cls.base=read("data/native/classes/base/warlock.json")
+        cls.base=read("data/rulesets/first-party-001/working/classes/base/warlock.json")
     def test_all_sixteen_dispositions_authorized_without_activation(self):
         approval=self.catalog["ownerApprovedConflictResolution"]
         self.assertEqual("owner-approved-native-design-not-implemented",approval["status"])

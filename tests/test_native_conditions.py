@@ -13,7 +13,7 @@ def load(path):
 class ExhaustionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.native_data = load("data/native/conditions.json")
+        cls.native_data = load("data/rulesets/first-party-001/native/conditions.json")
         cls.native = next(
             x for x in cls.native_data["conditions"] if x["id"] == "condition.exhaustion"
         )

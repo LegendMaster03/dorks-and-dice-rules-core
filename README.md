@@ -10,9 +10,9 @@ Rules Core is the **headless, authoritative native rules engine and rules-conten
 
 ## Organization
 
-- `data/native/skills.json` — native skills, including all adopted historical-edition skill concepts but **no edition/import metadata**
-- `data/native/competencies.json` — unified crafting-skill and tool-proficiency capabilities, not duplicated ordinary Skills
-- `data/native/` — version-controlled, independently identified native Dorks & Dice entities, one primary JSON document per substantial entity; contained categories such as Skills and Competencies each use one JSON file
+- `data/rulesets/first-party-001/working/skills.json` — provisional skill records, including all adopted historical-edition skill concepts but **no edition/import metadata**
+- `data/rulesets/first-party-001/working/competencies.json` — provisional unified crafting-skill and tool-proficiency capabilities, not duplicated ordinary Skills
+- `data/rulesets/first-party-001/working/` — version-controlled, independently identified native Dorks & Dice entities, one primary JSON document per substantial entity; contained categories such as Skills and Competencies each use one JSON file
 - `data/conversions/` — reviewed, versioned imported-source-to-native conversion definitions
 - `data/schemas/` — data validation schemas as they are defined
 - `data/reference/` — only material cleared for inclusion in version control, with source/license attribution
@@ -35,10 +35,12 @@ Agree on foundational native data contracts, rules composition and access bounda
 
 ## SRD native baseline
 
-The pinned SRD 5.1 and 5.2.1 structured corpus has been fully staged
-into native category files and 2,225 per-entity records.
+The pinned SRD 5.1 and 5.2.1 structured corpus has been staged
+in the inert working tree, retaining its 2,225 per-entity records.
 **Unreviewed candidate definitions are inert**, not executable rules or
-approved native mechanics; resolved Skills and Conditions remain authoritative
-where already decided. The original 90-file source pack is immutable reference
+approved native mechanics; the reconciled Conditions catalog is authoritative,
+while the full Skills and Competencies catalogs remain provisional. The original 90-file source pack is immutable reference
 material. For counts, structure and verification caveats, see
 `docs/rewrite/native-srd-baseline-complete.md`.
+
+For the Phase 1A migration evidence and file/record reconciliation see `docs/rewrite/phase-1a-audit.md`.

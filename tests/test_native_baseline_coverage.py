@@ -6,7 +6,8 @@ import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "data/native"
+WORKING = ROOT / "data/rulesets/first-party-001/working"
+AUTHORITATIVE = ROOT / "data/rulesets/first-party-001/native"
 REF = ROOT / "data/reference/srd"
 
 
@@ -34,7 +35,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertEqual(
             ["Legal Information"],
             [s["name"] for s in meta["referenceOnlyBookSections"]])
-        self.assertFalse((NATIVE / "rules/legal-information.json").exists())
+        self.assertFalse((WORKING / "rules/legal-information.json").exists())
         self.assertTrue((REF / "structured/book/book-srd51.json").exists())
         self.assertTrue((REF / "structured/book/book-srd52.json").exists())
 
@@ -50,11 +51,11 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 self.assertNotIn("path", row)
                 continue
             relative = row["path"]
-            self.assertTrue(relative.startswith("data/native/"), relative)
+            self.assertTrue(relative.startswith("data/rulesets/first-party-001/"), relative)
             path = ROOT / relative
             self.assertTrue(path.is_file(), relative)
             paths.add(path)
-            if path.parent == NATIVE:
+            if path.parent in (WORKING, AUTHORITATIVE):
                 catalog = load(path)
                 matches = [x for v in catalog.values() if isinstance(v, list)
                            for x in v if isinstance(x, dict) and x.get("id") == cid]
@@ -104,12 +105,12 @@ class NativeSrdBaselineTests(unittest.TestCase):
                                 and isinstance(v["content"], dict)
                                 for v in native["candidateDefinitions"]))
             self.assertNotIn("source", native)
-        tracked = {p for p in NATIVE.rglob("*.json") if p.parent != NATIVE}
-        source_tracked = {p for p in paths if p.parent != NATIVE}
+        tracked = {p for p in WORKING.rglob("*.json") if p.parent != WORKING}
+        source_tracked = {p for p in paths if p.is_relative_to(WORKING) and p.parent != WORKING}
         self.assertEqual(set(), source_tracked - tracked)
         native_only = tracked - source_tracked
         approved_non_srd_invocations = {
-            NATIVE / "features/optional" / f"{name}.json"
+            WORKING / "features/optional" / f"{name}.json"
             for name in (
                 "improved-pact-weapon", "gift-of-the-ever-living-ones",
                 "aspect-of-the-moon", "far-scribe",
@@ -118,7 +119,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
             )
         }
         approved_native_only = {
-            NATIVE / "features/classes/wizard" / f"{name}.json"
+            WORKING / "features/classes/wizard" / f"{name}.json"
             for name in (
                 "scribe-scroll-level-1",
                 "wizard-specialization-level-5",
@@ -144,9 +145,9 @@ class NativeSrdBaselineTests(unittest.TestCase):
             self.assertIsInstance(entity["definition"]["mechanics"], dict)
 
     def test_approved_skill_competency_and_condition_data_not_overwritten(self):
-        skills = load(NATIVE / "skills.json")["skills"]
-        competencies = load(NATIVE / "competencies.json")["competencies"]
-        conditions = load(NATIVE / "conditions.json")["conditions"]
+        skills = load(WORKING / "skills.json")["skills"]
+        competencies = load(WORKING / "competencies.json")["competencies"]
+        conditions = load(AUTHORITATIVE / "conditions.json")["conditions"]
         self.assertEqual(88, len(skills))
         self.assertEqual(33, len(competencies))
         self.assertEqual(30, len(conditions))
@@ -161,16 +162,16 @@ class NativeSrdBaselineTests(unittest.TestCase):
                          attack_penalty[0]["when"])
 
     def test_class_species_parent_structure(self):
-        classes = {p.stem for p in (NATIVE / "classes/base").glob("*.json")}
-        species = {p.stem for p in (NATIVE / "species/base").glob("*.json")}
+        classes = {p.stem for p in (WORKING / "classes/base").glob("*.json")}
+        species = {p.stem for p in (WORKING / "species/base").glob("*.json")}
         self.assertEqual(12, len(classes))
         self.assertGreaterEqual(len(species), 10)
-        for p in (NATIVE / "classes/subclasses").glob("*/*.json"):
+        for p in (WORKING / "classes/subclasses").glob("*/*.json"):
             d = load(p)
             self.assertEqual("class." + p.parent.name, d["parentClass"])
             self.assertIn(p.parent.name, classes)
             self.assertEqual("subclass." + p.parent.name + "." + p.stem, d["id"])
-        for p in (NATIVE / "species/subspecies").glob("*/*.json"):
+        for p in (WORKING / "species/subspecies").glob("*/*.json"):
             d = load(p)
             self.assertEqual("species." + p.parent.name, d["parentSpecies"])
             self.assertIn(p.parent.name, species)
@@ -184,18 +185,18 @@ class NativeSrdBaselineTests(unittest.TestCase):
             ("species/base/dragonborn.json", 2),
 
         ]:
-            d = load(NATIVE / path)
+            d = load(WORKING / path)
             self.assertEqual(expected, len(d["candidateDefinitions"]), path)
             self.assertTrue(all(v["content"] for v in d["candidateDefinitions"]))
             self.assertNotIn("fluff", path)
-        wizard = load(NATIVE / "classes/base/wizard.json")
+        wizard = load(WORKING / "classes/base/wizard.json")
         self.assertEqual("retained-native-definition", wizard["baselineStatus"])
         self.assertNotIn("candidateDefinitions", wizard)
         self.assertEqual(20, len(wizard["definition"]["progression"]))
-        aboleth = load(NATIVE / "bestiary/aboleth.json")
+        aboleth = load(WORKING / "bestiary/aboleth.json")
         self.assertEqual("retained-native-definition", aboleth["baselineStatus"])
         self.assertIn("lore", aboleth["definition"])
-        self.assertFalse(list(NATIVE.rglob("fluff-*.json")))
+        self.assertFalse(list(WORKING.rglob("fluff-*.json")))
 
     def test_no_runtime_source_specific_switch_and_no_leftover_bootstrap(self):
         for f in [

@@ -52,7 +52,7 @@ class WarlockSRDSliceScopeTests(unittest.TestCase):
         self.assertEqual("source-inventory-and-acceptance-scope-not-native-reconciliation", self.inventory["status"])
         self.assertEqual([1, 20], self.inventory["scope"]["band"])
         self.assertEqual(["SRD51", "SRD52"], self.inventory["scope"]["editions"])
-        native = load("data/native/classes/base/warlock.json")
+        native = load("data/rulesets/first-party-001/working/classes/base/warlock.json")
         self.assertEqual("pending-native-reconciliation", native["baselineStatus"])
 
 if __name__ == "__main__":
