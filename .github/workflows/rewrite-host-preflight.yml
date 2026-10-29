@@ -1,0 +1,49 @@
+name: Rewrite host preflight
+on:
+  push:
+    branches: [ops/rewrite-first-deployment]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: [self-hosted, dorks-and-dice-rules-core]
+    timeout-minutes: 5
+    steps:
+      - name: Inspect deployment prerequisites without changing services
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib, subprocess
+          def docker(*args):
+              p = subprocess.run(["docker", *args], text=True, capture_output=True)
+              if p.returncode: return None
+              try: return json.loads(p.stdout)
+              except ValueError: return p.stdout.strip()
+          print("DOCKER_VERSION", docker("version", "--format", "{{json .Server}}"))
+          for project in ["dorks-and-dice-rules-core","dorks-and-dice-rules-wiki","dorks-and-dice-site"]:
+              root = pathlib.Path("/mnt/HDDs/www") / project
+              env = root / ".env"
+              allowed = {"RulesCorePrivate__Network", "ToolHosting__ControlPlaneNetwork", "TOOL_HOST_BASE_URL", "RULES_CORE_PRIVATE_BASE_URL"}
+              values = {}
+              if env.is_file():
+                  for line in env.read_text().splitlines():
+                      key, sep, value = line.partition("=")
+                      if sep and key in allowed: values[key] = value.strip().strip(chr(34)).strip(chr(39))
+              print("DEPLOYMENT_CONFIG", json.dumps({"project": project, "directoryExists": root.is_dir(), "envExists": env.is_file(), "safeValues": values}))
+          names = docker("ps", "-a", "--format", "{{.Names}}") or ""
+          for name in names.splitlines():
+              if name in ["dorks-and-dice-site","dorks-and-dice-rules-core","dorks-and-dice-rules-core-private","dorks-and-dice-rules-wiki"]:
+                  data = docker("inspect", name)[0]
+                  safe_env = {}
+                  for item in data["Config"].get("Env", []):
+                      key, _, value = item.partition("=")
+                      if key.startswith("ToolHosting__PrivateTunnels__") or key in {"RulesCore__ApiSurface","ToolHost__BaseUrl","RulesCorePrivate__BaseUrl"}: safe_env[key] = value
+                  print("CONTAINER",json.dumps({"name":name,"imageId":data["Image"],"status":data["State"]["Status"],"restarts":data["RestartCount"],"project":data["Config"].get("Labels",{}).get("com.docker.compose.project"),"networks":list(data["NetworkSettings"]["Networks"]),"ports":data["HostConfig"].get("PortBindings"),"user":data["Config"].get("User"),"safeEnvironment":safe_env}))
+          networks = docker("network", "ls", "--format", "{{.Name}}") or ""
+          for name in networks.splitlines():
+              if "rules" in name or "control-plane" in name or name == "dorks-and-dice-backend":
+                  data = docker("network","inspect",name)[0]
+                  print("NETWORK",json.dumps({"name":name,"internal":data.get("Internal"),"members":sorted(x["Name"] for x in data.get("Containers",{}).values())}))
+          PY
