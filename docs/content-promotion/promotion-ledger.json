@@ -98,7 +98,7 @@
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/druid.json",
         "reconciliation": "docs/rewrite/druid-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 22,
-        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants. The later owner-approved exclusive persistent animal versus temporary familiar path supersedes earlier simultaneous grants; choice is recorded at level 1, temporary path becomes available at level 2."
       },
       {
         "id": "class.rogue",
@@ -421,7 +421,7 @@
       "python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict",
       "python3 tools/validate_ruleset_split.py"
     ],
-    "fingerprint": "3b60c6f125eb525285333bc26758abeb41424aa4b4c362831d36987e11375f8c",
+    "fingerprint": "46965599d7d37798823a7b416ff954ab99aac91a5a3432b6df4c5e1db06d2a3e",
     "fingerprintSource": "RulesCore.Content.NativeCatalogLoader through successful content-only .NET 10 workflow 40853683143",
     "fingerprintVerifiedAt": "2026-10-29"
   }
