@@ -29,6 +29,6 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/native data/reference/srd/monster-legacy-variant-review.json docs/rewrite/native-reconciliation-statistics.json docs/rewrite/monster-legacy-feature-results.json
+          git add data/rulesets/first-party-001/working data/reference/srd/monster-legacy-variant-review.json docs/rewrite/native-reconciliation-statistics.json docs/rewrite/monster-legacy-feature-results.json
           git commit -m "data(rewrite): restore adapted Weretiger Pounce and close resolved legacy question"
           git push origin HEAD:feature/rules-core-baseline-consistency

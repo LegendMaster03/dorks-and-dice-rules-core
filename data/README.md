@@ -1,10 +1,11 @@
 # Repository-authored rules data
 
-Unlike the previous implementation, root `data/` is for **version-controlled native rules and approved conversion/reference definitions**, inspired by 5etools' category organization but not its monolithic data files or frontend architecture.
+`rulesets/first-party-001/native/` is the **only authoritative runtime content root**. `rulesets/first-party-001/working/` preserves non-operative SRD candidates, provisional catalogs and incomplete reconciliations; it may not be used as an API source or fallback. `rulesets/first-party-001/manifest.json` provides stable internal identity and path information, not a per-entity approval allowlist.
 
-- `native/`: native rule entities, organized by mechanics category and subtype
-- `conversions/`: reviewed mappings from imported source formats/editions to native entities
-- `schemas/`: data validation contracts
-- `reference/`: only explicitly approved/licensed reference material
+- `conversions/`: approved conversion mappings and research; no source edition is an automatic runtime fallback
+- `schemas/`: data contracts
+- `reference/`: original pinned sources, licenses, attribution and historical decisions
 
-**Runtime data is not kept here.** Imported user materials, source grants, source blobs, uploads, caches, and database files belong in deployment-owned volumes outside the repository. No entitlement or license is inferred from the presence of a mapping.
+Approved complete rules move from working to native, leaving no duplicate authority. See `docs/rewrite/phase-1a-audit.md` and the migration ledger.
+
+**Runtime data is not kept here.** User uploads, source grants, caches and databases live outside the repository.

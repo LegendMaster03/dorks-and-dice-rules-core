@@ -70,7 +70,7 @@ def audit(root):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--native", type=Path, default=Path("data/native"))
+    parser.add_argument("--native", type=Path, default=Path("data/rulesets/first-party-001/native"))
     parser.add_argument("--strict", action="store_true",
                         help="Fail if native records retain alternative candidates or validation errors")
     parser.add_argument("--json", action="store_true")
