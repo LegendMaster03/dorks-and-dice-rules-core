@@ -7,7 +7,7 @@
 
 ## Requirement 1 — reviewed SHA + fingerprint, not the original pinned catalog
 
-`tools/deploy_native_core.py` currently hardcodes `FINGERPRINT = "870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6"`. That value reflects the original 35-entity catalog. The content wave expands the catalog to a verified **222** entities and exact native fingerprint **`3b60c6f125eb525285333bc26758abeb41424aa4b4c362831d36987e11375f8c`**, computed by `NativeCatalogLoader` in the content digest PR workflow. Continuing to require the original digest will correctly reject the update, but ignoring the check would be unsafe.
+`tools/deploy_native_core.py` currently hardcodes `FINGERPRINT = "870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6"`. That value reflects the original 35-entity catalog. The content wave expands the catalog to a verified **222** entities and exact native fingerprint **`46965599d7d37798823a7b416ff954ab99aac91a5a3432b6df4c5e1db06d2a3e`**, computed by `NativeCatalogLoader` in the content digest PR workflow. Continuing to require the original digest will correctly reject the update, but ignoring the check would be unsafe.
 
 Implement a reviewed release input containing **(a) exact release Git SHA, (b) exact C# loader-computed native SHA-256 fingerprint, (c) content-review reference, and (d) rollback image/SHA**. Verify the image provenance against the reviewed release SHA and verify **both private and public ingress instances** loaded the exact approved fingerprint. Do not accept a runtime-generated fingerprint as approval by itself. A manifest containing the reviewed expectation is not a per-rule publication allowlist and must not relax native authority, signing/review or isolation checks.
 
