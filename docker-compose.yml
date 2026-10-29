@@ -1,7 +1,7 @@
 # Phase 3A review-only deployment definition. Do not run without approval.
 services:
   rules-core-public:
-    image: dorks-and-dice-rules-core:phase3a
+    image: ${RULES_CORE_IMAGE:?RULES_CORE_IMAGE must identify the reviewed release}
     build: .
     container_name: dorks-and-dice-rules-core
     restart: unless-stopped
