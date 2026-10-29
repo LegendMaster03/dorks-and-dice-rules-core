@@ -21,3 +21,7 @@ node_modules
 __pycache__
 TestResults
 coverage
+# Never transfer unfinished or third-party reference/candidate content into a Docker context.
+data/rulesets/*/working/
+data/reference/
+data/conversions/

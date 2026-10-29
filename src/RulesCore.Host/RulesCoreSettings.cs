@@ -4,7 +4,7 @@ namespace RulesCore.Host;
 
 /// <summary>
 /// No compatibility or combined surface is permitted in the new host.
-/// Private API authentication and any private routes belong to Phase 3A.
+/// Private Wiki APIs and public consumer APIs are mapped on separate ingresses.
 /// </summary>
 public enum ApiSurfaceMode
 {

@@ -6,10 +6,11 @@ user-facing application: https://github.com/LegendMaster03/dorks-and-dice-rules-
 
 ## Rewrite status
 
-The rewrite branch integrates Phase 1A native/working separation and the
-Phase 1B .NET 10 host foundation. This Phase 2 development branch loads and
-validates a native-only catalog, but exposes no rules-serving API. The earlier
-implementation on main is historical reference, not a second runtime.
+The rewrite branch integrates Phase 1A/1B, the Phase 2 native catalog, and the
+Phase 3A private Wiki read API. The isolated Phase 3B development branch adds
+a separate native-first public consumer API that requires an explicit reviewed
+package fingerprint before any definitions are anonymously distributed.
+The earlier implementation on main is historical reference, not a second runtime.
 
 The initial ruleset identifier is first-party-001. The approved content source
 is exclusively data/rulesets/first-party-001/native/. Content in working/ is
@@ -32,9 +33,10 @@ injection.
 
 GET /health reports process liveness and remains HTTP 200 when content is
 unavailable. GET /ready is HTTP 200 only with a validated catalog, otherwise
-HTTP 503 with a safe reason. No rules, Rules Wiki or private API routes are
-mapped. PublicOnly and PrivateOnly remain separate configuration options
-without granting access to unfinished endpoints.
+HTTP 503 with a safe reason. PublicOnly maps only /api/rulesets native GET
+operations; PrivateOnly maps only authenticated /api/private/rulesets operations.
+Neither mode exposes legacy /api/rules or the other's endpoint family. The
+current first-party native package has no public-distribution authorization.
 
 Run from the repository root:
 
@@ -49,8 +51,10 @@ For an alternate working directory, configure Rulesets__ContentRoot to the
 absolute path of data/rulesets. Docker embeds the manifest and native content,
 but excludes working drafts and conversion/reference data.
 
-See docs/rewrite/phase-2-native-catalog.md for the validation contract,
-readiness lifecycle, test commands and Phase 3A integration handoff.
+See docs/rewrite/phase-2-native-catalog.md for validation, 
+docs/rewrite/phase-3a-native-private-reference-api.md for the private Wiki boundary,
+and docs/rewrite/phase-3b-native-public-consumer-api.md for public DTOs,
+distribution policy, consumer migration, and Phase 4 release gates.
 
 No deployment, merge to the rewrite branch, consumer exposure or production
 cutover is authorized by this phase.
