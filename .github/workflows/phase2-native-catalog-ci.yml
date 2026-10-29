@@ -1,0 +1,56 @@
+# Branch-scoped checks only: never deploy or merge.
+name: Rules Core Phase 2 Native Catalog CI
+
+on:
+  push:
+    branches:
+      - feature/rules-core-phase2-native-catalog
+  pull_request:
+    branches:
+      - feature/rules-core-rewrite
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Restore
+        run: dotnet restore RulesCore.slnx
+      - name: Build
+        run: dotnet build RulesCore.slnx -c Release --no-restore
+      - name: C# tests
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Existing Python validation suite
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Native authority and migration ledger
+        run: python3 tools/validate_ruleset_split.py
+      - name: Build Docker image
+        run: docker build -t rules-core-phase2:ci .
+      - name: Docker runtime smoke tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm -d -p 127.0.0.1:18765:8080 \
+            --name rules-core-phase2-ready rules-core-phase2:ci
+          docker run --rm -d -p 127.0.0.1:18766:8080 \
+            -e Rulesets__ContentRoot=/app/missing \
+            --name rules-core-phase2-missing rules-core-phase2:ci
+          trap 'docker rm -f rules-core-phase2-ready rules-core-phase2-missing >/dev/null 2>&1 || true' EXIT
+          health=000
+          for attempt in $(seq 1 30); do
+            health=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/health || true)
+            if [ "$health" = 200 ]; then break; fi
+            sleep 1
+          done
+          test "$health" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/ready)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18765/api/rules)" = 404
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/health)" = 200
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18766/ready)" = 503

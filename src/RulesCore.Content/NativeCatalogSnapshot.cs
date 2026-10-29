@@ -150,6 +150,6 @@ public sealed class NativeCatalogSnapshot
             total++;
         }
 
-        return new CatalogSearchPage(selected.MoveToImmutable(), total, offset, limit);
+        return new CatalogSearchPage(selected.ToImmutable(), total, offset, limit);
     }
 }
