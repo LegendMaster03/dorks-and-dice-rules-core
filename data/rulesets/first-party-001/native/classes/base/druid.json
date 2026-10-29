@@ -343,11 +343,13 @@
       "class-feature.druid.magician-level-1",
       "class-feature.druid.potent-spellcasting-level-7",
       "class-feature.druid.primal-strike-level-7",
-      "class-feature.druid.warden-level-1"
+      "class-feature.druid.warden-level-1",
+      "druid.animal-companion",
+      "class-feature.druid.wild-companion-level-2"
     ],
     "animalCompanion": "druid.animal-companion",
     "animalCompanionPersistent": true,
-    "temporaryWildCompanionCanCoexist": true,
+    "temporaryWildCompanionCanCoexist": false,
     "companionActionEconomy": "native-controlled-creature",
     "wildShape": "class-feature.druid.wild-shape-level-2",
     "wildShapeHp": "independent-form-hp-pool-with-no-spillover",
@@ -380,7 +382,6 @@
           "class-feature.druid.druidic-level-1",
           "class-feature.druid.primal-order-level-1",
           "class-feature.druid.spellcasting-level-1",
-          "druid.animal-companion",
           "druid.nature-sense",
           "druid.wild-empathy"
         ],
@@ -409,12 +410,12 @@
           "fortitude": 2,
           "reflex": 0,
           "will": 2
-        }
+        },
+        "pendingCompanionPathChoice": true
       },
       {
         "level": 2,
         "featureGrants": [
-          "class-feature.druid.wild-companion-level-2",
           "class-feature.druid.wild-shape-level-2",
           "druid.woodland-stride"
         ],
@@ -2064,6 +2065,24 @@
       }
     ],
     "subclasses": "excluded",
-    "prestigeClasses": "excluded"
+    "prestigeClasses": "excluded",
+    "companionPathChoice": {
+      "exclusive": true,
+      "selectionFromDruidLevel": 1,
+      "paths": [
+        {
+          "id": "persistent-animal-companion",
+          "featureId": "druid.animal-companion",
+          "availableFromLevel": 1
+        },
+        {
+          "id": "temporary-wild-companion",
+          "featureId": "class-feature.druid.wild-companion-level-2",
+          "availableFromLevel": 2
+        }
+      ],
+      "implementation": "shared-companion-subsystem-pending",
+      "additionalCompanionsRequireExplicitSeparateGrant": true
+    }
   }
 }
