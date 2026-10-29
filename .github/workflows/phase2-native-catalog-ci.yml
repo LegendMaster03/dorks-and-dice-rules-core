@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - feature/rules-core-phase2-native-catalog
+      - feature/rules-core-rewrite
   pull_request:
     branches:
       - feature/rules-core-rewrite
