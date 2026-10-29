@@ -4,10 +4,13 @@ name: Rules Core Phase 3B Public Native API CI
 on:
   push:
     branches:
+      - main
+      - ops/rewrite-first-deployment
       - feature/rules-core-phase3b-public-native-api
       - feature/rules-core-rewrite
   pull_request:
     branches:
+      - main
       - feature/rules-core-rewrite
   workflow_dispatch:
 

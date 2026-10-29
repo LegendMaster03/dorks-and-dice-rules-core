@@ -2,7 +2,7 @@
 # It must not join dorks-and-dice-backend or a shared database network.
 services:
   rules-core-private:
-    image: dorks-and-dice-rules-core:phase3a
+    image: ${RULES_CORE_IMAGE:?RULES_CORE_IMAGE must identify the reviewed release}
     build: .
     container_name: dorks-and-dice-rules-core-private
     restart: unless-stopped

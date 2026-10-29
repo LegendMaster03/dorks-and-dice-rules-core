@@ -1,17 +1,33 @@
-# Deployment remains disabled while Rules Core has no executable runtime.
-# Restore deployment and smoke tests only after the new implementation is
-# approved, keeping main-only deploy policy and public/private isolation.
-name: Rules Core Deployment Disabled
-
+name: Deploy native Rules Core
+run-name: Native Core at ${{ github.event.workflow_run.head_sha || github.sha }}
 on:
-  workflow_dispatch:
-
+  workflow_run:
+    workflows: [Rules Core Phase 3B Public Native API CI]
+    types: [completed]
+    branches: [main]
 permissions:
   contents: read
-
+concurrency:
+  group: dorks-and-dice-rules-core
+  cancel-in-progress: false
 jobs:
-  not-deployable:
-    if: ${{ false }}
-    runs-on: ubuntu-latest
+  deploy:
+    if: github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success'
+    runs-on: [self-hosted, dorks-and-dice-rules-core]
+    timeout-minutes: 20
+    env:
+      RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+      RULES_CORE_ENV_FILE: /mnt/HDDs/www/dorks-and-dice-rules-core/.env
     steps:
-      - run: echo "Rules Core rewrite has no deployable runtime."
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Reject a superseded release
+        shell: bash
+        run: test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$RELEASE_SHA"
+      - name: Check host prerequisites before replacing services
+        run: python3 tools/deploy_native_core.py preflight
+      - name: Build commit-pinned release
+        run: docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" -t "dorks-and-dice-rules-core:rewrite-$RELEASE_SHA" .
+      - name: Deploy and monitor native ingresses
+        run: python3 tools/deploy_native_core.py deploy
