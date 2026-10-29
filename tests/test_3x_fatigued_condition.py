@@ -13,9 +13,9 @@ def load(path):
 class FatiguedReconciliationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog = load("data/native/conditions.json")["conditions"]
+        cls.catalog = load("data/rulesets/first-party-001/native/conditions.json")["conditions"]
         cls.conditions = {x["id"]: x for x in cls.catalog}
-        cls.chapter = load("data/native/rules/conditions.json")
+        cls.chapter = load("data/rulesets/first-party-001/native/rules/conditions.json")
         cls.history = load("data/reference/3x/fatigue-exhaustion-reconciliation.json")
 
     def test_new_fatigued_condition_while_exhaustion_remains_six_levels(self):

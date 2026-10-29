@@ -4,8 +4,8 @@ from pathlib import Path
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
-BASE=ROOT/"data/native/classes/base/druid.json"
-FEATURES=ROOT/"data/native/features/classes/druid"
+BASE=ROOT/"data/rulesets/first-party-001/working/classes/base/druid.json"
+FEATURES=ROOT/"data/rulesets/first-party-001/working/features/classes/druid"
 MANIFEST=ROOT/"data/reference/srd/native-coverage-manifest.json"
 
 def load(path):

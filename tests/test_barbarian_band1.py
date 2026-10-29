@@ -4,8 +4,8 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = ROOT / "data/native/classes/base/barbarian.json"
-FEATURES = ROOT / "data/native/features/classes/barbarian"
+BASE = ROOT / "data/rulesets/first-party-001/working/classes/base/barbarian.json"
+FEATURES = ROOT / "data/rulesets/first-party-001/working/features/classes/barbarian"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
 

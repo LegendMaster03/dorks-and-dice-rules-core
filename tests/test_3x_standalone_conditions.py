@@ -13,9 +13,9 @@ def load(path):
 class ThreeXStandaloneConditionsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog = load("data/native/conditions.json")
+        cls.catalog = load("data/rulesets/first-party-001/native/conditions.json")
         cls.native = {x["id"]: x for x in cls.catalog["conditions"]}
-        cls.chapter = load("data/native/rules/conditions.json")
+        cls.chapter = load("data/rulesets/first-party-001/native/rules/conditions.json")
         cls.decisions = load("data/reference/3x/standalone-conditions.json")
         cls.srd51_52 = load("data/reference/srd/structured/conditionsdiseases.json")["condition"]
 

@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "data/native"
+NATIVE = ROOT / "data/rulesets/first-party-001/working"
 REFERENCE = ROOT / "data/reference/srd"
 
 def read(relative):
@@ -16,7 +16,7 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
     def setUpClass(cls):
         cls.coverage = read("data/reference/srd/native-coverage-manifest.json")
         cls.rows = {r["nativeId"]: r for r in cls.coverage["coverage"]}
-        cls.families = read("data/native/monster-families.json")["monsterFamilies"]
+        cls.families = read("data/rulesets/first-party-001/working/monster-families.json")["monsterFamilies"]
         cls.ledger = read("data/reference/srd/monster-legacy-variant-review.json")
 
     def test_paired_monster_roster_has_one_default_per_identity(self):
@@ -58,10 +58,10 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
         self.assertEqual(
             ["monster.goblin-minion", "monster.goblin-warrior", "monster.goblin-boss"],
             goblins["memberIds"])
-        legacy_goblin = read("data/native/bestiary/goblin.json")
+        legacy_goblin = read("data/rulesets/first-party-001/working/bestiary/goblin.json")
         self.assertEqual("monster.goblin-warrior", legacy_goblin["aliasOf"])
         for name in ("hobgoblin", "bugbear"):
-            old = read("data/native/bestiary/" + name + ".json")
+            old = read("data/rulesets/first-party-001/working/bestiary/" + name + ".json")
             self.assertEqual("native-identity-alias", old["baselineStatus"])
             self.assertEqual("monster." + name + "-warrior", old["aliasOf"])
             self.assertNotIn("definition", old)
@@ -80,7 +80,7 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
         self.assertGreater(len(review), 0)
         ids = [r["nativeId"] for r in review]
         self.assertEqual(len(ids), len(set(ids)))
-        bat = read("data/native/bestiary/bat.json")
+        bat = read("data/rulesets/first-party-001/working/bestiary/bat.json")
         self.assertEqual(
             {"Echolocation", "Keen Hearing"},
             {t["name"] for t in bat["definition"]["trait"]})

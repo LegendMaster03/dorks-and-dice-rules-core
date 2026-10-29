@@ -4,8 +4,8 @@ from pathlib import Path
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
-BASE=ROOT/"data/native/classes/base/cleric.json"
-FEATURE_DIR=ROOT/"data/native/features/classes/cleric"
+BASE=ROOT/"data/rulesets/first-party-001/working/classes/base/cleric.json"
+FEATURE_DIR=ROOT/"data/rulesets/first-party-001/working/features/classes/cleric"
 MANIFEST=ROOT/"data/reference/srd/native-coverage-manifest.json"
 
 def read(path):
