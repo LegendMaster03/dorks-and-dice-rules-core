@@ -16,8 +16,8 @@ public static class RulesCoreApplication
         var builder = WebApplication.CreateBuilder(args);
         configureBuilder?.Invoke(builder);
 
-        // Fail startup for invalid configuration. An absent catalog is not an
-        // invalid configuration: this release intentionally starts unready.
+        // An invalid configuration fails startup. An unavailable or invalid
+        // catalog does not: liveness stays independent of content readiness.
         var settings = RulesCoreSettings.Read(builder.Configuration);
 
         builder.Logging.ClearProviders();
@@ -25,7 +25,10 @@ public static class RulesCoreApplication
         builder.Services.Configure<HostOptions>(options =>
             options.ShutdownTimeout = TimeSpan.FromSeconds(15));
         builder.Services.AddSingleton(settings);
-        builder.Services.AddSingleton<INativeCatalogReadiness, UnavailableNativeCatalogReadiness>();
+        builder.Services.AddSingleton<NativeCatalogStore>();
+        builder.Services.AddSingleton<INativeCatalogReadiness>(services =>
+            services.GetRequiredService<NativeCatalogStore>());
+        builder.Services.AddHostedService<NativeCatalogInitializer>();
 
         var app = builder.Build();
 
@@ -33,22 +36,19 @@ public static class RulesCoreApplication
 
         app.MapGet("/ready", (INativeCatalogReadiness catalog) =>
         {
-            var snapshot = catalog.Current();
-            return snapshot.IsReady
+            var state = catalog.Current();
+            return state.IsReady
                 ? Results.Ok(new { status = "ready" })
                 : Results.Json(
-                    new { status = "not_ready", reason = snapshot.Reason },
+                    new { status = "not_ready", reason = state.Reason },
                     statusCode: StatusCodes.Status503ServiceUnavailable);
         });
 
-        // No consumer or private APIs exist at Phase 1B. In particular,
-        // this host does not map /api/rules or any privileged Wiki routes.
+        // Phase 2 exposes no consumer or Rules Wiki endpoints.
         app.Lifetime.ApplicationStarted.Register(() =>
             app.Logger.LogInformation(
-                "Rules Core started with surface {ApiSurface}, ruleset {RulesetId}, native path {NativeDirectory}",
-                settings.Surface,
-                settings.Ruleset.RulesetId,
-                settings.Ruleset.NativeDirectory));
+                "Rules Core started with surface {ApiSurface}, ruleset {RulesetId}",
+                settings.Surface, settings.Ruleset.RulesetId));
         app.Lifetime.ApplicationStopping.Register(() =>
             app.Logger.LogInformation("Rules Core stopping"));
 
