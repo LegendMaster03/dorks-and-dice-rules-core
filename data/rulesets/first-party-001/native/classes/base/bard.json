@@ -1,0 +1,1361 @@
+{
+  "id": "class.bard",
+  "name": "Bard",
+  "kind": "class",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 8
+    },
+    "description": "A Bard channels magic through art and expression, which need not be musical. Artistic specializations do not require a subclass.",
+    "spellcastingAbility": "charisma",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "dexterity",
+      "charisma"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "simple",
+      "hand-crossbow",
+      "longsword",
+      "rapier",
+      "sap",
+      "shortsword",
+      "shortbow",
+      "whip"
+    ],
+    "legacySingleMartialWeaponChoice": {
+      "source": "3.0",
+      "count": 1,
+      "duplicateSelectionNotAdditional": true
+    },
+    "skillChoices": {
+      "count": 3,
+      "from": "any eligible native skill"
+    },
+    "artisticTrainingChoices": {
+      "count": 3,
+      "from": "eligible artistic proficiency/competency, including nonmusical disciplines",
+      "musicalInstrumentRequired": false
+    },
+    "rankedClassSkills": [
+      "appraise",
+      "balance",
+      "bluff",
+      "climb",
+      "concentration",
+      "craft",
+      "decipher-script",
+      "diplomacy",
+      "disguise",
+      "escape-artist",
+      "gather-information",
+      "hide",
+      "jump",
+      "knowledge",
+      "listen",
+      "move-silently",
+      "perform",
+      "profession",
+      "sense-motive",
+      "sleight-of-hand",
+      "speak-language",
+      "spellcraft",
+      "swim",
+      "tumble",
+      "use-magic-device"
+    ],
+    "rankedSkillPoints": {
+      "firstLevel": "4*(6+Int-modifier)",
+      "eachAdditionalLevel": "6+Int-modifier"
+    },
+    "alignmentRestriction": null,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonMinimumTotalCharacterLevel": 21,
+    "expression": {
+      "musicNotRequired": true,
+      "artisticMedia": "any suitable trained medium",
+      "audienceNotAutomaticallyRequired": true,
+      "sensoryRequirement": "feature-specific",
+      "spellcastingFocus": "eligible-trained-artistic-focus-per-native-focus-rules"
+    },
+    "startingEquipment": {
+      "chooseWeapon": [
+        "rapier",
+        "longsword",
+        "eligible-simple-weapon"
+      ],
+      "choosePack": [
+        "diplomats-pack",
+        "entertainers-pack"
+      ],
+      "chooseArtisticImplement": "one eligible artistic implement; may be nonmusical",
+      "additionalItems": [
+        "leather-armor",
+        "dagger"
+      ],
+      "goldAlternative": "5d4*10",
+      "backgroundEquipment": "native-background-rules"
+    },
+    "multiclassCharismaPrerequisite": 13,
+    "multiclassProficienciesOnEntering": {
+      "armor": [
+        "light"
+      ],
+      "skills": {
+        "choose": 1,
+        "from": "any eligible native skill"
+      },
+      "artisticTraining": {
+        "choose": 1,
+        "from": "eligible artistic discipline"
+      }
+    },
+    "attackProgression": "three-quarter-BAB",
+    "iterativeAttackPolicy": "native-attack-procedures",
+    "spellSlotsOrPoints": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "noSpellPreparation": true,
+    "spellKnownProgression": [
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      16,
+      17,
+      18,
+      19,
+      19,
+      20,
+      22,
+      22,
+      22
+    ],
+    "cantripsKnownProgression": [
+      4,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "spellSlotProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "inspirationResource": "bard.inspiration",
+    "performanceResource": "bard.performances",
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.bard.bardic-inspiration-level-1",
+          "class-feature.bard.spellcasting-level-1",
+          "bard.bardic-expression",
+          "bard.bardic-knowledge",
+          "bard.bardic-performances",
+          "bard.countersong",
+          "bard.fascinate",
+          "bard.inspire-courage"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d6",
+        "bardicPerformanceUsesPerLongRest": 1,
+        "cantripsKnown": 4,
+        "leveledSpellsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.bard.expertise-level-2",
+          "class-feature.bard.jack-of-all-trades-level-2",
+          "class-feature.bard.song-of-rest-d6-level-2"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d6",
+        "bardicPerformanceUsesPerLongRest": 2,
+        "cantripsKnown": 5,
+        "leveledSpellsKnown": 5,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 0,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [
+          "bard.inspire-competence"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d6",
+        "bardicPerformanceUsesPerLongRest": 3,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 6,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.bard.ability-score-improvement-level-4"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d6",
+        "bardicPerformanceUsesPerLongRest": 4,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 7,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.bard.bardic-inspiration-d8-level-5",
+          "class-feature.bard.font-of-inspiration-level-5"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d8",
+        "bardicPerformanceUsesPerLongRest": 5,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 9,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 1,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [
+          "class-feature.bard.countercharm-level-6",
+          "bard.suggestion"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d8",
+        "bardicPerformanceUsesPerLongRest": 6,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 10,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.bard.countercharm-level-7"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d8",
+        "bardicPerformanceUsesPerLongRest": 7,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 11,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 1,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.bard.ability-score-improvement-level-8"
+        ],
+        "improvements": [
+          {
+            "feature": "bard.inspire-courage",
+            "attackAndWeaponDamageBonus": 2,
+            "charmAndFearSavesBonus": 2
+          }
+        ],
+        "bardicInspirationDie": "d8",
+        "bardicPerformanceUsesPerLongRest": 8,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 12,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 2,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 6,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [
+          "class-feature.bard.expertise-level-9",
+          "class-feature.bard.song-of-rest-d8-level-9",
+          "bard.inspire-greatness"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d8",
+        "bardicPerformanceUsesPerLongRest": 9,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 14,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 2,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 6,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [
+          "class-feature.bard.bardic-inspiration-d10-level-10",
+          "class-feature.bard.magical-secrets-level-10"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d10",
+        "bardicPerformanceUsesPerLongRest": 10,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 15,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 2,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 7,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [],
+        "improvements": [],
+        "bardicInspirationDie": "d10",
+        "bardicPerformanceUsesPerLongRest": 11,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 16,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 2,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 7,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.bard.ability-score-improvement-level-12",
+          "bard.song-of-freedom"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d10",
+        "bardicPerformanceUsesPerLongRest": 12,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 16,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 2,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 8,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [
+          "class-feature.bard.song-of-rest-d10-level-13"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d10",
+        "bardicPerformanceUsesPerLongRest": 13,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 17,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 2,
+        "inspireCourageCharmFearSaveBonus": 2,
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 8,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [
+          "class-feature.bard.magical-secrets-level-14"
+        ],
+        "improvements": [
+          {
+            "feature": "bard.inspire-courage",
+            "attackAndWeaponDamageBonus": 3,
+            "charmAndFearSavesBonus": 3
+          }
+        ],
+        "bardicInspirationDie": "d10",
+        "bardicPerformanceUsesPerLongRest": 14,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 18,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 3,
+        "inspireCourageCharmFearSaveBonus": 3,
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 9,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.bard.bardic-inspiration-d12-level-15",
+          "bard.inspire-heroics"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d12",
+        "bardicPerformanceUsesPerLongRest": 15,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 19,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 3,
+        "inspireCourageCharmFearSaveBonus": 3,
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 9,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.bard.ability-score-improvement-level-16"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d12",
+        "bardicPerformanceUsesPerLongRest": 16,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 19,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "inspireCourageAttackDamageBonus": 3,
+        "inspireCourageCharmFearSaveBonus": 3,
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 10,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [
+          "class-feature.bard.song-of-rest-d12-level-17"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d12",
+        "bardicPerformanceUsesPerLongRest": 17,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 20,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "inspireCourageAttackDamageBonus": 3,
+        "inspireCourageCharmFearSaveBonus": 3,
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 10,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.bard.magical-secrets-level-18",
+          "class-feature.bard.superior-inspiration-level-18",
+          "bard.mass-suggestion"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d12",
+        "bardicPerformanceUsesPerLongRest": 18,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 22,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "inspireCourageAttackDamageBonus": 3,
+        "inspireCourageCharmFearSaveBonus": 3,
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 11,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.bard.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "bardicInspirationDie": "d12",
+        "bardicPerformanceUsesPerLongRest": 19,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 22,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "inspireCourageAttackDamageBonus": 3,
+        "inspireCourageCharmFearSaveBonus": 3,
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 11,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.bard.words-of-creation-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "bard.inspire-courage",
+            "attackAndWeaponDamageBonus": 4,
+            "charmAndFearSavesBonus": 4
+          }
+        ],
+        "bardicInspirationDie": "d12",
+        "bardicPerformanceUsesPerLongRest": 20,
+        "cantripsKnown": 6,
+        "leveledSpellsKnown": 22,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "inspireCourageAttackDamageBonus": 4,
+        "inspireCourageCharmFearSaveBonus": 4,
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 12,
+          "will": 12
+        }
+      }
+    ],
+    "inlineFeatures": [
+      {
+        "id": "bard.bardic-expression",
+        "name": "Bardic Expression",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "class-identity",
+          "source": "art-and-expression",
+          "nonMusicalFormsAllowed": true,
+          "mediaExamples": [
+            "music",
+            "dance",
+            "storytelling",
+            "poetry",
+            "drawing",
+            "painting",
+            "theater",
+            "sculpture",
+            "cooking"
+          ],
+          "noAudienceUnlessEffectSaysSo": true,
+          "perception": "feature-specific"
+        },
+        "description": "Bardic Expression is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.bardic-knowledge",
+        "name": "Bardic Knowledge",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "special-intelligence-lore-check",
+          "roll": "d20 + bard-class-level + intelligence-modifier",
+          "historyRankThreshold": 5,
+          "bonusIfHistoryRankThresholdMet": 2,
+          "knowledgeDCExamples": [
+            10,
+            20,
+            25,
+            30
+          ],
+          "takeTenOrTwenty": false,
+          "noJackOfAllTradesBonus": true
+        },
+        "description": "Bardic Knowledge is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.bardic-performances",
+        "name": "Bardic Performances",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "performance-resource",
+          "uses": "bard-class-level-per-day",
+          "regain": "long-rest",
+          "activation": "action",
+          "expression": "trained-artistic-discipline",
+          "independentFromBardicInspiration": true,
+          "rankAndPerceptionGates": "feature-specific",
+          "maintenance": "specific-effect-concentration-actions",
+          "castingAndItemActivationDuringPerformance": "retain-historical-limitations"
+        },
+        "description": "Bardic Performances is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.countersong",
+        "name": "Countersong",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 3,
+          "rangeFeet": 30,
+          "protectAgainst": [
+            "sonic-magical-effects",
+            "language-dependent-magical-effects"
+          ],
+          "performCheckSubstitutesEligibleSavingThrowIfHigher": true,
+          "retryOngoingEligibleSaves": true,
+          "requiresAllowedSavingThrow": true,
+          "maximumRounds": 10,
+          "maintenance": "concentration-action",
+          "distinctFromCountercharm": true
+        },
+        "description": "Countersong is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.fascinate",
+        "name": "Fascinate",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 3,
+          "rangeFeet": 90,
+          "targetCount": "1 + floor((bard-level-1)/3)",
+          "requires": "attention-and-sensing-expression-outside-immediate-danger",
+          "savingThrow": "will",
+          "dc": "artistic-performance-check-result",
+          "onSaveSuccessRetryDelayHours": 24,
+          "maintenance": "concentration-action",
+          "maximumRounds": "bard-class-level",
+          "status": "fascinated-native-mapping"
+        },
+        "description": "Fascinate is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.inspire-courage",
+        "name": "Inspire Courage",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 3,
+          "appliesTo": "allies-perceiving-expression",
+          "attackAndWeaponDamageBonus": [
+            [
+              1,
+              1
+            ],
+            [
+              8,
+              2
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              20,
+              4
+            ]
+          ],
+          "savingThrowBonusAgainstCharmAndFear": [
+            [
+              1,
+              2
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              20,
+              4
+            ]
+          ],
+          "postExpressionDurationRounds": 5,
+          "notBardicInspirationDie": true
+        },
+        "description": "Inspire Courage is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.inspire-competence",
+        "name": "Inspire Competence",
+        "classLevel": 3,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 6,
+          "skillCheckCompetenceBonus": 2,
+          "targets": "ally-not-self",
+          "maximumMinutes": 2,
+          "maintenance": "concentration-action"
+        },
+        "description": "Inspire Competence is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.suggestion",
+        "name": "Suggestion",
+        "classLevel": 6,
+        "mechanics": {
+          "kind": "performance-effect",
+          "additionalUses": 0,
+          "minimumArtisticRank": 9,
+          "requires": "target-already-fascinated",
+          "spellEquivalent": "suggestion",
+          "save": "will",
+          "saveDC": "10 + 3 + charisma-modifier"
+        },
+        "description": "Suggestion is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.inspire-greatness",
+        "name": "Inspire Greatness",
+        "classLevel": 9,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 12,
+          "temporaryHitDice": 2,
+          "hitDieType": "d10",
+          "constitutionAffectsDerivedHP": true,
+          "attackBonus": 2,
+          "fortitudeSavingThrowBonus": 1,
+          "targetCount": "1 + floor(max(0,bard-level-9)/3)",
+          "perceptionRequired": true
+        },
+        "description": "Inspire Greatness is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.song-of-freedom",
+        "name": "Song of Freedom",
+        "classLevel": 12,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 15,
+          "requiresMinutes": 1,
+          "rangeFeet": 30,
+          "target": "other-creature-not-self",
+          "spellEquivalent": "break-enchantment",
+          "perception": "feature-specific"
+        },
+        "description": "Song of Freedom is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.inspire-heroics",
+        "name": "Inspire Heroics",
+        "classLevel": 15,
+        "mechanics": {
+          "kind": "performance-effect",
+          "uses": 1,
+          "minimumArtisticRank": 18,
+          "saveMoraleBonus": 4,
+          "dodgeACBonus": 4,
+          "initialAction": "full-round-native-action-conversion",
+          "targetCount": "1 + floor(max(0,bard-level-15)/3)"
+        },
+        "description": "Inspire Heroics is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      },
+      {
+        "id": "bard.mass-suggestion",
+        "name": "Mass Suggestion",
+        "classLevel": 18,
+        "mechanics": {
+          "kind": "performance-effect",
+          "additionalUses": 0,
+          "minimumArtisticRank": 21,
+          "requires": "targets-already-fascinated",
+          "spellEquivalent": "mass-suggestion",
+          "save": "will",
+          "saveDC": "10 + 6 + charisma-modifier"
+        },
+        "description": "Mass Suggestion is a historical Bard base-class grant adapted to artistic expression without mandatory music."
+      }
+    ],
+    "subclasses": "excluded-until-subclass-pass",
+    "prestigeClasses": "excluded-until-prestige-pass"
+  }
+}

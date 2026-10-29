@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.sorcerer.ability-score-improvement-level-12",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 12,
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "ability-improvement-or-feat",
+      "abilityChoices": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "feat": "any-eligible",
+      "noPermanentAbilityScoreMaximum": true,
+      "epicBoonMinimumTotalCharacterLevel": 21
+    }
+  }
+}

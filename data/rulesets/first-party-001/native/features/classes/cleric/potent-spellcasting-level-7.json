@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.cleric.potent-spellcasting-level-7",
+  "name": "Potent Spellcasting",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 7,
+  "definition": {
+    "name": "Potent Spellcasting",
+    "description": "Potent Spellcasting is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "blessed-strikes-option",
+      "choiceOf": "class-feature.cleric.blessed-strikes-level-7",
+      "bonusDamage": "wisdom-modifier",
+      "appliesTo": "cleric-cantrip-damage",
+      "level14Improvement": "when-cantrip-deals-damage-grant-2x-Wisdom-modifier-temp-hp-to-self-or-ally-within-60-feet"
+    }
+  }
+}

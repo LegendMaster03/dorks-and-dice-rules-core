@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.cleric.ability-score-improvement-level-19",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 19,
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Ability Score Improvement is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "ability-improvement-or-eligible-feat",
+      "abilityScoreOptions": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "featChoices": "any-eligible",
+      "epicBoonTotalCharacterLevelMinimum": 21,
+      "permanentAbilityScoreMaximum": null
+    }
+  }
+}

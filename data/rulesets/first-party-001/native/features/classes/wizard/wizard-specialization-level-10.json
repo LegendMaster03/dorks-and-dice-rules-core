@@ -1,0 +1,27 @@
+{
+  "id": "class-feature.wizard.wizard-specialization-level-10",
+  "name": "Wizard Specialization",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 10,
+  "definition": {
+    "name": "Wizard Specialization",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "choose-wizard-specialization",
+      "grantAtWizardClassLevel": 10,
+      "choose": 1,
+      "fromSelectionList": "wizard-specialization",
+      "eligibleFamilies": [
+        "metamagic",
+        "item-creation"
+      ],
+      "additionalToOtherClassFeatures": true,
+      "notAnOrdinaryFeatGrant": true,
+      "underlyingPrerequisitesApply": true,
+      "repeatOnlyIfUnderlyingOptionPermits": true,
+      "doesNotGrantSorceryPoints": true,
+      "optionEffects": "shared-mechanics-deferred"
+    }
+  }
+}

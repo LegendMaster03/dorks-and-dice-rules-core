@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.barbarian.reckless-attack-level-2",
+  "name": "Reckless Attack",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 2,
+  "definition": {
+    "name": "Reckless Attack",
+    "description": "On first attack roll in a turn, choose Strength attack Advantage until next turn; attackers gain Advantage against the Barbarian meanwhile.",
+    "mechanics": {
+      "kind": "reckless-attack",
+      "trigger": "first-attack-roll-of-turn",
+      "strengthAttackMode": "advantage",
+      "incomingAttacks": "advantage",
+      "expires": "start-of-next-turn"
+    }
+  }
+}

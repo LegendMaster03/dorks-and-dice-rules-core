@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.druid.improved-elemental-fury-level-15",
+  "name": "Improved Elemental Fury",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 15,
+  "definition": {
+    "name": "Improved Elemental Fury",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "upgrade-selected-elemental-fury",
+      "potentSpellcasting": {
+        "rangeAtLeastFeet": 10,
+        "additionalFeet": 300
+      },
+      "primalStrike": {
+        "totalExtraDamage": "2d8"
+      },
+      "onlySelectedOptionImproves": true
+    }
+  }
+}

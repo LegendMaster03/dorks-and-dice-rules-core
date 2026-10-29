@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.wizard.ritual-adept-level-1",
+  "name": "Ritual Adept",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 1,
+  "definition": {
+    "name": "Ritual Adept",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "wizard-ritual-casting",
+      "requiresRitualTag": true,
+      "requiresSpellInSpellbook": true,
+      "mustReadFromPhysicalSpellbook": true,
+      "noDailyPreparationRequired": true
+    }
+  }
+}

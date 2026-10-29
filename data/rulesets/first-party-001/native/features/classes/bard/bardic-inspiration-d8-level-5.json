@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.bard.bardic-inspiration-d8-level-5",
+  "name": "Bardic Inspiration (d8)",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 5,
+  "definition": {
+    "name": "Bardic Inspiration (d8)",
+    "description": "Bardic Inspiration (d8): unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "inspiration-die-upgrade",
+      "newDie": "d8",
+      "replacePreviousDie": true,
+      "sameResource": "bard.inspiration"
+    }
+  }
+}

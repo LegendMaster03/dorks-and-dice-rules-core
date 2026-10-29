@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.barbarian.brutal-strike-level-9",
+  "name": "Brutal Strike",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 9,
+  "definition": {
+    "name": "Brutal Strike",
+    "description": "Forego Reckless Attack Advantage on one eligible Strength attack; on hit add 1d10 and choose Forceful Blow or Hamstring Blow.",
+    "mechanics": {
+      "kind": "brutal-strike",
+      "requires": [
+        "reckless-attack",
+        "strength-based-attack",
+        "no-disadvantage"
+      ],
+      "cost": "forgo-advantage",
+      "bonusDamage": "1d10-same-type",
+      "effects": [
+        {
+          "name": "Forceful Blow",
+          "pushFeet": 15,
+          "followHalfSpeedWithoutOpportunityAttacks": true
+        },
+        {
+          "name": "Hamstring Blow",
+          "speedReductionFeet": 15,
+          "until": "start-of-next-turn",
+          "nonstacking": true
+        }
+      ]
+    }
+  }
+}

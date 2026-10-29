@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.cleric.divine-strike-level-7",
+  "name": "Divine Strike",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 7,
+  "definition": {
+    "name": "Divine Strike",
+    "description": "Divine Strike is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "blessed-strikes-option",
+      "choiceOf": "class-feature.cleric.blessed-strikes-level-7",
+      "extraWeaponHitDamage": "1d8",
+      "damageTypes": [
+        "radiant",
+        "necrotic"
+      ],
+      "frequency": "once-on-each-of-your-turns",
+      "upgradesTo": "2d8-at-cleric-level-14"
+    }
+  }
+}

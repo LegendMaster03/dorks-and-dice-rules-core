@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.barbarian.relentless-rage-level-11",
+  "name": "Relentless Rage",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 11,
+  "definition": {
+    "name": "Relentless Rage",
+    "description": "At 0 HP while raging, if not killed outright, DC 10 Constitution save; on success restore 2 × Barbarian level HP. Later uses increase DC +5 until a Short or Long Rest.",
+    "mechanics": {
+      "kind": "prevent-zero-hp",
+      "save": "constitution",
+      "initialDC": 10,
+      "increaseDCPerSubsequentUse": 5,
+      "resetDCOn": [
+        "short-rest",
+        "long-rest"
+      ],
+      "successHP": "2 * barbarian-class-level",
+      "requires": [
+        "rage-active",
+        "not-killed-outright"
+      ]
+    }
+  }
+}

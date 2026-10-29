@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.sorcerer.sorcery-incarnate-level-7",
+  "name": "Sorcery Incarnate",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 7,
+  "definition": {
+    "name": "Sorcery Incarnate",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "sorcery-incarnate",
+      "whenInnateUsesExhausted": {
+        "activateForSorceryPoints": 2,
+        "action": "bonus-action"
+      },
+      "duringInnateSorcery": {
+        "maximumDistinctMetamagicOptions": 2,
+        "eachPaysCost": true
+      }
+    }
+  }
+}

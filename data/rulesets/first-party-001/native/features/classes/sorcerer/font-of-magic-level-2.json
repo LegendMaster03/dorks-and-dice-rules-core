@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.sorcerer.font-of-magic-level-2",
+  "name": "Font of Magic",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 2,
+  "definition": {
+    "name": "Font of Magic",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "font-of-magic",
+      "resource": "sorcery-points",
+      "relatedFeatures": [
+        "sorcery-points-level-2",
+        "flexible-casting-level-2"
+      ],
+      "doesNotGrantSecondPool": true
+    }
+  }
+}

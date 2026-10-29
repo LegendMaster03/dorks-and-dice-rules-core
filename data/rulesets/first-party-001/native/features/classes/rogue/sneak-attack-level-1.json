@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.rogue.sneak-attack-level-1",
+  "name": "Sneak Attack",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 1,
+  "definition": {
+    "name": "Sneak Attack",
+    "description": "Native Rogue Sneak Attack; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "sneak-attack",
+      "dice": "1d6 plus 1d6 each odd Rogue level, through 10d6",
+      "frequency": "each-independently-qualifying-successful-hit",
+      "eligibility": "undetected-or-unanticipated-attack-or-explicit-precision-vulnerability",
+      "advantageAloneInsufficient": true,
+      "requiresWeaponProficiency": true,
+      "finesseOrRangedNotRequired": true,
+      "masteryNotRequired": true,
+      "ordinaryRangeOnly": true,
+      "noExtraAttacksGranted": true,
+      "creatureTypeNotBlanketImmunity": true,
+      "respectsActualImmunities": true,
+      "criticalResolution": "shared-native-system"
+    }
+  }
+}

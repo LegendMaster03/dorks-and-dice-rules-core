@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.bard.song-of-rest-d12-level-17",
+  "name": "Song of Rest (d12)",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 17,
+  "definition": {
+    "name": "Song of Rest (d12)",
+    "description": "Song of Rest (d12): unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "rest-healing-upgrade",
+      "extraHealingDie": "d12",
+      "trigger": "end-short-rest-after-spending-hit-die",
+      "targets": "bard-or-friendly-creature-perceiving-rest-expression",
+      "noMandatoryMusic": true,
+      "replacePreviousDie": true
+    }
+  }
+}

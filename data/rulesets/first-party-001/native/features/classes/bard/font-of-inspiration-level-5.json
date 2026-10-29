@@ -1,0 +1,27 @@
+{
+  "id": "class-feature.bard.font-of-inspiration-level-5",
+  "name": "Font of Inspiration",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 5,
+  "definition": {
+    "name": "Font of Inspiration",
+    "description": "Font of Inspiration: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "inspiration-recovery-upgrade",
+      "resource": "bard.inspiration",
+      "regainOn": [
+        "short-rest",
+        "long-rest"
+      ],
+      "regainAmount": "all",
+      "slotConversion": {
+        "cost": "one-spell-slot",
+        "restoreInspirationUses": 1,
+        "action": "none"
+      },
+      "spellPointMode": "native-equivalent-conversion",
+      "notNewPool": true
+    }
+  }
+}

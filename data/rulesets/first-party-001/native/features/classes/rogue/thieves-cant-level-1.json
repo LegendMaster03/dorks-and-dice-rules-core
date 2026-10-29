@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.rogue.thieves-cant-level-1",
+  "name": "Thieves' Cant",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 1,
+  "definition": {
+    "name": "Thieves' Cant",
+    "description": "Native Rogue Thieves' Cant; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "secret-language",
+      "hiddenSpeechAndSigns": true,
+      "hiddenMessageSpeechTimeMultiplier": 4,
+      "additionalLanguageChoice": 1
+    }
+  }
+}

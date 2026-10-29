@@ -1,0 +1,39 @@
+{
+  "id": "class-feature.sorcerer.sorcery-points-level-2",
+  "name": "Sorcery Points",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 2,
+  "definition": {
+    "name": "Sorcery Points",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "sorcery-points",
+      "maxByLevel": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "fullRecovery": "long-rest",
+      "independentOfCastingSpellPoints": true,
+      "samePoolAsFontOfMagic": true
+    }
+  }
+}

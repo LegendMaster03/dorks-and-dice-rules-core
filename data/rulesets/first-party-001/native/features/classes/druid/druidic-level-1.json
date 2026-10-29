@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.druid.druidic-level-1",
+  "name": "Druidic",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 1,
+  "definition": {
+    "name": "Druidic",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "druidic-language",
+      "language": "druidic",
+      "secretMessages": true,
+      "othersMayNoticeDC": 15,
+      "understandingRequiresLanguageOrMagic": true,
+      "alwaysAccessibleSpell": "speak-with-animals",
+      "countsAgainstSpellAccess": false
+    }
+  }
+}

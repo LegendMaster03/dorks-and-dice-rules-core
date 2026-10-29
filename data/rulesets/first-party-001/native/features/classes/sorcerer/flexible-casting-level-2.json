@@ -1,0 +1,53 @@
+{
+  "id": "class-feature.sorcerer.flexible-casting-level-2",
+  "name": "Flexible Casting",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 2,
+  "definition": {
+    "name": "Flexible Casting",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "flexible-casting",
+      "convertSlotToSorceryPoints": {
+        "action": "none",
+        "gain": "slot-level",
+        "maximumApplies": true
+      },
+      "createSlot": {
+        "action": "bonus-action",
+        "costs": [
+          {
+            "slotLevel": 1,
+            "cost": 2,
+            "minSorcererLevel": 2
+          },
+          {
+            "slotLevel": 2,
+            "cost": 3,
+            "minSorcererLevel": 3
+          },
+          {
+            "slotLevel": 3,
+            "cost": 5,
+            "minSorcererLevel": 5
+          },
+          {
+            "slotLevel": 4,
+            "cost": 6,
+            "minSorcererLevel": 7
+          },
+          {
+            "slotLevel": 5,
+            "cost": 7,
+            "minSorcererLevel": 9
+          }
+        ],
+        "maxCreatedSlotLevel": 5,
+        "createdSlotExpires": "long-rest"
+      },
+      "spellPointCastingIntegration": "shared-resource-subsystem",
+      "noPoolMerging": true
+    }
+  }
+}

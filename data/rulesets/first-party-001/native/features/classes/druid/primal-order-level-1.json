@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.druid.primal-order-level-1",
+  "name": "Primal Order",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 1,
+  "definition": {
+    "name": "Primal Order",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "choice",
+      "choose": 1,
+      "options": [
+        "class-feature.druid.magician-level-1",
+        "class-feature.druid.warden-level-1"
+      ],
+      "notBothGranted": true
+    }
+  }
+}

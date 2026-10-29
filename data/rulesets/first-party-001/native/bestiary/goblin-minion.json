@@ -1,0 +1,127 @@
+{
+  "id": "monster.goblin-minion",
+  "name": "Goblin Minion",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Goblinoids"
+    ],
+    "size": [
+      "S"
+    ],
+    "type": {
+      "type": "fey",
+      "tags": [
+        "goblinoid"
+      ]
+    },
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 7,
+      "formula": "2d6"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 8,
+    "dex": 15,
+    "con": 10,
+    "int": 10,
+    "wis": 8,
+    "cha": 8,
+    "skill": {
+      "stealth": "+6"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "languages": [
+      "Common",
+      "Goblin"
+    ],
+    "cr": "1/8",
+    "gear": [
+      {
+        "item": "dagger|srd52",
+        "quantity": 3
+      }
+    ],
+    "action": [
+      {
+        "name": "Dagger",
+        "entries": [
+          "{@atkr m,r} {@hit 4}, reach 5 ft. or range 20/60 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Nimble Escape",
+        "entries": [
+          "The goblin takes the {@action Disengage|SRD52} or {@action Hide|SRD52} action."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "grassland",
+      "hill",
+      "planar, acheron",
+      "planar, feywild",
+      "underdark"
+    ],
+    "treasure": [
+      "implements",
+      "individual"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "GO"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "THW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Goblin Minion",
+        "_copy": {
+          "name": "Goblins",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Goblin minions enjoy participating in the disruptive schemes of clever leaders but are quick to flee when confronted by their comeuppance."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "familyId": "monster-family.goblin",
+  "variantRole": "minion",
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

@@ -1,0 +1,426 @@
+{
+  "version": 1,
+  "updated": "2026-10-29",
+  "baseMain": "1f5f910d0998f2991b33a25d042bfd46c5641e31",
+  "branch": "content/coherent-rule-promotion-wave-1",
+  "rulesetId": "first-party-001",
+  "authority": {
+    "authoritativeRoot": "data/rulesets/first-party-001/native/",
+    "inertReviewRoot": "data/rulesets/first-party-001/working/",
+    "rule": "A coherent selected ruling may be native and subject to revision; imported edition candidates alone never confer authority."
+  },
+  "inventory": {
+    "before": {
+      "total": 35,
+      "byKind": {
+        "condition": 29,
+        "leveled-condition": 1,
+        "rule": 4,
+        "ruleChapter": 1
+      }
+    },
+    "expectedAfter": {
+      "total": 222,
+      "byKind": {
+        "condition": 29,
+        "leveled-condition": 1,
+        "rule": 4,
+        "ruleChapter": 1,
+        "class": 7,
+        "classFeature": 161,
+        "monster": 16,
+        "monsterFamily": 3
+      }
+    }
+  },
+  "statusGroups": {
+    "alreadyNativeBeforeWave": [
+      {
+        "category": "conditions-and-foundation",
+        "state": "native",
+        "count": 35,
+        "path": "data/rulesets/first-party-001/native/",
+        "note": "Thirty conditions including Exhaustion; shared defense and monster-statblock foundations already native."
+      }
+    ],
+    "promotedClassModels": [
+      {
+        "id": "class.barbarian",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/barbarian.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/barbarian.json",
+        "reconciliation": "docs/rewrite/barbarian-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 25,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      },
+      {
+        "id": "class.bard",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/bard.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/bard.json",
+        "reconciliation": "docs/rewrite/bard-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 25,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      },
+      {
+        "id": "class.cleric",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/cleric.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/cleric.json",
+        "reconciliation": "docs/rewrite/cleric-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 27,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      },
+      {
+        "id": "class.druid",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/druid.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/druid.json",
+        "reconciliation": "docs/rewrite/druid-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 22,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      },
+      {
+        "id": "class.rogue",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/rogue.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/rogue.json",
+        "reconciliation": "docs/rewrite/rogue-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 28,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      },
+      {
+        "id": "class.sorcerer",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/sorcerer.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/sorcerer.json",
+        "reconciliation": "docs/rewrite/sorcerer-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 18,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      },
+      {
+        "id": "class.wizard",
+        "state": "native-selected-coherent",
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ],
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/wizard.json",
+        "sourcePath": "data/rulesets/first-party-001/working/classes/base/wizard.json",
+        "reconciliation": "docs/rewrite/wizard-band-1-reconciliation.md",
+        "selectedStandaloneFeatureCount": 16,
+        "scope": "Selected base class and option features; no automatic subclass, prestige, Epic Boon or Band 2 grants."
+      }
+    ],
+    "promotedCreatureSample": [
+      {
+        "id": "monster.wolf",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/wolf.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/wolf.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.baboon",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/baboon.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/baboon.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.goblin-minion",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/goblin-minion.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/goblin-minion.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.goblin-warrior",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/goblin-warrior.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/goblin-warrior.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.goblin-boss",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/goblin-boss.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/goblin-boss.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.hobgoblin-warrior",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/hobgoblin-warrior.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/hobgoblin-warrior.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.hobgoblin-captain",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/hobgoblin-captain.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/hobgoblin-captain.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.bugbear-stalker",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/bugbear-stalker.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/bugbear-stalker.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.bugbear-warrior",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/bugbear-warrior.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/bugbear-warrior.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.weretiger",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/weretiger.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/weretiger.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.brown-bear",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/brown-bear.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/brown-bear.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.tiger",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/tiger.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/tiger.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.priest",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/priest.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/priest.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.aboleth",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/aboleth.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/aboleth.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.lich",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/lich.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/lich.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      },
+      {
+        "id": "monster.adult-red-dragon",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/bestiary/adult-red-dragon.json",
+        "sourcePath": "data/rulesets/first-party-001/working/bestiary/adult-red-dragon.json",
+        "statBlockFoundation": "rule.monster-statblock-foundation"
+      }
+    ],
+    "promotedFamilies": [
+      {
+        "id": "monster-family.goblin",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/monster-families.json"
+      },
+      {
+        "id": "monster-family.hobgoblin",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/monster-families.json"
+      },
+      {
+        "id": "monster-family.bugbear",
+        "state": "native-selected-coherent",
+        "nativePath": "data/rulesets/first-party-001/native/monster-families.json"
+      }
+    ],
+    "experimental": [
+      {
+        "id": "experiment.warlock-modular-alpha-0-3-1",
+        "state": "experimental-reference-not-native",
+        "path": "data/reference/experiments/warlock-modular-alpha-0.3.1.json",
+        "package": "docs/content-promotion/warlock-modular-alpha-0.3.1.md",
+        "comparesTo": "single unified class progression approach in seven selected base classes",
+        "note": "Imported class.warlock remains pending; use dedicated opt-in experimental API to show A/B material, not working fallback."
+      }
+    ],
+    "eligibleForNextReview": [
+      {
+        "category": "additional-monsters",
+        "state": "eligible-after-individual-compatibility-checks",
+        "location": "data/rulesets/first-party-001/working/bestiary/",
+        "note": "Already reconciled selected 5.5e statistics with specifically restored older features may qualify; do not equate retained-native-definition with automatic approval."
+      },
+      {
+        "category": "skills-competencies-and-general-rules",
+        "state": "needs-dependency-review",
+        "location": "data/rulesets/first-party-001/working/",
+        "note": "Recheck unified mechanics and indexed dependencies before promoting."
+      },
+      {
+        "category": "spells-items-feats-weapon-masteries-creature-types",
+        "state": "needs-individual-reconciliation",
+        "location": "data/rulesets/first-party-001/working/",
+        "note": "Single source or historical retained label alone does not qualify."
+      }
+    ],
+    "unresolved": [
+      {
+        "id": "monster.assassin.surprise-critical",
+        "scope": "monster-specific",
+        "decision": "Assassin automatic critical hit against a surprised target remains undecided.",
+        "blocks": [
+          "monster.assassin"
+        ],
+        "doesNotBlock": [
+          "other coherent monsters"
+        ]
+      },
+      {
+        "id": "monster.derived-defenses-and-saves",
+        "scope": "projection/integration",
+        "decision": "Creature-specific numerical Touch and Flat-Footed AC and independent Fortitude/Reflex/Will values need explicit derivation or grants; no guessed per-monster numbers.",
+        "blocks": [
+          "complete derived-stat consumer presentation"
+        ],
+        "doesNotBlock": [
+          "selected source stat blocks"
+        ]
+      },
+      {
+        "id": "warlock.invocation-balance",
+        "scope": "experiment",
+        "decision": "Owner-selected hybrid 1–20 Invocation totals are a test baseline, not a final balance ruling; alternate curve retained as comparison.",
+        "blocks": [
+          "authoritative class.warlock"
+        ],
+        "doesNotBlock": [
+          "working alpha A/B review"
+        ]
+      },
+      {
+        "id": "warlock.hellfire-shield",
+        "scope": "experiment",
+        "decision": "How Hellfire Shield can be acquired remains deferred; it is not an automatic Fiend grant.",
+        "blocks": [
+          "effective Hellfire Shield grant"
+        ]
+      },
+      {
+        "id": "warlock.incomplete-invocations",
+        "scope": "experiment",
+        "decision": "Alpha 0.3.1 omits seven elective options including three Talisman-specific options, limiting full cross-pact balance conclusions.",
+        "blocks": [
+          "complete option-breadth comparison"
+        ]
+      },
+      {
+        "id": "warlock.fiend-retaliation-timing",
+        "scope": "experiment",
+        "decision": "Alpha supplies provisional healing-tick and Flamewreath hit-event interpretations; permanent shared timing remains unresolved.",
+        "blocks": [
+          "final timing procedure"
+        ]
+      },
+      {
+        "id": "warlock.additional-pacts",
+        "scope": "experiment",
+        "decision": "Star Chain/Seeker are disabled/deferred; eligibility for multiple Pacts is outside first alpha.",
+        "blocks": [
+          "additional Pact entitlement"
+        ]
+      },
+      {
+        "id": "druid.companion-integration",
+        "scope": "shared system",
+        "decision": "Persistent companion and temporary Wild Companion timing and control interactions need shared companion mechanism; do not invent grants.",
+        "blocks": [
+          "fully executable companion feature"
+        ]
+      },
+      {
+        "id": "sorcerer-wizard.familiar-path",
+        "scope": "shared system",
+        "decision": "Approved exclusive companion path choices are represented but familiar mechanics remain deferred.",
+        "blocks": [
+          "fully executable familiar options"
+        ]
+      },
+      {
+        "id": "rogue.defensive-roll-dc",
+        "scope": "shared system",
+        "decision": "Numerical Defensive Roll Dexterity save DC and 0-HP interactions are not yet fixed.",
+        "blocks": [
+          "automated Defensive Roll adjudication"
+        ]
+      },
+      {
+        "id": "shared.spell-points-crafting-feats",
+        "scope": "shared system",
+        "decision": "Some class options depend on shared spells, feat prerequisites, crafting or spell-point execution; approved class models remain coherent declarative data.",
+        "blocks": [
+          "full runtime execution"
+        ],
+        "doesNotBlock": [
+          "native declarative content"
+        ]
+      }
+    ]
+  },
+  "reviewBoundaries": {
+    "neverPromoteFromLabelAlone": true,
+    "noNewApprovalDetector": true,
+    "noRuntimeWorkingFallback": true,
+    "noDeployOrMergeWithoutApproval": true,
+    "contentOnlyOwnership": true
+  },
+  "verification": {
+    "contentTest": "tests/test_coherent_rule_promotion_wave1.py",
+    "existingValidation": [
+      "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+      "python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict",
+      "python3 tools/validate_ruleset_split.py"
+    ],
+    "fingerprint": "Capture actual SHA-256 through RulesCore.Content NativeCatalogLoader on reviewed SHA; do not reuse baseline digest."
+  }
+}
