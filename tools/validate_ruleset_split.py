@@ -24,6 +24,20 @@ def read_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def draft_key_paths(value, prefix=""):
+    """Locate imported candidate structures at any depth of a native record."""
+    forbidden = {"candidateDefinitions", "candidateSpecializations"}
+    if isinstance(value, dict):
+        for key, item in value.items():
+            path = f"{prefix}.{key}" if prefix else key
+            if key in forbidden:
+                yield path
+            yield from draft_key_paths(item, path)
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            yield from draft_key_paths(item, f"{prefix}[{index}]")
+
+
 def validate_native_tree(root):
     """Return identity map and errors; inspect every top-level operative record."""
     ids = {}
@@ -47,8 +61,8 @@ def validate_native_tree(root):
             ids[ident] = path
             if not record.get("kind") or not record.get("name"):
                 errors.append(f"{path}: {ident} needs name and kind")
-            if "candidateDefinitions" in record or "candidateSpecializations" in record:
-                errors.append(f"{path}: {ident} includes draft candidate structures")
+            for draft_path in draft_key_paths(record):
+                errors.append(f"{path}: {ident} includes draft candidate structure at {draft_path}")
             if "aliasOf" in record:
                 errors.append(f"{path}: {ident} is only an identity alias")
             if "baselineStatus" in record:
@@ -227,6 +241,9 @@ def main(argv=None):
         for rec in records:
             if "id" in rec:
                 working_ids[rec["id"]].append(str(path))
+    for ident, locations in working_ids.items():
+        if len(locations) != 1:
+            errors.append(f"duplicate working ID {ident}: {locations}")
     for ident in ids:
         if ident in working_ids:
             errors.append(f"authoritative {ident} also appears in working")

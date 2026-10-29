@@ -35,6 +35,16 @@ class NativeWorkingBoundaryTests(unittest.TestCase):
             self.assertTrue(any("duplicate" in err for err in errors))
             self.assertTrue(any("baselineStatus" in err for err in errors))
 
+    def test_reject_nested_draft_data_in_authoritative_rules(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "nested.json"
+            path.write_text(json.dumps({
+                "id": "rule.nested", "name": "Nested", "kind": "rule",
+                "definition": {"nested": {"candidateDefinitions": [{"content": {}}]}}
+            }), encoding="utf-8")
+            _, errors = validate_native_tree(Path(directory))
+            self.assertTrue(any("definition.nested.candidateDefinitions" in e for e in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
