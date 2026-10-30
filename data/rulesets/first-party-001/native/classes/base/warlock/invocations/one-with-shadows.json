@@ -7,7 +7,8 @@
   "requiredPact": null,
   "repeatable": false,
   "cost": 1,
-  "description": "While in Dim Light or Darkness, cast Invisibility on yourself without a spell slot.",
+  "description": "While you are in an area of Dim Light or Darkness, you can cast Invisibility on yourself without expending a spell slot.",
   "selectionStatus": "included-in-alpha-0.3.1",
-  "rulesStatus": "selected-for-playtest"
+  "rulesStatus": "selected-for-playtest",
+  "rulesVersion": "5.5e"
 }

@@ -7,7 +7,7 @@
   "requiredPact": "pact.warlock.blade",
   "repeatable": false,
   "cost": 1,
-  "description": "Once per turn on a Pact-weapon hit, expend an actual Pact Magic slot for (1 + expended slot level)d8 additional Force damage, and optionally knock a Huge-or-smaller target Prone.",
+  "description": "Once per turn when a Pact-weapon attack hits, expend one Pact Magic slot to add (1 + slot level)d8 Force damage. You may also knock the target Prone if it is Huge or smaller. It spends an actual slot, not a per-rest free cast. Use the host game's critical rules for the hit damage.",
   "selectionStatus": "included-in-alpha-0.3.1",
   "rulesStatus": "selected-for-playtest"
 }

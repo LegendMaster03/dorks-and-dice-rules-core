@@ -7,7 +7,7 @@
   "requiredPact": "pact.warlock.blade",
   "repeatable": false,
   "cost": 1,
-  "description": "When attacking with your Pact weapon, make three attacks total instead of the intrinsic level-5 two, never three additional attacks.",
+  "description": "Your Blade Pact and its intrinsic level-5 two-attack feature are required. When you take the Attack action with your Pact weapon, make three attacks total instead of two. This is one upgrade, not three extra attacks.",
   "selectionStatus": "included-in-alpha-0.3.1",
   "rulesStatus": "selected-for-playtest"
 }

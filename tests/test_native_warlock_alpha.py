@@ -147,5 +147,47 @@ class WarlockNativeAlphaTests(unittest.TestCase):
         self.assertEqual("class.warlock", self.reference["excludedAuthoritativeClassId"])
         self.assertEqual("0.3.1",self.warlock["alphaVersion"])
 
+    def test_restored_play_procedures_and_approved_feedback(self):
+        blade = self.pacts['pact.warlock.blade']
+        self.assertIn('5 feet away for one minute', blade['description'])
+        self.assertIn('physical weapon remains present', blade['description'])
+        self.assertIn('Extra Attack features do not automatically add', blade['deepenedAtLevel5'])
+        chain = self.pacts['pact.warlock.chain']
+        self.assertIn('give the command before', chain['description'])
+        self.assertIn('not gain a second Attack action', chain['deepenedAtLevel5'])
+        tome = self.pacts['pact.warlock.tome']
+        self.assertIn('Only you access its Pact magic', tome['description'])
+        self.assertIn('does not add them to normal Pact-slot casting unless separately learned', tome['deepenedAtLevel5'])
+        self.assertIn('three independent uses, not a shared pool', tome['deepenedAtLevel5'])
+        talisman = self.pacts['pact.warlock.talisman']
+        self.assertIn('\n\nUntrained Guidance:', talisman['description'])
+        self.assertIn('\n\nFortunate Correction:', talisman['description'])
+        self.assertIn('old one becomes inactive', talisman['description'])
+        self.assertIn('sight of the attacker is not required', talisman['deepenedAtLevel5'])
+        investment = self.invocations['invocation.investment-of-the-chain-master']['description']
+        self.assertIn('preserving superior base speed', investment)
+        self.assertIn('Bludgeoning, Piercing, or Slashing', investment)
+        self.assertIn('Necrotic, Psychic, or Radiant', investment)
+        self.assertIn('refill limited attacks', investment)
+        self.assertIn('Paid ritual records survive book replacement', self.invocations['invocation.book-of-ancient-secrets']['description'])
+        self.assertIn('erase a name with a Magic action', self.invocations['invocation.gift-of-the-protectors']['description'])
+        retaliation = next(f for f in self.patron['features'] if f['level']==8)['description']
+        self.assertIn('including those spent at 0 without healing', retaliation)
+        self.assertIn('twentieth subsequent turn start', retaliation)
+        self.assertIn('restore that choice for another eligible spell', self.patron['spellAccess']['description'])
+        self.assertNotIn('Summon Undead', tome['deepenedAtLevel5'])
+        self.assertNotIn('invocation.grasp-of-hadar', self.invocations)
+
+    def test_advancement_shows_improvements_and_related_patron_grants(self):
+        rows = {r['level']:r for r in self.warlock['progression']}
+        asi = 'class-feature.warlock.ability-score-improvement'
+        self.assertEqual([4,8,12,16,19], [level for level,row in rows.items() if asi in row['featureGrants']])
+        for level in [7,11,15,19,20]: self.assertTrue(rows[level]['improvements'])
+        for level in [1,3,5,6,7,8,9,13,14,18]:
+            self.assertTrue(rows[level]['relatedFeatures'])
+            self.assertTrue(all(f['ruleId']=='patron.warlock.fiend' for f in rows[level]['relatedFeatures']))
+            self.assertNotIn('patron.warlock.fiend',rows[level]['featureGrants'])
+
 if __name__ == "__main__":
     unittest.main()
+

@@ -7,7 +7,8 @@
   "requiredPact": null,
   "repeatable": false,
   "cost": 1,
-  "description": "Gain proficiency in Deception and Persuasion.",
+  "description": "You gain proficiency in the Deception and Persuasion skills.",
   "selectionStatus": "included-in-alpha-0.3.1",
-  "rulesStatus": "selected-for-playtest"
+  "rulesStatus": "selected-for-playtest",
+  "rulesVersion": "5e"
 }

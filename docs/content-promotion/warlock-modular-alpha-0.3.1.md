@@ -56,6 +56,16 @@ The 3.5e, 2014 5e, raw 2024 5.5e, Pact-adjusted 2024, and selected hybrid Invoca
 
 Alpha 0.3.1 omits **seven elective Invocations**, including the three dedicated Talisman options. The resulting playtest is informative about the core Talisman and generic clauses, but insufficient to conclude that the completed Talisman ecosystem is weak or strong. Star Chain/Seeker are disabled/deferred, not deleted. Additional Pact acquisition entitlement is not selected. Other pending shared mechanics include familiar behavior, crafting/feat interactions, spell resource integrations, and exact Fiend event timing.
 
+## Approved feedback and rule restoration (October 30, 2026)
+
+The approved feedback revision separates Talisman's Untrained Guidance and Fortunate Correction into paragraphs and adds Psychic alongside Necrotic and Radiant to Investment of the Chain Master's damage conversion. Animate Dead remains selected for Tome. This restoration includes those decisions from `content/warlock-early-playtest-feedback`; it does not revert to the annotated packet's older Investment text.
+
+Native descriptions retain the packet's complete play procedures rather than abbreviated previews: weapon bonds, familiar command limits, book replacement and ritual access, talisman resources, Patron timing and spell-choice replacement, and Invocation procedures. The selected numerical progression and catalog remain unchanged.
+
+Progression `improvements` describe changes to existing features. `relatedFeatures` entries contain a display name and `ruleId` linking to a separately owned rule, such as a Fiend milestone or spell grant. They are references, not extra base-class grants, and do not select a character's options. The Wiki presents both alongside the existing `featureGrants`.
+
+Tester questions, comparisons, and illustrative builds remain separate from normative rule text. The complete operating procedure for the current alpha remains in each rule even where that procedure is provisional.
+
 ## Evaluation and acceptance
 
 Compare representative builds at levels **1, 2, 4, 5, 7, 9, 11, 13, 15, 16, 18, and 20**, with Fiend and each of Blade/Chain/Tome/Talisman, against similarly equipped, single-progression reconciled classes in comparable encounters. Record action/reaction contention, spell resources, feature-combo viability, options actually worth selecting, and the time required to make meaningful character decisions. Ask for concrete examples of over- or underperformance and mechanics that needed adjudication. Do not collect a compulsory form.
@@ -75,3 +85,4 @@ The owner's **`Dorks_and_Dice_Warlock_Alpha_Playtest_Packet.pdf`**, Alpha 0.3.1 
 Warlock Alpha 0.3.1 is the **current selected native Warlock** even while its design is being tested. Imported edition candidates stay in `working/`; the historical experiment record stays in `reference/` with a distinct `experiment.*` ID, and that reference record itself is never runtime authority. The native Warlock entities are included in the catalog and its semantic fingerprint. The Wiki should display the selected native alpha as the current Warlock, with a clear playtest/version label, not as a finalized architecture decision.
 
 The playtest packet contains CC-licensed SRD sources, historical non-SRD research references, and original first-party adaptations. Do not treat every historical non-SRD contribution as CC-licensed or freely distributable. Perform source-rights review separately before any external release.
+

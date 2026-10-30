@@ -7,7 +7,9 @@
   "requiredPact": null,
   "repeatable": true,
   "cost": 1,
-  "description": "Choose a damaging known Warlock cantrip with an attack roll. On a hit, push a Large-or-smaller target up to 10 feet straight away. Repeatable for a different eligible cantrip.",
+  "description": "Choose one of your known Warlock cantrips that requires an attack roll. When you hit a Large or smaller creature with that cantrip, you can push the creature up to 10 feet straight away from you.\n\nRepeatable: You can gain this invocation more than once. Each time you do so, choose a different eligible cantrip.\n\nTrack the chosen cantrip by name. Each further purchase must enhance a different eligible cantrip. Automatic Eldritch Blast qualifies.",
   "selectionStatus": "included-in-alpha-0.3.1",
-  "rulesStatus": "selected-for-playtest"
+  "rulesStatus": "selected-for-playtest",
+  "rulesVersion": "5.5e",
+  "cantripPrerequisite": "A known Warlock cantrip that deals damage via an attack roll."
 }

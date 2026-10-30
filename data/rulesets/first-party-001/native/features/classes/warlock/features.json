@@ -7,7 +7,7 @@
       "parentClass": "class.warlock",
       "classLevel": 1,
       "definition": {
-        "description": "Charisma is the spellcasting ability. Use the progression table for known spells, cantrips, Pact slots and slot level. All Pact slots share one level, recover on Short or Long Rest, and cast eligible known Warlock spells without daily preparation. When gaining a class level, replace up to one ordinary cantrip and one ordinary leveled spell. Patron, Pact and Mystic Arcanum grants do not consume ordinary known-spell selections.",
+        "description": "Know two Warlock cantrips and two level-1 Warlock spells. Choose from your host Warlock list plus explicit class grants. Your spell attack modifier is proficiency bonus + Charisma modifier; spell save DC is 8 + proficiency bonus + Charisma modifier.\n\nAll Pact slots have the level shown in the class table. Spend one to cast an eligible known Warlock spell of that level or lower, applying its higher-slot rules. Regain all Pact slots on a Short or Long Rest. Use host casting/rest rules. These spells are known without daily preparation.\n\nWhen the table increases ordinary cantrips or spells known, choose the difference; newly chosen leveled spells can not exceed your Pact slot level. On gaining a Warlock level, you may replace one ordinary cantrip and one ordinary known spell with eligible alternatives. Patron, Pact, and Arcanum grants are separate.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -19,7 +19,7 @@
       "parentClass": "class.warlock",
       "classLevel": 1,
       "definition": {
-        "description": "Automatically know Eldritch Blast in addition to ordinary cantrips. Use the host game's Warlock cantrip; the beam count is 1 at level 1, 2 at 5, 3 at 11, and 4 at 17, resolved separately. It qualifies for Invocations but does not gain historical 3.5e blast dice.",
+        "description": "You automatically gain Eldritch Blast in addition to your ordinary cantrip choices. Use your host game's version of the cantrip. It counts as a Warlock cantrip for Invocation prerequisites. Do not spend another cantrip choice to learn it, and do not add historical 3.5e blast dice to its beams.\n\nFor a single-class Warlock, its beam count is one at level 1, two at level 5, three at level 11, and four at level 17. Resolve each beam's attack, damage, and possible critical separately under the host rules.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -31,7 +31,7 @@
       "parentClass": "class.warlock",
       "classLevel": 1,
       "definition": {
-        "description": "Choose the ongoing source of supernatural power at level 1; the selected alpha Patron is Fiend. A Patron may be inherited, involuntary, concealed or unknown by name, without direct contact or a literal contract. Do not gain a second Patron at level 3.",
+        "description": "Your magic has a continuing Patron source, which may be inherited, involuntary, or unknown by name. Direct communication or a literal contract is unnecessary. Choose Fiend for this round and gain its features at their listed levels. Do not add another Patron package at level 3.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -43,7 +43,7 @@
       "parentClass": "class.warlock",
       "classLevel": 1,
       "definition": {
-        "description": "Choose one free Pact at level 1 from Blade, Chain, Tome, and Talisman. It represents the manifestation or terms of a deal. The first Pact does not consume an Invocation selection. Additional Pacts are out of scope.",
+        "description": "Your Pact establishes the type or manifestation of your deal with your Patron. Choose one Pact: Blade, Chain, Tome, or Talisman. This choice costs no Invocation selection. Each Pact gains an intrinsic improvement at Warlock 5. The Pact section explains its abilities. Additional simultaneous Pacts are outside this round.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -55,7 +55,7 @@
       "parentClass": "class.warlock",
       "classLevel": 1,
       "definition": {
-        "description": "Gain one elective at level 1, increasing to 12 at level 20 under the selected hybrid curve. Each Invocation costs one elective, attaches to one actual Pact and requires acceptance by that Pact's Patron. Meet all prerequisites. On Warlock level-up you may replace one option with an eligible alternative. Severance suspends attached Invocations without automatic refund; restoration or transfer requires revalidation.",
+        "description": "Learn one eligible Invocation, an additional term attached to your larger Pact. Gain additional selections when the class table increases your total. Each costs one elective selection, attaches to your actual Pact, and requires that Pact's Patron to accept it. Existing or inherited terms may supply acceptance without a new conversation.\n\nMeet every level, Pact, cantrip, and other prerequisite. A generic option can attach to any eligible Pact; it is not unattached. Repeat an option only if permitted by its text. On gaining a Warlock level, you may replace one Invocation with an eligible alternative, keeping prerequisites required by retained choices.\n\nA severed Pact suspends its Invocations, preserving acquisition history without an automatic refund. Restoration or transfer requires valid receiving terms, Patron acceptance, and prerequisite revalidation.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -67,7 +67,7 @@
       "parentClass": "class.warlock",
       "classLevel": 2,
       "definition": {
-        "description": "Spend one minute in an esoteric rite to recover expended Pact Magic slots up to half the slot maximum, rounded up; one at levels 2–10, two at levels 11–19. The rite is available once per Long Rest and does not replenish other resources. Eldritch Master upgrades the same rite.",
+        "description": "Perform an esoteric rite for one minute. Restore expended Pact Magic slots up to half your maximum, rounded up: one at levels 2-10 or two at levels 11-20. Once used, you must finish a Long Rest to use the rite again. It does not refill other resources. Eldritch Master improves this same rite at level 20.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -79,7 +79,7 @@
       "parentClass": "class.warlock",
       "classLevel": 3,
       "definition": {
-        "description": "Reduce Bludgeoning, Piercing and Slashing damage from weapon or natural attacks by 1 at level 3; by 2 at 7, 3 at 11, 4 at 15, 5 at 19. Cold iron bypasses this mitigation. Reduce each qualifying damage component once, before ordinary half-damage Resistance. Do not reduce separately typed elemental or other damage riders.",
+        "description": "Reduce Bludgeoning, Piercing, and Slashing damage from weapons or natural attacks by 1 per damage instance, including magical weapons unless they are cold iron. Cold iron bypasses this reduction. It does not reduce a separately typed Fire, Force, or other damage rider.\n\nThe reduction increases to 2 at Warlock 7, 3 at 11, 4 at 15, and 5 at 19. For this test, apply flat mitigation before ordinary half-damage Resistance, rounding down after halving. Do not apply the same flat benefit twice to one damage component.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -91,7 +91,7 @@
       "parentClass": "class.warlock",
       "classLevel": 4,
       "definition": {
-        "description": "At Warlock levels 4, 8, 12, 16, and 19, increase one ability score by 2 or two by 1, with the ordinary host-game increase ceiling for this alpha; an eligible feat may be chosen under the table's rules. The level-19 grant is ordinary, not an automatic Epic Boon.",
+        "description": "Increase one ability score by 2 or two ability scores by 1, to a maximum of 20, or choose an eligible feat using your table's normal rules. Gain this feature again at Warlock 8, 12, 16, and 19. Use an ordinary eligible improvement at 19 for this round; Epic Boons remain outside this test.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -103,7 +103,7 @@
       "parentClass": "class.warlock",
       "classLevel": 4,
       "definition": {
-        "description": "For eligible magic-item-use competency checks, treat the d20 as 10 even under threat or distraction, then apply modifiers. Use Charisma and proficiency where trained. It does not grant automatic success or apply to unrelated attacks, saving throws or skills; omit testing if the host has no such competency check.",
+        "description": "On eligible magic-item-use competency checks, you may treat the d20 as 10 even while threatened or distracted, then add normal modifiers. This does not grant automatic success or apply to attacks, saves, or unrelated skills.\n\nFor this test, use Charisma + proficiency if proficient in your table's applicable magic-item-use competency; otherwise use Charisma. If the host lacks that check procedure, leave this ability untested rather than introducing another skill system.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -115,7 +115,7 @@
       "parentClass": "class.warlock",
       "classLevel": 5,
       "definition": {
-        "description": "At level 5 gain the intrinsic improvement of the chosen Pact without an Invocation charge: Blade makes two Pact-weapon attacks; Chain's one commanded familiar Attack action makes two attacks; Tome obtains three independent slot-free spell uses; Talisman obtains Shared Ward.",
+        "description": "Gain your Pact's intrinsic improvement without spending an Invocation: Blade makes two Pact-weapon attacks with its Attack action; Chain's commanded familiar Attack action contains two attacks; Tome gains its three separate slot-free spell uses; Talisman gains Shared Ward. Read the full rule in your Pact entry.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -127,7 +127,7 @@
       "parentClass": "class.warlock",
       "classLevel": 9,
       "definition": {
-        "description": "Know Contact Other Plane in addition to ordinary known spells. Once per Long Rest cast it without a slot to contact your Patron, automatically succeeding on its saving throw. Normal spell restrictions still apply.",
+        "description": "Know Contact Other Plane in addition to your ordinary selections. Once per Long Rest, cast it without a slot to contact your Patron, automatically succeeding on its saving throw. Normal casting time and other spell restrictions remain. Direct communication is not the first acquisition of your Patron's identity.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -139,7 +139,7 @@
       "parentClass": "class.warlock",
       "classLevel": 10,
       "definition": {
-        "description": "Choose two damage types from Acid, Cold, Fire, Lightning and Thunder. Reduce each selected damage type by 5 per instance at level 10, increasing to 10 at level 20. This is flat damage mitigation before ordinary Resistance, not damage-halving Resistance. It is distinct from the retired Fiend level-10 feature.",
+        "description": "Permanently choose two damage types from Acid, Cold, Fire, Lightning, and Thunder. Reduce damage of each chosen type by 5 per instance. This increases to 10 at Warlock 20.\n\nThis is flat mitigation, not ordinary 5e/5.5e half-damage Resistance. Apply it before any ordinary Resistance and round down after halving. It is a universal class feature, separate from the Fiend's omitted level-10 selected-type resistance.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -151,7 +151,7 @@
       "parentClass": "class.warlock",
       "classLevel": 11,
       "definition": {
-        "description": "Choose one 6th-level Warlock spell and cast it once without a slot per Long Rest. It is separate from Pact Magic and other Arcanum levels. You may replace one Arcanum spell when gaining a Warlock level, with another of the same spell level.",
+        "description": "Choose one level-6 Warlock spell. Cast it once without a spell slot, recovering its use on a Long Rest. Each Arcanum has its own one-use-per-Long-Rest allowance at its own spell level. They are not Pact slots and do not upcast one another or consume ordinary known-spell selections.\n\nWhenever you gain a Warlock level, you may replace one Arcanum spell with another Warlock spell of the same level.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -163,7 +163,7 @@
       "parentClass": "class.warlock",
       "classLevel": 12,
       "definition": {
-        "description": "When qualified to create a magic item, substitute a magic-item-use check for a missing prerequisite spell: DC 15 + spell level for arcane or DC 25 + spell level for divine. Other requirements and costs remain. A failure does not complete the item or consume its creation payment; do not retry until next Warlock level. Skip if host has no crafting/check procedure.",
+        "description": "With the required item-creation entitlement, substitute a magic-item-use check for a missing prerequisite spell: DC 15 + spell level for arcane, or DC 25 + spell level for divine. Other requirements and costs remain.\n\nFailure does not complete the item or consume its creation payment. Do not retry that substitution until your next Warlock level. If the host lacks the crafting/check procedure, leave this feature untested.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -175,7 +175,7 @@
       "parentClass": "class.warlock",
       "classLevel": 13,
       "definition": {
-        "description": "Choose one separate 7th-level Warlock spell with one slot-free use per Long Rest. It is neither a Pact slot nor an upgrade of the 6th-level Arcanum.",
+        "description": "Choose one level-7 Warlock spell. Cast it once without a spell slot, recovering its use on a Long Rest. Each Arcanum has its own one-use-per-Long-Rest allowance at its own spell level. They are not Pact slots and do not upcast one another or consume ordinary known-spell selections.\n\nWhenever you gain a Warlock level, you may replace one Arcanum spell with another Warlock spell of the same level.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -187,7 +187,7 @@
       "parentClass": "class.warlock",
       "classLevel": 15,
       "definition": {
-        "description": "Choose one separate 8th-level Warlock spell with one slot-free use per Long Rest. It does not consume ordinary spells known or Pact slots.",
+        "description": "Choose one level-8 Warlock spell. Cast it once without a spell slot, recovering its use on a Long Rest. Each Arcanum has its own one-use-per-Long-Rest allowance at its own spell level. They are not Pact slots and do not upcast one another or consume ordinary known-spell selections.\n\nWhenever you gain a Warlock level, you may replace one Arcanum spell with another Warlock spell of the same level.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -199,7 +199,7 @@
       "parentClass": "class.warlock",
       "classLevel": 17,
       "definition": {
-        "description": "Choose one separate 9th-level Warlock spell with one slot-free use per Long Rest. It does not consume ordinary spells known or Pact slots.",
+        "description": "Choose one level-9 Warlock spell. Cast it once without a spell slot, recovering its use on a Long Rest. Each Arcanum has its own one-use-per-Long-Rest allowance at its own spell level. They are not Pact slots and do not upcast one another or consume ordinary known-spell selections.\n\nWhenever you gain a Warlock level, you may replace one Arcanum spell with another Warlock spell of the same level.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }
@@ -211,7 +211,7 @@
       "parentClass": "class.warlock",
       "classLevel": 20,
       "definition": {
-        "description": "Magical Cunning now restores all expended Pact Magic slots. This improves the same one-minute rite with its existing once-per-Long-Rest limit, without creating another recovery resource.",
+        "description": "Magical Cunning now restores all your expended Pact Magic slots. It remains the same once-per-Long-Rest, one-minute rite, not a second recovery resource.",
         "alpha": "0.3.1",
         "rulesStatus": "selected-for-playtest"
       }

@@ -4,22 +4,22 @@
   "kind": "patron",
   "parentClass": "class.warlock",
   "availableAtWarlockLevel": 1,
-  "description": "The selected alpha Patron. Fiend is the supernatural power source from level 1 and may be paired with any active Pact. The 5.x Fiend level-10 selected-type resistance and automatic Hellfire Shield are retired, not duplicated.",
+  "description": "Fiend supplies signature abilities and spell access. Any of the four active Pacts can belong to this Patron. The host Fiend's level-10 selected-type resistance and Hellfire Shield are not granted. Universal Energy Resistance remains.",
   "features": [
     {
       "level": 1,
       "name": "Dark One's Blessing",
-      "description": "When you reduce a hostile creature to 0 HP, or another creature reduces an enemy within 10 feet of you to 0 HP, gain temporary HP equal to max(1, Charisma modifier + Warlock level). Temporary HP do not stack."
+      "description": "When you reduce a hostile creature to 0 HP, or another creature reduces an enemy within 10 feet of you to 0 HP, gain temporary HP equal to max(1, Charisma modifier + Warlock level). Use normal host temporary HP rules; these do not stack or restore ordinary HP."
     },
     {
       "level": 6,
       "name": "Dark One's Own Luck",
-      "description": "Add 1d10 after an ability check or saving throw is rolled but before resolution, at most once per roll. Uses per Long Rest: max(1, Charisma modifier). No Reaction required."
+      "description": "After an ability check or saving throw is rolled, before its outcome resolves, add 1d10, at most once per roll. Uses equal max(1, Charisma modifier), recovered on Long Rest. It costs no Reaction and does not modify attacks."
     },
     {
       "level": 8,
       "name": "Infernal Retaliation",
-      "description": "Use your Reaction at a time you choose without an external trigger, consuming the one shared use per Long Rest. Select one 20-round mode: Fiendish Resilience heals 1/2/5 HP per round at levels 8/13/18, or Fiendish Flamewreath deals 1d6/2d6/5d6 Fire after each qualifying melee hit within 5 feet. Ongoing effect needs no further Reactions. Resilience does not heal at 0 HP and stabilizes once if 0 HP is reached after activation. Alpha timing: healing starts at next turn start; Flamewreath resolves after each hit."
+      "description": "Spend your Reaction at a time you choose and the single shared use per Long Rest. Choose one mode for 20 rounds (two minutes). Continuing it needs no more Reactions. No external trigger is required to activate it; an unconscious Warlock can not do so.\n\nFiendish Resilience. Heal 1 HP/round at Warlock 8, 2 at 13, or 5 at 18. Reaching 0 HP while it is already active stabilizes you once without restoring HP or consciousness. It does not heal at 0 HP, revive the dead, or stabilize again after further damage. If another effect restores you above 0, remaining healing can resume.\n\nFiendish Flamewreath. After each resolved melee hit against you from a creature within 5 feet, that creature takes the listed Fire damage. Separate multiattack hits can each qualify. No save or additional Reaction is required. Misses, ranged hits, and ongoing damage do not trigger it.\n\nAt Warlock levels 8, 13, and 18, healing is respectively 1, 2, and 5 HP per round; Fire damage is respectively 1d6, 2d6, and 5d6 per qualifying hit.\n\nProvisional timing: healing ticks at your turn start above 0 HP, first on your next turn. Count twenty turn-starts, including those spent at 0 without healing. Flamewreath ends at the twentieth subsequent turn start."
     },
     {
       "level": 13,
@@ -29,7 +29,7 @@
     {
       "level": 14,
       "name": "Hurl Through Hell",
-      "description": "Once per turn on a qualifying attack-roll hit, expend its use to force a Charisma save against the Warlock spell DC. Failure sends the target to the Lower Planes, Incapacitated and unavailable for targeting; if not a Fiend, it immediately takes 8d10 Psychic damage. It returns at end of your next turn. Success still spends the use. Recharge on Long Rest or by expending a Pact slot, with provisional no-action recharge and max one stored use."
+      "description": "Once per turn on a qualifying attack-roll hit, expend its use and force a Charisma save against your spell DC. On failure the target travels through the Lower Planes and is Incapacitated; if not a Fiend, it immediately takes 8d10 Psychic damage. While absent it is unavailable to ordinary targeting. It returns at the end of your next turn to its departed space or the nearest unoccupied space. Success still spends the use.\n\nRecover on Long Rest or spend a Pact slot to restore a use. For this test restoration costs no additional action and stores at most one use; that action timing is provisional."
     },
     {
       "level": 18,
@@ -76,7 +76,8 @@
       }
     ],
     "alternateTestMode": "expanded-choice-from-same-13-spell-list-not-simultaneous",
-    "additionalSlotsGranted": 0
+    "additionalSlotsGranted": 0,
+    "description": "Automatically know the Fiend spells at their listed Warlock levels without ordinary selection costs or daily preparation. They grant no extra slots or free casts. If a normal spell choice later becomes automatic, restore that choice for another eligible spell.\n\nNo Patron spells are automatically learned at Warlock 1; the first five arrive at 3."
   },
   "rulesStatus": "selected-for-playtest"
 }

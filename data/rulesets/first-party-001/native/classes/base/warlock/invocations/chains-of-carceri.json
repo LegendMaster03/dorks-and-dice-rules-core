@@ -7,7 +7,7 @@
   "requiredPact": "pact.warlock.chain",
   "repeatable": false,
   "cost": 1,
-  "description": "Cast Hold Monster without slot or material components, but only on a Celestial, Fiend or Elemental. You may not attempt it on that same individual again until a Long Rest, including after a failed attempt.",
+  "description": "Cast Hold Monster without a slot or material components, targeting only a Celestial, Fiend, or Elemental. Once you attempt to use this Invocation on an individual, you must finish a Long Rest before attempting it on that individual again, including after a failed attempt. Other eligible individuals remain available. Normal spell action, duration, and concentration apply.",
   "selectionStatus": "included-in-alpha-0.3.1",
   "rulesStatus": "selected-for-playtest"
 }
