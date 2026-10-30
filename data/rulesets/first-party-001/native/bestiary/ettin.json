@@ -1,0 +1,226 @@
+{
+  "id": "monster.ettin",
+  "name": "Ettin",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 85,
+      "formula": "10d10 + 30"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 21,
+    "dex": 8,
+    "con": 17,
+    "int": 6,
+    "wis": 10,
+    "cha": 8,
+    "skill": {
+      "perception": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "frightened",
+      "stunned",
+      "unconscious"
+    ],
+    "languages": [
+      "Giant"
+    ],
+    "cr": "4",
+    "gear": [
+      "battleaxe|srd52",
+      "morningstar|srd52"
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The ettin makes one Battleaxe attack and one Morningstar attack."
+        ]
+      },
+      {
+        "name": "Battleaxe",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}14 ({@damage 2d8 + 5}) Slashing damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Morningstar",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}14 ({@damage 2d8 + 5}) Piercing damage, and the target has {@variantrule Disadvantage|SRD52} on the next attack roll it makes before the end of its next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "mountain",
+      "underdark"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/ettin.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "GI"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ettin",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Ettin",
+            "entries": [
+              "{@i Quarrelsome Two-Headed Giant}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Hill|bestiary|environment=hill}, {@filter Mountain|bestiary|environment=mountain}, {@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Individual"
+                  }
+                ]
+              },
+              "Ettins are physically powerful Giants with two heads. While many ettins have features similar to hill giants, others have more bestial or unusual traits, such as tusks, short horns, or a single eye on each head.",
+              "Ettins frequently ally with other Giants or groups that value their strength, such as hill giants, bandits, or ogres. Some ettins possess mystical ties to the lands they inhabit, and they might know or guard secrets valued by druids or Fey.",
+              "Each ettin head has a distinct personality. While this makes some ettins quarrelsome with themselves and others, many function as a team. An ettin head might have its own name, or both heads might refer to themselves as a single being—either with one name or a portmanteau of two.",
+              "Roll on or choose a result from the Ettin Interactions table to inspire how an ettin's heads are interacting when the creature is encountered.",
+              {
+                "type": "table",
+                "caption": "Ettin Interactions",
+                "colLabels": [
+                  "1d8",
+                  "The Ettin's Heads Are..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Amping up one another in preparation for a conflict or challenge."
+                  ],
+                  [
+                    "2",
+                    "Arguing over plans for battle, dinner, or how to spend the day."
+                  ],
+                  [
+                    "3",
+                    "Criticizing one another as they perform separate tasks."
+                  ],
+                  [
+                    "4",
+                    "Engaged in a staring contest."
+                  ],
+                  [
+                    "5",
+                    "Making polite small talk as if they were meeting for the first time."
+                  ],
+                  [
+                    "6",
+                    "Performatively ignoring one another."
+                  ],
+                  [
+                    "7",
+                    "Talking over an increasingly convoluted plot."
+                  ],
+                  [
+                    "8",
+                    "Trying to keep one another awake."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Twice the malice, aggressiveness, and appetite—the ettin demonstrates that two heads aren't necessarily better than one."
+                    ],
+                    "by": "Bertrand, Inquisitor of the Mind Fire"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Ettin.webp"
+            },
+            "credit": "Robson Michel",
+            "width": 1253,
+            "height": 1686
+          }
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Wakeful",
+        "entries": [
+          "When one of the ettin's heads is asleep, its other head is awake."
+        ]
+      },
+      {
+        "name": "Two Heads",
+        "entries": [
+          "The ettin has advantage on Wisdom ({@skill Perception}) checks and on saving throws against being {@condition blinded}, {@condition charmed}, {@condition deafened}, {@condition frightened}, {@condition stunned}, and knocked {@condition unconscious}."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
