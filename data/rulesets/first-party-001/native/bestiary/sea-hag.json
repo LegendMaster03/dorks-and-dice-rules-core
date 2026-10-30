@@ -1,0 +1,234 @@
+{
+  "id": "monster.sea-hag",
+  "name": "Sea Hag",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "fey",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "7d8 + 21"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 40
+    },
+    "str": 16,
+    "dex": 13,
+    "con": 16,
+    "int": 12,
+    "wis": 12,
+    "cha": 13,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 11,
+    "languages": [
+      "Common",
+      "Giant",
+      "Primordial (Aquan)"
+    ],
+    "cr": "2",
+    "spellcasting": [
+      {
+        "name": "Coven Magic",
+        "type": "spellcasting",
+        "headerEntries": [
+          "While within 30 feet of at least two hag allies, the hag can cast one of the following spells, requiring no Material components, using the spell's normal casting time, and using Intelligence as the spellcasting ability (spell save {@dc 11}): {@spell Augury|SRD52}, {@spell Find Familiar|SRD52}, {@spell Identify|SRD52}, {@spell Locate Object|SRD52}, {@spell Scrying|SRD52}, or {@spell Unseen Servant|SRD52}. The hag must finish a {@variantrule Long Rest|SRD52} before using this trait to cast that spell again."
+        ],
+        "restLong": {
+          "1": [
+            "{@spell Augury|SRD52}",
+            "{@spell Find Familiar|SRD52}",
+            "{@spell Identify|SRD52}",
+            "{@spell Locate Object|SRD52}",
+            "{@spell Scrying|SRD52}",
+            "{@spell Unseen Servant|SRD52}"
+          ]
+        },
+        "ability": "int",
+        "hidden": [
+          "restLong"
+        ]
+      },
+      {
+        "name": "Illusory Appearance",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The hag casts {@spell Disguise Self|SRD52}, using Constitution as the spellcasting ability (spell save {@dc 13}). The spell's duration is 24 hours."
+        ],
+        "will": [
+          "{@spell Disguise Self|SRD52}"
+        ],
+        "ability": "con",
+        "displayAs": "action",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The hag can breathe air and water."
+        ]
+      },
+      {
+        "name": "Vile Appearance",
+        "entries": [
+          "{@actSave wis} {@dc 11}, any Beast or Humanoid that starts its turn within 30 feet of the hag and can see the hag's true form. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the start of its next turn. {@actSaveSuccess} The target is immune to this hag's Vile Appearance for 24 hours."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Death Glare {@recharge 5}",
+        "entries": [
+          "{@actSave wis} {@dc 11}, one {@condition Frightened|SRD52} creature the hag can see within 30 feet. {@actSaveFail} If the target has 20 {@variantrule Hit Points|SRD52} or fewer, it drops to 0 {@variantrule Hit Points|SRD52}. Otherwise, the target takes 13 ({@damage 3d8}) Psychic damage."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "underwater"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/sea-hag.opus"
+    },
+    "traitTags": [
+      "Amphibious"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "AQ",
+      "C",
+      "GI",
+      "P"
+    ],
+    "damageTags": [
+      "S",
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "frightened"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Sea Hag",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Sea Hag",
+            "entries": [
+              "{@i Hag of Despair and the Dismal Deep}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Underwater|bestiary|environment=underwater}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Arcana"
+                  }
+                ]
+              },
+              "Sea hags loathe peace and beauty. Bitter, jealous creatures, they spread chaos and undermine joy however they can, undertaking elaborate deceptions to sow discord for its own sake. The hags' true forms are supernaturally vile, and their baleful gazes can strike down creatures {@condition frightened|SRD52} by their appearance.",
+              "Sea hags cloak themselves in illusions to work their schemes. Roll on or choose a result from the Sea Hag Disguises table to inspire a sea hag's illusion and how they might use it to wreak chaos and destruction.",
+              {
+                "type": "table",
+                "caption": "Sea Hag Disguises",
+                "colLabels": [
+                  "1d6",
+                  "The Sea Hag Takes the Form of A..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Captive and claims nearby villagers bound them and left them to drown."
+                  ],
+                  [
+                    "2",
+                    "Castaway and shares a cursed item's location with would-be rescuers."
+                  ],
+                  [
+                    "3",
+                    "Healer and passes off poisons as medicine."
+                  ],
+                  [
+                    "4",
+                    "Panic-spreading prophesier of doom."
+                  ],
+                  [
+                    "5",
+                    "Ship captain and delivers passengers to the hag's pet sea monster."
+                  ],
+                  [
+                    "6",
+                    "Wounded sailor and claims their ship was destroyed by merfolk or other peaceful people."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Sea Hag.webp"
+            },
+            "credit": "Lorenzo Mastroianni",
+            "width": 1320,
+            "height": 2310
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

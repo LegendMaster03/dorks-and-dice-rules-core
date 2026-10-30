@@ -1,0 +1,193 @@
+{
+  "id": "monster.shambling-mound",
+  "name": "Shambling Mound",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "plant",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 110,
+      "formula": "13d10 + 39"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 20
+    },
+    "str": 18,
+    "dex": 8,
+    "con": 16,
+    "int": 5,
+    "wis": 10,
+    "cha": 5,
+    "skill": {
+      "stealth": "+3"
+    },
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 10,
+    "resist": [
+      "cold",
+      "fire"
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "conditionImmune": [
+      "deafened",
+      "exhaustion"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Lightning Absorption",
+        "entries": [
+          "Whenever the shambling mound is subjected to Lightning damage, it regains a number of {@variantrule Hit Points|SRD52} equal to the Lightning damage dealt."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The shambling mound makes three Charged Tendril attacks. It can replace one attack with a use of Engulf."
+        ]
+      },
+      {
+        "name": "Charged Tendril",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}7 ({@damage 1d6 + 4}) Bludgeoning damage plus 5 ({@damage 2d4}) Lightning damage. If the target is a Medium or smaller creature, the shambling mound pulls the target 5 feet straight toward itself."
+        ]
+      },
+      {
+        "name": "Engulf",
+        "entries": [
+          "{@actSave str} {@dc 15}, one Medium or smaller creature within 5 feet. {@actSaveFail} The target is pulled into the shambling mound's space and has the {@condition Grappled|SRD52} condition (escape {@dc 14}). Until the grapple ends, the target has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, and it takes 10 ({@damage 3d6}) Lightning damage at the start of each of its turns. When the shambling mound moves, the {@condition Grappled|SRD52} target moves with it, costing it no extra movement. The shambling mound can have only one creature {@condition Grappled|SRD52} by this action at a time."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "swamp"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/shambling-mound.opus"
+    },
+    "traitTags": [
+      "Damage Absorption"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "B",
+      "L"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled"
+    ],
+    "savingThrowForced": [
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Shambling Mound",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Shambling Mound",
+            "entries": [
+              "{@i Manifestation of Primeval Power}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Swamp|bestiary|environment=swamp}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Shambling mounds—also known as \"shamblers\"—embody the tenacity of the wilderness, seeking only to consume and grow. These masses of vegetation rise up to half again as tall as a human and possess thick limbs and a vague head. As they move through bogs and undergrowth, they ensnare creatures that come within reach. Shambling mounds bury those they catch within their own forms as compost.",
+              "Strange circumstances might give rise to shambling mounds, transforming vegetation into hulks with rudimentary cunning. Such conditions include strikes from magical lightning, nature defending itself, or druidic curses. Roll on or choose a result from the Shambling Mound Cultivation table to inspire a shambling mound's origins and features.",
+              {
+                "type": "table",
+                "caption": "Shambling Mound Cultivation",
+                "colLabels": [
+                  "1d6",
+                  "The Shambling Mound Is..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Covered in vibrant alien or Feywild blooms."
+                  ],
+                  [
+                    "2",
+                    "Hauling a rune-etched menhir in its torso."
+                  ],
+                  [
+                    "3",
+                    "Infested with vermin or fungi."
+                  ],
+                  [
+                    "4",
+                    "Made up of knotty vines entangling skeletons."
+                  ],
+                  [
+                    "5",
+                    "Mutated and leaking glowing pollution."
+                  ],
+                  [
+                    "6",
+                    "The remains of an ancient tree or a treant."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Shambling Mound.webp"
+            },
+            "credit": "Robson Michel",
+            "width": 2560,
+            "height": 1656
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
