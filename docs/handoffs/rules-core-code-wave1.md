@@ -7,7 +7,7 @@
 
 ## Requirement 1 — reviewed SHA + fingerprint, not the original pinned catalog
 
-`tools/deploy_native_core.py` currently hardcodes `FINGERPRINT = "870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6"`. That value reflects the original 35-entity catalog. The content wave expands the catalog to a verified **222** entities and exact native fingerprint **`46965599d7d37798823a7b416ff954ab99aac91a5a3432b6df4c5e1db06d2a3e`**, computed by `NativeCatalogLoader` in the content digest PR workflow. Continuing to require the original digest will correctly reject the update, but ignoring the check would be unsafe.
+`tools/deploy_native_core.py` currently hardcodes `FINGERPRINT = "870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6"`. That value reflects the original 35-entity catalog. The content wave expands the catalog to a verified **222** entities and exact native fingerprint **`b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32`**, computed by `NativeCatalogLoader` in the content digest PR workflow. Continuing to require the original digest will correctly reject the update, but ignoring the check would be unsafe.
 
 Implement a reviewed release input containing **(a) exact release Git SHA, (b) exact C# loader-computed native SHA-256 fingerprint, (c) content-review reference, and (d) rollback image/SHA**. Verify the image provenance against the reviewed release SHA and verify **both private and public ingress instances** loaded the exact approved fingerprint. Do not accept a runtime-generated fingerprint as approval by itself. A manifest containing the reviewed expectation is not a per-rule publication allowlist and must not relax native authority, signing/review or isolation checks.
 
@@ -45,3 +45,7 @@ Design an **explicit, access-controlled experimental content endpoint or reviewe
 6. Simulate failure/rollback or conduct controlled recovery test to the **prior content image** and its corresponding original fingerprint.
 
 These checks are separate from owner approval to **merge** and from owner approval to **deploy**.
+
+## Condition-description update (same review branch)
+
+Wave 1 now also adds human-readable summaries for Deafened, Frightened, Grappled, Poisoned and Restrained, plus stable-ID links in `rule.conditions`. This changes native catalog bytes and semantic fingerprint without changing 222 entity IDs or effect rules. The current approved-review *candidate* fingerprint is `b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32` (read-only C# loader workflow run 40984999799). Do not use the earlier Wave 1 fingerprint from review history. Existing authenticated private APIs should return all 30 selected condition records; no condition execution engine or new fallback may be enabled by this release. Preserve separate owner approval for the actual SHA and deployment.
