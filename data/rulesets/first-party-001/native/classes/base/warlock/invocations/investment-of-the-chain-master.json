@@ -7,7 +7,7 @@
   "requiredPact": "pact.warlock.chain",
   "repeatable": false,
   "cost": 1,
-  "description": "Use your Bonus Action to command the familiar's single allowed Attack action, instead of sacrificing an attack. Grant eligible 40-foot Fly or Swim Speed, switch some damage to Necrotic/Radiant, use Warlock save DCs, and give one damage instance Resistance by Reaction. Never double the commanded action.",
+  "description": "Your Bonus Action can command the familiar's one allowed Attack action instead of sacrificing an attack. Do not use both pathways for extra familiar actions. Choose a 40-foot Fly or Swim speed, preserving superior base speed. When it deals Bludgeoning, Piercing, or Slashing damage, you may replace that damage with Necrotic, Psychic, or Radiant. Its forced saves use your Warlock spell DC. When it takes damage, spend your Reaction to give it Resistance against that one damage instance. This does not add an Attack action or refill limited attacks.",
   "selectionStatus": "included-in-alpha-0.3.1",
   "rulesStatus": "selected-for-playtest"
 }

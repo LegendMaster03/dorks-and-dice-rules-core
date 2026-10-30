@@ -7,7 +7,8 @@
   "requiredPact": null,
   "repeatable": false,
   "cost": 1,
-  "description": "Cast Speak with Dead without a spell slot.",
+  "description": "You can cast Speak with Dead without expending a spell slot.",
   "selectionStatus": "included-in-alpha-0.3.1",
-  "rulesStatus": "selected-for-playtest"
+  "rulesStatus": "selected-for-playtest",
+  "rulesVersion": "5.5e"
 }

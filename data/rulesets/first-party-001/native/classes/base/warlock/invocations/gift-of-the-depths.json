@@ -7,7 +7,8 @@
   "requiredPact": null,
   "repeatable": false,
   "cost": 1,
-  "description": "Breathe underwater; gain Swim Speed equal to Speed. Cast Water Breathing without a slot once per Long Rest.",
+  "description": "You can breathe underwater, and you gain a Swim Speed equal to your Speed.\n\nYou can also cast Water Breathing once without expending a spell slot. You regain the ability to cast it in this way again when you finish a Long Rest.",
   "selectionStatus": "included-in-alpha-0.3.1",
-  "rulesStatus": "selected-for-playtest"
+  "rulesStatus": "selected-for-playtest",
+  "rulesVersion": "5.5e"
 }

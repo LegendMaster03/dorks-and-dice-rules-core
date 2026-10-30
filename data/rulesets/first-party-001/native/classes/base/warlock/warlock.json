@@ -12,7 +12,7 @@
     "alphaVersion": "0.3.1",
     "rulesStatus": "selected-for-playtest; subject-to-change",
     "playtestMode": "replaces-host-5e-or-5.5e-warlock",
-    "sourcePackage": "Dorks_and_Dice_Warlock_Alpha_Playtest_Packet.pdf (2026-10-25)",
+    "sourcePackage": "Dorks_and_Dice_Warlock_Alpha_0.3.1_Playtest_Revised.pdf (approved feedback revision, 2026-10-30)",
     "description": "A Patron supplies Warlock power, a Pact is the type or manifestation of its agreement, and Invocations are additional terms attached to that Pact. This selected modular design is under active testing alongside coherent native classes; it is not a source edition candidate or a finalized architecture decision.",
     "hitDie": {
       "number": 1,
@@ -58,7 +58,13 @@
         "pactSlots": 1,
         "pactSlotLevel": 1,
         "damageReduction": 0,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "relatedFeatures": [
+          {
+            "name": "Dark One's Blessing (Fiend)",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 2,
@@ -86,7 +92,13 @@
         "pactSlots": 2,
         "pactSlotLevel": 2,
         "damageReduction": 1,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "relatedFeatures": [
+          {
+            "name": "Fiend spell grants",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 4,
@@ -115,7 +127,13 @@
         "pactSlots": 2,
         "pactSlotLevel": 3,
         "damageReduction": 1,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "relatedFeatures": [
+          {
+            "name": "Fiend spell grants",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 6,
@@ -127,7 +145,13 @@
         "pactSlots": 2,
         "pactSlotLevel": 3,
         "damageReduction": 1,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "relatedFeatures": [
+          {
+            "name": "Dark One's Own Luck (Fiend)",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 7,
@@ -139,7 +163,16 @@
         "pactSlots": 2,
         "pactSlotLevel": 4,
         "damageReduction": 2,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "improvements": [
+          "Damage Reduction increases to 2."
+        ],
+        "relatedFeatures": [
+          {
+            "name": "Fiend spell grants",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 8,
@@ -153,7 +186,13 @@
         "pactSlots": 2,
         "pactSlotLevel": 4,
         "damageReduction": 2,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "relatedFeatures": [
+          {
+            "name": "Infernal Retaliation (Fiend)",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 9,
@@ -167,7 +206,13 @@
         "pactSlots": 2,
         "pactSlotLevel": 5,
         "damageReduction": 2,
-        "energyResistance": 0
+        "energyResistance": 0,
+        "relatedFeatures": [
+          {
+            "name": "Fiend spell grants",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 10,
@@ -195,7 +240,10 @@
         "pactSlots": 3,
         "pactSlotLevel": 5,
         "damageReduction": 3,
-        "energyResistance": 5
+        "energyResistance": 5,
+        "improvements": [
+          "Damage Reduction increases to 3."
+        ]
       },
       {
         "level": 12,
@@ -224,7 +272,13 @@
         "pactSlots": 3,
         "pactSlotLevel": 5,
         "damageReduction": 3,
-        "energyResistance": 5
+        "energyResistance": 5,
+        "relatedFeatures": [
+          {
+            "name": "Infernal Retaliation Improvement (Fiend)",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 14,
@@ -236,7 +290,13 @@
         "pactSlots": 3,
         "pactSlotLevel": 5,
         "damageReduction": 3,
-        "energyResistance": 5
+        "energyResistance": 5,
+        "relatedFeatures": [
+          {
+            "name": "Hurl Through Hell (Fiend)",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 15,
@@ -250,7 +310,10 @@
         "pactSlots": 3,
         "pactSlotLevel": 5,
         "damageReduction": 4,
-        "energyResistance": 5
+        "energyResistance": 5,
+        "improvements": [
+          "Damage Reduction increases to 4."
+        ]
       },
       {
         "level": 16,
@@ -290,7 +353,13 @@
         "pactSlots": 4,
         "pactSlotLevel": 5,
         "damageReduction": 4,
-        "energyResistance": 5
+        "energyResistance": 5,
+        "relatedFeatures": [
+          {
+            "name": "Infernal Retaliation Improvement (Fiend)",
+            "ruleId": "patron.warlock.fiend"
+          }
+        ]
       },
       {
         "level": 19,
@@ -304,7 +373,10 @@
         "pactSlots": 4,
         "pactSlotLevel": 5,
         "damageReduction": 5,
-        "energyResistance": 5
+        "energyResistance": 5,
+        "improvements": [
+          "Damage Reduction increases to 5."
+        ]
       },
       {
         "level": 20,
@@ -318,7 +390,10 @@
         "pactSlots": 4,
         "pactSlotLevel": 5,
         "damageReduction": 5,
-        "energyResistance": 10
+        "energyResistance": 10,
+        "improvements": [
+          "Energy Resistance increases to 10 for each of your two chosen damage types."
+        ]
       }
     ],
     "selectionRules": {
@@ -373,6 +448,11 @@
       "Infernal Retaliation tick timing and Hurl Through Hell slot recharge action cost are provisional.",
       "Alternative Invocation progressions are reference comparisons, not simultaneous grants.",
       "No Band 2 or automatic Epic Boon at level 19."
+    ],
+    "referenceNotes": [
+      "Use the host 5e or 5.5e origin, ability-score, starting equipment, feat, and leveling rules with these class traits. A Magic action uses your Action when playing in 5e.",
+      "Invocation totals exclude the free Pact. Cantrip totals exclude automatic Eldritch Blast and Pact grants. Spells known exclude automatic Patron, Pact, and Mystic Arcanum grants.",
+      "Related Fiend milestones below describe the current playtest Patron. They are not additional base-class grants and do not award those features twice."
     ]
   }
 }

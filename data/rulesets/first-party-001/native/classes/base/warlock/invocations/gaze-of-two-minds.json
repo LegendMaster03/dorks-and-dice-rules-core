@@ -7,7 +7,8 @@
   "requiredPact": null,
   "repeatable": false,
   "cost": 1,
-  "description": "Touch a willing creature as a Bonus Action to perceive through its senses until the end of your next turn. Maintain as a Bonus Action on the same plane; when within 60 feet, cast spells as if occupying your space or the creature's space.",
+  "description": "You can use a Bonus Action to touch a willing creature and perceive through its senses until the end of your next turn. As long as the creature is on the same plane of existence as you, you can take a Bonus Action on subsequent turns to maintain this connection, extending the duration until the end of your next turn. The connection ends if you do not maintain it in this way.\n\nWhile perceiving through the other creature's senses, you benefit from any special senses possessed by that creature, and you can cast spells as if you were in your space or the other creature's space if the two of you are within 60 feet of each other.",
   "selectionStatus": "included-in-alpha-0.3.1",
-  "rulesStatus": "selected-for-playtest"
+  "rulesStatus": "selected-for-playtest",
+  "rulesVersion": "5.5e"
 }
