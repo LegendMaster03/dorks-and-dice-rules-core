@@ -1,0 +1,220 @@
+{
+  "id": "monster.roper",
+  "name": "Roper",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "average": 93,
+      "formula": "11d10 + 33"
+    },
+    "speed": {
+      "walk": 10,
+      "climb": 20
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 18,
+    "dex": 8,
+    "con": 17,
+    "int": 7,
+    "wis": 16,
+    "cha": 6,
+    "skill": {
+      "perception": "+6",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 16,
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The roper can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the roper remains motionless, it is indistinguishable from a normal cave formation, such as a stalagmite."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The roper makes two Tentacle attacks, uses Reel, and makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}17 ({@damage 3d8 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Tentacle",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 60 ft. {@h}The target has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from one of six tentacles, and the target has the {@condition Poisoned|SRD52} condition until the grapple ends.",
+          "The tentacle can be damaged, freeing a creature it has {@condition Grappled|SRD52} when destroyed (AC 20, HP 10, {@variantrule Immunity|SRD52} to Poison and Psychic damage). Damaging the tentacle deals no damage to the roper, and a destroyed tentacle regrows at the start of the roper's next turn."
+        ]
+      },
+      {
+        "name": "Reel",
+        "entries": [
+          "The roper pulls each creature {@condition Grappled|SRD52} by it up to 30 feet straight toward it."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/roper.opus"
+    },
+    "traitTags": [
+      "Spider Climb"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack",
+      "Tentacles"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "poisoned"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Roper",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Roper",
+            "entries": [
+              "{@i Tentacled Subterranean Trapper}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Camouflaged as rock formations, ropers are aberrant ambushers that lurk in wait for smaller creatures. These bizarre subterranean hunters extend their rubbery tentacles to explore and prod their surroundings, often reaching beyond their fields of vision. Should they encounter prey, these limbs ensnare victims and drag them close to ropers' toothy maws. If these tentacles are severed, ropers rapidly grow replacements.",
+              "Ropers can move, albeit slowly. Crawling on the sticky cilia that cover their undersides, ropers can climb walls and suspend themselves from ceilings. These hunters often position themselves in unexpected or treacherous locations, using their surroundings to weaken their prey. Roll on or choose a result from the Roper Hazards table to inspire what dangers ropers employ when ambushing prey.",
+              {
+                "type": "table",
+                "caption": "Roper Hazards",
+                "colLabels": [
+                  "1d8",
+                  "The Roper Drags Prey Through..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Areas that trigger traps."
+                  ],
+                  [
+                    "2",
+                    "Caverns filled with smoke or gas."
+                  ],
+                  [
+                    "3",
+                    "{@book dead magic zone|SRD52|2|Dead Magic} or {@hazard Wild Magic Zone|SRD52|Wild Magic zones}."
+                  ],
+                  [
+                    "4",
+                    "The lair of a creature it is trying to bait out."
+                  ],
+                  [
+                    "5",
+                    "A nest of rats, insects, or other vermin."
+                  ],
+                  [
+                    "6",
+                    "Patches of brown mold* or green slime*."
+                  ],
+                  [
+                    "7",
+                    "Pools of magma or boiling water."
+                  ],
+                  [
+                    "8",
+                    "{@book razorvine|SRD51|5|Razorvine} or similar dangerous plants."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Rule 9: Never trust a stalagmite."
+                    ],
+                    "from": "X the Mystic's Rules of Dungeon Survival"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Roper.webp"
+            },
+            "credit": "Brian Valeza",
+            "width": 2048,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
