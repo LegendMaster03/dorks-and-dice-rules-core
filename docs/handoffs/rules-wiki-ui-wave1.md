@@ -27,6 +27,20 @@ Present the selected stat block with ordinary AC, HP, speed, attributes, ability
 
 Acceptance examples: Goblin Minion, Warrior and Boss appear as separate stat blocks; Hobgoblin Warrior retains Pack Tactics and Martial Advantage; Priest has its retained spellcasting effects; Aboleth and Lich display their legendary actions.
 
+## Existing native conditions — explicitly include in Wave 1 navigation
+
+The original catalog already contains **29** `condition` definitions and **one** `leveled-condition` (Exhaustion). These are settled, coherent rules ready for read-only Wiki review, not new imported source variants. The same content branch now includes complete descriptions for all 30 and repairs obsolete path references in `rule.conditions`.
+
+- List the condition entities identified in `rule.conditions.conditionIds`, linking each to the canonical ID. Index ordinary conditions and Exhaustion together while respecting the distinct `kind`.
+- Render the authored `description` and structured `effects` without fabricating executable outcomes. Preserve each `when` predicate, `appliesConditions` and `requiresConditions` relationship, `endsWhen` triggers, and `levelRules`/`levels` for Exhaustion.
+- Link `rule.defenses` and `rule.pin-and-held` when the selected condition refers to their mechanics. Do not mistake denials of positive Dexterity/dodge defense for automatically receiving the complete Flat-Footed condition, or repeat inherited penalties.
+- Preserve approved distinctions: Stunned has half Speed; Petrified does not necessarily remove awareness; Held differs from Pinned; Dazed differs from Incapacitated; Fatigued differs from Exhaustion; Shaken/Frightened/Panicked/Cowering have distinct effects; Wet retains its existing removal triggers.
+- Do not display deferred concepts (Confused, Staggered, Turned, historical 3.x Exhausted) as active conditions or imply automatic fear escalation. These remain research decisions, not missing client defaults.
+
+**Condition-specific acceptance:** All 30 linked identities have readable summaries, five newly authored summaries match their mechanical effect records, the six Exhaustion levels display cumulatively, condition dependencies are navigable without recursion or duplicate penalty application, and no condition viewer reads `working/` or public-unapproved data. The existing authenticated private reference API provides the native catalog; no new API is required solely to show these definitions. Verify access and entity detail behavior against the reviewed deployed SHA before concluding UI acceptance.
+
+Detailed content-level contract: `docs/content-promotion/conditions-readiness.md`.
+
 ## Warlock experimental A/B review
 
 The Warlock modular package is **not in the native catalog**. `docs/content-promotion/warlock-modular-alpha-0.3.1.md` and `data/reference/experiments/warlock-modular-alpha-0.3.1.json` define the selected test. A new Core Code project contract is required to serve it securely. Do **not** make the Wiki read `data/reference/` or `working/` as a runtime fallback.
