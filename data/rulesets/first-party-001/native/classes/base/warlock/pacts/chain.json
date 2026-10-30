@@ -1,0 +1,11 @@
+{
+  "id": "pact.warlock.chain",
+  "name": "Pact of the Chain",
+  "kind": "pact",
+  "parentClass": "class.warlock",
+  "availableAtWarlockLevel": 1,
+  "invocationCost": 0,
+  "description": "Know Find Familiar without spending an ordinary known-spell selection. Cast it as a Magic action without a slot while retaining components, or as a ritual. Use host statblocks for Imp, Pseudodragon, Quasit, Skeleton, Sphinx of Wonder, Sprite, Venomous Snake, or ordinary forms. Familiar shares initiative but takes its own turn. Forgo one of your attacks during your Attack action to command one familiar Attack action in that shared round.",
+  "deepenedAtLevel5": "The familiar's one commanded Attack action contains two attacks, not two Attack actions. Investment of the Chain Master may instead use the Warlock's Bonus Action to command this same action; the routes never stack.",
+  "rulesStatus": "selected-for-playtest"
+}

@@ -60,7 +60,7 @@ class NativeWorkingBoundaryTests(unittest.TestCase):
             native, dict(source, baselineStatus="pending-native-reconciliation"), working_path))
 
     def test_selected_warlock_may_supersede_preserved_source_candidates(self):
-        native_path = ROOT / "data/rulesets/first-party-001/native/classes/base/warlock.json"
+        native_path = ROOT / "data/rulesets/first-party-001/native/classes/base/warlock/warlock.json"
         source_path = ROOT / "data/rulesets/first-party-001/working/classes/base/warlock.json"
         native = json.loads(native_path.read_text(encoding="utf-8"))
         source = json.loads(source_path.read_text(encoding="utf-8"))

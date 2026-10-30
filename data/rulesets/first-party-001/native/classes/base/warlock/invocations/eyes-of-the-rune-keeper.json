@@ -1,0 +1,13 @@
+{
+  "id": "invocation.eyes-of-the-rune-keeper",
+  "name": "Eyes of the Rune Keeper",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 1,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "You can read all writing.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

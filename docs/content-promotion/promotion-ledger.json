@@ -54,7 +54,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/barbarian.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/barbarian/barbarian.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/barbarian.json",
         "reconciliation": "docs/rewrite/barbarian-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 25,
@@ -68,7 +68,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/bard.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/bard/bard.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/bard.json",
         "reconciliation": "docs/rewrite/bard-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 25,
@@ -82,7 +82,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/cleric.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/cleric/cleric.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/cleric.json",
         "reconciliation": "docs/rewrite/cleric-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 27,
@@ -96,7 +96,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/druid.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/druid/druid.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/druid.json",
         "reconciliation": "docs/rewrite/druid-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 22,
@@ -110,7 +110,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/rogue.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/rogue/rogue.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/rogue.json",
         "reconciliation": "docs/rewrite/rogue-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 28,
@@ -124,7 +124,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/sorcerer.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/sorcerer/sorcerer.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/sorcerer.json",
         "reconciliation": "docs/rewrite/sorcerer-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 18,
@@ -138,7 +138,7 @@
           1,
           20
         ],
-        "nativePath": "data/rulesets/first-party-001/native/classes/base/wizard.json",
+        "nativePath": "data/rulesets/first-party-001/native/classes/base/wizard/wizard.json",
         "sourcePath": "data/rulesets/first-party-001/working/classes/base/wizard.json",
         "reconciliation": "docs/rewrite/wizard-band-1-reconciliation.md",
         "selectedStandaloneFeatureCount": 16,

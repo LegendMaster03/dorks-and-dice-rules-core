@@ -1,0 +1,13 @@
+{
+  "id": "invocation.fiendish-vigor",
+  "name": "Fiendish Vigor",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 2,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast False Life on yourself without a slot; use its maximum temporary-hit-point die rather than rolling.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

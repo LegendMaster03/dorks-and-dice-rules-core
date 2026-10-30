@@ -1,0 +1,13 @@
+{
+  "id": "invocation.eldritch-smite",
+  "name": "Eldritch Smite",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 5,
+  "requiredPact": "pact.warlock.blade",
+  "repeatable": false,
+  "cost": 1,
+  "description": "Once per turn on a Pact-weapon hit, expend an actual Pact Magic slot for (1 + expended slot level)d8 additional Force damage, and optionally knock a Huge-or-smaller target Prone.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

@@ -52,7 +52,6 @@
           "class-feature.warlock.pact-choice",
           "class-feature.warlock.eldritch-invocations"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 1,
         "ordinaryCantripsKnown": 2,
         "ordinarySpellsKnown": 2,
@@ -67,7 +66,6 @@
         "featureGrants": [
           "class-feature.warlock.magical-cunning"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 2,
         "ordinaryCantripsKnown": 2,
         "ordinarySpellsKnown": 3,
@@ -81,9 +79,6 @@
         "proficiencyBonus": 2,
         "featureGrants": [
           "class-feature.warlock.damage-reduction"
-        ],
-        "fiendMilestones": [
-          "Fiend spell access"
         ],
         "invocationsElectiveTotal": 2,
         "ordinaryCantripsKnown": 2,
@@ -100,7 +95,6 @@
           "class-feature.warlock.ability-score-improvement",
           "class-feature.warlock.deceive-item"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 3,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 5,
@@ -115,9 +109,6 @@
         "featureGrants": [
           "class-feature.warlock.deepened-pact"
         ],
-        "fiendMilestones": [
-          "Fiend spell access"
-        ],
         "invocationsElectiveTotal": 4,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 6,
@@ -130,9 +121,6 @@
         "level": 6,
         "proficiencyBonus": 3,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Dark One's Own Luck"
-        ],
         "invocationsElectiveTotal": 4,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 7,
@@ -145,9 +133,6 @@
         "level": 7,
         "proficiencyBonus": 3,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Fiend spell access"
-        ],
         "invocationsElectiveTotal": 5,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 8,
@@ -160,9 +145,6 @@
         "level": 8,
         "proficiencyBonus": 3,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Infernal Retaliation"
-        ],
         "invocationsElectiveTotal": 5,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 9,
@@ -176,9 +158,6 @@
         "proficiencyBonus": 4,
         "featureGrants": [
           "class-feature.warlock.contact-patron"
-        ],
-        "fiendMilestones": [
-          "Fiend spell access"
         ],
         "invocationsElectiveTotal": 6,
         "ordinaryCantripsKnown": 3,
@@ -194,7 +173,6 @@
         "featureGrants": [
           "class-feature.warlock.energy-resistance"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 6,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 10,
@@ -209,7 +187,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-6"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 7,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 11,
@@ -224,7 +201,6 @@
         "featureGrants": [
           "class-feature.warlock.imbue-item"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 7,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 11,
@@ -239,9 +215,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-7"
         ],
-        "fiendMilestones": [
-          "Infernal Retaliation improvement"
-        ],
         "invocationsElectiveTotal": 8,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 12,
@@ -254,9 +227,6 @@
         "level": 14,
         "proficiencyBonus": 5,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Hurl Through Hell"
-        ],
         "invocationsElectiveTotal": 8,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 12,
@@ -271,7 +241,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-8"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 9,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 13,
@@ -284,7 +253,6 @@
         "level": 16,
         "proficiencyBonus": 5,
         "featureGrants": [],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 10,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 13,
@@ -299,7 +267,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-9"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 10,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 14,
@@ -312,9 +279,6 @@
         "level": 18,
         "proficiencyBonus": 6,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Infernal Retaliation improvement"
-        ],
         "invocationsElectiveTotal": 11,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 14,
@@ -327,7 +291,6 @@
         "level": 19,
         "proficiencyBonus": 6,
         "featureGrants": [],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 11,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 15,
@@ -342,7 +305,6 @@
         "featureGrants": [
           "class-feature.warlock.eldritch-master"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 12,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 15,
@@ -352,86 +314,21 @@
         "energyResistance": 10
       }
     ],
-    "pillarSystem": {
+    "selectionRules": {
       "patron": {
         "requiredAtWarlockLevel": 1,
-        "activePatronIds": [
-          "patron.warlock.fiend"
-        ],
-        "identityMayBeInheritedOrUnknown": true
+        "identityMayBeInheritedOrUnknown": true,
+        "playtestPatronId": "patron.warlock.fiend"
       },
       "pact": {
         "requiredAtWarlockLevel": 1,
         "firstChoiceFree": true,
-        "activePactIds": [
-          "pact.warlock.blade",
-          "pact.warlock.chain",
-          "pact.warlock.tome",
-          "pact.warlock.talisman"
-        ],
-        "grantAtLevel5": "class-feature.warlock.deepened-pact",
         "extraPacts": "out-of-scope"
       },
       "invocations": {
         "firstChoiceAtWarlockLevel": 1,
-        "acquisitionLevels": [
-          1,
-          2,
-          4,
-          5,
-          7,
-          9,
-          11,
-          13,
-          15,
-          16,
-          18,
-          20
-        ],
-        "level20Choices": 12,
-        "selectionCost": 1,
         "everyChoiceAttachedToOneActualPact": true,
         "patronAcceptanceRequired": true,
-        "activeInvocationIds": [
-          "invocation.agonizing-blast",
-          "invocation.armor-of-shadows",
-          "invocation.ascendant-step",
-          "invocation.beast-speech",
-          "invocation.beguiling-influence",
-          "invocation.bewitching-whispers",
-          "invocation.book-of-ancient-secrets",
-          "invocation.chains-of-carceri",
-          "invocation.devils-sight",
-          "invocation.devouring-blade",
-          "invocation.dreadful-word",
-          "invocation.eldritch-mind",
-          "invocation.eldritch-sight",
-          "invocation.eldritch-smite",
-          "invocation.eldritch-spear",
-          "invocation.eyes-of-the-rune-keeper",
-          "invocation.fiendish-vigor",
-          "invocation.gaze-of-two-minds",
-          "invocation.gift-of-the-depths",
-          "invocation.gift-of-the-protectors",
-          "invocation.investment-of-the-chain-master",
-          "invocation.lessons-of-the-first-ones",
-          "invocation.lifedrinker",
-          "invocation.mask-of-many-faces",
-          "invocation.master-of-myriad-forms",
-          "invocation.minions-of-chaos",
-          "invocation.mire-the-mind",
-          "invocation.misty-visions",
-          "invocation.one-with-shadows",
-          "invocation.otherworldly-leap",
-          "invocation.repelling-blast",
-          "invocation.sculptor-of-flesh",
-          "invocation.sign-of-ill-omen",
-          "invocation.thief-of-five-fates",
-          "invocation.visions-of-distant-realms",
-          "invocation.voice-of-the-chain-master",
-          "invocation.whispers-of-the-grave",
-          "invocation.witch-sight"
-        ],
         "severance": "suspend-without-refund",
         "replacement": "one-on-warlock-level-up"
       }
@@ -456,14 +353,11 @@
       "class-feature.warlock.mystic-arcanum-9",
       "class-feature.warlock.eldritch-master"
     ],
-    "fiendPatronId": "patron.warlock.fiend",
-    "invocationSourceVersions": "Use selected 5.5e shared Invocations and retained 5e-only Invocations from the playtest packet; no automatic double version grants.",
     "separateGrants": {
       "automaticEldritchBlast": true,
       "extraKnownCantripCost": 0,
       "pactMagicSlotsRecover": "short-or-long-rest",
-      "mysticArcanumSeparate": true,
-      "fiendSpellRosterAutomatic": true
+      "mysticArcanumSeparate": true
     },
     "limitations": [
       "The host 5e/5.5e rules supply spell details, equipment, feats, creatures and ordinary combat mechanics for this standalone alpha.",

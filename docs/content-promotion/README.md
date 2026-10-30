@@ -26,7 +26,7 @@ The selected Band 1 classes are Barbarian, Bard, Cleric, Druid, Rogue, Sorcerer 
 
 The representative monster records preserve existing source statistics, encounter actions, and family relations without inventing unresolved derived defenses or saving throws. All 30 conditions are selected native data with readable descriptions and chapter navigation; executable condition mechanics remain a separate responsibility. See [conditions-readiness.md](conditions-readiness.md).
 
-**Selected native experimental rules:** Modular Warlock Alpha 0.3.1 is now the authoritative current Warlock for playtesting in `native/classes/base/warlock.json`, with separate native features, Fiend Patron, four Pacts and selected Invocations. Its historical comparison record remains under `data/reference/experiments/` but is not runtime authority. All rules are subject to ongoing revision; native means selected coherent rule, not finalized ruleset.
+**Selected native experimental rules:** Modular Warlock Alpha 0.3.1 is now the authoritative current Warlock for playtesting in `native/classes/base/warlock/warlock.json`, with separately authored class-feature records and individual JSON records under its `patrons/`, `pacts/`, and `invocations/` directories. Its historical comparison record remains under `data/reference/experiments/` but is not runtime authority. All rules are subject to ongoing revision; native means selected coherent rule, not finalized ruleset.
 
 ## Permanent validation policy
 

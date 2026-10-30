@@ -1,0 +1,13 @@
+{
+  "id": "invocation.chains-of-carceri",
+  "name": "Chains of Carceri",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 15,
+  "requiredPact": "pact.warlock.chain",
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Hold Monster without slot or material components, but only on a Celestial, Fiend or Elemental. You may not attempt it on that same individual again until a Long Rest, including after a failed attempt.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

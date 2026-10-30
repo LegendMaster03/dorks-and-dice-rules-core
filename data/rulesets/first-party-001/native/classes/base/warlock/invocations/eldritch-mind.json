@@ -1,0 +1,13 @@
+{
+  "id": "invocation.eldritch-mind",
+  "name": "Eldritch Mind",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 1,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Gain Advantage on Constitution saving throws made to maintain Concentration.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

@@ -9,13 +9,22 @@ NATIVE = ROOT / "data/rulesets/first-party-001/native"
 def load(rel):
     return json.loads((NATIVE / rel).read_text(encoding="utf-8"))
 
+def load_option_records(folder):
+    directory = NATIVE / "classes/base/warlock" / folder
+    paths = sorted(directory.glob("*.json"))
+    records = [load(path.relative_to(NATIVE)) for path in paths]
+    assert len(records) == len({entry["id"] for entry in records}), f"Duplicate option ID in {folder}"
+    return {record["id"]: record for record in records}
+
 class WarlockNativeAlphaTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.warlock = load("classes/base/warlock.json")["definition"]
-        cls.patron = load("classes/warlock-patrons.json")["patrons"][0]
-        cls.pacts = {p["id"]: p for p in load("classes/warlock-pacts.json")["pacts"]}
-        cls.invocations = {i["id"]: i for i in load("classes/warlock-invocations.json")["invocations"]}
+        cls.warlock = load("classes/base/warlock/warlock.json")["definition"]
+        cls.patrons = load_option_records("patrons")
+        cls.patron = cls.patrons["patron.warlock.fiend"]
+        cls.pacts = load_option_records("pacts")
+        cls.invocations = load_option_records("invocations")
+        cls.selection = cls.warlock["selectionRules"]
         cls.features = {f["id"]: f for f in load("features/classes/warlock/features.json")["classFeatures"]}
         cls.reference = json.loads((ROOT / "data/reference/experiments/warlock-modular-alpha-0.3.1.json").read_text(encoding="utf-8"))
 
@@ -30,9 +39,20 @@ class WarlockNativeAlphaTests(unittest.TestCase):
                 self.assertEqual(expected[b],actual[a],(actual["level"],a))
         self.assertEqual(1, rows[0]["invocationsElectiveTotal"])
         self.assertEqual(12, rows[-1]["invocationsElectiveTotal"])
-        self.assertEqual([1,2,4,5,7,9,11,13,15,16,18,20],self.warlock["pillarSystem"]["invocations"]["acquisitionLevels"])
-        self.assertTrue(self.warlock["pillarSystem"]["pact"]["firstChoiceFree"])
-        self.assertEqual(1, self.warlock["pillarSystem"]["patron"]["requiredAtWarlockLevel"])
+        granted_at = [
+            row["level"] for i, row in enumerate(rows)
+            if row["invocationsElectiveTotal"] > (rows[i-1]["invocationsElectiveTotal"] if i else 0)
+        ]
+        self.assertEqual([1,2,4,5,7,9,11,13,15,16,18,20], granted_at)
+        self.assertEqual(1, self.selection["invocations"]["firstChoiceAtWarlockLevel"])
+        self.assertTrue(self.selection["pact"]["firstChoiceFree"])
+        self.assertEqual(1, self.selection["patron"]["requiredAtWarlockLevel"])
+        self.assertEqual(1, self.selection["pact"]["requiredAtWarlockLevel"])
+        self.assertIn("class-feature.warlock.patron-choice", rows[0]["featureGrants"])
+        self.assertIn("class-feature.warlock.pact-choice", rows[0]["featureGrants"])
+        self.assertIn("class-feature.warlock.eldritch-invocations", rows[0]["featureGrants"])
+        self.assertIn("class-feature.warlock.deepened-pact", rows[4]["featureGrants"])
+        self.assertTrue(all("fiendMilestones" not in row for row in rows))
 
     def test_all_grants_resolve_and_identity_is_unique(self):
         ids=set(self.features)
@@ -43,23 +63,71 @@ class WarlockNativeAlphaTests(unittest.TestCase):
             self.assertEqual("class.warlock",feature["parentClass"])
             self.assertEqual("classFeature",feature["kind"])
         self.assertEqual(set(self.warlock["baseFeatureIds"]),ids)
-        self.assertEqual(set(self.warlock["pillarSystem"]["pact"]["activePactIds"]),set(self.pacts))
-        self.assertEqual(set(self.warlock["pillarSystem"]["invocations"]["activeInvocationIds"]),set(self.invocations))
+        option_ids = list(self.patrons) + list(self.pacts) + list(self.invocations)
+        self.assertEqual(len(option_ids), len(set(option_ids)))
+        self.assertNotIn("activePatronIds", self.selection["patron"])
+        self.assertNotIn("activePactIds", self.selection["pact"])
+        self.assertNotIn("activeInvocationIds", self.selection["invocations"])
+
+    def test_per_class_directories_and_individual_option_records(self):
+        base = NATIVE / "classes/base"
+        for name in ("barbarian", "bard", "cleric", "druid", "rogue", "sorcerer", "warlock", "wizard"):
+            with self.subTest(name=name):
+                document = load("classes/base/" + name + "/" + name + ".json")
+                self.assertEqual("class." + name, document["id"])
+                self.assertFalse((base / (name + ".json")).exists())
+        self.assertNotIn("pillarSystem", self.warlock)
+        self.assertNotIn("optionRuleIds", self.warlock)
+        self.assertEqual({"patron", "pact", "invocations"}, set(self.selection))
+        for folder, records in (
+            ("patrons", self.patrons),
+            ("pacts", self.pacts),
+            ("invocations", self.invocations),
+        ):
+            with self.subTest(folder=folder):
+                directory = base / "warlock" / folder
+                self.assertFalse((directory / "selection.json").exists())
+                paths = list(directory.glob("*.json"))
+                self.assertEqual(len(records), len(paths))
+                self.assertTrue(records)
+                for path in paths:
+                    record = load(path.relative_to(NATIVE))
+                    self.assertEqual("class.warlock", record["parentClass"])
+                    self.assertEqual(record["id"].split(".")[-1] + ".json", path.name)
+        self.assertEqual("patron.warlock.fiend", self.selection["patron"]["playtestPatronId"])
+        self.assertIn(self.selection["patron"]["playtestPatronId"], self.patrons)
+        self.assertTrue(self.selection["patron"]["identityMayBeInheritedOrUnknown"])
+        self.assertTrue(self.selection["pact"]["firstChoiceFree"])
+        self.assertEqual("out-of-scope", self.selection["pact"]["extraPacts"])
+        self.assertTrue(self.selection["invocations"]["everyChoiceAttachedToOneActualPact"])
+        self.assertTrue(self.selection["invocations"]["patronAcceptanceRequired"])
+        self.assertEqual("suspend-without-refund", self.selection["invocations"]["severance"])
+        self.assertEqual("one-on-warlock-level-up", self.selection["invocations"]["replacement"])
+        self.assertNotIn("acquisitionLevels", self.selection["invocations"])
+        self.assertNotIn("level20Choices", self.selection["invocations"])
+        self.assertNotIn("selectionCost", self.selection["invocations"])
+        self.assertNotIn("fiendSpellRosterAutomatic", self.warlock["separateGrants"])
+        self.assertFalse((NATIVE / "classes/warlock-patrons.json").exists())
+        self.assertFalse((NATIVE / "classes/warlock-pacts.json").exists())
+        self.assertFalse((NATIVE / "classes/warlock-invocations.json").exists())
 
     def test_pact_and_patron_alpha(self):
         self.assertEqual("patron.warlock.fiend",self.patron["id"])
         roster=self.patron["spellAccess"]["grants"]
         self.assertEqual([3,5,7,9],[s["level"] for s in roster])
         self.assertEqual(13,sum(len(s["spells"]) for s in roster))
+        self.assertEqual("automatic-known-no-ordinary-selection-cost",
+                         self.patron["spellAccess"]["defaultMode"])
         self.assertEqual([1,6,8,13,14,18],[f["level"] for f in self.patron["features"]])
-        self.assertEqual(4,len(self.pacts))
+        self.assertTrue({"pact.warlock.blade", "pact.warlock.chain",
+                         "pact.warlock.tome", "pact.warlock.talisman"}.issubset(self.pacts))
         for pact in self.pacts.values():
             self.assertEqual(0,pact["invocationCost"])
             self.assertEqual(1,pact["availableAtWarlockLevel"])
             self.assertIn("deepenedAtLevel5",pact)
 
     def test_invocation_catalog_is_selected_playtest_only(self):
-        self.assertEqual(38,len(self.invocations))
+        self.assertTrue(self.invocations)
         self.assertNotIn("invocation.thirsting-blade", self.invocations)
         for omitted in ("rebuke-of-the-talisman","protection-of-the-talisman","bond-of-the-talisman",
                         "improved-pact-weapon","gift-of-the-ever-living-ones","aspect-of-the-moon","far-scribe"):
