@@ -36,7 +36,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.release_sha }}
-          persist-credentials: false
       - name: Require the explicitly reviewed current main commit
         shell: bash
         run: |
