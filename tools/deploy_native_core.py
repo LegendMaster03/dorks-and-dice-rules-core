@@ -61,6 +61,12 @@ def require_catalog_fingerprint(log, expected):
     require(bool(observed) and all(value == expected for value in observed),
             "Catalog fingerprint mismatch")
 
+def require_image_provenance(image, sha):
+    require(image["Config"].get("User") not in (None, "", "root", "0"),
+            "Release image must be unprivileged")
+    require(image["Config"].get("Labels", {}).get("org.opencontainers.image.revision") == sha,
+            "Release image commit label does not match the reviewed SHA")
+
 def release_config():
     sha = os.environ.get("RELEASE_SHA", "")
     require(bool(re.fullmatch(r"[0-9a-f]{40}", sha)), "RELEASE_SHA must be an exact commit")
@@ -136,9 +142,7 @@ def deploy():
     image, env, compose, pair, control = preflight()
     built = inspect("image", image)
     image_id = built["Id"]
-    require(built["Config"].get("User") not in (None, "", "root", "0"), "Release image must be unprivileged")
-    require(built["Config"].get("Labels", {}).get("org.opencontainers.image.revision") == os.environ["RELEASE_SHA"],
-            "Release image commit label does not match the reviewed SHA")
+    require_image_provenance(built, os.environ["RELEASE_SHA"])
     try:
         # Never remove orphans, recreate databases or touch another Compose project.
         command(*compose, "up", "-d", "--no-build", "--no-deps", "rules-core-public", "rules-core-private", env=env)
