@@ -57,7 +57,7 @@ def reviewed_fingerprint():
     return value
 
 def require_catalog_fingerprint(log, expected):
-    observed = re.findall(r"\\bfingerprint ([0-9a-f]{64})\\b", log)
+    observed = re.findall(r"\bfingerprint ([0-9a-f]{64})\b", log)
     require(bool(observed) and all(value == expected for value in observed),
             "Catalog fingerprint mismatch")
 
