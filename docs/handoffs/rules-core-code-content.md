@@ -1,21 +1,26 @@
-# Rules Core Code Rewrite handoff — ongoing content content release and experiment separation
+# Rules Core Code Rewrite handoff — continuous content releases and experiment separation
 
 **Owning project:** Rules Core Code Rewrite (not Rules Content)  
 **Base content PR:** `content/coherent-rule-promotion-wave-1` targeting latest `main`  
 **Ruleset:** `first-party-001`  
-**Status:** **Handoff only. No Core Code changes or deployment authorized by the present content PR.**
+**Status:** Native release plumbing updated on the review branch; no merge or deployment authorized.
 
-## Requirement 1 — reviewed SHA + fingerprint, not the original pinned catalog
+## Release workflow — implemented pending reviewed merge
 
-`tools/deploy_native_core.py` currently hardcodes `FINGERPRINT = "870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6"`. That value reflects the original 35-entity catalog. The reviewed content snapshot expands the catalog to a verified **222** entities and exact native fingerprint **`b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32`**, computed by `NativeCatalogLoader` in the content digest PR workflow. Continuing to require the original digest will correctly reject the update, but ignoring the check would be unsafe.
+The old implementation pinned the original 35-record fingerprint in `tools/deploy_native_core.py`. Content changes made that value stale. **The release no longer maintains fingerprint constants.**
 
-Implement a reviewed release input containing **(a) exact release Git SHA, (b) exact C# loader-computed native SHA-256 fingerprint, (c) content-review reference, and (d) rollback image/SHA**. Verify the image provenance against the reviewed release SHA and verify **both private and public ingress instances** loaded the exact approved fingerprint. Do not accept a runtime-generated fingerprint as approval by itself. A manifest containing the reviewed expectation is not a per-rule publication allowlist and must not relax native authority, signing/review or isolation checks.
+- `.github/workflows/deploy.yml` is now **manual** (`workflow_dispatch`), taking the exact 40-character `release_sha` and `review_reference`. A normal merge does not trigger deployment.
+- The workflow requires `main` at exactly that SHA and an explicitly successful **main-push** CI run for that same commit, rather than treating a green PR run as sufficient.
+- It calculates the semantic fingerprint using `NativeCatalogLoader` against that checked-out reviewed SHA, injects the result into the deployment environment, and requires a full 64-character lowercase digest.
+- `tools/deploy_native_core.py` verifies both public and private ingress containers have the reviewed fingerprint; a missing or different value fails closed. A built image is accepted only with a matching reviewed commit label and an unprivileged runtime user.
+- Existing network isolation, no-host-port/no-volume rules, public-distribution denial by default, readiness probes and failure withdrawal remain unchanged.
+- The prior release image/tag is not deleted. Existing withdrawal stops the failed replacement; **automatic restoration of the previous image is not implemented**. Operator recovery must be tested for a production release.
 
-Affected components: `tools/deploy_native_core.py`, release workflow(s) invoking it, `src/RulesCore.Content/NativeCatalogLoader.cs` (digest source, should not change solely for this task), `src/RulesCore.Host/NativeReferenceEndpoints.cs` (private fingerprint/readiness), public-distribution policy and configuration. Preserve commit-pinned image reuse, no image-building during deploy, controlled network membership and rollback safety.
+This mechanism makes the *approved commit* the release selector and the derived fingerprint the integrity check. A changed native JSON document automatically produces a changed expected digest. The deployment step cannot approve an arbitrary image by merely reading its own logs.
 
-**Acceptance criteria:** old fingerprint does not authorize updated content; reviewed SHA+new fingerprint passes; mismatched fingerprint fails closed before or during readiness verification; both ingress containers agree; missing/corrupt native fails with no `working/` fallback; prior image is recoverable without restoring any obsolete runtime. No deployment without owner authorization.
+**Required operational review before first use:** Confirm the self-hosted deploy runner can reach GitHub Actions API with `actions: read`, install/use .NET 10 via setup-dotnet, resolve `main` with authenticated checkout, and access the existing protected Docker host networks. A dry-run/host preflight is not evidence that live Wiki authentication or full rollback was validated.
 
-## Requirement 2 — dynamic native content tests (completed on the content branch)
+## Native content tests — completed
 
 `tests/RulesCore.Host.Tests/NativeCatalogTests.cs`, `tests/NativeCatalogFingerprint/Program.cs` and the Docker API smoke test now derive entity counts and category facets from the current catalog, rather than the initial 35-record dataset. The persistent test contract covers successful loading, exact identity uniqueness, paging, references, fingerprint format, failed invalid input and no `working/` fallback. Future valid content additions/removals must not require changing source-code counts.
 
@@ -46,6 +51,6 @@ Design an **explicit, access-controlled experimental content endpoint or reviewe
 
 These checks are separate from owner approval to **merge** and from owner approval to **deploy**.
 
-## Condition-description update (same review branch)
+## Condition descriptions in the current catalog
 
-continuous content now also adds human-readable summaries for Deafened, Frightened, Grappled, Poisoned and Restrained, plus stable-ID links in `rule.conditions`. This changes native catalog bytes and semantic fingerprint without changing 222 entity IDs or effect rules. The current approved-review *candidate* fingerprint is `b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32` (read-only C# loader workflow run 40984999799). Do not use the earlier continuous content fingerprint from review history. Existing authenticated private APIs should return all 30 selected condition records; no condition execution engine or new fallback may be enabled by this release. Preserve separate owner approval for the actual SHA and deployment.
+The selected catalog also adds human-readable summaries for Deafened, Frightened, Grappled, Poisoned and Restrained, plus stable-ID links in `rule.conditions`. This changes native catalog bytes and semantic fingerprint without changing 222 entity IDs or effect rules. The current approved-review *candidate* fingerprint is `b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32` (read-only C# loader workflow run 40984999799). Do not use the previous catalog fingerprint from review history. Existing authenticated private APIs should return all 30 selected condition records; no condition execution engine or new fallback may be enabled by this release. Preserve separate owner approval for the actual SHA and deployment.
