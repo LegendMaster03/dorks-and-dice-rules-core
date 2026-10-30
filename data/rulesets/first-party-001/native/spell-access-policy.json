@@ -1,0 +1,28 @@
+{
+  "id": "rule.spell-access-policy",
+  "name": "Spell preparation and optional Open Spell Access",
+  "kind": "rule",
+  "rulesStatus": "selected-native-rule; active-design",
+  "category": "magic",
+  "dailySpellPreparation": {
+    "required": false,
+    "rule": "A spellcaster does not select a daily prepared subset of spells they are otherwise allowed to know or access."
+  },
+  "openSpellAccess": {
+    "optional": true,
+    "scope": "GM/campaign",
+    "whenEnabled": "A spellcaster can cast any spell or cantrip on that character's own eligible class spell list at a spell level the class grants, without separately learning, recording or selecting that spell.",
+    "whenDisabled": "Finite native spells-known progressions and class-specific eligible full-list entitlements still apply; daily preparation remains eliminated.",
+    "noOffListSpells": true,
+    "noAdditionalSlotsOrPoints": true,
+    "noAdditionalCastingActions": true,
+    "noAutomaticMetamagic": true
+  },
+  "resourceSeparation": {
+    "casting": "Spell slots and optional spell points are alternative spell expenditure profiles, not additive resources.",
+    "classResources": "Sorcery Points and other class-specific feature resources remain separately tracked."
+  },
+  "unresolved": [
+    "Shared spell-point runtime integration and class-specific source conversion exceptions."
+  ]
+}
