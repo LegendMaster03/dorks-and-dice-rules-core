@@ -1,0 +1,193 @@
+{
+  "id": "monster.mage",
+  "name": "Mage",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "wizard"
+      ]
+    },
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 81,
+      "formula": "18d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 9,
+    "dex": 14,
+    "con": 11,
+    "int": 17,
+    "wis": 12,
+    "cha": 11,
+    "save": {
+      "int": "+6",
+      "wis": "+4"
+    },
+    "skill": {
+      "arcana": "+6",
+      "history": "+6",
+      "perception": "+4"
+    },
+    "passive": 14,
+    "languages": [
+      "Common plus three other languages"
+    ],
+    "cr": "6",
+    "gear": [
+      "wand|srd52"
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mage casts one of the following spells, using Intelligence as the spellcasting ability (spell save {@dc 14}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Light|SRD52}",
+          "{@spell Mage Armor|SRD52} (included in AC)",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Prestidigitation|SRD52}"
+        ],
+        "daily": {
+          "2e": [
+            "{@spell Fireball|SRD52} (level 4 version)",
+            "{@spell Invisibility|SRD52}"
+          ],
+          "1e": [
+            "{@spell Cone of Cold|SRD52}",
+            "{@spell Fly|SRD52}"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "action"
+      },
+      {
+        "name": "Misty Step (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mage casts {@spell Misty Step|SRD52}, using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "3": [
+            "{@spell Misty Step|SRD52}"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      },
+      {
+        "name": "Protective Magic (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mage casts {@spell Counterspell|SRD52} or {@spell Shield|SRD52} in response to the spell's trigger, using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "3": [
+            "{@spell Counterspell|SRD52}",
+            "{@spell Shield|SRD52}"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "reaction",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The mage makes three Arcane Burst attacks."
+        ]
+      },
+      {
+        "name": "Arcane Burst",
+        "entries": [
+          "{@atkr m,r} {@hit 6}, reach 5 ft. or range 120 ft. {@h}16 ({@damage 3d8 + 3}) Force damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "arcana",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/mage.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "O"
+    ],
+    "damageTagsSpell": [
+      "C",
+      "F"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA"
+    ],
+    "conditionInflictSpell": [
+      "invisible"
+    ],
+    "savingThrowForcedSpell": [
+      "constitution",
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Mage",
+        "_copy": {
+          "name": "Mages",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Mages are accomplished spellcasters whose lives have been shaped by magic. They can use their powers to defend or dominate other creatures, or they could focus on magical research and unlocking mystical secrets."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

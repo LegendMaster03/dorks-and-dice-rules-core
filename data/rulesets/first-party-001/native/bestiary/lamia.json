@@ -1,0 +1,226 @@
+{
+  "id": "monster.lamia",
+  "name": "Lamia",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 97,
+      "formula": "13d10 + 26"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 16,
+    "dex": 13,
+    "con": 15,
+    "int": 14,
+    "wis": 15,
+    "cha": 16,
+    "skill": {
+      "deception": "+7",
+      "insight": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Abyssal",
+      "Common"
+    ],
+    "cr": "4",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The lamia casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 13}):"
+        ],
+        "will": [
+          "{@spell Disguise Self|SRD52} (can appear as a Large or Medium biped)",
+          "{@spell Minor Illusion|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Geas|SRD52}",
+            "{@spell Major Image|SRD52}",
+            "{@spell Scrying|SRD52}"
+          ],
+          "3e": [
+            "{@spell charm person}",
+            "{@spell mirror image}",
+            "{@spell suggestion}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The lamia makes two Claw attacks. It can replace one attack with a use of Corrupting Touch."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Slashing damage plus 7 ({@damage 2d6}) Psychic damage."
+        ]
+      },
+      {
+        "name": "Corrupting Touch",
+        "entries": [
+          "{@actSave wis} {@dc 13}, one creature the lamia can see within 5 feet. {@actSaveFail} 13 ({@damage 3d8}) Psychic damage, and the target is cursed for 1 hour. Until the curse ends, the target has the {@condition Charmed|SRD52} and {@condition Poisoned|SRD52} conditions."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Leap",
+        "entries": [
+          "The lamia jumps up to 30 feet by spending 10 feet of movement."
+        ]
+      }
+    ],
+    "environment": [
+      "desert"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/lamia.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AB",
+      "C"
+    ],
+    "damageTags": [
+      "S",
+      "Y"
+    ],
+    "damageTagsSpell": [
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflictSpell": [
+      "charmed"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Lamia",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Lamia",
+            "entries": [
+              "{@i Accursed Bargainer and Ruin Raider}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Arcana"
+                  }
+                ]
+              },
+              "Legends say the first lamia was an ambitious ruler who made a sinister bargain with the demon lord Graz'zt for everlasting majesty. As a consequence, the ruler was transformed into a lamia, a monster with the body of a lion and an accursed touch.",
+              "Lamias either are descendants of that first lamia or have made similar deals. They often dwell near ruins, seeking mysterious magic they can use to gain riches and influence. Lamias use magical illusions and enchantments to trick others into serving them. They sometimes work with bandits to abduct travelers, releasing captives only if they accept a dangerous bargain. Roll on or choose a result from the Lamia Pacts table to inspire a lamia's desires.",
+              {
+                "type": "table",
+                "caption": "Lamia Pacts",
+                "colLabels": [
+                  "1d6",
+                  "The Lamia Compels the Bargainer To..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Bring it a possession from a ruler or noble."
+                  ],
+                  [
+                    "2",
+                    "Create a map of a dungeon or ruin."
+                  ],
+                  [
+                    "3",
+                    "Escort it through a nearby community's gate."
+                  ],
+                  [
+                    "4",
+                    "Place a strange idol in a specific site or home."
+                  ],
+                  [
+                    "5",
+                    "Remove a magic item's curse, then return it."
+                  ],
+                  [
+                    "6",
+                    "Slay a monster and retrieve a specific organ."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Lamia.webp"
+            },
+            "credit": "Viko Menezes",
+            "width": 2550,
+            "height": 1650
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
