@@ -1,0 +1,138 @@
+{
+  "id": "monster.hill-giant",
+  "name": "Hill Giant",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 105,
+      "formula": "10d12 + 40"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 21,
+    "dex": 8,
+    "con": 19,
+    "int": 5,
+    "wis": 9,
+    "cha": 6,
+    "skill": {
+      "perception": "+2"
+    },
+    "passive": 12,
+    "languages": [
+      "Giant"
+    ],
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Tree Club or Trash Lob in any combination."
+        ]
+      },
+      {
+        "name": "Tree Club",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}18 ({@damage 3d8 + 5}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Trash Lob",
+        "entries": [
+          "{@atkr r} {@hit 8}, range 60/240 ft. {@h}16 ({@damage 2d10 + 5}) Bludgeoning damage, and the target has the {@condition Poisoned|SRD52} condition until the end of its next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "hill"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/hill-giant.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "GI"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "poisoned",
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Hill Giant",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Hill Giant",
+            "entries": [
+              "{@i Giant of Crags and Valleys}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Hill|bestiary|environment=hill}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Hill giants live among rugged bluffs and highlands. Standing three times the size of most humans, these giants exhibit skin and hair in a range of shades, including hues suggestive of the earth and mosses near their dwellings.",
+              "Among hidden valleys, pristine waterfalls, and game-filled slopes, hill giants usually find their needs met by nature's bounty. What the wilderness doesn't provide, hill giants make, crafting clothes, tools, and weapons from rocks, wood, and hides. When they encounter strangers, hill giants might be suspicious and protective of their territories, but some might be convinced to share their bounties with travelers willing to entertain them.",
+              "Disaster, invasion, or want might drive hill giants from their homes into other people's lands. Some displaced hill giants might steal what they need or seek revenge for their losses by causing ruin among smaller beings. Others might take up lives of raiding or serve other giants in return for protection."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Hill Giant.webp"
+            },
+            "credit": "Johan Grenier",
+            "width": 2500,
+            "height": 1809
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

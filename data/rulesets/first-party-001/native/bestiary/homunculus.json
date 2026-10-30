@@ -1,0 +1,187 @@
+{
+  "id": "monster.homunculus",
+  "name": "Homunculus",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "construct",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 4,
+      "formula": "1d4 + 2"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 4,
+    "dex": 15,
+    "con": 14,
+    "int": 10,
+    "wis": 10,
+    "cha": 7,
+    "save": {
+      "wis": "+2",
+      "cha": "+0"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Telepathic Bond",
+        "entries": [
+          "While the homunculus is on the same plane of existence as its master, the two of them can communicate telepathically with each other."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage, and the target is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the end of the homunculus's next turn. {@actSaveFailBy 5} The target has the {@condition Poisoned|SRD52} condition for 1 minute. While {@condition Poisoned|SRD52}, the target has the {@condition Unconscious|SRD52} condition, which ends early if the target takes any damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/homunculus.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "poisoned",
+      "unconscious"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Homunculus",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Homunculus",
+            "entries": [
+              "{@i Winged Servant Given Magical Life}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "A mage can create a cat-sized, obedient assistant called a homunculus through a ritual that uses the mage's blood. Each homunculus shares a telepathic bond with the mage who created it and loyally serves its creator. A homunculus is reduced to inert material if its creator dies.",
+              "A homunculus's appearance reflects its creator's tastes. Roll on or choose a result from the Homunculus Features table to inspire a homunculus's form.",
+              {
+                "type": "table",
+                "caption": "Homunculus Features",
+                "colLabels": [
+                  "1d8",
+                  "The Homunculus Has Features That Are..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Bat-like with tattered wings."
+                  ],
+                  [
+                    "2",
+                    "Made of soft metal and delicate gears."
+                  ],
+                  [
+                    "3",
+                    "Marked with its creator's symbol."
+                  ],
+                  [
+                    "4",
+                    "Similar to those of a winged humanoid."
+                  ],
+                  [
+                    "5",
+                    "Sprouting flowers and leaves."
+                  ],
+                  [
+                    "6",
+                    "Suggestive of its creator's appearance."
+                  ],
+                  [
+                    "7",
+                    "Underdeveloped and fleshy with beady eyes."
+                  ],
+                  [
+                    "8",
+                    "Woven and patchwork, like a well-loved toy."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Homunculus.webp"
+            },
+            "title": "Homunculi are as varied as the magic-users who create them",
+            "credit": "Taras Susak",
+            "width": 1094,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
