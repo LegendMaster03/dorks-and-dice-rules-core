@@ -1,0 +1,112 @@
+{
+  "id": "monster.dire-wolf",
+  "name": "Dire Wolf",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "3d10 + 6"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 17,
+    "dex": 15,
+    "con": 15,
+    "int": 3,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+5",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The wolf has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Keen Hearing and Smell",
+        "entries": [
+          "The wolf has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}8 ({@damage 1d10 + 3}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "hill"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/dire-wolf.opus"
+    },
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Dire Wolf",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Dire Wolf.webp"
+                  },
+                  "credit": "Borja Pindado",
+                  "width": 1066,
+                  "height": 783
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

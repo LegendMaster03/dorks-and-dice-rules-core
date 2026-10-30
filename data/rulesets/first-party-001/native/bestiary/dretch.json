@@ -1,0 +1,122 @@
+{
+  "id": "monster.dretch",
+  "name": "Dretch",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Demons"
+    ],
+    "size": [
+      "S"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 18,
+      "formula": "4d6 + 4"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 12,
+    "dex": 11,
+    "con": 12,
+    "int": 5,
+    "wis": 8,
+    "cha": 3,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "resist": [
+      "cold",
+      "fire",
+      "lightning"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Abyssal; telepathy 60 ft. (works only with creatures that understand Abyssal)"
+    ],
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Fetid Cloud (1/Day)",
+        "entries": [
+          "{@actSave con} {@dc 11}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the dretch. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the end of its next turn. While {@condition Poisoned|SRD52}, the creature can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both, and it can't take Reactions."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, abyss"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/dretch.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "AB",
+      "TP"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Dretch",
+        "_copy": {
+          "name": "Dretches",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Lone dretches serve other demons or evil magic-users. They are erratic, filthy, and violent, and they demonstrate little sense of self-preservation."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
