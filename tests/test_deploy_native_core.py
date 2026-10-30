@@ -84,6 +84,17 @@ class DeploymentBoundaryTests(unittest.TestCase):
             with self.subTest(image=bad), self.assertRaises(RuntimeError):
                 release.require_image_provenance(bad, sha)
 
+    def test_release_workflow_does_not_auto_deploy_on_merge(self):
+        workflow = (Path(__file__).parents[1] / ".github/workflows/deploy.yml"
+                    ).read_text(encoding="utf-8")
+        self.assertIn("  workflow_dispatch:", workflow)
+        self.assertNotIn("  workflow_run:", workflow)
+        self.assertIn("release_sha:", workflow)
+        self.assertIn("review_reference:", workflow)
+        self.assertIn("Matching main CI succeeded for reviewed SHA", workflow)
+        self.assertIn("RULES_CORE_EXPECTED_FINGERPRINT=", workflow)
+        self.assertIn("org.opencontainers.image.revision=$RELEASE_SHA", workflow)
+
     def test_unknown_private_peer_is_rejected(self):
         with self.assertRaises(RuntimeError):
             release.validate_members("pair",{"Containers":{"1":{"Name":"unrelated"}}},{release.PRIVATE,release.WIKI})
