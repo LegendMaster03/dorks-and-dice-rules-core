@@ -84,16 +84,81 @@ class DeploymentBoundaryTests(unittest.TestCase):
             with self.subTest(image=bad), self.assertRaises(RuntimeError):
                 release.require_image_provenance(bad, sha)
 
-    def test_release_workflow_does_not_auto_deploy_on_merge(self):
+    def test_release_workflow_is_one_click_choice_not_text_inputs(self):
         workflow = (Path(__file__).parents[1] / ".github/workflows/deploy.yml"
                     ).read_text(encoding="utf-8")
         self.assertIn("  workflow_dispatch:", workflow)
         self.assertNotIn("  workflow_run:", workflow)
-        self.assertIn("release_sha:", workflow)
-        self.assertIn("review_reference:", workflow)
+        self.assertIn("deployment_type:", workflow)
+        self.assertIn("type: choice", workflow)
+        self.assertIn("- Content update", workflow)
+        self.assertIn("- Full deploy", workflow)
+        self.assertNotIn("      release_sha:", workflow)
+        self.assertNotIn("      review_reference:", workflow)
+        self.assertIn("RELEASE_SHA: ${{ github.sha }}", workflow)
         self.assertIn("Matching main CI succeeded for reviewed SHA", workflow)
         self.assertIn("RULES_CORE_EXPECTED_FINGERPRINT=", workflow)
         self.assertIn("org.opencontainers.image.revision=$RELEASE_SHA", workflow)
+        self.assertIn("Dockerfile.content-update", workflow)
+        self.assertIn("tools/deploy_native_core.py content-base", workflow)
+
+    def test_content_only_requires_unchanged_runtime_from_prior_commit(self):
+        prior = "a" * 40
+        current = "b" * 40
+        with patch.object(release, "command") as run, patch.object(release.subprocess, "run") as diff:
+            diff.return_value.returncode = 0
+            release.require_runtime_unchanged(prior, current)
+            self.assertEqual(2, run.call_count)
+            diff.assert_called_once()
+            args = diff.call_args.args[0]
+            self.assertEqual(args[:5], ["git", "diff", "--quiet", prior, current])
+            self.assertIn("src/RulesCore.Host/", args)
+            self.assertIn("Dockerfile", args)
+            self.assertNotIn("data/rulesets/", args)
+
+            diff.return_value.returncode = 1
+            with self.assertRaisesRegex(RuntimeError, "Full deploy"):
+                release.require_runtime_unchanged(prior, current)
+            with self.assertRaisesRegex(RuntimeError, "Full deploy"):
+                release.require_runtime_unchanged("unknown", current)
+
+    def test_content_base_must_match_both_running_core_containers(self):
+        previous = "a" * 40
+        image_id = "sha256:" + "b" * 64
+        tag = "dorks-and-dice-rules-core:rewrite-" + previous
+        state = {
+            "Image": image_id,
+            "State": {"Running": True, "OOMKilled": False},
+            "Config": {"Labels": {"com.docker.compose.project": release.PUBLIC}},
+        }
+        image = {"Id": image_id, "Config": {
+            "User": "1654", "Labels": {"org.opencontainers.image.revision": previous}}}
+        def inspect(kind, identifier):
+            self.assertEqual(kind, "container" if identifier in
+                             (release.PUBLIC, release.PRIVATE) else "image")
+            if identifier in (release.PUBLIC, release.PRIVATE):
+                return state
+            self.assertIn(identifier, (image_id, tag))
+            return image
+        with patch.object(release, "inspect", side_effect=inspect), patch.object(
+            release, "require_runtime_unchanged"
+        ) as compatible, patch.dict(release.os.environ, {"RELEASE_SHA": "c" * 40}):
+            self.assertEqual(tag, release.content_base_image())
+            compatible.assert_called_once_with(previous, "c" * 40)
+
+        with patch.object(release, "inspect", side_effect=[
+            state, {**state, "Image": "sha256:" + "d" * 64}
+        ]), self.assertRaisesRegex(RuntimeError, "Full deploy"):
+            release.content_base_image()
+
+    def test_content_only_dockerfile_replaces_old_native_content(self):
+        contents = (Path(__file__).parents[1] / "Dockerfile.content-update"
+                    ).read_text(encoding="utf-8")
+        self.assertIn("FROM ${RULES_CORE_BASE_IMAGE}", contents)
+        self.assertIn("rm -rf /app/data/rulesets/first-party-001/native", contents)
+        self.assertIn("COPY data/rulesets/first-party-001/native/", contents)
+        self.assertIn("USER $APP_UID", contents)
+        self.assertNotIn("dotnet publish", contents)
 
     def test_unknown_private_peer_is_rejected(self):
         with self.assertRaises(RuntimeError):

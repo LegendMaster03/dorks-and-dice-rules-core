@@ -39,6 +39,26 @@ jobs:
           python3 tools/validate_ruleset_split.py
       - name: Build native-only Docker image
         run: docker build -t rules-core-phase3b:ci .
+      - name: Verify content-only Docker layering preserves the native catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build -f Dockerfile.content-update \
+            --build-arg RULES_CORE_BASE_IMAGE=rules-core-phase3b:ci \
+            -t rules-core-content-only:ci .
+          docker run -d --rm --name rules-core-content-only-smoke \
+            -p 127.0.0.1:18769:8080 rules-core-content-only:ci
+          trap 'docker rm -f rules-core-content-only-smoke >/dev/null 2>&1 || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18769/ready >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18769/ready)" = 200
+          curl -fsS http://127.0.0.1:18769/api/rulesets | python3 -c 'import json,sys; assert json.load(sys.stdin)=={"rulesets": []}'
+          original=$(docker image inspect rules-core-phase3b:ci --format '{{.Config.User}}')
+          updated=$(docker image inspect rules-core-content-only:ci --format '{{.Config.User}}')
+          test -n "$original" && test "$original" != "root" && test "$updated" = "$original"
+          test -n "$(docker logs rules-core-content-only-smoke 2>&1 | grep -oE 'fingerprint [0-9a-f]{64}' | head -1)"
       - name: Docker public/private and readiness smoke
         shell: bash
         run: |

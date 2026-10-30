@@ -22,6 +22,29 @@ The current native package consists of six JSON files and 35 playable
 definitions. Phase 1A migration evidence is preserved separately. Native data
 updates do not require recompilation of RulesCore.Content or RulesCore.Host.
 
+## Manual deployment
+
+Open **GitHub Actions → Deploy native Rules Core → Run workflow** on `main`.
+The dialog has a single **What should be deployed?** dropdown:
+
+- **Content update** (default): layer the latest `native/` JSON and package manifest onto
+  the existing validated Rules Core image, without rebuilding C# or changing the
+  runtime. It requires both Core instances to run the same trusted image and no
+  Core executable/Docker configuration changes since that image's commit.
+  If either condition fails, select **Full deploy**.
+- **Full deploy**: rebuild the Rules Core application and its native content
+  from the latest `main` commit.
+
+Both choices automatically select the current `main` SHA, require a successful
+`main` CI run for that exact commit, independently calculate the native catalog
+fingerprint, and check the deployed image, both ingress fingerprints, readiness,
+network restrictions and public-distribution denial. There are no SHA or review
+reference text inputs. The GitHub actor and run identify the manual authorization.
+
+Merging a PR does not deploy. A failed replacement is withdrawn, but the
+previous image is not automatically restored. Both actions deploy **Rules Core
+only**, not the other Dorks & Dice services.
+
 ## Catalog and host
 
 RulesCore.Content is independent of ASP.NET Core and PostgreSQL. It validates
