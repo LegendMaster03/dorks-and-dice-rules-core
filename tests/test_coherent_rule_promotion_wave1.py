@@ -53,12 +53,16 @@ class CoherentContentWaveOneTests(unittest.TestCase):
                 cls.counts[entry["kind"]] += 1
 
     def test_inventory(self):
-        self.assertEqual(
-            {"condition": 29, "leveled-condition": 1, "rule": 4,
-             "ruleChapter": 1, "class": 7, "classFeature": 161,
-             "monster": 16, "monsterFamily": 3},
-            dict(self.counts))
-        self.assertEqual(222, len(self.catalog))
+        # The catalog is actively authored; no total or category size is fixed.
+        self.assertEqual(len(self.catalog), sum(self.counts.values()))
+        for kind in ("condition", "leveled-condition", "rule", "ruleChapter",
+                     "class", "classFeature", "monster", "monsterFamily"):
+            with self.subTest(kind=kind):
+                self.assertGreater(self.counts[kind], 0)
+        for name in CLASSES:
+            self.assertIn("class." + name, self.catalog)
+        for name in MONSTERS:
+            self.assertIn("monster." + name, self.catalog)
         self.assertNotIn("class.warlock", self.catalog)
 
     def test_seven_selected_band_one_progressions(self):
@@ -97,7 +101,7 @@ class CoherentContentWaveOneTests(unittest.TestCase):
     def test_feature_dependencies_and_provenance(self):
         for name in CLASSES:
             features = sorted((NATIVE / "features/classes" / name).glob("*.json"))
-            self.assertEqual(FEATURE_COUNTS[name], len(features), name)
+            self.assertGreaterEqual(len(features), FEATURE_COUNTS[name], name)
             for path in features:
                 entry = read(path)
                 self.assertEqual("classFeature", entry["kind"])
@@ -131,7 +135,7 @@ class CoherentContentWaveOneTests(unittest.TestCase):
 
     def test_monster_families_have_distinct_real_members(self):
         families = read(NATIVE / "monster-families.json")["monsterFamilies"]
-        self.assertEqual(3, len(families))
+        self.assertGreaterEqual(len(families), 3)
         for family in families:
             self.assertEqual("monsterFamily", family["kind"])
             self.assertEqual(len(family["memberIds"]), len(set(family["memberIds"])))
