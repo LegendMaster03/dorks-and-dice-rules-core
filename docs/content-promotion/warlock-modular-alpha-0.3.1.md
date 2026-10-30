@@ -3,7 +3,7 @@
 **Classification:** Selected experimental native rules (Alpha 0.3.1), subject to revision; the reference record below remains historical comparison material.  
 **Owner-selected test baseline:** October 25, 2026.  
 **Scope:** Band 1 levels 1–20, Fiend Patron, four active Pacts, and a provisional 12-Invocation hybrid.  
-**Native authority:** `data/rulesets/first-party-001/native/classes/base/warlock/warlock.json` plus the separately authored class features and one-entity-per-file Patron, Pact, and Invocation catalogs in `classes/base/warlock/{patrons,pacts,invocations}/`; each directory also contains its selection policy.  
+**Native authority:** `data/rulesets/first-party-001/native/classes/base/warlock/warlock.json` plus the separately authored class features and one-entity-per-file Patron, Pact, and Invocation records in `classes/base/warlock/{patrons,pacts,invocations}/`. Global acquisition and selection rules are part of `warlock.json`; individual options declare their own prerequisites and mechanics.  
 **Historical machine-readable comparison:** `data/reference/experiments/warlock-modular-alpha-0.3.1.json`.
 
 ## A/B question
@@ -28,6 +28,8 @@ The experimental packet is meant for a normal **5e or 5.5e host game**: replace 
 | Fiend | Level-1 Dark One's Blessing and power source, level-6 Dark One's Own Luck, level-8 Infernal Retaliation with level-13 and -18 scaling, level-14 Hurl Through Hell |
 | Fiend spell access | Default automatic merged 13-spell list, first spells at level 3; elective expanded-choice alternative remains a test counterfactual |
 | Epic material | No Band 2 features or level-19 automatic Epic Boon |
+
+The `warlock.json` progression is the authority for Invocation acquisition counts; the option directories are discovered by `parentClass` and entity `kind`, without manually repeated active-ID lists. Fiend milestones and Patron spell access are defined by `patrons/fiend.json`, not duplicated on each base-class level. The selected Invocation pool reconciles 5.5e shared options with retained 5e-only options; source-edition variants do not grant duplicate Invocations.
 
 The level-by-level 20-row table in the machine-readable review file reflects the actual Alpha 0.3.1 playtest packet. Level-20 counts: 12 elective Invocations, four Pact slots at spell level 5, four ordinary cantrips (plus automatic Eldritch Blast), and 15 ordinary known spells (plus separate Patron and Pact grants).
 

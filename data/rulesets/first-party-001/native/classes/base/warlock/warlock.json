@@ -52,7 +52,6 @@
           "class-feature.warlock.pact-choice",
           "class-feature.warlock.eldritch-invocations"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 1,
         "ordinaryCantripsKnown": 2,
         "ordinarySpellsKnown": 2,
@@ -67,7 +66,6 @@
         "featureGrants": [
           "class-feature.warlock.magical-cunning"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 2,
         "ordinaryCantripsKnown": 2,
         "ordinarySpellsKnown": 3,
@@ -81,9 +79,6 @@
         "proficiencyBonus": 2,
         "featureGrants": [
           "class-feature.warlock.damage-reduction"
-        ],
-        "fiendMilestones": [
-          "Fiend spell access"
         ],
         "invocationsElectiveTotal": 2,
         "ordinaryCantripsKnown": 2,
@@ -100,7 +95,6 @@
           "class-feature.warlock.ability-score-improvement",
           "class-feature.warlock.deceive-item"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 3,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 5,
@@ -115,9 +109,6 @@
         "featureGrants": [
           "class-feature.warlock.deepened-pact"
         ],
-        "fiendMilestones": [
-          "Fiend spell access"
-        ],
         "invocationsElectiveTotal": 4,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 6,
@@ -130,9 +121,6 @@
         "level": 6,
         "proficiencyBonus": 3,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Dark One's Own Luck"
-        ],
         "invocationsElectiveTotal": 4,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 7,
@@ -145,9 +133,6 @@
         "level": 7,
         "proficiencyBonus": 3,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Fiend spell access"
-        ],
         "invocationsElectiveTotal": 5,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 8,
@@ -160,9 +145,6 @@
         "level": 8,
         "proficiencyBonus": 3,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Infernal Retaliation"
-        ],
         "invocationsElectiveTotal": 5,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 9,
@@ -176,9 +158,6 @@
         "proficiencyBonus": 4,
         "featureGrants": [
           "class-feature.warlock.contact-patron"
-        ],
-        "fiendMilestones": [
-          "Fiend spell access"
         ],
         "invocationsElectiveTotal": 6,
         "ordinaryCantripsKnown": 3,
@@ -194,7 +173,6 @@
         "featureGrants": [
           "class-feature.warlock.energy-resistance"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 6,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 10,
@@ -209,7 +187,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-6"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 7,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 11,
@@ -224,7 +201,6 @@
         "featureGrants": [
           "class-feature.warlock.imbue-item"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 7,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 11,
@@ -239,9 +215,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-7"
         ],
-        "fiendMilestones": [
-          "Infernal Retaliation improvement"
-        ],
         "invocationsElectiveTotal": 8,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 12,
@@ -254,9 +227,6 @@
         "level": 14,
         "proficiencyBonus": 5,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Hurl Through Hell"
-        ],
         "invocationsElectiveTotal": 8,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 12,
@@ -271,7 +241,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-8"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 9,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 13,
@@ -284,7 +253,6 @@
         "level": 16,
         "proficiencyBonus": 5,
         "featureGrants": [],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 10,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 13,
@@ -299,7 +267,6 @@
         "featureGrants": [
           "class-feature.warlock.mystic-arcanum-9"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 10,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 14,
@@ -312,9 +279,6 @@
         "level": 18,
         "proficiencyBonus": 6,
         "featureGrants": [],
-        "fiendMilestones": [
-          "Infernal Retaliation improvement"
-        ],
         "invocationsElectiveTotal": 11,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 14,
@@ -327,7 +291,6 @@
         "level": 19,
         "proficiencyBonus": 6,
         "featureGrants": [],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 11,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 15,
@@ -342,7 +305,6 @@
         "featureGrants": [
           "class-feature.warlock.eldritch-master"
         ],
-        "fiendMilestones": [],
         "invocationsElectiveTotal": 12,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 15,
@@ -352,6 +314,25 @@
         "energyResistance": 10
       }
     ],
+    "selectionRules": {
+      "patron": {
+        "requiredAtWarlockLevel": 1,
+        "identityMayBeInheritedOrUnknown": true,
+        "playtestPatronId": "patron.warlock.fiend"
+      },
+      "pact": {
+        "requiredAtWarlockLevel": 1,
+        "firstChoiceFree": true,
+        "extraPacts": "out-of-scope"
+      },
+      "invocations": {
+        "firstChoiceAtWarlockLevel": 1,
+        "everyChoiceAttachedToOneActualPact": true,
+        "patronAcceptanceRequired": true,
+        "severance": "suspend-without-refund",
+        "replacement": "one-on-warlock-level-up"
+      }
+    },
     "baseFeatureIds": [
       "class-feature.warlock.pact-magic",
       "class-feature.warlock.eldritch-blast",
@@ -376,8 +357,7 @@
       "automaticEldritchBlast": true,
       "extraKnownCantripCost": 0,
       "pactMagicSlotsRecover": "short-or-long-rest",
-      "mysticArcanumSeparate": true,
-      "fiendSpellRosterAutomatic": true
+      "mysticArcanumSeparate": true
     },
     "limitations": [
       "The host 5e/5.5e rules supply spell details, equipment, feats, creatures and ordinary combat mechanics for this standalone alpha.",
@@ -386,11 +366,6 @@
       "Infernal Retaliation tick timing and Hurl Through Hell slot recharge action cost are provisional.",
       "Alternative Invocation progressions are reference comparisons, not simultaneous grants.",
       "No Band 2 or automatic Epic Boon at level 19."
-    ],
-    "optionRuleIds": {
-      "patron": "rule.warlock.patron-selection",
-      "pact": "rule.warlock.pact-selection",
-      "invocations": "rule.warlock.invocation-selection"
-    }
+    ]
   }
 }
