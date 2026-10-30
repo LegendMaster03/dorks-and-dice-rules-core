@@ -1,0 +1,175 @@
+{
+  "id": "monster.sprite",
+  "name": "Sprite",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "fey",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 10,
+      "formula": "4d4"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 40
+    },
+    "str": 3,
+    "dex": 18,
+    "con": 10,
+    "int": 14,
+    "wis": 13,
+    "cha": 11,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+8"
+    },
+    "passive": 13,
+    "languages": [
+      "Common",
+      "Elvish",
+      "Sylvan"
+    ],
+    "cr": "1/4",
+    "spellcasting": [
+      {
+        "name": "Invisibility",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The sprite casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using Charisma as the spellcasting ability."
+        ],
+        "will": [
+          "{@spell Invisibility|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Needle Sword",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Enchanting Bow",
+        "entries": [
+          "{@atkr r} {@hit 6}, range 40/160 ft. {@h}1 Piercing damage, and the target has the {@condition Charmed|SRD52} condition until the start of the sprite's next turn."
+        ]
+      },
+      {
+        "name": "Heart Sight",
+        "entries": [
+          "{@actSave cha} {@dc 10}, one creature within 5 feet the sprite can see (Celestials, Fiends, and Undead automatically fail the save). {@actSaveFail} The sprite knows the target's emotions and alignment."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "planar, feywild"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/sprite.opus"
+    },
+    "languageTags": [
+      "C",
+      "E",
+      "S"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA"
+    ],
+    "conditionInflict": [
+      "charmed"
+    ],
+    "conditionInflictSpell": [
+      "invisible"
+    ],
+    "savingThrowForced": [
+      "charisma"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Sprite",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Sprite",
+            "entries": [
+              "{@i Elusive Defender of Fey Realms}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Planar (Feywild)|bestiary|environment=planar, feywild}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Sprites dwell in mystical forests touched by the magic of the Feywild, living peacefully with most other Fey and friends of nature. These foot-tall spirits of nature resemble elves with exaggerated, whimsical features and gossamer wings.",
+              "Sprites can sense the innate goodness or wickedness of other creatures. Those that enter their realms with good intentions might be treated to tiny feasts and celebrations. The wicked face nasty tricks and bold ambushes at the hands of {@condition invisible|SRD52} sprite defenders. These woodland guardians enchant the arrows of their tiny bows with charming magic that can pierce the heart of the fiercest foe.",
+              "Sprites oppose any creatures that seek to harm places of natural magic and beauty. This can put them into conflict with would-be settlers, monsters like ettercaps, and despoilers such as goblinoids and hags. They frequently aid other good creatures of the forest, including treants and unicorns, in defending their homes.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "The tree had a wee village nestled in its boughs, I swear. Next thing I knew, I was lyin' face-down in the dirt. My head was full of stars, an' when I stood up an' looked around, both the tree an' the wee village were gone."
+                    ],
+                    "from": "Tale of Haravak the Ranger"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Sprite.webp"
+            },
+            "credit": "Annie Stegg",
+            "width": 961,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
