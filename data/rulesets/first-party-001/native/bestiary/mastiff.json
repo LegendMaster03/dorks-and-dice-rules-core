@@ -1,0 +1,102 @@
+{
+  "id": "monster.mastiff",
+  "name": "Mastiff",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 5,
+      "formula": "1d8 + 1"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 13,
+    "dex": 14,
+    "con": 12,
+    "int": 3,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "cr": "1/8",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "hill",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/mastiff.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Mastiff",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Mastiff.webp"
+                  },
+                  "width": 1153,
+                  "height": 912
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Hearing and Smell",
+        "entries": [
+          "The mastiff has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
