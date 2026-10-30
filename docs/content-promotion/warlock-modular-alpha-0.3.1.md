@@ -54,7 +54,7 @@ The separate 5.x Fiend level-10 damage resistance was retired, not duplicated. H
 
 The 3.5e, 2014 5e, raw 2024 5.5e, Pact-adjusted 2024, and selected hybrid Invocation curves remain preserved in `data/reference/warlock-invocation-progression-band1-comparison.json`. A zero-Invocation-level-1 candidate is **only** an alternate balance probe. The approved default is one elective at level 1 plus a free Pact. A matching number of choices across editions does not establish equal power.
 
-Alpha 0.3.1 omits **seven elective Invocations**, including the three dedicated Talisman options. The resulting playtest is informative about the core Talisman and generic clauses, but insufficient to conclude that the completed Talisman ecosystem is weak or strong. Star Chain/Seeker are disabled/deferred, not deleted. Additional Pact acquisition entitlement is not selected. Other pending shared mechanics include familiar behavior, crafting/feat interactions, spell resource integrations, and exact Fiend event timing.
+The native alpha includes the three approved Talisman Invocations: Rebuke, Protection, and Bond. Their omission from the earlier packet and native catalog is corrected; each remains a paid, Pact-bound elective. The remaining four omissions are Improved Pact Weapon, Gift of the Ever-Living Ones, Aspect of the Moon, and Far Scribe. Star Chain/Seeker are disabled/deferred, not deleted. Additional Pact acquisition entitlement is not selected. Other pending shared mechanics include familiar behavior, crafting/feat interactions, spell resource integrations, and exact Fiend event timing.
 
 ## Approved feedback and rule restoration (October 30, 2026)
 
@@ -86,3 +86,7 @@ Warlock Alpha 0.3.1 is the **current selected native Warlock** even while its de
 
 The playtest packet contains CC-licensed SRD sources, historical non-SRD research references, and original first-party adaptations. Do not treat every historical non-SRD contribution as CC-licensed or freely distributable. Perform source-rights review separately before any external release.
 
+
+## Talisman Invocation restoration
+
+Restore the three owner-approved Talisman Invocations from their approved native data contracts. Rebuke is available with the level-1 Pact and uses the Warlock Reaction without core charges; Protection is level 7 with an independent proficiency-bonus-per-Long-Rest pool; Bond is level 12 with a different proficiency-bonus-per-Long-Rest pool shared across both teleport directions. The Wiki discovers the Talisman prerequisite filter directly from these native entries.

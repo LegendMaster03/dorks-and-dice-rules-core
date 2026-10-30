@@ -1,0 +1,13 @@
+{
+  "id": "invocation.rebuke-of-the-talisman",
+  "name": "Rebuke of the Talisman",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 1,
+  "requiredPact": "pact.warlock.talisman",
+  "repeatable": false,
+  "cost": 1,
+  "description": "When an attacker you can see within 30 feet of you hits the creature wearing your active talisman, you may spend your Reaction to deal Psychic damage to the attacker equal to your Warlock proficiency bonus. You may also push the attacker up to 10 feet away from the wearer.\n\nThis uses no core Talisman charge. Rebuke and Shared Ward each require your Reaction; you can not use both with the same Reaction.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

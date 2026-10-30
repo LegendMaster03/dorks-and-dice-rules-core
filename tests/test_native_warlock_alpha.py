@@ -129,8 +129,7 @@ class WarlockNativeAlphaTests(unittest.TestCase):
     def test_invocation_catalog_is_selected_playtest_only(self):
         self.assertTrue(self.invocations)
         self.assertNotIn("invocation.thirsting-blade", self.invocations)
-        for omitted in ("rebuke-of-the-talisman","protection-of-the-talisman","bond-of-the-talisman",
-                        "improved-pact-weapon","gift-of-the-ever-living-ones","aspect-of-the-moon","far-scribe"):
+        for omitted in ("improved-pact-weapon","gift-of-the-ever-living-ones","aspect-of-the-moon","far-scribe"):
             self.assertNotIn("invocation."+omitted,self.invocations)
         self.assertEqual(0,sum(x["cost"]!=1 for x in self.invocations.values()))
         for inv in self.invocations.values():
@@ -141,6 +140,31 @@ class WarlockNativeAlphaTests(unittest.TestCase):
             self.assertEqual("included-in-alpha-0.3.1",inv["selectionStatus"])
         self.assertEqual("pact.warlock.blade",self.invocations["invocation.devouring-blade"]["requiredPact"])
         self.assertEqual(12,self.invocations["invocation.devouring-blade"]["minimumWarlockLevel"])
+
+    def test_three_talisman_invocations_preserve_approved_resources(self):
+        entries = {entry['id']:entry for entry in self.invocations.values()
+                   if entry['requiredPact']=='pact.warlock.talisman'}
+        self.assertEqual({'invocation.rebuke-of-the-talisman', 'invocation.protection-of-the-talisman',
+                          'invocation.bond-of-the-talisman'}, set(entries))
+        self.assertEqual([1,7,12], [entries['invocation.'+slug]['minimumWarlockLevel'] for slug in
+                         ['rebuke-of-the-talisman','protection-of-the-talisman','bond-of-the-talisman']])
+        self.assertTrue(all(entry['cost']==1 and not entry['repeatable'] for entry in entries.values()))
+        rebuke = entries['invocation.rebuke-of-the-talisman']['description']
+        self.assertIn('within 30 feet of you',rebuke)
+        self.assertIn('10 feet away from the wearer',rebuke)
+        self.assertIn('no core Talisman charge',rebuke)
+        self.assertIn('same Reaction',rebuke)
+        protection = entries['invocation.protection-of-the-talisman']['description']
+        self.assertIn('fails a saving throw',protection)
+        self.assertIn('add 1d4',protection)
+        self.assertIn('separate from the core Talisman charges',protection)
+        bond = entries['invocation.bond-of-the-talisman']['description']
+        self.assertIn('same plane',bond)
+        self.assertIn('use an Action',bond)
+        self.assertIn('nearest unoccupied space',bond)
+        self.assertIn('single shared Bond pool',bond)
+        self.assertIn('regardless of direction',bond)
+        self.assertIn('separate from core Talisman charges',bond)
 
     def test_reference_remains_comparison_not_authority(self):
         self.assertFalse(self.reference["runtimeAuthority"])
