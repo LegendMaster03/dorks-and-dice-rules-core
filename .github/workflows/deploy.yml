@@ -1,33 +1,95 @@
 name: Deploy native Rules Core
-run-name: Native Core at ${{ github.event.workflow_run.head_sha || github.sha }}
+run-name: Reviewed native Core at ${{ inputs.release_sha }}
+
+# A merge does not authorize a deployment. A repository maintainer explicitly
+# dispatches a reviewed main commit after that commit's full CI has passed.
 on:
-  workflow_run:
-    workflows: [Rules Core Phase 3B Public Native API CI]
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      release_sha:
+        description: Exact reviewed 40-character main commit SHA
+        required: true
+        type: string
+      review_reference:
+        description: PR or release review reference approving this deployment
+        required: true
+        type: string
+
 permissions:
   contents: read
+  actions: read
+
 concurrency:
   group: dorks-and-dice-rules-core
   cancel-in-progress: false
+
 jobs:
   deploy:
-    if: github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success'
+    if: github.ref == 'refs/heads/main'
     runs-on: [self-hosted, dorks-and-dice-rules-core]
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
-      RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+      RELEASE_SHA: ${{ inputs.release_sha }}
+      REVIEW_REFERENCE: ${{ inputs.review_reference }}
       RULES_CORE_ENV_FILE: /mnt/HDDs/www/dorks-and-dice-rules-core/.env
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-      - name: Reject a superseded release
+          ref: ${{ inputs.release_sha }}
+          persist-credentials: false
+      - name: Require the explicitly reviewed current main commit
         shell: bash
-        run: test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$RELEASE_SHA"
-      - name: Check host prerequisites before replacing services
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ -n "$REVIEW_REFERENCE" ]]
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$RELEASE_SHA"
+      - name: Require successful main CI for the exact release commit
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO_NAME: ${{ github.repository }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from urllib.request import Request, urlopen
+
+          sha = os.environ["RELEASE_SHA"]
+          repo = os.environ["REPO_NAME"]
+          url = ("https://api.github.com/repos/" + repo +
+                 "/actions/workflows/phase3b-native-public-api-ci.yml/runs"
+                 "?head_sha=" + sha + "&event=push&status=success&per_page=30")
+          request = Request(url, headers={
+              "Accept": "application/vnd.github+json",
+              "Authorization": "Bearer " + os.environ["GITHUB_TOKEN"],
+              "X-GitHub-Api-Version": "2022-11-28",
+          })
+          with urlopen(request, timeout=20) as response:
+              runs = json.load(response)["workflow_runs"]
+          if not any(run["head_sha"] == sha and run["head_branch"] == "main" and
+                     run["event"] == "push" and run["conclusion"] == "success"
+                     for run in runs):
+              raise SystemExit("Reviewed commit has no passing main push CI; deployment denied")
+          print("Matching main CI succeeded for reviewed SHA")
+          PY
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Compute the loader fingerprint from the reviewed source commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          result=$(dotnet run --project tests/NativeCatalogFingerprint/NativeCatalogFingerprint.csproj --configuration Release)
+          printf '%s\n' "$result"
+          grep -qx 'CONTENT_FINGERPRINT_VALIDATED=true' <<< "$result"
+          fingerprint=$(printf '%s\n' "$result" | sed -nE 's/^CATALOG_SHA256=([0-9a-f]{64})$/\1/p')
+          [[ "$fingerprint" =~ ^[0-9a-f]{64}$ ]]
+          printf 'RULES_CORE_EXPECTED_FINGERPRINT=%s\n' "$fingerprint" >> "$GITHUB_ENV"
+      - name: Check host isolation before replacing services
         run: python3 tools/deploy_native_core.py preflight
-      - name: Build commit-pinned release
+      - name: Build exact commit-pinned release image
         run: docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" -t "dorks-and-dice-rules-core:rewrite-$RELEASE_SHA" .
-      - name: Deploy and monitor native ingresses
+      - name: Deploy and monitor the approved native ingresses
         run: python3 tools/deploy_native_core.py deploy
