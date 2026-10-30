@@ -421,9 +421,10 @@
       "python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict",
       "python3 tools/validate_ruleset_split.py"
     ],
-    "fingerprint": "46965599d7d37798823a7b416ff954ab99aac91a5a3432b6df4c5e1db06d2a3e",
-    "fingerprintSource": "RulesCore.Content.NativeCatalogLoader through successful content-only .NET 10 workflow 40853683143",
-    "fingerprintVerifiedAt": "2026-10-29"
+    "fingerprint": "b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32",
+    "fingerprintSource": "RulesCore.Content.NativeCatalogLoader through successful read-only native-content digest workflow run 40984999799",
+    "fingerprintVerifiedAt": "2026-10-29",
+    "conditionReadinessTest": "tests/test_conditions_wiki_readiness.py"
   },
   "sourceDivergences": {
     "class.druid": {
