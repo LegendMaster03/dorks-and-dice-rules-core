@@ -1,14 +1,14 @@
-# Coherent rules recovery — Wave 1 ledger
+# Continuous native rules content promotion
 
 **Ruleset:** `first-party-001`  
-**Base:** `1f5f910d0998f2991b33a25d042bfd46c5641e31`  
-**Content branch:** `content/coherent-rule-promotion-wave-1`
+**Review branch:** `content/coherent-rule-promotion-wave-1` (historical branch name; **no wave-based release model**)  
+**Initial main baseline:** `1f5f910d0998f2991b33a25d042bfd46c5641e31`
 
-This file is a navigation summary. [The machine-readable ledger](promotion-ledger.json) retains named classifications and specific unresolved decisions for later conversations and content batches. `native/` remains the sole runtime catalog. `working/` retains original candidate definitions and the nonauthoritative Warlock experiment.
+Content promotion is **continuous**. Approved coherent rulings may be moved into `data/rulesets/first-party-001/native/` whenever they are ready; other content stays under `working/` or `reference/`. There are no numbered content waves, batch milestones, or fixed catalog sizes. The [promotion ledger](promotion-ledger.json) preserves the reviewed snapshot, provenance, selected identities and outstanding design decisions. It is **not a per-rule runtime approval detector**.
 
-## Catalog inventory
+## Current reviewed catalog snapshot (not an invariant)
 
-| Kind | Before | After (expected) |
+| Kind | At initial baseline | At this review |
 | --- | ---: | ---: |
 | condition | 29 | 29 |
 | leveled-condition | 1 | 1 |
@@ -20,28 +20,28 @@ This file is a navigation summary. [The machine-readable ledger](promotion-ledge
 | monsterFamily | 0 | 3 |
 | **Total** | **35** | **222** |
 
-The 7 unified Band 1 classes now have their selected 1–20 level tables and separately defined features. The class files contain embedded historical feature mechanics where those mechanics were selected. Optional Cleric, Druid and Rogue selections remain **options**, not unconditional grants. Unselected subclasses, Epic Boons, imported historical variants, and higher bands remain in working.
+**These counts document one reviewed state only.** Tests and release digests must derive current totals from native JSON. Adding, replacing or removing an approved record should not require changing a catalog count in Python, C#, a Docker smoke test, or a digest utility.
 
-The 16 creature examples include simple beasts, three Goblin roles, two Hobgoblin roles, two Bugbear roles, a lycanthrope, a spellcasting Priest, and three advanced magical/legendary creatures. Creature data preserve existing reconciled statistics and source action economies, with a reference to the native unified monster-statblock foundation; **missing derived defenses/saves are not invented**.
+The selected Band 1 classes are Barbarian, Bard, Cleric, Druid, Rogue, Sorcerer and Wizard. Their coherent progression data and associated feature records live in native; selectable options are not automatic grants. The Druid's mutually exclusive companion paths reflect the later owner approval. Additional classes, features, monsters, and general rules are eligible for promotion individually once reconciled.
 
-## Review status and next batches
+The representative monster records preserve existing source statistics, encounter actions, and family relations without inventing unresolved derived defenses or saving throws. All 30 conditions are selected native data with readable descriptions and chapter navigation; executable condition mechanics remain a separate responsibility. See [conditions-readiness.md](conditions-readiness.md).
 
-- **Native before Wave 1:** 35 condition/foundation records. This batch does not redefine them.
-- **Native after Wave 1:** seven classes, 161 selected class features, 16 monsters and three creature families.
-- **Experimental only:** Warlock modular Fiend alpha 0.3.1 under `data/reference/experiments/`; no native `class.warlock`.
-- **Further eligible review:** additional coherent monster stat blocks, and already reconciled skill/competency/general-mechanic entries after checking references.
-- **Unresolved:** see `statusGroups.unresolved` in the JSON ledger; these are concrete decisions and execution limitations, not a declaration that all seven class models are blocked.
+**Experimental only:** Modular Warlock Alpha 0.3.1 remains under `data/reference/experiments/`, outside native runtime authority. It does not become an authoritative class through content packaging.
 
-## Safety and release
+## Permanent validation policy
 
-This is a **content-only** proposal. The selected native definitions change the semantic catalog digest; the old deployment fingerprint `870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6` must not be accepted for an updated image. The exact semantic digest **b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32** was computed and verified with the C# native loader by the read-only content workflow. The actual release SHA must still be explicitly approved when the updated image is built. Do not change the deployment script to skip the check.
+1. Parse only the selected `native/` directory with `NativeCatalogLoader`. Reject invalid files, duplicate IDs, bad condition references and missing content; never fall back to `working/`.
+2. Verify category totals, search pagination and distinct identities against the **actual loaded catalog**. Do not compare them with a historic 35/222-record inventory.
+3. Run `tests/test_native_content_regressions.py`, `tests/test_conditions_wiki_readiness.py`, and existing shared-rule and C# tests. Focus on approved mechanical behavior, provenance, identity relationships and access restrictions.
+4. Compute a semantic SHA-256 fingerprint for each reviewed commit. It is a **release integrity identifier**, not a constant that tests require across ordinary editing.
+5. For deployment, independently authorize the specific release commit and fingerprint; verify the image matches that authorization and retains public/private access restrictions. No merge or deployment is authorized by a green test alone.
 
-The existing C# `NativeCatalogTests.ApprovedPackageLoads35PlayableRecords` asserts the original count of 35 and will need a separate Core Code rewrite owner update, not an unreviewed content-side rewrite. The review/verification handoffs live under `docs/handoffs/`.
+The original release's fixed fingerprint was `870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6`. The latest **reviewed content snapshot** fingerprint is `b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32` (222 entities; verified by the native C# loader). It may legitimately change on the next JSON edit. The existing deployment script still pins the older value; update that release authorization mechanism separately rather than weakening integrity checks.
 
-**Validation:** `tests/test_coherent_rule_promotion_wave1.py` checks class-to-feature references, class progression, source provenance, monster role mappings, exact expected counts and Warlock nonauthority. The existing Python validations still apply. Green content checks do **not** imply that all runtime/consumer tests pass, or that deployment is authorized.
+## Ownership and continuation
 
-**Post-review correction:** The Druid companion paths are now exclusive as approved on 2026-10-23: choose persistent Animal Companion or temporary Wild Companion; neither is an unconditional simultaneous grant. The source `working/` candidate is preserved unchanged. This correction is covered by the regression test and its exact new loader digest is `b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32` (GitHub Actions, review commit `117b7ce670aff5d84af58f5d70280d9fe8a97d03`).
+- **Rules Content:** reconcile and promote individual native JSON definitions continuously; maintain evidence and targeted regression tests.
+- **Rules Core Code Rewrite:** maintain the native loader, CI/release authentication, distribution security and deployment process. C# and Docker tests should not embed content counts.
+- **Rules Wiki UI:** read the native authorized catalog, show approved classes, condition effects and creature identities, and label any separately authorized experiments.
 
-## Conditions readiness for Wiki
-
-All **30** canonical conditions were already native before Wave 1. This pass completed five missing readable condition descriptions and corrected the Conditions chapter to reference stable native rule IDs. They are now directly available as *read-only reference data* to the Wiki through the existing private catalog contract. Condition execution is not implied. See `docs/content-promotion/conditions-readiness.md` and `tests/test_conditions_wiki_readiness.py`. The resulting catalog remains **222 entities**; its current verified loader fingerprint is **b2af2ac5b47d133e181b82604a0619593ac5c6c67ae73da6e01f96f920acfd32** (content digest workflow run 40984999799). The prior fingerprint is superseded.
+Review notes are in `docs/handoffs/` and the machine-readable ledger. Deferred mechanics are documented for their relevant subsystem; they do not block unrelated coherent rules.
