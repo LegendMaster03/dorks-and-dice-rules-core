@@ -1,0 +1,112 @@
+{
+  "id": "monster.awakened-shrub",
+  "name": "Awakened Shrub",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "plant",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      9
+    ],
+    "hp": {
+      "average": 10,
+      "formula": "3d6"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 3,
+    "dex": 8,
+    "con": 11,
+    "int": 10,
+    "wis": 10,
+    "cha": 6,
+    "passive": 10,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "0",
+    "action": [
+      {
+        "name": "Rake",
+        "entries": [
+          "{@atkr m} {@hit 1}, reach 5 ft. {@h}1 Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "forest"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/awakened-shrub.opus"
+    },
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Awakened Shrub",
+        "_copy": {
+          "name": "Awakened Plants",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Awakened shrubs can be any sort of small plant, from forest bushes to clustered flowers. They often appear near awakened trees or in regions imbued with primal magic. Some have whimsical appearances or foliage resembling rudimentary facial features, while others look like animate topiary creatures."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Awakened Shrub.webp"
+                  },
+                  "width": 855,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the shrub remains motionless, it is indistinguishable from a normal shrub."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

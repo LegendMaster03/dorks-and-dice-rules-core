@@ -1,0 +1,220 @@
+{
+  "id": "monster.assassin",
+  "name": "Assassin",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 97,
+      "formula": "15d8 + 30"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 11,
+    "dex": 18,
+    "con": 14,
+    "int": 16,
+    "wis": 11,
+    "cha": 10,
+    "save": {
+      "dex": "+7",
+      "int": "+6"
+    },
+    "skill": {
+      "acrobatics": "+7",
+      "perception": "+6",
+      "stealth": "+10"
+    },
+    "passive": 16,
+    "resist": [
+      "poison"
+    ],
+    "languages": [
+      "Common",
+      "Thieves' cant"
+    ],
+    "cr": "8",
+    "gear": [
+      "light crossbow|srd52",
+      "shortsword|srd52",
+      "studded leather armor|srd52"
+    ],
+    "trait": [
+      {
+        "name": "Evasion",
+        "entries": [
+          "If the assassin is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, the assassin instead takes no damage if it succeeds on the save and only half damage if it fails. It can't use this trait if it has the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Sneak Attack (1/Turn)",
+        "entries": [
+          "The assassin deals an extra 14 ({@damage 4d6}) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of the assassin that isn't {@condition incapacitated} and the assassin doesn't have disadvantage on the attack roll."
+        ]
+      },
+      {
+        "name": "Assassinate (First-Turn Advantage)",
+        "entries": [
+          "During the assassin's first turn of combat, it has advantage on attack rolls against any creature that hasn't taken a turn."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The assassin makes three attacks, using Shortsword or Light Crossbow in any combination."
+        ]
+      },
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}7 ({@damage 1d6 + 4}) Piercing damage plus 17 ({@damage 5d6}) Poison damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the assassin's next turn."
+        ]
+      },
+      {
+        "name": "Light Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 7}, range 80/320 ft. {@h}8 ({@damage 1d8 + 4}) Piercing damage plus 21 ({@damage 6d6}) Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Cunning Action",
+        "entries": [
+          "The assassin takes the {@action Dash|SRD52}, {@action Disengage|SRD52}, or {@action Hide|SRD52} action."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "implements",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/assassin.opus"
+    },
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "TC"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RNG"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Assassin",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Assassin",
+            "entries": [
+              "{@i Contract Killer}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Implements, Individual"
+                  }
+                ]
+              },
+              "Assassins are professional killers skilled at stealthily approaching their victims and striking unseen. Most assassins kill for a reason, perhaps hiring themselves out to wealthy patrons or slaying for an unscrupulous cause. They use poisons and other deadly tools, and they might carry equipment to help them break into secure areas or avoid capture.",
+              "Many assassins adhere to a professional code or exhibit some signature quirk. Roll on or choose a result from the Assassin Modus Operandi table to inspire an assassin's distinctive habits.",
+              {
+                "type": "table",
+                "caption": "Assassin Modus Operandi",
+                "colLabels": [
+                  "1d6",
+                  "The Assassin Is Infamous For..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Arranging their victims in artful tableaux."
+                  ],
+                  [
+                    "2",
+                    "Hiding within large objects, such as suits of armor or hollow furnishings."
+                  ],
+                  [
+                    "3",
+                    "Leaving behind a signature item, such as a calling card, flower, seashell, or tooth."
+                  ],
+                  [
+                    "4",
+                    "Posing as celebrities, holy people, or servants."
+                  ],
+                  [
+                    "5",
+                    "Taking trophies from their victims."
+                  ],
+                  [
+                    "6",
+                    "Using poison with a distinctive color or smell."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Assassin.webp"
+            },
+            "credit": "Viko Menezes",
+            "width": 2550,
+            "height": 1704
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

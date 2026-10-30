@@ -1,0 +1,126 @@
+{
+  "id": "monster.avatar-of-death",
+  "name": "Avatar of Death",
+  "kind": "monster",
+  "definition": {
+    "name": "Avatar of Death",
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "special": "half the Hit Point maximum of its summoner"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 60,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 16,
+    "dex": 16,
+    "con": 16,
+    "int": 16,
+    "wis": 16,
+    "cha": 16,
+    "senses": [
+      "Truesight 60 ft."
+    ],
+    "passive": 13,
+    "immune": [
+      "necrotic",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "unconscious"
+    ],
+    "languages": [
+      "all languages known to its summoner"
+    ],
+    "cr": {
+      "special": "None",
+      "xp": 0
+    },
+    "pbNote": "equals its summoner's Proficiency Bonus",
+    "trait": [
+      {
+        "name": "Incorporeal Movement",
+        "entries": [
+          "The avatar can move through other creatures and objects as if they were {@variantrule Difficult Terrain|SRD52}. It takes 5 ({@damage 1d10}) Force damage if it ends its turn inside an object."
+        ]
+      },
+      {
+        "name": "Turning Immunity",
+        "entries": [
+          "The avatar is immune to features that turn undead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The avatar makes a number of Reaping Scythe attacks equal to half the summoner's Proficiency Bonus (rounded up)."
+        ]
+      },
+      {
+        "name": "Reaping Scythe",
+        "entries": [
+          "Melee Attack Roll: Automatic hit, reach 5 ft. Hit: 7 ({@damage 1d8 + 3}) Slashing damage plus 4 ({@damage 1d8}) Necrotic damage."
+        ]
+      }
+    ],
+    "lore": [
+      {
+        "name": "Avatar of Death",
+        "entries": [
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Summoned by the \"Skull\" card from the {@item Deck of Many Things}."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "hasToken": true,
+    "languageTags": [
+      "XX"
+    ],
+    "damageTags": [
+      "N",
+      "O",
+      "S"
+    ],
+    "traitTags": [
+      "Incorporeal Movement",
+      "Turning Immunity"
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
