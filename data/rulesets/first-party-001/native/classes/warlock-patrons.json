@@ -1,0 +1,86 @@
+{
+  "patrons": [
+    {
+      "id": "patron.warlock.fiend",
+      "name": "The Fiend",
+      "kind": "patron",
+      "parentClass": "class.warlock",
+      "availableAtWarlockLevel": 1,
+      "description": "The selected alpha Patron. Fiend is the supernatural power source from level 1 and may be paired with any active Pact. The 5.x Fiend level-10 selected-type resistance and automatic Hellfire Shield are retired, not duplicated.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Dark One's Blessing",
+          "description": "When you reduce a hostile creature to 0 HP, or another creature reduces an enemy within 10 feet of you to 0 HP, gain temporary HP equal to max(1, Charisma modifier + Warlock level). Temporary HP do not stack."
+        },
+        {
+          "level": 6,
+          "name": "Dark One's Own Luck",
+          "description": "Add 1d10 after an ability check or saving throw is rolled but before resolution, at most once per roll. Uses per Long Rest: max(1, Charisma modifier). No Reaction required."
+        },
+        {
+          "level": 8,
+          "name": "Infernal Retaliation",
+          "description": "Use your Reaction at a time you choose without an external trigger, consuming the one shared use per Long Rest. Select one 20-round mode: Fiendish Resilience heals 1/2/5 HP per round at levels 8/13/18, or Fiendish Flamewreath deals 1d6/2d6/5d6 Fire after each qualifying melee hit within 5 feet. Ongoing effect needs no further Reactions. Resilience does not heal at 0 HP and stabilizes once if 0 HP is reached after activation. Alpha timing: healing starts at next turn start; Flamewreath resolves after each hit."
+        },
+        {
+          "level": 13,
+          "name": "Infernal Retaliation Improvement",
+          "description": "Increase Resilience healing to 2 HP per round or Flamewreath Fire damage to 2d6 per qualifying hit; no additional use."
+        },
+        {
+          "level": 14,
+          "name": "Hurl Through Hell",
+          "description": "Once per turn on a qualifying attack-roll hit, expend its use to force a Charisma save against the Warlock spell DC. Failure sends the target to the Lower Planes, Incapacitated and unavailable for targeting; if not a Fiend, it immediately takes 8d10 Psychic damage. It returns at end of your next turn. Success still spends the use. Recharge on Long Rest or by expending a Pact slot, with provisional no-action recharge and max one stored use."
+        },
+        {
+          "level": 18,
+          "name": "Infernal Retaliation Improvement",
+          "description": "Increase Resilience to 5 HP per round or Flamewreath to 5d6 Fire per qualifying hit; no additional use."
+        }
+      ],
+      "spellAccess": {
+        "defaultMode": "automatic-known-no-ordinary-selection-cost",
+        "firstGrantLevel": 3,
+        "grants": [
+          {
+            "level": 3,
+            "spells": [
+              "Burning Hands",
+              "Command",
+              "Scorching Ray",
+              "Suggestion",
+              "Blindness/Deafness"
+            ]
+          },
+          {
+            "level": 5,
+            "spells": [
+              "Fireball",
+              "Stinking Cloud"
+            ]
+          },
+          {
+            "level": 7,
+            "spells": [
+              "Fire Shield",
+              "Wall of Fire"
+            ]
+          },
+          {
+            "level": 9,
+            "spells": [
+              "Geas",
+              "Insect Plague",
+              "Flame Strike",
+              "Hallow"
+            ]
+          }
+        ],
+        "alternateTestMode": "expanded-choice-from-same-13-spell-list-not-simultaneous",
+        "additionalSlotsGranted": 0
+      },
+      "rulesStatus": "selected-for-playtest"
+    }
+  ]
+}

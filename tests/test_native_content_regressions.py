@@ -57,7 +57,7 @@ class NativeContentRegressionTests(unittest.TestCase):
             self.assertIn("class." + name, self.catalog)
         for name in MONSTERS:
             self.assertIn("monster." + name, self.catalog)
-        self.assertNotIn("class.warlock", self.catalog)
+        self.assertIn("class.warlock", self.catalog)
 
     def test_seven_selected_band_one_progressions(self):
         for name in CLASSES:

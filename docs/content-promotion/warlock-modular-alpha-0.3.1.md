@@ -1,13 +1,14 @@
 # Warlock modular class — Alpha 0.3.1 comparative review
 
-**Classification:** Experiment, **not** an authoritative `class.warlock` native definition.  
+**Classification:** Selected experimental native rules (Alpha 0.3.1), subject to revision; the reference record below remains historical comparison material.  
 **Owner-selected test baseline:** October 25, 2026.  
 **Scope:** Band 1 levels 1–20, Fiend Patron, four active Pacts, and a provisional 12-Invocation hybrid.  
-**Machine-readable companion:** `data/reference/experiments/warlock-modular-alpha-0.3.1.json`.
+**Native authority:** `data/rulesets/first-party-001/native/classes/base/warlock.json` plus the native Warlock class features, Patron, Pacts and Invocations.  
+**Historical machine-readable comparison:** `data/reference/experiments/warlock-modular-alpha-0.3.1.json`.
 
 ## A/B question
 
-The seven reconciled classes in this wave use one coherent, selected class-level progression with attached features. Warlock deliberately tests a different way to organize one class: **Patron** (power source), **Pact** (manifestation/terms of the relationship), and **Invocations** (extra clauses bound to a specific Pact). These are **three complementary pillars of one Warlock**, not alternative source-edition versions. The first Warlock Pact is independently granted at level 1 and costs no Invocation choice.
+The seven other classes promoted in the earlier snapshot use one coherent, selected class-level progression with attached features. Warlock deliberately tests a different way to organize one class: **Patron** (power source), **Pact** (manifestation/terms of the relationship), and **Invocations** (extra clauses bound to a specific Pact). These are **three complementary pillars of one Warlock**, not alternative source-edition versions. The first Warlock Pact is independently granted at level 1 and costs no Invocation choice.
 
 The aim is to determine whether independently developed and specialized Pacts meaningfully improve build choice and mechanical identity without making complexity or total power disproportionate to the existing unified-class approach. No outcome has yet been selected. Do not replace the seven unified classes with a new modular pattern, and do not replace the modular Warlock with an imported combined source-class record.
 
@@ -69,6 +70,6 @@ The owner's **`Dorks_and_Dice_Warlock_Alpha_Playtest_Packet.pdf`**, Alpha 0.3.1 
 - `docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md`
 - `data/reference/warlock-invocation-progression-band1-comparison.json`
 
-The imported Warlock class and source candidates remain in `data/rulesets/first-party-001/working/`. This review package has a distinct `experiment.*` ID, sits under `data/reference/`, and **must not be included in the native catalog's fingerprint or runtime content**. An authenticated, opt-in experimental API is a **separate Core Code project** request. The Wiki must not read arbitrary `working/` files or show experimental alternatives as one effective native class.
+Warlock Alpha 0.3.1 is the **current selected native Warlock** even while its design is being tested. Imported edition candidates stay in `working/`; the historical experiment record stays in `reference/` with a distinct `experiment.*` ID, and that reference record itself is never runtime authority. The native Warlock entities are included in the catalog and its semantic fingerprint. The Wiki should display the selected native alpha as the current Warlock, with a clear playtest/version label, not as a finalized architecture decision.
 
 The playtest packet contains CC-licensed SRD sources, historical non-SRD research references, and original first-party adaptations. Do not treat every historical non-SRD contribution as CC-licensed or freely distributable. Perform source-rights review separately before any external release.

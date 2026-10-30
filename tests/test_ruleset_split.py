@@ -59,6 +59,15 @@ class NativeWorkingBoundaryTests(unittest.TestCase):
         self.assertFalse(matches_preserved_working_evidence(
             native, dict(source, baselineStatus="pending-native-reconciliation"), working_path))
 
+    def test_selected_warlock_may_supersede_preserved_source_candidates(self):
+        native_path = ROOT / "data/rulesets/first-party-001/native/classes/base/warlock.json"
+        source_path = ROOT / "data/rulesets/first-party-001/working/classes/base/warlock.json"
+        native = json.loads(native_path.read_text(encoding="utf-8"))
+        source = json.loads(source_path.read_text(encoding="utf-8"))
+        self.assertEqual("pending-native-reconciliation", source["baselineStatus"])
+        self.assertIn("candidateDefinitions", source)
+        self.assertTrue(matches_preserved_working_evidence(native, source, source_path))
+
     def test_monster_statblock_reference_is_non_numeric_mirror_annotation(self):
         original = {"id": "monster.test", "name": "Test", "kind": "monster",
                     "definition": {"ac": [10], "hp": {"average": 1}}}

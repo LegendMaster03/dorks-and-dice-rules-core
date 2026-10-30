@@ -452,6 +452,15 @@
         "/definition/mechanics/bothMayCoexist",
         "/definition/mechanics/requiresCompanionPathSelection"
       ]
+    },
+    "class.warlock": {
+      "reconciliationDocument": "docs/content-promotion/warlock-modular-alpha-0.3.1.md",
+      "sourceBaselineStatus": "pending-native-reconciliation",
+      "reason": "The historical 5e/5.5e Warlock candidates stay unchanged in working as source evidence; the independently selected modular Alpha 0.3.1 is the operative native class.",
+      "changedPaths": [
+        "/candidateDefinitions",
+        "/definition"
+      ]
     }
   },
   "conditionReadiness": {
