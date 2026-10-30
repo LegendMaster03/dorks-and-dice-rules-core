@@ -1,0 +1,233 @@
+{
+  "id": "monster.ice-devil",
+  "name": "Ice Devil",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 228,
+      "formula": "24d10 + 96"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 21,
+    "dex": 14,
+    "con": 18,
+    "int": 18,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "dex": "+7",
+      "con": "+9",
+      "wis": "+7",
+      "cha": "+9"
+    },
+    "skill": {
+      "insight": "+7",
+      "perception": "+7",
+      "persuasion": "+9"
+    },
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 17,
+    "immune": [
+      "cold",
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "14",
+    "spellcasting": [
+      {
+        "name": "Ice Wall {@recharge}",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The devil casts {@spell Wall of Ice|SRD52} (level 8 version), requiring no spell components and using Intelligence as the spellcasting ability (spell save {@dc 17})."
+        ],
+        "recharge": {
+          "6": [
+            "{@spell Wall of Ice|SRD52} (level 8 version)"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "action",
+        "hidden": [
+          "recharge"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes three Ice Spear attacks. It can replace one attack with a Tail attack."
+        ]
+      },
+      {
+        "name": "Ice Spear",
+        "entries": [
+          "{@atkr m,r} {@hit 10}, reach 5 ft. or range 30/120 ft. {@h}14 ({@damage 2d8 + 5}) Piercing damage plus 10 ({@damage 3d6}) Cold damage. Until the end of its next turn, the target can't take a {@variantrule Bonus Action|SRD52} or {@variantrule Reaction|SRD52}, its {@variantrule Speed|SRD52} decreases by 10 feet, and it can move or take one action on its turn, not both. {@hom}The spear magically returns to the devil's hand immediately after a ranged attack."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 3d6 + 5}) Bludgeoning damage plus 18 ({@damage 4d8}) Cold damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/ice-devil.opus"
+    },
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "B",
+      "C",
+      "P"
+    ],
+    "damageTagsSpell": [
+      "C"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RCH",
+      "THW"
+    ],
+    "savingThrowForcedSpell": [
+      "constitution",
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ice Devil",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Ice Devil",
+            "entries": [
+              "{@i Devil of Antipathy and Intellectual Arrogance}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Arcana"
+                  }
+                ]
+              },
+              "Heartless strategists of the Nine Hells, ice devils—also known as gelugons—forsake emotion to indulge in their own malicious interpretations of logic. For them, the multiverse is a puzzle that must be solved to benefit them, their masters, and the Nine Hells.",
+              "Ice devils act maliciously, disguising their whims as reason and strategy. In the service of evil masters, these insectile devils patiently plot the movements of infernal armies and scheme ways to fulfill wicked goals. They might also serve as guardians, owing to their martial prowess and ability to reshape battlefields with walls of ice.",
+              "When indulging their own schemes, ice devils tempt mortals to forsake empathy and social connections to embrace selfish, destructive visions of intellectualism. After isolating victims, these devils drain them of their secrets or send them forth to spread fractious dogmas cloaked as reason.",
+              "Ice devils usually lurk in frozen realms, particularly the frigid layer of Cania in the Nine Hells.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Part of the charm of ice devils is that they always think they're smarter than you. Mmm—there are few pleasures sweeter than proving a devil wrong."
+                    ],
+                    "by": "Tasha"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Ice Devil.webp"
+            },
+            "credit": "Nils Hamm",
+            "width": 1506,
+            "height": 1795
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
