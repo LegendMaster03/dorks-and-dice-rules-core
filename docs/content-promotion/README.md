@@ -45,3 +45,5 @@ The original release's fixed fingerprint was `870ca5e89a97b9176f0a3b55fb6cb94672
 - **Rules Wiki UI:** read the native authorized catalog, show approved classes, condition effects and creature identities, and label any separately authorized experiments.
 
 Review notes are in `docs/handoffs/` and the machine-readable ledger. Deferred mechanics are documented for their relevant subsystem; they do not block unrelated coherent rules.
+
+**Continuing promotion:** The selected native Skills, Competencies and fear-family interactions are now represented in `native/skills.json`, `native/competencies.json`, and `native/fear.json`. Original working records remain for source comparison. Deferred fear escalation is explicitly non-operative; these selections are not claims of finality.

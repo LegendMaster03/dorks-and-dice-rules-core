@@ -1,0 +1,528 @@
+{
+  "_meta": {
+    "role": "selected native crafting and tool competency definitions; actively revised",
+    "reference": "docs/rewrite/native-seed-skills-and-competencies.md"
+  },
+  "competencies": [
+    {
+      "id": "competency.alchemy",
+      "name": "Alchemy",
+      "kind": "competency",
+      "trainingIdentity": "competency.alchemy",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Alchemist's Supplies"
+        }
+      ]
+    },
+    {
+      "id": "competency.armorsmithing",
+      "name": "Armorsmithing",
+      "kind": "competency",
+      "trainingIdentity": "competency.armorsmithing",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.basketweaving",
+      "name": "Basketweaving",
+      "kind": "competency",
+      "trainingIdentity": "competency.basketweaving",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.blacksmithing",
+      "name": "Blacksmithing",
+      "kind": "competency",
+      "trainingIdentity": "competency.blacksmithing",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.bookbinding",
+      "name": "Bookbinding",
+      "kind": "competency",
+      "trainingIdentity": "competency.bookbinding",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.bowmaking",
+      "name": "Bowmaking",
+      "kind": "competency",
+      "trainingIdentity": "competency.bowmaking",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.brewing",
+      "name": "Brewing",
+      "kind": "competency",
+      "trainingIdentity": "competency.brewing",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Brewer's Supplies"
+        }
+      ]
+    },
+    {
+      "id": "competency.calligraphy",
+      "name": "Calligraphy",
+      "kind": "competency",
+      "trainingIdentity": "competency.calligraphy",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Calligrapher's Supplies"
+        }
+      ]
+    },
+    {
+      "id": "competency.carpentry",
+      "name": "Carpentry",
+      "kind": "competency",
+      "trainingIdentity": "competency.carpentry",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Carpenter's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.cartography",
+      "name": "Cartography",
+      "kind": "competency",
+      "trainingIdentity": "competency.cartography",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Cartographer's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.cobbling",
+      "name": "Cobbling",
+      "kind": "competency",
+      "trainingIdentity": "competency.cobbling",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Cobbler's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.cooking",
+      "name": "Cooking",
+      "kind": "competency",
+      "trainingIdentity": "competency.cooking",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Cook's Utensils"
+        }
+      ]
+    },
+    {
+      "id": "competency.disguise-kit",
+      "name": "Disguise Kit",
+      "kind": "competency",
+      "trainingIdentity": "competency.disguise-kit",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Disguise Kit"
+        }
+      ]
+    },
+    {
+      "id": "competency.forgery",
+      "name": "Forgery",
+      "kind": "competency",
+      "trainingIdentity": "competency.forgery",
+      "facets": [
+        {
+          "type": "skill",
+          "skill": "skill.forgery"
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Forgery Kit"
+        }
+      ]
+    },
+    {
+      "id": "competency.gemcutting",
+      "name": "Gemcutting",
+      "kind": "competency",
+      "trainingIdentity": "competency.gemcutting",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Jeweler's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.glassblowing",
+      "name": "Glassblowing",
+      "kind": "competency",
+      "trainingIdentity": "competency.glassblowing",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Glassblower's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.herbalism",
+      "name": "Herbalism",
+      "kind": "competency",
+      "trainingIdentity": "competency.herbalism",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Herbalism Kit"
+        }
+      ]
+    },
+    {
+      "id": "competency.leatherworking",
+      "name": "Leatherworking",
+      "kind": "competency",
+      "trainingIdentity": "competency.leatherworking",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Leatherworker's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.locksmithing",
+      "name": "Locksmithing",
+      "kind": "competency",
+      "trainingIdentity": "competency.locksmithing",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.navigation",
+      "name": "Navigation",
+      "kind": "competency",
+      "trainingIdentity": "competency.navigation",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Navigator's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.painting",
+      "name": "Painting",
+      "kind": "competency",
+      "trainingIdentity": "competency.painting",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Painter's Supplies"
+        }
+      ]
+    },
+    {
+      "id": "competency.poisoning",
+      "name": "Poisoning",
+      "kind": "competency",
+      "trainingIdentity": "competency.poisoning",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Poisoner's Kit"
+        }
+      ]
+    },
+    {
+      "id": "competency.pottery",
+      "name": "Pottery",
+      "kind": "competency",
+      "trainingIdentity": "competency.pottery",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Potter's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.sculpting",
+      "name": "Sculpting",
+      "kind": "competency",
+      "trainingIdentity": "competency.sculpting",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.shipmaking",
+      "name": "Shipmaking",
+      "kind": "competency",
+      "trainingIdentity": "competency.shipmaking",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.smithing",
+      "name": "Smithing",
+      "kind": "competency",
+      "trainingIdentity": "competency.smithing",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Smith's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.stonemasonry",
+      "name": "Stonemasonry",
+      "kind": "competency",
+      "trainingIdentity": "competency.stonemasonry",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Mason's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.thieves-tools",
+      "name": "Thieves' Tools",
+      "kind": "competency",
+      "trainingIdentity": "competency.thieves-tools",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Thieves' Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.tinkering",
+      "name": "Tinkering",
+      "kind": "competency",
+      "trainingIdentity": "competency.tinkering",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Tinker's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.trapmaking",
+      "name": "Trapmaking",
+      "kind": "competency",
+      "trainingIdentity": "competency.trapmaking",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.weaponsmithing",
+      "name": "Weaponsmithing",
+      "kind": "competency",
+      "trainingIdentity": "competency.weaponsmithing",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        }
+      ]
+    },
+    {
+      "id": "competency.weaving",
+      "name": "Weaving",
+      "kind": "competency",
+      "trainingIdentity": "competency.weaving",
+      "facets": [
+        {
+          "type": "crafting-skill",
+          "governingAbility": "intelligence",
+          "ranks": true,
+          "classSkillState": true,
+          "trainedOnly": false,
+          "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Weaver's Tools"
+        }
+      ]
+    },
+    {
+      "id": "competency.woodcarving",
+      "name": "Woodcarving",
+      "kind": "competency",
+      "trainingIdentity": "competency.woodcarving",
+      "facets": [
+        {
+          "type": "tool-proficiency",
+          "tool": "Woodcarver's Tools"
+        }
+      ]
+    }
+  ]
+}
