@@ -5,7 +5,7 @@
   "parentClass": "class.warlock",
   "availableAtWarlockLevel": 1,
   "invocationCost": 0,
-  "description": "One active wearable or transferable talisman. Untrained Guidance adds 1d4 to an unproficient skill ability check without spending charges. Fortunate Correction spends one charge after a failed ability check to add 1d4. They cannot both enhance one check, and neither applies to attacks or saving throws. Charges equal Warlock proficiency bonus and recover on Long Rest; replacing a lost talisman takes a one-hour ceremony and does not restore charges.",
+  "description": "One active wearable or transferable talisman.\n\nUntrained Guidance adds 1d4 to an unproficient skill ability check without spending charges.\n\nFortunate Correction spends one charge after a failed ability check to add 1d4.\n\nThey cannot both enhance one check, and neither applies to attacks or saving throws. Charges equal Warlock proficiency bonus and recover on Long Rest; replacing a lost talisman takes a one-hour ceremony and does not restore charges.",
   "deepenedAtLevel5": "Shared Ward: while the wearer is within 60 feet and takes damage, spend the Warlock's Reaction and one existing Talisman charge to reduce that damage event by 2d6 plus Charisma modifier, bounded between zero and the damage taken. The dedicated Talisman elective Invocations were omitted from this alpha.",
   "rulesStatus": "selected-for-playtest"
 }

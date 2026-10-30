@@ -142,6 +142,19 @@ class WarlockNativeAlphaTests(unittest.TestCase):
         self.assertEqual("pact.warlock.blade",self.invocations["invocation.devouring-blade"]["requiredPact"])
         self.assertEqual(12,self.invocations["invocation.devouring-blade"]["minimumWarlockLevel"])
 
+    def test_early_playtest_feedback(self):
+        # Approved changes to an existing Invocation and readability of a Pact.
+        chain = self.invocations["invocation.investment-of-the-chain-master"]
+        self.assertEqual("pact.warlock.chain", chain["requiredPact"])
+        self.assertIn("Necrotic/Psychic/Radiant", chain["description"])
+
+        talisman = self.pacts["pact.warlock.talisman"]["description"]
+        self.assertIn("\n\nUntrained Guidance", talisman)
+        self.assertIn("\n\nFortunate Correction", talisman)
+
+        # Non-SRD Grasp of Hadar has not been selected for distributable native content.
+        self.assertNotIn("invocation.grasp-of-hadar", self.invocations)
+
     def test_reference_remains_comparison_not_authority(self):
         self.assertFalse(self.reference["runtimeAuthority"])
         self.assertEqual("class.warlock", self.reference["excludedAuthoritativeClassId"])

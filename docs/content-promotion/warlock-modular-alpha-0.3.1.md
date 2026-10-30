@@ -56,6 +56,17 @@ The 3.5e, 2014 5e, raw 2024 5.5e, Pact-adjusted 2024, and selected hybrid Invoca
 
 Alpha 0.3.1 omits **seven elective Invocations**, including the three dedicated Talisman options. The resulting playtest is informative about the core Talisman and generic clauses, but insufficient to conclude that the completed Talisman ecosystem is weak or strong. Star Chain/Seeker are disabled/deferred, not deleted. Additional Pact acquisition entitlement is not selected. Other pending shared mechanics include familiar behavior, crafting/feat interactions, spell resource integrations, and exact Fiend event timing.
 
+## Early external feedback (October 30, 2026)
+
+Michael's initial packet annotations are favorable toward the Patron/Pact/Invocation architecture, but are not a substitute for observed balance data. He will playtest the class at the October 31 one-shot. Changes selected before that test:
+
+- **Pact of the Talisman:** separate Untrained Guidance and Fortunate Correction into readable paragraphs. No numerical or entitlement change.
+- **Investment of the Chain Master:** allow Psychic alongside Necrotic and Radiant as a damage-conversion choice, consistent with Blade Pact. No additional damage, attack, or resource grant.
+- **Pact of the Tome:** consider Summon Undead in place of Animate Dead as a test alternative, but **do not change the selected spell yet**.
+- **Grasp of Hadar:** requested by the tester, but originates outside the Creative Commons SRD. **Not selected or added to native content**; any limited table test must use the original authorized non-SRD source separately, not reproduce that text as a first-party licensed rule. Original independently designed movement alternatives may be considered later.
+
+These are early targeted refinements rather than approval of all outstanding rules or proof of class balance. The alpha remains 0.3.1 pending a full playtest-based revision.
+
 ## Evaluation and acceptance
 
 Compare representative builds at levels **1, 2, 4, 5, 7, 9, 11, 13, 15, 16, 18, and 20**, with Fiend and each of Blade/Chain/Tome/Talisman, against similarly equipped, single-progression reconciled classes in comparable encounters. Record action/reaction contention, spell resources, feature-combo viability, options actually worth selecting, and the time required to make meaningful character decisions. Ask for concrete examples of over- or underperformance and mechanics that needed adjudication. Do not collect a compulsory form.
