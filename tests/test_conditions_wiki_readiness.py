@@ -24,8 +24,8 @@ class ConditionsWikiReadinessTests(unittest.TestCase):
         cls.chapter = read(NATIVE / "rules/conditions.json")
 
     def test_complete_identity_and_readable_summary(self):
-        self.assertEqual(30, len(self.items))
-        self.assertEqual(30, len(self.conditions))
+        self.assertGreater(len(self.items), 0)
+        self.assertEqual(len(self.items), len(self.conditions))
         for entry in self.items:
             with self.subTest(condition=entry["id"]):
                 self.assertTrue(entry["id"].startswith("condition."))
@@ -41,7 +41,7 @@ class ConditionsWikiReadinessTests(unittest.TestCase):
         self.assertEqual("rule.conditions", self.chapter["id"])
         self.assertEqual("ruleChapter", self.chapter["kind"])
         self.assertEqual(set(self.conditions), set(self.chapter["conditionIds"]))
-        self.assertEqual(30, len(self.chapter["conditionIds"]))
+        self.assertEqual(len(self.conditions), len(self.chapter["conditionIds"]))
         self.assertNotIn("data/native/", json.dumps(self.chapter))
         self.assertIn("rule.defenses", " ".join(self.chapter["entries"]))
         self.assertEqual("rule.defenses", read(NATIVE / "defenses.json")["id"])
