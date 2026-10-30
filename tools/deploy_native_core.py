@@ -101,6 +101,60 @@ def preflight():
     print("Host preflight passed: isolation, Site grant and container ownership", flush=True)
     return image, env, compose, pair, control
 
+# A content-only image inherits the *running* application's executable layers.
+# Reject it when a runtime input changed since that application's commit.
+RUNTIME_PATHS = (
+    "src/RulesCore.Content/",
+    "src/RulesCore.Host/",
+    "Dockerfile",
+    "docker-compose.yml",
+    "docker-compose.private-tunnel.yml",
+    ".dockerignore",
+    "global.json",
+    "NuGet.config",
+    "Directory.Build.props",
+    "Directory.Packages.props",
+)
+
+def require_runtime_unchanged(previous_sha, target_sha):
+    require(bool(re.fullmatch(r"[0-9a-f]{40}", previous_sha)),
+            "Running image has no trusted Git revision; select Full deploy")
+    require(bool(re.fullmatch(r"[0-9a-f]{40}", target_sha)),
+            "Invalid target release commit")
+    command("git", "cat-file", "-e", previous_sha + "^{commit}")
+    command("git", "merge-base", "--is-ancestor", previous_sha, target_sha)
+    result = subprocess.run(
+        ["git", "diff", "--quiet", previous_sha, target_sha, "--", *RUNTIME_PATHS],
+        text=True, capture_output=True)
+    require(result.returncode == 0,
+            "Core executable or deployment settings changed; select Full deploy")
+
+def content_base_image():
+    images = []
+    for name in (PUBLIC, PRIVATE):
+        state = inspect("container", name)
+        require(state["State"]["Running"] and not state["State"].get("OOMKilled"),
+                "Two healthy Core instances are required for Content update; select Full deploy")
+        require(state["Config"].get("Labels", {}).get("com.docker.compose.project") == PUBLIC,
+                "Core container is not owned by the expected Compose project")
+        image_id = state["Image"]
+        require(bool(re.fullmatch(r"sha256:[0-9a-f]{64}", image_id)),
+                "Running Core image identity is invalid")
+        images.append(image_id)
+    require(images[0] == images[1],
+            "Public/private Core images differ; select Full deploy")
+    base = inspect("image", images[0])
+    require(base["Config"].get("User") not in (None, "", "root", "0"),
+            "Running Core base image is not unprivileged")
+    prior_sha = base["Config"].get("Labels", {}).get("org.opencontainers.image.revision", "")
+    require_runtime_unchanged(prior_sha, os.environ["RELEASE_SHA"])
+    # Use the verified local commit tag rather than an unresolvable image ID
+    # in Dockerfile FROM. Never pull an external image for this mode.
+    tag = "dorks-and-dice-rules-core:rewrite-" + prior_sha
+    require(inspect("image", tag)["Id"] == images[0],
+            "Running image commit tag does not match its actual image; select Full deploy")
+    return tag
+
 def probe(network, host, path):
     output = command("docker", "run", "--rm", "--network", network, "curlimages/curl:8.12.1",
                      "--connect-timeout", "2", "--max-time", "5", "-sS", "-w", "\\n%{http_code}",
@@ -172,8 +226,13 @@ def deploy():
 
 if __name__ == "__main__":
     try:
-        require(len(sys.argv) == 2 and sys.argv[1] in {"preflight", "deploy"}, "Expected preflight or deploy")
-        preflight() if sys.argv[1] == "preflight" else deploy()
+        require(len(sys.argv) == 2 and sys.argv[1] in {"preflight", "content-base", "deploy"}, "Expected preflight, content-base or deploy")
+        if sys.argv[1] == "preflight":
+            preflight()
+        elif sys.argv[1] == "content-base":
+            print("CONTENT_BASE_IMAGE=" + content_base_image())
+        else:
+            deploy()
     except (RuntimeError, KeyError, ValueError, OSError) as error:
         print(f"Native Core release stopped: {error}", file=sys.stderr)
         sys.exit(1)
