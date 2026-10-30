@@ -40,7 +40,7 @@
         "state": "native",
         "count": 35,
         "path": "data/rulesets/first-party-001/native/",
-        "note": "Thirty conditions including Exhaustion; shared defense and monster-statblock foundations already native."
+        "note": "Thirty selected native conditions (29 ordinary plus six-level Exhaustion), plus five other general-rule/foundation records. Condition catalog is Wiki-readable; executable condition engine remains separate."
       }
     ],
     "promotedClassModels": [
@@ -446,5 +446,42 @@
         "/definition/mechanics/requiresCompanionPathSelection"
       ]
     }
+  },
+  "conditionReadiness": {
+    "status": "native-selected-read-only-wiki-ready",
+    "documentation": "docs/content-promotion/conditions-readiness.md",
+    "records": 30,
+    "byKind": {
+      "condition": 29,
+      "leveled-condition": 1
+    },
+    "nativePath": "data/rulesets/first-party-001/native/conditions.json",
+    "indexRule": "rule.conditions",
+    "relatedRules": [
+      "rule.defenses",
+      "rule.pin-and-held"
+    ],
+    "displayDescriptions": "all-thirty-present",
+    "newlyCompletedDescriptions": [
+      "condition.deafened",
+      "condition.frightened",
+      "condition.grappled",
+      "condition.poisoned",
+      "condition.restrained"
+    ],
+    "sourceEditionAlternatives": "preserved-outside-native",
+    "runtimeEffectInterpreter": "not-implemented-by-this-content-pass",
+    "withheldCandidates": [
+      "confused",
+      "staggered",
+      "turned",
+      "historical-3x-exhausted"
+    ],
+    "outstandingDependencies": [
+      "3.x fear stacking and automatic escalation",
+      "3.x Exhausted and repeat-fatigue mapping to native conditions",
+      "shared movement/action and spellcasting procedures for Entangled, Nauseated, Pinned",
+      "source-aware condition inheritance and executable combat/defense calculations"
+    ]
   }
 }
