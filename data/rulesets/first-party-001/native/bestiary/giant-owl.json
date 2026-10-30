@@ -1,0 +1,152 @@
+{
+  "id": "monster.giant-owl",
+  "name": "Giant Owl",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 5,
+      "fly": 60
+    },
+    "str": 13,
+    "dex": 15,
+    "con": 12,
+    "int": 10,
+    "wis": 14,
+    "cha": 10,
+    "save": {
+      "wis": "+4"
+    },
+    "skill": {
+      "perception": "+6",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 16,
+    "resist": [
+      "necrotic",
+      "radiant"
+    ],
+    "languages": [
+      "Celestial; understands Common",
+      "Elvish",
+      "and Sylvan but can't speak them"
+    ],
+    "cr": "1/4",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The owl casts one of the following spells, requiring no spell components and using Wisdom as the spellcasting ability:"
+        ],
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}",
+          "{@spell Detect Magic|SRD52}"
+        ],
+        "daily": {
+          "1": [
+            "{@spell Clairvoyance|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The owl doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+        ]
+      },
+      {
+        "name": "Keen Hearing and Sight",
+        "entries": [
+          "The owl has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or sight."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Talons",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 1d10 + 2}) Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "forest",
+      "hill"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/giant-owl.opus"
+    },
+    "traitTags": [
+      "Flyby"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "languageTags": [
+      "C",
+      "CE",
+      "CS",
+      "E",
+      "S"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Giant Owl",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Owl.webp"
+                  },
+                  "width": 506,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
