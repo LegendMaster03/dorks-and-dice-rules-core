@@ -1,0 +1,112 @@
+{
+  "id": "monster.owl",
+  "name": "Owl",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 1,
+      "formula": "1d4 - 1"
+    },
+    "speed": {
+      "walk": 5,
+      "fly": 60
+    },
+    "str": 3,
+    "dex": 13,
+    "con": 8,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+5",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 15,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The owl doesn't provoke {@action Opportunity Attack|SRD52|Opportunity Attacks} when it flies out of an enemy's reach."
+        ]
+      },
+      {
+        "name": "Keen Hearing and Sight",
+        "entries": [
+          "The owl has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or sight."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Talons",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}1 Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "forest",
+      "hill"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/owl.opus"
+    },
+    "traitTags": [
+      "Flyby"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Owl",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Owl.webp"
+                  },
+                  "credit": "Jonathan Kuo",
+                  "width": 506,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

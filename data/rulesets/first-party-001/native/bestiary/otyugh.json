@@ -1,0 +1,189 @@
+{
+  "id": "monster.otyugh",
+  "name": "Otyugh",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 104,
+      "formula": "11d10 + 44"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 11,
+    "con": 19,
+    "int": 6,
+    "wis": 13,
+    "cha": 6,
+    "save": {
+      "con": "+7"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 11,
+    "languages": [
+      "Otyugh; telepathy 120 ft. (doesn't allow the receiving creature to respond telepathically)"
+    ],
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The otyugh makes one Bite attack and two Tentacle attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition. Whenever the {@condition Poisoned|SRD52} target finishes a {@variantrule Long Rest|SRD52}, it is subjected to the following effect. {@actSave con} {@dc 15}. {@actSaveFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by 5 ({@dice 1d10}) and doesn't return to normal until the {@condition Poisoned|SRD52} condition ends on the target. {@actSaveSuccess} The {@condition Poisoned|SRD52} condition ends."
+        ]
+      },
+      {
+        "name": "Tentacle",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from one of two tentacles."
+        ]
+      },
+      {
+        "name": "Tentacle Slam",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature {@condition Grappled|SRD52} by the otyugh. {@actSaveFail} 16 ({@damage 3d8 + 3}) Bludgeoning damage, and the target has the {@condition Stunned|SRD52} condition until the start of the otyugh's next turn. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/otyugh.opus"
+    },
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack",
+      "Tentacles"
+    ],
+    "languageTags": [
+      "OTH",
+      "TP"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "poisoned",
+      "stunned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Otyugh",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Otyugh",
+            "entries": [
+              "{@i Garbage-Heap Gourmand}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Otyughs live to eat—the more disgusting the meal, the better. They consider all non-otyughs that come within reach dishes in life's endless buffet. In dumps, sewers, polluted ruins, and similar murky depths, otyughs devour garbage, carcasses, and anything else their tentacles can cram in their expansive maws. Some creatures ply otyughs with trash to recruit them as watchful—if disgusting—guardians.",
+              "Otyughs often bury themselves amid trash heaps and observe their surroundings with their eye-studded stalk. They use glittery trash and telepathic urgings to coax creatures close, then burst from hiding, attacking with their spiny tentacles and filthy maws. Roll on or choose a result from the Otyugh Lures table to inspire how an otyugh tempts prey close.",
+              {
+                "type": "table",
+                "caption": "Otyugh Lures",
+                "colLabels": [
+                  "1d4",
+                  "To Attract Potential Meals, the Otyugh..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Disguises its tentacles with garbage puppets."
+                  ],
+                  [
+                    "2",
+                    "Sings an enticing song in Otyugh."
+                  ],
+                  [
+                    "3",
+                    "Telepathically transmits a message like \"Happy good stuff here!\" or \"Help now! I'm too delicious?\""
+                  ],
+                  [
+                    "4",
+                    "Telepathically transmits an image of a large gemstone, crooked weapon, or soggy pastry."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Otyugh.webp"
+            },
+            "credit": "Néstor Ossandón Leal",
+            "width": 2560,
+            "height": 1752
+          }
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Limited Telepathy",
+        "entries": [
+          "The otyugh can magically transmit simple messages and images to any creature within 120 feet of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
