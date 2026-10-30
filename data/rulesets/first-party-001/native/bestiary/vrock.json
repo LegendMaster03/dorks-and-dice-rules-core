@@ -1,0 +1,187 @@
+{
+  "id": "monster.vrock",
+  "name": "Vrock",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Demons"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 152,
+      "formula": "16d10 + 64"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 60
+    },
+    "str": 17,
+    "dex": 15,
+    "con": 18,
+    "int": 8,
+    "wis": 13,
+    "cha": 8,
+    "save": {
+      "dex": "+5",
+      "wis": "+4",
+      "cha": "+2"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 11,
+    "resist": [
+      "cold",
+      "fire",
+      "lightning"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Abyssal; telepathy 120 ft."
+    ],
+    "cr": "6",
+    "trait": [
+      {
+        "name": "Demonic Restoration",
+        "entries": [
+          "If the vrock dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Abyss."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The vrock has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The vrock makes two Shred attacks."
+        ]
+      },
+      {
+        "name": "Shred",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage plus 10 ({@damage 3d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Spores {@recharge}",
+        "entries": [
+          "{@actSave con} {@dc 15}, each creature in a 20-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the vrock. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. While {@condition Poisoned|SRD52}, the target takes 5 ({@damage 1d10}) Poison damage at the start of each of its turns. Emptying a flask of {@item Holy Water|SRD52} on the target ends the effect early."
+        ]
+      },
+      {
+        "name": "Stunning Screech (1/Day)",
+        "entries": [
+          "{@actSave con} {@dc 15}, each creature in a 20-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the vrock (demons succeed automatically). {@actSaveFail} 10 ({@damage 3d6}) Thunder damage, and the target has the {@condition Stunned|SRD52} condition until the end of the vrock's next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, abyss"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/vrock.opus"
+    },
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AB",
+      "TP"
+    ],
+    "damageTags": [
+      "I",
+      "P",
+      "T"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "poisoned",
+      "stunned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Vrock",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Vrock",
+            "entries": [
+              "{@i Demon of Carnage and Ruin}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Abyss)|bestiary|environment=planar, abyss}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Screeching, vulturelike demons, vrocks soar from the Abyss to spread ruin and slaughter. Their filthy feathers carry magical toxins from the Lower Planes, creating a noxious cloud capable of killing those who escape the vrocks' vicious beaks and claws. To further terrorize their foes, vrocks unleash an otherworldly screech so terrible it can halt creatures in their tracks."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Vrock.webp"
+            },
+            "credit": "Valera Luftullina",
+            "width": 1117,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
