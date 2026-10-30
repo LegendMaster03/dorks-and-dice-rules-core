@@ -99,8 +99,8 @@ jobs:
           set -euo pipefail
           result=$(python3 tools/deploy_native_core.py content-base)
           printf '%s\n' "$result"
-          base=$(printf '%s\n' "$result" | sed -nE 's/^CONTENT_BASE_IMAGE_ID=(sha256:[0-9a-f]{64})$/\1/p')
-          [[ "$base" =~ ^sha256:[0-9a-f]{64}$ ]]
+          base=$(printf '%s\n' "$result" | sed -nE 's/^CONTENT_BASE_IMAGE=(dorks-and-dice-rules-core:rewrite-[0-9a-f]{40})$/\1/p')
+          [[ "$base" =~ ^dorks-and-dice-rules-core:rewrite-[0-9a-f]{40}$ ]]
           printf 'image=%s\n' "$base" >> "$GITHUB_OUTPUT"
       - name: Build content-only image (reuse unchanged running application)
         if: inputs.deployment_type == 'Content update'
