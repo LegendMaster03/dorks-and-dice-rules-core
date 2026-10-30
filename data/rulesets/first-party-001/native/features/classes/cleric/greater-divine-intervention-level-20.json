@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.cleric.greater-divine-intervention-level-20",
+  "name": "Greater Divine Intervention",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 20,
+  "definition": {
+    "name": "Greater Divine Intervention",
+    "description": "Greater Divine Intervention is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "direct-intervention-capstone",
+      "improves": "class-feature.cleric.divine-intervention-level-10",
+      "addsSpell": "wish",
+      "whenWishChosenLockout": "2d4-long-rests",
+      "noSpellSlotExpended": true,
+      "doesNotRemoveSeparateSupplicationMode": true
+    }
+  }
+}

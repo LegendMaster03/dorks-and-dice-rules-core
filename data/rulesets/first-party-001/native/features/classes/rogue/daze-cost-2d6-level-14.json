@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.rogue.daze-cost-2d6-level-14",
+  "name": "Daze (Cost: 2d6)",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 14,
+  "definition": {
+    "name": "Daze (Cost: 2d6)",
+    "description": "Native Rogue Daze (Cost: 2d6); uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "cunning-strike-effect",
+      "dieCost": 2,
+      "save": "constitution",
+      "saveDC": "8 + Dexterity modifier + proficiency bonus",
+      "onFailedSaveNextTurn": "only-one-of-move-action-bonus-action"
+    }
+  }
+}

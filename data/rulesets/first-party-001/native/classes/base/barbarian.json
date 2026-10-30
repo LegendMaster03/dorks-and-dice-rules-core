@@ -1,0 +1,809 @@
+{
+  "id": "class.barbarian",
+  "name": "Barbarian",
+  "kind": "class",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 12
+    },
+    "savingThrowProficiencies": [
+      "strength",
+      "constitution"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "simple",
+      "martial"
+    ],
+    "skillChoices": {
+      "choose": 2,
+      "from": [
+        "skill.animal-handling",
+        "skill.athletics",
+        "skill.intimidation",
+        "skill.nature",
+        "skill.perception",
+        "skill.survival"
+      ]
+    },
+    "rankedClassSkills": [
+      "skill.climb",
+      "skill.jump",
+      "skill.ride",
+      "skill.swim",
+      "skill.listen",
+      "skill.survival",
+      "skill.intimidation",
+      "skill.animal-handling"
+    ],
+    "skillPoints": {
+      "firstLevel": "4*(4+Int-modifier)",
+      "eachOtherLevel": "4+Int-modifier"
+    },
+    "attackProgression": "full-BAB",
+    "extraAttackAndIteratives": "alternative-procedures-not-cumulative",
+    "multiclassStrengthPrerequisite": 13,
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.barbarian.rage-level-1",
+          "class-feature.barbarian.unarmored-defense-level-1",
+          "class-feature.barbarian.weapon-mastery-level-1",
+          "barbarian.fast-movement"
+        ],
+        "improvements": [],
+        "rageUses": 2,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 2,
+        "trapSense": 0,
+        "damageReduction": 0,
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 0,
+          "will": 0
+        }
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.barbarian.danger-sense-level-2",
+          "class-feature.barbarian.reckless-attack-level-2",
+          "barbarian.uncanny-dodge"
+        ],
+        "improvements": [],
+        "rageUses": 2,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 2,
+        "trapSense": 0,
+        "damageReduction": 0,
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 0,
+          "will": 0
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [
+          "class-feature.barbarian.primal-knowledge-level-3",
+          "barbarian.trap-sense"
+        ],
+        "improvements": [],
+        "rageUses": 3,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 2,
+        "trapSense": 1,
+        "damageReduction": 0,
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 1,
+          "will": 1
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-4"
+        ],
+        "improvements": [
+          {
+            "feature": "weapon-mastery",
+            "choices": 3
+          }
+        ],
+        "rageUses": 3,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 1,
+        "damageReduction": 0,
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 1
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.barbarian.extra-attack-level-5",
+          "class-feature.barbarian.fast-movement-level-5",
+          "barbarian.improved-uncanny-dodge"
+        ],
+        "improvements": [],
+        "rageUses": 3,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 1,
+        "damageReduction": 0,
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 1
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 2
+          }
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 2,
+        "damageReduction": 0,
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.barbarian.feral-instinct-level-7",
+          "class-feature.barbarian.instinctive-pounce-level-7",
+          "barbarian.damage-reduction"
+        ],
+        "improvements": [],
+        "rageUses": 4,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 2,
+        "damageReduction": 1,
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-8"
+        ],
+        "improvements": [],
+        "rageUses": 4,
+        "battleRageDamage": 2,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 2,
+        "damageReduction": 1,
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 2,
+          "will": 2
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [
+          "class-feature.barbarian.brutal-critical-1-die-level-9",
+          "class-feature.barbarian.brutal-strike-level-9"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 3
+          },
+          {
+            "feature": "battle-rage",
+            "name": "Greater Battle Rage"
+          }
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 3,
+        "trapSense": 3,
+        "damageReduction": 1,
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "weapon-mastery",
+            "choices": 4
+          },
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 2
+          }
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 4,
+        "primalWillSaveBonus": 2,
+        "weaponMasteryChoices": 4,
+        "trapSense": 3,
+        "damageReduction": 2,
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [
+          "class-feature.barbarian.relentless-rage-level-11"
+        ],
+        "improvements": [
+          {
+            "feature": "primal-rage",
+            "name": "Greater Primal Rage"
+          }
+        ],
+        "rageUses": 4,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 3,
+        "damageReduction": 2,
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 3
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-12"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 4
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 4,
+        "damageReduction": 2,
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [
+          "class-feature.barbarian.brutal-critical-2-dice-level-13",
+          "class-feature.barbarian.improved-brutal-strike-level-13"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 3
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 4,
+        "damageReduction": 3,
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [
+          "barbarian.indomitable-will"
+        ],
+        "improvements": [],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 4,
+        "damageReduction": 3,
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 4,
+          "will": 4
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.barbarian.persistent-rage-level-15"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 5
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 3,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 5,
+        "damageReduction": 3,
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-16"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 4
+          },
+          {
+            "feature": "battle-rage",
+            "name": "Mighty Battle Rage"
+          }
+        ],
+        "rageUses": 5,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 5,
+        "damageReduction": 4,
+        "baseAttackBonus": 16,
+        "iterativeBaseAttackBonuses": [
+          16,
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [
+          "class-feature.barbarian.brutal-critical-3-dice-level-17",
+          "class-feature.barbarian.improved-brutal-strike-level-17",
+          "barbarian.tireless-rage"
+        ],
+        "improvements": [],
+        "rageUses": 6,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 5,
+        "damageReduction": 4,
+        "baseAttackBonus": 17,
+        "iterativeBaseAttackBonuses": [
+          17,
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 5
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.barbarian.indomitable-might-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.trap-sense",
+            "bonus": 6
+          }
+        ],
+        "rageUses": 6,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 6,
+        "damageReduction": 4,
+        "baseAttackBonus": 18,
+        "iterativeBaseAttackBonuses": [
+          18,
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 6
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.barbarian.ability-score-improvement-level-19"
+        ],
+        "improvements": [
+          {
+            "feature": "barbarian.damage-reduction",
+            "value": 5
+          }
+        ],
+        "rageUses": 6,
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 6,
+        "primalWillSaveBonus": 3,
+        "weaponMasteryChoices": 4,
+        "trapSense": 6,
+        "damageReduction": 5,
+        "baseAttackBonus": 19,
+        "iterativeBaseAttackBonuses": [
+          19,
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 6
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.barbarian.primal-champion-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "primal-rage",
+            "name": "Mighty Primal Rage"
+          },
+          {
+            "feature": "rage-resource",
+            "uses": "unlimited"
+          }
+        ],
+        "rageUses": "unlimited",
+        "battleRageDamage": 4,
+        "primalStrengthConstitutionBonus": 8,
+        "primalWillSaveBonus": 4,
+        "weaponMasteryChoices": 4,
+        "trapSense": 6,
+        "damageReduction": 5,
+        "baseAttackBonus": 20,
+        "iterativeBaseAttackBonuses": [
+          20,
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 12,
+          "reflex": 6,
+          "will": 6
+        }
+      }
+    ],
+    "inlineFeatures": [
+      {
+        "id": "barbarian.fast-movement",
+        "name": "Fast Movement",
+        "classLevel": 1,
+        "mechanics": {
+          "kind": "speed-bonus",
+          "feet": 10,
+          "requiresBeforeLevel5": [
+            "no-heavy-armor",
+            "no-heavy-load"
+          ],
+          "requiresAtLevel5": "no-heavy-armor",
+          "notAdditive": true
+        }
+      },
+      {
+        "id": "barbarian.uncanny-dodge",
+        "name": "Uncanny Dodge",
+        "classLevel": 2,
+        "mechanics": {
+          "kind": "keep-dexterity-to-ac",
+          "against": [
+            "flat-footed",
+            "invisible-attacker"
+          ],
+          "except": "immobilized"
+        }
+      },
+      {
+        "id": "barbarian.trap-sense",
+        "name": "Trap Sense",
+        "classLevel": 3,
+        "mechanics": {
+          "kind": "bonus-vs-traps",
+          "reflexAndDodgeAC": true,
+          "levels": [
+            3,
+            6,
+            9,
+            12,
+            15,
+            18
+          ],
+          "bonuses": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      {
+        "id": "barbarian.improved-uncanny-dodge",
+        "name": "Improved Uncanny Dodge",
+        "classLevel": 5,
+        "mechanics": {
+          "kind": "anti-flanking",
+          "rogueExceptionAdditionalLevels": 4,
+          "combineMulticlassUncannyDodgeLevels": true
+        }
+      },
+      {
+        "id": "barbarian.damage-reduction",
+        "name": "Damage Reduction",
+        "classLevel": 7,
+        "mechanics": {
+          "kind": "flat-reduction",
+          "eligible": [
+            "weapon-attacks",
+            "natural-attacks"
+          ],
+          "levels": [
+            7,
+            10,
+            13,
+            16,
+            19
+          ],
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "withResistance": "native-damage-resolution"
+        }
+      },
+      {
+        "id": "barbarian.indomitable-will",
+        "name": "Indomitable Will",
+        "classLevel": 14,
+        "mechanics": {
+          "kind": "conditional-will-save-bonus",
+          "bonus": 4,
+          "against": "enchantment",
+          "requires": "rage"
+        }
+      },
+      {
+        "id": "barbarian.tireless-rage",
+        "name": "Tireless Rage",
+        "classLevel": 17,
+        "mechanics": {
+          "kind": "remove-primal-rage-fatigue"
+        }
+      }
+    ],
+    "rageResource": "barbarian.rage",
+    "alignmentRestriction": null,
+    "illiteracyRestriction": false,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonTotalCharacterLevelMinimum": 21,
+    "subclasses": "excluded-pending-subclass-pass",
+    "prestigeClasses": "excluded-pending-prestige-pass",
+    "eligibleCraftAndProfessionCompetencies": {
+      "sourceConcepts": [
+        "Craft",
+        "Profession"
+      ],
+      "rule": "use-native-competency-eligibility-and-training-not-free-proficiency"
+    },
+    "startingEquipment": {
+      "chooseOnePackage": [
+        {
+          "name": "Traveling Warrior",
+          "choiceOfMartialMeleeWeapon": [
+            "greataxe",
+            "any-martial-melee-weapon"
+          ],
+          "secondWeapons": [
+            "two-handaxes",
+            "one-simple-weapon"
+          ],
+          "otherEquipment": [
+            "explorer-pack",
+            "four-javelins"
+          ]
+        },
+        {
+          "name": "Prepared Berserker",
+          "equipment": [
+            "greataxe",
+            "four-handaxes",
+            "explorer-pack"
+          ],
+          "currencyGP": 15
+        },
+        {
+          "name": "Starting Currency",
+          "currencyGP": 75
+        },
+        {
+          "name": "Variable Starting Currency",
+          "currencyFormulaGP": "2d4 * 10"
+        }
+      ],
+      "packagesMutuallyExclusive": true,
+      "itemsAlsoGrantedFromBackground": "according-to-native-background-rules"
+    },
+    "multiclassProficienciesWhenEntering": {
+      "armor": [
+        "shields"
+      ],
+      "weapons": [
+        "simple",
+        "martial"
+      ]
+    },
+    "skillTrainingNotes": "Ranked class skills express 3.x eligibility, not automatic proficiency in each listed skill. Craft and Profession map to native Competencies. Skill selections and ranks apply through the common character-creation and advancement rules."
+  }
+}

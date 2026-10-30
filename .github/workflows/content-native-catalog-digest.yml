@@ -1,0 +1,29 @@
+# Content-only digest verification; does not authorize publication or deployment.
+name: Rules Content Native Catalog Digest
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "data/rulesets/first-party-001/native/**"
+      - "docs/content-promotion/promotion-ledger.json"
+      - "tests/NativeCatalogFingerprint/**"
+      - ".github/workflows/content-native-catalog-digest.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  catalog-digest:
+    name: Calculate exact loader fingerprint and review inventory
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Check content against ledger with the actual C# native loader
+        env:
+          CONTENT_REVIEW_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: dotnet run --project tests/NativeCatalogFingerprint/NativeCatalogFingerprint.csproj --configuration Release

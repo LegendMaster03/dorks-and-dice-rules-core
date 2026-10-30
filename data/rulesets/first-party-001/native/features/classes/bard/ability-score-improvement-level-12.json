@@ -1,0 +1,26 @@
+{
+  "id": "class-feature.bard.ability-score-improvement-level-12",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 12,
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Ability Score Improvement: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "ability-improvement-or-feat",
+      "abilityChoices": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "feat": "any-eligible",
+      "epicBoonMinimumTotalCharacterLevel": 21,
+      "permanentAbilityScoreMaximum": null
+    }
+  }
+}

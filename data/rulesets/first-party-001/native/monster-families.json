@@ -1,0 +1,32 @@
+{
+  "monsterFamilies": [
+    {
+      "id": "monster-family.goblin",
+      "name": "Goblin",
+      "kind": "monsterFamily",
+      "memberIds": [
+        "monster.goblin-minion",
+        "monster.goblin-warrior",
+        "monster.goblin-boss"
+      ]
+    },
+    {
+      "id": "monster-family.hobgoblin",
+      "name": "Hobgoblin",
+      "kind": "monsterFamily",
+      "memberIds": [
+        "monster.hobgoblin-warrior",
+        "monster.hobgoblin-captain"
+      ]
+    },
+    {
+      "id": "monster-family.bugbear",
+      "name": "Bugbear",
+      "kind": "monsterFamily",
+      "memberIds": [
+        "monster.bugbear-warrior",
+        "monster.bugbear-stalker"
+      ]
+    }
+  ]
+}

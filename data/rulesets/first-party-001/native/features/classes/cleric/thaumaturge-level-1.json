@@ -1,0 +1,22 @@
+{
+  "id": "class-feature.cleric.thaumaturge-level-1",
+  "name": "Thaumaturge",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 1,
+  "definition": {
+    "name": "Thaumaturge",
+    "description": "Thaumaturge is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "divine-order-option",
+      "choiceOf": "class-feature.cleric.divine-order-level-1",
+      "extraKnownClericCantrips": 1,
+      "bonusToSkills": [
+        "arcana",
+        "religion"
+      ],
+      "bonus": "max(1,wisdom-modifier)",
+      "doesNotGrantProtector": true
+    }
+  }
+}

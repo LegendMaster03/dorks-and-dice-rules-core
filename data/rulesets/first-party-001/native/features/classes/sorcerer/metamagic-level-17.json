@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.sorcerer.metamagic-level-17",
+  "name": "Metamagic",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 17,
+  "definition": {
+    "name": "Metamagic",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "metamagic-option-progression",
+      "newOptions": 2,
+      "totalKnownOptions": 6,
+      "oneUnifiedPool": true
+    }
+  }
+}

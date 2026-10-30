@@ -1,0 +1,33 @@
+{
+  "id": "class-feature.barbarian.weapon-mastery-level-1",
+  "name": "Weapon Mastery",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 1,
+  "definition": {
+    "name": "Weapon Mastery",
+    "description": "Mastery of two eligible melee weapons, increasing to three at 4 and four at 10; exchange one choice on a Long Rest.",
+    "mechanics": {
+      "kind": "weapon-mastery",
+      "allowed": [
+        "simple-melee",
+        "martial-melee"
+      ],
+      "choices": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          10,
+          4
+        ]
+      ],
+      "changeOnLongRest": 1
+    }
+  }
+}

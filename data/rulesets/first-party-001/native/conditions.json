@@ -170,7 +170,8 @@
           "requiresSense": "hearing",
           "result": "automatic-failure"
         }
-      ]
+      ],
+      "description": "A Deafened creature cannot hear and automatically fails ability checks that require hearing. Deafened does not itself prevent speech, movement, or spellcasting."
     },
     {
       "id": "condition.entangled",
@@ -474,7 +475,8 @@
           "restriction": "cannot-willingly-move-closer",
           "relativeTo": "fear-source"
         }
-      ]
+      ],
+      "description": "A Frightened creature has Disadvantage on its attack rolls and ability checks while its fear source is within line of sight, and it cannot willingly move closer to that source. Frightened does not itself compel flight."
     },
     {
       "id": "condition.grappled",
@@ -517,7 +519,8 @@
           "event": "grappled-creature-moves-outside-grapple-reach",
           "cause": "any-effect"
         }
-      ]
+      ],
+      "description": "A Grappled creature has Speed 0, which cannot increase. Its attacks against targets other than its grappler have Disadvantage. Against attacks from creatures other than its grappler, it loses applicable positive Dexterity and dodge contributions to Armor Class. The grapple ends if its grappler becomes Incapacitated or an effect moves the creature beyond the grappler's reach."
     },
     {
       "id": "condition.held",
@@ -1006,7 +1009,8 @@
           "appliesTo": "ability-check",
           "mode": "disadvantage"
         }
-      ]
+      ],
+      "description": "A Poisoned creature has Disadvantage on attack rolls and ability checks. This condition does not automatically impose the separate Sickened or Nauseated conditions."
     },
     {
       "id": "condition.prone",
@@ -1087,7 +1091,8 @@
           "ability": "dexterity",
           "mode": "disadvantage"
         }
-      ]
+      ],
+      "description": "A Restrained creature has Speed 0, which cannot increase. Attacks against it have Advantage; its own attacks have Disadvantage; and it has Disadvantage on Dexterity saving throws."
     },
     {
       "id": "condition.shaken",

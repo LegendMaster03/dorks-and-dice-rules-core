@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.cleric.sear-undead-level-5",
+  "name": "Sear Undead",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 5,
+  "definition": {
+    "name": "Sear Undead",
+    "description": "Sear Undead is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "turn-undead-failed-save-extra-damage",
+      "appliesTo": "modern-turn-undead-failed-wisdom-save",
+      "damageDice": "max(1,wisdom-modifier)d8",
+      "damageType": "radiant",
+      "doesNotEndTurnUndead": true,
+      "destructionSupersedesDamage": true
+    }
+  }
+}

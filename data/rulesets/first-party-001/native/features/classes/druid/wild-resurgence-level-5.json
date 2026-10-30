@@ -1,0 +1,29 @@
+{
+  "id": "class-feature.druid.wild-resurgence-level-5",
+  "name": "Wild Resurgence",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 5,
+  "definition": {
+    "name": "Wild Resurgence",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "wild-shape-finite-charge-exchange",
+      "requiresFiniteCharges": true,
+      "spellSlotToWildShape": {
+        "requiresCurrentCharges": 0,
+        "costSpellSlot": 1,
+        "recoverFiniteCharge": 1,
+        "noAction": true,
+        "frequency": "once-per-turn"
+      },
+      "wildShapeToSpellSlot": {
+        "costFiniteCharge": 1,
+        "spellSlotLevel": 1,
+        "oncePerLongRest": true,
+        "noAction": true
+      },
+      "unlimitedTransformationsNeverCountAsConvertibleFiniteCharges": true
+    }
+  }
+}

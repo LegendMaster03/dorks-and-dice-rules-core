@@ -1,0 +1,2088 @@
+{
+  "id": "class.druid",
+  "name": "Druid",
+  "kind": "class",
+  "definition": {
+    "classType": "base",
+    "band": 1,
+    "levelRange": [
+      1,
+      20
+    ],
+    "hitDie": {
+      "number": 1,
+      "faces": 8
+    },
+    "spellcastingAbility": "wisdom",
+    "casterProgression": "full",
+    "savingThrowProficiencies": [
+      "intelligence",
+      "wisdom"
+    ],
+    "armorProficiencies": [
+      "light",
+      "medium",
+      "shields"
+    ],
+    "weaponProficiencies": [
+      "club",
+      "dagger",
+      "dart",
+      "javelin",
+      "mace",
+      "quarterstaff",
+      "scimitar",
+      "sickle",
+      "sling",
+      "spear",
+      "shortspear",
+      "natural-attacks-in-eligible-form"
+    ],
+    "skillChoices": {
+      "count": 2,
+      "from": [
+        "arcana",
+        "animal-handling",
+        "insight",
+        "medicine",
+        "nature",
+        "perception",
+        "religion",
+        "survival"
+      ]
+    },
+    "rankedClassSkills": [
+      "concentration",
+      "craft",
+      "diplomacy",
+      "handle-animal",
+      "heal",
+      "knowledge-nature",
+      "listen",
+      "profession",
+      "ride",
+      "spellcraft",
+      "spot",
+      "survival",
+      "swim"
+    ],
+    "rankedSkillPoints": {
+      "firstLevel": "4*(4+intelligence-modifier)",
+      "otherLevels": "4+intelligence-modifier"
+    },
+    "bonusLanguages": [
+      "sylvan"
+    ],
+    "alignmentRestriction": null,
+    "metalArmorRestrictions": {
+      "mechanicalLossOfMagic": false,
+      "mandatoryNonmetalOnly": false,
+      "mayObserveTraditionVoluntarily": true
+    },
+    "noExDruidLossOfPowersForAlignmentOrTeachingDruidic": true,
+    "spellAccess": "entire-eligible-druid-list-of-castable-levels",
+    "spellPreparation": "none",
+    "spellKnownCapacity": null,
+    "spellResourceModes": [
+      "spell-slots",
+      "spell-points"
+    ],
+    "cantripsKnownProgression": [
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "spellSlotsProgression": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1,
+        1,
+        1
+      ],
+      [
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    ],
+    "primalOrderSelection": [
+      "class-feature.druid.magician-level-1",
+      "class-feature.druid.warden-level-1"
+    ],
+    "elementalFurySelection": [
+      "class-feature.druid.potent-spellcasting-level-7",
+      "class-feature.druid.primal-strike-level-7"
+    ],
+    "choiceOnlyFeatureIds": [
+      "class-feature.druid.magician-level-1",
+      "class-feature.druid.potent-spellcasting-level-7",
+      "class-feature.druid.primal-strike-level-7",
+      "class-feature.druid.warden-level-1",
+      "druid.animal-companion",
+      "class-feature.druid.wild-companion-level-2"
+    ],
+    "animalCompanion": "druid.animal-companion",
+    "animalCompanionPersistent": true,
+    "temporaryWildCompanionCanCoexist": false,
+    "companionActionEconomy": "native-controlled-creature",
+    "wildShape": "class-feature.druid.wild-shape-level-2",
+    "wildShapeHp": "independent-form-hp-pool-with-no-spillover",
+    "finiteWildShapeChargesByLevel": [
+      [
+        2,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        18,
+        4
+      ]
+    ],
+    "unlimitedTransformationsLevel": 20,
+    "convertibleChargesStayFinite": true,
+    "elementalTransformationDailyQuota": "one-at-16-two-at-18-three-at-20",
+    "attackProgression": "three-quarters-BAB",
+    "iterativeAttacks": "native-alternative-attack-procedures",
+    "multiclassWisdomMinimum": 13,
+    "permanentAbilityScoreMaximum": null,
+    "epicBoonMinimumTotalCharacterLevel": 21,
+    "progression": [
+      {
+        "level": 1,
+        "featureGrants": [
+          "class-feature.druid.druidic-level-1",
+          "class-feature.druid.primal-order-level-1",
+          "class-feature.druid.spellcasting-level-1",
+          "druid.nature-sense",
+          "druid.wild-empathy"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 0,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": null,
+        "modernKnownForms": 0,
+        "legacyFormGates": [],
+        "cantripsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 0,
+        "iterativeBaseAttackBonuses": [],
+        "baseSaves": {
+          "fortitude": 2,
+          "reflex": 0,
+          "will": 2
+        },
+        "pendingCompanionPathChoice": true
+      },
+      {
+        "level": 2,
+        "featureGrants": [
+          "class-feature.druid.wild-shape-level-2",
+          "druid.woodland-stride"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.25,
+        "modernKnownForms": 4,
+        "legacyFormGates": [],
+        "cantripsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 1,
+        "iterativeBaseAttackBonuses": [
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 0,
+          "will": 3
+        }
+      },
+      {
+        "level": 3,
+        "featureGrants": [
+          "druid.trackless-step"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.25,
+        "modernKnownForms": 4,
+        "legacyFormGates": [],
+        "cantripsKnown": 2,
+        "spellSlotsBySpellLevel": [
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 2,
+        "iterativeBaseAttackBonuses": [
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 3,
+          "reflex": 1,
+          "will": 3
+        }
+      },
+      {
+        "level": 4,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-4",
+          "class-feature.druid.wild-shape-improvement-level-4",
+          "druid.resist-natures-lure"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.druid.wild-shape-level-2",
+            "modernCR": 0.5,
+            "modernKnownForms": 6
+          }
+        ],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 5,
+        "featureGrants": [
+          "class-feature.druid.wild-resurgence-level-5",
+          "druid.historical-wild-shape"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 2,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 3,
+        "iterativeBaseAttackBonuses": [
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 4,
+          "reflex": 1,
+          "will": 4
+        }
+      },
+      {
+        "level": 6,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "druid.wild-shape",
+            "maxFiniteCharges": 3
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 4,
+        "iterativeBaseAttackBonuses": [
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 7,
+        "featureGrants": [
+          "class-feature.druid.elemental-fury-level-7"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 0.5,
+        "modernKnownForms": 6,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 5,
+        "iterativeBaseAttackBonuses": [
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 5,
+          "reflex": 2,
+          "will": 5
+        }
+      },
+      {
+        "level": 8,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-8",
+          "class-feature.druid.wild-shape-improvement-level-8"
+        ],
+        "improvements": [
+          {
+            "feature": "class-feature.druid.wild-shape-level-2",
+            "modernCR": 1,
+            "modernKnownForms": 8
+          },
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 2,
+          "will": 6
+        }
+      },
+      {
+        "level": 9,
+        "featureGrants": [
+          "druid.venom-immunity"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          }
+        ],
+        "cantripsKnown": 3,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 6,
+        "iterativeBaseAttackBonuses": [
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 6,
+          "reflex": 3,
+          "will": 6
+        }
+      },
+      {
+        "level": 10,
+        "featureGrants": [],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 7,
+        "iterativeBaseAttackBonuses": [
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 11,
+        "featureGrants": [],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 8,
+        "iterativeBaseAttackBonuses": [
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 7,
+          "reflex": 3,
+          "will": 7
+        }
+      },
+      {
+        "level": 12,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-12",
+          "druid.plant-wild-shape"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 13,
+        "featureGrants": [
+          "druid.a-thousand-faces"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 9,
+        "iterativeBaseAttackBonuses": [
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 8,
+          "reflex": 4,
+          "will": 8
+        }
+      },
+      {
+        "level": 14,
+        "featureGrants": [],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        "baseAttackBonus": 10,
+        "iterativeBaseAttackBonuses": [
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 4,
+          "will": 9
+        }
+      },
+      {
+        "level": 15,
+        "featureGrants": [
+          "class-feature.druid.improved-elemental-fury-level-15",
+          "druid.timeless-body-historical"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 0,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 11,
+        "iterativeBaseAttackBonuses": [
+          11,
+          6,
+          1
+        ],
+        "baseSaves": {
+          "fortitude": 9,
+          "reflex": 5,
+          "will": 9
+        }
+      },
+      {
+        "level": 16,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-16",
+          "druid.elemental-wild-shape"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 1,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          0
+        ],
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 17,
+        "featureGrants": [],
+        "improvements": [],
+        "finiteWildShapeCharges": 3,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 1,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 12,
+        "iterativeBaseAttackBonuses": [
+          12,
+          7,
+          2
+        ],
+        "baseSaves": {
+          "fortitude": 10,
+          "reflex": 5,
+          "will": 10
+        }
+      },
+      {
+        "level": 18,
+        "featureGrants": [
+          "class-feature.druid.beast-spells-level-18",
+          "class-feature.druid.timeless-body-level-18"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.wild-shape",
+            "maxFiniteCharges": 4
+          },
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 4,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 2,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          },
+          {
+            "level": 18,
+            "elementalQuota": 2
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 13,
+        "iterativeBaseAttackBonuses": [
+          13,
+          8,
+          3
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 19,
+        "featureGrants": [
+          "class-feature.druid.ability-score-improvement-level-19"
+        ],
+        "improvements": [],
+        "finiteWildShapeCharges": 4,
+        "unlimitedTransformationPermission": false,
+        "elementalFormsPerLongRest": 2,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          },
+          {
+            "level": 18,
+            "elementalQuota": 2
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          1,
+          1,
+          1
+        ],
+        "baseAttackBonus": 14,
+        "iterativeBaseAttackBonuses": [
+          14,
+          9,
+          4
+        ],
+        "baseSaves": {
+          "fortitude": 11,
+          "reflex": 6,
+          "will": 11
+        }
+      },
+      {
+        "level": 20,
+        "featureGrants": [
+          "class-feature.druid.archdruid-level-20"
+        ],
+        "improvements": [
+          {
+            "feature": "druid.historical-wild-shape",
+            "legacyFormPermissionsUpdated": true
+          }
+        ],
+        "finiteWildShapeCharges": 4,
+        "unlimitedTransformationPermission": true,
+        "elementalFormsPerLongRest": 3,
+        "modernFormMaxCR": 1,
+        "modernKnownForms": 8,
+        "legacyFormGates": [
+          {
+            "level": 5,
+            "types": [
+              "animal"
+            ],
+            "sizes": [
+              "small",
+              "medium"
+            ],
+            "maxHitDice": "druid-level"
+          },
+          {
+            "level": 8,
+            "addSizes": [
+              "large"
+            ]
+          },
+          {
+            "level": 11,
+            "addSizes": [
+              "tiny"
+            ]
+          },
+          {
+            "level": 12,
+            "types": [
+              "plant-creature"
+            ],
+            "useCurrentLegacyAnimalSizeLimit": true
+          },
+          {
+            "level": 15,
+            "addSizes": [
+              "huge"
+            ]
+          },
+          {
+            "level": 16,
+            "types": [
+              "elemental"
+            ],
+            "sizes": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "elementalQuota": 1
+          },
+          {
+            "level": 18,
+            "elementalQuota": 2
+          },
+          {
+            "level": 20,
+            "elementalQuota": 3,
+            "elementalAddSizes": [
+              "huge"
+            ]
+          }
+        ],
+        "cantripsKnown": 4,
+        "spellSlotsBySpellLevel": [
+          4,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "baseAttackBonus": 15,
+        "iterativeBaseAttackBonuses": [
+          15,
+          10,
+          5
+        ],
+        "baseSaves": {
+          "fortitude": 12,
+          "reflex": 6,
+          "will": 12
+        }
+      }
+    ],
+    "inlineFeatures": [
+      {
+        "id": "druid.animal-companion",
+        "name": "Animal Companion",
+        "classLevel": 1,
+        "description": "Animal Companion from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "persistent-animal-companion",
+          "fromLevel": 1,
+          "maximumPersistentCompanions": 1,
+          "lastsAcrossRestsAndEncounters": true,
+          "baseChoices": [
+            "badger",
+            "camel",
+            "dire-rat",
+            "dog",
+            "riding-dog",
+            "eagle",
+            "hawk",
+            "light-horse",
+            "heavy-horse",
+            "owl",
+            "pony",
+            "small-viper",
+            "medium-viper",
+            "wolf"
+          ],
+          "aquaticOptions": [
+            "crocodile",
+            "porpoise",
+            "medium-shark",
+            "squid"
+          ],
+          "alternativeCompanions": [
+            {
+              "availableAtDruidLevel": 4,
+              "effectiveCompanionLevelPenalty": 3,
+              "animals": [
+                "ape",
+                "black-bear",
+                "bison",
+                "boar",
+                "cheetah",
+                "crocodile",
+                "dire-badger",
+                "dire-bat",
+                "dire-weasel",
+                "leopard",
+                "monitor-lizard",
+                "large-shark",
+                "constrictor-snake",
+                "large-viper",
+                "wolverine"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 7,
+              "effectiveCompanionLevelPenalty": 6,
+              "animals": [
+                "brown-bear",
+                "dire-wolverine",
+                "giant-crocodile",
+                "deinonychus",
+                "dire-ape",
+                "dire-boar",
+                "dire-wolf",
+                "elasmosaurus",
+                "lion",
+                "rhinoceros",
+                "huge-viper",
+                "tiger"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 10,
+              "effectiveCompanionLevelPenalty": 9,
+              "animals": [
+                "polar-bear",
+                "dire-lion",
+                "megaraptor",
+                "huge-shark",
+                "giant-constrictor-snake",
+                "orca"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 13,
+              "effectiveCompanionLevelPenalty": 12,
+              "animals": [
+                "dire-bear",
+                "elephant",
+                "giant-octopus"
+              ]
+            },
+            {
+              "availableAtDruidLevel": 16,
+              "effectiveCompanionLevelPenalty": 15,
+              "animals": [
+                "dire-shark",
+                "dire-tiger",
+                "giant-squid",
+                "triceratops",
+                "tyrannosaurus"
+              ]
+            }
+          ],
+          "effectiveCompanionLevel": "druid-level-minus-advanced-animal-adjustment",
+          "progression": [
+            {
+              "minLevel": 1,
+              "maxLevel": 2,
+              "bonusHitDice": 0,
+              "naturalArmorBonus": 0,
+              "strDexBonus": 0,
+              "bonusTricks": 1,
+              "newAbilities": [
+                "link",
+                "share-spells"
+              ]
+            },
+            {
+              "minLevel": 3,
+              "maxLevel": 5,
+              "bonusHitDice": 2,
+              "naturalArmorBonus": 2,
+              "strDexBonus": 1,
+              "bonusTricks": 2,
+              "newAbilities": [
+                "evasion"
+              ]
+            },
+            {
+              "minLevel": 6,
+              "maxLevel": 8,
+              "bonusHitDice": 4,
+              "naturalArmorBonus": 4,
+              "strDexBonus": 2,
+              "bonusTricks": 3,
+              "newAbilities": [
+                "devotion"
+              ]
+            },
+            {
+              "minLevel": 9,
+              "maxLevel": 11,
+              "bonusHitDice": 6,
+              "naturalArmorBonus": 6,
+              "strDexBonus": 3,
+              "bonusTricks": 4,
+              "newAbilities": [
+                "multiattack"
+              ]
+            },
+            {
+              "minLevel": 12,
+              "maxLevel": 14,
+              "bonusHitDice": 8,
+              "naturalArmorBonus": 8,
+              "strDexBonus": 4,
+              "bonusTricks": 5,
+              "newAbilities": []
+            },
+            {
+              "minLevel": 15,
+              "maxLevel": 17,
+              "bonusHitDice": 10,
+              "naturalArmorBonus": 10,
+              "strDexBonus": 5,
+              "bonusTricks": 6,
+              "newAbilities": [
+                "improved-evasion"
+              ]
+            },
+            {
+              "minLevel": 18,
+              "maxLevel": 20,
+              "bonusHitDice": 12,
+              "naturalArmorBonus": 12,
+              "strDexBonus": 6,
+              "bonusTricks": 7,
+              "newAbilities": []
+            }
+          ],
+          "abilities": {
+            "link": "free-handle-move-push-plus-four-wild-empathy-and-handle-animal",
+            "shareSpells": "share-self-spells-within-5-feet-including-touch-self-on-companion",
+            "evasion": "zero-damage-on-successful-reflex-save-for-half",
+            "devotion": "plus-four-Will-vs-enchantment",
+            "multiattack": "feat-when-at-least-three-natural-attacks-else-extra-primary-at-minus-five",
+            "improvedEvasion": "zero-on-success-half-on-fail-for-half"
+          },
+          "replacementCeremonyHours": 24,
+          "uninterruptedCeremony": true,
+          "controlledCreatureInitiative": "controller-initiative",
+          "combatActions": "native-controlled-creature-rules",
+          "notTemporaryWildCompanion": true
+        }
+      },
+      {
+        "id": "druid.nature-sense",
+        "name": "Nature Sense",
+        "classLevel": 1,
+        "description": "Nature Sense from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "nature-competence",
+          "skills": [
+            "knowledge-nature",
+            "survival"
+          ],
+          "bonus": 2,
+          "source3eOrdinaryIdentification": "native-environment-knowledge-procedure"
+        }
+      },
+      {
+        "id": "druid.wild-empathy",
+        "name": "Wild Empathy",
+        "classLevel": 1,
+        "description": "Wild Empathy from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "animal-attitude-check",
+          "formula": "d20+druid-level+charisma-modifier",
+          "rangeFeet": 30,
+          "usualMinutes": 1,
+          "magicalBeasts": {
+            "intelligenceMaximum": 2,
+            "penalty": -4
+          }
+        }
+      },
+      {
+        "id": "druid.woodland-stride",
+        "name": "Woodland Stride",
+        "classLevel": 2,
+        "description": "Woodland Stride from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "normal-travel-through-natural-undergrowth",
+          "noDamageOrPenalty": true,
+          "magicallyManipulatedPlantsStillApply": true
+        }
+      },
+      {
+        "id": "druid.trackless-step",
+        "name": "Trackless Step",
+        "classLevel": 3,
+        "description": "Trackless Step from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "no-trail-in-natural-surroundings",
+          "mayVoluntarilyLeaveTrail": true
+        }
+      },
+      {
+        "id": "druid.resist-natures-lure",
+        "name": "Resist Nature's Lure",
+        "classLevel": 4,
+        "description": "Resist Nature's Lure from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "fey-resistance",
+          "saveBonus": 4,
+          "against": "fey-spell-like-abilities"
+        }
+      },
+      {
+        "id": "druid.historical-wild-shape",
+        "name": "Historical Wild Shape Forms",
+        "classLevel": 5,
+        "description": "Historical Wild Shape Forms from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "base-class-form-eligibility",
+          "path": "historical-familiar-forms",
+          "rules": [
+            {
+              "level": 5,
+              "types": [
+                "animal"
+              ],
+              "sizes": [
+                "small",
+                "medium"
+              ],
+              "maxHitDice": "druid-level"
+            },
+            {
+              "level": 8,
+              "addSizes": [
+                "large"
+              ]
+            },
+            {
+              "level": 11,
+              "addSizes": [
+                "tiny"
+              ]
+            },
+            {
+              "level": 12,
+              "types": [
+                "plant-creature"
+              ],
+              "useCurrentLegacyAnimalSizeLimit": true
+            },
+            {
+              "level": 15,
+              "addSizes": [
+                "huge"
+              ]
+            },
+            {
+              "level": 16,
+              "types": [
+                "elemental"
+              ],
+              "sizes": [
+                "small",
+                "medium",
+                "large"
+              ],
+              "elementalQuota": 1
+            },
+            {
+              "level": 18,
+              "elementalQuota": 2
+            },
+            {
+              "level": 20,
+              "elementalQuota": 3,
+              "elementalAddSizes": [
+                "huge"
+              ]
+            }
+          ],
+          "notAdvancedOption": true,
+          "sameWildShapeUseAndHpMechanics": true
+        }
+      },
+      {
+        "id": "druid.venom-immunity",
+        "name": "Venom Immunity",
+        "classLevel": 9,
+        "description": "Venom Immunity from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "poison-immunity",
+          "allPoisonEffects": true
+        }
+      },
+      {
+        "id": "druid.plant-wild-shape",
+        "name": "Plant Wild Shape",
+        "classLevel": 12,
+        "description": "Plant Wild Shape from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "form-eligibility-extension",
+          "type": "plant-creature",
+          "size": "current-legacy-size-permissions",
+          "hdCap": "druid-level",
+          "notOrdinaryPlants": true
+        }
+      },
+      {
+        "id": "druid.a-thousand-faces",
+        "name": "A Thousand Faces",
+        "classLevel": 13,
+        "description": "A Thousand Faces from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "alter-self-appearance-at-will",
+          "requiresNaturalForm": true,
+          "onlyAppearanceOption": true,
+          "noSpellSlot": true
+        }
+      },
+      {
+        "id": "druid.timeless-body-historical",
+        "name": "Timeless Body — Historical",
+        "classLevel": 15,
+        "description": "Timeless Body — Historical from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "aging-protection",
+          "newAgeAbilityPenalties": false,
+          "immuneToMagicalAging": true,
+          "oldAgeDeathStillPossible": true,
+          "preexistingPenaltiesRemain": true
+        }
+      },
+      {
+        "id": "druid.elemental-wild-shape",
+        "name": "Elemental Wild Shape",
+        "classLevel": 16,
+        "description": "Elemental Wild Shape from the 3.x Druid base class, adapted to shared native systems.",
+        "mechanics": {
+          "kind": "elemental-form-eligibility",
+          "elementTypes": [
+            "air",
+            "earth",
+            "fire",
+            "water"
+          ],
+          "sizesAt16": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "hugeFromLevel": 20,
+          "usesSharedWildShapeMechanics": true,
+          "separateElementalQuotaByLevel": [
+            [
+              16,
+              1
+            ],
+            [
+              18,
+              2
+            ],
+            [
+              20,
+              3
+            ]
+          ],
+          "quotaLongRestRestore": true,
+          "maximumHD": "druid-level",
+          "eligibleSpecialAbilities": "original-3.5-form-provisions",
+          "notUnlimitedElementalTransformationsAtLevel20": true
+        }
+      }
+    ],
+    "subclasses": "excluded",
+    "prestigeClasses": "excluded",
+    "companionPathChoice": {
+      "exclusive": true,
+      "selectionFromDruidLevel": 1,
+      "paths": [
+        {
+          "id": "persistent-animal-companion",
+          "featureId": "druid.animal-companion",
+          "availableFromLevel": 1
+        },
+        {
+          "id": "temporary-wild-companion",
+          "featureId": "class-feature.druid.wild-companion-level-2",
+          "availableFromLevel": 2
+        }
+      ],
+      "implementation": "shared-companion-subsystem-pending",
+      "additionalCompanionsRequireExplicitSeparateGrant": true
+    }
+  }
+}

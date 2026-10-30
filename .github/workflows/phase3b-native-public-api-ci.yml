@@ -78,6 +78,8 @@ jobs:
             if curl -fsS http://127.0.0.1:18768/ready >/dev/null; then break; fi
             sleep 1
           done
-          curl -fsS http://127.0.0.1:18768/api/rulesets | python3 -c 'import json,sys; j=json.load(sys.stdin); assert len(j["rulesets"])==1 and j["rulesets"][0]["entityCount"]==35'
+          catalog_count=$(curl -fsS http://127.0.0.1:18768/api/rulesets | python3 -c 'import json,sys; j=json.load(sys.stdin); assert len(j["rulesets"])==1; r=j["rulesets"][0]; assert r["id"]=="first-party-001" and r["entityCount"]>0 and len(r["fingerprint"])==64; print(r["entityCount"])')
+          # Test the complete live inventory and fingerprint without a fixed content size.
+          curl -fsS http://127.0.0.1:18768/api/rulesets/first-party-001/rules | python3 -c 'import json,sys; j=json.load(sys.stdin); assert j["total"]==int(sys.argv[1]) and j["fingerprint"]==sys.argv[2]; assert sum(f["count"] for f in j["categoryFacets"])==j["total"]' "$catalog_count" "$fingerprint"
           curl -fsS http://127.0.0.1:18768/api/rulesets/first-party-001/rules/condition.blinded | python3 -c 'import json,sys; j=json.load(sys.stdin); assert j["rule"]["id"]=="condition.blinded" and "definition" in j["rule"]'
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:18768/api/private/rulesets)" = 404

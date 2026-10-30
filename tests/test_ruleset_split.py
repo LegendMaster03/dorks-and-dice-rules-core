@@ -7,7 +7,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from validate_ruleset_split import validate_native_tree, check_migration_ledger, main
+from validate_ruleset_split import (validate_native_tree, check_migration_ledger,
+                                    matches_preserved_working_evidence, main)
 
 
 class NativeWorkingBoundaryTests(unittest.TestCase):
@@ -44,6 +45,30 @@ class NativeWorkingBoundaryTests(unittest.TestCase):
             }), encoding="utf-8")
             _, errors = validate_native_tree(Path(directory))
             self.assertTrue(any("definition.nested.candidateDefinitions" in e for e in errors))
+
+    def test_only_exact_preserved_source_mirrors_are_allowed(self):
+        native = {"id": "class.test", "name": "Test", "kind": "class",
+                  "definition": {"progression": [1, 2]}}
+        source = dict(native, baselineStatus="retained-native-definition")
+        working_path = Path("some/staged/class/test.json")
+        self.assertTrue(matches_preserved_working_evidence(native, source, working_path))
+        self.assertFalse(matches_preserved_working_evidence(
+            dict(native, definition={"progression": [1, 3]}), source, working_path))
+        self.assertFalse(matches_preserved_working_evidence(
+            native, dict(source, candidateDefinitions=[{"key": "candidate-a"}]), working_path))
+        self.assertFalse(matches_preserved_working_evidence(
+            native, dict(source, baselineStatus="pending-native-reconciliation"), working_path))
+
+    def test_monster_statblock_reference_is_non_numeric_mirror_annotation(self):
+        original = {"id": "monster.test", "name": "Test", "kind": "monster",
+                    "definition": {"ac": [10], "hp": {"average": 1}}}
+        staged = dict(original, baselineStatus="retained-native-definition")
+        selected = dict(original, statBlockFoundationId="rule.monster-statblock-foundation")
+        self.assertTrue(matches_preserved_working_evidence(
+            selected, staged, Path("some/staged/monster.json")))
+        self.assertFalse(matches_preserved_working_evidence(
+            dict(selected, definition={"ac": [11]}), staged,
+            Path("some/staged/monster.json")))
 
 
 if __name__ == "__main__":

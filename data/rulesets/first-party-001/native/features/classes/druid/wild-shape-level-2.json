@@ -1,0 +1,184 @@
+{
+  "id": "class-feature.druid.wild-shape-level-2",
+  "name": "Wild Shape",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 2,
+  "definition": {
+    "name": "Wild Shape",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "unified-wild-shape",
+      "startLevel": 2,
+      "transform": "bonus-action",
+      "revert": "bonus-action",
+      "durationHours": "floor(druid-level/2)",
+      "finiteUsesByLevel": [
+        [
+          2,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          18,
+          4
+        ]
+      ],
+      "shortRestRestore": 1,
+      "longRestRestore": "all",
+      "unlimitedTransformationAtLevel": 20,
+      "unlimitedTransformationNotConvertible": true,
+      "hp": {
+        "mode": "separate-beast-hit-point-pool",
+        "pool": "selected-creature-stat-block-hit-points",
+        "normalHitPoints": "unchanged-while-in-form",
+        "atFormZeroHp": "revert",
+        "overflowDamageToNormalHp": 0,
+        "tempHpFromWildShape": 0,
+        "source": "owner-house-rule-no-overflow-not-published-2014",
+        "resetPoolOnNewTransformation": true
+      },
+      "forms": {
+        "eligibility": "modern-known-beast-path-OR-historical-familiar-creature-path",
+        "sizeAlwaysChecked": true,
+        "sourcePermissionsNotStackedAsIncompatibleGates": true,
+        "modern": {
+          "type": "beast",
+          "minLevel": 2,
+          "maximumCRByLevel": [
+            [
+              2,
+              0.25
+            ],
+            [
+              4,
+              0.5
+            ],
+            [
+              8,
+              1
+            ]
+          ],
+          "knownFormsByLevel": [
+            [
+              2,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              8,
+              8
+            ]
+          ],
+          "flyingFormsFromLevel": 8,
+          "swimmingFormsFromLevel": 2,
+          "replaceOneKnownFormOnLongRest": true,
+          "formSize": "any-size-on-eligible-modern-stat-block"
+        },
+        "historical": {
+          "startLevel": 5,
+          "requiresFamiliarity": true,
+          "maxHitDice": "druid-level",
+          "progression": [
+            {
+              "level": 5,
+              "types": [
+                "animal"
+              ],
+              "sizes": [
+                "small",
+                "medium"
+              ],
+              "maxHitDice": "druid-level"
+            },
+            {
+              "level": 8,
+              "addSizes": [
+                "large"
+              ]
+            },
+            {
+              "level": 11,
+              "addSizes": [
+                "tiny"
+              ]
+            },
+            {
+              "level": 12,
+              "types": [
+                "plant-creature"
+              ],
+              "useCurrentLegacyAnimalSizeLimit": true
+            },
+            {
+              "level": 15,
+              "addSizes": [
+                "huge"
+              ]
+            },
+            {
+              "level": 16,
+              "types": [
+                "elemental"
+              ],
+              "sizes": [
+                "small",
+                "medium",
+                "large"
+              ],
+              "elementalQuota": 1
+            },
+            {
+              "level": 18,
+              "elementalQuota": 2
+            },
+            {
+              "level": 20,
+              "elementalQuota": 3,
+              "elementalAddSizes": [
+                "huge"
+              ]
+            }
+          ],
+          "usesCreatureTypeAndSizeGates": true,
+          "noExtraModernCRCap": true,
+          "noModernKnownFormLimit": true
+        }
+      },
+      "statistics": {
+        "useCreatureStatblockPhysicalAbilities": true,
+        "retains": [
+          "personality",
+          "memories",
+          "intelligence",
+          "wisdom",
+          "charisma",
+          "creature-type",
+          "languages",
+          "class-features",
+          "proficiencies",
+          "competencies"
+        ],
+        "canSpeak": true,
+        "canCastBeforeBeastSpells": false,
+        "concentrationOnExistingSpellContinues": true,
+        "doNotGrant": [
+          "lair-actions",
+          "legendary-actions"
+        ],
+        "equipmentModes": [
+          "drop",
+          "merge",
+          "wear-if-fit"
+        ],
+        "formAnatomyGovernsObjects": true
+      }
+    }
+  }
+}

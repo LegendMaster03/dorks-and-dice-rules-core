@@ -39,6 +39,62 @@ class DeploymentBoundaryTests(unittest.TestCase):
             with self.subTest(config=config), self.assertRaises(RuntimeError):
                 release.validate_compose(config)
 
+    def test_reviewed_fingerprint_is_required_and_not_a_static_release_constant(self):
+        fingerprint = "a" * 64
+        with patch.dict(release.os.environ, {}, clear=True), self.assertRaises(RuntimeError):
+            release.reviewed_fingerprint()
+        for malformed in ("", "a" * 63, "A" * 64, "not-a-digest"):
+            with self.subTest(value=malformed), patch.dict(
+                release.os.environ, {"RULES_CORE_EXPECTED_FINGERPRINT": malformed}, clear=True
+            ), self.assertRaises(RuntimeError):
+                release.reviewed_fingerprint()
+        for valid in (fingerprint, "b" * 64):
+            with patch.dict(
+                release.os.environ, {"RULES_CORE_EXPECTED_FINGERPRINT": valid}, clear=True
+            ):
+                self.assertEqual(valid, release.reviewed_fingerprint())
+
+    def test_release_configuration_requires_reviewed_sha_and_fingerprint_before_docker(self):
+        env = {"RELEASE_SHA": "c" * 40, "RULES_CORE_ENV_FILE": "/not/used"}
+        with patch.dict(release.os.environ, env, clear=True), patch.object(release, "command") as run:
+            with self.assertRaises(RuntimeError):
+                release.release_config()
+            run.assert_not_called()
+
+    def test_catalog_log_fingerprint_must_match_reviewed_digest(self):
+        expected = "a" * 64
+        other = "b" * 64
+        release.require_catalog_fingerprint("Native catalog fingerprint " + expected, expected)
+        for log in ("", "Native catalog fingerprint " + other,
+                    "Native catalog fingerprint " + expected +
+                    "\\nNative catalog fingerprint " + other):
+            with self.subTest(log=log), self.assertRaises(RuntimeError):
+                release.require_catalog_fingerprint(log, expected)
+
+    def test_image_must_match_commit_and_be_unprivileged(self):
+        sha = "c" * 40
+        image = {"Config": {"User": "1654",
+                            "Labels": {"org.opencontainers.image.revision": sha}}}
+        release.require_image_provenance(image, sha)
+        for bad in (
+            {"Config": {"User": "root", "Labels": {"org.opencontainers.image.revision": sha}}},
+            {"Config": {"User": "1654", "Labels": {"org.opencontainers.image.revision": "d" * 40}}},
+            {"Config": {"User": "1654", "Labels": {}}},
+        ):
+            with self.subTest(image=bad), self.assertRaises(RuntimeError):
+                release.require_image_provenance(bad, sha)
+
+    def test_release_workflow_does_not_auto_deploy_on_merge(self):
+        workflow = (Path(__file__).parents[1] / ".github/workflows/deploy.yml"
+                    ).read_text(encoding="utf-8")
+        self.assertIn("  workflow_dispatch:", workflow)
+        self.assertNotIn("  workflow_run:", workflow)
+        self.assertIn("release_sha:", workflow)
+        self.assertIn("review_reference:", workflow)
+        self.assertIn("Matching main CI succeeded for reviewed SHA", workflow)
+        self.assertIn("RULES_CORE_EXPECTED_FINGERPRINT=", workflow)
+        self.assertIn("org.opencontainers.image.revision=$RELEASE_SHA", workflow)
+
     def test_unknown_private_peer_is_rejected(self):
         with self.assertRaises(RuntimeError):
             release.validate_members("pair",{"Containers":{"1":{"Name":"unrelated"}}},{release.PRIVATE,release.WIKI})

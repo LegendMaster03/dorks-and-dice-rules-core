@@ -1,0 +1,45 @@
+{
+  "id": "class-feature.cleric.divine-spark-level-2",
+  "name": "Divine Spark",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 2,
+  "definition": {
+    "name": "Divine Spark",
+    "description": "Divine Spark is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "channel-divinity-option",
+      "resource": "cleric.channel-divinity",
+      "cost": 1,
+      "action": "magic-action",
+      "rangeFeet": 30,
+      "target": "other-visible-creature",
+      "healing": "Nd8 + Wisdom modifier",
+      "damage": "Nd8 + Wisdom modifier",
+      "diceByClericLevel": [
+        [
+          2,
+          1
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          18,
+          4
+        ]
+      ],
+      "damageTypes": [
+        "radiant",
+        "necrotic"
+      ],
+      "constitutionSave": "half-on-success; full-on-failure",
+      "saveDC": "cleric-spell-save-dc"
+    }
+  }
+}

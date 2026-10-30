@@ -1,0 +1,27 @@
+{
+  "id": "class-feature.wizard.ability-score-improvement-level-12",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 12,
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "ability-improvement-or-feat",
+      "abilityChoices": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "feat": "any-eligible",
+      "noPermanentAbilityScoreMaximum": true,
+      "epicBoonMinimumTotalCharacterLevel": 21,
+      "wizardSpecializationInsteadOfFeat": "allowed-only-when-feat-selection-itself-is-eligible"
+    }
+  }
+}

@@ -1,0 +1,457 @@
+{
+  "id": "experiment.warlock-modular-alpha-0-3-1",
+  "name": "Warlock modular architecture — Alpha 0.3.1",
+  "kind": "experimentalClassReview",
+  "status": "selected-playtest-baseline-not-native-authority",
+  "runtimeAuthority": false,
+  "rulesetId": "first-party-001",
+  "comparisonGroup": "band1-base-class-architecture",
+  "alternativeTo": "unified-class-reconciliation",
+  "excludedAuthoritativeClassId": "class.warlock",
+  "playtestContext": "Run the replacement Warlock within an existing 5e or 5.5e host game; do not combine it with host Warlock or native unified classes.",
+  "source": {
+    "packet": "Dorks_and_Dice_Warlock_Alpha_Playtest_Packet.pdf (owner playtest alpha 0.3.1, 2026-10-25)",
+    "repositoryDocuments": [
+      "docs/rewrite/warlock-pact-pillar-reconciliation.md",
+      "docs/rewrite/warlock-fiend-patron-consolidated-decision.md",
+      "docs/rewrite/warlock-invocation-progression-band1-test-baseline.md",
+      "docs/rewrite/warlock-pact-specific-invocation-conflict-resolution-proposal.md",
+      "data/reference/warlock-invocation-progression-band1-comparison.json"
+    ]
+  },
+  "pillars": {
+    "patron": {
+      "requiredAtWarlockLevel": 1,
+      "role": "Source of supernatural power; may be inherited, involuntary or concealed; no personal contract or contact required",
+      "testOption": "Fiend"
+    },
+    "pact": {
+      "requiredAtWarlockLevel": 1,
+      "role": "Type or manifestation of relationship",
+      "firstPactIndependentOfInvocations": true,
+      "firstPactInvocationCost": 0,
+      "activeOptions": [
+        "Blade",
+        "Chain",
+        "Tome",
+        "Talisman"
+      ],
+      "deferredOptions": [
+        "Star Chain"
+      ],
+      "intrinsicImprovementAtLevel": 5
+    },
+    "invocations": {
+      "firstSelectionAtWarlockLevel": 1,
+      "role": "Additional terms attached to one actual Pact and subject to its Patron's accepted terms",
+      "costPerSelection": 1,
+      "level20Total": 12,
+      "acquisitionLevels": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        16,
+        18,
+        20
+      ]
+    }
+  },
+  "baseFeatures": {
+    "hitDie": "d8",
+    "castingAbility": "Charisma",
+    "automaticEldritchBlast": true,
+    "eldritchBlastOutsideCantripsKnown": true,
+    "pactSlotRecovery": "short-or-long-rest",
+    "pactMagicDistinctFromMysticArcanum": true,
+    "damageReductionMilestones": [
+      [
+        3,
+        1
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        11,
+        3
+      ],
+      [
+        15,
+        4
+      ],
+      [
+        19,
+        5
+      ]
+    ],
+    "energyResistanceMilestones": [
+      [
+        10,
+        5
+      ],
+      [
+        20,
+        10
+      ]
+    ],
+    "epicBoonGrantAtLevel19": false
+  },
+  "levels": [
+    {
+      "level": 1,
+      "proficiencyBonus": 2,
+      "invocationsElectiveTotal": 1,
+      "cantripsKnownExcludingEldritchBlast": 2,
+      "ordinarySpellsKnown": 2,
+      "pactSlots": 1,
+      "pactSlotLevel": 1,
+      "classAndFiendMilestones": [
+        "Pact Magic",
+        "Eldritch Blast",
+        "Patron",
+        "Pact",
+        "Eldritch Invocations"
+      ]
+    },
+    {
+      "level": 2,
+      "proficiencyBonus": 2,
+      "invocationsElectiveTotal": 2,
+      "cantripsKnownExcludingEldritchBlast": 2,
+      "ordinarySpellsKnown": 3,
+      "pactSlots": 2,
+      "pactSlotLevel": 1,
+      "classAndFiendMilestones": [
+        "Magical Cunning"
+      ]
+    },
+    {
+      "level": 3,
+      "proficiencyBonus": 2,
+      "invocationsElectiveTotal": 2,
+      "cantripsKnownExcludingEldritchBlast": 2,
+      "ordinarySpellsKnown": 4,
+      "pactSlots": 2,
+      "pactSlotLevel": 2,
+      "classAndFiendMilestones": [
+        "Damage Reduction 1",
+        "Fiend spell access"
+      ]
+    },
+    {
+      "level": 4,
+      "proficiencyBonus": 2,
+      "invocationsElectiveTotal": 3,
+      "cantripsKnownExcludingEldritchBlast": 3,
+      "ordinarySpellsKnown": 5,
+      "pactSlots": 2,
+      "pactSlotLevel": 2,
+      "classAndFiendMilestones": [
+        "Ability Score Improvement",
+        "Deceive Item"
+      ]
+    },
+    {
+      "level": 5,
+      "proficiencyBonus": 3,
+      "invocationsElectiveTotal": 4,
+      "cantripsKnownExcludingEldritchBlast": 3,
+      "ordinarySpellsKnown": 6,
+      "pactSlots": 2,
+      "pactSlotLevel": 3,
+      "classAndFiendMilestones": [
+        "Deepened Pact",
+        "Fiend spell access"
+      ]
+    },
+    {
+      "level": 6,
+      "proficiencyBonus": 3,
+      "invocationsElectiveTotal": 4,
+      "cantripsKnownExcludingEldritchBlast": 3,
+      "ordinarySpellsKnown": 7,
+      "pactSlots": 2,
+      "pactSlotLevel": 3,
+      "classAndFiendMilestones": [
+        "Dark One's Own Luck"
+      ]
+    },
+    {
+      "level": 7,
+      "proficiencyBonus": 3,
+      "invocationsElectiveTotal": 5,
+      "cantripsKnownExcludingEldritchBlast": 3,
+      "ordinarySpellsKnown": 8,
+      "pactSlots": 2,
+      "pactSlotLevel": 4,
+      "classAndFiendMilestones": [
+        "Damage Reduction 2",
+        "Fiend spell access"
+      ]
+    },
+    {
+      "level": 8,
+      "proficiencyBonus": 3,
+      "invocationsElectiveTotal": 5,
+      "cantripsKnownExcludingEldritchBlast": 3,
+      "ordinarySpellsKnown": 9,
+      "pactSlots": 2,
+      "pactSlotLevel": 4,
+      "classAndFiendMilestones": [
+        "Ability Score Improvement",
+        "Infernal Retaliation"
+      ]
+    },
+    {
+      "level": 9,
+      "proficiencyBonus": 4,
+      "invocationsElectiveTotal": 6,
+      "cantripsKnownExcludingEldritchBlast": 3,
+      "ordinarySpellsKnown": 10,
+      "pactSlots": 2,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Contact Patron",
+        "Fiend spell access"
+      ]
+    },
+    {
+      "level": 10,
+      "proficiencyBonus": 4,
+      "invocationsElectiveTotal": 6,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 10,
+      "pactSlots": 2,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Energy Resistance 5"
+      ]
+    },
+    {
+      "level": 11,
+      "proficiencyBonus": 4,
+      "invocationsElectiveTotal": 7,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 11,
+      "pactSlots": 3,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Damage Reduction 3",
+        "Mystic Arcanum (6th)"
+      ]
+    },
+    {
+      "level": 12,
+      "proficiencyBonus": 4,
+      "invocationsElectiveTotal": 7,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 11,
+      "pactSlots": 3,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Ability Score Improvement",
+        "Imbue Item"
+      ]
+    },
+    {
+      "level": 13,
+      "proficiencyBonus": 5,
+      "invocationsElectiveTotal": 8,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 12,
+      "pactSlots": 3,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Mystic Arcanum (7th)",
+        "Infernal Retaliation improvement"
+      ]
+    },
+    {
+      "level": 14,
+      "proficiencyBonus": 5,
+      "invocationsElectiveTotal": 8,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 12,
+      "pactSlots": 3,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Hurl Through Hell"
+      ]
+    },
+    {
+      "level": 15,
+      "proficiencyBonus": 5,
+      "invocationsElectiveTotal": 9,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 13,
+      "pactSlots": 3,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Damage Reduction 4",
+        "Mystic Arcanum (8th)"
+      ]
+    },
+    {
+      "level": 16,
+      "proficiencyBonus": 5,
+      "invocationsElectiveTotal": 10,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 13,
+      "pactSlots": 3,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Ability Score Improvement"
+      ]
+    },
+    {
+      "level": 17,
+      "proficiencyBonus": 6,
+      "invocationsElectiveTotal": 10,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 14,
+      "pactSlots": 4,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Mystic Arcanum (9th)"
+      ]
+    },
+    {
+      "level": 18,
+      "proficiencyBonus": 6,
+      "invocationsElectiveTotal": 11,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 14,
+      "pactSlots": 4,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Infernal Retaliation improvement"
+      ]
+    },
+    {
+      "level": 19,
+      "proficiencyBonus": 6,
+      "invocationsElectiveTotal": 11,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 15,
+      "pactSlots": 4,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Damage Reduction 5",
+        "Ability Score Improvement"
+      ]
+    },
+    {
+      "level": 20,
+      "proficiencyBonus": 6,
+      "invocationsElectiveTotal": 12,
+      "cantripsKnownExcludingEldritchBlast": 4,
+      "ordinarySpellsKnown": 15,
+      "pactSlots": 4,
+      "pactSlotLevel": 5,
+      "classAndFiendMilestones": [
+        "Eldritch Master",
+        "Energy Resistance 10"
+      ]
+    }
+  ],
+  "fiendVerticalSlice": {
+    "patronLevel": 1,
+    "darkOnesBlessing": {
+      "level": 1,
+      "temporaryHitPoints": "max(1, Charisma modifier + Warlock level)",
+      "trigger": "Enemy reduced to zero by Warlock or by another creature within 10 feet of Warlock"
+    },
+    "spellAccess": {
+      "mode": "automatic 13-spell roster",
+      "milestoneLevels": [
+        3,
+        5,
+        7,
+        9
+      ],
+      "alternate": "2014-style expanded-choice access retained for testing; not simultaneous"
+    },
+    "darkOnesOwnLuck": {
+      "level": 6,
+      "bonus": "1d10",
+      "uses": "max(1, Charisma modifier) per Long Rest"
+    },
+    "infernalRetaliation": {
+      "level": 8,
+      "resource": "one shared Reaction activation per Long Rest",
+      "durationRounds": 20,
+      "modes": [
+        "Fiendish Resilience",
+        "Fiendish Flamewreath"
+      ],
+      "healPerRoundAtLevels": [
+        [
+          8,
+          1
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          18,
+          5
+        ]
+      ],
+      "fireDicePerQualifyingHitAtLevels": [
+        [
+          8,
+          "1d6"
+        ],
+        [
+          13,
+          "2d6"
+        ],
+        [
+          18,
+          "5d6"
+        ]
+      ],
+      "healingTickAlpha": "start of Warlock turn, first next turn, only if above 0 HP",
+      "flamewreathEventAlpha": "each resolved melee hit against Warlock from creature within 5 feet",
+      "timingStatus": "alpha interpretation for playtest, not finalized shared-system adjudication"
+    },
+    "hurlThroughHellLevel": 14,
+    "retiredLevel10FiendDamageResistance": true,
+    "hellfireShield": "not automatically granted; acquisition pending Invocation reconciliation"
+  },
+  "pacts": {
+    "Blade": {
+      "role": "Pact weapon",
+      "level5": "two Pact-weapon attacks within its Attack action"
+    },
+    "Chain": {
+      "role": "Pact familiar",
+      "level5": "two attacks in the familiar's one commanded Attack action; action economy subject to selected host-game adaptation"
+    },
+    "Tome": {
+      "role": "Book of Shadows and magical versatility",
+      "level5": "one separate slot-free cast each of Animate Dead, Haste, Call Lightning per Long Rest"
+    },
+    "Talisman": {
+      "role": "portable skill assistance",
+      "level5": "Shared Ward Reaction consuming one existing Talisman charge, mitigating 2d6 + Charisma modifier"
+    }
+  },
+  "importantLimitations": [
+    "Seven elective Invocations, including all three dedicated Talisman electives, are omitted from the alpha packet; absence is not evidence of a ruling rejecting them.",
+    "Alternative Invocation schedules are comparison material, not simultaneous authoritative entitlements.",
+    "The Chain familiar and other companion integrations are provisional where the shared creature-control rules are incomplete.",
+    "Per-spell and shared casting, crafting, defense and combat mechanics may rely on the host game; this packet is not a complete first-party ruleset.",
+    "Provisional Fiend retaliation event timing is not a finalized universal ruling.",
+    "Warlock's imported pending class candidate definitions are not this experiment and remain in working."
+  ],
+  "publicDistribution": "Do not expose before a dedicated authenticated experimental-content contract is approved; never treat working as a runtime fallback."
+}

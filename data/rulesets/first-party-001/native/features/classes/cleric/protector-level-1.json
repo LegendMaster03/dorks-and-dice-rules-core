@@ -1,0 +1,18 @@
+{
+  "id": "class-feature.cleric.protector-level-1",
+  "name": "Protector",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 1,
+  "definition": {
+    "name": "Protector",
+    "description": "Protector is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "divine-order-option",
+      "choiceOf": "class-feature.cleric.divine-order-level-1",
+      "martialWeaponProficiency": true,
+      "heavyArmorProficiency": true,
+      "duplicateHeavyArmorTraining": "no-second-benefit-since-historical-cleric-already-has-heavy-armor"
+    }
+  }
+}

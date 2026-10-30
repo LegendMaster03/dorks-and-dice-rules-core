@@ -1,0 +1,25 @@
+{
+  "id": "class-feature.druid.ability-score-improvement-level-16",
+  "name": "Ability Score Improvement",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 16,
+  "definition": {
+    "name": "Ability Score Improvement",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "asi-or-eligible-feat",
+      "abilityOptions": [
+        [
+          2
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "noPermanentAbilityMaximum": true,
+      "epicBoonMinimumTotalCharacterLevel": 21
+    }
+  }
+}

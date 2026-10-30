@@ -1,0 +1,34 @@
+{
+  "id": "class-feature.druid.archdruid-level-20",
+  "name": "Archdruid",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 20,
+  "definition": {
+    "name": "Archdruid",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "archdruid-capstone",
+      "unlimitedWildShapeTransformations": true,
+      "finiteTrackedChargePoolStillMaximum": 4,
+      "unlimitedTransformationsCannotPayCosts": true,
+      "evergreen": {
+        "onInitiativeWhenFinitePoolEmptyRecover": 1
+      },
+      "natureMagician": {
+        "oncePerLongRest": true,
+        "consumeFiniteCharges": true,
+        "slotLevel": "2*finite-charges-consumed",
+        "maximumSlotLevel": 8,
+        "spellPointEquivalent": "native-spell-point-rules"
+      },
+      "spellComponents": {
+        "ignoreVerbal": true,
+        "ignoreSomatic": true,
+        "ignoreUnpricedNonconsumedMaterial": true,
+        "inNaturalAndWildShapeForms": true
+      },
+      "longevity": "one-year-per-ten-years-nonstacking"
+    }
+  }
+}

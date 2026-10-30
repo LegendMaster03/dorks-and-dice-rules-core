@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.wizard.arcane-recovery-level-1",
+  "name": "Arcane Recovery",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 1,
+  "definition": {
+    "name": "Arcane Recovery",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "recover-spellcasting-resources",
+      "trigger": "finish-short-rest",
+      "studySpellbook": true,
+      "maximumCombinedRecoveredSpellLevels": "ceil(wizard-class-level/2)",
+      "highestRecoverableSpellSlotLevel": 5,
+      "oncePerLongRest": true,
+      "castingSpellPointsCompatibility": "shared-spell-resource-integration-deferred"
+    }
+  }
+}

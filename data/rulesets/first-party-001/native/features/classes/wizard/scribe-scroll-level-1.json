@@ -1,0 +1,20 @@
+{
+  "id": "class-feature.wizard.scribe-scroll-level-1",
+  "name": "Scribe Scroll",
+  "kind": "classFeature",
+  "parentClass": "class.wizard",
+  "classLevel": 1,
+  "definition": {
+    "name": "Scribe Scroll",
+    "description": "Native declarative Wizard feature; shared mechanics remain separate where noted.",
+    "mechanics": {
+      "kind": "scribe-scroll",
+      "sourceEdition": "SRD35",
+      "automaticAtWizardClassLevel": 1,
+      "consumesGeneralFeat": false,
+      "consumesWizardSpecializationChoice": false,
+      "grants": "shared-spell-scroll-crafting-entitlement",
+      "craftingEffectsAndCosts": "deferred-to-shared-item-creation-system"
+    }
+  }
+}

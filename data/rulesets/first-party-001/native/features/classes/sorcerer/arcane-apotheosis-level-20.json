@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.sorcerer.arcane-apotheosis-level-20",
+  "name": "Arcane Apotheosis",
+  "kind": "classFeature",
+  "parentClass": "class.sorcerer",
+  "classLevel": 20,
+  "definition": {
+    "name": "Arcane Apotheosis",
+    "description": "Native Band 1 Sorcerer feature; shared engine constraints and approved owner reconciliation apply.",
+    "mechanics": {
+      "kind": "arcane-apotheosis",
+      "requiresInnateSorceryActive": true,
+      "oneOptionEachTurnGetsDiscount": true,
+      "discountUpToSorceryPoints": 2,
+      "secondMetamagicPaysFullCost": true,
+      "minimumCost": 0
+    }
+  }
+}

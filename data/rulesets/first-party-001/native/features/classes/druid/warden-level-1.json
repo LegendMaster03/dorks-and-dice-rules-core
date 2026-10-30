@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.druid.warden-level-1",
+  "name": "Warden",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 1,
+  "definition": {
+    "name": "Warden",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "primal-order-option",
+      "armor": [
+        "medium"
+      ],
+      "weapons": [
+        "martial"
+      ],
+      "duplicateMediumArmor": "nonstacking"
+    }
+  }
+}

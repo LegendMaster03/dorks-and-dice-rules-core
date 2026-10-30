@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.rogue.steady-aim-level-3",
+  "name": "Steady Aim",
+  "kind": "classFeature",
+  "parentClass": "class.rogue",
+  "classLevel": 3,
+  "definition": {
+    "name": "Steady Aim",
+    "description": "Native Rogue Steady Aim; uses shared Dorks & Dice adjudication.",
+    "mechanics": {
+      "kind": "aim-for-accuracy",
+      "cost": "bonus-action",
+      "requiresNotMovedThisTurn": true,
+      "speedZeroUntilTurnEnd": true,
+      "advantageNextAttackCurrentTurn": true,
+      "doesNotCreateSneakAttackEligibility": true
+    }
+  }
+}

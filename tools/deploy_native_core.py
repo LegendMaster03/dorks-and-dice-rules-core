@@ -8,7 +8,9 @@ import subprocess
 import sys
 import time
 
-FINGERPRINT = "870ca5e89a97b9176f0a3b55fb6cb9467227d13562a83dd7d72ecee5a57ecda6"
+# A deployment is authorized for an exact reviewed Git commit. The CI-validated
+# native catalog fingerprint for that commit is supplied by the release workflow,
+# not pinned in source or derived from the runtime container being verified.
 PUBLIC = "dorks-and-dice-rules-core"
 PRIVATE = PUBLIC + "-private"
 SITE = "dorks-and-dice-site"
@@ -48,9 +50,27 @@ def validate_members(name, network, allowed):
     require(members <= allowed, f"Unexpected member on {name}; review privately")
     return members
 
+def reviewed_fingerprint():
+    value = os.environ.get("RULES_CORE_EXPECTED_FINGERPRINT", "")
+    require(bool(re.fullmatch(r"[0-9a-f]{64}", value)),
+            "Reviewed native catalog fingerprint is missing or invalid")
+    return value
+
+def require_catalog_fingerprint(log, expected):
+    observed = re.findall(r"\bfingerprint ([0-9a-f]{64})\b", log)
+    require(bool(observed) and all(value == expected for value in observed),
+            "Catalog fingerprint mismatch")
+
+def require_image_provenance(image, sha):
+    require(image["Config"].get("User") not in (None, "", "root", "0"),
+            "Release image must be unprivileged")
+    require(image["Config"].get("Labels", {}).get("org.opencontainers.image.revision") == sha,
+            "Release image commit label does not match the reviewed SHA")
+
 def release_config():
     sha = os.environ.get("RELEASE_SHA", "")
     require(bool(re.fullmatch(r"[0-9a-f]{40}", sha)), "RELEASE_SHA must be an exact commit")
+    reviewed_fingerprint()
     env_file = os.environ.get("RULES_CORE_ENV_FILE", "")
     require(Path(env_file).is_file(), "Core deployment .env is missing")
     image = "dorks-and-dice-rules-core:rewrite-" + sha
@@ -105,7 +125,7 @@ def verify(image_id, pair, control):
     require(status == "200" and json.loads(body) == {"rulesets": []}, "Anonymous distribution is not closed")
     for name in (PUBLIC, PRIVATE):
         # JsonConsole writes catalog initialization messages to stdout.
-        require(FINGERPRINT in command("docker", "logs", name), "Catalog fingerprint mismatch")
+        require_catalog_fingerprint(command("docker", "logs", name), reviewed_fingerprint())
     validate_members(pair, inspect("network", pair), {PRIVATE, WIKI})
     validate_members(control, inspect("network", control), {SITE, PRIVATE})
 
@@ -122,7 +142,7 @@ def deploy():
     image, env, compose, pair, control = preflight()
     built = inspect("image", image)
     image_id = built["Id"]
-    require(built["Config"].get("User") not in (None, "", "root", "0"), "Release image must be unprivileged")
+    require_image_provenance(built, os.environ["RELEASE_SHA"])
     try:
         # Never remove orphans, recreate databases or touch another Compose project.
         command(*compose, "up", "-d", "--no-build", "--no-deps", "rules-core-public", "rules-core-private", env=env)
@@ -144,7 +164,7 @@ def deploy():
             time.sleep(10)
             verify(image_id, pair, control)
             require(all(inspect("container", name)["RestartCount"] == count for name, count in before.items()), "Core restarted during observation")
-        print(json.dumps({"status": "infrastructure-smoke-passed", "imageId": image_id, "fingerprint": FINGERPRINT,
+        print(json.dumps({"status": "infrastructure-smoke-passed", "imageId": image_id, "fingerprint": reviewed_fingerprint(),
                           "observationSeconds": 60, "liveSiteTicketAcceptance": "pending"}), flush=True)
     except Exception:
         withdraw(image_id)

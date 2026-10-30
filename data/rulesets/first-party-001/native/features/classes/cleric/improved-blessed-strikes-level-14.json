@@ -1,0 +1,25 @@
+{
+  "id": "class-feature.cleric.improved-blessed-strikes-level-14",
+  "name": "Improved Blessed Strikes",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 14,
+  "definition": {
+    "name": "Improved Blessed Strikes",
+    "description": "Improved Blessed Strikes is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "improve-selected-blessed-strikes-option",
+      "requires": "class-feature.cleric.blessed-strikes-level-7",
+      "divineStrike": {
+        "totalDamage": "2d8",
+        "notAdditiveToPriorDie": true
+      },
+      "potentSpellcasting": {
+        "on": "cleric-cantrip-deals-damage-to-creature",
+        "targets": "self-or-other-creature-within-60-feet",
+        "temporaryHitPoints": "2*wisdom-modifier"
+      },
+      "doesNotGrantUnselectedOption": true
+    }
+  }
+}

@@ -7,16 +7,19 @@ namespace RulesCore.Host.Tests;
 public sealed class NativeCatalogTests
 {
     [Fact]
-    public void ApprovedPackageLoads35PlayableRecords()
+    public void ApprovedPackageLoadsAllNativeRecords()
     {
-        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        var location = RepositoryLocation();
+        var catalog = NativeCatalogLoader.Load(location);
+        var expected = ReadNativeInventory(location.NativeDirectory);
+        Assert.NotEmpty(expected);
         Assert.Equal("first-party-001", catalog.RulesetId);
         Assert.Equal(1, catalog.SchemaVersion);
-        Assert.Equal(35, catalog.Count);
-        Assert.Equal(29, catalog.CountByCategory("CONDITION"));
-        Assert.Equal(1, catalog.CountByCategory("leveled-condition"));
-        Assert.Equal(4, catalog.CountByCategory("rule"));
-        Assert.Equal(1, catalog.CountByCategory("ruleChapter"));
+        Assert.Equal(expected.Count, catalog.Count);
+        foreach (var group in expected.GroupBy(e => e.Kind, StringComparer.OrdinalIgnoreCase))
+            Assert.Equal(group.Count(), catalog.CountByCategory(group.Key));
+        Assert.Equal(expected.Select(e => e.Kind).Distinct(StringComparer.OrdinalIgnoreCase).Count(),
+            catalog.CountsByCategory.Count);
         Assert.Equal(64, catalog.Fingerprint.Length);
         Assert.True(catalog.TryGetById("condition.wet", out var wet));
         Assert.Equal("Wet", wet!.Name);
@@ -31,17 +34,26 @@ public sealed class NativeCatalogTests
     [Fact]
     public void SearchIsStableCaseInsensitiveAndBounded()
     {
-        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        var location = RepositoryLocation();
+        var catalog = NativeCatalogLoader.Load(location);
+        var expected = ReadNativeInventory(location.NativeDirectory);
         var all = catalog.Search(limit: 100);
-        Assert.Equal(35, all.Total);
+        Assert.Equal(expected.Count, all.Total);
+        Assert.Equal(Math.Min(100, expected.Count), all.Items.Length);
+        var allIds = Enumerable.Range(0, (expected.Count + 99) / 100)
+            .SelectMany(page => catalog.Search(offset: page * 100, limit: 100).Items.Select(e => e.Id));
+        Assert.Equal(expected.Select(e => e.Id).OrderBy(id => id, StringComparer.Ordinal), allIds);
         Assert.Equal(
             all.Items.Select(x => x.Id).OrderBy(x => x, StringComparer.Ordinal),
             all.Items.Select(x => x.Id));
         Assert.Equal(catalog.Search("condition.", limit: 100).Items.Select(x => x.Id),
             catalog.Search("CONDITION.", limit: 100).Items.Select(x => x.Id));
-        Assert.Equal(30, catalog.Search("CONDITION.").Total);
-        Assert.Equal(29, catalog.Search(category: "condition").Total);
-        Assert.Equal(1, catalog.Search(category: "LEVELED-CONDITION").Total);
+        Assert.Equal(expected.Count(e => e.Id.StartsWith("condition.", StringComparison.OrdinalIgnoreCase)),
+            catalog.Search("CONDITION.").Total);
+        Assert.Equal(expected.Count(e => e.Kind.Equals("condition", StringComparison.OrdinalIgnoreCase)),
+            catalog.Search(category: "condition").Total);
+        Assert.Equal(expected.Count(e => e.Kind.Equals("leveled-condition", StringComparison.OrdinalIgnoreCase)),
+            catalog.Search(category: "LEVELED-CONDITION").Total);
         Assert.Equal(0, catalog.Search("never-present").Total);
         Assert.Equal(0, catalog.Search(category: "never-present").Total);
         var first = catalog.Search("condition", offset: 0, limit: 4);
@@ -194,6 +206,37 @@ public sealed class NativeCatalogTests
         Assert.False(store.Current().IsReady);
         store.Publish(first);
         Assert.True(store.Current().IsReady);
+    }
+
+    // Source-derived inventory: adding or removing valid native JSON does not require
+    // editing a catalog total in test code. Read only top-level playable entities.
+    private static IReadOnlyList<(string Id, string Kind)> ReadNativeInventory(string nativeDirectory)
+    {
+        var inventory = new List<(string Id, string Kind)>();
+        foreach (var path in Directory.EnumerateFiles(nativeDirectory, "*.json", SearchOption.AllDirectories))
+        {
+            using var document = JsonDocument.Parse(File.ReadAllText(path));
+            var root = document.RootElement;
+            void Add(IEnumerable<JsonElement> records)
+            {
+                foreach (var record in records)
+                {
+                    var kind = record.GetProperty("kind").GetString()!;
+                    if (kind.Equals("metadata", StringComparison.OrdinalIgnoreCase)) continue;
+                    inventory.Add((record.GetProperty("id").GetString()!, kind));
+                }
+            }
+
+            if (root.ValueKind == JsonValueKind.Array)
+                Add(root.EnumerateArray());
+            else if (root.TryGetProperty("id", out _))
+                Add(new[] { root });
+            else
+                Add(root.EnumerateObject()
+                    .Where(property => !property.Name.StartsWith("_", StringComparison.Ordinal))
+                    .SelectMany(property => property.Value.EnumerateArray()));
+        }
+        return inventory;
     }
 
     private static NativeCatalogLoadException Failure(Fixture f) =>

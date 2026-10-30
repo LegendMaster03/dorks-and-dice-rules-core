@@ -1,0 +1,17 @@
+{
+  "id": "class-feature.druid.timeless-body-level-18",
+  "name": "Timeless Body (Longevity)",
+  "kind": "classFeature",
+  "parentClass": "class.druid",
+  "classLevel": 18,
+  "definition": {
+    "name": "Timeless Body (Longevity)",
+    "description": "Native Druid base-class feature; obey prerequisites and option selection.",
+    "mechanics": {
+      "kind": "slow-aging",
+      "agingRatio": 0.1,
+      "doesNotStackWithArchdruidLongevity": true,
+      "alsoRetainsEarlierHistoricalAgingResilience": true
+    }
+  }
+}

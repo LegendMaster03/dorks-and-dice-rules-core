@@ -1,0 +1,19 @@
+{
+  "id": "class-feature.bard.superior-inspiration-level-18",
+  "name": "Superior Inspiration",
+  "kind": "classFeature",
+  "parentClass": "class.bard",
+  "classLevel": 18,
+  "definition": {
+    "name": "Superior Inspiration",
+    "description": "Superior Inspiration: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "initiative-recovery",
+      "resource": "bard.inspiration",
+      "when": "roll-initiative",
+      "restoreUntilCurrentUses": 2,
+      "onlyExpendedUses": true,
+      "notAboveResourceMaximum": true
+    }
+  }
+}

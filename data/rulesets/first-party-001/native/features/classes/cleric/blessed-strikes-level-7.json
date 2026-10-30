@@ -1,0 +1,21 @@
+{
+  "id": "class-feature.cleric.blessed-strikes-level-7",
+  "name": "Blessed Strikes",
+  "kind": "classFeature",
+  "parentClass": "class.cleric",
+  "classLevel": 7,
+  "definition": {
+    "name": "Blessed Strikes",
+    "description": "Blessed Strikes is part of the unified Cleric Band 1 base class; its mechanics apply through the common native divine and combat rules.",
+    "mechanics": {
+      "kind": "choose-one-blessed-strikes-option",
+      "choose": 1,
+      "options": [
+        "class-feature.cleric.divine-strike-level-7",
+        "class-feature.cleric.potent-spellcasting-level-7"
+      ],
+      "optionOnlyOne": true,
+      "oldSubclassVersion": "do-not-duplicate-same-selected-feature"
+    }
+  }
+}

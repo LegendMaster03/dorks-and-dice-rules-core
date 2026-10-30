@@ -1,0 +1,176 @@
+{
+  "id": "class-feature.barbarian.rage-level-1",
+  "name": "Rage",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 1,
+  "definition": {
+    "name": "Rage",
+    "description": "Rage uses a common pool. Choose Battle Rage or Primal Rage when activated.",
+    "mechanics": {
+      "kind": "rage-resource",
+      "activation": "bonus-action",
+      "usesByClassLevel": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          20,
+          "unlimited"
+        ]
+      ],
+      "shortRestRestore": 1,
+      "longRestRestore": "all",
+      "shared": {
+        "strengthAdvantage": true,
+        "resistance": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "forbidSpellsAndConcentration": true,
+        "noHeavyArmor": true,
+        "endsEarlyOn": [
+          "incapacitated",
+          "heavy-armor",
+          "voluntary-end"
+        ],
+        "atClassLevel15IncapacitatedReplacedByUnconscious": true
+      },
+      "battle": {
+        "names": [
+          [
+            1,
+            "Battle Rage"
+          ],
+          [
+            9,
+            "Greater Battle Rage"
+          ],
+          [
+            16,
+            "Mighty Battle Rage"
+          ]
+        ],
+        "strengthAttackDamageBonus": [
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            16,
+            4
+          ]
+        ],
+        "durationUntil": "end-of-next-turn",
+        "extendBy": [
+          "attack-enemy",
+          "force-enemy-saving-throw",
+          "bonus-action"
+        ],
+        "maximumMinutes": 10
+      },
+      "primal": {
+        "names": [
+          [
+            1,
+            "Primal Rage"
+          ],
+          [
+            11,
+            "Greater Primal Rage"
+          ],
+          [
+            20,
+            "Mighty Primal Rage"
+          ]
+        ],
+        "temporaryStrengthConstitution": [
+          [
+            1,
+            4
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            20,
+            8
+          ]
+        ],
+        "bonusWillSavingThrow": [
+          [
+            1,
+            2
+          ],
+          [
+            11,
+            3
+          ],
+          [
+            20,
+            4
+          ]
+        ],
+        "armorClassPenalty": -2,
+        "rounds": "3 + modified-Constitution-modifier",
+        "oncePerEncounter": true,
+        "noBattleDamageBonus": true,
+        "temporaryConstitutionModifiesHitPoints": true,
+        "postRage": "condition.fatigued",
+        "fatigueExpires": "end-of-encounter",
+        "fatigueRemovedAtLevel": 17,
+        "restrictionOnConcentrationMagicItemsAndMentalSkills": "retain-historical-primal-restrictions-with-native-ability-substitution",
+        "restrictions": {
+          "noActionsRequiringPatienceOrConcentration": true,
+          "forbiddenCheckAbilityBases": [
+            "charisma",
+            "dexterity",
+            "intelligence"
+          ],
+          "allowedSkillExceptions": [
+            "balance",
+            "escape-artist",
+            "intimidation",
+            "ride"
+          ],
+          "allowStrengthBasedSubstitutionsIfGranted": true,
+          "forbiddenMagicItemActivation": [
+            "command-word",
+            "spell-trigger",
+            "spell-completion"
+          ],
+          "blockedFeatFamilies": [
+            "combat-expertise",
+            "item-creation",
+            "metamagic"
+          ],
+          "blockedConcentrationSkill": true
+        }
+      },
+      "persistentUpgradeAt": 15
+    }
+  }
+}

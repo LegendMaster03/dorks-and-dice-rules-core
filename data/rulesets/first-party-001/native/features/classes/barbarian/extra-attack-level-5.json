@@ -1,0 +1,16 @@
+{
+  "id": "class-feature.barbarian.extra-attack-level-5",
+  "name": "Extra Attack",
+  "kind": "classFeature",
+  "parentClass": "class.barbarian",
+  "classLevel": 5,
+  "definition": {
+    "name": "Extra Attack",
+    "description": "Two attacks with the standard Attack action; does not add to attacks from the alternative BAB iterative procedure.",
+    "mechanics": {
+      "kind": "attack-action",
+      "standardAttackCount": 2,
+      "babInteraction": "alternative-procedure-not-additive"
+    }
+  }
+}
