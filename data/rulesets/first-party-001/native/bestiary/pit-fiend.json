@@ -1,0 +1,264 @@
+{
+  "id": "monster.pit-fiend",
+  "name": "Pit Fiend",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      21
+    ],
+    "hp": {
+      "average": 337,
+      "formula": "27d10 + 189"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 26,
+    "dex": 14,
+    "con": 24,
+    "int": 22,
+    "wis": 18,
+    "cha": 24,
+    "save": {
+      "dex": "+8",
+      "wis": "+10"
+    },
+    "skill": {
+      "perception": "+10",
+      "persuasion": "+19"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 20,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "20",
+    "spellcasting": [
+      {
+        "name": "Hellfire Spellcasting {@recharge 4}",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The pit fiend casts {@spell Fireball|SRD52} (level 5 version) twice, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}). It can replace one {@spell Fireball|SRD52} with {@spell Hold Monster|SRD52} (level 7 version) or {@spell Wall of Fire|SRD52}."
+        ],
+        "recharge": {
+          "4": [
+            "{@spell Fireball|SRD52} (level 5 version)",
+            "{@spell Hold Monster|SRD52} (level 7 version)",
+            "{@spell Wall of Fire|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "recharge"
+        ]
+      },
+      {
+        "name": "Detect Magic",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The pit fiend casts {@spell Detect Magic|SRD52} at will, requiring no Material components, using Charisma as its spellcasting ability."
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the pit fiend dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Fear Aura",
+        "entries": [
+          "The pit fiend emanates an aura in a 20-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} while it doesn't have the {@condition Incapacitated|SRD52} condition. {@actSave wis} {@dc 21}, any enemy that starts its turn in the aura. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the start of its next turn. {@actSaveSuccess} The target is immune to this pit fiend's aura for 24 hours."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day)",
+        "entries": [
+          "If the pit fiend fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The pit fiend has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The pit fiend's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The pit fiend makes one Bite attack, two Devilish Claw attacks, and one Fiery Mace attack."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}18 ({@damage 3d6 + 8}) Piercing damage. If the target is a creature, it must make the following saving throw. {@actSave con} {@dc 21}. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition. While {@condition Poisoned|SRD52}, the target can't regain {@variantrule Hit Points|SRD52} and takes 21 ({@damage 6d6}) Poison damage at the start of each of its turns, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      },
+      {
+        "name": "Devilish Claw",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}26 ({@damage 4d8 + 8}) Necrotic damage."
+        ]
+      },
+      {
+        "name": "Fiery Mace",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}22 ({@damage 4d6 + 8}) Force damage plus 21 ({@damage 6d6}) Fire damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/pit-fiend.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "U"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "F",
+      "I",
+      "N",
+      "O",
+      "P"
+    ],
+    "damageTagsSpell": [
+      "F"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "frightened",
+      "poisoned"
+    ],
+    "conditionInflictSpell": [
+      "paralyzed"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "dexterity",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Pit Fiend",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Pit Fiend",
+            "entries": [
+              "{@i Devil of Domination}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Relics"
+                  }
+                ]
+              },
+              "Masterminds of the Nine Hells and generals of infernal legions, pit fiends seek conquests across the planes of existence. More than warmongers, these diabolical tyrants concoct intricate plots that play out among fiendish battlefields, infernal politics, and mortal conspiracies.",
+              "Pit fiends are the nobility of the Nine Hells, and many rule Lower Planar fiefdoms, doomed mortal worlds, and other infernal redoubts. Most serve archdevils of the Nine Hells as they pursue their own ambitions. Ranks of lesser devils obey pit fiends, but these cunning tyrants remain on guard against betrayal from their servants.",
+              "Smoldering with the evil of the Nine Hells, pit fiends strike fear in creatures with their mere presence. Despite their size and incredible physical and magical might, pit fiends are as likely to try to corrupt foes as they are to destroy them outright. Pit fiends' arrogance can lead them to underestimate mortal foes—a failing that can lead to their downfall."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Pit Fiend.webp"
+            },
+            "credit": "Eric Belisle",
+            "width": 1289,
+            "height": 1464
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
