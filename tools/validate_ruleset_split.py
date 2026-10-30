@@ -245,7 +245,7 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
     if has_source_candidates and source_status != "pending-native-reconciliation":
         return False
     source_copy = dict(working_record)
-    source_copy.pop("baselineStatus")
+    source_copy.pop("baselineStatus", None)
     if source_copy.get("kind") == "monster":
         # This reference adds no invented numeric statistics or action grants.
         source_copy["statBlockFoundationId"] = "rule.monster-statblock-foundation"
