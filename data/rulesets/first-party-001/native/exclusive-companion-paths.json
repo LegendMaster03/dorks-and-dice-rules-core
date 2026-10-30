@@ -1,0 +1,28 @@
+{
+  "id": "rule.exclusive-companion-paths",
+  "name": "Exclusive class-granted companion paths",
+  "kind": "rule",
+  "status": "selected-native-rule; individual-companion-mechanics-under-design",
+  "description": "Where a base class grants mutually exclusive bonded, persistent or temporary companion paths, select one applicable path; do not automatically grant both. This applies independently of separately authorized companion-granting features.",
+  "appliesTo": [
+    "class.druid",
+    "class.sorcerer",
+    "class.wizard"
+  ],
+  "druid": {
+    "choice": [
+      "persistent animal companion (3.5e-derived, not familiar)",
+      "temporary Wild Companion familiar"
+    ],
+    "bothAutomatically": false,
+    "originalSourceTiming": {
+      "animalCompanionClassLevel": 1,
+      "wildCompanionClassLevel": 2
+    }
+  },
+  "sorcererAndWizard": "Use the class-specific true familiar alternatives and keep their detailed mechanics deferred until shared reconciliation.",
+  "independentGrants": "A separate explicit class or feat grant may provide another companion. Merely knowing Find Familiar is not an automatic class companion entitlement.",
+  "unresolved": [
+    "The distinct companion mechanical packages, respec/replacement procedures, and effective source timing require the dedicated shared companion pass."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "rule.npc-monster-casting-resources",
+  "name": "NPC and monster spellcasting resources",
+  "kind": "rule",
+  "status": "selected-native-rule; casting-runtime-integration-under-design",
+  "description": "NPCs, monsters, and player characters use the same native qualifying spell-resource framework; source presentation alone does not mandate slotless monsters or grant them unearned slots.",
+  "resourceProfiles": {
+    "slotChoice": "Use source-supported explicit slot grants or explicitly authorized slot-expending abilities at their actual spell levels and counts.",
+    "spellPointChoice": "Spell points are an alternative representation of the same qualifying expendable pool, not additional simultaneous uses.",
+    "selection": "GM chooses applicable slot or point profile for eligible NPCs and monsters; presence of spell-like abilities alone does not entitle a creature to any pool.",
+    "noCRDerivedSlots": true
+  },
+  "independentGrants": {
+    "atWill": "Preserve existing at-will permission",
+    "limitedUse": "Preserve each explicit limited use and recovery schedule",
+    "innate": "Preserve innate powers and their own permissions",
+    "slotUse": "Requires actual separately authorized spells and slot expenditure; a pool never supplies missing spells"
+  },
+  "restoredAbilities": "A compatible older spell-slot-powered ability may coexist with a newer action when restored, but duplicate consequences are not counted twice.",
+  "example": {
+    "monsterId": "monster.priest",
+    "sourceSupportedSlotsByLevel": {
+      "1": 4,
+      "2": 3,
+      "3": 2
+    },
+    "retains": "Current Priest attacks, casting and Divine Aid; restored Divine Eminence can expend the source-supported older pool."
+  },
+  "unresolved": [
+    "Native spell-point exchange and exact runtime effect interpretation; do not infer new slots for other spellcasting monsters."
+  ]
+}

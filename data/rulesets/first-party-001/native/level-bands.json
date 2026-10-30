@@ -1,0 +1,73 @@
+{
+  "id": "rule.level-bands",
+  "name": "Level Bands and advancement tracks",
+  "kind": "rule",
+  "status": "selected-native-rule; transition-implementation-under-design",
+  "description": "Class, prestige and total-character level progression use separate consecutive 20-level bands, not an independent hard-coded epic progression engine.",
+  "bands": {
+    "size": 20,
+    "examples": [
+      {
+        "band": 1,
+        "levels": [
+          1,
+          20
+        ]
+      },
+      {
+        "band": 2,
+        "levels": [
+          21,
+          40
+        ]
+      },
+      {
+        "band": 3,
+        "levels": [
+          41,
+          60
+        ]
+      }
+    ],
+    "separateTracks": [
+      "total-character",
+      "base-class",
+      "prestige-class"
+    ],
+    "subclassTrack": "normally parent base-class track",
+    "notAutomaticallyBands": [
+      "competency-rank",
+      "non-level tier"
+    ],
+    "example": "Wizard 15 / Fighter 10 is in total-character Band 2 at level 25 while both individual classes remain in Band 1."
+  },
+  "progressionOutcomes": [
+    "newly available",
+    "continue unchanged",
+    "continue scaling",
+    "stop improving but remain active",
+    "evolve scaling or permission",
+    "end only when explicitly specified"
+  ],
+  "abilityScores": {
+    "universalPermanentMaximum": null,
+    "sourceCapsNotAutomaticallyAdopted": true,
+    "noFreeASIFromBandTransition": true
+  },
+  "epicBoons": {
+    "eligibility": "total-character-level >= 21",
+    "classification": "feat",
+    "level19Default": "ordinary ASI or otherwise eligible feat, not an automatic Epic Boon",
+    "noAutomaticAward": true
+  },
+  "scope": {
+    "firstPlaytestBand": [
+      1,
+      20
+    ],
+    "secondBandDeferred": true
+  },
+  "unresolved": [
+    "Silent-source band transition defaults, overlapping track effects, prestige spellcasting effective levels and paused or ended progression semantics."
+  ]
+}
