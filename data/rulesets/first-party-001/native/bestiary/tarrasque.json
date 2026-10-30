@@ -1,0 +1,278 @@
+{
+  "id": "monster.tarrasque",
+  "name": "Tarrasque",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Titans"
+    ],
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "monstrosity",
+      "tags": [
+        "titan"
+      ]
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      25
+    ],
+    "hp": {
+      "average": 697,
+      "formula": "34d20 + 340"
+    },
+    "speed": {
+      "walk": 60,
+      "burrow": 40,
+      "climb": 60
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 11,
+    "con": 30,
+    "int": 3,
+    "wis": 11,
+    "cha": 11,
+    "save": {
+      "dex": "+9",
+      "int": "+5",
+      "wis": "+9",
+      "cha": "+9"
+    },
+    "skill": {
+      "perception": "+9"
+    },
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 19,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
+    "cr": "30",
+    "trait": [
+      {
+        "name": "Legendary Resistance (6/Day)",
+        "entries": [
+          "If the tarrasque fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The tarrasque has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Reflective Carapace",
+        "entries": [
+          "If the tarrasque is targeted by a {@spell Magic Missile|SRD52} spell or a spell that requires a ranged attack roll, roll {@dice 1d6}. On a 1-5, the tarrasque is unaffected. On a 6, the tarrasque is unaffected and reflects the spell, turning the caster into the target."
+        ]
+      },
+      {
+        "name": "Siege Monster",
+        "entries": [
+          "The tarrasque deals double damage to objects and structures."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The tarrasque makes one Bite attack and three other attacks, using Claw or Tail in any combination."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 19}, reach 15 ft. {@h}36 ({@damage 4d12 + 10}) Piercing damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 20}). Until the grapple ends, the target has the {@condition Restrained|SRD52} condition and can't teleport."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 19}, reach 15 ft. {@h}28 ({@damage 4d8 + 10}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 19}, reach 30 ft. {@h}23 ({@damage 3d8 + 10}) Bludgeoning damage. If the target is a Huge or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Thunderous Bellow {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 27}, each creature and each object that isn't being worn or carried in a 150-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 78 ({@damage 12d12}) Thunder damage, and the target has the {@condition Deafened|SRD52} and {@condition Frightened|SRD52} conditions until the end of its next turn. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Swallow",
+        "entries": [
+          "{@actSave str} {@dc 27}, one Large or smaller creature {@condition Grappled|SRD52} by the tarrasque (it can have up to six creatures swallowed at a time). {@actSaveFail} The target is swallowed, and the {@condition Grappled|SRD52} condition ends. A swallowed creature has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions and can't teleport, it has {@variantrule Cover|SRD52|Total Cover} against attacks and other effects outside the tarrasque, and it takes 56 ({@damage 16d6}) Acid damage at the start of each of the tarrasque's turns.",
+          "If the tarrasque takes 60 damage or more on a single turn from a creature inside it, the tarrasque must succeed on a {@dc 20} Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, each of which falls in a space within 10 feet of the tarrasque and has the {@condition Prone|SRD52} condition. If the tarrasque dies, any swallowed creature no longer has the {@condition Restrained|SRD52} condition and can escape from the corpse using 20 feet of movement, exiting {@condition Prone|SRD52}."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Onslaught",
+        "entries": [
+          "The tarrasque moves up to half its {@variantrule Speed|SRD52}, and it makes one Claw or Tail attack."
+        ]
+      },
+      {
+        "name": "World-Shaking Movement",
+        "entries": [
+          "The tarrasque moves up to its {@variantrule Speed|SRD52}. At the end of this movement, the tarrasque creates an instantaneous shock wave in a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from itself. Creatures in that area lose {@status Concentration|SRD52} and, if Medium or smaller, have the {@condition Prone|SRD52} condition. The tarrasque can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Move",
+        "entries": [
+          "The tarrasque moves up to half its speed."
+        ]
+      }
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/tarrasque.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances",
+      "Magic Resistance",
+      "Siege Monster"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "actionTags": [
+      "Multiattack",
+      "Swallow"
+    ],
+    "damageTags": [
+      "A",
+      "B",
+      "P",
+      "S",
+      "T"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "prone",
+      "restrained"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "strength"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Tarrasque",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Tarrasque",
+            "entries": [
+              "{@i The Shape of Calamity}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Among the most devastating creatures in existence, the tarrasque is an engine of catastrophe and a ruiner of nations. A terror of massive size and overwhelming might, this primeval destroyer survives from the earliest epochs of the Material Plane, when it served as a weapon of immortal forces. Since then, the tarrasque has slumbered in secret, rising every few ages to usher in eras of destruction.",
+              "The tarrasque is a bipedal, prehistoric Monstrosity that stands over seventy feet tall. Bristling with horns and spikes, its spiny carapace deflects harm and can reflect magical attacks.",
+              "The tarrasque is a creature of tireless rage. It lashes out at any creature that catches its attention, thrashing with claws and its mighty tail while swallowing smaller beings whole. It seems to take instinctual offense at the works of lesser beings, venting its rage at buildings, bridges, ships, and monuments. The larger a structure or foe is, the greater the tarrasque's wrath.",
+              "It is a mystery what—if anything—calms the tarrasque, but eventually it returns to its slumber, leaving the world irrevocably changed. While the tarrasque might be halted by incredible opposition, its threat can never be wiped from the multiverse. Whenever the tarrasque is defeated, another tarrasque awakes somewhere else on the Material Plane.",
+              "Few things survive the tarrasque's rampages, and reports of the monster's devastation are often contradictory, incomplete, or beyond belief. In cases where it leaves no survivors, its calamities might initially be blamed on evil dragons or magical disasters, but the tarrasque frequently leaves behind some unmistakable indication of its passage. Roll on or choose a result from the Tarrasque Evidence table to inspire what marks the monster's rampages.",
+              {
+                "type": "table",
+                "caption": "Tarrasque Evidence",
+                "colLabels": [
+                  "1d4",
+                  "Amid Destruction, the Tarrasque Leaves..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Evidence of a magic spell reflected back on its caster, like Ice Knife or Melf's Acid Arrow."
+                  ],
+                  [
+                    "2",
+                    "Massive footprints or claw marks."
+                  ],
+                  [
+                    "3",
+                    "A russet scale the size of a knight's shield."
+                  ],
+                  [
+                    "4",
+                    "A shattered mountain or diverted river."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Tarrasque.webp"
+            },
+            "credit": "Chris Rahn",
+            "width": 2214,
+            "height": 2214
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
