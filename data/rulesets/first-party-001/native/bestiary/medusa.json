@@ -1,0 +1,204 @@
+{
+  "id": "monster.medusa",
+  "name": "Medusa",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 127,
+      "formula": "17d8 + 51"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 10,
+    "dex": 17,
+    "con": 16,
+    "int": 12,
+    "wis": 13,
+    "cha": 15,
+    "save": {
+      "wis": "+4"
+    },
+    "skill": {
+      "deception": "+5",
+      "perception": "+4",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Darkvision 150 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "6",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The medusa makes two Claw attacks and one Snake Hair attack, or it makes three Poison Ray attacks."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Snake Hair",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Piercing damage plus 14 ({@damage 4d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poison Ray",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 150 ft. {@h}11 ({@damage 2d8 + 2}) Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Petrifying Gaze {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 13}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. If the medusa sees its reflection in the {@variantrule Cone [Area of Effect]|SRD52|Cone}, the medusa must make this save. {@actSaveFail 1} The target has the {@condition Restrained|SRD52} condition and repeats the save at the end of its next turn if it is still {@condition Restrained|SRD52}, ending the effect on itself on a success. {@actSaveFail 2} The target has the {@condition Petrified|SRD52} condition instead of the {@condition Restrained|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "desert"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/medusa.opus"
+    },
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "I",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RA"
+    ],
+    "conditionInflict": [
+      "petrified",
+      "restrained"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Medusa",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Medusa",
+            "entries": [
+              "{@i Snake-Haired Recluse with a Petrifying Gaze}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "With their hair of living snakes and their infamous petrifying gazes, medusas are hubristic creatures that inhabit sites of fallen glory. They often dwell beyond the fringes of civilization or travel in disguise, leaving trails of {@condition petrified|SRD52} victims. Some medusas dominate groups of monsters or criminals, controlling them with threats of {@condition petrified|SRD52} doom, while others recruit servants that are immune to being {@condition petrified|SRD52}, such as gargoyles and gorgons.",
+              "Medusas are born or created through preternatural circumstances. Roll on or choose a result from the Medusa Fates table to inspire what led to a medusa's creation.",
+              {
+                "type": "table",
+                "caption": "Medusa Fates",
+                "colLabels": [
+                  "1d6",
+                  "The Medusa Was..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Born a medusa and lives unaware of whatever curse or circumstances afflicted its ancestor."
+                  ],
+                  [
+                    "2",
+                    "Created by a god and tasked with guarding a treasure or secret."
+                  ],
+                  [
+                    "3",
+                    "A cultist who made a fiendish bargain and enjoyed rewards that have since faded."
+                  ],
+                  [
+                    "4",
+                    "An explorer transformed and compelled to defend a cursed ruin."
+                  ],
+                  [
+                    "5",
+                    "A vain noble whose magical attempt to gain eternal beauty backfired."
+                  ],
+                  [
+                    "6",
+                    "The victim of a bite from a magical serpent or reptilian god in disguise."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Medusa.webp"
+            },
+            "credit": "Aaron J. Riley",
+            "width": 1463,
+            "height": 2560
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

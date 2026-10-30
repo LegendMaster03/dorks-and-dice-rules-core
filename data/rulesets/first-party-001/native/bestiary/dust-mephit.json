@@ -1,0 +1,163 @@
+{
+  "id": "monster.dust-mephit",
+  "name": "Dust Mephit",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 17,
+      "formula": "5d6"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 30
+    },
+    "str": 5,
+    "dex": 14,
+    "con": 10,
+    "int": 9,
+    "wis": 11,
+    "cha": 10,
+    "skill": {
+      "perception": "+2",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "immune": [
+      "poison"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "Primordial (Auran, Terran)"
+    ],
+    "cr": "1/2",
+    "spellcasting": [
+      {
+        "name": "Sleep (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mephit casts the {@spell Sleep|SRD52} spell, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 10})."
+        ],
+        "daily": {
+          "1": [
+            "{@spell Sleep|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The mephit explodes when it dies. {@actSave dex} {@dc 10}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 5 ({@damage 2d4}) Bludgeoning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Blinding Breath {@recharge}",
+        "entries": [
+          "{@actSave dex} {@dc 10}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Blinded|SRD52} condition until the end of the mephit's next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, elemental"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/mephit.opus"
+    },
+    "traitTags": [
+      "Death Burst"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "AU",
+      "P",
+      "T"
+    ],
+    "damageTags": [
+      "B",
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "blinded"
+    ],
+    "conditionInflictSpell": [
+      "incapacitated",
+      "unconscious"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Dust Mephit",
+        "_copy": {
+          "name": "Mephits",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Dust mephits are composed of air and fine earth. They are drawn to forsaken places, and they think everything associated with death is hilarious."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

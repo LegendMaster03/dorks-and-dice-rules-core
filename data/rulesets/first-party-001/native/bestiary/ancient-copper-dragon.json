@@ -1,0 +1,258 @@
+{
+  "id": "monster.ancient-copper-dragon",
+  "name": "Ancient Copper Dragon",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Metallic Dragons"
+    ],
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      21
+    ],
+    "hp": {
+      "average": 367,
+      "formula": "21d20 + 147"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 12,
+    "con": 25,
+    "int": 20,
+    "wis": 17,
+    "cha": 22,
+    "save": {
+      "dex": "+8",
+      "wis": "+10"
+    },
+    "skill": {
+      "deception": "+13",
+      "perception": "+17",
+      "stealth": "+8"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "immune": [
+      "acid"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "21",
+      "xpLair": 41000
+    },
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Mind Spike|SRD52} (level 5 version)",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Greater Restoration|SRD52}",
+            "{@spell Major Image|SRD52}",
+            "{@spell Project Image|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Slowing Breath or (B) Spellcasting to cast {@spell Mind Spike|SRD52} (level 5 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 15}, reach 15 ft. {@h}19 ({@damage 2d10 + 8}) Slashing damage plus 9 ({@damage 2d8}) Acid damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 22}, each creature in an 90-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 63 ({@damage 14d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Slowing Breath",
+        "entries": [
+          "{@actSave con} {@dc 22}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target can't take Reactions; its {@variantrule Speed|SRD52} is halved; and it can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both. This effect lasts until the end of its next turn."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Giggling Magic",
+        "entries": [
+          "{@actSave cha} {@dc 21}, one creature the dragon can see within 120 feet. {@actSaveFail} 31 ({@damage 9d6}) Psychic damage. Until the end of its next turn, the target rolls {@dice 1d8} whenever it makes an ability check or attack roll and subtracts the number rolled from the {@variantrule D20 Test|SRD52}. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Mind Jolt",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Mind Spike|SRD52} (level 5 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 23} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "environment": [
+      "hill"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "dragonAge": "ancient",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/copper-dragon.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "A",
+      "S",
+      "Y"
+    ],
+    "damageTagsSpell": [
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "savingThrowForced": [
+      "charisma",
+      "constitution",
+      "dexterity"
+    ],
+    "savingThrowForcedLegendary": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ancient Copper Dragon",
+        "_copy": {
+          "name": "Copper Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ancient copper dragons use warmth and reliability to effect change over time. They open their cozy lairs to their friends as havens of learning and laughter for the young and those in need. These dragons watch for and oppose future threats while fostering sanctuaries of simple goodness."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Ancient Copper Dragon.webp"
+                  },
+                  "title": "An ancient copper dragon watches over its allies' boisterous young",
+                  "credit": "Svetlin Velinov",
+                  "width": 1978,
+                  "height": 2560
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

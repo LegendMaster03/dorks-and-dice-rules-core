@@ -1,0 +1,441 @@
+{
+  "_meta": {
+    "sourceWorking": "working/creature-types.json",
+    "selection": "approved creature-type hierarchy; candidate specializations remain source-only"
+  },
+  "entries": [
+    {
+      "id": "rule.creature-type-inheritance",
+      "name": "Creature types and inherited defaults",
+      "kind": "rule",
+      "description": "One selected, edition-independent creature-type hierarchy for new native creature definitions; existing reviewed monster statistics are not recomputed automatically.",
+      "genericParent": {
+        "id": "creature",
+        "name": "Creature",
+        "hitDie": null,
+        "needs": {
+          "breathing": true,
+          "food": true,
+          "sleep": true
+        },
+        "senses": [],
+        "damageModifiers": {},
+        "conditionImmunities": [],
+        "naturalWeaponCompetency": false,
+        "description": "Universal creature mechanics. No arbitrary ability score, speed, Hit Die count, or fixed Hit Die size."
+      },
+      "inheritance": {
+        "model": "Generic Creature parent; typed descendants may inherit and override properties. Creature families and individual definitions can be further descendants.",
+        "multipleInheritance": true,
+        "classification": "Mechanical inheritance and type-sensitive targeting identity are distinct. Explicit effective type eligibility controls targeting; do not infer every ancestor or shared mixin as a target type.",
+        "typeEligibilityResolution": "Deferred until multi-type targeting rules are finalized; no automatic change to existing creature targeting eligibility.",
+        "existingStatblocks": "Keep previously reconciled 5.x statistics and effective traits intact during migration; explicit creature overrides preserve differences.",
+        "strengths": "Fortitude, Reflex, and Will are separate native saving throws from Constitution, Dexterity, and Wisdom; type defaults establish competency, not a numerical formula.",
+        "sharedTraits": "Store common properties at the appropriate ancestor; leave more specific or exceptional traits to descendants."
+      },
+      "typeIds": [
+        "creature-type.outsider",
+        "creature-type.celestial",
+        "creature-type.fiend",
+        "creature-type.elemental",
+        "creature-type.fey",
+        "creature-type.true-elemental",
+        "creature-type.beast",
+        "creature-type.magical-beast",
+        "creature-type.vermin",
+        "creature-type.humanoid",
+        "creature-type.giant",
+        "creature-type.monstrosity",
+        "creature-type.monstrous-humanoid",
+        "creature-type.aberration",
+        "creature-type.construct",
+        "creature-type.dragon",
+        "creature-type.ooze",
+        "creature-type.plant",
+        "creature-type.undead"
+      ],
+      "unresolved": [
+        "Historical BAB and saving throw numerical progressions",
+        "Monster feat acquisition and effects",
+        "Automatic CR/HD scaling or monster advancement",
+        "Overlapping-type targeting semantics",
+        "Additional historical immunities that depend on unreconciled combat rules",
+        "Runtime inheritance resolver"
+      ]
+    },
+    {
+      "id": "creature-type.outsider",
+      "name": "Outsider",
+      "parent": "creature",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        }
+      ],
+      "needs": {
+        "food": false,
+        "sleep": false
+      },
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude",
+          "reflex",
+          "will"
+        ]
+      },
+      "description": "Planar or otherworldly foundation; breathing follows generic Creature default.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.celestial",
+      "name": "Celestial",
+      "parent": "creature-type.outsider",
+      "description": "Further shared celestial traits belong to more specialized descendants.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.fiend",
+      "name": "Fiend",
+      "parent": "creature-type.outsider",
+      "description": "Further shared fiend traits belong to more specialized descendants.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.elemental",
+      "name": "Elemental",
+      "parent": "creature-type.outsider",
+      "savingThrowDefaults": {
+        "strong": [],
+        "note": "Elemental strong-save defaults are supplied by specific elemental descendants, where appropriate."
+      },
+      "description": "Elemental nature; elemental-body physiology is not universal to genies and other Elementals.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.fey",
+      "name": "Fey",
+      "parent": "creature-type.outsider",
+      "hitDie": 6,
+      "needs": {
+        "food": true,
+        "sleep": true
+      },
+      "savingThrowDefaults": {
+        "strong": [
+          "reflex",
+          "will"
+        ]
+      },
+      "description": "Overrides Outsider biological requirements; other Fey-specific characteristics are inherited further down.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.true-elemental",
+      "name": "True Elemental",
+      "parent": "creature-type.elemental",
+      "needs": {
+        "breathing": false
+      },
+      "description": "Additional elemental-body properties are assigned here or to a more specific descendant after trait review.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.beast",
+      "name": "Beast",
+      "parent": "creature",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "low-light-vision"
+        }
+      ],
+      "naturalWeaponCompetency": true,
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude",
+          "reflex"
+        ]
+      },
+      "description": "Ordinary biological needs; no universal intelligence, language, alignment, or equipment prohibitions.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.magical-beast",
+      "name": "Magical Beast",
+      "parent": "creature-type.beast",
+      "hitDie": 10,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        }
+      ],
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude",
+          "reflex"
+        ]
+      },
+      "description": "Additional Darkvision supplements inherited Low-Light Vision. Magical Beast does not imply magical attacks or mandatory spellcasting.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.vermin",
+      "name": "Vermin",
+      "parent": "creature-type.beast",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        }
+      ],
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude"
+        ]
+      },
+      "description": "Invertebrate foundation. Mindless is not universal; families grant it explicitly where appropriate.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.humanoid",
+      "name": "Humanoid",
+      "parent": "creature",
+      "hitDie": 8,
+      "weaponCompetencies": [
+        "simple"
+      ],
+      "description": "Ordinary physiology, equipment compatibility; no universal language, armor, speed, alignment, or ability scores.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.giant",
+      "name": "Giant",
+      "parent": "creature-type.humanoid",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "low-light-vision"
+        }
+      ],
+      "weaponCompetencies": [
+        "martial"
+      ],
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude"
+        ]
+      },
+      "description": "No mandatory Large size or uniform Strength. Humanoid mechanical ancestry does not automatically settle Humanoid spell-target eligibility.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.monstrosity",
+      "name": "Monstrosity",
+      "parent": "creature",
+      "hitDie": 10,
+      "naturalWeaponCompetency": true,
+      "description": "Broad monstrous physiology; no blanket senses, immunities, or magical abilities.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.monstrous-humanoid",
+      "name": "Monstrous Humanoid",
+      "parent": "creature-type.monstrosity",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        }
+      ],
+      "weaponCompetencies": [
+        "simple"
+      ],
+      "savingThrowDefaults": {
+        "strong": [
+          "reflex",
+          "will"
+        ]
+      },
+      "description": "Monstrous creature with humanoid-like anatomy; does not automatically acquire Humanoid targeting eligibility.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.aberration",
+      "name": "Aberration",
+      "parent": "creature",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        }
+      ],
+      "naturalWeaponCompetency": true,
+      "savingThrowDefaults": {
+        "strong": [
+          "will"
+        ]
+      },
+      "description": "Unusual anatomy; no automatic psionics, telepathy, or magical resistance.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.construct",
+      "name": "Construct",
+      "parent": "creature",
+      "hitDie": 10,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        },
+        {
+          "kind": "low-light-vision"
+        }
+      ],
+      "needs": {
+        "breathing": false,
+        "food": false,
+        "sleep": false
+      },
+      "damageModifiers": {
+        "poison": 100
+      },
+      "conditionImmunities": [
+        "poisoned",
+        "exhaustion",
+        "paralyzed",
+        "petrified"
+      ],
+      "naturalWeaponCompetency": true,
+      "description": "Constitution scores and native healing remain possible; additional historical construct immunities are not automatically operative.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.dragon",
+      "name": "Dragon",
+      "parent": "creature",
+      "hitDie": 12,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        },
+        {
+          "kind": "low-light-vision"
+        }
+      ],
+      "naturalWeaponCompetency": true,
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude",
+          "reflex",
+          "will"
+        ]
+      },
+      "description": "Breath weapons, flight, frightful presence, and elemental immunity belong to descendants where appropriate.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.ooze",
+      "name": "Ooze",
+      "parent": "creature",
+      "hitDie": 10,
+      "senses": [
+        {
+          "kind": "blindsight",
+          "range": "creature-or-descendant-defined"
+        }
+      ],
+      "needs": {
+        "sleep": false
+      },
+      "conditionImmunities": [
+        "charmed",
+        "frightened",
+        "poisoned"
+      ],
+      "naturalWeaponCompetency": true,
+      "description": "Amorphous foundation; no universal Mindless, critical-hit immunity, or mandatory single blindsight range.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.plant",
+      "name": "Plant",
+      "parent": "creature",
+      "hitDie": 8,
+      "senses": [
+        {
+          "kind": "low-light-vision"
+        }
+      ],
+      "needs": {
+        "sleep": false
+      },
+      "naturalWeaponCompetency": true,
+      "savingThrowDefaults": {
+        "strong": [
+          "fortitude"
+        ]
+      },
+      "description": "Game classification includes fungal creatures; no assertion that fungi are botanically plants.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    },
+    {
+      "id": "creature-type.undead",
+      "name": "Undead",
+      "parent": "creature",
+      "hitDie": 12,
+      "senses": [
+        {
+          "kind": "darkvision",
+          "rangeFeet": 60
+        }
+      ],
+      "needs": {
+        "breathing": false,
+        "food": false,
+        "sleep": false
+      },
+      "damageModifiers": {
+        "poison": 100
+      },
+      "conditionImmunities": [
+        "poisoned",
+        "exhaustion"
+      ],
+      "naturalWeaponCompetency": true,
+      "savingThrowDefaults": {
+        "strong": [
+          "will"
+        ]
+      },
+      "description": "Retains Constitution scores; does not universally import 3.x critical-hit, mental-effect, or energy-drain rules.",
+      "kind": "creatureType",
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "monster.zombie",
+  "name": "Zombie",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      8
+    ],
+    "hp": {
+      "average": 15,
+      "formula": "2d8 + 6"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 13,
+    "dex": 6,
+    "con": 16,
+    "int": 3,
+    "wis": 6,
+    "cha": 5,
+    "save": {
+      "wis": "+0"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 8,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Undead Fortitude",
+        "entries": [
+          "If damage reduces the zombie to 0 {@variantrule Hit Points|SRD52}, it makes a Constitution saving throw ({@dc 5} plus the damage taken) unless the damage is Radiant or from a {@variantrule Critical Hit|SRD52}. On a successful save, the zombie drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, shadowfell",
+      "underdark",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/zombie.opus"
+    },
+    "traitTags": [
+      "Undead Fortitude"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "CS",
+      "X"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Zombie",
+        "_copy": {
+          "name": "Zombies",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Humanoid zombies usually serve as guardians, servants, or soldiers for evil magic-users. In rare cases, foul magic might result in widespread reanimation of the dead, unleashing hordes of zombies to terrorize the living."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

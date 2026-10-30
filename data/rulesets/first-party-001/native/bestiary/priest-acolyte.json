@@ -1,0 +1,161 @@
+{
+  "id": "monster.priest-acolyte",
+  "name": "Priest Acolyte",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "cleric"
+      ]
+    },
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 14,
+    "dex": 10,
+    "con": 12,
+    "int": 10,
+    "wis": 14,
+    "cha": 11,
+    "skill": {
+      "medicine": "+4",
+      "religion": "+2"
+    },
+    "passive": 12,
+    "languages": [
+      "Common"
+    ],
+    "cr": "1/4",
+    "gear": [
+      "chain shirt|srd52",
+      "holy symbol|srd52",
+      "mace|srd52"
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The priest casts one of the following spells, using Wisdom as the spellcasting ability:"
+        ],
+        "will": [
+          "{@spell Light|SRD52}",
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "ability": "wis",
+        "displayAs": "action"
+      },
+      {
+        "name": "Divine Aid (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The priest casts {@spell Bless|SRD52}, {@spell Healing Word|SRD52}, or {@spell Sanctuary|SRD52}, using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "1": [
+            "{@spell Bless|SRD52}",
+            "{@spell Healing Word|SRD52}",
+            "{@spell Sanctuary|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Mace",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Bludgeoning damage plus 2 ({@damage 1d4}) Radiant damage."
+        ]
+      },
+      {
+        "name": "Radiant Flame",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 60 ft. {@h}7 ({@damage 2d6}) Radiant damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "individual",
+      "relics"
+    ],
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "B",
+      "R"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Priest Acolyte",
+        "_copy": {
+          "name": "Priests",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Priest acolytes have great faith but modest magical skill. Some might be trainees in religious organizations or soldiers in zealous armies, while others are faith leaders in small communities or wanderers on pilgrimages."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Priest Acolyte.webp"
+                  },
+                  "width": 389,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

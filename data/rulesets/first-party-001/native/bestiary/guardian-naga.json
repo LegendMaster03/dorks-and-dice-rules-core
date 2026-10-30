@@ -1,0 +1,257 @@
+{
+  "id": "monster.guardian-naga",
+  "name": "Guardian Naga",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 136,
+      "formula": "16d10 + 48"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "swim": 40
+    },
+    "str": 19,
+    "dex": 18,
+    "con": 16,
+    "int": 16,
+    "wis": 19,
+    "cha": 18,
+    "save": {
+      "dex": "+8",
+      "con": "+7",
+      "int": "+7",
+      "wis": "+8",
+      "cha": "+8"
+    },
+    "skill": {
+      "arcana": "+11",
+      "history": "+11",
+      "religion": "+11"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "paralyzed",
+      "poisoned",
+      "restrained"
+    ],
+    "languages": [
+      "Celestial",
+      "Common"
+    ],
+    "cr": "10",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The naga casts one of the following spells, requiring no Somatic or Material components and using Wisdom as the spellcasting ability (spell save {@dc 16}):"
+        ],
+        "will": [
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Clairvoyance|SRD52}",
+            "{@spell Cure Wounds|SRD52} (level 6 version)",
+            "{@spell Flame Strike|SRD52} (level 6 version)",
+            "{@spell Geas|SRD52}",
+            "{@spell True Seeing|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Celestial Restoration",
+        "entries": [
+          "If the naga dies, it returns to life in {@dice 1d6} days and regains all its {@variantrule Hit Points|SRD52} unless {@spell Dispel Evil and Good|SRD52} is cast on its remains."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The naga makes two Bite attacks. It can replace any attack with a use of Poisonous Spittle."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}17 ({@damage 2d12 + 4}) Piercing damage plus 22 ({@damage 4d10}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poisonous Spittle",
+        "entries": [
+          "{@actSave con} {@dc 16}, one creature the naga can see within 60 feet. {@actSaveFail} 31 ({@damage 7d8}) Poison damage, and the target has the {@condition Blinded|SRD52} condition until the start of the naga's next turn. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "planar, upper"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/guardian-naga.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "CE"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "damageTagsSpell": [
+      "F",
+      "R",
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "blinded"
+    ],
+    "conditionInflictSpell": [
+      "charmed"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "savingThrowForcedSpell": [
+      "dexterity",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Guardian Naga",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Guardian Naga",
+            "entries": [
+              "{@i Enduring Serpentine Lore Keeper}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Planar (Upper Planes)|bestiary|environment=planar, upper}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Relics"
+                  }
+                ]
+              },
+              "Guardian nagas are immortal, serpentine scholars that possess perfect memories. They collect the histories and lore of those they live among, guarding cultures' stories and passing them on to new generations with infallible accuracy. Guardian nagas that outlive their host civilizations might linger in whatever ruins remain, preserving the civilizations' stories so their lost people might live on.",
+              "Roll on or choose a result from the Guardian Naga Lore table to inspire what a naga knows.",
+              {
+                "type": "table",
+                "caption": "Guardian Naga Lore",
+                "colLabels": [
+                  "1d8",
+                  "The Guardian Naga Recalls..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "The last words of an ancient sage or leader."
+                  ],
+                  [
+                    "2",
+                    "The location of a hidden city or continent."
+                  ],
+                  [
+                    "3",
+                    "A magic word, password, or riddle's answer."
+                  ],
+                  [
+                    "4",
+                    "The names of all who have told it stories."
+                  ],
+                  [
+                    "5",
+                    "An otherwise forgotten ritual or spell."
+                  ],
+                  [
+                    "6",
+                    "Recipes using regional ingredients."
+                  ],
+                  [
+                    "7",
+                    "Stories of forgotten gods and local spirits."
+                  ],
+                  [
+                    "8",
+                    "The vulnerabilities of a legendary monster."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Guardian Naga.webp"
+            },
+            "credit": "Alejandro Pacheco",
+            "width": 2560,
+            "height": 1656
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

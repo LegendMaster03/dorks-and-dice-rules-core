@@ -1,0 +1,144 @@
+{
+  "id": "monster.lion",
+  "name": "Lion",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "4d10"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 17,
+    "dex": 15,
+    "con": 11,
+    "int": 3,
+    "wis": 12,
+    "cha": 8,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The lion has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the lion's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Running Leap",
+        "entries": [
+          "With a 10-foot running start, the lion can {@variantrule Long Jump|SRD52} up to 25 feet."
+        ]
+      },
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The lion has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "If the lion moves at least 20 feet straight toward a creature and then hits it with a Rend attack on the same turn, that target must succeed on a {@dc 13} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the lion can make one Rend attack against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The lion makes two Rend attacks. It can replace one attack with a use of Roar."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Roar",
+        "entries": [
+          "{@actSave wis} {@dc 11}, one creature within 15 feet. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the start of the lion's next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "grassland",
+      "hill",
+      "mountain"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/lion.opus"
+    },
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "frightened"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Lion",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Lion.webp"
+                  },
+                  "credit": "Jonathan Kuo",
+                  "width": 1200,
+                  "height": 960
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

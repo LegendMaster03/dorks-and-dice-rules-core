@@ -1,0 +1,132 @@
+{
+  "id": "monster.spy",
+  "name": "Spy",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 27,
+      "formula": "6d8"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 10,
+    "dex": 15,
+    "con": 10,
+    "int": 12,
+    "wis": 14,
+    "cha": 16,
+    "skill": {
+      "deception": "+5",
+      "insight": "+4",
+      "investigation": "+5",
+      "perception": "+6",
+      "sleight of hand": "+4",
+      "stealth": "+6"
+    },
+    "passive": 16,
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "1",
+    "gear": [
+      "hand crossbow|srd52",
+      "shortsword|srd52",
+      "thieves' tools|srd52"
+    ],
+    "action": [
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Hand Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 30/120 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Cunning Action",
+        "entries": [
+          "The spy takes the {@action Dash|SRD52}, {@action Disengage|SRD52}, or {@action Hide|SRD52} action."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "implements",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/spy.opus"
+    },
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RNG"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Spy",
+        "_copy": {
+          "name": "Spies",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Spies use charm and deception to veil their true intentions. If forced into combat, they seek to end such conflicts quietly and decisively."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Sneak Attack (1/Turn)",
+        "entries": [
+          "The spy deals an extra 7 ({@damage 2d6}) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of the spy that isn't {@condition incapacitated} and the spy doesn't have disadvantage on the attack roll."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

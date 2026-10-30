@@ -1,0 +1,281 @@
+{
+  "id": "monster.half-red-dragon-veteran",
+  "name": "Half-Red Dragon Veteran",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "human"
+      ]
+    },
+    "alignment": [
+      "A"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "{@item plate armor|srd51}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 65,
+      "formula": "10d8 + 20"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 13,
+    "con": 14,
+    "int": 10,
+    "wis": 11,
+    "cha": 10,
+    "skill": {
+      "athletics": "+6",
+      "perception": "+3"
+    },
+    "senses": [
+      "blindsight 10 ft.",
+      "darkvision 60 ft."
+    ],
+    "passive": 12,
+    "resist": [
+      "fire"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The veteran makes two longsword attacks. If it has a shortsword drawn, it can also make a shortsword attack."
+        ]
+      },
+      {
+        "name": "Longsword",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d8 + 3}) slashing damage, or 8 ({@damage 1d10 + 3}) slashing damage if used with two hands."
+        ]
+      },
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage."
+        ]
+      },
+      {
+        "name": "Heavy Crossbow",
+        "entries": [
+          "{@atk rw} {@hit 3} to hit, range 100/400 ft., one target. {@h}6 ({@damage 1d10 + 1}) piercing damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "The veteran exhales fire in a 15-foot cone. Each creature in that area must make a {@dc 15} Dexterity saving throw, taking 24 ({@damage 7d6}) fire damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/half-red-dragon-veteran.opus"
+    },
+    "attachedItems": [
+      "heavy crossbow|srd51",
+      "longsword|srd51",
+      "shortsword|srd51"
+    ],
+    "senseTags": [
+      "B",
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "F",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "AOE",
+      "MLW",
+      "MW",
+      "RNG",
+      "RW"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Half-Red Dragon Veteran",
+        "entries": [
+          "When a dragon in polymorphed form mates with another creature, the union sometimes produces half dragon offspring. A creature might also transform into a half-dragon as a result of a mad wizard's spell or a ritual bath in dragon's blood. In all these cases, the result is a creature that combines the essence of a dragon with the form of its original race. Regardless of their origins, all half-dragons have similar features and appearance, gaining special senses, resistance to destructive energy, and a breath weapon.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "name": "Draconic Nature",
+                    "type": "entries",
+                    "entries": [
+                      "Half-dragons are incapable of having natural born offspring. Those that wish to propagate must find other ways to do so, almost always involving magic. By way of compensation, half dragons are blessed with long life. Barring unforeseen misfortune, a typical half-dragon's life expectancy is twice that of its non-draconic line, so that a half-dragon human might live more than a century and a half.",
+                      "Half-dragons inherit personality traits common to their draconic heritage, so that half-gold dragons are often shy and secretive, while half-copper dragons are impish and playful. Half-green dragons are deceitful, while half-white dragons are often dim-witted brutes. These traits are tempered by a half-dragon's other lineage, but greed, arrogance, and paranoia are qualities that even good-aligned half-dragons often possess."
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Half-Dragon Template",
+            "entries": [
+              "A beast, humanoid, giant, or monstrosity can become a half-dragon. When a creature becomes a half-dragon, it retains all its statistics except as noted below.",
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "name": "Challenge",
+                    "entries": [
+                      "To avoid recalculating the creature's challenge rating, apply the template only to a creature that meets the optional prerequisite in the Breath Weapon table below. Otherwise, use the guidelines in the Dungeon Master's Guide to recalculate the rating after you apply the template."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Senses",
+                    "entries": [
+                      "The half-dragon gains {@sense blindsight} with a radius of 10 feet and {@sense darkvision} with a radius of 60 feet."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Resistances",
+                    "entries": [
+                      "The half-dragon gains resistance to a type of damage based on its color.",
+                      {
+                        "type": "table",
+                        "colLabels": [
+                          "Color",
+                          "Damage Resistance"
+                        ],
+                        "colStyles": [
+                          "col-6",
+                          "col-6"
+                        ],
+                        "rows": [
+                          [
+                            "Black or copper",
+                            "Acid"
+                          ],
+                          [
+                            "Blue or bronze",
+                            "Lightning"
+                          ],
+                          [
+                            "Brass, gold, or red",
+                            "Fire"
+                          ],
+                          [
+                            "Green",
+                            "Poison"
+                          ],
+                          [
+                            "Silver or white",
+                            "Cold"
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Languages",
+                    "entries": [
+                      "The half-dragon speaks Draconic in addition to any other languages it knows."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "New Action: Breath Weapon",
+                    "entries": [
+                      "The half-dragon has the breath weapon of its dragon half. The half-dragon's size determines how this action functions.",
+                      {
+                        "type": "table",
+                        "colLabels": [
+                          "Size",
+                          "Breath Weapon",
+                          "Optional Prerequisite"
+                        ],
+                        "colStyles": [
+                          "col-4",
+                          "col-4",
+                          "col-4"
+                        ],
+                        "rows": [
+                          [
+                            "Large or smaller",
+                            "As a wyrmling",
+                            "Challenge 2 or higher"
+                          ],
+                          [
+                            "Huge",
+                            "As a young dragon",
+                            "Challenge 7 or higher"
+                          ],
+                          [
+                            "Gargantuan",
+                            "As an adult dragon",
+                            "Challenge 8 or higher"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Sample Half-Dragon",
+                "entries": [
+                  "Here the half-dragon template has been applied to a human {@creature veteran} to create a half-red dragon veteran. {@item Splint armor|srd51} has been replaced with {@item plate armor|srd51|plate}."
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/MM/Half-Red Dragon Veteran.webp"
+            },
+            "width": 707,
+            "height": 1000
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

@@ -231,17 +231,21 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
         }
 
     source_status = working_record.get("baselineStatus")
-    if source_status not in ("retained-native-definition", "pending-native-reconciliation"):
-        return False
     has_source_candidates = ("candidateDefinitions" in working_record or
                              "candidateSpecializations" in working_record)
+    # A deliberately selected record may retain an exact, candidate-free
+    # source-data mirror in working. This never activates working at runtime.
+    if source_status is None and not has_source_candidates and native_record == working_record:
+        return True
+    if source_status not in (None, "retained-native-definition", "pending-native-reconciliation"):
+        return False
     # Source-only candidates may be retained as immutable provenance after a
     # separately selected coherent native rule is published. Such overlap is
     # permitted ONLY with an exact, documented source divergence below.
     if has_source_candidates and source_status != "pending-native-reconciliation":
         return False
     source_copy = dict(working_record)
-    source_copy.pop("baselineStatus")
+    source_copy.pop("baselineStatus", None)
     if source_copy.get("kind") == "monster":
         # This reference adds no invented numeric statistics or action grants.
         source_copy["statBlockFoundationId"] = "rule.monster-statblock-foundation"
@@ -257,6 +261,10 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
         return False
     if source_status == "pending-native-reconciliation" and (
             divergence.get("sourceBaselineStatus") != source_status):
+        return False
+    if source_status is None and (
+            not working_record.get("status") or
+            divergence.get("sourceWorkingStatus") != working_record.get("status")):
         return False
     if not (REPO / divergence["reconciliationDocument"]).is_file():
         return False

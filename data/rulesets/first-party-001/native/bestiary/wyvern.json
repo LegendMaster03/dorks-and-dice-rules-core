@@ -1,0 +1,134 @@
+{
+  "id": "monster.wyvern",
+  "name": "Wyvern",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 127,
+      "formula": "15d10 + 45"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 80
+    },
+    "str": 19,
+    "dex": 10,
+    "con": 16,
+    "int": 5,
+    "wis": 12,
+    "cha": 6,
+    "skill": {
+      "perception": "+4"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 14,
+    "cr": "6",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The wyvern makes one Bite attack and one Sting attack."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Sting",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage plus 24 ({@damage 7d6}) Poison damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the wyvern's next turn."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "mountain"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/wyvern.opus"
+    },
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Wyvern",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Wyvern",
+            "entries": [
+              "{@i Draconic Hunter with a Venomous Sting}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Hill|bestiary|environment=hill}, {@filter Mountain|bestiary|environment=mountain}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Opportunistic predators, wyverns are draconic ambushers that strike from above. These territorial hunters attack with their fangs and stinger-tipped tails. Wyvern stingers drip with deadly venom, a painful toxin feared by monster hunters and coveted by alchemists.",
+              "Wyverns are aggressive and claim sizable territories around the mountains, crags, and ruins where they dwell. Despite their considerable strength, they're opportunistic hunters that target unwitting livestock and groups of encamped travelers. Wyverns usually land only to finish off creatures they've weakened with their poison and strafing attacks. Creatures that fight back or take flight might deter wyverns, convincing them to search for easier prey.",
+              "Once wyverns overpower a quarry, they carry it to their cavernous lairs to either consume it in safety or trap it to eat later. Most wyverns don't hoard treasure, but their lairs are littered with the possessions of past victims. It isn't uncommon for wyverns to carry off chests, carts, or small boats along with their prey."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Wyvern.webp"
+            },
+            "credit": "Fury Galluzzi",
+            "width": 2550,
+            "height": 1704
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

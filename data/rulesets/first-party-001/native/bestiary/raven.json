@@ -1,0 +1,98 @@
+{
+  "id": "monster.raven",
+  "name": "Raven",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 2,
+      "formula": "1d4"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 50
+    },
+    "str": 2,
+    "dex": 14,
+    "con": 10,
+    "int": 5,
+    "wis": 13,
+    "cha": 6,
+    "skill": {
+      "perception": "+3"
+    },
+    "passive": 13,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Mimicry",
+        "entries": [
+          "The raven can mimic simple sounds it has heard, such as a whisper or chitter. A hearer can discern the sounds are imitations with a successful {@dc 10} Wisdom ({@skill Insight|SRD52}) check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "swamp",
+      "urban"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/raven.opus"
+    },
+    "traitTags": [
+      "Mimicry"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Raven",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Raven.webp"
+                  },
+                  "width": 898,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

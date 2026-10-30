@@ -1,0 +1,15 @@
+{
+  "id": "rule.rest-recovery-policy",
+  "name": "Rest-based resource recovery",
+  "kind": "rule",
+  "rulesStatus": "selected-native-rule; active-design",
+  "category": "rest",
+  "default": "Ordinary limited ability uses recover on the explicitly granted Short Rest, Long Rest or other rest event. A historical once-per-day ability ordinarily becomes one use regained at the end of a Long Rest rather than a midnight/calendar-day reset.",
+  "exceptions": "Real day boundaries, elapsed time, multi-day effects, item mechanics and other expressly selected cooldowns may remain calendar/elapsed-time based.",
+  "restrictions": [
+    "Do not grant Short Rest recovery to an ability that only specifies Long Rest recovery.",
+    "Completing a qualifying Long Rest is not the same as midnight or mere passage of 24 hours.",
+    "Do not replace already selected longer recovery schedules, such as an explicit seven-day cooldown.",
+    "This policy does not grant additional rests or restore independent resource pools."
+  ]
+}

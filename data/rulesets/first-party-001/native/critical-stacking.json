@@ -1,0 +1,38 @@
+{
+  "id": "rule.critical-stacking",
+  "name": "Optional critical escalation",
+  "kind": "rule",
+  "rulesStatus": "selected-optional-native-rule; active-design",
+  "category": "combat",
+  "defaultEnabled": null,
+  "gameMasterControlsScope": true,
+  "description": "Optional table rule based on the owner's specified Fool's Gold-inspired critical tiers, with Dorks & Dice adaptations. A campaign can use normal critical hits without enabling escalation.",
+  "criticalSuccess": {
+    "start": "A natural 20 starts a critical chain and prompts an unmodified d20 escalation roll.",
+    "double": "Another qualifying critical result raises the chain to double. An expanded critical range may qualify up to double only.",
+    "triple": "Three consecutive natural 20s in combat reduce the attacked target to 0 HP. A non-20 result can never be part of a triple.",
+    "singleHitDamage": "Maximum eligible base damage dice plus one additional roll of eligible damage dice.",
+    "doubleHitDamage": "Maximum eligible base damage dice plus two additional rolls of eligible damage dice."
+  },
+  "criticalFailure": {
+    "start": "A natural 1 begins an escalating failure chain.",
+    "singleAndDouble": "Situational consequences are adjudicated by the GM; no mandatory universal fumble table.",
+    "triple": "Three consecutive natural 1s reduce the failing character to 0 HP."
+  },
+  "escalationRolls": {
+    "die": "d20",
+    "unmodified": true,
+    "advantage": false,
+    "disadvantage": false,
+    "emphasis": false,
+    "chainEndsWhenFollowUpDoesNotQualify": true,
+    "retainEarnedTier": true
+  },
+  "atZeroHP": "Normal 5e-style death saving throws remain available; do not silently substitute 3.x negative-HP instant death.",
+  "unresolved": [
+    "How supplemental damage dice and static bonuses enter the maximization arithmetic.",
+    "Beyond-triple behavior and special immunities/defenses.",
+    "Interaction with external abilities that permit rerolling an escalation die."
+  ],
+  "noAutomaticUniversalActivation": true
+}

@@ -1,0 +1,113 @@
+{
+  "id": "monster.allosaurus",
+  "name": "Allosaurus",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Dinosaurs"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "beast",
+      "tags": [
+        "dinosaur"
+      ]
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 51,
+      "formula": "6d10 + 18"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 19,
+    "dex": 13,
+    "con": 17,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "skill": {
+      "perception": "+5"
+    },
+    "passive": 15,
+    "cr": "2",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}15 ({@damage 2d10 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Claws",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}8 ({@damage 1d8 + 4}) Slashing damage. If the target is a Large or smaller creature and the allosaurus moved 30+ feet straight toward it immediately before the hit, the target has the {@condition Prone|SRD52} condition, and the allosaurus can make one Bite attack against it."
+        ]
+      }
+    ],
+    "environment": [
+      "grassland"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/allosaurus.opus"
+    },
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Allosaurus",
+        "entries": [
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  "The allosaurus is a predator possessing great size, strength, and speed. It can run down almost any prey over open ground, pouncing to pull creatures down with its wicked claws.",
+                  {
+                    "type": "entries",
+                    "name": "Dinosaurs",
+                    "entries": [
+                      "Dinosaurs, or behemoths, are among the oldest reptiles in the world. Predatory dinosaurs are savage, territorial hunters. Herbivorous dinosaurs are less aggressive, but they might attack to defend their young, or if startled or harassed.",
+                      "Dinosaurs come in many sizes and shapes. Larger varieties often have drab coloration, while smaller dinosaurs have colorful markings akin to birds. Dinosaurs roam rugged and isolated areas that humanoids seldom visit, including remote mountain valleys, inaccessible plateaus, tropical islands, and deep fens."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/MM/Dinosaurs.webp"
+            },
+            "width": 1000,
+            "height": 827
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

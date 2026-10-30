@@ -1,0 +1,193 @@
+{
+  "id": "monster.death-dog",
+  "name": "Death Dog",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 39,
+      "formula": "6d8 + 12"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 15,
+    "dex": 14,
+    "con": 14,
+    "int": 3,
+    "wis": 13,
+    "cha": 6,
+    "skill": {
+      "perception": "+5",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 15,
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "frightened",
+      "stunned",
+      "unconscious"
+    ],
+    "cr": "1",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The death dog makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage. If the target is a creature, it is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail 1} The target has the {@condition Poisoned|SRD52} condition. While {@condition Poisoned|SRD52}, the target's {@variantrule Hit Points|SRD52|Hit Point} maximum doesn't return to normal when finishing a {@variantrule Long Rest|SRD52}, and it repeats the save every 24 hours that elapse, ending the effect on itself on a success. Subsequent Failures: The {@condition Poisoned|SRD52} target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by 5 ({@dice 1d10})."
+        ]
+      }
+    ],
+    "environment": [
+      "desert"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/death-dog.opus"
+    },
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Death Dog",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Death Dog",
+            "entries": [
+              "{@i Two-Headed Spreader of Disease}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Death dogs are plagues on the arid lands they inhabit. These vicious, two-headed canines ambush creatures they perceive as weaker than themselves, favoring the wounded or infirm. They attack recklessly, infecting as many creatures as possible with their diseased jaws. If driven off, death dogs linger close to their victims, letting infection weaken their prey before they attack again.",
+              "Legends tie death dogs to malicious death gods, the underworld, and cursed rulers. These stories are based on the malady death dogs spread. Roll on or choose a result from the Death Dog Malady Symptoms table to inspire symptoms spread by a death dog's bite. These symptoms are cosmetic and don't alter the effects of the death dog's Bite action. The symptoms vanish when a creature no longer has the {@condition Poisoned|SRD52} condition from a death dog's Bite.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "And his sorrows will stalk your land like hungry dogs until the seas turn to sand and the sun burns to cinders."
+                    ],
+                    "by": "Tablet Fragment",
+                    "from": "Bright Desert"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "caption": "Death Dog Malady Symptoms",
+                "colLabels": [
+                  "1d6",
+                  "The Death Dog's Malady Causes..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Marks from canine jaws to appear on the victim's body, as if they were still being mauled."
+                  ],
+                  [
+                    "2",
+                    "The victim's body to wither, as if constantly exposed to desert heat."
+                  ],
+                  [
+                    "3",
+                    "The victim to be distracted by distant howling or vague whispers only they can hear."
+                  ],
+                  [
+                    "4",
+                    "The victim's flesh to rot like a corpse."
+                  ],
+                  [
+                    "5",
+                    "The victim to itch, as if they had fleas or sand beneath their skin."
+                  ],
+                  [
+                    "6",
+                    "Wicked symbols to gradually appear on and spread across the victim's body."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Death Dog.webp"
+            },
+            "credit": "Daren Bader",
+            "width": 1465,
+            "height": 1766
+          }
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Two-Headed",
+        "entries": [
+          "The dog has advantage on Wisdom ({@skill Perception}) checks and on saving throws against being {@condition blinded}, {@condition charmed}, {@condition deafened}, {@condition frightened}, {@condition stunned}, or knocked {@condition unconscious}."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

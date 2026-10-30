@@ -24,7 +24,7 @@ Content promotion is **continuous**. Approved coherent rulings may be moved into
 
 The selected Band 1 classes are Barbarian, Bard, Cleric, Druid, Rogue, Sorcerer and Wizard. Their coherent progression data and associated feature records live in native; selectable options are not automatic grants. The Druid's mutually exclusive companion paths reflect the later owner approval. Additional classes, features, monsters, and general rules are eligible for promotion individually once reconciled.
 
-The representative monster records preserve existing source statistics, encounter actions, and family relations without inventing unresolved derived defenses or saving throws. All 30 conditions are selected native data with readable descriptions and chapter navigation; executable condition mechanics remain a separate responsibility. See [conditions-readiness.md](conditions-readiness.md).
+The native bestiary now contains every previously selected `retained-native-definition` creature from the staged bestiary. These preserve source statistics, encounter actions, and family relations; historical `native-identity-alias` entries remain inert in `working/` instead of creating duplicate creatures. The Assassin automatic-critical detail remains a separate unresolved design question; the otherwise selected creature definition is still usable. All 30 conditions are selected native data with readable descriptions and chapter navigation; executable condition mechanics remain a separate responsibility. See [conditions-readiness.md](conditions-readiness.md).
 
 **Selected native experimental rules:** Modular Warlock Alpha 0.3.1 is now the authoritative current Warlock for playtesting in `native/classes/base/warlock/warlock.json`, with separately authored class-feature records and individual JSON records under its `patrons/`, `pacts/`, and `invocations/` directories. Its historical comparison record remains under `data/reference/experiments/` but is not runtime authority. All rules are subject to ongoing revision; native means selected coherent rule, not finalized ruleset.
 
@@ -45,3 +45,20 @@ The original release's fixed fingerprint was `870ca5e89a97b9176f0a3b55fb6cb94672
 - **Rules Wiki UI:** read the native authorized catalog, show approved classes, condition effects and creature identities, and label any separately authorized experiments.
 
 Review notes are in `docs/handoffs/` and the machine-readable ledger. Deferred mechanics are documented for their relevant subsystem; they do not block unrelated coherent rules.
+
+**Continuing promotion:** The selected native Skills, Competencies and fear-family interactions are now represented in `native/skills.json`, `native/competencies.json`, and `native/fear.json`. Original working records remain for source comparison. Deferred fear escalation is explicitly non-operative; these selections are not claims of finality.
+
+## Ongoing native content recovery
+
+The active migration branch continues promoting previously **selected coherent rules**, without requiring the rest of the system to be finalized. Its committed native additions include:
+
+- Skills and Competencies (selected composites and training facets), copied without substituting unresolved imported definitions.
+- The fear-family interaction rule, while preserving the separately deferred historical escalation.
+- Emphasis, optional critical escalation, spell-access policy, rest-based recovery and the agreed Grapple starting procedure. Open edge cases remain documented rather than invented.
+- More selected monster statblocks that already have a reviewed single `retained-native-definition` in working. Original source candidates, identity aliases and unresolved monsters are not automatically activated.
+
+This is **not a completion claim** for the bestiary, spell corpus, equipment, feats, subclasses or other pending systems. There is no arbitrary sequence of promotion waves and no fixed catalog-count gate. The active branch is deliberately separate from the previously merged Warlock content.
+
+**Bestiary parity validation:** `tests/test_all_native_monsters_source_mirror.py` dynamically checks both directions: every native monster matches its retained selected source definition, and every retained selected source monster has a native record. Source aliases must point to an existing selected monster without producing their own native stat block. No fixed record count or fingerprint is required for content editing.
+
+**Creature types:** The previously approved 19-type hierarchy and shared creature-inheritance foundation are now native searchable records. The unchanged staged `working/creature-types.json` retains nonselected specializations and deferred compatibility research. Existing monster statblocks are not recalculated from type defaults merely because these rules are available.

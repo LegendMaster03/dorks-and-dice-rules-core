@@ -1,0 +1,119 @@
+{
+  "id": "monster.ogre",
+  "name": "Ogre",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 68,
+      "formula": "8d10 + 24"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 19,
+    "dex": 8,
+    "con": 16,
+    "int": 5,
+    "wis": 7,
+    "cha": 7,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 8,
+    "languages": [
+      "Common",
+      "Giant"
+    ],
+    "cr": "2",
+    "gear": [
+      "greatclub|srd52",
+      {
+        "item": "javelin|srd52",
+        "quantity": 3
+      }
+    ],
+    "action": [
+      {
+        "name": "Greatclub",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Javelin",
+        "entries": [
+          "{@atkr m,r} {@hit 6}, reach 5 ft. or range 30/120 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic",
+      "desert",
+      "forest",
+      "grassland",
+      "hill",
+      "mountain",
+      "swamp",
+      "underdark"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/ogre.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "GI"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "THW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ogre",
+        "_copy": {
+          "name": "Ogres",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ogres are 10-foot-tall brutes that overwhelm their foes and take what spoils they please. Ogre raiders ally with other evil forces in return for food, riches, and promises of battle."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

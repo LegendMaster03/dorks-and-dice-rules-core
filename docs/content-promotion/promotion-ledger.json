@@ -461,6 +461,14 @@
         "/candidateDefinitions",
         "/definition"
       ]
+    },
+    "rule.fear-family": {
+      "reconciliationDocument": "docs/rewrite/fear-conditions-3x.md",
+      "sourceWorkingStatus": "partial-native-rule; historical-escalation-unresolved",
+      "reason": "The selected fear-family interactions are playable native rules while optional 3.x cumulative escalation remains explicitly deferred.",
+      "changedPaths": [
+        "/status"
+      ]
     }
   },
   "conditionReadiness": {

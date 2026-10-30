@@ -1,0 +1,238 @@
+{
+  "id": "monster.dryad",
+  "name": "Dryad",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "fey",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "5d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 10,
+    "dex": 12,
+    "con": 11,
+    "int": 14,
+    "wis": 15,
+    "cha": 18,
+    "skill": {
+      "perception": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Elvish",
+      "Sylvan"
+    ],
+    "cr": "1",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dryad casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 14}):"
+        ],
+        "will": [
+          "{@spell Animal Friendship|SRD52}",
+          "{@spell Charm Monster|SRD52} (lasts 24 hours; ends early if the dryad casts the spell again)",
+          "{@spell Druidcraft|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Entangle|SRD52}",
+            "{@spell Pass without Trace|SRD52}",
+            "{@spell barkskin}",
+            "{@spell shillelagh}"
+          ],
+          "3e": [
+            "{@spell goodberry}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The dryad has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Speak with Beasts and Plants",
+        "entries": [
+          "The dryad can communicate with Beasts and Plants as if they shared a language."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dryad makes one Vine Lash or Thorn Burst attack, and it can use Spellcasting to cast {@spell Charm Monster|SRD52}."
+        ]
+      },
+      {
+        "name": "Vine Lash",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}8 ({@damage 1d8 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Thorn Burst",
+        "entries": [
+          "{@atkr r} {@hit 6}, range 60 ft. {@h}7 ({@damage 1d6 + 4}) Piercing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Tree Stride",
+        "entries": [
+          "If within 5 feet of a Large or bigger tree, the dryad teleports to an unoccupied space within 5 feet of a second Large or bigger tree that is within 60 feet of the previous tree."
+        ]
+      }
+    ],
+    "environment": [
+      "forest"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/dryad.opus"
+    },
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "E",
+      "S"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflictSpell": [
+      "charmed",
+      "restrained"
+    ],
+    "savingThrowForcedSpell": [
+      "strength",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Dryad",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Dryad",
+            "entries": [
+              "{@i Tree-Bound Guardian of Nature}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Guardians of the woodlands, dryads magically flit from tree to tree and from root to bough, harrying trespassers with tangling vines and thorns. Most of these elusive beings have a special connection with one plant or a natural sanctuary that they protect. Some also share physical similarities with the plants they're most connected to. Dryads might sicken or die if their plant or sanctuary is destroyed, recovering only if it is healed or magically replaced. Roll on or choose an option from the Dryad Sanctuaries table to inspire a dryad's bond.",
+              {
+                "type": "table",
+                "caption": "Dryad Sanctuaries",
+                "colLabels": [
+                  "1d6",
+                  "The Dryad Dwells in and Protects..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "An acres-large clonal colony—a stand of identical, interconnected trees."
+                  ],
+                  [
+                    "2",
+                    "A fortress-like tree, like a baobab or sequoia."
+                  ],
+                  [
+                    "3",
+                    "A living lock—a plant that seals evil below or blocks the path to a dungeon."
+                  ],
+                  [
+                    "4",
+                    "A lonely tree that stands atop a windswept mountain or amid a {@condition petrified|SRD52} forest."
+                  ],
+                  [
+                    "5",
+                    "A plant with magic fruit or remarkable seeds."
+                  ],
+                  [
+                    "6",
+                    "A shambling mound or treant that the dryad lives in or around as a Fey symbiote."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Dryad.webp"
+            },
+            "credit": "Dario Jelusic",
+            "width": 1200,
+            "height": 2100
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

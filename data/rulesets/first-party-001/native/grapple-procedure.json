@@ -1,0 +1,39 @@
+{
+  "id": "rule.grapple-procedure",
+  "name": "Native Grapple baseline",
+  "kind": "rule",
+  "rulesStatus": "selected-native-core; action-integration-under-development",
+  "category": "combat",
+  "description": "The native starting procedure preserves the two-stage D&D 3.x Grapple concept, distinct from the modern 5e Athletics/Acrobatics or saving-throw initiation.",
+  "steps": [
+    {
+      "order": 1,
+      "name": "Initiate touch",
+      "rule": "Make a qualifying melee touch attack against the target's Touch AC; apply the eventually defined native attack cost and opportunity policy."
+    },
+    {
+      "order": 2,
+      "name": "Establish hold",
+      "rule": "On successful contact, resolve an opposed grapple check involving combat ability, Strength and applicable size modifiers; contact alone is not a Grapple."
+    },
+    {
+      "order": 3,
+      "name": "Escape by force",
+      "rule": "Use an opposed grapple check against the grappler, respecting native attack-substitution timing when specified."
+    },
+    {
+      "order": 4,
+      "name": "Escape by technique",
+      "rule": "Use a Dexterity-based Escape Artist check opposed by the holder's grapple check; armor check penalties can apply under the source comparison."
+    }
+  ],
+  "sourceIllustration": "Historical 3.5 grapple check uses BAB + Strength modifier + special grapple size modifier; this is not a completed blanket native attack-economy translation.",
+  "notEquivalentTo": [
+    "Strength (Athletics) substituted for grapple check",
+    "Acrobatics substituted for Escape Artist",
+    "Automatic application of every 3.5e opportunity or move-action cost"
+  ],
+  "unresolved": [
+    "Exact attack cost, opportunity triggers, native timing, occupied-space interactions, casting constraints, multiple grapplers and feature-specific bypasses."
+  ]
+}

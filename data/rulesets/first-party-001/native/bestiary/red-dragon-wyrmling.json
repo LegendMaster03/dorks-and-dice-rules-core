@@ -1,0 +1,156 @@
+{
+  "id": "monster.red-dragon-wyrmling",
+  "name": "Red Dragon Wyrmling",
+  "kind": "monster",
+  "definition": {
+    "group": [
+      "Chromatic Dragons"
+    ],
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 75,
+      "formula": "10d8 + 30"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 10,
+    "con": 17,
+    "int": 12,
+    "wis": 11,
+    "cha": 15,
+    "save": {
+      "dex": "+2",
+      "wis": "+2"
+    },
+    "skill": {
+      "perception": "+4",
+      "stealth": "+2"
+    },
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Draconic"
+    ],
+    "cr": "4",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 1d10 + 4}) Slashing damage plus 3 ({@damage 1d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 13}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 24 ({@damage 7d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "mountain"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "dragonAge": "wyrmling",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/red-dragon-wyrmling.opus"
+    },
+    "senseTags": [
+      "B",
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "DR"
+    ],
+    "damageTags": [
+      "F",
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Red Dragon Wyrmling",
+        "_copy": {
+          "name": "Red Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Red dragon wyrmlings are born destroyers. From a young age, they delight in igniting objects and creatures alike. They sometimes restrain themselves from scorching creatures to instead bully others into following their orders and bringing them gifts."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Red Dragon Wyrmling.webp"
+                  },
+                  "credit": "Joshua Raphael",
+                  "width": 1350,
+                  "height": 1534
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

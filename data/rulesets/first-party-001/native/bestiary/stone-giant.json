@@ -1,0 +1,170 @@
+{
+  "id": "monster.stone-giant",
+  "name": "Stone Giant",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 126,
+      "formula": "11d12 + 55"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 15,
+    "con": 20,
+    "int": 10,
+    "wis": 12,
+    "cha": 9,
+    "save": {
+      "dex": "+5",
+      "con": "+8",
+      "wis": "+4"
+    },
+    "skill": {
+      "athletics": "+12",
+      "perception": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Giant"
+    ],
+    "cr": "7",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Stone Club or Boulder in any combination."
+        ]
+      },
+      {
+        "name": "Stone Club",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 15 ft. {@h}22 ({@damage 3d10 + 6}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Boulder",
+        "entries": [
+          "{@atkr r} {@hit 9}, range 60/240 ft. {@h}15 ({@damage 2d8 + 6}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Deflect Missile {@recharge 5}",
+        "entries": [
+          "{@actTrigger} The giant is hit by a ranged attack roll and takes Bludgeoning, Piercing, or Slashing damage from it. {@actResponse} The giant reduces the damage it takes from the attack by 11 ({@dice 1d10 + 6}), and if that damage is reduced to 0, the giant can redirect some of the attack's force. {@actSave dex} {@dc 17}, one creature the giant can see within 60 feet. {@actSaveFail} 11 ({@damage 1d10 + 6}) Force damage."
+        ]
+      }
+    ],
+    "environment": [
+      "mountain",
+      "underdark"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/stone-giant.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "GI"
+    ],
+    "damageTags": [
+      "B",
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Stone Giant",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Stone Giant",
+            "entries": [
+              "{@i Giant of the Earth}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Mountain|bestiary|environment=mountain}, {@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "In cavernous depths and amid mountain canyons, stone giants contemplate the strength and persistence of the earth. Stone giants have rugged features and skin with patterns and hues similar to the rock common near their homes. This makes them adept at blending in with their stony surroundings despite their size.",
+              "Stone giants rarely interfere in the affairs of other creatures, whether their smaller neighbors or other Giants. Most are slow to act, preferring to weather hardships or wait out perilous times. When roused to action—particularly when sites of ancient wonder or their homes are threatened—stone giants can unleash the might of mountains and crush foes with the force of an avalanche.",
+              "Stone giants often ponder the mysteries of natural wonders, such as mountain spires, crystal formations, or mystical petroglyphs. Some know much about the magic and secret messages hidden within the earth. Those who confine themselves to the Underdark often regard the surface world and its inhabitants as dreams imagined into being by slumbering primordials, strange gods, or other entities."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Stone Giant.webp"
+            },
+            "credit": "Robson Michel",
+            "width": 2550,
+            "height": 1650
+          }
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Stone Camouflage",
+        "entries": [
+          "The giant has advantage on Dexterity ({@skill Stealth}) checks made to hide in rocky terrain."
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

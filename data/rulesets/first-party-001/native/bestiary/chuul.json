@@ -1,0 +1,170 @@
+{
+  "id": "monster.chuul",
+  "name": "Chuul",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 76,
+      "formula": "9d10 + 27"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 10,
+    "con": 16,
+    "int": 5,
+    "wis": 11,
+    "cha": 5,
+    "skill": {
+      "perception": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "understands Deep Speech but can't speak"
+    ],
+    "cr": "4",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The chuul can breathe air and water."
+        ]
+      },
+      {
+        "name": "Sense Magic",
+        "entries": [
+          "The chuul senses magic within 120 feet of itself. This trait otherwise works like the {@spell Detect Magic|SRD52} spell but isn't itself magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The chuul makes two Pincer attacks and uses Paralyzing Tentacles."
+        ]
+      },
+      {
+        "name": "Pincer",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}9 ({@damage 1d10 + 4}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from one of two pincers."
+        ]
+      },
+      {
+        "name": "Paralyzing Tentacles",
+        "entries": [
+          "{@actSave con} {@dc 13}, one creature {@condition Grappled|SRD52} by the chuul. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically. While {@condition Poisoned|SRD52}, the target has the {@condition Paralyzed|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "swamp",
+      "underdark"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/chuul.opus"
+    },
+    "traitTags": [
+      "Amphibious"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "CS",
+      "DS"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "paralyzed",
+      "poisoned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Chuul",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Chuul",
+            "entries": [
+              "{@i Chitinous Servant of Primeval Powers}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Swamp|bestiary|environment=swamp}, {@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Relics"
+                  }
+                ]
+              },
+              "Chuuls originated in forgotten ages when aboleths and stranger beings ruled alien empires beneath the waves. The aboleths transformed numerous deep-sea predators into servants that could venture beyond the seas to claim more magic and creatures to exploit. Chuuls are the most enduring of these bizarre servants.",
+              "Many chuuls serve aboleth overlords, carrying out their whims amid lightless seas and primeval swamps. Other chuuls obey new aberrant masters, such as beholders, grells, or mind flayers. Some chuuls follow their own drives, endlessly collecting ancient magic treasures or interpreting age-old orders to bizarre ends. Regardless of their agendas, chuuls snare creatures in their massive pincers before rendering foes helpless with their paralytic tentacles.",
+              "Chuuls don't age and can lie dormant in hidden places for millennia before threats, ancient orders, or strange compulsions awaken them."
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Chuul.webp"
+            },
+            "credit": "Ben Wootten",
+            "width": 2550,
+            "height": 1907
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}

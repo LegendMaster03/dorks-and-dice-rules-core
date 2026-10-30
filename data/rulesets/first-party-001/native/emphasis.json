@@ -1,0 +1,49 @@
+{
+  "id": "rule.emphasis",
+  "name": "Emphasis d20 roll mode",
+  "kind": "rule",
+  "rulesStatus": "selected-native-rule; active-design",
+  "category": "checks",
+  "description": "Emphasis is a d20 roll-selection mode distinct from Normal, Advantage and Disadvantage. It is not inherently a buff or debuff.",
+  "playerFacingRule": "Emphasis: Roll two d20s. If the results add up to 21, they cancel each other out. Apply any special cancellation effect defined by the applicable rule. If no such effect exists, reroll both dice.\n\nOtherwise, use whichever result is more extreme (closer to 1 or 20). If both dice show the same number, use that number.",
+  "resolution": [
+    "Check cancellation before selecting a die or adjudicating ordinary success, failure or critical effects.",
+    "An applicable explicit cancellation outcome takes precedence over a reroll.",
+    "Otherwise reroll both dice together; repeat until the pair does not cancel.",
+    "For a noncanceling pair, use the die closest to an endpoint (1 or 20). If identical use that result."
+  ],
+  "examples": [
+    {
+      "rolls": [
+        7,
+        14
+      ],
+      "outcome": "cancel-reroll"
+    },
+    {
+      "rolls": [
+        7,
+        13
+      ],
+      "outcome": 7
+    },
+    {
+      "rolls": [
+        4,
+        16
+      ],
+      "outcome": 4
+    },
+    {
+      "rolls": [
+        7,
+        7
+      ],
+      "outcome": 7
+    }
+  ],
+  "criticalEscalationExempt": true,
+  "unresolved": [
+    "Simultaneous independent roll-mode grants and special cancellation outcomes must be resolved by their applicable rules."
+  ]
+}

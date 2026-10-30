@@ -1,0 +1,107 @@
+{
+  "id": "monster.berserker",
+  "name": "Berserker",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 67,
+      "formula": "9d8 + 27"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 12,
+    "con": 17,
+    "int": 9,
+    "wis": 11,
+    "cha": 9,
+    "passive": 10,
+    "languages": [
+      "Common"
+    ],
+    "cr": "2",
+    "gear": [
+      "greataxe|srd52",
+      "hide armor|srd52"
+    ],
+    "trait": [
+      {
+        "name": "Bloodied Frenzy",
+        "entries": [
+          "While {@status Bloodied|SRD52}, the berserker has {@variantrule Advantage|SRD52} on attack rolls and saving throws."
+        ]
+      },
+      {
+        "name": "Reckless",
+        "entries": [
+          "At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Greataxe",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}9 ({@damage 1d12 + 3}) Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "armaments",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/berserker.opus"
+    },
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Berserker",
+        "_copy": {
+          "name": "Berserkers",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Berserkers might fight for personal glory or form motivated forces or howling hordes."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
