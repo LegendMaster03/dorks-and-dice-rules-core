@@ -1,19 +1,19 @@
 name: Deploy native Rules Core
-run-name: Reviewed native Core at ${{ inputs.release_sha }}
+run-name: ${{ inputs.deployment_type }} — ${{ github.sha }}
 
-# A merge does not authorize a deployment. A repository maintainer explicitly
-# dispatches a reviewed main commit after that commit's full CI has passed.
+# One-click manual release: select the deployment scope. The current main SHA
+# and its successful main-push CI run are verified automatically, never typed.
 on:
   workflow_dispatch:
     inputs:
-      release_sha:
-        description: Exact reviewed 40-character main commit SHA
+      deployment_type:
+        description: What should be deployed?
+        type: choice
         required: true
-        type: string
-      review_reference:
-        description: PR or release review reference approving this deployment
-        required: true
-        type: string
+        default: Content update
+        options:
+          - Content update
+          - Full deploy
 
 permissions:
   contents: read
@@ -29,19 +29,22 @@ jobs:
     runs-on: [self-hosted, dorks-and-dice-rules-core]
     timeout-minutes: 25
     env:
-      RELEASE_SHA: ${{ inputs.release_sha }}
-      REVIEW_REFERENCE: ${{ inputs.review_reference }}
+      RELEASE_SHA: ${{ github.sha }}
+      DEPLOYMENT_TYPE: ${{ inputs.deployment_type }}
       RULES_CORE_ENV_FILE: /mnt/HDDs/www/dorks-and-dice-rules-core/.env
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.release_sha }}
-      - name: Require the explicitly reviewed current main commit
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Require the selected main commit and a supported deployment type
         shell: bash
         run: |
           set -euo pipefail
           [[ "$RELEASE_SHA" =~ ^[0-9a-f]{40}$ ]]
-          [[ -n "$REVIEW_REFERENCE" ]]
+          [[ "$DEPLOYMENT_TYPE" == "Content update" || "$DEPLOYMENT_TYPE" == "Full deploy" ]]
+          echo "Approved by GitHub actor $GITHUB_ACTOR via workflow run $GITHUB_RUN_ID"
+          echo "Scope: $DEPLOYMENT_TYPE, commit: $RELEASE_SHA"
           test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
           test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$RELEASE_SHA"
       - name: Require successful main CI for the exact release commit
@@ -88,7 +91,30 @@ jobs:
           printf 'RULES_CORE_EXPECTED_FINGERPRINT=%s\n' "$fingerprint" >> "$GITHUB_ENV"
       - name: Check host isolation before replacing services
         run: python3 tools/deploy_native_core.py preflight
-      - name: Build exact commit-pinned release image
+      - name: Inspect unchanged running Core for content-only update
+        if: inputs.deployment_type == 'Content update'
+        id: content_base
+        shell: bash
+        run: |
+          set -euo pipefail
+          result=$(python3 tools/deploy_native_core.py content-base)
+          printf '%s\n' "$result"
+          base=$(printf '%s\n' "$result" | sed -nE 's/^CONTENT_BASE_IMAGE_ID=(sha256:[0-9a-f]{64})$/\1/p')
+          [[ "$base" =~ ^sha256:[0-9a-f]{64}$ ]]
+          printf 'image=%s\n' "$base" >> "$GITHUB_OUTPUT"
+      - name: Build content-only image (reuse unchanged running application)
+        if: inputs.deployment_type == 'Content update'
+        shell: bash
+        env:
+          BASE_IMAGE: ${{ steps.content_base.outputs.image }}
+        run: |
+          set -euo pipefail
+          docker build -f Dockerfile.content-update \
+            --build-arg "RULES_CORE_BASE_IMAGE=$BASE_IMAGE" \
+            --label "org.opencontainers.image.revision=$RELEASE_SHA" \
+            -t "dorks-and-dice-rules-core:rewrite-$RELEASE_SHA" .
+      - name: Build full application and content image
+        if: inputs.deployment_type == 'Full deploy'
         run: docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" -t "dorks-and-dice-rules-core:rewrite-$RELEASE_SHA" .
       - name: Deploy and monitor the approved native ingresses
         run: python3 tools/deploy_native_core.py deploy
