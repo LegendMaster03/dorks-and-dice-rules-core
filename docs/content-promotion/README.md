@@ -60,3 +60,5 @@ The active migration branch continues promoting previously **selected coherent r
 This is **not a completion claim** for the bestiary, spell corpus, equipment, feats, subclasses or other pending systems. There is no arbitrary sequence of promotion waves and no fixed catalog-count gate. The active branch is deliberately separate from the previously merged Warlock content.
 
 **Bestiary parity validation:** `tests/test_all_native_monsters_source_mirror.py` dynamically checks both directions: every native monster matches its retained selected source definition, and every retained selected source monster has a native record. Source aliases must point to an existing selected monster without producing their own native stat block. No fixed record count or fingerprint is required for content editing.
+
+**Creature types:** The previously approved 19-type hierarchy and shared creature-inheritance foundation are now native searchable records. The unchanged staged `working/creature-types.json` retains nonselected specializations and deferred compatibility research. Existing monster statblocks are not recalculated from type defaults merely because these rules are available.
