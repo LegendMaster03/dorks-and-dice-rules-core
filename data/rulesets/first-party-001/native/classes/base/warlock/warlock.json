@@ -144,7 +144,9 @@
       {
         "level": 8,
         "proficiencyBonus": 3,
-        "featureGrants": [],
+        "featureGrants": [
+          "class-feature.warlock.ability-score-improvement"
+        ],
         "invocationsElectiveTotal": 5,
         "ordinaryCantripsKnown": 3,
         "ordinarySpellsKnown": 9,
@@ -199,7 +201,8 @@
         "level": 12,
         "proficiencyBonus": 4,
         "featureGrants": [
-          "class-feature.warlock.imbue-item"
+          "class-feature.warlock.imbue-item",
+          "class-feature.warlock.ability-score-improvement"
         ],
         "invocationsElectiveTotal": 7,
         "ordinaryCantripsKnown": 4,
@@ -252,7 +255,9 @@
       {
         "level": 16,
         "proficiencyBonus": 5,
-        "featureGrants": [],
+        "featureGrants": [
+          "class-feature.warlock.ability-score-improvement"
+        ],
         "invocationsElectiveTotal": 10,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 13,
@@ -290,7 +295,9 @@
       {
         "level": 19,
         "proficiencyBonus": 6,
-        "featureGrants": [],
+        "featureGrants": [
+          "class-feature.warlock.ability-score-improvement"
+        ],
         "invocationsElectiveTotal": 11,
         "ordinaryCantripsKnown": 4,
         "ordinarySpellsKnown": 15,
