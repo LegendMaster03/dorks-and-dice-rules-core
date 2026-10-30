@@ -1,0 +1,11 @@
+{
+  "id": "pact.warlock.blade",
+  "name": "Pact of the Blade",
+  "kind": "pact",
+  "parentClass": "class.warlock",
+  "availableAtWarlockLevel": 1,
+  "invocationCost": 0,
+  "description": "Manifest the agreement in a weapon. Use a Bonus Action to conjure or bind an eligible melee weapon; gain proficiency, Charisma option for attacks and damage, and Warlock focus use; choose ordinary, Necrotic, Psychic, or Radiant damage per attack. Follow the host's modern bond and ending restrictions.",
+  "deepenedAtLevel5": "Attack twice with your Pact weapon during one Attack action; this is intrinsic and does not cost an Invocation. Devouring Blade can upgrade this to three attacks total. Thirsting Blade is not a selectable option.",
+  "rulesStatus": "selected-for-playtest"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "invocation.armor-of-shadows",
+  "name": "Armor of Shadows",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 1,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Mage Armor on yourself without a spell slot.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

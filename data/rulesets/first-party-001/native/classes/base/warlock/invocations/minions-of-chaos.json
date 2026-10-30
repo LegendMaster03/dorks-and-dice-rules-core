@@ -1,0 +1,13 @@
+{
+  "id": "invocation.minions-of-chaos",
+  "name": "Minions of Chaos",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 9,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Conjure Elemental once using a Pact Magic slot, refreshing permission on a Long Rest.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

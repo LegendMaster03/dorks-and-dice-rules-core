@@ -3,7 +3,7 @@
 **Classification:** Selected experimental native rules (Alpha 0.3.1), subject to revision; the reference record below remains historical comparison material.  
 **Owner-selected test baseline:** October 25, 2026.  
 **Scope:** Band 1 levels 1–20, Fiend Patron, four active Pacts, and a provisional 12-Invocation hybrid.  
-**Native authority:** `data/rulesets/first-party-001/native/classes/base/warlock.json` plus the native Warlock class features, Patron, Pacts and Invocations.  
+**Native authority:** `data/rulesets/first-party-001/native/classes/base/warlock/warlock.json` plus the separately authored class features and one-entity-per-file Patron, Pact, and Invocation catalogs in `classes/base/warlock/{patrons,pacts,invocations}/`; each directory also contains its selection policy.  
 **Historical machine-readable comparison:** `data/reference/experiments/warlock-modular-alpha-0.3.1.json`.
 
 ## A/B question

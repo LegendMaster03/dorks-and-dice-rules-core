@@ -1,0 +1,11 @@
+{
+  "id": "pact.warlock.tome",
+  "name": "Pact of the Tome",
+  "kind": "pact",
+  "parentClass": "class.warlock",
+  "availableAtWarlockLevel": 1,
+  "invocationCost": 0,
+  "description": "Conjure a Book of Shadows at the end of a Short or Long Rest. While carrying it, gain three extra cantrips from any class list and two level-1 Ritual spells, with the book as a focus. For this alpha, starter Ritual spells are ritual-only unless separately known; replacement does not recharge limited uses. Book of Ancient Secrets separately supports additional rituals.",
+  "deepenedAtLevel5": "Cast each of Animate Dead, Haste, and Call Lightning once separately without a slot per Long Rest; ordinary casting requirements and concentration apply. The book does not refresh the three uses when replaced.",
+  "rulesStatus": "selected-for-playtest"
+}

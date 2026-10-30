@@ -1,0 +1,13 @@
+{
+  "id": "invocation.gift-of-the-protectors",
+  "name": "Gift of the Protectors",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 9,
+  "requiredPact": "pact.warlock.tome",
+  "repeatable": false,
+  "cost": 1,
+  "description": "Book can hold up to max(1, Charisma modifier) willing names. When a named creature would reach 0 HP without instant death, it drops to 1 HP instead; one shared rescue per Long Rest.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

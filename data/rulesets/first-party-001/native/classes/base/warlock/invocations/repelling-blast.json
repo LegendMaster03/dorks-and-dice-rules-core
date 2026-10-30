@@ -1,0 +1,13 @@
+{
+  "id": "invocation.repelling-blast",
+  "name": "Repelling Blast",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 2,
+  "requiredPact": null,
+  "repeatable": true,
+  "cost": 1,
+  "description": "Choose a damaging known Warlock cantrip with an attack roll. On a hit, push a Large-or-smaller target up to 10 feet straight away. Repeatable for a different eligible cantrip.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

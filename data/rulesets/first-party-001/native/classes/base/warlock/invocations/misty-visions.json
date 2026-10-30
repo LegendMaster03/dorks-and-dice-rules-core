@@ -1,0 +1,13 @@
+{
+  "id": "invocation.misty-visions",
+  "name": "Misty Visions",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 2,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Silent Image without a spell slot.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

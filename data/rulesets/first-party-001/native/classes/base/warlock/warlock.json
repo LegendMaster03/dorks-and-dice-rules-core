@@ -352,90 +352,6 @@
         "energyResistance": 10
       }
     ],
-    "pillarSystem": {
-      "patron": {
-        "requiredAtWarlockLevel": 1,
-        "activePatronIds": [
-          "patron.warlock.fiend"
-        ],
-        "identityMayBeInheritedOrUnknown": true
-      },
-      "pact": {
-        "requiredAtWarlockLevel": 1,
-        "firstChoiceFree": true,
-        "activePactIds": [
-          "pact.warlock.blade",
-          "pact.warlock.chain",
-          "pact.warlock.tome",
-          "pact.warlock.talisman"
-        ],
-        "grantAtLevel5": "class-feature.warlock.deepened-pact",
-        "extraPacts": "out-of-scope"
-      },
-      "invocations": {
-        "firstChoiceAtWarlockLevel": 1,
-        "acquisitionLevels": [
-          1,
-          2,
-          4,
-          5,
-          7,
-          9,
-          11,
-          13,
-          15,
-          16,
-          18,
-          20
-        ],
-        "level20Choices": 12,
-        "selectionCost": 1,
-        "everyChoiceAttachedToOneActualPact": true,
-        "patronAcceptanceRequired": true,
-        "activeInvocationIds": [
-          "invocation.agonizing-blast",
-          "invocation.armor-of-shadows",
-          "invocation.ascendant-step",
-          "invocation.beast-speech",
-          "invocation.beguiling-influence",
-          "invocation.bewitching-whispers",
-          "invocation.book-of-ancient-secrets",
-          "invocation.chains-of-carceri",
-          "invocation.devils-sight",
-          "invocation.devouring-blade",
-          "invocation.dreadful-word",
-          "invocation.eldritch-mind",
-          "invocation.eldritch-sight",
-          "invocation.eldritch-smite",
-          "invocation.eldritch-spear",
-          "invocation.eyes-of-the-rune-keeper",
-          "invocation.fiendish-vigor",
-          "invocation.gaze-of-two-minds",
-          "invocation.gift-of-the-depths",
-          "invocation.gift-of-the-protectors",
-          "invocation.investment-of-the-chain-master",
-          "invocation.lessons-of-the-first-ones",
-          "invocation.lifedrinker",
-          "invocation.mask-of-many-faces",
-          "invocation.master-of-myriad-forms",
-          "invocation.minions-of-chaos",
-          "invocation.mire-the-mind",
-          "invocation.misty-visions",
-          "invocation.one-with-shadows",
-          "invocation.otherworldly-leap",
-          "invocation.repelling-blast",
-          "invocation.sculptor-of-flesh",
-          "invocation.sign-of-ill-omen",
-          "invocation.thief-of-five-fates",
-          "invocation.visions-of-distant-realms",
-          "invocation.voice-of-the-chain-master",
-          "invocation.whispers-of-the-grave",
-          "invocation.witch-sight"
-        ],
-        "severance": "suspend-without-refund",
-        "replacement": "one-on-warlock-level-up"
-      }
-    },
     "baseFeatureIds": [
       "class-feature.warlock.pact-magic",
       "class-feature.warlock.eldritch-blast",
@@ -456,8 +372,6 @@
       "class-feature.warlock.mystic-arcanum-9",
       "class-feature.warlock.eldritch-master"
     ],
-    "fiendPatronId": "patron.warlock.fiend",
-    "invocationSourceVersions": "Use selected 5.5e shared Invocations and retained 5e-only Invocations from the playtest packet; no automatic double version grants.",
     "separateGrants": {
       "automaticEldritchBlast": true,
       "extraKnownCantripCost": 0,
@@ -472,6 +386,11 @@
       "Infernal Retaliation tick timing and Hurl Through Hell slot recharge action cost are provisional.",
       "Alternative Invocation progressions are reference comparisons, not simultaneous grants.",
       "No Band 2 or automatic Epic Boon at level 19."
-    ]
+    ],
+    "optionRuleIds": {
+      "patron": "rule.warlock.patron-selection",
+      "pact": "rule.warlock.pact-selection",
+      "invocations": "rule.warlock.invocation-selection"
+    }
   }
 }

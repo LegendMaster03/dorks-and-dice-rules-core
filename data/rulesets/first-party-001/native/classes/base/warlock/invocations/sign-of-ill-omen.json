@@ -1,0 +1,13 @@
+{
+  "id": "invocation.sign-of-ill-omen",
+  "name": "Sign of Ill Omen",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 5,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Bestow Curse once using a Pact Magic slot, refreshing permission on a Long Rest.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

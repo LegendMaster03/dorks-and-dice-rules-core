@@ -1,0 +1,13 @@
+{
+  "id": "invocation.whispers-of-the-grave",
+  "name": "Whispers of the Grave",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 7,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Speak with Dead without a spell slot.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

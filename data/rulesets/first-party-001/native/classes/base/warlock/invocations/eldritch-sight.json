@@ -1,0 +1,13 @@
+{
+  "id": "invocation.eldritch-sight",
+  "name": "Eldritch Sight",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 1,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "Cast Detect Magic at will without a spell slot.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

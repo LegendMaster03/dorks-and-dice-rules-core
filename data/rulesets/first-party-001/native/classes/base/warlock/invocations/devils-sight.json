@@ -1,0 +1,13 @@
+{
+  "id": "invocation.devils-sight",
+  "name": "Devil's Sight",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 2,
+  "requiredPact": null,
+  "repeatable": false,
+  "cost": 1,
+  "description": "See normally within 120 feet in Dim Light and Darkness, magical or nonmagical.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

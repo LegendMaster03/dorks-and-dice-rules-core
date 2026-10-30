@@ -1,0 +1,13 @@
+{
+  "id": "invocation.eldritch-spear",
+  "name": "Eldritch Spear",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 2,
+  "requiredPact": null,
+  "repeatable": true,
+  "cost": 1,
+  "description": "Choose one damaging known Warlock cantrip with range at least 10 feet; increase its range by 30 feet per Warlock level. Repeat only for distinct eligible cantrips.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}
