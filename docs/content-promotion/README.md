@@ -47,3 +47,14 @@ The original release's fixed fingerprint was `870ca5e89a97b9176f0a3b55fb6cb94672
 Review notes are in `docs/handoffs/` and the machine-readable ledger. Deferred mechanics are documented for their relevant subsystem; they do not block unrelated coherent rules.
 
 **Continuing promotion:** The selected native Skills, Competencies and fear-family interactions are now represented in `native/skills.json`, `native/competencies.json`, and `native/fear.json`. Original working records remain for source comparison. Deferred fear escalation is explicitly non-operative; these selections are not claims of finality.
+
+## Ongoing native content recovery
+
+The active migration branch continues promoting previously **selected coherent rules**, without requiring the rest of the system to be finalized. Its committed native additions include:
+
+- Skills and Competencies (selected composites and training facets), copied without substituting unresolved imported definitions.
+- The fear-family interaction rule, while preserving the separately deferred historical escalation.
+- Emphasis, optional critical escalation, spell-access policy, rest-based recovery and the agreed Grapple starting procedure. Open edge cases remain documented rather than invented.
+- More selected monster statblocks that already have a reviewed single `retained-native-definition` in working. Original source candidates, identity aliases and unresolved monsters are not automatically activated.
+
+This is **not a completion claim** for the bestiary, spell corpus, equipment, feats, subclasses or other pending systems. There is no arbitrary sequence of promotion waves and no fixed catalog-count gate. The active branch is deliberately separate from the previously merged Warlock content.
