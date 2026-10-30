@@ -230,16 +230,22 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
             "kind": "monsterFamily", "memberIds": working_record.get("memberIds"),
         }
 
-    if working_record.get("baselineStatus") != "retained-native-definition":
+    source_status = working_record.get("baselineStatus")
+    if source_status not in ("retained-native-definition", "pending-native-reconciliation"):
         return False
-    if "candidateDefinitions" in working_record or "candidateSpecializations" in working_record:
+    has_source_candidates = ("candidateDefinitions" in working_record or
+                             "candidateSpecializations" in working_record)
+    # Source-only candidates may be retained as immutable provenance after a
+    # separately selected coherent native rule is published. Such overlap is
+    # permitted ONLY with an exact, documented source divergence below.
+    if has_source_candidates and source_status != "pending-native-reconciliation":
         return False
     source_copy = dict(working_record)
     source_copy.pop("baselineStatus")
     if source_copy.get("kind") == "monster":
         # This reference adds no invented numeric statistics or action grants.
         source_copy["statBlockFoundationId"] = "rule.monster-statblock-foundation"
-    if native_record == source_copy:
+    if not has_source_candidates and source_status == "retained-native-definition" and native_record == source_copy:
         return True
     # Explicitly documented reconciliation divergence is a static CONTENT
     # validation exception, never a runtime rule approval or fallback.
@@ -248,6 +254,9 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
         return False
     divergence = read_json(ledger_path).get("sourceDivergences", {}).get(native_record["id"])
     if not divergence or not divergence.get("reconciliationDocument"):
+        return False
+    if source_status == "pending-native-reconciliation" and (
+            divergence.get("sourceBaselineStatus") != source_status):
         return False
     if not (REPO / divergence["reconciliationDocument"]).is_file():
         return False
