@@ -1,0 +1,166 @@
+{
+  "id": "monster.commoner",
+  "name": "Commoner",
+  "kind": "monster",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 4,
+      "formula": "1d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 10,
+    "dex": 10,
+    "con": 10,
+    "int": 10,
+    "wis": 10,
+    "cha": 10,
+    "passive": 10,
+    "languages": [
+      "Common"
+    ],
+    "cr": "0",
+    "gear": [
+      "club|srd52"
+    ],
+    "trait": [
+      {
+        "name": "Training",
+        "entries": [
+          "The commoner has proficiency in one skill of the DM's choice and has {@variantrule Advantage|SRD52} whenever it makes an ability check using that skill."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Club",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/commoner.opus"
+    },
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Commoner",
+        "entries": [
+          {
+            "type": "section",
+            "name": "Commoner",
+            "entries": [
+              "{@i Everyday Folk}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Individual"
+                  }
+                ]
+              },
+              "Commoners constitute the majority of people who don't pursue magical talents, extraordinary training, or a life of adventure. Some are generous, helpful sorts, while others are more cautious in sharing what they have. Use the following list of jobs and roles to introduce commoners in your adventures:",
+              {
+                "type": "list",
+                "style": "list-no-bullets",
+                "columns": 3,
+                "items": [
+                  "Artist",
+                  "Baker",
+                  "Bartender",
+                  "Blacksmith",
+                  "Butcher",
+                  "Captive",
+                  "Carpenter",
+                  "Castaway",
+                  "Cobbler",
+                  "Cook",
+                  "Dyer",
+                  "Farmer",
+                  "Fisher",
+                  "Fletcher",
+                  "Flimflam artist",
+                  "Gossip",
+                  "Hermit",
+                  "Hooligan",
+                  "Hunter",
+                  "Innkeeper",
+                  "Laborer",
+                  "Lamplighter",
+                  "Mason",
+                  "Merchant",
+                  "Miner",
+                  "Mud lark",
+                  "Patient",
+                  "Pilgrim",
+                  "Resurrectionist",
+                  "Rioter",
+                  "Scribe",
+                  "Servant",
+                  "Shepherd",
+                  "Student",
+                  "Tailor",
+                  "Tanner",
+                  "Town crier",
+                  "Weaver",
+                  "Youngster"
+                ]
+              }
+            ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Commoner.webp"
+            },
+            "credit": "Zuzanna Wužyk",
+            "width": 2550,
+            "height": 1704
+          }
+        ]
+      }
+    ]
+  },
+  "statBlockFoundationId": "rule.monster-statblock-foundation"
+}
