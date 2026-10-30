@@ -1,0 +1,13 @@
+{
+  "id": "invocation.bond-of-the-talisman",
+  "name": "Bond of the Talisman",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 12,
+  "requiredPact": "pact.warlock.talisman",
+  "repeatable": false,
+  "cost": 1,
+  "description": "While another creature wears your active talisman and both of you are on the same plane, either of you may use an Action to teleport to the nearest unoccupied space next to the other. The Warlock may travel to the wearer, or the wearer may travel to the Warlock.\n\nEach teleport spends one use from a single shared Bond pool, regardless of direction. Its maximum is your Warlock proficiency bonus, and its uses return when you finish a Long Rest. This pool is separate from core Talisman charges and Protection of the Talisman's uses.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}

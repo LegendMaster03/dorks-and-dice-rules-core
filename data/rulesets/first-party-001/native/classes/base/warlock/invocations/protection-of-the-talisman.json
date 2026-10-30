@@ -1,0 +1,13 @@
+{
+  "id": "invocation.protection-of-the-talisman",
+  "name": "Protection of the Talisman",
+  "kind": "invocation",
+  "parentClass": "class.warlock",
+  "minimumWarlockLevel": 7,
+  "requiredPact": "pact.warlock.talisman",
+  "repeatable": false,
+  "cost": 1,
+  "description": "After the wearer of your active talisman fails a saving throw, the wearer may add 1d4 to that saving throw and check whether the new total succeeds. Each attempt spends one Protection use.\n\nProtection has its own pool of uses equal to your Warlock proficiency bonus, restored when you finish a Long Rest. This pool is separate from the core Talisman charges used by Fortunate Correction and Shared Ward and from Bond of the Talisman's uses.",
+  "selectionStatus": "included-in-alpha-0.3.1",
+  "rulesStatus": "selected-for-playtest"
+}
