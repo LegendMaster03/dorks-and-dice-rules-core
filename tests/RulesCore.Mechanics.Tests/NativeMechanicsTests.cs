@@ -259,6 +259,25 @@ public sealed class NativeMechanicsTests
     }
 
     [Fact]
+    public void UntrustedOversizedNumericInputsFailWithoutOverflowing()
+    {
+        using var fixture = new NativeFixture();
+        var projector = new NativeCharacterProjector(fixture.Catalog);
+        var defenseOverflow = projector.Project(fixture.Input() with {
+            DefenseContributions = new Dictionary<string, int> { ["armor"] = int.MaxValue }
+        });
+        Assert.Equal("invalid", defenseOverflow.Status);
+        Assert.Contains(defenseOverflow.Issues, i => i.Code == "invalid-input-limits");
+        var hitPointOverflow = projector.Project(fixture.Input() with {
+            HitPointGains = new Dictionary<string, int> {
+                ["first"] = int.MaxValue, ["second"] = int.MaxValue,
+                ["third"] = int.MaxValue }
+        });
+        Assert.Equal("invalid", hitPointOverflow.Status);
+        Assert.Contains(hitPointOverflow.Issues, i => i.Code == "invalid-input-limits");
+    }
+
+    [Fact]
     public void RejectedDuplicateAdvancementWithholdsAllClassDerivedBenefits()
     {
         using var fixture = new NativeFixture();

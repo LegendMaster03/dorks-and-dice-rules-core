@@ -38,10 +38,30 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
             Issue("invalid-input", "character", "AbilityScores and Advancements are required.");
             return Finish("invalid");
         }
+        // These are transport/arithmetic limits, not gameplay maximums. Prevent
+        // untrusted input from overflowing checked totals or exhausting work.
+        const int maxMagnitude = 1_000_000;
         if (request.Advancements.Count > 100 || request.SelectedOptions?.Count > 200 ||
-            request.AbilityScores.Count > 20)
+            request.AbilityScores.Count > 20 || request.Skills?.Count > 500 ||
+            request.Competencies?.Count > 500 || request.DefenseContributions?.Count > 20 ||
+            request.ConditionIds?.Count > 64 || request.HitPointGains?.Count > 1000 ||
+            request.CurrentResources?.Count > 200 ||
+            request.BaseWalkSpeed is < 0 or > maxMagnitude ||
+            request.Advancements.Any(a => a?.OccurrenceId?.Length > 128 || a?.ClassId?.Length > 160) ||
+            request.SelectedOptions?.Any(id => id?.Length > 160) == true ||
+            request.ConditionIds?.Any(id => id?.Length > 160) == true ||
+            request.DefenseContributions?.Any(pair => pair.Key.Length > 80 ||
+                pair.Value is < -maxMagnitude or > maxMagnitude) == true ||
+            request.HitPointGains?.Values.Any(value => value is < 0 or > maxMagnitude) == true ||
+            request.Skills?.Any(pair => pair.Key.Length > 160 || pair.Value is null ||
+                pair.Value.Ranks is < 0 or > maxMagnitude ||
+                pair.Value.MiscModifier is < -maxMagnitude or > maxMagnitude) == true ||
+            request.Competencies?.Any(pair => pair.Key.Length > 160 || pair.Value is null ||
+                pair.Value.Ranks is < 0 or > maxMagnitude ||
+                pair.Value.MiscModifier is < -maxMagnitude or > maxMagnitude) == true)
         {
-            Issue("request-too-large", "character", "Requested character exceeds evaluation limits.");
+            Issue("invalid-input-limits", "character",
+                "Character input exceeds bounded numeric or collection limits.");
             return Finish("invalid");
         }
         var abilityMods = new Dictionary<string, int>(StringComparer.Ordinal);

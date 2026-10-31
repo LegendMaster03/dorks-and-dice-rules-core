@@ -110,6 +110,38 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task InvalidCharacterMagnitudeIsBadRequestRatherThanVersionConflictOrServerError()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        using var info = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, "/api/mechanics/v1/ruleset"));
+        var metadata = await info.Content.ReadFromJsonAsync<JsonElement>();
+        var fingerprint = metadata.GetProperty("fingerprint").GetString();
+        using var oversized = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/characters/project", JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint,
+                abilityScores = new { strength = 10, dexterity = 10, constitution = 10,
+                    intelligence = 10, wisdom = 10, charisma = 10 },
+                advancements = new[] { new { classId = "class.demo", level = 1, occurrenceId = "a" } },
+                defenseContributions = new { armor = int.MaxValue }
+            }));
+        using var invalidResponse = await fixture.Client.SendAsync(oversized);
+        Assert.Equal(HttpStatusCode.BadRequest, invalidResponse.StatusCode);
+        var invalid = await invalidResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("invalid", invalid.GetProperty("status").GetString());
+        using var stale = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/characters/project", JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "stale",
+                abilityScores = new { strength = 10, dexterity = 10, constitution = 10,
+                    intelligence = 10, wisdom = 10, charisma = 10 },
+                advancements = new[] { new { classId = "class.demo", level = 1, occurrenceId = "a" } }
+            }));
+        using var conflict = await fixture.Client.SendAsync(stale);
+        Assert.Equal(HttpStatusCode.Conflict, conflict.StatusCode);
+    }
+
+    [Fact]
     public async Task AuthorizedRollModeEvaluatesEventFactsAndRejectsMissingFacts()
     {
         await using var fixture = new Fixture();

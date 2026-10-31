@@ -110,7 +110,8 @@ public static class NativeMechanicsEndpoints
             var result = new NativeCharacterProjector(catalog).Project(request, context.RequestAborted);
             Timing(context, "native-character-project", start);
             return result.Status == "invalid"
-                ? Results.Json(result, statusCode: 409)
+                ? Results.Json(result, statusCode: result.Issues.Any(
+                    issue => issue.Code == "ruleset-version-mismatch") ? 409 : 400)
                 : Results.Ok(result);
         });
 
@@ -163,7 +164,10 @@ public static class NativeMechanicsEndpoints
                 return Error(400, "invalid_resource_action");
             var projection = new NativeCharacterProjector(catalog).Project(request.Character,
                 context.RequestAborted);
-            if (projection.Status == "invalid") return Error(409, "ruleset_version_mismatch");
+            if (projection.Status == "invalid") return projection.Issues.Any(
+                issue => issue.Code == "ruleset-version-mismatch")
+                ? Error(409, "ruleset_version_mismatch")
+                : Error(400, "invalid_character_input");
             var matching = projection.Resources.Where(r => r.Id == request.ResourceId).Take(2).ToArray();
             if (matching.Length != 1) return Error(422, "resource_unavailable_or_ambiguous");
             var resource = matching[0];
