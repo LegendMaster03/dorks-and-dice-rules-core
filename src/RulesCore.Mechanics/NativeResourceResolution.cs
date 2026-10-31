@@ -17,7 +17,8 @@ public static class NativeResourceResolution
 
     public static NativeResourceChange Recover(NativeResource resource, int current, NativeRecoveryEvent rest)
     {
-        if (resource.Maximum < 0 || current < 0 || current > resource.Maximum)
+        if (resource.Maximum < 0 || current < 0 || current > resource.Maximum ||
+            rest is not (NativeRecoveryEvent.ShortRest or NativeRecoveryEvent.LongRest))
             return new("invalid-input", resource.Id, null, null);
         if (resource.Recovery == "unsupported")
             return new("unsupported", resource.Id, current, resource.Maximum, "No native recovery rule.");

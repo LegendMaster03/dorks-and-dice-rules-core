@@ -52,6 +52,13 @@ public sealed class NativeMechanicsTests
         Assert.Equal("insufficient-resource", NativeResourceResolution.Spend(sorcery, 1, 2).Status);
         Assert.Equal("unsupported", NativeResourceResolution.Recover(
             sorcery with { Recovery = "unsupported" }, 1, NativeRecoveryEvent.LongRest).Status);
+        var pact = new NativeResource("resource.pact-magic", 2, 0, "short-or-long-rest", 3);
+        Assert.Equal(2, NativeResourceResolution.Recover(pact, 0,
+            NativeRecoveryEvent.ShortRest).Current);
+        Assert.Equal(2, NativeResourceResolution.Recover(pact, 0,
+            NativeRecoveryEvent.LongRest).Current);
+        Assert.Equal("invalid-input", NativeResourceResolution.Recover(pact, 0,
+            (NativeRecoveryEvent)42).Status);
     }
 
     [Fact]

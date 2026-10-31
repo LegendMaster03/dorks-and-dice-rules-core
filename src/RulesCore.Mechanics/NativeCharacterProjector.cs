@@ -168,7 +168,7 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
                 resources.Add(Resource("resource.sorcery-points", sorcery.Value, "long-rest"));
             var pact = Number(current, "pactSlots");
             if (pact is > 0)
-                resources.Add(Resource("resource.pact-magic", pact.Value, "unsupported",
+                resources.Add(Resource("resource.pact-magic", pact.Value, "short-or-long-rest",
                     Number(current, "pactSlotLevel")));
             if (Array(current, "spellSlotsBySpellLevel", out var slots))
             {
