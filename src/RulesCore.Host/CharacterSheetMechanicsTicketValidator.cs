@@ -25,7 +25,20 @@ public sealed class CharacterSheetMechanicsTicketValidator(HttpClient siteClient
         string? PrivateTunnelSourceToolKey,
         string? DelegatedFromToolKey);
 
-    public async Task<IResult?> ValidateAsync(HttpContext context, bool requirePrivateTunnel = true)
+    public Task<IResult?> ValidateAsync(HttpContext context, bool requirePrivateTunnel = true) =>
+        ValidateCoreAsync(context, requirePrivateTunnel, directConsumerCatalog: false);
+
+    /// <summary>
+    /// The existing Site registration gateway issues user-scoped rules-core tickets.
+    /// Direct authenticated consumers may read the live native catalog without a
+    /// package fingerprint authorization, but delegated or Wiki tickets are not
+    /// interchangeable with a direct user session.
+    /// </summary>
+    public Task<IResult?> ValidateDirectConsumerCatalogAsync(HttpContext context) =>
+        ValidateCoreAsync(context, requirePrivateTunnel: false, directConsumerCatalog: true);
+
+    private async Task<IResult?> ValidateCoreAsync(
+        HttpContext context, bool requirePrivateTunnel, bool directConsumerCatalog)
     {
         context.Response.Headers.CacheControl = "no-store";
         var tickets = context.Request.Headers[TicketHeader];
@@ -53,7 +66,13 @@ public sealed class CharacterSheetMechanicsTicketValidator(HttpClient siteClient
             // Each ingress requires its own Site-issued source provenance.
             if (session.SiteMode != "dorks-and-dice")
                 return Fail(403, "mechanics_access_denied");
-            if (requirePrivateTunnel)
+            if (directConsumerCatalog)
+            {
+                if (session.PrivateTunnelSourceToolKey is not null ||
+                    session.DelegatedFromToolKey is not null)
+                    return Fail(403, "catalog_access_denied");
+            }
+            else if (requirePrivateTunnel)
             {
                 if (session.PrivateTunnelSourceToolKey != "character-sheet" ||
                     session.DelegatedFromToolKey is not null)

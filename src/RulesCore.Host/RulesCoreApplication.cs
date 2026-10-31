@@ -72,6 +72,7 @@ public static class RulesCoreApplication
         else
         {
             app.MapNativePublicReferences();
+            app.MapNativeAuthenticatedReferences();
             app.MapAuthenticatedNativeMechanics(privateTunnel: false);
         }
         // Unrecognized API paths never resolve to the UI or a legacy endpoint.
