@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="src/RulesCore.Content/RulesCore.Content.csproj" />
+  <Project Path="src/RulesCore.Mechanics/RulesCore.Mechanics.csproj" />
   <Project Path="src/RulesCore.Host/RulesCore.Host.csproj" />
   <Project Path="tests/RulesCore.Host.Tests/RulesCore.Host.Tests.csproj" />
+  <Project Path="tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj" />
 </Solution>

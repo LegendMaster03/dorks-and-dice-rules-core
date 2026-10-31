@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../RulesCore.Content/RulesCore.Content.csproj" />
+    <ProjectReference Include="../RulesCore.Mechanics/RulesCore.Mechanics.csproj" />
   </ItemGroup>
 </Project>
