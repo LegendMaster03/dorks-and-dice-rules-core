@@ -25,15 +25,26 @@ public static class RulesCoreApplication
             services.GetRequiredService<NativeCatalogStore>());
         builder.Services.AddHostedService<NativeCatalogInitializer>();
 
-        if (settings.Surface == ApiSurfaceMode.PrivateOnly)
+        // Character Sheet uses ordinary Site delegation on the public ingress.
+        // Private-only Wiki references retain their separate private tunnel.
+        var baseUrl = builder.Configuration["ToolHost:BaseUrl"];
+        if (settings.Surface is ApiSurfaceMode.PrivateOnly or ApiSurfaceMode.PublicOnly)
         {
-            var baseUrl = builder.Configuration["ToolHost:BaseUrl"];
-            // No credential bypass: missing Site address yields HTTP 503 for every private request.
+            // No credential bypass: missing Site address yields HTTP 503.
             if (!string.IsNullOrEmpty(baseUrl) &&
                 (!Uri.TryCreate(baseUrl, UriKind.Absolute, out var parsed) ||
                  (parsed.Scheme != Uri.UriSchemeHttp && parsed.Scheme != Uri.UriSchemeHttps)))
                 throw new ArgumentException("ToolHost:BaseUrl must be an HTTP(S) URL.");
-            builder.Services.AddHttpClient<PrivateReferenceTicketValidator>(client =>
+            if (settings.Surface == ApiSurfaceMode.PrivateOnly)
+            {
+                builder.Services.AddHttpClient<PrivateReferenceTicketValidator>(client =>
+                {
+                    if (!string.IsNullOrWhiteSpace(baseUrl)) client.BaseAddress = new Uri(baseUrl);
+                    client.Timeout = TimeSpan.FromSeconds(3);
+                }).ConfigurePrimaryHttpMessageHandler(() =>
+                    new HttpClientHandler { AllowAutoRedirect = false, UseCookies = false });
+            }
+            builder.Services.AddHttpClient<CharacterSheetMechanicsTicketValidator>(client =>
             {
                 if (!string.IsNullOrWhiteSpace(baseUrl)) client.BaseAddress = new Uri(baseUrl);
                 client.Timeout = TimeSpan.FromSeconds(3);
@@ -54,9 +65,15 @@ public static class RulesCoreApplication
         });
 
         if (settings.Surface == ApiSurfaceMode.PrivateOnly)
+        {
             app.MapNativePrivateReferences();
+            app.MapAuthenticatedNativeMechanics(privateTunnel: true);
+        }
         else
+        {
             app.MapNativePublicReferences();
+            app.MapAuthenticatedNativeMechanics(privateTunnel: false);
+        }
         // Unrecognized API paths never resolve to the UI or a legacy endpoint.
         app.Map("/api/{**unmatched}", () => Results.NotFound(new { error = "api_not_found" }));
 
