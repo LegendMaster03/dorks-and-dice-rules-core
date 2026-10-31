@@ -177,8 +177,8 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
                 foreach (var slot in slots.EnumerateArray())
                 {
                     tier++;
-                    if (slot.ValueKind == JsonValueKind.Number && slot.TryGetInt32(out var count) && count > 0)
-                        resources.Add(Resource($"resource.spell-slot.{tier}", count, "unsupported", tier));
+                    if (slot.ValueKind == JsonValueKind.Number && slot.TryGetInt32(out var slotCount) && slotCount > 0)
+                        resources.Add(Resource($"resource.spell-slot.{tier}", slotCount, "unsupported", tier));
                 }
             }
         }
