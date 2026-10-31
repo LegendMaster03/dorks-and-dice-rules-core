@@ -27,13 +27,28 @@ public static class NativePublicEndpoints
     private static readonly Regex SafeRuleId = new(
         "^[a-z0-9-]+(?:\\.[a-z0-9-]+)+$", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
 
-    public static void MapNativePublicReferences(this WebApplication app)
+    public static void MapNativePublicReferences(this WebApplication app) =>
+        MapNativeReferences(app, "/api/rulesets", authenticated: false);
+
+    // A user-scoped Site ticket authorizes the active ruleset independently of
+    // its changing fingerprint. Anonymous distribution keeps its separate gate.
+    public static void MapNativeAuthenticatedReferences(this WebApplication app) =>
+        MapNativeReferences(app, "/api/consumer/v1/rulesets", authenticated: true);
+
+    private static void MapNativeReferences(WebApplication app, string route, bool authenticated)
     {
-        var group = app.MapGroup("/api/rulesets");
+        var group = app.MapGroup(route);
         group.AddEndpointFilter(async (invocation, next) =>
         {
             invocation.HttpContext.Response.Headers.CacheControl = "no-store";
             invocation.HttpContext.Response.Headers["X-Content-Type-Options"] = "nosniff";
+            if (authenticated)
+            {
+                var validator = invocation.HttpContext.RequestServices
+                    .GetRequiredService<CharacterSheetMechanicsTicketValidator>();
+                var failure = await validator.ValidateDirectConsumerCatalogAsync(invocation.HttpContext);
+                if (failure is not null) return failure;
+            }
             return await next(invocation);
         });
 
@@ -42,7 +57,7 @@ public static class NativePublicEndpoints
             var snapshot = store.Snapshot;
             if (snapshot is null) return Unavailable();
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
-            PublicRulesetSummary[] visible = policy.Allows(snapshot)
+            PublicRulesetSummary[] visible = (authenticated || policy.Allows(snapshot))
                 ? [new PublicRulesetSummary(snapshot.RulesetId, snapshot.Count, snapshot.Fingerprint,
                     new PublicRulesetCapabilities(true, false))]
                 : [];
@@ -56,7 +71,7 @@ public static class NativePublicEndpoints
             var snapshot = store.Snapshot;
             if (snapshot is null) return Unavailable();
             if (!ValidRulesetId(rulesetId)) return InvalidId();
-            if (!Matches(snapshot, policy, rulesetId)) return NotFound();
+            if (!Matches(snapshot, policy, rulesetId, authenticated)) return NotFound();
 
             if (request.Query.Keys.Any(key => key is not ("q" or "category" or "limit" or "offset")) ||
                 !ReadQuery(request, "q", out var query) || !ReadQuery(request, "category", out var category) ||
@@ -83,7 +98,7 @@ public static class NativePublicEndpoints
             if (snapshot is null) return Unavailable();
             if (!ValidRulesetId(rulesetId) || ruleId.Length > 160 || !SafeRuleId.IsMatch(ruleId))
                 return InvalidId();
-            if (!Matches(snapshot, policy, rulesetId)) return NotFound();
+            if (!Matches(snapshot, policy, rulesetId, authenticated)) return NotFound();
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
             if (!snapshot.TryGetById(ruleId, out var rule) || rule is null)
                 return Results.NotFound(new { error = "rule_not_found" });
@@ -93,8 +108,9 @@ public static class NativePublicEndpoints
     }
 
     private static bool Matches(NativeCatalogSnapshot snapshot, NativePublicDistributionPolicy policy,
-        string rulesetId) =>
-        string.Equals(rulesetId, snapshot.RulesetId, StringComparison.Ordinal) && policy.Allows(snapshot);
+        string rulesetId, bool authenticated) =>
+        string.Equals(rulesetId, snapshot.RulesetId, StringComparison.Ordinal) &&
+        (authenticated || policy.Allows(snapshot));
 
     private static bool ValidRulesetId(string id) => id.Length <= 80 && SafeRulesetId.IsMatch(id);
     private static IResult NotFound() => Results.NotFound(new { error = "ruleset_not_found" });
