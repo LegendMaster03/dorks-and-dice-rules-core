@@ -82,7 +82,7 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
             var source = "native." + occurrence.OccurrenceId + ".";
             var countBefore = grants.Count;
             if (materialization.TryGetProperty("fixedGrants", out var fixedGrants)) {
-                if (!fixedGrants.IsArray())
+                if (fixedGrants.ValueKind != JsonValueKind.Array)
                     Issue("invalid-native-equipment", occurrence.ClassId,
                         "Fixed grants must be a list.");
                 else
@@ -188,7 +188,7 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
                 continue;
             }
             var name = kind == "item"
-                ? catalog.TryGetById(target!, out var item) ? item!.Name : target!
+                ? catalog.TryGetById(target!, out var resolvedItem) ? resolvedItem!.Name : target!
                 : target!;
             grants.Add(new(prefix + key, kind!, target!, name, quantity!.Value));
         }
@@ -219,8 +219,3 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
         value.TryGetInt32(out var result) ? result : null;
 }
 
-internal static class NativeJsonElementExtensions
-{
-    public static bool IsArray(this JsonElement element) =>
-        element.ValueKind == JsonValueKind.Array;
-}
