@@ -39,6 +39,7 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
         var choices = new List<NativeStartingEquipmentChoice>();
         var issues = new List<NativeIssue>();
         var unresolved = false;
+        var pendingPackages = false;
         void Issue(string code, string key, string detail) {
             issues.Add(new NativeIssue(code, key, detail)); unresolved = true;
         }
@@ -117,8 +118,9 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
                     allOptions.Add(new(id, name));
                     if (id == selected) selectedPackage = option;
                 }
+                choices.Add(new(choiceKey, allOptions));
                 if (selected is null) {
-                    choices.Add(new(choiceKey, allOptions));
+                    pendingPackages = true;
                 } else if (selectedPackage is not JsonElement chosen ||
                     !TryArray(chosen, "grants", out var packageGrants))
                 {
@@ -142,8 +144,8 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
                 Issue("invalid-equipment-selection", choice, "The selected package does not belong to an active class.");
 
         if (unresolved) return Result("unavailable", issues);
-        if (choices.Count != 0) return Result("needs-choices", issues, choices);
-        return Result("resolved", issues, [], grants);
+        if (pendingPackages) return Result("needs-choices", issues, choices);
+        return Result("resolved", issues, choices, grants);
 
         NativeStartingEquipmentProjection Result(
             string status, IReadOnlyList<NativeIssue> problems,
