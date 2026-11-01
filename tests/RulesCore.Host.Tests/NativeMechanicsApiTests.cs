@@ -329,7 +329,7 @@ public sealed class NativeMechanicsApiTests
         Assert.False(result.GetProperty("options")[0].TryGetProperty("sourcePath", out _));
         // Skill and Competency summaries are safe identities only, not raw
         // native definitions or private content. Empty result sets are valid.
-        foreach (var category in new[] { "skill", "competency", "monster", "item" })
+        foreach (var category in new[] { "skill", "competency", "monster", "item", "feat", "spell" })
         {
             using var catalogSearch = await fixture.Client.SendAsync(fixture.Authenticated(
                 HttpMethod.Get, "/api/mechanics/v1/catalog/options?fingerprint=" +

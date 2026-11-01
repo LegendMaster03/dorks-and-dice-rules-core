@@ -68,7 +68,8 @@ public static class NativeMechanicsEndpoints
                 !SingleQueryValue(request, "offset", out var offsetText) ||
                 category is not ("class" or "subclass" or "patron" or "pact" or
                     "invocation" or "condition" or "leveled-condition" or
-                    "skill" or "competency" or "monster" or "item") ||
+                    "skill" or "competency" or "monster" or "item" or
+                    "feat" or "spell") ||
                 (query?.Length ?? 0) > 200 ||
                 !PageNumber(limitText, 50, 1, 100, out var limit) ||
                 !PageNumber(offsetText, 0, 0, 1_000_000, out var offset))
