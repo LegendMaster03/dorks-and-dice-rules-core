@@ -47,6 +47,7 @@ public static class NativeMechanicsEndpoints
                 capabilities = new { characterProjection = true, resourceResolution = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
+                    startingEquipmentResolution = "authored-grants-only",
                     conditionRollMode = "conditional-subset",
                     creatureProjection = "partial", sourceConversion = false,
                     campaignEffectiveRules = false }
@@ -85,6 +86,25 @@ public static class NativeMechanicsEndpoints
                     id = item.Id, name = item.Name, kind = item.Category
                 }).ToArray()
             });
+        });
+
+        // Only explicit native materialization blocks may yield inventory
+        // grants. Older authored package prose remains visible as unavailable
+        // rather than being silently converted into concrete item identities.
+        group.MapPost("/characters/starting-equipment",
+            (NativeStartingEquipmentRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_equipment_request");
+            var resolved = new NativeStartingEquipmentResolver(catalog).Resolve(request);
+            Timing(context, "native-starting-equipment", start);
+            return resolved.Status == "invalid"
+                ? Results.Json(resolved, statusCode: resolved.Issues.Any(issue =>
+                    issue.Code == "ruleset-version-mismatch") ? 409 : 400)
+                : Results.Ok(resolved);
         });
 
         group.MapPost("/advancements/eligibility", (NativeEligibilityRequest request,
