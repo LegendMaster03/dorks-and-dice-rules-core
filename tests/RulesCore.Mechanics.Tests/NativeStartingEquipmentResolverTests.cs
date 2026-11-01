@@ -66,6 +66,29 @@ public sealed class NativeStartingEquipmentResolverTests
     }
 
     [Fact]
+    public void LaterMulticlassDoesNotGrantAnotherStartingPackageOrBlockTheFirst()
+    {
+        using var fixture = new Fixture(true, false, includeOtherClass: true);
+        var choiceKey = "starting-equipment.00000000-0000-0000-0000-000000000001";
+        var request = fixture.Request(new Dictionary<string, string> {
+            [choiceKey] = "gold"
+        }) with {
+            Advancements = [
+                new NativeAdvancement("class.demo", 3,
+                    "00000000-0000-0000-0000-000000000001"),
+                new NativeAdvancement("class.demo.other", 1,
+                    "00000000-0000-0000-0000-000000000002")
+            ]
+        };
+        var result = new NativeStartingEquipmentResolver(fixture.Catalog).Resolve(request);
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(2, result.Grants.Count);
+        Assert.Single(result.Choices);
+        Assert.Equal(choiceKey, result.Choices[0].ChoiceKey);
+        Assert.Empty(result.Issues);
+    }
+
+    [Fact]
     public void SelectedUnknownPackageAndStaleFingerprintFailClosed()
     {
         using var fixture = new Fixture(true, false);
@@ -89,7 +112,7 @@ public sealed class NativeStartingEquipmentResolverTests
             Path.Combine(Path.GetTempPath(), "rules-core-equipment-" + Guid.NewGuid().ToString("N"));
         public NativeCatalogSnapshot Catalog { get; }
 
-        public Fixture(bool approved, bool missingItem)
+        public Fixture(bool approved, bool missingItem, bool includeOtherClass = false)
         {
             var package = Path.Combine(_path, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -113,6 +136,9 @@ public sealed class NativeStartingEquipmentResolverTests
             File.WriteAllText(Path.Combine(package, "native", "class.json"),
                 "{\"id\":\"class.demo\",\"name\":\"Demo\",\"kind\":\"class\",\"definition\":{" +
                 equipment + "\"progression\":[{\"level\":1,\"proficiencyBonus\":2,\"featureGrants\":[]}]}}");
+            if (includeOtherClass)
+                File.WriteAllText(Path.Combine(package, "native", "other-class.json"),
+                    """{"id":"class.demo.other","name":"Demo Other","kind":"class","definition":{"startingEquipment":{"chooseOnePackage":["other-class-unreconciled"]}}}""");
             if (!missingItem)
                 File.WriteAllText(Path.Combine(package, "native", "items.json"),
                     """{"id":"item.demo.knife","name":"Demo Knife","kind":"item"}""");

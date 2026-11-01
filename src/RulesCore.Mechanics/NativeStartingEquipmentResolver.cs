@@ -57,6 +57,7 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
 
         var seenOccurrences = new HashSet<string>(StringComparer.Ordinal);
         var knownChoices = new HashSet<string>(StringComparer.Ordinal);
+        var isInitialClass = true;
         foreach (var occurrence in request.Advancements)
         {
             if (occurrence is null || occurrence.Level is < 1 or > 100 ||
@@ -71,6 +72,12 @@ public sealed class NativeStartingEquipmentResolver(NativeCatalogSnapshot catalo
                     new("invalid-class", "advancements", "Saved class occurrence has no verified native class identity.")
                 ]);
             }
+            // Starting equipment belongs to the Character's initial class,
+            // not to every later class obtained through multiclass advancement.
+            // Validate the full history, but grant only from the first class.
+            if (!isInitialClass)
+                continue;
+            isInitialClass = false;
             var definition = entity.Definition;
             if (!TryObject(definition, "definition", out var details) ||
                 !TryObject(details, "startingEquipment", out var equipment) ||
