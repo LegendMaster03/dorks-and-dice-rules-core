@@ -35,7 +35,9 @@ public sealed class NativeStartingEquipmentResolverTests
             new Dictionary<string, string> { [choice.ChoiceKey] = "gold" }));
         Assert.Equal("resolved", selected.Status);
         Assert.Empty(selected.Issues);
-        Assert.Empty(selected.Choices);
+        Assert.Single(selected.Choices);
+        Assert.Equal("starting-equipment.00000000-0000-0000-0000-000000000001",
+            selected.Choices[0].ChoiceKey);
         Assert.Collection(selected.Grants,
             grant => {
                 Assert.Equal("item", grant.Kind);
