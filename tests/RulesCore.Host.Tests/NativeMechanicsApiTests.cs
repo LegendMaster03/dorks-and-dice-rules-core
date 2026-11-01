@@ -327,6 +327,22 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal("class.demo", result.GetProperty("options")[0].GetProperty("id").GetString());
         Assert.False(result.GetProperty("options")[0].TryGetProperty("definition", out _));
         Assert.False(result.GetProperty("options")[0].TryGetProperty("sourcePath", out _));
+        // Skill and Competency summaries are safe identities only, not raw
+        // native definitions or private content. Empty result sets are valid.
+        foreach (var category in new[] { "skill", "competency" })
+        {
+            using var catalogSearch = await fixture.Client.SendAsync(fixture.Authenticated(
+                HttpMethod.Get, "/api/mechanics/v1/catalog/options?fingerprint=" +
+                    fingerprint + "&category=" + category));
+            Assert.Equal(HttpStatusCode.OK, catalogSearch.StatusCode);
+            var catalogPage = await catalogSearch.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal(category, catalogPage.GetProperty("category").GetString());
+            foreach (var item in catalogPage.GetProperty("options").EnumerateArray())
+            {
+                Assert.False(item.TryGetProperty("definition", out _));
+                Assert.False(item.TryGetProperty("sourcePath", out _));
+            }
+        }
 
         using var check = fixture.Authenticated(HttpMethod.Post,
             "/api/mechanics/v1/advancements/eligibility", JsonContent.Create(new {
