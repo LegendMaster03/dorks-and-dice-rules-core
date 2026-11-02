@@ -48,6 +48,7 @@ public static class NativeMechanicsEndpoints
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     startingEquipmentResolution = "authored-grants-only",
+                     manufacturingResolution = "manual-competency-subset",
                     conditionRollMode = "conditional-subset",
                     creatureProjection = "partial", sourceConversion = false,
                     campaignEffectiveRules = false }
@@ -86,6 +87,23 @@ public static class NativeMechanicsEndpoints
                     id = item.Id, name = item.Name, kind = item.Category
                 }).ToArray()
             });
+        });
+
+        // Uses the previously implemented manufacturing check and explicitly
+        // supplied manual values until all native competency facets are modeled.
+        group.MapPost("/crafting/manufacturing/resolve",
+            (NativeManufacturingRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_manufacturing_request");
+            var result = new NativeCraftingResolver(catalog).ResolveManufacturing(request);
+            Timing(context, "native-manufacturing", start);
+            return result.Status == "resolved" ? Results.Ok(result)
+                : Results.Json(result, statusCode:
+                    result.Reason == "ruleset-version-mismatch" ? 409 : 422);
         });
 
         // Only explicit native materialization blocks may yield inventory
