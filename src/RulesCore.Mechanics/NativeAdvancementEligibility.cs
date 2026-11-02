@@ -11,7 +11,8 @@ public sealed record NativeEligibilityRequest(
     string RulesetId,
     string Fingerprint,
     string CandidateId,
-    NativeCharacterRequest Character);
+    NativeCharacterRequest Character,
+    int? HitDieValue = null);
 
 public sealed record NativeEligibilityRequirement(
     string Key, string Status, string Detail);
@@ -141,6 +142,21 @@ public sealed class NativeAdvancementEligibility(NativeCatalogSnapshot catalog)
                 Add("class-level", "unresolved", "Duplicate native progression rows prevent selection.");
             else
                 Add("class-level", "satisfied", "The requested level exists in the native class progression.");
+
+            // A hit-point gain is a class-rule input, not an arbitrary positive
+            // value accepted by Character Sheet. An omitted value is allowed
+            // during eligibility discovery, but a supplied value is validated.
+            if (request.HitDieValue is int gain)
+            {
+                if (!definition.TryGetProperty("hitDie", out var die) ||
+                    ReadInt(die, "number") != 1 ||
+                    ReadInt(die, "faces") is not int faces || faces is < 1 or > 1000)
+                    Add("hit-die", "unresolved",
+                        "The native class does not expose a supported hit die profile.");
+                else
+                    Add("hit-die", gain is >= 1 && gain <= faces ? "satisfied" : "failed",
+                        $"The supplied hit point gain must be between 1 and {faces}.");
+            }
             return Finish();
         }
 

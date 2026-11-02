@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/native-mechanics-existing-tools
+      - feature/native-hit-die-eligibility
   pull_request:
     branches:
       - main
