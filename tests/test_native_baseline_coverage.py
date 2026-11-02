@@ -78,6 +78,14 @@ class NativeSrdBaselineTests(unittest.TestCase):
                     self.assertEqual({c["id"] for c in conditions},
                                      set(native["conditionIds"]))
                 continue
+            if row["status"] == "approved-native-reconciled":
+                self.assertTrue(path.is_relative_to(AUTHORITATIVE), relative)
+                self.assertNotIn("baselineStatus", native, cid)
+                self.assertNotIn("candidateDefinitions", native, cid)
+                self.assertEqual(row["kind"], native["kind"], cid)
+                self.assertIn("name", native, cid)
+                self.assertEqual("selected-native", native.get("status"), cid)
+                continue
             if row["status"] == "matching-candidates":
                 self.assertNotIn("candidateDefinitions", native, cid)
                 self.assertNotIn("baselineStatus", native, cid)
@@ -165,7 +173,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
     def test_class_species_parent_structure(self):
         classes = {p.stem for p in (WORKING / "classes/base").glob("*.json")}
-        species = {p.stem for p in (WORKING / "species/base").glob("*.json")}
+        species = {p.stem for p in (WORKING / "species/base").glob("*.json")} | {p.stem for p in (AUTHORITATIVE / "species/base").glob("*.json")}
         self.assertEqual(12, len(classes))
         self.assertGreaterEqual(len(species), 10)
         for p in (WORKING / "classes/subclasses").glob("*/*.json"):
@@ -178,6 +186,43 @@ class NativeSrdBaselineTests(unittest.TestCase):
             self.assertEqual("species." + p.parent.name, d["parentSpecies"])
             self.assertIn(p.parent.name, species)
             self.assertEqual("subspecies." + p.parent.name + "." + p.stem, d["id"])
+
+    def test_selected_species_subspecies_and_upbringings_have_stable_parents(self):
+        native = AUTHORITATIVE
+        species_defs = {
+            r["id"]: r
+            for p in (native / "species/base").rglob("*.json")
+            for r in [load(p)]
+        }
+        subspecies_defs = {
+            r["id"]: r
+            for p in (native / "species/subspecies").rglob("*.json")
+            for r in [load(p)]
+        }
+        upbringings = {
+            r["id"]: r
+            for p in (native / "upbringings").rglob("*.json")
+            for r in [load(p)]
+        }
+        self.assertGreaterEqual(len(species_defs), 4)
+        self.assertGreaterEqual(len(subspecies_defs), 7)
+        self.assertGreaterEqual(len(upbringings), 8)
+        for item in subspecies_defs.values():
+            self.assertIn(item["parent"], species_defs | subspecies_defs)
+        for item in upbringings.values():
+            if "parent" in item:
+                self.assertIn(item["parent"], upbringings)
+            for target in item.get("defaultFor", []):
+                self.assertIn(target, species_defs | subspecies_defs)
+        for records in (species_defs | subspecies_defs, upbringings):
+            for id in records:
+                visited = set()
+                cursor = id
+                while cursor in records and "parent" in records[cursor]:
+                    self.assertNotIn(cursor, visited, cursor)
+                    visited.add(cursor)
+                    cursor = records[cursor]["parent"]
+                self.assertIn(cursor, records)
 
     def test_large_entities_have_full_candidate_records_and_merged_lore(self):
         for path, expected in [
@@ -208,7 +253,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
             ".github/workflows/finalize-native-srd-baseline.yml",
         ]:
             self.assertFalse((ROOT / f).exists(), f)
-        self.assertEqual("native-coverage-staged; all source-marked entities present; decisions pending",
+        self.assertEqual("native-coverage-staged; pinned SRD evidence retained; approved reconciliations promoted individually",
                          self.coverage["status"])
 
 

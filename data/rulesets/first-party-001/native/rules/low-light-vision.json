@@ -1,0 +1,21 @@
+{
+  "id": "rule.low-light-vision",
+  "kind": "rule",
+  "name": "Low-Light Vision",
+  "status": "selected-native",
+  "description": "You perceive Dim Light as Bright Light.",
+  "effects": [
+    {
+      "actualLightLevel": "dim",
+      "perceivedLightLevel": "bright"
+    }
+  ],
+  "clarifications": [
+    "Does not change the perception of Darkness.",
+    "Does not suppress or restrict other senses or visibility abilities.",
+    "No separate Low-Light Vision range is imposed by this rule."
+  ],
+  "reviewNotes": [
+    "Which Species and Subspecies receive the sense is deferred to the comparative Species review."
+  ]
+}

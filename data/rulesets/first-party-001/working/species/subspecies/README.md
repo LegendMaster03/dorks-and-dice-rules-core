@@ -1,5 +1,5 @@
-# Subspecies
+# Subspecies — working research
 
-Organize subspecies by parent species: `subspecies/<parent-species>/<subspecies>.json`. Example: `subspecies/elf/high-elf.json`.
+Active future-reconciliation notes and unresolved source candidates belong here. Reviewed and approved Subspecies definitions move to the matching `native/species/subspecies/` tree, with recursive nesting when helpful.
 
-Each subspecies has its own stable native identity and explicit parent-species relationship. Source reprints and imported variants must not be conflated with a parent relationship.
+The directory structure reflects organization. Every selected definition uses explicit stable parent IDs. A parent Species or intermediate Subspecies can be nonselectable; the concrete playable leaf resolves its whole ancestor chain. Original source content remains available under `data/reference/srd/`.

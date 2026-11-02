@@ -1,0 +1,42 @@
+{
+  "id": "upbringing.gnome.rock",
+  "name": "Rock Gnome Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "tinkering",
+      "description": "Gain native Tinkering Competency, including Tinker's Tools.",
+      "competency": "competency.tinkering"
+    },
+    {
+      "id": "artificers-lore",
+      "description": "Double Proficiency Bonus on qualifying Intelligence (History) checks involving magical, alchemical or technological objects.",
+      "skill": "history",
+      "ability": "intelligence",
+      "proficiencyBonusMultiplier": 2,
+      "scope": "magic-alchemy-technology-objects"
+    },
+    {
+      "id": "clockwork-tinker",
+      "description": "May make appropriate clockwork devices using the Tinkering Competency, proper tools, materials and time."
+    },
+    {
+      "id": "prestidigitation",
+      "description": "Learn Prestidigitation as a cantrip.",
+      "spell": "prestidigitation"
+    },
+    {
+      "id": "magical-tinkering",
+      "description": "Learn a technique combining Tinkering Competency and Prestidigitation. Does not automatically grant Mending."
+    }
+  ],
+  "parent": "upbringing.gnome.general",
+  "defaultFor": [
+    "subspecies.gnome.rock"
+  ],
+  "reviewNotes": [
+    "Spellcasting ability for Upbringing-granted Prestidigitation remains unresolved."
+  ]
+}

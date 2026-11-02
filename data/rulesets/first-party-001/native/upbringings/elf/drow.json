@@ -1,0 +1,31 @@
+{
+  "id": "upbringing.elf.drow",
+  "name": "Drow Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "undercommon",
+      "description": "Learn Undercommon.",
+      "language": "undercommon"
+    },
+    {
+      "id": "subterranean-survival",
+      "description": "Gain +2 to Survival checks for underground navigation, tracking, foraging and identifying subterranean hazards. The activity must qualify, not merely the location.",
+      "skill": "survival",
+      "bonus": 2,
+      "scope": [
+        "underground-navigation",
+        "underground-tracking",
+        "underground-foraging",
+        "subterranean-hazards"
+      ],
+      "stacksWithTraining": true
+    }
+  ],
+  "parent": "upbringing.elf.general",
+  "defaultFor": [
+    "subspecies.elf.drow"
+  ]
+}

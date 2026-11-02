@@ -1,0 +1,64 @@
+{
+  "id": "rule.species-subspecies-upbringing",
+  "kind": "rule",
+  "name": "Species, Subspecies, and Upbringing Inheritance",
+  "status": "selected-native",
+  "description": "Species and Subspecies encode inherited traits. Upbringings encode acquired traditions, skills and language. Their inheritance graphs are independent and Upbringing associations do not restrict character selection.",
+  "speciesInheritance": {
+    "recursive": true,
+    "parentByStableId": true,
+    "nonselectableIntermediatesAllowed": true,
+    "selection": "Selecting a terminal Subspecies resolves its ancestor chain without requiring the user to select each ancestor.",
+    "filesystem": "Directories may mirror the hierarchy but stable parent IDs are authoritative."
+  },
+  "upbringings": {
+    "recursive": true,
+    "association": "optional-many-to-many",
+    "defaultAssociation": "A familiar 5e/5.5e option may resolve to a selected default Upbringing for compatibility, without forbidding alternative selections.",
+    "speciesRestrictionsByDefault": false
+  },
+  "dragonbornApprovedStructure": {
+    "baseSpecies": "species.dragonborn",
+    "baseSelectable": false,
+    "intermediateFamilies": [
+      {
+        "id": "subspecies.dragonborn.chromatic",
+        "selectable": false,
+        "types": [
+          "black",
+          "blue",
+          "green",
+          "red",
+          "white"
+        ]
+      },
+      {
+        "id": "subspecies.dragonborn.metallic",
+        "selectable": false,
+        "types": [
+          "brass",
+          "bronze",
+          "copper",
+          "gold",
+          "silver"
+        ]
+      },
+      {
+        "id": "subspecies.dragonborn.gem",
+        "selectable": false,
+        "types": [
+          "amethyst",
+          "crystal",
+          "emerald",
+          "sapphire",
+          "topaz"
+        ]
+      }
+    ],
+    "leafSubspeciesSelectable": true
+  },
+  "reviewNotes": [
+    "The Dragonborn trait definitions remain under reconciliation; no placeholder playable Dragonborn records are created here.",
+    "Existing projector and candidate import tools do not yet execute this selected data model."
+  ]
+}

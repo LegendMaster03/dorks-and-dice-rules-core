@@ -1,0 +1,28 @@
+{
+  "id": "species.gnome",
+  "name": "Gnome",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "traits": [
+    {
+      "id": "gnomish-cunning",
+      "description": "Advantage on Intelligence, Wisdom and Charisma saving throws against magic only.",
+      "savingThrows": {
+        "advantageAbilities": [
+          "intelligence",
+          "wisdom",
+          "charisma"
+        ],
+        "scope": "magic-only"
+      }
+    }
+  ],
+  "creatureType": "humanoid",
+  "size": "small",
+  "walkingSpeedFeet": 30,
+  "darkvisionFeet": 60,
+  "reviewNotes": [
+    "Walking speed subject to comparative Species balance."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "upbringing.elf.high",
+  "name": "High Elf Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "traditional-weapons",
+      "description": "Gain proficiency with longsword, shortsword, shortbow and longbow.",
+      "weaponProficiencies": [
+        "longsword",
+        "shortsword",
+        "shortbow",
+        "longbow"
+      ]
+    },
+    {
+      "id": "additional-language",
+      "description": "Learn one additional language of choice without replacing inherited Elvish.",
+      "extraLanguages": 1
+    }
+  ],
+  "parent": "upbringing.elf.general",
+  "defaultFor": [
+    "subspecies.elf.high"
+  ]
+}

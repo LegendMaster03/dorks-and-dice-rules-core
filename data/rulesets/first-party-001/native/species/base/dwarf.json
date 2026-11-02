@@ -1,0 +1,47 @@
+{
+  "id": "species.dwarf",
+  "name": "Dwarf",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "traits": [
+    {
+      "id": "dwarven-toughness",
+      "description": "Increase maximum hit points by 1 for each character level.",
+      "hitPointsPerCharacterLevel": 1
+    },
+    {
+      "id": "dwarven-resilience",
+      "description": "Advantage on saving throws against poison effects and 50 percent resistance to poison damage.",
+      "savingThrows": {
+        "advantageAgainst": [
+          "poison-effects"
+        ]
+      },
+      "damageResistance": {
+        "poison": 50
+      }
+    },
+    {
+      "id": "stonebound-tremorsense",
+      "description": "While in contact with stone, activate 60-foot Tremorsense for 10 minutes as a Bonus Action. Uses equal Proficiency Bonus per Long Rest.",
+      "sense": "tremorsense",
+      "rangeFeet": 60,
+      "requiresContact": "stone",
+      "activation": "bonus-action",
+      "durationMinutes": 10,
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    }
+  ],
+  "creatureType": "humanoid",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "darkvisionFeet": 120,
+  "reviewNotes": [
+    "Walking speed and Darkvision range remain subject to comparative Species balance.",
+    "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "species.elf",
+  "name": "Elf",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "traits": [
+    {
+      "id": "keen-senses",
+      "description": "Gain +2 Listen and +2 Spot. Existing Perception composite calculation uses these bonuses.",
+      "skillBonuses": {
+        "skill.listen": 2,
+        "skill.spot": 2
+      }
+    },
+    {
+      "id": "fey-ancestry",
+      "description": "Advantage on saving throws to resist or end Charmed.",
+      "savingThrows": {
+        "advantageAgainst": [
+          "condition.charmed"
+        ]
+      }
+    },
+    {
+      "id": "trance",
+      "description": "Complete a Long Rest through four hours of trancelike meditation. Elves do not need to sleep.",
+      "longRestHours": 4,
+      "sleepRequired": false
+    },
+    {
+      "id": "magical-sleep",
+      "description": "Immune to magical sleep that is not willingly accepted. Can consent to a specific magical sleep effect; this is not a general immunity toggle."
+    }
+  ],
+  "creatureType": "humanoid",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "darkvisionFeet": 60,
+  "reviewNotes": [
+    "Historical Search bonus remains unresolved.",
+    "Speed and overall trait balance will be compared with other Species."
+  ]
+}

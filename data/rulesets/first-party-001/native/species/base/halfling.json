@@ -1,0 +1,38 @@
+{
+  "id": "species.halfling",
+  "name": "Halfling",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "traits": [
+    {
+      "id": "halfling-luck",
+      "description": "On a natural 1 for a d20 test, reroll and use the new result."
+    },
+    {
+      "id": "brave",
+      "description": "Advantage on saves to resist or end Shaken, Frightened, Panicked, and fear-induced Cowering; this does not create new saving throw opportunities."
+    },
+    {
+      "id": "halfling-nimbleness",
+      "description": "Move through spaces occupied by creatures larger than you, but do not end movement there unless another ability permits it."
+    },
+    {
+      "id": "naturally-stealthy",
+      "description": "May Hide when obscured by a larger creature."
+    },
+    {
+      "id": "keen-hearing",
+      "description": "Gain +2 to Listen; the existing native composite-skill procedure incorporates this in Perception.",
+      "skillBonuses": {
+        "skill.listen": 2
+      }
+    }
+  ],
+  "creatureType": "humanoid",
+  "size": "small",
+  "walkingSpeedFeet": 30,
+  "reviewNotes": [
+    "Walking speed subject to comparative Species balance."
+  ]
+}

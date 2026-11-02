@@ -1,0 +1,33 @@
+{
+  "id": "rule.jumping",
+  "kind": "rule",
+  "name": "Jumping",
+  "status": "selected-native",
+  "runningStartFeet": 10,
+  "runningLongJump": {
+    "distanceFeet": "strength-score"
+  },
+  "runningHighJump": {
+    "heightFeet": "max(0,3 + strength-modifier)"
+  },
+  "standingJump": {
+    "automaticDistance": "half-running-distance"
+  },
+  "exceptionalJumpChecks": {
+    "longJump": {
+      "skill": "jump",
+      "ability": "strength",
+      "dc": "attempted-distance-feet"
+    },
+    "highJump": {
+      "skill": "jump",
+      "ability": "strength",
+      "dc": "4 * attempted-height-feet"
+    },
+    "standingDcMultiplier": 2
+  },
+  "movement": "Jumping consumes ordinary movement. There is no general speed-based -6 penalty.",
+  "reviewNotes": [
+    "Consequences of failure, Reflex integration and exact standing-height rounding remain unresolved."
+  ]
+}
