@@ -267,6 +267,57 @@ public static class NativeConditionEffects
         return matched;
     }
 
+    /// <summary>
+    /// Keep unrelated character numbers when a condition only changes roll mode.
+    /// Numeric condition effects not yet evaluated must invalidate their dependent
+    /// values rather than advertise unmodified totals as effective values.
+    /// </summary>
+    public static void WithholdUnsupportedCharacterValues(NativeCatalogSnapshot catalog,
+        IReadOnlyList<string> conditionIds, IDictionary<string, NativeNumeric> values,
+        List<NativeIssue> issues)
+    {
+        var conditionIssues = new List<NativeIssue>();
+        var abilities = new HashSet<string>(StringComparer.Ordinal);
+        var saves = false;
+        var training = false;
+        foreach (var (id, effect) in Effects(catalog, conditionIds, conditionIssues))
+        {
+            var type = ReadString(effect, "type");
+            if (type == "effective-ability-score")
+            {
+                var ability = ReadString(effect, "ability");
+                if (ability is null) conditionIssues.Add(new(
+                    "condition-ability-unresolved", id, "Condition ability target is missing."));
+                else abilities.Add(ability);
+            }
+            if (type == "saving-throw" ||
+                type == "roll-modifier" && ReadString(effect, "appliesTo") == "saving-throw")
+                saves = true;
+            if (type == "check" || type == "roll-modifier" &&
+                ReadString(effect, "appliesTo") is "skill-check" or "ability-check")
+                training = true;
+        }
+        var unknown = conditionIssues.Count != 0;
+        issues.AddRange(conditionIssues);
+        foreach (var key in values.Keys.ToArray())
+        {
+            var abilityDependent = abilities.Any(ability =>
+                key.StartsWith("ability." + ability + ".", StringComparison.Ordinal) ||
+                key == "save." + ability || key == "initiative" && ability == "dexterity" ||
+                key == "hit-points.maximum" && ability == "constitution");
+            var trainingValue = key.EndsWith(".total", StringComparison.Ordinal);
+            var unsupported = abilityDependent ||
+                (saves && key.StartsWith("save.", StringComparison.Ordinal)) ||
+                trainingValue && (training || abilities.Count > 0) ||
+                unknown && key != "proficiency.bonus";
+            if (!unsupported) continue;
+            values[key] = new("unsupported", null,
+                "A native condition has an unresolved numeric effect on this value.");
+            issues.Add(new("condition-numeric-effect-unresolved", key,
+                "The active condition needs additional numeric effect evaluation."));
+        }
+    }
+
     private static IEnumerable<(string Id, JsonElement Effect)> Effects(NativeCatalogSnapshot catalog,
         IReadOnlyList<string> conditionIds, List<NativeIssue> issues)
     {
