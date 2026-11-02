@@ -9,9 +9,18 @@
 ## Deferred Dragonborn reconciliation (5)
 - **Gem** — Amethyst, Crystal, Emerald, Sapphire, Topaz. Keep descriptions as research in `gem/HOARD_TRADITIONS_RESEARCH.md`; do not produce playable Gem leaves or selected Upbringing defaults in this pass.
 
-## Other Draconomicon entries (5), not approved as Dragonborn
-- Deep Dragon; Dragon Turtle; Faerie Dragon; Moonstone Dragon; Shadow Dragon.
-- These are extra source profiles, not members of the fifteen standard Chromatic/Metallic/Gem Dragonborn ancestries and not necessarily all independently inherited dragon types. Shadow forms particularly require distinguishing transformed dragons from lineage.
+## Other Draconomicon entries (5), research now documented — not approved as Dragonborn
+All five profiles have their own source-summary and possible learned-tradition notes in the existing `unclassified/` research directory:
+
+| Chapter 5 profile | Hoard research note |
+| --- | --- |
+| Deep Dragon | [Deep Dragon](unclassified/DEEP_DRAGON_HOARD_RESEARCH.md) |
+| Faerie Dragon | [Faerie Dragon](unclassified/FAERIE_DRAGON_HOARD_RESEARCH.md) |
+| Moonstone Dragon | [Moonstone Dragon](unclassified/MOONSTONE_DRAGON_HOARD_RESEARCH.md) |
+| Shadow Dragon | [Shadow Dragon](unclassified/SHADOW_DRAGON_HOARD_RESEARCH.md) |
+| Dragon Turtle | [Dragon Turtle](unclassified/DRAGON_TURTLE_HOARD_RESEARCH.md) |
+
+These are extra creature profiles, not members of the fifteen standard Chromatic, Metallic, and Gem Dragonborn types. **Shadow** is a particularly important transformation/lineage distinction; **Dragon Turtle** is not assumed to have a humanoid descendant Species. The five files document research only, without expanding the ten-type first pass.
 
 ## How to use hoard lore
 1. Record the **published dragon's preference** (what it treasures, why, and any associated knowledge or craft), with a source locator to its Chapter 5 entry.
@@ -25,4 +34,4 @@
 - For research, use the individual **[Color/Type] Dragon Treasures** subsection at the end of each Draconomicon entry. Treasure examples are source context, not prescribed Dragonborn possessions.
 - The pinned SRD 5.1/5.2.1 evidence is retained separately in `data/reference/srd/`. *Fizban's* is a non-SRD published reference, not a newly imported or runtime-authoritative rulebook.
 
-**Scope guard:** collecting Chapter 5 source notes for all twenty types does not approve additional playable Species/Subspecies or extend the current ten-type Chromatic/Metallic mechanics pass.
+**Coverage:** 20/20 Chapter 5 dragon/draconic-creature hoard profiles have corresponding research notes: five Chromatic, five Metallic, five Gem, and five additional profiles. **Scope guard:** this does not approve additional playable Species/Subspecies or expand the ten-type Chromatic/Metallic mechanics pass.
