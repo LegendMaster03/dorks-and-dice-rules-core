@@ -43,6 +43,31 @@ public sealed class NativeMechanicsApiTests
                 {"id":"class.demo","name":"Demo","kind":"class","definition":{
                   "progression":[{"level":1,"proficiencyBonus":2,"featureGrants":[]}]}}
                 """);
+            File.WriteAllText(Path.Combine(package, "native", "harvesting.json"), """
+                {"id":"procedure.harvesting.loot-tavern-lite",
+                 "name":"Harvesting & Crafting Lite","kind":"harvesting-procedure",
+                 "source":{"workKey":"loot-tavern.harvesting-crafting-lite",
+                   "workDisplayName":"Harvesting & Crafting Lite",
+                   "provider":"Loot Tavern","gameEdition":"5e",
+                   "releaseKind":"public-release","publicationDate":"2024-07-03",
+                   "referenceUri":"https://example.test"},
+                 "procedure":{"assessment":{"mechanicKey":"check.harvesting.assessment",
+                     "abilityKey":"intelligence","abilityDisplayName":"Intelligence",
+                     "defaultRollMode":"normal"},
+                   "carving":{"mechanicKey":"check.harvesting.carving",
+                     "abilityKey":"dexterity","abilityDisplayName":"Dexterity",
+                     "defaultRollMode":"normal"},
+                   "totalMechanicKey":"check.harvesting.total",
+                   "sameActorRollMode":"disadvantage","componentDcAggregation":"cumulative-in-order",
+                   "awardMode":"ordered-prefix","helpers":{"maximumByCreatureSize":
+                     {"Tiny":0,"Small":1,"Medium":2,"Large":4,"Huge":6,"Gargantuan":10},
+                     "standardHelpActionApplies":false}},
+                 "creatureTypes":[{"key":"dragon","displayName":"Dragon",
+                   "competencyKey":"competency.survival",
+                   "competencyDisplayName":"Survival",
+                   "defaultComponents":[{"key":"eye","displayName":"Eye","componentDc":5},
+                     {"key":"scale","displayName":"Scale","componentDc":10}]}]}
+                """);
             File.WriteAllText(Path.Combine(package, "native", "conditions.json"), """
                 {"conditions":[{"id":"condition.frightened","name":"Frightened","kind":"condition",
                   "effects":[{"type":"roll-mode","appliesTo":"attack-roll",
@@ -80,6 +105,63 @@ public sealed class NativeMechanicsApiTests
             if (App is not null) await App.DisposeAsync();
             if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task AuthorizedHarvestingUsesNativeSnapshotAndRejectsUnsignedRequests()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        using var metadataResponse = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, "/api/mechanics/v1/ruleset"));
+        Assert.Equal(HttpStatusCode.OK, metadataResponse.StatusCode);
+        var metadata = await metadataResponse.Content.ReadFromJsonAsync<JsonElement>();
+        var fingerprint = metadata.GetProperty("fingerprint").GetString();
+        Assert.Equal("type-monster-manual-edits", metadata.GetProperty("capabilities")
+            .GetProperty("harvestingResolution").GetString());
+        var url = "/api/mechanics/v1/harvesting?fingerprint=" + fingerprint;
+        using var anonymous = await fixture.Client.GetAsync(url);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+        using var catalogResponse = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, url));
+        Assert.Equal(HttpStatusCode.OK, catalogResponse.StatusCode);
+        var catalog = await catalogResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("Loot Tavern", catalog.GetProperty("source")
+            .GetProperty("provider").GetString());
+        Assert.Single(catalog.GetProperty("creatureTypes").EnumerateArray());
+
+        var type = new {
+            rulesetId = "first-party-001", fingerprint, creatureType = "dragon",
+            manualEdits = new { upsertComponents = new[] {
+                new { key = "eye", displayName = "Eye", componentDc = 7, quantity = 2 }
+            } }
+        };
+        using var tableResponse = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, "/api/mechanics/v1/harvesting/resolve",
+            JsonContent.Create(type)));
+        Assert.Equal(HttpStatusCode.OK, tableResponse.StatusCode);
+        var table = await tableResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(7, table.GetProperty("components")[0].GetProperty("componentDc").GetInt32());
+        Assert.Equal("manual", table.GetProperty("components")[0].GetProperty("origin").GetString());
+
+        using var outcomeResponse = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, "/api/mechanics/v1/harvesting/outcome",
+            JsonContent.Create(new {
+                table = type, assessmentResult = 8, carvingResult = 8,
+                sameActor = false, harvestOrderComponentKeys = new[] { "eye", "scale" },
+                creatureSize = "Medium", helpers = new[] {
+                    new { proficiencyBonus = 4, isProficient = true }
+                }
+            })));
+        Assert.Equal(HttpStatusCode.OK, outcomeResponse.StatusCode);
+        var outcome = await outcomeResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(20, outcome.GetProperty("harvestingResult").GetInt32());
+        Assert.Equal(7, outcome.GetProperty("components")[0].GetProperty("harvestDc").GetInt32());
+        Assert.Equal(17, outcome.GetProperty("components")[1].GetProperty("harvestDc").GetInt32());
+        Assert.True(outcome.GetProperty("components")[1].GetProperty("awarded").GetBoolean());
+        using var stale = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, "/api/mechanics/v1/harvesting?fingerprint=stale"));
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
     }
 
     [Fact]
