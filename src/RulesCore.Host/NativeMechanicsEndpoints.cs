@@ -49,6 +49,7 @@ public static class NativeMechanicsEndpoints
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     startingEquipmentResolution = "authored-grants-only",
                      manufacturingResolution = "manual-competency-subset",
+                     harvestingResolution = "type-monster-manual-edits",
                     conditionRollMode = "conditional-subset",
                     creatureProjection = "partial", sourceConversion = false,
                     campaignEffectiveRules = false }
@@ -87,6 +88,65 @@ public static class NativeMechanicsEndpoints
                     id = item.Id, name = item.Name, kind = item.Category
                 }).ToArray()
             });
+        });
+
+        // Harvesting tables and outcomes are sourced exclusively from native
+        // content and the current immutable catalog; no retired application API.
+        group.MapGet("/harvesting", (string fingerprint,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (fingerprint != catalog.Fingerprint)
+                return Error(409, "ruleset_version_mismatch");
+            var result = new NativeHarvestingResolver(catalog).GetCatalog(fingerprint);
+            Timing(context, "native-harvesting-catalog", start);
+            return Results.Ok(result);
+        });
+        group.MapPost("/harvesting/resolve", (NativeHarvestingTableRequest request,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_harvesting_request");
+            if (request.Fingerprint != catalog.Fingerprint ||
+                request.RulesetId != catalog.RulesetId)
+                return Error(409, "ruleset_version_mismatch");
+            try
+            {
+                var result = new NativeHarvestingResolver(catalog).Resolve(request);
+                Timing(context, "native-harvesting-table", start);
+                return Results.Ok(result);
+            }
+            catch (Exception ex) when (ex is ArgumentException or
+                KeyNotFoundException or InvalidOperationException or OverflowException)
+            {
+                return Error(422, "native_harvesting_unresolved");
+            }
+        });
+        group.MapPost("/harvesting/outcome", (NativeHarvestingOutcomeRequest request,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request?.Table is null) return Error(400, "invalid_harvesting_request");
+            if (request.Table.Fingerprint != catalog.Fingerprint ||
+                request.Table.RulesetId != catalog.RulesetId)
+                return Error(409, "ruleset_version_mismatch");
+            try
+            {
+                var result = new NativeHarvestingResolver(catalog).Evaluate(request);
+                Timing(context, "native-harvesting-outcome", start);
+                return Results.Ok(result);
+            }
+            catch (Exception ex) when (ex is ArgumentException or
+                KeyNotFoundException or InvalidOperationException or OverflowException)
+            {
+                return Error(422, "native_harvesting_unresolved");
+            }
         });
 
         // Uses the previously implemented manufacturing check and explicitly

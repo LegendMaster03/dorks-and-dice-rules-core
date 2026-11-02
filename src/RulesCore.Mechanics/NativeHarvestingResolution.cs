@@ -256,7 +256,7 @@ public sealed class NativeHarvestingResolver(NativeCatalogSnapshot catalog)
     private static string? Size(JsonElement definition)
     {
         if (!definition.TryGetProperty("size", out var size)) return null;
-        var sizes = size.ValueKind switch {
+        string[] sizes = size.ValueKind switch {
             JsonValueKind.String => [size.GetString()!],
             JsonValueKind.Array => size.EnumerateArray().Where(v =>
                 v.ValueKind == JsonValueKind.String).Select(v => v.GetString()!).ToArray(),
@@ -280,9 +280,12 @@ public sealed class NativeHarvestingResolver(NativeCatalogSnapshot catalog)
         node.ValueKind == JsonValueKind.Object &&
         node.TryGetProperty(name, out var prop) && prop.ValueKind == JsonValueKind.String
             ? prop.GetString() : null;
-    private static bool TryObject(JsonElement node, string name, out JsonElement value) =>
-        node.ValueKind == JsonValueKind.Object &&
-        node.TryGetProperty(name, out value) && value.ValueKind == JsonValueKind.Object;
+    private static bool TryObject(JsonElement node, string name, out JsonElement value)
+    {
+        value = default;
+        return node.ValueKind == JsonValueKind.Object &&
+            node.TryGetProperty(name, out value) && value.ValueKind == JsonValueKind.Object;
+    }
     private static T Read<T>(JsonElement node, string key)
     {
         if (node.TryGetProperty(key, out var prop))
