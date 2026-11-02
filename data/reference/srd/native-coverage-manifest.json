@@ -29224,9 +29224,9 @@
     {
       "nativeId": "species.dragonborn",
       "kind": "race",
-      "status": "multiple-candidates",
+      "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/working/species/base/dragonborn.json",
+      "path": "data/rulesets/first-party-001/native/species/base/dragonborn.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -39825,7 +39825,7 @@
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
     "single-candidate": 505,
-    "multiple-candidates": 988,
+    "multiple-candidates": 987,
     "native-single-source-retained": 528,
     "native-compatible-merged": 108,
     "native-equivalent-reconciled": 34,
@@ -39833,6 +39833,6 @@
     "matching-candidates": 19,
     "native-monster-role-default": 285,
     "native-monster-identity-alias": 23,
-    "approved-native-reconciled": 8
+    "approved-native-reconciled": 9
   }
 }

@@ -264,12 +264,41 @@ class NativeSrdBaselineTests(unittest.TestCase):
                     cursor = records[cursor]["parent"]
                 self.assertIn(cursor, records)
 
+    def test_approved_dragonborn_shared_baseline_and_source_promotion(self):
+        path = AUTHORITATIVE / "species/base/dragonborn.json"
+        dragonborn = load(path)
+        self.assertEqual("species.dragonborn", dragonborn["id"])
+        self.assertFalse(dragonborn["selectable"])
+        self.assertEqual("humanoid", dragonborn["creatureType"])
+        self.assertEqual("medium", dragonborn["size"])
+        self.assertEqual(30, dragonborn["walkingSpeedFeet"])
+        self.assertEqual(60, dragonborn["darkvisionFeet"])
+        traits = {x["id"]: x for x in dragonborn["traits"]}
+        self.assertEqual({"draconic-resistance", "breath-weapon"}, set(traits))
+        self.assertEqual(50, traits["draconic-resistance"]["damageResistance"]["percent"])
+        breath = traits["breath-weapon"]
+        self.assertEqual("one-attack", breath["activation"]["replaces"])
+        self.assertEqual("proficiency-bonus", breath["uses"]["value"])
+        self.assertEqual("long-rest", breath["uses"]["recharge"])
+        self.assertEqual("dexterity", breath["savingThrow"]["ability"])
+        self.assertEqual("8 + proficiency-bonus + constitution-modifier", breath["savingThrow"]["dc"])
+        self.assertEqual("half-damage", breath["savingThrow"]["onSuccess"])
+        self.assertEqual([(1, "1d10"), (5, "2d10"), (11, "3d10"), (17, "4d10")],
+                         [(x["characterLevel"], x["dice"]) for x in breath["damage"]["progression"]])
+        self.assertEqual("selected-dragonborn-family-or-leaf", breath["areaFrom"])
+        self.assertNotIn("shape", breath)
+        self.assertFalse((WORKING / "species/base/dragonborn.json").exists())
+        row = next(r for r in self.entries if r["nativeId"] == "species.dragonborn")
+        self.assertEqual("approved-native-reconciled", row["status"])
+        self.assertEqual("data/rulesets/first-party-001/native/species/base/dragonborn.json",
+                         row["path"])
+
     def test_large_entities_have_full_candidate_records_and_merged_lore(self):
         for path, expected in [
             # Wizard is now an approved native definition, not a staged candidate.
             ("classes/subclasses/monk/open-hand.json", 2),
             ("spells/acid-splash.json", 2),
-            ("species/base/dragonborn.json", 2),
+            # Dragonborn base was promoted to native; pinned source preserved in reference.
 
         ]:
             d = load(WORKING / path)

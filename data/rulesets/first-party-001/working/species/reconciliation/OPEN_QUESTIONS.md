@@ -14,7 +14,7 @@ Approved Dwarf, Halfling, Gnome and Elf rules are in `native/species/`, `native/
 - Halfling: cultural Upbringing.
 - Elf: final comparison of senses, movement and spells.
 - All: ability scores, effect and qualification contracts, native Character projector and schema.
-- Dragonborn: shared Breath Weapon uses/recharge, damage, shape, action economy, saves; family features; ten individual-type adaptations; independent cultural traditions.
+- Dragonborn: common Breath Weapon action, uses, save and damage have been selected in native. Remaining: breath geometry, Chromatic/Metallic family features, ten individual-type adaptations, and independent cultural traditions.
 - Deferred: Gem Dragonborn, exceptional Platinum/Ruby/composite forms, rites of rebirth, historical dragon families, Dragon Shaman ancestry-sharing feat, and Dragonfire Adept-derived feats or prestige classes.
 
 ## Upbringing defaults

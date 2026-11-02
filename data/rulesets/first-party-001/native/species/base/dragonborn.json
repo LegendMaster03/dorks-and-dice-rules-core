@@ -1,0 +1,69 @@
+{
+  "id": "species.dragonborn",
+  "name": "Dragonborn",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": false,
+  "creatureType": "humanoid",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "darkvisionFeet": 60,
+  "traits": [
+    {
+      "id": "draconic-resistance",
+      "description": "You have 50 percent resistance to the damage type associated with your specific dragon ancestry.",
+      "damageResistance": {
+        "percent": 50,
+        "damageTypeFrom": "selected-dragonborn-leaf"
+      }
+    },
+    {
+      "id": "breath-weapon",
+      "description": "On your turn when you take the Attack action, you can replace one of the attacks with your Breath Weapon. Targets in the area defined by your dragon ancestry make a Dexterity saving throw against DC 8 + your Proficiency Bonus + your Constitution modifier. A failed save deals damage of your dragon ancestry's type; a successful save takes half damage. Uses equal Proficiency Bonus and all expended uses return after a Long Rest.",
+      "activation": {
+        "action": "attack",
+        "replaces": "one-attack",
+        "timing": "on-your-turn"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      },
+      "savingThrow": {
+        "ability": "dexterity",
+        "dc": "8 + proficiency-bonus + constitution-modifier",
+        "onSuccess": "half-damage"
+      },
+      "damage": {
+        "typeFrom": "selected-dragonborn-leaf",
+        "progression": [
+          {
+            "characterLevel": 1,
+            "dice": "1d10"
+          },
+          {
+            "characterLevel": 5,
+            "dice": "2d10"
+          },
+          {
+            "characterLevel": 11,
+            "dice": "3d10"
+          },
+          {
+            "characterLevel": 17,
+            "dice": "4d10"
+          }
+        ]
+      },
+      "areaFrom": "selected-dragonborn-family-or-leaf"
+    }
+  ],
+  "reviewNotes": [
+    "60-foot Darkvision and 30-foot walking speed are selected as the working baseline; both remain subject to the comparative Species balance pass.",
+    "Damage type and area shape are supplied by the individual dragon-type Subspecies and/or family definitions; no shape has yet been selected.",
+    "Chromatic Warding, Metallic alternative breath effects, and 5.5e temporary flight have not been selected.",
+    "No ordinary playable Dragonborn Subspecies is complete until its family and individual traits are approved.",
+    "Language and learned dragon traditions belong to separately selected Upbringings. Ability score changes remain deferred.",
+    "The C# character mechanics projector does not yet execute this ancestry inheritance and Breath Weapon contract."
+  ]
+}
