@@ -41,7 +41,7 @@ public sealed class NativeCraftingResolver(NativeCatalogSnapshot catalog)
             !string.IsNullOrWhiteSpace(competency.DisplayName) &&
             competency.DisplayName.Length <= 200 &&
             competency.Contribution is >= -100000 and <= 100000 &&
-            request.ManualAbilityModifier is >= -100000 and <= 100000 &&
+            request.ManualAbilityModifier is null or >= -100000 and <= 100000 &&
             request.OtherModifier is >= -100000 and <= 100000 &&
             request.D20Roll is null or >= 1 and <= 20 &&
             request.TargetDc is null or >= 1 and <= 100000;

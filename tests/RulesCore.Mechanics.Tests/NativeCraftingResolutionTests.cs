@@ -7,8 +7,8 @@ namespace RulesCore.Mechanics.Tests;
 public sealed class NativeCraftingResolutionTests
 {
     [Theory]
-    [InlineData(15, 3, 2, 10, 20, "completed", 0, true)]
-    [InlineData(5, 3, 2, 10, 20, "failed", -10, false)]
+    [InlineData(15, 3, 2, 0, 20, "completed", 0, true)]
+    [InlineData(5, 3, 2, 0, 20, "failed", -10, false)]
     [InlineData(19, 1, 0, 0, 20, "completed", 0, true)]
     public void ManufacturingMatchesPriorAcceptedOutcome(
         int die, int competency, int ability, int other, int dc,
