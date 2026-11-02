@@ -410,6 +410,8 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
         else if (totalLevel > 0)
             Issue("hit-point-input-required", "hit-points", "Per-level hit point gains required; no assumed dice rolls.");
 
+        NativeConditionEffects.WithholdUnsupportedCharacterValues(catalog,
+            request.ConditionIds ?? [], values, issues);
         return Finish(issues.Count == 0 ? "resolved" : "partial");
 
         NativeResource Resource(string id, int maximum, string recovery, int? spellLevel = null)

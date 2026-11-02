@@ -117,6 +117,18 @@ public sealed class NativeMechanicsTests
     }
 
     [Fact]
+    public void WetRetainsIndependentCharacterNumbers()
+    {
+        using var fixture = new NativeFixture();
+        var baseline = new NativeCharacterProjector(fixture.Catalog).Project(fixture.Input());
+        var wet = new NativeCharacterProjector(fixture.Catalog).Project(
+            fixture.Input() with { ConditionIds = ["condition.wet"] });
+        foreach (var key in new[] { "ability.dexterity.score", "ability.dexterity.modifier",
+                     "save.dexterity", "proficiency.bonus", "skill.listen.total" })
+            Assert.Equal(baseline.Values[key], wet.Values[key]);
+    }
+
+    [Fact]
     public void UnknownConditionsAreNotSilentlyIgnored()
     {
         using var fixture = new NativeFixture();
@@ -125,6 +137,8 @@ public sealed class NativeMechanicsTests
         Assert.Equal("unsupported", projection.Values["ac.normal"].Status);
         Assert.Equal("unsupported", projection.Values["movement.walk"].Status);
         Assert.Contains(projection.Issues, issue => issue.Code == "condition-unavailable");
+        Assert.Equal("unsupported", projection.Values["ability.dexterity.modifier"].Status);
+        Assert.Equal(2, projection.Values["proficiency.bonus"].Value);
     }
 
     [Fact]
