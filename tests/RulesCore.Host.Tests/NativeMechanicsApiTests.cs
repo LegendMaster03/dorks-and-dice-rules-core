@@ -83,6 +83,46 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task NativeManufacturingChecksAreAuthenticatedAndUseCurrentSnapshot()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/crafting/manufacturing/resolve";
+        using var metadataResponse = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, "/api/mechanics/v1/ruleset"));
+        Assert.Equal(HttpStatusCode.OK, metadataResponse.StatusCode);
+        var metadata = await metadataResponse.Content.ReadFromJsonAsync<JsonElement>();
+        var fingerprint = metadata.GetProperty("fingerprint").GetString();
+        Assert.Equal("manual-competency-subset", metadata.GetProperty("capabilities")
+            .GetProperty("manufacturingResolution").GetString());
+        var input = new {
+            rulesetId = "first-party-001", fingerprint,
+            competency = new { displayName = "Smithing", contribution = 3, isQualified = true },
+            manualAbilityModifier = 2, d20Roll = 15, otherModifier = 0, targetDc = 20
+        };
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint, input);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var response = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(input)));
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("resolved", result.GetProperty("status").GetString());
+        Assert.Equal("completed", result.GetProperty("outcome").GetString());
+        Assert.Equal(20, result.GetProperty("total").GetInt32());
+        Assert.True(result.GetProperty("inputsConsumed").GetBoolean());
+
+        using var staleRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "stale",
+                input.competency, input.manualAbilityModifier,
+                input.d20Roll, input.targetDc
+            }));
+        using var stale = await fixture.Client.SendAsync(staleRequest);
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+    }
+
+    [Fact]
     public async Task AuthorizedCharacterSheetCanPinAndProjectSnapshot()
     {
         await using var fixture = new Fixture();
@@ -327,6 +367,22 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal("class.demo", result.GetProperty("options")[0].GetProperty("id").GetString());
         Assert.False(result.GetProperty("options")[0].TryGetProperty("definition", out _));
         Assert.False(result.GetProperty("options")[0].TryGetProperty("sourcePath", out _));
+        // Skill and Competency summaries are safe identities only, not raw
+        // native definitions or private content. Empty result sets are valid.
+        foreach (var category in new[] { "skill", "competency", "monster", "item", "feat", "spell" })
+        {
+            using var catalogSearch = await fixture.Client.SendAsync(fixture.Authenticated(
+                HttpMethod.Get, "/api/mechanics/v1/catalog/options?fingerprint=" +
+                    fingerprint + "&category=" + category));
+            Assert.Equal(HttpStatusCode.OK, catalogSearch.StatusCode);
+            var catalogPage = await catalogSearch.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal(category, catalogPage.GetProperty("category").GetString());
+            foreach (var item in catalogPage.GetProperty("options").EnumerateArray())
+            {
+                Assert.False(item.TryGetProperty("definition", out _));
+                Assert.False(item.TryGetProperty("sourcePath", out _));
+            }
+        }
 
         using var check = fixture.Authenticated(HttpMethod.Post,
             "/api/mechanics/v1/advancements/eligibility", JsonContent.Create(new {

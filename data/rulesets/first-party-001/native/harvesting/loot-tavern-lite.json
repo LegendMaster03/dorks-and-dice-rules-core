@@ -1,0 +1,1177 @@
+{
+  "id": "procedure.harvesting.loot-tavern-lite",
+  "name": "Harvesting & Crafting Lite",
+  "kind": "harvesting-procedure",
+  "source": {
+    "workKey": "loot-tavern.harvesting-crafting-lite",
+    "workDisplayName": "Harvesting & Crafting Lite",
+    "provider": "Loot Tavern",
+    "gameEdition": "5e",
+    "releaseKind": "public-release",
+    "publicationDate": "2024-07-03",
+    "referenceUri": "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117"
+  },
+  "procedure": {
+    "assessment": {
+      "mechanicKey": "check.harvesting.assessment",
+      "abilityKey": "intelligence",
+      "abilityDisplayName": "Intelligence",
+      "defaultRollMode": "normal"
+    },
+    "carving": {
+      "mechanicKey": "check.harvesting.carving",
+      "abilityKey": "dexterity",
+      "abilityDisplayName": "Dexterity",
+      "defaultRollMode": "normal"
+    },
+    "totalMechanicKey": "check.harvesting.total",
+    "sameActorRollMode": "disadvantage",
+    "componentDcAggregation": "cumulative-in-order",
+    "awardMode": "ordered-prefix",
+    "helpers": {
+      "maximumByCreatureSize": {
+        "Tiny": 0,
+        "Small": 1,
+        "Medium": 2,
+        "Large": 4,
+        "Huge": 6,
+        "Gargantuan": 10
+      },
+      "standardHelpActionApplies": false
+    }
+  },
+  "creatureTypes": [
+    {
+      "key": "aberration",
+      "displayName": "Aberration",
+      "competencyKey": "competency.arcana",
+      "competencyDisplayName": "Arcana",
+      "defaultComponents": [
+        {
+          "key": "antenna",
+          "displayName": "Antenna",
+          "componentDc": 5
+        },
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "egg",
+          "displayName": "Egg",
+          "componentDc": 10
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-claws",
+          "displayName": "Pouch of claws",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "tentacle",
+          "displayName": "Tentacle",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "phial-of-mucus",
+          "displayName": "Phial of mucus",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "stinger",
+          "displayName": "Stinger",
+          "componentDc": 15
+        },
+        {
+          "key": "brain",
+          "displayName": "Brain",
+          "componentDc": 20
+        },
+        {
+          "key": "chitin",
+          "displayName": "Chitin",
+          "componentDc": 20
+        },
+        {
+          "key": "hide",
+          "displayName": "Hide",
+          "componentDc": 20
+        },
+        {
+          "key": "main-eye",
+          "displayName": "Main eye",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "beast",
+      "displayName": "Beast",
+      "competencyKey": "competency.survival",
+      "competencyDisplayName": "Survival",
+      "defaultComponents": [
+        {
+          "key": "antenna",
+          "displayName": "Antenna",
+          "componentDc": 5
+        },
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "hair",
+          "displayName": "Hair",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "antler",
+          "displayName": "Antler",
+          "componentDc": 10
+        },
+        {
+          "key": "beak",
+          "displayName": "Beak",
+          "componentDc": 10
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "egg",
+          "displayName": "Egg",
+          "componentDc": 10
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 10
+        },
+        {
+          "key": "fin",
+          "displayName": "Fin",
+          "componentDc": 10
+        },
+        {
+          "key": "horn",
+          "displayName": "Horn",
+          "componentDc": 10
+        },
+        {
+          "key": "pincer",
+          "displayName": "Pincer",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-claws",
+          "displayName": "Pouch of claws",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "talon",
+          "displayName": "Talon",
+          "componentDc": 10
+        },
+        {
+          "key": "tusk",
+          "displayName": "Tusk",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "poison-gland",
+          "displayName": "Poison gland",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-feathers",
+          "displayName": "Pouch of feathers",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "stinger",
+          "displayName": "Stinger",
+          "componentDc": 15
+        },
+        {
+          "key": "tentacle",
+          "displayName": "Tentacle",
+          "componentDc": 15
+        },
+        {
+          "key": "chitin",
+          "displayName": "Chitin",
+          "componentDc": 20
+        },
+        {
+          "key": "pelt",
+          "displayName": "Pelt",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "celestial",
+      "displayName": "Celestial",
+      "competencyKey": "competency.religion",
+      "competencyDisplayName": "Religion",
+      "defaultComponents": [
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "hair",
+          "displayName": "Hair",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "pouch-of-dust",
+          "displayName": "Pouch of dust",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 10
+        },
+        {
+          "key": "horn",
+          "displayName": "Horn",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-feathers",
+          "displayName": "Pouch of feathers",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "brain",
+          "displayName": "Brain",
+          "componentDc": 20
+        },
+        {
+          "key": "skin",
+          "displayName": "Skin",
+          "componentDc": 20
+        },
+        {
+          "key": "soul",
+          "displayName": "Soul",
+          "componentDc": 25
+        }
+      ]
+    },
+    {
+      "key": "construct",
+      "displayName": "Construct",
+      "competencyKey": "competency.investigation",
+      "competencyDisplayName": "Investigation",
+      "defaultComponents": [
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-oil",
+          "displayName": "Phial of oil",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 10
+        },
+        {
+          "key": "plating",
+          "displayName": "Plating",
+          "componentDc": 10
+        },
+        {
+          "key": "stone",
+          "displayName": "Stone",
+          "componentDc": 10
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 15
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "gears",
+          "displayName": "Gears",
+          "componentDc": 15
+        },
+        {
+          "key": "brain",
+          "displayName": "Brain",
+          "componentDc": 20
+        },
+        {
+          "key": "instructions",
+          "displayName": "Instructions",
+          "componentDc": 20
+        },
+        {
+          "key": "lifespark",
+          "displayName": "Lifespark",
+          "componentDc": 25
+        }
+      ]
+    },
+    {
+      "key": "dragon",
+      "displayName": "Dragon",
+      "competencyKey": "competency.survival",
+      "competencyDisplayName": "Survival",
+      "defaultComponents": [
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "egg",
+          "displayName": "Egg",
+          "componentDc": 10
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-claws",
+          "displayName": "Pouch of claws",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "horn",
+          "displayName": "Horn",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 20
+        },
+        {
+          "key": "breath-sac",
+          "displayName": "Breath sac",
+          "componentDc": 25
+        }
+      ]
+    },
+    {
+      "key": "elemental",
+      "displayName": "Elemental",
+      "competencyKey": "competency.arcana",
+      "competencyDisplayName": "Arcana",
+      "defaultComponents": [
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "primordial-dust",
+          "displayName": "Primordial dust",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "volatile-mote",
+          "displayName": "Volatile mote of air/earth/fire/water",
+          "componentDc": 15
+        },
+        {
+          "key": "core",
+          "displayName": "Core of air/earth/fire/water",
+          "componentDc": 25
+        }
+      ]
+    },
+    {
+      "key": "fey",
+      "displayName": "Fey",
+      "competencyKey": "competency.arcana",
+      "competencyDisplayName": "Arcana",
+      "defaultComponents": [
+        {
+          "key": "antenna",
+          "displayName": "Antenna",
+          "componentDc": 5
+        },
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "hair",
+          "displayName": "Hair",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "antler",
+          "displayName": "Antler",
+          "componentDc": 10
+        },
+        {
+          "key": "beak",
+          "displayName": "Beak",
+          "componentDc": 10
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "egg",
+          "displayName": "Egg",
+          "componentDc": 10
+        },
+        {
+          "key": "horn",
+          "displayName": "Horn",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-claws",
+          "displayName": "Pouch of claws",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "talon",
+          "displayName": "Talon",
+          "componentDc": 10
+        },
+        {
+          "key": "tusk",
+          "displayName": "Tusk",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "poison-gland",
+          "displayName": "Poison gland",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-feathers",
+          "displayName": "Pouch of feathers",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "tentacle",
+          "displayName": "Tentacle",
+          "componentDc": 15
+        },
+        {
+          "key": "tongue",
+          "displayName": "Tongue",
+          "componentDc": 15
+        },
+        {
+          "key": "brain",
+          "displayName": "Brain",
+          "componentDc": 20
+        },
+        {
+          "key": "skin",
+          "displayName": "Skin",
+          "componentDc": 20
+        },
+        {
+          "key": "pelt",
+          "displayName": "Pelt",
+          "componentDc": 20
+        },
+        {
+          "key": "psyche",
+          "displayName": "Psyche",
+          "componentDc": 25
+        }
+      ]
+    },
+    {
+      "key": "fiend",
+      "displayName": "Fiend",
+      "competencyKey": "competency.religion",
+      "competencyDisplayName": "Religion",
+      "defaultComponents": [
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "hair",
+          "displayName": "Hair",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "pouch-of-dust",
+          "displayName": "Pouch of dust",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "horn",
+          "displayName": "Horn",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-claws",
+          "displayName": "Pouch of claws",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "poison-gland",
+          "displayName": "Poison gland",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-feathers",
+          "displayName": "Pouch of feathers",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "brain",
+          "displayName": "Brain",
+          "componentDc": 20
+        },
+        {
+          "key": "skin",
+          "displayName": "Skin",
+          "componentDc": 20
+        },
+        {
+          "key": "soul",
+          "displayName": "Soul",
+          "componentDc": 25
+        }
+      ]
+    },
+    {
+      "key": "giant",
+      "displayName": "Giant",
+      "competencyKey": "competency.medicine",
+      "competencyDisplayName": "Medicine",
+      "defaultComponents": [
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "nail",
+          "displayName": "Nail",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 10
+        },
+        {
+          "key": "tooth",
+          "displayName": "Tooth",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "skin",
+          "displayName": "Skin",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "humanoid",
+      "displayName": "Humanoid",
+      "competencyKey": "competency.medicine",
+      "competencyDisplayName": "Medicine",
+      "defaultComponents": [
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "egg",
+          "displayName": "Egg",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-feathers",
+          "displayName": "Pouch of feathers",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "brain",
+          "displayName": "Brain",
+          "componentDc": 20
+        },
+        {
+          "key": "skin",
+          "displayName": "Skin",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "monstrosity",
+      "displayName": "Monstrosity",
+      "competencyKey": "competency.survival",
+      "competencyDisplayName": "Survival",
+      "defaultComponents": [
+        {
+          "key": "antenna",
+          "displayName": "Antenna",
+          "componentDc": 5
+        },
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "flesh",
+          "displayName": "Flesh",
+          "componentDc": 5
+        },
+        {
+          "key": "hair",
+          "displayName": "Hair",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-blood",
+          "displayName": "Phial of blood",
+          "componentDc": 5
+        },
+        {
+          "key": "antler",
+          "displayName": "Antler",
+          "componentDc": 10
+        },
+        {
+          "key": "beak",
+          "displayName": "Beak",
+          "componentDc": 10
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 10
+        },
+        {
+          "key": "egg",
+          "displayName": "Egg",
+          "componentDc": 10
+        },
+        {
+          "key": "fat",
+          "displayName": "Fat",
+          "componentDc": 10
+        },
+        {
+          "key": "fin",
+          "displayName": "Fin",
+          "componentDc": 10
+        },
+        {
+          "key": "horn",
+          "displayName": "Horn",
+          "componentDc": 10
+        },
+        {
+          "key": "pincer",
+          "displayName": "Pincer",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-claws",
+          "displayName": "Pouch of claws",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "talon",
+          "displayName": "Talon",
+          "componentDc": 10
+        },
+        {
+          "key": "tusk",
+          "displayName": "Tusk",
+          "componentDc": 10
+        },
+        {
+          "key": "heart",
+          "displayName": "Heart",
+          "componentDc": 15
+        },
+        {
+          "key": "liver",
+          "displayName": "Liver",
+          "componentDc": 15
+        },
+        {
+          "key": "poison-gland",
+          "displayName": "Poison gland",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-feathers",
+          "displayName": "Pouch of feathers",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-scales",
+          "displayName": "Pouch of scales",
+          "componentDc": 15
+        },
+        {
+          "key": "stinger",
+          "displayName": "Stinger",
+          "componentDc": 15
+        },
+        {
+          "key": "tentacle",
+          "displayName": "Tentacle",
+          "componentDc": 15
+        },
+        {
+          "key": "chitin",
+          "displayName": "Chitin",
+          "componentDc": 20
+        },
+        {
+          "key": "pelt",
+          "displayName": "Pelt",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "ooze",
+      "displayName": "Ooze",
+      "competencyKey": "competency.nature",
+      "competencyDisplayName": "Nature",
+      "defaultComponents": [
+        {
+          "key": "phial-of-acid",
+          "displayName": "Phial of acid",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-mucus",
+          "displayName": "Phial of mucus",
+          "componentDc": 10
+        },
+        {
+          "key": "vesicle",
+          "displayName": "Vesicle",
+          "componentDc": 15
+        },
+        {
+          "key": "membrane",
+          "displayName": "Membrane",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "plant",
+      "displayName": "Plant",
+      "competencyKey": "competency.nature",
+      "competencyDisplayName": "Nature",
+      "defaultComponents": [
+        {
+          "key": "phial-of-sap",
+          "displayName": "Phial of sap",
+          "componentDc": 5
+        },
+        {
+          "key": "tuber",
+          "displayName": "Tuber",
+          "componentDc": 5
+        },
+        {
+          "key": "bundle-of-roots",
+          "displayName": "Bundle of roots",
+          "componentDc": 10
+        },
+        {
+          "key": "phial-of-wax",
+          "displayName": "Phial of wax",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-hyphae",
+          "displayName": "Pouch of hyphae",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-leaves",
+          "displayName": "Pouch of leaves",
+          "componentDc": 10
+        },
+        {
+          "key": "poison-gland",
+          "displayName": "Poison gland",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-pollen",
+          "displayName": "Pouch of pollen",
+          "componentDc": 15
+        },
+        {
+          "key": "pouch-of-spores",
+          "displayName": "Pouch of spores",
+          "componentDc": 15
+        },
+        {
+          "key": "bark",
+          "displayName": "Bark",
+          "componentDc": 20
+        },
+        {
+          "key": "membrane",
+          "displayName": "Membrane",
+          "componentDc": 20
+        }
+      ]
+    },
+    {
+      "key": "undead",
+      "displayName": "Undead",
+      "competencyKey": "competency.medicine",
+      "competencyDisplayName": "Medicine",
+      "defaultComponents": [
+        {
+          "key": "eye",
+          "displayName": "Eye",
+          "componentDc": 5
+        },
+        {
+          "key": "bone",
+          "displayName": "Bone",
+          "componentDc": 5
+        },
+        {
+          "key": "phial-of-congealed-blood",
+          "displayName": "Phial of congealed blood",
+          "componentDc": 5
+        },
+        {
+          "key": "marrow",
+          "displayName": "Marrow",
+          "componentDc": 10
+        },
+        {
+          "key": "pouch-of-teeth",
+          "displayName": "Pouch of teeth",
+          "componentDc": 10
+        },
+        {
+          "key": "rancid-fat",
+          "displayName": "Rancid fat",
+          "componentDc": 10
+        },
+        {
+          "key": "ethereal-ichor",
+          "displayName": "Ethereal ichor",
+          "componentDc": 15
+        },
+        {
+          "key": "undying-flesh",
+          "displayName": "Undying flesh",
+          "componentDc": 15
+        },
+        {
+          "key": "undying-heart",
+          "displayName": "Undying heart",
+          "componentDc": 20
+        }
+      ]
+    }
+  ]
+}

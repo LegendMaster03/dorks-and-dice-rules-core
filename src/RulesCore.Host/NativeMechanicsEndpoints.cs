@@ -47,6 +47,9 @@ public static class NativeMechanicsEndpoints
                 capabilities = new { characterProjection = true, resourceResolution = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
+                    startingEquipmentResolution = "authored-grants-only",
+                     manufacturingResolution = "manual-competency-subset",
+                     harvestingResolution = "type-monster-manual-edits",
                     conditionRollMode = "conditional-subset",
                     creatureProjection = "partial", sourceConversion = false,
                     campaignEffectiveRules = false }
@@ -67,7 +70,9 @@ public static class NativeMechanicsEndpoints
                 !SingleQueryValue(request, "limit", out var limitText) ||
                 !SingleQueryValue(request, "offset", out var offsetText) ||
                 category is not ("class" or "subclass" or "patron" or "pact" or
-                    "invocation" or "condition" or "leveled-condition") ||
+                    "invocation" or "condition" or "leveled-condition" or
+                    "skill" or "competency" or "monster" or "item" or
+                    "feat" or "spell") ||
                 (query?.Length ?? 0) > 200 ||
                 !PageNumber(limitText, 50, 1, 100, out var limit) ||
                 !PageNumber(offsetText, 0, 0, 1_000_000, out var offset))
@@ -83,6 +88,101 @@ public static class NativeMechanicsEndpoints
                     id = item.Id, name = item.Name, kind = item.Category
                 }).ToArray()
             });
+        });
+
+        // Harvesting tables and outcomes are sourced exclusively from native
+        // content and the current immutable catalog; no retired application API.
+        group.MapGet("/harvesting", (string fingerprint,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (fingerprint != catalog.Fingerprint)
+                return Error(409, "ruleset_version_mismatch");
+            var result = new NativeHarvestingResolver(catalog).GetCatalog(fingerprint);
+            Timing(context, "native-harvesting-catalog", start);
+            return Results.Ok(result);
+        });
+        group.MapPost("/harvesting/resolve", (NativeHarvestingTableRequest request,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_harvesting_request");
+            if (request.Fingerprint != catalog.Fingerprint ||
+                request.RulesetId != catalog.RulesetId)
+                return Error(409, "ruleset_version_mismatch");
+            try
+            {
+                var result = new NativeHarvestingResolver(catalog).Resolve(request);
+                Timing(context, "native-harvesting-table", start);
+                return Results.Ok(result);
+            }
+            catch (Exception ex) when (ex is ArgumentException or
+                KeyNotFoundException or InvalidOperationException or OverflowException)
+            {
+                return Error(422, "native_harvesting_unresolved");
+            }
+        });
+        group.MapPost("/harvesting/outcome", (NativeHarvestingOutcomeRequest request,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request?.Table is null) return Error(400, "invalid_harvesting_request");
+            if (request.Table.Fingerprint != catalog.Fingerprint ||
+                request.Table.RulesetId != catalog.RulesetId)
+                return Error(409, "ruleset_version_mismatch");
+            try
+            {
+                var result = new NativeHarvestingResolver(catalog).Evaluate(request);
+                Timing(context, "native-harvesting-outcome", start);
+                return Results.Ok(result);
+            }
+            catch (Exception ex) when (ex is ArgumentException or
+                KeyNotFoundException or InvalidOperationException or OverflowException)
+            {
+                return Error(422, "native_harvesting_unresolved");
+            }
+        });
+
+        // Uses the previously implemented manufacturing check and explicitly
+        // supplied manual values until all native competency facets are modeled.
+        group.MapPost("/crafting/manufacturing/resolve",
+            (NativeManufacturingRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_manufacturing_request");
+            var result = new NativeCraftingResolver(catalog).ResolveManufacturing(request);
+            Timing(context, "native-manufacturing", start);
+            return result.Status == "resolved" ? Results.Ok(result)
+                : Results.Json(result, statusCode:
+                    result.Reason == "ruleset-version-mismatch" ? 409 : 422);
+        });
+
+        // Only explicit native materialization blocks may yield inventory
+        // grants. Older authored package prose remains visible as unavailable
+        // rather than being silently converted into concrete item identities.
+        group.MapPost("/characters/starting-equipment",
+            (NativeStartingEquipmentRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_equipment_request");
+            var resolved = new NativeStartingEquipmentResolver(catalog).Resolve(request);
+            Timing(context, "native-starting-equipment", start);
+            return resolved.Status == "invalid"
+                ? Results.Json(resolved, statusCode: resolved.Issues.Any(issue =>
+                    issue.Code == "ruleset-version-mismatch") ? 409 : 400)
+                : Results.Ok(resolved);
         });
 
         group.MapPost("/advancements/eligibility", (NativeEligibilityRequest request,

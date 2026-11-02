@@ -19,6 +19,25 @@ public sealed class NativeAdvancementEligibilityTests
     }
 
     [Fact]
+    public void SuppliedHitPointGainMustRespectNativeClassHitDie()
+    {
+        using var fixture = new Fixture();
+        var service = new NativeAdvancementEligibility(fixture.Catalog);
+        var candidate = fixture.Candidate("class.warlock", 1);
+        Assert.Equal("eligible", service.Evaluate(candidate).Status);
+        Assert.Equal("eligible", service.Evaluate(candidate with { HitDieValue = 8 }).Status);
+        var oversized = service.Evaluate(candidate with { HitDieValue = 9 });
+        Assert.Equal("ineligible", oversized.Status);
+        Assert.Contains(oversized.Requirements, r => r.Key == "hit-die" && r.Status == "failed");
+        var zero = service.Evaluate(candidate with { HitDieValue = 0 });
+        Assert.Equal("ineligible", zero.Status);
+        var unknown = service.Evaluate(fixture.Candidate("class.secondary", 0)
+            with { HitDieValue = 5 });
+        Assert.Equal("unresolved", unknown.Status);
+        Assert.Contains(unknown.Requirements, r => r.Key == "hit-die" && r.Status == "unresolved");
+    }
+
+    [Fact]
     public void PatronAndPactAreExclusiveAndRequireParentClass()
     {
         using var fixture = new Fixture();
@@ -96,7 +115,7 @@ public sealed class NativeAdvancementEligibilityTests
                 """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
             File.WriteAllText(Path.Combine(dir, "native", "classes.json"), """
                 [
-                  {"id":"class.warlock","name":"Warlock","kind":"class","definition":{"progression":[
+                  {"id":"class.warlock","name":"Warlock","kind":"class","definition":{"hitDie":{"number":1,"faces":8},"progression":[
                     {"level":1,"invocationsElectiveTotal":1},
                     {"level":2,"invocationsElectiveTotal":2}
                   ]}},
