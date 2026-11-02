@@ -45,6 +45,7 @@ public static class NativeMechanicsEndpoints
                 schemaVersion = catalog.SchemaVersion,
                 fingerprint = catalog.Fingerprint,
                 capabilities = new { characterProjection = true, resourceResolution = true,
+                    conditionValueIsolation = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     startingEquipmentResolution = "authored-grants-only",
