@@ -8,6 +8,10 @@
 - 5.5e SRD 5.2.1: universal choice of cone or line.
 - 3.5e Dragon Shaman (*Player's Handbook II*) totem adaptation: Underwater breathing. This was a **class ability** and does not automatically transfer into inherited Dragonborn mechanics.
 
+**Proposed first-pass adaptation (unapproved):** Amphibious—breathe air and water indefinitely; no automatic Swim Speed. The native Green Dragon Wyrmling has Amphibious. This duplicates Black's physiology benefit, while Green's selected ancestry damage type is Poison rather than Acid.
+
+For the comparative case and limits, see `CHROMATIC_BALANCE_RECONCILIATION.md`.
+
 ## Reconciliation question
 Compare 3.5e acid versus 5e poison; water breathing is not necessarily culturally learned.
 

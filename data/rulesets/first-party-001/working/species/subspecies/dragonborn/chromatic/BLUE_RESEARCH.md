@@ -8,6 +8,10 @@
 - 5.5e SRD 5.2.1: universal choice of cone or line.
 - 3.5e Dragon Shaman (*Player's Handbook II*) totem adaptation: Magical ventriloquism. This was a **class ability** and does not automatically transfer into inherited Dragonborn mechanics.
 
+**Proposed first-pass adaptation (unapproved):** at-will Displaced Voice—Action, vocal sounds apparently from a point within 30 feet; no images, damage, or automatic successful deception. The 3.5e Dragon Shaman had Ventriloquism; this limited effect is a new adaptation. **Alternative:** restricted 10–15-foot sand/earth burrowing, inspired by the native Blue Dragon Wyrmling's 15-foot Burrow Speed. Do not combine both automatically.
+
+For the comparative case and limits, see `CHROMATIC_BALANCE_RECONCILIATION.md`.
+
 ## Reconciliation question
 Requires a decision whether innate sound-misdirection magic is biology, learnable training, or an optional feat.
 

@@ -19,6 +19,10 @@ This follows the inherited movement-adaptation pattern of other dragons more clo
 
 See `HOARD_TRADITIONS_RESEARCH.md` for a complete comparison across all five ancestries.
 
+**Proposed first-pass adaptation (unapproved):** Natural Climber, 15-foot Climb Speed. It does not allow ceiling travel, bypass unusual surface restrictions, or grant Spider Climb. This is half the true Red Dragon Wyrmling's existing 30-foot climbing speed, intentionally proposed for balance.
+
+For the comparative case and limits, see `CHROMATIC_BALANCE_RECONCILIATION.md`.
+
 ## Reconciliation question
 Red's climbing adaptation and any hoard-based Upbringing benefits remain candidates. Check relative utility against Black/Green water breathing, Blue innate magic, and White ice movement before approval.
 
