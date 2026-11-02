@@ -1,6 +1,8 @@
 import copy
 import importlib.util
+import json
 from pathlib import Path
+import shutil
 import unittest
 from unittest.mock import patch
 spec = importlib.util.spec_from_file_location("release", Path(__file__).parents[1] / "tools/deploy_native_core.py")
@@ -10,12 +12,49 @@ spec.loader.exec_module(release)
 class DeploymentBoundaryTests(unittest.TestCase):
     def config(self):
         return {"services": {
-            "rules-core-public": {"image":"release","environment":{"RulesCore__ApiSurface":"PublicOnly"},"networks":{release.BACKEND:{}}},
-            "rules-core-private":{"image":"release","environment":{"RulesCore__ApiSurface":"PrivateOnly"},"networks":{"rules-core-private-tunnel":{},"dorks-and-dice-tool-control-plane":{}}}},
+            "rules-core-public": {"image":"release","environment":{"RulesCore__ApiSurface":"PublicOnly","ToolHost__BaseUrl":"http://dorks-and-dice-site:8080"},"networks":{release.BACKEND:{}}},
+            "rules-core-private":{"image":"release","environment":{"RulesCore__ApiSurface":"PrivateOnly","ToolHost__BaseUrl":"http://dorks-and-dice-site:8080"},"networks":{"rules-core-private-tunnel":{},"dorks-and-dice-tool-control-plane":{}}}},
             "networks":{"rules-core-private-tunnel":{"name":"pair"},"dorks-and-dice-tool-control-plane":{"name":"control"}}}
 
     def test_valid_release(self):
         self.assertEqual(("pair","control"), release.validate_compose(self.config()))
+
+    @unittest.skipUnless(shutil.which("docker"), "Docker Compose is required to render deployment configuration")
+    def test_shipped_compose_configures_site_authentication_for_both_ingresses(self):
+        root = Path(__file__).parents[1]
+        env = {**release.os.environ, "RULES_CORE_IMAGE": "rules-core:test",
+               "RulesCorePrivate__Network": "core-auth-test-private",
+               "ToolHosting__ControlPlaneNetwork": "core-auth-test-control",
+               "TOOL_HOST_BASE_URL": "http://dorks-and-dice-site:8080"}
+        config = json.loads(release.command(
+            "docker", "compose", "-f", str(root / "docker-compose.yml"),
+            "-f", str(root / "docker-compose.private-tunnel.yml"),
+            "config", "--format", "json", env=env))
+        release.validate_compose(config)
+
+    def test_both_ingresses_require_site_ticket_redemption_configuration(self):
+        for service in ("rules-core-public", "rules-core-private"):
+            for value in (None, "", " ", "/relative", "ftp://site", "http://", "http://site:bad",
+                          "http://site:0", "http://user:secret@site", "http://site?token=secret"):
+                config = self.config()
+                environment = config["services"][service]["environment"]
+                if value is None:
+                    environment.pop("ToolHost__BaseUrl")
+                else:
+                    environment["ToolHost__BaseUrl"] = value
+                with self.subTest(service=service, value=value), self.assertRaisesRegex(
+                    RuntimeError, "Site ticket redemption URL"
+                ):
+                    release.validate_compose(config)
+
+    def test_running_ingress_missing_site_url_is_rejected_before_health_probes(self):
+        state = {"Image": "release", "State": {"Running": True},
+                 "NetworkSettings": {"Networks": {release.BACKEND: {}}},
+                 "HostConfig": {"PortBindings": {}}, "Config": {"Env": []}}
+        with patch.object(release, "inspect", return_value=state), patch.object(release, "probe") as probe:
+            with self.assertRaisesRegex(RuntimeError, "Site ticket redemption URL"):
+                release.verify("release", "pair", "control")
+            probe.assert_not_called()
 
     def test_rejects_ports_mounts_network_broadening_and_image_drift(self):
         variants=[]
