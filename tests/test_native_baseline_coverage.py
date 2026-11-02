@@ -82,7 +82,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 self.assertTrue(path.is_relative_to(AUTHORITATIVE), relative)
                 self.assertNotIn("baselineStatus", native, cid)
                 self.assertNotIn("candidateDefinitions", native, cid)
-                self.assertEqual(row["kind"], native["kind"], cid)
+                self.assertEqual({"race": "species", "subrace": "subspecies"}.get(row["kind"], row["kind"]), native["kind"], cid)
                 self.assertIn("name", native, cid)
                 self.assertEqual("selected-native", native.get("status"), cid)
                 continue
