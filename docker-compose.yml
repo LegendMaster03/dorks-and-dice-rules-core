@@ -8,6 +8,8 @@ services:
     environment:
       RulesCore__ApiSurface: PublicOnly
       Rulesets__ContentRoot: /app/data/rulesets
+      # Ordinary Character Sheet delegation redeems tickets through Site too.
+      ToolHost__BaseUrl: ${TOOL_HOST_BASE_URL:-http://dorks-and-dice-site:8080}
     networks:
       - dorks-and-dice-backend
 

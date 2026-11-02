@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 import time
+from urllib.parse import urlsplit
 
 # A deployment is authorized for an exact reviewed Git commit. The CI-validated
 # native catalog fingerprint for that commit is supplied by the release workflow,
@@ -30,6 +31,18 @@ def command(*args, env=None):
 def inspect(kind, name):
     return json.loads(command("docker", kind, "inspect", name))[0]
 
+def require_site_authentication(environment):
+    # Catalog readiness does not prove that Site-issued tickets can be redeemed.
+    value = environment.get("ToolHost__BaseUrl", "")
+    try:
+        parsed = urlsplit(value)
+        valid = (parsed.scheme in {"http", "https"} and bool(parsed.hostname)
+                 and parsed.port != 0 and not parsed.username and not parsed.password
+                 and not parsed.query and not parsed.fragment)
+    except (TypeError, ValueError):
+        valid = False
+    require(valid, "Core Site ticket redemption URL is missing or invalid")
+
 def validate_compose(config):
     services = config["services"]
     require(set(services) == {"rules-core-public", "rules-core-private"}, "Unexpected service set")
@@ -39,6 +52,7 @@ def validate_compose(config):
     require(set(private.get("networks", {})) == {"rules-core-private-tunnel", "dorks-and-dice-tool-control-plane"}, "Private Core network broadening")
     require(set(public.get("networks", {})) == {BACKEND}, "Public Core network mismatch")
     for service in services.values():
+        require_site_authentication(service.get("environment", {}))
         require(not service.get("ports"), "Host ports are prohibited")
         require(not service.get("volumes"), "Use embedded native data without mounts")
         require(not any("PublicDistribution" in key for key in service.get("environment", {})), "Public distribution configuration is prohibited")
@@ -168,6 +182,8 @@ def verify(image_id, pair, control):
         require(state["State"]["Running"] and not state["State"].get("OOMKilled"), "Core exited or was OOM-killed")
         require(set(state["NetworkSettings"]["Networks"]) == networks, "Running network mismatch")
         require(not state["HostConfig"].get("PortBindings"), "Running Core publishes host ports")
+        environment = dict(item.split("=", 1) for item in state["Config"].get("Env", []) if "=" in item)
+        require_site_authentication(environment)
     checks = [(BACKEND, PUBLIC, "/ready", "200"), (pair, PRIVATE, "/ready", "200"),
               (BACKEND, PUBLIC, "/api/private/rulesets", "404"), (pair, PRIVATE, "/api/rulesets", "404"),
               (pair, PRIVATE, "/api/private/rulesets", "401"), (BACKEND, PUBLIC, "/api/rules", "404"),
