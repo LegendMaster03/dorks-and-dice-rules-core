@@ -27,8 +27,5 @@
       "stacksWithTraining": true
     }
   ],
-  "parent": "upbringing.elf.general",
-  "defaultFor": [
-    "subspecies.elf.wood"
-  ]
+  "parent": "upbringing.elf.general"
 }

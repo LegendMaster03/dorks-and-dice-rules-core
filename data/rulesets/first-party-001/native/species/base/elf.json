@@ -40,5 +40,6 @@
   "reviewNotes": [
     "Historical Search bonus remains unresolved.",
     "Speed and overall trait balance will be compared with other Species."
-  ]
+  ],
+  "defaultUpbringing": "upbringing.elf.general"
 }

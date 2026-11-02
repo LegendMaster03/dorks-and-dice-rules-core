@@ -207,13 +207,53 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertGreaterEqual(len(species_defs), 4)
         self.assertGreaterEqual(len(subspecies_defs), 7)
         self.assertGreaterEqual(len(upbringings), 8)
+        all_species = species_defs | subspecies_defs
         for item in subspecies_defs.values():
-            self.assertIn(item["parent"], species_defs | subspecies_defs)
+            self.assertIn(item["parent"], all_species)
         for item in upbringings.values():
+            self.assertNotIn("defaultFor", item, item["id"])
             if "parent" in item:
                 self.assertIn(item["parent"], upbringings)
-            for target in item.get("defaultFor", []):
-                self.assertIn(target, species_defs | subspecies_defs)
+        for item in all_species.values():
+            if "defaultUpbringing" in item:
+                reference = item["defaultUpbringing"]
+                self.assertIn(reference, upbringings, item["id"])
+                self.assertTrue(upbringings[reference]["selectable"], reference)
+
+        expected_defaults = {
+            "species.dwarf": "upbringing.dwarf.general",
+            "species.elf": "upbringing.elf.general",
+            "species.gnome": "upbringing.gnome.general",
+            "subspecies.elf.high": "upbringing.elf.high",
+            "subspecies.elf.wood": "upbringing.elf.wood",
+            "subspecies.elf.drow": "upbringing.elf.drow",
+            "subspecies.gnome.forest": "upbringing.gnome.forest",
+            "subspecies.gnome.rock": "upbringing.gnome.rock",
+        }
+        self.assertEqual(
+            expected_defaults,
+            {id: item["defaultUpbringing"] for id, item in all_species.items()
+             if "defaultUpbringing" in item}
+        )
+
+        def nearest_default(id):
+            current = id
+            while current is not None:
+                record = all_species[current]
+                if "defaultUpbringing" in record:
+                    return record["defaultUpbringing"]
+                current = record.get("parent")
+            return None
+
+        self.assertEqual("upbringing.dwarf.general", nearest_default("subspecies.dwarf.hill"))
+        self.assertEqual("upbringing.elf.high", nearest_default("subspecies.elf.high"))
+        self.assertEqual("upbringing.gnome.forest", nearest_default("subspecies.gnome.forest"))
+        self.assertIsNone(nearest_default("subspecies.halfling.lightfoot"))
+        self.assertFalse({"species.half-elf", "species.half-orc"} & set(species_defs))
+        policy = load(native / "rules/species-subspecies-upbringing.json")["upbringings"]
+        self.assertEqual("defaultUpbringing", policy["defaultField"])
+        self.assertEqual(1, policy["selectedCount"])
+        self.assertFalse(policy["speciesRestrictionsByDefault"])
         for records in (species_defs | subspecies_defs, upbringings):
             for id in records:
                 visited = set()

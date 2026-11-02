@@ -1,14 +1,23 @@
-# Species/Upbringing — outstanding reconciliation only
+# Species/Upbringing — unresolved material
 
-Approved rules from the initial Dwarf, Halfling, Gnome and Elf pass are published in `native/species/`, `native/upbringings/`, and shared `native/rules/`. This working file records **unresolved questions only**, not parallel authoritative copies.
+Approved Dwarf, Halfling, Gnome and Elf rules are in `native/species/`, `native/upbringings/` and `native/rules/`. No parallel authoritative mechanics belong here.
 
-- Species comparative balance: final Dwarf/Halfling/Wood Elf walking speeds; Dwarf Darkvision range; whether Elf historical Search traits should be restored; distribution of Low-Light Vision; overall nine-Species power comparison.
-- Dwarf: application of +1 HP per character level to monsters/NPCs; potential martial-focused Dwarf Upbringing incorporating traditional weapon proficiencies.
-- Gnome: numeric/skill expression of General Gnome cultural knowledge; spellcasting ability for Upbringing-granted Prestidigitation.
-- Halfling: cultural Upbringing remains unreviewed; ability-score treatment deferred.
-- Elf: final comparative balance, Search adaptation and numerical spellcasting integration.
-- All Species: ability-score reconciliation, choice display, spell qualification, native C# projector and schema.
-- Dragonborn: select shared innate mechanics (including Breath Weapon action/uses/recharge/damage, Darkvision and flight); then three family mechanics and fifteen individual dragon-type mechanics; determine cultural Upbringings.
-- Exceptional Platinum/Ruby/composite Chromatic forms, transformation rites, Dragon Shaman candidate ancestry-sharing feat, Dragonfire Adept derived feat/prestige-class, and additional dragon taxa remain **outside initial scope**.
+## Initial scope
+**Nine base Species:** Dwarf, Dragonborn, Elf, Gnome, Goliath, Halfling, Human, Orc and Tiefling. **Half-Elf and Half-Orc are excluded**: the later Mixed Species mechanic will address their concepts. Their historical SRD source candidates remain inert in `working/` as evidence, not approved Species definitions.
 
-The complete pinned source SRD material remains in `data/reference/srd/`. Reviewed staged Species/Subspecies JSON records are removed from `working/` when promoted to `native/`; `data/reference/srd/native-coverage-manifest.json` tracks their new location.
+**Dragonborn first pass:** five Chromatic types (Black, Blue, Green, Red, White) and five Metallic types (Brass, Bronze, Copper, Gold, Silver). Gem Dragonborn and exceptional forms are deferred, although the three-family inheritance structure remains an approved future-capable model.
+
+## Remaining questions
+- Species comparison: Dwarf/Halfling/Wood Elf speeds; Dwarf Darkvision; historical Elf Search; Low-Light Vision distribution; overall balance across the nine base Species.
+- Dwarf: maximum HP for NPCs/monsters; potential martial-focused Upbringing.
+- Gnome: mechanical expression for general cultural knowledge; casting ability for Upbringing-granted Prestidigitation.
+- Halfling: cultural Upbringing.
+- Elf: final comparison of senses, movement and spells.
+- All: ability scores, effect and qualification contracts, native Character projector and schema.
+- Dragonborn: shared Breath Weapon uses/recharge, damage, shape, action economy, saves; family features; ten individual-type adaptations; independent cultural traditions.
+- Deferred: Gem Dragonborn, exceptional Platinum/Ruby/composite forms, rites of rebirth, historical dragon families, Dragon Shaman ancestry-sharing feat, and Dragonfire Adept-derived feats or prestige classes.
+
+## Upbringing defaults
+Species/Subspecies declare `defaultUpbringing`, pointing to a stable Upbringing ID. An explicit player choice overrides any default; otherwise the most specific selected Subspecies/ancestor default wins. The chosen Upbringing inherits its own parents but consumes only one choice. If no default exists, leave the choice unresolved. Biological Species does not restrict selection by default.
+
+Pinned source evidence remains in `data/reference/srd/`. When a source candidate is reconciled, move its authoritative definition to `native/`, remove it from `working/`, and update the SRD coverage manifest.

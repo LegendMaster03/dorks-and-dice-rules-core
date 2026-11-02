@@ -24,5 +24,6 @@
   "darkvisionFeet": 60,
   "reviewNotes": [
     "Walking speed subject to comparative Species balance."
-  ]
+  ],
+  "defaultUpbringing": "upbringing.gnome.general"
 }

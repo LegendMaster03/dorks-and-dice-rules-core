@@ -24,8 +24,5 @@
       "stacksWithTraining": true
     }
   ],
-  "parent": "upbringing.elf.general",
-  "defaultFor": [
-    "subspecies.elf.drow"
-  ]
+  "parent": "upbringing.elf.general"
 }

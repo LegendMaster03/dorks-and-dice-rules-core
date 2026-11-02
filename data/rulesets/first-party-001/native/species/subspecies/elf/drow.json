@@ -44,5 +44,6 @@
     "intelligence",
     "wisdom",
     "charisma"
-  ]
+  ],
+  "defaultUpbringing": "upbringing.elf.drow"
 }

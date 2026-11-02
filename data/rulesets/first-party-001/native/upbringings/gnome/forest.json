@@ -15,8 +15,5 @@
       ]
     }
   ],
-  "parent": "upbringing.gnome.general",
-  "defaultFor": [
-    "subspecies.gnome.forest"
-  ]
+  "parent": "upbringing.gnome.general"
 }

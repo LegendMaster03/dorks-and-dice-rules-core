@@ -27,8 +27,5 @@
         "competency.stonemasonry"
       ]
     }
-  ],
-  "defaultFor": [
-    "species.dwarf"
   ]
 }

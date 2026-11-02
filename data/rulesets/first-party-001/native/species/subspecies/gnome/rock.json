@@ -17,5 +17,6 @@
         "stone"
       ]
     }
-  ]
+  ],
+  "defaultUpbringing": "upbringing.gnome.rock"
 }

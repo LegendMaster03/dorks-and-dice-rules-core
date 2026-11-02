@@ -3,7 +3,7 @@
   "kind": "rule",
   "name": "Species, Subspecies, and Upbringing Inheritance",
   "status": "selected-native",
-  "description": "Species and Subspecies encode inherited traits. Upbringings encode acquired traditions, skills and language. Their inheritance graphs are independent and Upbringing associations do not restrict character selection.",
+  "description": "Species and Subspecies represent inherited traits; Upbringings represent learned traditions. Their parentage is independent, and biological ancestry does not by itself restrict Upbringing selection.",
   "speciesInheritance": {
     "recursive": true,
     "parentByStableId": true,
@@ -13,9 +13,18 @@
   },
   "upbringings": {
     "recursive": true,
-    "association": "optional-many-to-many",
-    "defaultAssociation": "A familiar 5e/5.5e option may resolve to a selected default Upbringing for compatibility, without forbidding alternative selections.",
-    "speciesRestrictionsByDefault": false
+    "speciesRestrictionsByDefault": false,
+    "defaultField": "defaultUpbringing",
+    "defaultFieldLocation": "species-or-subspecies",
+    "defaultSelectionOrder": [
+      "Use an explicitly selected Upbringing instead of an ancestry default.",
+      "Otherwise use the selected Subspecies defaultUpbringing, when present.",
+      "Otherwise traverse the selected Subspecies parent chain to the nearest ancestor with defaultUpbringing.",
+      "If no default exists, leave selection unresolved instead of inventing an Upbringing."
+    ],
+    "selectedCount": 1,
+    "inheritance": "The selected Upbringing inherits the benefits of its own parent chain; ancestors are not additional selections.",
+    "association": "A default is a reference on Species/Subspecies JSON, not a reverse defaultFor list on Upbringing records."
   },
   "dragonbornApprovedStructure": {
     "baseSpecies": "species.dragonborn",
@@ -58,7 +67,9 @@
     "leafSubspeciesSelectable": true
   },
   "reviewNotes": [
-    "The Dragonborn trait definitions remain under reconciliation; no placeholder playable Dragonborn records are created here.",
-    "Existing projector and candidate import tools do not yet execute this selected data model."
+    "Only ten ordinary Chromatic and Metallic Dragonborn are in the active first pass; Gem is a future reconciliation.",
+    "Dragonborn shared and family mechanics are not yet resolved, so no placeholder playable Dragonborn records are published.",
+    "Half-Elf and Half-Orc source records are reserved for the future Mixed Species mechanic, not ordinary initial Species.",
+    "The native C# projector does not yet execute this inheritance/default system."
   ]
 }

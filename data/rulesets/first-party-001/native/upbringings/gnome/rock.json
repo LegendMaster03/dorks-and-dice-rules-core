@@ -33,9 +33,6 @@
     }
   ],
   "parent": "upbringing.gnome.general",
-  "defaultFor": [
-    "subspecies.gnome.rock"
-  ],
   "reviewNotes": [
     "Spellcasting ability for Upbringing-granted Prestidigitation remains unresolved."
   ]

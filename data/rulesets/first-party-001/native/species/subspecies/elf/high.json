@@ -36,5 +36,6 @@
     "intelligence",
     "wisdom",
     "charisma"
-  ]
+  ],
+  "defaultUpbringing": "upbringing.elf.high"
 }

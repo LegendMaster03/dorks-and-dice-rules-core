@@ -21,8 +21,5 @@
       "extraLanguages": 1
     }
   ],
-  "parent": "upbringing.elf.general",
-  "defaultFor": [
-    "subspecies.elf.high"
-  ]
+  "parent": "upbringing.elf.general"
 }

@@ -43,5 +43,6 @@
   "reviewNotes": [
     "Walking speed and Darkvision range remain subject to comparative Species balance.",
     "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved."
-  ]
+  ],
+  "defaultUpbringing": "upbringing.dwarf.general"
 }

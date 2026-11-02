@@ -40,5 +40,6 @@
   ],
   "reviewNotes": [
     "35-foot walking speed remains subject to comparative Species balance."
-  ]
+  ],
+  "defaultUpbringing": "upbringing.elf.wood"
 }

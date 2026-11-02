@@ -26,5 +26,6 @@
     "intelligence",
     "wisdom",
     "charisma"
-  ]
+  ],
+  "defaultUpbringing": "upbringing.gnome.forest"
 }
