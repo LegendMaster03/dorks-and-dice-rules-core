@@ -1,6 +1,9 @@
-# Metallic dragon research (deferred)
+# Metallic Dragonborn research
 
-- Initial five: Brass, Bronze, Copper, Gold, Silver.
-- Steel and Mercury are Metallic Dragons in published lore; research additional types independently.
+**Active first pass:** Brass, Bronze, Copper, Gold and Silver. Shared Dragonborn Species rules are in native; Metallic family abilities and the five individual leaves remain under review.
 
-No additional playable Subspecies or Upbringing is approved here. Research potential classification, publication/source, inherited features versus transformations, and potential learned cultural traits before future reconciliation.
+- `FIZBANS_REVIEW.md`: source mechanics and deferred family decisions.
+- `HOARD_TRADITIONS_RESEARCH.md`: *Fizban's* five Metallic Dragon treasure preferences and candidate learned cultural traditions.
+- Steel and Mercury are additional historical Metallic dragons, **outside** the present ten-type pass.
+
+No proposed hoard tradition, bonus, or Species-specific default is an approved native rule.

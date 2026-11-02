@@ -1,6 +1,9 @@
-# Gem dragon research (deferred)
+# Gem Dragonborn research (deferred)
 
-- Initial five: Amethyst, Crystal, Emerald, Sapphire, Topaz.
-- Ruby (Sardior-associated) is an exceptional future topic; no corresponding playable ancestry approved.
+The five standard Gem types are **Amethyst, Crystal, Emerald, Sapphire and Topaz**. Their family inheritance position is reserved in the approved Dragonborn structure, but no Gem Dragonborn mechanic is part of the current first pass.
 
-No additional playable Subspecies or Upbringing is approved here. Research potential classification, publication/source, inherited features versus transformations, and potential learned cultural traits before future reconciliation.
+- `HOARD_TRADITIONS_RESEARCH.md` records *Fizban's* preferred-hoard themes for all five and separates them from unapproved learned Upbringings.
+- Ruby/Sardior exceptional forms are a separate deferred topic.
+- The current active Species/Subspecies reconciliation covers only five Chromatic and five Metallic types.
+
+No playable Gem records, family benefits or Upbringing defaults are approved here.

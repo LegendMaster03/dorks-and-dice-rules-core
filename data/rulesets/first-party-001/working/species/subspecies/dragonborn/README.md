@@ -7,6 +7,8 @@ Approved structural inheritance: Dragonborn Species → nonselectable Chromatic/
 
 See `chromatic/FIZBANS_REVIEW.md` and `metallic/FIZBANS_REVIEW.md` for published 5e mechanical options and potential enhancements. The reconciled base Species was promoted out of `working/`. The pinned SRD versions remain in `data/reference/srd/`; an unresolved historical Subspecies source candidate remains at `working/species/subspecies/dragonborn/unnamed-1a909417769c0dff.json`. See `SHARED_BREATH_REFERENCE.md` for the unselected alternatives.
 
+The [*Fizban's* hoard source index](HOARD_SOURCE_INDEX.md) now records all twenty Chapter 5 dragon and draconic-creature entries, including the fifteen standard Chromatic, Metallic and Gem types. Hoard themes are **research for learned traditions**, not Species biology or mandatory personality traits.
+
 ## Deferred
 Gem family (Amethyst, Crystal, Emerald, Sapphire, Topaz) retains a reserved position in the *structural* hierarchy only. Exceptional Platinum/Ruby/composite Dragonborn, transformation rites, other dragon categories, Dragon Shaman feat ideas and Dragonfire Adept-derived advancement are outside this first pass.
 
