@@ -6,6 +6,26 @@ namespace RulesCore.Mechanics.Tests;
 
 public sealed class NativeMechanicsTests
 {
+    [Fact]
+    public void TrainingStructureSurvivesUnresolvedNumericalValues()
+    {
+        using var fixture = new NativeFixture();
+        var request = fixture.Input() with { Skills = null };
+        var projection = new NativeCharacterProjector(fixture.Catalog).Project(request);
+        var family = Assert.Single(projection.Training!, entry => entry.Id == "skill.perform");
+        Assert.True(family.IsFamily);
+        Assert.False(family.SupportsRanks);
+        Assert.Equal("charisma", family.GoverningAbility);
+        var member = Assert.Single(projection.Training!, entry => entry.Id == "skill.perform-act");
+        Assert.Equal(family.Id, member.FamilyId);
+        Assert.True(member.SupportsRanks);
+        var composite = Assert.Single(projection.Training!, entry => entry.Id == "skill.perception");
+        Assert.Equal(new[] { "skill.listen", "skill.spot" }, composite.ComponentIds);
+        Assert.Equal("arithmetic-mean", composite.Composition);
+        Assert.False(composite.SupportsRanks);
+        Assert.DoesNotContain("skill.perception.total", projection.Values.Keys);
+    }
+
     [Theory]
     [InlineData(NativeRollMode.Normal, 8, null, "resolved", 8)]
     [InlineData(NativeRollMode.Advantage, 8, 16, "resolved", 16)]
@@ -404,6 +424,8 @@ public sealed class NativeMechanicsTests
                     """);
             File.WriteAllText(Path.Combine(root, "native", "skills.json"), """
                 {"skills":[
+                  {"id":"skill.perform","name":"Perform","kind":"skill-family","defaultAbility":"charisma"},
+                  {"id":"skill.perform-act","name":"Perform (Act)","kind":"skill","family":"skill.perform","defaultAbility":"charisma"},
                   {"id":"skill.listen","name":"Listen","kind":"skill","defaultAbility":"wisdom"},
                   {"id":"skill.spot","name":"Spot","kind":"skill","defaultAbility":"wisdom"},
                   {"id":"skill.perception","name":"Perception","kind":"skill","defaultAbility":"wisdom",

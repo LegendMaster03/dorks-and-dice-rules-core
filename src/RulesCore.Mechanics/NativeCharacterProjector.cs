@@ -502,7 +502,8 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
         NativeCharacterProjection Finish(string status) => new(1, catalog.RulesetId, catalog.Fingerprint,
             status, values.ToFrozenDictionary(StringComparer.Ordinal), granted.ToArray(),
             resources.OrderBy(r => r.Id, StringComparer.Ordinal).ToArray(), required.ToArray(),
-            issues.OrderBy(i => i.Path, StringComparer.Ordinal).ThenBy(i => i.Code, StringComparer.Ordinal).ToArray());
+            issues.OrderBy(i => i.Path, StringComparer.Ordinal).ThenBy(i => i.Code, StringComparer.Ordinal).ToArray(),
+            status == "invalid" ? null : NativeTrainingPresentationCatalog.Read(catalog));
     }
 
     private static bool Object(JsonElement element, string name, out JsonElement result)

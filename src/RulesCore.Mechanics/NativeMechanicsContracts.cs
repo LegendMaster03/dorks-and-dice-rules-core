@@ -32,7 +32,14 @@ public sealed record NativeCharacterProjection(
     IReadOnlyList<string> FeatureIds,
     IReadOnlyList<NativeResource> Resources,
     IReadOnlyList<string> RequiredChoices,
-    IReadOnlyList<NativeIssue> Issues);
+    IReadOnlyList<NativeIssue> Issues,
+    IReadOnlyList<NativeTrainingPresentation>? Training = null);
+
+/// <summary>Safe display structure, separate from numerical results and raw definitions.</summary>
+public sealed record NativeTrainingPresentation(
+    string Id, string Name, string Kind, string? GoverningAbility,
+    string? FamilyId, IReadOnlyList<string> ComponentIds, string? Composition,
+    bool IsFamily, bool SupportsRanks);
 
 public enum NativeRollMode { Normal, Advantage, Disadvantage, Emphasis }
 public sealed record NativeRollResolution(string Status, int? Selected, string? EffectKey = null);
