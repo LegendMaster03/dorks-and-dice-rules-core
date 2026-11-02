@@ -83,6 +83,46 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task NativeManufacturingChecksAreAuthenticatedAndUseCurrentSnapshot()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/crafting/manufacturing/resolve";
+        using var metadataResponse = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, "/api/mechanics/v1/ruleset"));
+        Assert.Equal(HttpStatusCode.OK, metadataResponse.StatusCode);
+        var metadata = await metadataResponse.Content.ReadFromJsonAsync<JsonElement>();
+        var fingerprint = metadata.GetProperty("fingerprint").GetString();
+        Assert.Equal("manual-competency-subset", metadata.GetProperty("capabilities")
+            .GetProperty("manufacturingResolution").GetString());
+        var input = new {
+            rulesetId = "first-party-001", fingerprint,
+            competency = new { displayName = "Smithing", contribution = 3, isQualified = true },
+            manualAbilityModifier = 2, d20Roll = 15, otherModifier = 0, targetDc = 20
+        };
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint, input);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var response = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(input)));
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("resolved", result.GetProperty("status").GetString());
+        Assert.Equal("completed", result.GetProperty("outcome").GetString());
+        Assert.Equal(20, result.GetProperty("total").GetInt32());
+        Assert.True(result.GetProperty("inputsConsumed").GetBoolean());
+
+        using var staleRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "stale",
+                input.competency, input.manualAbilityModifier,
+                input.d20Roll, input.targetDc
+            }));
+        using var stale = await fixture.Client.SendAsync(staleRequest);
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+    }
+
+    [Fact]
     public async Task AuthorizedCharacterSheetCanPinAndProjectSnapshot()
     {
         await using var fixture = new Fixture();
