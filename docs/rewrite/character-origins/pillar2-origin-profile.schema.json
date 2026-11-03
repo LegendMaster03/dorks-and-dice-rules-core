@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provisional Character Origin Profile",
+  "description": "Design-only fixture; not a native rule, C# contract, or approved balancing model.",
+  "type": "object",
+  "required": [
+    "id",
+    "designStatus",
+    "origination",
+    "heritageSources",
+    "traitCandidates",
+    "openQuestions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "designStatus": {
+      "const": "illustrative-not-approved"
+    },
+    "label": {
+      "type": "string"
+    },
+    "origination": {
+      "type": "object",
+      "required": [
+        "method",
+        "contributors"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "contributors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "role"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "characterDescription": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "heritageSources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sourceKind"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceKind": {
+            "enum": [
+              "species",
+              "ancestry",
+              "individual",
+              "design",
+              "material",
+              "collective",
+              "supernatural",
+              "other"
+            ]
+          },
+          "nativeEntityId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "viaContributorIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "conventionalSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "speciesId": {
+          "type": "string"
+        },
+        "ancestryIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "upbringingId": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "existing-approved-preset",
+            "candidate-preset"
+          ]
+        }
+      }
+    },
+    "effectiveProfile": {
+      "type": "object",
+      "required": [
+        "resolution"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "resolution": {
+          "enum": [
+            "existing-approved-species-baseline",
+            "unresolved",
+            "illustrative-candidate"
+          ]
+        },
+        "creatureType": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string"
+        },
+        "walkingSpeedFeet": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "traitCandidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sourceIds",
+          "resolution"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "nativeTraitLocation": {
+            "type": "object",
+            "required": [
+              "entityId",
+              "localTraitId"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "entityId": {
+                "type": "string"
+              },
+              "localTraitId": {
+                "type": "string"
+              }
+            }
+          },
+          "proposedConcept": {
+            "type": "string"
+          },
+          "resolution": {
+            "enum": [
+              "existing-approved-preset",
+              "candidate",
+              "unresolved"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
