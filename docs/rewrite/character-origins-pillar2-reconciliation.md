@@ -61,6 +61,14 @@ The current native tree contains **nine Species base JSON files, 29 Ancestry JSO
 
 **Proposed invariant:** A character receives each inherent effect only because a selected Species/Ancestry preset or explicit heritage decision grants it. Relationships and descriptors alone never grant mechanics. Upbringing and Background remain separate.
 
+## Inheritance complexity and player choice — approved direction (2026-11-03)
+
+- **Do not require Punnett squares, dominant/recessive allele calculations, or randomized genetic outcomes for playable-character creation.** Modeling heredity should not displace player control of the character concept.
+- Biological dominance, recessiveness, or dormant ancestry may be inspiration for particular traits, families, or optional worldbuilding, but are **not** an approved mandatory game-mechanics system.
+- When mixed heritage offers eligible inherent characteristics, the player should be able to choose among permissible outcomes rather than roll for the character they are allowed to play. Specific eligibility, limits, conflicts, and balance remain unresolved.
+- A full mechanical record of unexpressed ancestral alleles or indefinite genealogical inheritance is **not required** by this decision. Whether dormant hereditary characteristics have any gameplay effect remains open.
+- This does not remove restrictions where an approved trait requires compatible anatomy, a particular supernatural source, or other justified prerequisites.
+
 ## First rules-design boundary — **working proposal, not approved**
 
 An Origination event can have zero or more participants and sources. A relationship describes how a source was involved; it does **not** mean that every attribute of that source can be inherited.
