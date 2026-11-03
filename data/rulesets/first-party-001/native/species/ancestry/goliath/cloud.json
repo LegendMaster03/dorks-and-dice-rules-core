@@ -1,0 +1,92 @@
+{
+  "id": "ancestry.goliath.cloud",
+  "name": "Cloud Goliath",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.goliath",
+  "traits": [
+    {
+      "id": "clouds-jaunt",
+      "name": "Cloud's Jaunt",
+      "description": "As a Bonus Action, you teleport up to 30 feet to an unoccupied space you can see. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "activation": {
+        "action": "bonus-action"
+      },
+      "teleport": {
+        "maximumDistanceFeet": 30,
+        "destination": "unoccupied-space-you-can-see"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    },
+    {
+      "id": "cloud-strike",
+      "name": "Cloud Strike",
+      "requiredCharacterLevel": 1,
+      "description": "Once per turn, when you hit with a melee weapon or thrown-weapon ranged attack, spend one use of Cloud's Jaunt to deal 1d4 additional Thunder damage. A creature struck makes a Wisdom saving throw; on failure, you become invisible only to that creature until the start of your next turn or until immediately after you make an attack roll or cast a spell. This does not conceal you from other creatures.",
+      "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+      "oncePerTurn": true,
+      "extraDamage": {
+        "dice": "1d4",
+        "damageType": "thunder",
+        "target": "same-target"
+      },
+      "savingThrow": {
+        "ability": "wisdom",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-visibility-effect"
+      },
+      "invisibility": {
+        "onlyAgainst": "struck-creature",
+        "onFailedSave": true,
+        "endsAt": "start-of-your-next-turn",
+        "alsoEndsImmediatelyAfter": [
+          "you-make-an-attack-roll",
+          "you-cast-a-spell"
+        ],
+        "notGlobalCondition": true
+      },
+      "sharedUsesFromTrait": "clouds-jaunt",
+      "extraUsesGranted": false
+    },
+    {
+      "id": "cloudy-escape",
+      "name": "Cloudy Escape",
+      "requiredCharacterLevel": 4,
+      "description": "When a creature you can see hits you with an attack, you can use your Reaction to resist the damage of that attack by 50 percent, then teleport up to 30 feet to an unoccupied space you can see. This defensive use has its own Proficiency Bonus uses per Long Rest.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "visible-creature-hits-you-with-an-attack-roll"
+      },
+      "damageResistance": {
+        "percent": 50,
+        "scope": "triggering-attack",
+        "duration": "triggering-attack-only",
+        "stacking": "existing-resistance-rules"
+      },
+      "teleport": {
+        "maximumDistanceFeet": 30,
+        "destination": "unoccupied-space-you-can-see",
+        "timing": "after-triggering-damage-is-resolved"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      },
+      "independentUsesFrom": "clouds-jaunt"
+    }
+  ],
+  "reviewNotes": [
+    "SRD 5.2.1 Giant Ancestry adapted into one selectable Ancestry, not six independent options granted to every Goliath.",
+    "Inherits Powerful Build, Large Form, size and Speed from species.goliath; the chosen ancestry boon uses Proficiency Bonus activations per Long Rest.",
+    "Effects are a coherent first-pass baseline and remain open to future reconciliation and playtesting.",
+    "Selected for first-pass playtesting: each ancestry's Strike-derived early mode is merged with the SRD boon instead of granting an independent Strike of the Giants feat; Fire's Burn already contains Fire Strike.",
+    "Early Strike modes share the original ancestry's Proficiency Bonus uses per Long Rest and never grant an extra use pool. Modes with Bigby's weapon-hit restriction retain that restriction; core SRD boons are not narrowed.",
+    "Advanced inherited features unlock at total character level 4. Their source-feat prerequisites and +1 Ability Score Increase are not additional grants; save/attack modifiers use the Goliath's selected giant ancestry aptitude.",
+    "Other feats, rune training and giant cultural backgrounds remain independent options and are not automatically provided by Species inheritance.",
+    "cloud Goliath's advanced features were adapted from the corresponding *Bigby Presents: Glory of the Giants* giant feat; cultural and rune feats remain separate. No feat or ability-score-increase entitlement is awarded."
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "id": "ancestry.goliath.storm",
+  "name": "Storm Goliath",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.goliath",
+  "traits": [
+    {
+      "id": "storms-thunder",
+      "name": "Storm's Thunder",
+      "description": "When a creature within 60 feet of you deals damage to you, you can use your Reaction to deal 1d8 Thunder damage to that creature. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "when-a-creature-within-range-deals-damage-to-you"
+      },
+      "rangeFeet": 60,
+      "retaliation": {
+        "dice": "1d8",
+        "damageType": "thunder",
+        "target": "triggering-creature"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    },
+    {
+      "id": "storm-strike",
+      "name": "Storm Strike",
+      "requiredCharacterLevel": 1,
+      "description": "Once per turn, when you hit with a melee or thrown-weapon attack, you can spend one use of Storm's Thunder to deal 1d6 additional Lightning damage. If the target is a creature, it makes a Constitution saving throw or has Disadvantage on attack rolls until the start of your next turn.",
+      "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+      "oncePerTurn": true,
+      "extraDamage": {
+        "dice": "1d6",
+        "damageType": "lightning",
+        "target": "same-target"
+      },
+      "savingThrow": {
+        "ability": "constitution",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-attack-roll-penalty"
+      },
+      "onFailedSave": {
+        "attackRollMode": "disadvantage",
+        "endsAt": "start-of-your-next-turn"
+      },
+      "sharedUsesFromTrait": "storms-thunder",
+      "extraUsesGranted": false
+    },
+    {
+      "id": "maelstrom-aura",
+      "name": "Maelstrom Aura",
+      "requiredCharacterLevel": 4,
+      "description": "As a Bonus Action, project a 10-foot aura of magical wind and lightning until the start of your next turn or until you become Incapacitated. It does not extend through total cover. While active, you have 50 percent resistance to Lightning and Thunder damage, and attacks against you have Disadvantage. When another creature begins its turn in the aura, you may require a Strength save; on failure its Speed is halved until the start of its next turn. Proficiency Bonus uses per Long Rest.",
+      "activation": {
+        "action": "bonus-action"
+      },
+      "area": {
+        "shape": "aura",
+        "radiusFeet": 10,
+        "center": "self",
+        "blockedBy": "total-cover"
+      },
+      "duration": {
+        "endsAt": "start-of-your-next-turn",
+        "alsoEndsWhen": "condition.incapacitated"
+      },
+      "whileActive": {
+        "damageResistance": [
+          {
+            "damageType": "lightning",
+            "percent": 50
+          },
+          {
+            "damageType": "thunder",
+            "percent": 50
+          }
+        ],
+        "attackRollsTargetingYou": "disadvantage"
+      },
+      "startsTurnInside": {
+        "target": "other-creature",
+        "savingThrow": {
+          "ability": "strength",
+          "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+          "onSuccess": "no-speed-change"
+        },
+        "onFailedSave": {
+          "speedMultiplier": 0.5,
+          "endsAt": "start-of-targets-next-turn"
+        }
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    }
+  ],
+  "reviewNotes": [
+    "SRD 5.2.1 Giant Ancestry adapted into one selectable Ancestry, not six independent options granted to every Goliath.",
+    "Inherits Powerful Build, Large Form, size and Speed from species.goliath; the chosen ancestry boon uses Proficiency Bonus activations per Long Rest.",
+    "Effects are a coherent first-pass baseline and remain open to future reconciliation and playtesting.",
+    "Selected for first-pass playtesting: each ancestry's Strike-derived early mode is merged with the SRD boon instead of granting an independent Strike of the Giants feat; Fire's Burn already contains Fire Strike.",
+    "Early Strike modes share the original ancestry's Proficiency Bonus uses per Long Rest and never grant an extra use pool. Modes with Bigby's weapon-hit restriction retain that restriction; core SRD boons are not narrowed.",
+    "Advanced inherited features unlock at total character level 4. Their source-feat prerequisites and +1 Ability Score Increase are not additional grants; save/attack modifiers use the Goliath's selected giant ancestry aptitude.",
+    "Other feats, rune training and giant cultural backgrounds remain independent options and are not automatically provided by Species inheritance.",
+    "storm Goliath's advanced features were adapted from the corresponding *Bigby Presents: Glory of the Giants* giant feat; cultural and rune feats remain separate. No feat or ability-score-increase entitlement is awarded."
+  ]
+}

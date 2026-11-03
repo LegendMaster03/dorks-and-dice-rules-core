@@ -1,0 +1,48 @@
+{
+  "id": "upbringing.goliath.general",
+  "name": "General Goliath Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "gol-kaa",
+      "name": "Gol-Kaa",
+      "description": "Learn Gol-Kaa, the traditional language of many older Goliath clan communities. This learned language is not an inherited Species trait.",
+      "language": "gol-kaa"
+    },
+    {
+      "id": "clan-training",
+      "name": "Clan Training",
+      "description": "Choose one Skill training from Athletics, Insight, or Survival. Training in composite Athletics does not automatically train its independently ranked Climb, Jump, or Swim components.",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.athletics",
+        "skill.insight",
+        "skill.survival"
+      ],
+      "choiceCount": 1,
+      "doesNotAutomaticallyTrainChildSkills": true
+    },
+    {
+      "id": "clan-craft",
+      "name": "Clan Craft",
+      "description": "Choose one Competency from Cooking, Leatherworking, or Navigation, reflecting practical community traditions.",
+      "grantType": "competency-training",
+      "chooseOne": [
+        "competency.cooking",
+        "competency.leatherworking",
+        "competency.navigation"
+      ],
+      "choiceCount": 1
+    }
+  ],
+  "reviewNotes": [
+    "One baseline of Goliath clan culture is selected for the first pass regardless of whether the character has Cloud, Fire, Frost, Hill, Stone, or Storm ancestry.",
+    "This is a learned cultural upbringing, not an inherited parent of any other Upbringing; a Goliath can explicitly select Giant Foundling or another culture.",
+    "Gol-Kaa is retained from the original 3.5e Goliath traditions. Giant remains a distinct language, which Goliaths may also learn through contact.",
+    "The exact traditions of individual Goliath clans can vary; six distinct Goliath clan cultures mapped to Giant Ancestry are not established by the reviewed sources.",
+    "No Origin feat, rune casting, ancestral supernatural ability, or mandatory Ordning membership is granted.",
+    "Gol-Kaa now has an authoritative language.gol-kaa definition under native/languages/; its learned grant remains part of this Upbringing."
+  ]
+}

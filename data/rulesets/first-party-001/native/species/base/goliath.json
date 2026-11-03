@@ -1,0 +1,120 @@
+{
+  "id": "species.goliath",
+  "name": "Goliath",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": false,
+  "creatureType": "giant",
+  "size": "medium",
+  "walkingSpeedFeet": 35,
+  "traits": [
+    {
+      "id": "powerful-build",
+      "name": "Powerful Build",
+      "description": "You have Advantage on ability checks you make to end the Grappled condition, and you count as one size larger when determining your carrying capacity. This does not otherwise change your actual size, space, reach, weapon permissions, or grapple size modifiers.",
+      "advantageOnAbilityChecksToEndCondition": "condition.grappled",
+      "effectiveSizeCategoriesHigherForCarryingCapacity": 1,
+      "doesNotChange": [
+        "actual-size",
+        "occupied-space",
+        "attack-reach",
+        "weapon-permissions",
+        "grapple-size-modifiers"
+      ]
+    },
+    {
+      "id": "large-form",
+      "name": "Large Form",
+      "description": "Starting at character level 5, you can become Large as a Bonus Action if there is enough space. The transformation lasts for 10 minutes or until you end it without taking an action. While transformed, you have Advantage on Strength checks and your walking Speed increases by 10 feet. You regain the use after a Long Rest. This is an actual size change, not a permanent enlargement or an automatic increase in reach.",
+      "requiredCharacterLevel": 5,
+      "activation": {
+        "action": "bonus-action",
+        "requiresSpaceFor": "large"
+      },
+      "sizeChange": {
+        "to": "large",
+        "actualSize": true
+      },
+      "duration": {
+        "minutes": 10,
+        "canEndEarly": true,
+        "endEarlyAction": "none"
+      },
+      "advantageOnChecks": {
+        "ability": "strength",
+        "checkType": "ability-check"
+      },
+      "walkingSpeedBonusFeet": 10,
+      "uses": {
+        "value": 1,
+        "recharge": "long-rest"
+      },
+      "doesNotGrant": [
+        "automatic-reach-increase",
+        "permanent-large-size"
+      ]
+    },
+    {
+      "id": "mountain-leap",
+      "name": "Mountain Leap",
+      "description": "You can make standing Long Jumps and standing High Jumps using the distances and heights that would apply if you had completed the normal running approach. Each jump still expends movement, and all other jump, landing, and obstacle rules continue to apply.",
+      "standingJumpAsRunning": [
+        "long-jump",
+        "high-jump"
+      ],
+      "ignoresRunningApproachRequirement": true,
+      "movementCost": "normal-jump-movement-cost",
+      "doesNotGrant": [
+        "additional-movement",
+        "flight",
+        "automatic-landing-success",
+        "immunity-to-falling-damage"
+      ]
+    },
+    {
+      "id": "altitude-acclimation",
+      "name": "Altitude Acclimation",
+      "description": "You are naturally acclimated to high altitudes, including elevations above 20,000 feet, even if you have never visited them. You do not incur high-altitude travel penalties that arise solely from a lack of acclimation, and spending time at lower elevations does not remove this adaptation. You must still breathe normally and are not protected from extreme cold, unrelated environmental hazards, or loss of air.",
+      "naturallyAcclimated": true,
+      "altitudeLimitFeet": null,
+      "includesElevationAboveFeet": 20000,
+      "maintainsAcclimationAtLowerElevations": true,
+      "ignores": "penalties-from-unacclimated-high-altitude-travel",
+      "doesNotGrant": [
+        "cold-damage-resistance",
+        "extreme-cold-immunity",
+        "suffocation-immunity",
+        "protection-from-other-hazards"
+      ]
+    },
+    {
+      "id": "giant-ancestry-aptitude",
+      "name": "Giant Ancestry Aptitude",
+      "description": "When you select a Goliath Ancestry, choose Strength or Constitution as the ability governing inherited giant-ancestry effects that require a saving throw or attack modifier. The chosen modifier is used for those abilities, including advanced features unlocked later. This choice does not grant any proficiency, ability-score increase or additional use of another feature.",
+      "requiredCharacterLevel": 1,
+      "abilityChoice": {
+        "from": [
+          "strength",
+          "constitution"
+        ],
+        "when": "goliath-ancestry-selection",
+        "perCharacter": true
+      },
+      "savingThrowDC": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+      "attackModifier": "proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+      "doesNotGrant": [
+        "ability-score-increase",
+        "feat-selection",
+        "proficiency",
+        "extra-use-pool"
+      ]
+    }
+  ],
+  "reviewNotes": [
+    "Powerful Build grants advantage on ability checks to end Grappled, not an automatic 3.5e opposed-grapple size modifier or oversized-weapon permission. Exact interplay with the native opposed grapple procedure remains part of combat-integration review.",
+    "Large Form uses the native actual Large size category, not historical automatic 3.5e AC/grapple modifiers; reach and occupancy follow the native spatial rules.",
+    "The standing-jump portion of 3.5e Mountain Movement and high-altitude acclimation are selected. No compulsory Ordning status or Upbringing choice is granted by biology.",
+    "Giant creature type selected in the comparative Species review. Size remains Medium. Giant-specific targeting applies, but Giant monster stat-block defaults and Humanoid targeting via hierarchy parentage are not automatically inherited."
+  ],
+  "defaultUpbringing": "upbringing.goliath.general"
+}

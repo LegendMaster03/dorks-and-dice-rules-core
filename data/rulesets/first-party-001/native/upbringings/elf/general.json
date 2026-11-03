@@ -1,0 +1,23 @@
+{
+  "id": "upbringing.elf.general",
+  "name": "General Elf Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "elvish",
+      "description": "Learn Elvish.",
+      "language": "elvish"
+    },
+    {
+      "id": "cultural-training",
+      "description": "Choose one skill training.",
+      "chooseOne": [
+        "insight",
+        "perception",
+        "survival"
+      ]
+    }
+  ]
+}

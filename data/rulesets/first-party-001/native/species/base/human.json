@@ -1,0 +1,53 @@
+{
+  "id": "species.human",
+  "name": "Human",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "creatureType": "humanoid",
+  "sizeChoice": {
+    "from": [
+      "small",
+      "medium"
+    ],
+    "when": "character-creation"
+  },
+  "walkingSpeedFeet": 30,
+  "traits": [
+    {
+      "id": "skillful",
+      "name": "Skillful",
+      "description": "At character creation, choose one additional Skill in which you gain proficiency. This choice is separate from your additional skill ranks and from any Upbringing benefits.",
+      "grantType": "skill-proficiency",
+      "chooseFrom": "any-native-skill",
+      "choiceCount": 1,
+      "when": "character-creation"
+    },
+    {
+      "id": "versatile",
+      "name": "Versatile",
+      "description": "At character creation, choose one additional Origin feat. This choice is in addition to any feat granted by your other character-creation selections.",
+      "grantType": "feat-choice",
+      "featCategory": "origin",
+      "choiceCount": 1,
+      "when": "character-creation"
+    },
+    {
+      "id": "adaptable-learning",
+      "name": "Adaptable Learning",
+      "description": "Gain four additional skill ranks to allocate at character level 1. At each subsequent character level, gain one additional skill rank to allocate. These ranks supplement normal advancement and are allocated by the player under the usual skill-rank limits.",
+      "additionalRanksAtCharacterLevel1": 4,
+      "additionalRanksPerSubsequentCharacterLevel": 1,
+      "allocation": "player-choice",
+      "obeysNormalSkillRankLimits": true
+    }
+  ],
+  "reviewNotes": [
+    "The three Human customization benefits are cumulative rather than mutually exclusive and are part of the approved first-pass Species baseline.",
+    "Resourceful and Heroic Inspiration remain source candidates, not granted native traits, until the general Inspiration rule is reconciled.",
+    "How additional skill-rank entitlements and one selectable proficiency are enforced by the common character-advancement/projector contracts remains an integration question; they are independent benefits and may not circumvent ordinary skill-rank limits.",
+    "The Origin feat entitlement is selected as a rule but the final Origin feat catalog, qualification rules and native character integration remain part of the Feats pass.",
+    "Humans have no mandatory Ancestry or default Upbringing. Learned languages, local traditions and cultural benefits belong to independently selectable Upbringings.",
+    "No ability-score increase is granted by Human Species; ability-score allocation and comparative balance remain separate reconciliation topics."
+  ]
+}

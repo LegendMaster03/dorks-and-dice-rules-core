@@ -78,6 +78,14 @@ class NativeSrdBaselineTests(unittest.TestCase):
                     self.assertEqual({c["id"] for c in conditions},
                                      set(native["conditionIds"]))
                 continue
+            if row["status"] == "approved-native-reconciled":
+                self.assertTrue(path.is_relative_to(AUTHORITATIVE), relative)
+                self.assertNotIn("baselineStatus", native, cid)
+                self.assertNotIn("candidateDefinitions", native, cid)
+                self.assertEqual({"race": "species", "subrace": "subspecies"}.get(row["kind"], row["kind"]), native["kind"], cid)
+                self.assertIn("name", native, cid)
+                self.assertEqual("selected-native", native.get("status"), cid)
+                continue
             if row["status"] == "matching-candidates":
                 self.assertNotIn("candidateDefinitions", native, cid)
                 self.assertNotIn("baselineStatus", native, cid)
@@ -165,7 +173,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
     def test_class_species_parent_structure(self):
         classes = {p.stem for p in (WORKING / "classes/base").glob("*.json")}
-        species = {p.stem for p in (WORKING / "species/base").glob("*.json")}
+        species = {p.stem for p in (WORKING / "species/base").glob("*.json")} | {p.stem for p in (AUTHORITATIVE / "species/base").glob("*.json")}
         self.assertEqual(12, len(classes))
         self.assertGreaterEqual(len(species), 10)
         for p in (WORKING / "classes/subclasses").glob("*/*.json"):
@@ -179,12 +187,215 @@ class NativeSrdBaselineTests(unittest.TestCase):
             self.assertIn(p.parent.name, species)
             self.assertEqual("subspecies." + p.parent.name + "." + p.stem, d["id"])
 
+    def test_selected_species_subspecies_and_upbringings_have_stable_parents(self):
+        native = AUTHORITATIVE
+        species_defs = {
+            r["id"]: r
+            for p in (native / "species/base").rglob("*.json")
+            for r in [load(p)]
+        }
+        subspecies_defs = {
+            r["id"]: r
+            for p in (native / "species/ancestry").rglob("*.json")
+            for r in [load(p)]
+        }
+        upbringings = {
+            r["id"]: r
+            for p in (native / "upbringings").rglob("*.json")
+            for r in [load(p)]
+        }
+        self.assertGreaterEqual(len(species_defs), 4)
+        self.assertGreaterEqual(len(subspecies_defs), 29)
+        self.assertGreaterEqual(len(upbringings), 8)
+        all_species = species_defs | subspecies_defs
+        for item in subspecies_defs.values():
+            self.assertIn(item["parent"], all_species)
+        for item in upbringings.values():
+            self.assertNotIn("defaultFor", item, item["id"])
+            if "parent" in item:
+                self.assertIn(item["parent"], upbringings)
+        for item in all_species.values():
+            if "defaultUpbringing" in item:
+                reference = item["defaultUpbringing"]
+                self.assertIn(reference, upbringings, item["id"])
+                self.assertTrue(upbringings[reference]["selectable"], reference)
+
+        expected_defaults = {
+            "species.dwarf": "upbringing.dwarf.general",
+            "species.elf": "upbringing.elf.general",
+            "species.gnome": "upbringing.gnome.general",
+            "species.goliath": "upbringing.goliath.general",
+            "ancestry.elf.high": "upbringing.elf.high",
+            "ancestry.elf.wood": "upbringing.elf.wood",
+            "ancestry.elf.drow": "upbringing.elf.drow",
+            "ancestry.gnome.forest": "upbringing.gnome.forest",
+            "ancestry.gnome.rock": "upbringing.gnome.rock",
+        }
+        self.assertEqual(
+            expected_defaults,
+            {id: item["defaultUpbringing"] for id, item in all_species.items()
+             if "defaultUpbringing" in item}
+        )
+
+        def nearest_default(id):
+            current = id
+            while current is not None:
+                record = all_species[current]
+                if "defaultUpbringing" in record:
+                    return record["defaultUpbringing"]
+                current = record.get("parent")
+            return None
+
+        self.assertEqual("upbringing.dwarf.general", nearest_default("ancestry.dwarf.hill"))
+        self.assertEqual("upbringing.elf.high", nearest_default("ancestry.elf.high"))
+        self.assertEqual("upbringing.gnome.forest", nearest_default("ancestry.gnome.forest"))
+        for giant_type in ("cloud", "fire", "frost", "hill", "stone", "storm"):
+            self.assertEqual("upbringing.goliath.general",
+                             nearest_default("ancestry.goliath." + giant_type))
+        self.assertIsNone(nearest_default("ancestry.halfling.lightfoot"))
+        self.assertFalse({"species.half-elf", "species.half-orc"} & set(species_defs))
+        policy = load(native / "rules/species-subspecies-upbringing.json")["upbringings"]
+        self.assertEqual("defaultUpbringing", policy["defaultField"])
+        self.assertEqual(1, policy["selectedCount"])
+        self.assertFalse(policy["speciesRestrictionsByDefault"])
+        for records in (species_defs | subspecies_defs, upbringings):
+            for id in records:
+                visited = set()
+                cursor = id
+                while cursor in records and "parent" in records[cursor]:
+                    self.assertNotIn(cursor, visited, cursor)
+                    visited.add(cursor)
+                    cursor = records[cursor]["parent"]
+                self.assertIn(cursor, records)
+
+    def test_approved_dragonborn_shared_baseline_and_source_promotion(self):
+        path = AUTHORITATIVE / "species/base/dragonborn.json"
+        dragonborn = load(path)
+        self.assertEqual("species.dragonborn", dragonborn["id"])
+        self.assertFalse(dragonborn["selectable"])
+        self.assertEqual("dragon", dragonborn["creatureType"])
+        self.assertEqual("medium", dragonborn["size"])
+        self.assertEqual(30, dragonborn["walkingSpeedFeet"])
+        self.assertNotIn("darkvisionFeet", dragonborn)
+        traits = {x["id"]: x for x in dragonborn["traits"]}
+        self.assertEqual({"low-light-vision", "draconic-resistance", "breath-weapon"}, set(traits))
+        self.assertEqual("rule.low-light-vision", traits["low-light-vision"]["rule"])
+        self.assertEqual(50, traits["draconic-resistance"]["damageResistance"]["percent"])
+        breath = traits["breath-weapon"]
+        self.assertEqual("one-attack", breath["activation"]["replaces"])
+        self.assertEqual("proficiency-bonus", breath["uses"]["value"])
+        self.assertEqual("long-rest", breath["uses"]["recharge"])
+        self.assertEqual("dexterity", breath["savingThrow"]["ability"])
+        self.assertEqual("8 + proficiency-bonus + constitution-modifier", breath["savingThrow"]["dc"])
+        self.assertEqual("half-damage", breath["savingThrow"]["onSuccess"])
+        self.assertEqual([(1, "1d10"), (5, "2d10"), (11, "3d10"), (17, "4d10")],
+                         [(x["characterLevel"], x["dice"]) for x in breath["damage"]["progression"]])
+        self.assertEqual("selected-dragonborn-family-or-leaf", breath["areaFrom"])
+        self.assertNotIn("shape", breath)
+        self.assertFalse((WORKING / "species/base/dragonborn.json").exists())
+        row = next(r for r in self.entries if r["nativeId"] == "species.dragonborn")
+        self.assertEqual("approved-native-reconciled", row["status"])
+        self.assertEqual("data/rulesets/first-party-001/native/species/base/dragonborn.json",
+                         row["path"])
+
+    def test_approved_chromatic_dragonborn_family_and_five_leaves(self):
+        base = AUTHORITATIVE / "species/ancestry/dragonborn"
+        chromatic = load(base / "chromatic.json")
+        self.assertEqual("ancestry.dragonborn.chromatic", chromatic["id"])
+        self.assertEqual("species.dragonborn", chromatic["parent"])
+        self.assertFalse(chromatic["selectable"])
+        self.assertEqual({"shape": "line", "lengthFeet": 30, "widthFeet": 5},
+                         chromatic["breathWeaponArea"])
+        self.assertEqual(1, len(chromatic["traits"]))
+        warding = chromatic["traits"][0]
+        self.assertEqual("chromatic-warding", warding["id"])
+        self.assertEqual(5, warding["requiredCharacterLevel"])
+        self.assertEqual("action", warding["activation"]["action"])
+        self.assertEqual(1, warding["duration"]["minutes"])
+        self.assertEqual({"value": 1, "recharge": "long-rest"}, warding["uses"])
+        self.assertEqual(100, warding["damageResistanceOverride"]["percent"])
+        self.assertEqual("selected-dragonborn-leaf",
+                         warding["damageResistanceOverride"]["damageTypeFrom"])
+        self.assertEqual("replace-lower-same-type",
+                         warding["damageResistanceOverride"]["stacking"])
+        self.assertTrue(warding["doesNotGrantConditionImmunity"])
+
+        expected_damage_types = {
+            "black": "acid", "blue": "lightning", "green": "poison",
+            "red": "fire", "white": "cold"
+        }
+        actual = {p.stem for p in (base / "chromatic").glob("*.json")}
+        self.assertEqual(set(expected_damage_types), actual)
+        leaves = {
+            slug: load(base / "chromatic" / (slug + ".json"))
+            for slug in expected_damage_types
+        }
+        for slug, leaf in leaves.items():
+            self.assertEqual("ancestry.dragonborn." + slug, leaf["id"])
+            self.assertEqual("ancestry.dragonborn.chromatic", leaf["parent"])
+            self.assertEqual("ancestry", leaf["kind"])
+            self.assertTrue(leaf["selectable"])
+            self.assertEqual("selected-native", leaf["status"])
+            self.assertEqual(expected_damage_types[slug], leaf["damageType"])
+            self.assertNotIn("defaultUpbringing", leaf)
+            self.assertNotIn("breathWeaponArea", leaf)
+            self.assertNotIn("flyingSpeedFeet", leaf)
+            if slug != "white":
+                self.assertNotIn("swimmingSpeedFeet", leaf)
+            if slug != "red":
+                self.assertNotIn("climbingSpeedFeet", leaf)
+
+        for slug in ("black", "green"):
+            amphibious = leaves[slug]["traits"][0]
+            self.assertEqual("amphibious", amphibious["id"])
+            self.assertEqual(["air", "water"], amphibious["canBreathe"])
+            self.assertFalse(amphibious["grantsSwimSpeed"])
+
+        blue = leaves["blue"]["traits"][0]
+        self.assertEqual("displaced-voice", blue["id"])
+        self.assertEqual("action", blue["activation"]["action"])
+        self.assertTrue(blue["atWill"])
+        self.assertEqual(30, blue["rangeFeet"])
+        self.assertEqual("own-vocal-sounds", blue["soundSource"])
+        self.assertEqual("while-speaking-during-action", blue["duration"])
+        self.assertFalse(blue["visualEffect"])
+        self.assertFalse(blue["guaranteesDeception"])
+
+        red = leaves["red"]
+        self.assertEqual(15, red["climbingSpeedFeet"])
+        self.assertEqual("natural-climber", red["traits"][0]["id"])
+        self.assertIn("spider-climb", red["traits"][0]["doesNotGrant"])
+
+        white = leaves["white"]
+        self.assertEqual(15, white["swimmingSpeedFeet"])
+        self.assertEqual({"icewalker", "coldwater-swimmer"},
+                         {t["id"] for t in white["traits"]})
+        icewalker = next(t for t in white["traits"] if t["id"] == "icewalker")
+        self.assertEqual("ordinary-slippery-ice-alone",
+                         icewalker["slipperyIceSaveExemption"]["trigger"])
+        self.assertEqual("dexterity",
+                         icewalker["slipperyIceSaveExemption"]["savingThrow"])
+        self.assertEqual("prone", icewalker["slipperyIceSaveExemption"]["effect"])
+        self.assertTrue(icewalker["doesNotNegateOtherHazards"])
+        swimmer = next(t for t in white["traits"] if t["id"] == "coldwater-swimmer")
+        self.assertEqual(15, swimmer["speedFeet"])
+        self.assertFalse(swimmer["grantsWaterBreathing"])
+
+        # The staged SRD template includes unresolved Metallic variants and
+        # must not be deleted merely because Chromatic leaves are selected.
+        historical = WORKING / "species/subspecies/dragonborn/unnamed-1a909417769c0dff.json"
+        self.assertTrue(historical.is_file())
+        row = next(r for r in self.entries
+                   if r["nativeId"] == "subspecies.dragonborn.unnamed-1a909417769c0dff")
+        self.assertEqual("single-candidate", row["status"])
+        self.assertIn("working/species/subspecies/dragonborn/", row["path"])
+
     def test_large_entities_have_full_candidate_records_and_merged_lore(self):
         for path, expected in [
             # Wizard is now an approved native definition, not a staged candidate.
             ("classes/subclasses/monk/open-hand.json", 2),
             ("spells/acid-splash.json", 2),
-            ("species/base/dragonborn.json", 2),
+            # Dragonborn base was promoted to native; pinned source preserved in reference.
 
         ]:
             d = load(WORKING / path)
@@ -208,7 +419,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
             ".github/workflows/finalize-native-srd-baseline.yml",
         ]:
             self.assertFalse((ROOT / f).exists(), f)
-        self.assertEqual("native-coverage-staged; all source-marked entities present; decisions pending",
+        self.assertEqual("native-coverage-staged; pinned SRD evidence retained; approved reconciliations promoted individually",
                          self.coverage["status"])
 
 

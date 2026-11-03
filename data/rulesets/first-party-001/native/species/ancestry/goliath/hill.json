@@ -1,0 +1,83 @@
+{
+  "id": "ancestry.goliath.hill",
+  "name": "Hill Goliath",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.goliath",
+  "traits": [
+    {
+      "id": "hills-tumble",
+      "name": "Hill's Tumble",
+      "description": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can knock that creature Prone. No additional saving throw is specified. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+      "targetMaximumSize": "large",
+      "applyCondition": "condition.prone",
+      "additionalSavingThrow": false,
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      },
+      "alternateStrikeMode": {
+        "id": "hill-strike",
+        "name": "Hill Strike",
+        "description": "Instead of Hill's Tumble's automatic Prone effect against a Large or smaller target, on a melee or thrown-weapon hit that deals damage you can deal another 1d6 damage of the weapon's type. If the target is a creature, it makes a Strength saving throw or becomes Prone. This mode does not have Hill's Tumble's Large-size cap, but Prone is save-dependent. Spend one existing Hill's Tumble use, not an additional use.",
+        "trigger": "melee-weapon-or-thrown-weapon-attack-hit-and-deal-damage",
+        "oncePerTurn": true,
+        "replaces": "hills-tumble-automatic-prone",
+        "extraDamage": {
+          "dice": "1d6",
+          "damageTypeFrom": "triggering-weapon"
+        },
+        "savingThrow": {
+          "ability": "strength",
+          "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+          "onSuccess": "no-prone"
+        },
+        "applyConditionOnFailedSave": "condition.prone",
+        "targetMaximumSize": null,
+        "sharedUsesFromTrait": "hills-tumble",
+        "extraUsesGranted": false
+      }
+    },
+    {
+      "id": "bulwark",
+      "name": "Bulwark",
+      "requiredCharacterLevel": 4,
+      "description": "When an effect would move you at least 5 feet against your will or make you Prone, you can use your Reaction to prevent the movement and Prone from that triggering effect. This costs a Reaction but has no separate use limit.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "effect-would-forcibly-move-you-at-least-5-feet-or-make-you-prone"
+      },
+      "prevents": {
+        "forcedMovementFromTrigger": true,
+        "applyConditionFromTrigger": "condition.prone"
+      },
+      "atWill": true,
+      "doesNotGrant": [
+        "immunity-to-all-forced-movement",
+        "extra-reaction"
+      ]
+    },
+    {
+      "id": "iron-stomach",
+      "name": "Iron Stomach",
+      "requiredCharacterLevel": 4,
+      "description": "When you eat food during a Short Rest and spend at least one Hit Die to recover hit points, regain additional hit points equal to your Constitution modifier plus Proficiency Bonus. Apply this additional healing once per qualifying Short Rest, not once per Hit Die.",
+      "trigger": "during-short-rest-with-food-and-at-least-one-hit-die-spent",
+      "extraHealing": "constitution-modifier + proficiency-bonus",
+      "oncePerShortRest": true,
+      "perHitDie": false
+    }
+  ],
+  "reviewNotes": [
+    "SRD 5.2.1 Giant Ancestry adapted into one selectable Ancestry, not six independent options granted to every Goliath.",
+    "Inherits Powerful Build, Large Form, size and Speed from species.goliath; the chosen ancestry boon uses Proficiency Bonus activations per Long Rest.",
+    "Applies the Dorks & Dice native Prone condition; monitor comparative balance with other ancestries during the first playtest.",
+    "Selected for first-pass playtesting: each ancestry's Strike-derived early mode is merged with the SRD boon instead of granting an independent Strike of the Giants feat; Fire's Burn already contains Fire Strike.",
+    "Early Strike modes share the original ancestry's Proficiency Bonus uses per Long Rest and never grant an extra use pool. Modes with Bigby's weapon-hit restriction retain that restriction; core SRD boons are not narrowed.",
+    "Advanced inherited features unlock at total character level 4. Their source-feat prerequisites and +1 Ability Score Increase are not additional grants; save/attack modifiers use the Goliath's selected giant ancestry aptitude.",
+    "Other feats, rune training and giant cultural backgrounds remain independent options and are not automatically provided by Species inheritance.",
+    "hill Goliath's advanced features were adapted from the corresponding *Bigby Presents: Glory of the Giants* giant feat; cultural and rune feats remain separate. No feat or ability-score-increase entitlement is awarded."
+  ]
+}

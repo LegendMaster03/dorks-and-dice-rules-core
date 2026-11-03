@@ -1,0 +1,52 @@
+{
+  "id": "species.elf",
+  "name": "Elf",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "traits": [
+    {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
+    {
+      "id": "keen-senses",
+      "description": "Gain +2 Listen and +2 Spot. Existing Perception composite calculation uses these bonuses.",
+      "skillBonuses": {
+        "skill.listen": 2,
+        "skill.spot": 2
+      }
+    },
+    {
+      "id": "fey-ancestry",
+      "description": "Advantage on saving throws to resist or end Charmed.",
+      "savingThrows": {
+        "advantageAgainst": [
+          "condition.charmed"
+        ]
+      }
+    },
+    {
+      "id": "trance",
+      "description": "Complete a Long Rest through four hours of trancelike meditation. Elves do not need to sleep.",
+      "longRestHours": 4,
+      "sleepRequired": false
+    },
+    {
+      "id": "magical-sleep",
+      "description": "Immune to magical sleep that is not willingly accepted. Can consent to a specific magical sleep effect; this is not a general immunity toggle."
+    }
+  ],
+  "creatureType": "fey",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "reviewNotes": [
+    "Historical Search bonus remains unresolved.",
+    "Speed and overall trait balance will be compared with other Species.",
+    "Native Low-Light Vision replaces base 60-foot Darkvision in the approved comparative vision review; a specifically darkness-adapted Ancestry can still grant Darkvision.",
+    "Creature type Fey selected in the nine-Species comparative review. Explicit Fey targeting eligibility applies, but monster Outsider/Fey defaults (Hit Dice, vision, senses, competencies, and biological needs) are not automatically granted to playable characters."
+  ],
+  "defaultUpbringing": "upbringing.elf.general"
+}

@@ -6,9 +6,9 @@
   "entries": [
     {
       "id": "rule.creature-type-inheritance",
-      "name": "Creature types and inherited defaults",
+      "name": "Creature types, universal classification, and stat-block defaults",
       "kind": "rule",
-      "description": "One selected, edition-independent creature-type hierarchy for new native creature definitions; existing reviewed monster statistics are not recomputed automatically.",
+      "description": "A single creature-type taxonomy serves all creatures, including playable Species. Creature-type targeting and identity are universal; inherited monster/NPC stat-block defaults are not automatic player-character benefits.",
       "genericParent": {
         "id": "creature",
         "name": "Creature",
@@ -25,13 +25,13 @@
         "description": "Universal creature mechanics. No arbitrary ability score, speed, Hit Die count, or fixed Hit Die size."
       },
       "inheritance": {
-        "model": "Generic Creature parent; typed descendants may inherit and override properties. Creature families and individual definitions can be further descendants.",
+        "model": "Type hierarchy defines classification and stat-block-default inheritance. Species/Ancestry grant character traits independently; playable Species may use any creature type.",
         "multipleInheritance": true,
-        "classification": "Mechanical inheritance and type-sensitive targeting identity are distinct. Explicit effective type eligibility controls targeting; do not infer every ancestor or shared mixin as a target type.",
-        "typeEligibilityResolution": "Deferred until multi-type targeting rules are finalized; no automatic change to existing creature targeting eligibility.",
+        "classification": "Type classification, including type-specific spell and ability targeting, applies to every creature. Classification and inherited monster-statblock defaults are independent. Explicit effective type eligibility controls targeting; a parent type does not automatically count as a separate target type.",
+        "typeEligibilityResolution": "Multiple effective creature-type targeting remains deferred; a single explicitly assigned type is eligible for effects targeting that type regardless of whether the creature is a monster or player character.",
         "existingStatblocks": "Keep previously reconciled 5.x statistics and effective traits intact during migration; explicit creature overrides preserve differences.",
-        "strengths": "Fortitude, Reflex, and Will are separate native saving throws from Constitution, Dexterity, and Wisdom; type defaults establish competency, not a numerical formula.",
-        "sharedTraits": "Store common properties at the appropriate ancestor; leave more specific or exceptional traits to descendants."
+        "strengths": "Fortitude, Reflex, and Will are independent from Constitution, Dexterity, and Wisdom. Type-derived default competencies apply to monster/NPC stat-block construction, not automatically to player-character advancement.",
+        "sharedTraits": "Creature-type default properties are available for monster/NPC stat-block construction; player characters receive benefits only from explicit Species, Ancestry, Class, and other character grants."
       },
       "typeIds": [
         "creature-type.outsider",
@@ -61,7 +61,32 @@
         "Overlapping-type targeting semantics",
         "Additional historical immunities that depend on unreconciled combat rules",
         "Runtime inheritance resolver"
-      ]
+      ],
+      "applicationScope": {
+        "creatureTypeClassification": "all-creatures-including-player-characters",
+        "typeBasedEffectEligibility": "all-creatures-based-on-explicit-effective-type",
+        "playableSpecies": {
+          "permittedCreatureTypes": "all-defined-creature-types",
+          "eligibilityDeterminedBy": "species-and-required-ancestry-selection",
+          "noMonsterTypeExclusion": true
+        },
+        "monsterAndNpcStatblockDefaults": {
+          "appliesDuring": "monster-or-npc-stat-block-construction",
+          "fields": [
+            "hitDie",
+            "senses",
+            "needs",
+            "savingThrowDefaults",
+            "weaponCompetencies",
+            "naturalWeaponCompetency",
+            "damageModifiers",
+            "conditionImmunities"
+          ],
+          "doesNotAutomaticallyGrantToPlayableCharacters": true,
+          "speciesAndCharacterGrants": "Explicit Species, Ancestry, Class, and other applicable player-character rules determine traits, Hit Dice, biological needs, senses, competencies, resistances and immunities.",
+          "existingMonsterStatblocksUnchanged": true
+        }
+      }
     },
     {
       "id": "creature-type.outsider",

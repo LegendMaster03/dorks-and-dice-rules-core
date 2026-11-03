@@ -1,0 +1,61 @@
+{
+  "id": "ancestry.tiefling.chthonic",
+  "name": "Chthonic Tiefling",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.tiefling",
+  "ancestryTheme": "Chthonic fiendish ancestry",
+  "spellcastingAbilityChoice": [
+    "intelligence",
+    "wisdom",
+    "charisma"
+  ],
+  "traits": [
+    {
+      "id": "chthonic-resistance",
+      "name": "Chthonic Resistance",
+      "description": "You have 50 percent resistance to necrotic damage.",
+      "damageResistance": {
+        "percent": 50,
+        "damageType": "necrotic"
+      }
+    },
+    {
+      "id": "chill-touch",
+      "name": "Chill Touch",
+      "description": "At character level 1, know Chill Touch and cast it at will.",
+      "spell": "chill-touch",
+      "level": 1,
+      "atWill": true
+    },
+    {
+      "id": "false-life",
+      "name": "False Life",
+      "description": "At character level 3, always have False Life available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
+      "spell": "false-life",
+      "level": 3,
+      "alwaysPrepared": true,
+      "freeUses": 1,
+      "recharge": "long-rest",
+      "slotCasting": true
+    },
+    {
+      "id": "ray-of-enfeeblement",
+      "name": "Ray Of Enfeeblement",
+      "description": "At character level 5, always have Ray Of Enfeeblement available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
+      "spell": "ray-of-enfeeblement",
+      "level": 5,
+      "alwaysPrepared": true,
+      "freeUses": 1,
+      "recharge": "long-rest",
+      "slotCasting": true
+    }
+  ],
+  "reviewNotes": [
+    "Inherits Fiend (Native), normal biological needs, Low-Light Vision and Thaumaturgy from species.tiefling.",
+    "Choose Intelligence, Wisdom or Charisma when selecting this ancestry. The choice governs all granted Tiefling spells, including Thaumaturgy.",
+    "Level 3 and level 5 spells have independent once-per-Long-Rest free castings; appropriate spell slots can be used additionally.",
+    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting."
+  ]
+}

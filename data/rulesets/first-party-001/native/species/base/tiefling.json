@@ -1,0 +1,55 @@
+{
+  "id": "species.tiefling",
+  "name": "Tiefling",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": false,
+  "creatureType": "fiend",
+  "sizeChoice": {
+    "from": [
+      "small",
+      "medium"
+    ],
+    "when": "character-creation"
+  },
+  "walkingSpeedFeet": 30,
+  "needs": {
+    "breathing": true,
+    "food": true,
+    "sleep": true
+  },
+  "ancestrySelection": {
+    "required": true,
+    "selectOneFrom": [
+      "ancestry.tiefling.abyssal",
+      "ancestry.tiefling.chthonic",
+      "ancestry.tiefling.infernal"
+    ]
+  },
+  "traits": [
+    {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit vision through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
+    {
+      "id": "otherworldly-presence",
+      "name": "Otherworldly Presence",
+      "description": "Know Thaumaturgy at character level 1 and cast it at will. Use the spellcasting ability chosen for your Fiendish Ancestry.",
+      "spell": "thaumaturgy",
+      "level": 1,
+      "atWill": true,
+      "spellcastingAbilityFrom": "selected-tiefling-ancestry"
+    }
+  ],
+  "reviewNotes": [
+    "Tiefling is classified as Fiend, not Humanoid, and is playable through one of its three required Fiendish Ancestry leaves. The Fiend classification applies to type-based targeting independent of alignment.",
+    "Ordinary mortal needs (breathing, food, and sleep) are explicitly defined by Tiefling Species. Fiend classification does not add a Humanoid type or import Outsider monster stat-block defaults.",
+    "Low-Light Vision supersedes the older 60-foot Darkvision; no automatic Sunlight Sensitivity is granted. Future specialized darkness-adapted ancestry remains a separate decision.",
+    "The three Ancestries retain distinct 50-percent damage resistance types and inherited spell progressions. Thaumaturgy is shared and its casting ability follows the chosen Ancestry.",
+    "No alignment restriction, automatic Infernal/Abyssal language, or required cultural Upbringing. Ability-score adjustments and comparative balance are deferred.",
+    "Historical 3.5e resistance 5 to cold/electricity/fire and Bluff/Hide bonuses remain research evidence rather than cumulative native benefits; optional Tiefling Ancestry variants remain deferred.",
+    "Additional spellcasting, creature-type targeting, and native character projector implementation remain later integration work; this JSON is the authoritative provisional rules baseline."
+  ]
+}

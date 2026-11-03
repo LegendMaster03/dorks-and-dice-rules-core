@@ -1,0 +1,31 @@
+{
+  "id": "upbringing.elf.wood",
+  "name": "Wood Elf Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "woodland-archery",
+      "description": "Gain proficiency with shortbow and longbow.",
+      "weaponProficiencies": [
+        "shortbow",
+        "longbow"
+      ]
+    },
+    {
+      "id": "woodland-fieldcraft",
+      "description": "Gain +2 to Survival checks for forest navigation, tracking, foraging and identifying natural woodland hazards. The activity must qualify, not merely the location.",
+      "skill": "survival",
+      "bonus": 2,
+      "scope": [
+        "forest-navigation",
+        "forest-tracking",
+        "forest-foraging",
+        "natural-woodland-hazards"
+      ],
+      "stacksWithTraining": true
+    }
+  ],
+  "parent": "upbringing.elf.general"
+}

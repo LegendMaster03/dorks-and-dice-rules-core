@@ -1,0 +1,36 @@
+{
+  "id": "ancestry.dragonborn.silver",
+  "name": "Silver Dragonborn",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "ancestry.dragonborn.metallic",
+  "damageType": "cold",
+  "traits": [
+    {
+      "id": "soft-landing",
+      "name": "Soft Landing",
+      "description": "When you fall, you can use your Reaction to slow your own descent to 60 feet per round for up to 1 minute. If you land during this effect, you take no damage from the fall and the effect ends. You can use this trait at will. It does not protect another creature or grant flight or hovering.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "when-you-fall"
+      },
+      "atWill": true,
+      "targets": "self",
+      "fallingSpeedFeetPerRound": 60,
+      "duration": {
+        "minutes": 1
+      },
+      "endsOnLanding": true,
+      "preventsFallingDamageOnLanding": true,
+      "protectsOtherCreatures": false,
+      "grantsFlight": false,
+      "grantsHover": false
+    }
+  ],
+  "reviewNotes": [
+    "Inherits shared Dragonborn and nonselectable Metallic family traits via explicit stable parent IDs.",
+    "No cultural Upbringing default is selected until independent Dragonborn Upbringing reconciliation.",
+    "Comparative playtest balance of the individual innate adaptation remains open to later revision."
+  ]
+}

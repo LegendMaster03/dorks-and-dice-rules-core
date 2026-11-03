@@ -1,0 +1,93 @@
+{
+  "id": "species.orc",
+  "name": "Orc",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "creatureType": "humanoid",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "traits": [
+    {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
+    {
+      "id": "adrenaline-rush",
+      "name": "Adrenaline Rush",
+      "description": "As a Bonus Action, take the Dash action and gain Temporary Hit Points equal to your Proficiency Bonus. You can use this trait a number of times equal to your Proficiency Bonus, regaining all expended uses after a Short Rest or Long Rest.",
+      "activation": {
+        "action": "bonus-action",
+        "grantsAction": "dash"
+      },
+      "temporaryHitPoints": {
+        "value": "proficiency-bonus"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "short-or-long-rest"
+      }
+    },
+    {
+      "id": "relentless-endurance",
+      "name": "Relentless Endurance",
+      "description": "When you would be reduced to 0 Hit Points but are not killed outright, you can remain at 1 Hit Point instead. After using this trait, you must finish a Long Rest before using it again.",
+      "trigger": "reduced-to-zero-hit-points-but-not-killed-outright",
+      "hitPointsInstead": 1,
+      "uses": {
+        "value": 1,
+        "recharge": "long-rest"
+      }
+    },
+    {
+      "id": "powerful-build",
+      "name": "Powerful Build",
+      "description": "Count as one size larger when determining carrying capacity and how much weight you can push, drag, or lift. This does not change your actual size, occupied space, reach, weapon permissions, or grapple modifiers, and does not grant the Goliath's advantage on checks to end Grappled.",
+      "effectiveSizeCategoriesHigherForCarryingCapacity": 1,
+      "effectiveSizeCategoriesHigherForPushingDraggingLifting": 1,
+      "doesNotChange": [
+        "actual-size",
+        "occupied-space",
+        "attack-reach",
+        "weapon-permissions",
+        "grapple-size-modifiers"
+      ],
+      "doesNotGrant": [
+        "advantage-on-checks-to-end-grappled"
+      ]
+    },
+    {
+      "id": "savage-attacks",
+      "name": "Savage Attacks",
+      "description": "When you score a critical hit with a melee weapon attack, roll one additional die of the weapon's damage and add it to the critical hit's damage. The interaction with optional critical escalation and damage maximization is subject to the shared critical-rules review.",
+      "trigger": "critical-hit-with-melee-weapon-attack",
+      "bonusDamageDice": {
+        "count": 1,
+        "dieFrom": "weapon-damage-die"
+      },
+      "requiresCriticalHit": true
+    },
+    {
+      "id": "menacing-presence",
+      "name": "Menacing Presence",
+      "description": "Gain Advantage on Intimidation checks when you use your physical presence, appearance, or stature to intimidate a creature that can perceive it. This does not grant Intimidation proficiency or apply to unrelated social intimidation.",
+      "skillCheckAdvantage": {
+        "skill": "skill.intimidation",
+        "when": "physical-appearance-stature-or-presence-used-to-intimidate",
+        "requiresTargetCanPerceivePresence": true
+      },
+      "grantsSkillProficiency": false
+    }
+  ],
+  "reviewNotes": [
+    "Low-Light Vision, as defined by rule.low-light-vision, replaces the SRD 5.2.1 Orc's 120-foot Darkvision. Base Orc has no Sunlight Sensitivity or other daylight penalty. Future darkness-adapted Orc Ancestry can be reconciled separately.",
+    "Adrenaline Rush retains the SRD 5.2.1 Bonus Action Dash, Proficiency Bonus Temporary Hit Points, Proficiency Bonus uses, and Short or Long Rest recharge. Older Aggressive is not granted separately.",
+    "Powerful Build restores carrying/pushing/dragging/lifting size equivalence without Goliath's additional grapple-escape advantage or automatic 3.x size modifiers.",
+    "Savage Attacks is adapted from SRD 5.1 Half-Orc source evidence, without introducing Half-Orc as a distinct Species. Its interaction with optional critical-escalation tiers and maximization remains under review.",
+    "Menacing Presence represents a contextual physical trait instead of an unconditional learned Intimidation proficiency.",
+    "Orc is directly selectable with no mandatory Ancestry or default Upbringing. Languages, traditions and training remain independently selectable cultural benefits.",
+    "Comparative Species balance and any future Orc Ancestry variants remain open."
+  ]
+}

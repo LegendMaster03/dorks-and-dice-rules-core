@@ -1,0 +1,17 @@
+{
+  "id": "upbringing.gnome.general",
+  "name": "General Gnome Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "gnomish",
+      "description": "Learn Gnomish.",
+      "language": "gnomish"
+    }
+  ],
+  "reviewNotes": [
+    "Shared cultural knowledge was approved in principle; exact mechanical grant remains unresolved and is not invented here."
+  ]
+}

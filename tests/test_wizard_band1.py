@@ -58,6 +58,6 @@ class WizardBand1Tests(unittest.TestCase):
             else:self.assertIn(entry["status"],{"single-candidate","multiple-candidates"})
         s=read("docs/rewrite/native-reconciliation-statistics.json")
         self.assertEqual(16,s["approvedWizardBand1"]["activeFeatureFiles"])
-        self.assertEqual(1501,s["candidateRecordsStillUnresolved"])
+        self.assertEqual(sum(1 for entry in m["coverage"] if entry["status"] in {"single-candidate", "multiple-candidates"}),s["candidateRecordsStillUnresolved"])
         self.assertEqual(s["statuses"],m["reconciliationCounts"])
 if __name__=="__main__":unittest.main()

@@ -1,0 +1,31 @@
+{
+  "id": "upbringing.dwarf.general",
+  "name": "General Dwarf Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "dwarvish",
+      "description": "Learn Dwarvish.",
+      "language": "dwarvish"
+    },
+    {
+      "id": "stonecunning",
+      "description": "Double Proficiency Bonus on qualifying Intelligence (History) checks concerning stonework and its origins.",
+      "skill": "history",
+      "ability": "intelligence",
+      "proficiencyBonusMultiplier": 2,
+      "scope": "stonework-history"
+    },
+    {
+      "id": "crafting-tradition",
+      "description": "Choose one native crafting Competency.",
+      "chooseOne": [
+        "competency.smithing",
+        "competency.brewing",
+        "competency.stonemasonry"
+      ]
+    }
+  ]
+}

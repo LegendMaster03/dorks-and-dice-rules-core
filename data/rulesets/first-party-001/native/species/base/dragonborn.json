@@ -1,0 +1,72 @@
+{
+  "id": "species.dragonborn",
+  "name": "Dragonborn",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": false,
+  "creatureType": "dragon",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "traits": [
+    {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
+    {
+      "id": "draconic-resistance",
+      "description": "You have 50 percent resistance to the damage type associated with your specific dragon ancestry.",
+      "damageResistance": {
+        "percent": 50,
+        "damageTypeFrom": "selected-dragonborn-leaf"
+      }
+    },
+    {
+      "id": "breath-weapon",
+      "description": "On your turn when you take the Attack action, you can replace one of the attacks with your Breath Weapon. Targets in the area defined by your dragon ancestry make a Dexterity saving throw against DC 8 + your Proficiency Bonus + your Constitution modifier. A failed save deals damage of your dragon ancestry's type; a successful save takes half damage. Uses equal Proficiency Bonus and all expended uses return after a Long Rest.",
+      "activation": {
+        "action": "attack",
+        "replaces": "one-attack",
+        "timing": "on-your-turn"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      },
+      "savingThrow": {
+        "ability": "dexterity",
+        "dc": "8 + proficiency-bonus + constitution-modifier",
+        "onSuccess": "half-damage"
+      },
+      "damage": {
+        "typeFrom": "selected-dragonborn-leaf",
+        "progression": [
+          {
+            "characterLevel": 1,
+            "dice": "1d10"
+          },
+          {
+            "characterLevel": 5,
+            "dice": "2d10"
+          },
+          {
+            "characterLevel": 11,
+            "dice": "3d10"
+          },
+          {
+            "characterLevel": 17,
+            "dice": "4d10"
+          }
+        ]
+      },
+      "areaFrom": "selected-dragonborn-family-or-leaf"
+    }
+  ],
+  "reviewNotes": [
+    "Low-Light Vision replaces baseline 60-foot Darkvision for all Dragonborn families and currently playable ancestries; 30-foot walking speed remains subject to comparative Species balance. Specialized future ancestries may define their own vision and related light sensitivity.",
+    "5.5e temporary Draconic Flight is not automatically granted by the Dragonborn base Species.",
+    "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred.",
+    "Dragon creature type selected in the comparative Species review. Dragon-specific targeting applies; monster Dragon Hit Dice, senses, saving throw competencies and other stat-block defaults are not automatically granted to playable characters."
+  ]
+}

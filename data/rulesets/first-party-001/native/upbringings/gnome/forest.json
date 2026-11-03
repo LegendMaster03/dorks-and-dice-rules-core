@@ -1,0 +1,19 @@
+{
+  "id": "upbringing.gnome.forest",
+  "name": "Forest Gnome Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "naturalist-training",
+      "description": "Choose one skill training.",
+      "chooseOne": [
+        "nature",
+        "survival",
+        "animal-handling"
+      ]
+    }
+  ],
+  "parent": "upbringing.gnome.general"
+}
