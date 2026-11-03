@@ -31,10 +31,11 @@ The current native tree contains **nine Species base JSON files, 29 Ancestry JSO
 
 ## Reference-system comparison (design evidence, not adopted mechanics)
 
-1. **An Elf and an Orc Had a Little Baby:** Separates parentage traits and upbringing, initially chooses two birth parents, and offers point-valued trait customization in supplemental material. Useful: independent inherent/acquired characteristics and alternative trait packages. Unsuitable without modification: universal two-birth-parent premise, automatic biological assumptions, and point values built for different 5e mechanics. A later supplement illustrates a trait-exchange approach using a base race.
+1. **An Elf and an Orc Had a Little Baby:** Separates parentage traits and upbringing. The initial main procedure uses two birth parents, but the first book's Appendix B permits traits from more than two parentages within its point limit, and later books explicitly allow one or more parentages. Useful: distinct inherent/acquired characteristics, multiple heritage inputs, and alternative trait packages. Limitations for this project: the source model is still centered on birth parentage, its specific 5e point valuations do not transfer automatically, and artificial or spontaneous origins require another generalization.
    - https://marketplace.roll20.net/browse/compendiumexpansion/24690/an-elf-and-an-orc-had-a-little-baby/
    - https://anyflip.com/ilydf/nule/basic/101-113
-   - https://d1vzi28wh99zvq.cloudfront.net/pdf_previews/407044-sample.pdf
+   - https://www.geeknative.com/77281/worth-your-money-an-elf-and-an-orc-had-a-little-baby-parentage-and-upbringing-in-dd/
+   - https://www.scribd.com/document/968618475/If-an-Elf-and-an-Orc-Had-a-Baby-4
 2. **3.5e SRD:** Half-Elf and Half-Orc have discrete race-based effects and special race-targeting eligibility; monsters as player characters use racial Hit Dice, Level Adjustment and ECL. Useful: a clear distinction between ancestry identity and effect eligibility, and awareness that creature power differs. Do **not** copy ECL, racial Hit Dice or Level Adjustment into the native character system.
    - https://www.d20srd.org/srd/races.htm
    - https://www.d20srd.org/srd/monstersAsRaces.htm
@@ -51,6 +52,20 @@ The current native tree contains **nine Species base JSON files, 29 Ancestry JSO
 - **Inherent traits:** The actual mechanically granted characteristics. Each grant needs an identified origin, effect, progression, and any qualifications or interactions. A source relationship establishes **eligibility**, not an automatic complete package.
 
 **Proposed invariant:** A character receives each inherent effect only because a selected Species/Ancestry preset or explicit heritage decision grants it. Relationships and descriptors alone never grant mechanics. Upbringing and Background remain separate.
+
+## First rules-design boundary — **working proposal, not approved**
+
+An Origination event can have zero or more participants and sources. A relationship describes how a source was involved; it does **not** mean that every attribute of that source can be inherited.
+
+Heritage establishes which source characteristics can **qualify** for expression. The character's explicit selected inherent traits establish what actually manifests. The transmission of an individual's variant (as distinct from its Species default) is a separate open question.
+
+The effective character profile must resolve enough properties for play, including explicit creature type, size, physical form where relevant, movement, senses, and needs. A standard Species/Ancestry selection supplies a conventional predefined profile. A future advanced custom origin can supply one without being forced to adopt the identity of one contributor.
+
+The Origination process itself may be mechanically relevant: a magical ritual, construct material, or supernatural manifestation might establish a characteristic through an explicit rule. This is not the same as passively inheriting the creator's Species/Class features.
+
+The existing single effective creature-type rule remains in force for current characters; mixed-type eligibility and any broader identity targeting must be reconciled independently. An Elf/Orc heritage source should not automatically count as both Fey and Humanoid for all type-targeted effects.
+
+A trait may be inheritable, physically dependent on a body plan, available only through a supernatural origin, or acquired rather than inherent. These categories are candidates to investigate, not finalized trait tags or replacement rules.
 
 ## Alternatives to test before selecting a permanent structure
 
