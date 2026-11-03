@@ -2,6 +2,8 @@
 
 **Status:** research and recommendation only, not native. The six selected SRD 5.2.1 ancestry boons remain active without modification. The companion Goliath Species already provides Powerful Build, Large Form, Mountain Leap and Altitude Acclimation. None of the secondary traits proposed here has been approved or granted.
 
+**New overlap findings:** [`GOLIATH_STRIKE_OVERLAP_REVIEW.md`](GOLIATH_STRIKE_OVERLAP_REVIEW.md) compares the six original Strike options against the current SRD 5.2.1 Goliath boons. Fire Strike is a mechanical duplicate; Frost and Hill substantially overlap. It evaluates an early Strike grant and level-4 advanced ancestry progression, rather than assuming the previous provisional level-9 recommendation.
+
 **Source boundary:** *Bigby Presents: Glory of the Giants* (2023) contains giantkind lore, character feats, two backgrounds, giant-themed monsters and the Ordning. The book **does not define six Goliath Subspecies**. The following secondary Goliath adaptations are newly proposed design applications of the giant types; they must not be misidentified as published Goliath Species traits. Source-backed giant lore is distinguished from the proposed mechanical adaptation below.
 
 ## Primary recommendation: one bounded secondary adaptation per Subspecies
@@ -46,7 +48,7 @@
 
 **Owner direction under discussion:** Instead of making the six *Bigby's* higher-tier giant feats into Origin feats, consider **granting their supernatural/non-ASI benefits automatically through the corresponding Goliath Subspecies at a later character level**. This supersedes the earlier preference for only small passive secondary adaptations *as the leading option to assess*, but is not yet a confirmed native rule. Existing six SRD 5.2.1 boons are retained.
 
-**Suggested progression:** ancestry boon at level 1; shared Large Form at level 5; an advanced ancestry feature at **character level 9** as a first comparative candidate. Consider level 11 if tier-2 burst is excessive. Do not simply use the original feat's level-4 prerequisite as the Species feature grant level. The resulting ability is an inherited Subspecies feature, **not** a feat selection and **not** a bonus Origin feat.
+**Earlier progression candidate (superseded for investigation):** ancestry boon at level 1; shared Large Form at level 5; an advanced ancestry feature at **character level 9**. The more recent owner direction evaluates advanced features around **level 4**, with possible early Strike grants. See the separate overlap review before selecting levels. Consider level 11 if tier-2 burst is excessive. Do not simply use the original feat's level-4 prerequisite as the Species feature grant level. The resulting ability is an inherited Subspecies feature, **not** a feat selection and **not** a bonus Origin feat.
 
 | Subspecies | Bigby's advanced feat used as source | Proposed level-9 inherited powers, without the +1 ability-score increase | Balance / exact-rule questions |
 | --- | --- | --- | --- |
@@ -61,7 +63,7 @@
 
 **Ability scores and save DCs:** All six original advanced feats include a +1 ability-score improvement. If the abilities are inherited rather than earned as feats, remove that generic improvement. Where feat text keys its attack/save DC to the increased score (especially Stone and Storm), use a separately reconciled source such as Constitution or a stated player choice; **do not embed an invalid dangling reference to a removed feat ASI**.
 
-**Level timing:** At level 5, shared Large Form already unlocks, adding 10 feet of Speed and Advantage on Strength checks with temporary Large size. An additional full advanced giant feat at level 5 could be a steep Species power spike. Level 9 is a provisional spacing suggestion and **not yet approved**; level 11 offers a stricter tier-3 comparison. Evaluate the strength of all six against other Species, not just against each other.
+**Level timing:** At level 5, shared Large Form already unlocks, adding 10 feet of Speed and Advantage on Strength checks with temporary Large size. The previous level-9 or level-11 spacing suggestion is retained as historical design context, but the current proposal to investigate grants advanced features around **level 4**. That means a level-4 advanced power immediately precedes Large Form at 5; playtest the combined power concentration. Evaluate the strength of all six against other Species, not just against each other.
 
 **Supersession of earlier passive suggestions:** The bounded Mist Sight, Heat-Hardened, Winter Strider, Steady Footing, Rock Concealment and Amphibious proposals are **alternatives**, not assumed extra benefits **on top of** the advanced features. In particular, Fire's elemental defenses, Hill's Bulwark, Stone's Darkvision and Storm's aura could make the earlier additions redundant or push the package too far.
 
