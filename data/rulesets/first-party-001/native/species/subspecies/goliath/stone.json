@@ -1,0 +1,34 @@
+{
+  "id": "subspecies.goliath.stone",
+  "name": "Stone Goliath",
+  "kind": "subspecies",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.goliath",
+  "traits": [
+    {
+      "id": "stones-endurance",
+      "name": "Stone's Endurance",
+      "description": "When you take damage, you can use your Reaction to reduce that damage by 1d12 plus your Constitution modifier. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "when-you-take-damage"
+      },
+      "damageReduction": {
+        "dice": "1d12",
+        "addAbilityModifier": "constitution",
+        "appliesTo": "triggering-damage"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    }
+  ],
+  "reviewNotes": [
+    "SRD 5.2.1 Giant Ancestry adapted into one selectable Subspecies, not six independent options granted to every Goliath.",
+    "Inherits Powerful Build, Large Form, size and Speed from species.goliath; the chosen ancestry boon uses Proficiency Bonus activations per Long Rest.",
+    "Effects are a coherent first-pass baseline and remain open to future reconciliation and playtesting.",
+    "Bigby's rune, feat and cultural traditions are not automatically inherited or assigned as an Upbringing."
+  ]
+}

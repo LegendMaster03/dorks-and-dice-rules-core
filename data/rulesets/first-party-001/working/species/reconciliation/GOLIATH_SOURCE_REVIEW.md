@@ -1,8 +1,8 @@
 # Goliath — first-pass source reconciliation research
 
-**Status:** source review and research plan only. Goliath remains an unresolved Species in `working/species/base/goliath.json`. No native Goliath Species, Subspecies, Upbringing, or feat has been approved by this document.
+**Status:** the SRD 5.2.1 shared Goliath Species and six selectable giant-ancestry Subspecies are now native first-pass playtest content. This document retains historical comparisons and unresolved questions. No Goliath Upbringing, feat or *Bigby's*-derived extra mechanics have been selected.
 
-**Goal:** develop a coherent first-pass Goliath Species for playtesting by reconciling historical material, the 2024 SRD baseline and giant-focused material from *Bigby Presents: Glory of the Giants* (2023). Approval means playable for testing, not final or balance-complete.
+**Goal:** document the selected first-pass Goliath Species from SRD 5.2.1 and the outstanding review of historical material and *Bigby Presents: Glory of the Giants* (2023). Inclusion in native means playable for testing, not final or balance-complete.
 
 ## Required source set
 
@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 3.5e *Races of Stone* (and relevant 3.x giant rules) | Original Goliath physical and environmental traits, Powerful Build, mountain movement and adaptation, size interactions | Historical Species and mechanical reference; do not copy edition-specific implementation uncritically |
 | 5e Goliath versions, including *Elemental Evil Player's Companion* / *Volo's Guide to Monsters* and *Mordenkainen Presents: Monsters of the Multiverse* | Earlier Goliath traits and revisions; Stone's Endurance, Powerful Build, Athletics/environmental adaptation and resources | Edition comparison, verify individual books before selecting rules |
-| **5.5e SRD 5.2.1** | 35-foot movement, Medium size, Powerful Build, level-5 Large Form and six Giant Ancestry choices | Imported baseline: `working/species/base/goliath.json` (pending native reconciliation) |
+| **5.5e SRD 5.2.1** | 35-foot movement, Medium size, Powerful Build, level-5 Large Form and six Giant Ancestry choices | Selected base in `native/species/base/goliath.json` and six leaves under `native/species/subspecies/goliath/`; pinned SRD source remains in `data/reference/srd/` |
 | **Bigby Presents: Glory of the Giants** (2023) | Giantkind lore, six major giant types, the Ordning, giant societies, rune magic, Giant Foundling and Rune Carver backgrounds, giant-themed feats, Path of the Giant and relevant giant monsters | Additional mandatory comparison and design inspiration; **not** an automatic grant of book feats, background abilities or class features to Goliaths |
 
 ## Bigby's research coverage
@@ -40,9 +40,9 @@ The older 3.5e +4 Strength, −2 Dexterity, +2 Constitution, +1 level adjustment
 
 Sources: https://dnd.arkalseif.info/races/races-of-stone--82/goliath--13/ ; https://dnd5e.wikidot.com/lineage:goliath-eepc ; https://dnd5e.wikidot.com/lineage:goliath-mpmm ; https://www.dndbeyond.com/species/1751439-goliath ; pinned SRD source in `working/species/base/goliath.json`.
 
-## Six 5.5e Giant Ancestry abilities (candidate Subspecies distinctions)
+## Six 5.5e Giant Ancestry abilities (selected first-pass Subspecies distinctions)
 
-The staged SRD 5.2.1 Goliath candidate has **six mutually exclusive ancestry boons**, each with **Proficiency Bonus uses per Long Rest**. Each line below describes published input and a first-pass handling recommendation, not yet an approved rule:
+The staged SRD 5.2.1 Goliath candidate has **six mutually exclusive ancestry boons**, each with **Proficiency Bonus uses per Long Rest**. Each line below describes the published input selected for the corresponding native Subspecies (still open to playtest-driven revision):
 
 | Ancestry | 5.5e source ability | Key mechanics / implications in Dorks & Dice |
 | --- | --- | --- |
@@ -67,9 +67,9 @@ All six inherit general Goliath capabilities if modeled as Subspecies. The same 
 
 Publisher references: https://www.dndbeyond.com/sources/dnd/gotg ; https://www.dndbeyond.com/posts/1534-giant-personalities-an-infographic-on-the ; https://www.dndbeyond.com/posts/1531-first-look-giant-foundling-background-and-strike ; https://www.dndbeyond.com/posts/1551-channel-ancient-power-with-the-rune-carver .
 
-## First-pass Species model — recommendation for review, not yet approved
+## First-pass Species model — selected native baseline
 
-**Recommended shape: a nonselectable Goliath Species with six selectable giant-ancestry Subspecies.** A separate nonselectable family tier, as used for Dragonborn's Chromatic/Metallic/Gem, is not necessary at present because all six options share one giant-ancestry level. The hierarchy could grow later without requiring its initial complexity:
+**Selected shape: a nonselectable Goliath Species with six selectable giant-ancestry Subspecies.** A separate nonselectable family tier, as used for Dragonborn's Chromatic/Metallic/Gem, is not necessary at present because all six options share one giant-ancestry level. The hierarchy could grow later without requiring its initial complexity:
 
 ```text
 species.goliath (nonselectable)
@@ -81,7 +81,7 @@ species.goliath (nonselectable)
 └─ subspecies.goliath.storm   (selectable)
 ```
 
-Candidate **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Powerful Build; level-5 Large Form (Bonus Action, 10 minutes, once per Long Rest, +10 ft speed, Advantage on Strength checks and must have physical room to become Large). Candidate **leaf** traits: the one relevant 5.5e ancestry boon described above (PB uses per Long Rest). No common Stone's Endurance, no unconditional universal cold resistance, no automatic 3.5e ability-score changes, no level adjustment, no assumed giant language or cultural values.
+Selected **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Powerful Build; level-5 Large Form (Bonus Action, 10 minutes, once per Long Rest, +10 ft speed, Advantage on Strength checks and must have physical room to become Large). Selected **leaf** traits: the one relevant 5.5e ancestry boon described above (PB uses per Long Rest). No common Stone's Endurance, no unconditional universal cold resistance, no automatic 3.5e ability-score changes, no level adjustment, no assumed giant language or cultural values.
 
 **Powerful Build is the largest native-mechanics integration question.** The native `rule.grapple-procedure` defines opposed grappling checks and distinct Escape Artist attempts, while 5.5e Powerful Build grants Advantage on ability checks to end Grappled. The first-pass description must explicitly state which native escape attempts receive the bonus. Do not silently transplant 3.5e's entire size modifier, oversized-weapon permissions, and automatic stacking on top of 5.5e Powerful Build.
 
@@ -93,7 +93,7 @@ Candidate **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style P
 
 ## Open design questions (not proposals approved for implementation)
 
-- **Primary selection decision:** Should six giant ancestries become six selectable Goliath Subspecies (recommended), or remain a single Species choice feature? Both represent six mutually exclusive ancestry options, but the former aligns the user-facing selection and recursive inheritance with the Dragonborn reconciliation.
+- The six giant ancestries have been selected as six playable Goliath Subspecies; review that structure only if later ruleset work supplies contrary evidence.
 - Which abilities are genuinely innate and which should remain independently selectable learned traditions or later feats?
 - Define native Powerful Build's exact interaction with opposed Grapple/Escape Artist resolution, size-dependent effects and carry capacity. Do not enable oversized weapon use or 3.5e special-attack size interactions automatically.
 - Does inherited Large Form interact cleanly with native size, reach, occupancy and carrying capacity? Do not grant permanent Large size, extra reach or historical 3.5e AC modifiers merely from giant descent.
@@ -108,6 +108,6 @@ Candidate **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style P
 - Publisher's Rune Carver / Rune Shaper overview: https://www.dndbeyond.com/posts/1551-channel-ancient-power-with-the-rune-carver
 - Publisher's Giant Foundling / Strike of the Giants overview: https://www.dndbeyond.com/posts/1531-first-look-giant-foundling-background-and-strike
 - Publisher's 2024 Goliath ancestry overview: https://www.dndbeyond.com/posts/1783-the-10-species-in-the-2024-players-handbook
-- Existing staged SRD baseline: `working/species/base/goliath.json`; original pinned text under `data/reference/srd/`.
+- Selected native: `native/species/base/goliath.json` and `native/species/subspecies/goliath/`; original pinned SRD source evidence under `data/reference/srd/` and in repository history.
 
-This file is a research map, not an exhaustive extraction of Bigby's or an approval to promote any rule. Maintain source-specific findings in `working/` until reviewed.
+This file is a research map, not an exhaustive extraction of Bigby's or an approval to promote any rule. Maintain further source-specific proposals in `working/` until reviewed; the coherent SRD 5.2.1 baseline already lives in `native/`.

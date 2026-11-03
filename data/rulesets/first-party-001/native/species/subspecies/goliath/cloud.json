@@ -1,0 +1,32 @@
+{
+  "id": "subspecies.goliath.cloud",
+  "name": "Cloud Goliath",
+  "kind": "subspecies",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.goliath",
+  "traits": [
+    {
+      "id": "clouds-jaunt",
+      "name": "Cloud's Jaunt",
+      "description": "As a Bonus Action, you teleport up to 30 feet to an unoccupied space you can see. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "activation": {
+        "action": "bonus-action"
+      },
+      "teleport": {
+        "maximumDistanceFeet": 30,
+        "destination": "unoccupied-space-you-can-see"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    }
+  ],
+  "reviewNotes": [
+    "SRD 5.2.1 Giant Ancestry adapted into one selectable Subspecies, not six independent options granted to every Goliath.",
+    "Inherits Powerful Build, Large Form, size and Speed from species.goliath; the chosen ancestry boon uses Proficiency Bonus activations per Long Rest.",
+    "Effects are a coherent first-pass baseline and remain open to future reconciliation and playtesting.",
+    "Bigby's rune, feat and cultural traditions are not automatically inherited or assigned as an Upbringing."
+  ]
+}

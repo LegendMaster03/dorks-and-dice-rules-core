@@ -29292,9 +29292,9 @@
     {
       "nativeId": "species.goliath",
       "kind": "race",
-      "status": "single-candidate",
+      "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/working/species/base/goliath.json",
+      "path": "data/rulesets/first-party-001/native/species/base/goliath.json",
       "candidates": [
         {
           "key": "candidate-b",
@@ -39824,7 +39824,7 @@
   "canonicalIdentifiersNormalized": 653,
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
-    "single-candidate": 505,
+    "single-candidate": 504,
     "multiple-candidates": 987,
     "native-single-source-retained": 528,
     "native-compatible-merged": 108,
@@ -39833,6 +39833,6 @@
     "matching-candidates": 19,
     "native-monster-role-default": 285,
     "native-monster-identity-alias": 23,
-    "approved-native-reconciled": 9
+    "approved-native-reconciled": 10
   }
 }
