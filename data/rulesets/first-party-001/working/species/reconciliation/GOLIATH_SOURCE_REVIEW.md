@@ -1,6 +1,6 @@
 # Goliath — first-pass source reconciliation research
 
-**Status:** the SRD 5.2.1 shared Goliath Species and six selectable giant-ancestry Subspecies are now native first-pass playtest content. This document retains historical comparisons and unresolved questions. No Goliath Upbringing, feat or *Bigby's*-derived extra mechanics have been selected.
+**Status:** the SRD 5.2.1 Goliath Species and six selectable Subspecies are native first-pass playtest content. Standing-jump Mountain Leap and physiological Altitude Acclimation from earlier editions have also been selected. This document retains historical comparisons and unresolved questions. No Goliath Upbringing, feat or *Bigby's*-derived Subspecies expansion has been selected.
 
 **Goal:** document the selected first-pass Goliath Species from SRD 5.2.1 and the outstanding review of historical material and *Bigby Presents: Glory of the Giants* (2023). Inclusion in native means playable for testing, not final or balance-complete.
 
@@ -12,6 +12,8 @@
 | 5e Goliath versions, including *Elemental Evil Player's Companion* / *Volo's Guide to Monsters* and *Mordenkainen Presents: Monsters of the Multiverse* | Earlier Goliath traits and revisions; Stone's Endurance, Powerful Build, Athletics/environmental adaptation and resources | Edition comparison, verify individual books before selecting rules |
 | **5.5e SRD 5.2.1** | 35-foot movement, Medium size, Powerful Build, level-5 Large Form and six Giant Ancestry choices | Selected base in `native/species/base/goliath.json` and six leaves under `native/species/subspecies/goliath/`; pinned SRD source remains in `data/reference/srd/` |
 | **Bigby Presents: Glory of the Giants** (2023) | Giantkind lore, six major giant types, the Ordning, giant societies, rune magic, Giant Foundling and Rune Carver backgrounds, giant-themed feats, Path of the Giant and relevant giant monsters | Additional mandatory comparison and design inspiration; **not** an automatic grant of book feats, background abilities or class features to Goliaths |
+
+**Bigby's six Subspecies expansion proposals:** see [`GOLIATH_BIGBYS_SUBSPECIES_EXPANSION.md`](GOLIATH_BIGBYS_SUBSPECIES_EXPANSION.md) for source-specific comparisons and six candidate secondary innate adaptations. All remain in research until explicitly selected.
 
 ## Bigby's research coverage
 
@@ -91,7 +93,7 @@ Selected **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Po
 
 **Giant-specific Upbringings:** retain possible traditions of Cloud, Fire, Frost, Hill, Stone and Storm giant societies, plus Giant Foundling and Rune Carver. These are **research leads only**. Do not create ancestry-locked Upbringings or defaults; do not assign Goliaths a compulsory Ordning ideology or proficiency.
 
-## 5e and 3.5e recovery assessment (unselected candidates)
+## 5e and 3.5e recovery assessment (selected and unselected findings)
 
 **Status:** comparative source research only. Do not promote any item below without review and selection. The SRD 5.2.1 Goliath Species and six selectable Subspecies already in `native/` remain the coherent first-pass reference; all mechanics can be revisited after playtesting.
 
@@ -136,14 +138,14 @@ Source references:
 
 **F. Sense Motive (+2), Giant language, favored class and markings — separate appropriately.** The old body-language reading bonus reflects social interpretation and is a candidate for an Upbringing/Skill feature (native `skill.insight` exists); it is not an innate personality requirement. Historical default Giant language, Barbarian favored class and Goliath markings or related feats do not automatically apply across independent Upbringings or the modern class/feat system. The 3.5e Monstrous Humanoid creature type and +1 Level Adjustment should not displace the selected Humanoid classification or reintroduce edition-specific character taxes.
 
-### Proposed decision order (none selected)
+### Decision tracking (Mountain Leap and Altitude Acclimation selected)
 
-1. Decide whether to add **standing Long/High Jump without running approach** to `species.goliath` as a shared innate feature.
-2. Decide whether to add **high-altitude acclimation** as a shared physiological adaptation while preserving distinction from cold-damage resistance.
+1. **Selected:** Shared **Mountain Leap** enables standing Long/High Jumps as running jumps, still subject to movement and landing rules.
+2. **Selected:** Shared **Altitude Acclimation** prevents penalties for high-altitude travel arising solely from lack of acclimation, including above 20,000 feet; it does not grant Cold resistance or immunity to lack of air.
 3. Review whether **Powerful Build** should explicitly grant additional size-related offensive/defensive benefits and how that interacts with the native opposed-grapple system and Large Form; keep oversized weapons a distinct question.
 4. Leave Cold damage resistance, extra Athletics proficiency, original social reading bonus and older class/feat baggage for the comparative Species, Upbringing or dedicated mechanics passes unless new rationale emerges.
 
-**Approval boundary:** this section does not modify any native Goliath definition. Existing six ancestry boons and Large Form remain unchanged.
+**Approval boundary:** only Mountain Leap and Altitude Acclimation are additionally selected in native in this pass. Powerful Build expansion, Cold resistance, other older traits, and all Bigby's-derived Subspecies proposals remain unselected.
 
 ## Open design questions (not proposals approved for implementation)
 

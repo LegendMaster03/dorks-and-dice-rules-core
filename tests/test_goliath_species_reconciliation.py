@@ -33,7 +33,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual(35, self.base["walkingSpeedFeet"])
         self.assertNotIn("defaultUpbringing", self.base)
         self.assertEqual(
-            {"powerful-build", "large-form"},
+            {"powerful-build", "large-form", "mountain-leap", "altitude-acclimation"},
             {t["id"] for t in self.base["traits"]})
         self.assertEqual(set(self.slugs),
                          {p.stem for p in LEAVES.glob("*.json")})
@@ -50,6 +50,25 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
             self.assertNotIn("defaultUpbringing", leaf)
             self.assertNotIn("creatureType", leaf)
             self.assertNotIn("walkingSpeedFeet", leaf)
+
+    def test_approved_mountain_leap_and_altitude_acclimation(self):
+        traits = {t["id"]: t for t in self.base["traits"]}
+        jump = traits["mountain-leap"]
+        self.assertEqual(["long-jump", "high-jump"], jump["standingJumpAsRunning"])
+        self.assertTrue(jump["ignoresRunningApproachRequirement"])
+        self.assertEqual("normal-jump-movement-cost", jump["movementCost"])
+        self.assertIn("additional-movement", jump["doesNotGrant"])
+        self.assertIn("immunity-to-falling-damage", jump["doesNotGrant"])
+        altitude = traits["altitude-acclimation"]
+        self.assertTrue(altitude["naturallyAcclimated"])
+        self.assertIsNone(altitude["altitudeLimitFeet"])
+        self.assertEqual(20000, altitude["includesElevationAboveFeet"])
+        self.assertTrue(altitude["maintainsAcclimationAtLowerElevations"])
+        self.assertEqual("penalties-from-unacclimated-high-altitude-travel",
+                         altitude["ignores"])
+        self.assertIn("cold-damage-resistance", altitude["doesNotGrant"])
+        self.assertIn("suffocation-immunity", altitude["doesNotGrant"])
+        self.assertFalse((WORKING / "species/base/goliath.json").exists())
 
     def test_powerful_build_and_large_form_are_distinct(self):
         traits = {t["id"]: t for t in self.base["traits"]}
