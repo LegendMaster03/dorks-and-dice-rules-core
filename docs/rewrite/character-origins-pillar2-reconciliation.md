@@ -69,6 +69,31 @@ The current native tree contains **nine Species base JSON files, 29 Ancestry JSO
 - A full mechanical record of unexpressed ancestral alleles or indefinite genealogical inheritance is **not required** by this decision. Whether dormant hereditary characteristics have any gameplay effect remains open.
 - This does not remove restrictions where an approved trait requires compatible anatomy, a particular supernatural source, or other justified prerequisites.
 
+## Direct review of user-provided source PDFs — 2026-11-03
+
+**Source collection reviewed:** *An Elf and an Orc Had a Little Baby* Volumes 1–3 and *An Owl and a Bear Had a Little Baby* (Volume 4). All four files were accessed in the user's selected Library folder; the private Drive URLs are not reproduced here. These texts are **reference evidence, not adopted native rules**.
+
+### Mechanical observations
+
+- **Volume 1, introduction (printed pp. 3–4):** Character creation provides a **16-point parentage-trait pool** and separate Upbringing. Although examples emphasize two birth parents, players explicitly choose *one or more parentages*. Age, speed, sight, spellcasting, and other features may be priced as traits; repeated same-name traits normally do not stack.
+- **Volume 1, Appendix B (printed pp. 108–111):** Trait selection can draw from *as many parentages as desired* within the 16-point cap. Appendix B also prices Upbringing benefits, nominally 12–17 points, including a fictional case mixing parents' and grandparents' **upbringings**. This is not evidence of tracking unexpressed biological alleles across generations.
+- **Volume 1, Elven Parentage (printed pp. 24–27) and Orc Parentage (pp. 69–70):** Elven Fey Ancestry is priced at 3, Keen Senses at 2, Trance at 1; Orc Powerful Build at 1, Relentless Endurance at 6, and source Darkvision at 4. These numbers are **not compatible point costs** for Dorks & Dice: the approved native definitions differ (e.g., Orc uses Low-Light Vision and Fey Ancestry is not identical in expression). Long-Lived can have a changed result if both parents contribute it; Orc Relentless Endurance also states an enhancement if inherited twice. The source therefore contains conditionally interacting traits, not only independent purchases.
+- **Volume 1, Warforged (pp. 86–88):** Describes constructed, magical, and speculative biological ways to originate mixed Warforged; nevertheless retains the two-birth-parent trait-purchase framing. Provides a concrete example of construct physiology without a general Origination model.
+- **Volume 2, introduction and contents (pp. 2–4):** Retains 16-point parentage selection and extends the option catalog to additional monstrous and unusual parentages, including further Warforged material.
+- **Volume 3, Autognomish (pp. 10–11), Myconid (pp. 64–66), Plasmoid (pp. 73–74):** Extends options to constructed, fungal, and Ooze-bodied characters, while generally retaining birth-parent language. Creature type may itself be selected as a priced trait (e.g., Myconid's Plant; Plasmoid's Shape Self includes Ooze classification). Autognome healing and repair options show that anatomical properties, magical effects, and targeting eligibility cannot always be treated as unrelated purchases.
+- **Volume 4, introduction (pp. 3–5) and Appendix (p. 111):** Applies the same 16-point parentage approach to animals and animal-like creatures, offers no new Upbringings in that volume, and directs readers to earlier Upbringings or a design guide.
+
+### Implications for the working Dorks & Dice proposal
+
+1. **Retain player selection rather than genetic probability:** This is closer to the reference books' actual mechanics. A Punnett-square system would add simulation complexity not required by these sources.
+2. **Study trait-value methods, not published trait prices:** Native benefits are already different from the source, and point costs require testing for packages, progression, dependencies, and undesirable negative-trait arbitrage.
+3. **Do not equate all traits with independent purchases:** Some benefits require compatible morphology, depend on another feature, or change when repeated. We need a distinction among eligible traits, prerequisites, conflicts, and actual expression.
+4. **Do not model Origination as exactly two parent slots:** Volume 3 includes constructed and magical origins, but still expresses them largely through parentage options. Dorks & Dice must remain able to represent zero or multiple creators or biological contributors.
+5. **Keep creature type as explicit resolved classification:** A priced Fey/Plant/Ooze entry in a source table does not automatically settle native mixed-type targeting or override Pillar 1 classifications.
+6. **Distinguish multi-parentage selection from genealogy simulation:** The sources support selection across multiple parentage pools, but do not require hereditary carrier records for parents, grandparents, or unexpressed traits.
+
+**Status:** These are observations and design implications for review; no new native inheritance mechanics approved by documenting them.
+
 ## First rules-design boundary — **working proposal, not approved**
 
 An Origination event can have zero or more participants and sources. A relationship describes how a source was involved; it does **not** mean that every attribute of that source can be inherited.
