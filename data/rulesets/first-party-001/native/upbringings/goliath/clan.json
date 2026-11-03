@@ -38,10 +38,11 @@
     }
   ],
   "reviewNotes": [
-    "The Goliath Clan clan tradition can be chosen by any Species.",
-    "Original 3.5e Goliaths used Gol-Kaa; later 5e Goliaths used Giant. These are distinct languages.",
-    "The Giant cultural Upbringings are independent selections rather than children of this record.",
-    "No feat, rune spellcasting, ancestral powers, or automatic Ordning allegiance is granted.",
-    "The Gol-Kaa language-catalog definition is future work; the language grant is a coherent first-pass entry."
+    "One baseline of Goliath clan culture is selected for the first pass regardless of whether the character has Cloud, Fire, Frost, Hill, Stone, or Storm ancestry.",
+    "This is a learned cultural upbringing, not an inherited parent of any other Upbringing; a Goliath can explicitly select Giant Foundling or another culture.",
+    "Gol-Kaa is retained from the original 3.5e Goliath traditions. Giant remains a distinct language, which Goliaths may also learn through contact.",
+    "The exact traditions of individual Goliath clans can vary; six distinct Goliath clan cultures mapped to Giant Ancestry are not established by the reviewed sources.",
+    "No Origin feat, rune casting, ancestral supernatural ability, or mandatory Ordning membership is granted.",
+    "The global language catalog still needs a standalone Gol-Kaa record; the cultural language grant is selected first-pass content."
   ]
 }

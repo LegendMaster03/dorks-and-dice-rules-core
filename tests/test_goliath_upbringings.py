@@ -1,4 +1,4 @@
-"""First-pass Goliath and independent giant-cultural Upbringings."""
+"""Goliath Clan and Giant Foundling Upbringings: independent culture and inheritance."""
 import json
 import unittest
 from pathlib import Path
@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
 WORKING = ROOT / "data/rulesets/first-party-001/working"
 UPBRING = NATIVE / "upbringings"
-KINDS = ("cloud", "fire", "frost", "hill", "stone", "storm")
+ANCESTRIES = ("cloud", "fire", "frost", "hill", "stone", "storm")
 
 
 def read(path):
@@ -17,75 +17,85 @@ def read(path):
 class GoliathUpbringingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.general = read(UPBRING / "goliath/clan.json")
-        cls.cultures = {k: read(UPBRING / "giant" / (k + ".json")) for k in KINDS}
+        cls.clan = read(UPBRING / "goliath/clan.json")
+        cls.foundling = read(UPBRING / "giant-foundling.json")
         cls.skills = {r["id"] for r in read(WORKING / "skills.json")["skills"]}
-        cls.competencies = {r["id"] for r in read(WORKING / "competencies.json")["competencies"]}
+        cls.competencies = {
+            r["id"] for r in read(WORKING / "competencies.json")["competencies"]
+        }
 
-    def test_seven_independent_playable_upbringings(self):
-        self.assertEqual({"clan.json"}, {p.name for p in (UPBRING / "goliath").glob("*.json")})
-        self.assertEqual(set(KINDS), {p.stem for p in (UPBRING / "giant").glob("*.json")})
-        self.assertEqual("upbringing.goliath.clan", self.general["id"])
-        self.assertEqual("Goliath Clan Upbringing", self.general["name"])
-        for slug, record in self.cultures.items():
-            self.assertEqual("upbringing.giant." + slug, record["id"])
-            self.assertEqual(slug.title() + " Giant Society Upbringing", record["name"])
-        records = [self.general, *self.cultures.values()]
-        self.assertEqual(7, len({r["id"] for r in records}))
-        for record in records:
+    def test_only_two_selected_goliath_related_upbringings(self):
+        self.assertEqual({"clan.json"}, {p.name for p in
+                         (UPBRING / "goliath").glob("*.json")})
+        self.assertFalse((UPBRING / "giant").exists(),
+                         "The six giant-society candidates must not remain native")
+        self.assertEqual("upbringing.goliath.clan", self.clan["id"])
+        self.assertEqual("Goliath Clan Upbringing", self.clan["name"])
+        self.assertEqual("upbringing.giant-foundling", self.foundling["id"])
+        self.assertEqual("Giant Foundling Upbringing", self.foundling["name"])
+        for record in (self.clan, self.foundling):
             self.assertEqual("upbringing", record["kind"])
             self.assertEqual("selected-native", record["status"])
             self.assertTrue(record["selectable"])
-            for forbidden in ("parent", "defaultFor", "requiredSpecies", "speciesRestriction"):
+            for forbidden in ("parent", "defaultFor", "requiredSpecies",
+                              "speciesRestriction", "feat"):
                 self.assertNotIn(forbidden, record)
-            self.assertEqual(3, len(record["benefits"]))
 
-    def test_only_species_contains_default_and_each_subspecies_inherits_it(self):
-        species = read(NATIVE / "species/base/goliath.json")
-        self.assertEqual(self.general["id"], species["defaultUpbringing"])
-        for kind in KINDS:
-            sub = read(NATIVE / "species/subspecies/goliath" / (kind + ".json"))
+    def test_goliath_default_is_a_suggestion_not_inherited_culture(self):
+        base = read(NATIVE / "species/base/goliath.json")
+        self.assertEqual(self.clan["id"], base["defaultUpbringing"])
+        for type_name in ANCESTRIES:
+            sub = read(NATIVE / "species/subspecies/goliath" / (type_name + ".json"))
             self.assertEqual("species.goliath", sub["parent"])
             self.assertNotIn("defaultUpbringing", sub)
         policy = read(NATIVE / "rules/species-subspecies-upbringing.json")["upbringings"]
         self.assertFalse(policy["speciesRestrictionsByDefault"])
         self.assertEqual(1, policy["selectedCount"])
 
-    def test_language_skills_and_competencies_are_concrete_and_valid(self):
-        self.assertEqual(["gol-kaa"], [b["language"] for b in self.general["benefits"]
-                                     if "language" in b])
-        for row in self.cultures.values():
-            self.assertEqual(["giant"], [b["language"] for b in row["benefits"]
-                                       if "language" in b])
-        for record in [self.general, *self.cultures.values()]:
-            self.assertEqual(1, sum("language" in b for b in record["benefits"]))
-            self.assertEqual(1, sum(b.get("grantType") == "competency-training"
-                                    for b in record["benefits"]))
-            for benefit in record["benefits"]:
-                if benefit.get("grantType") in ("competency-training", "skill-training"):
-                    self.assertEqual(1, benefit["choiceCount"])
-                    allowed = (self.competencies if benefit["grantType"] == "competency-training"
-                               else self.skills)
-                    self.assertTrue(set(benefit["chooseOne"]).issubset(allowed),
-                                    record["id"])
-                if "skill" in benefit:
-                    self.assertIn(benefit["skill"], self.skills)
-                    self.assertEqual(2, benefit["bonus"])
-                    self.assertTrue(benefit["scope"])
-                    self.assertTrue(benefit["stacksWithTraining"])
-                for forbidden in ("feat", "originFeat", "spell", "strikeOfTheGiantsFeat"):
-                    self.assertNotIn(forbidden, benefit)
-        choice = next(b for b in self.general["benefits"] if b.get("grantType") == "skill-training")
+    def test_goliath_clan_preserves_gol_kaa_and_existing_choices(self):
+        self.assertEqual(3, len(self.clan["benefits"]))
+        by_id = {benefit["id"]: benefit for benefit in self.clan["benefits"]}
+        self.assertEqual("gol-kaa", by_id["gol-kaa"]["language"])
+        skill = by_id["clan-training"]
+        self.assertEqual("skill-training", skill["grantType"])
+        self.assertEqual(1, skill["choiceCount"])
+        self.assertTrue(skill["doesNotAutomaticallyTrainChildSkills"])
         self.assertEqual({"skill.athletics", "skill.insight", "skill.survival"},
-                         set(choice["chooseOne"]))
-        self.assertTrue(choice["doesNotAutomaticallyTrainChildSkills"])
+                         set(skill["chooseOne"]))
+        self.assertTrue(set(skill["chooseOne"]) <= self.skills)
+        competency = by_id["clan-craft"]
+        self.assertEqual("competency-training", competency["grantType"])
+        self.assertEqual(1, competency["choiceCount"])
+        self.assertEqual({"competency.cooking", "competency.leatherworking",
+                          "competency.navigation"}, set(competency["chooseOne"]))
+        self.assertTrue(set(competency["chooseOne"]) <= self.competencies)
 
-    def test_rune_and_giant_combat_powers_not_granted_through_culture(self):
-        for record in [self.general, *self.cultures.values()]:
-            ids = {b["id"] for b in record["benefits"]}
-            self.assertFalse(ids & {"strike-of-the-giants", "rune-shaper",
-                                    "giant-ancestry-aptitude"})
-            self.assertTrue(all("damage" not in b for b in record["benefits"]))
+    def test_giant_foundling_converts_original_cultural_benefits(self):
+        benefits = {benefit["id"]: benefit for benefit in self.foundling["benefits"]}
+        self.assertEqual({"giant-language", "foundling-additional-language",
+                          "foundling-intimidation", "foundling-survival"}, set(benefits))
+        self.assertEqual("giant", benefits["giant-language"]["language"])
+        self.assertEqual(1, benefits["foundling-additional-language"]["extraLanguages"])
+        self.assertEqual({"skill.intimidation", "skill.survival"},
+                         {benefit["skill"] for benefit in benefits.values()
+                          if benefit.get("grantType") == "skill-training"})
+        self.assertTrue({benefit["skill"] for benefit in benefits.values()
+                         if "skill" in benefit} <= self.skills)
+        self.assertFalse(any("gol-kaa" in str(x) for x in benefits.values()))
+        self.assertTrue(all("feat" not in benefit and "spell" not in benefit
+                            and "damage" not in benefit for benefit in benefits.values()))
+
+    def test_no_giant_foundling_strike_feat_or_ancestry_duplication(self):
+        for record in (self.clan, self.foundling):
+            self.assertNotIn("grantsFeat", record)
+            self.assertNotIn("feat", record)
+            self.assertNotIn("sizeChange", record)
+            for benefit in record["benefits"]:
+                self.assertNotIn(benefit["id"], {
+                    "strike-of-the-giants", "rune-shaper", "giant-ancestry-aptitude"
+                })
+                self.assertNotIn("grantsFeat", benefit)
+                self.assertNotIn("giantAncestry", benefit)
 
 
 if __name__ == "__main__":

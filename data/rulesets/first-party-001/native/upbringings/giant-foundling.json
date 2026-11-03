@@ -1,0 +1,44 @@
+{
+  "id": "upbringing.giant-foundling",
+  "name": "Giant Foundling Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You spent your formative years living among or being raised by giants. This upbringing is available to any Species, including Goliaths, without changing inherited Species or Subspecies powers.",
+  "benefits": [
+    {
+      "id": "giant-language",
+      "name": "Giant Language",
+      "description": "Learn Giant from the people who raised you.",
+      "language": "giant"
+    },
+    {
+      "id": "foundling-additional-language",
+      "name": "Additional Language",
+      "description": "Learn one additional language of your choice, representing the wider community or circumstances of your childhood.",
+      "extraLanguages": 1
+    },
+    {
+      "id": "foundling-intimidation",
+      "name": "Intimidation Training",
+      "description": "Gain training in Intimidation from navigating relationships and social expectations among giants.",
+      "skill": "skill.intimidation",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "foundling-survival",
+      "name": "Survival Training",
+      "description": "Gain training in Survival from growing up in environments and surroundings shaped by giants.",
+      "skill": "skill.survival",
+      "grantType": "skill-training"
+    }
+  ],
+  "reviewNotes": [
+    "Converted from the *Bigby Presents: Glory of the Giants* Giant Foundling Background into an independent learned Upbringing. The original source grants proficiency in Intimidation and Survival, Giant and one additional language, and the Strike of the Giants feat.",
+    "The documented language and Skill benefits are selected for native playtest. The original bonus feat is not silently awarded: feat entitlement, source prerequisites, and duplicate/stacking behavior remain for a separate Feat reconciliation.",
+    "For a Goliath this replaces, rather than combines with, the suggested Goliath Clan Upbringing. Gol-Kaa is therefore not automatic when Giant Foundling is selected.",
+    "No non-Goliath gains Goliath Giant Ancestry or Large Form from this Upbringing. Being raised among giants does not force an actual size increase.",
+    "Original source background equipment and personal-origin table are retained as research, not independent ancestry or additional starting-inventory grants.",
+    "This record is independent of all six Goliath ancestry types and has no parent Upbringing. Specific giant communities can shape a character's narrative without six separate Upbringing records."
+  ]
+}

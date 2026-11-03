@@ -1,6 +1,6 @@
 # Goliath — first-pass source reconciliation research
 
-**Status:** Goliath Species and six giant-ancestry Subspecies have selected first-pass native mechanics, including merged Strike modes and level-4 advanced features. Goliath Clan and six independent giant cultural Upbringings are now native. Giant Foundling and Rune Carver Background/Feat options remain independent work; all mechanics are subject to revision.
+**Status:** Goliath Species and six giant-ancestry Subspecies have selected first-pass native mechanics, including merged Strike modes and level-4 advanced features. One shared Goliath Clan Upbringing and one separate Giant Foundling Upbringing are native. Six prior invented Giant Society Upbringings have been withdrawn into research; the source Giant Foundling feat and Rune Carver still await separate mechanics reconciliation.
 
 **Goal:** document the selected first-pass Goliath Species from SRD 5.2.1 and the outstanding review of historical material and *Bigby Presents: Glory of the Giants* (2023). Inclusion in native means playable for testing, not final or balance-complete.
 
@@ -20,7 +20,7 @@
 1. **Six giant traditions:** Cloud, Fire, Frost, Hill, Stone and Storm. Compare their distinct supernatural, elemental, physiological and environmental signatures with the six SRD 5.2.1 Goliath Giant Ancestry choices. Verify whether their distinctions are best modeled as selectable Subspecies (potentially with shared nonselectable ancestry intermediates) or as a Species choice feature. Do **not** presume the Dragonborn hierarchy must be copied.
 2. **Species versus culture:** Examine the Ordning, social structures, languages, religion, arts and regional environments for learned Upbringing candidates. Giant ancestry must not impose a caste, faith, personality, profession or cultural allegiance on the player.
 3. **Rune traditions:** Compare rune lore and crafting with the existing Skills/Competencies and future Upbringing work. Consider runecraft training independently of biological giant descent.
-4. **Giant Foundling and Rune Carver:** Compare their background material as possible Background/Upbringing research, not intrinsically inherited Species abilities. Preserve the distinction between a character raised among giants and one descended from giants.
+4. **Giant Foundling and Rune Carver:** Giant Foundling has been adapted into a native cultural Upbringing (languages and Skills); its original source feat remains deferred for the independent Feat pass. Rune Carver remains a Background/Feat research lead. A character raised among giants and one biologically descended from giants are independent concepts.
 5. **Giant-themed feats:** Examine *Strike of the Giants*, the six ancestry-associated follow-up feats and *Rune Shaper* as optional or future feat research. Do not fold their progression or prerequisites into the base Species without a separate decision.
 6. **Class and monster material:** Path of the Giant Barbarian, giant stat blocks and other advanced options can inform balance and design vocabulary. They are not automatically level-1 Species features.
 7. **Physical mechanics:** Reconcile Powerful Build, size and carry/lift rules, movement, mountainous adaptation, damage prevention, Large Form, activation economy, resource uses and conditions against the native mechanics rather than importing older-edition wording verbatim.
@@ -55,7 +55,7 @@ The staged SRD 5.2.1 Goliath candidate has **six mutually exclusive ancestry boo
 | Stone | Stone's Endurance: Reaction to reduce incoming damage by 1d12 + Constitution modifier | Defensive option previously shared by all Goliaths in 5e; in 5.5e only Stone inherits it, and it costs a Reaction |
 | Storm | Storm's Thunder: Reaction after taking damage from creature within 60 ft, dealing 1d8 Thunder damage to source | Ranged retaliation, but trigger is damage received, not a freely chosen attack; do not invent a saving throw or visibility requirement |
 
-All six inherit Goliath Clan capabilities if modeled as Subspecies. The same option grants no more than PB activations per Long Rest; the six options are **alternatives**, not a pool of six powers owned by every Goliath. Damage types, damage rolls and condition interactions must be reconciled with native rules rather than edition-specific text.
+All six inherit the shared Goliath Species traits, but do not automatically receive Goliath Clan Upbringing benefits if a different Upbringing was selected. The same option grants no more than PB activations per Long Rest; the six options are **alternatives**, not a pool of six powers owned by every Goliath. Damage types, damage rolls and condition interactions must be reconciled with native rules rather than edition-specific text.
 
 ## Bigby's specific contribution
 
@@ -91,7 +91,7 @@ Selected **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Po
 
 **Mountain legacy traits:** 3.5e Mountain Movement and altitude acclimation, and 5e Mountain Born, should be retained as research. Automatic universal cold resistance poorly fits six elemental giant ancestries (especially Fire) and stacks an additional elemental perk on top of the modern six boons. Alpine training is better considered for independently selectable Upbringings; physiological altitude adaptation may require a distinct environmental mechanics decision. A Goliath need not be raised in mountains.
 
-**Giant cultural Upbringings:** The Goliath Clan clan record and six independent Giant tradition records are native first-pass content. See [`GOLIATH_UPBRINGINGS_RECONCILIATION.md`](GOLIATH_UPBRINGINGS_RECONCILIATION.md). Goliath clans traditionally used Gol-Kaa in 3.5e, while giant societies use Giant; neither tradition is ancestry-restricted. Giant Foundling and Rune Carver remain Background/Feat research, not Upbringing entitlements.
+**Selected Upbringings:** One traditional Goliath Clan Upbringing (Gol-Kaa) and one independently selectable Giant Foundling Upbringing (Giant, Intimidation and Survival training) are native. The six source giant ancestries are inherited traits, not six established Goliath clan cultures. Six invented Giant Society Upbringings were withdrawn from native; see [`GOLIATH_UPBRINGINGS_RECONCILIATION.md`](GOLIATH_UPBRINGINGS_RECONCILIATION.md) for discarded ideas and the conversion rationale. The original Giant Foundling bonus feat is deferred to the Feat pass, and Rune Carver remains separate.
 
 ## 5e and 3.5e recovery assessment (selected and unselected findings)
 

@@ -1,47 +1,59 @@
-# Goliath and Giant Cultural Upbringings — First-Pass Native Reconciliation
+# Goliath and Giant Foundling Upbringings — First-Pass Reconciliation
 
-**Status:** Seven playable Upbringings selected as experimental native content. Learned customs are independent of biological Species/Subspecies, including for non-Goliath characters raised among giants. No feat, Origin feat, Rune Shaper spellcasting, or extra Strike is granted here.
+**Status:** The native playtest choices are **Goliath Clan Upbringing** and **Giant Foundling Upbringing**, both independently selectable; only the former is suggested by `species.goliath`. The six formerly native Giant Society Upbringings have been withdrawn as unsupported cultural subdivisions of the six Goliath biological ancestries. Their exploratory ideas are retained below, **not playable rules**.
 
-## Source distinctions
+## Evidence and interpretation
 
-- *Races of Stone* (3.5e) identifies **Gol-Kaa** as a traditional Goliath language and **Giant** as a separate optional language. The clans feature cooperation, competitions, oral memory, and mountain community work. Later 5e typically grants Giant instead. These languages should not be silently equated.
-- *Bigby Presents: Glory of the Giants* identifies six different giant societies and their preferred social measures and activities. Those are examples of learnable traditions, **not compulsory personalities, belief systems or ranks**.
-- *Bigby's* Giant Foundling and Rune Carver are Backgrounds, not Goliath species features. They carry distinct feats in their original presentation; their eventual Background reconciliation must not silently duplicate the selected Goliath ancestry powers.
+- *Races of Stone* (3.5e) describes Goliath clan societies and oral traditions with the Gol-Kaa language; Giant is listed separately. Different clans may have different practices and relationships with giants. It does **not** establish six culturally separate Goliath tribes corresponding to the six 2024 giant ancestry powers.
+- 5e Goliath descriptions preserve a recognizable, broadly shared clan culture (mountain survival, competition, and communal responsibility), although the language in the 2014-era version is Giant rather than Gol-Kaa.
+- The 2024/5.5e Goliath rules make the Cloud, Fire, Frost, Hill, Stone and Storm features ancestry-derived supernatural options, not distinct social institutions, clan cultures or six separate Upbringing choices.
+- *Bigby Presents: Glory of the Giants* (2023) describes **giant societies**; the separate Giant Foundling **Background** explicitly represents a person of another Species raised among giants. Neither its backstory nor the six distinct giant societies establishes six standard Goliath clan cultures.
 
-## Selected Upbringing records
+**Selected Dorks & Dice reconciliation:** Retain Gol-Kaa as a learned traditional Goliath clan language; the historical shift to Giant in later editions does not require us to erase Gol-Kaa or claim the two languages are identical. Preserve Giant as a separate language available through Giant Foundling and other language-learning paths.
 
-| Record | Learned language | Training and cultural practice |
+## Authoritative native choices
+
+| Upbringing | Independent benefit package | Applicable Species |
 | --- | --- | --- |
-| `upbringing.goliath.clan` | Gol-Kaa | Choose one Skill training (Athletics, Insight, Survival) and one Competency (Cooking, Leatherworking, Navigation) |
-| `upbringing.giant.cloud` | Giant | Choose Gemcutting or Calligraphy; +2 scoped Appraise for treasures and crafted gifts |
-| `upbringing.giant.fire` | Giant | Choose Smithing, Weaponsmithing, Armorsmithing or Blacksmithing; +2 scoped Investigation for worked metal |
-| `upbringing.giant.frost` | Giant | Choose Leatherworking or Woodcarving; +2 scoped Survival for cold-country tracking and navigation |
-| `upbringing.giant.hill` | Giant | Choose Cooking or Herbalism; +2 scoped Survival for foraging and game tracking |
-| `upbringing.giant.stone` | Giant | Choose Stonemasonry or Sculpting; +2 scoped History for stone monuments, carvings and inscriptions |
-| `upbringing.giant.storm` | Giant | Choose Navigation or Cartography; +2 scoped Nature for weather patterns and tides |
+| `upbringing.goliath.clan` | Gol-Kaa; train one of Athletics, Insight or Survival; train one of Cooking, Leatherworking or Navigation | Any Species; suggested default for Goliaths |
+| `upbringing.giant-foundling` | Giant; one additional language choice; train Intimidation and Survival | Any Species, including any Goliath Subspecies; no Species default |
 
-Skill and Competency identifiers reference the existing catalog. Training in composite Athletics does not automatically train its independently ranked component Skills. The scoped +2 bonuses stack with training but apply to the listed activities only. These grants are **new Dorks & Dice cultural adaptations**, not published Upbringing stat blocks.
+Both records stand alone, with **no Upbringing parent**. A character selects one Upbringing, not both by default. Goliaths with Giant Foundling do **not** simultaneously receive Gol-Kaa or Goliath clan training unless another independent rule grants them. A non-Goliath with Giant Foundling does **not** acquire inherited Goliath supernatural abilities.
 
-## Two equally valid cultural origins
+## Source Background → Upbringing conversion
 
-A Goliath can be raised among Goliath clans or among one of the six giant societies. Neither path depends on the chosen Goliath Subspecies. The **Goliath Clan Upbringing** is one specific, independently selectable culture, not a generic parent whose benefits all Goliaths inherit. The **Giant Society Upbringings** are alternative independent cultural choices for Goliaths and other Species, not branches inheriting Gol-Kaa or Goliath clan training. The Goliath Species default remains only a suggestion when the player has not selected an Upbringing.
+The source Giant Foundling Background grants Intimidation, Survival, Giant, one additional language, a starting-equipment package, and the Strike of the Giants feat. This Upbringing selects the **learned languages and skills** without assigning a separate Background, with no equipment entitlement (starting inventory belongs in the appropriate character-creation system).
 
-## Inheritance and defaults
+**Important outstanding matter:** The source feat is meaningful: a Giant Foundling of a non-Goliath Species may appropriately qualify to learn Strike of the Giants in the Feat pass. However, Goliaths already have Strike-derived abilities from their Subspecies. Do not grant that feat automatically through this Upbringing or allocate a duplicate use pool until the Feat system can account for feat ownership, alternative choices, prerequisites, overlap and stacking. This is a deliberate deferred mechanic, not a claim that *Bigby's* did not include it.
 
-`species.goliath` sets `"defaultUpbringing": "upbringing.goliath.clan"`, and all six Goliath Subspecies inherit that default. The player may select another Upbringing without ancestry-based restriction. The six `upbringing.giant.*` records have **no parent** to `upbringing.goliath.clan`: being raised among giants does not make a non-Goliath character inherit Gol-Kaa or Goliath clan practices. Every chosen Upbringing consumes one selection; none is automatically stacked with the Species default.
+The original narrative discusses magically unusual size, but neither the source nor this conversion grants an automatic change to the character's actual Size category.
 
-## Pending follow-up
+## Rejected/retired six-way cultural candidates — reference only
 
-- The separate global language catalog does not yet define `language.gol-kaa`; the selected Upbringing grants the learned language `gol-kaa` as an initial rule reference, pending the full language-catalog reconciliation. Giant is currently represented in the staged language catalog.
-- The Character Sheet's native projector does not necessarily execute Upbringing inheritance, Skill/Competency selections, or scoped bonuses; those are separate integration tasks.
-- Original Background/Origin feat grants, including Giant Foundling and Rune Carver, must be reconciled independently. Goliaths must not receive duplicate Strike benefits or rune casting through an Upbringing by accident.
-- Balance across generic and specialized Upbringings, history of Gol-Kaa script, and the final Skill/Competency training procedure remain revisable in the wider character-building pass.
+An earlier proposal incorrectly treated the six giant societies described in *Bigby's* as if they were six standard Goliath Upbringings parallel to the six ancestral Subspecies. Those invented training bonuses are **not** selected native content. Their former themes are preserved only for later independent giant-worldbuilding and possible individual cultural specialties, should the setting establish them.
+
+| Former record | Proposed name | Former invented cultural skill benefit |
+| --- | --- | --- |
+| `upbringing.giant.cloud` | Cloud Giant Society Upbringing | Gain +2 on Appraise checks for these learned activities: precious goods appraisal, crafted gift valuation, art object valuation. The activity, not merely the character's location or ancestry, must qualify. |
+| `upbringing.giant.fire` | Fire Giant Society Upbringing | Gain +2 on Investigation checks for these learned activities: metalworking construction analysis, forge flaw identification, worked metal damage assessment. The activity, not merely the character's location or ancestry, must qualify. |
+| `upbringing.giant.frost` | Frost Giant Society Upbringing | Gain +2 on Survival checks for these learned activities: snowy wilderness tracking, cold country hunting routes, snow and ice navigation. The activity, not merely the character's location or ancestry, must qualify. |
+| `upbringing.giant.hill` | Hill Giant Society Upbringing | Gain +2 on Survival checks for these learned activities: edible plant foraging, food game tracking, safe foraging area selection. The activity, not merely the character's location or ancestry, must qualify. |
+| `upbringing.giant.stone` | Stone Giant Society Upbringing | Gain +2 on History checks for these learned activities: stone art history, worked stone inscription history, stone monument provenance. The activity, not merely the character's location or ancestry, must qualify. |
+| `upbringing.giant.storm` | Storm Giant Society Upbringing | Gain +2 on Nature checks for these learned activities: observable weather pattern analysis, natural storm patterns, tidal condition knowledge. The activity, not merely the character's location or ancestry, must qualify. |
+
+The six original native JSON records have been removed from `native/upbringings/giant/`. The facts about actual Cloud, Fire, Frost, Hill, Stone and Storm giant society remain valid worldbuilding research, but there is no automatic six-way Goliath culture subdivision.
+
+## Open dependencies
+
+- Gol-Kaa needs a resolved global language-catalog entry; Giant is currently represented in the working language catalog.
+- Upbringing benefit execution and character language/Skill grants depend on the Character Sheet and native projector integration.
+- A later Feat pass must reconcile access to Strike of the Giants for Giant Foundlings, especially for Goliaths with overlapping Subspecies features. Rune Carver remains separate material; no rune magic was awarded here.
+- The broader cultural pass may revise the skill balance (Goliath Clan grants one choice of Skill and one Competency, Giant Foundling grants two fixed Skills and a language choice) without inventing extra Species powers.
 
 ## Sources
 
-- 3.5e Goliath characteristics: https://dnd.arkalseif.info/races/races-of-stone--82/goliath--13/
-- Historical Gol-Kaa tongue: https://arkalseif.info/languages/gol-kaa/
-- 5e Goliath source: https://www.dndbeyond.com/species/22-goliath
-- Bigby's six giant cultures: https://www.dndbeyond.com/posts/1534-giant-personalities-an-infographic-on-the
-- Bigby's book index: https://www.dndbeyond.com/sources/dnd/gotg
-- Publisher Rune Carver overview: https://www.dndbeyond.com/posts/1551-channel-ancient-power-with-the-rune-carver
+- D&D Beyond 2024 Goliath rules: https://www.dndbeyond.com/sources/dnd/br-2024/character-origins
+- D&D Beyond 2014 Goliath tribal culture: https://www.dndbeyond.com/species/22-goliath
+- Publisher Giant Foundling overview: https://www.dndbeyond.com/posts/1531-first-look-giant-foundling-background-and-strike
+- *Bigby Presents: Glory of the Giants* book index: https://www.dndbeyond.com/sources/dnd/gotg
+- 3.5e Goliath clan-language notes: https://dnd.arkalseif.info/races/races-of-stone--82/goliath--13/
