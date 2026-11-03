@@ -1,0 +1,359 @@
+{
+  "scope": "pillar3-initial-source-evidence-not-native-rules",
+  "snapshotCommit": "d5a2b15b7ae2bd88ae9e47a5ddfad01d481623bb",
+  "records": [
+    {
+      "sourcePath": "data/rulesets/first-party-001/working/backgrounds/acolyte.json",
+      "sourceBlobSha": "55f47e1806cdba5c93c4e53bf1a1bd3e2bcb8fcb",
+      "entityId": "background.acolyte",
+      "sourceKind": "non-authoritative-working-background",
+      "baselineStatusAsRecorded": "pending-native-reconciliation",
+      "variants": [
+        {
+          "variant": "candidate-a",
+          "abilitiesSource": null,
+          "featSourceIds": null,
+          "skillsSource": [
+            {
+              "insight": true,
+              "religion": true
+            }
+          ],
+          "toolsSource": null,
+          "languagesSource": [
+            {
+              "anyStandard": 2
+            }
+          ],
+          "startingEquipmentShape": [
+            [
+              "_"
+            ],
+            [
+              "a",
+              "b"
+            ]
+          ],
+          "hasStartingEquipment": true,
+          "hasNarrativeLore": true,
+          "sourceFieldKeys": [
+            "name",
+            "skillProficiencies",
+            "languageProficiencies",
+            "startingEquipment",
+            "entries",
+            "lore"
+          ]
+        },
+        {
+          "variant": "candidate-b",
+          "abilitiesSource": [
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ],
+                  "weights": [
+                    2,
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "int",
+                    "wis",
+                    "cha"
+                  ],
+                  "weights": [
+                    1,
+                    1,
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "featSourceIds": [
+            {
+              "magic initiate; cleric|srd52": true
+            }
+          ],
+          "skillsSource": [
+            {
+              "insight": true,
+              "religion": true
+            }
+          ],
+          "toolsSource": [
+            {
+              "calligrapher's supplies": true
+            }
+          ],
+          "languagesSource": null,
+          "startingEquipmentShape": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "hasStartingEquipment": true,
+          "hasNarrativeLore": true,
+          "sourceFieldKeys": [
+            "name",
+            "ability",
+            "feats",
+            "skillProficiencies",
+            "toolProficiencies",
+            "startingEquipment",
+            "entries",
+            "lore"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/working/backgrounds/criminal.json",
+      "sourceBlobSha": "47ad4950e59872404c2d4086d14ceed585f63666",
+      "entityId": "background.criminal",
+      "sourceKind": "non-authoritative-working-background",
+      "baselineStatusAsRecorded": "retained-native-definition",
+      "variants": [
+        {
+          "variant": "definition",
+          "abilitiesSource": [
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "dex",
+                    "con",
+                    "int"
+                  ],
+                  "weights": [
+                    2,
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "dex",
+                    "con",
+                    "int"
+                  ],
+                  "weights": [
+                    1,
+                    1,
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "featSourceIds": [
+            {
+              "alert|srd52": true
+            }
+          ],
+          "skillsSource": [
+            {
+              "sleight of hand": true,
+              "stealth": true
+            }
+          ],
+          "toolsSource": [
+            {
+              "thieves' tools": true
+            }
+          ],
+          "languagesSource": null,
+          "startingEquipmentShape": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "hasStartingEquipment": true,
+          "hasNarrativeLore": true,
+          "sourceFieldKeys": [
+            "ability",
+            "feats",
+            "skillProficiencies",
+            "toolProficiencies",
+            "startingEquipment",
+            "entries",
+            "lore"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/working/backgrounds/sage.json",
+      "sourceBlobSha": "8c6c626b79f8f0325ba3c582b60356ab276e7f8e",
+      "entityId": "background.sage",
+      "sourceKind": "non-authoritative-working-background",
+      "baselineStatusAsRecorded": "retained-native-definition",
+      "variants": [
+        {
+          "variant": "definition",
+          "abilitiesSource": [
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "con",
+                    "int",
+                    "wis"
+                  ],
+                  "weights": [
+                    2,
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "con",
+                    "int",
+                    "wis"
+                  ],
+                  "weights": [
+                    1,
+                    1,
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "featSourceIds": [
+            {
+              "magic initiate; wizard|srd52": true
+            }
+          ],
+          "skillsSource": [
+            {
+              "arcana": true,
+              "history": true
+            }
+          ],
+          "toolsSource": [
+            {
+              "calligrapher's supplies": true
+            }
+          ],
+          "languagesSource": null,
+          "startingEquipmentShape": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "hasStartingEquipment": true,
+          "hasNarrativeLore": true,
+          "sourceFieldKeys": [
+            "ability",
+            "feats",
+            "skillProficiencies",
+            "toolProficiencies",
+            "startingEquipment",
+            "entries",
+            "lore"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/working/backgrounds/soldier.json",
+      "sourceBlobSha": "d839ec53b872b8485088059875ba9034da389192",
+      "entityId": "background.soldier",
+      "sourceKind": "non-authoritative-working-background",
+      "baselineStatusAsRecorded": "retained-native-definition",
+      "variants": [
+        {
+          "variant": "definition",
+          "abilitiesSource": [
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "str",
+                    "dex",
+                    "con"
+                  ],
+                  "weights": [
+                    2,
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "choose": {
+                "weighted": {
+                  "from": [
+                    "str",
+                    "dex",
+                    "con"
+                  ],
+                  "weights": [
+                    1,
+                    1,
+                    1
+                  ]
+                }
+              }
+            }
+          ],
+          "featSourceIds": [
+            {
+              "savage attacker|srd52": true
+            }
+          ],
+          "skillsSource": [
+            {
+              "athletics": true,
+              "intimidation": true
+            }
+          ],
+          "toolsSource": [
+            {
+              "anyGamingSet": 1
+            }
+          ],
+          "languagesSource": null,
+          "startingEquipmentShape": [
+            [
+              "A",
+              "B"
+            ]
+          ],
+          "hasStartingEquipment": true,
+          "hasNarrativeLore": true,
+          "sourceFieldKeys": [
+            "ability",
+            "feats",
+            "skillProficiencies",
+            "toolProficiencies",
+            "startingEquipment",
+            "entries",
+            "lore"
+          ]
+        }
+      ]
+    }
+  ]
+}
