@@ -2,7 +2,7 @@
   "description": "Rule status counts for the pinned SRD source pack, including approved native promotions; not a runtime execution-readiness certificate.",
   "baselineEntries": 2522,
   "statuses": {
-    "single-candidate": 505,
+    "single-candidate": 504,
     "multiple-candidates": 987,
     "native-single-source-retained": 528,
     "native-compatible-merged": 108,
@@ -11,7 +11,7 @@
     "matching-candidates": 19,
     "native-monster-role-default": 285,
     "native-monster-identity-alias": 23,
-    "approved-native-reconciled": 9
+    "approved-native-reconciled": 10
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
@@ -20,11 +20,11 @@
     "native-single-source-retained": 528
   },
   "remainingWithMultipleCandidates": 987,
-  "remainingWithOneCandidate": 505,
+  "remainingWithOneCandidate": 504,
   "retainedDefinitionsNeedingNativeShaping": 833,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1492,
+  "candidateRecordsStillUnresolved": 1491,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
