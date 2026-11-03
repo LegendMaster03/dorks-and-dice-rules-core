@@ -31,7 +31,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual("humanoid", self.base["creatureType"])
         self.assertEqual("medium", self.base["size"])
         self.assertEqual(35, self.base["walkingSpeedFeet"])
-        self.assertEqual("upbringing.goliath.general", self.base["defaultUpbringing"])
+        self.assertEqual("upbringing.goliath.clan", self.base["defaultUpbringing"])
         self.assertEqual(
             {"powerful-build", "large-form", "mountain-leap", "altitude-acclimation", "giant-ancestry-aptitude"},
             {t["id"] for t in self.base["traits"]})

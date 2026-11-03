@@ -1,6 +1,6 @@
 {
-  "id": "upbringing.goliath.general",
-  "name": "General Goliath Upbringing",
+  "id": "upbringing.goliath.clan",
+  "name": "Goliath Clan Upbringing",
   "kind": "upbringing",
   "status": "selected-native",
   "selectable": true,
@@ -38,7 +38,7 @@
     }
   ],
   "reviewNotes": [
-    "The general Goliath clan tradition can be chosen by any Species.",
+    "The Goliath Clan clan tradition can be chosen by any Species.",
     "Original 3.5e Goliaths used Gol-Kaa; later 5e Goliaths used Giant. These are distinct languages.",
     "The Giant cultural Upbringings are independent selections rather than children of this record.",
     "No feat, rune spellcasting, ancestral powers, or automatic Ordning allegiance is granted.",

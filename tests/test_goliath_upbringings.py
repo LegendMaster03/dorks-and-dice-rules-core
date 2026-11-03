@@ -17,17 +17,19 @@ def read(path):
 class GoliathUpbringingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.general = read(UPBRING / "goliath/general.json")
+        cls.general = read(UPBRING / "goliath/clan.json")
         cls.cultures = {k: read(UPBRING / "giant" / (k + ".json")) for k in KINDS}
         cls.skills = {r["id"] for r in read(WORKING / "skills.json")["skills"]}
         cls.competencies = {r["id"] for r in read(WORKING / "competencies.json")["competencies"]}
 
     def test_seven_independent_playable_upbringings(self):
-        self.assertEqual({"general.json"}, {p.name for p in (UPBRING / "goliath").glob("*.json")})
+        self.assertEqual({"clan.json"}, {p.name for p in (UPBRING / "goliath").glob("*.json")})
         self.assertEqual(set(KINDS), {p.stem for p in (UPBRING / "giant").glob("*.json")})
-        self.assertEqual("upbringing.goliath.general", self.general["id"])
+        self.assertEqual("upbringing.goliath.clan", self.general["id"])
+        self.assertEqual("Goliath Clan Upbringing", self.general["name"])
         for slug, record in self.cultures.items():
             self.assertEqual("upbringing.giant." + slug, record["id"])
+            self.assertEqual(slug.title() + " Giant Society Upbringing", record["name"])
         records = [self.general, *self.cultures.values()]
         self.assertEqual(7, len({r["id"] for r in records}))
         for record in records:

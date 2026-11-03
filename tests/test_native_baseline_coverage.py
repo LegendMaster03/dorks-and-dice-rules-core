@@ -224,7 +224,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
             "species.dwarf": "upbringing.dwarf.general",
             "species.elf": "upbringing.elf.general",
             "species.gnome": "upbringing.gnome.general",
-            "species.goliath": "upbringing.goliath.general",
+            "species.goliath": "upbringing.goliath.clan",
             "subspecies.elf.high": "upbringing.elf.high",
             "subspecies.elf.wood": "upbringing.elf.wood",
             "subspecies.elf.drow": "upbringing.elf.drow",
@@ -250,7 +250,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertEqual("upbringing.elf.high", nearest_default("subspecies.elf.high"))
         self.assertEqual("upbringing.gnome.forest", nearest_default("subspecies.gnome.forest"))
         for giant_type in ("cloud", "fire", "frost", "hill", "stone", "storm"):
-            self.assertEqual("upbringing.goliath.general",
+            self.assertEqual("upbringing.goliath.clan",
                              nearest_default("subspecies.goliath." + giant_type))
         self.assertIsNone(nearest_default("subspecies.halfling.lightfoot"))
         self.assertFalse({"species.half-elf", "species.half-orc"} & set(species_defs))

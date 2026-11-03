@@ -1,6 +1,6 @@
 {
   "id": "upbringing.giant.storm",
-  "name": "Storm Giant Tradition Upbringing",
+  "name": "Storm Giant Society Upbringing",
   "kind": "upbringing",
   "status": "selected-native",
   "selectable": true,
@@ -38,8 +38,8 @@
   ],
   "reviewNotes": [
     "Source inspiration: Navigation, sea and sky knowledge, and interpreting weather; the specific Skill and Competency grants are experimental Dorks & Dice adaptations, not published Upbringing statistics.",
-    "The upbringing is independently selectable by any Species, including non-Goliaths; it does not require a matching giant ancestry.",
-    "Giant culture does not require Gol-Kaa or general Goliath clan training, so this is not a child of upbringing.goliath.general.",
+    "This Giant Society Upbringing represents a character raised among or trained within this giant society, including Goliaths whose upbringing differs from Goliath clan traditions. No matching Species or Subspecies is required.",
+    "Giant culture does not require Gol-Kaa or Goliath Clan clan training, so this is not a child of upbringing.goliath.clan.",
     "No Giant Foundling, Rune Carver, rune spellcasting, Origin feat, Strike of the Giants, giant attack ability, or compulsory Ordning status is granted."
   ]
 }

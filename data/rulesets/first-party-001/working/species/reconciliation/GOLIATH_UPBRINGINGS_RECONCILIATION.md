@@ -12,7 +12,7 @@
 
 | Record | Learned language | Training and cultural practice |
 | --- | --- | --- |
-| `upbringing.goliath.general` | Gol-Kaa | Choose one Skill training (Athletics, Insight, Survival) and one Competency (Cooking, Leatherworking, Navigation) |
+| `upbringing.goliath.clan` | Gol-Kaa | Choose one Skill training (Athletics, Insight, Survival) and one Competency (Cooking, Leatherworking, Navigation) |
 | `upbringing.giant.cloud` | Giant | Choose Gemcutting or Calligraphy; +2 scoped Appraise for treasures and crafted gifts |
 | `upbringing.giant.fire` | Giant | Choose Smithing, Weaponsmithing, Armorsmithing or Blacksmithing; +2 scoped Investigation for worked metal |
 | `upbringing.giant.frost` | Giant | Choose Leatherworking or Woodcarving; +2 scoped Survival for cold-country tracking and navigation |
@@ -22,9 +22,13 @@
 
 Skill and Competency identifiers reference the existing catalog. Training in composite Athletics does not automatically train its independently ranked component Skills. The scoped +2 bonuses stack with training but apply to the listed activities only. These grants are **new Dorks & Dice cultural adaptations**, not published Upbringing stat blocks.
 
+## Two equally valid cultural origins
+
+A Goliath can be raised among Goliath clans or among one of the six giant societies. Neither path depends on the chosen Goliath Subspecies. The **Goliath Clan Upbringing** is one specific, independently selectable culture, not a generic parent whose benefits all Goliaths inherit. The **Giant Society Upbringings** are alternative independent cultural choices for Goliaths and other Species, not branches inheriting Gol-Kaa or Goliath clan training. The Goliath Species default remains only a suggestion when the player has not selected an Upbringing.
+
 ## Inheritance and defaults
 
-`species.goliath` sets `"defaultUpbringing": "upbringing.goliath.general"`, and all six Goliath Subspecies inherit that default. The player may select another Upbringing without ancestry-based restriction. The six `upbringing.giant.*` records have **no parent** to `upbringing.goliath.general`: being raised among giants does not make a non-Goliath character inherit Gol-Kaa or Goliath clan practices. Every chosen Upbringing consumes one selection; none is automatically stacked with the Species default.
+`species.goliath` sets `"defaultUpbringing": "upbringing.goliath.clan"`, and all six Goliath Subspecies inherit that default. The player may select another Upbringing without ancestry-based restriction. The six `upbringing.giant.*` records have **no parent** to `upbringing.goliath.clan`: being raised among giants does not make a non-Goliath character inherit Gol-Kaa or Goliath clan practices. Every chosen Upbringing consumes one selection; none is automatically stacked with the Species default.
 
 ## Pending follow-up
 

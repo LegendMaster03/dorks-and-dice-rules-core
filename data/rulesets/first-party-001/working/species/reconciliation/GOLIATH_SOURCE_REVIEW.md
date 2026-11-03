@@ -1,6 +1,6 @@
 # Goliath — first-pass source reconciliation research
 
-**Status:** Goliath Species and six giant-ancestry Subspecies have selected first-pass native mechanics, including merged Strike modes and level-4 advanced features. General Goliath and six independent giant cultural Upbringings are now native. Giant Foundling and Rune Carver Background/Feat options remain independent work; all mechanics are subject to revision.
+**Status:** Goliath Species and six giant-ancestry Subspecies have selected first-pass native mechanics, including merged Strike modes and level-4 advanced features. Goliath Clan and six independent giant cultural Upbringings are now native. Giant Foundling and Rune Carver Background/Feat options remain independent work; all mechanics are subject to revision.
 
 **Goal:** document the selected first-pass Goliath Species from SRD 5.2.1 and the outstanding review of historical material and *Bigby Presents: Glory of the Giants* (2023). Inclusion in native means playable for testing, not final or balance-complete.
 
@@ -55,7 +55,7 @@ The staged SRD 5.2.1 Goliath candidate has **six mutually exclusive ancestry boo
 | Stone | Stone's Endurance: Reaction to reduce incoming damage by 1d12 + Constitution modifier | Defensive option previously shared by all Goliaths in 5e; in 5.5e only Stone inherits it, and it costs a Reaction |
 | Storm | Storm's Thunder: Reaction after taking damage from creature within 60 ft, dealing 1d8 Thunder damage to source | Ranged retaliation, but trigger is damage received, not a freely chosen attack; do not invent a saving throw or visibility requirement |
 
-All six inherit general Goliath capabilities if modeled as Subspecies. The same option grants no more than PB activations per Long Rest; the six options are **alternatives**, not a pool of six powers owned by every Goliath. Damage types, damage rolls and condition interactions must be reconciled with native rules rather than edition-specific text.
+All six inherit Goliath Clan capabilities if modeled as Subspecies. The same option grants no more than PB activations per Long Rest; the six options are **alternatives**, not a pool of six powers owned by every Goliath. Damage types, damage rolls and condition interactions must be reconciled with native rules rather than edition-specific text.
 
 ## Bigby's specific contribution
 
@@ -91,7 +91,7 @@ Selected **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Po
 
 **Mountain legacy traits:** 3.5e Mountain Movement and altitude acclimation, and 5e Mountain Born, should be retained as research. Automatic universal cold resistance poorly fits six elemental giant ancestries (especially Fire) and stacks an additional elemental perk on top of the modern six boons. Alpine training is better considered for independently selectable Upbringings; physiological altitude adaptation may require a distinct environmental mechanics decision. A Goliath need not be raised in mountains.
 
-**Giant cultural Upbringings:** The General Goliath clan record and six independent Giant tradition records are native first-pass content. See [`GOLIATH_UPBRINGINGS_RECONCILIATION.md`](GOLIATH_UPBRINGINGS_RECONCILIATION.md). Goliath clans traditionally used Gol-Kaa in 3.5e, while giant societies use Giant; neither tradition is ancestry-restricted. Giant Foundling and Rune Carver remain Background/Feat research, not Upbringing entitlements.
+**Giant cultural Upbringings:** The Goliath Clan clan record and six independent Giant tradition records are native first-pass content. See [`GOLIATH_UPBRINGINGS_RECONCILIATION.md`](GOLIATH_UPBRINGINGS_RECONCILIATION.md). Goliath clans traditionally used Gol-Kaa in 3.5e, while giant societies use Giant; neither tradition is ancestry-restricted. Giant Foundling and Rune Carver remain Background/Feat research, not Upbringing entitlements.
 
 ## 5e and 3.5e recovery assessment (selected and unselected findings)
 
