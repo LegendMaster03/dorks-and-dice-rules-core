@@ -49,7 +49,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
             self.assertGreaterEqual(len(leaf["traits"]), 3)
             self.assertEqual(1, sum(x.get("uses") == {
                 "value": "proficiency-bonus", "recharge": "long-rest"
-            } for x in leaf["traits"] if x["requiredCharacterLevel"] == 1 or "requiredCharacterLevel" not in x))
+            } for x in leaf["traits"] if x.get("requiredCharacterLevel", 1) == 1))
             self.assertNotIn("defaultUpbringing", leaf)
             self.assertNotIn("creatureType", leaf)
             self.assertNotIn("walkingSpeedFeet", leaf)
