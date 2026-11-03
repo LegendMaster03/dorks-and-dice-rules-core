@@ -119,5 +119,5 @@
     "At level 1 choose Strength or Constitution as the stable ability modifier for the Goliath ancestry's Strike and advanced supernatural powers. This replaces source-feat DCs tied to an omitted +1 Ability Score Increase.",
     "The suggested Goliath default is a selectable Gol-Kaa clan Upbringing, and a player may override it with any other Upbringing. Giant cultural traditions require no Goliath ancestry."
   ],
-  "defaultUpbringing": "upbringing.goliath.clan"
+  "defaultUpbringing": "upbringing.goliath.general"
 }

@@ -17,7 +17,7 @@ def read(path):
 class GoliathUpbringingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.clan = read(UPBRING / "goliath/clan.json")
+        cls.clan = read(UPBRING / "goliath/general.json")
         cls.foundling = read(UPBRING / "giant-foundling.json")
         cls.skills = {r["id"] for r in read(WORKING / "skills.json")["skills"]}
         cls.competencies = {
@@ -25,12 +25,12 @@ class GoliathUpbringingTests(unittest.TestCase):
         }
 
     def test_only_two_selected_goliath_related_upbringings(self):
-        self.assertEqual({"clan.json"}, {p.name for p in
+        self.assertEqual({"general.json"}, {p.name for p in
                          (UPBRING / "goliath").glob("*.json")})
         self.assertFalse((UPBRING / "giant").exists(),
                          "The six giant-society candidates must not remain native")
-        self.assertEqual("upbringing.goliath.clan", self.clan["id"])
-        self.assertEqual("Goliath Clan Upbringing", self.clan["name"])
+        self.assertEqual("upbringing.goliath.general", self.clan["id"])
+        self.assertEqual("General Goliath Upbringing", self.clan["name"])
         self.assertEqual("upbringing.giant-foundling", self.foundling["id"])
         self.assertEqual("Giant Foundling Upbringing", self.foundling["name"])
         for record in (self.clan, self.foundling):

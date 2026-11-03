@@ -1,6 +1,6 @@
 {
-  "id": "upbringing.goliath.clan",
-  "name": "Goliath Clan Upbringing",
+  "id": "upbringing.goliath.general",
+  "name": "General Goliath Upbringing",
   "kind": "upbringing",
   "status": "selected-native",
   "selectable": true,

@@ -1,6 +1,6 @@
 # Goliath and Giant Foundling Upbringings — First-Pass Reconciliation
 
-**Status:** The native playtest choices are **Goliath Clan Upbringing** and **Giant Foundling Upbringing**, both independently selectable; only the former is suggested by `species.goliath`. The six formerly native Giant Society Upbringings have been withdrawn as unsupported cultural subdivisions of the six Goliath biological ancestries. Their exploratory ideas are retained below, **not playable rules**.
+**Status:** The native playtest choices are **General Goliath Upbringing** and **Giant Foundling Upbringing**, both independently selectable; only the former is suggested by `species.goliath`. The six formerly native Giant Society Upbringings have been withdrawn as unsupported cultural subdivisions of the six Goliath biological ancestries. Their exploratory ideas are retained below, **not playable rules**.
 
 ## Evidence and interpretation
 
@@ -15,7 +15,7 @@
 
 | Upbringing | Independent benefit package | Applicable Species |
 | --- | --- | --- |
-| `upbringing.goliath.clan` | Gol-Kaa; train one of Athletics, Insight or Survival; train one of Cooking, Leatherworking or Navigation | Any Species; suggested default for Goliaths |
+| `upbringing.goliath.general` | Gol-Kaa; train one of Athletics, Insight or Survival; train one of Cooking, Leatherworking or Navigation | Any Species; suggested default for Goliaths |
 | `upbringing.giant-foundling` | Giant; one additional language choice; train Intimidation and Survival | Any Species, including any Goliath Subspecies; no Species default |
 
 Both records stand alone, with **no Upbringing parent**. A character selects one Upbringing, not both by default. Goliaths with Giant Foundling do **not** simultaneously receive Gol-Kaa or Goliath clan training unless another independent rule grants them. A non-Goliath with Giant Foundling does **not** acquire inherited Goliath supernatural abilities.
