@@ -1,0 +1,678 @@
+{
+  "scope": "provisional-nonauthoritative-trait-audit",
+  "snapshotCommit": "d5a2b15b7ae2bd88ae9e47a5ddfad01d481623bb",
+  "classification": "heuristic-review-only",
+  "records": [
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/dragonborn.json",
+      "sourceBlobSha": "088160ddba0c1de20d962a7324781137ded57b28",
+      "entityId": "species.dragonborn",
+      "kind": "species",
+      "selectable": false,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "dragon",
+        "size": "medium",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 30,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "low-light-vision",
+          "name": "Low-Light Vision",
+          "mechanicKeys": [
+            "rule"
+          ],
+          "classificationCandidates": [
+            "senses"
+          ],
+          "reviewFlags": [
+            "references-shared-rule"
+          ]
+        },
+        {
+          "id": "draconic-resistance",
+          "name": null,
+          "mechanicKeys": [
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival"
+          ],
+          "reviewFlags": [
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "breath-weapon",
+          "name": null,
+          "mechanicKeys": [
+            "activation",
+            "uses",
+            "savingThrow",
+            "damage",
+            "areaFrom"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection",
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/dwarf.json",
+      "sourceBlobSha": "324ee3490c8374833469d1079b13a8e618e8b364",
+      "entityId": "species.dwarf",
+      "kind": "species",
+      "selectable": true,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "humanoid",
+        "size": "medium",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 25,
+        "darkvisionFeet": 60
+      },
+      "otherTopLevelKeys": [
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "dwarven-toughness",
+          "name": null,
+          "mechanicKeys": [
+            "hitPointsPerCharacterLevel"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "dwarven-resilience",
+          "name": null,
+          "mechanicKeys": [
+            "savingThrows",
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "stonebound-tremorsense",
+          "name": null,
+          "mechanicKeys": [
+            "sense",
+            "rangeFeet",
+            "requiresContact",
+            "activation",
+            "durationMinutes",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "senses",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/elf.json",
+      "sourceBlobSha": "164690dc7837e1eb66d382e923a3f141410382cc",
+      "entityId": "species.elf",
+      "kind": "species",
+      "selectable": true,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "fey",
+        "size": "medium",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 30,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "low-light-vision",
+          "name": "Low-Light Vision",
+          "mechanicKeys": [
+            "rule"
+          ],
+          "classificationCandidates": [
+            "senses"
+          ],
+          "reviewFlags": [
+            "references-shared-rule"
+          ]
+        },
+        {
+          "id": "keen-senses",
+          "name": null,
+          "mechanicKeys": [
+            "skillBonuses"
+          ],
+          "classificationCandidates": [
+            "skill-or-advancement",
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "fey-ancestry",
+          "name": null,
+          "mechanicKeys": [
+            "savingThrows"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "trance",
+          "name": null,
+          "mechanicKeys": [
+            "longRestHours",
+            "sleepRequired"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "magical-sleep",
+          "name": null,
+          "mechanicKeys": [],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/gnome.json",
+      "sourceBlobSha": "28f52427f5e8b3724bc6e355d923e1a994c17004",
+      "entityId": "species.gnome",
+      "kind": "species",
+      "selectable": true,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "fey",
+        "size": "small",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 25,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "low-light-vision",
+          "name": "Low-Light Vision",
+          "mechanicKeys": [
+            "rule"
+          ],
+          "classificationCandidates": [
+            "senses"
+          ],
+          "reviewFlags": [
+            "references-shared-rule"
+          ]
+        },
+        {
+          "id": "gnomish-cunning",
+          "name": null,
+          "mechanicKeys": [
+            "savingThrows"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/goliath.json",
+      "sourceBlobSha": "e27df19a0dc095dac47b6254281e941aefe6b17a",
+      "entityId": "species.goliath",
+      "kind": "species",
+      "selectable": false,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "giant",
+        "size": "medium",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 35,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "powerful-build",
+          "name": "Powerful Build",
+          "mechanicKeys": [
+            "advantageOnAbilityChecksToEndCondition",
+            "effectiveSizeCategoriesHigherForCarryingCapacity",
+            "doesNotChange"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement",
+            "defense-or-survival"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        },
+        {
+          "id": "large-form",
+          "name": "Large Form",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "sizeChange",
+            "duration",
+            "advantageOnChecks",
+            "walkingSpeedBonusFeet",
+            "uses",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "possible-physical-context-review"
+          ]
+        },
+        {
+          "id": "mountain-leap",
+          "name": "Mountain Leap",
+          "mechanicKeys": [
+            "standingJumpAsRunning",
+            "ignoresRunningApproachRequirement",
+            "movementCost",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        },
+        {
+          "id": "altitude-acclimation",
+          "name": "Altitude Acclimation",
+          "mechanicKeys": [
+            "naturallyAcclimated",
+            "altitudeLimitFeet",
+            "includesElevationAboveFeet",
+            "maintainsAcclimationAtLowerElevations",
+            "ignores",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        },
+        {
+          "id": "giant-ancestry-aptitude",
+          "name": "Giant Ancestry Aptitude",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "abilityChoice",
+            "savingThrowDC",
+            "attackModifier",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "depends-on-other-selection",
+            "choice-within-trait"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/halfling.json",
+      "sourceBlobSha": "da38987599bb3399a8d8e5ecd75cfa690e1ae848",
+      "entityId": "species.halfling",
+      "kind": "species",
+      "selectable": true,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "humanoid",
+        "size": "small",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 25,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "halfling-luck",
+          "name": null,
+          "mechanicKeys": [],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "brave",
+          "name": null,
+          "mechanicKeys": [],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "halfling-nimbleness",
+          "name": null,
+          "mechanicKeys": [],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "naturally-stealthy",
+          "name": null,
+          "mechanicKeys": [],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "keen-hearing",
+          "name": null,
+          "mechanicKeys": [
+            "skillBonuses"
+          ],
+          "classificationCandidates": [
+            "senses",
+            "skill-or-advancement",
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/human.json",
+      "sourceBlobSha": "784b57062d9185b34d02a52580b8cd53b00ec4cb",
+      "entityId": "species.human",
+      "kind": "species",
+      "selectable": true,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "humanoid",
+        "size": null,
+        "sizeChoice": {
+          "from": [
+            "small",
+            "medium"
+          ],
+          "when": "character-creation"
+        },
+        "walkingSpeedFeet": 30,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "skillful",
+          "name": "Skillful",
+          "mechanicKeys": [
+            "grantType",
+            "chooseFrom",
+            "choiceCount",
+            "when"
+          ],
+          "classificationCandidates": [
+            "skill-or-advancement"
+          ],
+          "reviewFlags": [
+            "depends-on-other-selection",
+            "choice-within-trait"
+          ]
+        },
+        {
+          "id": "versatile",
+          "name": "Versatile",
+          "mechanicKeys": [
+            "grantType",
+            "featCategory",
+            "choiceCount",
+            "when"
+          ],
+          "classificationCandidates": [
+            "skill-or-advancement"
+          ],
+          "reviewFlags": [
+            "choice-within-trait"
+          ]
+        },
+        {
+          "id": "adaptable-learning",
+          "name": "Adaptable Learning",
+          "mechanicKeys": [
+            "additionalRanksAtCharacterLevel1",
+            "additionalRanksPerSubsequentCharacterLevel",
+            "allocation",
+            "obeysNormalSkillRankLimits"
+          ],
+          "classificationCandidates": [
+            "skill-or-advancement"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/orc.json",
+      "sourceBlobSha": "2ab4d88520de7995d58b4b0a58b8714431435ba2",
+      "entityId": "species.orc",
+      "kind": "species",
+      "selectable": true,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "humanoid",
+        "size": "medium",
+        "sizeChoice": null,
+        "walkingSpeedFeet": 30,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "low-light-vision",
+          "name": "Low-Light Vision",
+          "mechanicKeys": [
+            "rule"
+          ],
+          "classificationCandidates": [
+            "senses"
+          ],
+          "reviewFlags": [
+            "references-shared-rule"
+          ]
+        },
+        {
+          "id": "adrenaline-rush",
+          "name": "Adrenaline Rush",
+          "mechanicKeys": [
+            "activation",
+            "temporaryHitPoints",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "relentless-endurance",
+          "name": "Relentless Endurance",
+          "mechanicKeys": [
+            "trigger",
+            "hitPointsInstead",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "powerful-build",
+          "name": "Powerful Build",
+          "mechanicKeys": [
+            "effectiveSizeCategoriesHigherForCarryingCapacity",
+            "effectiveSizeCategoriesHigherForPushingDraggingLifting",
+            "doesNotChange",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        },
+        {
+          "id": "savage-attacks",
+          "name": "Savage Attacks",
+          "mechanicKeys": [
+            "trigger",
+            "bonusDamageDice",
+            "requiresCriticalHit"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "menacing-presence",
+          "name": "Menacing Presence",
+          "mechanicKeys": [
+            "skillCheckAdvantage",
+            "grantsSkillProficiency"
+          ],
+          "classificationCandidates": [
+            "skill-or-advancement"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/base/tiefling.json",
+      "sourceBlobSha": "4cef41f610ac04ab5d83ddd19c4c692f160a3819",
+      "entityId": "species.tiefling",
+      "kind": "species",
+      "selectable": false,
+      "status": "selected-native",
+      "parent": null,
+      "effectiveBaseline": {
+        "creatureType": "fiend",
+        "size": null,
+        "sizeChoice": {
+          "from": [
+            "small",
+            "medium"
+          ],
+          "when": "character-creation"
+        },
+        "walkingSpeedFeet": 30,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "needs",
+        "ancestrySelection"
+      ],
+      "traits": [
+        {
+          "id": "low-light-vision",
+          "name": "Low-Light Vision",
+          "mechanicKeys": [
+            "rule"
+          ],
+          "classificationCandidates": [
+            "senses"
+          ],
+          "reviewFlags": [
+            "references-shared-rule"
+          ]
+        },
+        {
+          "id": "otherworldly-presence",
+          "name": "Otherworldly Presence",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "atWill",
+            "spellcastingAbilityFrom"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    }
+  ]
+}
