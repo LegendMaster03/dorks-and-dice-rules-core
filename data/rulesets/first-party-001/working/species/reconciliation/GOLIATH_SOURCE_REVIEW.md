@@ -1,6 +1,6 @@
 # Goliath — first-pass source reconciliation research
 
-**Status:** the SRD 5.2.1 Goliath Species and six selectable Subspecies are native first-pass playtest content. Standing-jump Mountain Leap and physiological Altitude Acclimation from earlier editions have also been selected. This document retains historical comparisons and unresolved questions. No Goliath Upbringing, feat or *Bigby's*-derived Subspecies expansion has been selected.
+**Status:** Goliath Species and six giant-ancestry Subspecies have selected first-pass native mechanics, including merged Strike modes and level-4 advanced features. General Goliath and six independent giant cultural Upbringings are now native. Giant Foundling and Rune Carver Background/Feat options remain independent work; all mechanics are subject to revision.
 
 **Goal:** document the selected first-pass Goliath Species from SRD 5.2.1 and the outstanding review of historical material and *Bigby Presents: Glory of the Giants* (2023). Inclusion in native means playable for testing, not final or balance-complete.
 
@@ -91,7 +91,7 @@ Selected **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Po
 
 **Mountain legacy traits:** 3.5e Mountain Movement and altitude acclimation, and 5e Mountain Born, should be retained as research. Automatic universal cold resistance poorly fits six elemental giant ancestries (especially Fire) and stacks an additional elemental perk on top of the modern six boons. Alpine training is better considered for independently selectable Upbringings; physiological altitude adaptation may require a distinct environmental mechanics decision. A Goliath need not be raised in mountains.
 
-**Giant-specific Upbringings:** retain possible traditions of Cloud, Fire, Frost, Hill, Stone and Storm giant societies, plus Giant Foundling and Rune Carver. These are **research leads only**. Do not create ancestry-locked Upbringings or defaults; do not assign Goliaths a compulsory Ordning ideology or proficiency.
+**Giant cultural Upbringings:** The General Goliath clan record and six independent Giant tradition records are native first-pass content. See [`GOLIATH_UPBRINGINGS_RECONCILIATION.md`](GOLIATH_UPBRINGINGS_RECONCILIATION.md). Goliath clans traditionally used Gol-Kaa in 3.5e, while giant societies use Giant; neither tradition is ancestry-restricted. Giant Foundling and Rune Carver remain Background/Feat research, not Upbringing entitlements.
 
 ## 5e and 3.5e recovery assessment (selected and unselected findings)
 

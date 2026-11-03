@@ -1,0 +1,45 @@
+{
+  "id": "upbringing.giant.frost",
+  "name": "Frost Giant Tradition Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "giant-language",
+      "name": "Giant Language",
+      "description": "Learn Giant through this cultural tradition.",
+      "language": "giant"
+    },
+    {
+      "id": "frost-craft",
+      "name": "Cultural Craft",
+      "description": "Choose training in one Competency associated with this tradition: Leatherworking, Woodcarving.",
+      "grantType": "competency-training",
+      "chooseOne": [
+        "competency.leatherworking",
+        "competency.woodcarving"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "frost-field-knowledge",
+      "name": "Cultural Field Knowledge",
+      "description": "Gain +2 on Survival checks for these learned activities: snowy wilderness tracking, cold country hunting routes, snow and ice navigation. The activity, not merely the character's location or ancestry, must qualify.",
+      "skill": "skill.survival",
+      "bonus": 2,
+      "scope": [
+        "snowy-wilderness-tracking",
+        "cold-country-hunting-routes",
+        "snow-and-ice-navigation"
+      ],
+      "stacksWithTraining": true
+    }
+  ],
+  "reviewNotes": [
+    "Source inspiration: Cold-country hunting, fieldcraft, and making hunting gear; the specific Skill and Competency grants are experimental Dorks & Dice adaptations, not published Upbringing statistics.",
+    "The upbringing is independently selectable by any Species, including non-Goliaths; it does not require a matching giant ancestry.",
+    "Giant culture does not require Gol-Kaa or general Goliath clan training, so this is not a child of upbringing.goliath.general.",
+    "No Giant Foundling, Rune Carver, rune spellcasting, Origin feat, Strike of the Giants, giant attack ability, or compulsory Ordning status is granted."
+  ]
+}

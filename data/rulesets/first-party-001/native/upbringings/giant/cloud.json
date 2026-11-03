@@ -1,0 +1,45 @@
+{
+  "id": "upbringing.giant.cloud",
+  "name": "Cloud Giant Tradition Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "giant-language",
+      "name": "Giant Language",
+      "description": "Learn Giant through this cultural tradition.",
+      "language": "giant"
+    },
+    {
+      "id": "cloud-craft",
+      "name": "Cultural Craft",
+      "description": "Choose training in one Competency associated with this tradition: Gemcutting, Calligraphy.",
+      "grantType": "competency-training",
+      "chooseOne": [
+        "competency.gemcutting",
+        "competency.calligraphy"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "cloud-field-knowledge",
+      "name": "Cultural Field Knowledge",
+      "description": "Gain +2 on Appraise checks for these learned activities: precious goods appraisal, crafted gift valuation, art object valuation. The activity, not merely the character's location or ancestry, must qualify.",
+      "skill": "skill.appraise",
+      "bonus": 2,
+      "scope": [
+        "precious-goods-appraisal",
+        "crafted-gift-valuation",
+        "art-object-valuation"
+      ],
+      "stacksWithTraining": true
+    }
+  ],
+  "reviewNotes": [
+    "Source inspiration: Wealth, crafted gifts, and artistic treasure appraisal; the specific Skill and Competency grants are experimental Dorks & Dice adaptations, not published Upbringing statistics.",
+    "The upbringing is independently selectable by any Species, including non-Goliaths; it does not require a matching giant ancestry.",
+    "Giant culture does not require Gol-Kaa or general Goliath clan training, so this is not a child of upbringing.goliath.general.",
+    "No Giant Foundling, Rune Carver, rune spellcasting, Origin feat, Strike of the Giants, giant attack ability, or compulsory Ordning status is granted."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "upbringing.giant.stone",
+  "name": "Stone Giant Tradition Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "giant-language",
+      "name": "Giant Language",
+      "description": "Learn Giant through this cultural tradition.",
+      "language": "giant"
+    },
+    {
+      "id": "stone-craft",
+      "name": "Cultural Craft",
+      "description": "Choose training in one Competency associated with this tradition: Stonemasonry, Sculpting.",
+      "grantType": "competency-training",
+      "chooseOne": [
+        "competency.stonemasonry",
+        "competency.sculpting"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "stone-field-knowledge",
+      "name": "Cultural Field Knowledge",
+      "description": "Gain +2 on History checks for these learned activities: stone art history, worked stone inscription history, stone monument provenance. The activity, not merely the character's location or ancestry, must qualify.",
+      "skill": "skill.history",
+      "bonus": 2,
+      "scope": [
+        "stone-art-history",
+        "worked-stone-inscription-history",
+        "stone-monument-provenance"
+      ],
+      "stacksWithTraining": true
+    }
+  ],
+  "reviewNotes": [
+    "Source inspiration: Stonecraft, sculpture, and carved historical traditions; the specific Skill and Competency grants are experimental Dorks & Dice adaptations, not published Upbringing statistics.",
+    "The upbringing is independently selectable by any Species, including non-Goliaths; it does not require a matching giant ancestry.",
+    "Giant culture does not require Gol-Kaa or general Goliath clan training, so this is not a child of upbringing.goliath.general.",
+    "No Giant Foundling, Rune Carver, rune spellcasting, Origin feat, Strike of the Giants, giant attack ability, or compulsory Ordning status is granted."
+  ]
+}

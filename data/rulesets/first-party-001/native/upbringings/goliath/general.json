@@ -1,0 +1,47 @@
+{
+  "id": "upbringing.goliath.general",
+  "name": "General Goliath Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "benefits": [
+    {
+      "id": "gol-kaa",
+      "name": "Gol-Kaa",
+      "description": "Learn Gol-Kaa, the traditional language of many older Goliath clan communities. This learned language is not an inherited Species trait.",
+      "language": "gol-kaa"
+    },
+    {
+      "id": "clan-training",
+      "name": "Clan Training",
+      "description": "Choose one Skill training from Athletics, Insight, or Survival. Training in composite Athletics does not automatically train its independently ranked Climb, Jump, or Swim components.",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.athletics",
+        "skill.insight",
+        "skill.survival"
+      ],
+      "choiceCount": 1,
+      "doesNotAutomaticallyTrainChildSkills": true
+    },
+    {
+      "id": "clan-craft",
+      "name": "Clan Craft",
+      "description": "Choose one Competency from Cooking, Leatherworking, or Navigation, reflecting practical community traditions.",
+      "grantType": "competency-training",
+      "chooseOne": [
+        "competency.cooking",
+        "competency.leatherworking",
+        "competency.navigation"
+      ],
+      "choiceCount": 1
+    }
+  ],
+  "reviewNotes": [
+    "The general Goliath clan tradition can be chosen by any Species.",
+    "Original 3.5e Goliaths used Gol-Kaa; later 5e Goliaths used Giant. These are distinct languages.",
+    "The Giant cultural Upbringings are independent selections rather than children of this record.",
+    "No feat, rune spellcasting, ancestral powers, or automatic Ordning allegiance is granted.",
+    "The Gol-Kaa language-catalog definition is future work; the language grant is a coherent first-pass entry."
+  ]
+}
