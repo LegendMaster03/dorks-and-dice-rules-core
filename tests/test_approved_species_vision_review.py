@@ -63,11 +63,33 @@ class ApprovedVisionReviewTests(unittest.TestCase):
                 self.assertFalse(any(t.get("rule") == "rule.low-light-vision"
                                      for t in species["traits"]))
 
+    def test_fey_elf_and_gnome_keep_explicit_character_traits(self):
+        types = read(NATIVE / "creature-types.json")["entries"]
+        catalog = {t["id"]: t for t in types}
+        self.assertEqual("creature-type.outsider",
+                         catalog["creature-type.fey"]["parent"])
+        scope = catalog["rule.creature-type-inheritance"]["applicationScope"]
+        self.assertTrue(scope["monsterAndNpcStatblockDefaults"]
+                        ["doesNotAutomaticallyGrantToPlayableCharacters"])
+        for slug, speed in (("elf", 30), ("gnome", 25)):
+            with self.subTest(slug=slug):
+                species = base(slug)
+                self.assertEqual("fey", species["creatureType"])
+                self.assertEqual(speed, species["walkingSpeedFeet"])
+                self.assertNotIn("hitDie", species)
+                self.assertNotIn("darkvisionFeet", species)
+                self.assertEqual("rule.low-light-vision",
+                                 next(t["rule"] for t in species["traits"]
+                                      if t["id"] == "low-light-vision"))
+                self.assertNotIn("creatureSubtype", species)
+        self.assertIn("fey-ancestry", {t["id"] for t in base("elf")["traits"]})
+        self.assertIn("gnomish-cunning", {t["id"] for t in base("gnome")["traits"]})
+
     def test_approved_species_movement_and_creature_types(self):
         expected = {
             "dwarf": (25, "humanoid"),
-            "elf": (30, "humanoid"),
-            "gnome": (25, "humanoid"),
+            "elf": (30, "fey"),
+            "gnome": (25, "fey"),
             "halfling": (25, "humanoid"),
             "dragonborn": (30, "dragon"),
             "goliath": (35, "giant"),

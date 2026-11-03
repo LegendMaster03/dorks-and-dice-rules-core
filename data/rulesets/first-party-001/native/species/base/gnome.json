@@ -24,12 +24,13 @@
       }
     }
   ],
-  "creatureType": "humanoid",
+  "creatureType": "fey",
   "size": "small",
   "walkingSpeedFeet": 25,
   "reviewNotes": [
     "Walking Speed reduced to 25 feet in the approved comparative Species review; overall balance remains open.",
-    "Native Low-Light Vision replaces base 60-foot Darkvision in the approved comparative vision review; a specifically darkness-adapted Ancestry can still grant Darkvision."
+    "Native Low-Light Vision replaces base 60-foot Darkvision in the approved comparative vision review; a specifically darkness-adapted Ancestry can still grant Darkvision.",
+    "Creature type Fey selected in the nine-Species comparative review. Explicit Fey targeting eligibility applies, but monster Outsider/Fey defaults (Hit Dice, vision, senses, competencies, and biological needs) are not automatically granted to playable characters."
   ],
   "defaultUpbringing": "upbringing.gnome.general"
 }
