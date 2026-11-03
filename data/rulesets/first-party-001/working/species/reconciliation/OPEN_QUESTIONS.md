@@ -9,6 +9,7 @@ Approved Dwarf, Halfling, Gnome and Elf rules are in `native/species/`, `native/
 
 ## Remaining questions
 - Species comparison: Dwarf/Halfling/Wood Elf speeds; Dwarf Darkvision; historical Elf Search; Low-Light Vision distribution; overall balance across the nine base Species.
+- Goliath next-pass research: reconcile 3.5e, 5e and 5.5e Goliath plus *Bigby Presents: Glory of the Giants*; compare six giant ancestry options, native size/Powerful Build rules, and giant-specific learned traditions separately. See `GOLIATH_SOURCE_REVIEW.md` (research only).
 - Dwarf: maximum HP for NPCs/monsters; potential martial-focused Upbringing.
 - Gnome: mechanical expression for general cultural knowledge; casting ability for Upbringing-granted Prestidigitation.
 - Halfling: cultural Upbringing.
