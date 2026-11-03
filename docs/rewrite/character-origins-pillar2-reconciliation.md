@@ -57,7 +57,7 @@ The current native tree contains **nine Species base JSON files, 29 Ancestry JSO
 
 An Origination event can have zero or more participants and sources. A relationship describes how a source was involved; it does **not** mean that every attribute of that source can be inherited.
 
-Heritage establishes which source characteristics can **qualify** for expression. The character's explicit selected inherent traits establish what actually manifests. The transmission of an individual's variant (as distinct from its Species default) is a separate open question.
+Heritage establishes which source characteristics can **qualify** for expression. The character's explicit selected inherent traits establish what actually manifests. A biological parent or any other contributing individual may themselves have mixed Species heritage; a contributor therefore cannot be modeled as exactly one Species. Heritage may extend across multiple generations without assuming equal, fixed-percentage contribution from every source. The transmission of an individual's variant (as distinct from its Species default), including traits they carry but do not express, is a separate open question.
 
 The effective character profile must resolve enough properties for play, including explicit creature type, size, physical form where relevant, movement, senses, and needs. A standard Species/Ancestry selection supplies a conventional predefined profile. A future advanced custom origin can supply one without being forced to adopt the identity of one contributor.
 
@@ -86,6 +86,20 @@ A trait may be inheritable, physically dependent on a body plan, available only 
 4. **Construct:** A fabricator, a designer and a material source may all participate in Origination, while an explicit created-body profile establishes creature type, inherent abilities and any material-related resistances. A designer's own Species must not automatically flow into the product.
 5. **Fungal or hive character:** A spore source or colony may be one collective contributor or a process; no two-parent slots are required. Its plant classification and effective capabilities must be explicit character grants, not blindly inherited monster defaults.
 6. **Inherited supernatural potential:** A historical bloodline or pact may establish provenance, potential, obligations or eligibility. Only explicit traits produce effects. Sorcerer or Warlock Class levels and associated features are never automatically granted.
+
+## Multi-generation mixed heritage — scenario to reconcile
+
+**Confirmed scope:** A biological parent can themselves be mixed-Species, including descendants of previous mixed parents. The model must therefore support repeated and asymmetric mixing across generations, not just one Elf parent plus one Orc parent.
+
+**Test case:** One parent has Elf/Orc heritage, another has Human/Gnome heritage. A child might express characteristics from more than two Species; those characteristics should be evaluated individually, and their eligibility should not be equated with mechanically receiving all four Species packages.
+
+**Unresolved rules:**
+- Can an unexpressed trait remain transmissible, or is inheritance limited to traits expressed by an individual?
+- Can a mixed parent transmit an inherited characteristic that is not present in their own current playable Species package?
+- What limits repeated accumulation of advantageous traits without imposing universal fixed Species percentages?
+- How much genealogical detail matters mechanically versus being optional character history?
+
+**Design constraint:** Do not equate a parent's selected Species identity with the full extent of their heritage. Do not impose `50/50` or `25/25/25/25` genetic ratios as game rules without specific justification.
 
 ## Open decisions (do not presume approval)
 
