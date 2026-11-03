@@ -1,0 +1,22 @@
+{
+  "id": "ancestry.gnome.rock",
+  "name": "Rock Gnome",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.gnome",
+  "traits": [
+    {
+      "id": "earthbound-tremorsense",
+      "description": "Continuously sense contacts up to 15 feet while both the Rock Gnome and target touch connected earth or stone. This sense does not confer sight.",
+      "sense": "tremorsense",
+      "rangeFeet": 15,
+      "activation": "passive",
+      "requiresSharedContact": [
+        "earth",
+        "stone"
+      ]
+    }
+  ],
+  "defaultUpbringing": "upbringing.gnome.rock"
+}

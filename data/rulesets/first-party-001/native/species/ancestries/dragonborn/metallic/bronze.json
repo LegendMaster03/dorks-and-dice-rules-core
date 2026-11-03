@@ -1,0 +1,26 @@
+{
+  "id": "ancestry.dragonborn.bronze",
+  "name": "Bronze Dragonborn",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "ancestry.dragonborn.metallic",
+  "damageType": "lightning",
+  "traits": [
+    {
+      "id": "amphibious",
+      "name": "Amphibious",
+      "description": "You can breathe air and water indefinitely. This trait does not grant a swimming speed.",
+      "canBreathe": [
+        "air",
+        "water"
+      ],
+      "grantsSwimSpeed": false
+    }
+  ],
+  "reviewNotes": [
+    "Inherits shared Dragonborn and nonselectable Metallic family traits via explicit stable parent IDs.",
+    "No cultural Upbringing default is selected until independent Dragonborn Upbringing reconciliation.",
+    "Comparative playtest balance of the individual innate adaptation remains open to later revision."
+  ]
+}
