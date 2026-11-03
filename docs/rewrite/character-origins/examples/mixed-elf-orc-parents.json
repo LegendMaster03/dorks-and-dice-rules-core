@@ -1,0 +1,121 @@
+{
+  "id": "example.multi-generation-elf-orc",
+  "label": "Child of two mixed Elf/Orc parents",
+  "designStatus": "illustrative-not-approved",
+  "origination": {
+    "method": "biological-reproduction",
+    "contributors": [
+      {
+        "id": "parent-a",
+        "role": "biological-parent",
+        "characterDescription": "Mixed Elf/Orc individual, with their own actual expressed traits"
+      },
+      {
+        "id": "parent-b",
+        "role": "biological-parent",
+        "characterDescription": "Mixed Orc/Elf individual, with their own actual expressed traits"
+      }
+    ],
+    "notes": "Neither parent is presumed to be a single Species. No biological percentages, probability rolls, or automatically granted packages."
+  },
+  "heritageSources": [
+    {
+      "id": "elf-from-a",
+      "sourceKind": "species",
+      "nativeEntityId": "species.elf",
+      "viaContributorIds": [
+        "parent-a"
+      ]
+    },
+    {
+      "id": "orc-from-a",
+      "sourceKind": "species",
+      "nativeEntityId": "species.orc",
+      "viaContributorIds": [
+        "parent-a"
+      ]
+    },
+    {
+      "id": "elf-from-b",
+      "sourceKind": "species",
+      "nativeEntityId": "species.elf",
+      "viaContributorIds": [
+        "parent-b"
+      ]
+    },
+    {
+      "id": "orc-from-b",
+      "sourceKind": "species",
+      "nativeEntityId": "species.orc",
+      "viaContributorIds": [
+        "parent-b"
+      ]
+    }
+  ],
+  "conventionalSelection": {
+    "speciesId": "species.elf",
+    "status": "candidate-preset"
+  },
+  "effectiveProfile": {
+    "resolution": "unresolved",
+    "notes": "A primary Species is an illustrative convenience, not an approved universal requirement. Mixed creature type and resulting mechanics remain open."
+  },
+  "traitCandidates": [
+    {
+      "id": "low-light-vision",
+      "sourceIds": [
+        "elf-from-a",
+        "elf-from-b",
+        "orc-from-a",
+        "orc-from-b"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "low-light-vision"
+      },
+      "resolution": "candidate",
+      "notes": "Shared mechanic also exists in species.orc. Do not grant multiple copies."
+    },
+    {
+      "id": "fey-ancestry",
+      "sourceIds": [
+        "elf-from-a"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "fey-ancestry"
+      },
+      "resolution": "candidate"
+    },
+    {
+      "id": "relentless-endurance",
+      "sourceIds": [
+        "orc-from-b"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.orc",
+        "localTraitId": "relentless-endurance"
+      },
+      "resolution": "candidate"
+    },
+    {
+      "id": "powerful-build",
+      "sourceIds": [
+        "orc-from-a"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.orc",
+        "localTraitId": "powerful-build"
+      },
+      "resolution": "candidate",
+      "notes": "Physical prerequisites and equivalence remain unresolved."
+    }
+  ],
+  "openQuestions": [
+    "Which source traits are actually selectable when the contributors themselves have mixed heritage?",
+    "Should an unexpressed trait of a parent be eligible for transmission? No genealogy simulation is required by current approvals.",
+    "How are duplicate and incompatible traits resolved?",
+    "What is the resulting creature type and type-targeting eligibility?",
+    "What selection limits preserve meaningful heritage without combining full Species packages?"
+  ]
+}
