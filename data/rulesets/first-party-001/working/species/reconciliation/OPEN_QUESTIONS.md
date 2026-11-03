@@ -14,7 +14,7 @@ Approved Dwarf, Halfling, Gnome and Elf rules are in `native/species/`, `native/
 - Halfling: cultural Upbringing.
 - Elf: final comparison of senses, movement and spells.
 - All: ability scores, effect and qualification contracts, native Character projector and schema.
-- Dragonborn: shared traits and Breath Weapon are native. The Chromatic family, 30-by-5-foot line breath, Chromatic Warding and Black/Blue/Green/Red/White individual adaptations are native. Remaining: Metallic family, five Metallic leaf Subspecies, comparative playtest balance and all independent Dragonborn cultural Upbringings.
+- Dragonborn: shared traits and Breath Weapon are native. The Chromatic family, 30-by-5-foot line breath, Chromatic Warding and Black/Blue/Green/Red/White individual adaptations are native. Metallic family and five Metallic leaves are now native, completing the ten-type Dragonborn Species/Subspecies mechanics pass. Remaining: comparative playtest balance and independent Dragonborn cultural Upbringings.
 - Deferred: Gem Dragonborn, exceptional Platinum/Ruby/composite forms, rites of rebirth, historical dragon families, Dragon Shaman ancestry-sharing feat, and Dragonfire Adept-derived feats or prestige classes.
 
 ## Upbringing defaults
