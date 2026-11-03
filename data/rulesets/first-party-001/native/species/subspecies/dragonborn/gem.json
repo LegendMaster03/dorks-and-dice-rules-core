@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.dragonborn.gem",
+  "id": "ancestry.dragonborn.gem",
   "name": "Gem Dragonborn",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": false,
   "parent": "species.dragonborn",

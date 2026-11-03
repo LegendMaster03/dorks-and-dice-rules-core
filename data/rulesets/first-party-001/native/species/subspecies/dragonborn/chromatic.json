@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.dragonborn.chromatic",
+  "id": "ancestry.dragonborn.chromatic",
   "name": "Chromatic Dragonborn",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": false,
   "parent": "species.dragonborn",

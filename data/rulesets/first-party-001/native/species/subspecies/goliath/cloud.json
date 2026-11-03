@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.goliath.cloud",
+  "id": "ancestry.goliath.cloud",
   "name": "Cloud Goliath",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
   "parent": "species.goliath",
@@ -80,7 +80,7 @@
     }
   ],
   "reviewNotes": [
-    "SRD 5.2.1 Giant Ancestry adapted into one selectable Subspecies, not six independent options granted to every Goliath.",
+    "SRD 5.2.1 Giant Ancestry adapted into one selectable Ancestry, not six independent options granted to every Goliath.",
     "Inherits Powerful Build, Large Form, size and Speed from species.goliath; the chosen ancestry boon uses Proficiency Bonus activations per Long Rest.",
     "Effects are a coherent first-pass baseline and remain open to future reconciliation and playtesting.",
     "Selected for first-pass playtesting: each ancestry's Strike-derived early mode is merged with the SRD boon instead of granting an independent Strike of the Giants feat; Fire's Burn already contains Fire Strike.",

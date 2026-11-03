@@ -90,14 +90,14 @@
     {
       "id": "giant-ancestry-aptitude",
       "name": "Giant Ancestry Aptitude",
-      "description": "When you select a Goliath Subspecies, choose Strength or Constitution as the ability governing inherited giant-ancestry effects that require a saving throw or attack modifier. The chosen modifier is used for those abilities, including advanced features unlocked later. This choice does not grant any proficiency, ability-score increase or additional use of another feature.",
+      "description": "When you select a Goliath Ancestry, choose Strength or Constitution as the ability governing inherited giant-ancestry effects that require a saving throw or attack modifier. The chosen modifier is used for those abilities, including advanced features unlocked later. This choice does not grant any proficiency, ability-score increase or additional use of another feature.",
       "requiredCharacterLevel": 1,
       "abilityChoice": {
         "from": [
           "strength",
           "constitution"
         ],
-        "when": "goliath-subspecies-selection",
+        "when": "goliath-ancestry-selection",
         "perCharacter": true
       },
       "savingThrowDC": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
@@ -111,11 +111,11 @@
     }
   ],
   "reviewNotes": [
-    "First-playtest SRD 5.2.1 baseline: the six mutually exclusive giant ancestry boons are separate selectable Goliath Subspecies, inherited via parent IDs.",
+    "First-playtest SRD 5.2.1 baseline: the six mutually exclusive giant ancestry boons are separate selectable Goliath Ancestries, inherited via parent IDs.",
     "Powerful Build grants advantage on ability checks to end Grappled, not an automatic 3.5e opposed-grapple size modifier or oversized-weapon permission. Exact interplay with the native opposed grapple procedure remains part of combat-integration review.",
     "Large Form uses the native actual Large size category, not historical automatic 3.5e AC/grapple modifiers; reach and occupancy follow the native spatial rules.",
     "The standing-jump portion of 3.5e Mountain Movement and high-altitude acclimation are selected. Level-1 merged Strike modes and level-4 Bigby's-inspired ancestry powers are native; extra older editions and minor passive alternatives remain research. No compulsory Ordning status or Upbringing choice is granted by biology.",
-    "Species/Subspecies are playable first-pass content, not finalized, and executable inheritance in the character projector remains a separate integration task.",
+    "Species and Ancestries are playable first-pass content, not finalized, and executable inheritance in the character projector remains a separate integration task.",
     "At level 1 choose Strength or Constitution as the stable ability modifier for the Goliath ancestry's Strike and advanced supernatural powers. This replaces source-feat DCs tied to an omitted +1 Ability Score Increase.",
     "The General Goliath Upbringing is a suggested Gol-Kaa cultural default, not an inherited Species trait. Giant Foundling is an independent upbringing selectable by characters of any Species; neither changes Goliath ancestry powers."
   ],

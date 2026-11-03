@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.dragonborn.metallic",
+  "id": "ancestry.dragonborn.metallic",
   "name": "Metallic Dragonborn",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": false,
   "parent": "species.dragonborn",

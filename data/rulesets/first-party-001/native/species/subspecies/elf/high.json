@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.elf.high",
+  "id": "ancestry.elf.high",
   "name": "High Elf",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
   "parent": "species.elf",

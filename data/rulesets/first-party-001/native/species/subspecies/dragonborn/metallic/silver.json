@@ -1,10 +1,10 @@
 {
-  "id": "subspecies.dragonborn.silver",
+  "id": "ancestry.dragonborn.silver",
   "name": "Silver Dragonborn",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
-  "parent": "subspecies.dragonborn.metallic",
+  "parent": "ancestry.dragonborn.metallic",
   "damageType": "cold",
   "traits": [
     {

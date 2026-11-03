@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.elf.drow",
+  "id": "ancestry.elf.drow",
   "name": "Drow",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
   "parent": "species.elf",

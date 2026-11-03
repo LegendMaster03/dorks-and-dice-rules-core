@@ -1,10 +1,10 @@
 {
-  "id": "subspecies.dragonborn.red",
+  "id": "ancestry.dragonborn.red",
   "name": "Red Dragonborn",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
-  "parent": "subspecies.dragonborn.chromatic",
+  "parent": "ancestry.dragonborn.chromatic",
   "damageType": "fire",
   "climbingSpeedFeet": 15,
   "traits": [

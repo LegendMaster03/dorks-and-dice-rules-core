@@ -1,7 +1,7 @@
 {
-  "id": "subspecies.halfling.lightfoot",
+  "id": "ancestry.halfling.lightfoot",
   "name": "Lightfoot Halfling",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
   "parent": "species.halfling",

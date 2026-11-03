@@ -1,37 +1,37 @@
 {
-  "id": "rule.species-subspecies-upbringing",
+  "id": "rule.species-ancestry-upbringing",
   "kind": "rule",
-  "name": "Species, Subspecies, and Upbringing Inheritance",
+  "name": "Species, Ancestry, and Upbringing Inheritance",
   "status": "selected-native",
-  "description": "Species and Subspecies represent inherited traits; Upbringings represent learned traditions. Their parentage is independent, and biological ancestry does not by itself restrict Upbringing selection.",
+  "description": "Species and Ancestries represent inherited traits; Upbringings represent learned traditions. Their parentage is independent, and biological ancestry does not by itself restrict Upbringing selection.",
   "speciesInheritance": {
     "recursive": true,
     "parentByStableId": true,
     "nonselectableIntermediatesAllowed": true,
-    "selection": "Selecting a terminal Subspecies resolves its ancestor chain without requiring the user to select each ancestor.",
+    "selection": "Selecting a terminal Ancestry resolves its ancestor chain without requiring the user to select each ancestor.",
     "filesystem": "Directories may mirror the hierarchy but stable parent IDs are authoritative."
   },
   "upbringings": {
     "recursive": true,
     "speciesRestrictionsByDefault": false,
     "defaultField": "defaultUpbringing",
-    "defaultFieldLocation": "species-or-subspecies",
+    "defaultFieldLocation": "species-or-ancestry",
     "defaultSelectionOrder": [
       "Use an explicitly selected Upbringing instead of an ancestry default.",
-      "Otherwise use the selected Subspecies defaultUpbringing, when present.",
-      "Otherwise traverse the selected Subspecies parent chain to the nearest ancestor with defaultUpbringing.",
+      "Otherwise use the selected Ancestry defaultUpbringing, when present.",
+      "Otherwise traverse the selected Ancestry parent chain to the nearest ancestor with defaultUpbringing.",
       "If no default exists, leave selection unresolved instead of inventing an Upbringing."
     ],
     "selectedCount": 1,
     "inheritance": "The selected Upbringing inherits the benefits of its own parent chain; ancestors are not additional selections.",
-    "association": "A default is a reference on Species/Subspecies JSON, not a reverse defaultFor list on Upbringing records."
+    "association": "A default is a reference on Species/Ancestry JSON, not a reverse defaultFor list on Upbringing records."
   },
   "dragonbornApprovedStructure": {
     "baseSpecies": "species.dragonborn",
     "baseSelectable": false,
     "intermediateFamilies": [
       {
-        "id": "subspecies.dragonborn.chromatic",
+        "id": "ancestry.dragonborn.chromatic",
         "selectable": false,
         "types": [
           "black",
@@ -42,7 +42,7 @@
         ]
       },
       {
-        "id": "subspecies.dragonborn.metallic",
+        "id": "ancestry.dragonborn.metallic",
         "selectable": false,
         "types": [
           "brass",
@@ -53,7 +53,7 @@
         ]
       },
       {
-        "id": "subspecies.dragonborn.gem",
+        "id": "ancestry.dragonborn.gem",
         "selectable": false,
         "types": [
           "amethyst",
@@ -64,10 +64,10 @@
         ]
       }
     ],
-    "leafSubspeciesSelectable": true
+    "leafAncestrySelectable": true
   },
   "reviewNotes": [
-    "Chromatic and Metallic family records and all ten playable leaf Subspecies have native mechanics; Gem now has a native nonselectable intermediate family node only, with five leaves and their mechanics deferred.",
+    "Chromatic and Metallic family records and all ten playable leaf Ancestries have native mechanics; Gem now has a native nonselectable intermediate family node only, with five leaves and their mechanics deferred.",
     "Only ten standard Chromatic and Metallic Dragonborn are playable in this initial pass; the nonselectable Gem family node is native without playable Gem leaves.",
     "Half-Elf and Half-Orc are reserved for the future Mixed Species mechanic, not initial Species.",
     "The native C# character projector does not yet execute ancestry inheritance/default selections."

@@ -1,10 +1,10 @@
 {
-  "id": "subspecies.dragonborn.copper",
+  "id": "ancestry.dragonborn.copper",
   "name": "Copper Dragonborn",
-  "kind": "subspecies",
+  "kind": "ancestry",
   "status": "selected-native",
   "selectable": true,
-  "parent": "subspecies.dragonborn.metallic",
+  "parent": "ancestry.dragonborn.metallic",
   "damageType": "acid",
   "climbingSpeedFeet": 15,
   "traits": [
