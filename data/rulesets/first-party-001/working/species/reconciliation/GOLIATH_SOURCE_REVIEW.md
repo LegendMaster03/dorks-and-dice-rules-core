@@ -91,6 +91,60 @@ Selected **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Po
 
 **Giant-specific Upbringings:** retain possible traditions of Cloud, Fire, Frost, Hill, Stone and Storm giant societies, plus Giant Foundling and Rune Carver. These are **research leads only**. Do not create ancestry-locked Upbringings or defaults; do not assign Goliaths a compulsory Ordning ideology or proficiency.
 
+## 5e and 3.5e recovery assessment (unselected candidates)
+
+**Status:** comparative source research only. Do not promote any item below without review and selection. The SRD 5.2.1 Goliath Species and six selectable Subspecies already in `native/` remain the coherent first-pass reference; all mechanics can be revisited after playtesting.
+
+### Historical edition distinctions
+
+| Trait | 3.5e *Races of Stone* (2004) | Early 5e *Elemental Evil* / *Volo's* (2015–16) | 2022 *Monsters of the Multiverse* | Selected SRD 5.2.1 |
+| --- | --- | --- | --- | --- |
+| Powerful Build | Treat size as one category larger when advantageous for opposed size modifiers and size-based special attacks; wield larger weapons without penalty; no extra space/reach | Count larger for carrying, pushing, dragging, lifting | Equivalent encumbrance effects under Little Giant | Larger carrying allowance plus Advantage on ability checks ending Grappled |
+| Mountain Movement | Standing long/high jumps count as running; accelerated Climb at half Speed without −5 Climb check penalty | Not present | Not present | Not present |
+| Altitude | Always acclimated; does not lose acclimation at lower elevations | Mountain Born grants high-altitude acclimation | Mountain Born grants high-altitude acclimation | Not present |
+| Cold | No universal Cold damage resistance in original Goliath traits | Mountain Born originally cold-*climate adaptation* in *Volo's*; later official errata grants Cold resistance | Cold damage resistance | Not present |
+| Athletics | No separate automatic 5e-style skill proficiency (has mountain mobility abilities) | Natural Athlete: Athletics proficiency | Little Giant: Athletics proficiency | Not present |
+| Damage mitigation | No shared Stone's Endurance | Universal Stone's Endurance, 1/Short or Long Rest, Reaction, 1d12 + CON | Universal Stone's Endurance, PB/Long Rest | Stone ancestry's boon, PB/Long Rest |
+| Body-language reading | +2 Sense Motive (3.5e skill) | Not present | Not present | Not present |
+| Category and character-system baggage | Monstrous Humanoid, racial ability modifiers, +1 Level Adjustment, Barbarian favored class | Humanoid, fixed ability scores in original | Humanoid, flexible ability scores | Humanoid; ability scores deferred to wider system |
+
+**Important source nuance:** *Volo's* original text and later errata differ in the protection granted by Mountain Born. Distinguish survival in extremely cold weather from Cold *damage resistance*. Earlier 5e versions should not be collapsed into one rule.
+
+Source references:
+- *Races of Stone* Goliath traits: https://dnd.arkalseif.info/races/races-of-stone--82/goliath--13/
+- Early 5e Goliath: https://www.dndbeyond.com/species/22-goliath
+- Official *Volo's Guide to Monsters* errata, Mountain Born: https://www.dndbeyond.com/sources/dnd/sae/volos-guide-to-monsters
+- 2022 *Monsters of the Multiverse* Goliath summary: https://dnd5e.wikidot.com/lineage:goliath
+- 2024 Goliath: https://www.dndbeyond.com/species/1751439-goliath
+- 2024 Long Jump and High Jump rules: https://www.dndbeyond.com/sources/dnd/br-2024/rules-glossary
+- 3.5e Climb accelerated penalty: https://stg.dndtools.org/rules/move-actions-17
+- 5e climb movement cost: https://dnd-srd-sphinx.readthedocs.io/en/latest/adventuring.html
+
+### Candidate dispositions, subject to approval
+
+**A. Recover a limited standing-jump adaptation — recommended.** The clear 3.5e contribution is jumping from a standstill as though a running approach had been made, for both Long and High Jumps. That remains a meaningful distinction under the 2024 jumping procedure, which normally halves distance without a 10-foot approach. Jump distance still consumes movement; this does **not** grant free movement, ignore landing hazards, or bypass insufficient remaining Speed. A simple description referencing the native Jump procedure is more faithful than inventing a flat +2 to Athletics or a new Climb Speed.
+
+**Accelerated-climb caveat:** 3.5e Goliaths avoided a −5 Climb check penalty to climb at half their speed; normal 3.5e climbing was quarter-speed. In modern 5.x, *ordinary* climbing already generally costs twice the movement (effectively half walking speed), and the current native spatial foundation has not specified a 3.5e accelerated-climb penalty. Therefore restoring this exact 3.5e clause **would largely duplicate baseline behavior**. Do not silently turn it into a 15-foot Climb Speed, automatic climb success or Spider Climb. If an improved climbing benefit is desired, design it separately as a deliberate new Species improvement.
+
+**B. Recover innate high-altitude acclimation — reasonable second candidate.** Multiple historical versions grant Goliaths physiological acclimation independently of recent travel. The staged `working/hazards/high-altitude.json` treats 10,000-foot travel as more taxing and restricts acclimation above 20,000 feet without suitable native origin. Goliaths could receive a targeted exception to high-altitude travel penalties, including very high altitude, rather than generic immunity to suffocation, vacuums, environmental damage or arbitrary oxygen deprivation. This is biological adaptability and does not oblige a character to have been raised in the mountains. That hazard is still in `working/`; the mechanics would need integration when its environmental procedure becomes native.
+
+**C. Expand Powerful Build for size-limited interactions — worth a separate ruling.** *Races of Stone* treats a Goliath as effectively one size larger for favorable opposed size modifiers, protection from certain size-restricted special attacks, and ability to wield oversized weapons; normal occupied space and reach remain unchanged. The native `rule.grapple-procedure` uses opposed grapple checks and an Escape Artist path rather than replacing both with Athletics/Acrobatics. The current native Goliath's Advantage on ability checks ending Grappled is **not automatically equivalent to Advantage on every opposed grapple roll**. Clarify exactly which escape rolls it covers when the native procedure is finalized. An optional additional effective-size benefit for qualifying grapple/trip/shove checks or defensive size thresholds is plausible, but do not unintentionally apply both size modifiers and escape Advantage to the same roll without a stacking decision. Oversized weapons require their own equipment resolution; 3.5e also allowed Powerful Build to stack with actual size-changing effects, which could make Large Form consequential outside carrying capacity. These are balance and rules-integration choices, not automatic consequences of the 2024 baseline.
+
+**D. Natural Athlete / Little Giant — consider the Skill system before granting.** Early and 2022 5e grant Athletics proficiency. The current native/working skills model distinguishes `skill.athletics` as a composite parent of independently ranked `skill.climb`, `skill.jump` and `skill.swim`. A broad inherited Athletics proficiency is not equivalent to a bonus or training for all three child skills. If physical exceptionalism needs another expression, explicitly decide between a mechanical jump/climb benefit and a separate learned Athletics training entitlement. Do not assign both without reviewing duplication. The former is more defensibly an innate Species feature; training can belong to independently selected Upbringings.
+
+**E. Cold damage resistance — do not grant universally without a separate comparison.** Original *Volo's* distinguished survival in a cold climate from Cold damage resistance; official errata and 2022 granted the latter. The staged `working/hazards/extreme-cold.json` already lets Cold-resistant creatures automatically succeed at environmental extreme-cold saving throws, but cold-weather endurance need not imply resistance to magical or attack-based Cold damage. Universal resistance would be an additional common defensive trait for six already strong ancestry options and could obscure Frost Goliath distinction. Alternatives: environmental-only acclimation, or Frost-specific Cold resistance considered alongside comparable individual Subspecies enhancements. Neither is selected.
+
+**F. Sense Motive (+2), Giant language, favored class and markings — separate appropriately.** The old body-language reading bonus reflects social interpretation and is a candidate for an Upbringing/Skill feature (native `skill.insight` exists); it is not an innate personality requirement. Historical default Giant language, Barbarian favored class and Goliath markings or related feats do not automatically apply across independent Upbringings or the modern class/feat system. The 3.5e Monstrous Humanoid creature type and +1 Level Adjustment should not displace the selected Humanoid classification or reintroduce edition-specific character taxes.
+
+### Proposed decision order (none selected)
+
+1. Decide whether to add **standing Long/High Jump without running approach** to `species.goliath` as a shared innate feature.
+2. Decide whether to add **high-altitude acclimation** as a shared physiological adaptation while preserving distinction from cold-damage resistance.
+3. Review whether **Powerful Build** should explicitly grant additional size-related offensive/defensive benefits and how that interacts with the native opposed-grapple system and Large Form; keep oversized weapons a distinct question.
+4. Leave Cold damage resistance, extra Athletics proficiency, original social reading bonus and older class/feat baggage for the comparative Species, Upbringing or dedicated mechanics passes unless new rationale emerges.
+
+**Approval boundary:** this section does not modify any native Goliath definition. Existing six ancestry boons and Large Form remain unchanged.
+
 ## Open design questions (not proposals approved for implementation)
 
 - The six giant ancestries have been selected as six playable Goliath Subspecies; review that structure only if later ruleset work supplies contrary evidence.
