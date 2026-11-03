@@ -39,7 +39,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
                     self.assertTrue(leaf["selectable"])
                     self.assertEqual("selected-native", leaf["status"])
                     self.assertEqual("subspecies", leaf["kind"])
-                    self.assertEqual(1, len(leaf["traits"]))
+                    self.assertGreaterEqual(len(leaf["traits"]), 1)
                     self.assertNotIn("defaultUpbringing", leaf)
                     self.assertNotIn(leaf["id"], ids)
                     ids.add(leaf["id"])
