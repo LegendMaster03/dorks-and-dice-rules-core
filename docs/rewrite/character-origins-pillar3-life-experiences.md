@@ -139,3 +139,17 @@ The compatibility relation is **a recommended/default reconstruction recipe**, n
 **Metadata needed if implemented later:** source game/edition, source Race/Species identity, source Subrace identity where applicable, native Species/Ancestry target, suggested Upbringing target, any additional independent Background/language/feat/ability choices, and known divergences. Keep this in a conversion crosswalk or equivalent versioned reference rather than making `defaultUpbringing` a mandatory identity association. Existing `defaultUpbringing` can be reused where valid, but a single native default does not necessarily identify the correct 2014 and 2024 source pairing.
 
 **Pillar 3 implication:** Retain stable source-to-native relationship evidence when reconciling the ten Upbringings. Avoid restructuring them so that future conversion requires guessing which cultural benefits were separated from each 5.x Race/Species. Neither a converter nor new runtime schema needs to be implemented in this pass.
+
+
+## Balance adjustment across Species/Ancestry and Upbringing — owner direction (2026-11-03)
+
+The owner explicitly recognizes that the prior Species/Ancestry → Upbringing split is an **approved starting point, not a frozen balance allocation**. To make independently selectable Upbringings work, later reconciliation **may require shifting suitable benefits back into Ancestry or adding benefits to Upbringings**, alongside other justified adjustments. This supersedes any interpretation of the earlier audit as forbidding redistribution; it does **not** approve any particular trait move or numeric grant yet.
+
+Design/evaluation approach:
+1. Establish the complete conventional Species + Ancestry + associated Upbringing package and its original rationale, including the intended route for converting a conventional 5.x character *into Dorks & Dice* (not preserving exact source mechanics).
+2. Test alternative Species/Ancestry + Upbringing combinations, including the cross-cultural and unusual-origin cases, to identify imbalances introduced by independence.
+3. Distinguish a **classification problem** (a truly inherent characteristic placed in Upbringing, or learned training placed in Ancestry) from a **power-allocation problem** (individually sensible grants but disproportionate packages). A balance fix alone does not justify making cultural training biologically inherited.
+4. Recommend targeted trait reassignment, added learned benefits, or adjusted grant conditions using the existing skill/competency/trait semantics. Evaluate the effect on both conventional and cross-cultural combinations, not standalone Upbringing counts alone.
+5. Preserve the distinction between **proposed** adjustments and **approved** native content. Change authoritative JSON only after the relevant particular rules are reconciled and approved.
+
+The objective is a workable, culturally independent Life Experiences system, not merely to preserve the first split verbatim or make every Upbringing grant the same number of features.
