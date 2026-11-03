@@ -23,14 +23,14 @@ class TieflingSpeciesReconciliationTests(unittest.TestCase):
         cls.leaves = {name: read(ANCESTRY / (name + ".json"))
                       for name in ("abyssal", "chthonic", "infernal")}
 
-    def test_base_is_fiend_native_but_playable_by_ancestry(self):
+    def test_base_is_fiend_without_subtype_and_playable_by_ancestry(self):
         base = self.base
         self.assertEqual("species.tiefling", base["id"])
         self.assertEqual("species", base["kind"])
         self.assertEqual("selected-native", base["status"])
         self.assertFalse(base["selectable"])
         self.assertEqual("fiend", base["creatureType"])
-        self.assertEqual("native", base["creatureSubtype"])
+        self.assertNotIn("creatureSubtype", base)
         self.assertEqual({"breathing": True, "food": True, "sleep": True},
                          base["needs"])
         self.assertEqual(["small", "medium"], base["sizeChoice"]["from"])

@@ -45,6 +45,7 @@ class CreatureTypePlayableSpeciesScopeTests(unittest.TestCase):
         self.assertEqual({"food": False, "sleep": False}, outsider["needs"])
         tiefling = read(NATIVE / "species/base/tiefling.json")
         self.assertEqual("fiend", tiefling["creatureType"])
+        self.assertNotIn("creatureSubtype", tiefling)
         self.assertEqual({"breathing": True, "food": True, "sleep": True},
                          tiefling["needs"])
         self.assertNotIn("hitDie", tiefling)
