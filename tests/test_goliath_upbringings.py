@@ -100,14 +100,18 @@ class GoliathUpbringingTests(unittest.TestCase):
         self.assertEqual("giant", next(b["language"] for b in
                                       self.foundling["benefits"] if "language" in b))
 
+    def test_non_srd_strike_feat_is_excluded_from_first_wave(self):
+        self.assertFalse((NATIVE / "feats/strike-of-the-giants.json").exists())
+        self.assertFalse((WORKING / "feats/strike-of-the-giants.json").exists())
+        self.assertFalse(any(p.stem == "strike-of-the-giants"
+                             for p in (NATIVE / "feats").rglob("*.json")))
+        self.assertFalse(any(p.stem == "strike-of-the-giants"
+                             for p in (WORKING / "feats").rglob("*.json")))
+
     def test_no_giant_foundling_strike_feat_or_ancestry_duplication(self):
         for record in (self.clan, self.foundling):
             self.assertNotIn("grantsFeat", record)
-            if record["id"] == "upbringing.giant-foundling":
-                adaptation = record["sourceAdaptation"]
-                self.assertEqual("feat.strike-of-the-giants",
-                                 adaptation["excludedAutomaticFeatGrant"])
-                self.assertTrue(adaptation["independentFeatAcquisitionAllowed"])
+            self.assertNotIn("sourceAdaptation", record)
             self.assertNotIn("feat", record)
             self.assertNotIn("sizeChange", record)
             for benefit in record["benefits"]:

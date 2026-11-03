@@ -24,7 +24,7 @@ Both records stand alone, with **no Upbringing parent**. A character selects one
 
 The source Giant Foundling Background grants Intimidation, Survival, Giant, one additional language, a starting-equipment package, and the Strike of the Giants feat. This Upbringing selects the **learned languages and skills** without assigning a separate Background or equipment entitlement (starting inventory belongs in the appropriate character-creation system). Its source feat grant is intentionally excluded from the Upbringing.
 
-**Selected feat disposition:** The original Giant Foundling feat grant is deliberately removed in the Dorks & Dice Upbringing conversion. Giant Foundling confers **no automatic Strike of the Giants feat** and does not duplicate a Goliath Subspecies' Strike-derived abilities. This does not prohibit a character from independently acquiring a giant-themed feat if the later Feat rules allow it. It does not deny that the published Background originally granted the feat.
+**First-wave Feat decision:** *Strike of the Giants* is non-SRD and **excluded from first-wave Feat content**, not queued for first-wave native promotion or selection. Its automatic grant is intentionally absent from Giant Foundling. The published Background originally included it, which remains historical research only. Any future non-SRD feat content would require a separate decision.
 
 The original narrative discusses magically unusual size, but neither the source nor this conversion grants an automatic change to the character's actual Size category.
 
@@ -47,7 +47,7 @@ The six original native JSON records have been removed from `native/upbringings/
 
 - Gol-Kaa is now selected as `language.gol-kaa` in `native/languages/gol-kaa.json`. Giant remains a separate staged language in the broader working language catalog; full language-family and script reconciliation is separate.
 - Upbringing benefit execution and character language/Skill grants depend on the Character Sheet and native projector integration.
-- Strike of the Giants is **not** granted by Giant Foundling, by design. Independent feat ownership and eligibility can be evaluated in the wider Feat pass; Rune Carver remains separate material, and no rune magic was awarded here.
+- Strike of the Giants is **excluded from the first-wave SRD Feat catalog**, with no corresponding native or first-wave working feat record. Rune Carver remains separate research, and no rune magic is granted here.
 - The broader cultural pass may revise the skill balance (Goliath Clan grants one choice of Skill and one Competency, Giant Foundling grants two fixed Skills and a language choice) without inventing extra Species powers.
 
 ## Sources

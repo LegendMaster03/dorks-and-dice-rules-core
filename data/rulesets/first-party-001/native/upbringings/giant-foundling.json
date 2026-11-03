@@ -34,17 +34,11 @@
     }
   ],
   "reviewNotes": [
-    "Converted from the *Bigby Presents: Glory of the Giants* Giant Foundling Background into an independent learned Upbringing. The original source grants proficiency in Intimidation and Survival, Giant and one additional language, and the Strike of the Giants feat.",
-    "Deliberate Dorks & Dice adaptation: Strike of the Giants from the published Background is omitted from this Upbringing. Giant Foundling grants learned languages and Skills only, with no automatic feat, extra use pool, or inherited giant-ancestry power. This does not prevent taking feats through the independent Feat system when eligible.",
+    "Adapted from the non-SRD Giant Foundling Background. The native Upbringing retains learned Skills and languages; no bonus feat is awarded.",
+    "Strike of the Giants is non-SRD and excluded from first-wave Feat content. This Upbringing does not grant it or any other feat, combat-use pool, or inherited giant power.",
     "For a Goliath this replaces, rather than combines with, the suggested General Goliath Upbringing. Gol-Kaa is therefore not automatic when Giant Foundling is selected.",
     "No non-Goliath gains Goliath Giant Ancestry or Large Form from this Upbringing. Being raised among giants does not force an actual size increase.",
     "Original source background equipment and personal-origin table are retained as research, not independent ancestry or additional starting-inventory grants.",
     "This record is independent of all six Goliath ancestry types and has no parent Upbringing. Specific giant communities can shape a character's narrative without six separate Upbringing records."
-  ],
-  "sourceAdaptation": {
-    "originalSource": "Bigby Presents: Glory of the Giants — Giant Foundling Background",
-    "excludedAutomaticFeatGrant": "feat.strike-of-the-giants",
-    "reason": "An Upbringing grants learned culture and training; it does not automatically confer this separate supernatural combat feat.",
-    "independentFeatAcquisitionAllowed": true
-  }
+  ]
 }
