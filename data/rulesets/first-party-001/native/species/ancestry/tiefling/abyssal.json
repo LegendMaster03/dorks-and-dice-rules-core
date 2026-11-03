@@ -1,0 +1,61 @@
+{
+  "id": "ancestry.tiefling.abyssal",
+  "name": "Abyssal Tiefling",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.tiefling",
+  "ancestryTheme": "Demonic fiendish ancestry",
+  "spellcastingAbilityChoice": [
+    "intelligence",
+    "wisdom",
+    "charisma"
+  ],
+  "traits": [
+    {
+      "id": "abyssal-resistance",
+      "name": "Abyssal Resistance",
+      "description": "You have 50 percent resistance to poison damage.",
+      "damageResistance": {
+        "percent": 50,
+        "damageType": "poison"
+      }
+    },
+    {
+      "id": "poison-spray",
+      "name": "Poison Spray",
+      "description": "At character level 1, know Poison Spray and cast it at will.",
+      "spell": "poison-spray",
+      "level": 1,
+      "atWill": true
+    },
+    {
+      "id": "ray-of-sickness",
+      "name": "Ray Of Sickness",
+      "description": "At character level 3, always have Ray Of Sickness available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
+      "spell": "ray-of-sickness",
+      "level": 3,
+      "alwaysPrepared": true,
+      "freeUses": 1,
+      "recharge": "long-rest",
+      "slotCasting": true
+    },
+    {
+      "id": "hold-person",
+      "name": "Hold Person",
+      "description": "At character level 5, always have Hold Person available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
+      "spell": "hold-person",
+      "level": 5,
+      "alwaysPrepared": true,
+      "freeUses": 1,
+      "recharge": "long-rest",
+      "slotCasting": true
+    }
+  ],
+  "reviewNotes": [
+    "Inherits Fiend (Native), normal biological needs, Low-Light Vision and Thaumaturgy from species.tiefling.",
+    "Choose Intelligence, Wisdom or Charisma when selecting this ancestry. The choice governs all granted Tiefling spells, including Thaumaturgy.",
+    "Level 3 and level 5 spells have independent once-per-Long-Rest free castings; appropriate spell slots can be used additionally.",
+    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting."
+  ]
+}
