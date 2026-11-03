@@ -1,0 +1,492 @@
+{
+  "scope": "provisional-nonauthoritative-trait-audit",
+  "snapshotCommit": "d5a2b15b7ae2bd88ae9e47a5ddfad01d481623bb",
+  "classification": "heuristic-review-only",
+  "records": [
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/chromatic.json",
+      "sourceBlobSha": "a341d70dd9930f211c740b861764c454903c7f7e",
+      "entityId": "ancestry.dragonborn.chromatic",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": false,
+      "parent": "species.dragonborn",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "breathWeaponArea"
+      ],
+      "traits": [
+        {
+          "id": "chromatic-warding",
+          "name": "Chromatic Warding",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "duration",
+            "uses",
+            "damageResistanceOverride",
+            "doesNotGrantConditionImmunity"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/chromatic/black.json",
+      "sourceBlobSha": "0bffb72b4cec3870cbb0cf315e0957ab723a2bb2",
+      "entityId": "ancestry.dragonborn.black",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.chromatic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType"
+      ],
+      "traits": [
+        {
+          "id": "amphibious",
+          "name": "Amphibious",
+          "mechanicKeys": [
+            "canBreathe",
+            "grantsSwimSpeed"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/chromatic/blue.json",
+      "sourceBlobSha": "3c50197f754ebe802d2df418b7d40b6369b51295",
+      "entityId": "ancestry.dragonborn.blue",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.chromatic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType"
+      ],
+      "traits": [
+        {
+          "id": "displaced-voice",
+          "name": "Displaced Voice",
+          "mechanicKeys": [
+            "activation",
+            "atWill",
+            "rangeFeet",
+            "soundSource",
+            "apparentOrigin",
+            "duration",
+            "visualEffect",
+            "guaranteesDeception"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/chromatic/green.json",
+      "sourceBlobSha": "a6c40266304c42bb0dc5b775087f73ffbce5a900",
+      "entityId": "ancestry.dragonborn.green",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.chromatic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType"
+      ],
+      "traits": [
+        {
+          "id": "amphibious",
+          "name": "Amphibious",
+          "mechanicKeys": [
+            "canBreathe",
+            "grantsSwimSpeed"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/chromatic/red.json",
+      "sourceBlobSha": "22c00ee8c3bed86990d09602475d0a21d70f1d7a",
+      "entityId": "ancestry.dragonborn.red",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.chromatic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType",
+        "climbingSpeedFeet"
+      ],
+      "traits": [
+        {
+          "id": "natural-climber",
+          "name": "Natural Climber",
+          "mechanicKeys": [
+            "movementMode",
+            "speedFeet",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/chromatic/white.json",
+      "sourceBlobSha": "78c1019109e5c01f46df2ea105862f918594b526",
+      "entityId": "ancestry.dragonborn.white",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.chromatic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType",
+        "swimmingSpeedFeet"
+      ],
+      "traits": [
+        {
+          "id": "icewalker",
+          "name": "Icewalker",
+          "mechanicKeys": [
+            "terrain",
+            "ignoresDifficultTerrainFrom",
+            "ignoreIcySurfaceAbilityChecks",
+            "slipperyIceSaveExemption",
+            "doesNotNegateOtherHazards"
+          ],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": [
+            "depends-on-other-selection",
+            "possible-physical-context-review"
+          ]
+        },
+        {
+          "id": "coldwater-swimmer",
+          "name": "Coldwater Swimmer",
+          "mechanicKeys": [
+            "movementMode",
+            "speedFeet",
+            "grantsWaterBreathing"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/gem.json",
+      "sourceBlobSha": "fe18094551478ef42db312c8318073b6c6776bb3",
+      "entityId": "ancestry.dragonborn.gem",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": false,
+      "parent": "species.dragonborn",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": []
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/metallic.json",
+      "sourceBlobSha": "6883aeac0e7afb86378e0bf1c51d1ae92e506312",
+      "entityId": "ancestry.dragonborn.metallic",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": false,
+      "parent": "species.dragonborn",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "breathWeaponArea"
+      ],
+      "traits": [
+        {
+          "id": "metallic-breath-weapon",
+          "name": "Metallic Breath Weapon",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "uses",
+            "area",
+            "choiceTiming",
+            "options"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/metallic/brass.json",
+      "sourceBlobSha": "70aa407b59b9098931dd6aacfe7207dbbf7b2361",
+      "entityId": "ancestry.dragonborn.brass",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.metallic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType",
+        "burrowingSpeedFeet"
+      ],
+      "traits": [
+        {
+          "id": "sand-burrower",
+          "name": "Sand Burrower",
+          "mechanicKeys": [
+            "movementMode",
+            "speedFeet",
+            "allowedMaterials",
+            "disallowedMaterials",
+            "leavesPermanentTraversableTunnel",
+            "negatesSuffocation",
+            "negatesVisibilityRestrictions"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/metallic/bronze.json",
+      "sourceBlobSha": "128326fac2dfe6bc358bed2d7e462247274e7389",
+      "entityId": "ancestry.dragonborn.bronze",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.metallic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType"
+      ],
+      "traits": [
+        {
+          "id": "amphibious",
+          "name": "Amphibious",
+          "mechanicKeys": [
+            "canBreathe",
+            "grantsSwimSpeed"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/metallic/copper.json",
+      "sourceBlobSha": "87df84b39328d762511c9501597a2136ffdf646e",
+      "entityId": "ancestry.dragonborn.copper",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.metallic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType",
+        "climbingSpeedFeet"
+      ],
+      "traits": [
+        {
+          "id": "natural-climber",
+          "name": "Natural Climber",
+          "mechanicKeys": [
+            "movementMode",
+            "speedFeet",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/metallic/gold.json",
+      "sourceBlobSha": "9df063733ce6d6e7be95e08f172c9d2f7cb2677f",
+      "entityId": "ancestry.dragonborn.gold",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.metallic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType"
+      ],
+      "traits": [
+        {
+          "id": "amphibious",
+          "name": "Amphibious",
+          "mechanicKeys": [
+            "canBreathe",
+            "grantsSwimSpeed"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dragonborn/metallic/silver.json",
+      "sourceBlobSha": "c2c9e94cae7a38f671c69f5a7666ef7d84e5fd00",
+      "entityId": "ancestry.dragonborn.silver",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "ancestry.dragonborn.metallic",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "damageType"
+      ],
+      "traits": [
+        {
+          "id": "soft-landing",
+          "name": "Soft Landing",
+          "mechanicKeys": [
+            "activation",
+            "atWill",
+            "targets",
+            "fallingSpeedFeetPerRound",
+            "duration",
+            "endsOnLanding",
+            "preventsFallingDamageOnLanding",
+            "protectsOtherCreatures",
+            "grantsFlight",
+            "grantsHover"
+          ],
+          "classificationCandidates": [
+            "senses",
+            "physiology-or-movement",
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    }
+  ]
+}
