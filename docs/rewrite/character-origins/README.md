@@ -14,6 +14,24 @@ The approved player-choice direction rejects mandatory Punnett squares, genetic 
 
 `pillar2-origin-profile.schema.json` describes a **testing artifact**, not the final native JSON schema or character-save contract. Any field may change after reviewing trait composition, eligibility, balance, type targeting, and tester feedback.
 
+## Current audit outputs (2026-11-03)
+
+The Pillar 2 inventory covers **9 Species and 29 Ancestry/family records**, including **93 inline trait occurrences**. Pillar 3 intake inventories **10 selected Upbringings with 25 direct benefits**, alongside **four working-only SRD Backgrounds containing five source variants**. These counts are descriptive; they do not establish a number of independent trait choices or any balance budget.
+
+- [Pillar 2 findings](pillar2-trait-inventory-findings.md) — source-complete first-pass categories, overlapping local IDs, structural gaps, and next design questions.
+- [Species base inventory](catalog-inventory/species-base.json) — all nine Species and inline trait shapes.
+- [Dragonborn Ancestry inventory](catalog-inventory/dragonborn-ancestry.json) — family and selectable leaf shapes.
+- [Other Ancestry inventory](catalog-inventory/other-ancestry.json) — remaining 16 ancestry records.
+- [Pillar 3 intake and concrete comparisons](pillar3-life-experiences-intake.md) — four candidate Life Experiences combinations and the source/native boundaries.
+- [Native Upbringing benefits](catalog-inventory/upbringings.json) — ten selected Upbringings.
+- [Working-only Background evidence](catalog-inventory/backgrounds-working.json) — four imported Background identities and five variants; no authoritative Background promotion.
+
+The catalog inventories are **provisional descriptive snapshots** of the committed native or working files, not synchronized sources of truth. Proposed category and dependency labels were generated as review aids and require manual interpretation. Current native rule content is unchanged.
+
+### Validation performed
+
+All nine new/existing JSON design and inventory files were parsed successfully. The audit checked record counts, unique IDs, parent references, source blob SHAs, local trait IDs in representative examples, and contributor/source relationships. No C# changes or runtime tests were made, because the work is entirely documentation and draft JSON outside `native/`.
+
 ## Shape of the draft representation
 
 | Field | Role | Important non-assumption |
