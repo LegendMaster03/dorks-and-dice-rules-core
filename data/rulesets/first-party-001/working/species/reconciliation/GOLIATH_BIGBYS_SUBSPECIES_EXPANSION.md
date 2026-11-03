@@ -1,6 +1,6 @@
 # Bigby — six Goliath Subspecies expansion candidates
 
-**Status:** research and recommendation only, not native. The six selected SRD 5.2.1 ancestry boons remain active without modification. The companion Goliath Species already provides Powerful Build, Large Form, Mountain Leap and Altitude Acclimation. None of the secondary traits proposed here has been approved or granted.
+**Status:** historical candidate research and rejected alternatives for the current first pass. The six SRD 5.2.1 boons are native, augmented with merged level-1 Strike effects and level-4 advanced non-ASI features (see `GOLIATH_STRIKE_OVERLAP_REVIEW.md`). The earlier minor passive additions proposed here — Mist Sight, Heat-Hardened, Winter Strider, Steady Footing, Rock Concealment and Amphibious — are **not** granted in addition.
 
 **New overlap findings:** [`GOLIATH_STRIKE_OVERLAP_REVIEW.md`](GOLIATH_STRIKE_OVERLAP_REVIEW.md) compares the six original Strike options against the current SRD 5.2.1 Goliath boons. Fire Strike is a mechanical duplicate; Frost and Hill substantially overlap. It evaluates an early Strike grant and level-4 advanced ancestry progression, rather than assuming the previous provisional level-9 recommendation.
 
@@ -44,7 +44,7 @@
 5. **Respect runtime boundary.** The selected environmental hazard records and skill procedures are not all executable in the native character evaluator; document capabilities in native only after selection, but do not manufacture finished mechanics-engine support.
 6. **Separate source and proposal.** The specific Mist Sight, Heat-Hardened, Winter Strider, Steady Footing and Rock Concealment text is **our proposed adaptation**, not a published Bigby's player-character feature. Amphibious is directly modeled on published Storm Giant creature mechanics.
 
-## Later-level giant ancestry features — new proposal for review
+## Later-level giant ancestry features — earlier level-9 proposal, superseded by selected level 4
 
 **Owner direction under discussion:** Instead of making the six *Bigby's* higher-tier giant feats into Origin feats, consider **granting their supernatural/non-ASI benefits automatically through the corresponding Goliath Subspecies at a later character level**. This supersedes the earlier preference for only small passive secondary adaptations *as the leading option to assess*, but is not yet a confirmed native rule. Existing six SRD 5.2.1 boons are retained.
 

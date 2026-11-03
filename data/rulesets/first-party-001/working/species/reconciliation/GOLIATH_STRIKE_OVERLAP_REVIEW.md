@@ -1,6 +1,18 @@
 # Goliath — Strike of the Giants overlap and early progression review
 
-**Status: research and recommendation only.** The existing six SRD 5.2.1 Goliath Subspecies remain native. No early Strike grants, extra charges, or later-level feats have been selected or promoted. This follows the owner's request to consider an early ancestral Strike (perhaps level 1) and grant corresponding advanced *Bigby's* features around **character level 4**, after investigating overlap. These are not Origin feats in this model.
+**Status: implementation recorded.** The owner directed consolidation of duplicate abilities and continuation of the first-pass playtest rules. The native six Goliath Subspecies retain the SRD 5.2.1 abilities, add merged Strike-derived attack modes at level 1 (none separately for Fire), and unlock their associated non-ASI advanced abilities at total character level 4. Shared Large Form remains at level 5. Original Bigby's feat entitlements have **not** been granted; the source content was adapted as inherited mechanics. Unsettled cross-system concerns remain open for later playtests.
+
+## Selected native implementation (first-pass, revisable)
+
+**Level 1:** Cloud Strike, Stone Strike and Storm Strike are added offensive alternatives, each consuming one use of their original ancestry's PB/LR pool. Frost Strike and Hill Strike are alternate modes within the existing Frost's Chill/Hill's Tumble trait, each spending one of that trait's PB/LR uses; the original baseline mode stays usable as written. Fire Strike is a duplicate of Fire's Burn and adds neither damage nor charges. The new modes retain the melee/thrown-weapon trigger, once-per-turn limit and source-related saves. The original SRD 5.2.1 abilities keep their broader activation triggers.
+
+**Governing modifier:** choosing a Goliath Subspecies also chooses Strength or Constitution once for saving throw DCs and any magical attacks made by its inherited giant-ancestry powers: **8 + PB + chosen ability modifier** for saves, **PB + chosen ability modifier** for attack modifiers. This replaces the absent generic +1 ASI from the source's advanced feats. It is a first-pass native reconciliation decision, not a claim that the 2023 feats had the same ability choices.
+
+**Level 4:** Cloud gains Cloudy Escape; Fire gains 50% Fire resistance and Searing Ignition; Frost gains 50% Cold resistance and Frigid Retaliation; Hill gains Bulwark and Iron Stomach; Stone gains Cavernous Sight and Stone Throw; Storm gains Maelstrom Aura. The independently activated level-4 abilities retain their own source-based PB/LR charges where applicable. Resistances are scope-limited: only Fire/Frost are permanent; Cloud applies 50% only to the triggering attack and Storm's 50% Lightning/Thunder resistance lasts only for its aura.
+
+**Level 5:** unchanged shared Large Form. No original Strike/advanced feat was assigned, no +1 ASI and no upbringing selection was inferred. The early extra powers, fourth-level features and six-way relative balance remain explicitly subject to playtest-driven changes; they are not finalized.
+
+**Implementation caveat:** Native JSON provides referenceable rule definitions but does not guarantee the C# Character projector or action engine already supports dynamic mode selection, Giant Ancestry Aptitude, saving throws, area powers, resources or level-gated inheritance. These are separate consumer-mechanics dependencies.
 
 ## Source contracts to keep distinct
 
@@ -126,4 +138,4 @@ This path is possible, but the need to invent a Fire equivalent and resolve uneq
 5. **Feat independence:** a non-Goliath Giant Foundling and a character choosing Strike through future optional feats must remain possible. Goliath ancestry should not automatically consume general feat choices or duplicate feat grants on character sheets. Define what happens if a Goliath later independently receives the same Strike.
 6. **Early level choice is not approved.** The owner has asked us to *investigate the overlap* before settling level-1 versus another early level and the ~level-4 advancement. Record any subsequent approval separately and then promote to native.
 
-**Recommendation:** approve Path A as a lean baseline if the goal is first-pass playtest coverage. Use Path B only if the extra early Strike is an important intentional power increase; resolve Fire's duplication before implementation.
+**Recorded disposition:** Merged early Strike effects with the original SRD ancestries without duplicate charge pools. Advanced non-ASI feat effects are now inherited at level 4; see selected implementation at the top of this document. Path alternatives are retained as earlier research, not concurrent native rules.

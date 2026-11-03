@@ -33,7 +33,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual(35, self.base["walkingSpeedFeet"])
         self.assertNotIn("defaultUpbringing", self.base)
         self.assertEqual(
-            {"powerful-build", "large-form", "mountain-leap", "altitude-acclimation"},
+            {"powerful-build", "large-form", "mountain-leap", "altitude-acclimation", "giant-ancestry-aptitude"},
             {t["id"] for t in self.base["traits"]})
         self.assertEqual(set(self.slugs),
                          {p.stem for p in LEAVES.glob("*.json")})
@@ -46,7 +46,10 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
             self.assertEqual("selected-native", leaf["status"])
             self.assertTrue(leaf["selectable"])
             self.assertEqual(self.base["id"], leaf["parent"])
-            self.assertEqual(1, len(leaf["traits"]))
+            self.assertGreaterEqual(len(leaf["traits"]), 3)
+            self.assertEqual(1, sum(x.get("uses") == {
+                "value": "proficiency-bonus", "recharge": "long-rest"
+            } for x in leaf["traits"] if x["requiredCharacterLevel"] == 1 or "requiredCharacterLevel" not in x))
             self.assertNotIn("defaultUpbringing", leaf)
             self.assertNotIn("creatureType", leaf)
             self.assertNotIn("walkingSpeedFeet", leaf)
@@ -123,6 +126,100 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         conditions = {c["id"] for c in read(NATIVE / "conditions.json")["conditions"]}
         self.assertIn("condition.prone", conditions)
         self.assertIn("condition.grappled", conditions)
+
+    def test_bigbys_first_pass_level_1_strike_modes_do_not_duplicate_original_charges(self):
+        base_traits = {t["id"]: t for t in self.base["traits"]}
+        aptitude = base_traits["giant-ancestry-aptitude"]
+        self.assertEqual(["strength", "constitution"], aptitude["abilityChoice"]["from"])
+        self.assertEqual("goliath-subspecies-selection", aptitude["abilityChoice"]["when"])
+        self.assertEqual("8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+                         aptitude["savingThrowDC"])
+        ids = {"cloud": "clouds-jaunt", "fire": "fires-burn",
+               "frost": "frosts-chill", "hill": "hills-tumble",
+               "stone": "stones-endurance", "storm": "storms-thunder"}
+        for slug, leaf in self.leaves.items():
+            original = leaf["traits"][0]
+            self.assertEqual(ids[slug], original["id"])
+            self.assertEqual({"value": "proficiency-bonus", "recharge": "long-rest"},
+                             original["uses"])
+            self.assertEqual(0, sum("uses" in trait for trait in leaf["traits"][1:]
+                                    if trait.get("requiredCharacterLevel") == 1))
+            self.assertEqual(len(leaf["traits"]),
+                             len({trait["id"] for trait in leaf["traits"]}))
+            for trait in leaf["traits"]:
+                self.assertLessEqual(trait.get("requiredCharacterLevel", 1), 4)
+        for slug in ("cloud", "stone", "storm"):
+            t = next(t for t in self.leaves[slug]["traits"] if t["id"] == slug + "-strike")
+            self.assertEqual(1, t["requiredCharacterLevel"])
+            self.assertTrue(t["oncePerTurn"])
+            self.assertTrue(t["extraUsesGranted"] is False)
+            self.assertEqual(ids[slug], t["sharedUsesFromTrait"])
+            self.assertEqual("melee-weapon-or-thrown-weapon-attack-hit", t["trigger"])
+        fire = self.leaves["fire"]["traits"][0]
+        self.assertEqual("fire-strike", fire["coversStrikeOfTheGiantsMode"])
+        self.assertFalse(fire["duplicateStrikeBenefitGranted"])
+        frost = self.leaves["frost"]["traits"][0]["alternateStrikeMode"]
+        self.assertEqual("frost-strike", frost["id"])
+        self.assertEqual("frosts-chill", frost["sharedUsesFromTrait"])
+        self.assertEqual("frosts-chill-speed-reduction", frost["replaces"])
+        self.assertTrue(frost["extraDamageAlreadyProvidedByParent"])
+        self.assertEqual(0, frost["onFailedSave"]["speedSetFeet"])
+        hill = self.leaves["hill"]["traits"][0]["alternateStrikeMode"]
+        self.assertEqual("hill-strike", hill["id"])
+        self.assertEqual("hills-tumble", hill["sharedUsesFromTrait"])
+        self.assertEqual("hills-tumble-automatic-prone", hill["replaces"])
+        self.assertEqual("1d6", hill["extraDamage"]["dice"])
+        self.assertIsNone(hill["targetMaximumSize"])
+
+    def test_advanced_bigbys_features_unlock_only_at_level_4(self):
+        expected = {
+            "cloud": {"cloudy-escape"},
+            "fire": {"born-of-flame", "searing-ignition"},
+            "frost": {"born-of-ice", "frigid-retaliation"},
+            "hill": {"bulwark", "iron-stomach"},
+            "stone": {"cavernous-sight", "stone-throw"},
+            "storm": {"maelstrom-aura"},
+        }
+        for slug, ids in expected.items():
+            advanced = [t for t in self.leaves[slug]["traits"]
+                        if t.get("requiredCharacterLevel") == 4]
+            self.assertEqual(ids, {t["id"] for t in advanced})
+            for t in advanced:
+                self.assertNotIn("abilityScoreIncrease", t)
+                self.assertNotIn("featPrerequisite", t)
+                self.assertNotIn("strikeOfTheGiantsFeat", t)
+        fire = {t["id"]: t for t in self.leaves["fire"]["traits"]}
+        frost = {t["id"]: t for t in self.leaves["frost"]["traits"]}
+        self.assertEqual({"percent": 50, "damageType": "fire"},
+                         fire["born-of-flame"]["damageResistance"])
+        self.assertEqual({"percent": 50, "damageType": "cold"},
+                         frost["born-of-ice"]["damageResistance"])
+        ignition = fire["searing-ignition"]
+        self.assertEqual("one-attack", ignition["activation"]["replaces"])
+        self.assertEqual("condition.blinded",
+                         ignition["applyConditionOnFailedSave"]["condition"])
+        self.assertTrue(ignition["oncePerTurn"])
+        self.assertEqual({"value": "proficiency-bonus", "recharge": "long-rest"},
+                         ignition["uses"])
+        self.assertEqual(0, frost["frigid-retaliation"]["onFailedSave"]["speedSetFeet"])
+        self.assertTrue(next(t for t in self.leaves["hill"]["traits"]
+                             if t["id"] == "bulwark")["atWill"])
+        self.assertTrue(next(t for t in self.leaves["hill"]["traits"]
+                             if t["id"] == "iron-stomach")["oncePerShortRest"])
+        stone = {t["id"]: t for t in self.leaves["stone"]["traits"]}
+        self.assertEqual(60, stone["cavernous-sight"]["addToExistingDarkvisionFeet"])
+        self.assertEqual("ranged-spell-attack", stone["stone-throw"]["attack"]["type"])
+        storm = next(t for t in self.leaves["storm"]["traits"]
+                     if t["id"] == "maelstrom-aura")
+        self.assertEqual("total-cover", storm["area"]["blockedBy"])
+        self.assertEqual({"lightning", "thunder"},
+                         {r["damageType"] for r in storm["whileActive"]["damageResistance"]})
+        self.assertTrue(all(r["percent"] == 50 for r in
+                            storm["whileActive"]["damageResistance"]))
+        self.assertEqual(0.5, storm["startsTurnInside"]["onFailedSave"]["speedMultiplier"])
+        conditions = {x["id"] for x in read(NATIVE / "conditions.json")["conditions"]}
+        self.assertIn("condition.blinded", conditions)
+        self.assertIn("condition.incapacitated", conditions)
 
     def test_original_srd_candidate_promoted_without_loss_of_source_provenance(self):
         row = next(r for r in read(MANIFEST)["coverage"]
