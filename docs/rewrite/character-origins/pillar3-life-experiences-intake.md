@@ -48,3 +48,44 @@ These descriptions are boundaries for reconciliation, **not yet an approved mech
 First reconcile one **conventional** Life Experiences pair, such as General Elf Upbringing plus Sage Background, then one **cross-cultural** pair, such as Orc with General Elf Upbringing plus Soldier Background. Use the already-approved native Upbringings as the baseline, and source-shaped working Backgrounds only as historical evidence. Record resulting decisions before promoting any Background to `native/`.
 
 Work on this pillar is **conceptually parallel** to Pillar 2, provided it does not settle inherent trait inheritance, creature-type targeting, or Species balancing by implication. Dependencies should be noted explicitly rather than silently filled in.
+
+## First comparative cases — source-derived, not selected native Background rules
+
+### Case A: High Elf + High Elf Upbringing + Sage Background
+
+- **Pillar 1:** The conventional Elf base and High Elf Ancestry grant the already-selected Fey type, Low-Light Vision, Elf characteristics and High Elf innate spell advancement.
+- **Native Upbringing:** `upbringing.elf.high` extends `upbringing.elf.general`. In their existing records, the pair offers learned Elvish, a cultural skill-training choice, traditional weapon proficiencies and another language.
+- **Working Background source:** `background.sage` preserves a 5.2.1-shaped definition with Arcana, History, calligrapher's supplies, Magic Initiate (Wizard), ability-score choices, and starting-equipment choices. This definition is **not** authoritative `native/` Background content.
+- **Design issue:** Learned magic or a feat from life experience can coexist with inherited High Elf spellcasting, but duplicate spell selection, eligibility, and grant timing should be addressed through the relevant general feat/spell rules. Do not strip an approved Ancestry spell because a source Background grants something similar.
+- **Inventory issue:** The source equipment should become actual inventory grants if selected, not a permanently separate starting-equipment container.
+
+### Case B: Orc + General Elf Upbringing + Soldier Background
+
+- **Pillar 1:** Orc remains Humanoid with the approved Orc traits. A different cultural Upbringing must not turn Orc into Fey or automatically grant Elf Trance.
+- **Native Upbringing:** `upbringing.elf.general` offers learned Elvish and a choice of Insight, Perception or Survival training, regardless of the character's inherited Species.
+- **Working Background source:** `background.soldier` includes Athletics, Intimidation, a gaming-set tool, Savage Attacker as an Origin feat, ability-score choices and starting equipment.
+- **Design issue:** Orc **Menacing Presence** grants contextual advantage on certain Intimidation checks, while Soldier's *source* training grants Intimidation proficiency. These are distinct mechanisms; their combined treatment must use the existing skill rules, without an assumed extra proficiency or replacement. Orc **Savage Attacks** and the *source* Savage Attacker feat have similar names but different definitions.
+- **Eligibility issue:** Any mandatory social or biological link between Soldier and Orc would contradict the already-established separation of Species from Upbringing and Background.
+
+### Case C: Goliath + Giant Foundling Upbringing + Soldier Background
+
+- **Native Upbringing:** `upbringing.giant-foundling` already grants Intimidation and Survival training plus Giant and an additional language. It explicitly does not grant Goliath powers or the original source Background's feat.
+- **Working Background source:** Soldier would separately offer Intimidation among its skill proficiencies.
+- **Design issue:** This tests repeated acquired training from **two** Life Experiences sources. No duplication compensation or extra rank is yet approved. Do not automatically stack two full packages without reviewing the Life Experiences advancement model.
+- **Historical distinction:** Giant Foundling was adapted into a native Upbringing, but its source Background identity does not imply it must remain a second independent native Background package.
+
+### Case D: Construct without a conventional childhood
+
+- **Pillar 2:** Its creators, design, materials and animating magic concern Origination/Heritage and its effective inherent profile.
+- **Pillar 3:** Training after animation, implanted knowledge, occupational service or a compressed formative experience may establish acquired benefits. These possibilities should not be conflated with biological parentage or mandated as one universal childhood model.
+- **Design issue:** Whether an Upbringing or Background can be omitted, replaced, or custom-defined is still unresolved; preserve room for alternatives.
+
+## First Pillar 3 decision order (proposed, not approved)
+
+1. Establish **what a Life Experiences selection represents** and how independently chosen Upbringing and Background interact. This is already conceptually two related parts, not two unrelated origins.
+2. Compare the **grants and narrative roles** across the native Upbringings and four source Backgrounds before reallocating any bonus.
+3. Address **overlap and duplicate learned grants**, using the existing competency/skill model where appropriate.
+4. Determine the roles of ability-score allocation, Origin feats, and equipment **without** blindly reproducing the 5.2.1 Background bundle.
+5. Stress-test unconventional or rapid formative experiences, then expand the native Background catalog only as approved.
+
+The recommendation is to begin with Cases A and B, retaining Cases C and D as targeted stress tests. This work can proceed while Pillar 2 inheritance budgets and player feedback remain open. It must not change approved Pillar 1 mechanics as a side effect.
