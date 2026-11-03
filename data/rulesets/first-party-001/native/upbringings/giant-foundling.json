@@ -4,7 +4,7 @@
   "kind": "upbringing",
   "status": "selected-native",
   "selectable": true,
-  "description": "You spent your formative years living among or being raised by giants. This upbringing is available to any Species, including Goliaths, without changing inherited Species or Ancestry powers.",
+  "description": "You spent your formative years living among or being raised by giants. This upbringing is available to any Species, including Goliaths, without changing inherited Species or Subspecies powers.",
   "benefits": [
     {
       "id": "giant-language",

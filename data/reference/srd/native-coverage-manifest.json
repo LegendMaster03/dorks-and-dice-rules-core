@@ -37937,11 +37937,10 @@
     },
     {
       "nativeId": "subspecies.dwarf.hill",
-      "reconciledNativeId": "ancestry.dwarf.hill",
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestries/dwarf/hill.json",
+      "path": "data/rulesets/first-party-001/native/species/subspecies/dwarf/hill.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -37951,11 +37950,10 @@
     },
     {
       "nativeId": "subspecies.elf.high",
-      "reconciledNativeId": "ancestry.elf.high",
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestries/elf/high.json",
+      "path": "data/rulesets/first-party-001/native/species/subspecies/elf/high.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -37965,11 +37963,10 @@
     },
     {
       "nativeId": "subspecies.gnome.rock",
-      "reconciledNativeId": "ancestry.gnome.rock",
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestries/gnome/rock.json",
+      "path": "data/rulesets/first-party-001/native/species/subspecies/gnome/rock.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -38005,11 +38002,10 @@
     },
     {
       "nativeId": "subspecies.halfling.lightfoot",
-      "reconciledNativeId": "ancestry.halfling.lightfoot",
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestries/halfling/lightfoot.json",
+      "path": "data/rulesets/first-party-001/native/species/subspecies/halfling/lightfoot.json",
       "candidates": [
         {
           "key": "candidate-a",
