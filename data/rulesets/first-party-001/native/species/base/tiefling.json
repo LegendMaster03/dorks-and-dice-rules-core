@@ -1,0 +1,29 @@
+{
+  "id": "species.tiefling",
+  "name": "Tiefling",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": false,
+  "creatureType": "humanoid",
+  "sizeChoices": [
+    "small",
+    "medium"
+  ],
+  "walkingSpeedFeet": 30,
+  "darkvisionFeet": 60,
+  "traits": [
+    {
+      "id": "otherworldly-presence",
+      "name": "Otherworldly Presence",
+      "description": "You know the Thaumaturgy cantrip. When you cast it using this trait, use the spellcasting ability chosen for your Tiefling Ancestry.",
+      "spell": "thaumaturgy",
+      "spellcastingAbilityFrom": "selected-tiefling-ancestry"
+    }
+  ],
+  "reviewNotes": [
+    "Choose an Abyssal, Chthonic, or Infernal Ancestry to determine the inherited damage resistance and remaining innate magic. The shared Tiefling record is not itself selectable.",
+    "5.5e Fiendish Legacy replaces the 5.1-only Infernal Legacy assumption as the initial three-Ancestry baseline; 5.1 Infernal spell-level differences remain a separate comparison.",
+    "3.5e native-outsider creature classification and its three flat elemental resistances are not silently combined with the newer Humanoid and single-Ancestry resistance model. Creature-type and resistance reconciliation may revise this baseline.",
+    "Languages and learned traditions remain for Upbringing. Ability-score adjustments are deferred rather than imported from older editions."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "species.human",
+  "name": "Human",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "creatureType": "humanoid",
+  "sizeChoices": [
+    "small",
+    "medium"
+  ],
+  "walkingSpeedFeet": 30,
+  "traits": [
+    {
+      "id": "resourceful",
+      "name": "Resourceful",
+      "description": "You gain Heroic Inspiration whenever you finish a Long Rest.",
+      "grant": "heroic-inspiration",
+      "trigger": "finish-long-rest"
+    },
+    {
+      "id": "skillful",
+      "name": "Skillful",
+      "description": "Gain training in one skill of your choice.",
+      "grantType": "skill-training",
+      "choiceCount": 1,
+      "skillChoice": "any"
+    },
+    {
+      "id": "versatile",
+      "name": "Versatile",
+      "description": "Gain one Origin feat of your choice.",
+      "featChoice": {
+        "category": "origin",
+        "count": 1
+      }
+    }
+  ],
+  "reviewNotes": [
+    "First-pass baseline draws on SRD 5.2.1. SRD 5.1 grants a different set of ability-score changes; those are not combined with this baseline.",
+    "3.5e bonus feat and additional skill points informed the modern Versatile and Skillful traits, but do not grant additional feats or skill-point pools.",
+    "The feat and skill selection contracts remain subject to the separate Feats, Skills, and character-creation passes. These are provisional Species traits and may be reassigned when Upbringing and Background receive their full review.",
+    "Languages and learned cultural benefits belong to independently selectable Upbringings; no Human-specific Upbringing or Ancestry is required by this first pass."
+  ]
+}

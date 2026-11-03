@@ -1,0 +1,44 @@
+{
+  "id": "species.orc",
+  "name": "Orc",
+  "kind": "species",
+  "status": "selected-native",
+  "selectable": true,
+  "creatureType": "humanoid",
+  "size": "medium",
+  "walkingSpeedFeet": 30,
+  "darkvisionFeet": 120,
+  "traits": [
+    {
+      "id": "adrenaline-rush",
+      "name": "Adrenaline Rush",
+      "description": "You can take the Dash action as a Bonus Action. When you do, you gain Temporary Hit Points equal to your Proficiency Bonus. You can use this trait a number of times equal to your Proficiency Bonus, regaining all uses when you finish a Short Rest or Long Rest.",
+      "activation": {
+        "action": "bonus-action",
+        "actionTaken": "dash"
+      },
+      "temporaryHitPoints": "proficiency-bonus",
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "short-or-long-rest"
+      }
+    },
+    {
+      "id": "relentless-endurance",
+      "name": "Relentless Endurance",
+      "description": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. You regain this trait after a Long Rest.",
+      "trigger": "reduced-to-zero-hit-points-but-not-killed-outright",
+      "hitPointsInstead": 1,
+      "uses": {
+        "value": 1,
+        "recharge": "long-rest"
+      }
+    }
+  ],
+  "reviewNotes": [
+    "First-pass baseline is SRD 5.2.1; this is the sole Orc Species candidate in the staged 5e/5.5e SRD.",
+    "3.5e Orc light sensitivity is not automatically reinstated because the later baseline omits it. Its potential return remains an independent balance question.",
+    "Historical Orc ability-score modifiers and learned languages are not automatic grants in this Species baseline. The appropriate Upbringing remains open for later reconciliation.",
+    "Half-Orc remains reserved for Mixed Species rather than being promoted as an Orc Ancestry."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "ancestry.tiefling.infernal",
+  "name": "Infernal Tiefling",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": true,
+  "parent": "species.tiefling",
+  "traits": [
+    {
+      "id": "infernal-resistance",
+      "name": "Infernal Resistance",
+      "description": "You have 50 percent resistance to fire damage.",
+      "damageResistance": {
+        "percent": 50,
+        "damageType": "fire"
+      }
+    },
+    {
+      "id": "infernal-cantrip",
+      "name": "Fire Bolt Cantrip",
+      "description": "You know the Fire Bolt cantrip.",
+      "spell": "fire-bolt",
+      "requiredCharacterLevel": 1
+    },
+    {
+      "id": "infernal-hellish-rebuke",
+      "name": "Hellish Rebuke",
+      "description": "Starting at character level 3, you always have Hellish Rebuke prepared. You can cast it once without a spell slot per Long Rest and can also cast it using available spell slots of the appropriate level.",
+      "spell": "hellish-rebuke",
+      "requiredCharacterLevel": 3,
+      "alwaysPrepared": true,
+      "freeUses": 1,
+      "recharge": "long-rest",
+      "slotCasting": true
+    },
+    {
+      "id": "infernal-darkness",
+      "name": "Darkness",
+      "description": "Starting at character level 5, you always have Darkness prepared. You can cast it once without a spell slot per Long Rest and can also cast it using available spell slots of the appropriate level.",
+      "spell": "darkness",
+      "requiredCharacterLevel": 5,
+      "alwaysPrepared": true,
+      "freeUses": 1,
+      "recharge": "long-rest",
+      "slotCasting": true
+    }
+  ],
+  "spellcastingAbilityChoice": [
+    "intelligence",
+    "wisdom",
+    "charisma"
+  ],
+  "reviewNotes": [
+    "Choose the Ancestry's spellcasting ability when selecting it. The choice also governs the Thaumaturgy cantrip inherited from species.tiefling.",
+    "The level-3 and level-5 free castings are independent, with each spell replenishing after a Long Rest. They do not consume spell slots when used for free.",
+    "Additional older-edition Tiefling resistances, spells, and creature-type alternatives have not been stacked with this initial lineage."
+  ]
+}
