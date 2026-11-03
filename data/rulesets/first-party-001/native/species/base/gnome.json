@@ -26,9 +26,9 @@
   ],
   "creatureType": "humanoid",
   "size": "small",
-  "walkingSpeedFeet": 30,
+  "walkingSpeedFeet": 25,
   "reviewNotes": [
-    "Walking speed subject to comparative Species balance.",
+    "Walking Speed reduced to 25 feet in the approved comparative Species review; overall balance remains open.",
     "Native Low-Light Vision replaces base 60-foot Darkvision in the approved comparative vision review; a specifically darkness-adapted Ancestry can still grant Darkvision."
   ],
   "defaultUpbringing": "upbringing.gnome.general"

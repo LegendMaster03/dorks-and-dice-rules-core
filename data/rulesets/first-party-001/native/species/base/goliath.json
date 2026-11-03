@@ -4,7 +4,7 @@
   "kind": "species",
   "status": "selected-native",
   "selectable": false,
-  "creatureType": "humanoid",
+  "creatureType": "giant",
   "size": "medium",
   "walkingSpeedFeet": 35,
   "traits": [
@@ -113,7 +113,8 @@
   "reviewNotes": [
     "Powerful Build grants advantage on ability checks to end Grappled, not an automatic 3.5e opposed-grapple size modifier or oversized-weapon permission. Exact interplay with the native opposed grapple procedure remains part of combat-integration review.",
     "Large Form uses the native actual Large size category, not historical automatic 3.5e AC/grapple modifiers; reach and occupancy follow the native spatial rules.",
-    "The standing-jump portion of 3.5e Mountain Movement and high-altitude acclimation are selected. No compulsory Ordning status or Upbringing choice is granted by biology."
+    "The standing-jump portion of 3.5e Mountain Movement and high-altitude acclimation are selected. No compulsory Ordning status or Upbringing choice is granted by biology.",
+    "Giant creature type selected in the comparative Species review. Size remains Medium. Giant-specific targeting applies, but Giant monster stat-block defaults and Humanoid targeting via hierarchy parentage are not automatically inherited."
   ],
   "defaultUpbringing": "upbringing.goliath.general"
 }

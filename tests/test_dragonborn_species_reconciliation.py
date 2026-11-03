@@ -18,6 +18,8 @@ class DragonbornReconciliationTests(unittest.TestCase):
     def test_selected_family_and_ten_leaves(self):
         base = read(DRAGONBORN / "base/dragonborn.json")
         self.assertEqual("species.dragonborn", base["id"])
+        self.assertEqual("dragon", base["creatureType"])
+        self.assertEqual(30, base["walkingSpeedFeet"])
         self.assertFalse(base["selectable"])
         families = {
             "chromatic": ("black", "blue", "green", "red", "white"),

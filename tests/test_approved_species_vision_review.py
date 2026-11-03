@@ -63,13 +63,14 @@ class ApprovedVisionReviewTests(unittest.TestCase):
                 self.assertFalse(any(t.get("rule") == "rule.low-light-vision"
                                      for t in species["traits"]))
 
-    def test_speed_and_type_remain_unmodified_by_vision_decision(self):
+    def test_approved_species_movement_and_creature_types(self):
         expected = {
-            "dwarf": (30, "humanoid"),
+            "dwarf": (25, "humanoid"),
             "elf": (30, "humanoid"),
-            "gnome": (30, "humanoid"),
-            "dragonborn": (30, "humanoid"),
-            "goliath": (35, "humanoid"),
+            "gnome": (25, "humanoid"),
+            "halfling": (25, "humanoid"),
+            "dragonborn": (30, "dragon"),
+            "goliath": (35, "giant"),
             "orc": (30, "humanoid"),
         }
         for slug, (speed, creature_type) in expected.items():

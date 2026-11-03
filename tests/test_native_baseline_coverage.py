@@ -196,7 +196,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
         }
         subspecies_defs = {
             r["id"]: r
-            for p in (native / "species/subspecies").rglob("*.json")
+            for p in (native / "species/ancestry").rglob("*.json")
             for r in [load(p)]
         }
         upbringings = {
@@ -205,7 +205,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
             for r in [load(p)]
         }
         self.assertGreaterEqual(len(species_defs), 4)
-        self.assertGreaterEqual(len(subspecies_defs), 7)
+        self.assertGreaterEqual(len(subspecies_defs), 29)
         self.assertGreaterEqual(len(upbringings), 8)
         all_species = species_defs | subspecies_defs
         for item in subspecies_defs.values():
@@ -225,11 +225,11 @@ class NativeSrdBaselineTests(unittest.TestCase):
             "species.elf": "upbringing.elf.general",
             "species.gnome": "upbringing.gnome.general",
             "species.goliath": "upbringing.goliath.general",
-            "subspecies.elf.high": "upbringing.elf.high",
-            "subspecies.elf.wood": "upbringing.elf.wood",
-            "subspecies.elf.drow": "upbringing.elf.drow",
-            "subspecies.gnome.forest": "upbringing.gnome.forest",
-            "subspecies.gnome.rock": "upbringing.gnome.rock",
+            "ancestry.elf.high": "upbringing.elf.high",
+            "ancestry.elf.wood": "upbringing.elf.wood",
+            "ancestry.elf.drow": "upbringing.elf.drow",
+            "ancestry.gnome.forest": "upbringing.gnome.forest",
+            "ancestry.gnome.rock": "upbringing.gnome.rock",
         }
         self.assertEqual(
             expected_defaults,
@@ -246,13 +246,13 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 current = record.get("parent")
             return None
 
-        self.assertEqual("upbringing.dwarf.general", nearest_default("subspecies.dwarf.hill"))
-        self.assertEqual("upbringing.elf.high", nearest_default("subspecies.elf.high"))
-        self.assertEqual("upbringing.gnome.forest", nearest_default("subspecies.gnome.forest"))
+        self.assertEqual("upbringing.dwarf.general", nearest_default("ancestry.dwarf.hill"))
+        self.assertEqual("upbringing.elf.high", nearest_default("ancestry.elf.high"))
+        self.assertEqual("upbringing.gnome.forest", nearest_default("ancestry.gnome.forest"))
         for giant_type in ("cloud", "fire", "frost", "hill", "stone", "storm"):
             self.assertEqual("upbringing.goliath.general",
-                             nearest_default("subspecies.goliath." + giant_type))
-        self.assertIsNone(nearest_default("subspecies.halfling.lightfoot"))
+                             nearest_default("ancestry.goliath." + giant_type))
+        self.assertIsNone(nearest_default("ancestry.halfling.lightfoot"))
         self.assertFalse({"species.half-elf", "species.half-orc"} & set(species_defs))
         policy = load(native / "rules/species-subspecies-upbringing.json")["upbringings"]
         self.assertEqual("defaultUpbringing", policy["defaultField"])
@@ -273,12 +273,13 @@ class NativeSrdBaselineTests(unittest.TestCase):
         dragonborn = load(path)
         self.assertEqual("species.dragonborn", dragonborn["id"])
         self.assertFalse(dragonborn["selectable"])
-        self.assertEqual("humanoid", dragonborn["creatureType"])
+        self.assertEqual("dragon", dragonborn["creatureType"])
         self.assertEqual("medium", dragonborn["size"])
         self.assertEqual(30, dragonborn["walkingSpeedFeet"])
-        self.assertEqual(60, dragonborn["darkvisionFeet"])
+        self.assertNotIn("darkvisionFeet", dragonborn)
         traits = {x["id"]: x for x in dragonborn["traits"]}
-        self.assertEqual({"draconic-resistance", "breath-weapon"}, set(traits))
+        self.assertEqual({"low-light-vision", "draconic-resistance", "breath-weapon"}, set(traits))
+        self.assertEqual("rule.low-light-vision", traits["low-light-vision"]["rule"])
         self.assertEqual(50, traits["draconic-resistance"]["damageResistance"]["percent"])
         breath = traits["breath-weapon"]
         self.assertEqual("one-attack", breath["activation"]["replaces"])
@@ -298,9 +299,9 @@ class NativeSrdBaselineTests(unittest.TestCase):
                          row["path"])
 
     def test_approved_chromatic_dragonborn_family_and_five_leaves(self):
-        base = AUTHORITATIVE / "species/subspecies/dragonborn"
+        base = AUTHORITATIVE / "species/ancestry/dragonborn"
         chromatic = load(base / "chromatic.json")
-        self.assertEqual("subspecies.dragonborn.chromatic", chromatic["id"])
+        self.assertEqual("ancestry.dragonborn.chromatic", chromatic["id"])
         self.assertEqual("species.dragonborn", chromatic["parent"])
         self.assertFalse(chromatic["selectable"])
         self.assertEqual({"shape": "line", "lengthFeet": 30, "widthFeet": 5},
@@ -330,8 +331,9 @@ class NativeSrdBaselineTests(unittest.TestCase):
             for slug in expected_damage_types
         }
         for slug, leaf in leaves.items():
-            self.assertEqual("subspecies.dragonborn." + slug, leaf["id"])
-            self.assertEqual("subspecies.dragonborn.chromatic", leaf["parent"])
+            self.assertEqual("ancestry.dragonborn." + slug, leaf["id"])
+            self.assertEqual("ancestry.dragonborn.chromatic", leaf["parent"])
+            self.assertEqual("ancestry", leaf["kind"])
             self.assertTrue(leaf["selectable"])
             self.assertEqual("selected-native", leaf["status"])
             self.assertEqual(expected_damage_types[slug], leaf["damageType"])

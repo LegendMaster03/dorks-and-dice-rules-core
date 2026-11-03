@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
 BASE = NATIVE / "species/base/goliath.json"
-LEAVES = NATIVE / "species/subspecies/goliath"
+LEAVES = NATIVE / "species/ancestry/goliath"
 WORKING = ROOT / "data/rulesets/first-party-001/working"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
@@ -28,7 +28,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual("species", self.base["kind"])
         self.assertEqual("selected-native", self.base["status"])
         self.assertFalse(self.base["selectable"])
-        self.assertEqual("humanoid", self.base["creatureType"])
+        self.assertEqual("giant", self.base["creatureType"])
         self.assertEqual("medium", self.base["size"])
         self.assertEqual(35, self.base["walkingSpeedFeet"])
         self.assertEqual("upbringing.goliath.general", self.base["defaultUpbringing"])
@@ -39,10 +39,10 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
                          {p.stem for p in LEAVES.glob("*.json")})
         ids = set()
         for slug, leaf in self.leaves.items():
-            self.assertEqual("subspecies.goliath." + slug, leaf["id"])
+            self.assertEqual("ancestry.goliath." + slug, leaf["id"])
             self.assertNotIn(leaf["id"], ids)
             ids.add(leaf["id"])
-            self.assertEqual("subspecies", leaf["kind"])
+            self.assertEqual("ancestry", leaf["kind"])
             self.assertEqual("selected-native", leaf["status"])
             self.assertTrue(leaf["selectable"])
             self.assertEqual(self.base["id"], leaf["parent"])
@@ -131,7 +131,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         base_traits = {t["id"]: t for t in self.base["traits"]}
         aptitude = base_traits["giant-ancestry-aptitude"]
         self.assertEqual(["strength", "constitution"], aptitude["abilityChoice"]["from"])
-        self.assertEqual("goliath-subspecies-selection", aptitude["abilityChoice"]["when"])
+        self.assertEqual("goliath-ancestry-selection", aptitude["abilityChoice"]["when"])
         self.assertEqual("8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
                          aptitude["savingThrowDC"])
         ids = {"cloud": "clouds-jaunt", "fire": "fires-burn",
