@@ -26,7 +26,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         ids = {base["id"]}
         for family, names in families.items():
             with self.subTest(family=family):
-                node = read(DRAGONBORN / f"subspecies/dragonborn/{family}.json")
+                node = read(DRAGONBORN / f"ancestry/dragonborn/{family}.json")
                 self.assertEqual("species.dragonborn", node["parent"])
                 self.assertFalse(node["selectable"])
                 self.assertEqual("selected-native", node["status"])
@@ -34,11 +34,11 @@ class DragonbornReconciliationTests(unittest.TestCase):
                 self.assertNotIn(node["id"], ids)
                 ids.add(node["id"])
                 for name in names:
-                    leaf = read(DRAGONBORN / f"subspecies/dragonborn/{family}/{name}.json")
+                    leaf = read(DRAGONBORN / f"ancestry/dragonborn/{family}/{name}.json")
                     self.assertEqual(node["id"], leaf["parent"])
                     self.assertTrue(leaf["selectable"])
                     self.assertEqual("selected-native", leaf["status"])
-                    self.assertEqual("subspecies", leaf["kind"])
+                    self.assertEqual("ancestry", leaf["kind"])
                     self.assertGreaterEqual(len(leaf["traits"]), 1)
                     self.assertNotIn("defaultUpbringing", leaf)
                     self.assertNotIn(leaf["id"], ids)
@@ -47,10 +47,9 @@ class DragonbornReconciliationTests(unittest.TestCase):
 
     def test_gem_family_is_nonselectable_and_structural_only(self):
         base = read(DRAGONBORN / "base/dragonborn.json")
-        gem = read(DRAGONBORN / "subspecies/dragonborn/gem.json")
-        inheritance = read(NATIVE / "rules/species-subspecies-upbringing.json")
-        self.assertEqual("subspecies.dragonborn.gem", gem["id"])
-        self.assertEqual("subspecies", gem["kind"])
+        gem = read(DRAGONBORN / "ancestry/dragonborn/gem.json")
+        self.assertEqual("ancestry.dragonborn.gem", gem["id"])
+        self.assertEqual("ancestry", gem["kind"])
         self.assertEqual("selected-native", gem["status"])
         self.assertFalse(base["selectable"])
         self.assertFalse(gem["selectable"])
@@ -58,20 +57,31 @@ class DragonbornReconciliationTests(unittest.TestCase):
         self.assertEqual([], gem["traits"])
         for unresolved in ("breathWeaponArea", "damageType", "defaultUpbringing"):
             self.assertNotIn(unresolved, gem)
-        gem_families = [
-            family for family in inheritance["dragonbornApprovedStructure"]["intermediateFamilies"]
-            if family["id"] == gem["id"]
-        ]
-        self.assertEqual(1, len(gem_families))
-        self.assertFalse(gem_families[0]["selectable"])
-        self.assertEqual(
-            {"amethyst", "crystal", "emerald", "sapphire", "topaz"},
-            set(gem_families[0]["types"]))
-        self.assertFalse((DRAGONBORN / "subspecies/dragonborn/gem").exists())
+        self.assertFalse((DRAGONBORN / "ancestry/dragonborn/gem").exists())
+
+    def test_dragonborn_inherits_unrestricted_low_light_vision(self):
+        base = read(DRAGONBORN / "base/dragonborn.json")
+        rule = read(NATIVE / "rules/low-light-vision.json")
+        self.assertNotIn("darkvisionFeet", base)
+        vision = next(t for t in base["traits"] if t["id"] == "low-light-vision")
+        self.assertEqual(rule["id"], vision["rule"])
+        self.assertEqual("dim", rule["effects"][0]["actualLightLevel"])
+        self.assertEqual("bright", rule["effects"][0]["perceivedLightLevel"])
+        self.assertTrue(any("No separate Low-Light Vision range" in x
+                            for x in rule["clarifications"]))
+        for family in ("chromatic", "metallic"):
+            root = DRAGONBORN / "ancestry/dragonborn"
+            node = read(root / (family + ".json"))
+            self.assertNotIn("darkvisionFeet", node)
+            self.assertNotIn("lowLightVision", node)
+            for file in (root / family).glob("*.json"):
+                leaf = read(file)
+                self.assertNotIn("darkvisionFeet", leaf, file.name)
+                self.assertNotIn("lowLightVision", leaf, file.name)
 
     def test_family_breath_geometry_and_resources(self):
-        chromatic = read(DRAGONBORN / "subspecies/dragonborn/chromatic.json")
-        metallic = read(DRAGONBORN / "subspecies/dragonborn/metallic.json")
+        chromatic = read(DRAGONBORN / "ancestry/dragonborn/chromatic.json")
+        metallic = read(DRAGONBORN / "ancestry/dragonborn/metallic.json")
         self.assertEqual({"shape": "line", "lengthFeet": 30, "widthFeet": 5}, chromatic["breathWeaponArea"])
         self.assertEqual({"shape": "cone", "lengthFeet": 15}, metallic["breathWeaponArea"])
         breath = next(t for t in metallic["traits"] if t["id"] == "metallic-breath-weapon")
@@ -98,7 +108,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
 
     def test_metallic_leaf_types_and_adaptations(self):
         expected = {"brass": "fire", "bronze": "lightning", "copper": "acid", "gold": "fire", "silver": "cold"}
-        leaf = lambda name: read(DRAGONBORN / f"subspecies/dragonborn/metallic/{name}.json")
+        leaf = lambda name: read(DRAGONBORN / f"ancestry/dragonborn/metallic/{name}.json")
         for name, damage in expected.items():
             self.assertEqual(damage, leaf(name)["damageType"])
         brass = leaf("brass")

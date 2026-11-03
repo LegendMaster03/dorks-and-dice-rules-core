@@ -7,8 +7,13 @@
   "creatureType": "humanoid",
   "size": "medium",
   "walkingSpeedFeet": 30,
-  "darkvisionFeet": 60,
   "traits": [
+    {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
     {
       "id": "draconic-resistance",
       "description": "You have 50 percent resistance to the damage type associated with your specific dragon ancestry.",
@@ -59,7 +64,7 @@
     }
   ],
   "reviewNotes": [
-    "60-foot Darkvision and 30-foot walking speed remain subject to the comparative Species balance pass.",
+    "Low-Light Vision replaces baseline 60-foot Darkvision for all Dragonborn families and currently playable ancestries; 30-foot walking speed remains subject to comparative Species balance. Specialized future ancestries may define their own vision and related light sensitivity.",
     "5.5e temporary Draconic Flight is not automatically granted by the Dragonborn base Species.",
     "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred."
   ]

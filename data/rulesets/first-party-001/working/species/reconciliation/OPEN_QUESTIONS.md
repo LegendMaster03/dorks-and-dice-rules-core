@@ -14,8 +14,10 @@ Approved Dwarf, Halfling, Gnome and Elf rules are in `native/species/`, `native/
 - Gnome: mechanical expression for general cultural knowledge; casting ability for Upbringing-granted Prestidigitation.
 - Halfling: cultural Upbringing.
 - Elf: final comparison of senses, movement and spells.
+- Orc: Species baseline promoted with Low-Light Vision, Adrenaline Rush, Relentless Endurance, Powerful Build (carrying/push/drag/lift only), Savage Attacks, and conditional physical Menacing Presence. No compulsory Ancestry, Upbringing, Darkvision or Sunlight Sensitivity. Critical-escalation integration and comparative balance remain open.
 - Human: Species baseline promoted with cumulative character-creation choices (one Skill proficiency, one Origin feat, four bonus skill ranks at level 1 and one per later character level), Small/Medium size choice and 30-foot Speed. No mandatory Ancestry or default Upbringing. Resourceful/Heroic Inspiration remains deferred pending general rule reconciliation; rank-limit integration, Feats eligibility and comparative balance remain open.
 - All: ability scores, effect and qualification contracts, native Character projector and schema.
+- Dragonborn: Base 60-foot Darkvision was replaced with native Low-Light Vision, inherited by all Chromatic and Metallic leaves; no leaf overrides it. Future specialized darkness-adapted Ancestry can be considered separately.
 - Dragonborn: shared traits and Breath Weapon are native. The Chromatic family, 30-by-5-foot line breath, Chromatic Warding and Black/Blue/Green/Red/White individual adaptations are native. Metallic family and five Metallic leaves are now native, completing the ten-type Dragonborn Species/Subspecies mechanics pass. Remaining: comparative playtest balance and independent Dragonborn cultural Upbringings.
 - Deferred: five Gem Dragonborn leaf Subspecies and their mechanics (the nonselectable Gem family node is native), exceptional Platinum/Ruby/composite forms, rites of rebirth, historical dragon families, Dragon Shaman ancestry-sharing feat, and Dragonfire Adept-derived feats or prestige classes.
 
