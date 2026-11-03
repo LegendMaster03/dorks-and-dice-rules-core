@@ -1,0 +1,444 @@
+{
+  "scope": "pillar3-initial-source-inventory-not-new-rules",
+  "snapshotCommit": "d5a2b15b7ae2bd88ae9e47a5ddfad01d481623bb",
+  "records": [
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/dwarf/general.json",
+      "sourceBlobSha": "e01c3c0106c06d65538ae1bd9e7f51f5a27dd13d",
+      "entityId": "upbringing.dwarf.general",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": null,
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "dwarvish",
+          "name": null,
+          "mechanicKeys": [
+            "language"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "stonecunning",
+          "name": null,
+          "mechanicKeys": [
+            "skill",
+            "ability",
+            "proficiencyBonusMultiplier",
+            "scope"
+          ],
+          "candidateCategories": [
+            "training",
+            "situational-modifier"
+          ],
+          "choiceOrContextKeys": [
+            "proficiencyBonusMultiplier",
+            "scope"
+          ]
+        },
+        {
+          "id": "crafting-tradition",
+          "name": null,
+          "mechanicKeys": [
+            "chooseOne"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": [
+            "chooseOne"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/elf/drow.json",
+      "sourceBlobSha": "00404504e4a70684320f36d55859d2bb471d2dd2",
+      "entityId": "upbringing.elf.drow",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "upbringing.elf.general",
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "undercommon",
+          "name": null,
+          "mechanicKeys": [
+            "language"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "subterranean-survival",
+          "name": null,
+          "mechanicKeys": [
+            "skill",
+            "bonus",
+            "scope",
+            "stacksWithTraining"
+          ],
+          "candidateCategories": [
+            "training",
+            "situational-modifier"
+          ],
+          "choiceOrContextKeys": [
+            "bonus",
+            "scope"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/elf/general.json",
+      "sourceBlobSha": "4aa4087f946f5e3e94baf712e3697120afedf7ef",
+      "entityId": "upbringing.elf.general",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": null,
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "elvish",
+          "name": null,
+          "mechanicKeys": [
+            "language"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "cultural-training",
+          "name": null,
+          "mechanicKeys": [
+            "chooseOne"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": [
+            "chooseOne"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/elf/high.json",
+      "sourceBlobSha": "82c5eaaf39f372ae99f7e248d9913c24962d3a7b",
+      "entityId": "upbringing.elf.high",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "upbringing.elf.general",
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "traditional-weapons",
+          "name": null,
+          "mechanicKeys": [
+            "weaponProficiencies"
+          ],
+          "candidateCategories": [
+            "training",
+            "equipment-competency"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "additional-language",
+          "name": null,
+          "mechanicKeys": [
+            "extraLanguages"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/elf/wood.json",
+      "sourceBlobSha": "a568b3e15e4d670786d8f22a6add969c45b3189e",
+      "entityId": "upbringing.elf.wood",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "upbringing.elf.general",
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "woodland-archery",
+          "name": null,
+          "mechanicKeys": [
+            "weaponProficiencies"
+          ],
+          "candidateCategories": [
+            "training",
+            "equipment-competency"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "woodland-fieldcraft",
+          "name": null,
+          "mechanicKeys": [
+            "skill",
+            "bonus",
+            "scope",
+            "stacksWithTraining"
+          ],
+          "candidateCategories": [
+            "training",
+            "situational-modifier"
+          ],
+          "choiceOrContextKeys": [
+            "bonus",
+            "scope"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/giant-foundling.json",
+      "sourceBlobSha": "b5f3ade0f8f90525524bec1dcdcb369302a985d2",
+      "entityId": "upbringing.giant-foundling",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": null,
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "giant-language",
+          "name": "Giant Language",
+          "mechanicKeys": [
+            "language"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "foundling-additional-language",
+          "name": "Additional Language",
+          "mechanicKeys": [
+            "extraLanguages"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "foundling-intimidation",
+          "name": "Intimidation Training",
+          "mechanicKeys": [
+            "skill",
+            "grantType"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "foundling-survival",
+          "name": "Survival Training",
+          "mechanicKeys": [
+            "skill",
+            "grantType"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/gnome/forest.json",
+      "sourceBlobSha": "a3ba87cdeea98f018bb5d7d1ffa9e1e1271aeee6",
+      "entityId": "upbringing.gnome.forest",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "upbringing.gnome.general",
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "naturalist-training",
+          "name": null,
+          "mechanicKeys": [
+            "chooseOne"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": [
+            "chooseOne"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/gnome/general.json",
+      "sourceBlobSha": "62eafc0afee08a63db59bf2f9d1dde790750ef04",
+      "entityId": "upbringing.gnome.general",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": null,
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "gnomish",
+          "name": null,
+          "mechanicKeys": [
+            "language"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/gnome/rock.json",
+      "sourceBlobSha": "65cf97608273d12c1f28d02f7223e3488c5faa80",
+      "entityId": "upbringing.gnome.rock",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "upbringing.gnome.general",
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "tinkering",
+          "name": null,
+          "mechanicKeys": [
+            "competency"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "artificers-lore",
+          "name": null,
+          "mechanicKeys": [
+            "skill",
+            "ability",
+            "proficiencyBonusMultiplier",
+            "scope"
+          ],
+          "candidateCategories": [
+            "training",
+            "situational-modifier"
+          ],
+          "choiceOrContextKeys": [
+            "proficiencyBonusMultiplier",
+            "scope"
+          ]
+        },
+        {
+          "id": "clockwork-tinker",
+          "name": null,
+          "mechanicKeys": [],
+          "candidateCategories": [
+            "review-needed"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "prestidigitation",
+          "name": null,
+          "mechanicKeys": [
+            "spell"
+          ],
+          "candidateCategories": [
+            "spell-or-magic"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "magical-tinkering",
+          "name": null,
+          "mechanicKeys": [],
+          "candidateCategories": [
+            "review-needed"
+          ],
+          "choiceOrContextKeys": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/upbringings/goliath/general.json",
+      "sourceBlobSha": "69ab2efa9154bc8b038c40968a4153545b69568a",
+      "entityId": "upbringing.goliath.general",
+      "kind": "upbringing",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": null,
+      "otherTopLevelKeys": [],
+      "benefits": [
+        {
+          "id": "gol-kaa",
+          "name": "Gol-Kaa",
+          "mechanicKeys": [
+            "language"
+          ],
+          "candidateCategories": [
+            "language"
+          ],
+          "choiceOrContextKeys": []
+        },
+        {
+          "id": "clan-training",
+          "name": "Clan Training",
+          "mechanicKeys": [
+            "grantType",
+            "chooseOne",
+            "choiceCount",
+            "doesNotAutomaticallyTrainChildSkills"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": [
+            "chooseOne"
+          ]
+        },
+        {
+          "id": "clan-craft",
+          "name": "Clan Craft",
+          "mechanicKeys": [
+            "grantType",
+            "chooseOne",
+            "choiceCount"
+          ],
+          "candidateCategories": [
+            "training"
+          ],
+          "choiceOrContextKeys": [
+            "chooseOne"
+          ]
+        }
+      ]
+    }
+  ]
+}
