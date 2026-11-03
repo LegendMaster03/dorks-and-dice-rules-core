@@ -153,3 +153,22 @@ Design/evaluation approach:
 5. Preserve the distinction between **proposed** adjustments and **approved** native content. Change authoritative JSON only after the relevant particular rules are reconciled and approved.
 
 The objective is a workable, culturally independent Life Experiences system, not merely to preserve the first split verbatim or make every Upbringing grant the same number of features.
+
+## Revised reconciliation source order — user proposal, 2026-11-03
+
+**Status:** Proposed method of investigation, **not** approval of a final allocation or native mechanics. The owner observes that multiple new 2024/5.5e Background mechanics overlap substantially with the idea of Upbringing, and proposes using 2014 5e (or potentially 3.5e) as a foundation before assigning 2024 grants.
+
+**Recommended methodological response:**
+1. **2014 5e Backgrounds as initial structure.** Start with social/history identity, skill proficiencies, optional tools/languages, starting equipment, social features, and explicit customization. This avoids adopting the 2024 benefit grouping as a package by default.
+2. **3.5e as a comparative mechanics source.** The optional 3.5e Character Background variant models per-level activities, class/feat/skill/gear progression, and optional reputation/contacts. That is not the same kind of default level-1 Background package as 2014 5e; selectively study specialized training, careers, contacts, and continued experience rather than grafting on the class-level generation procedure.
+3. **2024 5.5e as a set of additional grants to allocate deliberately.** Review Background-provided ability-score increases, fixed Origin feats, two skills, a tool, and starting resources individually. Determine whether each grant belongs to Background, Upbringing, or a shared/general character-creation allocation, using narrative cause *and* game balance.
+4. Test the resulting allocations against complete conventional Species/Ancestry/Upbringing + Background characters and independent cross-cultural combinations. Do not simply add 2014 social features and 2024 feat grants without a benefit comparison.
+
+**Specifically open:** (a) whether initial +2/+1 or +1/+1/+1 ability adjustments are generally allocated rather than tied to Background or culture; (b) whether an Origin feat is a Background grant, shared Life Experiences allocation, or chosen through another character-creation component; (c) the degree of tool/language crossover; (d) how 2014 social benefits interact with any feat grants.
+
+**Amendment to earlier working recommendation:** The prior suggestion to retain one Background-granted Origin feat is now only **one option for evaluation**, not the preferred settled allocation. The same applies to any presumption that the 2024 Background's two skills/one tool/ability list/feat are inseparable. Nothing in this source hierarchy reverses approved Pillar 1 Upbringings or determines Pillar 2 traits.
+
+Sources checked:
+- https://5e.d20srd.org/srd/backgrounds.htm (2014 Background skills, language, gear, social features, customization and duplicate-skill choice)
+- https://www.d20srd.org/srd/variant/buildingCharacters/characterBackground.htm (3.5e optional activity-by-level variant)
+- https://www.dndbeyond.com/sources/dnd/br-2024/character-origins (2024 Background grants)
