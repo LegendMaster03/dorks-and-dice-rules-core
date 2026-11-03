@@ -119,3 +119,21 @@ Both may cover the same historical years. A character raised in a religious orde
 8. Evaluate Pillar 2 dependencies without adopting its unapproved draft schema.
 
 No authoritative native JSON, APIs, Character Sheet code, or Pillar 2 files are modified in this initial intake.
+
+
+## Desired 5.x character-conversion compatibility — user direction, not a requirement
+
+**Status:** The project owner would **like** the ability to convert a conventional 5.x character into Dorks & Dice by selecting the corresponding Species/Ancestry and associated Upbringing. This is a compatibility objective, **not** a mandatory feature for Pillar 3 completion, and it does not approve an importer or a lossless round trip.
+
+**Recommended design interpretation (pending specific approval):** Preserve explicit, edition/source-specific **compatibility pairings** between an original 5.x Race/Subrace or Species identity and the native Species/Ancestry plus conventional Upbringing that collectively reconstruct its intended character concept. Examples:
+- A conventional **2014 High Elf** may map to `species.elf`, `ancestry.elf.high`, and `upbringing.elf.high` (whose parent is `upbringing.elf.general`), plus conversion of Background and other selections separately.
+- A 2014 **Dwarf** maps to native Dwarf identity plus the appropriate conventional Dwarf Upbringing, but differences in currently selected weapon training, ability scores, and other traits must be reviewed, not silently treated as exact equivalence.
+- A **2024 character** chooses Species, Background and languages in a different way than 2014. Do not automatically derive Upbringing from the Species and double-count learned languages or feats.
+
+The compatibility relation is **a recommended/default reconstruction recipe**, not a required coupling, restriction, heritage rule, or automatic second grant. Users may independently select a different Upbringing. Multiple edition source identities may share a native target; a source identity may require additional choices or have no exact equivalent.
+
+**Important design boundary:** A pairing can reconstruct the *intended conventional concept* without reconstructing all original numbers or effects. Native Dorks & Dice traits, creature types, speeds, feat policies and training may differ deliberately. A future converter should distinguish exact mappings, transformed/equivalent concepts, and rules requiring manual review or unsupported effects. Do not conceal mechanical divergence by labeling it lossless.
+
+**Metadata needed if implemented later:** source game/edition, source Race/Species identity, source Subrace identity where applicable, native Species/Ancestry target, suggested Upbringing target, any additional independent Background/language/feat/ability choices, and known divergences. Keep this in a conversion crosswalk or equivalent versioned reference rather than making `defaultUpbringing` a mandatory identity association. Existing `defaultUpbringing` can be reused where valid, but a single native default does not necessarily identify the correct 2014 and 2024 source pairing.
+
+**Pillar 3 implication:** Retain stable source-to-native relationship evidence when reconciling the ten Upbringings. Avoid restructuring them so that future conversion requires guessing which cultural benefits were separated from each 5.x Race/Species. Neither a converter nor new runtime schema needs to be implemented in this pass.
