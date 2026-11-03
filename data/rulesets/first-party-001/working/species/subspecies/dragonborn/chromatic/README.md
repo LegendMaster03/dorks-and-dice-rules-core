@@ -1,11 +1,11 @@
-# Chromatic Dragonborn research
+# Chromatic Dragonborn research — resolved family and pending work
 
-**Active first pass:** Black, Blue, Green, Red, White. The shared Species mechanics are selected in native; Chromatic family geometry, Warding and individual additional traits remain under review.
+The Chromatic family, breath geometry, Warding and five playable leaves are selected in `native/species/subspecies/dragonborn/`. **The directory here is inert working research**, not another source of live mechanics.
 
-- `FIZBANS_REVIEW.md` documents the family breath and Warding alternatives and five 3.5e adaptation candidates.
-- `CHROMATIC_BALANCE_RECONCILIATION.md` evaluates a complete five-leaf innate-adaptation package against the native true-dragon bestiary. **All family and leaf mechanics in that proposal remain unapproved.**
-- `HOARD_TRADITIONS_RESEARCH.md` compares dragon treasure themes and candidate learned Upbringings; evaluates Red's 5e climbing-speed precedent as a separate biological trait.
-- Pinned SRD source evidence remains in `data/reference/srd/`.
-- Future types such as Brown, Gray, Purple and Yellow are deferred and their classifications require edition-specific review.
+- `CHROMATIC_BALANCE_RECONCILIATION.md` lists comparative balance concerns, precise edge-case decisions, and unselected alternatives.
+- `FIZBANS_REVIEW.md` preserves historical source differences.
+- `HOARD_TRADITIONS_RESEARCH.md` holds unapproved hoard-derived learned traditions for all five types.
+- `{BLACK,BLUE,GREEN,RED,WHITE}_RESEARCH.md` retain original 5e/5.5e/3.5e comparisons, while pointing to approved native definitions.
+- Future Brown, Gray, Purple and Yellow dragons remain outside the present ten-type Dragonborn scope.
 
-No other Chromatic Dragonborn are currently approved as playable Subspecies; no unapproved family abilities belong in `native/`.
+Chromatic-derived Upbringings and defaults are **not approved**; Species selection must not force a cultural tradition. Gem and other dragons remain deferred. Metallic reconciliation is next.

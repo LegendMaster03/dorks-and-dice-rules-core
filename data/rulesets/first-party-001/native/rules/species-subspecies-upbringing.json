@@ -67,9 +67,9 @@
     "leafSubspeciesSelectable": true
   },
   "reviewNotes": [
-    "Only ten ordinary Chromatic and Metallic Dragonborn are in the active first pass; Gem is a future reconciliation.",
-    "Dragonborn shared and family mechanics are not yet resolved, so no placeholder playable Dragonborn records are published.",
-    "Half-Elf and Half-Orc source records are reserved for the future Mixed Species mechanic, not ordinary initial Species.",
-    "The native C# projector does not yet execute this inheritance/default system."
+    "Chromatic Dragonborn parent and five leaf types have selected native content; Metallic leaves are still being reconciled and Gem leaves remain deferred.",
+    "Only ten standard Chromatic and Metallic Dragonborn are in the active first pass; Gem is reserved structurally.",
+    "Half-Elf and Half-Orc are reserved for the future Mixed Species mechanic, not initial Species.",
+    "The native C# character projector does not yet execute ancestry inheritance/default selections."
   ]
 }

@@ -293,6 +293,97 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertEqual("data/rulesets/first-party-001/native/species/base/dragonborn.json",
                          row["path"])
 
+    def test_approved_chromatic_dragonborn_family_and_five_leaves(self):
+        base = AUTHORITATIVE / "species/subspecies/dragonborn"
+        chromatic = load(base / "chromatic.json")
+        self.assertEqual("subspecies.dragonborn.chromatic", chromatic["id"])
+        self.assertEqual("species.dragonborn", chromatic["parent"])
+        self.assertFalse(chromatic["selectable"])
+        self.assertEqual({"shape": "line", "lengthFeet": 30, "widthFeet": 5},
+                         chromatic["breathWeaponArea"])
+        self.assertEqual(1, len(chromatic["traits"]))
+        warding = chromatic["traits"][0]
+        self.assertEqual("chromatic-warding", warding["id"])
+        self.assertEqual(5, warding["requiredCharacterLevel"])
+        self.assertEqual("action", warding["activation"]["action"])
+        self.assertEqual(1, warding["duration"]["minutes"])
+        self.assertEqual({"value": 1, "recharge": "long-rest"}, warding["uses"])
+        self.assertEqual(100, warding["damageResistanceOverride"]["percent"])
+        self.assertEqual("selected-dragonborn-leaf",
+                         warding["damageResistanceOverride"]["damageTypeFrom"])
+        self.assertEqual("replace-lower-same-type",
+                         warding["damageResistanceOverride"]["stacking"])
+        self.assertTrue(warding["doesNotGrantConditionImmunity"])
+
+        expected_damage_types = {
+            "black": "acid", "blue": "lightning", "green": "poison",
+            "red": "fire", "white": "cold"
+        }
+        actual = {p.stem for p in (base / "chromatic").glob("*.json")}
+        self.assertEqual(set(expected_damage_types), actual)
+        leaves = {
+            slug: load(base / "chromatic" / (slug + ".json"))
+            for slug in expected_damage_types
+        }
+        for slug, leaf in leaves.items():
+            self.assertEqual("subspecies.dragonborn." + slug, leaf["id"])
+            self.assertEqual("subspecies.dragonborn.chromatic", leaf["parent"])
+            self.assertTrue(leaf["selectable"])
+            self.assertEqual("selected-native", leaf["status"])
+            self.assertEqual(expected_damage_types[slug], leaf["damageType"])
+            self.assertNotIn("defaultUpbringing", leaf)
+            self.assertNotIn("breathWeaponArea", leaf)
+            self.assertNotIn("flyingSpeedFeet", leaf)
+            if slug != "white":
+                self.assertNotIn("swimmingSpeedFeet", leaf)
+            if slug != "red":
+                self.assertNotIn("climbingSpeedFeet", leaf)
+
+        for slug in ("black", "green"):
+            amphibious = leaves[slug]["traits"][0]
+            self.assertEqual("amphibious", amphibious["id"])
+            self.assertEqual(["air", "water"], amphibious["canBreathe"])
+            self.assertFalse(amphibious["grantsSwimSpeed"])
+
+        blue = leaves["blue"]["traits"][0]
+        self.assertEqual("displaced-voice", blue["id"])
+        self.assertEqual("action", blue["activation"]["action"])
+        self.assertTrue(blue["atWill"])
+        self.assertEqual(30, blue["rangeFeet"])
+        self.assertEqual("own-vocal-sounds", blue["soundSource"])
+        self.assertEqual("while-speaking-during-action", blue["duration"])
+        self.assertFalse(blue["visualEffect"])
+        self.assertFalse(blue["guaranteesDeception"])
+
+        red = leaves["red"]
+        self.assertEqual(15, red["climbingSpeedFeet"])
+        self.assertEqual("natural-climber", red["traits"][0]["id"])
+        self.assertIn("spider-climb", red["traits"][0]["doesNotGrant"])
+
+        white = leaves["white"]
+        self.assertEqual(15, white["swimmingSpeedFeet"])
+        self.assertEqual({"icewalker", "coldwater-swimmer"},
+                         {t["id"] for t in white["traits"]})
+        icewalker = next(t for t in white["traits"] if t["id"] == "icewalker")
+        self.assertEqual("ordinary-slippery-ice-alone",
+                         icewalker["slipperyIceSaveExemption"]["trigger"])
+        self.assertEqual("dexterity",
+                         icewalker["slipperyIceSaveExemption"]["savingThrow"])
+        self.assertEqual("prone", icewalker["slipperyIceSaveExemption"]["effect"])
+        self.assertTrue(icewalker["doesNotNegateOtherHazards"])
+        swimmer = next(t for t in white["traits"] if t["id"] == "coldwater-swimmer")
+        self.assertEqual(15, swimmer["speedFeet"])
+        self.assertFalse(swimmer["grantsWaterBreathing"])
+
+        # The staged SRD template includes unresolved Metallic variants and
+        # must not be deleted merely because Chromatic leaves are selected.
+        historical = WORKING / "species/subspecies/dragonborn/unnamed-1a909417769c0dff.json"
+        self.assertTrue(historical.is_file())
+        row = next(r for r in self.entries
+                   if r["nativeId"] == "subspecies.dragonborn.unnamed-1a909417769c0dff")
+        self.assertEqual("single-candidate", row["status"])
+        self.assertIn("working/species/subspecies/dragonborn/", row["path"])
+
     def test_large_entities_have_full_candidate_records_and_merged_lore(self):
         for path, expected in [
             # Wizard is now an approved native definition, not a staged candidate.

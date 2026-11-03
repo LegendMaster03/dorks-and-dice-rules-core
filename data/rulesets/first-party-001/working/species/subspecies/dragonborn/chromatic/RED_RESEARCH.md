@@ -1,31 +1,17 @@
-# Red Dragonborn — individual Subspecies research (unresolved)
+# Red Dragonborn — unresolved source differences and possible enhancements
 
-**Family:** Chromatic. **Damage type:** Fire. **Approved shared Dragonborn traits:** see `native/species/base/dragonborn.json`.
+**Selected native definition:** `native/species/subspecies/dragonborn/chromatic/red.json`, inheriting `chromatic.json` and `species.dragonborn`. The following remains **research**, not an alternate active definition.
 
-## Source comparison
-- 5e SRD 5.1 traditional Breath Weapon shape: 15-foot cone.
-- *Fizban's Treasury of Dragons* 5e Chromatic family breath: 30-foot by 5-foot line for all five Chromatic types (proposed family default, not yet selected).
-- 5.5e SRD 5.2.1: universal choice of cone or line.
-- 3.5e Dragon Shaman (*Player's Handbook II*) totem adaptation: Appraise/Search bonus for valuables. This was a **class ability** and does not automatically transfer into inherited Dragonborn mechanics.
+## Edition comparisons
+- Original 5e SRD 5.1 Dragonborn breath geometry and activation differ from the now-selected *Fizban's*-influenced Chromatic family rule.
+- 3.5e Dragon Shaman totem adaptations were class abilities; they were evaluated as source inspirations rather than transplanted wholesale.
+- True-dragon wyrmling traits were consulted as biological precedents, with reductions and additional restrictions where approved.
 
-## Proposed biological alternative (not approved)
-**Draconic Climbing:** 5e Red Dragon stat blocks, including wyrmlings, have a natural climbing speed. A Red Dragonborn could inherit a reduced **15-foot climbing speed**, enabling climbing on ordinary climbable surfaces at that rate without the movement penalty for climbing. Exceptional surfaces still require appropriate checks. This is a proposed adaptation, not a 5e published Red Dragonborn trait.
+## Still unresolved
+- The 3.5e Dragon Shaman's Appraise/Search treasure-seeker bonus may inspire a learned Upbringing or feat, not an additional Red innate trait.
+- Pathfinder Smoke Vision is an unselected alternative, not a native 3.5e D&D Red Dragon feature.
+- Hoard-inspired Upbringings are not automatically biological Species traits. See `HOARD_TRADITIONS_RESEARCH.md`.
+- No `defaultUpbringing` is selected until an independently balanced Dragonborn Upbringing exists.
 
-This follows the inherited movement-adaptation pattern of other dragons more closely than the 3.5e Dragon Shaman's learned-seeming Treasure Seeker.
-**Alternative for later evaluation:** smoke vision, modeled on Pathfinder's Red Dragon exceptional trait; do not misattribute it to 3.5e D&D. Smoke vision is more specialized and is not proposed alongside climbing automatically.
-
-## Upbringing candidate (not approved)
-**Treasure Seeker:** 3.5e Dragon Shaman had a +5 bonus to Appraise and Search. For Dorks & Dice, evaluating gold, metalwork, gems and provenance is knowledge/training rather than biology. Consider a Dragonborn-inspired learned tradition referencing existing `skill.appraise`, `skill.search` and perhaps `competency.gemcutting`. It should receive a comparable training budget to other Chromatic-inspired Upbringings, not a bonus unique to Red.
-
-See `HOARD_TRADITIONS_RESEARCH.md` for a complete comparison across all five ancestries.
-
-**Proposed first-pass adaptation (unapproved):** Natural Climber, 15-foot Climb Speed. It does not allow ceiling travel, bypass unusual surface restrictions, or grant Spider Climb. This is half the true Red Dragon Wyrmling's existing 30-foot climbing speed, intentionally proposed for balance.
-
-For the comparative case and limits, see `CHROMATIC_BALANCE_RECONCILIATION.md`.
-
-## Reconciliation question
-Red's climbing adaptation and any hoard-based Upbringing benefits remain candidates. Check relative utility against Black/Green water breathing, Blue innate magic, and White ice movement before approval.
-
-**Not approved:** any extra innate adaptation, family geometry, Chromatic Warding or cultural Upbringing. These remain separate selection decisions. Do not make alignment, ecological preferences, or loyalty mandatory for this Dragonborn type.
-
-Sources: SRD 5.1/5.2.1 under `data/reference/srd/`; *Fizban's Treasury of Dragons* (2021); *Player's Handbook II* (2006) Dragon Shaman; 5e SRD Red Dragon including wyrmling natural climbing speed (https://dnd5e.info/monsters/monster/dragon-red-adult/); Pathfinder First Edition Red Dragon Smoke Vision (https://www.d20pfsrd.com/bestiary/monster-listings/dragons/dragon/chromatic-red/adult-red-dragon).
+## Research record
+See `FIZBANS_REVIEW.md`, `CHROMATIC_BALANCE_RECONCILIATION.md`, original SRD versions in `data/reference/srd/`, and the native bestiary's dragon wyrmlings. The earlier working candidate included source variants; historical research remains under these reference files without creating duplicate native authority.

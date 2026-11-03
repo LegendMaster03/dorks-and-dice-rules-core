@@ -1,20 +1,17 @@
-# Blue Dragonborn — individual Subspecies research (unresolved)
+# Blue Dragonborn — unresolved source differences and possible enhancements
 
-**Family:** Chromatic. **Damage type:** Lightning. **Approved shared Dragonborn traits:** see `native/species/base/dragonborn.json`.
+**Selected native definition:** `native/species/subspecies/dragonborn/chromatic/blue.json`, inheriting `chromatic.json` and `species.dragonborn`. The following remains **research**, not an alternate active definition.
 
-## Source comparison
-- 5e SRD 5.1 traditional Breath Weapon shape: 30-foot by 5-foot line.
-- *Fizban's Treasury of Dragons* 5e Chromatic family breath: 30-foot by 5-foot line for all five Chromatic types (proposed family default, not yet selected).
-- 5.5e SRD 5.2.1: universal choice of cone or line.
-- 3.5e Dragon Shaman (*Player's Handbook II*) totem adaptation: Magical ventriloquism. This was a **class ability** and does not automatically transfer into inherited Dragonborn mechanics.
+## Edition comparisons
+- Original 5e SRD 5.1 Dragonborn breath geometry and activation differ from the now-selected *Fizban's*-influenced Chromatic family rule.
+- 3.5e Dragon Shaman totem adaptations were class abilities; they were evaluated as source inspirations rather than transplanted wholesale.
+- True-dragon wyrmling traits were consulted as biological precedents, with reductions and additional restrictions where approved.
 
-**Proposed first-pass adaptation (unapproved):** at-will Displaced Voice—Action, vocal sounds apparently from a point within 30 feet; no images, damage, or automatic successful deception. The 3.5e Dragon Shaman had Ventriloquism; this limited effect is a new adaptation. **Alternative:** restricted 10–15-foot sand/earth burrowing, inspired by the native Blue Dragon Wyrmling's 15-foot Burrow Speed. Do not combine both automatically.
+## Still unresolved
+- Blue Dragon Wyrmling's Burrow Speed may inspire an optional future alternative to Displaced Voice; it has not been granted as a second leaf power.
+- A more powerful or prolonged sound illusion, or impersonation powers, require a separate approval.
+- Hoard-inspired Upbringings are not automatically biological Species traits. See `HOARD_TRADITIONS_RESEARCH.md`.
+- No `defaultUpbringing` is selected until an independently balanced Dragonborn Upbringing exists.
 
-For the comparative case and limits, see `CHROMATIC_BALANCE_RECONCILIATION.md`.
-
-## Reconciliation question
-Requires a decision whether innate sound-misdirection magic is biology, learnable training, or an optional feat.
-
-**Not approved:** any extra innate adaptation, family geometry, Chromatic Warding or cultural Upbringing. These remain separate selection decisions. Do not make alignment, ecological preferences, or loyalty mandatory for this Dragonborn type.
-
-Sources: SRD 5.1/5.2.1 under `data/reference/srd/`; *Fizban's Treasury of Dragons* (2021); *Player's Handbook II* (2006) Dragon Shaman.
+## Research record
+See `FIZBANS_REVIEW.md`, `CHROMATIC_BALANCE_RECONCILIATION.md`, original SRD versions in `data/reference/srd/`, and the native bestiary's dragon wyrmlings. The earlier working candidate included source variants; historical research remains under these reference files without creating duplicate native authority.

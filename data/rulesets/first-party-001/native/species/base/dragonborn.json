@@ -59,11 +59,11 @@
     }
   ],
   "reviewNotes": [
-    "60-foot Darkvision and 30-foot walking speed are selected as the working baseline; both remain subject to the comparative Species balance pass.",
-    "Damage type and area shape are supplied by the individual dragon-type Subspecies and/or family definitions; no shape has yet been selected.",
-    "Chromatic Warding, Metallic alternative breath effects, and 5.5e temporary flight have not been selected.",
-    "No ordinary playable Dragonborn Subspecies is complete until its family and individual traits are approved.",
-    "Language and learned dragon traditions belong to separately selected Upbringings. Ability score changes remain deferred.",
-    "The C# character mechanics projector does not yet execute this ancestry inheritance and Breath Weapon contract."
+    "60-foot Darkvision and 30-foot walking speed remain subject to the comparative Species balance pass.",
+    "Chromatic family geometry and Warding are selected in subspecies.dragonborn.chromatic; each of its five leaf Subspecies supplies a damage type and an innate adaptation.",
+    "Metallic family geometry, alternative breath effects, and its five leaf Subspecies are unresolved. Gem family remains deferred.",
+    "5.5e temporary Draconic Flight is not automatically granted by the Dragonborn base Species.",
+    "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred.",
+    "Native character projection does not yet execute Species/Subspecies inheritance, Breath Weapon or Warding."
   ]
 }

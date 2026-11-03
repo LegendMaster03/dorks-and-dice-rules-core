@@ -9,7 +9,7 @@ The selected common Dragonborn Species mechanics are authoritative in `native/sp
 - Uses equal Proficiency Bonus, replenished on Long Rest.
 - Dexterity save DC = 8 + Proficiency Bonus + Constitution modifier; success takes half damage.
 - Damage 1d10 at level 1, 2d10 at level 5, 3d10 at level 11, 4d10 at level 17.
-- Family/individual type provides breath damage type and geometry; neither has been selected for the family records yet.
+- Family/individual type supplies breath damage type and geometry. **Chromatic has a selected 30-foot, 5-foot-wide line**, while Metallic geometry remains unresolved.
 
 ## Relevant published alternatives — not selected
 - **5e SRD 5.1:** ancestry-specific cone/line, sometimes Constitution rather than Dexterity saves; Action activation; 2d6 at level 1, increasing to 5d6 at level 16; one use per Short or Long Rest; no Darkvision granted by the Species.
@@ -20,8 +20,8 @@ The selected common Dragonborn Species mechanics are authoritative in `native/sp
 - **3.5e true dragons:** metallic secondary breaths, sensory/environmental adaptations, and older Green Dragon acid breath require specific review before promotion.
 
 ## Active next decisions
-- Chromatic versus Metallic breath geometry and family feature package.
-- Ten individual dragon Subspecies (Black, Blue, Green, Red, White; Brass, Bronze, Copper, Gold, Silver).
+- Metallic breath geometry and family feature package (Chromatic is selected).
+- Five individual Metallic dragon Subspecies (Brass, Bronze, Copper, Gold, Silver); Chromatic's five leaves are selected.
 - Distinct innate dragon-type adaptations versus learned Upbringing practices.
 
 **Deferred:** Gem Dragonborn; Platinum/Ruby/composite exceptional forms; transformation rites; Dragon Shaman feat; Dragonfire Adept feat/prestige-class; other dragon categories.

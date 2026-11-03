@@ -1,50 +1,25 @@
-# Chromatic Dragonborn — family reconciliation research (not approved)
+# Chromatic Dragonborn — historical source comparison (not alternate native rules)
 
-**Current first-pass scope:** Black, Blue, Green, Red, White. The common Dragonborn Species and Breath Weapon activation/damage/resource/save rules are approved in `native/species/base/dragonborn.json`; this file records only proposed family/individual traits and source comparisons. Do not interpret this file as an executable native rule.
+The selected Chromatic family mechanics and five innate adaptations now reside in `native/species/subspecies/dragonborn/chromatic.json` and its `chromatic/` leaf directory. The notes here preserve historical edition differences and possible future revisions, not alternate rules.
 
-## Family Breath Weapon geometry
-- *Fizban's Treasury of Dragons* (published 5e, 2021) assigns **all Chromatic Dragonborn a 30-foot line that is 5 feet wide**, independent of their elemental ancestry.
-- 5e SRD 5.1 differentiates shapes: Black and Blue use 30-foot lines; Green, Red, and White use 15-foot cones.
-- 5.5e SRD 5.2.1 grants a flexible line-or-cone choice to Dragonborn generally.
-- **Pending proposal:** set the Chromatic parent Subspecies' default geometry to a 30-foot, 5-foot-wide line, reflecting *Fizban's* family distinction. Do not make the 5e cone geometry automatic individual overrides; preserve them as candidate alternatives.
+## Source distinctions
+- 5e SRD 5.1 used line or cone breath shapes depending on ancestry, with a different use/recharge and damage progression.
+- *Fizban's Treasury of Dragons* (published 2021) used one Chromatic-family line breath and Chromatic Warding; these were selected after adjusting the shared Dragonborn framework.
+- SRD 5.2.1 provides flexible general cone/line breath geometry and universal temporary Dragonborn flight at level 5; neither becomes an automatic Chromatic grant.
+- Unearthed Arcana: Draconic Options offered an earlier Warding at level 3 with a longer 10-minute duration. This was not selected; do not conflate with the published 1-minute, level-5 version.
+- 3.5e Dragon Shaman's totem adaptations were class features, not Dragonborn species features. Selected adaptations in our new Species/Subspecies system are independently rewritten for this context.
 
-| Chromatic type | Selected elemental affinity | 5e SRD 5.1 geometry | *Fizban's* geometry |
-| --- | --- | --- | --- |
-| Black | Acid | Line | Line |
-| Blue | Lightning | Line | Line |
-| Green | Poison | Cone | Line |
-| Red | Fire | Cone | Line |
-| White | Cold | Cone | Line |
+## Deferred alternative mechanics
+- Historical Red Appraise/Search is learned-seeming and is a candidate for a separately selectable Upbringing, not a hereditary entitlement.
+- Blue's native Blue Dragon Wyrmling has burrowing that could inspire a future alternative to the currently approved Displaced Voice.
+- Red Smoke Vision is a Pathfinder First Edition precedent, not a confirmed 3.5e D&D ability.
+- Green Dragon acid-breath traditions differ from 5e poison affinity; the current selected Green leaf uses poison. Do not silently stack affinities.
+- Additional family-specific Upbringings drawn from *Fizban's* treasure descriptions remain under review.
 
-## Chromatic Warding — published version versus UA
-- *Fizban's* published form: gained at **character level 5**, takes **an Action**, lasts **1 minute**, grants immunity to the Dragonborn's ancestry-linked damage type, and recharges **once per Long Rest**.
-- The earlier Unearthed Arcana iteration differs materially: level 3, 10-minute duration. **Do not conflate UA with the published ability.**
-- **Pending proposal:** use the *Fizban's* level-5, one-minute, Action, once/Long Rest profile. Treat the duration as an upgrade from baseline 50% elemental resistance to **100% immunity** for the same damage type, not a 150% sum; confirm against our native resistance/stacking contract when implementing.
-- Damage-type immunity does **not** automatically imply immunity to elemental conditions. Poison damage and the Poisoned condition are distinct.
-- The 5.5e general Draconic Flight gained at level 5 conflicts in design space with family-specific options; do not grant both automatically without a separate balancing decision.
+## References
+- SRD 5.1 and 5.2.1 pinned in `data/reference/srd/`.
+- *Fizban's Treasury of Dragons* (2021), Chapter 1 and Draconomicon: https://www.dndbeyond.com/sources/dnd/ftod
+- 3.5e *Player's Handbook II*, Dragon Shaman.
+- See `CHROMATIC_BALANCE_RECONCILIATION.md` for remaining balance questions.
 
-## Candidate 3.5e Dragon Shaman totem adaptations — not Species traits yet
-3.5e *Player's Handbook II* supplies an optional dragon-totem class feature at Dragon Shaman level 3. These are precedents to evaluate individually, **not pre-approved inherited Dragonborn abilities**.
-
-| Ancestry | Dragon Shaman precedent | Review concern |
-| --- | --- | --- |
-| Black | Underwater breathing | Physiology candidate, but compare against other ancestry power budgets |
-| Blue | Ventriloquism (magical voice displacement) | Innate magic versus learned technique; possible at-will power |
-| Green | Underwater breathing | Water-related adaptation distinct from elemental poison resistance |
-| Red | Strong appraisal and searching for valuables | Knowledge/training may fit Upbringing or feat better than biology |
-| White | Movement across icy surfaces unhindered by ordinary slippery terrain | Potential innate physical adaptation; verify fit with existing terrain and condition rules |
-
-The Dragon Shaman's class-granted auras, party healing, skill proficiencies, and alignment restrictions **must not** be copied into Dragonborn Species definitions.
-
-## Unresolved decisions before promotion
-1. Accept 30-by-5-foot **line** as the family breath default, or use ancestry-specific geometry?
-2. Accept *Fizban's* Chromatic Warding exactly, or modify activation/duration/charges?
-3. When reviewing each leaf, decide whether the historical dragon-specific adaptations are biological, learned Upbringing benefits, optional feats, or excluded.
-4. Reconcile 5e Green Dragon poison affinity with 3.5e green dragon acid precedents without changing the approved shared ability arbitrarily.
-
-## Sources
-- SRD 5.1 and SRD 5.2.1: pinned reference records under `data/reference/srd/`.
-- Official D&D Beyond published *Fizban's* overview: https://www.dndbeyond.com/posts/1097-explore-the-chromatic-and-gem-dragonborn-from
-- *Fizban's Treasury of Dragons* (2021), Chapter 1: Chromatic Dragonborn.
-- *Player's Handbook II* (2006), Dragon Shaman's Totem Dragon and Draconic Adaptation: https://srd.dndtools.org/srd/classes/basePhb2/dragonShaman.html
-- *Unearthed Arcana: Draconic Options* (2021), early Chromatic Warding iteration (research only).
+No playable features in this file; consult native for the authoritative selected Chromatic definitions.
