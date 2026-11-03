@@ -1,0 +1,41 @@
+{
+  "id": "language.gol-kaa",
+  "name": "Gol-Kaa",
+  "kind": "language",
+  "status": "selected-native",
+  "description": "Traditional language of Goliath communities, preserved through an ancient oral tradition. It is distinct from the Giant language; the languages' historical relationship and mutual intelligibility remain unspecified.",
+  "historicallySpokenBy": [
+    "goliath-clans"
+  ],
+  "traditionalForm": "spoken",
+  "phoneticElements": [
+    "a",
+    "e",
+    "g",
+    "i",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "u",
+    "th",
+    "v"
+  ],
+  "writtenForm": {
+    "adoptedAlphabet": "dwarvish",
+    "adoption": "some-goliath-communities",
+    "universallyWritten": false
+  },
+  "distinctFrom": [
+    "language.giant"
+  ],
+  "languageFamily": "unresolved",
+  "reviewNotes": [
+    "Gol-Kaa is attested in Races of Stone (3.5e): it has thirteen phonetic elements and a longstanding oral tradition; some communities later adopted the Dwarvish alphabet.",
+    "Giant is listed separately as an optional Goliath language in 3.5e. Do not assume the languages are interchangeable or that one descends from the other.",
+    "The General Goliath Upbringing grants this learned language; biological Goliath Species does not automatically do so.",
+    "Future global language reconciliation may refine scripts and language families without removing the selected Gol-Kaa definition."
+  ]
+}

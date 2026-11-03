@@ -22,9 +22,9 @@ Both records stand alone, with **no Upbringing parent**. A character selects one
 
 ## Source Background → Upbringing conversion
 
-The source Giant Foundling Background grants Intimidation, Survival, Giant, one additional language, a starting-equipment package, and the Strike of the Giants feat. This Upbringing selects the **learned languages and skills** without assigning a separate Background, with no equipment entitlement (starting inventory belongs in the appropriate character-creation system).
+The source Giant Foundling Background grants Intimidation, Survival, Giant, one additional language, a starting-equipment package, and the Strike of the Giants feat. This Upbringing selects the **learned languages and skills** without assigning a separate Background or equipment entitlement (starting inventory belongs in the appropriate character-creation system). Its source feat grant is intentionally excluded from the Upbringing.
 
-**Important outstanding matter:** The source feat is meaningful: a Giant Foundling of a non-Goliath Species may appropriately qualify to learn Strike of the Giants in the Feat pass. However, Goliaths already have Strike-derived abilities from their Subspecies. Do not grant that feat automatically through this Upbringing or allocate a duplicate use pool until the Feat system can account for feat ownership, alternative choices, prerequisites, overlap and stacking. This is a deliberate deferred mechanic, not a claim that *Bigby's* did not include it.
+**Selected feat disposition:** The original Giant Foundling feat grant is deliberately removed in the Dorks & Dice Upbringing conversion. Giant Foundling confers **no automatic Strike of the Giants feat** and does not duplicate a Goliath Subspecies' Strike-derived abilities. This does not prohibit a character from independently acquiring a giant-themed feat if the later Feat rules allow it. It does not deny that the published Background originally granted the feat.
 
 The original narrative discusses magically unusual size, but neither the source nor this conversion grants an automatic change to the character's actual Size category.
 
@@ -45,9 +45,9 @@ The six original native JSON records have been removed from `native/upbringings/
 
 ## Open dependencies
 
-- Gol-Kaa needs a resolved global language-catalog entry; Giant is currently represented in the working language catalog.
+- Gol-Kaa is now selected as `language.gol-kaa` in `native/languages/gol-kaa.json`. Giant remains a separate staged language in the broader working language catalog; full language-family and script reconciliation is separate.
 - Upbringing benefit execution and character language/Skill grants depend on the Character Sheet and native projector integration.
-- A later Feat pass must reconcile access to Strike of the Giants for Giant Foundlings, especially for Goliaths with overlapping Subspecies features. Rune Carver remains separate material; no rune magic was awarded here.
+- Strike of the Giants is **not** granted by Giant Foundling, by design. Independent feat ownership and eligibility can be evaluated in the wider Feat pass; Rune Carver remains separate material, and no rune magic was awarded here.
 - The broader cultural pass may revise the skill balance (Goliath Clan grants one choice of Skill and one Competency, Giant Foundling grants two fixed Skills and a language choice) without inventing extra Species powers.
 
 ## Sources

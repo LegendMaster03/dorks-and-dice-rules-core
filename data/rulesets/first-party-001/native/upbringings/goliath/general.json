@@ -43,6 +43,6 @@
     "Gol-Kaa is retained from the original 3.5e Goliath traditions. Giant remains a distinct language, which Goliaths may also learn through contact.",
     "The exact traditions of individual Goliath clans can vary; six distinct Goliath clan cultures mapped to Giant Ancestry are not established by the reviewed sources.",
     "No Origin feat, rune casting, ancestral supernatural ability, or mandatory Ordning membership is granted.",
-    "The global language catalog still needs a standalone Gol-Kaa record; the cultural language grant is selected first-pass content."
+    "Gol-Kaa now has an authoritative language.gol-kaa definition under native/languages/; its learned grant remains part of this Upbringing."
   ]
 }

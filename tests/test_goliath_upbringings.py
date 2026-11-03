@@ -85,9 +85,29 @@ class GoliathUpbringingTests(unittest.TestCase):
         self.assertTrue(all("feat" not in benefit and "spell" not in benefit
                             and "damage" not in benefit for benefit in benefits.values()))
 
+    def test_gol_kaa_native_language_is_distinct_and_referenced_by_upbringing(self):
+        language = read(NATIVE / "languages/gol-kaa.json")
+        self.assertEqual("language.gol-kaa", language["id"])
+        self.assertEqual("language", language["kind"])
+        self.assertEqual("selected-native", language["status"])
+        self.assertEqual("Gol-Kaa", language["name"])
+        self.assertEqual(13, len(language["phoneticElements"]))
+        self.assertEqual("dwarvish", language["writtenForm"]["adoptedAlphabet"])
+        self.assertFalse(language["writtenForm"]["universallyWritten"])
+        self.assertIn("language.giant", language["distinctFrom"])
+        grant = next(b for b in self.clan["benefits"] if "language" in b)
+        self.assertEqual(language["id"], "language." + grant["language"])
+        self.assertEqual("giant", next(b["language"] for b in
+                                      self.foundling["benefits"] if "language" in b))
+
     def test_no_giant_foundling_strike_feat_or_ancestry_duplication(self):
         for record in (self.clan, self.foundling):
             self.assertNotIn("grantsFeat", record)
+            if record["id"] == "upbringing.giant-foundling":
+                adaptation = record["sourceAdaptation"]
+                self.assertEqual("feat.strike-of-the-giants",
+                                 adaptation["excludedAutomaticFeatGrant"])
+                self.assertTrue(adaptation["independentFeatAcquisitionAllowed"])
             self.assertNotIn("feat", record)
             self.assertNotIn("sizeChange", record)
             for benefit in record["benefits"]:
