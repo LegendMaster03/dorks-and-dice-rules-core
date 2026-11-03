@@ -48,6 +48,61 @@ Advanced-feature source details:
 - https://dnd5e.wikidot.com/feat:keenness-of-the-stone-giant
 - https://dnd5e.wikidot.com/feat:soul-of-the-storm-giant
 
+## Consolidation gap analysis — what the first-pass implementation would actually add
+
+**Question:** if the SRD 5.2.1 base and the Bigby's two-stage Strike/advanced-feat chain are merged rather than duplicated, what new mechanics remain to implement? This is a *design inventory*, not authorization to edit the six native Subspecies.
+
+### Level 1 or other early level — meaningful additions to existing SRD boons
+
+| Ancestry | Existing boon / redundant Strike portion | Remaining benefit after deduplication | Proposed consolidation |
+| --- | --- | --- | --- |
+| Cloud | Existing Bonus Action 30-ft teleport; Strike itself is **not** a teleport | Strike's **1d4 Thunder** and conditional visibility concealment *against the struck creature only* (Wisdom save) | Add an offensive mode to the Cloud ancestry. Both the offensive mode and Jaunt consume **one** charge from a shared PB/LR ancestry pool; melee/thrown weapon qualification and once-per-turn limit apply to Strike mode |
+| Fire | Existing Fire's Burn already provides **1d10 Fire**, and qualifies on a broader range of attack rolls | **No additional Strike effect.** The source Fire Strike does not have another rider | Keep Fire's Burn unchanged, with existing broad attack eligibility and PB/LR pool. Do not grant a second identical damage pool or invent a new feature solely to even the number of modes |
+| Frost | Existing Frost's Chill covers **1d6 Cold** plus unconditional **−10 ft** Speed | On an eligible melee/thrown weapon hit, the original Strike's Constitution-save option can lower Speed to **0** | Give the existing Chill **one alternative control mode**, no additional 1d6 damage, no additional resource pool. If using the stronger effect, failure means Speed 0; preserving the existing −10-ft penalty on a successful save is an optional first-pass synthesis **not present in the source Strike** and requires an explicit ruling |
+| Hill | Existing Tumble automatically makes a qualifying **Large-or-smaller** target Prone, no additional save | Strike grants **1d6 weapon-type damage** and permits a **save-gated Prone** against bigger targets | Consolidate into one attack rider with choice between SRD auto-Prone within size limit and Strike damage-plus-save for broader targets, or grant just the weapon damage on eligible attacks. Do not apply two Prone conditions, and avoid automatic no-save Prone for Huge+ targets without a separate decision |
+| Stone | Stone's Endurance reduces incoming damage as a Reaction; no offense | Strike adds **1d6 Force** on melee/thrown weapon hit and save-gated **10-ft push** | Add an offensive mode sharing the existing Stone PB/LR ancestry charges; keep reaction damage reduction distinct in timing |
+| Storm | Storm's Thunder is a reactive Thunder damage response | Strike adds **1d6 Lightning** on melee/thrown weapon hit and **Constitution save** against Disadvantage on attacks | Add an offensive mode sharing Storm PB/LR ancestry charges, with attack eligibility and once-per-turn limit |
+
+**Early-tier result:** **one exact duplicate (Fire), two partial overlaps needing mode selection (Frost and Hill), three substantially new modes (Cloud, Stone and Storm).** In terms of new deliverables, **five** Subspecies need an added or modified early mode, **one** does not. This is not necessarily a power gap: Fire's existing 1d10 Fire is stronger than several individual riders, and its level-4 package is unusually rich. Distinctness, resource economy and impact matter more than equal numbers of fields.
+
+**Single pool caveat:** Granting new modes within each Subspecies's existing PB/LR ancestry pool keeps the number of activated uses equal, but allows some ancestries more choices. Giving each copied feat its own PB/LR pool would change the intended balance and undermine the reason to merge. Any future independently obtained Strike feat must have a separate, explicit duplicate-benefit policy.
+
+### Level 4 — advanced feat residue once overlapping base/Strike functions are removed
+
+| Subspecies | Advanced feat features still distinct from SRD boon and merged Strike | Resistance profile |
+| --- | --- | --- |
+| Cloud | **Cloudy Escape:** Reaction to resist damage from one attack **and** teleport 30 ft; can be a new defensive activation **mode of Cloud's Jaunt** rather than another independent teleport ability | **Temporary, attack-scoped** resistance to triggering attack only; not permanent Thunder resistance |
+| Fire | **Born of Flame:** ongoing Fire resistance; **Searing Ignition:** selective 15-ft-radius Fire burst replacing one attack, with Dexterity save and possible Blinded | **Permanent 50% Fire damage resistance** under current native resistance scale |
+| Frost | **Born of Ice:** ongoing Cold resistance; **Frigid Retaliation:** Reaction to a visible qualifying damaging hit, Constitution save vs Cold damage + Speed 0 | **Permanent 50% Cold damage resistance**; Frigid Retaliation reuses a control concept, but **not the same trigger** as attack-based Frost Strike |
+| Hill | **Bulwark:** Reaction prevent qualifying forced movement or Prone; **Iron Stomach:** extra healing with food and Hit Dice on Short Rest | **No published damage resistance** from this feat; Bulwark prevents displacement/condition, not damage |
+| Stone | **Cavernous Sight:** Darkvision 60 ft or extend an existing range; **Stone Throw:** Bonus Action magical Force rock attack with Str save or Prone | **No published damage resistance** from this feat |
+| Storm | **Maelstrom Aura:** short-duration Bonus Action defensive/control aura; attacks against you have Disadvantage and creatures starting nearby can have Speed halved on a failed Str save | **Temporary 50% Lightning and Thunder resistance while the aura is active**, not permanent and not an independent passive trait |
+
+**Advanced-tier result:** Ten named feature units across six feats: Cloud (1), Fire (2), Frost (2), Hill (2), Stone (2), Storm (1). **Two units are straightforward permanent damage resistance grants** (Fire, Frost). The other **eight** comprise reactions, attacks, senses, healing or aura control. Cloud and Storm have *conditional* resistance embedded within their other feature; this is not an additional permanent resistance.
+
+The two passive resistance grants do not themselves fulfill the rest of their feats: the remaining **eight** advanced-tier benefit units still need representation to preserve Bigby's full non-ASI mechanical scope. If implementation instead aims only to restore missing passive defenses, then Fire and Frost are covered, but the book's distinctive attack, reaction and utility features are intentionally **not** covered.
+
+### Proposed minimal coherent progression, not approved
+
+- **Level 1:** retain all six current SRD ancestry boons without damage stacking or a duplicated Fire use pool.
+- **Early level (1–3 to select):** either augment five ancestries with the five merged Strike modes above sharing existing ancestry charges, or keep Strike-derived modes until the advanced tier. The user has suggested perhaps level 1; do not assume a fixed unlock.
+- **Level 4:** grant the corresponding advanced feat's **non-ASI** features as Subspecies features, not feats. Cloud's escape can extend Jaunt with a distinct Reaction trigger, while Stone's new throw remains a separate attack type and Storm's aura is distinct from Thunder retaliation. **Do not automatically make all resistances permanent:** Cloud is one attack, Storm only while an aura is active, Fire/Frost are permanent.
+- **Level 5:** retain shared Large Form.
+- **Do not grant** the original advanced feats' six +1 ability-score increases, background requirements, or Strike prerequisite as extra player choices unless explicitly reconciled elsewhere.
+
+### Gaps and dependency decisions if this plan is selected
+
+1. **Early merge treatment:** exact timing, whether the five added/modified modes use the existing PB/LR pool, and how a weapon-only Strike trigger integrates without narrowing the existing broader SRD ancestry attacks.
+2. **Frost/Hill synthesis:** identify which save/no-save alternatives are allowed; do not double-count damage or Prone. *A new alternative-mode rule is a Dorks & Dice design decision, not a direct Bigby's transcription.*
+3. **Fire balance:** zero *additional* early Strike effect is not missing source content; it is duplication avoided. Compare the Fire level-4 package before inventing compensation.
+4. **DCs and attacks:** Bigby's Strike DC can use Strength or Constitution; several advanced feats reference an ability score increased by the feat. Removing the generic ASI requires choosing a native governing ability for Stone Throw, Storm's aura and other save effects. Unresolved until selected.
+5. **Resistance/effect schemas:** use the native percentage-based resistance scale (ordinary source Resistance maps to 50%); distinguish permanent Fire/Cold from Cloud attack-scoped resistance and Storm one-round aura resistance. Resolve stacking, trigger timing, source-target selection, and whether resistance is applied before/after reactive damage reductions.
+6. **Feat interoperability:** a Goliath may later select Strike/advanced feat independently or gain it via another source. Do not grant duplicate entitlements automatically or prohibit non-Goliaths from obtaining those feats.
+7. **Balance:** power delivery at level 4 immediately precedes level-5 Large Form; effect complexity differs by ancestry. Assess Fire Blinded, Hill native Prone, Stone Prone rock, and Storm attack Disadvantage/aura against native conditions before accepting the final level-4 package.
+8. **Environment and combat engine:** selected Species/Subspecies JSON does not itself prove execution support; once approved, test inheritance and level-gated feature serialization separately from native action-economy integration.
+
+**Net conclusion:** After consolidation, the *Bigby's* Strike layer adds **3 distinct modes + 2 upgrades**, not 6 independent feat grants. The level-4 layer includes **2 simple permanent resistance benefits + 8 other distinct benefit units**, with additional situational resistance embedded in Cloud and Storm. No new arbitrary compensating Fire feature is required to get a coherent first-pass rule; deciding *how* Fire compares with the others is a playtest-balance question.
+
 ## Proposed progression alternatives (none selected)
 
 **Path A — recommended for the initial playtest:** **Level 1 existing ancestry boon; level 4 advanced giant feature; level 5 shared Large Form.** Treat the existing ancestry boon as satisfying the *conceptual* Strike prerequisite for that Subspecies's automatic level-4 feature, without literally granting `Strike of the Giants` feat or extra charges. At level 4 grant the native adapted follow-up feature(s), **excluding the +1 ASI** and using explicitly selected ability modifiers for DCs. The overlapping Strike options are retained as research or independent feat choices for later feat reconciliation. This path preserves all six equal acquisition levels and avoids writing arbitrary compensation powers for Fire.
