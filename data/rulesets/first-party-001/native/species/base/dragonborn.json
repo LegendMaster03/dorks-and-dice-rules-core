@@ -60,10 +60,7 @@
   ],
   "reviewNotes": [
     "60-foot Darkvision and 30-foot walking speed remain subject to the comparative Species balance pass.",
-    "Chromatic family geometry and Warding are selected in ancestry.dragonborn.chromatic; each of its five leaf Ancestries supplies a damage type and an innate adaptation.",
-    "The nonselectable Gem family node is selected in native solely for hierarchy; all Gem leaf types, breath geometry and other Gem-specific mechanics remain deferred.",
     "5.5e temporary Draconic Flight is not automatically granted by the Dragonborn base Species.",
-    "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred.",
-    "Native character projection does not yet execute Species/Ancestry inheritance, Breath Weapon or Warding."
+    "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred."
   ]
 }

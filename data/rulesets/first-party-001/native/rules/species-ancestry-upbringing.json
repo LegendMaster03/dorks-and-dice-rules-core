@@ -26,49 +26,7 @@
     "inheritance": "The selected Upbringing inherits the benefits of its own parent chain; ancestors are not additional selections.",
     "association": "A default is a reference on Species/Ancestry JSON, not a reverse defaultFor list on Upbringing records."
   },
-  "dragonbornApprovedStructure": {
-    "baseSpecies": "species.dragonborn",
-    "baseSelectable": false,
-    "intermediateFamilies": [
-      {
-        "id": "ancestry.dragonborn.chromatic",
-        "selectable": false,
-        "types": [
-          "black",
-          "blue",
-          "green",
-          "red",
-          "white"
-        ]
-      },
-      {
-        "id": "ancestry.dragonborn.metallic",
-        "selectable": false,
-        "types": [
-          "brass",
-          "bronze",
-          "copper",
-          "gold",
-          "silver"
-        ]
-      },
-      {
-        "id": "ancestry.dragonborn.gem",
-        "selectable": false,
-        "types": [
-          "amethyst",
-          "crystal",
-          "emerald",
-          "sapphire",
-          "topaz"
-        ]
-      }
-    ],
-    "leafAncestrySelectable": true
-  },
   "reviewNotes": [
-    "Chromatic and Metallic family records and all ten playable leaf Ancestries have native mechanics; Gem now has a native nonselectable intermediate family node only, with five leaves and their mechanics deferred.",
-    "Only ten standard Chromatic and Metallic Dragonborn are playable in this initial pass; the nonselectable Gem family node is native without playable Gem leaves.",
     "Half-Elf and Half-Orc are reserved for the future Mixed Species mechanic, not initial Species.",
     "The native C# character projector does not yet execute ancestry inheritance/default selections."
   ]
