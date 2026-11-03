@@ -67,8 +67,8 @@
     "leafSubspeciesSelectable": true
   },
   "reviewNotes": [
-    "Both Chromatic and Metallic family records and all ten leaf types have selected native content; Gem leaves remain deferred.",
-    "Only ten standard Chromatic and Metallic Dragonborn are in the active first pass; Gem is reserved structurally.",
+    "Chromatic and Metallic family records and all ten playable leaf Subspecies have native mechanics; Gem now has a native nonselectable intermediate family node only, with five leaves and their mechanics deferred.",
+    "Only ten standard Chromatic and Metallic Dragonborn are playable in this initial pass; the nonselectable Gem family node is native without playable Gem leaves.",
     "Half-Elf and Half-Orc are reserved for the future Mixed Species mechanic, not initial Species.",
     "The native C# character projector does not yet execute ancestry inheritance/default selections."
   ]

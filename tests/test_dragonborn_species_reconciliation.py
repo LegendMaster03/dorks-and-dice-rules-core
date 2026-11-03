@@ -45,6 +45,30 @@ class DragonbornReconciliationTests(unittest.TestCase):
                     ids.add(leaf["id"])
         self.assertEqual(13, len(ids))
 
+    def test_gem_family_is_nonselectable_and_structural_only(self):
+        base = read(DRAGONBORN / "base/dragonborn.json")
+        gem = read(DRAGONBORN / "subspecies/dragonborn/gem.json")
+        inheritance = read(NATIVE / "rules/species-subspecies-upbringing.json")
+        self.assertEqual("subspecies.dragonborn.gem", gem["id"])
+        self.assertEqual("subspecies", gem["kind"])
+        self.assertEqual("selected-native", gem["status"])
+        self.assertFalse(base["selectable"])
+        self.assertFalse(gem["selectable"])
+        self.assertEqual(base["id"], gem["parent"])
+        self.assertEqual([], gem["traits"])
+        for unresolved in ("breathWeaponArea", "damageType", "defaultUpbringing"):
+            self.assertNotIn(unresolved, gem)
+        gem_families = [
+            family for family in inheritance["dragonbornApprovedStructure"]["intermediateFamilies"]
+            if family["id"] == gem["id"]
+        ]
+        self.assertEqual(1, len(gem_families))
+        self.assertFalse(gem_families[0]["selectable"])
+        self.assertEqual(
+            {"amethyst", "crystal", "emerald", "sapphire", "topaz"},
+            set(gem_families[0]["types"]))
+        self.assertFalse((DRAGONBORN / "subspecies/dragonborn/gem").exists())
+
     def test_family_breath_geometry_and_resources(self):
         chromatic = read(DRAGONBORN / "subspecies/dragonborn/chromatic.json")
         metallic = read(DRAGONBORN / "subspecies/dragonborn/metallic.json")

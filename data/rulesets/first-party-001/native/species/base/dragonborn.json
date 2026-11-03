@@ -61,7 +61,7 @@
   "reviewNotes": [
     "60-foot Darkvision and 30-foot walking speed remain subject to the comparative Species balance pass.",
     "Chromatic family geometry and Warding are selected in subspecies.dragonborn.chromatic; each of its five leaf Subspecies supplies a damage type and an innate adaptation.",
-    "Metallic family cone breath, level-5 secondary breath effects, and five leaf Subspecies are selected in native. Gem family remains deferred.",
+    "The nonselectable Gem family node is selected in native solely for hierarchy; all Gem leaf types, breath geometry and other Gem-specific mechanics remain deferred.",
     "5.5e temporary Draconic Flight is not automatically granted by the Dragonborn base Species.",
     "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred.",
     "Native character projection does not yet execute Species/Subspecies inheritance, Breath Weapon or Warding."
