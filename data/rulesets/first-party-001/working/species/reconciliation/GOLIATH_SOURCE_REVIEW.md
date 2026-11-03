@@ -23,13 +23,82 @@
 6. **Class and monster material:** Path of the Giant Barbarian, giant stat blocks and other advanced options can inform balance and design vocabulary. They are not automatically level-1 Species features.
 7. **Physical mechanics:** Reconcile Powerful Build, size and carry/lift rules, movement, mountainous adaptation, damage prevention, Large Form, activation economy, resource uses and conditions against the native mechanics rather than importing older-edition wording verbatim.
 
+## Completed source comparison (findings, not native selections)
+
+| Feature | *Races of Stone* (3.5e) | 5e *EEPC*/*Volo's* | 5e *Monsters of the Multiverse* | 5.5e SRD 5.2.1 |
+| --- | --- | --- | --- | --- |
+| Creature type | Monstrous Humanoid (with associated type implications) | Humanoid | Humanoid | Humanoid |
+| Base size and walking speed | Medium, 30 ft | Medium, 30 ft | Medium, 30 ft | Medium, 35 ft |
+| Powerful Build | Broader favorable size treatment for opposed checks, certain special attacks and oversized weapons; space and reach remain Medium | One size larger for carry/push/drag/lift | One size larger for carry/push/drag/lift | One size larger for carrying capacity and Advantage on ability checks to end Grappled |
+| Movement/environment | Mountain Movement (standing jumps and accelerated climbing), permanent high-altitude acclimation | Mountain Born: cold resistance and altitude adaptation | Mountain Born retained with cold resistance | Mountain Born omitted |
+| General athletic training | 3.5e culture/skills references rather than a baseline 5e Athletics proficiency | Natural Athlete: Athletics proficiency | Little Giant: Athletics proficiency plus carry benefit | No automatic Athletics proficiency |
+| Damage reduction | None as a shared Goliath trait | Stone's Endurance once per Short/Long Rest | Stone's Endurance PB per Long Rest | Stone's Endurance only as one of six ancestry choices, PB per Long Rest |
+| Giant ancestry choice | No six-way Giant Ancestry selection | No six-way Giant Ancestry selection | No six-way Giant Ancestry selection | Six choices: Cloud, Fire, Frost, Hill, Stone and Storm |
+| Transformation | None | None | None | Large Form at level 5, once per Long Rest, 10 minutes, +10 ft speed and Advantage on Strength checks |
+
+The older 3.5e +4 Strength, −2 Dexterity, +2 Constitution, +1 level adjustment, favored class, and Monstrous Humanoid-based implications are **edition-specific comparisons**, not automatically retained Species traits. In particular, do not automatically add 3.5e Darkvision or armor/weapon proficiency by changing a 5.5e Humanoid into a 3.5e Monstrous Humanoid.
+
+Sources: https://dnd.arkalseif.info/races/races-of-stone--82/goliath--13/ ; https://dnd5e.wikidot.com/lineage:goliath-eepc ; https://dnd5e.wikidot.com/lineage:goliath-mpmm ; https://www.dndbeyond.com/species/1751439-goliath ; pinned SRD source in `working/species/base/goliath.json`.
+
+## Six 5.5e Giant Ancestry abilities (candidate Subspecies distinctions)
+
+The staged SRD 5.2.1 Goliath candidate has **six mutually exclusive ancestry boons**, each with **Proficiency Bonus uses per Long Rest**. Each line below describes published input and a first-pass handling recommendation, not yet an approved rule:
+
+| Ancestry | 5.5e source ability | Key mechanics / implications in Dorks & Dice |
+| --- | --- | --- |
+| Cloud | Cloud's Jaunt: Bonus Action teleport up to 30 ft to visible unoccupied space | Reliable position, escape and infiltration; requires the existing teleport targeting and occupancy rules |
+| Fire | Fire's Burn: additional 1d10 Fire damage when an attack roll hits and deals damage | Straightforward burst damage; check future interplay with similar Feats rather than withholding the Species boon |
+| Frost | Frost's Chill: 1d6 Cold damage on attack hit plus 10-ft speed penalty until start of user's next turn | Damage + control; avoid assuming the speed penalty is a condition, paralysis, or reduction below zero |
+| Hill | Hill's Tumble: on damaging attack hit, make Large-or-smaller target Prone, no saving throw specified | **Major balance watch:** native Prone applies −4 melee AC, +4 ranged AC, own attack Disadvantage and a movement cost to stand, rather than standard 5e attacker Advantage/Disadvantage |
+| Stone | Stone's Endurance: Reaction to reduce incoming damage by 1d12 + Constitution modifier | Defensive option previously shared by all Goliaths in 5e; in 5.5e only Stone inherits it, and it costs a Reaction |
+| Storm | Storm's Thunder: Reaction after taking damage from creature within 60 ft, dealing 1d8 Thunder damage to source | Ranged retaliation, but trigger is damage received, not a freely chosen attack; do not invent a saving throw or visibility requirement |
+
+All six inherit general Goliath capabilities if modeled as Subspecies. The same option grants no more than PB activations per Long Rest; the six options are **alternatives**, not a pool of six powers owned by every Goliath. Damage types, damage rolls and condition interactions must be reconciled with native rules rather than edition-specific text.
+
+## Bigby's specific contribution
+
+*Bigby Presents: Glory of the Giants* (2023) predates the 2024 Goliath redesign. It is a **supplement to the ancestry research**, not a replacement Goliath Species definition.
+
+- Giant society and the Ordning: six major giant kinds and differing social ideals. The ranking **Storm > Cloud > Fire > Frost > Stone > Hill** is a giant social hierarchy, **not** a mechanical power ranking or a basis for unequal Goliath Subspecies quality. The book explicitly discusses giants who reject it.
+- Giant Foundling background: training in Intimidation and Survival and access to *Strike of the Giants*. This represents formative experience among giants and should be considered for Background/Upbringing, accessible independently of Goliath biological Species.
+- Rune Carver background: History, Perception, Giant language and rune-oriented study; *Rune Shaper* is associated with the background. Rune crafting and teaching belong primarily to the learned/feat systems, not automatically to an anatomical trait.
+- *Strike of the Giants* offers six giant-themed attack riders; additional giant feats expand these ideas. **Overlapping effects matter** when a Goliath later selects both their ancestry boon and a giant feat (e.g. additional Fire damage or repeated Hill Prone application). Do not grant these feats for free and do not presume all damage riders may or may not stack until the applicable native stacking rules and individual feat pass.
+- *Path of the Giant* Barbarian and giant monster entries inform later classes, monsters and size interactions. They do not automatically imply all Goliaths share Barbarian progression, a fixed giant alignment, an Ordning rank or inherited rune spellcasting.
+
+Publisher references: https://www.dndbeyond.com/sources/dnd/gotg ; https://www.dndbeyond.com/posts/1534-giant-personalities-an-infographic-on-the ; https://www.dndbeyond.com/posts/1531-first-look-giant-foundling-background-and-strike ; https://www.dndbeyond.com/posts/1551-channel-ancient-power-with-the-rune-carver .
+
+## First-pass Species model — recommendation for review, not yet approved
+
+**Recommended shape: a nonselectable Goliath Species with six selectable giant-ancestry Subspecies.** A separate nonselectable family tier, as used for Dragonborn's Chromatic/Metallic/Gem, is not necessary at present because all six options share one giant-ancestry level. The hierarchy could grow later without requiring its initial complexity:
+
+```text
+species.goliath (nonselectable)
+├─ subspecies.goliath.cloud   (selectable)
+├─ subspecies.goliath.fire    (selectable)
+├─ subspecies.goliath.frost   (selectable)
+├─ subspecies.goliath.hill    (selectable)
+├─ subspecies.goliath.stone   (selectable)
+└─ subspecies.goliath.storm   (selectable)
+```
+
+Candidate **common** traits: Humanoid; Medium; 35-ft walking speed; 5.5e-style Powerful Build; level-5 Large Form (Bonus Action, 10 minutes, once per Long Rest, +10 ft speed, Advantage on Strength checks and must have physical room to become Large). Candidate **leaf** traits: the one relevant 5.5e ancestry boon described above (PB uses per Long Rest). No common Stone's Endurance, no unconditional universal cold resistance, no automatic 3.5e ability-score changes, no level adjustment, no assumed giant language or cultural values.
+
+**Powerful Build is the largest native-mechanics integration question.** The native `rule.grapple-procedure` defines opposed grappling checks and distinct Escape Artist attempts, while 5.5e Powerful Build grants Advantage on ability checks to end Grappled. The first-pass description must explicitly state which native escape attempts receive the bonus. Do not silently transplant 3.5e's entire size modifier, oversized-weapon permissions, and automatic stacking on top of 5.5e Powerful Build.
+
+**Large Form is real size change, not simply effective size.** The native `rule.spatial-foundation` has a nine-category size model with Large default 10×10-ft space but no universal added reach from size. Its historical grapple/AC size modifiers are not automatically active. Clarify that Powerful Build's carrying allowance may scale from the character's *current* actual size during Large Form, while **grappling size, weapon handling, occupied space and reach** must follow explicitly selected native mechanics, not a blanket additional category. In cramped spaces, transformation may be unavailable as the source requires room.
+
+**Mountain legacy traits:** 3.5e Mountain Movement and altitude acclimation, and 5e Mountain Born, should be retained as research. Automatic universal cold resistance poorly fits six elemental giant ancestries (especially Fire) and stacks an additional elemental perk on top of the modern six boons. Alpine training is better considered for independently selectable Upbringings; physiological altitude adaptation may require a distinct environmental mechanics decision. A Goliath need not be raised in mountains.
+
+**Giant-specific Upbringings:** retain possible traditions of Cloud, Fire, Frost, Hill, Stone and Storm giant societies, plus Giant Foundling and Rune Carver. These are **research leads only**. Do not create ancestry-locked Upbringings or defaults; do not assign Goliaths a compulsory Ordning ideology or proficiency.
+
 ## Open design questions (not proposals approved for implementation)
 
-- Should each of the six giant ancestries become a playable Goliath Subspecies, or remain one choice within the Goliath Species? Confirm selection and inheritance consequences before creating native children.
+- **Primary selection decision:** Should six giant ancestries become six selectable Goliath Subspecies (recommended), or remain a single Species choice feature? Both represent six mutually exclusive ancestry options, but the former aligns the user-facing selection and recursive inheritance with the Dragonborn reconciliation.
 - Which abilities are genuinely innate and which should remain independently selectable learned traditions or later feats?
-- Does inherited Large Form interact cleanly with 3.5e Powerful Build and the native spatial/size system? Do not grant permanent Large size merely from giant descent.
+- Define native Powerful Build's exact interaction with opposed Grapple/Escape Artist resolution, size-dependent effects and carry capacity. Do not enable oversized weapon use or 3.5e special-attack size interactions automatically.
+- Does inherited Large Form interact cleanly with native size, reach, occupancy and carrying capacity? Do not grant permanent Large size, extra reach or historical 3.5e AC modifiers merely from giant descent.
 - What can be retained from original Goliath mountain adaptation without making all Goliaths share one regional upbringing?
-- How do six giant options compare with the approved Chromatic/Metallic Dragonborn Subspecies in versatility, encounter power and exploration utility? The objective is a first playable baseline, not final balancing.
+- How do six giant options compare with the approved Chromatic/Metallic Dragonborn Subspecies in versatility, encounter power and exploration utility? In particular, native Prone makes Hill more potent than in standard 5.5e; Stone's reactive mitigation and Cloud's teleport have different encounter values. The objective is a first playable baseline, not final balancing.
 
 ## Verified references / further reading
 
