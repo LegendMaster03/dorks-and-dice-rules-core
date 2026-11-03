@@ -1,0 +1,90 @@
+{
+  "id": "example.constructed-person",
+  "label": "Construct with multiple creators and a magical animating source",
+  "designStatus": "illustrative-not-approved",
+  "origination": {
+    "method": "artificial-construction",
+    "contributors": [
+      {
+        "id": "designer",
+        "role": "designer",
+        "description": "Designer establishes the structure"
+      },
+      {
+        "id": "fabricator",
+        "role": "fabricator",
+        "description": "Fabricator builds the body"
+      },
+      {
+        "id": "animator",
+        "role": "magical-animator",
+        "description": "Magical source animates the result"
+      }
+    ],
+    "notes": "There are no assumed biological parents. The creators' Species and Classes do not grant traits."
+  },
+  "heritageSources": [
+    {
+      "id": "design-pattern",
+      "sourceKind": "design",
+      "description": "A custom anatomical plan",
+      "viaContributorIds": [
+        "designer"
+      ]
+    },
+    {
+      "id": "material-source",
+      "sourceKind": "material",
+      "description": "Ironwood and stone",
+      "viaContributorIds": [
+        "fabricator"
+      ]
+    },
+    {
+      "id": "animation-source",
+      "sourceKind": "supernatural",
+      "description": "Animating magic",
+      "viaContributorIds": [
+        "animator"
+      ]
+    }
+  ],
+  "effectiveProfile": {
+    "resolution": "illustrative-candidate",
+    "creatureType": "construct",
+    "notes": "The creature-type choice and physiological rules here are a test hypothesis, not an approved character."
+  },
+  "traitCandidates": [
+    {
+      "id": "constructed-body",
+      "sourceIds": [
+        "design-pattern",
+        "material-source"
+      ],
+      "proposedConcept": "Body shape, material properties, and physical dependencies",
+      "resolution": "unresolved"
+    },
+    {
+      "id": "animating-sentience",
+      "sourceIds": [
+        "animation-source"
+      ],
+      "proposedConcept": "Animating magic and awareness",
+      "resolution": "unresolved"
+    },
+    {
+      "id": "life-sustenance",
+      "sourceIds": [
+        "design-pattern",
+        "animation-source"
+      ],
+      "proposedConcept": "Food, air, sleep, and healing compatibility",
+      "resolution": "unresolved"
+    }
+  ],
+  "openQuestions": [
+    "Can advanced characters have a complete effective profile without a conventional Species selection?",
+    "What physical and magical properties must be explicitly chosen rather than imported from creator ancestry?",
+    "How do repair and healing interactions depend on body form and creature type?"
+  ]
+}
