@@ -3,7 +3,7 @@
   "baselineEntries": 2522,
   "statuses": {
     "single-candidate": 504,
-    "multiple-candidates": 987,
+    "multiple-candidates": 986,
     "native-single-source-retained": 528,
     "native-compatible-merged": 108,
     "native-equivalent-reconciled": 34,
@@ -11,7 +11,7 @@
     "matching-candidates": 19,
     "native-monster-role-default": 285,
     "native-monster-identity-alias": 23,
-    "approved-native-reconciled": 10
+    "approved-native-reconciled": 11
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
@@ -19,12 +19,12 @@
     "native-equivalent-reconciled": 34,
     "native-single-source-retained": 528
   },
-  "remainingWithMultipleCandidates": 987,
+  "remainingWithMultipleCandidates": 986,
   "remainingWithOneCandidate": 504,
   "retainedDefinitionsNeedingNativeShaping": 833,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1491,
+  "candidateRecordsStillUnresolved": 1490,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
