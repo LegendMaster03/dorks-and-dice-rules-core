@@ -1,0 +1,1121 @@
+{
+  "scope": "provisional-nonauthoritative-trait-audit",
+  "snapshotCommit": "d5a2b15b7ae2bd88ae9e47a5ddfad01d481623bb",
+  "classification": "heuristic-review-only",
+  "records": [
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/dwarf/hill.json",
+      "sourceBlobSha": "3085b8813dad43583d39b2ba2e78474ff1c3707c",
+      "entityId": "ancestry.dwarf.hill",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.dwarf",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "stability",
+          "name": null,
+          "mechanicKeys": [],
+          "classificationCandidates": [
+            "other-needs-review"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/elf/drow.json",
+      "sourceBlobSha": "a79c07a4c074982b79ad43153ec68e820041b70c",
+      "entityId": "ancestry.elf.drow",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.elf",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": 120
+      },
+      "otherTopLevelKeys": [
+        "spellcastingAbilityChoice",
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "dancing-lights",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "atWill"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "faerie-fire",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "darkness",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "sunlight-sensitivity",
+          "name": null,
+          "mechanicKeys": [
+            "condition",
+            "trigger",
+            "end"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/elf/high.json",
+      "sourceBlobSha": "88b0b07a87a9bfbeb15f63f08648f0b0610c9658",
+      "entityId": "ancestry.elf.high",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.elf",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "spellcastingAbilityChoice",
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "arcane-cantrip",
+          "name": null,
+          "mechanicKeys": [
+            "spellList",
+            "level",
+            "replacement"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "detect-magic",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "misty-step",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/elf/wood.json",
+      "sourceBlobSha": "2a47dc379d25e3ab00c88ce49b4ac79e5a1b5d66",
+      "entityId": "ancestry.elf.wood",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.elf",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": 35,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "spellcastingAbilityChoice",
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "druidcraft",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "atWill"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "longstrider",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "pass-without-trace",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/gnome/forest.json",
+      "sourceBlobSha": "a42e1519ae98bcfd72c372fd93189948bd8be837",
+      "entityId": "ancestry.gnome.forest",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.gnome",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "spellcastingAbilityChoice",
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "forest-illusion",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "atWill"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "animal-speech",
+          "name": null,
+          "mechanicKeys": [
+            "spell",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/gnome/rock.json",
+      "sourceBlobSha": "bc3c59d11efa8941b6535820069bdd0271ad2cd0",
+      "entityId": "ancestry.gnome.rock",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.gnome",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "defaultUpbringing"
+      ],
+      "traits": [
+        {
+          "id": "earthbound-tremorsense",
+          "name": null,
+          "mechanicKeys": [
+            "sense",
+            "rangeFeet",
+            "activation",
+            "requiresSharedContact"
+          ],
+          "classificationCandidates": [
+            "senses",
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/goliath/cloud.json",
+      "sourceBlobSha": "ad4c4acb548c4a1fd54d7e7861c7082d34b71f0b",
+      "entityId": "ancestry.goliath.cloud",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.goliath",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "clouds-jaunt",
+          "name": "Cloud's Jaunt",
+          "mechanicKeys": [
+            "activation",
+            "teleport",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "cloud-strike",
+          "name": "Cloud Strike",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "trigger",
+            "oncePerTurn",
+            "extraDamage",
+            "savingThrow",
+            "invisibility",
+            "sharedUsesFromTrait",
+            "extraUsesGranted"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "cloudy-escape",
+          "name": "Cloudy Escape",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "damageResistance",
+            "teleport",
+            "uses",
+            "independentUsesFrom"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/goliath/fire.json",
+      "sourceBlobSha": "6c034d40985546bec8c0b14440c161875d2e669f",
+      "entityId": "ancestry.goliath.fire",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.goliath",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "fires-burn",
+          "name": "Fire's Burn",
+          "mechanicKeys": [
+            "trigger",
+            "extraDamage",
+            "uses",
+            "coversStrikeOfTheGiantsMode",
+            "duplicateStrikeBenefitGranted"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "born-of-flame",
+          "name": "Born of Flame",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "searing-ignition",
+          "name": "Searing Ignition",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "oncePerTurn",
+            "area",
+            "savingThrow",
+            "damage",
+            "applyConditionOnFailedSave",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/goliath/frost.json",
+      "sourceBlobSha": "673dc718e43e452039eb0bf03da12c16c493a849",
+      "entityId": "ancestry.goliath.frost",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.goliath",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "frosts-chill",
+          "name": "Frost's Chill",
+          "mechanicKeys": [
+            "trigger",
+            "extraDamage",
+            "speedReduction",
+            "uses",
+            "alternateStrikeMode"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "born-of-ice",
+          "name": "Born of Ice",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "frigid-retaliation",
+          "name": "Frigid Retaliation",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "rangeFeet",
+            "savingThrow",
+            "onFailedSave",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/goliath/hill.json",
+      "sourceBlobSha": "fd4305ec416e920538d2c16b58fbf73eab8d904d",
+      "entityId": "ancestry.goliath.hill",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.goliath",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "hills-tumble",
+          "name": "Hill's Tumble",
+          "mechanicKeys": [
+            "trigger",
+            "targetMaximumSize",
+            "applyCondition",
+            "additionalSavingThrow",
+            "uses",
+            "alternateStrikeMode"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement",
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "bulwark",
+          "name": "Bulwark",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "prevents",
+            "atWill",
+            "doesNotGrant"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "iron-stomach",
+          "name": "Iron Stomach",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "trigger",
+            "extraHealing",
+            "oncePerShortRest",
+            "perHitDie"
+          ],
+          "classificationCandidates": [
+            "physiology-or-movement",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/goliath/stone.json",
+      "sourceBlobSha": "b95917874c5d2adc5c590753003aea4d4f780ba4",
+      "entityId": "ancestry.goliath.stone",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.goliath",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "stones-endurance",
+          "name": "Stone's Endurance",
+          "mechanicKeys": [
+            "activation",
+            "damageReduction",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "stone-strike",
+          "name": "Stone Strike",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "trigger",
+            "oncePerTurn",
+            "extraDamage",
+            "savingThrow",
+            "onFailedSave",
+            "sharedUsesFromTrait",
+            "extraUsesGranted"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "cavernous-sight",
+          "name": "Cavernous Sight",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "sense",
+            "rangeFeet",
+            "addToExistingDarkvisionFeet",
+            "stacking"
+          ],
+          "classificationCandidates": [
+            "senses"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "stone-throw",
+          "name": "Stone Throw",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "requiresItem",
+            "attack",
+            "damage",
+            "savingThrow",
+            "applyConditionOnFailedSave",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/goliath/storm.json",
+      "sourceBlobSha": "735ab726e21ed36f8d1f8ebb67b674d878119e39",
+      "entityId": "ancestry.goliath.storm",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.goliath",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "storms-thunder",
+          "name": "Storm's Thunder",
+          "mechanicKeys": [
+            "activation",
+            "rangeFeet",
+            "retaliation",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "storm-strike",
+          "name": "Storm Strike",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "trigger",
+            "oncePerTurn",
+            "extraDamage",
+            "savingThrow",
+            "onFailedSave",
+            "sharedUsesFromTrait",
+            "extraUsesGranted"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "depends-on-other-selection"
+          ]
+        },
+        {
+          "id": "maelstrom-aura",
+          "name": "Maelstrom Aura",
+          "mechanicKeys": [
+            "requiredCharacterLevel",
+            "activation",
+            "area",
+            "duration",
+            "whileActive",
+            "startsTurnInside",
+            "uses"
+          ],
+          "classificationCandidates": [
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration",
+            "depends-on-other-selection"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/halfling/lightfoot.json",
+      "sourceBlobSha": "fe3aad937c0b951af1a87282467fe25cffb4531e",
+      "entityId": "ancestry.halfling.lightfoot",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.halfling",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [],
+      "traits": [
+        {
+          "id": "natural-agility",
+          "name": null,
+          "mechanicKeys": [
+            "skillBonuses"
+          ],
+          "classificationCandidates": [
+            "skill-or-advancement",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "possible-physical-context-review"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/tiefling/abyssal.json",
+      "sourceBlobSha": "06fab923ebe0b5d71e77b56451861f417a89dd33",
+      "entityId": "ancestry.tiefling.abyssal",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.tiefling",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "ancestryTheme",
+        "spellcastingAbilityChoice"
+      ],
+      "traits": [
+        {
+          "id": "abyssal-resistance",
+          "name": "Abyssal Resistance",
+          "mechanicKeys": [
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "poison-spray",
+          "name": "Poison Spray",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "atWill"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "ray-of-sickness",
+          "name": "Ray Of Sickness",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "hold-person",
+          "name": "Hold Person",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/tiefling/chthonic.json",
+      "sourceBlobSha": "6a50032232903c463e1791e659c25b40dff08fdb",
+      "entityId": "ancestry.tiefling.chthonic",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.tiefling",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "ancestryTheme",
+        "spellcastingAbilityChoice"
+      ],
+      "traits": [
+        {
+          "id": "chthonic-resistance",
+          "name": "Chthonic Resistance",
+          "mechanicKeys": [
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "chill-touch",
+          "name": "Chill Touch",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "atWill"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "false-life",
+          "name": "False Life",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "ray-of-enfeeblement",
+          "name": "Ray Of Enfeeblement",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    },
+    {
+      "sourcePath": "data/rulesets/first-party-001/native/species/ancestry/tiefling/infernal.json",
+      "sourceBlobSha": "5ace77796da4654f0b0b4b7b5ac98c52758126ff",
+      "entityId": "ancestry.tiefling.infernal",
+      "kind": "ancestry",
+      "status": "selected-native",
+      "selectable": true,
+      "parent": "species.tiefling",
+      "effectiveOverrides": {
+        "creatureType": null,
+        "size": null,
+        "walkingSpeedFeet": null,
+        "darkvisionFeet": null
+      },
+      "otherTopLevelKeys": [
+        "ancestryTheme",
+        "spellcastingAbilityChoice"
+      ],
+      "traits": [
+        {
+          "id": "infernal-resistance",
+          "name": "Infernal Resistance",
+          "mechanicKeys": [
+            "damageResistance"
+          ],
+          "classificationCandidates": [
+            "defense-or-survival",
+            "activated-or-combat"
+          ],
+          "reviewFlags": []
+        },
+        {
+          "id": "fire-bolt",
+          "name": "Fire Bolt",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "atWill"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive"
+          ]
+        },
+        {
+          "id": "hellish-rebuke",
+          "name": "Hellish Rebuke",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting",
+            "freeCastSpellLevel"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        },
+        {
+          "id": "darkness",
+          "name": "Darkness",
+          "mechanicKeys": [
+            "spell",
+            "level",
+            "alwaysPrepared",
+            "freeUses",
+            "recharge",
+            "slotCasting"
+          ],
+          "classificationCandidates": [
+            "supernatural-or-spell",
+            "activated-or-combat"
+          ],
+          "reviewFlags": [
+            "level-gated-or-progressive",
+            "usage-resource-or-duration"
+          ]
+        }
+      ]
+    }
+  ]
+}
