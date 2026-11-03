@@ -1,0 +1,130 @@
+{
+  "id": "example.conventional-high-elf",
+  "label": "Conventional High Elf control case",
+  "designStatus": "illustrative-not-approved",
+  "origination": {
+    "method": "biological-reproduction",
+    "contributors": [],
+    "notes": "A conventional preset does not require a genealogy record."
+  },
+  "heritageSources": [
+    {
+      "id": "elf",
+      "sourceKind": "species",
+      "nativeEntityId": "species.elf"
+    },
+    {
+      "id": "high-elf",
+      "sourceKind": "ancestry",
+      "nativeEntityId": "ancestry.elf.high"
+    }
+  ],
+  "conventionalSelection": {
+    "speciesId": "species.elf",
+    "ancestryIds": [
+      "ancestry.elf.high"
+    ],
+    "upbringingId": "upbringing.elf.high",
+    "status": "existing-approved-preset"
+  },
+  "effectiveProfile": {
+    "resolution": "existing-approved-species-baseline",
+    "creatureType": "fey",
+    "size": "medium",
+    "walkingSpeedFeet": 30,
+    "notes": "Approved baseline. The upbringing is selected independently."
+  },
+  "traitCandidates": [
+    {
+      "id": "low-light-vision",
+      "sourceIds": [
+        "elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "low-light-vision"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "keen-senses",
+      "sourceIds": [
+        "elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "keen-senses"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "fey-ancestry",
+      "sourceIds": [
+        "elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "fey-ancestry"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "trance",
+      "sourceIds": [
+        "elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "trance"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "magical-sleep",
+      "sourceIds": [
+        "elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "species.elf",
+        "localTraitId": "magical-sleep"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "arcane-cantrip",
+      "sourceIds": [
+        "high-elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "ancestry.elf.high",
+        "localTraitId": "arcane-cantrip"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "detect-magic",
+      "sourceIds": [
+        "high-elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "ancestry.elf.high",
+        "localTraitId": "detect-magic"
+      },
+      "resolution": "existing-approved-preset"
+    },
+    {
+      "id": "misty-step",
+      "sourceIds": [
+        "high-elf"
+      ],
+      "nativeTraitLocation": {
+        "entityId": "ancestry.elf.high",
+        "localTraitId": "misty-step"
+      },
+      "resolution": "existing-approved-preset"
+    }
+  ],
+  "openQuestions": [
+    "Can a conventional preset resolve without manually choosing each individual trait?"
+  ]
+}
