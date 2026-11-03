@@ -39,9 +39,9 @@
   "creatureType": "humanoid",
   "size": "medium",
   "walkingSpeedFeet": 30,
-  "darkvisionFeet": 120,
+  "darkvisionFeet": 60,
   "reviewNotes": [
-    "Walking speed and Darkvision range remain subject to comparative Species balance.",
+    "Darkvision was reduced from 120 to 60 feet during the approved comparative vision review. Broader surface versus subterranean Dwarf Ancestry distribution remains open; walking Speed remains subject to comparative Species balance.",
     "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved."
   ],
   "defaultUpbringing": "upbringing.dwarf.general"

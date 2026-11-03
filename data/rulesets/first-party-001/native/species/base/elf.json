@@ -6,6 +6,12 @@
   "selectable": true,
   "traits": [
     {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
+    {
       "id": "keen-senses",
       "description": "Gain +2 Listen and +2 Spot. Existing Perception composite calculation uses these bonuses.",
       "skillBonuses": {
@@ -36,10 +42,10 @@
   "creatureType": "humanoid",
   "size": "medium",
   "walkingSpeedFeet": 30,
-  "darkvisionFeet": 60,
   "reviewNotes": [
     "Historical Search bonus remains unresolved.",
-    "Speed and overall trait balance will be compared with other Species."
+    "Speed and overall trait balance will be compared with other Species.",
+    "Native Low-Light Vision replaces base 60-foot Darkvision in the approved comparative vision review; a specifically darkness-adapted Ancestry can still grant Darkvision."
   ],
   "defaultUpbringing": "upbringing.elf.general"
 }

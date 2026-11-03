@@ -6,6 +6,12 @@
   "selectable": true,
   "traits": [
     {
+      "id": "low-light-vision",
+      "name": "Low-Light Vision",
+      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
+      "rule": "rule.low-light-vision"
+    },
+    {
       "id": "gnomish-cunning",
       "description": "Advantage on Intelligence, Wisdom and Charisma saving throws against magic only.",
       "savingThrows": {
@@ -21,9 +27,9 @@
   "creatureType": "humanoid",
   "size": "small",
   "walkingSpeedFeet": 30,
-  "darkvisionFeet": 60,
   "reviewNotes": [
-    "Walking speed subject to comparative Species balance."
+    "Walking speed subject to comparative Species balance.",
+    "Native Low-Light Vision replaces base 60-foot Darkvision in the approved comparative vision review; a specifically darkness-adapted Ancestry can still grant Darkvision."
   ],
   "defaultUpbringing": "upbringing.gnome.general"
 }
