@@ -15,6 +15,14 @@
 - Learned cultural benefits are not automatically inherited from Species.
 - Previously approved Species/Ancestry benefits remain in effect unless deliberately reconciled.
 
+## Pillar 2 foundational ruling — approved
+
+> Origination establishes how an individual came into existence. Heritage identifies the sources from which inherent characteristics may be derived. A character's actual characteristics are determined by the traits that manifest or are explicitly established through its origin. Neither the existence of a contributor nor a relationship with that contributor automatically grants its complete mechanical characteristics.
+
+**Interpretation:** The presence of any source, including one or more mixed-Species parents, does not grant that source's full Species/Ancestry package. Sources may be biological, artificial, supernatural, collective, or unknown. Actual grant and expression rules remain for later reconciliation.
+
+**Not yet approved:** inheritance probabilities, dormant/transmissible traits, trait exchange rates, creature-type resolution for mixed heritage, or universal point budgets. Approval of the distinction does not settle these questions.
+
 ## Verified repository findings (2026-11-03)
 
 The current native tree contains **nine Species base JSON files, 29 Ancestry JSON files (including nonselectable families and unresolved/deferred entries), and ten Upbringing JSON files**.
