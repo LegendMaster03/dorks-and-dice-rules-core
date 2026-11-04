@@ -364,3 +364,27 @@ Whether optional narrative guidance is cataloged centrally and referenced by mul
 **Implementation boundary:** This is an approved **native JSON content** allocation, not a claim that Background-grant, narrative-feature or starting-equipment execution is already implemented in C#/consumers. The equipment list is descriptive and must later be reconciled to verified native item identities and ordinary inventory; no extra inventory feature or new system is introduced. This content's effect on the total Character Origins benefit distribution is subject to the later agreed corpus audit.
 
 **Next:** Decompose Criminal and Soldier, then return to Acolyte using the same 2014-first approach; do not reopen Sage without a concrete new issue.
+
+## Criminal approved native baseline — 2026-11-04
+
+**Owner decision:** Adopt the **2014 5e Criminal Background** largely unchanged, including the *Criminal Contact* social feature. The 2024 SRD record remains available in `working/backgrounds/criminal.json` as non-authoritative source material.
+
+**Native file:** `data/rulesets/first-party-001/native/backgrounds/criminal.json` (`background.criminal`, `selected-native`).
+
+| Element | Approved allocation |
+| --- | --- |
+| Skills | Deception and Stealth training |
+| Competencies | Thieves' Tools; choose one Gaming Set type |
+| Languages | No default learned language |
+| Feature | Criminal Contact, a reliable communication liaison with an underworld network, not guaranteed access to all organizations |
+| Starting inventory | Crowbar, hooded dark common clothes, pouch, and 15 gp |
+| Specialties | Eight 2014 specialty examples retained as optional narrative prompts |
+| Variant | 2014 Spy concept retained as a narrative variant; no extra benefit package |
+| Characteristics | Optional inspiration; mechanics-first and story-first character creation both remain available |
+| 2024 grants excluded | Alert feat, ability adjustments, and replacement Sleight of Hand skill |
+
+Source verification: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/personality-and-background
+
+**Execution boundary:** Native JSON content is selected, but the runtime/consumer does not yet implement every Background benefit. The Gaming Set is a category-based training choice awaiting common native competency-choice resolution, and the starting equipment is descriptive pending normal inventory item materialization. Do not infer that this Background has an additional Upbringing or a mandatory criminal upbringing history. Defer corpus-wide rebalancing.
+
+**Next:** Soldier, then Acolyte. No code or consumer API changes required for the present content selection.
