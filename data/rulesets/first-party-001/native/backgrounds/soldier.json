@@ -1,0 +1,115 @@
+{
+  "id": "background.soldier",
+  "name": "Soldier",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have undergone military training and served in a fighting force, such as an army, militia, mercenary company, or comparable organization. Your experience does not prescribe your alignment, past allegiance, current occupation, or the age at which you entered service.",
+  "benefits": [
+    {
+      "id": "soldier-athletics",
+      "name": "Athletics Training",
+      "description": "Gain training in Athletics. Composite Athletics does not automatically train the separate Climb, Jump, or Swim facets.",
+      "skill": "skill.athletics",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "soldier-intimidation",
+      "name": "Intimidation Training",
+      "description": "Gain training in Intimidation.",
+      "skill": "skill.intimidation",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "soldier-gaming-set",
+      "name": "Gaming Set Training",
+      "description": "Choose one kind of gaming set and gain training with it.",
+      "grantType": "competency-training",
+      "choiceCategory": "gaming-set",
+      "choiceCount": 1
+    },
+    {
+      "id": "soldier-land-vehicles",
+      "name": "Land Vehicles Training",
+      "description": "Gain training with land vehicles, reflecting military transport and field service.",
+      "grantType": "qualification-training",
+      "qualificationCategory": "vehicle",
+      "vehicleType": "land"
+    },
+    {
+      "id": "soldier-military-rank",
+      "name": "Military Rank",
+      "description": "Your military rank or recognized standing can carry influence among members of a force that acknowledges it. When appropriate, you can request modest temporary equipment or mounts and may have access to friendly military encampments or fortifications. Recognition and cooperation depend on your relationship with the organization and its circumstances; the feature gives no automatic authority over unrelated forces.",
+      "grantType": "background-feature"
+    }
+  ],
+  "startingEquipment": {
+    "description": "An insignia of rank, a trophy from military service (such as a dagger, broken blade, or piece of a banner), a set of bone dice or a deck of cards, common clothes, and a pouch containing 10 gp. These are ordinary inventory possessions. The story behind the trophy is up to the player.",
+    "items": [
+      {
+        "name": "Insignia of rank",
+        "quantity": 1
+      },
+      {
+        "name": "Military trophy",
+        "quantity": 1,
+        "examples": [
+          "Dagger",
+          "Broken blade",
+          "Piece of a banner"
+        ]
+      },
+      {
+        "name": "Gaming set",
+        "quantity": 1,
+        "options": [
+          "Bone dice",
+          "Deck of cards"
+        ]
+      },
+      {
+        "name": "Common clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedSpecialties": [
+    "Officer",
+    "Scout",
+    "Infantry",
+    "Cavalry",
+    "Healer",
+    "Quartermaster",
+    "Standard Bearer",
+    "Support Staff"
+  ],
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Military roles, personality traits, ideals, bonds, flaws, and service history are optional prompts. They do not restrict the character's history, morality, organization, or current profession.",
+    "prompts": [
+      "What kind of force did you serve, and what did you do for it?",
+      "Who taught you to endure military life or work with others?",
+      "What part of your service still influences your decisions?",
+      "Do you retain contact with your former unit or commanders?"
+    ]
+  },
+  "reviewNotes": [
+    "Native reconciliation adopts the 2014 5e Soldier Background rather than the 2024 Soldier source in working/backgrounds/soldier.json.",
+    "Athletics and Intimidation remain the two skill grants.",
+    "Retain one gaming-set choice and proficiency with land vehicles; source-shaped category choices are descriptive until native execution support is implemented.",
+    "Land vehicles are authored as a qualification category because a verified native standalone competency ID for land-vehicle training was not found; do not substitute Navigation or automatically invent a new universal competency identity.",
+    "Military Rank is a contextual social relationship/privilege, not blanket command of all military organizations.",
+    "No language grant is included. Upbringing normally supplies formative languages.",
+    "Equipment follows the 2014 package, is ordinary character inventory, and awaits later item-identity/materialization support.",
+    "The 2014 eight specialties and suggested characteristics are optional narrative aids, not mandatory mechanical subtypes.",
+    "The 2024 Savage Attacker Origin feat and fixed ability adjustments are not automatically granted.",
+    "Giant Foundling Upbringing and Soldier both grant Intimidation. Preserve the overlap for the corpus-wide duplicate-grant reconciliation rather than granting extra training or changing the approved skill list."
+  ]
+}
