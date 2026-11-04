@@ -79,3 +79,19 @@ Grant order recognition plus guaranteed retinue. This is mechanically richer tha
 ## Approval boundary
 
 No Knight JSON until its core feature is selected and the skill/competency/language grants and equipment package are approved. This remains a stand-alone Background; no Noble or Soldier inheritance, no mechanical variant system, and no new follower subsystem just to represent noncombat retainers.
+
+
+## Approved Retainers feature direction — 2026-11-04
+
+**Owner decision:** Adopt the **2014 5e Retainers model and its intentional ambiguity and limitations** as the core differentiating feature for the independent Knight Background. Do **not** design a detailed retainer-management subsystem to resolve matters that 5e leaves to the DM and table. This selects Model B above; Model A (Knightly Standing) is not a second separately granted feature.
+
+**Approved conceptual mechanics:**
+
+- A retinue of **three noncombat retainers**, including the 2014 Knight model of a squire and two ordinary attendants. These are supporting NPCs, **not extra player-controlled characters** or combatants.
+- Retainers may perform appropriate ordinary tasks and errands. They **do not fight** for the character and **do not accompany the character into obviously dangerous areas**, including dungeons. They may leave if regularly endangered or abused.
+- Their ordinary behavior, availability and portrayal are adjudicated by the DM, consistent with usual NPC handling.
+- Keep 5e's **unspecified logistics unspecified**: no mandatory wages, daily cost, provisioning table, NPC character-sheet or initiative-tracking requirement; no automatic replacement or recruitment mechanic; no prescribed travel schedule, estate requirement, or detailed follower progression.
+- Do not implicitly add noble status, a guaranteed mount, a second institutional-access power, or a separate combat companion grant. Knight remains a new independent Background rather than a Noble/Soldier variant.
+- Author eventual native text in original wording rather than copying the non-SRD PHB passage.
+
+**Still unapproved:** Exact Skill and Competency grants, language grant, starting equipment, the full final native text, and promotion to `native/backgrounds/knight.json`. Previous skill/competency/equipment proposals remain open for individual approval or revision.
