@@ -427,3 +427,14 @@ Source verification: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/pers
 - **Not granted:** Automatic 2024 Magic Initiate (Cleric), fixed ability increases, or mandatory Calligraphy.
 
 **Status:** The initial four native Backgrounds (Sage, Criminal, Soldier, Acolyte) have been selected. This is the **initial** corpus, not all potential 5.x or supplemental Background sources. Background grants, social features, choices and ordinary inventory are authored content; executable consumer projection remains deferred. Corpus-wide duplicate, exception, and power-distribution review follows the planned Background decomposition, not individual editing of approved grants.
+
+
+## Noble approved native Background and Aristocratic Upbringing allocation — 2026-11-04
+
+**Native Noble record:** `data/rulesets/first-party-001/native/backgrounds/noble.json` (`background.noble`, `selected-native`). This is the **fifth** individually selected native Background on the Pillar 3 branch. The 2014 5e Noble mechanics are adapted as a standalone package: History and Persuasion training; one Gaming Set type; one learned language; Position of Privilege with recognition and relationship limits; and fine clothes, signet ring, evidence of noble standing or later ennoblement, a purse and 25 gp. Knight is to be a **separate future Background**, not a Noble variant. No fixed 2024 feat or ability scores are granted.
+
+**Aristocratic Upbringing:** Its name, independent formative scope, one community/household language, Skill pool (History, Insight, Persuasion, Deception, Performance), Competency pool (Gaming Set type, Calligraphy, Painting, Cooking), and *Aristocratic Protocol* are approved. The protocol conveys understanding of familiar aristocratic titles, etiquette and customary introductions without creating automatic social admission, rank, authority, or property. **Selection counts are not approved**, so no incomplete native Aristocratic Upbringing is selectable yet.
+
+**Independence:** Aristocratic upbringing need not come with a title; Noble rank can be earned later. Both can be selected together without making their grants automatically stack. The eventual duplicate-grant policy and cross-corpus balance review apply. Native Noble's equipment is ordinary inventory pending identity validation and consumer grant execution.
+
+Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3-2014-background-intake.md`.
