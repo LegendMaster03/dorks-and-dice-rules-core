@@ -314,10 +314,32 @@ The owner requests this reference collection explicitly as part of the Backgroun
 | 2014 Acolyte (two languages) | No universal language allocation by default; investigate faith-specific liturgical/scholarly language or optional study specialization | Candidate to test, not settled |
 | 2024 Soldier | No default language; particular military/intelligence/diplomatic roles may justify one | Candidate to test |
 | 2024 Criminal | No default language; specialized associations/trades may justify one | Candidate to test |
-| Source Giant Foundling | Already reconciled predominantly as `upbringing.giant-foundling`, which grants Giant plus an additional language choice; do not recreate a second Background entitlement | Existing selected native allocation |
+| Source Giant Foundling | **Fully converted** to `upbringing.giant-foundling`; it is **not** a native Dorks & Dice Background. It grants Giant plus an additional language choice. The historical source Background is conversion evidence only; do not recreate a second Background entitlement. | Existing selected native allocation |
 
 **No automatic compensation:** Removing a source Background's former language slots does not itself authorize substitute skill, tool, feat, rank, equipment, or other benefits. Track removals and transformations as part of the full Character Origins corpus audit; rebalance after all source Backgrounds have been decomposed.
 
 **Cross-source duplication:** A character can learn additional languages through Background even if its Upbringing already grants a language. Resolving duplicate selection and proficiency identity remains an open shared rule, not a reason to ban legitimate Background grants.
 
 **Sage distinction:** Its broad 2014 identity includes scholarship, research, and translation opportunities; magical study is only one specialty. A language-of-choice grant need not imply Wizard magic or a fixed arcane language.
+
+
+## Character creation order: mechanics-first or story-first — owner direction, 2026-11-04
+
+**Approved design intent:** Players can (a) select rules-defined traits, Species/Ancestry, Upbringing, Background and other options first, then develop a fitting backstory; **or** (b) develop their backstory first and select the rules-defined options that best match it. Both routes are ordinary, equally legitimate D&D-style character creation. Neither has default priority, bonus power, or a separate character-creation ruleset. Narrative sequencing is not a mechanical prerequisite.
+
+### Guidance for suggested characteristics
+
+- Retain personality traits, ideals, bonds, flaws, specialties, motivations, associations, and backstory prompts as **optional inspiration**. They should help a player generate or express a character, regardless of which creation direction the player chose.
+- Suggested characteristics may be displayed alongside a relevant Background such as 2014 Sage for discoverability, but **association is not exclusivity**: a character may adopt, combine, alter, or ignore them regardless of Background. They do not restrict freeform personality or biography.
+- Do not make suggested characteristic prompts carry hidden skill, feat, affiliation, ability-score, language, or equipment grants. Any such effect must be a separately specified explicit rule, not a consequence of choosing a narrative prompt.
+- A chosen Background should be mechanically comprehensible without the player accepting its default fictional story. A custom story need not be squeezed into one of the source's suggested archetypes. Players select the nearest appropriate mechanics where the concept fits.
+- If a particular **actual mechanical grant** requires a story-world condition (for example, current access to a religious order's support), express that condition in the grant's rules rather than making the entire character history follow a mandatory template.
+- The 2014 Sage's suggested specialties and characteristic tables should therefore be kept available as optional writing aids; they are **not** eight mandated mechanical subtypes or requirements to qualify as Sage.
+
+### Giant Foundling naming and classification clarification
+
+The already-native `upbringing.giant-foundling` was **fully** converted from its historical source Background into an **Upbringing**. It is not simultaneously a Dorks & Dice Background, and its earlier non-SRD source feat remains excluded. The owner is considering renaming the native concept to align with general culturally derived Upbringings (and to avoid unnecessary reuse of the source Background's distinctive name). **Naming is a proposal, not yet an approved rename**. A rename must preserve any needed historical conversion mapping and distinguish a general Giant-community upbringing from the particular published character concept. No native ID/name changed at this stage.
+
+### Remaining design decision
+
+Whether optional narrative guidance is cataloged centrally and referenced by multiple Backgrounds/Upbringings, or is authored alongside each Background for convenience, is a presentation/content-organization choice. Neither option makes narrative prompts mechanical prerequisites.
