@@ -125,3 +125,43 @@ The provisional working label is **Street-Raised Upbringing**, not yet a final n
 **Unresolved for selection:** Which skill and competency alternatives are acceptable, how many choices each character receives, whether a street-raised character receives any fixed training beyond language and urban navigation, and the detailed urban-route rule. These should be reconciled before writing `native/upbringings/street-raised.json`; no incomplete mechanically active native Upbringing has been introduced by this approval.
 
 **Copyright boundary:** Urchin is not an SRD 5.1 Creative Commons Background. The general formative concept and functional mechanics may inform Dorks & Dice design, while new native descriptions and feature explanations must be independently authored. Do not reproduce PHB narrative or suggestion tables.
+
+
+## Approved Street-Raised language, training pools, and Urban Navigation — 2026-11-04
+
+**Owner decision:** The specific community-language treatment, five-option Skill pool, four-option Competency pool, and the independently authored Urban Navigation rule below are **approved**. This supersedes the preceding *candidate/not individually approved* labels for those particular elements. The **number of Skill choices and Competency choices is still unapproved**, so the complete package is **not yet eligible for a selectable native Upbringing record**. Its name remains provisional pending final content selection.
+
+### Approved language rule
+
+Learn **one language used by the community that shaped your upbringing**. Common is a valid choice when spoken in that settlement or formative community, but it is not universally mandatory. The player chooses a language that fits the actual setting and their experience; this is a learned Upbringing grant, not a Species trait.
+
+### Approved Skill choices — pool, not quantity
+
+- `skill.stealth`
+- `skill.sleight-of-hand`
+- `skill.perception`
+- `skill.insight`
+- `skill.survival`
+
+### Approved Competency choices — pool, not quantity
+
+- `competency.disguise-kit`
+- `competency.thieves-tools`
+- `competency.cooking`
+- `competency.forgery`
+
+These are legitimate alternatives representing different urban experiences. **Do not award all nine options**, presume any particular choice counts, grant skill ranks twice, or imply every street-raised character engaged in crime. The final quantity/combination rules require later cross-Upbringing benefit review.
+
+### Approved Urban Navigation rule — native-original expression
+
+> **Urban Navigation.** When traveling outside combat through a substantial settlement, you can identify efficient routes through its accessible streets, alleys, and passages. You and companions following your guidance can travel between locations in half the usual time. This benefit does not bypass physical barriers or grant additional movement during combat.
+
+The **half-time** traversal effect is intentional and approved. Its domain is accessible city/settlement routes and **noncombat travel**, not every environment, instantaneous travel, combat movement, forced entry, or supernatural knowledge of concealed routes. If a campaign encounter introduces a special obstruction, it is resolved normally rather than bypassed by the feature. Do not require a detailed street-map subsystem to implement this content.
+
+### Finalization boundary
+
+- The historical PHB Urchin is **fully redirected to an Upbringing design**, not duplicated as a native Background. The underlying functional mechanics are adapted without reproducing protected non-SRD prose.
+- All Species may select this experience once its package is finalized. Street-Raised can coexist with a separate Criminal or other Background; cross-grant duplicates are resolved under the later general policy.
+- No separate Urchin equipment grant, compulsory orphanhood, compulsory poverty, or compulsory criminal conduct.
+- **Remaining for native promotion:** Number of Skill selections, number of Competency selections, potential other fixed grants (none approved so far), final name/ID, and comparison of the full package against existing native Upbringings. The approved benefits should be retained intact while these remaining decisions are resolved.
+- **Implementation is deferred** as with the other Pillar 3 Backgrounds: authored native content is distinct from working consumer grant projection.
