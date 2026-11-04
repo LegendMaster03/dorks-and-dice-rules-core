@@ -22,6 +22,23 @@ Sources:
 - 2014 Basic Rules for Acolyte, Criminal, Folk Hero, Noble, Sage, Soldier: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/personality-and-background
 - Additional PHB options and variants may require the licensed PHB for full original text; do not mistake an index entry for full detailed evidence.
 
+
+## Non-SRD PHB source handling — 2026-11-04
+
+**Source/licensing clarification:** The 2014 Player's Handbook has thirteen standard Backgrounds; SRD 5.1 contains **only Acolyte** among them. The absence of a CC-BY grant for the other PHB Background text **does not** mean the underlying common concepts or mechanics are copyright-protected. Under U.S. law, 17 U.S.C. § 102(b) excludes ideas, procedures, processes, systems, and methods of operation; the U.S. Copyright Office's Games guidance specifically distinguishes game-play methods from copyrightable rules explanations and illustrations.
+
+**Implementation/editorial handling for the nine candidates and existing 2014-based native Backgrounds:**
+
+- It is permissible to analyze and independently implement **generic experience concepts and functional game mechanics**: e.g., city navigation, identifying a contact, military standing, learned skills and other mechanical procedures. Source provenance and comparisons stay documented.
+- Write **original Dorks & Dice prose** for all native descriptions, feature wording, roleplaying prompts, specialty explanations and invented setting details. Do **not** bulk-copy PHB feature paragraphs, background narratives, suggested-personality tables, illustrations or other expressive material absent licensing or another applicable basis.
+- Short titles and names, including generic Background names or short feature labels, are **not protected by copyright as names**; trademark and brand-confusion questions are separate. Renaming a concept can improve clarity and reduce unnecessary publication risk, but renaming alone neither creates originality nor is universally required.
+- Do **not** distort mechanical rules solely for apparent copyright differentiation. Change mechanics when required for Dorks & Dice Species/Ancestry/Upbringing/Background division, compatibility, balance or design quality.
+- Keep the status of **individual source excerpts** distinct from the status of native expressions. The presence of a PHB concept in source reference notes does not establish that the entire PHB entry was released under the SRD license.
+- Re-review the authored native Sage, Criminal and Soldier descriptions for independent prose and nonmandatory narrative material during the later quality pass; do **not** presume a problem merely because their functional mechanics resemble the 2014 PHB.
+- The source `working/`, `reference/`, and comparison documents do **not** become part of the authoritative native content path merely by being useful research sources.
+
+**Authoritative legal sources:** https://uscode.house.gov/us/usc/119-136/t17/s102/ ; https://www.copyright.gov/register/tx-games.html ; https://copyright.gov/help/faq/faq-protect.html ; https://docs.dnd5eapi.co/api/get-a-background-by-index (SRD 5.1 background inventory). This is a content-reconciliation policy, not a determination that any particular reproduction or distribution is legally cleared.
+
 ## Remaining nine: first-pass destination hypotheses
 
 | 2014 source Background | Distinctive 2014 feature | Most likely destination | What needs a careful split? |
