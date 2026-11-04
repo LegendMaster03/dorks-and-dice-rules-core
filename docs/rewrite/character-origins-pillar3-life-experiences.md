@@ -297,3 +297,27 @@ The owner requests this reference collection explicitly as part of the Backgroun
 **Strixhaven caution:** Its five college Student Backgrounds span different magical disciplines (including Druid-related study). They are related examples of academic specialization, not proof of literal source-defined Sage parentage or mandatory Wizard spellcasting. Do not promote non-SRD spells or feats solely because they appear in a comparative source.
 
 **Source coverage limitation:** The existing `working/backgrounds/sage.json` contains the 2024 SRD-derived Sage, not a local reconciled 2014 Sage entry. The 2014 description above is independently referenced historical material, not yet a promoted native rule. The general Background decomposition and later corpus balance audit remain open.
+
+## Candidate rule: Background language allocation — 2026-11-04
+
+**Status: owner-proposed design direction, with Sage one-language grant as recommendation pending specific approval. No native content changed.**
+
+> Languages are normally acquired through Upbringing. A Background grants an additional language only when language acquisition or sustained use is meaningfully part of its education, duties, activities, or associated social experience. A Background may grant a fixed associated language, a restricted choice, or an open language choice when warranted. Most Backgrounds need not grant any language.
+
+**Important distinction:** Reconciliation does **not** mean mechanically relocating every language slot removed from a 2014 Background into a particular Upbringing. The existing Upbringing requirement normally supplies language knowledge on its own terms, reflecting the character's actual society/culture. The source Background's old language count is retained as historical evidence for conversion and later balance audits.
+
+### First test cases
+
+| Source Background | Candidate language treatment | Status |
+| --- | --- | --- |
+| 2014 Sage (two languages) | **One language of choice** provisionally, as scholarly study and translation plausibly teach additional languages | Proposed, not approved native grant |
+| 2014 Acolyte (two languages) | No universal language allocation by default; investigate faith-specific liturgical/scholarly language or optional study specialization | Candidate to test, not settled |
+| 2024 Soldier | No default language; particular military/intelligence/diplomatic roles may justify one | Candidate to test |
+| 2024 Criminal | No default language; specialized associations/trades may justify one | Candidate to test |
+| Source Giant Foundling | Already reconciled predominantly as `upbringing.giant-foundling`, which grants Giant plus an additional language choice; do not recreate a second Background entitlement | Existing selected native allocation |
+
+**No automatic compensation:** Removing a source Background's former language slots does not itself authorize substitute skill, tool, feat, rank, equipment, or other benefits. Track removals and transformations as part of the full Character Origins corpus audit; rebalance after all source Backgrounds have been decomposed.
+
+**Cross-source duplication:** A character can learn additional languages through Background even if its Upbringing already grants a language. Resolving duplicate selection and proficiency identity remains an open shared rule, not a reason to ban legitimate Background grants.
+
+**Sage distinction:** Its broad 2014 identity includes scholarship, research, and translation opportunities; magical study is only one specialty. A language-of-choice grant need not imply Wizard magic or a fixed arcane language.
