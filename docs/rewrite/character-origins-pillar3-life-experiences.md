@@ -218,7 +218,7 @@ The existing Acolyte comparison document is a source inventory and candidate dec
 
 **Relevant existing structural principle:** This system supports **non-selectable parent definitions** whose grants are inherited by selectable members of a group. Apply the same idea to language rules when genuinely shared across an Upbringing family:
 
-- A non-selectable parent Upbringing can express a common cultural-language baseline (including Common where appropriate). Selectable descendant Upbringings inherit that baseline, then contribute their distinct benefits.
+- **Existing pattern, not new architecture:** General Elf Upbringing is a selectable parent of Drow, High Elf, and Wood Elf Upbringings; General Gnome Upbringing is a selectable parent of Forest Gnome and Rock Gnome Upbringings. Their descendants already inherit the shared language/benefit baseline. A parent Upbringing **may be selectable or non-selectable**; selectability is not a prerequisite for inheritance. Common can be added at a shared parent only when appropriate to all descendants, otherwise at the individual child.
 - A selectable Upbringing can also contain its own language grant when the language is not genuinely shared by all members of the parent grouping.
 - Selecting a child resolves inherited parent grants as **one effective Upbringing selection**, rather than treating its parent as an independently selected package or multiplying duplicate language benefits.
 - A cultural parent must reflect a genuine shared setting/tradition. Do not create a fictitious universal cultural parent solely to grant Common across unrelated peoples; do not silently make a Society/Species language biological.
