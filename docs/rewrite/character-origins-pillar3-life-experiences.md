@@ -226,3 +226,48 @@ The existing Acolyte comparison document is a source inventory and candidate dec
 - Backgrounds remain free to supply languages learned later through education, occupation, or other experiences. The proposed normal Upbringing minimum of one language, and its exceptions, remain to be reconciled with other grants and the complete corpus balance review.
 
 **Status boundaries:** The owner explicitly chose the first Common allocation approach. Exact per-Upbringing Common grants, changes to parent/selectability hierarchies, and duplicate-language replacement mechanics are **not** approved by this choice and remain pending content-by-content reconciliation. No native JSON changes yet.
+
+## Further comparisons: Sage, Strixhaven, and the Elf/Orc parentage-and-upbringing books
+
+**Status:** Research evidence and proposed tests, not approved mechanics or authorizations to promote non-SRD content.
+
+### Corrected Sage comparison
+
+- **2014 Sage:** Broad scholarship including Alchemist, Astronomer, Discredited Academic, Librarian, Professor, Researcher, Wizard's Apprentice and Scribe. It grants Arcana, History, two languages and the Researcher informational/social feature. Wizard study is one specialization rather than the meaning of Sage as a whole. Source: https://www.dndbeyond.com/backgrounds/11-sage
+- **2024 Sage:** Still scholarly, but adds a particularly Wizard-oriented Magic Initiate (Wizard) Origin feat, Calligrapher's Supplies, and specific Ability choices. Do not recast broad scholarship as a compulsory Wizard upbringing. Source: https://www.dndbeyond.com/backgrounds/406485-sage
+- **Strixhaven: A Curriculum of Chaos (2021):** Five *distinct* college Student Backgrounds, not literal inherited children of Sage. Their college-specific magical study intersects academic Background, upbringing/environment, and acquired magical feat/spell-list access. The five colleges **do not all emphasize Wizard magic**:
+  - Lorehold: historical/archaeological/spiritual studies; Initiate spells from Cleric or Wizard.
+  - Prismari: elemental arts/performance; Initiate spells from Bard or Sorcerer.
+  - Quandrix: math, physics and nature; Initiate spells from Druid or Wizard.
+  - Silverquill: language, influence, light and shadow; Initiate spells from Bard or Cleric.
+  - Witherbloom: biology, life, death and healing; Initiate spells from Druid or Wizard; thematically especially hospitable to Druid, Cleric, Warlock and others.
+  
+  The different college spell choices provide evidence for **discipline-specific learned magic**, not five mandatory Wizard specializations. Strixhaven also adds college-related spells to spellcasting lists; neither feat grants nor spell-list additions can simply be copied into native Upbringings without examining class and feat rules. Direct source listing: https://www.dndbeyond.com/sources/dnd/sacoc . Official D&D Beyond comparative article: https://www.dndbeyond.com/posts/1128-building-around-the-new-backgrounds-found-in
+
+**Design inference to test:** General scholarly exposure, an institutional/student environment, demonstrated scholarly activity and specialized magical study are *distinct dimensions*. A scholarly Upbringing might represent education, while Sage Background describes substantive research and scholarly practice. Alternatively, a college Student concept might largely be Background if joining the college was a deliberate later activity. Do not enforce a childhood boundary; classify grants by what the selected experience actually provides. No automatic Sage → Strixhaven parent relation is established.
+
+### Requested review: *An Elf and an Orc Had a Little Baby* series
+
+The owner requests this reference collection explicitly as part of the Background/Upbringing **decomposition** review, not just as a mixed-Species heritage precedent. A direct multi-volume source study was previously recorded on the separate Pillar 2 branch in `docs/rewrite/character-origins-pillar2-reconciliation.md`; those findings are research, not a binding Pillar 3 allocation.
+
+**Existing relevant findings from that recorded study (do not mistake this for a new direct re-reading):**
+
+- Volume 1 separates point-selected parentage traits from learned Upbringing; Appendix B also discusses optional Upbringing benefit selection and mixed cultural upbringing. Its published numerical ranges/traits are **not Dorks & Dice prices**.
+- Later volumes expand available parentage/creature concepts; they do not by themselves establish a universal rule that all cultural/occupational benefits must sit in Upbringing.
+- Compare each book's Upbringing content to its treatment of separate Background and class/feat selection, with special attention to overlapping learned skills, languages, non-biological origins and cases combining multiple formative cultures.
+
+**Pillar 3 comparison checklist for a fuller review of all four books:**
+1. What does a selected Upbringing actually grant, and which benefits are identical or comparable to ordinary 5.x Background grants?
+2. Can non-biological, artificial, mixed-cultural or unconventional formative environments use the same approach?
+3. How are broad formative education and later sustained activities/occupations distinguished, if at all?
+4. How are overlap, duplicate grants, language entitlement, feats and exceptional magical education handled?
+5. Does the source provide reusable parent/group inheritance, presets and advanced customization without unlimited benefit accumulation?
+6. What useful design pattern transfers without importing the source's budgets, feature prices or parentage assumptions?
+
+### Decomposition implications
+
+- **Do not presume every scholarly or magical source Background needs a new Upbringing.** The decision is grant- and concept-specific; one may remain largely Background, another may primarily contribute formative training.
+- Separate **source identity**, **native narrative role**, **mechanical grants**, **actual acquisition stage**, and **optional thematic specialization**. Those dimensions may have different destinations.
+- Record the 2014 Sage Researcher feature and languages alongside 2024 Wizard-oriented choices without deciding yet whether any source grants are retained, replaced, allocated to Upbringing or folded into a general Character Origins choice.
+- Treat Strixhaven and the Elf/Orc books as comparative design evidence. No non-SRD content is being promoted or newly claimed as authoritative native material.
+
