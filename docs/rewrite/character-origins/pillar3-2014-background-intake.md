@@ -226,3 +226,30 @@ Knight is **not** an existing selected native Background and will be designed as
 5. **Non-aristocratic + Knight:** Knightly recognition and acquired martial obligations are possible without noble childhood or any Noble Background.
 
 **Next approval points:** Aristocratic Skill pool, Competency pool, community-language allocation, whether Aristocratic Protocol is a distinct mechanical feature, and Noble's proposed retention of its 2014 learned grants. Final choice counts and total-benefit comparison remain deferred until the first general audit.
+
+
+## Approved Aristocratic Upbringing and Noble Background baseline — 2026-11-04
+
+**Owner approval:** The immediately preceding reconciliation's proposed **Aristocratic Upbringing** language, skill options, competency options and *Aristocratic Protocol* are accepted. Its training-selection **counts are deferred** to the corpus-level balance review. The parallel proposal to retain **2014-derived Noble** as a self-contained, independent Background baseline is accepted. Neither implies that the character must select the other.
+
+### Aristocratic Upbringing — approved content, unresolved counts
+
+- **Scope:** Formative exposure to aristocratic customs or household life; any Species, family role, or social status can qualify where the character actually acquired those practices. No required noble birth, title, wealth, royal court residence, servants, or starting equipment.
+- **Language:** Learn **one language used in the formative aristocratic household or social environment**, including Common if appropriate.
+- **Skill choice pool:** `skill.history`, `skill.insight`, `skill.persuasion`, `skill.deception`, `skill.performance`.
+- **Competency choice pool:** one Gaming Set type (`choiceCategory: gaming-set`), `competency.calligraphy`, `competency.painting`, `competency.cooking`.
+- **Aristocratic Protocol:** When dealing with aristocratic communities whose customs you know, you understand ordinary titles, ranks, forms of address, etiquette, and ways to request introductions or an audience. This learned familiarity gives no automatic admission, audience, title, authority, wealth, or control over another person. Unfamiliar customs may require inquiry or ordinary adjudication.
+- **Unresolved:** The number of choices from each pool and final native ID. No selectable native Aristocratic Upbringing is added until its total grants are coherent. Do not automatically award every option.
+
+### Noble Background — approved 2014-derived native baseline
+
+- **Skills:** History and Persuasion training.
+- **Competency:** Choose one type of Gaming Set to train.
+- **Language:** One additional language of choice, acquired through noble social experience. Distinct from a language learned in Upbringing.
+- **Social feature:** Position of Privilege, representing recognized noble rank and access among institutions and people who acknowledge the character's standing. Recognition does not mean universal command or entrance everywhere; current standing may differ by jurisdiction and relationship.
+- **Inventory:** Fine clothes, a signet ring, evidence of pedigree **or** an equivalent document of bestowed status (such as a charter or commission), and 25 GP in a purse. Ordinary inventory; not automatically inherited from Aristocratic Upbringing.
+- **Narrative:** No required biological noble lineage or aristocratic childhood, and no compulsory moral, political or familial outlook.
+- **Do not grant** fixed 2024 ability increments or the 2024 Skilled Origin feat. Knight is a distinct future Background, not a Noble variant.
+- **Execution:** Native JSON is selected content; projection, category-qualification resolution, item identity and consumer execution remain deferred until integration work.
+
+**Interaction tests:** Aristocratic + Noble may overlap History, language and gaming grants; use the later general duplicate policy rather than silently stacking ranks or replacing unrelated benefits. A character with other Upbringing can also select Noble, and Aristocratic upbringing does not independently imply recognized rank.
