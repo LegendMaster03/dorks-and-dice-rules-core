@@ -197,3 +197,17 @@ Address the audit findings through targeted reassignment between Ancestry and Up
 ### Immediate implication for Acolyte
 
 The existing Acolyte comparison document is a source inventory and candidate decomposition, **not** a finalized Acolyte Background. First classify each 2014 and 2024 element by destination and record open dependencies; do not finalize its balance or feature budget now. Apply the same method to the remaining background candidates. The 2014 model is the initial Background reference, with 3.5 alternatives and 2024 mechanics evaluated for their appropriate destination.
+
+## Proposed baseline: formative language grants — owner proposal (2026-11-04)
+
+**Status: proposed, for review; not yet a newly approved operative rule.**
+
+- An Upbringing **normally provides at least one learned language**, derived from the character's formative environment, society, culture, community, education, or socialization.
+- This would typically be a language associated with the culture referenced by the Upbringing, **not a biological Species grant**. A character raised in a different culture is not automatically entitled to the language traditionally associated with its Species.
+- **Common may be granted in addition where justified by the actual formative community or contact**, but is not automatically required of all characters, and should not be granted for no discernible reason simply because the character is playable.
+- There may be **exceptions**, including atypical isolated, nonverbal, recently created, or otherwise unconventional beginnings. The existence and exact handling of exceptions are still to be reconciled; do not require every concept to be given a fabricated childhood or language.
+- **Backgrounds may also grant learned languages** through roles, professions, study, travel, and other significant experiences. Not all Backgrounds must do so. Do not remove the 2014 Acolyte's two language choices solely to enforce a supposed exclusive Upbringing responsibility.
+- Repeated languages from independent sources need a consistent no-double-benefit policy, but the exact replacement/choice semantics remain unresolved. A primary language and Common may be separate grants; do not silently treat the same known language as multiple proficiencies.
+- The rule is a **minimum expectation**, not a package-equivalence or balance metric. Its potential adoption does not prove that existing Upbringings are balanced.
+
+**Baseline examples to test:** General Dwarf -> Dwarvish; General Elf -> Elvish; General Goliath -> Gol-Kaa; Giant Foundling -> Giant and its existing language choice; Common-speaking city -> Common as culturally learned; culturally displaced character -> language of actual upbringing, not inherited Species language. Existing native Upbringings are unchanged pending approval and later corpus-wide analysis.
