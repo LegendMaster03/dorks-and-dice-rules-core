@@ -413,3 +413,17 @@ Source verification: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/pers
 **Equipment and source boundary:** Equipment is descriptive and becomes ordinary inventory when valid native item identities and materialization exist. The eight specialties and suggested characteristics do not add hidden grants or mandate a particular backstory. The earlier 2024 source record remains retained for comparisons.
 
 **Next candidate:** Revisit 2014 Acolyte using the same source-first decomposition process; finalize only on its individual approval.
+
+
+## Acolyte selected native allocation — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/acolyte.json` (`background.acolyte`, `selected-native`). Uses the 2014 5e Acolyte as its baseline, while the 2024 source remains preserved separately in `working/backgrounds/acolyte.json`.
+
+- **Skills:** Insight and Religion.
+- **Language:** One choice associated with the character's deity, faith, religious traditions, or practices; **Common is valid** when used by that religious community or in its practices. Replaces the 2014 two unrestricted language choices. This is an acquired Background language, distinct from Upbringing.
+- **Feature:** Shelter of the Faithful; rites, faith-community healing/care with required spell components provided, modest personal support, conditional institutional assistance/residence. Standing, location, resources, and relationships matter.
+- **Ordinary inventory:** Holy symbol; prayer book **or** prayer wheel; five incense sticks; vestments; common clothes; belt pouch; 15 gp. Descriptive pending normal item materialization.
+- **Suggested characteristics:** Nonbinding narrative guidance; no particular backstory or Cleric class required.
+- **Not granted:** Automatic 2024 Magic Initiate (Cleric), fixed ability increases, or mandatory Calligraphy.
+
+**Status:** The initial four native Backgrounds (Sage, Criminal, Soldier, Acolyte) have been selected. This is the **initial** corpus, not all potential 5.x or supplemental Background sources. Background grants, social features, choices and ordinary inventory are authored content; executable consumer projection remains deferred. Corpus-wide duplicate, exception, and power-distribution review follows the planned Background decomposition, not individual editing of approved grants.
