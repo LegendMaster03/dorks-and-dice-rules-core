@@ -1,0 +1,93 @@
+{
+  "id": "background.sage",
+  "name": "Sage",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have devoted substantial effort to the study, preservation, investigation, or teaching of knowledge. Your work may be mundane or magical, independent or institutional; choosing this Background does not require membership in an academy or training as a spellcaster.",
+  "benefits": [
+    {
+      "id": "sage-arcana",
+      "name": "Arcana Training",
+      "description": "Gain training in Arcana.",
+      "skill": "skill.arcana",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "sage-history",
+      "name": "History Training",
+      "description": "Gain training in History.",
+      "skill": "skill.history",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "sage-learned-language",
+      "name": "Additional Scholarly Language",
+      "description": "Learn one additional language of your choice through your studies. Languages provided by Upbringing are separate learned grants.",
+      "extraLanguages": 1
+    },
+    {
+      "id": "sage-researcher",
+      "name": "Researcher",
+      "grantType": "background-feature",
+      "description": "When you lack a piece of lore, you can often identify an expert, archive, text, institution, or other source where the information might be found. Knowing where to look does not grant the information or access to it, and the GM determines whether the knowledge is secret, inaccessible, or unavailable."
+    }
+  ],
+  "startingEquipment": {
+    "description": "An ink bottle, a quill, a small knife, scholarly correspondence concerning an unresolved question, common clothes, and 10 gp. These possessions enter ordinary inventory; the correspondence is a suggested story hook, not a mandatory personal-history fact.",
+    "items": [
+      {
+        "name": "Ink bottle",
+        "quantity": 1
+      },
+      {
+        "name": "Quill",
+        "quantity": 1
+      },
+      {
+        "name": "Small knife",
+        "quantity": 1
+      },
+      {
+        "name": "Scholarly correspondence",
+        "quantity": 1
+      },
+      {
+        "name": "Common clothes",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedSpecialties": [
+    "Alchemist",
+    "Astronomer",
+    "Discredited Academic",
+    "Librarian",
+    "Professor",
+    "Researcher",
+    "Wizard's Apprentice",
+    "Scribe"
+  ],
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Personality traits, ideals, bonds, flaws, and scholarly specialties are inspiration only. Select, adapt, combine, or disregard them; no backstory or personality is required to choose Sage.",
+    "prompts": [
+      "What question or field of knowledge keeps drawing you back?",
+      "Who taught you, challenged you, or relied on your research?",
+      "What principle guides your pursuit of knowledge?",
+      "What habit or blind spot has your education given you?"
+    ]
+  },
+  "reviewNotes": [
+    "Native reconciliation uses the broad 2014 5e Sage rather than the narrower 2024 Wizard-focused package.",
+    "The 2014 grant of two languages is reduced to one learned language choice because formative language learning is normally represented by Upbringing.",
+    "2014 Sage specialties and suggested characteristics remain optional narrative prompts, not required or separately granted mechanical specializations.",
+    "No Magic Initiate (Wizard), fixed 2024 ability increases, or universal Calligraphy grant.",
+    "Starting equipment is described here but requires later item-identity and ordinary-inventory materialization; do not interpret this descriptive package as already executable.",
+    "Researcher is a GM-adjudicated informational benefit; its description does not promise an automatic answer or unrestricted institutional access.",
+    "The 2024 Sage working source is retained separately as non-authoritative source evidence."
+  ]
+}
