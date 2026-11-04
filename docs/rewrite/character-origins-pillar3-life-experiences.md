@@ -211,3 +211,18 @@ The existing Acolyte comparison document is a source inventory and candidate dec
 - The rule is a **minimum expectation**, not a package-equivalence or balance metric. Its potential adoption does not prove that existing Upbringings are balanced.
 
 **Baseline examples to test:** General Dwarf -> Dwarvish; General Elf -> Elvish; General Goliath -> Gol-Kaa; Giant Foundling -> Giant and its existing language choice; Common-speaking city -> Common as culturally learned; culturally displaced character -> language of actual upbringing, not inherited Species language. Existing native Upbringings are unchanged pending approval and later corpus-wide analysis.
+
+## Language decision: community-granted Common and inherited group rules — 2026-11-04
+
+**Approved direction:** Use the **first** Common-language allocation option: an Upbringing from a community in which Common is widely used may grant Common **as an additional learned language**, rather than taking that grant from a universal, separate character-creation language allowance. Common is not an automatic grant for every playable Species or every Upbringing.
+
+**Relevant existing structural principle:** This system supports **non-selectable parent definitions** whose grants are inherited by selectable members of a group. Apply the same idea to language rules when genuinely shared across an Upbringing family:
+
+- A non-selectable parent Upbringing can express a common cultural-language baseline (including Common where appropriate). Selectable descendant Upbringings inherit that baseline, then contribute their distinct benefits.
+- A selectable Upbringing can also contain its own language grant when the language is not genuinely shared by all members of the parent grouping.
+- Selecting a child resolves inherited parent grants as **one effective Upbringing selection**, rather than treating its parent as an independently selected package or multiplying duplicate language benefits.
+- A cultural parent must reflect a genuine shared setting/tradition. Do not create a fictitious universal cultural parent solely to grant Common across unrelated peoples; do not silently make a Society/Species language biological.
+- The presence of non-selectable parent nodes does not require converting **existing selectable general Upbringings** into non-selectable records without review. The choice of parent/leaf structure is independent of the language allocation principle.
+- Backgrounds remain free to supply languages learned later through education, occupation, or other experiences. The proposed normal Upbringing minimum of one language, and its exceptions, remain to be reconciled with other grants and the complete corpus balance review.
+
+**Status boundaries:** The owner explicitly chose the first Common allocation approach. Exact per-Upbringing Common grants, changes to parent/selectability hierarchies, and duplicate-language replacement mechanics are **not** approved by this choice and remain pending content-by-content reconciliation. No native JSON changes yet.
