@@ -165,3 +165,20 @@ The **half-time** traversal effect is intentional and approved. Its domain is ac
 - No separate Urchin equipment grant, compulsory orphanhood, compulsory poverty, or compulsory criminal conduct.
 - **Remaining for native promotion:** Number of Skill selections, number of Competency selections, potential other fixed grants (none approved so far), final name/ID, and comparison of the full package against existing native Upbringings. The approved benefits should be retained intact while these remaining decisions are resolved.
 - **Implementation is deferred** as with the other Pillar 3 Backgrounds: authored native content is distinct from working consumer grant projection.
+
+
+## Noble and Aristocratic Upbringing — corrected design direction (2026-11-04)
+
+**Owner direction:** Use **Aristocratic Upbringing**, not `Court-Raised`. The broader term includes upbringing in noble households, estates, and aristocratic social environments, without requiring that a character was physically raised at court or personally holds a hereditary title.
+
+**Keep three independent concepts, with different responsibilities:**
+
+- **Aristocratic Upbringing:** Formative cultural environment and acquired social or educational practices, language, etiquette, and training. Does **not** automatically confer noble rank, current wealth, political recognition, or privilege. A household attendant raised in that environment may qualify.
+- **Noble Background:** Actual experience and recognized standing in aristocratic structures, with contextual social access, political ties and privilege as appropriate. A character can become noble in later life without Aristocratic Upbringing.
+- **Knight Background:** **Already separately designed by the project owner.** Do not reintroduce Knight as a `Noble` Background variant or make a second incompatible Knight definition. Assess its existing design and supplement it if justified, including possible use of the historical 2014 Retainers mechanics, but do not silently approve or append a new feature.
+
+**Repository verification boundary (2026-11-04):** A current-branch lookup of `native/backgrounds/knight.json` and `working/backgrounds/knight.json` returned no files. The rewritten native Background catalog presently contains the first four approved Background records (Acolyte, Criminal, Sage, Soldier). A code-search for Knight in the current repository returned monster entries but did not locate its independent Background definition. This is **not evidence the user's previously created Knight design does not exist**; recover that design from its actual source/history before authoring or importing it. Do not create a new speculative Knight replacement based only on the PHB variant.
+
+**Historical mapping:** The 2014 PHB `Noble (Knight variant)` is **source evidence only**. For the Dorks & Dice native allocation, use `Noble` and separately existing `Knight` Backgrounds. Do not confuse the source edition's variant classification with the desired system's authoritative Background taxonomy.
+
+**Still unapproved:** Exact Aristocratic Upbringing skill/competency choices or choice counts; the Nobility feature scope and starting equipment; mapping of rank and retainer mechanics between the existing Knight and Noble definitions; final native IDs/wording. No new native file is authorized by this classification alone.
