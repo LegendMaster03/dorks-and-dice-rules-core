@@ -175,10 +175,54 @@ The **half-time** traversal effect is intentional and approved. Its domain is ac
 
 - **Aristocratic Upbringing:** Formative cultural environment and acquired social or educational practices, language, etiquette, and training. Does **not** automatically confer noble rank, current wealth, political recognition, or privilege. A household attendant raised in that environment may qualify.
 - **Noble Background:** Actual experience and recognized standing in aristocratic structures, with contextual social access, political ties and privilege as appropriate. A character can become noble in later life without Aristocratic Upbringing.
-- **Knight Background:** **Already separately designed by the project owner.** Do not reintroduce Knight as a `Noble` Background variant or make a second incompatible Knight definition. Assess its existing design and supplement it if justified, including possible use of the historical 2014 Retainers mechanics, but do not silently approve or append a new feature.
+- **Knight Background:** The owner corrected the earlier recollection: **Soldier** was the previously designed Background, not Knight. Design **Knight as a new, independent Background**, using Soldier and the 2014 Knight material as mechanical references where appropriate. Do not create it as a Noble or Soldier variant or automatically inherit either package.
 
-**Repository verification boundary (2026-11-04):** A current-branch lookup of `native/backgrounds/knight.json` and `working/backgrounds/knight.json` returned no files. The rewritten native Background catalog presently contains the first four approved Background records (Acolyte, Criminal, Sage, Soldier). A code-search for Knight in the current repository returned monster entries but did not locate its independent Background definition. This is **not evidence the user's previously created Knight design does not exist**; recover that design from its actual source/history before authoring or importing it. Do not create a new speculative Knight replacement based only on the PHB variant.
+**Repository verification and owner correction (2026-11-04):** The rewrite does **not** contain `background.knight`. The owner clarified that **Soldier**, not Knight, was the previously developed Background. Knight is therefore a **new Background candidate**. Its independent mechanics, privileges and any retainer relationships require reconciliation; the 2014 PHB Knight variant is research evidence only.
 
 **Historical mapping:** The 2014 PHB `Noble (Knight variant)` is **source evidence only**. For the Dorks & Dice native allocation, use `Noble` and separately existing `Knight` Backgrounds. Do not confuse the source edition's variant classification with the desired system's authoritative Background taxonomy.
 
 **Still unapproved:** Exact Aristocratic Upbringing skill/competency choices or choice counts; the Nobility feature scope and starting equipment; mapping of rank and retainer mechanics between the existing Knight and Noble definitions; final native IDs/wording. No new native file is authorized by this classification alone.
+
+## Aristocratic Upbringing and independent Noble — first mechanical candidates (2026-11-04)
+
+**Status:** Source-backed design candidate. The owner **approved the name Aristocratic Upbringing** and the independent concept split. The detailed pools, feature, numbers, and Noble allocations below are **proposals only**. Do not add a native selectable record before resolving them.
+
+### Source and design distinction
+
+The official 2014 Noble Background offers History and Persuasion training, one type of Gaming Set training, one chosen language, the social feature Position of Privilege, and fine clothes, signet ring, pedigree scroll, and 25 gp. Its Knight variant replaces the feature and is **not a native inheritance relationship**. See https://www.dndbeyond.com/sources/dnd/basic-rules-2014/personality-and-background and https://www.dndbeyond.com/backgrounds/10-noble.
+
+**Correction to an earlier proposal:** Do not take History or Gaming Set training **away** from Noble solely because Aristocratic Upbringing might also teach them. An individual who gains noble status later in life must still be able to take Noble without relying on a prescribed childhood. Design each package independently; duplicate choices between Upbringing and Background need a general overlap policy later.
+
+### Aristocratic Upbringing — proposed
+
+- **Meaning:** Formative immersion in aristocratic social customs, education, family service, household relationships or elite institutions. The character need not hold a title, belong biologically to a noble family, possess current wealth, or have attended a royal court. Merely residing on aristocratic lands without exposure to those practices does not imply all such training.
+- **Language:** One language regularly used in the character's formative household or social environment, selected according to the setting. Common may qualify. This is cultural learning, not a bonus language awarded merely because someone is of noble blood.
+- **Skill selection pool:** History, Insight, Persuasion, Deception, and Performance (`skill.history`, `skill.insight`, `skill.persuasion`, `skill.deception`, `skill.performance`). Represent formal education, reading social expectations, diplomacy, intrigue or ceremonial presentation. The number of choices is deferred.
+- **Competency selection pool:** A type of Gaming Set (`choiceCategory: gaming-set`) or an existing native competency such as `competency.calligraphy`, `competency.painting`, or `competency.cooking`, depending on upbringing. Art and household service are equally legitimate; neither wealth nor leisure-game training is mandatory. The number of choices is deferred.
+- **Aristocratic Protocol — candidate cultural feature:** When dealing with aristocratic communities whose customs you know, you can identify ordinary ranks and titles, forms of address, etiquette, and accepted procedures for requesting an introduction or audience. This conveys practical social knowledge, **not** admission, an automatic audience, influence, land, wealth, recognized title or command over others. Foreign or unfamiliar conventions may require ordinary inquiry or learning.
+- **No separate starting equipment, social rank, mandatory servants, retainers, inherited wealth, or class-dependent feats.** Equipment comes from the selected Background and ordinary inventory.
+
+The feature provides recognizable **information and procedure**, unlike Noble's potential *social access based on actual standing*. If it creates an unreasonable asymmetry with other Upbringings, revise it deliberately during the corpus-wide review rather than silently stripping it from the approved concept.
+
+### Noble Background — independent 2014-derived candidate
+
+- **Meaning:** Meaningful experience holding or exercising recognized noble standing, including a title acquired later in life. No Aristocratic Upbringing prerequisite.
+- **Skills:** Retain 2014 History and Persuasion as the primary baseline for comparison; consider more flexible later revisions on their own merits, not as a forced subtraction to fund the Upbringing.
+- **Competency:** One Gaming Set type as in 2014; this is a category choice pending shared training execution.
+- **Language:** Retain one chosen learned language as the 2014 comparison baseline, subject to review whether noble experience justifies this in every setting. Do not tie it to hereditary biology.
+- **Position of Privilege:** Contextual recognition and social access where the character's actual title or standing is acknowledged; not an automatic power over everyone or guaranteed entrance to hostile institutions. The character's learned skills persist if recognition changes.
+- **Starting equipment:** Evaluate the 2014 package of fine clothes, signet ring, evidence of title or pedigree, and 25 gp as ordinary inventory. Acquired status need not imply biological lineage: a new grant of rank may be represented by a charter, commission, or other relevant record.
+
+### Independent Knight Background — later candidate
+
+Knight is **not** an existing selected native Background and will be designed as a **distinct** Background. Historical 2014 Knight and Retainers material may inspire it, as may Soldier's military-service training, but it will not be a mechanical subtype with automatic inheritance. Review Knight alongside Noble when testing distinctions among social privilege, recognized service, mounted/martial experience, and followers. Do not make Retainers universal or create a follower subsystem by assumption.
+
+### Cross-component test cases and unresolved decisions
+
+1. **Aristocratic + Noble:** The character has cultural education plus actual noble status. Overlapping History, language or gaming benefits await general duplication handling, not automatic stacking.
+2. **Aristocratic + Criminal:** Knowledge of aristocratic customs remains, but criminal contacts come from the separate Background; no noble recognition is implied.
+3. **Non-aristocratic + Noble:** An ennobled individual receives the Noble Background's full learned package without a formative prerequisite.
+4. **Aristocratic + Knight:** A person raised within a noble household enters knightly service; upbringing does not independently confer knighthood.
+5. **Non-aristocratic + Knight:** Knightly recognition and acquired martial obligations are possible without noble childhood or any Noble Background.
+
+**Next approval points:** Aristocratic Skill pool, Competency pool, community-language allocation, whether Aristocratic Protocol is a distinct mechanical feature, and Noble's proposed retention of its 2014 learned grants. Final choice counts and total-benefit comparison remain deferred until the first general audit.
