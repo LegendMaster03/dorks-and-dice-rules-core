@@ -1,0 +1,82 @@
+# Pillar 3 — 2014 Background Corpus Decomposition Intake
+
+**Status:** Source-backed first-pass classification and **unapproved** proposals. No new Background or Upbringing grant is approved by this intake, and no native JSON is changed.
+
+**Ruleset:** `first-party-001`  
+**Branch:** `feature/character-origins-pillar3-life-experiences`
+
+## Scope and source order
+
+The 2014 Player's Handbook has **13 primary Backgrounds**. Four have already been reconciled and selected as native Backgrounds in this branch:
+
+- `background.acolyte` — 2014 Insight and Religion, one **faith-associated** chosen language instead of two unrestricted choices, Shelter of the Faithful.
+- `background.criminal` — 2014 Deception and Stealth, Thieves' Tools, Gaming Set choice, Criminal Contact.
+- `background.sage` — 2014 Arcana and History, **one** language of choice instead of two, Researcher.
+- `background.soldier` — 2014 Athletics and Intimidation, Gaming Set and Land Vehicles training, Military Rank.
+
+Review the **remaining nine** 2014 PHB Backgrounds for whether their formative components belong to Upbringing. Historical source descriptions and features are evidence, not automatically approved native grants. Do not replace the approved first four with their 2024 versions. Also retain the already-native `upbringing.giant-foundling` as an Upbringing **only**, not a pending Background.
+
+Sources:
+- Official 2014 Background listing: https://www.dndbeyond.com/backgrounds?filter-name=&filter-source=1
+- Comprehensive legacy Background list and individual PHB feature mapping: https://rpg.stackexchange.com/questions/162624/what-are-all-the-background-features-in-the-players-handbook
+- 2014 Basic Rules for Acolyte, Criminal, Folk Hero, Noble, Sage, Soldier: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/personality-and-background
+- Additional PHB options and variants may require the licensed PHB for full original text; do not mistake an index entry for full detailed evidence.
+
+## Remaining nine: first-pass destination hypotheses
+
+| 2014 source Background | Distinctive 2014 feature | Most likely destination | What needs a careful split? |
+| --- | --- | --- | --- |
+| **Charlatan** | False Identity | Background | Deceptive work and forged identity are experiences and practiced roles; do not assume a particular upbringing |
+| **Entertainer** (Gladiator variant) | By Popular Demand | Background | Learned performance or gladiatorial expertise is usually occupational, although performer-family upbringing is possible |
+| **Folk Hero** | Rustic Hospitality | Background | Fame and assistance earned through a defining event are Background; agricultural or rural training may have come from an independent Upbringing |
+| **Guild Artisan** (Guild Merchant variant) | Guild Membership | Background | Membership, trade practice, dues and institutional contacts versus apprenticeship within a formative artisan household |
+| **Hermit** | Discovery | Case-dependent | Isolation and self-study could be formative; a deliberate later retreat/discovery remains a meaningful Background; no compulsory shared biography |
+| **Noble** (Knight variant) | Position of Privilege (Knight: Retainers) | **High-priority split review** | Noble-house upbringing, learned etiquette/languages, recognized social rank, current privileges, and independently earned roles should not be conflated; no general social-class subsystem presumed |
+| **Outlander** | Wanderer | **High-priority split review** | Community upbringing and learned wilderness language/training versus later travel, guidance, exploration or wayfinding; do not equate all wilderness people with one culture |
+| **Sailor** (Pirate variant) | Ship's Passage (Pirate: Bad Reputation) | Background | Shipboard experience and professional contacts are acquired practice; childhood aboard ship may justify a separate optional maritime Upbringing |
+| **Urchin** | City Secrets | **Highest-priority Upbringing conversion candidate** | The 2014 definition directly describes growing up on the streets. Street-learned navigation, Stealth, Sleight of Hand, Thieves' Tools, Disguise Kit may describe formative adaptation, while starting possessions and post-childhood occupations must not be inherited as permanent assumptions |
+
+**Classification is provisional.** No row authorizes a one-to-one native conversion or a required new Upbringing. A source Background may yield a Background, an Upbringing, both, or neither where a concept is already represented. Classify each *grant* with its narrative cause. A character's life can overlap both classifications; no arbitrary childhood/adulthood gate.
+
+### Specific Urchin evidence and implications
+
+The 2014 source explicitly describes growing up without a stable home on city streets. It grants **Sleight of Hand and Stealth**; **Disguise Kit and Thieves' Tools**; **City Secrets**, which accelerates noncombat traversal between urban locations; and an initial possessions package. It does **not** grant languages.
+
+This makes a **Street-Raised Upbringing** (working label) a natural test: formative urban navigation and learned survival skills belong there. But the Dorks & Dice Upbringing generally also grants at least one learned language, so the resulting package must examine what urban speech actually was (often Common, not automatically all cities), rather than pretending its source possessed a language grant.
+
+The original source implies orphanhood and poverty; those are **not necessary prerequisites** of a broadly useful urban-street formative experience. A player should be able to use the mechanics first or write their backstory first, without a mandatory dead-parent or homeless-child narrative.
+
+**Not approved:** A new `upbringing.street-raised` ID, specific skill/competency grants, the City Secrets effect wording, a new language, a source name change, starting equipment, and any interaction with an independent Criminal Background. An individual approval pass is needed.
+
+### Noble and Outlander are not automatic full conversions
+
+**Noble:** Being raised in a noble household is a formative social environment, but the 2014 *Position of Privilege* also represents a standing recognized by others. It is not settled whether that recognition is a conditional social grant of Upbringing, Background, or a wider status relation. A noble-raised Soldier and a non-noble later ennobled should both be representable without giving everyone automatic duplicate privileges.
+
+**Outlander:** Cultural knowledge, a language, and environmental learning can be formative; repeated travel or professional wilderness survival is a separate experience. Avoid inventing a universal "wild peoples" culture or assuming every wilderness character has the same Species or linguistic background.
+
+**Hermit:** One may withdraw after substantial previous life experience or grow up in isolation. Those are different historical paths that could grant similar learned benefits; the 2014 *Discovery* is not automatically an inheritable cultural trait.
+
+## Relevant 2024 and supplemental source contrasts
+
+The 2024 PHB also includes Artisan, Farmer, Guard, Guide, Merchant, Scribe, and Wayfarer, while reconfiguring many older Background packages. These are **future comparison candidates**, not replacements of the 2014 baseline. Some may illuminate formative rural, educational or urban experiences, while others remain recognizable occupational Backgrounds. Source listing: https://www.dndbeyond.com/backgrounds and https://www.rollfortwo.com/articles/dnd-backgrounds-explained/ .
+
+**Strixhaven: A Curriculum of Chaos:** Its five college backgrounds represent different magical disciplines, including Druid-related study. They are not mechanically inherited children of Sage; use them to study the distinction between educational environment, a sustained scholar role, and elective magical specialization, without importing automatic feats.
+
+**The four Elf/Orc series books:** The **separate Pillar 2 branch** already documents a direct inspection of *An Elf and an Orc Had a Little Baby* Volumes 1–3 and *An Owl and a Bear Had a Little Baby* (fourth volume). See `docs/rewrite/character-origins-pillar2-reconciliation.md`, section `Direct review of user-provided source PDFs — 2026-11-03`. The present intake relies on those **recorded observations**, not a fresh comprehensive read of the files:
+
+- Volume 1 includes an independent Upbringing selection and optional customized/mixed Upbringings in Appendix B, with a published Upbringing benefit budget; its numerical prices are **not approved native balance costs**.
+- Later volumes enlarge parentage/material options without requiring all cultural/occupation traits to be inherited.
+- The fourth volume explicitly **does not add new Upbringings** and directs players to earlier Upbringings or authoring guidance.
+- A source Upbringing can include familiar training and language mechanics; this supports keeping **the source's social/narrative component separate from mechanical class and Background entitlements**. Do not infer that a third-party Upbringing automatically supplies any given 5.x Background feature.
+
+## Review sequence
+
+1. **Urchin:** Test a predominantly Upbringing conversion, including language expectations and City Secrets, against a character with a separate Criminal, Sage, or Soldier Background.
+2. **Noble:** Work through social standing, formative education, and the Knight variant, testing a noble-raised Soldier and a later ennobled character.
+3. **Outlander:** Distinguish cultural environment from later wilderness travel; test compatibility with the existing Elven and Giant-community Upbringings.
+4. **Hermit:** Determine whether a common learned-trait pattern is needed, without prescribing age or biography.
+5. **Other five:** Charlatan, Entertainer, Folk Hero, Guild Artisan, Sailor; largely Background-first but each still undergoes an individual source-benefit decomposition.
+6. **Supplemental 2024/Strixhaven/other Background review:** Use as examples of additional native concepts, not a guaranteed expansion to every published option.
+7. **After classification and approved promotion:** Audit the *effective combined corpus* for unequal benefits, grant duplication, scope mismatches and cross-cultural compatibility, then recommend any targeted balance changes.
+
+Keep source `working/` evidence non-authoritative. Only individually approved native allocations belong in `native/`. No executable C#/consumer implementation is authorized by this classification.
