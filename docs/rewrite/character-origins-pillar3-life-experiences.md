@@ -343,3 +343,24 @@ The already-native `upbringing.giant-foundling` was **fully** converted from its
 ### Remaining design decision
 
 Whether optional narrative guidance is cataloged centrally and referenced by multiple Backgrounds/Upbringings, or is authored alongside each Background for convenience, is a presentation/content-organization choice. Neither option makes narrative prompts mechanical prerequisites.
+
+## Sage approved native baseline — 2026-11-04
+
+**Owner decision:** Use **2014 5e Sage**; do not create a separate scholarly rule system. Supersedes the earlier Sage design candidates in this document. The previously discussed **reduction from two 2014 Background-granted languages to one** is retained to recognize languages normally supplied by Upbringing.
+
+**Native file:** `data/rulesets/first-party-001/native/backgrounds/sage.json` (`background.sage`, status `selected-native`). The non-authoritative `working/backgrounds/sage.json` still preserves the 2024 source definition; no source history was overwritten.
+
+| Decision | Native treatment |
+| --- | --- |
+| Background identity | Broad scholarship; not compulsory wizardry or magical college |
+| Skills | Arcana and History training |
+| Languages | One additional language of choice |
+| Background feature | Researcher: knows possible avenues to find unknown information, subject to GM adjudication; not guaranteed knowledge |
+| Equipment | 2014-style research/writing items, clothing, and 10 gp; story-hook correspondence is customizable, with no required deceased colleague in the character's biography |
+| 2014 specialties | Retain all eight as optional suggestions without new mechanical subtypes |
+| Personality, ideals, bonds, flaws | Optional player-facing narrative prompts; players can use story-first or mechanics-first creation |
+| 2024 feat, abilities, tools | No automatic Magic Initiate (Wizard), fixed ability increase, or Calligraphy grant |
+
+**Implementation boundary:** This is an approved **native JSON content** allocation, not a claim that Background-grant, narrative-feature or starting-equipment execution is already implemented in C#/consumers. The equipment list is descriptive and must later be reconciled to verified native item identities and ordinary inventory; no extra inventory feature or new system is introduced. This content's effect on the total Character Origins benefit distribution is subject to the later agreed corpus audit.
+
+**Next:** Decompose Criminal and Soldier, then return to Acolyte using the same 2014-first approach; do not reopen Sage without a concrete new issue.
