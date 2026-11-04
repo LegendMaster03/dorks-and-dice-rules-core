@@ -1,0 +1,93 @@
+{
+  "id": "background.acolyte",
+  "name": "Acolyte",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have served, studied, or performed religious duties in a faith, temple, shrine, or spiritual community. This Background does not require divine spellcasting, a Cleric class, a particular alignment, or a prescribed childhood or present religious allegiance.",
+  "benefits": [
+    {
+      "id": "acolyte-insight",
+      "name": "Insight Training",
+      "description": "Gain training in Insight.",
+      "skill": "skill.insight",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "acolyte-religion",
+      "name": "Religion Training",
+      "description": "Gain training in Religion.",
+      "skill": "skill.religion",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "acolyte-religious-language",
+      "name": "Religious Language",
+      "description": "Learn one language of your choice associated with your deity, faith, religious traditions, or practices. It might be used in sacred texts, rites, scholarship, or by the faith's community. Common is an appropriate choice when the character's religious practices use it.",
+      "extraLanguages": 1,
+      "choiceConstraint": "associated-with-deity-faith-religious-traditions-or-practices"
+    },
+    {
+      "id": "acolyte-shelter-of-the-faithful",
+      "name": "Shelter of the Faithful",
+      "grantType": "background-feature",
+      "description": "Members of your faith may recognize your religious service and allow you to perform its ordinary rites. You and your companions can ordinarily seek healing and care from an established temple, shrine, or comparable community of the same faith, while providing required material components for spells. Members of your faith may support you, but not automatically your companions, at a modest lifestyle. Where you have a temple or community affiliation, you may have residence or access to its members' assistance when in good standing and when the assistance is reasonable and not dangerous. These privileges depend on recognition, location, available resources, and relationships; they do not confer supernatural spellcasting, universal access, or compulsory aid."
+    }
+  ],
+  "startingEquipment": {
+    "description": "A holy symbol, a prayer book or prayer wheel, five sticks of incense, vestments, common clothes, and a belt pouch containing 15 gp. These become ordinary inventory. The holy symbol or prayer item may be appropriate to the character's religious tradition; no particular deity or institutional backstory is mandatory.",
+    "items": [
+      {
+        "name": "Holy symbol",
+        "quantity": 1
+      },
+      {
+        "name": "Prayer book or prayer wheel",
+        "quantity": 1,
+        "options": [
+          "Prayer book",
+          "Prayer wheel"
+        ]
+      },
+      {
+        "name": "Stick of incense",
+        "quantity": 5
+      },
+      {
+        "name": "Vestments",
+        "quantity": 1
+      },
+      {
+        "name": "Common clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Belt pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Personality traits, ideals, bonds, flaws, religious associations, and formative experiences are optional prompts. They do not limit the character's faith, morality, personality, life history, or current relations with an institution.",
+    "prompts": [
+      "What religious community, practices, or teachings shaped your experience?",
+      "What responsibility did you perform for that faith or community?",
+      "Which relationships from your service remain important?",
+      "What aspect of your beliefs or experiences is open to change?"
+    ]
+  },
+  "reviewNotes": [
+    "Native reconciliation follows the 2014 5e Acolyte Background, rather than the 2024 source retained as a separate candidate in working/backgrounds/acolyte.json.",
+    "The 2014 two unrestricted languages are replaced with one language of choice associated with the character's deity, faith, religious traditions, or practices; Common is allowed where appropriate.",
+    "A religiously associated language is an additional acquired Background language, distinct from formative language grants through Upbringing. Duplicate-language semantics remain pending corpus-wide reconciliation.",
+    "Insight and Religion are the retained skill-training grants.",
+    "Shelter of the Faithful retains religious ceremony, faith-community care, modest support for the Acolyte, and conditional temple ties while not guaranteeing assistance independent of standing or availability.",
+    "No Magic Initiate (Cleric), fixed 2024 ability increases, or mandatory Calligraphy proficiency.",
+    "Starting equipment is descriptive pending native item-identity verification and ordinary-inventory materialization; the prayer book/wheel is an exclusive choice, not both.",
+    "Background narrative suggestions are optional and do not impose required personal traits or a Cleric class."
+  ]
+}
