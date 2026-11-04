@@ -388,3 +388,28 @@ Source verification: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/pers
 **Execution boundary:** Native JSON content is selected, but the runtime/consumer does not yet implement every Background benefit. The Gaming Set is a category-based training choice awaiting common native competency-choice resolution, and the starting equipment is descriptive pending normal inventory item materialization. Do not infer that this Background has an additional Upbringing or a mandatory criminal upbringing history. Defer corpus-wide rebalancing.
 
 **Next:** Soldier, then Acolyte. No code or consumer API changes required for the present content selection.
+
+## Soldier approved native baseline — 2026-11-04
+
+**Owner decision:** Adopt the **2014 5e Soldier Background** with minimal change. Its core military-service identity and *Military Rank* feature are retained, with the source's contextual limits on recognition. The 2024 definition remains non-authoritative in `working/backgrounds/soldier.json`.
+
+**Native file:** `data/rulesets/first-party-001/native/backgrounds/soldier.json` (`background.soldier`, `selected-native`).
+
+| Element | Approved allocation |
+| --- | --- |
+| Skills | Athletics and Intimidation training |
+| Acquired competencies | Choose one Gaming Set type; Land Vehicles proficiency |
+| Languages | None |
+| Feature | Military Rank: recognized military standing grants conditional influence, modest temporary requisition and access in relevant friendly organizations; not universal command authority |
+| Starting inventory | Insignia of rank; military trophy (dagger, broken blade or banner fragment); dice or cards; common clothes; pouch and 10 gp |
+| Suggested specialties | Eight 2014 military roles retained as optional narrative aids |
+| Characteristics | Optional prompts, no required service history beyond the experience that makes Soldier an appropriate Background |
+| 2024 grants excluded | Savage Attacker and fixed Strength/Dexterity/Constitution increases |
+
+**Existing native semantic distinction:** Land Vehicles training has no verified standalone native universal competency ID in the inspected catalog. It is represented in Soldier as a qualified vehicle-training category with `grantType: qualification-training`, not falsely converted into `competency.navigation` or `competency.thieves-tools`. This category needs execution/consumer projection when Background grants are implemented. The Gaming Set is likewise a category-specific choice pending common native resolution. No runtime or API changes are made at this stage.
+
+**Cross-component duplication:** The already-selected `upbringing.giant-foundling` grants Intimidation, as does `background.soldier`. This pair is an explicit later corpus-audit test. Do not presume a second skill rank, Expertise, or automatic substitution until general duplicate-grant semantics are established.
+
+**Equipment and source boundary:** Equipment is descriptive and becomes ordinary inventory when valid native item identities and materialization exist. The eight specialties and suggested characteristics do not add hidden grants or mandate a particular backstory. The earlier 2024 source record remains retained for comparisons.
+
+**Next candidate:** Revisit 2014 Acolyte using the same source-first decomposition process; finalize only on its individual approval.
