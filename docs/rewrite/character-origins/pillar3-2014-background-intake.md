@@ -97,3 +97,31 @@ The 2024 PHB also includes Artisan, Farmer, Guard, Guide, Merchant, Scribe, and 
 7. **After classification and approved promotion:** Audit the *effective combined corpus* for unequal benefits, grant duplication, scope mismatches and cross-cultural compatibility, then recommend any targeted balance changes.
 
 Keep source `working/` evidence non-authoritative. Only individually approved native allocations belong in `native/`. No executable C#/consumer implementation is authorized by this classification.
+
+
+## Approved Urchin-to-Upbringing conversion direction — 2026-11-04
+
+**Owner approval:** Treat the 2014 PHB Urchin primarily as an **Upbringing source**, in the same manner that historical Giant Foundling was fully converted to an independent Giant-community Upbringing. Rework the concept and mechanical allocation rather than retaining an Urchin Background alongside it.
+
+The provisional working label is **Street-Raised Upbringing**, not yet a final native ID or finalized name. The intended concept is being shaped by life among the streets, markets, lanes, and informal networks of a substantial settlement. Orphanhood, poverty, and criminal activity are **not** required facts. Any Species may choose the Upbringing, and a Street-Raised character may select Criminal, Sage, Soldier, or another Background independently.
+
+**Approved design direction (not yet a final numeric grant package):**
+
+1. **Language:** Reflect an actual language used by the formative community, commonly Common but not universally so. Do not infer a language from the original 2014 Urchin, which had no Background language grant.
+2. **Flexible training:** Preserve Stealth, Sleight of Hand, Disguise Kit and Thieves' Tools as useful **source candidates**, but do not force every Street-Raised character into criminal or deceptive specialization. Expand the options to include credible observational and survival training.
+3. **Urban traversal:** Retain an adapted version of the functional *City Secrets* idea, rewritten in original Dorks & Dice prose and appropriately scoped to navigating a settlement outside combat.
+4. **No Upbringing equipment package:** Original Urchin starting items do not become a second inventory entitlement; starting equipment belongs to the selected Background and normal inventory.
+5. **Separate formative experience from later occupation:** Do not reintroduce Urchin as a selectable Background merely because the 2014 source used that category. Character concepts may combine this Upbringing with independent Backgrounds.
+6. **Later balancing:** The exact quantity of learned skill and competency grants, travel benefit power, and comparison to Giant/community Upbringings remain explicitly **provisional** until the wider corpus balance pass.
+
+### Concrete training and feature candidates for the next reconciliation
+
+**Skill pool (proposed, not individually approved):** `skill.stealth`, `skill.sleight-of-hand`, `skill.perception`, `skill.insight`, `skill.survival`. A broad pool can represent observing urban crowds, evading threats, managing scarce resources, or practiced manual dexterity without requiring criminality.
+
+**Competency pool (proposed, not individually approved):** `competency.disguise-kit`, `competency.thieves-tools`, `competency.cooking`, `competency.forgery`. The first two preserve the historical source options; the others are existing reviewed native semantic IDs for practical street and informal-trade experience. Neither training category is an inherent Species/Ancestry grant.
+
+**Urban travel candidate, mechanical scope not yet approved:** A character who can navigate accessible connected passages in a substantial settlement can guide companions through suitable routes to reduce noncombat travel time between locations. Whether the historical **half-time** effect should be preserved exactly, and how familiarity, obstructions, settlement scale and inaccessible areas limit it, should be decided without prematurely changing the global travel system. It does not grant combat movement bonuses, ignore barriers, or reveal hidden locations automatically.
+
+**Unresolved for selection:** Which skill and competency alternatives are acceptable, how many choices each character receives, whether a street-raised character receives any fixed training beyond language and urban navigation, and the detailed urban-route rule. These should be reconciled before writing `native/upbringings/street-raised.json`; no incomplete mechanically active native Upbringing has been introduced by this approval.
+
+**Copyright boundary:** Urchin is not an SRD 5.1 Creative Commons Background. The general formative concept and functional mechanics may inform Dorks & Dice design, while new native descriptions and feature explanations must be independently authored. Do not reproduce PHB narrative or suggestion tables.
