@@ -172,3 +172,28 @@ Sources checked:
 - https://5e.d20srd.org/srd/backgrounds.htm (2014 Background skills, language, gear, social features, customization and duplicate-skill choice)
 - https://www.d20srd.org/srd/variant/buildingCharacters/characterBackground.htm (3.5e optional activity-by-level variant)
 - https://www.dndbeyond.com/sources/dnd/br-2024/character-origins (2024 Background grants)
+
+## Reconciliation order clarified — 2026-11-04
+
+**Owner direction:** The Species/Ancestry-to-Upbringing separation was **already carried out** as the initial Pillar 1 pass. The resulting native Upbringings are not yet balanced against each other or against Backgrounds. **Do not run the full balance/reallocation pass before performing an equivalent decomposition of the source Backgrounds.** The owner expects that completing both separations will make the remaining corpus inconsistencies visible and actionable.
+
+### Stage 1 — Decompose Background source content (current work)
+
+- Examine each source Background's identity and its individual mechanics. For each source benefit, classify the mechanical **destination** (Upbringing, Background, inherent origin/another pillar, general character-creation allocation, or no retained grant) and record its reason.
+- Allow **uneven decomposition**. Acolyte can remain predominantly Background; Giant Foundling has already been moved predominantly into Upbringing. Do **not** impose a uniform percentage of grants or artificial Upbringing slice on every source Background.
+- Track destination separately from grant type: a skill or language can be learned through either Upbringing or Background based on the source narrative and intended rules; a feat or ability adjustment may need broader system-level consideration.
+- Preserve historical source identity and an explicit conversion relationship. A 5.x Background can map to Dorks & Dice Upbringing, Background, both, or an additional character-creation selection; this is **conversion into native rules**, not lossless reconstruction.
+- Avoid double-granting Giant Foundling from its historical source Background and the already-native Upbringing. The 2023 source's excluded non-SRD feat remains excluded unless separately revisited.
+- Promote only **individually approved coherent native content**. Do not declare a Background complete merely because a partial source-derived record was split; note any open destination or effect decisions.
+
+### Stage 2 — Audit the complete resulting Character Origins corpus
+
+Once background-derived formative grants have joined the Species-derived Upbringings, compare real complete combinations and legal cross-cultural selections. Check for duplicate qualification identities, grant omissions, scope/eligibility mismatch, strong and weak combinations, ability/feat/language/competency irregularities, and misclassified inherent versus learned benefits. The audit concerns **whole character-origin outcomes** and **independently selectable components**, not feature counts alone.
+
+### Stage 3 — Rebalance and normalize only where justified
+
+Address the audit findings through targeted reassignment between Ancestry and Upbringing, additions, substitutions, eligibility/scoping changes, or shared grant rules, with particular attention to Background overlap. This stage may revise initial Pillar 1 allocations. **Do not infer that the initial split must remain frozen** or that equal-looking package sizes are required. Maintain review/approval status for each rule change.
+
+### Immediate implication for Acolyte
+
+The existing Acolyte comparison document is a source inventory and candidate decomposition, **not** a finalized Acolyte Background. First classify each 2014 and 2024 element by destination and record open dependencies; do not finalize its balance or feature budget now. Apply the same method to the remaining background candidates. The 2014 model is the initial Background reference, with 3.5 alternatives and 2024 mechanics evaluated for their appropriate destination.
