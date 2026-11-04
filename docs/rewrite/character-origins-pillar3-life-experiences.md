@@ -271,3 +271,29 @@ The owner requests this reference collection explicitly as part of the Backgroun
 - Record the 2014 Sage Researcher feature and languages alongside 2024 Wizard-oriented choices without deciding yet whether any source grants are retained, replaced, allocated to Upbringing or folded into a general Character Origins choice.
 - Treat Strixhaven and the Elf/Orc books as comparative design evidence. No non-SRD content is being promoted or newly claimed as authoritative native material.
 
+
+## Sage source preference and working decomposition — 2026-11-04
+
+**Owner-endorsed direction:** The 2014 5e Sage provides a broader and more useful identity basis for this reconciliation than the narrower 2024 Sage. Treat 2014's scholarly activities and social function as the starting point, with 2024 Magic Initiate (Wizard) and Calligrapher's Supplies evaluated individually rather than making Wizard training compulsory.
+
+**Source comparison (2014 Basic Rules/PHB vs 2024 PHB):**
+
+- 2014 Sage: Arcana and History skills; two chosen languages; a small researcher-themed equipment package and 10 GP; *Researcher* identifies where/from whom unknown lore might be found, subject to GM limitations; eight suggested *specialties*: Alchemist, Astronomer, Discredited Academic, Librarian, Professor, Researcher, Wizard's Apprentice, Scribe. These specialties are **narrative suggestions**, not eight independently granted mechanical subclass packages. Source: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/personality-and-background
+- 2024 Sage: Arcana and History; Calligrapher's Supplies; Magic Initiate (Wizard); Constitution/Intelligence/Wisdom ability options; and equipment or 50 GP. Its character history describes access to libraries during formative years and early exposure to magic. Source: https://www.dndbeyond.com/backgrounds/406485-sage
+
+**Candidate destination review; not yet approved as native rules:**
+
+| Source concept/grant | Proposed location to test | Important boundary |
+| --- | --- | --- |
+| Identity of a researcher/scholar; Researcher information-access feature | Sage Background | This is a meaningful acquired role even when scholarly training started early |
+| Arcana and History | Sage Background baseline | Both are acquired proficiencies, and specific variants could warrant alternative competencies |
+| Two chosen scholarly languages | Sage Background or Upbringing as justified by source experience | Do not move merely because Upbringing normally grants a language; do not silently double count |
+| Formative academic/literate social environment | Possible Scholarly Upbringing | Do not invent a new obligatory package for someone who became a scholar later |
+| Alchemy, astronomy, teaching, scribal work | Optional acquired specialty | A 2014 Sage specialty is not itself a fixed mechanical benefit; must define actual grant separately |
+| Wizard-apprentice magical initiation | Optional specialized training/feat | Wizard magic is not compulsory for all Sage backgrounds |
+| 2024 Calligrapher's Supplies | Optional scholarly/scribal competency | Not a universal qualification for every scholarly role |
+| 2024 fixed ability increases | Broader Character Origins allocation pending design | Do not auto-add +3 to an older edition package |
+
+**Strixhaven caution:** Its five college Student Backgrounds span different magical disciplines (including Druid-related study). They are related examples of academic specialization, not proof of literal source-defined Sage parentage or mandatory Wizard spellcasting. Do not promote non-SRD spells or feats solely because they appear in a comparative source.
+
+**Source coverage limitation:** The existing `working/backgrounds/sage.json` contains the 2024 SRD-derived Sage, not a local reconciled 2014 Sage entry. The 2014 description above is independently referenced historical material, not yet a promoted native rule. The general Background decomposition and later corpus balance audit remain open.
