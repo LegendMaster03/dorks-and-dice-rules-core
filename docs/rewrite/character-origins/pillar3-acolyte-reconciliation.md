@@ -1,6 +1,6 @@
 # Pillar 3 — Acolyte Background Reconciliation
 
-**Status:** Source-verified initial comparison and **unapproved** proposed native mechanics. No Background promotion, content edits or executable work authorized by this document.
+**Status:** Historical source comparison. **The Acolyte native allocation was approved on 2026-11-04. The earlier unresolved candidate questions below are superseded by the final ruling.**
 
 **Base:** `main` at `d5a2b15b7ae2bd88ae9e47a5ddfad01d481623bb` (merged Pillar 1 PR #130). **Branch:** `feature/character-origins-pillar3-life-experiences`.
 
@@ -83,3 +83,17 @@ The 2024 equipment alternatives are replacement starting packages, not additive 
 ## Interpretation boundaries
 
 This document is **analysis**, not permission to change `native/`. Avoid creating a general social-network/reputation subsystem just to support Acolyte. Do not interpret a religious affiliation as a Species trait, supernatural inheritance, guaranteed spellcasting or necessarily current institutional standing. Do not infer approval of a universal numeric budget, origin feat allocation or fixed Upbringing structure.
+
+
+## Final ruling — Acolyte selected native allocation — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/acolyte.json` (`background.acolyte`, `selected-native`). Uses the 2014 5e Acolyte as its baseline, while the 2024 source remains preserved separately in `working/backgrounds/acolyte.json`.
+
+- **Skills:** Insight and Religion.
+- **Language:** One choice associated with the character's deity, faith, religious traditions, or practices; **Common is valid** when used by that religious community or in its practices. Replaces the 2014 two unrestricted language choices. This is an acquired Background language, distinct from Upbringing.
+- **Feature:** Shelter of the Faithful; rites, faith-community healing/care with required spell components provided, modest personal support, conditional institutional assistance/residence. Standing, location, resources, and relationships matter.
+- **Ordinary inventory:** Holy symbol; prayer book **or** prayer wheel; five incense sticks; vestments; common clothes; belt pouch; 15 gp. Descriptive pending normal item materialization.
+- **Suggested characteristics:** Nonbinding narrative guidance; no particular backstory or Cleric class required.
+- **Not granted:** Automatic 2024 Magic Initiate (Cleric), fixed ability increases, or mandatory Calligraphy.
+
+**Status:** The initial four native Backgrounds (Sage, Criminal, Soldier, Acolyte) have been selected. This is the **initial** corpus, not all potential 5.x or supplemental Background sources. Background grants, social features, choices and ordinary inventory are authored content; executable consumer projection remains deferred. Corpus-wide duplicate, exception, and power-distribution review follows the planned Background decomposition, not individual editing of approved grants.
