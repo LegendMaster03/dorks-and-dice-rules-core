@@ -1,0 +1,62 @@
+{
+  "id": "upbringing.street-raised",
+  "name": "Street-Raised Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "Your formative years were shaped by everyday life among the streets, markets, lanes, and informal communities of a substantial settlement. You learned practical skills and ways of moving through its public routes. This Upbringing is available to any Species and does not require poverty, orphanhood, criminal activity, a particular family arrangement, or a later urban occupation.",
+  "benefits": [
+    {
+      "id": "street-raised-community-language",
+      "name": "Community Language",
+      "description": "Learn one language used by the community that shaped your upbringing. Common is a valid choice where it was spoken by your formative household or community, but is not universally mandatory. This is learned experience rather than a Species trait.",
+      "extraLanguages": 1,
+      "choiceConstraint": "spoken-in-formative-household-or-community"
+    },
+    {
+      "id": "street-raised-formative-skill",
+      "name": "Street-Raised Skill",
+      "grantType": "skill-training",
+      "description": "Choose one Skill from Stealth, Sleight of Hand, Perception, Insight, or Survival, reflecting what you learned through formative urban life. Perception is a composite Skill; training it does not independently train Listen or Spot.",
+      "chooseOne": [
+        "skill.stealth",
+        "skill.sleight-of-hand",
+        "skill.perception",
+        "skill.insight",
+        "skill.survival"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "street-raised-community-competency",
+      "name": "Community Competency",
+      "grantType": "competency-training",
+      "description": "Choose one existing Competency from Disguise Kit, Thieves' Tools, Cooking, or Forgery, reflecting practical experience within your formative community. Choosing any of these does not imply that you committed crimes or own the corresponding tools. The chosen Competency grants its established native facets.",
+      "chooseOne": [
+        "competency.disguise-kit",
+        "competency.thieves-tools",
+        "competency.cooking",
+        "competency.forgery"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "street-raised-urban-navigation",
+      "name": "Urban Navigation",
+      "grantType": "upbringing-feature",
+      "description": "When traveling outside combat through a substantial settlement, you can identify efficient routes through its accessible streets, alleys, and passages. You and companions following your guidance can travel between locations in half the usual time. This benefit does not bypass physical barriers or grant additional movement during combat."
+    }
+  ],
+  "reviewNotes": [
+    "Approved independent Street-Raised Upbringing, resolving the formative portion of the historical 2014 Urchin source rather than creating a native Urchin Background.",
+    "One learned community language; Common is eligible if used by the formative household or community, but is not automatically required or an inherited Species language.",
+    "Initial balance baseline: choose exactly one Skill from Stealth, Sleight of Hand, Perception, Insight, or Survival and exactly one Competency from Disguise Kit, Thieves' Tools, Cooking, or Forgery. The owner explicitly authorized authoring these counts now and revisiting the number of selections during the later corpus-wide balance review.",
+    "The four approved Competency alternatives retain their native semantic facets: Forgery includes both its reviewed Forgery Skill facet and Forgery Kit proficiency. This may differ in strength from the other choices; preserve the identity for the general balance review.",
+    "The half-time Urban Navigation rule is approved for accessible routes in substantial settlements outside combat and includes companions following the character's guidance. It does not bypass barriers, grant combat speed, reveal otherwise hidden locations, or create a separate map/pathfinding subsystem.",
+    "All Species may select this Upbringing. It does not require poverty, orphanhood, criminality, abandonment, a particular social class, or a criminal future occupation.",
+    "This Upbringing is separate from Criminal, Spy, Charlatan, Soldier, Sage, and all other independently chosen Backgrounds. It does not grant their contacts, false identities, military rank, or other Background features.",
+    "The original Urchin Background equipment, city map, pet mouse, parent's keepsake, knife, clothing, and money do not create a second Upbringing equipment package. No startingEquipment grant is included.",
+    "No fixed ability changes, Origin feat, mandatory tool ownership, separate criminal affiliation, or automatic training of composite Perception's independently ranked Listen/Spot components.",
+    "Shared future work includes generic Skill/Competency choice execution, language choices, conditional urban travel integration, the corpus-level duplication policy, and testing whether one Skill plus one Competency alongside Urban Navigation is appropriately balanced against other Upbringings."
+  ]
+}
