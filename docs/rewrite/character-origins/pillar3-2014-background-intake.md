@@ -371,3 +371,18 @@ See `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md` for res
 - **No automatic upgrades:** Neither grants class maneuvers, all martial weapons, armor, 2024 Musician/other Origin feats, ability changes, or special inherited performer/gladiator upbringing.
 
 **Deferred:** Mixed instrument-versus-disguise choice, weapon-type choice projection, item identity/cost, feature execution, overlap/duplicate grants and relative balance. Full design comparison, approval and prior alternatives: `docs/rewrite/character-origins/pillar3-entertainer-gladiator-reconciliation.md`.
+
+
+## Hermit promoted as an independent Background — 2026-11-05
+
+**Owner-approved disposition:** The 2014 Hermit source has been reconciled as independent selected-native `background.hermit`, at `data/rulesets/first-party-001/native/backgrounds/hermit.json`. The Background records significant seclusion and a concrete Discovery, not a universally required formative childhood experience.
+
+**Grants:** Two distinct selected Skills from Medicine/Religion/Nature/Survival/Arcana/History/Investigation/Insight; no automatically awarded Herbalism, additional language or vehicle training. **Discovery** is one meaningful, genuine prior finding agreed with the GM, whose established truth the character already knows. It is not an ongoing secret-finding power or automatic plot solution.
+
+**Ordinary possessions:** Notes in a scroll case or notebook, winter blanket or modest bedding, common/practical clothes, one ordinary personal item chosen with the GM without guaranteed value or proficiency, and **5 gp**.
+
+**Intentional 2014 change:** Fixed Medicine and Religion, Herbalism Kit proficiency and a free language have been replaced by an experience-relevant Skill choice with no mandatory unrelated vocation. The source combination remains possible.
+
+**Upbringing boundary:** A future Isolated-Raised Upbringing may represent an unusual formative environment but is **not approved or automatically inherited**. `upbringing.wilderness-raised` is independent and concerns practical provisioning; Hermit also differs from Sage's Researcher and Explorer's Expedition Survey.
+
+**Deferred:** Feature adjudication/projection, Skill selection execution, item identity/materialization, overlaps and relative balance. The complete comparison and approval rationale is at `docs/rewrite/character-origins/pillar3-hermit-reconciliation.md`.
