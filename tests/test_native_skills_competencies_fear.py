@@ -25,11 +25,45 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
 
     def test_competencies_preserve_crafting_and_tool_facets(self):
         native = read(NATIVE / "competencies.json")["competencies"]
-        self.assertEqual(read(WORKING / "competencies.json")["competencies"], native)
-        identities = {c["id"]:c for c in native}
-        self.assertEqual(len(identities),len(native))
-        alchemy=identities["competency.alchemy"]
-        self.assertEqual({"crafting-skill","tool-proficiency"},{f["type"] for f in alchemy["facets"]})
+        identities = {c["id"]: c for c in native}
+        self.assertEqual(32, len(native))
+        self.assertEqual(len(identities), len(native))
+        # Working is source evidence, not the authoritative native ruleset.
+        self.assertIn("competency.smithing",
+                      {c["id"] for c in read(WORKING / "competencies.json")["competencies"]})
+        self.assertNotIn("competency.smithing", identities)
+        alchemy = identities["competency.alchemy"]
+        self.assertEqual({"crafting-skill", "tool-proficiency"},
+                         {f["type"] for f in alchemy["facets"]})
+        for competency in native:
+            self.assertEqual(competency["trainingIdentity"], competency["id"])
+            self.assertEqual({
+                "trainingState": "per-competency-identity",
+                "governingAbility": "per-activity-or-facet",
+                "numericProgression": "pending-reconciliation"
+            }, competency["trainingProfile"])
+            self.assertTrue(competency["facets"])
+            for child in competency.get("childCompetencies", []):
+                self.assertIn(child, identities)
+                self.assertEqual(competency["id"],
+                                 identities[child]["parentCompetency"])
+                self.assertEqual("specialization",
+                                 identities[child]["parentRelationship"])
+        blacksmithing = identities["competency.blacksmithing"]
+        self.assertEqual(["competency.armorsmithing", "competency.weaponsmithing"],
+                         blacksmithing["childCompetencies"])
+        self.assertEqual("specialization", blacksmithing["childRelationship"])
+        self.assertIn("Smith's Tools", [
+            facet.get("tool") for facet in blacksmithing["facets"]
+        ])
+        # The hierarchy is organizational and conveys no automatic rank
+        # calculation, training inheritance or numeric composition.
+        self.assertNotIn("composition", blacksmithing)
+        dwarf = read(NATIVE / "upbringings/dwarf/general.json")
+        dwarf_grant = next(x for x in dwarf["benefits"]
+                           if x["id"] == "crafting-tradition")
+        self.assertIn("competency.blacksmithing", dwarf_grant["chooseOne"])
+        self.assertNotIn("competency.smithing", dwarf_grant["chooseOne"])
 
     def test_selected_fear_rule_retains_unresolved_escalation_as_inert(self):
         native = read(NATIVE / "fear.json")
