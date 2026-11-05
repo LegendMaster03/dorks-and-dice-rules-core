@@ -438,3 +438,20 @@ Source verification: https://www.dndbeyond.com/sources/dnd/basic-rules-2014/pers
 **Independence:** Aristocratic upbringing need not come with a title; Noble rank can be earned later. Both can be selected together without making their grants automatically stack. The eventual duplicate-grant policy and cross-corpus balance review apply. Native Noble's equipment is ordinary inventory pending identity validation and consumer grant execution.
 
 Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3-2014-background-intake.md`.
+
+
+## Knight approved native Background — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/knight.json` (`background.knight`, `selected-native`), as the **sixth native Background** on the Pillar 3 branch. This is a separate standalone Background, **not** a Noble variant or a mechanical descendant of Noble or Soldier.
+
+- **Skills:** Fixed Persuasion; choose one of Athletics, Animal Handling, Ride, History, Religion, Arcana, or Nature.
+- **Competency:** Choose one Gaming Set **or** one Musical Instrument type, a single selection across the two categories. Category-choice consumer execution remains deferred.
+- **Language:** One chosen language associated with Knightly order, patron, training or duties. Common may qualify.
+- **Feature:** Retainers—three ordinary noncombat attendants including a squire, with the original 5e practical limits and normal DM adjudication. No new wages, replacement, progression, logistics, or NPC-control subsystem.
+- **Ordinary inventory:** Knightly insignia or commission, service clothing, token of service, pouch and 10 gp. No free mount, armor, arms, land or noble title.
+- **Not granted:** Noble's Position of Privilege, Soldier's Military Rank, fixed 2024 ability increases, Origin feat, or class-specific fighting benefits.
+- **Cross-corpus review:** Duplicate granted skills, language overlap, benefit strength and the noncombat retinue's value remain part of the later balance and consistency audit.
+
+**Design record:** `docs/rewrite/character-origins/pillar3-knight-reconciliation.md`, including the approved final allocation, choice-count semantics and deliberate retainer ambiguity.
+
+**Current branch total:** Six native Backgrounds (Sage, Criminal, Soldier, Acolyte, Noble, Knight). Ten existing native Upbringings; Street-Raised and Aristocratic have approved portions but their training-selection counts and native promotion remain pending.
