@@ -100,7 +100,7 @@ The source's most defensible gameplay function is **the character begins with on
 | `background.sage` | **Researcher:** indicates where unknown lore might be found | **Discovery:** one concrete piece of information **already known**, not a locator for future research |
 | `background.explorer` | **Expedition Survey:** bounded actionable conclusions from presently available field evidence, plus personal route recall | **Discovery:** a **fixed prior finding** learned during seclusion; not an ongoing survey information entitlement |
 | `background.acolyte` | **Shelter of the Faithful:** conditional help from a faith institution | Hermit needs no religious institution, temple access or implied spells |
-| `background.wilderness-raised` | (Not a Background: `upbringing.wilderness-raised`) six-person Wilderness Provisioning | Hermit is not automatically skilled at wilderness resource gathering |
+| `upbringing.wilderness-raised` | **Wilderness Provisioning:** conditional daily provisions for up to six people | This is an Upbringing, not a Background. Hermit does not automatically grant wilderness resource gathering |
 | `background.folk-hero` | **Community Refuge:** sympathy and hospitality from recognized deeds | Hermit receives no automatic loyal supporters, public fame or shelter |
 
 **Residual risk:** Discovery remains partly GM-authored and may have extremely different campaign usefulness depending on content. That is a known feature-value risk, not a reason to secretly substitute a permanent +2 Knowledge bonus or automatic new lore on demand. The scope should be confirmed in playtest.
