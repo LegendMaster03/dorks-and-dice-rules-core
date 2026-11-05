@@ -402,3 +402,18 @@ See `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md` for res
 **Balancing permission:** The current **one Skill + one Competency** selection counts are approved for native implementation as an initial baseline, and may be adjusted in the broader cross-Upbringing balancing pass. Earlier unresolved-count and not-yet-native statements in this document are **superseded** for Street-Raised only. The already approved pools, language and Urban Navigation are not reopened.
 
 **Deferred:** Generic choice projection, duplicate training, Forgery facet balance, travel integration and comparative feature strength. Decision analysis: `docs/rewrite/character-origins/pillar3-urchin-street-raised-reconciliation.md`.
+
+
+## Aristocratic Upbringing promoted to native — 2026-11-05
+
+**Owner-approved resolution:** `upbringing.aristocratic` is now selected-native at `data/rulesets/first-party-001/native/upbringings/aristocratic.json`. This final allocation **supersedes earlier entries in this document** describing unresolved Aristocratic selection counts. The training counts are deliberately **provisional for later balance changes**; they are nevertheless approved as the current native package.
+
+- **Scope:** Formative familiarity with aristocratic households and social customs, without required noble birth, title, fortune, personal servants, or court residence. Any Species may select this experience, independently of a later Background.
+- **Language:** Learn one language used by the formative household or social community; Common is eligible when spoken there.
+- **Skill training:** Choose **one** Skill: History, Insight, Persuasion, Deception, or Performance.
+- **Competency training:** Choose **one total**: proficiency with one type of Gaming Set, **or** Calligraphy, Painting, or Cooking. The mixed alternatives are encoded as one `benefit-choice` with one nested category choice for a Gaming Set type. Existing Calligraphy/Painting crafting-skill and tool facets are preserved; no free physical supplies are implied.
+- **Aristocratic Protocol:** For aristocratic communities whose customs the character knows, they understand ordinary titles, ranks, forms of address, etiquette, and ways of requesting introductions or audiences. **No check is required solely to recall familiar ordinary protocol**; unfamiliar, secret, or uncertain practices remain subject to normal GM adjudication. This does not grant actual noble status, admission, favorable treatment, authority, wealth, guaranteed audiences, or the Noble Background's Position of Privilege.
+- **No Upbringing starting equipment**, fixed ability increases, Origin feat, automatic rank, or mandatory noble family.
+- **Balancing remains open:** One Skill and one Competency are initial working counts, not an assertion that this package has proven equal to Street-Raised, Goliath, or Species-linked Upbringings. The corpus-wide duplicate-training policy remains unresolved; no Aristocratic-specific stacking or replacement is introduced.
+
+**Analysis and cross-package review:** `docs/rewrite/character-origins/pillar3-corpus-balance-consistency-review.md`. No new runtime or consumer code is authorized.
