@@ -279,3 +279,16 @@ The Knight source decomposition and full approval boundary are recorded in `docs
 **Pending:** Generic choice execution for multiple distinct skills, competency options, inventory item resolution, and corpus-wide comparison. No special espionage system or automatic false identity was introduced.
 
 See `docs/rewrite/character-origins/pillar3-spy-reconciliation.md` for the source comparison, alternatives, and final approval record.
+
+
+## Guild Artisan independently promoted — 2026-11-04
+
+**Owner-approved result:** Guild Artisan is now a selected native Background (`background.guild-artisan`) at `data/rulesets/first-party-001/native/backgrounds/guild-artisan.json`, not a subtype with inherited mechanics. Retain Insight, Persuasion, one native craft Competency corresponding to the actual guild trade, one trade-linked learned language, Guild Membership and the 2014 starting-equipment structure.
+
+**Guild Membership retains 5 gp monthly dues**, interpreted through ordinary DM adjudication. The feature offers conditional professional contact, guild-network introductions, modest hospitality and institutional support; good standing and available resources matter.
+
+**Ordinary starting possessions:** Tools suited to the selected craft only where a matching tool set is defined, guild introduction letter or evidence, traveler's clothes, pouch and **15 gp**. No invented craft workshop or guaranteed resources.
+
+**Merchant is not a variant:** The 2014 Guild Merchant variant remains source material for designing an independent **Guild Merchant** Background; its trading qualifications and starting inventory require a separate approval pass. No unapproved Merchant record is selected.
+
+**Deferred:** The general `crafting-competency` category resolution, valid guild-trade eligibility, tool-item binding, duplicate grants, and differences between tool-only and multi-facet Competencies during the corpus-wide audit. Detailed proposal and approval record: `docs/rewrite/character-origins/pillar3-guild-artisan-reconciliation.md`.
