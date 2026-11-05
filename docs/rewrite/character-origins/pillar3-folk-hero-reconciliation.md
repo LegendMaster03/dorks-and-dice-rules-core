@@ -1,6 +1,6 @@
 # Pillar 3 — Folk Hero Background and Rural Upbringing Reconciliation
 
-**Status:** Source-reviewed proposal only. No native Folk Hero Background or new Rural Community Upbringing is approved or authored here.
+**Status:** Folk Hero approved and authored as an independent native Background. Earlier proposals remain preserved as research; the final approved grant package appears below.
 
 **Ruleset:** `first-party-001`  
 **Branch:** `feature/character-origins-pillar3-life-experiences`
@@ -166,3 +166,19 @@ Removing vocational training represents a **deliberate mechanical departure** fr
 - **Cross-corpus tests:** Compare this Background with Soldier and Knight standing, Acolyte shelter, Guild Artisan contacts, Wilderness-Raised provisioning and Rural Community if added. A recognized person can have another occupation in biography without accumulating an additional full Background.
 
 **Open for owner approval:** Whether to adopt Option C and this equipment set as the complete package. The feature and Skill pool had conceptual agreement but are not thereby marked as a selected-native record. No repository runtime or native content change is approved by this note.
+
+
+## Approved native Folk Hero allocation — 2026-11-04
+
+**Owner approval:** Adopt the revised **Option C** package proposed after the earlier agreement, including flexible Skills, Community Refuge, **no automatic vocational grant**, and simple ordinary equipment. This supersedes the earlier pending approval boundary while retaining its comparison of source alternatives.
+
+**Selected native record:** `data/rulesets/first-party-001/native/backgrounds/folk-hero.json`, `background.folk-hero`, independently selectable with `status: selected-native`.
+
+- **Skills:** Choose **two distinct** from Animal Handling (`skill.animal-handling`), Survival (`skill.survival`), Athletics (`skill.athletics`), Medicine (`skill.medicine`), Persuasion (`skill.persuasion`), Insight (`skill.insight`), Intimidation (`skill.intimidation`), Investigation (`skill.investigation`). Composite Athletics training does not independently train its child Skills.
+- **Other training:** None automatically. No craft or musical Competency, land-vehicle qualification, extra Skill, or learned language is granted by this Background. This intentionally departs from the original 2014 artisan-tool-and-vehicle package.
+- **Feature — Community Refuge:** Recognized or credibly attested past deeds allow the character to seek temporary shelter, modest hospitality, or discreet recovery among sympathetic ordinary people. Supporters may conceal whereabouts when justified and reasonably safe. Assistance depends on trust, recognition, available resources, and circumstances; they are not expected to risk their lives or livelihoods. Traveling companions may be hosted only where realistically feasible. No global reputation, automatic legal immunity, command authority, or guaranteed shelter for an arbitrary party size.
+- **Ordinary starting inventory:** One set of common or work-appropriate clothes; a mundane keepsake/testimonial of the deed; **one DM-agreed ordinary personal item** connected to the deed or previous work, without a guaranteed monetary value or training; pouch; **10 gp**. No automatically granted artisan tools, shovel, iron pot, cart, livestock, estate, or reward.
+- **Origin separation:** The recognition is earned; any Species and Upbringing can qualify. The possible Rural Community Upbringing is **still unapproved** and confers no automatic Folk Hero feature. No special inheritance or profession is implied.
+- **Pending wider review:** Comparative feature strength, Skill overlap and duplication, item identity/materialization, meaningful source feature execution and group hospitality adjudication.
+
+Native record authored without adding C# mechanics, new social-reputation tracking, feature execution, or consumer changes. Earlier unapproved options remain in the document for audit, not as current native rules.
