@@ -473,3 +473,20 @@ Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3
 **Detailed source comparison and approval:** `docs/rewrite/character-origins/pillar3-spy-reconciliation.md`.
 
 **Current Pillar 3 branch total:** Seven native Backgrounds (Sage, Criminal, Soldier, Acolyte, Noble, Knight, Spy); ten previously authored native Upbringings. Street-Raised and Aristocratic remain approved in substantial part but need training choice counts before native promotion.
+
+
+## Guild Artisan approved native Background — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/guild-artisan.json` (`background.guild-artisan`, `selected-native`), the **eighth independent native Background** on the Pillar 3 branch. It is based on the 2014 Guild Artisan concept and remains independent of any future Guild Merchant Background.
+
+- **Skills:** Insight and Persuasion.
+- **Competency:** Choose **one** native crafting Competency relevant to the character's actual guild trade. The illustrative examples do not form a closed eligibility list; the general `crafting-competency` choice category and trade constraint require later consumer resolution.
+- **Language:** Learn one language associated with the guild, members, clients, or trade relationships; Common may qualify.
+- **Feature:** Guild Membership supplies conditional trade contacts, introductions, reasonable hospitality, and institutional support where recognized. Good standing ordinarily requires **5 gp per month** in guild dues. No payment subsystem is added.
+- **Equipment:** One appropriate guild craft tool set when corresponding tools exist, guild letter or membership evidence, traveler's clothes, pouch and **15 gp**, as ordinary inventory; no workshop or fictional tool kit is automatically granted.
+- **Balance/consistency follow-up:** Different native craft Competencies may contain skill, tool, or combined facets; analyze strength, equipment value and duplicate cultural training in the first corpus-wide pass.
+- **Guild Merchant:** Future independent reconciliation. Do not add it as a Guild Artisan variant or automatically inherit all craft benefits.
+
+**Source review and final approved scope:** `docs/rewrite/character-origins/pillar3-guild-artisan-reconciliation.md`.
+
+**Current branch total:** Eight native Backgrounds (Acolyte, Criminal, Guild Artisan, Knight, Noble, Sage, Soldier, Spy), ten native Upbringings. Street-Raised and Aristocratic have approved mechanics but still require selection counts before native promotion.
