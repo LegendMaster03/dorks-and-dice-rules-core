@@ -262,9 +262,11 @@ The contract exposes, as applicable:
 
 A family hierarchy and a composite competency can look similar in a nested UI, but they are mechanically different. A family is taxonomy containing independent children. A composite competency, such as Hide + Move Silently -> Stealth, has an explicit Rules Layer value-composition relationship.
 
+The native Blacksmithing / Armorsmithing / Weaponsmithing hierarchy is a third, specialization relationship. Blacksmithing retains independently addressable Craft and Smith's Tools facets. Its children do not automatically grant Blacksmithing ranks, derive an arithmetic parent bonus, or inherit all parent capabilities. The native training presentation exposes `specializationIds` separately from numerically composed `componentIds`. The future ranked competency progression remains under review.
+
 ### Shared competency facets
 
-A learned competency can have more than one mechanical facet without making those facets numerically equivalent. Reviewed shared identities include Alchemy, Forgery, Calligraphy, Carpentry, Cobbling, Gemcutting, Leatherworking, Painting, Pottery, Stonemasonry, and Weaving. The complete reviewed mapping and deliberately separate tool relationships are maintained in `docs/competency-reconciliation-audit.md`.
+A learned competency can have more than one mechanical facet without making those facets numerically equivalent. Reviewed shared identities include Alchemy, Blacksmithing, Forgery, Calligraphy, Carpentry, Cobbling, Gemcutting, Leatherworking, Painting, Pottery, Stonemasonry, and Weaving. The complete reviewed mapping and deliberately separate tool relationships are maintained in `docs/competency-reconciliation-audit.md`.
 
 For Alchemy, the catalog can expose both:
 
