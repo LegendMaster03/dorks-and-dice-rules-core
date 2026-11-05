@@ -545,3 +545,21 @@ Neither role automatically requires or grants the other; Wilderness-Raised is no
 The **Wilderness-Raised Upbringing** candidate is unchanged: one household/community language, one formative Skill choice and conditional six-person Wilderness Provisioning, not an automatic Explorer feature. No native Upbringing/Explorer records have been authorized.
 
 **Full comparison, example adjudications, and proposed feature wording:** `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`.
+
+
+## Wilderness-Raised and Explorer native approval — 2026-11-04
+
+**Approved and authored as separate selections:**
+
+- `upbringing.wilderness-raised` at `data/rulesets/first-party-001/native/upbringings/wilderness-raised.json`, the **eleventh native Upbringing**. One learned formative community language (Common eligible), one chosen Skill from Survival/Nature/Animal Handling/Perception/Athletics, and **Wilderness Provisioning**: gather food and fresh water for the character plus five others when available, accessible and feasible. No automatic Competency or starting equipment.
+- `background.explorer` at `data/rulesets/first-party-001/native/backgrounds/explorer.json`, the **eleventh native Background**. Fixed Perception, one Skill chosen from Survival/Investigation/History/Nature/Athletics, one Competency chosen from Navigation/Cartography, no language, and **Expedition Survey**. Field journal/notes, map paper, writing implement, traveler's clothes, pouch and 10 gp are ordinary starting inventory.
+
+**Expedition Survey:** One reliable actionable interpretation of a newly surveyed area if observations/maps/accounts provide meaningful evidence; report insufficiency otherwise. Recall personally surveyed routes' major turns, junctions and landmarks without a separate memory check. No hidden-route discovery, safe-travel guarantee, or bypass of existing travel/navigation checks.
+
+**Source split:** The prior plan to promote a native `background.outlander` has been superseded. Outlander remains comparison material rather than a separate selected Background. Wilderness-Raised and Explorer do not inherit one another and have no Species restriction.
+
+**Deferred:** Common grant execution for Upbringing features, choices and item identity, cross-package duplicate grants, relative strength of six-person provisioning in different campaigns, Explorer's survey utility and consumer travel integration.
+
+**Reconciliation and approval history:** `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md` and `docs/rewrite/character-origins/pillar3-outlander-reconciliation.md`.
+
+**Current branch total:** **Eleven native Upbringings and eleven native Backgrounds**. Street-Raised and Aristocratic Upbringings still need approved selection counts before native promotion.
