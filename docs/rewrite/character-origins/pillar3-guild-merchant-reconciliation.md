@@ -1,6 +1,6 @@
 # Pillar 3 — Guild Merchant Background Reconciliation
 
-**Status:** Source-reviewed proposal; no native Guild Merchant record approved or authored.
+**Status:** Guild Merchant approved and authored as an independent native Background. The earlier proposal and unapproved alternatives are preserved as historical analysis; the final approved allocation appears below.
 
 **Ruleset:** `first-party-001`  
 **Branch:** `feature/character-origins-pillar3-life-experiences`
@@ -112,3 +112,24 @@ The suggested initial approval should select **A**, but the owner may prefer B t
 ## Approval boundary
 
 **No `native/backgrounds/guild-merchant.json` has been authorized.** Approval is still needed for the Skill choice, choice of Navigation or extra language, trade-associated baseline language, shared Guild Membership and 5 gp/month obligation, and mule/cart equipment choice. The record is independent of Guild Artisan, and no runtime changes or payment/trade subsystem are within scope.
+
+
+## Approved native Guild Merchant allocation — 2026-11-04
+
+**Owner approval:** The recommended independent Guild Merchant package is approved, including its fixed Persuasion, one commercial Skill choice, the Navigation-or-language alternative, one trade-related baseline language, the shared Guild Membership feature with **5 gp monthly dues**, and **mule-and-cart** starting equipment with **15 gp**.
+
+**Native record:** `data/rulesets/first-party-001/native/backgrounds/guild-merchant.json`, selected as `background.guild-merchant`. It is **not a variant or inheriting subtype** of Guild Artisan.
+
+### Approved mechanics
+
+- **Skill 1 (fixed):** Persuasion (`skill.persuasion`).
+- **Skill 2 (choose one):** Insight, Appraise, or Gather Information (`skill.insight`, `skill.appraise`, `skill.gather-information`).
+- **Baseline language:** One language used through trade, merchants, partners, clients, markets, or trade routes. Common may qualify.
+- **Additional professional choice (choose one total):** Navigation Competency (`competency.navigation`, corresponding to Navigator's Tools) **or** one **additional** learned commercial language. Both options are not granted. The native file expresses this as a `benefit-choice` with `options` and `choiceCount: 1`, whose individual option benefits have different grant types. Executable projection remains deferred to common integration.
+- **Guild Membership:** The conditional trade-organization network feature already functionally approved for Guild Artisan, with **5 gp monthly dues** and ordinary DM adjudication of standing, assistance and payments. It does not create guaranteed credit, market discounts, arbitrary profits or automatic access to every merchant group.
+- **Equipment:** Mule, cart, guild letter or membership evidence, traveler's clothes, pouch, and **15 gp**. No artisan tool set, shop, trading cargo, caravan inventory or automatic land-vehicle proficiency.
+- **Origin independence:** Any Species and Upbringing may qualify. Membership is acquired through a trade association, not automatically inherited. A non-guild merchant remains a separately potential Background, not an entitlement to Guild Membership.
+- **No extra mechanics:** No trade economy, subscription/dues tracker, caravan/follower subsystem, combat animal feature, Origin feat, fixed ability score changes, or Guild Artisan craft Competency.
+- **Review boundary:** Appraise and Gather Information action metadata, mixed-result choice projection, proficiency duplication, relative value of Navigation vs language, and mule/cart value relative to craft tools require the later general review.
+
+This final section **supersedes earlier unapproved recommendations and the approval boundary above** without erasing their source comparison.
