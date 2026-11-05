@@ -38,6 +38,12 @@ public sealed class NativeMechanicsTests
         Assert.Empty(blacksmithing.ComponentIds);
         Assert.Null(blacksmithing.Composition);
         Assert.True(blacksmithing.SupportsRanks);
+        Assert.Null(blacksmithing.ParentCompetencyId);
+        var armorsmithing = Assert.Single(projection.Training!,
+            entry => entry.Id == "competency.armorsmithing");
+        Assert.Equal(blacksmithing.Id, armorsmithing.ParentCompetencyId);
+        Assert.True(armorsmithing.SupportsRanks);
+        Assert.Empty(armorsmithing.SpecializationIds!);
 
         var cartography = Assert.Single(projection.Training!,
             entry => entry.Id == "competency.cartography");
