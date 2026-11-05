@@ -346,3 +346,16 @@ Source comparison, proposed alternatives and complete owner-approved grant alloc
 **Rural Community Upbringing remains separate and not approved.** It would represent formative environment, not automatic celebrity or the Community Refuge feature. General duplication, item resolution and relative Background power await the corpus review.
 
 Detailed source comparison, intermediate alternatives and final approved allocation: `docs/rewrite/character-origins/pillar3-folk-hero-reconciliation.md`.
+
+
+## Charlatan independently promoted — 2026-11-04
+
+**Owner-approved final disposition:** The 2014 Charlatan source is reconciled as standalone `background.charlatan` in `data/rulesets/first-party-001/native/backgrounds/charlatan.json`, not as a Criminal or Spy variant.
+
+**Grants:** Deception, Sleight of Hand, Disguise Kit Competency and Forgery Competency. The latter has both a skill and tool facet in the native catalog. No additional language. **False Identity** establishes one documented alternate persona and grants sample-based document/handwriting imitation subject to scrutiny, not automatic success or genuine institutional authority.
+
+**Ordinary possessions:** Fine clothes, a physical Disguise Kit, exactly one con-prop package (ten small colored-liquid bottles, weighted dice, marked playing cards or fictional-noble signet ring), pouch and **15 gp**. No physical Forgery Kit automatically; supporting cover documents are existing narrative circumstances, not unlimited salable objects.
+
+**Not inherited:** Criminal Contact, Spy Intelligence Sources, noble legal rank, upbringing training, 2024 Origin feats, fixed ability changes or automatic criminal allegiance. General duplicate grants, materialized item IDs, feature execution and comparison of the multi-facet Forgery Competency are deferred.
+
+See `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md` for research, comparison and final approval.
