@@ -1,0 +1,47 @@
+{
+  "id": "upbringing.wilderness-raised",
+  "name": "Wilderness-Raised Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "Your formative years were shaped by a household, community, or sustained environment where obtaining and using natural resources was part of everyday life. This Upbringing is available to any Species and does not require a nomadic culture, isolation from settlements, hunting, poverty, or a particular moral outlook.",
+  "benefits": [
+    {
+      "id": "wilderness-raised-community-language",
+      "name": "Community Language",
+      "description": "Learn one language spoken in your formative household or community. Common may be chosen where it was used there; no special wilderness language is presumed.",
+      "extraLanguages": 1,
+      "choiceConstraint": "spoken-in-formative-household-or-community"
+    },
+    {
+      "id": "wilderness-raised-formative-skill",
+      "name": "Formative Training",
+      "description": "Choose one Skill from Survival, Nature, Animal Handling, Perception, or Athletics to reflect knowledge and practices learned while growing up. Training in composite Perception or Athletics does not automatically train independently ranked component Skills.",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.survival",
+        "skill.nature",
+        "skill.animal-handling",
+        "skill.perception",
+        "skill.athletics"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "wilderness-raised-provisioning",
+      "name": "Wilderness Provisioning",
+      "grantType": "upbringing-feature",
+      "description": "From formative experience obtaining provisions from uncultivated environments, you know how to gather usable food and fresh water when these resources are sufficiently available and accessible. Given a reasonable opportunity to gather provisions during a day, you can supply enough food and fresh water for yourself and up to five other people. This ability does not create resources where none exist, purify unsafe water, bypass inaccessible terrain, or prevent other dangers encountered while gathering."
+    }
+  ],
+  "reviewNotes": [
+    "Independent Upbringing based on the formative aspects of the 2014 Outlander concept. No native Outlander Background is selected; Explorer is a separate Background.",
+    "One language is learned from the character's household or community, including Common if appropriate. The grant does not presume a universal wilderness language.",
+    "One Skill is selected from Survival, Nature, Animal Handling, Perception, and Athletics. Training in either composite Skill does not automatically train its separately ranked child Skills.",
+    "Wilderness Provisioning offers dependable daily food and fresh water for up to six people total when sufficient resources are accessible and gathering is feasible; it does not simply grant permission for an ordinary Survival check.",
+    "The six-person group benefit is campaign-dependent. Exact mechanical balance against complete conventional Species–Ancestry–Upbringing combinations and cross-cultural substitutions remains part of the corpus audit.",
+    "No additional crafting Competency, instrument proficiency, starting items, ability-score increase, Origin feat, inherited ancestry traits, or automatic Explorer feature is granted.",
+    "The Upbringing is independent of Rural Community and Itinerant Community candidates. Selecting it does not require a particular race, poverty, nomadism, or a wilderness-only later career.",
+    "Upbringing-feature projection and overlapping language or Skill training remain deferred to general mechanics integration and cross-package duplicate-grant resolution."
+  ]
+}
