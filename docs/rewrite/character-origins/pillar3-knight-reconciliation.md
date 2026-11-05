@@ -95,3 +95,24 @@ No Knight JSON until its core feature is selected and the skill/competency/langu
 - Author eventual native text in original wording rather than copying the non-SRD PHB passage.
 
 **Still unapproved:** Exact Skill and Competency grants, language grant, starting equipment, the full final native text, and promotion to `native/backgrounds/knight.json`. Previous skill/competency/equipment proposals remain open for individual approval or revision.
+
+
+## Approved native Knight allocation — 2026-11-04
+
+**Owner approval:** The final proposed Knight package, including the fixed Persuasion skill, one additional Skill choice, one gaming-set-or-instrument choice, one service-associated language, 10 gp equipment package, and the previously approved 5e-style Retainers feature, is **approved for native promotion**.
+
+**Authored native record:** `data/rulesets/first-party-001/native/backgrounds/knight.json` (`background.knight`, `selected-native`, independently selectable).
+
+### Final grant allocation
+
+- **Skill 1 (fixed):** `skill.persuasion`.
+- **Skill 2 (choose one):** `skill.athletics`, `skill.animal-handling`, `skill.ride`, `skill.history`, `skill.religion`, `skill.arcana`, or `skill.nature`. This is **one selection**, not all seven.
+- **Competency (choose one total):** one Gaming Set type **or** one Musical Instrument type. The native record documents two eligible `choiceCategories` and `choiceCount: 1`; common category-choice execution remains deferred. No nonexistent instrument competency ID is invented.
+- **Language:** Learn one language of choice associated with the Knight's order, patron, training, or duties; Common may be chosen where appropriate.
+- **Retainers:** A squire and two ordinary noncombat attendants. They perform ordinary duties but do not fight or accompany the knight into obviously dangerous locations; they may leave for repeated danger or mistreatment. NPC conduct is subject to DM adjudication. The unresolved details of employment, upkeep, travel, replacement, and progression remain deliberately unspecified, consistent with the owner's approval of 2014-style ambiguity.
+- **Equipment:** One insignia or commission evidencing Knight standing, service clothing, a personal service token, a pouch, and **10 gp**, as ordinary inventory. No guaranteed steed, weapon, armor, land, heredity, servants beyond the Retainers feature, or additional social privilege.
+- **No forced origins:** Knight does not require Noble, Aristocratic Upbringing, Soldier, a specific Class, a noble birth, or mounted service. It is a distinct Background, **not a variant** and does not inherit another Background mechanically.
+- **No 2024 fixed ability increases or automatic Origin feat.** Combat proficiencies remain part of their proper mechanical sources.
+- **Deferred:** Consumer execution for choice categories, native inventory materialization, retainer narrative handling, and corpus-wide duplicate-grant and overall balance review.
+
+The prior source comparisons, feature alternatives, and "unapproved" sections above are historical design notes, **superseded by this approved allocation**.
