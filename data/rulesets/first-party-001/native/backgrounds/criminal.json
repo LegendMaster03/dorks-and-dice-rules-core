@@ -4,7 +4,7 @@
   "kind": "background",
   "status": "selected-native",
   "selectable": true,
-  "description": "Your previous experiences include illicit activity, the networks around it, or work performed beyond the law. You may have acted independently, within an organization, or as an intelligence operative. The Background does not determine your current occupation, loyalties, morals, or personal history.",
+  "description": "Your previous experiences include illicit activity, the networks around it, or work performed beyond the law. You may have acted independently or within an organization. This Background does not determine your current occupation, loyalties, morals, or personal history.",
   "benefits": [
     {
       "id": "criminal-deception",
@@ -72,17 +72,11 @@
     "Pickpocket",
     "Smuggler"
   ],
-  "suggestedVariants": [
-    {
-      "name": "Spy",
-      "description": "The same experience and contact mechanics can represent espionage or intelligence work, whether authorized by a government, performed independently, or conducted for another group. This is a narrative alternative, not a second mechanical package."
-    }
-  ],
   "suggestedCharacteristics": {
     "optional": true,
-    "description": "Personality traits, ideals, bonds, flaws, criminal specialties, and the Spy variant are optional inspiration. They impose no morality, alignment, current membership, or required personal history.",
+    "description": "Personality traits, ideals, bonds, flaws, and criminal specialties are optional inspiration. They impose no morality, alignment, current membership, or required personal history.",
     "prompts": [
-      "How did you first become involved in unlawful or covert work?",
+      "How did you first become involved in illicit work?",
       "What kind of relationship do you maintain with your contact?",
       "Which rules, if any, do you refuse to break?",
       "Do you still work in that world, or have you left it behind?"
@@ -94,7 +88,7 @@
     "One gaming-set type is a choice among trained competencies; resolving choices by category requires later native grant execution support.",
     "No language grant is included. A character's Upbringing normally supplies formative languages, while later learned languages require another justification.",
     "Criminal Contact is a relationship-based social feature, not unrestricted underworld privilege.",
-    "Specialties, Spy, and suggested characteristics are optional narrative guidance without additional mechanical grants.",
+    "Specialties and suggested characteristics are optional narrative guidance without additional mechanical grants. Spy is a separately selectable native Background, not a Criminal variant.",
     "The 2014 starting equipment is descriptive pending native item identity matching and ordinary inventory materialization; no separate equipment bag is created.",
     "The 2024 Alert Origin feat and fixed ability adjustments are not automatically granted."
   ]
