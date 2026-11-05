@@ -65,6 +65,36 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
         self.assertIn("competency.blacksmithing", dwarf_grant["chooseOne"])
         self.assertNotIn("competency.smithing", dwarf_grant["chooseOne"])
 
+    def test_competency_specialization_graph_has_no_cycles_or_dangling_links(self):
+        native = read(NATIVE / "competencies.json")["competencies"]
+        by_id = {entry["id"]: entry for entry in native}
+        children_seen = set()
+        for parent in native:
+            children = parent.get("childCompetencies", [])
+            self.assertEqual(len(children), len(set(children)), parent["id"])
+            if children:
+                self.assertEqual("specialization", parent["childRelationship"])
+            for child_id in children:
+                self.assertIn(child_id, by_id)
+                child = by_id[child_id]
+                self.assertEqual(parent["id"], child.get("parentCompetency"))
+                self.assertEqual("specialization", child.get("parentRelationship"))
+                self.assertNotIn(child_id, children_seen)
+                children_seen.add(child_id)
+                self.assertNotIn("composition", parent)
+        for entry in native:
+            parent_id = entry.get("parentCompetency")
+            if parent_id:
+                self.assertIn(parent_id, by_id)
+                self.assertIn(entry["id"], by_id[parent_id].get("childCompetencies", []))
+            seen = set()
+            node = entry
+            while node.get("parentCompetency"):
+                self.assertNotIn(node["id"], seen)
+                seen.add(node["id"])
+                node = by_id[node["parentCompetency"]]
+            self.assertNotIn(node["id"], seen)
+
     def test_selected_fear_rule_retains_unresolved_escalation_as_inert(self):
         native = read(NATIVE / "fear.json")
         source = read(WORKING / "fear.json")
