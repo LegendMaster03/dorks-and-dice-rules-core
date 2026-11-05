@@ -1,0 +1,108 @@
+{
+  "id": "background.knight",
+  "name": "Knight",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have served in a recognized knightly role through an oath, commission, title, order, or comparable obligation. Knighthood may be earned or granted and does not require noble birth, an Aristocratic Upbringing, a military command, ownership of a mount, or a particular class or alignment.",
+  "benefits": [
+    {
+      "id": "knight-persuasion",
+      "name": "Persuasion Training",
+      "description": "Gain training in Persuasion from the duties and relationships associated with your knightly service.",
+      "skill": "skill.persuasion",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "knight-service-training",
+      "name": "Knightly Service Training",
+      "description": "Choose one Skill training reflecting the nature of your knightly duties: Athletics, Animal Handling, Ride, History, Religion, Arcana, or Nature.",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.athletics",
+        "skill.animal-handling",
+        "skill.ride",
+        "skill.history",
+        "skill.religion",
+        "skill.arcana",
+        "skill.nature"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "knight-leisure-training",
+      "name": "Gaming or Musical Training",
+      "description": "Choose one type of gaming set or one type of musical instrument and gain training with that choice. The selection is one proficiency in total, not one from each category.",
+      "grantType": "competency-training",
+      "choiceCategories": [
+        "gaming-set",
+        "musical-instrument"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "knight-service-language",
+      "name": "Knightly Service Language",
+      "description": "Learn one language of your choice associated with your knightly order, patron, training, or duties. Common is a valid choice where appropriate to the character's experience.",
+      "extraLanguages": 1,
+      "choiceConstraint": "associated-with-knightly-order-patron-training-or-duties"
+    },
+    {
+      "id": "knight-retainers",
+      "name": "Retainers",
+      "grantType": "background-feature",
+      "description": "Three noncombat retainers attend you: a squire and two other ordinary attendants. They may perform customary duties and errands, but they do not fight for you or accompany you into obviously dangerous places, such as dungeons. They may leave if you repeatedly put them in danger or mistreat them. The DM adjudicates their conduct and circumstances as with other NPCs. This feature grants neither player-controlled adventuring characters nor noble status or military command."
+    }
+  ],
+  "startingEquipment": {
+    "description": "An insignia or document representing your knightly standing, clothing appropriate to your service, a personal token associated with your patron or duties, and a pouch containing 10 gp. These are ordinary inventory possessions. No mount, weapon, armor, estate, or hereditary title is included.",
+    "items": [
+      {
+        "name": "Insignia or document of knightly standing",
+        "quantity": 1,
+        "options": [
+          "Knightly insignia",
+          "Commission or certificate of knightly standing"
+        ]
+      },
+      {
+        "name": "Service clothing",
+        "quantity": 1
+      },
+      {
+        "name": "Token of service or patronage",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "The source of knighthood, code, patron, order, and duties are roleplaying choices. They do not require nobility, religious practice, mounted service, military rank, or a specific alignment.",
+    "prompts": [
+      "Who recognized your knightly service, and under what terms?",
+      "What duty or obligation defines your knighthood?",
+      "How do you relate to your squire and other attendants?",
+      "Where is your standing recognized, questioned, or unknown?"
+    ]
+  },
+  "reviewNotes": [
+    "Selected as an independent native Background. Knight does not inherit the Noble or Soldier Background and is not a variant of either.",
+    "Persuasion is fixed; choose one of Athletics, Animal Handling, Ride, History, Religion, Arcana, or Nature as the second skill.",
+    "Choose one gaming-set type OR one musical-instrument type. These alternatives are authored as two choice categories with one total selection; consumer-side category resolution is deferred.",
+    "The service-associated language is one learned language; Common is eligible if connected to the character's knightly experience.",
+    "Retainers follow the intentional 2014 5e limits: a squire plus two ordinary noncombat attendants, no combat service, no entrance into obviously dangerous areas, possible departure after mistreatment or repeated danger, and ordinary DM adjudication.",
+    "No daily pay, replacements, food and lodging system, recruitment mechanics, retainer inventory or NPC leveling system is introduced; unspecified logistics remain unspecified.",
+    "Recognized knightly standing is narrative context, not a second background-feature grant of Noble's Position of Privilege or Soldier's Military Rank.",
+    "The four-item and 10 gp equipment package reflects approved service-based possessions without guaranteeing a mount, armor, weapons, land, or noble title; ordinary inventory item resolution is deferred.",
+    "No free martial class proficiencies, spellcasting, feats, or fixed ability score increases are awarded by the Background.",
+    "Narrative guidance is optional; combinations with any Upbringing, including Aristocratic, are allowed. Duplicate-grant handling remains deferred to the general corpus review.",
+    "This record uses original Dorks & Dice prose and derives the generic Retainers game mechanic from the non-SRD 2014 Knight material; it does not reproduce PHB narrative expression."
+  ]
+}
