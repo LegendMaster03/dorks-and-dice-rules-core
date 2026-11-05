@@ -142,11 +142,11 @@ Calligraphy and Painting can carry both crafting-skill and tool facets, so one C
 ## Audit verification and changes made
 
 - Read and compared **16 Background JSON records** and **12 Upbringing JSON records**, including child/parent Upbringings, against native Skill and Competency definitions. Current catalogs have **88 Skills and 33 Competencies**.
-- Confirmed all 16 Backgrounds contain two Skill trainings and one principal \`background-feature\`. Background Skill/Competency references sampled by the audit resolve to reviewed identities; nested and open-ended choice categories still require executor validation.
+- Confirmed all 16 Backgrounds contain two Skill trainings and one principal \`background-feature\`. Background Skill/Competency identity references checked across the 16 records resolve to reviewed identities; nested and open-ended choice categories still require executor validation.
 - Found **17 canonicalization flags in six older Upbringing records**; these include several flags on the same choice and scoped modifiers. A follow-up normalization should occur only with an explicit compatible grammar. No new Skill/Competency identities were invented.
 - Compared selected Species defaults and representative Ancestry defaults; did **not** treat defaultUpbringing as mandatory biological inheritance.
 - **One text-only consistency correction applied:** \`data/rulesets/first-party-001/native/upbringings/elf/high.json\` now correctly identifies Elvish as learned through General Elf rather than inherited as a Species trait. All mechanical fields remained unchanged.
-- **No balance adjustments, Arbitrocratic native allocation, duplicate policy or runtime engine changes have been implemented in this audit.** Structural checks do not constitute playtest results.
+- **No balance adjustments, Aristocratic native allocation, duplicate policy, or runtime engine changes have been implemented in this audit.** Structural checks do not constitute playtest results.
 
 ## Decision summary
 
