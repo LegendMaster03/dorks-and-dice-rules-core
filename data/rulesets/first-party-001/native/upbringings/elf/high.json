@@ -17,7 +17,7 @@
     },
     {
       "id": "additional-language",
-      "description": "Learn one additional language of choice without replacing inherited Elvish.",
+      "description": "Learn one additional language of choice without replacing Elvish learned through the General Elf Upbringing.",
       "extraLanguages": 1
     }
   ],
