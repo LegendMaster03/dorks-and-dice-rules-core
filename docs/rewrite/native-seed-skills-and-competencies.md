@@ -1,6 +1,6 @@
 # Native Skills and Competencies — corrected baseline
 
-**Status:** Initial data-only, provisional foundation on the clean-slate rewrite branch. No executable rules engine, database, or public/tester access change.
+**Status:** Reconciled provisional native competency data baseline. The numerical rank/proficiency advancement system is still undecided; historical `working/` records remain reference evidence.
 
 ## Native data organization
 
@@ -20,12 +20,16 @@ Crafting-related capabilities are not duplicated as unrelated Skill and Competen
 
 ## Competencies
 
-The initial Competencies catalog contains all 20 previously reviewed Craft specialties and 13 separately established tool-based identities. For example:
+The native Competencies catalog contains 32 identities following the consolidation of Smithing into Blacksmithing. It retains all 20 reviewed Craft specialties and their existing implementation facets. For example:
 
 - **Alchemy:** crafting-skill facet **and** Alchemist's Supplies tool-proficiency facet under one competency identity.
 - **Carpentry:** crafting-skill facet **and** Carpenter's Tools facet under one identity.
-- **Smithing:** a tool-proficiency competency. It is **not** automatically equated with Blacksmithing, Armorsmithing or Weaponsmithing.
+- **Blacksmithing:** one competency identity with the historical ranked Craft facet and the **Smith's Tools** tool-proficiency facet. The former standalone native Smithing identity is no longer selectable. Armorsmithing and Weaponsmithing are recorded as specialized sub-competencies of Blacksmithing, not as automatic rank grants.
 - **Forgery:** a tool competency with an explicit link to the separately adopted Forgery skill; this linkage is not a generalized claim that skills and competencies are interchangeable.
+
+Every native competency uses a common `trainingProfile` structure: training belongs to the competency identity; governing Ability is resolved by the applicable activity or existing facet; and the future numeric progression remains pending review. Existing crafting/tool/skill facets remain authoritative for their currently defined mechanics, rather than being silently converted to an unapproved universal rank formula.
+
+`parentCompetency` / `childCompetencies` record specialization links without assigning a derived arithmetic mean, rank inheritance, or automatic proficiency. That distinguishes sub-competencies from established derived composite Skills. Other plausible competency relationships remain candidates for separate review.
 
 Only explicit reviewed relationships unify training. A crafting rank does not turn into a tool-proficiency bonus or vice versa. Standalone tools do not invent Craft (X) source rules.
 
@@ -37,4 +41,4 @@ CC BY 4.0 attributions are retained in `data/reference/srd/manifest.json` becaus
 
 ## Checks and remaining work
 
-Structural tests cover the reviewed skill corpus, 18 SRD skills, Skill-to-Skill composites, specialty counts, real competency facets and the strict boundary between core rules and import mappings. This is **not** confirmation that all native numeric Skill mechanics or all crafting/tool interactions are implemented. Those require approved schemas and gameplay-engine work.
+Structural tests cover the reviewed skill corpus, 18 SRD skills, Skill-to-Skill composites, the merged Blacksmithing identity, specialization links, the common competency training profile, existing competency facets and the strict boundary between core rules and import mappings. This is **not** confirmation that all native numeric Skill mechanics or all crafting/tool interactions are implemented. Those require approved schemas and gameplay-engine work.
