@@ -292,3 +292,16 @@ See `docs/rewrite/character-origins/pillar3-spy-reconciliation.md` for the sourc
 **Merchant is not a variant:** The 2014 Guild Merchant variant remains source material for designing an independent **Guild Merchant** Background; its trading qualifications and starting inventory require a separate approval pass. No unapproved Merchant record is selected.
 
 **Deferred:** The general `crafting-competency` category resolution, valid guild-trade eligibility, tool-item binding, duplicate grants, and differences between tool-only and multi-facet Competencies during the corpus-wide audit. Detailed proposal and approval record: `docs/rewrite/character-origins/pillar3-guild-artisan-reconciliation.md`.
+
+
+## Guild Merchant promoted as an independent Background — 2026-11-04
+
+**Owner-approved resolution:** Historical Guild Merchant was a 2014 variant of Guild Artisan, but the native system now defines it as a **separate, independently selected Background**: `data/rulesets/first-party-001/native/backgrounds/guild-merchant.json` (`background.guild-merchant`).
+
+**Grants:** Persuasion; choose one Skill from Insight, Appraise, Gather Information; learn one trade-linked language; **choose one** of Navigation Competency or a second commercial language; gain Guild Membership with **5 gp/month dues**; and receive a mule, cart, merchant guild letter/evidence, traveler's clothes, pouch and **15 gp** as ordinary inventory.
+
+**No inheritance or assumed craft:** It grants no Guild Artisan crafting Competency, shop, cargo, guaranteed profits, or standing from ancestry or upbringing. Its shared organizational Guild Membership feature is appropriate because the two institutions provide similar conditional support, not because one Background inherits the other.
+
+**Deferred integration:** Mixed-result Navigation/language choice, Skill actions for Appraise/Gather Information, duplicate grants, mule/cart ordinary inventory identity and comparative equipment/training balance. No guild-management, commerce, or animal companion system is introduced.
+
+See `docs/rewrite/character-origins/pillar3-guild-merchant-reconciliation.md` for the proposal history and final approval.
