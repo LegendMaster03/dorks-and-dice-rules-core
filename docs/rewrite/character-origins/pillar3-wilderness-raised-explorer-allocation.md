@@ -107,3 +107,56 @@ Do not normalize on arbitrary equal-sized grant lists. In the eventual corpus re
 This is a **working recommendation**, not approved mechanics. Before native authoring, individually review the Wilderness-Raised language, one-Skill count/pool, six-person Wilderness Provisioning entitlement, and working name; then separately review Explorer's two Skills, Navigation/Cartography choice, Geographic Recall (or more active alternative), no-language decision and ordinary equipment. Preserve the earlier 2014 Outlander evidence without treating its source package as a native rule.
 
 No new native Upbringing or Background, no modification of previously approved Backgrounds, and no runtime or consumer code are authorized by this proposal.
+
+
+## Explorer feature refinement — 2026-11-04: Expedition Survey recommended
+
+**Status:** Independently evaluated recommendation, **not owner-approved**. The original `Geographic Recall` proposal above remains historical comparison; the preferred single Explorer feature is now **Expedition Survey**, which includes bounded recall without requiring the character to have explored an area previously.
+
+### Existing Rules Core travel contract to respect
+
+The repository document `docs/travel-environment-mechanics.md` establishes a separation of concerns: Rules Core provides effective travel/environment definitions and source-grounded travel checks; **Hex Crawl** owns expedition map state, route/navigation transitions, cadence and DM workflow. Its 3.5e navigation rules include:
+
+- `travel.navigation.avoid-getting-lost`: Survival checks, once per hour or portion, with contextual DCs;
+- `travel.navigation.recognize-lost`: Survival checks to recognize lost state;
+- `travel.navigation.set-new-course`: Survival checks to establish a fresh course;
+- existing deferral of mapping/scouting responsibility integration and character-dependent modifier composition.
+
+A new Explorer feature must not silently exempt the group from these checks, change journey distance or tempo, mutate Hex Crawl expedition state, or award an automatic general tool/skill bonus outside the unresolved shared grant contract.
+
+### Comparison of feature designs
+
+| Model | Meaningful benefit | Primary weakness | Judgment |
+| --- | --- | --- | --- |
+| **Geographic Recall only** | Dependably remember geography and surveyed routes without fresh recall checks | Little use during a first expedition into uncharted territory; memory of prior study may resemble ordinary competence | Preserve its useful component but do not make it the entire feature |
+| **Expedition Survey** (proposed) | Obtain reliable, bounded orientation and route information from actual observations/usable charts while traveling; retain key details for return travel | The GM must distinguish clearly observable facts from genuinely uncertain or hidden routefinding; can feel trivial if reduced to common observation | Preferred baseline |
+| **Numerical navigation bonus or automatic no-getting-lost effect** | Quantifiable advantage to relevant routefinding checks | A new bonus competes with existing Survival/Navigation/Knowledge compositions; automatic success could bypass established travel procedures | Do not adopt without broader travel/skill integration review |
+
+### Expedition Survey — preferred original native wording, unapproved
+
+> **Expedition Survey.** When you have a reasonable opportunity to observe an area, travel through it, or study a usable map or account, you can identify the broad relationships among major landmarks, terrain features, and routes that the available evidence reveals. When a destination is visible or marked in the available information, you can identify a plausible approach and suitable landmarks for orientation, if the evidence supports them. You can reliably retain or record the major landmarks, turns, and junctions of a route you personally survey and use that information to describe or retrace it. The GM determines what the observations or records make discernible. This feature does not reveal concealed or unexplored routes, guarantee the shortest or safest approach, or eliminate checks to avoid getting lost, recognize that you are lost, or establish a new course when conditions make navigation uncertain.
+
+**Mechanical interpretation and testable entitlement:**
+
+1. **Active:** The Explorer can use available observations or maps to establish an actionable **plausible approach and orientation reference**, including on the first visit, if those facts can genuinely be inferred. The GM need not disclose unknown or hidden facts. If evidence is sufficient and unambiguous, the Explorer can understand the broad relationships **without a separate check merely to interpret that evident information**.
+2. **Persistent:** The Explorer does not need a fresh memory check to recount a route's observed major junctions and landmarks after personally surveying it, provided the character had a reasonable opportunity to examine them. It is not flawless photographic memory or an exact map.
+3. **Not automatic routefinding:** Getting-lost checks, obscured/repeating landmarks, broken routes, shifting conditions, dangerous encounters, and the need to choose a new course remain normal gameplay, informed by the available survey data rather than replaced by it.
+4. **Not another system:** The definition is content-level character entitlement. The existing Hex Crawl system owns travel state and adjudication; no new general mapping procedure, action economy, guaranteed ten-minute interval, or map data structure is authorized.
+5. **Tool distinction:** Explorer's Navigation-or-Cartography choice remains independently useful. Expedition Survey does not give both tool proficiencies. An Explorer can communicate a broad route without needing flawless professional chart production.
+
+**Boundary tests:**
+
+- **First entry into a forest:** From a hilltop, the Explorer identifies the visible ridge and a plausible approach to a mapped ruin if those relationships are discernible. The feature does not reveal hidden trails beneath the canopy.
+- **Established return route:** The Explorer remembers a previously surveyed crossing and junctions without rechecking memory. Thick fog or altered terrain can still trigger ordinary getting-lost checks.
+- **Featureless desert:** If there are no usable landmarks or sufficiently informative records, Expedition Survey can not conjure a route or waive Survival checks.
+- **City-raised Explorer:** The feature works without Wilderness-Raised and does not grant the Upbringing's six-person provisions.
+- **Wilderness-Raised Sage:** Provisioning from childhood works without Explorer's route survey.
+- **Sailor:** Ship's Passage is a relationship-based transportation benefit. Explorer's surveyed route does not guarantee that a ship will sail it.
+- **Guild Merchant:** Navigation proficiency, if chosen, is a separate qualification from Expedition Survey's limited information entitlement.
+- **Sage Researcher:** Researcher points to where lore might be found; Expedition Survey interprets already available observation/terrain records. Neither guarantees access to concealed information.
+
+**Residual design risk:** Even this version may be too close to what a competent character can normally do with Survival, Navigation and Cartography. If the owner considers it insufficiently distinctive, evaluate a **small scoped check benefit** for using a personally surveyed route, but only after clarifying how character capabilities compose with `travel.navigation.*` checks. Do not insert an ungrounded reroll, passive advantage or numeric bonus into native content now.
+
+**What this refines:** Use `Expedition Survey` **instead of**, not in addition to, `Geographic Recall` as the single Explorer Background feature. The existing candidate Explorer skills (Perception plus one selected Skill), one Navigation-or-Cartography Competency, no extra language, and ordinary expedition equipment remain **unchanged proposals**. The Wilderness-Raised feature, skill choice and community language also remain unapproved.
+
+**Approval still required:** The feature wording, its functional distinction from ordinary navigation skill checks, and both complete origin packages must be approved before native promotion.
