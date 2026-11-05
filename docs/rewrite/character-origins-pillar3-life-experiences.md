@@ -455,3 +455,21 @@ Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3
 **Design record:** `docs/rewrite/character-origins/pillar3-knight-reconciliation.md`, including the approved final allocation, choice-count semantics and deliberate retainer ambiguity.
 
 **Current branch total:** Six native Backgrounds (Sage, Criminal, Soldier, Acolyte, Noble, Knight). Ten existing native Upbringings; Street-Raised and Aristocratic have approved portions but their training-selection counts and native promotion remain pending.
+
+
+## Spy selected as independent native Background — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/spy.json` (`background.spy`, `selected-native`), as the **seventh independent native Background** on the Pillar 3 branch.
+
+- **Skills:** Choose two distinct Skills from Deception, Stealth, Investigation, Insight, Perception, Persuasion.
+- **Competency:** One choice from Disguise Kit, Forgery, Thieves' Tools, or Calligraphy.
+- **Language:** One language associated with the character's intelligence work, contacts or assignments; Common may qualify.
+- **Feature:** Intelligence Sources; an established source or intermediary can be contacted discreetly for possible leads. There is no guaranteed secret, safe house, organizational authority, or automatic information delivery.
+- **Inventory:** Plain or work-appropriate clothing, notebook/notes, ink, writing instrument, pouch, **10 gp**, as normal starting inventory.
+- **Identity:** Intelligence work need not be criminal, government-sponsored, or performed under a current employer. Spy is not a Criminal Background variant or a Noble/Soldier descendant.
+- **Criminal cleanup:** The obsolete Spy `suggestedVariants` and criminality-implying wording have been removed from `background.criminal`; its approved skills, competencies, contact feature, and starting equipment are unchanged.
+- **Deferred:** Character projection of two distinct skill choices, competency selection, starting-inventory materialization, and grant duplication/balance.
+
+**Detailed source comparison and approval:** `docs/rewrite/character-origins/pillar3-spy-reconciliation.md`.
+
+**Current Pillar 3 branch total:** Seven native Backgrounds (Sage, Criminal, Soldier, Acolyte, Noble, Knight, Spy); ten previously authored native Upbringings. Street-Raised and Aristocratic remain approved in substantial part but need training choice counts before native promotion.
