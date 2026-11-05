@@ -1,6 +1,6 @@
 # Pillar 3 — Sailor Background Reconciliation
 
-**Status:** Source-reviewed design proposal; **not approved for native promotion**. This document does not authorize a selectable Sailor or Pirate native record.
+**Status:** Sailor approved and promoted into the native catalog. Pirate remains an independent unapproved candidate. Earlier proposals and approval boundaries are historical notes superseded by the final approved allocation below.
 
 **Ruleset:** `first-party-001`  
 **Development branch:** `feature/character-origins-pillar3-life-experiences`
@@ -142,3 +142,28 @@ Separate Pirate reconciliation may take place after the first corpus-wide review
 **Pending owner approval:** Fixed Athletics/Perception, Navigation Competency, Water Vehicles qualification, **no extra language**, independent Ship's Passage and its bounded group benefit, and the source-faithful ordinary equipment package with **10 gp**.
 
 Only after approving those points may we create `data/rulesets/first-party-001/native/backgrounds/sailor.json`. **Pirate remains an independent design candidate**, not an approved or inherited variant; no native Pirate JSON is authorized. Native grant execution, vehicle category projection, identity resolution and common balance review remain deferred.
+
+
+## Approved native Sailor allocation — 2026-11-04
+
+**Owner approval:** Adopt the complete proposed 2014-derived Sailor package: **Athletics**, **Perception**, **Navigation Competency**, **Water Vehicles qualification**, **no Background language**, **Ship's Passage** for the character and traveling companions, and the ordinary 2014 equipment package with **10 gp**.
+
+**Authored native record:** `data/rulesets/first-party-001/native/backgrounds/sailor.json` (`background.sailor`, `selected-native`), independently selectable.
+
+**Granted training:**
+
+- `skill.athletics`, a composite Skill; does not independently train its separately ranked Climb, Jump or Swim components.
+- `skill.perception`, a composite Skill; does not independently train its separately ranked Listen or Spot components.
+- `competency.navigation`, including Navigator's Tools proficiency; not Shipmaking or Cartography.
+- Water Vehicles qualification, modeled as `grantType: qualification-training`, `qualificationCategory: vehicle`, and `vehicleType: water`, parallel to Soldier's Land Vehicles qualification. Navigation and water-vehicle operation remain distinct.
+- No additional Background language, fixed ability increases, Origin feat, or inherited/class capability.
+
+**Ship's Passage:** Existing seafaring relationships can ordinarily secure passenger passage **without a normal fare for the Sailor and traveling companions**. Actual vessel availability, route, departure and journey duration constrain it; the traveling group is expected to perform appropriate shipboard work. There is no guaranteed schedule or destination, immediate departure, ship ownership, crew command or cargo entitlement.
+
+**Ordinary starting inventory:** Belaying pin (may be used as a club), **50 feet of silk rope**, one mundane lucky charm/trinket, common clothes, pouch, and **10 gp**. The lucky charm has no automatic supernatural benefit. Item identity/materialization remains deferred.
+
+**Independence:** The Sailor experience does not require upbringing aboard ship, naval service, a specific Species, or moral outlook. **Pirate is not a Sailor variant** in native content and is not created by this approval. Its Bad Reputation feature requires separate review, and neither Background inherits the other.
+
+**Review later:** Navigation/Water Vehicle grant projection, character inventory materialization, composite skill behavior, duplicate grants, the economic value of silk rope, and situational strength of Ship's Passage.
+
+This section supersedes the earlier proposed status and approval boundary while preserving the historical research above.
