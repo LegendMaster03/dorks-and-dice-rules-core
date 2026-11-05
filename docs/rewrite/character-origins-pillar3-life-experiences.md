@@ -506,3 +506,20 @@ Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3
 **Source comparison and final approval:** `docs/rewrite/character-origins/pillar3-guild-merchant-reconciliation.md`.
 
 **Current branch total:** Nine native Backgrounds (Acolyte, Criminal, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Soldier, Spy), ten existing native Upbringings. Street-Raised and Aristocratic retain approved mechanics but need selection counts for native promotion.
+
+
+## Sailor approved native Background — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/sailor.json` (`background.sailor`, `selected-native`), the **tenth independent native Background** on the Pillar 3 branch.
+
+- **Skills:** Fixed Athletics and Perception. They are composite Skills; grant neither separately ranked Climb/Jump/Swim nor separately ranked Listen/Spot automatically.
+- **Competency and vehicle qualification:** `competency.navigation` for Navigator's Tools **and** separately qualified **Water Vehicles** training, with `grantType: qualification-training`, `qualificationCategory: vehicle`, and `vehicleType: water`, following the Soldier Land Vehicles representation.
+- **Languages:** No additional Background language.
+- **Feature:** Ship's Passage may secure fare-free travel for the Sailor and companions using available seafaring relationships and vessels; routes, departure and duration depend on real availability, and travelers help with suitable shipboard labor. No ship ownership, guaranteed journey or crew authority.
+- **Equipment:** Belaying pin usable as a club, **50 feet silk rope**, ordinary lucky charm/trinket, common clothes, pouch, and **10 gp**, as standard inventory; item-identity materialization is pending.
+- **Pirate:** Remains a separate **unapproved** candidate rather than a Sailor variant; its Bad Reputation feature is not imported.
+- **Review later:** Relative travel-feature utility, material equipment values, composite Skill behavior, training overlaps, Water Vehicles projection and native inventory implementation.
+
+**Source comparison and final approved allocation:** `docs/rewrite/character-origins/pillar3-sailor-reconciliation.md`.
+
+**Current branch total:** Ten native Backgrounds (Acolyte, Criminal, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Sailor, Soldier, Spy) and ten existing native Upbringings. Street-Raised and Aristocratic are partially approved but lack their training selection counts for native promotion.
