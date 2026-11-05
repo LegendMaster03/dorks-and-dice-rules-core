@@ -631,3 +631,20 @@ The **Wilderness-Raised Upbringing** candidate is unchanged: one household/commu
 **Approval rationale and 2014 comparison:** `docs/rewrite/character-origins/pillar3-hermit-reconciliation.md`.
 
 **Current Pillar 3 branch totals:** **Sixteen native Backgrounds and eleven native Upbringings**. Street-Raised and Aristocratic Upbringings still await finalized Skill/Competency selection counts.
+
+
+## Street-Raised approved native Upbringing — 2026-11-05
+
+**Owner-approved and authored:** `upbringing.street-raised` at `data/rulesets/first-party-001/native/upbringings/street-raised.json`, the **twelfth native Upbringing** on the Pillar 3 feature branch. The historical 2014 Urchin concept is reconciled into this independent formative Upbringing; no native `background.urchin` is selected.
+
+- **One learned community language:** The language must have been spoken by the character's formative community or household; Common is eligible when appropriate.
+- **One Skill choice (initial count):** Stealth, Sleight of Hand, Perception, Insight or Survival.
+- **One Competency choice (initial count):** Disguise Kit, Thieves' Tools, Cooking or Forgery, retaining the established native Competency facets.
+- **Urban Navigation:** Half the usual noncombat travel time for the character and guided companions using accessible routes through substantial settlements; no bypassing barriers or increasing combat movement.
+- **No extra Upbringing inventory, mandatory poverty/orphanhood/crime, Species restriction, contacts, false identity or assumed later occupation.**
+- **Balancing authorization:** One Skill + one Competency is an **implemented provisional balance baseline**. The owner expressly permits changing the number of selections during the later corpus-wide Upbringing balance review, without treating that flexibility as a reason to delay native authoring.
+- **Deferred:** Consumer projection, general duplicate-choice policy, ability to resolve actual language and Competency options, noncombat urban travel integration, and comparing Forgery facet strength with other choices.
+
+**Detailed reconciliation and approval history:** `docs/rewrite/character-origins/pillar3-urchin-street-raised-reconciliation.md`.
+
+**Current Pillar 3 branch totals:** **Sixteen native Backgrounds and twelve native Upbringings**. Aristocratic Upbringing remains partially approved, with its Skill and Competency selection counts unresolved.
