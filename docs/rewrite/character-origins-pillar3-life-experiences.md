@@ -596,3 +596,22 @@ The **Wilderness-Raised Upbringing** candidate is unchanged: one household/commu
 **Full historical comparison and approval record:** `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md`.
 
 **Current branch totals:** **Thirteen native Backgrounds** (Acolyte, Charlatan, Criminal, Explorer, Folk Hero, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Sailor, Soldier, Spy) and **eleven native Upbringings**. Street-Raised and Aristocratic Upbringings continue to await approved selection counts.
+
+
+## Entertainer and Gladiator approved native Backgrounds — 2026-11-04
+
+**Owner-approved and authored independently:**
+- `background.entertainer` in `data/rulesets/first-party-001/native/backgrounds/entertainer.json`, the **fourteenth native Background**.
+- `background.gladiator` in `data/rulesets/first-party-001/native/backgrounds/gladiator.json`, the **fifteenth native Background**.
+
+**Entertainer:** Fixed Performance and choose one of Acrobatics, Deception, Persuasion, Sleight of Hand or Insight; choose **one** proficiency from Disguise Kit **or** one musical instrument type; no extra language. **By Popular Demand** provides venue-dependent regular performance opportunities, food/lodging in exchange for agreed performances and bounded favorable local recognition. Ordinary starting possessions: a method-appropriate performance item, admirer token, costume, pouch and **15 gp**.
+
+**Gladiator:** Fixed Performance and choose one of Athletics, Acrobatics or Intimidation; **one specific arena-appropriate weapon-type proficiency in place of ordinary tool training**, no Disguise Kit or Musical Instrument proficiency and no extra language. **Arena Performances** offers venue-dependent exhibition work, hospitality and recognition without guaranteed prizes or safe matches. Ordinary starting possessions: one inexpensive mundane arena weapon matching the selected proficiency, admirer token, costume, pouch and **15 gp**.
+
+**Source distinction:** The 2014 Gladiator variant grants no explicit new weapon proficiency; this replacement of utility tool training with a single weapon-type proficiency is an intentional approved native deviation. Trident and net are illustrative, not a restricted pool. Neither Background inherits from the other or implies upbringing, class powers, additional attack, general martial weapon qualification or 2024 Origin feat.
+
+**Deferred:** Choice execution for Disguise Kit versus instrument type, chosen individual weapon proficiency, matching equipment identities, conditional hospitality, duplicate grants and balance between combat and noncombat proficiencies.
+
+**Design history and authoritative approved allocation:** `docs/rewrite/character-origins/pillar3-entertainer-gladiator-reconciliation.md`.
+
+**Current Pillar 3 branch totals:** **Fifteen native Backgrounds and eleven native Upbringings**. Street-Raised and Aristocratic Upbringings continue to await training selection counts.
