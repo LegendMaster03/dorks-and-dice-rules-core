@@ -563,3 +563,19 @@ The **Wilderness-Raised Upbringing** candidate is unchanged: one household/commu
 **Reconciliation and approval history:** `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md` and `docs/rewrite/character-origins/pillar3-outlander-reconciliation.md`.
 
 **Current branch total:** **Eleven native Upbringings and eleven native Backgrounds**. Street-Raised and Aristocratic Upbringings still need approved selection counts before native promotion.
+
+
+## Folk Hero approved native Background — 2026-11-04
+
+**Owner-approved and authored:** `data/rulesets/first-party-001/native/backgrounds/folk-hero.json` (`background.folk-hero`, `selected-native`), the **twelfth independent native Background**.
+
+- **Skills:** Choose **two different Skills** from Animal Handling, Survival, Athletics, Medicine, Persuasion, Insight, Intimidation or Investigation. The 2014 rural pair remains available but is not compulsory.
+- **No tool, vehicle or language grant:** Omit the source's mandatory artisan tools and Land Vehicles training, as these are tied to a presumed livelihood rather than earned public recognition.
+- **Feature:** Community Refuge, a conditional earned relationship among sympathetic ordinary people allowing practical shelter, modest hospitality and potentially discretion. Supporters do not risk their lives or livelihoods as a mechanical obligation; companions may be helped when capacity allows. It is not universal fame or lawful immunity.
+- **Ordinary possessions:** Common/work-appropriate clothes, a mundane keepsake/testimonial, one DM-agreed ordinary personal item without automatic price or training, pouch and **10 gp**.
+- **Upbringing independence:** Does not require rural childhood, poverty, a specific Species, a particular trade, or any specific Upbringing. **Rural Community remains a separate unapproved Upbringing candidate.**
+- **Further review:** Two-distinct-Skill choice execution, balance compared to tool-heavy Backgrounds and community Upbringings, social feature adjudication, cross-package duplicate grants and ordinary item materialization.
+
+**Final approved design and historical 2014 comparison:** `docs/rewrite/character-origins/pillar3-folk-hero-reconciliation.md`.
+
+**Current Pillar 3 branch total:** Twelve native Backgrounds (Acolyte, Criminal, Explorer, Folk Hero, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Sailor, Soldier, Spy) and eleven native Upbringings. Street-Raised and Aristocratic Upbringings still await training selection counts.
