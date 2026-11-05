@@ -523,3 +523,14 @@ Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3
 **Source comparison and final approved allocation:** `docs/rewrite/character-origins/pillar3-sailor-reconciliation.md`.
 
 **Current branch total:** Ten native Backgrounds (Acolyte, Criminal, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Sailor, Soldier, Spy) and ten existing native Upbringings. Street-Raised and Aristocratic are partially approved but lack their training selection counts for native promotion.
+
+
+## Outlander split: Wilderness-Raised Upbringing and Explorer Background proposal — 2026-11-04
+
+**Direction clarified; not yet approved as mechanical allocations:** The 2014 Outlander identity is better addressed through a **Wilderness-Raised Upbringing**, with an independently selectable **Explorer Background** to represent deliberate expedition experience. The next-pass proposal splits the original Wanderer feature between **Wilderness Provisioning** (food and water for the character plus five others when resources permit) in the Upbringing and **Geographic Recall** (retained broad knowledge of explored or studied areas) in Explorer.
+
+**Candidate Upbringing:** One household/community language (Common eligible), choose one Skill from Survival, Nature, Animal Handling, Perception or Athletics; provision supplies for up to six; **no automatic additional crafting Competency** in the initial candidate, to avoid obvious dominance over General Goliath's one Skill plus one Competency plus Gol-Kaa. The scope and balance remain under review.
+
+**Candidate Explorer Background:** Perception plus one of Survival, Investigation, History, Nature or Athletics; one Navigation/Cartography Competency choice; no default additional language; Geographic Recall; field notes, map paper, writing implement, traveler's clothes and 10 gp as ordinary equipment. Its utility during first-time exploration remains an open point.
+
+Neither role automatically requires or grants the other; Wilderness-Raised is not a universal Rural or Itinerant culture. There is **no approved native `background.outlander`, `background.explorer`, or Wilderness-Raised Upbringing** yet. Earlier Outlander-Background recommendations are superseded by this division pending individual approval. Full proposal: `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`.
