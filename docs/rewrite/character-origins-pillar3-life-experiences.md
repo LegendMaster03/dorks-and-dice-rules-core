@@ -490,3 +490,19 @@ Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3
 **Source review and final approved scope:** `docs/rewrite/character-origins/pillar3-guild-artisan-reconciliation.md`.
 
 **Current branch total:** Eight native Backgrounds (Acolyte, Criminal, Guild Artisan, Knight, Noble, Sage, Soldier, Spy), ten native Upbringings. Street-Raised and Aristocratic have approved mechanics but still require selection counts before native promotion.
+
+
+## Guild Merchant approved native Background — 2026-11-04
+
+**Approved and authored:** `data/rulesets/first-party-001/native/backgrounds/guild-merchant.json` (`background.guild-merchant`, `selected-native`), the **ninth independent native Background** of Pillar 3. Guild Merchant is not an inherited Guild Artisan variant.
+
+- **Skills:** Persuasion plus one choice of Insight, Appraise, or Gather Information.
+- **Languages/Competency:** One baseline trade-related language, plus **one exclusive choice** between `competency.navigation` (Navigator's Tools) and an additional commercial language. Native `benefit-choice` records the mixed-result option pending general execution.
+- **Feature:** Guild Membership offers conditional professional relationships, introductions, modest hospitality and institutional support through a commercial guild. **5 gp monthly dues** apply under DM adjudication, consistent with Guild Artisan.
+- **Ordinary starting inventory:** Mule, cart, merchant guild letter or evidence, traveler's clothes, pouch, and **15 gp**. A cart does not grant land-vehicle qualification, free stock, guaranteed income or a new animal-companion subsystem.
+- **Distinctness:** Commerce/brokerage does not automatically train a craft Competency or require artisan-family Upbringing. A non-guild Merchant Background remains outside this selection.
+- **Review later:** Differences between Insight and thinner native Appraise/Gather Information metadata, trade-language-versus-Navigation option value, equipment economics, duplicate grants, mixed-choice projection and inventory materialization.
+
+**Source comparison and final approval:** `docs/rewrite/character-origins/pillar3-guild-merchant-reconciliation.md`.
+
+**Current branch total:** Nine native Backgrounds (Acolyte, Criminal, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Soldier, Spy), ten existing native Upbringings. Street-Raised and Aristocratic retain approved mechanics but need selection counts for native promotion.
