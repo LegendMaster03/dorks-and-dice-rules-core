@@ -579,3 +579,20 @@ The **Wilderness-Raised Upbringing** candidate is unchanged: one household/commu
 **Final approved design and historical 2014 comparison:** `docs/rewrite/character-origins/pillar3-folk-hero-reconciliation.md`.
 
 **Current Pillar 3 branch total:** Twelve native Backgrounds (Acolyte, Criminal, Explorer, Folk Hero, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Sailor, Soldier, Spy) and eleven native Upbringings. Street-Raised and Aristocratic Upbringings still await training selection counts.
+
+
+## Charlatan approved native Background — 2026-11-04
+
+**Owner-approved and authored:** `data/rulesets/first-party-001/native/backgrounds/charlatan.json` (`background.charlatan`, `selected-native`), the **thirteenth independent native Background** on the Pillar 3 feature branch.
+
+- **Skills:** Fixed Deception and Sleight of Hand.
+- **Competencies:** Fixed Disguise Kit and the established Forgery Competency, with its combined Forgery Skill and Forgery Kit tool-proficiency facets. This does not award the separate Disguise Skill or an extra Forgery Kit item.
+- **Language:** No additional Background language.
+- **False Identity:** One pre-existing documented alternate persona with associated acquaintances and disguise arrangements, plus the ability to imitate documents/handwriting from examples with appropriate tools and time. Acceptance is not automatic; fake rank does not grant real status; neither Criminal Contact nor Spy Intelligence Sources is inherited.
+- **Ordinary starting inventory:** Fine clothes, physical Disguise Kit, choose one con-prop package (ten colored-liquid bottles, weighted dice, marked cards or a fictional-noble signet ring), pouch and **15 gp**.
+- **Independent origins:** No specific Species, Upbringing, criminal affiliation or required active criminal career. No 2024 Origin feat or fixed ability improvement.
+- **Deferred:** False-identity feature adjudication, Forgery multi-facet balance, duplicate grants, four-way prop choice execution and common ordinary-item materialization.
+
+**Full historical comparison and approval record:** `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md`.
+
+**Current branch totals:** **Thirteen native Backgrounds** (Acolyte, Charlatan, Criminal, Explorer, Folk Hero, Guild Artisan, Guild Merchant, Knight, Noble, Sage, Sailor, Soldier, Spy) and **eleven native Upbringings**. Street-Raised and Aristocratic Upbringings continue to await approved selection counts.
