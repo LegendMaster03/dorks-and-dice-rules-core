@@ -1,0 +1,125 @@
+{
+  "id": "background.guild-merchant",
+  "name": "Guild Merchant",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have worked in commerce as a buyer, seller, broker, supplier, or organizer of trade through a recognized merchant guild or comparable association. Your membership and commercial experience may have been acquired later in life and do not require inherited wealth, a particular Upbringing, a production craft, or a continuing business.",
+  "benefits": [
+    {
+      "id": "guild-merchant-persuasion",
+      "name": "Persuasion Training",
+      "description": "Gain training in Persuasion through negotiation and commercial dealings.",
+      "skill": "skill.persuasion",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "guild-merchant-commercial-skill",
+      "name": "Commercial Skill Training",
+      "description": "Choose one Skill from Insight, Appraise, or Gather Information reflecting your experience assessing trading partners, valuing goods, or finding commercial opportunities.",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.insight",
+        "skill.appraise",
+        "skill.gather-information"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "guild-merchant-trade-language",
+      "name": "Trade Language",
+      "description": "Learn one language used in your merchant guild, its commercial partners, client relationships, markets, or trade routes. Common is valid where appropriate.",
+      "extraLanguages": 1,
+      "choiceConstraint": "associated-with-merchant-guild-partners-clients-markets-or-trade-routes"
+    },
+    {
+      "id": "guild-merchant-professional-choice",
+      "name": "Navigation or Additional Trade Language",
+      "description": "Choose one: gain training with Navigation (Navigator's Tools), or learn one additional language used in commercial dealings. The baseline Trade Language benefit above applies in either case; do not gain both alternatives.",
+      "grantType": "benefit-choice",
+      "choiceCount": 1,
+      "options": [
+        {
+          "id": "navigation",
+          "name": "Navigation Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.navigation",
+              "description": "Gain Navigation training, which includes proficiency with Navigator's Tools. It does not grant Land Vehicles training or general vehicle-operation qualifications."
+            }
+          ]
+        },
+        {
+          "id": "additional-trade-language",
+          "name": "Additional Trade Language",
+          "benefits": [
+            {
+              "extraLanguages": 1,
+              "choiceConstraint": "learned-through-commercial-dealings",
+              "description": "Learn one additional language used in commercial dealings, beyond the baseline Trade Language grant."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guild-merchant-membership",
+      "name": "Guild Membership",
+      "grantType": "background-feature",
+      "description": "Your experience and recognized standing with a merchant guild or comparable commercial association may provide introductions to members, trade contacts, and modest food or lodging when its members can reasonably assist you. The organization may offer advocacy or introductions to influential people when doing so serves its interests. Assistance depends on the association's reach, resources, and your standing; it does not guarantee credit, discounts, profits, unrestricted goods, legal immunity, or access to unrelated guilds. Maintaining good standing ordinarily requires dues of 5 gp each month, with missed payments and circumstances adjudicated by the DM."
+    }
+  ],
+  "startingEquipment": {
+    "description": "A mule and cart, a guild letter of introduction or other evidence of membership, traveler's clothes, and a pouch containing 15 gp. These are ordinary starting possessions. The mule and cart replace the artisan tool-set baseline; they do not provide trade goods, a warehouse, guaranteed profits, or proficiency with land vehicles. Animal care and travel remain subject to ordinary play and DM adjudication.",
+    "items": [
+      {
+        "name": "Mule",
+        "quantity": 1
+      },
+      {
+        "name": "Cart",
+        "quantity": 1
+      },
+      {
+        "name": "Guild letter of introduction or evidence of membership",
+        "quantity": 1
+      },
+      {
+        "name": "Traveler's clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Your route, trade goods, guild affiliation, responsibilities, and financial history are optional details. The Background does not require you to be a traveling caravaner, own a storefront, or have been raised in a merchant family.",
+    "prompts": [
+      "What goods or services did you buy, sell, or arrange?",
+      "Which guild or association recognized your commercial work?",
+      "Where do you have established trading relationships?",
+      "What obligations or rivalries influence your current standing?"
+    ]
+  },
+  "reviewNotes": [
+    "Guild Merchant is a standalone native Background and is not a variant or descendant of Guild Artisan. The two may share the functional Guild Membership feature without inheriting other grants.",
+    "Fixed Persuasion plus one Skill choice from Insight, Appraise, or Gather Information; Appraise and Gather Information exist in the native catalog but their skill-action metadata needs general review.",
+    "Retains one trade-associated baseline language, with Common valid where appropriate.",
+    "One mutually exclusive mixed-result choice gives competency.navigation (Navigator's Tools) or one additional language used in commerce. The first baseline language is granted in either case; choose only one alternative.",
+    "The benefit-choice/options/benefits structure records approved choice semantics for future common grant execution. It does not claim the current consumer already projects mixed-result choices.",
+    "Navigation does not grant Land Vehicles qualification. Owning a mule and cart does not imply proficiency operating every vehicle.",
+    "The shared Guild Membership feature remains a conditional commercial relationship and retains the original 5 gp monthly dues. No recurring billing or dedicated guild-management subsystem is introduced.",
+    "The source-derived mule and cart are an approved starting-equipment baseline for corpus balance comparison against Guild Artisan's trade tools. No inventory or caravan profit subsystem is created.",
+    "Starting items enter ordinary inventory once item identities and grant projection are implemented; the mule is an owned animal, not an extra combat companion or follower entitlement.",
+    "An unrelated non-guild Merchant Background is not selected by this record. Guild Membership requires an appropriate professional association in the setting.",
+    "No fixed ability score changes, Origin feat, inherited guild rights, craft-producing Competency, or automatic merchant discounts are granted.",
+    "Duplicate Skills, navigation grants, and languages across Background and Upbringing require later general duplicate-grant review."
+  ]
+}
