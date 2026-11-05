@@ -1,0 +1,106 @@
+{
+  "id": "background.guild-artisan",
+  "name": "Guild Artisan",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have practical experience in a craft or trade and have belonged to a guild or comparable professional association. Your expertise and relationships may have developed through apprenticeship, later training, or independent work. This Background does not require a particular Upbringing, inherited membership, business ownership, or current good standing with every guild.",
+  "benefits": [
+    {
+      "id": "guild-artisan-insight",
+      "name": "Insight Training",
+      "description": "Gain training in Insight.",
+      "grantType": "skill-training",
+      "skill": "skill.insight"
+    },
+    {
+      "id": "guild-artisan-persuasion",
+      "name": "Persuasion Training",
+      "description": "Gain training in Persuasion.",
+      "grantType": "skill-training",
+      "skill": "skill.persuasion"
+    },
+    {
+      "id": "guild-artisan-trade",
+      "name": "Guild Trade Competency",
+      "description": "Choose one existing native crafting Competency suited to the craft you practiced through your guild. The selected Competency grants its defined training facets, which may include a crafting skill and/or proficiency with corresponding tools. It does not grant a second unrelated trade.",
+      "grantType": "competency-training",
+      "choiceCategory": "crafting-competency",
+      "choiceCount": 1,
+      "choiceConstraint": "appropriate-to-character-guild-trade",
+      "exampleCompetencies": [
+        "competency.smithing",
+        "competency.blacksmithing",
+        "competency.leatherworking",
+        "competency.cooking",
+        "competency.carpentry",
+        "competency.weaving",
+        "competency.pottery",
+        "competency.calligraphy",
+        "competency.cartography",
+        "competency.brewing",
+        "competency.alchemy"
+      ]
+    },
+    {
+      "id": "guild-artisan-trade-language",
+      "name": "Trade Language",
+      "description": "Learn one language of your choice associated with your guild's work, its members, clients, or trade relationships. Common is valid when used in that context.",
+      "extraLanguages": 1,
+      "choiceConstraint": "associated-with-guild-work-members-clients-or-trade-relationships"
+    },
+    {
+      "id": "guild-artisan-membership",
+      "name": "Guild Membership",
+      "grantType": "background-feature",
+      "description": "Your experience and recognized standing with a craft guild or comparable trade association can provide introductions to members, professional contacts, and modest food or lodging when the guild can reasonably assist you. The association may offer advocacy or introductions to influential people when doing so serves its interests. Assistance depends on its reach, resources, and your standing; it does not ensure legal immunity, unrestricted support, or access to unrelated guilds. Maintaining good standing ordinarily requires dues of 5 gp each month. The DM adjudicates missed payments and their effects under the circumstances."
+    }
+  ],
+  "startingEquipment": {
+    "description": "One set of tools appropriate to your selected guild craft, where a matching tool set exists, a letter of introduction or comparable proof of guild connection, traveler's clothes, and a pouch containing 15 gp. These are ordinary inventory possessions. A native craft Competency without corresponding tool equipment does not automatically supply an invented tool set, workshop, materials, or recipes. Guild dues are separate and are not automatically deducted from the starting money.",
+    "items": [
+      {
+        "name": "Guild craft tool set",
+        "quantity": 1,
+        "choiceConstraint": "appropriate-to-selected-craft-when-matching-tool-set-exists"
+      },
+      {
+        "name": "Guild letter of introduction or evidence of membership",
+        "quantity": 1
+      },
+      {
+        "name": "Traveler's clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "The guild, craft, past employment, and member relationships are optional narrative details. A craft worker need not have grown up in an artisan family, own a workshop, or hold a particular social or political view.",
+    "prompts": [
+      "Which craft did you practice, and how did you learn it?",
+      "What guild or professional association recognized your work?",
+      "How do your relationships with fellow members affect your access to assistance?",
+      "What obligations or disagreements continue to shape your professional life?"
+    ]
+  },
+  "reviewNotes": [
+    "Independently reconciled from the 2014 Guild Artisan Background rather than its 2024 version; Guild Merchant is a separate future Background candidate and not an inherited variant.",
+    "The 2014 Skill baseline of Insight and Persuasion is retained.",
+    "Choose one existing native craft Competency corresponding to the guild trade. The exampleCompetencies array is illustrative rather than an exhaustive eligibility list; the common choice executor must resolve the crafting-competency category against the active native catalog and relevant trade. Do not automatically include covert tools such as Thieves' Tools merely because they are Competencies.",
+    "A full native Competency may include multiple training facets, unlike the single 2014 artisan tool proficiency. Comparative mechanical strength must be considered during corpus balance review; different facet types are not automatically interchangeable.",
+    "Learn one language related to the guild's practice or trade relationships, including Common where appropriate.",
+    "Guild Membership grants conditional institutional and professional assistance. Maintaining good standing ordinarily requires 5 gp per month; no new guild dues tracking service or mandatory accounting subsystem is implemented.",
+    "Existing membership and standing depend on the setting; former members keep their learned training even when access to guild benefits changes.",
+    "Starting equipment consists of trade-appropriate tools where an actual matching set exists, proof of guild connection, traveler's clothes, and 15 gp as ordinary inventory. The tool choice is descriptive pending item identity resolution, and no fictional tool set is automatically fabricated.",
+    "No 2024 Origin feat, fixed ability increases, automatic class features, hereditary membership, or grant of a second Background.",
+    "Duplicate competencies from cultural Upbringings such as General Dwarf and General Goliath require the later system-wide duplicate-grant policy."
+  ]
+}
