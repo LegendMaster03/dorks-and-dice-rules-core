@@ -1,6 +1,6 @@
 # Pillar 3 — Entertainer and Gladiator Background Reconciliation
 
-**Status:** Source comparison and two **unapproved** native design candidates. This record does not authorize creation of either native Background.
+**Status:** Both independent Backgrounds are owner-approved and authored as selected-native content. Earlier alternatives remain in this document as design history; the authoritative final allocation is recorded below.
 **Branch:** `feature/character-origins-pillar3-life-experiences`
 **Ruleset:** `first-party-001`.
 
@@ -154,3 +154,34 @@ The choice between a trident and net must use verified native item identities wh
 **Compatibility and source note:** This departs intentionally from the literal 2014 Gladiator variant, which did **not** expressly award a weapon proficiency and continued to provide Entertainer's tool proficiencies. The approved native catalog already uses `weaponProficiencies` for fixed weapon grants in certain Upbringings; a **player-selected weapon type** must receive appropriate common choice representation later. Do not infer weapon training from an inventory item, grant a whole weapon category accidentally, or introduce a special Gladiator fighting subsystem.
 
 **Approval still required:** Both independent Backgrounds' complete grants, whether the selected weapon may be any arena-appropriate native weapon subject to a bounded equipment choice, and exact ordinary inventory wording. No native content or runtime code has been authorized.
+
+
+## Owner-approved native allocation — Entertainer and Gladiator (2026-11-04)
+
+**Owner approval:** The two independent complete packages were approved, following the explicit change that **Gladiator's single arena-weapon proficiency replaces tool training**. The pre-refinement proposal for Gladiator to gain both Disguise Kit training and a weapon proficiency was rejected. These final rules supersede the earlier speculative sections above.
+
+**Native records:**
+- `data/rulesets/first-party-001/native/backgrounds/entertainer.json` — `background.entertainer`, selected-native.
+- `data/rulesets/first-party-001/native/backgrounds/gladiator.json` — `background.gladiator`, selected-native.
+
+### Approved Entertainer
+
+- Fixed **Performance** (`skill.performance`) and **choose one** from Acrobatics, Deception, Persuasion, Sleight of Hand, Insight.
+- **One total proficiency choice**, represented as a native `benefit-choice`: either `competency.disguise-kit` **or** one musical instrument type using existing `musical-instrument` category selection. Neither option grants the other, and no independent Perform child Skills are automatically trained.
+- **No additional language.**
+- **By Popular Demand:** Available, appropriate venues allow regular performance work in exchange for food and lodging at modest/comfortable standards without a separate fee; prior performances may yield favorable local recognition. No compelled host where none exists, guaranteed pay, universal celebrity, private rooms for arbitrary companions, or institutional authority.
+- **Starting inventory:** One suitable performance item consistent with the chosen method (instrument of selected type; or physical Disguise Kit/ordinary prop when Disguise Kit training is selected), admirer token, costume, pouch and **15 gp**. An instrument is not compulsory for nonmusicians.
+
+### Approved Gladiator
+
+- Fixed **Performance** (`skill.performance`) and **choose one** from Athletics, Acrobatics, Intimidation.
+- **Choose proficiency with one specific existing mundane arena-appropriate weapon type**, rather than any tool proficiency. Trident and net are examples, not an exhaustive list. The new native selection is represented with `grantType: qualification-training`, `qualificationCategory: weapon`, `choiceCategory: specific-weapon`, `choiceCount: 1`. This is the source-of-truth content intent, **not** a claim that the current consumer choice executor already supports it.
+- **No Disguise Kit, Musical Instrument, other tool, additional language, entire martial weapon category, class maneuver, attack bonus, Fighting Style, or automatic class benefit.**
+- **Arena Performances:** Suitable combat-exhibition venues provide opportunities to perform, conditional food and lodging in exchange for ongoing performances, and local recognition. No guaranteed prizes, victories, danger-free matches, sponsor, legal immunity or restricted-area entry.
+- **Starting inventory:** One inexpensive mundane arena weapon **of the same specific type as the chosen proficiency**, admirer token, arena costume, pouch and **15 gp**. The weapon belongs to ordinary inventory and possession does not itself convey proficiency.
+
+### Final design boundaries and deferred integration
+
+- Each Background is selected independently; Gladiator is **not** an inherited Entertainer variant. An upbringing in a performer or arena community is possible narrative context, not an automatically granted Upbringing. Neither Background requires particular Species, age chronology, social status, or 2024 Origin feats.
+- The 2014 Gladiator variant **did not itself add weapon proficiency**. The native substitution is a deliberate owner-approved change to make arena training distinct from Entertainer's chosen utility training. Both packages contain one additional proficiency choice, but weapon vs. tool strength is not mechanically equivalent by assumption.
+- **Deferred:** Generic mixed benefit-choice execution, musical instrument type resolution, specific-weapon choice/qualification projection, actual item identities and cost comparison, duplicate training semantics, and conditional performance/venue adjudication. No C# host/consumer, Character Sheet, or equipment engine changes are authorized by this content approval.
