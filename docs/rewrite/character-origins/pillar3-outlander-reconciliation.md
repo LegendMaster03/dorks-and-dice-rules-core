@@ -188,3 +188,10 @@ Avoid a generic "you know where to look for information" restatement of Research
 5. Keep all proposals unselected until individually approved, with corpus-wide duplication and balance review still outstanding.
 
 **Current authorization:** Update the design record only. Do not create `native/backgrounds/outlander.json`, `native/backgrounds/explorer.json`, or any new native Upbringing, and do not change already approved content based on this direction alone.
+
+
+## Next-pass allocation proposal: Wilderness-Raised and Explorer
+
+After the owner identified the formative Outlander concept as better suited to Upbringing, the next-pass mechanical proposal recommends **separating the two Wanderer effects** rather than moving the original 2014 Background package intact. The proposed **Wilderness-Raised Upbringing** receives conditional six-person Wilderness Provisioning, one community language and one selected formative Skill; the proposed **Explorer Background** receives a Geographic Recall feature, Perception plus one selected expedition Skill, and Navigation or Cartography, with ordinary expedition equipment.
+
+**Both packages remain unapproved; no native records have been created.** The proposed allocations, precise wording, comparison against General Goliath, role of 2014 instrument training, and alternate active Explorer feature are in `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`. This focused proposal supersedes the early proposal in this document to promote Outlander directly as an independent Background, without discarding its historical source review.
