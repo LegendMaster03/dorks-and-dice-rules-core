@@ -534,3 +534,14 @@ Detailed approval and source boundaries: `docs/rewrite/character-origins/pillar3
 **Candidate Explorer Background:** Perception plus one of Survival, Investigation, History, Nature or Athletics; one Navigation/Cartography Competency choice; no default additional language; Geographic Recall; field notes, map paper, writing implement, traveler's clothes and 10 gp as ordinary equipment. Its utility during first-time exploration remains an open point.
 
 Neither role automatically requires or grants the other; Wilderness-Raised is not a universal Rural or Itinerant culture. There is **no approved native `background.outlander`, `background.explorer`, or Wilderness-Raised Upbringing** yet. Earlier Outlander-Background recommendations are superseded by this division pending individual approval. Full proposal: `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`.
+
+
+## Explorer Expedition Survey feature recommendation — 2026-11-04
+
+**Further design refinement; not approved native mechanics:** Prefer **Expedition Survey** over passive Geographic Recall as the **one** proposed Explorer Background feature. It provides bounded interpretation of actual observed terrain or usable maps to identify plausible approaches and landmarks on a first expedition, plus reliable recall of major route junctions and landmarks personally surveyed. It does not grant hidden geographical information, automatic safe/fast routes, unlimited map accuracy, or automatic success on navigation checks.
+
+**Compatibility finding:** `docs/travel-environment-mechanics.md` already defines source-based Survival checks for avoiding getting lost, recognizing lost state, and setting a new course, while Hex Crawl owns expedition map and route state. Explorer's Background feature should complement these rules, **not bypass them or invent a competing travel system**. Additional numeric bonuses or modified travel checks are deferred unless the shared character-capability interface later supports them.
+
+The **Wilderness-Raised Upbringing** candidate is unchanged: one household/community language, one formative Skill choice and conditional six-person Wilderness Provisioning, not an automatic Explorer feature. No native Upbringing/Explorer records have been authorized.
+
+**Full comparison, example adjudications, and proposed feature wording:** `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`.
