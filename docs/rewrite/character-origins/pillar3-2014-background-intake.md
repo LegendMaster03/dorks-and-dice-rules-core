@@ -318,3 +318,16 @@ See `docs/rewrite/character-origins/pillar3-guild-merchant-reconciliation.md` fo
 **Pirate remains independent and unapproved.** The 2014 Bad Reputation substitution is research evidence only, not an automatic option or benefit of Sailor. A separate reconciliation must evaluate its scope and full independent package if added later.
 
 **Deferred:** Common composite Skill grants, Water Vehicles execution, equipment identity/materialization, duplicate training, and relative benefit/equipment balance. Detailed source comparison and final approval: `docs/rewrite/character-origins/pillar3-sailor-reconciliation.md`.
+
+
+## Outlander split approved: Wilderness-Raised plus Explorer — 2026-11-04
+
+**Owner-approved final disposition of the 2014 Outlander source:** Its formative wilderness premise has been reconciled as independent selected-native **Wilderness-Raised Upbringing** (`upbringing.wilderness-raised`), with a separate **Explorer Background** (`background.explorer`) for later expedition and field-survey experience. **No `background.outlander` record is selected.** Earlier intake classification hypotheses were superseded.
+
+**Wilderness-Raised:** A community language and one chosen Skill (Survival, Nature, Animal Handling, Perception or Athletics); dependable daily gathering of food and fresh water for up to six people when accessible resources and opportunity permit. No added Competency or starting equipment.
+
+**Explorer:** Perception plus one choice (Survival, Investigation, History, Nature or Athletics); one Navigation or Cartography Competency choice; no language; evidence-supported **Expedition Survey** and 10 gp with portable field equipment as ordinary inventory.
+
+The original Wanderer's resource provision and geographical familiarity are **separately adapted**, not inherited wholesale. Explorer does not bypass existing travel navigation checks. Future Rural and Itinerant Upbringings require their own review.
+
+Source comparison, proposed alternatives and complete owner-approved grant allocation: `docs/rewrite/character-origins/pillar3-outlander-reconciliation.md` and `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`.
