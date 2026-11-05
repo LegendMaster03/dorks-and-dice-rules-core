@@ -1,0 +1,100 @@
+{
+  "id": "background.spy",
+  "name": "Spy",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have experience gathering, evaluating, concealing, or communicating information through covert work. You may have served an organization, government, individual, or your own interests. This Background does not require criminal activity, current agency employment, a particular allegiance, or a fixed cover identity.",
+  "benefits": [
+    {
+      "id": "spy-field-skills",
+      "name": "Intelligence Skills",
+      "description": "Choose two different Skills from Deception, Stealth, Investigation, Insight, Perception, and Persuasion, reflecting the methods used in your intelligence work.",
+      "grantType": "skill-training",
+      "chooseFrom": [
+        "skill.deception",
+        "skill.stealth",
+        "skill.investigation",
+        "skill.insight",
+        "skill.perception",
+        "skill.persuasion"
+      ],
+      "choiceCount": 2,
+      "distinctChoices": true
+    },
+    {
+      "id": "spy-tradecraft-competency",
+      "name": "Tradecraft Competency",
+      "description": "Choose one Competency from Disguise Kit, Forgery, Thieves' Tools, or Calligraphy, reflecting techniques learned in your work. This grant provides training, not ownership of the associated tools.",
+      "grantType": "competency-training",
+      "chooseOne": [
+        "competency.disguise-kit",
+        "competency.forgery",
+        "competency.thieves-tools",
+        "competency.calligraphy"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "spy-operational-language",
+      "name": "Operational Language",
+      "description": "Learn one language of your choice that you used in intelligence work, with informants or contacts, or in operational communication. Common is valid where appropriate.",
+      "extraLanguages": 1,
+      "choiceConstraint": "used-in-intelligence-work-sources-contacts-or-communications"
+    },
+    {
+      "id": "spy-intelligence-sources",
+      "name": "Intelligence Sources",
+      "grantType": "background-feature",
+      "description": "You maintain at least one established source or intermediary connected to your past intelligence work. You know a discreet way to communicate with that contact and ask for leads about people, places, or events within their sphere of knowledge. They may share information they possess or identify another possible source, depending on their circumstances and willingness. This feature does not guarantee secrets, immediate replies, safe houses, cooperation, or access to intelligence organizations."
+    }
+  ],
+  "startingEquipment": {
+    "description": "Plain or work-appropriate clothing, a small notebook or set of notes from an earlier assignment, ink, a writing instrument, and a pouch containing 10 gp. These are ordinary inventory possessions. The notes are not guaranteed to contain useful secrets or grant a false identity.",
+    "items": [
+      {
+        "name": "Plain or work-appropriate clothing",
+        "quantity": 1
+      },
+      {
+        "name": "Small notebook or assignment notes",
+        "quantity": 1
+      },
+      {
+        "name": "Ink",
+        "quantity": 1
+      },
+      {
+        "name": "Writing instrument",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "An intelligence operative may be employed, retired, disavowed, freelance, or working for personal reasons. Espionage is not automatically a criminal activity, and the character need not maintain a cover persona.",
+    "prompts": [
+      "What kind of information did you seek or protect?",
+      "How did you establish trust with a source or intermediary?",
+      "Which past relationship remains available, and what limits its assistance?",
+      "What did you learn about the costs or risks of secrecy?"
+    ]
+  },
+  "reviewNotes": [
+    "Spy is an independent native Background, not a variant or inheriting subtype of Criminal.",
+    "Two distinct Skills are chosen from Deception, Stealth, Investigation, Insight, Perception, and Persuasion. The general native choice executor must eventually honor choiceCount 2 for this grant.",
+    "Choose one Competency from Disguise Kit, Forgery, Thieves' Tools, or Calligraphy; Calligraphy does not automatically convey codebreaking or other unrelated technical abilities.",
+    "Learn one language relevant to prior intelligence activity. It need not be foreign or secret and may be Common where justified.",
+    "Intelligence Sources is a bounded information-contact feature. It does not provide Criminal Contact's guaranteed channel into an underworld network, nor Sage's Researcher knowledge-source identification.",
+    "No automatic false identity or Charlatan feature, free disguises, cryptographic bypass, guaranteed infiltration, criminal allegiance, Origin feat, ability score increases, or class capabilities.",
+    "Starting equipment is ordinary inventory, with item identity and materialization deferred to later implementation.",
+    "Native consumer execution of multi-skill and competency choices, and general duplication and benefit balance review, are deferred."
+  ]
+}
