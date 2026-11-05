@@ -39,7 +39,8 @@ public sealed record NativeCharacterProjection(
 public sealed record NativeTrainingPresentation(
     string Id, string Name, string Kind, string? GoverningAbility,
     string? FamilyId, IReadOnlyList<string> ComponentIds, string? Composition,
-    bool IsFamily, bool SupportsRanks);
+    bool IsFamily, bool SupportsRanks,
+    IReadOnlyList<string>? SpecializationIds = null);
 
 public enum NativeRollMode { Normal, Advantage, Disadvantage, Emphasis }
 public sealed record NativeRollResolution(string Status, int? Selected, string? EffectKey = null);
