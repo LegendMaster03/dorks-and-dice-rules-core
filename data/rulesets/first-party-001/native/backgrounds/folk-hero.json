@@ -1,0 +1,81 @@
+{
+  "id": "background.folk-hero",
+  "name": "Folk Hero",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You earned recognition and practical support within a community through a consequential deed or sustained efforts on behalf of others. Your reputation comes from what you did, not from a required rural childhood, social class, occupation, ancestry, or official title. People may disagree about your actions, and your reputation need not be known everywhere.",
+  "benefits": [
+    {
+      "id": "folk-hero-deed-skills",
+      "name": "Defining Deed Skills",
+      "grantType": "skill-training",
+      "description": "Choose two distinct Skills reflecting your experiences and the actions through which you earned community recognition: Animal Handling, Survival, Athletics, Medicine, Persuasion, Insight, Intimidation, or Investigation. Training in composite Athletics does not independently train its Climb, Jump, or Swim components.",
+      "chooseFrom": [
+        "skill.animal-handling",
+        "skill.survival",
+        "skill.athletics",
+        "skill.medicine",
+        "skill.persuasion",
+        "skill.insight",
+        "skill.intimidation",
+        "skill.investigation"
+      ],
+      "choiceCount": 2,
+      "distinctChoices": true
+    },
+    {
+      "id": "folk-hero-community-refuge",
+      "name": "Community Refuge",
+      "grantType": "background-feature",
+      "description": "Because people know or can credibly learn of what you have done for others, you can seek temporary shelter, modest hospitality, or a discreet place to recover among ordinary people sympathetic to your deeds. Such supporters may help keep your whereabouts from casual inquiry or pursuers when they believe doing so is justified and reasonably safe. Their help depends on recognition, trust, capacity, and practical circumstances; they are not expected to risk their lives or livelihoods or defy overwhelming danger. Traveling companions may be accommodated when supporters can reasonably provide for them, but no unlimited group shelter is guaranteed. The feature does not confer authority over supporters, universal popularity, legal immunity, or protection from every enemy."
+    }
+  ],
+  "startingEquipment": {
+    "description": "Common or work-appropriate clothing, a mundane keepsake or testimonial associated with the defining deed, one ordinary personal item connected to earlier work or the incident as agreed with the DM without an automatic monetary value or training grant, and a pouch containing 10 gp. These are ordinary inventory possessions; no artisan tool set, land vehicle, livestock, home, title, or monetary reward is guaranteed.",
+    "items": [
+      {
+        "name": "Common or work-appropriate clothing",
+        "quantity": 1
+      },
+      {
+        "name": "Mundane keepsake or testimonial of the defining deed",
+        "quantity": 1
+      },
+      {
+        "name": "Ordinary personal item associated with prior work or the deed",
+        "quantity": 1,
+        "choiceConstraint": "DM-agreed ordinary item without guaranteed monetary value or proficiency"
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "The event, public reputation, and community relationships are determined by the character's history and the setting. A notable deed need not make the character uniformly celebrated or morally uncomplicated.",
+    "prompts": [
+      "What deed or sustained actions led people to recognize you?",
+      "Who witnessed or benefited from your actions?",
+      "Which people might shelter or assist you now?",
+      "Where is your reputation disputed or unknown?"
+    ]
+  },
+  "reviewNotes": [
+    "Independent Folk Hero Background reconciled from the 2014 concept but not restricted to rural ancestry, agricultural work, poverty, or the upbringing and occupation assumptions of its historical presentation.",
+    "Choose two distinct Skills from the eight approved options. The original Animal Handling and Survival pair remains possible but is not mandatory.",
+    "Deliberately grant no automatic crafting or musical Competency, Land Vehicles qualification, additional language, or third Skill. Earlier draft options were rejected as unrelated to the common defining experience; the reduced 2014 vocational package is intentional rather than an assertion of numerical parity.",
+    "Community Refuge is grounded in earned recognition and sympathetic ordinary people. Its hospitality and discretion are meaningful where supporters can help, but do not guarantee lawful immunity, refuge everywhere, universal popularity, or risk to supporters' lives or livelihoods.",
+    "Companions may benefit only when appropriate to available capacity and circumstances; the Background does not grant guaranteed housing to an arbitrary party size.",
+    "Starting equipment is ordinary inventory: practical clothing, a mundane deed-related keepsake, one DM-agreed ordinary personal item without guaranteed market value or qualification, a pouch, and 10 gp. It does not automatically supply the original 2014 artisan tools, shovel and iron pot.",
+    "Any Species or Upbringing may select Folk Hero. A proposed Rural Community Upbringing, if reconciled later, would reflect formative rural life without automatic heroic reputation or Community Refuge.",
+    "Reputation is adjudicated in narrative context rather than by a new automatic renown or faction-standing subsystem. The character's learned Skills remain if social assistance later changes.",
+    "Comparative balance against Soldier, Knight, Acolyte, Guild Artisan, Wilderness-Raised, and other native origin options is deferred to the corpus review.",
+    "Native multi-skill choice execution, cross-package duplicate-grant rules, and ordinary inventory item resolution remain deferred. No fixed ability-score changes, Origin feat, class features, or new consumer code are added."
+  ]
+}
