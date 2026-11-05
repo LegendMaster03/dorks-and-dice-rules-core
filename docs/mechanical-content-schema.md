@@ -151,9 +151,10 @@ The reviewed shared identities are:
 - `Craft (pottery)` and `Potter's Tools` -> `Pottery`;
 - `Craft (stonemasonry)` and `Mason's Tools` -> `Stonemasonry`;
 - `Craft (weaving)` and `Weaver's Tools` -> `Weaving`;
+- `Craft (blacksmithing)` and `Smith's Tools` -> `Blacksmithing` (native reconciliation; historical source remains unmodified);
 - `Forgery` and later `Forgery Kit` -> `Forgery`.
 
-Other later tool proficiencies can establish standalone universal competencies without a 3.x facet. Current reviewed standalone identities include Brewing, Cartography, Cooking, Glassblowing, Herbalism, Navigation, Poisoning, Smithing, Tinkering, Woodcarving, Disguise Kit, and Thieves' Tools. Source-native musical-instrument and gaming-set proficiencies likewise remain valid standalone competencies unless a specific reviewed relationship is added.
+Other later tool proficiencies can establish standalone universal competencies without a 3.x facet. Current native standalone identities include Brewing, Cartography, Cooking, Glassblowing, Herbalism, Navigation, Poisoning, Tinkering, Woodcarving, Disguise Kit, and Thieves' Tools. Historical source records may still contain the distinct Smithing tool identity, but native character choices now use the merged Blacksmithing competency. Source-native musical-instrument and gaming-set proficiencies likewise remain valid standalone competencies unless a specific reviewed relationship is added.
 
 The shared state is conceptual training/proficiency identity. Facet-specific mechanics do not transfer. A 3.x Alchemy/Craft profile can carry ranks, class-skill state, governing Ability, trained-only behavior, and Armor Check Penalty semantics. The later tool facet uses its own proficiency mechanics. Ranks never become a tool bonus, proficiency bonus never becomes ranks, and class-skill state is never discarded.
 
