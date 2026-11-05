@@ -331,3 +331,18 @@ See `docs/rewrite/character-origins/pillar3-guild-merchant-reconciliation.md` fo
 The original Wanderer's resource provision and geographical familiarity are **separately adapted**, not inherited wholesale. Explorer does not bypass existing travel navigation checks. Future Rural and Itinerant Upbringings require their own review.
 
 Source comparison, proposed alternatives and complete owner-approved grant allocation: `docs/rewrite/character-origins/pillar3-outlander-reconciliation.md` and `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`.
+
+
+## Folk Hero promoted as an earned-reputation Background — 2026-11-04
+
+**Owner-approved resolution:** Folk Hero is now an independent selected-native Background `background.folk-hero` at `data/rulesets/first-party-001/native/backgrounds/folk-hero.json`, separated from any formative rural household or community.
+
+**Grants:** Choose two distinct Skills from Animal Handling, Survival, Athletics, Medicine, Persuasion, Insight, Intimidation or Investigation; gain the **Community Refuge** relationship feature, offering conditional shelter, hospitality and concealment through people sympathetic to the character's defining deed. Supporters are not compelled to endanger their lives or livelihoods. No crafting, vehicle or language training is assumed simply from the heroic event.
+
+**Ordinary inventory:** Appropriate clothes, a mundane deed-related keepsake, one ordinary personal item agreed with the DM without automatic market value or training, pouch and **10 gp**.
+
+**Source divergence:** Unlike 2014 Folk Hero, the selected record does **not** impose fixed Animal Handling and Survival or require artisan tools and Land Vehicles training. Those represent possible earlier occupations, not necessary consequences of earned recognition.
+
+**Rural Community Upbringing remains separate and not approved.** It would represent formative environment, not automatic celebrity or the Community Refuge feature. General duplication, item resolution and relative Background power await the corpus review.
+
+Detailed source comparison, intermediate alternatives and final approved allocation: `docs/rewrite/character-origins/pillar3-folk-hero-reconciliation.md`.
