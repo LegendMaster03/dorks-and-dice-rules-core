@@ -77,6 +77,7 @@ The reviewed cross-source skill/tool shared identities are:
 | Pottery | Craft (pottery); Potter's Tools |
 | Stonemasonry | Craft (stonemasonry); Mason's Tools |
 | Weaving | Craft (weaving); Weaver's Tools |
+| Blacksmithing | Craft (blacksmithing); Smith's Tools |
 | Forgery | Forgery; Forgery Kit |
 
 A universal identity does not require aliases from multiple editions. Source-defined tools and other trainable capabilities can establish their own universal competency without a historical skill counterpart. Rules Core does not invent a source-native `Craft (...)` or other historical record to fill such a gap.
@@ -128,11 +129,17 @@ Reviewed baseline membership:
 - Weaponsmithing
 - Weaving
 
-Reviewed shared Craft/tool identities are limited to Alchemy, Calligraphy, Carpentry, Cobbling, Gemcutting, Leatherworking, Painting, Pottery, Stonemasonry, and Weaving. This is explicit policy, not a name-matching rule.
+Reviewed shared Craft/tool identities now include Alchemy, Blacksmithing, Calligraphy, Carpentry, Cobbling, Gemcutting, Leatherworking, Painting, Pottery, Stonemasonry, and Weaving. This is explicit native policy, not a name-matching rule.
 
-Other reviewed later tools remain independent universal competencies when one later proficiency spans several historical specialties or when the historical concept is only related. Smithing is independent from Blacksmithing/Armorsmithing/Weaponsmithing; Tinkering is independent from Locksmithing/Trapmaking; Woodcarving is independent from Bowmaking/Carpentry. Brewing, Cooking, Herbalism, and Navigation likewise remain distinct from related Profession specialties.
+Other reviewed later tools remain independent universal competencies when one later proficiency spans several historical specialties or when the historical concept is only related. Native Smithing has been consolidated into Blacksmithing: Smith's Tools is now Blacksmithing's tool facet, and Armorsmithing and Weaponsmithing are its explicit child specializations. Those child links do not assign derived parent arithmetic or automatic rank/training grants. Tinkering remains independent from Locksmithing/Trapmaking; Woodcarving remains independent from Bowmaking/Carpentry. Brewing, Cooking, Herbalism, and Navigation likewise remain distinct from related Profession specialties.
 
-Reviewed standalone tool-only identities such as Brewing, Cartography, Cooking, Glassblowing, Herbalism, Navigation, Poisoning, Smithing, Tinkering, Woodcarving, Disguise Kit, and Thieves' Tools are first-class members of the universal catalog and do not depend on an active source-shaped tool row to exist. Forgery is likewise materialized as a reviewed non-family baseline identity because its historical Forgery skill and later Forgery Kit are already established as shared facets of the same learned competency. Musical instruments, gaming sets, and future source-defined tools enter the same universal model from their source-native records without fabricated Craft history.
+Reviewed standalone tool-only identities such as Brewing, Cartography, Cooking, Glassblowing, Herbalism, Navigation, Poisoning, Tinkering, Woodcarving, Disguise Kit, and Thieves' Tools are first-class members of the universal catalog and do not depend on an active source-shaped tool row to exist. Forgery is likewise materialized as a reviewed non-family baseline identity because its historical Forgery skill and later Forgery Kit are already established as shared facets of the same learned competency. Musical instruments, gaming sets, and future source-defined tools enter the same universal model from their source-native records without fabricated Craft history.
+
+### Native competency consistency baseline
+
+Every native competency defines the same provisional `trainingProfile` shape: one training identity per competency, activity/facet-defined Ability selection, and numeric advancement deliberately pending the common ranked/proficiency review. Legacy ranked Craft and tool-use facets remain present as application mechanics; the structural baseline does not convert between their numeric systems.
+
+Native `childCompetencies` and `parentCompetency` encode specialization relationships, separate from Skill `childSkills` and its evaluated composite formula. The current approved example is Blacksmithing as parent of Armorsmithing and Weaponsmithing. Other plausible groupings require individual review rather than implicit name-based composition.
 
 ### Perform
 
