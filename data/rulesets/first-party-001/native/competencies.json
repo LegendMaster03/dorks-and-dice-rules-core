@@ -1,7 +1,8 @@
 {
   "_meta": {
-    "role": "selected native crafting and tool competency definitions; actively revised",
-    "reference": "docs/rewrite/native-seed-skills-and-competencies.md"
+    "role": "selected native Competencies with one shared structural training profile and provisional specialization links",
+    "reference": "docs/rewrite/native-seed-skills-and-competencies.md",
+    "reconciliation": "Smithing tool facet consolidated into Blacksmithing; specialization links have no automatic numeric inheritance or proficiency grants"
   },
   "competencies": [
     {
@@ -22,7 +23,12 @@
           "type": "tool-proficiency",
           "tool": "Alchemist's Supplies"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.armorsmithing",
@@ -38,7 +44,14 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "parentCompetency": "competency.blacksmithing",
+      "parentRelationship": "specialization",
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.basketweaving",
@@ -54,7 +67,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.blacksmithing",
@@ -69,8 +87,22 @@
           "classSkillState": true,
           "trainedOnly": false,
           "armorCheckPenalty": false
+        },
+        {
+          "type": "tool-proficiency",
+          "tool": "Smith's Tools"
         }
-      ]
+      ],
+      "childCompetencies": [
+        "competency.armorsmithing",
+        "competency.weaponsmithing"
+      ],
+      "childRelationship": "specialization",
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.bookbinding",
@@ -86,7 +118,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.bowmaking",
@@ -102,7 +139,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.brewing",
@@ -114,7 +156,12 @@
           "type": "tool-proficiency",
           "tool": "Brewer's Supplies"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.calligraphy",
@@ -134,7 +181,12 @@
           "type": "tool-proficiency",
           "tool": "Calligrapher's Supplies"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.carpentry",
@@ -154,7 +206,12 @@
           "type": "tool-proficiency",
           "tool": "Carpenter's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.cartography",
@@ -166,7 +223,12 @@
           "type": "tool-proficiency",
           "tool": "Cartographer's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.cobbling",
@@ -186,7 +248,12 @@
           "type": "tool-proficiency",
           "tool": "Cobbler's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.cooking",
@@ -198,7 +265,12 @@
           "type": "tool-proficiency",
           "tool": "Cook's Utensils"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.disguise-kit",
@@ -210,7 +282,12 @@
           "type": "tool-proficiency",
           "tool": "Disguise Kit"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.forgery",
@@ -226,7 +303,12 @@
           "type": "tool-proficiency",
           "tool": "Forgery Kit"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.gemcutting",
@@ -246,7 +328,12 @@
           "type": "tool-proficiency",
           "tool": "Jeweler's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.glassblowing",
@@ -258,7 +345,12 @@
           "type": "tool-proficiency",
           "tool": "Glassblower's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.herbalism",
@@ -270,7 +362,12 @@
           "type": "tool-proficiency",
           "tool": "Herbalism Kit"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.leatherworking",
@@ -290,7 +387,12 @@
           "type": "tool-proficiency",
           "tool": "Leatherworker's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.locksmithing",
@@ -306,7 +408,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.navigation",
@@ -318,7 +425,12 @@
           "type": "tool-proficiency",
           "tool": "Navigator's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.painting",
@@ -338,7 +450,12 @@
           "type": "tool-proficiency",
           "tool": "Painter's Supplies"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.poisoning",
@@ -350,7 +467,12 @@
           "type": "tool-proficiency",
           "tool": "Poisoner's Kit"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.pottery",
@@ -370,7 +492,12 @@
           "type": "tool-proficiency",
           "tool": "Potter's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.sculpting",
@@ -386,7 +513,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.shipmaking",
@@ -402,19 +534,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
-    },
-    {
-      "id": "competency.smithing",
-      "name": "Smithing",
-      "kind": "competency",
-      "trainingIdentity": "competency.smithing",
-      "facets": [
-        {
-          "type": "tool-proficiency",
-          "tool": "Smith's Tools"
-        }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.stonemasonry",
@@ -434,7 +559,12 @@
           "type": "tool-proficiency",
           "tool": "Mason's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.thieves-tools",
@@ -446,7 +576,12 @@
           "type": "tool-proficiency",
           "tool": "Thieves' Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.tinkering",
@@ -458,7 +593,12 @@
           "type": "tool-proficiency",
           "tool": "Tinker's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.trapmaking",
@@ -474,7 +614,12 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.weaponsmithing",
@@ -490,7 +635,14 @@
           "trainedOnly": false,
           "armorCheckPenalty": false
         }
-      ]
+      ],
+      "parentCompetency": "competency.blacksmithing",
+      "parentRelationship": "specialization",
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.weaving",
@@ -510,7 +662,12 @@
           "type": "tool-proficiency",
           "tool": "Weaver's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     },
     {
       "id": "competency.woodcarving",
@@ -522,7 +679,12 @@
           "type": "tool-proficiency",
           "tool": "Woodcarver's Tools"
         }
-      ]
+      ],
+      "trainingProfile": {
+        "trainingState": "per-competency-identity",
+        "governingAbility": "per-activity-or-facet",
+        "numericProgression": "pending-reconciliation"
+      }
     }
   ]
 }
