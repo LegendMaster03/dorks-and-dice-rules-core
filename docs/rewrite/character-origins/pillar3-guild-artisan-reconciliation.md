@@ -1,6 +1,6 @@
 # Pillar 3 — Guild Artisan and Guild Merchant Source Reconciliation
 
-**Status:** Source-backed proposal only. No native Guild Artisan or Guild Merchant record is approved or authored by this document.
+**Status:** Guild Artisan approved and authored in the native catalog; Guild Merchant remains a separate unapproved candidate. Earlier proposal and approval-boundary sections below are historical analysis, superseded by the final decision.
 
 **Ruleset:** `first-party-001`  
 **Branch:** `feature/character-origins-pillar3-life-experiences`
@@ -128,3 +128,24 @@ Guild Merchant should be **reconciled as a separate Background candidate**, not 
 ## Approval boundary
 
 Nothing in this document authorizes an active `native/backgrounds/guild-artisan.json` file yet. Before promotion, approve the fixed skills, selected-craft Competency principle and eligibility, trade-related language, scope and dues of Guild Membership, and starting-equipment description. Guild Merchant remains a separate, unapproved follow-up; there is no native Background inheritance or generic guild-management implementation.
+
+
+## Approved Guild Artisan native allocation — 2026-11-04
+
+**Owner decision:** Approve Guild Artisan with the 2014 **Insight and Persuasion** skills; **one** native craft Competency appropriate to the character's trade; **one** language associated with the guild, members, clients or trade; **Guild Membership** with the original **5 gp monthly dues**; and **one relevant tool set where defined, guild introduction evidence, traveler's clothes and 15 gp**. This approval authorizes the native Guild Artisan record, but does not authorize Guild Merchant.
+
+**Native record:** `data/rulesets/first-party-001/native/backgrounds/guild-artisan.json` (`background.guild-artisan`, `selected-native`, independently selectable).
+
+**Selected native craft Competency:** One training choice from the existing native crafting catalog corresponding to the guild trade. The native record uses `choiceCategory: crafting-competency`, `choiceCount: 1`, and `choiceConstraint: appropriate-to-character-guild-trade`, with illustrative examples rather than a closed list. Some crafting Competencies include skill-rank facets, some include tool proficiency, and some both; **this mechanical inequality is intentionally preserved for the corpus-wide review**. The category resolver is deferred, and unrelated competencies such as Thieves' Tools are not automatically valid guild crafts.
+
+**Trade language:** A language the character learned through guild work or its commercial relationships, including Common when appropriate. This is a Background grant, independent of Upbringing.
+
+**Guild Membership:** Provides conditional professional contacts, introductions, modest hospitality and institutional advocacy where reasonable and within guild reach. **5 gp/month** is an ordinary dues obligation affecting standing under DM adjudication. Do not build an automated recurring-payment mechanism or apply an automatic deduction from starting gold. Training persists even if guild ties or good standing change.
+
+**Starting possessions:** Appropriate trade tools when the selected craft has corresponding equipment, an introduction letter or evidence of membership, traveler's clothes, pouch and **15 gp**, all ordinary inventory. No new workshop, recipes, materials, bulk resources or fictitious tool kit is granted. Item identity and conditional matching to the chosen native craft are deferred to normal equipment materialization.
+
+**Guild Merchant:** Still requires its own source and grant reconciliation as an **independent Background**, not a variant or automatic inheritor of Guild Artisan. No Merchant content has been promoted.
+
+**Outstanding general work:** Resolve semantic `crafting-competency` eligibility, item-tool mapping, multi-facet benefit balance and duplicate training from Dwarf/Goliath or future non-Species Upbringings through the planned corpus-wide review. No executable C# or consumer API changes are authorized by this content promotion.
+
+This approved allocation supersedes the earlier unapproved options and approval boundary in this document.
