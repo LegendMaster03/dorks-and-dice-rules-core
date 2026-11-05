@@ -1,0 +1,103 @@
+{
+  "id": "upbringing.aristocratic",
+  "name": "Aristocratic Upbringing",
+  "kind": "upbringing",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "Your formative environment exposed you to the customs, education, and social expectations of aristocratic households or communities. This Upbringing may reflect being raised among nobles, household attendants, tutors, or others familiar with such customs. It is available to any Species and does not require noble birth, a title, personal wealth, a royal court, servants, or a particular later Background.",
+  "benefits": [
+    {
+      "id": "aristocratic-community-language",
+      "name": "Household or Community Language",
+      "description": "Learn one language used in the household or aristocratic social environment that shaped your upbringing. Common is an appropriate choice where it was spoken there. This learned language is separate from Species traits and any language gained through a later Background.",
+      "extraLanguages": 1,
+      "choiceConstraint": "spoken-in-formative-aristocratic-household-or-community"
+    },
+    {
+      "id": "aristocratic-formative-skill",
+      "name": "Aristocratic Skill",
+      "grantType": "skill-training",
+      "description": "Choose one Skill reflecting the education and experience of your formative aristocratic environment: History, Insight, Persuasion, Deception, or Performance.",
+      "chooseOne": [
+        "skill.history",
+        "skill.insight",
+        "skill.persuasion",
+        "skill.deception",
+        "skill.performance"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "aristocratic-formative-competency",
+      "name": "Aristocratic Competency",
+      "grantType": "benefit-choice",
+      "choiceCount": 1,
+      "description": "Choose exactly one proficiency: one particular type of gaming set, or Calligraphy, Painting, or Cooking. These choices reflect practices learned in the household or social environment and do not grant starting equipment or multiple unrelated Competencies. The selected Competency retains its existing native facets.",
+      "options": [
+        {
+          "id": "gaming-set",
+          "name": "Gaming Set Proficiency",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "choiceCategory": "gaming-set",
+              "choiceCount": 1,
+              "description": "Choose proficiency with one particular type of gaming set; do not gain every gaming set type."
+            }
+          ]
+        },
+        {
+          "id": "calligraphy",
+          "name": "Calligraphy Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.calligraphy",
+              "description": "Gain the existing native Calligraphy Competency, including its reviewed crafting-skill and tool-proficiency facets; no physical tools are automatically granted."
+            }
+          ]
+        },
+        {
+          "id": "painting",
+          "name": "Painting Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.painting",
+              "description": "Gain the existing native Painting Competency, including its reviewed crafting-skill and tool-proficiency facets; no physical tools are automatically granted."
+            }
+          ]
+        },
+        {
+          "id": "cooking",
+          "name": "Cooking Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.cooking",
+              "description": "Gain the existing native Cooking Competency and its Cook's Utensils tool-proficiency facet; no physical tools are automatically granted."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aristocratic-protocol",
+      "name": "Aristocratic Protocol",
+      "grantType": "upbringing-feature",
+      "description": "When dealing with aristocratic communities whose customs you know, you understand their ordinary titles, ranks, forms of address, etiquette, and customary ways to seek introductions or an audience. You can recall that familiar ordinary protocol without a check required solely to remember it. Customs that are unfamiliar, deliberately concealed, unusual, or uncertain may require inquiry or ordinary adjudication by the GM. Knowing the appropriate protocol does not guarantee admission, an audience, favorable treatment, a title, authority, wealth, property, influence over others, or recognition as a noble."
+    }
+  ],
+  "reviewNotes": [
+    "Approved independent Aristocratic Upbringing, representing formative exposure to aristocratic household and community practices; a character does not need noble parents, personal status, wealth, or the Noble Background.",
+    "One learned language used in the formative household or social setting; Common is eligible when used there, but not automatically required or inherited from Species.",
+    "Provisional initial balance baseline approved by owner after corpus review: choose exactly one Skill from History, Insight, Persuasion, Deception, or Performance; and exactly one Competency from one type of gaming set, Calligraphy, Painting, or Cooking. Selection counts may be revisited in the broader balance pass.",
+    "The mixed proficiency choice uses one outer benefit-choice with four alternatives. Choosing a gaming set triggers one nested gaming-set category selection; choosing Calligraphy, Painting, or Cooking grants only that existing Competency.",
+    "Calligraphy and Painting include both crafting-skill and tool-proficiency facets; Cooking grants a tool-proficiency facet. These are reviewed native Competency identities, not automatically equal mechanical values. Relative balance and duplicate training require later common review.",
+    "Aristocratic Protocol grants reliable knowledge of ordinary protocol in aristocratic settings familiar to the character without an ordinary check solely to recall it. Unknown, secret, or foreign customs remain subject to normal adjudication.",
+    "Aristocratic Protocol does not grant social admission, authority, noble status, an audience, property, wealth, or the Noble Background's Position of Privilege.",
+    "No Upbringing startingEquipment package, fixed ability increases, Origin feat, household servants, instrument or kit items, or additional Background grants are provided.",
+    "Aristocratic Upbringing and Noble Background may be selected together without implying one from the other. Overlapping Skills, languages, or Gaming Set training await the single corpus-wide duplicate-grant policy.",
+    "Native mixed-benefit choice execution, Skill/Competency and language projection, parent/default selection, and cross-Species combinations remain deferred to common implementation."
+  ]
+}
