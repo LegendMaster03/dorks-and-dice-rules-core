@@ -1,6 +1,6 @@
 # Pillar 3 — Wilderness-Raised Upbringing and Explorer Background: candidate allocations
 
-**Status:** Independently assessed candidate mechanics following owner direction to place the 2014 Outlander concept primarily in Upbringing and potentially add a separate Explorer Background. **Neither package nor any individual grant is approved.** No native content is authorized by this design record.
+**Status:** Both final-review packages approved and authored in native content. Earlier unapproved proposals and alternatives remain as design history; the approved allocation is recorded at the end of this document.
 
 **Ruleset:** `first-party-001`  
 **Branch:** `feature/character-origins-pillar3-life-experiences`  
@@ -175,3 +175,34 @@ A new Explorer feature must not silently exempt the group from these checks, cha
 **Why this refinement:** The earlier feature risked restating what any trained character could do. An explicit entitlement to one evidence-supported navigational conclusion gives a meaningful first-expedition use without creating map knowledge, general skill bonuses, automatic safe travel, or a competing Hex Crawl procedure. It remains situational and should be playtested.
 
 **Approval needed separately for each package:** Wilderness-Raised name, scope, language, skill choices and six-person provision feature; Explorer's two skills, Navigation/Cartography, no language, field equipment and actionable Expedition Survey. No native JSON, C# or consumer changes are authorized by this note.
+
+
+## Approved native allocation — Wilderness-Raised and Explorer (2026-11-04)
+
+**Owner approval:** Both independent final-review packages were approved, including the revised **actionable Expedition Survey** feature. The following native records are selected and selectable:
+
+- `data/rulesets/first-party-001/native/upbringings/wilderness-raised.json` — `upbringing.wilderness-raised`.
+- `data/rulesets/first-party-001/native/backgrounds/explorer.json` — `background.explorer`.
+
+### Wilderness-Raised — approved Upbringing
+
+- Any Species may select this formative environment; it does not presume a nomadic culture, isolation, hunting, or a single wilderness ethnicity.
+- **One learned language** of the formative community or household; Common remains valid.
+- **One Skill choice** from Survival, Nature, Animal Handling, Perception, Athletics.
+- **Wilderness Provisioning:** In environments with sufficient accessible food and fresh water, a reasonable opportunity to gather allows reliable daily provisioning for **the character plus up to five others**. No conjuring supplies, automatically purifying unsafe water, traversing inaccessible locations, or avoiding unrelated danger.
+- **No additional Competency and no Upbringing starting equipment.** No extra Origin feat, ability increase, or Explorer package.
+
+### Explorer — approved Background
+
+- **Fixed Perception** and **choose one** Skill from Survival, Investigation, History, Nature, Athletics.
+- **Choose one Competency** from Navigation or Cartography. Vehicle qualifications do not follow automatically.
+- **No additional Background language.**
+- **Expedition Survey:** With a meaningful survey opportunity and useful evidence, request **one actionable conclusion** supported by observations, routes, or available maps/accounts. When evidence supports it, the GM supplies a conclusion without a separate check solely for interpretation; insufficient evidence is reported rather than replaced by invented facts. Recall personally surveyed major landmarks, turns and junctions without a check solely for memory. Repeated questions about unchanged evidence do not grant limitless new facts. Navigation under uncertainty continues to use normal checks.
+- **Ordinary starting inventory:** field journal or notes, map paper, writing implement, traveler's clothes, pouch with **10 gp**.
+- No automatic wilderness provisions, guaranteed shortcuts, hidden geographical information, safe travel, extra language, or the source Outlander's hunting trap/staff/trophy equipment.
+
+### Scope of the decision
+
+The split supersedes the earlier plan to make **Outlander** a standalone native Background. The source entry remains comparative evidence. A **Wilderness-Raised Upbringing** and **Explorer Background** can be selected separately or together without cross-inheritance.
+
+**Deferred:** Execution of native feature grants, language and choice projection, map/travel integration, item identity and inventory materialization, corpus-level duplication behavior, and balance/playtest review. Neither Hex Crawl nor Character Sheet code is changed in this content approval.
