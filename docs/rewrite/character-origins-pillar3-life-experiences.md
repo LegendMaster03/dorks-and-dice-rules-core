@@ -615,3 +615,19 @@ The **Wilderness-Raised Upbringing** candidate is unchanged: one household/commu
 **Design history and authoritative approved allocation:** `docs/rewrite/character-origins/pillar3-entertainer-gladiator-reconciliation.md`.
 
 **Current Pillar 3 branch totals:** **Fifteen native Backgrounds and eleven native Upbringings**. Street-Raised and Aristocratic Upbringings continue to await training selection counts.
+
+
+## Hermit approved native Background — 2026-11-05
+
+**Owner-approved and authored:** `background.hermit` at `data/rulesets/first-party-001/native/backgrounds/hermit.json`, the **sixteenth native Background**.
+
+- **Skills:** Choose **two distinct** from Medicine, Religion, Nature, Survival, Arcana, History, Investigation or Insight. The 2014 Medicine and Religion pair remains an option rather than a compulsory combination.
+- **No automatic vocational training:** No Herbalism Competency, new language, vehicle qualification or other profession is granted solely from seclusion.
+- **Discovery:** One meaningful, genuine GM-agreed prior finding learned during sustained withdrawal, usable as already established knowledge without a trivial rediscovery check. It does not repeatedly reveal unknown facts, rewrite the campaign, grant items/powers or guarantee solutions.
+- **Ordinary starting inventory:** Personal notes in a scroll case/notebook, winter blanket or modest bedding, common/practical clothes, one GM-agreed ordinary item without guaranteed value or proficiency, and **5 gp**.
+- **Independent origins:** Hermit may follow seclusion at any stage of life, alone or in a secluded community, and is not inherently a religious ascetic, herbalist or wilderness survivor. An **Isolated-Raised Upbringing** remains an independent, unapproved candidate.
+- **Deferred:** Choice execution, Discovery information agreement/projection, ordinary item identity/materialization, duplicate training resolution and corpus-wide feature balance.
+
+**Approval rationale and 2014 comparison:** `docs/rewrite/character-origins/pillar3-hermit-reconciliation.md`.
+
+**Current Pillar 3 branch totals:** **Sixteen native Backgrounds and eleven native Upbringings**. Street-Raised and Aristocratic Upbringings still await finalized Skill/Competency selection counts.
