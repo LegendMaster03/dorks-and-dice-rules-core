@@ -136,3 +136,33 @@ A Folk Hero's background is a separate earned relationship, not a granted or inh
 **Not yet decided:** Whether Folk Hero should retain exact 2014 fixed training, whether the proposed two-category vocational choice is too narrow, how to equate the craft-tool and noncraft equipment alternatives, and how far Community Refuge can support companions without becoming an unrestricted group shelter power.
 
 No `data/rulesets/first-party-001/native/backgrounds/folk-hero.json` is approved. No Rural Community Upbringing is approved. Do not author either native record, modify existing grants, add global reputation accounting or create new consumer/runtime mechanics until a separate owner decision.
+
+
+## Owner agreement and practical-training refinement — 2026-11-04
+
+**Agreement received:** Folk Hero remains an **independent Background** defined by earned recognition, with flexible Skills and **Community Refuge** rather than a mandatory rural, agricultural or social-class history. A possible **Rural Community Upbringing** receives a distinct later reconciliation; it is not automatically inherited. This agreement is **not authorization to promote a finished native Folk Hero**, since the practical qualification and linked equipment were expressly left unresolved.
+
+### Practical-training alternatives tested
+
+| Option | Mechanical package | What it solves | Problem |
+| --- | --- | --- | --- |
+| **A. 2014 fixed grant** | Artisan tool proficiency and Land Vehicles, in addition to the two Skills | Closest to source baseline | Forces rural working-history assumptions onto a city-born rescuer, scholar, healer or organizer |
+| **B. Mixed craft/vehicle choice** (earlier draft) | One crafting Competency **or** Land Vehicles | Narrows the extra grant and permits either source tradition | Still forces a vocational identity; craft Competencies have unequal facet strength; a noncraft, nonvehicle deed has no plausible option; equipment must branch |
+| **C. No compulsory vocational grant** (recommended) | Two selected Skills plus Community Refuge, without tool/vehicle grant | Training follows consequential deeds rather than presumed childhood employment; no forced trade or arbitrary extra language | Fewer mechanical training grants than many 2014 Backgrounds; may need later corpus-wide power review |
+| **D. Extra flexible training** | A third distinct Skill, a crafting Competency, or a vehicle qualification as one mixed-result choice | Can represent practical, social, or specialist backgrounds | Multiple fundamentally different benefit types, different power levels, more projection complexity, and an incentive to maximize mechanical value rather than characterize the deed |
+
+**Recommended selection:** **C**, omit the mandatory tool/vehicle grant altogether for the first native Folk Hero package. The character's ordinary childhood, past livelihood, and personal equipment may still include tools and transport, but their training is **not an inherent consequence of being a recognized Folk Hero**. No existing general starting-trade-training subsystem grants them automatically; players can obtain them through other applicable character options or later play.
+
+Removing vocational training represents a **deliberate mechanical departure** from the original 2014 Folk Hero. It is not numerically claimed to equal the historical two qualifications. The defining feature offers bounded social shelter and protection when recognition and sympathetic supporters exist; its actual utility varies with campaign. Compare the package across the first corpus before changing it purely for grant-count parity.
+
+### Revised Folk Hero package — proposed for final approval, not yet approved
+
+- **Identity:** You performed a meaningful deed or sustained acts that earned recognition and practical solidarity among a community. A rural upbringing is possible but not a prerequisite; noble birth, city life and a morally complicated deed are all possible.
+- **Skills:** Choose **two distinct** from `skill.animal-handling`, `skill.survival`, `skill.athletics`, `skill.medicine`, `skill.persuasion`, `skill.insight`, `skill.intimidation`, `skill.investigation`. The 2014 Animal Handling/Survival pair remains selectable.
+- **Other training:** **No mandatory Competency, vehicle qualification, language, or extra Skill** in this first-pass package. Rural upbringing and prior occupations are separate sources of learning; no replacement is silently invented.
+- **Feature:** **Community Refuge** as drafted earlier: recognized supporters offer shelter, modest hospitality or concealment from casual inquiries when justified, provided help is feasible and does not require risk to their lives or livelihoods. They retain agency; recognition is contextual rather than universal. Companions may be accommodated when supporters can realistically offer help, not as an unlimited party-wide entitlement.
+- **Starting possessions:** Common or practical clothing, a nonmagical keepsake or testimonial connected to the defining deed, one ordinary personal item associated with prior work or the incident **subject to DM determination without guaranteed monetary value or training**, and a pouch with **10 gp**. No artisan tool set, cart, working livestock, office, land, inherited family status or guaranteed rewards. All possessions enter ordinary inventory; exact item selection/materialization awaits shared equipment work.
+- **Optional narrative prompts:** What deed produced the reputation? Who witnessed it? Which people still support the character? Where is the deed disputed or unknown?
+- **Cross-corpus tests:** Compare this Background with Soldier and Knight standing, Acolyte shelter, Guild Artisan contacts, Wilderness-Raised provisioning and Rural Community if added. A recognized person can have another occupation in biography without accumulating an additional full Background.
+
+**Open for owner approval:** Whether to adopt Option C and this equipment set as the complete package. The feature and Skill pool had conceptual agreement but are not thereby marked as a selected-native record. No repository runtime or native content change is approved by this note.
