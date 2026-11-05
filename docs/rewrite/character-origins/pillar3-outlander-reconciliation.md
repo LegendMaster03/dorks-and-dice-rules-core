@@ -1,6 +1,6 @@
 # Pillar 3 — Outlander Source Reconciliation: Wilderness Upbringing and Explorer Background
 
-**Status:** Source review and revised working direction. Following owner feedback, **Outlander is being reconsidered as an Upbringing**, with **Explorer** as a potential separate Background. This is a design revision under discussion, not an approval of a final grant package; no native content has been promoted.
+**Status:** The Outlander source has been reconciled into the approved Wilderness-Raised Upbringing and independent Explorer Background. The earlier Outlander Background proposal is superseded; see the approved outcome at the end of this document.
 
 **Ruleset:** `first-party-001`  
 **Development branch:** `feature/character-origins-pillar3-life-experiences`
@@ -195,3 +195,18 @@ Avoid a generic "you know where to look for information" restatement of Research
 After the owner identified the formative Outlander concept as better suited to Upbringing, the next-pass mechanical proposal recommends **separating the two Wanderer effects** rather than moving the original 2014 Background package intact. The proposed **Wilderness-Raised Upbringing** receives conditional six-person Wilderness Provisioning, one community language and one selected formative Skill; the proposed **Explorer Background** receives a Geographic Recall feature, Perception plus one selected expedition Skill, and Navigation or Cartography, with ordinary expedition equipment.
 
 **Both packages remain unapproved; no native records have been created.** The proposed allocations, precise wording, comparison against General Goliath, role of 2014 instrument training, and alternate active Explorer feature are in `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`. This focused proposal supersedes the early proposal in this document to promote Outlander directly as an independent Background, without discarding its historical source review.
+
+
+## Approved outcome — native Wilderness-Raised and Explorer (2026-11-04)
+
+**Owner-approved resolution:** Do **not** promote a standalone Outlander Background. Its formative aspects support independent `upbringing.wilderness-raised`, and exploration/route-survey practice supports independent `background.explorer`.
+
+- Wilderness-Raised: one community language, one Skill choice (Survival, Nature, Animal Handling, Perception, Athletics), and daily Wilderness Provisioning for up to six people in suitable accessible conditions. No automatic craft competency or inventory.
+- Explorer: fixed Perception, one Skill choice (Survival, Investigation, History, Nature, Athletics), one choice of Navigation or Cartography, no language, evidence-bounded Expedition Survey and ordinary journal/map-paper/writing-implement/clothes/pouch equipment with 10 gp.
+- **Wanderer split:** Wilderness Provisioning is assigned to the Upbringing; actionable geographical survey and bounded route memory are assigned to Explorer. Neither inherits the complete 2014 Wanderer package, and a character need not select both.
+- Explorer's survey does **not** override `travel.navigation.*` checks or Hex Crawl's map/lost/route state. It can return one conclusion only when meaningful evidence supports it.
+- Rural and Itinerant community concepts remain **unapproved separate options**, not automatic variants.
+
+Native files: `data/rulesets/first-party-001/native/upbringings/wilderness-raised.json` and `data/rulesets/first-party-001/native/backgrounds/explorer.json`.
+
+Full approval mechanics and history: `docs/rewrite/character-origins/pillar3-wilderness-raised-explorer-allocation.md`. Earlier proposal sections remain preserved as research and are not the current native specification.
