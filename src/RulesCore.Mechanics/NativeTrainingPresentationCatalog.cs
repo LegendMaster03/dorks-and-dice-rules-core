@@ -49,7 +49,8 @@ public static class NativeTrainingPresentationCatalog
                     // a computed parent check, rank inheritance or training grant.
                     result.Add(new(item.Id, item.Name, category, ability,
                         Text(definition, "family"), components, composition,
-                        family, supportsRanks, specializations));
+                        family, supportsRanks, specializations,
+                        category == "competency" ? Text(definition, "parentCompetency") : null));
                 }
                 if (offset + page.Items.Length >= page.Total) break;
             }
