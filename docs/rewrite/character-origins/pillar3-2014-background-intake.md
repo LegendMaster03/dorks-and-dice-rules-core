@@ -305,3 +305,16 @@ See `docs/rewrite/character-origins/pillar3-spy-reconciliation.md` for the sourc
 **Deferred integration:** Mixed-result Navigation/language choice, Skill actions for Appraise/Gather Information, duplicate grants, mule/cart ordinary inventory identity and comparative equipment/training balance. No guild-management, commerce, or animal companion system is introduced.
 
 See `docs/rewrite/character-origins/pillar3-guild-merchant-reconciliation.md` for the proposal history and final approval.
+
+
+## Sailor independently promoted; Pirate deferred — 2026-11-04
+
+**Owner-approved result:** The 2014 Sailor source has been reconciled as independent native `background.sailor` in `data/rulesets/first-party-001/native/backgrounds/sailor.json`, not as an inherited subtype or Pirate variant.
+
+**Grants:** Athletics, Perception, Navigation Competency (Navigator's Tools), independent Water Vehicles qualification, **no new language**, and Ship's Passage, enabling fare-free passenger travel for the Sailor and companions where suitable ships and voyages can actually be arranged, with reasonable shipboard work expected. Does not confer a ship, command, or guaranteed route.
+
+**Ordinary possessions:** Belaying pin (ordinary club use), 50 feet of silk rope, mundane lucky charm, common clothes, pouch and **10 gp**.
+
+**Pirate remains independent and unapproved.** The 2014 Bad Reputation substitution is research evidence only, not an automatic option or benefit of Sailor. A separate reconciliation must evaluate its scope and full independent package if added later.
+
+**Deferred:** Common composite Skill grants, Water Vehicles execution, equipment identity/materialization, duplicate training, and relative benefit/equipment balance. Detailed source comparison and final approval: `docs/rewrite/character-origins/pillar3-sailor-reconciliation.md`.
