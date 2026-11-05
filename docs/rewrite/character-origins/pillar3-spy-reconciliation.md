@@ -1,6 +1,6 @@
 # Pillar 3 — Spy Background reconciliation
 
-**Status:** Independent candidate under review, **not approved for native promotion**. No Spy native record has been authored.
+**Status:** Approved and authored as independent native Background. The proposal and unapproved sections below are historical analysis; the final approved allocation is recorded at the end.
 
 **Ruleset:** `first-party-001`  
 **Branch:** `feature/character-origins-pillar3-life-experiences`
@@ -110,3 +110,22 @@ Do **not** change Criminal or add Spy native JSON until the Spy grants and featu
 ## Approval boundary
 
 The proposed two-of-six Skill selection, one-of-four Competency choice, one service-linked language, feature choice (Model A or B), and 10 gp equipment package are **not yet approved**. Author a standalone `native/backgrounds/spy.json` and clean up Criminal's old variant reference only after owner approval. No consumer C# or API work is authorized by this design document.
+
+
+## Approved native Spy Background — 2026-11-04
+
+**Owner approval:** The prior proposed package using Model A, **Intelligence Sources**, is approved as an independent native Background. The native selected record is `data/rulesets/first-party-001/native/backgrounds/spy.json` (`background.spy`, `selected-native`).
+
+**Final approved grants:**
+
+- **Skills:** Choose **two distinct** Skills from Deception, Stealth, Investigation, Insight, Perception, and Persuasion (`skill.deception`, `skill.stealth`, `skill.investigation`, `skill.insight`, `skill.perception`, `skill.persuasion`).
+- **Competency:** Choose **one** of Disguise Kit, Forgery, Thieves' Tools, or Calligraphy (`competency.disguise-kit`, `competency.forgery`, `competency.thieves-tools`, `competency.calligraphy`). Training does not automatically supply the equipment.
+- **Language:** Learn one language associated with the character's intelligence work, contacts, sources, or communications. Common can qualify where appropriate.
+- **Distinctive feature:** **Intelligence Sources**, an existing source or intermediary the character can discreetly contact for possible leads in their area of knowledge, without guaranteed secrets, safe houses, access, instant answers, or cooperation. No additional Operational Tradecraft or False Identity feature is granted.
+- **Equipment:** Work-appropriate or plain clothing, notebook or notes, ink, writing instrument, pouch, and **10 gp**. These become ordinary inventory; notes confer no guaranteed useful secrets or identity.
+- **Identity:** The character's covert work need not have been unlawful, governmental, or tied to any present employer, Species, or Upbringing. Spy is not a subclass, variant, or inherited package of Criminal.
+- **Integration pending:** The two-from-six native choice form (`chooseFrom` with `choiceCount: 2` and `distinctChoices: true`), competency choices, item materialization, and duplicate-grant handling await their general integration and corpus balance work.
+
+**Criminal cleanup completed:** `data/rulesets/first-party-001/native/backgrounds/criminal.json` no longer embeds the Spy `suggestedVariants` entry or presents general intelligence work as an inherently criminal alternative. Criminal retains its approved five benefits and unchanged starting equipment. A Spy who actually participated in crime may still choose Criminal instead where that better describes the character's defining experience.
+
+This section supersedes all earlier proposal, alternative, and approval-boundary language in this document. No special espionage subsystem or native Background inheritance was introduced.
