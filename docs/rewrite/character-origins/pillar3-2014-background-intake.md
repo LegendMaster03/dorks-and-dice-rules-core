@@ -253,3 +253,16 @@ Knight is **not** an existing selected native Background and will be designed as
 - **Execution:** Native JSON is selected content; projection, category-qualification resolution, item identity and consumer execution remain deferred until integration work.
 
 **Interaction tests:** Aristocratic + Noble may overlap History, language and gaming grants; use the later general duplicate policy rather than silently stacking ranks or replacing unrelated benefits. A character with other Upbringing can also select Noble, and Aristocratic upbringing does not independently imply recognized rank.
+
+
+## Independent Knight promoted to native Background — 2026-11-04
+
+**Owner-approved resolution superseding earlier Knight intake hypotheses:** Knight is a **new, independent native Background**, not a subtype of Soldier or Noble. The historical 2014 `Noble: Knight` source is reference material only; its **Retainers** mechanic is adapted in original Dorks & Dice wording.
+
+**Native file:** `data/rulesets/first-party-001/native/backgrounds/knight.json`, independently selectable as `background.knight`.
+
+**Grant summary:** Persuasion; choose **one** of Athletics, Animal Handling, Ride, History, Religion, Arcana, Nature; choose **one total** Gaming Set or Musical Instrument type; learn one language associated with knightly duties, order, patron or training; three noncombat retainers including a squire; Knightly insignia or commission, service clothing, token, pouch, **10 gp**.
+
+**Retainer limits:** Noncombat support only, no dangerous excursions, departure for repeated danger or mistreatment, DM adjudication. Wages, housing, replacement, travel arrangements, inventory, level advancement and follower management remain unspecified. Do not automatically grant an additional institutional privilege or noble status.
+
+The Knight source decomposition and full approval boundary are recorded in `docs/rewrite/character-origins/pillar3-knight-reconciliation.md`. Other unapproved Upbringings and Backgrounds remain subject to individual reconciliation. Native execution and balance audit still follow the broader project plan.
