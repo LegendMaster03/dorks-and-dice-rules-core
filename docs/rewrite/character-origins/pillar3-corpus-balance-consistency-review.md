@@ -155,3 +155,25 @@ Calligraphy and Painting can carry both crafting-skill and tool facets, so one C
 **No evidence yet to justify:** An across-the-board nerf to Street-Raised Urban Navigation; automatic deletion of Rock Gnome features; forced equal GP inventory value; uniform number of tools/languages for all Backgrounds; new Upbringings or Backgrounds; modifications to Class mechanics to conceal origin overlap.
 
 **Approval boundary:** This review records findings and one content-only wording correction. Any alteration to approved grant numbers, effects, skill/competency option pools, feature entitlements, or creation of native Aristocratic requires explicit owner approval.
+
+
+## Owner decision — Aristocratic native baseline approved (2026-11-05)
+
+**The owner approved the proposed baseline and the familiar-etiquette recall clarification.** The prior `Aristocratic Upbringing — count decision prepared, not presumed approved` section remains historical analysis; its approval boundary has been superseded for this specific package.
+
+Selected-native file: `data/rulesets/first-party-001/native/upbringings/aristocratic.json`, ID `upbringing.aristocratic`.
+
+- **One formative language** used by the aristocratic household/community.
+- **Choose one Skill** from History, Insight, Persuasion, Deception, Performance.
+- **Choose one Competency** from one Gaming Set type, Calligraphy, Painting, Cooking. This is one mutually exclusive mixed choice, not four grants; Calligraphy and Painting retain their existing crafting-skill and tool proficiency facets.
+- **Aristocratic Protocol** is a genuine learned-knowledge benefit: the character can recall ordinary familiar titles, etiquette, ranks and ways of seeking an introduction/audience without a check solely to remember them. Unknown/unfamiliar/secret customs remain normal adjudication. No access, status, authority, wealth, or guaranteed audience follows.
+- **No Upbringing equipment** and no implied `background.noble`.
+- **Initial counts remain subject to balancing**, in the same sense as Street-Raised; approval of a native starting value does not lock it against later justified changes.
+
+**Revised inventory:** **16 Backgrounds and 13 Upbringings** are now native. The earlier 12-Upbringing table remains an auditable snapshot from **before** Aristocratic promotion, not the complete new native roster. Treat this update as an additional row in the effective Upbringing comparison:
+
+| Upbringing | Effective learned/training benefits | Additional effects | Review implications |
+| --- | --- | --- | --- |
+| Aristocratic | One formative language; choose one Skill (History/Insight/Persuasion/Deception/Performance); choose one Competency (one Gaming Set type/Calligraphy/Painting/Cooking) | Aristocratic Protocol, including check-free recall of ordinary familiar protocol | Skill/Competency selection counts provisional; Calligraphy/Painting multi-facet value; duplicate grants with Noble/Knight and other Backgrounds; social benefit is knowledge, not privileged access |
+
+**Audit follow-up:** C1–C6 and the comparative combination tests remain open. The next design decision is the **single global duplicate proficiency policy**, not a special exception for Aristocratic. No C# consumer changes or unilateral rebalancing occurred during this promotion.
