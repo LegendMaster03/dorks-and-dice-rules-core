@@ -1,6 +1,6 @@
 # Pillar 3 — Charlatan Background Reconciliation
 
-**Status:** Historical-source comparison and native design **proposal**. Charlatan's package is **not approved**, and this document does not authorize a native record.
+**Status:** Charlatan approved and authored as an independent native Background. Earlier proposals and pending boundaries below are retained as design history; the approved allocation is documented in the final section.
 
 **Ruleset:** `first-party-001`  
 **Development branch:** `feature/character-origins-pillar3-life-experiences`
@@ -125,3 +125,18 @@ Possible practiced schemes: confidence pitches, false investments, forged refere
 **Unresolved details to decide or revise:** Whether the skill pair should remain fixed, whether the two native Competencies are justified despite Forgery's additional native skill facet, and whether the social cover wording adequately preserves the 2014 feature without overstating universal identity recognition.
 
 No native `data/rulesets/first-party-001/native/backgrounds/charlatan.json` is selected or authorized by this document. Native false-identity feature execution, inventory materialization, duplicate training and comparative balance are deferred. No runtime or Character Sheet code is to be changed by this source review.
+
+
+## Approved native Charlatan allocation — 2026-11-04
+
+**Owner-approved:** Preserve the proposed independent 2014-based Charlatan package with fixed **Deception** and **Sleight of Hand**, both **Disguise Kit** and **Forgery** Competencies, **no additional language**, one established **False Identity** and sample-based document imitation, and the 2014-style ordinary equipment with **15 gp**.
+
+**Authored native content:** `data/rulesets/first-party-001/native/backgrounds/charlatan.json` (`background.charlatan`, `selected-native`, independently selectable).
+
+- **Training:** `skill.deception`, `skill.sleight-of-hand`, `competency.disguise-kit`, and `competency.forgery` are fixed grants. Native Forgery retains its approved skill and tool facets; it is not split into a fictional narrower Forgery Kit Competency. The separate Disguise Skill is not automatically trained.
+- **Feature:** False Identity establishes **one credible alternate persona** supported by documents, suitable disguise arrangements and acquaintances familiar with that persona. It also enables imitation of document types and handwriting after examining relevant examples with suitable materials and opportunity. It does not guarantee acceptance of forged documents, confer actual noble/institutional authority, or provide Criminal Contact/Spy Intelligence Sources.
+- **Ordinary starting inventory:** Fine clothes, one physical Disguise Kit, **one mutually exclusive con-prop package** from ten colored-liquid bottles, weighted dice, marked playing cards or a fictional-noble signet ring, a pouch and **15 gp**. No physical Forgery Kit is automatically granted. False-identity supporting records are part of the feature's established circumstances and are not unlimited salable inventory.
+- **Independence:** No mandatory illegal activity, childhood, criminal organization, Species, social class or Upbringing. No 2024 Origin feat or fixed ability increases.
+- **Deferred:** Comparative strength of `competency.forgery` multi-facet grant, feature recognition/scaling under different campaigns, identity/document scrutiny, item identity/materialization, and overlap with Street-Raised or Aristocratic Upbringing.
+
+**This approved allocation supersedes the earlier pending approval boundary and unapproved language in this document.** Runtime grant projection and consumer behavior were not added.
