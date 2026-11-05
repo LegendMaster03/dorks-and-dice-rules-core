@@ -648,3 +648,19 @@ The **Wilderness-Raised Upbringing** candidate is unchanged: one household/commu
 **Detailed reconciliation and approval history:** `docs/rewrite/character-origins/pillar3-urchin-street-raised-reconciliation.md`.
 
 **Current Pillar 3 branch totals:** **Sixteen native Backgrounds and twelve native Upbringings**. Aristocratic Upbringing remains partially approved, with its Skill and Competency selection counts unresolved.
+
+
+## Aristocratic approved native Upbringing — 2026-11-05
+
+**Owner-approved and authored:** `upbringing.aristocratic` is independently selected-native at `data/rulesets/first-party-001/native/upbringings/aristocratic.json`, the **thirteenth native Upbringing**. Earlier sections marking its counts unresolved are **superseded** by this approved provisional package.
+
+- **Language:** One learned language used by the formative aristocratic household or social community.
+- **Skill choice (provisional balance count):** Exactly one of History, Insight, Persuasion, Deception, or Performance.
+- **Competency choice (provisional balance count):** Exactly one proficiency: one specific Gaming Set type **or** Calligraphy, Painting, or Cooking. Training uses existing reviewed Competency facets, including the multi-facet Calligraphy/Painting identities; it does not award items.
+- **Aristocratic Protocol:** The character knows the ordinary protocol of familiar aristocratic communities without a check solely to recall it. Knowing how to make a customary introduction or request does not confer access, noble rank, influence, property, or any other institutional privilege.
+- **No Upbringing starting inventory or automatic Noble Background.** Characters with any Species and a separate Background may select this Upbringing when their formative circumstances support it.
+- **Further review:** The one-Skill/one-Competency counts may be revised during the corpus-wide balance pass. Mixed-choice execution, multi-facet Competency value, cross-package duplicate grants and unfamiliar-custom adjudication remain deferred to the common mechanics and balancing review.
+
+**Approval record and analysis:** `docs/rewrite/character-origins/pillar3-2014-background-intake.md` and `docs/rewrite/character-origins/pillar3-corpus-balance-consistency-review.md`.
+
+**Current Pillar 3 branch totals:** **Sixteen native Backgrounds and thirteen native Upbringings**. The original 2014 PHB Background source pass remains closed; Pirate, Isolated-Raised, Rural Community and other scope additions remain deferred until the existing corpus is balanced.
