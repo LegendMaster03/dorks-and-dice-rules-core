@@ -266,3 +266,16 @@ Knight is **not** an existing selected native Background and will be designed as
 **Retainer limits:** Noncombat support only, no dangerous excursions, departure for repeated danger or mistreatment, DM adjudication. Wages, housing, replacement, travel arrangements, inventory, level advancement and follower management remain unspecified. Do not automatically grant an additional institutional privilege or noble status.
 
 The Knight source decomposition and full approval boundary are recorded in `docs/rewrite/character-origins/pillar3-knight-reconciliation.md`. Other unapproved Upbringings and Backgrounds remain subject to individual reconciliation. Native execution and balance audit still follow the broader project plan.
+
+
+## Spy promoted independently; Criminal variant retired — 2026-11-04
+
+**Owner-approved resolution:** The PHB's 2014 Spy variant is used as comparative source material only. It is **not** a selectable variant of Criminal or an inherited template. Spy has an independent selected-native definition at `data/rulesets/first-party-001/native/backgrounds/spy.json`.
+
+**Native grant allocation:** Two distinct Skills chosen from Deception, Stealth, Investigation, Insight, Perception, Persuasion; one Competency chosen from Disguise Kit, Forgery, Thieves' Tools, Calligraphy; one language relevant to intelligence work; the bounded **Intelligence Sources** relationship feature; clothing, notes, ink, a writing instrument, a pouch and **10 gp**.
+
+**Separation:** The Criminal record retains its original mechanical grants and equipment. Its former Spy `suggestedVariants` entry has been removed; covert intelligence work is not presumed unlawful. A character's espionage may still overlap criminal experiences in fiction without mandating inheritance or duplication.
+
+**Pending:** Generic choice execution for multiple distinct skills, competency options, inventory item resolution, and corpus-wide comparison. No special espionage system or automatic false identity was introduced.
+
+See `docs/rewrite/character-origins/pillar3-spy-reconciliation.md` for the source comparison, alternatives, and final approval record.
