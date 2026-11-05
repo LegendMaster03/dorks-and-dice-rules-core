@@ -359,3 +359,15 @@ Detailed source comparison, intermediate alternatives and final approved allocat
 **Not inherited:** Criminal Contact, Spy Intelligence Sources, noble legal rank, upbringing training, 2024 Origin feats, fixed ability changes or automatic criminal allegiance. General duplicate grants, materialized item IDs, feature execution and comparison of the multi-facet Forgery Competency are deferred.
 
 See `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md` for research, comparison and final approval.
+
+
+## Entertainer and Gladiator independently promoted — 2026-11-04
+
+**Owner-approved resolution:** The 2014 Entertainer and its Gladiator variant are reconciled into **independent** native `background.entertainer` and `background.gladiator`; neither inherits the other. The working assumption that both automatically retain the same two tool proficiencies is superseded by the approved origin-role distinction.
+
+- **Entertainer:** Fixed Performance, one of Acrobatics/Deception/Persuasion/Sleight of Hand/Insight, and **one** proficiency chosen between Disguise Kit and a type of Musical Instrument. **By Popular Demand** provides performance-dependent lodging/food and contextual local recognition. One suitable performance item, admirer token, costume, pouch and **15 gp** in ordinary inventory. No language.
+- **Gladiator:** Fixed Performance, one of Athletics/Acrobatics/Intimidation, and **one specific arena weapon proficiency as the replacement for any tool proficiency**. **Arena Performances** provides venue-dependent hospitality/recognition for combat spectacles. One mundane inexpensive matching arena weapon, admirer token, arena costume, pouch and **15 gp** in ordinary inventory. No extra language or tool proficiency.
+- **Historical distinction:** The 2014 Gladiator variant did not explicitly grant weapon proficiency; the native substitution is a deliberate design change. Trident/net are examples, not an exhaustive allowed weapon list.
+- **No automatic upgrades:** Neither grants class maneuvers, all martial weapons, armor, 2024 Musician/other Origin feats, ability changes, or special inherited performer/gladiator upbringing.
+
+**Deferred:** Mixed instrument-versus-disguise choice, weapon-type choice projection, item identity/cost, feature execution, overlap/duplicate grants and relative balance. Full design comparison, approval and prior alternatives: `docs/rewrite/character-origins/pillar3-entertainer-gladiator-reconciliation.md`.
