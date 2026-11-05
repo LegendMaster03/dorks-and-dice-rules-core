@@ -160,3 +160,18 @@ A new Explorer feature must not silently exempt the group from these checks, cha
 **What this refines:** Use `Expedition Survey` **instead of**, not in addition to, `Geographic Recall` as the single Explorer Background feature. The existing candidate Explorer skills (Perception plus one selected Skill), one Navigation-or-Cartography Competency, no extra language, and ordinary expedition equipment remain **unchanged proposals**. The Wilderness-Raised feature, skill choice and community language also remain unapproved.
 
 **Approval still required:** The feature wording, its functional distinction from ordinary navigation skill checks, and both complete origin packages must be approved before native promotion.
+
+
+## Final review: actionable Expedition Survey and approval choices
+
+**Status: recommendation only, not approved.**
+
+**Wilderness-Raised Upbringing candidate:** One formative community language (Common eligible); choose one of Survival, Nature, Animal Handling, Perception, Athletics; Wilderness Provisioning supplies food and fresh water for the character and up to five others when enough resources are accessible and there is a reasonable opportunity to gather. No other Competency or starting equipment is granted by this candidate. Its value is campaign-dependent; omitting a Competency does not prove balance.
+
+**Explorer Background candidate:** Perception plus one of Survival, Investigation, History, Nature, Athletics; choose Navigation or Cartography; no language; expedition journal, map paper, writing tool, traveler's clothes, pouch with 10 gp. The defining feature is Expedition Survey rather than passive Geographic Recall.
+
+**Revised Expedition Survey proposal:** When observing or traversing a distinct area, or studying useful maps or accounts, the Explorer can request one reliable, actionable conclusion supported by the available evidence about visible or recorded terrain, landmarks or routes. Examples include a plausible approach to a visible destination, a reference landmark for orientation, or the relationship between two observed paths. If evidence supports a conclusion, the GM supplies it without a separate check solely to interpret that evidence. If evidence is insufficient, the GM explains that limitation rather than inventing a route or hidden fact. The Explorer can later recall major turns and landmarks of routes personally surveyed without an additional check solely for memory. Ordinary checks for becoming lost, recognizing lost state and selecting a new course still apply when conditions require them. Repeated questions about unchanged observations do not generate unlimited new facts.
+
+**Why this refinement:** The earlier feature risked restating what any trained character could do. An explicit entitlement to one evidence-supported navigational conclusion gives a meaningful first-expedition use without creating map knowledge, general skill bonuses, automatic safe travel, or a competing Hex Crawl procedure. It remains situational and should be playtested.
+
+**Approval needed separately for each package:** Wilderness-Raised name, scope, language, skill choices and six-person provision feature; Explorer's two skills, Navigation/Cartography, no language, field equipment and actionable Expedition Survey. No native JSON, C# or consumer changes are authorized by this note.
