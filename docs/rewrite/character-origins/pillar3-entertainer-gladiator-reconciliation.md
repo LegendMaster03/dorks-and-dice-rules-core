@@ -134,3 +134,23 @@ The choice between a trident and net must use verified native item identities wh
 **Remaining decisions:** Whether to retain both 2014 tool grants for Entertainer, and whether to grant Gladiator one arena weapon proficiency despite its absence from 2014 (or prefer literal source or conservative no-weapon alternatives). These are not trivial phrasing changes: they affect relative Background and class access.
 
 **Nothing in this document approves native `background.entertainer`, `background.gladiator`, new Upbringing, or runtime system changes.** Preserve source evidence and only author selected-native JSON after owner approval.
+
+
+## Design refinement — Gladiator weapon proficiency replaces tool training
+
+**Owner direction (2026-11-04):** The Gladiator's **one arena-weapon proficiency is intended as the tradeoff for not receiving an ordinary tool proficiency**, not an extra proficiency stacked atop mandatory Disguise Kit training. The prior candidate's fixed Disguise Kit + weapon proficiency recommendation above is **superseded**. This discussion refines the proposal but does not constitute final authorization to promote native JSON.
+
+**Revised independent Gladiator candidate:**
+
+- **Fixed Skill:** `skill.performance`.
+- **Second Skill:** Choose one of `skill.athletics`, `skill.acrobatics`, `skill.intimidation`.
+- **One proficiency in place of tool training:** Choose **one specific arena-appropriate weapon type** for proficiency, with the starting weapon normally corresponding to that selection. This is a **single weapon proficiency**, not all martial weapons, additional attacks, a Fighting Style, armor training or another combat-class benefit.
+- **No automatic Disguise Kit, Musical Instrument, other tool proficiency, or language.** An arena costume or persona does not itself confer Disguise Kit expertise.
+- **Feature:** Arena Performances, for venue-appropriate opportunities, conditional hospitality, and recognition.
+- **Starting equipment:** A single appropriate arena weapon, costume, admirer token and pouch containing 15 gp, as ordinary inventory. Final selection must use an actual allowed weapon definition and consider the value of the item. The 2014 trident/net examples are not an exhaustive list or automatic mechanical restriction.
+
+**Entertainer comparison:** The Entertainer candidate keeps fixed Performance, one additional Skill, and a choice of one Musical Instrument proficiency **or** Disguise Kit. Gladiator instead uses the **one selected weapon proficiency** to represent a combat-performance specialty. This is parity of **grant count**, not proven parity of strength: weapon training can affect combat performance while most tool training contributes different utility.
+
+**Compatibility and source note:** This departs intentionally from the literal 2014 Gladiator variant, which did **not** expressly award a weapon proficiency and continued to provide Entertainer's tool proficiencies. The approved native catalog already uses `weaponProficiencies` for fixed weapon grants in certain Upbringings; a **player-selected weapon type** must receive appropriate common choice representation later. Do not infer weapon training from an inventory item, grant a whole weapon category accidentally, or introduce a special Gladiator fighting subsystem.
+
+**Approval still required:** Both independent Backgrounds' complete grants, whether the selected weapon may be any arena-appropriate native weapon subject to a bounded equipment choice, and exact ordinary inventory wording. No native content or runtime code has been authorized.
