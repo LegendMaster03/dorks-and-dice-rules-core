@@ -1,6 +1,6 @@
 # Pillar 3 — Urchin Source to Street-Raised Upbringing Reconciliation
 
-**Status:** Final selection-count proposal for owner review only. Earlier Street-Raised scope, language, training pools and Urban Navigation are **already approved**; the selection counts, native name/ID, and complete selectable package are **not yet approved**. No native Upbringing or Urchin Background is added by this design note.
+**Status:** Street-Raised is approved and authored as a selected-native Upbringing with initial choice counts subject to later balancing. Earlier alternatives and approval-boundary sections are retained as design history; the approved package is recorded at the end. No native Urchin Background is selected.
 
 **Ruleset:** `first-party-001`  
 **Development branch:** `feature/character-origins-pillar3-life-experiences`
@@ -119,3 +119,20 @@ The coexistence of multiple features is ordinary combination, **not inheritance*
 - Preserve the already-approved community language, Urban Navigation, no starting equipment, independent Species/Background compatibility.
 
 **Not approved by this document:** The numeric selection counts, native ID, and promotion of `native/upbringings/street-raised.json`. No new `background.urchin` is proposed. If the owner rejects Model A, evaluate Model B or C without undoing prior approvals.
+
+
+## Approved native Street-Raised allocation — 2026-11-05
+
+**Owner authorization:** Implement **Model A**, choosing **one Skill and one Competency** as the initial native balance baseline, with explicit permission to **change the number of choices during the later corpus-wide balance review**. The previously approved language, Skill and Competency pools, exact Urban Navigation feature, absence of Upbringing equipment, and independence from Background remain unchanged. The public name and native ID are now finalized for initial content: **Street-Raised Upbringing**, `upbringing.street-raised`.
+
+**Native record:** `data/rulesets/first-party-001/native/upbringings/street-raised.json` (`upbringing.street-raised`, `selected-native`, independently selectable).
+
+- **Language:** Learn one language spoken in the formative household/community; Common is eligible where genuinely spoken, but is not mandatory.
+- **One Skill (initial balance count):** Choose exactly one of Stealth (`skill.stealth`), Sleight of Hand (`skill.sleight-of-hand`), Perception (`skill.perception`), Insight (`skill.insight`), Survival (`skill.survival`). Composite Perception training does not independently train Listen/Spot.
+- **One Competency (initial balance count):** Choose exactly one of Disguise Kit (`competency.disguise-kit`), Thieves' Tools (`competency.thieves-tools`), Cooking (`competency.cooking`), Forgery (`competency.forgery`). Existing native competency facets apply, including Forgery's Skill and tool proficiency facets; comparative strength remains under review.
+- **Urban Navigation (previously approved; exact wording retained in native content):** When traveling outside combat through a substantial settlement, you can identify efficient routes through its accessible streets, alleys, and passages. You and companions following your guidance can travel between locations in half the usual time. This benefit does not bypass physical barriers or grant additional movement during combat.
+- **No Upbringing starting inventory** and no automatic criminal contacts, false identities, class benefits, or legacy Urchin biography requirements. Any Species and independent Background may be selected as appropriate.
+- **Balancing flexibility:** The two `choiceCount: 1` values are deliberately provisional **design balance decisions**, not unapproved or invalid content. They may be raised or reduced in the shared Upbringing review. Any change must preserve the approved option pools and feature unless explicitly reconsidered.
+- **Deferred shared integration:** Native choice and language projection, urban traversal execution, composite-Skill semantics, cross-source duplicate training, Forgery's multi-facet strength, and feature frequency/relative power in city-heavy campaigns.
+
+**Source disposition:** The 2014 Urchin is fully reconciled as an Upbringing source; no separate `background.urchin` should be created merely to preserve a historical label. This final approval supersedes earlier statements that selection counts were unapproved. No C# mechanics or Character Sheet changes were authorized by this native content promotion.
