@@ -386,3 +386,19 @@ See `docs/rewrite/character-origins/pillar3-charlatan-reconciliation.md` for res
 **Upbringing boundary:** A future Isolated-Raised Upbringing may represent an unusual formative environment but is **not approved or automatically inherited**. `upbringing.wilderness-raised` is independent and concerns practical provisioning; Hermit also differs from Sage's Researcher and Explorer's Expedition Survey.
 
 **Deferred:** Feature adjudication/projection, Skill selection execution, item identity/materialization, overlaps and relative balance. The complete comparison and approval rationale is at `docs/rewrite/character-origins/pillar3-hermit-reconciliation.md`.
+
+
+## Urchin finalized as native Street-Raised Upbringing — 2026-11-05
+
+**Owner-approved selected-native resolution:** The historical 2014 PHB Urchin is fully redirected to `upbringing.street-raised`, written at `data/rulesets/first-party-001/native/upbringings/street-raised.json`. **There is no separate native `background.urchin`.**
+
+- **Language:** Learn one community/household language, including Common only when used there.
+- **Skill:** Choose **one** from Stealth, Sleight of Hand, Perception, Insight or Survival.
+- **Competency:** Choose **one** from Disguise Kit, Thieves' Tools, Cooking or Forgery. Existing reviewed Competency facets apply; Forgery includes the established Skill and tool facets.
+- **Urban Navigation:** While traveling outside combat through a substantial settlement, the character and guided companions take **half the usual travel time** along accessible streets, alleys and passages; no bypass of physical barriers or combat movement bonus.
+- **Equipment:** No separate Upbringing starting inventory. The original Urchin items and 10 gp are historical evidence, not automatic starting possessions.
+- **Origins:** Independent of Species and later Background; no required poverty, orphanhood or criminal conduct.
+
+**Balancing permission:** The current **one Skill + one Competency** selection counts are approved for native implementation as an initial baseline, and may be adjusted in the broader cross-Upbringing balancing pass. Earlier unresolved-count and not-yet-native statements in this document are **superseded** for Street-Raised only. The already approved pools, language and Urban Navigation are not reopened.
+
+**Deferred:** Generic choice projection, duplicate training, Forgery facet balance, travel integration and comparative feature strength. Decision analysis: `docs/rewrite/character-origins/pillar3-urchin-street-raised-reconciliation.md`.
