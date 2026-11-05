@@ -1,6 +1,6 @@
 # Pillar 3 — Hermit: Seclusion, Upbringing and Discovery Reconciliation
 
-**Status:** 2014 source comparison and design proposals only. The Hermit Background and any Isolated-Raised Upbringing are **not approved**; no native JSON, C# or consumer changes are authorized by this document.
+**Status:** The independent Hermit Background is approved and authored as native content. Earlier alternatives and pre-approval boundaries remain below as decision history; the approved allocation is recorded at the end. Isolated-Raised Upbringing remains unapproved.
 
 **Ruleset:** `first-party-001`  
 **Development branch:** `feature/character-origins-pillar3-life-experiences`
@@ -138,3 +138,17 @@ No native Upbringing or new general social-isolation subsystem is authorized by 
 **Alternative requiring owner choice:** Model B retains a single choice between Herbalism Competency and an additional language and can be paired with the same flexible Skills and feature. Model A is exact 2014 training but imposes a monastic healer archetype.
 
 **Approval boundary:** The comparison and recommendation are **not** approval of `background.hermit`. No native record should be created before explicit owner approval. Discovery's information binding and future choice projection require common consumer integration; no separate secret-reveal subsystem is introduced.
+
+
+## Approved native Hermit allocation — 2026-11-05
+
+**Owner-approved and selected-native:** `background.hermit` at `data/rulesets/first-party-001/native/backgrounds/hermit.json`. The owner approved **Model C** as presented: flexible seclusion Skills, no automatic herbalism or learned language, genuine bounded Discovery, and ordinary starting equipment. This supersedes the preceding “Owner decision needed” and unapproved Hermit proposal language without approving any Isolated-Raised Upbringing.
+
+- **Skill training:** Choose **two distinct** from Medicine (`skill.medicine`), Religion (`skill.religion`), Nature (`skill.nature`), Survival (`skill.survival`), Arcana (`skill.arcana`), History (`skill.history`), Investigation (`skill.investigation`) and Insight (`skill.insight`). The original fixed 2014 Medicine/Religion pair is an eligible combination but not compulsory.
+- **Other training:** None automatically. No `competency.herbalism`, new language, vehicle qualification, additional Skill or spellcasting is assumed by this Background. This is an intentional source deviation.
+- **Feature — Discovery:** Establish with the GM **one meaningful, genuine prior finding** made during sustained seclusion. The agreed truth is already known; an ordinary knowledge check is not needed merely to rediscover it. Interpretations and undiscovered implications remain uncertain. Discovery neither generates additional secrets on request nor grants items, spells, rights, instant plot solutions or unrestricted world lore. Define the finding before invoking it, ideally during character creation.
+- **Ordinary starting possessions:** Personal notes in a scroll case **or** notebook; a winter blanket or comparable modest bedding; common/practical clothes; **one GM-agreed ordinary personal item** associated with seclusion, without guaranteed market value, training or unusual effects; and **5 gp**. All are ordinary inventory. A Herbalism Kit or relic is not automatically provided.
+- **Origin independence:** The period of withdrawal can occur at any stage of life and can be solitary or within a secluded community. No religious affiliation, specific Species, childhood isolation, social disadvantage, poverty or other Upbringing is required. **Isolated-Raised remains a separate unapproved Upbringing candidate.**
+- **Deferred common work:** Two-distinct-Skill choice execution, discovery information projection, equipment identity/materialization, cross-package duplicate grants, comparison of Discovery's usefulness across campaigns, and general corpus balance.
+
+**Implementation scope:** Only selected-native JSON and its decision documentation were changed. No C# executor, separate secret-generation subsystem, Character Sheet integration or automatic Isolated-Raised content was authorized.
