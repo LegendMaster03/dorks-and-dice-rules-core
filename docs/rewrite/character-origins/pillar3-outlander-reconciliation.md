@@ -1,6 +1,6 @@
-# Pillar 3 — Outlander Background and Wilderness Upbringing Reconciliation
+# Pillar 3 — Outlander Source Reconciliation: Wilderness Upbringing and Explorer Background
 
-**Status:** Source-backed first-pass design proposal. **No native Outlander Background or additional Upbringing is approved or promoted by this document.**
+**Status:** Source review and revised working direction. Following owner feedback, **Outlander is being reconsidered as an Upbringing**, with **Explorer** as a potential separate Background. This is a design revision under discussion, not an approval of a final grant package; no native content has been promoted.
 
 **Ruleset:** `first-party-001`  
 **Development branch:** `feature/character-origins-pillar3-life-experiences`
@@ -130,3 +130,61 @@ Do not introduce separate mechanical variants for each role merely to recreate t
 **No native content is authorized yet.** Approve or amend fixed Athletics/Survival, the Musical Instrument choice (Model A) versus an adaptable Competency choice (Model B), one travel-linked language, Wanderer's memory/food-and-water wording and six-person limit, and source-shaped equipment with a nonmandatory trophy before authoring `native/backgrounds/outlander.json`.
 
 No new `upbringing.wilderness-community`, `upbringing.rural-community`, or `upbringing.itinerant-community` is authorized. Their formative scopes are research hypotheses only; counts and features must be separately approved. No new shared skill or travel systems, consumer runtime code, or automatic grants are introduced in this reconciliation.
+
+
+## Revised design direction — 2026-11-04: Outlander as Upbringing, Explorer as Background
+
+**Owner feedback:** The 2014 Outlander source is better suited to **Upbringing**, potentially accompanied by a separate **Explorer Background**. This supersedes the earlier recommendation to select a native Outlander Background immediately. The earlier mechanics comparisons remain source evidence, not current proposals for approval.
+
+### New division of responsibilities — proposed, not yet approved
+
+| Element | Outlander / Wilderness-Raised Upbringing candidate | Explorer Background candidate |
+| --- | --- | --- |
+| Central cause | Formative life in a wilderness or remote community; learned practices, language and local environmental familiarity | Sustained exploration, charting, expeditions, field surveying, or route-finding through unfamiliar locations |
+| Species | Any Species; no special ancestry or biology implied | Any Species and any Upbringing |
+| Learned Skills | Skill or choice-pool options reflecting childhood experience (e.g., Survival, Nature, Animal Handling, Perception, Athletics); **counts unsettled** | Learned field/expedition skills; specific fixed-versus-choice grants **unsettled** |
+| Competencies | Formative practical tradition as appropriate (e.g., Cooking, Herbalism, Navigation, or Musical Instrument); no requirement that every remote community teaches the same instrument | Fieldwork/navigation/cartography as appropriate, independently reconciled |
+| Language | One language learned within the formative household/community, including Common when suitable | Any language gained through the later role requires a separate justification and approval |
+| Defining feature | Environmental familiarity and practical provisioning from upbringing, if approved | Expedition-specific route assessment, recording or preparation, **not** an automatic copy of Wanderer |
+| Starting equipment | No automatic Background starting kit merely for having this Upbringing | Ordinary adventuring/field equipment determined with the eventual Background package |
+| Cultural assumption | Not one universal wilderness culture, ethnicity, species, poverty status, or nomadic lifestyle | No requirement to have grown up outdoors or to have been wilderness-raised |
+
+**Naming:** The historical **Outlander** label might be retained as the Upbringing name, but **Wilderness-Raised** or **Wilderness Community** is arguably clearer: "outlander" describes an outsider relative to someone else, whereas a formative environment is the intended mechanical cause. Do not finalize the native ID or name from this discussion alone.
+
+**Important nuance:** A child may grow up in remote surroundings without learning to supply a six-person expedition every day, while an adult explorer may acquire exactly that capability through field work. The historical Wanderer feature therefore does **not** automatically transfer wholesale to the Upbringing without examining its two functions.
+
+### Reconcile the two functions of Wanderer rather than duplicating it
+
+The 2014 source combines:
+
+1. **Geographical memory:** Recall broad layouts and features of terrain and places.
+2. **Provisioning:** Obtain food and water for oneself plus **up to five others**, conditional on genuinely sufficient resources.
+
+**Potential separation:** Environmental/resource familiarity and community-learned foraging favor the formative Upbringing. Broad familiarity with expedition routes, maps and areas studied through professional travel favors Explorer. But a character's actual learned experiences may overlap those causes. Do not assign both full six-person provisioning or universally accurate geographical recall to both components; nor should one component's name prevent a character from learning similar capabilities through ordinary play.
+
+**Balance concern:** Automatic daily food and water for six characters is mechanically substantial compared with the currently variable native Upbringings. If that full feature is moved to an Upbringing, compare the **complete Species–Ancestry–Upbringing combinations** and cross-cultural substitutions before approval; do not impose a numerical budget solely because a feature originated as a 2014 Background.
+
+**Different possible approach:** Keep the original combined Wanderer as a single Outlander Upbringing feature and design Explorer around a different expeditions feature. This is simpler and closer to the user's suggested source-to-Upbringing conversion, but would need its strength and general applicability evaluated. No option is yet selected.
+
+### Explorer should not be a renamed Outlander
+
+An **Explorer** could investigate ruins, undertake expeditions, chart seas, survey deserts or forests, discover old roads, or travel between distant cultures. The defining experience is **deliberate exploration**, not necessarily wilderness upbringing or proficiency with a particular instrument.
+
+Possible feature directions to test include **Expedition Planning**, **Route Survey**, or another bounded practical exploration benefit. The feature must have a concrete effect distinct from:
+
+- `background.sage` **Researcher** (finding where knowledge can be sourced).
+- `background.sailor` **Ship's Passage** (finding fare-free voyage arrangements).
+- Street-Raised Upbringing's approved **Urban Navigation** (faster passage through accessible settlement routes).
+- Any wilderness upbringing's local familiarity/foraging (learned formative practice).
+
+Avoid a generic "you know where to look for information" restatement of Researcher, or an indefinite automatic bypass of hazards, map fog, wilderness checks, or supply limits.
+
+### Next decisions
+
+1. Determine whether the Upbringing is called **Outlander**, **Wilderness-Raised**, or **Wilderness Community**, and what formative experiences qualify.
+2. Decide which, if any, of the 2014 **Wanderer** effects belong to it: the combined feature, environmental provisioning only, or a different suitably scoped learned benefit.
+3. Independently develop **Explorer** and compare its skill, tool, travel-feature and starting-equipment package. Do not assume it inherits original Outlander starting equipment or the two fixed Skills.
+4. Consider future Rural Community and Itinerant Community Upbringings separately; their boundaries should not require every nomad or farmer to use Wilderness-Raised.
+5. Keep all proposals unselected until individually approved, with corpus-wide duplication and balance review still outstanding.
+
+**Current authorization:** Update the design record only. Do not create `native/backgrounds/outlander.json`, `native/backgrounds/explorer.json`, or any new native Upbringing, and do not change already approved content based on this direction alone.
