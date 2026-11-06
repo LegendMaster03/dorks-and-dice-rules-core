@@ -1,16 +1,16 @@
 # Dorks & Dice — Rules Core
 
-Rules Core is the headless rules-content service and future mechanical
-execution engine for the Dorks & Dice tabletop system. Rules Wiki is a separate
-user-facing application: https://github.com/LegendMaster03/dorks-and-dice-rules-wiki.
+Rules Core is the headless native rules-content and mechanics service for the
+Dorks & Dice tabletop system. Rules Wiki is a separate user-facing application:
+https://github.com/LegendMaster03/dorks-and-dice-rules-wiki.
 
-## Rewrite status
+## Architecture and development status
 
-The rewrite branch integrates Phase 1A/1B, the Phase 2 native catalog, and the
-Phase 3A private Wiki read API. The isolated Phase 3B development branch adds
-a separate native-first public consumer API that requires an explicit reviewed
-package fingerprint before any definitions are anonymously distributed.
-The earlier implementation on main is historical reference, not a second runtime.
+`main` contains the native catalog, private Wiki reference API, and native-first
+consumer/mechanics contracts. The first-party ruleset remains under active
+revision: implemented mechanics are available through those contracts, while
+unsupported behavior must be reported as unresolved rather than guessed.
+The retired legacy `/api/rules` service is not a second active runtime.
 
 The initial ruleset identifier is first-party-001. The approved content source
 is exclusively data/rulesets/first-party-001/native/. Content in working/ is
@@ -18,9 +18,11 @@ inert and never a fallback. Reference evidence and conversions are not loaded
 as native rules. Controlled promotion into native/ establishes approval; the
 runtime has no per-rule publication allowlist or approval detector.
 
-The current native package consists of six JSON files and 35 playable
-definitions. Phase 1A migration evidence is preserved separately. Native data
-updates do not require recompilation of RulesCore.Content or RulesCore.Host.
+The native package is an evolving collection of source-neutral JSON definitions
+organized beneath `native/`. Its contents and counts should be inspected in the
+repository rather than treated as a fixed phase milestone. Earlier phase
+migration evidence is preserved separately. Native data updates do not require
+recompilation of RulesCore.Content or RulesCore.Host.
 
 ## Manual deployment
 
@@ -79,5 +81,6 @@ docs/rewrite/phase-3a-native-private-reference-api.md for the private Wiki bound
 and docs/rewrite/phase-3b-native-public-consumer-api.md for public DTOs,
 distribution policy, consumer migration, and Phase 4 release gates.
 
-No deployment, merge to the rewrite branch, consumer exposure or production
-cutover is authorized by this phase.
+Historical phase documents under `docs/rewrite/` describe earlier implementation
+checkpoints. They do not supersede the current repository tree, API contracts,
+or the manual deployment workflow.

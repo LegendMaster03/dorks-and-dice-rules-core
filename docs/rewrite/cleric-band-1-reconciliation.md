@@ -1,6 +1,6 @@
 # Cleric — Band 1 native reconciliation (implemented)
 
-**Approval:** User authorized the previously proposed full-list spell access, unified Channel Divinity effects, and dual Divine Intervention on 2026-10-19. **Scope:** Cleric class levels 1–20 only; no domains, subclasses, prestige classes or Band 2 rules.
+**Decision (2026-10-19):** The project owner approved full-list spell access, unified Channel Divinity effects, and dual Divine Intervention. **Scope:** Cleric class levels 1–20 only; no domains, subclasses, prestige classes or Band 2 rules.
 
 ## Source and policy
 
@@ -11,7 +11,7 @@
 
 ## Native progression and grants
 
-`data/native/classes/base/cleric.json` is the source-neutral authority. It contains levels 1–20, modern full nine-spell-level slot progression, at-will Cleric cantrips following SRD 5.x (3/4/5 at class levels 1/4/10), historical 3/4 BAB with optional iterative procedure, strong Fortitude/Will and poor Reflex 3.x saves, and modern Wisdom/Charisma save proficiencies.
+`data/rulesets/first-party-001/native/classes/base/cleric/cleric.json` is the source-neutral authority. It contains levels 1–20, modern full nine-spell-level slot progression, at-will Cleric cantrips following SRD 5.x (3/4/5 at class levels 1/4/10), historical 3/4 BAB with optional iterative procedure, strong Fortitude/Will and poor Reflex 3.x saves, and modern Wisdom/Charisma save proficiencies.
 
 | Level | Unconditional base-class grants and improvements (excluding subclasses/domains) |
 | --- | --- |

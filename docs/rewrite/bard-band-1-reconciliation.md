@@ -1,6 +1,6 @@
 # Bard — Band 1 base-class reconciliation (approved and implemented)
 
-**Scope:** Unified Dorks & Dice Bard class levels 1–20, before subclasses, prestige classes, and Band 2. **Status:** the user authorized implementation of the four proposed rulings (2026-10-19). Bard Band 1 is implemented in native source-neutral class and feature records. Runtime execution and complete consumer integration remain separate tasks.
+**Scope:** Unified Dorks & Dice Bard class levels 1–20, before subclasses, prestige classes, and Band 2. **Decision (2026-10-19):** The project owner approved implementation of the four proposed rulings. Bard Band 1 is implemented in native source-neutral class and feature records. Runtime execution and complete consumer integration remain separate tasks.
 
 ## Approved foundational identity (2026-10-19)
 
