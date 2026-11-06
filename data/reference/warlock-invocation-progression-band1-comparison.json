@@ -73,7 +73,7 @@
       "id": "no-level-1-invocation",
       "levelOneElectiveInvocations": 0,
       "status": "balance-counterfactual-only-not-current-testing-model",
-      "reason": "May avoid granting a separate Pact and elective Invocation at level 1; user explicitly retained the earlier one-point hybrid."
+      "reason": "May avoid granting a separate Pact and elective Invocation at level 1; the provisional initial-testing design retains the earlier one-point hybrid."
     }
   ],
   "levels": [
