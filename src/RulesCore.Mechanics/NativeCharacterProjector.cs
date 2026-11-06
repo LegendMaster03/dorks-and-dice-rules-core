@@ -27,6 +27,9 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
         var resources = new List<NativeResource>();
         void Issue(string code, string path, string detail) => issues.Add(new(code, path, detail));
 
+        // Version identity pins the calculation to this immutable catalog. A
+        // fingerprint mismatch invalidates the projection, not the caller's
+        // authorization to access the service.
         if (!string.Equals(request.RulesetId, catalog.RulesetId, StringComparison.Ordinal) ||
             !string.Equals(request.Fingerprint, catalog.Fingerprint, StringComparison.Ordinal))
         {
@@ -388,6 +391,8 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
             Issue("class-derived-results-withheld", "advancements",
                 "Features, resources, and choices depend on the rejected advancement history.");
         }
+        // Without an approved multiclass combination rule, do not present
+        // independent class spell-slot pools as one valid character resource.
         if (spellcasters > 1)
         {
             resources.RemoveAll(r => r.Id.StartsWith("resource.spell-slot.", StringComparison.Ordinal));
@@ -426,6 +431,8 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
             return new NativeResource(id, maximum, current, recovery, spellLevel);
         }
 
+        // Only catalog identities of the requested training kind are accepted;
+        // display names and similarly named cross-category records are not rules.
         void ProjectSkillGroup(string prefix,
             IReadOnlyDictionary<string, NativeSkillTraining>? training, int? prof)
         {
