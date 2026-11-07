@@ -1,5 +1,31 @@
 # Rules Core API boundaries
 
+> **Documentation status:** The native rewrite has replaced the former resolved-rule host. This document preserves the earlier multi-API design and several durable private-tunnel security principles, but its historical `/api/rules`, `/api/wiki`, `Compatibility`, and `Combined` descriptions are **not current API or deployment instructions**. For current operations use [the documentation map](README.md) and the executable endpoint definitions under `src/RulesCore.Host/`.
+
+## Current native transport boundaries
+
+The native host is configured with `RulesCore:ApiSurface`. It accepts only `PublicOnly` (default) or `PrivateOnly`; unknown, numerical, and retired compatibility values are rejected at startup. These are separate ingresses, not a fallback API that preserves the earlier resolved-rule host.
+
+| Surface | Native routes | Authentication |
+| --- | --- | --- |
+| PublicOnly | `GET /api/rulesets` and its native ruleset/rule reads | Anonymous only when the explicit native distribution policy permits the snapshot |
+| PublicOnly | `GET /api/consumer/v1/rulesets` and its native ruleset/rule reads | Signed-in Site-issued target ticket; fingerprint changes do not revoke user authorization |
+| PublicOnly | `/api/mechanics/v1/*` | Site-issued ordinary tool/mechanics ticket; no anonymous mechanics access |
+| PrivateOnly | `GET /api/private/rulesets` and its native ruleset/rule reads | Source-bound private-tunnel target ticket validated by Rules Core |
+| PrivateOnly | `/api/private/mechanics/v1/*` | Source-bound private-tunnel target ticket validated by Rules Core |
+
+Only the private mechanics surface exposes the additional native character-catalog reads that require its stricter source-scoped boundary. The shared mechanics surface returns supported calculations and option summaries rather than unrestricted source definitions. Both surfaces use the active immutable native snapshot and return explicit errors for unsupported operations.
+
+Rules Wiki uses a **named-operation allowlist** in its own backend and calls Rules Core directly over a private pair-specific network. Site supplies normal authentication and issues/exchanges short-lived target tickets but does not proxy the Rules Wiki/Core data request. Ordinary delegation does not satisfy private-tunnel provenance. Source grants and domain authorization remain independent of transport reachability.
+
+These contracts are established by `RulesCoreApplication`, `RulesCoreSettings`, `NativePublicEndpoints`, `NativeReferenceEndpoints`, and `NativeMechanicsEndpoints`. There is no runtime `/api/rules` fallback, and a catalog fingerprint is a version identifier rather than access permission.
+
+---
+
+## Historical resolved-rule API design (retained for provenance)
+
+The remainder of this document describes the former compatibility migration and resolved-rule architecture. Present-tense wording below belongs to that **historical design**, not to the current native host.
+
 Rules Core has two deliberately separate HTTP surfaces:
 
 1. a stable public consumer API for ordinary Dorks & Dice Tools and independent Rules Core consumers; and
@@ -15,7 +41,7 @@ The central invariants are:
 
 These are standing architectural rules. A capability needed only by Rules Wiki must not be added to the public Rules Core API merely because Rules Wiki needs an HTTP contract. Promotion of a private capability to the public API requires a separately reviewed consumer need outside the private integration.
 
-## Migration activation
+## Migration activation (historical; superseded)
 
 The boundary implementation is intentionally deployable before Rules Wiki is migrated. `RulesCore:ApiSurface` defaults to `Compatibility`, which preserves the current API reachability and ordinary delegation behavior so merging the foundation does not break the live Wiki.
 
@@ -27,7 +53,7 @@ The hardened modes are:
 
 The coordinated Rules Wiki migration activates `PublicOnly` on the shared Rules Core ingress and `PrivateOnly` on the pair-specific Rules Wiki -> Rules Core ingress. `Compatibility` is a migration state, not the final architecture.
 
-## 1. Stable public consumer API
+## 1. Former resolved public consumer API
 
 The public API exists for Character Sheet, Block Initiative, Hex Crawl, future game Tools, and other consumers that do not have a private integration with Rules Core.
 
@@ -46,7 +72,7 @@ When a hardened API-surface mode is active, the transport boundary is private-by
 
 This protects the stable public contract from accidental expansion to satisfy first-party UI needs.
 
-## 2. Private first-party API
+## 2. Earlier private first-party API design
 
 Rules Core owns the semantic read/write models used by Rules Wiki. Those contracts are private Rules Core interfaces and are not part of the stable public compatibility promise.
 
@@ -143,7 +169,7 @@ Administrative source import and control-plane capabilities remain Rules Core do
 
 `/api` remains service metadata.
 
-## 6. Hosting and health API
+## 6. Former hosting and health API notes
 
 - `/health` is the process health endpoint.
 - `/ready` verifies Rules Core PostgreSQL readiness.
