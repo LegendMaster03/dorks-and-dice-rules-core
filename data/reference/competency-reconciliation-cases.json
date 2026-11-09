@@ -31,8 +31,7 @@
         "competency": "competency.alchemy",
         "singleNativeTrainingProfile": true,
         "nativeProficiency": "binary",
-        "nativeLevel": "progressive",
-        "historicalSourceProfilesPreservedAsEvidence": true
+        "nativeLevel": "progressive"
       }
     },
     {
@@ -47,8 +46,7 @@
       "expect": {
         "competency": "competency.forgery",
         "noSeparateNativeSkill": "skill.forgery",
-        "associatedTool": "Forgery Kit",
-        "historicalSkillPreservedInWorking": true
+        "associatedTool": "Forgery Kit"
       }
     },
     {
@@ -71,8 +69,7 @@
           "competency.weaponsmithing"
         ],
         "weaponOrArmorManufacture": "use-applicable-method-competency",
-        "itemSpecificModifiers": "not-assigned",
-        "historicalSourceProfilesPreservedAsEvidence": true
+        "itemSpecificModifiers": "not-assigned"
       }
     },
     {
@@ -93,7 +90,6 @@
           "competency.woodcarving"
         ],
         "selection": "by-recipe-and-activity",
-        "historicalSourcePreserved": true,
         "automaticLevelConversion": false,
         "bowSpecificModifiers": "not-assigned"
       }
@@ -117,7 +113,6 @@
         "detection": "applicable-detection-mechanics",
         "disarming": "applicable-tool-skill-or-feature",
         "magicalTrap": "spell-or-specific-feature-as-required",
-        "historicalSourcePreserved": true,
         "automaticLevelConversion": false,
         "automaticProficiencyTransfer": false,
         "trapDesignBonus": "not-assigned"
@@ -136,7 +131,6 @@
         "componentConstruction": "applicable-crafting-method-and-future-vessel-rules",
         "componentRepair": "applicable-tools-by-material-and-vessel-rules",
         "shipDesign": "deferred",
-        "historicalSourcePreserved": true,
         "automaticLevelConversion": false,
         "automaticProficiencyTransfer": false,
         "shipwrightModifiers": "not-assigned",
