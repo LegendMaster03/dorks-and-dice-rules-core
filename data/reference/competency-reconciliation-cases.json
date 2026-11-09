@@ -20,7 +20,7 @@
     },
     {
       "id": "craft-alchemy-tool",
-      "kind": "native-crafting-tool-competency",
+      "kind": "native-crafting-competency",
       "input": {
         "sourceMechanics": [
           "Craft (alchemy)",
@@ -29,8 +29,26 @@
       },
       "expect": {
         "competency": "competency.alchemy",
-        "sameLearnedTrainingIdentity": true,
-        "separateNumericProfiles": true
+        "singleNativeTrainingProfile": true,
+        "nativeProficiency": "binary",
+        "nativeLevel": "progressive",
+        "historicalSourceProfilesPreservedAsEvidence": true
+      }
+    },
+    {
+      "id": "forgery-unified-native",
+      "kind": "native-single-competency",
+      "input": {
+        "sourceMechanics": [
+          "Forgery (historical skill)",
+          "Forgery Kit"
+        ]
+      },
+      "expect": {
+        "competency": "competency.forgery",
+        "noSeparateNativeSkill": "skill.forgery",
+        "associatedTool": "Forgery Kit",
+        "historicalSkillPreservedInWorking": true
       }
     },
     {
@@ -151,16 +169,18 @@
     },
     {
       "id": "craft-family",
-      "kind": "crafting-competency-facet",
+      "kind": "historical-craft-family-source",
       "input": {
         "family": "Craft"
       },
       "expect": {
-        "competencyFamily": "crafting",
-        "ability": "intelligence",
-        "usesRanks": true,
-        "trainedOnly": false,
-        "childRankState": "independent"
+        "historicalCompetencyFamily": "crafting",
+        "historicalAbility": "intelligence",
+        "historicalUsesRanks": true,
+        "historicalTrainedOnly": false,
+        "nativeCompetenciesIndividuallyTrainable": true,
+        "nativeAbilityResolution": "per-activity",
+        "nativeLevelScale": "pending-reconciliation"
       }
     },
     {
