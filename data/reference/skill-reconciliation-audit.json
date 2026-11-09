@@ -54,9 +54,9 @@
     {
       "name": "Disable Device",
       "disposition": "split-by-activity",
-      "nativeCompetency": "competency.security-bypass",
-      "scope": "physical-security-trap-disarming-only",
-      "notes": "General mechanism sabotage or repair uses an applicable method such as Tinkering or Locksmithing. No blanket conversion of old Disable Device ranks."
+      "nativeCompetency": "competency.trap-disarming",
+      "scope": "applicable-trap-disarming-and-safe-bypass",
+      "notes": "Trap Disarming is distinct from Lockpicking and trap detection. General mechanism sabotage or repair uses an applicable method; no blanket conversion of historical Disable Device ranks."
     },
     {
       "name": "Disguise",
@@ -128,9 +128,9 @@
     {
       "name": "Open Lock",
       "disposition": "native-competency",
-      "nativeCompetency": "competency.security-bypass",
+      "nativeCompetency": "competency.lockpicking",
       "scope": "lockpicking",
-      "notes": "Security Bypass is the learned capability; Thieves' Tools remain equipment, not a separate advancement track."
+      "notes": "Lockpicking is a separate trained competency; Thieves' Tools are associated equipment, not independent training."
     },
     {
       "name": "Perform",
