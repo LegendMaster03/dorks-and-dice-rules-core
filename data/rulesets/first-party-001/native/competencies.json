@@ -46,17 +46,6 @@
       }
     },
     {
-      "id": "competency.bowmaking",
-      "name": "Bowmaking",
-      "kind": "competency",
-      "profile": {
-        "proficiency": "binary",
-        "level": "progressive",
-        "levelScale": "pending-reconciliation",
-        "abilityResolution": "per-activity"
-      }
-    },
-    {
       "id": "competency.brewing",
       "name": "Brewing",
       "kind": "competency",
