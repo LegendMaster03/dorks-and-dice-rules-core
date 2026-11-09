@@ -5,7 +5,7 @@
 
 ## Current accepted native baseline
 
-- The native catalog has **28** competencies. `competency.smithing` is the single native Smithing competency with Smith's Tools as associated equipment. The prior native Blacksmithing identity and independent Armorsmithing/Weaponsmithing entries have been retired.
+- The native catalog has **27** competencies. `competency.smithing` is the single native Smithing competency with Smith's Tools as associated equipment. The prior native Blacksmithing identity and independent Armorsmithing/Weaponsmithing entries have been retired.
 - Crafting competencies generally describe a learned method or discipline. Weapon and armor manufacture are item categories whose procedures may involve Smithing or other relevant competencies; the items do not create an additional competency level. Conditional item-specific modifiers remain possible but unassigned.
 - Every native competency has a single provisional `profile` containing proficiency and a level. The historical Craft/tool facets remain in `working/` and reference material, not in the native definition. A level scale or evaluation formula has **not** been selected.
 - **Forgery:** the former historical `skill.forgery` is represented by `competency.forgery` in the native ruleset. `working/skills.json` retains the source entry for conversion; no second native skill or independently tracked training is created.
@@ -28,7 +28,7 @@
 | --- | --- | --- | --- |
 | Tinkering; Locksmithing; historical Trapmaking | Tinkering and Locksmithing are independent native methods. Trapmaking was retired from the native catalog because traps span mechanical, structural, improvised, and magical construction. | Preserve applicable method-based competencies and historical Craft (trapmaking) evidence; no automatic transfer of training or levels | Whether trap design deserves scoped conditional features remains open |
 | Carpentry; Woodcarving; historical Bowmaking | Carpentry and Woodcarving are distinct retained methods. Bowmaking is retired from the native catalog; historical Craft (bowmaking) remains source evidence | Preserve Carpentry and Woodcarving; evaluate bow manufacture by the applicable method and recipe | How should imported Bowmaking ranks or a bowyer feature be represented without automatic level conversion? |
-| Carpentry; Shipmaking | Shipbuilding combines methods, materials, planning and coordinated labor. The historical Craft (shipmaking) is a separate 3.5e rank track, but 5e's Shipwright background uses Carpenter's Tools and water-vehicle proficiency for hull repairs and operation | **Shipmaking classification deferred**; retain its native identity until the separate naval construction reconciliation, with naval design expertise a later question | Is the design/engineering knowledge sufficiently independent to merit a later competency or scoped feature? |
+| Carpentry; historical Shipmaking | Shipbuilding involves materials, planning, and coordinated trades. Historical Craft (shipmaking) is retained in `working/`, while native Shipmaking is retired; *VoidSea* associates component repairs with material-appropriate tools | **Approved retirement** of the native item-output identity; retain naval design and ship construction as separate future subsystem work | Does ship design justify scoped expertise or another learned capability later? |
 | Alchemy; Herbalism; Poisoning | Different applications overlap in substances and methods; neither herbalism nor poisoning is universally a subdiscipline of alchemy | Preserve independent identities | Can recipes establish scoped prerequisites or substitutions? |
 | Leatherworking; Cobbling | Footwear can be leatherwork, but cobbling need not cover all leatherwork, and footwear can use nonleather materials | Preserve independent identities | Is task-scoped overlap useful for repairs or manufacture? |
 | Cooking; Brewing | Both concern consumable production, but neither is necessarily a specialization of the other | Preserve independent identities | Would a culinary taxonomy provide navigation without rank transfer? |
@@ -39,9 +39,9 @@ The purpose of this review is to avoid inventing new general-purpose umbrella co
 
 **Use Rope review:** `skill.use-rope` remains a native Skill. Moving it to a competency or removing it entirely is under consideration, not approved. Ordinary rope tasks and specialized ropework should be evaluated separately before changing the catalog.
 
-## Manufacturing method versus output review — Bowmaking and Trapmaking approved; Shipmaking deferred
+## Manufacturing method versus output review — Bowmaking, Trapmaking, and Shipmaking approved
 
-**Status:** Bowmaking and Trapmaking retirements approved and reflected in the 28-entry native catalog. Shipmaking remains in the catalog; its classification is deferred to a later review of Loot Tavern's naval construction system. Cobbling remains retained.
+**Status:** Bowmaking, Trapmaking, and Shipmaking retirements approved and reflected in the 27-entry native catalog. Detailed naval construction and component mechanics remain deferred; Cobbling remains retained.
 
 ### Classification criterion
 
@@ -54,7 +54,7 @@ Crafting competencies describe an independently meaningful craft, technique, or 
 | Competency | Assessment | Proposed next step |
 | --- | --- | --- |
 | **Bowmaking** | Product-focused historical Craft specialty; Loot Tavern assigns ordinary wooden bow manufacture to appropriate woodworking tools. | **Approved retirement** from native competencies. Select a crafting method such as Carpentry or Woodcarving by activity and recipe; retain historical identity in `working/`. Bow-specific benefits remain possible but are not defined. No automatic rank conversion. |
-| **Shipmaking** | A completed vessel is a large multi-material project, not one fabrication method; 3.5e treats Craft (shipmaking) as a separate rank track while 5e's Shipwright background relies on Carpenter's Tools and water-vehicle proficiency. | **Defer the identity decision.** *VoidSea* models modular components, upgrades and repairs but does not establish a distinct Shipmaking proficiency or self-contained ship-construction procedure in the reviewed beta. Do not infer Navigation or Profession (Sailor) grants shipbuilding qualification. |
+| **Shipmaking** | A vessel is a multi-material project rather than a single fabrication method. Historical 3.5e Craft (shipmaking) remains source evidence, while *VoidSea* has material-appropriate component repair tools and naval perks without separate Shipmaking proficiency. | **Approved retirement** as an independent native competency. Applicable crafting disciplines remain available; ship design, naval construction, and specialized features are separate future reconciliation questions. |
 | **Cobbling** | Recognizable footwear construction, fitting, and repair craft. Loot Tavern expressly associates footwear with Cobbler's Tools. | **Retain provisionally**; no basis yet to collapse into Leatherworking |
 | **Trapmaking** | Traps span different materials and methods. 3.5e has specific Craft (trapmaking) rules for mechanical traps, while 5e Thieves' Tools and Loot Tavern's Trapper features cover placing or constructing traps without a second general Trapmaking proficiency. | **Approved retirement** as a universal native manufacturing competency. Preserve historical construction rules as evidence and allow separately defined, conditional trap-engineering benefits when approved. Construction, placement, detection and disarming remain distinct activities. |
 
@@ -91,7 +91,7 @@ This differs from a total removal of trap-creation expertise. The source evidenc
 
 ### Shipmaking — cross-system analysis
 
-**Disposition: deferred, not approved for retirement.** `competency.shipmaking` remains a native competency in the 28-entry catalog. Ship construction and its interface with competencies are explicitly outside the scope of this reconciliation.
+**Disposition: approved retirement, reflected in native JSON.** `competency.shipmaking` is absent from the 27-entry native catalog. Detailed ship construction and its interface with crafting are outside the scope of this reconciliation.
 
 | Source | Source-supported mechanics | Consequence for native design |
 | --- | --- | --- |
@@ -112,9 +112,9 @@ This differs from a total removal of trap-creation expertise. The source evidenc
 | **Repair a vessel** | Appropriate method and tool; historical Shipwright background provides a scoped hull-repair benefit | General repair and the special background feature are not automatically identical |
 | **Navigate or operate a vessel** | Navigation and the relevant Skills, tools, and vehicle-training permissions | Route finding, piloting, and vessel construction are separate capabilities; native Profession (Boater/Sailor) does not determine construction level |
 
-#### Deferred classification and scope boundary
+#### Approved classification and scope boundary
 
-**Keep `competency.shipmaking` unchanged in the native catalog pending a separate identity decision.** The evidence in *VoidSea* reinforces method/material-based crafting and does not require independently trained Shipmaking. Its modular component, repair and upgrade rules do not themselves form a separate all-purpose shipbuilding crafting procedure. This strengthens the conceptual case for retiring Shipmaking as an output-category competency, but **retirement is not approved**. Evaluating or implementing full shipbuilding remains out of scope.
+**Retire `competency.shipmaking` from the native character advancement catalog.** *VoidSea* reinforces method/material-based component work and does not require an independently trained Shipmaking proficiency. Its modular component, repair, and upgrade rules do not define a new universal crafting-track identity. Detailed shipbuilding remains out of scope.
 
 **Do not automatically introduce “Naval Architecture.”** Its possible role, any conditions for shipwright specialization, and any relation to Carpentry or other competencies require a later naval-system reconciliation. A simple raft and a complex seagoing warship need not share the same construction or design requirements.
 
@@ -141,7 +141,7 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 - Multi-craft projects do not imply rank averaging, shared proficiency, automatic prerequisites, or a particular number of checks.
 - Historical 3.x Craft specialties remain in `working/` as reference evidence, including retired Bowmaking. Retirement does not establish a blanket conversion from Craft (bowmaking) to Carpentry or Woodcarving.
 
-**Next review:** Leave Shipmaking for the later naval-system reconciliation and proceed with tool-name versus method-name identities and remaining Skill/Competency overlaps. Cobbling remains independent unless evidence demonstrates redundant mechanics.
+**Next review:** Proceed with tool-name versus method-name identities and remaining Skill/Competency overlaps. Naval construction remains deferred, and Cobbling remains independent unless evidence demonstrates redundant mechanics.
 
 ## Follow-up decisions needed before ranked progression
 
