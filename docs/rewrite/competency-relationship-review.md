@@ -6,7 +6,7 @@
 ## Current accepted native baseline
 
 - The native catalog has **32** competencies. `competency.smithing` was folded into `competency.blacksmithing`; Smith's Tools is associated equipment for the single Blacksmithing competency, not a separate tool-training profile.
-- Blacksmithing is a general trainable competency, and Armorsmithing and Weaponsmithing are its independently identifiable **specializations**. Parent/child references are reciprocal.
+- Blacksmithing is a general trainable competency, and Armorsmithing and Weaponsmithing are its independently identifiable **specializations**. Parent/child references are reciprocal. Each specialization has the same native proficiency/level profile and explicitly identifies Smith's Tools as associated equipment; no training or level is inherited by implication.
 - Every native competency has a single provisional `profile` containing proficiency and a level. The historical Craft/tool facets remain in `working/` and reference material, not in the native definition. A level scale or evaluation formula has **not** been selected.
 - Historical `Craft` classification remains reference evidence. Native Blacksmithing uses `childCompetencies` / `parentCompetency` in parallel to the existing Skill parent/child structure; numerical composition requires an explicit future decision.
 - Native Skills such as Athletics/Climb/Jump/Swim use their own **computed composite** relationship and are not precedents for automatically averaging competency values.
