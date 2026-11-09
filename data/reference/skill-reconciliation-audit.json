@@ -53,10 +53,9 @@
     },
     {
       "name": "Disable Device",
-      "disposition": "split-by-activity",
-      "nativeCompetency": "competency.trap-disarming",
-      "scope": "applicable-trap-disarming-and-safe-bypass",
-      "notes": "Trap Disarming is distinct from Lockpicking and trap detection. General mechanism sabotage or repair uses an applicable method; no blanket conversion of historical Disable Device ranks."
+      "disposition": "task-specific-resolution",
+      "scope": "trap-disarming-sabotage-and-device-manipulation",
+      "notes": "Disarming is an activity using relevant Skills, Competencies, equipment, spells, or features according to trap type. General sabotage uses applicable methods; no separate native Disable Device or Trap Disarming track."
     },
     {
       "name": "Disguise",
@@ -127,10 +126,10 @@
     },
     {
       "name": "Open Lock",
-      "disposition": "native-competency",
-      "nativeCompetency": "competency.lockpicking",
-      "scope": "lockpicking",
-      "notes": "Lockpicking is a separate trained competency; Thieves' Tools are associated equipment, not independent training."
+      "disposition": "native-skill",
+      "scope": "opening-locks-without-intended-keys",
+      "notes": "Open Lock remains a native Skill; Thieves' Tools are equipment. 5.x tool proficiency effects require explicit reconciliation without creating a second independently advancing competency.",
+      "nativeSkill": "skill.open-lock"
     },
     {
       "name": "Perform",
