@@ -5,7 +5,8 @@
     "profileContract": "One native competency has proficiency and level; numerical progression and stat interaction remain for reconciliation",
     "associatedTools": "Equipment associations, not separate tool-proficiency training profiles or ownership grants",
     "relationshipContract": "Parent/child competency references follow Skill hierarchy structure; numerical composition and inheritance require a separate rule",
-    "previousSourceFacets": "Historical Craft, tool, and skill representations remain in working/reference material, not native character facets"
+    "previousSourceFacets": "Historical Craft, tool, and skill representations remain in working/reference material, not native character facets",
+    "reconciliation": "Smithing is a single method-oriented native competency associated with Smith's Tools; armorsmithing and weaponsmithing are not independent training identities. Item-specific modifiers remain subject to separate rules."
   },
   "competencies": [
     {
@@ -23,21 +24,6 @@
       ]
     },
     {
-      "id": "competency.armorsmithing",
-      "name": "Armorsmithing",
-      "kind": "competency",
-      "profile": {
-        "proficiency": "binary",
-        "level": "progressive",
-        "levelScale": "pending-reconciliation",
-        "abilityResolution": "per-activity"
-      },
-      "parentCompetency": "competency.blacksmithing",
-      "associatedTools": [
-        "Smith's Tools"
-      ]
-    },
-    {
       "id": "competency.basketweaving",
       "name": "Basketweaving",
       "kind": "competency",
@@ -47,24 +33,6 @@
         "levelScale": "pending-reconciliation",
         "abilityResolution": "per-activity"
       }
-    },
-    {
-      "id": "competency.blacksmithing",
-      "name": "Blacksmithing",
-      "kind": "competency",
-      "profile": {
-        "proficiency": "binary",
-        "level": "progressive",
-        "levelScale": "pending-reconciliation",
-        "abilityResolution": "per-activity"
-      },
-      "associatedTools": [
-        "Smith's Tools"
-      ],
-      "childCompetencies": [
-        "competency.armorsmithing",
-        "competency.weaponsmithing"
-      ]
     },
     {
       "id": "competency.bookbinding",
@@ -346,6 +314,20 @@
       }
     },
     {
+      "id": "competency.smithing",
+      "name": "Smithing",
+      "kind": "competency",
+      "profile": {
+        "proficiency": "binary",
+        "level": "progressive",
+        "levelScale": "pending-reconciliation",
+        "abilityResolution": "per-activity"
+      },
+      "associatedTools": [
+        "Smith's Tools"
+      ]
+    },
+    {
       "id": "competency.stonemasonry",
       "name": "Stonemasonry",
       "kind": "competency",
@@ -397,21 +379,6 @@
         "levelScale": "pending-reconciliation",
         "abilityResolution": "per-activity"
       }
-    },
-    {
-      "id": "competency.weaponsmithing",
-      "name": "Weaponsmithing",
-      "kind": "competency",
-      "profile": {
-        "proficiency": "binary",
-        "level": "progressive",
-        "levelScale": "pending-reconciliation",
-        "abilityResolution": "per-activity"
-      },
-      "parentCompetency": "competency.blacksmithing",
-      "associatedTools": [
-        "Smith's Tools"
-      ]
     },
     {
       "id": "competency.weaving",
