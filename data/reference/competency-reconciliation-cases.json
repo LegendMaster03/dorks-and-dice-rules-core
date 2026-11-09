@@ -124,6 +124,26 @@
       }
     },
     {
+      "id": "shipmaking-method-based",
+      "kind": "native-crafting-output-reconciliation",
+      "input": {
+        "historicalCapability": "Craft (shipmaking)",
+        "activity": "construct or repair a vessel or ship component",
+        "source": "VoidSea - Beta 0.1"
+      },
+      "expect": {
+        "retiredNativeCompetency": "competency.shipmaking",
+        "componentConstruction": "applicable-crafting-method-and-future-vessel-rules",
+        "componentRepair": "applicable-tools-by-material-and-vessel-rules",
+        "shipDesign": "deferred",
+        "historicalSourcePreserved": true,
+        "automaticLevelConversion": false,
+        "automaticProficiencyTransfer": false,
+        "shipwrightModifiers": "not-assigned",
+        "navalSystemImplementation": "deferred"
+      }
+    },
+    {
       "id": "stealth-components",
       "kind": "skill-composite",
       "input": {
