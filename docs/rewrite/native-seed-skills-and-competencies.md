@@ -4,34 +4,44 @@
 
 ## Native data organization
 
-- **`data/native/skills.json`** contains ordinary skills, independently usable narrower skills and derived parent skills, plus the previously adopted standalone skills and specialized Perform/Profession skills. There is no Skills directory of per-entry files.
-- **`data/native/competencies.json`** contains actual competencies: the combination of crafting skills and tool proficiencies into unified trainable capabilities. A competency can have only a crafting facet, only a tool facet, or both. Two different numeric profiles must remain distinct even where their training identity is reviewed as shared.
-- **`data/conversions/skill-name-mappings.json`** holds prior-edition skill-name mappings for future imported content, not native rule semantics. The optional review audit in `data/reference/` documents why the initial list includes the concepts it does, without placing import history in Skills.
+- **`data/rulesets/first-party-001/native/skills.json`** defines individual Skills, derived composite Skills, and specialized Perform/Profession entries.
+- **`data/rulesets/first-party-001/native/competencies.json`** defines native Competencies as **single learned capabilities**, each with its own proficiency and level. A competency does not contain a historical Craft skill and a separate tool proficiency.
+- **`data/rulesets/first-party-001/working/competencies.json`** and source reconciliation material retain the historical Craft/tool/skill representations. These are reference evidence, not native runtime facets.
+- **`data/conversions/skill-name-mappings.json`** retains earlier skill-name translations for source conversion, not native mechanical definitions.
 
-The native JSON is the Dorks & Dice rules source of truth, not a projection of historical-edition records.
+The native JSON describes the Dorks & Dice ruleset rather than imposing the source edition's internal distinction between skills and tool proficiencies.
 
 ## Skills
 
-The initial 18 standard SRD skill names and short descriptions are present as native Skills. Additional previously adopted 3.x skills include Appraise, Balance, Climb, Concentration, Decipher Script, Disable Device, Disguise, Escape Artist, Gather Information, Hide, Listen, Move Silently, Open Lock, Ride, Search, Spellcraft, Spot, Swim, Tumble, Use Magic Device, Use Rope, and reviewed psionic capabilities. Some skill numerical mechanics still require native design review; they have not been silently inferred from SRD prose.
+The 88 selected native Skills are unchanged by this reconciliation. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
 
-All three members of **Perception ← Listen + Spot** are skills. Likewise, Stealth, Acrobatics and Athletics are **skills**, not competencies; their component Skills retain independent numerical state. The reviewed arithmetic mean, truncation toward zero, and component-before-parent modifier order are recorded on each parent Skill.
-
-Crafting-related capabilities are not duplicated as unrelated Skill and Competency rows. Craft specialization is modeled under the Competency catalog; Perform and Profession specialties remain skill-presented, with individually addressable children. Speak Language belongs to the separate language-proficiency subsystem, not to Skills or Competencies.
+A Skill has proficiency and level in character state. Its normal Ability-score interactions and any explicit composite calculations belong to the Skill mechanics. Those calculations are not automatically imposed on Competencies.
 
 ## Competencies
 
-The native Competencies catalog contains 32 identities following the consolidation of Smithing into Blacksmithing. It retains all 20 reviewed Craft specialties and their existing implementation facets. For example:
+The native catalog contains **32** competency identities after merging the former Smithing tool identity into Blacksmithing. Each definition has one `profile` with:
 
-- **Alchemy:** crafting-skill facet **and** Alchemist's Supplies tool-proficiency facet under one competency identity.
-- **Carpentry:** crafting-skill facet **and** Carpenter's Tools facet under one identity.
-- **Blacksmithing:** one competency identity with the historical ranked Craft facet and the **Smith's Tools** tool-proficiency facet. The former standalone native Smithing identity is no longer selectable. Armorsmithing and Weaponsmithing are recorded as specialized sub-competencies of Blacksmithing, not as automatic rank grants.
-- **Forgery:** a tool competency with an explicit link to the separately adopted Forgery skill; this linkage is not a generalized claim that skills and competencies are interchangeable.
+- **`proficiency`:** binary proficiency as part of the competency itself, not a separately tracked tool proficiency;
+- **`level`:** an independently represented advancement dimension for the same competency;
+- **`levelScale`:** undecided pending the numerical progression review;
+- **`abilityResolution`:** activity-dependent rather than inherited from historical Craft rules.
 
-Every native competency uses a common `trainingProfile` structure: training belongs to the competency identity; governing Ability is resolved by the applicable activity or existing facet; and the future numeric progression remains pending review. Existing crafting/tool/skill facets remain authoritative for their currently defined mechanics, rather than being silently converted to an unapproved universal rank formula.
+The profile expresses the agreed shape of the capability; it does **not** set a bonus, a tier threshold, an advancement cost, or a proficiency/level dependency.
 
-`parentCompetency` / `childCompetencies` record specialization links without assigning a derived arithmetic mean, rank inheritance, or automatic proficiency. That distinguishes sub-competencies from established derived composite Skills. Other plausible competency relationships remain candidates for separate review.
+`associatedTools` lists applicable equipment identities such as Alchemist's Supplies, Carpenter's Tools, Smith's Tools, and Forgery Kit. These names do not create additional training entries or establish possession of an item. Competencies that do not currently have a named tool association are still full competencies.
 
-Only explicit reviewed relationships unify training. A crafting rank does not turn into a tool-proficiency bonus or vice versa. Standalone tools do not invent Craft (X) source rules.
+For example:
+
+- **Alchemy:** one competency, with Alchemist's Supplies as associated equipment.
+- **Carpentry:** one competency, with Carpenter's Tools as associated equipment.
+- **Blacksmithing:** one competency, with Smith's Tools as associated equipment. Its children are Armorsmithing and Weaponsmithing.
+- **Forgery:** one competency, with Forgery Kit as associated equipment. The separate `skill.forgery` retains an explicit `relatedSkills` reference pending review of its cross-category relationship.
+
+### Specialization structure
+
+`childCompetencies` and `parentCompetency` follow the existing Skills parent/child reference pattern. The specialization does **not** constitute a different kind of capability or a container of nested skill/tool implementations. Each child is itself a native competency with the same proficiency/level profile.
+
+As with Skills, the hierarchy and any resulting numerical composition are separate design questions: no automatic arithmetic mean, rank inheritance, parent proficiency grant, or child proficiency grant is inferred from the reference alone. A later explicit rule can establish applicable mechanics.
 
 ## Historical source information
 
@@ -41,4 +51,4 @@ CC BY 4.0 attributions are retained in `data/reference/srd/manifest.json` becaus
 
 ## Checks and remaining work
 
-Structural tests cover the reviewed skill corpus, 18 SRD skills, Skill-to-Skill composites, the merged Blacksmithing identity, specialization links, the common competency training profile, existing competency facets and the strict boundary between core rules and import mappings. This is **not** confirmation that all native numeric Skill mechanics or all crafting/tool interactions are implemented. Those require approved schemas and gameplay-engine work.
+Structural tests cover the reviewed Skills catalog, composite Skills, the consolidated Blacksmithing identity, reciprocal competency parent/child links, the unified native competency profile, and the source/native boundary. This is **not** confirmation that all native numeric Skill mechanics or all crafting/tool interactions are implemented. Those require approved schemas and gameplay-engine work.
