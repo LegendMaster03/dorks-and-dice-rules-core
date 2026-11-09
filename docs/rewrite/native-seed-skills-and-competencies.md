@@ -13,13 +13,13 @@ The native JSON describes the Dorks & Dice ruleset rather than imposing the sour
 
 ## Skills
 
-The 87 selected native Skills retain the existing composite and family structures. The former `skill.forgery` is represented solely by the native `competency.forgery`; no duplicate historical intermediate Skill is required. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
+The 83 selected native Skills retain the existing composite and family structures. The former `skill.forgery` is represented solely by the native `competency.forgery`; no duplicate historical intermediate Skill is required. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
 
 A Skill has proficiency and level in character state. Its normal Ability-score interactions and any explicit composite calculations belong to the Skill mechanics. Those calculations are not automatically imposed on Competencies.
 
 ## Competencies
 
-The native catalog contains **27** competency identities. The approved `competency.smithing` replaces the earlier provisional Blacksmithing identity. Armorsmithing and Weaponsmithing have been retired as native competencies because weapon and armor production can use multiple methods and materials. Each definition has one `profile` with:
+The native catalog contains **28** competency identities. The approved `competency.smithing` replaces the earlier provisional Blacksmithing identity. Armorsmithing and Weaponsmithing have been retired as native competencies because weapon and armor production can use multiple methods and materials. Each definition has one `profile` with:
 
 - **`proficiency`:** binary proficiency as part of the competency itself, not a separately tracked tool proficiency;
 - **`level`:** an independently represented advancement dimension for the same competency;
@@ -39,6 +39,8 @@ For example:
 - **Ship construction:** uses applicable manufacturing methods and vessel-specific rules when they are reconciled. Shipmaking is not a standalone native proficiency/level. The superseded intermediate Shipmaking definition has been removed; *VoidSea* construction, repair, and progression remain deferred to a naval-system review.
 - **Smithing:** one competency, associated with Smith's Tools. Metal weapons and armor can use Smithing where appropriate, while items made using other materials or techniques use their applicable competencies. No universal weapon- or armor-specific advancement track is introduced.
 - **Forgery:** one competency, with Forgery Kit as associated equipment. There is no separate native `skill.forgery` advancement identity or an obligation to retain its intermediate definition.
+- **Lockpicking:** its own competency for opening applicable locks without their keys. Thieves' Tools are associated equipment, not a second training track.
+- **Trap Disarming:** its own independently advancing competency for neutralizing or bypassing applicable discovered traps. It may use Thieves' Tools, but shares neither progression nor automatic qualifications with Lockpicking. Detection, construction, and general mechanical sabotage remain separate activities.
 
 ### Item categories and conditional benefits
 
