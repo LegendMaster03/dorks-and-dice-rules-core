@@ -88,7 +88,7 @@ Reviewed baseline children are:
 
 `Alchemy`, `Armorsmithing`, `Basketweaving`, `Blacksmithing`, `Bookbinding`, `Bowmaking`, `Calligraphy`, `Carpentry`, `Cobbling`, `Gemcutting`, `Leatherworking`, `Locksmithing`, `Painting`, `Pottery`, `Sculpting`, `Shipmaking`, `Stonemasonry`, `Trapmaking`, `Weaponsmithing`, and `Weaving`.
 
-The following Craft/tool mappings are reviewed shared identities. The Craft facet retains ranked-skill mechanics; the tool facet retains tool-proficiency mechanics. The current native reconciliation additionally unifies Blacksmithing with Smith's Tools; this decision supersedes the older standalone Smithing mapping above when reading historical snapshots:
+The following Craft/tool mappings are reviewed shared identities. The Craft facet retains ranked-skill mechanics; the tool facet retains tool-proficiency mechanics:
 
 | Universal competency | Historical facet | Later tool facet |
 | --- | --- | --- |
@@ -102,9 +102,8 @@ The following Craft/tool mappings are reviewed shared identities. The Craft face
 | Pottery | Craft (pottery) | Potter's Tools |
 | Stonemasonry | Craft (stonemasonry) | Mason's Tools |
 | Weaving | Craft (weaving) | Weaver's Tools |
-| Blacksmithing | Craft (blacksmithing) | Smith's Tools |
 
-These mappings are explicit reviewed policy. Rules Core does not generalize them into a rule that similarly named Craft specialties and tools are always identical. The Blacksmithing relationship is an approved native update; older source records may still use the historical Smithing identity as reference evidence.
+These mappings are explicit reviewed policy. Rules Core does not generalize them into a rule that similarly named Craft specialties and tools are always identical.
 
 ### Later tool and kit audit
 
@@ -117,14 +116,14 @@ These mappings are explicit reviewed policy. Rules Core does not generalize them
 | Herbalism Kit | Herbalism | Standalone; related to Profession (herbalist) and Apothecary |
 | Navigator's Tools | Navigation | Standalone; related to Guide and Sailor |
 | Poisoner's Kit | Poisoning | Standalone |
-| Smith's Tools | Blacksmithing | Native shared tool/crafting identity; Armorsmithing and Weaponsmithing are specialized child competencies, without implied rank or qualification inheritance |
+| Smith's Tools | Smithing | Standalone; related to Blacksmithing, Armorsmithing, and Weaponsmithing |
 | Tinker's Tools | Tinkering | Standalone; related to Locksmithing and Trapmaking |
 | Woodcarver's Tools | Woodcarving | Standalone; related to Bowmaking and Carpentry |
 | Disguise Kit | Disguise Kit | Standalone; related to the historical Disguise skill |
 | Thieves' Tools | Thieves' Tools | Standalone; Open Lock and Disable Device retain scoped-use relationships |
 | Forgery Kit | Forgery | Shared identity with the historical Forgery skill |
 
-The eleven remaining standalone tool identities are baseline universal-catalog members even when no source-shaped tool row is active. Forgery is also a baseline non-family universal identity because the reviewed historical Forgery skill and Forgery Kit are shared facets of the same competency; it therefore remains present even when neither implementation row is active. Musical instrument proficiencies and gaming-set proficiencies remain source-native standalone universal competencies unless a specific source-supported relationship is reviewed. Broad Perform categories are not automatically equated to particular instruments. No reviewed gaming-set historical equivalent is currently established.
+The twelve reviewed standalone tool identities are baseline universal-catalog members even when no source-shaped tool row is active. Forgery is also a baseline non-family universal identity because the reviewed historical Forgery skill and Forgery Kit are shared facets of the same competency; it therefore remains present even when neither implementation row is active. Musical instrument proficiencies and gaming-set proficiencies remain source-native standalone universal competencies unless a specific source-supported relationship is reviewed. Broad Perform categories are not automatically equated to particular instruments. No reviewed gaming-set historical equivalent is currently established.
 
 The current Loot Tavern Harvesting & Crafting consumer rules select a tool through the generic Rules Core tool-competency contract. The reviewed current source model does not require a new named Loot Tavern-only tool competency here; any genuinely distinct source-defined proficiency can enter the universal catalog through the same source-driven path later.
 
@@ -167,7 +166,7 @@ The Character Sheet therefore presents ordinary skills and composite skill relat
 
 ## Shared identity versus numeric mechanics
 
-A shared learned-competency identity shares only conceptual training/proficiency state. It never converts numeric systems. The native `trainingProfile` is a consistent structural contract while the ranked/proficiency advancement rules remain subject to reconciliation. The Blacksmithing children are specializations rather than numeric composite contributors.
+A shared learned-competency identity shares only conceptual training/proficiency state. It never converts numeric systems.
 
 For example, six ranks in `Craft (alchemy)` remain six ranks on that profile. They do not become a +6 Alchemist's Supplies bonus. A later proficiency bonus does not become 3.x ranks. Class-skill state, governing Ability, trained-only rules, and Armor Check Penalty applicability remain attached to the profile that defines them.
 

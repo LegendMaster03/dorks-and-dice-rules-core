@@ -1,8 +1,10 @@
+# During native design, do not run full suites on every draft branch push.
+# Run on main, main-targeting PRs, or manual dispatch.
 name: Validate Rules Core Rewrite Structure
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:

@@ -21,36 +21,18 @@ public static class NativeTrainingPresentationCatalog
                         ? children.EnumerateArray().Where(child => child.ValueKind == JsonValueKind.String)
                             .Select(child => child.GetString()!).ToArray() : [];
                     var family = category == "skill-family";
-                    var specializations = category == "competency" &&
-                        definition.TryGetProperty("childCompetencies", out var subcompetencies) &&
-                        subcompetencies.ValueKind == JsonValueKind.Array
-                        ? subcompetencies.EnumerateArray()
-                            .Where(child => child.ValueKind == JsonValueKind.String)
-                            .Select(child => child.GetString()!).ToArray() : [];
                     var ability = Text(definition, "defaultAbility");
-                    var supportsRanks = category == "skill" && components.Length == 0;
-                    if (category == "competency" &&
-                        definition.TryGetProperty("facets", out var facets) &&
+                    if (category == "competency" && definition.TryGetProperty("facets", out var facets) &&
                         facets.ValueKind == JsonValueKind.Array)
-                    {
-                        ability ??= facets.EnumerateArray()
-                            .Select(facet => Text(facet, "governingAbility"))
+                        ability ??= facets.EnumerateArray().Select(facet => Text(facet, "governingAbility"))
                             .FirstOrDefault(value => value is not null);
-                        // Existing facet rank capability is preserved until the
-                        // common ranked-competency design is decided.
-                        supportsRanks = facets.EnumerateArray().Any(facet =>
-                            facet.TryGetProperty("ranks", out var ranks) &&
-                            ranks.ValueKind == JsonValueKind.True);
-                    }
                     var composition = definition.TryGetProperty("composition", out var operation)
                         ? Text(operation, "operation") : null;
-                    // Arithmetic skill composites and specialization hierarchies
-                    // are different relationships. A specialization never implies
-                    // a computed parent check, rank inheritance or training grant.
+                    // Families are headings; composites derive their value from
+                    // children. Neither has an independently editable rank.
                     result.Add(new(item.Id, item.Name, category, ability,
                         Text(definition, "family"), components, composition,
-                        family, supportsRanks, specializations,
-                        category == "competency" ? Text(definition, "parentCompetency") : null));
+                        family, !family && components.Length == 0));
                 }
                 if (offset + page.Items.Length >= page.Total) break;
             }

@@ -5,17 +5,17 @@
 
 ## Current accepted native baseline
 
-- The native catalog has **32** competencies. `competency.smithing` was folded into `competency.blacksmithing`; Smith's Tools now belongs to Blacksmithing's tool-proficiency facet.
+- The native catalog has **32** competencies. `competency.smithing` was folded into `competency.blacksmithing`; Smith's Tools is associated equipment for the single Blacksmithing competency, not a separate tool-training profile.
 - Blacksmithing is a general trainable competency, and Armorsmithing and Weaponsmithing are its independently identifiable **specializations**. Parent/child references are reciprocal.
-- Every native competency carries the same provisional `trainingProfile` structure. The existing `facets` retain applicable ranked-craft, tool, or skill capabilities. A common numerical advancement system has **not** been selected.
-- `Craft` as a historical specialization family remains distinct from the native Blacksmithing specialization hierarchy. Neither a taxonomic family nor a specialization link implies arithmetic value composition.
+- Every native competency has a single provisional `profile` containing proficiency and a level. The historical Craft/tool facets remain in `working/` and reference material, not in the native definition. A level scale or evaluation formula has **not** been selected.
+- Historical `Craft` classification remains reference evidence. Native Blacksmithing uses `childCompetencies` / `parentCompetency` in parallel to the existing Skill parent/child structure; numerical composition requires an explicit future decision.
 - Native Skills such as Athletics/Climb/Jump/Swim use their own **computed composite** relationship and are not precedents for automatically averaging competency values.
 
 ### Relationship vocabulary
 
 | Relationship | Intended interpretation | Automatic numeric consequence in this baseline |
 | --- | --- | --- |
-| Shared competency identity / multiple facets | Two established applications of the same learned discipline, such as Blacksmithing and Smith's Tools | None; each applicable facet keeps its existing calculation |
+| One native competency / associated tools | A single learned capability, such as Blacksmithing, identifies relevant tools without a second training profile | None; equipment use and possession remain separate questions |
 | Parent / specialization | A broad learned discipline with separately recognizable specializations, such as Blacksmithing -> Armorsmithing | None; ranks, qualification, and proficiency transfer are undecided |
 | Related competencies | Overlap or transferable knowledge without evidence of a strict parent-child relationship | None; optional scopes can be proposed later |
 | Family / taxonomy | Navigation and display grouping of otherwise independent specialties | None |
@@ -47,6 +47,6 @@ The purpose of this review is to avoid inventing new general-purpose umbrella co
 
 ## Implementation boundaries
 
-The native training presentation exposes `SpecializationIds` and `ParentCompetencyId` separately from `ComponentIds` and `Composition`. Consumers should not derive one from the other.
+Only the JSON draft has been revised. Existing C# training presentation and mechanics consumers still implement the older contract; they must not be treated as an authoritative interpretation of the provisional competency profile.
 
-The current structural profile indicates that numeric progression is undecided, not that an identical rank formula or governing Ability has already been established for every competency. New parent-child proposals must be reviewed as mechanical relationships rather than generated from naming similarity.
+The current structural profile expresses proficiency plus level within one native competency. Numerical progression, governing Ability behavior, and parent/child composition are still undecided; these should not be inferred from historical source facets. New parent-child proposals must be reviewed as mechanical relationships rather than generated from naming similarity.

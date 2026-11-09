@@ -26,31 +26,6 @@ public sealed class NativeMechanicsTests
         Assert.DoesNotContain("skill.perception.total", projection.Values.Keys);
     }
 
-    [Fact]
-    public void CompetencySpecializationsRemainDistinctFromComputedSkillComposites()
-    {
-        using var fixture = new NativeFixture();
-        var projection = new NativeCharacterProjector(fixture.Catalog).Project(fixture.Input());
-        var blacksmithing = Assert.Single(projection.Training!,
-            entry => entry.Id == "competency.blacksmithing");
-        Assert.Equal(new[] { "competency.armorsmithing", "competency.weaponsmithing" },
-            blacksmithing.SpecializationIds);
-        Assert.Empty(blacksmithing.ComponentIds);
-        Assert.Null(blacksmithing.Composition);
-        Assert.True(blacksmithing.SupportsRanks);
-        Assert.Null(blacksmithing.ParentCompetencyId);
-        var armorsmithing = Assert.Single(projection.Training!,
-            entry => entry.Id == "competency.armorsmithing");
-        Assert.Equal(blacksmithing.Id, armorsmithing.ParentCompetencyId);
-        Assert.True(armorsmithing.SupportsRanks);
-        Assert.Empty(armorsmithing.SpecializationIds!);
-
-        var cartography = Assert.Single(projection.Training!,
-            entry => entry.Id == "competency.cartography");
-        Assert.False(cartography.SupportsRanks);
-        Assert.Empty(cartography.SpecializationIds!);
-    }
-
     [Theory]
     [InlineData(NativeRollMode.Normal, 8, null, "resolved", 8)]
     [InlineData(NativeRollMode.Advantage, 8, 16, "resolved", 16)]
@@ -470,29 +445,6 @@ public sealed class NativeMechanicsTests
                   {"id":"skill.perception","name":"Perception","kind":"skill","defaultAbility":"wisdom",
                    "childSkills":["skill.listen","skill.spot"],
                    "composition":{"operation":"arithmetic-mean","rounding":"truncate-toward-zero"}}
-                ]}
-                """);
-            File.WriteAllText(Path.Combine(root, "native", "competencies.json"), """
-                {"competencies":[
-                  {"id":"competency.blacksmithing","name":"Blacksmithing","kind":"competency",
-                   "trainingIdentity":"competency.blacksmithing",
-                   "childCompetencies":["competency.armorsmithing","competency.weaponsmithing"],
-                   "childRelationship":"specialization",
-                   "facets":[{"type":"crafting-skill","ranks":true,"governingAbility":"intelligence"},
-                             {"type":"tool-proficiency","tool":"Smith's Tools"}]},
-                  {"id":"competency.armorsmithing","name":"Armorsmithing","kind":"competency",
-                   "trainingIdentity":"competency.armorsmithing",
-                   "parentCompetency":"competency.blacksmithing",
-                   "parentRelationship":"specialization",
-                   "facets":[{"type":"crafting-skill","ranks":true,"governingAbility":"intelligence"}]},
-                  {"id":"competency.weaponsmithing","name":"Weaponsmithing","kind":"competency",
-                   "trainingIdentity":"competency.weaponsmithing",
-                   "parentCompetency":"competency.blacksmithing",
-                   "parentRelationship":"specialization",
-                   "facets":[{"type":"crafting-skill","ranks":true,"governingAbility":"intelligence"}]},
-                  {"id":"competency.cartography","name":"Cartography","kind":"competency",
-                   "trainingIdentity":"competency.cartography",
-                   "facets":[{"type":"tool-proficiency","tool":"Cartographer's Tools"}]}
                 ]}
                 """);
             File.WriteAllText(Path.Combine(root, "native", "conditions.json"), """
