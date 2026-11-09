@@ -60,10 +60,10 @@ infrastructure or a source-version rule selector.
 **Previously approved native rules are preserved**, including:
 - 88 named native Skills, with 18 SRD 5e skills already included;
 - 33 crafting/tool Competencies, independently defined from ordinary Skills;
-
-**Later reconciliation note:** The counts above describe the original staged baseline, not the current draft. The subsequent native competency reconciliation contains 87 Skills and 32 Competencies after folding Smithing into Blacksmithing and consolidating Forgery as one Competency. Historical `working/` definitions retain their original coverage.
 - Six native Conditions: Deafened, Exhaustion, Frightened, Grappled,
   Poisoned and Restrained. Nine remaining Conditions are candidates.
+
+**Later reconciliation note:** The counts above describe the original staged baseline, not the current draft. The subsequent native competency reconciliation contains 87 Skills and 30 Competencies after consolidating Forgery into one Competency, naming the metalworking competency Smithing, and retiring Armorsmithing and Weaponsmithing as native item-output competencies. Historical `working/` definitions retain their original coverage.
 
 ## Completeness controls and remaining caveats
 
