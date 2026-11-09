@@ -63,11 +63,11 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
     def test_bowmaking_is_an_output_not_a_native_advancement_track(self):
         native = read(NATIVE / "competencies.json")["competencies"]
         identities = {entry["id"]: entry for entry in native}
-        self.assertEqual(28, len(native))
-        self.assertEqual(28, len(identities))
+        self.assertEqual(27, len(native))
+        self.assertEqual(27, len(identities))
         self.assertNotIn("competency.bowmaking", identities)
         for retained in ("competency.carpentry", "competency.woodcarving",
-                         "competency.shipmaking", "competency.cobbling"):
+                         "competency.cobbling"):
             self.assertIn(retained, identities)
         working = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
         self.assertIn("competency.bowmaking", working)
@@ -80,7 +80,7 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
         self.assertIn("competency.carpentry", identities)
         self.assertIn("competency.smithing", identities)
         self.assertIn("competency.thieves-tools", identities)
-        self.assertIn("competency.shipmaking", identities)
+        self.assertNotIn("competency.shipmaking", identities)
         self.assertIn("competency.cobbling", identities)
         historical = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
         self.assertIn("competency.trapmaking", historical)
@@ -90,6 +90,22 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
         self.assertFalse(case["expect"]["automaticProficiencyTransfer"])
         skills = read(NATIVE / "skills.json")["skills"]
         self.assertIn("skill.use-rope", {entry["id"] for entry in skills})
+
+    def test_shipmaking_retires_but_its_historical_specialty_is_preserved(self):
+        native = read(NATIVE / "competencies.json")["competencies"]
+        identities = {entry["id"]: entry for entry in native}
+        self.assertNotIn("competency.shipmaking", identities)
+        self.assertIn("competency.carpentry", identities)
+        self.assertIn("competency.smithing", identities)
+        self.assertIn("competency.weaving", identities)
+        self.assertIn("competency.navigation", identities)
+        historical = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
+        self.assertIn("competency.shipmaking", historical)
+        cases = read(ROOT / "data/reference/competency-reconciliation-cases.json")["cases"]
+        case = next(x for x in cases if x["id"] == "shipmaking-method-based")
+        self.assertFalse(case["expect"]["automaticLevelConversion"])
+        self.assertFalse(case["expect"]["automaticProficiencyTransfer"])
+        self.assertEqual("deferred", case["expect"]["navalSystemImplementation"])
 
     def test_selected_fear_rule_retains_unresolved_escalation_as_inert(self):
         native = read(NATIVE / "fear.json")
