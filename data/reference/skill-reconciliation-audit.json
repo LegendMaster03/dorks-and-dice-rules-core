@@ -68,8 +68,8 @@
     },
     {
       "name": "Forgery",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.forgery"
+      "disposition": "native-competency",
+      "nativeCompetency": "competency.forgery"
     },
     {
       "name": "Gather Information",
