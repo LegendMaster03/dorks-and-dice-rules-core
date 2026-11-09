@@ -25,22 +25,6 @@
       ]
     },
     {
-      "id": "competency.armorsmithing",
-      "name": "Armorsmithing",
-      "kind": "competency",
-      "trainingIdentity": "competency.armorsmithing",
-      "facets": [
-        {
-          "type": "crafting-skill",
-          "governingAbility": "intelligence",
-          "ranks": true,
-          "classSkillState": true,
-          "trainedOnly": false,
-          "armorCheckPenalty": false
-        }
-      ]
-    },
-    {
       "id": "competency.basketweaving",
       "name": "Basketweaving",
       "kind": "competency",
@@ -57,42 +41,10 @@
       ]
     },
     {
-      "id": "competency.blacksmithing",
-      "name": "Blacksmithing",
-      "kind": "competency",
-      "trainingIdentity": "competency.blacksmithing",
-      "facets": [
-        {
-          "type": "crafting-skill",
-          "governingAbility": "intelligence",
-          "ranks": true,
-          "classSkillState": true,
-          "trainedOnly": false,
-          "armorCheckPenalty": false
-        }
-      ]
-    },
-    {
       "id": "competency.bookbinding",
       "name": "Bookbinding",
       "kind": "competency",
       "trainingIdentity": "competency.bookbinding",
-      "facets": [
-        {
-          "type": "crafting-skill",
-          "governingAbility": "intelligence",
-          "ranks": true,
-          "classSkillState": true,
-          "trainedOnly": false,
-          "armorCheckPenalty": false
-        }
-      ]
-    },
-    {
-      "id": "competency.bowmaking",
-      "name": "Bowmaking",
-      "kind": "competency",
-      "trainingIdentity": "competency.bowmaking",
       "facets": [
         {
           "type": "crafting-skill",
@@ -209,22 +161,6 @@
         {
           "type": "tool-proficiency",
           "tool": "Disguise Kit"
-        }
-      ]
-    },
-    {
-      "id": "competency.forgery",
-      "name": "Forgery",
-      "kind": "competency",
-      "trainingIdentity": "competency.forgery",
-      "facets": [
-        {
-          "type": "skill",
-          "skill": "skill.forgery"
-        },
-        {
-          "type": "tool-proficiency",
-          "tool": "Forgery Kit"
         }
       ]
     },
@@ -389,22 +325,6 @@
       ]
     },
     {
-      "id": "competency.shipmaking",
-      "name": "Shipmaking",
-      "kind": "competency",
-      "trainingIdentity": "competency.shipmaking",
-      "facets": [
-        {
-          "type": "crafting-skill",
-          "governingAbility": "intelligence",
-          "ranks": true,
-          "classSkillState": true,
-          "trainedOnly": false,
-          "armorCheckPenalty": false
-        }
-      ]
-    },
-    {
       "id": "competency.smithing",
       "name": "Smithing",
       "kind": "competency",
@@ -457,38 +377,6 @@
         {
           "type": "tool-proficiency",
           "tool": "Tinker's Tools"
-        }
-      ]
-    },
-    {
-      "id": "competency.trapmaking",
-      "name": "Trapmaking",
-      "kind": "competency",
-      "trainingIdentity": "competency.trapmaking",
-      "facets": [
-        {
-          "type": "crafting-skill",
-          "governingAbility": "intelligence",
-          "ranks": true,
-          "classSkillState": true,
-          "trainedOnly": false,
-          "armorCheckPenalty": false
-        }
-      ]
-    },
-    {
-      "id": "competency.weaponsmithing",
-      "name": "Weaponsmithing",
-      "kind": "competency",
-      "trainingIdentity": "competency.weaponsmithing",
-      "facets": [
-        {
-          "type": "crafting-skill",
-          "governingAbility": "intelligence",
-          "ranks": true,
-          "classSkillState": true,
-          "trainedOnly": false,
-          "armorCheckPenalty": false
         }
       ]
     },
