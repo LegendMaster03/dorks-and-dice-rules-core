@@ -32,7 +32,10 @@
         "levelScale": "pending-reconciliation",
         "abilityResolution": "per-activity"
       },
-      "parentCompetency": "competency.blacksmithing"
+      "parentCompetency": "competency.blacksmithing",
+      "associatedTools": [
+        "Smith's Tools"
+      ]
     },
     {
       "id": "competency.basketweaving",
@@ -408,7 +411,10 @@
         "levelScale": "pending-reconciliation",
         "abilityResolution": "per-activity"
       },
-      "parentCompetency": "competency.blacksmithing"
+      "parentCompetency": "competency.blacksmithing",
+      "associatedTools": [
+        "Smith's Tools"
+      ]
     },
     {
       "id": "competency.weaving",
