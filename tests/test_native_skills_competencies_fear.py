@@ -63,15 +63,33 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
     def test_bowmaking_is_an_output_not_a_native_advancement_track(self):
         native = read(NATIVE / "competencies.json")["competencies"]
         identities = {entry["id"]: entry for entry in native}
-        self.assertEqual(29, len(native))
-        self.assertEqual(29, len(identities))
+        self.assertEqual(28, len(native))
+        self.assertEqual(28, len(identities))
         self.assertNotIn("competency.bowmaking", identities)
         for retained in ("competency.carpentry", "competency.woodcarving",
-                         "competency.shipmaking", "competency.trapmaking",
-                         "competency.cobbling"):
+                         "competency.shipmaking", "competency.cobbling"):
             self.assertIn(retained, identities)
         working = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
         self.assertIn("competency.bowmaking", working)
+
+    def test_trapmaking_retires_without_disabling_other_capabilities(self):
+        native = read(NATIVE / "competencies.json")["competencies"]
+        identities = {entry["id"]: entry for entry in native}
+        self.assertNotIn("competency.trapmaking", identities)
+        self.assertIn("competency.tinkering", identities)
+        self.assertIn("competency.carpentry", identities)
+        self.assertIn("competency.smithing", identities)
+        self.assertIn("competency.thieves-tools", identities)
+        self.assertIn("competency.shipmaking", identities)
+        self.assertIn("competency.cobbling", identities)
+        historical = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
+        self.assertIn("competency.trapmaking", historical)
+        reference = read(ROOT / "data/reference/competency-reconciliation-cases.json")["cases"]
+        case = next(x for x in reference if x["id"] == "trapmaking-method-based")
+        self.assertFalse(case["expect"]["automaticLevelConversion"])
+        self.assertFalse(case["expect"]["automaticProficiencyTransfer"])
+        skills = read(NATIVE / "skills.json")["skills"]
+        self.assertIn("skill.use-rope", {entry["id"] for entry in skills})
 
     def test_selected_fear_rule_retains_unresolved_escalation_as_inert(self):
         native = read(NATIVE / "fear.json")
