@@ -26,7 +26,7 @@
 
 | Candidate | Observation | Present disposition | Potential future question |
 | --- | --- | --- | --- |
-| Tinkering; Locksmithing; Trapmaking | Tinkering can involve mechanisms, but a lock specialist or trap maker need not practice every form of tinkering; traps need not be mechanical | Preserve independent identities; candidate **related** links, not a parent relationship | Are there particular mechanical tasks for which experience transfers? |
+| Tinkering; Locksmithing; Trapmaking | Tinkering and Locksmithing are plausible independent methods; native Trapmaking still exists, but traps span mechanical, structural, improvised, and magical construction | Retain existing JSON unchanged while reviewing Trapmaking as a possible **retired output-category** identity; do not transfer its proficiency to other competencies automatically | Would trap engineering expertise be better represented by conditional features than a dedicated Trapmaking level? |
 | Carpentry; Woodcarving; historical Bowmaking | Carpentry and Woodcarving are distinct retained methods. Bowmaking is retired from the native catalog; historical Craft (bowmaking) remains source evidence | Preserve Carpentry and Woodcarving; evaluate bow manufacture by the applicable method and recipe | How should imported Bowmaking ranks or a bowyer feature be represented without automatic level conversion? |
 | Carpentry; Shipmaking | Construction of a ship may need carpentry but also other materials and ship systems | Preserve independent identities | Should ship construction require one or more qualified specialties rather than inherit carpentry ranks? |
 | Alchemy; Herbalism; Poisoning | Different applications overlap in substances and methods; neither herbalism nor poisoning is universally a subdiscipline of alchemy | Preserve independent identities | Can recipes establish scoped prerequisites or substitutions? |
@@ -56,7 +56,38 @@ Crafting competencies describe an independently meaningful craft, technique, or 
 | **Bowmaking** | Product-focused historical Craft specialty; Loot Tavern assigns ordinary wooden bow manufacture to appropriate woodworking tools. | **Approved retirement** from native competencies. Select a crafting method such as Carpentry or Woodcarving by activity and recipe; retain historical identity in `working/`. Bow-specific benefits remain possible but are not defined. No automatic rank conversion. |
 | **Shipmaking** | A complex final project requiring several possible crafts, materials, and design expertise, not one universal manufacturing method. | **Candidate project-based treatment**; determine whether specialized naval design remains separately trained before any retirement |
 | **Cobbling** | Recognizable footwear construction, fitting, and repair craft. Loot Tavern expressly associates footwear with Cobbler's Tools. | **Retain provisionally**; no basis yet to collapse into Leatherworking |
-| **Trapmaking** | Traps can be structural, mechanical, chemical, improvised, or magical. Manufacture, design, placement, and disarming are distinct activities. | **Candidate retirement as a generic item-output craft**; review design/setting separately before assigning applicable competencies |
+| **Trapmaking** | Traps span different materials and methods. 3.5e has specific Craft (trapmaking) rules for mechanical traps, while 5e Thieves' Tools and Loot Tavern's Trapper features cover placing or constructing traps without a second general Trapmaking proficiency. | **Recommend retirement as a universal native manufacturing competency, subject to approval.** Preserve historical construction rules as source evidence and allow explicit conditional trap-engineering expertise. Do not conflate construction with setting, detection, or disarming. |
+
+### Trapmaking — cross-system analysis
+
+**Disposition: proposed for approval, not implemented.** `competency.trapmaking` remains in the 29-entry native catalog. The following evidence informs a possible future retirement.
+
+| Source | Source-supported mechanics | Implication for native design |
+| --- | --- | --- |
+| **D&D 3.5e** | The mechanical-trap construction rules use dedicated **Craft (trapmaking)** checks; base DC varies with trap challenge rating and additional trigger/reset features. Search and Disable Device are separate activities. [3.5e SRD trap rules](https://www.d20srd.org/srd/traps.htm) | Preserve the historical construction specialty and its mechanical formulas as source evidence. Do not assume its ranks convert one-to-one into native proficiency or level. |
+| **D&D 5e** | *Xanathar's Guide to Everything*, “Thieves' Tools” (p. 84), provides a **Set a Trap** use based on the tool check and materials on hand, without separate Trapmaking training. The same tool supports disarming traps. | Ordinary improvised traps must not be gated on acquiring a second universal Trapmaking track. |
+| **D&D 5.5e (2024)** | The 2024 basic tool rules use tool proficiency for applicable checks and Advantage when the applicable skill is also proficient. [2024 Basic Rules: Equipment](https://www.dndbeyond.com/sources/dnd/br-2024/equipment) | Preserve the normal tool/skill interaction and avoid introducing a redundant always-on Trapmaking check bonus. The basic tool rule does not itself define every trap construction procedure. |
+| **Loot Tavern** | *Heliana's Guide to Monster Hunting*, Second Edition v2.02, Ranger **Trapper** (printed pp. 189–193): Trapper's Tools grants thieves' tools proficiency and doubles its contribution to disarm/manipulate checks; **Set Trap** grants physical trap creation with materials and time and separate magical trap creation dependent on feature progression, rest and spells. Deployment, concealment and disarming have their own procedures. | The subclass features must remain mechanically usable **without a separate native Trapmaking proficiency requirement**. Their trap options and save DCs are features, not universal advancement levels. |
+
+#### Activity separation
+
+| Trap-related activity | Candidate native resolution path | Boundary |
+| --- | --- | --- |
+| Design or assembly of mechanical components | Applicable manufacturing method, such as Tinkering, Smithing, Carpentry or Woodcarving | A trap design can need multiple materials; do not infer a universal combined check or equal competence |
+| Improvised field snares | Applicable tools, materials and fieldcraft checks; or a feature that specifies a procedure | A rope-based snare does not establish a separate native Use Rope or Trapmaking progression |
+| Add poison or an alchemical component | Applicable Poisoning or Alchemy competency where the procedure calls for it | Component manufacture and trap assembly are distinct |
+| Set, arm, deploy or conceal a trap | The rule governing that trap, applicable Thieves' Tools check, skill or class feature | Loot Tavern's Set Trap effects, timing and DCs are not automatically replaced by normal manufacturing checks |
+| Detect or investigate a trap | Applicable Perception, Investigation, Search or specialized feature | Do not grant detection merely through craftsmanship; existing Rogue Trapfinding remains meaningful |
+| Disarm or safely bypass a trap | Thieves' Tools / applicable Disable Device mechanics; specialized abilities when provided | Do not make routine detection or disarming Rogue-exclusive; the approved Rogue Trapfinding/Trap Sense decision is preserved |
+| Create or manipulate a magical trap | Its spell, magical crafting procedure or class feature, with Arcana where specified | Ordinary material-working proficiency does not grant spellcasting or class-granted trap access |
+
+#### Compatibility proposal
+
+If the retirement is approved, **remove `competency.trapmaking` only from native character advancement**, retaining historical `working/` records. Recipes and trap procedures should identify the applicable materials, methods, tools, and class or spell requirements. A character specializing in trigger design or trap engineering could receive an *explicit, scoped* bonus from a feature or proficiency use; no generic trap-bonus mechanism is adopted here.
+
+This differs from a total removal of trap-creation expertise. The source evidence supports distinct *procedures* and sometimes sophisticated design knowledge, but not the necessity of a separately leveled, all-purpose Trapmaking proficiency in every system. Historical trap DCs and Loot Tavern's class-derived trap DCs must **not** be flattened into one formula.
+
+**Unresolved:** Whether trap-design expertise deserves a general optional feature, whether a broader mechanism-design competency is warranted in the future, and what conversion policy to use for historical Craft (trapmaking) ranks. None of these constitutes approval for a new native competency, feat, DC, or conversion.
 
 ### Wider consistency scan
 
@@ -77,7 +108,7 @@ Crafting competencies describe an independently meaningful craft, technique, or 
 - Multi-craft projects do not imply rank averaging, shared proficiency, automatic prerequisites, or a particular number of checks.
 - Historical 3.x Craft specialties remain in `working/` as reference evidence, including retired Bowmaking. Retirement does not establish a blanket conversion from Craft (bowmaking) to Carpentry or Woodcarving.
 
-**Next review:** Trapmaking, then Shipmaking, followed by broader tool-name/skill overlap. Cobbling remains independent unless new evidence demonstrates redundant mechanics.
+**Next review:** Decide whether to approve the proposed retirement of native Trapmaking; then review Shipmaking and broader tool-name/skill overlap. Cobbling remains independent unless new evidence demonstrates redundant mechanics.
 
 ## Follow-up decisions needed before ranked progression
 
