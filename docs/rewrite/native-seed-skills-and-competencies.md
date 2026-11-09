@@ -13,7 +13,7 @@ The native JSON describes the Dorks & Dice ruleset rather than imposing the sour
 
 ## Skills
 
-The 88 selected native Skills are unchanged by this reconciliation. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
+The 87 selected native Skills retain the existing composite and family structures. The former `skill.forgery` is represented by the single native `competency.forgery`, while its historical skill definition remains under `working/` for source conversion. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
 
 A Skill has proficiency and level in character state. Its normal Ability-score interactions and any explicit composite calculations belong to the Skill mechanics. Those calculations are not automatically imposed on Competencies.
 
@@ -35,7 +35,7 @@ For example:
 - **Alchemy:** one competency, with Alchemist's Supplies as associated equipment.
 - **Carpentry:** one competency, with Carpenter's Tools as associated equipment.
 - **Blacksmithing:** one competency, with Smith's Tools as associated equipment. Its children are Armorsmithing and Weaponsmithing. Both children independently identify Smith's Tools as applicable equipment; this does not grant either child proficiency or establish inherited levels.
-- **Forgery:** one competency, with Forgery Kit as associated equipment. The separate `skill.forgery` retains an explicit `relatedSkills` reference pending review of its cross-category relationship.
+- **Forgery:** one competency, with Forgery Kit as associated equipment. There is no separate native `skill.forgery` advancement identity; historical Forgery skill mechanics remain source-conversion evidence.
 
 ### Specialization structure
 
