@@ -2,7 +2,7 @@
 
 This document classifies the reviewed 3e/3.5e competency corpus for the cross-edition Character contract. It is an implementation/audit map, not a claim that similarly named rules are interchangeable.
 
-**Native ruleset distinction:** This audit describes historical source and existing import/consumer relationships. The developing `first-party-001/native/competencies.json` instead defines each competency as one capability with proficiency and level, not separate Craft and tool-training facets. The native Smithing identity has been consolidated into Blacksmithing. Retaining distinct historical source records does not require distinct native competency identities or advancement tracks.
+**Native ruleset distinction:** This audit describes historical source and existing import/consumer relationships. The developing `first-party-001/native/competencies.json` instead defines each competency as one capability with proficiency and level, not separate Craft and tool-training facets. The current draft instead uses a single native Smithing identity and no native Armorsmithing or Weaponsmithing entries. Earlier Blacksmithing and Smithing representations remain historical reference material. Retaining distinct historical source records does not require distinct native competency identities or advancement tracks.
 
 ## Classification meanings
 
