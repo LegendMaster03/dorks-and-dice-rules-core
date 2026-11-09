@@ -23,41 +23,37 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
             for child in identities[parent]["childSkills"]:
                 self.assertIn(child,identities)
 
-    def test_competencies_preserve_crafting_and_tool_facets(self):
+    def test_competencies_have_one_native_profile_not_separate_source_facets(self):
         native = read(NATIVE / "competencies.json")["competencies"]
         identities = {c["id"]: c for c in native}
         self.assertEqual(32, len(native))
         self.assertEqual(len(identities), len(native))
-        # Working is source evidence, not the authoritative native ruleset.
         self.assertIn("competency.smithing",
                       {c["id"] for c in read(WORKING / "competencies.json")["competencies"]})
         self.assertNotIn("competency.smithing", identities)
-        alchemy = identities["competency.alchemy"]
-        self.assertEqual({"crafting-skill", "tool-proficiency"},
-                         {f["type"] for f in alchemy["facets"]})
+        expected_profile = {
+            "proficiency": "binary",
+            "level": "progressive",
+            "levelScale": "pending-reconciliation",
+            "abilityResolution": "per-activity"
+        }
+        old_facets = {"facets", "trainingIdentity", "trainingProfile",
+                      "parentRelationship", "childRelationship"}
         for competency in native:
-            self.assertEqual(competency["trainingIdentity"], competency["id"])
-            self.assertEqual({
-                "trainingState": "per-competency-identity",
-                "governingAbility": "per-activity-or-facet",
-                "numericProgression": "pending-reconciliation"
-            }, competency["trainingProfile"])
-            self.assertTrue(competency["facets"])
-            for child in competency.get("childCompetencies", []):
-                self.assertIn(child, identities)
-                self.assertEqual(competency["id"],
-                                 identities[child]["parentCompetency"])
-                self.assertEqual("specialization",
-                                 identities[child]["parentRelationship"])
+            self.assertEqual("competency", competency["kind"])
+            self.assertEqual(expected_profile, competency["profile"])
+            self.assertFalse(old_facets.intersection(competency), competency["id"])
+            self.assertEqual(len(competency.get("associatedTools", [])),
+                             len(set(competency.get("associatedTools", []))))
         blacksmithing = identities["competency.blacksmithing"]
         self.assertEqual(["competency.armorsmithing", "competency.weaponsmithing"],
                          blacksmithing["childCompetencies"])
-        self.assertEqual("specialization", blacksmithing["childRelationship"])
-        self.assertIn("Smith's Tools", [
-            facet.get("tool") for facet in blacksmithing["facets"]
-        ])
-        # The hierarchy is organizational and conveys no automatic rank
-        # calculation, training inheritance or numeric composition.
+        self.assertIn("Smith's Tools", blacksmithing["associatedTools"])
+        self.assertEqual(["Alchemist's Supplies"],
+                         identities["competency.alchemy"]["associatedTools"])
+        self.assertEqual(["skill.forgery"],
+                         identities["competency.forgery"]["relatedSkills"])
+        # Parent/child links do not establish a check formula or level inheritance.
         self.assertNotIn("composition", blacksmithing)
         dwarf = read(NATIVE / "upbringings/dwarf/general.json")
         dwarf_grant = next(x for x in dwarf["benefits"]
@@ -73,12 +69,11 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
             children = parent.get("childCompetencies", [])
             self.assertEqual(len(children), len(set(children)), parent["id"])
             if children:
-                self.assertEqual("specialization", parent["childRelationship"])
+                self.assertNotIn("composition", parent)
             for child_id in children:
                 self.assertIn(child_id, by_id)
                 child = by_id[child_id]
                 self.assertEqual(parent["id"], child.get("parentCompetency"))
-                self.assertEqual("specialization", child.get("parentRelationship"))
                 self.assertNotIn(child_id, children_seen)
                 children_seen.add(child_id)
                 self.assertNotIn("composition", parent)
