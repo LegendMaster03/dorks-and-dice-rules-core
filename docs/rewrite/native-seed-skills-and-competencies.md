@@ -19,7 +19,7 @@ A Skill has proficiency and level in character state. Its normal Ability-score i
 
 ## Competencies
 
-The native catalog contains **30** competency identities. The approved `competency.smithing` replaces the earlier provisional Blacksmithing identity. Armorsmithing and Weaponsmithing have been retired as native competencies because weapon and armor production can use multiple methods and materials. Each definition has one `profile` with:
+The native catalog contains **29** competency identities. The approved `competency.smithing` replaces the earlier provisional Blacksmithing identity. Armorsmithing and Weaponsmithing have been retired as native competencies because weapon and armor production can use multiple methods and materials. Each definition has one `profile` with:
 
 - **`proficiency`:** binary proficiency as part of the competency itself, not a separately tracked tool proficiency;
 - **`level`:** an independently represented advancement dimension for the same competency;
@@ -34,12 +34,13 @@ For example:
 
 - **Alchemy:** one competency, with Alchemist's Supplies as associated equipment.
 - **Carpentry:** one competency, with Carpenter's Tools as associated equipment.
+- **Bow manufacture:** may use Carpentry, Woodcarving, or another appropriate method competency depending on the activity and recipe. Bowmaking is not a separate native competency or level. Its historical Craft specialty remains in `working/`.
 - **Smithing:** one competency, associated with Smith's Tools. Metal weapons and armor can use Smithing where appropriate, while items made using other materials or techniques use their applicable competencies. No universal weapon- or armor-specific advancement track is introduced.
 - **Forgery:** one competency, with Forgery Kit as associated equipment. There is no separate native `skill.forgery` advancement identity; historical Forgery skill mechanics remain source-conversion evidence.
 
 ### Item categories and conditional benefits
 
-Native crafting competencies identify learned methods and disciplines, rather than always representing a category of manufactured product. `Smithing` is a single competency; making weapons or armor does not introduce separate Armorsmithing or Weaponsmithing levels. Specific recipes and applicable rules determine which competencies, tools, and abilities an activity uses.
+Native crafting competencies identify learned methods and disciplines, rather than always representing a category of manufactured product. Bowmaking has been retired as a separate native output-category identity. `Smithing` is a single competency; making weapons or armor does not introduce separate Armorsmithing or Weaponsmithing levels. Specific recipes and applicable rules determine which competencies, tools, and abilities an activity uses.
 
 Item-specific benefits can later be expressed through applicable modifiers or features. **No such benefits, level formula, or multi-competency procedure is assigned by this identity reconciliation.** The existing general parent/child structure remains available for genuinely independent specialized capabilities when justified, but this draft does not use it for armor and weapons.
 
