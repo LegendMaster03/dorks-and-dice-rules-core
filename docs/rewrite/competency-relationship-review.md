@@ -37,7 +37,7 @@
 
 The purpose of this review is to avoid inventing new general-purpose umbrella competencies, recategorizing existing source records, or silently equating use of the same physical tools with shared training.
 
-**Use Rope review:** `skill.use-rope` remains a native Skill. Moving it to a competency or removing it entirely is under consideration, not approved. Ordinary rope tasks and specialized ropework should be evaluated separately before changing the catalog.
+**Use Rope decision:** `skill.use-rope` has been retired as a native Skill. Ordinary rope work uses applicable activities and equipment; specialized rigging remains a future question rather than an automatically added Competency.
 
 ## Manufacturing method versus output review — Bowmaking, Trapmaking, and Shipmaking approved
 
@@ -128,9 +128,9 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 | --- | --- |
 | Basketweaving; Bookbinding | Retain provisionally as identifiable production techniques, although their outputs are specialized |
 | Carpentry; Woodcarving | Retain as separately meaningful methods despite overlapping source item eligibility |
-| Locksmithing | Retain pending distinction among lock construction, Tinkering, Open Lock, and Thieves' Tools |
+| Locksmithing | Retain manufacturing identity distinct from approved Security Bypass (lockpicking/security disarming) and Tinkering; exact task overlaps remain for the mechanical check review |
 | Gemcutting; Sculpting | Retain as fabrication methods, not universal finished-item categories |
-| Disguise Kit; Thieves' Tools | Tool-named identities warrant nomenclature/scope review, not automatic removal or loss of tool-proficiency compatibility |
+| Disguise; Security Bypass | Approved learned-capability names, associated respectively with Disguise Kit and Thieves' Tools; neither kit is an independent advancement identity |
 | Navigation | Retain as nonmanufacturing competency |
 | Alchemy; Brewing; Calligraphy; Cartography; Cooking; Forgery; Glassblowing; Herbalism; Leatherworking; Painting; Poisoning; Pottery; Smithing; Stonemasonry; Tinkering; Weaving | No change indicated by this method-versus-output review |
 
@@ -143,55 +143,49 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 
 **Next review:** Proceed with tool-name versus method-name identities and remaining Skill/Competency overlaps. Naval construction remains deferred, and Cobbling remains independent unless evidence demonstrates redundant mechanics.
 
-## Skill and equipment-named competency overlap review — proposals only
+## Skill and equipment-named competency overlap — approved identity reconciliation
 
-**Status:** Source comparison and candidate scope boundaries. No removal, rename, level transfer, or new competency in this section is approved or implemented. The native catalogs remain at 27 Competencies and 87 Skills.
+**Status:** The identity classifications below are approved and reflected in the native catalogs: **27 Competencies and 83 Skills**. These changes do not define check formulas, level progression, bonus stacking, or automatic transfers from previous editions. Superseded intermediate entries have been removed from `working/`.
 
-### Disguise versus Disguise Kit
+### Disguise
 
-**Current native identities:** `skill.disguise` (a Skill without an independently specified native check procedure) and `competency.disguise-kit` (an independently progressing Competency with `associatedTools: ["Disguise Kit"]`). The Competency name currently repeats its equipment identity, unlike Forgery.
+**Approved:** `competency.disguise` represents preparing, modifying, and maintaining disguises and is associated with **Disguise Kit** as equipment. The independently advancing `skill.disguise` and `competency.disguise-kit` identities are retired.
 
-**Sources:** The [3.5e Disguise Skill](https://www.d20srd.org/srd/skills/disguise.htm) uses one check to measure the effectiveness of a disguise and covers impersonation, while the edition's disguise kit is equipment that helps with the attempt. The [2024 equipment rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment) assign Disguise Kit an application (makeup) and costume crafting, with no need for an identically named Skill. A convincing verbal deception is distinguishable from preparing a likeness.
+**Source context:** [3.5e Disguise](https://www.d20srd.org/srd/skills/disguise.htm) provided a skill check for disguise effectiveness, with a kit as assisting equipment. [2024 tool rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment) associate a Disguise Kit with appearance work. The new rules do not need a second tool-named training track.
 
-**Recommendation for approval:** Consolidate into a **single `competency.disguise`**, associated with the physical Disguise Kit; retire `skill.disguise` and `competency.disguise-kit`. Resolving deception, maintaining a false story, and other interpersonal actions may use **Deception** or an appropriate Skill. Appearance work uses the unified Competency. Neither automatically adds its entire level/bonus to the other on a single check, and ownership of the kit is not proficiency in disguise.
+**Boundary:** Appearance preparation and impersonation through speech or behavior are distinguishable. **Deception** or an applicable Skill may address interpersonal performance. The future general check-resolution rules must determine any interaction; no automatic Skill-plus-Competency bonus or implicit kit ownership is approved.
 
-**Decision boundary:** Whether `competency.disguise` encompasses only constructing/maintaining a disguise or also measures how convincingly an identity is performed; the interaction with Deception should be specified when the general Skill/Competency check procedure is reconciled.
+### Security Bypass
 
-### Open Lock, Disable Device, and Thieves' Tools
+**Approved:** `competency.security-bypass` (**Security Bypass**) is the learned capability for picking applicable physical locks and bypassing or disarming applicable physical security traps, associated with **Thieves' Tools** as equipment. `skill.open-lock`, `skill.disable-device`, and `competency.thieves-tools` are retired as separate native advancement tracks.
 
-**Current native identities:** `skill.open-lock`, `skill.disable-device`, and `competency.thieves-tools` (associated with Thieves' Tools). Related manufacturing methods are `competency.locksmithing` and `competency.tinkering`.
+**Source context:** [3.5e Open Lock](https://www.d20srd.org/srd/skills/openLock.htm) and [Disable Device](https://www.d20srd.org/srd/skills/disableDevice.htm) were separate Skills; the latter also covered general mechanical interference. [2024 tool rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment) use Thieves' Tools for picking locks and disarming traps. Those source models inform the approved identity, not native progression formulas.
 
-**Sources:** The [3.5e Open Lock Skill](https://www.d20srd.org/srd/skills/openLock.htm) covers lock picking with tools as equipment. [3.5e Disable Device](https://www.d20srd.org/srd/skills/disableDevice.htm) covers mechanical disablement, jamming, traps, and covert sabotage, extending well beyond lock picking. The [2024 tool rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment) use Thieves' Tools to pick locks and disable traps; Tinker's Tools can craft a lock or trap. These are source models rather than adopted native formulas.
+| Activity | Native classification or boundary |
+| --- | --- |
+| Pick an ordinary physical lock | Security Bypass with applicable equipment and procedure |
+| Disarm or defeat an applicable physical security trap | Security Bypass and any specifically relevant feature |
+| Detect or investigate a trap | Search, Perception, Investigation, or another applicable detection rule, **not** Security Bypass proficiency by itself |
+| Sabotage, jam, dismantle, or repair a general mechanism | Applicable method such as Tinkering or Locksmithing, another suitable capability, or a specific feature; **no universal Disable Device Skill** |
+| Design, make, or repair a lock | Locksmithing or another appropriate manufacturing method; no automatic lockpicking proficiency |
+| Address magical traps | Relevant spell, feature, or special permission and check; Security Bypass alone does not bypass those requirements |
 
-| Activity | Candidate native locus | Reason to keep separate |
-| --- | --- | --- |
-| Pick an ordinary mechanical lock | One lock/security-bypass Competency associated with Thieves' Tools | Proficiency in manufacturing a lock is not automatically lockpicking skill |
-| Disarm or manipulate a physical security trap | Same specialized bypass Competency *when applicable* | Detecting a trap does not automatically grant disarming competence |
-| Jam, sabotage, disable, or rig a general mechanism | **Unresolved:** a narrowed Disable Device Skill or applicable Tinkering/other method; complex sabotage may warrant scoped expertise | 3.5e Disable Device is materially broader than lock and trap bypass |
-| Make or repair a lock | Locksmithing or an applicable manufacturing method | Constructive fabrication is different from non-destructive bypass |
-| Manufacture or repair other mechanisms | Tinkering, Smithing, etc., according to the activity | Tool overlap alone does not transfer character level |
-| Detect or identify a trap | Search, Perception, Investigation, relevant feature | Finding and defeating a hazard are separate activities |
-| Bypass or dismantle magical traps | Specific spell or feature permission and applicable check | Tool or ordinary lockpicking proficiency does not automatically defeat magic |
-
-**Recommendation for review:** Replace the **tool-named `competency.thieves-tools`** with an appropriately named specialized learned capability (working name: **Security Bypass**) and **retire `skill.open-lock`** as a duplicate level track. Decide whether `skill.disable-device` should (A) remain as a **narrowed general mechanical sabotage Skill** with trap/lock disarming moved to the bypass competency, or (B) be retired too, allocating sabotage to applicable methods and explicit features. This decision must precede any catalog change. No proposed name is approved.
-
-**Rogue feature constraint:** [Rogue Band 1 reconciliation](rogue-band-1-reconciliation.md) already approved Trapfinding/Trap Sense and retained ordinary trap search/disarming for non-Rogues. Its instruction to map `Search` and `Disable Device` to native **Competencies** conflicts with their current `skill.*` identities; the future feature implementation must use the resolved native check identities rather than promoting these Skills silently. The 3.5e DC+10 bypass is reference evidence, not an automatic native formula.
+The [Rogue Band 1 reconciliation](rogue-band-1-reconciliation.md) retains Trapfinding and Trap Sense, allowing specialized detection, disarming, and safe bypass without reserving ordinary trap handling exclusively for Rogues. **Search is a Skill; Security Bypass is a Competency**. Their check interaction, and any Rogue-specific DC advantage, remain for the mechanical review. The historic 3.5e DC+10 bypass benchmark is not adopted automatically.
 
 ### Use Rope
 
-**Current native identity:** `skill.use-rope` (still 87-Skill catalog member). Its reclassification/removal was under discussion and remains unapproved.
+**Approved retirement:** `skill.use-rope` is removed with **no new general Ropework Competency**. Ordinary knots, ropes, restraints, grappling hooks, climbing, and escape use relevant Skills, equipment, and individual activity rules where applicable. Specialized rigging could be reviewed later as a distinct technique if justified.
 
-**Sources:** [3.5e Use Rope](https://www.d20srd.org/srd/skills/useRope.htm) covers knots, splicing, grappling hooks, and binding characters. In [2024 equipment rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment), standard knots can use Sleight of Hand, a grappling hook Acrobatics, and rope restraints include their own check/escape procedures.
+**Source context:** [3.5e Use Rope](https://www.d20srd.org/srd/skills/useRope.htm) was one Skill for several rope uses. [2024 tool rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment) instead use applicable existing checks and task rules. No DC or numerical benefit is imported.
 
-**Recommendation for review:** Retire `skill.use-rope` **without immediately creating an umbrella Ropework Competency**. Resolve ordinary knotwork, securing a line, grappling-hook placement, restraint, climbing, and escape through the relevant task-specific Skills and equipment procedures. A future specialized rigging/ropework discipline is plausible but needs a distinct advancement justification (e.g., complex rigging work), not merely the common use of rope. No specific DCs, check bonus, or equipment rule is adopted in this review.
+### Next catalog questions
 
-### Further consistency work after these decisions
+- **Profession (Brewer/Cook/Herbalist/Apothecary)** versus Brewing, Cooking, Herbalism, and Alchemy: is professional knowledge a distinct learned capability, or a duplicate advancement track?
+- **Performance** (`skill.performance`) versus **Perform** (`skill.perform` and children): clarify how broad performance and specialized performance training coexist.
+- **Locksmithing/Tinkering:** confirm manufacturing boundaries, especially versus Security Bypass, through task-specific examples.
+- **Disguise/Deception:** define any check interaction through the general Skill/Competency model, not a second training identity.
 
-- **Profession (Brewer/Cook/Herbalist/Apothecary)** versus Brewing, Cooking, Herbalism, and potentially Alchemy: determine whether professional knowledge/employment and physical craft are distinguishable learned capabilities, or duplicative advancement tracks.
-- **Performance** (`skill.performance`) versus **Perform** family and its independently ranked specialties: clarify whether the umbrella Skill and family represent distinct mechanics or redundant identities.
-- **Locksmithing/Tinkering** manufacturing overlap, Disguise/Deception social interaction, and the wider Skills catalog should be checked with task-specific examples instead of assuming shared equipment means shared training.
-
-**Do not import 2024 tool+skill Advantage or 3.5 rank synergy automatically.** The native ruleset has a proficiency state and independent level whose interaction and calculation remain unresolved. Until the owner approves identity changes, this section is design analysis only.
+**Design boundary:** Nothing here adopts the 2024 tool-plus-skill Advantage rule, a 3.5e rank synergy, a numerical competency progression scale, or an unrestricted compound check. These remain independent future decisions.
 
 ## Follow-up decisions needed before ranked progression
 
