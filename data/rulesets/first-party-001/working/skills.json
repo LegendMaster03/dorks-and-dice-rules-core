@@ -127,11 +127,6 @@
       "kind": "skill"
     },
     {
-      "id": "skill.forgery",
-      "name": "Forgery",
-      "kind": "skill"
-    },
-    {
       "id": "skill.gather-information",
       "name": "Gather Information",
       "kind": "skill"
