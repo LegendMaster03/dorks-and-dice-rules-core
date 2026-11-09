@@ -214,20 +214,6 @@
       ]
     },
     {
-      "id": "competency.lockpicking",
-      "name": "Lockpicking",
-      "kind": "competency",
-      "profile": {
-        "proficiency": "binary",
-        "level": "progressive",
-        "levelScale": "pending-reconciliation",
-        "abilityResolution": "per-activity"
-      },
-      "associatedTools": [
-        "Thieves' Tools"
-      ]
-    },
-    {
       "id": "competency.locksmithing",
       "name": "Locksmithing",
       "kind": "competency",
@@ -345,20 +331,6 @@
       },
       "associatedTools": [
         "Tinker's Tools"
-      ]
-    },
-    {
-      "id": "competency.trap-disarming",
-      "name": "Trap Disarming",
-      "kind": "competency",
-      "profile": {
-        "proficiency": "binary",
-        "level": "progressive",
-        "levelScale": "pending-reconciliation",
-        "abilityResolution": "per-activity"
-      },
-      "associatedTools": [
-        "Thieves' Tools"
       ]
     },
     {
