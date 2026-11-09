@@ -145,7 +145,7 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 
 ## Skill and equipment-named competency overlap — approved identity reconciliation
 
-**Status:** The native draft contains **26 Competencies and 84 Skills**. Disguise is one Competency, Open Lock is a Skill, and Use Rope and the general Disable Device Skill have been retired. Lockpicking, Trap Disarming, and the earlier Security Bypass were provisional Competencies; all have been removed. **Thieves' Tools remain equipment**, rather than a native independently advancing Competency.
+**Status:** The native draft contains **26 Competencies and 84 Skills**. Disguise is one Competency, Open Lock is a Skill, and Use Rope and the general Disable Device Skill have been retired. Lockpicking, Trap Disarming, and the earlier Security Bypass were provisional Competencies; all have been removed. **Thieves' Tools remain equipment that can have a separately granted, binary equipment proficiency**, rather than a native independently advancing Competency.
 
 ### Disguise
 
@@ -153,11 +153,11 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 
 ### Open Lock and Thieves' Tools
 
-**Approved:** `skill.open-lock` is an ordinary Skill governing attempts to open locks without their intended keys. Its success or failure is resolved through the applicable Skill check and lock-specific rules. **Thieves' Tools** are equipment, not a second native independently leveled competency. The manufacturing competency **Locksmithing** remains distinct: a character skilled at making or repairing locks is not automatically skilled at picking them.
+**Approved:** `skill.open-lock` is an ordinary Skill governing attempts to open locks without their intended keys. Its success or failure is resolved through the applicable Skill check and lock-specific rules. **Thieves' Tools** are equipment. Proficiency with them is a narrow equipment qualification, not a second native independently leveled competency. The manufacturing competency **Locksmithing** remains distinct: a character skilled at making or repairing locks is not automatically skilled at picking them.
 
-**Scope:** Picking a lock is distinct from making, repairing, or destroying it. Source editions may grant **Thieves' Tools proficiency**, which is not equivalent to simply possessing the equipment. That source-granted proficiency and its interaction with an applicable Skill must be handled by the future proficiency/equipment reconciliation rather than erased or silently converted into a second advancing Competency.
+**Scope:** Picking a lock is distinct from making, repairing, or destroying it. **Thieves' Tools proficiency** remains available as a separately granted qualification in the shared weapon/armor/shield/tool equipment-proficiency framework. Possession of the tools, proficiency with them, and the Open Lock Skill are distinct. An equipment grant does not automatically grant a Skill, and the Skill does not automatically grant equipment proficiency. Their exact mechanical interaction remains to be reconciled.
 
-**5.x compatibility boundary:** 2014 tool proficiency contributes to lock opening and trap disarming; the 2024 tool rules also recognize a tool/Skill proficiency interaction. [2014 Basic Rules](https://www.dndbeyond.com/sources/dnd/basic-rules-2014/equipment) and [2024 Basic Rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment). The identity reconciliation does **not** approve replacing those rules with possession-only access, automatic Skill proficiency, an extra level track, or a new universal numeric formula.
+**5.x compatibility boundary:** The 2014 tool rules allow proficiency to contribute to lock opening and trap disarming; the 2024 tool rules also recognize a tool/Skill proficiency interaction. [2014 Basic Rules](https://www.dndbeyond.com/sources/dnd/basic-rules-2014/equipment) and [2024 Basic Rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment). The identity reconciliation preserves the capability to represent these grants without adopting possession-only access, automatic Skill proficiency, an extra level track, or a new universal numeric formula.
 
 ### Disarming traps as an activity, not a competency
 
@@ -184,9 +184,9 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 - **Profession (Brewer/Cook/Herbalist/Apothecary)** versus Brewing, Cooking, Herbalism, and Alchemy: decide whether employment/professional knowledge and production skills warrant separate progression.
 - **Performance** (`skill.performance`) versus the **Perform** family: determine whether there are duplicate training identities.
 - **Locksmithing/Tinkering** and **Disguise/Deception**: resolve overlap by activity and the general Skill/Competency mechanics rather than by sharing a tool name.
-- **5.x tool proficiency**: represent source-granted Thieves' Tools proficiency and any tool/Skill interactions without adding a second independently advancing catalog competency. Exact representation and stacking remain open.
+- **Shared equipment proficiency**: weapon, armor, shield, and tool qualifications use a common structural grant/eligibility framework. Thieves' Tools proficiency is a narrow qualification, not a leveled Competency; exact data representation and check effects remain open. Do not duplicate Smithing or other Competencies just because they name associated tools.
 
-**Design boundary:** The identity cleanup neither adopts nor abolishes all 5.x tool proficiency mechanics. No automatic conversion, proficiency stacking, check DC, 2024 Advantage rule, or rank progression has been implemented.
+**Approved equipment-proficiency direction:** Keep binary, non-leveling equipment qualifications within a common weapon/armor/shield/tool framework. Grant them explicitly and apply them only within the relevant equipment scope, without automatically duplicating existing Competency training. **Unresolved:** check effects, grant schema, 5.x tool/Skill interaction, stacking, prerequisites, DCs, and progression formulas. No executable equipment proficiency change is implemented.
 
 ## Follow-up decisions needed before ranked progression
 
