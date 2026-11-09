@@ -76,6 +76,29 @@
       }
     },
     {
+      "id": "bowmaking-method-based",
+      "kind": "native-crafting-output-reconciliation",
+      "input": {
+        "historicalCapability": "Craft (bowmaking)",
+        "manufacturedProduct": "bow",
+        "sourceEligibleTools": [
+          "Carpenter's Tools",
+          "Woodcarver's Tools"
+        ]
+      },
+      "expect": {
+        "retiredNativeCompetency": "competency.bowmaking",
+        "applicableCompetencies": [
+          "competency.carpentry",
+          "competency.woodcarving"
+        ],
+        "selection": "by-recipe-and-activity",
+        "historicalSourcePreserved": true,
+        "automaticLevelConversion": false,
+        "bowSpecificModifiers": "not-assigned"
+      }
+    },
+    {
       "id": "stealth-components",
       "kind": "skill-composite",
       "input": {
