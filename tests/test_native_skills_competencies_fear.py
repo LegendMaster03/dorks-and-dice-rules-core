@@ -35,6 +35,31 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
             for child in identities[parent]["childSkills"]:
                 self.assertIn(child,identities)
 
+    def test_native_smithing_identity_and_retired_item_categories(self):
+        native = read(NATIVE / "competencies.json")["competencies"]
+        identities = {item["id"]: item for item in native}
+        self.assertEqual(len(native), len(identities))
+        self.assertIn("competency.smithing", identities)
+        smithing = identities["competency.smithing"]
+        self.assertEqual("Smithing", smithing["name"])
+        self.assertIn("Smith's Tools", smithing["associatedTools"])
+        self.assertNotIn("childCompetencies", smithing)
+        for retired in ("competency.blacksmithing", "competency.armorsmithing",
+                        "competency.weaponsmithing"):
+            self.assertNotIn(retired, identities)
+        # The historical source is retained as evidence, not deployed as
+        # duplicate native character competencies.
+        working = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
+        self.assertTrue({"competency.smithing", "competency.blacksmithing",
+                         "competency.armorsmithing", "competency.weaponsmithing"}.issubset(working))
+        dwarf = read(NATIVE / "upbringings/dwarf/general.json")
+        crafting = next(x for x in dwarf["benefits"] if x["id"] == "crafting-tradition")
+        self.assertIn("competency.smithing", crafting["chooseOne"])
+        self.assertTrue(all(choice in identities for choice in crafting["chooseOne"]))
+        # Use Rope remains a Skill pending a separate classification review.
+        skills = read(NATIVE / "skills.json")["skills"]
+        self.assertIn("skill.use-rope", {x["id"] for x in skills})
+
     def test_selected_fear_rule_retains_unresolved_escalation_as_inert(self):
         native = read(NATIVE / "fear.json")
         source = read(WORKING / "fear.json")
