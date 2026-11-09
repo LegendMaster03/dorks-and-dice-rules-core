@@ -22,7 +22,7 @@
       "id": "crafting-tradition",
       "description": "Choose one native crafting Competency.",
       "chooseOne": [
-        "competency.blacksmithing",
+        "competency.smithing",
         "competency.brewing",
         "competency.stonemasonry"
       ]
