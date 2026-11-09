@@ -63,7 +63,7 @@ infrastructure or a source-version rule selector.
 - Six native Conditions: Deafened, Exhaustion, Frightened, Grappled,
   Poisoned and Restrained. Nine remaining Conditions are candidates.
 
-**Later reconciliation note:** The counts above describe the original staged baseline, not the current draft. The subsequent native competency reconciliation contains 87 Skills and 27 Competencies after consolidating Forgery into one Competency, naming the metalworking competency Smithing, and retiring Armorsmithing, Weaponsmithing, Bowmaking, Trapmaking, and Shipmaking as native item-output competencies. Obsolete intermediate `working/` definitions are removed after reconciliation; original pinned source materials remain under `data/reference/` where applicable.
+**Later reconciliation note:** The counts above describe the original staged baseline, not the current draft. The subsequent native competency reconciliation contains 83 Skills and 28 Competencies after consolidating Forgery into one Competency, naming the metalworking competency Smithing, and retiring Armorsmithing, Weaponsmithing, Bowmaking, Trapmaking, and Shipmaking as native item-output competencies. The draft also consolidates Disguise, removes independent Open Lock/Disable Device/Use Rope Skills, and establishes **separate Lockpicking and Trap Disarming competencies** rather than a combined Security Bypass identity. Obsolete intermediate `working/` definitions are removed after reconciliation; original pinned source materials remain under `data/reference/` where applicable.
 
 ## Completeness controls and remaining caveats
 
