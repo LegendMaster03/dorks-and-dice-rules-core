@@ -41,7 +41,7 @@ The purpose of this review is to avoid inventing new general-purpose umbrella co
 
 ## Manufacturing method versus output review — Bowmaking, Trapmaking, and Shipmaking approved
 
-**Status:** Bowmaking, Trapmaking, and Shipmaking retirements approved and reflected in the 27-entry native catalog. Detailed naval construction and component mechanics remain deferred; Cobbling remains retained.
+**Status:** Bowmaking, Trapmaking, and Shipmaking retirements approved and reflected in the 26-entry native catalog. Detailed naval construction and component mechanics remain deferred; Cobbling remains retained.
 
 ### Classification criterion
 
@@ -60,7 +60,7 @@ Crafting competencies describe an independently meaningful craft, technique, or 
 
 ### Trapmaking — cross-system analysis
 
-**Disposition: approved and reflected in native JSON.** `competency.trapmaking` is no longer in the 27-entry native catalog. The following source comparisons support the retirement without requiring an obsolete intermediate record.
+**Disposition: approved and reflected in native JSON.** `competency.trapmaking` is no longer in the 26-entry native catalog. The following source comparisons support the retirement without requiring an obsolete intermediate record.
 
 | Source | Source-supported mechanics | Implication for native design |
 | --- | --- | --- |
@@ -91,7 +91,7 @@ This differs from a total removal of trap-creation expertise. The source evidenc
 
 ### Shipmaking — cross-system analysis
 
-**Disposition: approved retirement, reflected in native JSON.** `competency.shipmaking` is absent from the 27-entry native catalog. Detailed ship construction and its interface with crafting are outside the scope of this reconciliation.
+**Disposition: approved retirement, reflected in native JSON.** `competency.shipmaking` is absent from the 26-entry native catalog. Detailed ship construction and its interface with crafting are outside the scope of this reconciliation.
 
 | Source | Source-supported mechanics | Consequence for native design |
 | --- | --- | --- |
