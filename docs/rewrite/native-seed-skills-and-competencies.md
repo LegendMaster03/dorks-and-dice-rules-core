@@ -19,7 +19,7 @@ A Skill has proficiency and level in character state. Its normal Ability-score i
 
 ## Competencies
 
-The native catalog contains **32** competency identities after merging the former Smithing tool identity into Blacksmithing. Each definition has one `profile` with:
+The native catalog contains **30** competency identities. The approved `competency.smithing` replaces the earlier provisional Blacksmithing identity. Armorsmithing and Weaponsmithing have been retired as native competencies because weapon and armor production can use multiple methods and materials. Each definition has one `profile` with:
 
 - **`proficiency`:** binary proficiency as part of the competency itself, not a separately tracked tool proficiency;
 - **`level`:** an independently represented advancement dimension for the same competency;
@@ -34,14 +34,14 @@ For example:
 
 - **Alchemy:** one competency, with Alchemist's Supplies as associated equipment.
 - **Carpentry:** one competency, with Carpenter's Tools as associated equipment.
-- **Blacksmithing:** one competency, with Smith's Tools as associated equipment. Its children are Armorsmithing and Weaponsmithing. Both children independently identify Smith's Tools as applicable equipment; this does not grant either child proficiency or establish inherited levels.
+- **Smithing:** one competency, associated with Smith's Tools. Metal weapons and armor can use Smithing where appropriate, while items made using other materials or techniques use their applicable competencies. No universal weapon- or armor-specific advancement track is introduced.
 - **Forgery:** one competency, with Forgery Kit as associated equipment. There is no separate native `skill.forgery` advancement identity; historical Forgery skill mechanics remain source-conversion evidence.
 
-### Specialization structure
+### Item categories and conditional benefits
 
-`childCompetencies` and `parentCompetency` follow the existing Skills parent/child reference pattern. The specialization does **not** constitute a different kind of capability or a container of nested skill/tool implementations. Each child is itself a native competency with the same proficiency/level profile.
+Native crafting competencies identify learned methods and disciplines, rather than always representing a category of manufactured product. `Smithing` is a single competency; making weapons or armor does not introduce separate Armorsmithing or Weaponsmithing levels. Specific recipes and applicable rules determine which competencies, tools, and abilities an activity uses.
 
-As with Skills, the hierarchy and any resulting numerical composition are separate design questions: no automatic arithmetic mean, rank inheritance, parent proficiency grant, or child proficiency grant is inferred from the reference alone. A later explicit rule can establish applicable mechanics.
+Item-specific benefits can later be expressed through applicable modifiers or features. **No such benefits, level formula, or multi-competency procedure is assigned by this identity reconciliation.** The existing general parent/child structure remains available for genuinely independent specialized capabilities when justified, but this draft does not use it for armor and weapons.
 
 ## Historical source information
 
