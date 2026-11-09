@@ -53,13 +53,17 @@
     },
     {
       "name": "Disable Device",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.disable-device"
+      "disposition": "split-by-activity",
+      "nativeCompetency": "competency.security-bypass",
+      "scope": "physical-security-trap-disarming-only",
+      "notes": "General mechanism sabotage or repair uses an applicable method such as Tinkering or Locksmithing. No blanket conversion of old Disable Device ranks."
     },
     {
       "name": "Disguise",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.disguise"
+      "disposition": "native-competency",
+      "nativeCompetency": "competency.disguise",
+      "scope": "appearance-and-disguise-preparation",
+      "notes": "Native Disguise competency uses Disguise Kit as equipment. Social deception remains a separate Skill; no automatic bonus stacking."
     },
     {
       "name": "Escape Artist",
@@ -123,8 +127,10 @@
     },
     {
       "name": "Open Lock",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.open-lock"
+      "disposition": "native-competency",
+      "nativeCompetency": "competency.security-bypass",
+      "scope": "lockpicking",
+      "notes": "Security Bypass is the learned capability; Thieves' Tools remain equipment, not a separate advancement track."
     },
     {
       "name": "Perform",
@@ -197,8 +203,8 @@
     },
     {
       "name": "Use Rope",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.use-rope"
+      "disposition": "no-independent-native-identity",
+      "notes": "Ordinary rope tasks use applicable Skills and equipment procedures. Specialized rigging remains open for a future distinct-identity review."
     },
     {
       "name": "Wilderness Lore (3e)",
