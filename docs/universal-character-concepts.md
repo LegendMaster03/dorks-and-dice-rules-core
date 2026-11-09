@@ -2,6 +2,8 @@
 
 Rules Core separates universal Character semantics from source identity and from the rule implementation that calculates a value.
 
+**Scope of this document:** The source-compatibility and existing consumer mechanics below describe the implementation being reconciled. They do not define the developing native `first-party-001` Competency schema: native competencies have a single proficiency/level profile, source Craft/tool facets are not independent native character capabilities, and native Smithing has been consolidated into Blacksmithing. Runtime and consumer migration is deferred until the native schema is approved.
+
 The authoritative flow is:
 
 ```text
