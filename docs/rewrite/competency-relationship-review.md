@@ -37,7 +37,49 @@
 
 The purpose of this review is to avoid inventing new general-purpose umbrella competencies, recategorizing existing source records, or silently equating use of the same physical tools with shared training.
 
-**Use Rope review:** `skill.use-rope` remains a native Skill. Moving it to a competency or removing it entirely is under consideration, not approved. Ordinary rope tasks and specialized ropework should be evaluated separately before changing the catalog.\n\n## Follow-up decisions needed before ranked progression
+**Use Rope review:** `skill.use-rope` remains a native Skill. Moving it to a competency or removing it entirely is under consideration, not approved. Ordinary rope tasks and specialized ropework should be evaluated separately before changing the catalog.
+
+## Manufacturing method versus output review — proposals only
+
+**Status:** Review findings, not approved changes. The 30-entry native catalog is unchanged by this review.
+
+### Classification criterion
+
+Crafting competencies describe an independently meaningful craft, technique, or material-working discipline, **not merely a category of finished goods**. The narrower output of a discipline is not itself grounds for removing it: expertise in specialized production can be a real learned method. Item recipes identify the applicable tool, method, material and abilities; a named item category does not automatically define a character advancement track. Nonmanufacturing competencies such as Navigation are outside this particular criterion.
+
+**Source examined:** *Heliana's Guide to Monster Hunting*, Second Edition v2.02, Chapter 5, “Tools and Their Products,” printed page 107. Its tool table assigns wooden bows and similar equipment to Carpenter's Tools or Woodcarver's Tools, some mechanical weapons to Tinker's Tools, leather goods to Leatherworker's Tools, and footwear to Cobbler's Tools. It does not require separately advancing Bowmaking, Shipmaking, or Trapmaking proficiencies. Tool applicability remains subject to the relevant manufacturing procedure and GM judgment. These are source observations, not new native rules.
+
+### Priority candidates
+
+| Competency | Assessment | Proposed next step |
+| --- | --- | --- |
+| **Bowmaking** | Product-focused specialty; ordinary wooden bow manufacture is already covered by applicable woodworking tools in the Loot Tavern source. Special bowyer techniques can be meaningful but need not require a separate native level. | **Candidate retirement**, with applicable method competency and optional conditional bow-specific benefits; no automatic conversion decided |
+| **Shipmaking** | A complex final project requiring several possible crafts, materials, and design expertise, not one universal manufacturing method. | **Candidate project-based treatment**; determine whether specialized naval design remains separately trained before any retirement |
+| **Cobbling** | Recognizable footwear construction, fitting, and repair craft. Loot Tavern expressly associates footwear with Cobbler's Tools. | **Retain provisionally**; no basis yet to collapse into Leatherworking |
+| **Trapmaking** | Traps can be structural, mechanical, chemical, improvised, or magical. Manufacture, design, placement, and disarming are distinct activities. | **Candidate retirement as a generic item-output craft**; review design/setting separately before assigning applicable competencies |
+
+### Wider consistency scan
+
+| Current competencies | Preliminary treatment |
+| --- | --- |
+| Basketweaving; Bookbinding | Retain provisionally as identifiable production techniques, although their outputs are specialized |
+| Carpentry; Woodcarving | Retain as separately meaningful methods despite overlapping source item eligibility |
+| Locksmithing | Retain pending distinction among lock construction, Tinkering, Open Lock, and Thieves' Tools |
+| Gemcutting; Sculpting | Retain as fabrication methods, not universal finished-item categories |
+| Disguise Kit; Thieves' Tools | Tool-named identities warrant nomenclature/scope review, not automatic removal or loss of tool-proficiency compatibility |
+| Navigation | Retain as nonmanufacturing competency |
+| Alchemy; Brewing; Calligraphy; Cartography; Cooking; Forgery; Glassblowing; Herbalism; Leatherworking; Painting; Poisoning; Pottery; Smithing; Stonemasonry; Tinkering; Weaving | No change indicated by this method-versus-output review |
+
+### Boundaries and follow-up
+
+- Each native competency still has **one proficiency state and one independently advancing level**. This review grants no level-dependent bonus, prerequisite, or proficiency-transfer rule.
+- Item-type-specific benefits may be represented by **conditional modifiers** without introducing new competencies, but no new modifier has been approved.
+- Multi-craft projects do not imply rank averaging, shared proficiency, automatic prerequisites, or a particular number of checks.
+- Historical 3.x Craft specialties remain in `working/` as reference evidence if the native identities later change.
+
+**Order of review:** Bowmaking, Trapmaking, Shipmaking, followed by broader tool-name/skill overlap. Cobbling can remain independent unless new evidence demonstrates redundant mechanics.
+
+## Follow-up decisions needed before ranked progression
 
 1. **Progression model:** whether ranks measure check bonuses, qualification thresholds, access to techniques, or a combination; whether all competencies use the same rank schedule.
 2. **Conditional item-specific modifiers:** determine whether features may grant bonuses for making particular item types without creating new competencies or automatic proficiency transfers.
