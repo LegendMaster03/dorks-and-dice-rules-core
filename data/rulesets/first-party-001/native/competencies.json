@@ -130,8 +130,8 @@
       ]
     },
     {
-      "id": "competency.disguise-kit",
-      "name": "Disguise Kit",
+      "id": "competency.disguise",
+      "name": "Disguise",
       "kind": "competency",
       "profile": {
         "proficiency": "binary",
@@ -320,8 +320,8 @@
       ]
     },
     {
-      "id": "competency.thieves-tools",
-      "name": "Thieves' Tools",
+      "id": "competency.security-bypass",
+      "name": "Security Bypass",
       "kind": "competency",
       "profile": {
         "proficiency": "binary",
