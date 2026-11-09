@@ -153,18 +153,6 @@
       ]
     },
     {
-      "id": "competency.disguise-kit",
-      "name": "Disguise Kit",
-      "kind": "competency",
-      "trainingIdentity": "competency.disguise-kit",
-      "facets": [
-        {
-          "type": "tool-proficiency",
-          "tool": "Disguise Kit"
-        }
-      ]
-    },
-    {
       "id": "competency.gemcutting",
       "name": "Gemcutting",
       "kind": "competency",
@@ -353,18 +341,6 @@
         {
           "type": "tool-proficiency",
           "tool": "Mason's Tools"
-        }
-      ]
-    },
-    {
-      "id": "competency.thieves-tools",
-      "name": "Thieves' Tools",
-      "kind": "competency",
-      "trainingIdentity": "competency.thieves-tools",
-      "facets": [
-        {
-          "type": "tool-proficiency",
-          "tool": "Thieves' Tools"
         }
       ]
     },
