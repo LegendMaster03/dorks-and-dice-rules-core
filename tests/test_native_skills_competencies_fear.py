@@ -17,7 +17,16 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
     def test_skills_are_exact_selected_source_definitions(self):
         native = read(NATIVE / "skills.json")["skills"]
         source = read(WORKING / "skills.json")["skills"]
-        self.assertEqual(source, native)
+        # Historical source Skills remain intact; native Forgery is one Competency.
+        self.assertEqual([s for s in source if s["id"] != "skill.forgery"], native)
+        self.assertEqual(87, len(native))
+        self.assertIn("skill.forgery", {s["id"] for s in source})
+        competencies = read(NATIVE / "competencies.json")["competencies"]
+        self.assertIn("competency.forgery", {c["id"] for c in competencies})
+        self.assertNotIn("skill.forgery", {s["id"] for s in native})
+        forgery = next(c for c in competencies if c["id"] == "competency.forgery")
+        self.assertNotIn("relatedSkills", forgery)
+        self.assertEqual(["Forgery Kit"], forgery["associatedTools"])
         identities = {s["id"]: s for s in native}
         self.assertEqual(len(native), len(identities))
         for parent in ("skill.perception","skill.stealth","skill.acrobatics","skill.athletics"):
