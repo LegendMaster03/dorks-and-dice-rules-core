@@ -264,8 +264,34 @@
         "trapDetection": "applicable-skill-or-feature",
         "trapConstruction": "applicable-crafting-method-or-feature",
         "generalSabotage": "applicable-method-or-feature",
-        "fiveXToolProficiency": "requires-explicit-grant-and-check-interaction-reconciliation",
+        "fiveXToolProficiency": "shared-equipment-qualification; check-interactions-pending",
         "automaticRankConversion": false
+      }
+    },
+    {
+      "id": "shared-equipment-proficiency-qualification",
+      "kind": "native-equipment-qualification-structure",
+      "input": {
+        "equipmentCategories": [
+          "weapon",
+          "armor",
+          "shield",
+          "tool"
+        ],
+        "example": "Thieves' Tools"
+      },
+      "expect": {
+        "sharedEquipmentQualificationFramework": true,
+        "independentlyRankedEquipmentProficiency": false,
+        "proficiencyDistinctFromPossession": true,
+        "explicitGrantRequired": true,
+        "categorySpecificMechanicalEffects": "pending-reconciliation",
+        "proficiencyWithEquipmentDoesNotGrantSkill": "skill.open-lock",
+        "skillDoesNotAutomaticallyGrantEquipmentProficiency": true,
+        "applicableTrapDisarming": "task-specific",
+        "associatedToolsDoNotImplySeparateQualification": true,
+        "smithingAndSmithsTools": "no-automatic-duplicate-training-requirement",
+        "numericCheckInteraction": "pending-reconciliation"
       }
     },
     {
