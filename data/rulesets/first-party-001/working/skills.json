@@ -219,6 +219,11 @@
       ]
     },
     {
+      "id": "skill.open-lock",
+      "name": "Open Lock",
+      "kind": "skill"
+    },
+    {
       "id": "skill.perception",
       "name": "Perception",
       "kind": "skill",
