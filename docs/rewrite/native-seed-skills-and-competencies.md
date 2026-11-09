@@ -34,7 +34,7 @@ For example:
 
 - **Alchemy:** one competency, with Alchemist's Supplies as associated equipment.
 - **Carpentry:** one competency, with Carpenter's Tools as associated equipment.
-- **Blacksmithing:** one competency, with Smith's Tools as associated equipment. Its children are Armorsmithing and Weaponsmithing.
+- **Blacksmithing:** one competency, with Smith's Tools as associated equipment. Its children are Armorsmithing and Weaponsmithing. Both children independently identify Smith's Tools as applicable equipment; this does not grant either child proficiency or establish inherited levels.
 - **Forgery:** one competency, with Forgery Kit as associated equipment. The separate `skill.forgery` retains an explicit `relatedSkills` reference pending review of its cross-category relationship.
 
 ### Specialization structure
