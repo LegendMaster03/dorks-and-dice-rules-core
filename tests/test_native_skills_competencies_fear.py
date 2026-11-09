@@ -14,7 +14,7 @@ def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 class PromotedSkillsAndFearTests(unittest.TestCase):
-    def test_skills_are_exact_selected_source_definitions(self):
+    def test_native_skills_preserve_source_except_reconciled_forgery(self):
         native = read(NATIVE / "skills.json")["skills"]
         source = read(WORKING / "skills.json")["skills"]
         # Historical source Skills remain intact; native Forgery is one Competency.
