@@ -99,6 +99,31 @@
       }
     },
     {
+      "id": "trapmaking-method-based",
+      "kind": "native-crafting-output-reconciliation",
+      "input": {
+        "historicalCapability": "Craft (trapmaking)",
+        "trapTypes": [
+          "mechanical",
+          "structural",
+          "improvised",
+          "magical"
+        ]
+      },
+      "expect": {
+        "retiredNativeCompetency": "competency.trapmaking",
+        "construction": "applicable-method-materials-and-procedure",
+        "placement": "applicable-tool-skill-or-feature",
+        "detection": "applicable-detection-mechanics",
+        "disarming": "applicable-tool-skill-or-feature",
+        "magicalTrap": "spell-or-specific-feature-as-required",
+        "historicalSourcePreserved": true,
+        "automaticLevelConversion": false,
+        "automaticProficiencyTransfer": false,
+        "trapDesignBonus": "not-assigned"
+      }
+    },
+    {
       "id": "stealth-components",
       "kind": "skill-composite",
       "input": {
