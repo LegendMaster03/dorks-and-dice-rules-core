@@ -238,8 +238,8 @@
       }
     },
     {
-      "id": "tool-distinction",
-      "kind": "skill-versus-tool-competency",
+      "id": "lockpicking-trap-disarming-independent",
+      "kind": "native-competency-identity-separation",
       "input": {
         "sourceMechanics": [
           "Open Lock",
@@ -248,9 +248,16 @@
         ]
       },
       "expect": {
-        "independentSkills": true,
-        "competency": "competency.thieves-tools",
-        "relationshipScope": "selected-uses-only"
+        "lockpickingCompetency": "competency.lockpicking",
+        "trapDisarmingCompetency": "competency.trap-disarming",
+        "independentAdvancement": true,
+        "sharedAssociatedTool": "Thieves' Tools",
+        "noSeparateToolAdvancement": "competency.thieves-tools",
+        "noCombinedAdvancement": "competency.security-bypass",
+        "trapDetection": "applicable-skill-or-feature",
+        "trapConstruction": "applicable-craft-or-feature",
+        "generalSabotage": "applicable-method-or-feature",
+        "automaticRankConversion": false
       }
     },
     {
