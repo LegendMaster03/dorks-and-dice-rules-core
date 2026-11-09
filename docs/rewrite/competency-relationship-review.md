@@ -5,19 +5,19 @@
 
 ## Current accepted native baseline
 
-- The native catalog has **32** competencies. `competency.smithing` was folded into `competency.blacksmithing`; Smith's Tools is associated equipment for the single Blacksmithing competency, not a separate tool-training profile.
-- Blacksmithing is a general trainable competency, and Armorsmithing and Weaponsmithing are its independently identifiable **specializations**. Parent/child references are reciprocal. Each specialization has the same native proficiency/level profile and explicitly identifies Smith's Tools as associated equipment; no training or level is inherited by implication.
+- The native catalog has **30** competencies. `competency.smithing` is the single native Smithing competency with Smith's Tools as associated equipment. The prior native Blacksmithing identity and independent Armorsmithing/Weaponsmithing entries have been retired.
+- Crafting competencies generally describe a learned method or discipline. Weapon and armor manufacture are item categories whose procedures may involve Smithing or other relevant competencies; the items do not create an additional competency level. Conditional item-specific modifiers remain possible but unassigned.
 - Every native competency has a single provisional `profile` containing proficiency and a level. The historical Craft/tool facets remain in `working/` and reference material, not in the native definition. A level scale or evaluation formula has **not** been selected.
 - **Forgery:** the former historical `skill.forgery` is represented by `competency.forgery` in the native ruleset. `working/skills.json` retains the source entry for conversion; no second native skill or independently tracked training is created.
-- Historical `Craft` classification remains reference evidence. Native Blacksmithing uses `childCompetencies` / `parentCompetency` in parallel to the existing Skill parent/child structure; numerical composition requires an explicit future decision.
+- Historical `Craft` classification remains reference evidence. The general `childCompetencies` / `parentCompetency` vocabulary is available in parallel to Skills, but **Smithing has no native child competencies**. No numerical composition or inheritance has been approved.
 - Native Skills such as Athletics/Climb/Jump/Swim use their own **computed composite** relationship and are not precedents for automatically averaging competency values.
 
 ### Relationship vocabulary
 
 | Relationship | Intended interpretation | Automatic numeric consequence in this baseline |
 | --- | --- | --- |
-| One native competency / associated tools | A single learned capability, such as Blacksmithing, identifies relevant tools without a second training profile | None; equipment use and possession remain separate questions |
-| Parent / specialization | A broad learned discipline with separately recognizable specializations, such as Blacksmithing -> Armorsmithing | None; ranks, qualification, and proficiency transfer are undecided |
+| One native competency / associated tools | A single learned capability, such as Smithing, identifies relevant tools without a second training profile | None; equipment use and possession remain separate questions |
+| Parent / specialization | Optional structure for independently meaningful specializations, not automatically used for item output categories | None; no native Smithing child relationship remains |
 | Related competencies | Overlap or transferable knowledge without evidence of a strict parent-child relationship | None; optional scopes can be proposed later |
 | Family / taxonomy | Navigation and display grouping of otherwise independent specialties | None |
 | Computed composite Skill | Explicit numeric parent formula from constituent skill values | Only when a separate reviewed rule defines the formula |
@@ -33,21 +33,21 @@
 | Leatherworking; Cobbling | Footwear can be leatherwork, but cobbling need not cover all leatherwork, and footwear can use nonleather materials | Preserve independent identities | Is task-scoped overlap useful for repairs or manufacture? |
 | Cooking; Brewing | Both concern consumable production, but neither is necessarily a specialization of the other | Preserve independent identities | Would a culinary taxonomy provide navigation without rank transfer? |
 | Painting; Calligraphy; Bookbinding | Shared media and materials do not imply interchangeable techniques | Preserve independent identities | Should a particular craft project consume several competencies? |
-| Gemcutting; Blacksmithing | Some jewelry or setting work uses both, but gem cutting is not inherently blacksmithing | Preserve independent identities | Should multi-disciplinary crafting procedures explicitly combine competencies? |
+| Gemcutting; Smithing | Some jewelry or setting work uses both, but gem cutting is not inherently smithing | Preserve independent identities | Should multi-disciplinary crafting procedures explicitly combine competencies? |
 
 The purpose of this review is to avoid inventing new general-purpose umbrella competencies, recategorizing existing source records, or silently equating use of the same physical tools with shared training.
 
-## Follow-up decisions needed before ranked progression
+**Use Rope review:** `skill.use-rope` remains a native Skill. Moving it to a competency or removing it entirely is under consideration, not approved. Ordinary rope tasks and specialized ropework should be evaluated separately before changing the catalog.\n\n## Follow-up decisions needed before ranked progression
 
 1. **Progression model:** whether ranks measure check bonuses, qualification thresholds, access to techniques, or a combination; whether all competencies use the same rank schedule.
-2. **Specialization behavior:** whether a parent has independently purchased ranks; whether child ranks grant any general competence; whether parent ranks qualify a character for introductory specialized tasks.
+2. **Conditional item-specific modifiers:** determine whether features may grant bonuses for making particular item types without creating new competencies or automatic proficiency transfers.
 3. **Equipment requirements:** distinguish the competency from possession of Smith's Tools, Alchemist's Supplies, or other required equipment. A tool is not a second character advancement track unless explicitly approved.
 4. **Duplicate grants and origins:** how repeated competency training from Background, Upbringing, Class, Species, or feats interacts with rank allocation.
 5. **Crafting and harvesting:** preserve Loot Tavern Assessment/Carving creature-type checks, required tool qualifications, qualified guidance and helper proficiency contributions; do not infer proficiency from a related competency.
-6. **Compatibility:** native `competency.smithing` has been retired, but preserved `working/` and source representations remain historical evidence. If an imported source or external tool still emits the old identifier, an explicit compatibility mapping can be reviewed; the runtime must not load `working/` as a fallback.
+6. **Compatibility:** native `competency.blacksmithing`, `competency.armorsmithing`, and `competency.weaponsmithing` have been replaced or retired. Preserved `working/` and source representations remain historical evidence. An explicit future compatibility mapping can be reviewed if a consumer still emits those old identifiers; the runtime must not load `working/` as a fallback.
 
 ## Implementation boundaries
 
 Only the JSON draft has been revised. Existing C# training presentation and mechanics consumers still implement the older contract; they must not be treated as an authoritative interpretation of the provisional competency profile.
 
-The current structural profile expresses proficiency plus level within one native competency. Numerical progression, governing Ability behavior, and parent/child composition are still undecided; these should not be inferred from historical source facets. New parent-child proposals must be reviewed as mechanical relationships rather than generated from naming similarity.
+The current structural profile expresses proficiency plus level within one native competency. Numerical progression and governing Ability behavior are still undecided; these should not be inferred from historical source facets. Crafting item categories do not imply separate competency identities. Independent specializations, if any are proposed later, require their own mechanical review.
