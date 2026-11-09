@@ -60,6 +60,19 @@ class PromotedSkillsAndFearTests(unittest.TestCase):
         skills = read(NATIVE / "skills.json")["skills"]
         self.assertIn("skill.use-rope", {x["id"] for x in skills})
 
+    def test_bowmaking_is_an_output_not_a_native_advancement_track(self):
+        native = read(NATIVE / "competencies.json")["competencies"]
+        identities = {entry["id"]: entry for entry in native}
+        self.assertEqual(29, len(native))
+        self.assertEqual(29, len(identities))
+        self.assertNotIn("competency.bowmaking", identities)
+        for retained in ("competency.carpentry", "competency.woodcarving",
+                         "competency.shipmaking", "competency.trapmaking",
+                         "competency.cobbling"):
+            self.assertIn(retained, identities)
+        working = {entry["id"] for entry in read(WORKING / "competencies.json")["competencies"]}
+        self.assertIn("competency.bowmaking", working)
+
     def test_selected_fear_rule_retains_unresolved_escalation_as_inert(self):
         native = read(NATIVE / "fear.json")
         source = read(WORKING / "fear.json")
