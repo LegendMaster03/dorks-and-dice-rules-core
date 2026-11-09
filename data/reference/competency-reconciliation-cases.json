@@ -52,6 +52,30 @@
       }
     },
     {
+      "id": "smithing-not-output-category",
+      "kind": "native-single-competency",
+      "input": {
+        "historicalCapabilities": [
+          "Craft (blacksmithing)",
+          "Craft (armorsmithing)",
+          "Craft (weaponsmithing)",
+          "Smith's Tools"
+        ]
+      },
+      "expect": {
+        "nativeCompetency": "competency.smithing",
+        "associatedTool": "Smith's Tools",
+        "noIndependentNativeCompetencies": [
+          "competency.blacksmithing",
+          "competency.armorsmithing",
+          "competency.weaponsmithing"
+        ],
+        "weaponOrArmorManufacture": "use-applicable-method-competency",
+        "itemSpecificModifiers": "not-assigned",
+        "historicalSourceProfilesPreservedAsEvidence": true
+      }
+    },
+    {
       "id": "stealth-components",
       "kind": "skill-composite",
       "input": {
