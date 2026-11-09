@@ -238,25 +238,33 @@
       }
     },
     {
-      "id": "lockpicking-trap-disarming-independent",
-      "kind": "native-competency-identity-separation",
+      "id": "open-lock-with-tools-and-task-based-trap-disarming",
+      "kind": "native-skill-and-equipment-classification",
       "input": {
         "sourceMechanics": [
           "Open Lock",
           "Disable Device",
           "Thieves' Tools"
+        ],
+        "activities": [
+          "picking locks",
+          "disarming traps"
         ]
       },
       "expect": {
-        "lockpickingCompetency": "competency.lockpicking",
-        "trapDisarmingCompetency": "competency.trap-disarming",
-        "independentAdvancement": true,
-        "sharedAssociatedTool": "Thieves' Tools",
-        "noSeparateToolAdvancement": "competency.thieves-tools",
-        "noCombinedAdvancement": "competency.security-bypass",
+        "lockpickingSkill": "skill.open-lock",
+        "thievesTools": "equipment",
+        "noIndependentNativeCompetencies": [
+          "competency.lockpicking",
+          "competency.trap-disarming",
+          "competency.security-bypass",
+          "competency.thieves-tools"
+        ],
+        "trapDisarming": "by-applicable-skill-competency-equipment-spell-or-feature",
         "trapDetection": "applicable-skill-or-feature",
-        "trapConstruction": "applicable-craft-or-feature",
+        "trapConstruction": "applicable-crafting-method-or-feature",
         "generalSabotage": "applicable-method-or-feature",
+        "fiveXToolProficiency": "requires-explicit-grant-and-check-interaction-reconciliation",
         "automaticRankConversion": false
       }
     },
