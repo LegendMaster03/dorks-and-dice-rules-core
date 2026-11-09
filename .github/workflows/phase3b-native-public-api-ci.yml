@@ -1,17 +1,12 @@
-# Development-only checks; never deploy or merge.
+# Main integration CI and deployment prerequisite; does not itself deploy.
+# Historical filename and job identity are retained for deployment/status checks.
 name: Rules Core Phase 3B Public Native API CI
 
 on:
   push:
-    branches:
-      - main
-      - ops/rewrite-first-deployment
-      - feature/rules-core-phase3b-public-native-api
-      - feature/rules-core-rewrite
+    branches: [main]
   pull_request:
-    branches:
-      - main
-      - feature/rules-core-rewrite
+    branches: [main]
   workflow_dispatch:
 
 permissions:

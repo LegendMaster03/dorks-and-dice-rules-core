@@ -51,4 +51,4 @@ CC BY 4.0 attributions are retained in `data/reference/srd/manifest.json` becaus
 
 ## Checks and remaining work
 
-Structural tests cover the reviewed Skills catalog, composite Skills, the consolidated Blacksmithing identity, reciprocal competency parent/child links, the unified native competency profile, and the source/native boundary. This is **not** confirmation that all native numeric Skill mechanics or all crafting/tool interactions are implemented. Those require approved schemas and gameplay-engine work.
+During competency design, no automated test locks down the competency profile's field layout, count, numerical progression, or specialization formula. The lightweight JSON Action verifies parsing only. Integration testing on `main` remains a separate deployment prerequisite and may need to be reconciled with the approved schema before native competencies are deployed. Basic competency identity and relationship consistency have been reviewed manually on this branch; that is not confirmation that executable mechanics are implemented.
