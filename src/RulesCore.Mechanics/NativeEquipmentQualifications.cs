@@ -506,7 +506,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
     // A slash separates occurrence from choice in persisted selection keys.
     // Reserving it in both components makes the mapping injective.
     private static bool ValidChoiceKeyComponent(string? value) =>
-        ValidId(value) && !value!.Contains('/', StringComparison.Ordinal);
+        ValidId(value) && !value!.Contains('/');
 
     private static bool TryObject(JsonElement obj, string name, out JsonElement value)
     {
