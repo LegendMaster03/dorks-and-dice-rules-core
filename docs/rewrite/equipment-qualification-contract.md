@@ -69,13 +69,15 @@ Choice grants declare count and fromCategory; optional fromGroupIds narrows cand
       }
     }
 
+The engine rejects a source that supplies both a root and nested equipmentProficiencyGrants block, an unsupported property at the grant-block or grant-entry level, or a block with no grants for the requested mode. Those situations return unavailable rather than silently dropping effects. Evaluation is bounded across the entire request: up to 1,000 fixed-grant occurrences and 200 choice occurrences, separate from per-source limits. These limits are work-safety bounds, not gameplay limits.
+
 Class sources may also declare multiclassFixed and multiclassChoices. A Source with GrantMode = multiclass reads ONLY these entry-specific grants; it never defaults to the standard Class grants. Not all Classes have an approved multiclass grant structure yet. Existing Bard artistic training and multiclass skill choices remain separate from equipment qualification.
 
 ## Resolver contract
 
 NativeEquipmentQualifications.Resolve accepts RulesetId, Fingerprint, Sources, and optional SelectedChoices. Each Source has SourceId, OccurrenceId, and GrantMode (standard by default; multiclass only for Class sources). The caller MUST verify that the character earned the source, is at the appropriate advancement event, and satisfied feature/choice prerequisites; a matching ID alone is never proof of entitlement.
 
-Choice key: sourceOccurrenceId/choiceId. SelectedChoices maps that key to distinct eligible qualification IDs of the declared count. Missing selections return needs-choices and eligible candidates, without partial qualification grants. Malformed grants, unresolved references, unsupported choices, and duplicated source occurrence IDs return unavailable without partial grants. Stale fingerprints return invalid.
+Choice key: sourceOccurrenceId/choiceId. Both component IDs reserve the slash separator; using a slash within either ID is invalid so that two unrelated choices cannot share the same persisted key. The combined key may contain up to 321 characters. SelectedChoices maps that key to distinct eligible qualification IDs of the declared count. Missing selections return needs-choices and eligible candidates, without partial qualification grants. Malformed grants, unresolved references, unsupported choices, and duplicated source occurrence IDs return unavailable without partial grants. Stale fingerprints return invalid.
 
 A resolved projection lists each unique qualification and all matching NativeEquipmentQualificationProvenance occurrences. Repeated qualifications are Boolean, with no stacked numerical modifiers.
 
