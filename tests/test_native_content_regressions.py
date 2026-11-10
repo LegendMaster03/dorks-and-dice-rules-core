@@ -90,7 +90,15 @@ class NativeContentRegressionTests(unittest.TestCase):
                     self.assertIn("druid.animal-companion", native["choiceOnlyFeatureIds"])
                     self.assertIn("class-feature.druid.wild-companion-level-2", native["choiceOnlyFeatureIds"])
                     source["definition"] = dict(native)
-                self.assertEqual(source, cls)
+                # The native-only equipment qualification contract is an
+                # intentional executable extension, not part of the older
+                # retained working-copy baseline. Keep comparing all original
+                # fields while verifying new grants in their own tests.
+                source["definition"].pop("equipmentProficiencyGrants", None)
+                original = dict(cls)
+                original["definition"] = dict(cls["definition"])
+                original["definition"].pop("equipmentProficiencyGrants", None)
+                self.assertEqual(source, original)
 
     def test_feature_dependencies_and_provenance(self):
         for name in CLASSES:
