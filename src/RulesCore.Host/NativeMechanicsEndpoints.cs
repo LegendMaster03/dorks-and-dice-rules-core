@@ -9,6 +9,9 @@ public sealed record NativeResourceActionRequest(
     NativeCharacterRequest Character, string ResourceId, int Current,
     int? Spend = null, NativeRecoveryEvent? Rest = null);
 
+public sealed record NativeEquipmentQualificationCoverageRequest(
+    NativeEquipmentQualificationRequest Qualifications, string EquipmentId);
+
 public sealed record NativeConditionRollRequest(
     string RulesetId, string Fingerprint, IReadOnlyList<string> ConditionIds,
     NativeRollContext Roll, NativeEffectContext? Facts = null);
@@ -49,6 +52,7 @@ public static class NativeMechanicsEndpoints
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     startingEquipmentResolution = "authored-grants-only",
+                    equipmentQualifications = "authored-scopes-only",
                      manufacturingResolution = "manual-competency-subset",
                      harvestingResolution = "type-monster-manual-edits",
                     conditionRollMode = "conditional-subset",
@@ -184,6 +188,45 @@ public static class NativeMechanicsEndpoints
                 ? Results.Json(resolved, statusCode: resolved.Issues.Any(issue =>
                     issue.Code == "ruleset-version-mismatch") ? 409 : 400)
                 : Results.Ok(resolved);
+        });
+
+        // Callers validate origin/class/feature entitlements before submitting
+        // source occurrences. This endpoint resolves only authored grant scope.
+        group.MapPost("/characters/equipment-proficiencies",
+            (NativeEquipmentQualificationRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_equipment_qualification_request");
+            var result = new NativeEquipmentQualifications(catalog).Resolve(request);
+            Timing(context, "native-equipment-proficiencies", start);
+            return result.Status == "invalid"
+                ? Results.Json(result, statusCode: result.Issues.Any(issue =>
+                    issue.Code == "ruleset-version-mismatch") ? 409 : 400)
+                : Results.Ok(result);
+        });
+
+        group.MapPost("/characters/equipment-proficiencies/coverage",
+            (NativeEquipmentQualificationCoverageRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null || request.Qualifications is null ||
+                string.IsNullOrWhiteSpace(request.EquipmentId))
+                return Error(400, "invalid_equipment_qualification_request");
+            var engine = new NativeEquipmentQualifications(catalog);
+            var qualifications = engine.Resolve(request.Qualifications);
+            var coverage = engine.Covers(qualifications, request.EquipmentId);
+            Timing(context, "native-equipment-coverage", start);
+            return qualifications.Status == "invalid"
+                ? Results.Json(new { qualifications, coverage },
+                    statusCode: qualifications.Issues.Any(issue =>
+                        issue.Code == "ruleset-version-mismatch") ? 409 : 400)
+                : Results.Ok(new { qualifications, coverage });
         });
 
         group.MapPost("/advancements/eligibility", (NativeEligibilityRequest request,
