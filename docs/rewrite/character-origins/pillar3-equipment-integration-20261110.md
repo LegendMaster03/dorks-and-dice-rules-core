@@ -39,8 +39,8 @@ All original Skills, Competency option identities, selected-option counts, start
 
 ## Native equipment taxonomy gaps relevant to Origins
 
-- **High Elf** has proficiency with Longsword, Shortsword, Shortbow, and Longbow. The representative catalog defines the first three but not Longbow. No partial fixed grants were emitted; preserve the approved four-type entitlement pending Longbow reconciliation.
-- **Wood Elf** has Shortbow and Longbow; the same missing type blocks complete mapping. Its contextual Survival modifier is separate from weapon proficiency.
+- **High Elf:** the merged native equipment catalog defines Longsword, Shortsword, Shortbow and Longbow. All four approved types now have fixed `equipmentProficiencyGrants` in `upbringings/elf/high.json`. These are base weapon-type proficiencies, not Sword/Bow family grants or Weapon Mastery.
+- **Wood Elf:** Shortbow and Longbow are both available in the merged catalog, and `upbringings/elf/wood.json` now has both canonical fixed type grants. Its contextual Survival modifier remains separate. No Weapon Mastery is inferred.
 - **Gladiator** grants one specific mundane arena-appropriate weapon type and a matching starting weapon. The current catalog is partial, with neither the example Net nor Trident present. Do not grant all martial weapons, invent an exclusive Net/Trident pool, or detach the inventory choice from the proficiency.
 - **Soldier/Sailor** grant Land/Water Vehicles respectively. The approved equipment contract covers weapon, armor, shield, and tool, **not** a vehicle/operator category. Preserve these separate benefits without coercing them to `tool`.
 
@@ -83,6 +83,6 @@ These contrasts are **review flags, not approved compensation rules**. A narrowe
 
 1. Allocate actual Competency **proficiency + one rank / rank only / proficiency only** source by source. Do not create rank gains merely from repeated binary equipment qualifications. Pay attention to fixed Charlatan/Sailor/Rock Gnome grants and one-of trade or cultural training choices.
 2. Specify and validate the Origin selection-authority projection for cross-domain choices, retaining the same one-of cardinality and provenance; Guild Merchant's Navigation-versus-extra-language is a similar unresolved cross-domain case.
-3. Reconcile Longbow and specific Gladiator eligible types; defer vehicle category semantics until separately approved. These should not block unrelated Origin balance work.
+3. **Longbow is reconciled** and High/Wood Elf weapon type grants have been authored and checked. Define the specific Gladiator eligible types and linked starting item when that eligibility is approved; defer vehicle operator/category semantics until separately approved. These should not block unrelated Origin balance work.
 4. Decide whether any unavoidable duplicate Origin/Class Skill or equipment qualification receives an alternative benefit. At present, Criminal + Rogue gives one effective Thieves' Tools proficiency with two independent source occurrences and no invented compensation.
 5. Reassess conventional and cross-cultural full character packages, including General/Rock Gnome value, skills, contextual modifiers, language grants, equipment costs, social support, and conditional versus persistent benefits. No numerical balancing changes were made in this pass.
