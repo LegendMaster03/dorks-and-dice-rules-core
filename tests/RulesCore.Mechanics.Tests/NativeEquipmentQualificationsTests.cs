@@ -105,6 +105,49 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void MagicAndOrdinaryItemDefinitionsInheritTheSameBaseWeaponProficiency()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+
+        // These are four distinct item *definitions*, not four equipment
+        // proficiency identities or instances of the same owned item.
+        var longsword = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.sword", "longsword")));
+        Assert.Equal("resolved", longsword.Status);
+        foreach (var item in new[]
+        {
+            "item.demo.plain-longsword",
+            "item.demo.plus-one-longsword",
+            "item.demo.flame-tongue-longsword"
+        })
+        {
+            var coverage = engine.Covers(longsword, item);
+            Assert.Equal("resolved", coverage.Status);
+            Assert.True(coverage.Proficient);
+            Assert.Equal(engine.Covers(longsword, "equipment.weapon.longsword").Provenance,
+                coverage.Provenance);
+        }
+
+        // The same reusable magical variant on a Rapier remains a Rapier for
+        // equipment qualification; a Longsword grant does not cover it.
+        Assert.False(engine.Covers(longsword, "item.demo.flame-tongue-rapier").Proficient);
+        Assert.False(engine.Covers(longsword, "item.demo.plus-one-mace").Proficient);
+
+        var swordFamily = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.sword-family", "family")));
+        Assert.True(engine.Covers(swordFamily, "item.demo.flame-tongue-longsword").Proficient);
+        Assert.True(engine.Covers(swordFamily, "item.demo.flame-tongue-rapier").Proficient);
+        Assert.False(engine.Covers(swordFamily, "item.demo.plus-one-mace").Proficient);
+
+        // An unreconciled item lacks a verified canonical type. Never deduce
+        // training from its name or its magic-variant label.
+        var unknown = engine.Covers(longsword, "item.demo.unlinked-longsword");
+        Assert.Equal("unresolved", unknown.Status);
+        Assert.Null(unknown.Proficient);
+    }
+
+    [Fact]
     public void SpecificWeaponDoesNotConferItsEntireGroup()
     {
         using var f = new Fixture();
@@ -458,6 +501,7 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"equipment.group.weapon.simple","name":"Simple Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.weapon.family.mace","name":"Maces","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.family.sword","name":"Swords","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.armor.light","name":"Light Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.armor.heavy","name":"Heavy Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.shield.all","name":"Shields","kind":"equipment-group","equipmentCategory":"shield"},
@@ -466,8 +510,8 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"equipment.group.tool.musical-instrument","name":"Instruments","kind":"equipment-group","equipmentCategory":"tool","parentGroupIds":["equipment.group.tool.all"]}
                   ],
                   "equipmentTypes": [
-                    {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
-                    {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
+                    {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword"]},
+                    {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword"]},
                     {"id":"equipment.weapon.mace","name":"Mace","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.family.mace"]},
                     {"id":"equipment.weapon.morningstar","name":"Morningstar","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.mace"]},
                     {"id":"equipment.shield.shield","name":"Shield","kind":"equipment-type","equipmentCategory":"shield","groupIds":["equipment.group.shield.all"]},
@@ -515,6 +559,9 @@ public sealed class NativeEquipmentQualificationsTests
                     "equipmentProficiencyGrants":{"choices":[
                       {"id":"family","count":1,"fromCategory":"weapon",
                        "selectionKind":"equipment-group"}]}},
+                  {"id":"feature.sword-family","name":"Sword Family Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"swords","targetId":"equipment.group.weapon.family.sword"}]}},
                   {"id":"feature.mace-family","name":"Mace Family Training","kind":"feature",
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"maces","targetId":"equipment.group.weapon.family.mace"}]}},
@@ -579,7 +626,18 @@ public sealed class NativeEquipmentQualificationsTests
                   ]}},
                   {"id":"skill.open-lock","name":"Open Lock","kind":"skill"},
                   {"id":"competency.smithing","name":"Smithing","kind":"competency","associatedTools":["Smith's Tools"]},
-                  {"id":"item.thieves-tools","name":"Owned Thieves' Tools","kind":"item","equipmentTypeId":"equipment.tool.thieves-tools"}
+                  {"id":"item.thieves-tools","name":"Owned Thieves' Tools","kind":"item","equipmentTypeId":"equipment.tool.thieves-tools"},
+                  {"id":"item.demo.plain-longsword","name":"Test Longsword","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.longsword"},
+                  {"id":"item.demo.plus-one-longsword","name":"Test +1 Longsword","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.longsword"},
+                  {"id":"item.demo.flame-tongue-longsword","name":"Test Flame Tongue Longsword","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.longsword"},
+                  {"id":"item.demo.flame-tongue-rapier","name":"Test Flame Tongue Rapier","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.rapier"},
+                  {"id":"item.demo.plus-one-mace","name":"Test +1 Mace","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.mace"},
+                  {"id":"item.demo.unlinked-longsword","name":"Unreconciled Test Longsword","kind":"item"}
                 ]}
                 """);
             // A valid source repeated many times must still respect the total
