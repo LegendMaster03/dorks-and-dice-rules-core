@@ -22,18 +22,20 @@
     },
     {
       "id": "criminal-thieves-tools",
-      "name": "Thieves' Tools Training",
+      "name": "Thieves' Tools Proficiency",
       "description": "Gain training with Thieves' Tools.",
-      "competency": "competency.thieves-tools",
-      "grantType": "competency-training"
+      "grantType": "qualification-training",
+      "qualificationCategory": "tool",
+      "equipmentTypeId": "equipment.tool.thieves-tools"
     },
     {
       "id": "criminal-gaming-set",
       "name": "Gaming Set Training",
       "description": "Choose one type of gaming set and gain training with it.",
-      "grantType": "competency-training",
+      "grantType": "qualification-training",
       "choiceCategory": "gaming-set",
-      "choiceCount": 1
+      "choiceCount": 1,
+      "qualificationCategory": "tool"
     },
     {
       "id": "criminal-contact",
@@ -85,11 +87,29 @@
   "reviewNotes": [
     "Native reconciliation follows the 2014 5e Criminal Background, rather than the 2024 definition preserved separately in working/backgrounds/criminal.json.",
     "The 2014 two-skill baseline is Deception and Stealth, not the 2024 Sleight of Hand and Stealth pairing.",
-    "One gaming-set type is a choice among trained competencies; resolving choices by category requires later native grant execution support.",
+    "One gaming-set type is a selectable equipment proficiency; it does not grant a ranked Competency. The native equipment evaluator uses the approved equipmentProficiencyGrants choice, subject to authorized character selection.",
     "No language grant is included. A character's Upbringing normally supplies formative languages, while later learned languages require another justification.",
     "Criminal Contact is a relationship-based social feature, not unrestricted underworld privilege.",
     "Specialties and suggested characteristics are optional narrative guidance without additional mechanical grants. Spy is a separately selectable native Background, not a Criminal variant.",
     "The 2014 starting equipment is descriptive pending native item identity matching and ordinary inventory materialization; no separate equipment bag is created.",
     "The 2024 Alert Origin feat and fixed ability adjustments are not automatically granted."
-  ]
+  ],
+  "equipmentProficiencyGrants": {
+    "fixed": [
+      {
+        "id": "criminal-thieves-tools",
+        "targetId": "equipment.tool.thieves-tools"
+      }
+    ],
+    "choices": [
+      {
+        "id": "criminal-gaming-set",
+        "count": 1,
+        "fromCategory": "tool",
+        "fromGroupIds": [
+          "equipment.group.tool.gaming-set"
+        ]
+      }
+    ]
+  }
 }
