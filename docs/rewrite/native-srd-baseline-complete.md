@@ -63,6 +63,8 @@ infrastructure or a source-version rule selector.
 - Six native Conditions: Deafened, Exhaustion, Frightened, Grappled,
   Poisoned and Restrained. Nine remaining Conditions are candidates.
 
+**Later reconciliation note:** The counts above describe the original staged baseline, not the current draft. The subsequent native competency reconciliation contains 81 Skills and 26 Competencies after consolidating Forgery into one Competency, naming the metalworking competency Smithing, and retiring Armorsmithing, Weaponsmithing, Bowmaking, Trapmaking, and Shipmaking as native item-output competencies. The draft also consolidates Disguise, retains **Open Lock as a Skill**, and retires separate Disable Device and Use Rope Skills. Lockpicking, Trap Disarming, and Security Bypass are **not** separate native Competencies. Thieves' Tools remain equipment, with source-granted 5.x tool proficiency to be reconciled without creating a duplicate leveled competency. Profession (Brewer), Profession (Cook), and Profession (Herbalist) have also been consolidated into the existing Brewing, Cooking, and Herbalism Competencies, respectively; ambiguous professions remain for activity-specific review. Obsolete intermediate `working/` definitions are removed after reconciliation; original pinned source materials remain under `data/reference/` where applicable.
+
 ## Completeness controls and remaining caveats
 
 The pinned pack contains 90 JSON files (about 8.16 MB). Permanent tests

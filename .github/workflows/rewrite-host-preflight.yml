@@ -1,7 +1,6 @@
 name: Rewrite host preflight
+# Read-only host inspection for manual troubleshooting.
 on:
-  push:
-    branches: [ops/rewrite-first-deployment]
   workflow_dispatch:
 permissions:
   contents: read

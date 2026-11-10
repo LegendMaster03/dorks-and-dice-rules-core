@@ -480,6 +480,23 @@ If older mechanics add compatible, nonredundant abilities to a creature, reconci
 
 See `docs/rewrite/monster-variant-family-model.md` for the family model, reviewed aliases, and older abilities pending integration. Do not introduce independent edition defaults or parallel runtime stat blocks.
 
+## Equipment proficiency — shared qualification model (approved 2026-11-09)
+
+**Approved structural direction:** Expand the existing weapon/armor proficiency concept into one coherent **equipment proficiency** qualification framework. The same general grant and eligibility structure may encompass **weapon**, **armor**, **shield**, and **tool** proficiency, without assuming that each category has the same mechanical benefit. This extends the equipment-training model; it does not revive a general independently leveled tool-competency track.
+
+- **Skills** represent the trained execution of applicable actions, such as `skill.open-lock`.
+- **Competencies** represent independently advancing learned disciplines, such as Smithing, Locksmithing, and Tinkering.
+- **Equipment proficiency** represents a narrower qualification in using designated equipment or equipment categories. It is a separate fact from owning or being allowed to use the equipment, and it has no independent proficiency levels or rank progression.
+- **Equipment** itself is a physical item or category; possession, qualification, and successful use are distinct facts.
+
+**Grants and scope:** Classes, backgrounds, species, features, and other approved rules can explicitly grant equipment proficiency at their specified scope. Proficiency with **Thieves' Tools** is available in this shared model but does not automatically grant Open Lock Skill proficiency, knowledge of every trap, or the ability to disarm all traps. Physical, alchemical, structural, and magical traps can call for different relevant Skills, Competencies, equipment qualifications, spells, and features.
+
+**Nonduplication:** Do **not** automatically create a new equipment-proficiency requirement for every Competency that lists associated tools. A Smithing competency paired with Smith's Tools does not inherently require two independently obtained training credentials. If a particular rules source or feature grants equipment proficiency separately, the grant must remain representable and retain its defined scope; the general check rules will later decide its interaction with a relevant Skill or Competency. There is no generic assumed proficiency transfer or automatic stacking.
+
+**Existing implementation boundary:** Native class data already includes `weaponProficiencies` and `armorProficiencies` grants. That is a starting point for a common qualification contract, **not evidence that a unified native equipment-proficiency evaluator already exists**. Do not add or standardize a new `toolProficiencies` field, infer automatic tool-grant rules, or silently reinterpret existing class grants in this design-only pass.
+
+**Still unresolved:** Exact grant data schema and category/individual-item matching; shield classification where needed; whether and how equipment proficiency modifies a check, eligibility, Advantage, bonuses, or penalties; effects of lacking proficiency; duplicate-grant rules; and interactions with independent Skill/Competency proficiency or levels. Weapon, armor, shield, and tool use may each have different consequences. Resolve those in their mechanical subsystems before implementing them or applying source-to-native conversions.
+
 ## Core rules chapters to complete progressively by native subsystem
 
 **These chapters are the eventual complete standalone Dorks & Dice game rules, not a checklist that must all finish before the initial native kernel can be written.** Recover already established decisions before defining behavior anew. For **each subsystem before implementing it**, document the native rules in ordinary language, at least one play example, representative source-to-native conversion examples, and unresolved/unsupported interactions. Then implement both the native mechanics and versioned converter tests in that subsystem slice. Chapters include:

@@ -26,6 +26,162 @@ public sealed class NativeMechanicsTests
         Assert.DoesNotContain("skill.perception.total", projection.Values.Keys);
     }
 
+    [Fact]
+    public void CompetencyChecksAddIndependentRanksAndProficiency()
+    {
+        using var fixture = new NativeFixture();
+        var request = fixture.Input() with
+        {
+            Competencies = new Dictionary<string, NativeSkillTraining>
+            {
+                ["competency.smithing"] = new(Ranks: 2, Proficient: true, Ability: "intelligence"),
+                ["competency.cooking"] = new(Ranks: 2, Ability: "wisdom"),
+                ["competency.alchemy"] = new(Proficient: true, Ability: "intelligence"),
+                ["competency.navigation"] = new(Ability: "wisdom")
+            }
+        };
+        var projection = new NativeCharacterProjector(fixture.Catalog).Project(request);
+        // Intelligence -1, Wisdom +2, proficiency bonus +2.
+        Assert.Equal(3, projection.Values["competency.smithing.total"].Value);
+        Assert.Equal(4, projection.Values["competency.cooking.total"].Value);
+        Assert.Equal(1, projection.Values["competency.alchemy.total"].Value);
+        Assert.Equal(2, projection.Values["competency.navigation.total"].Value);
+        Assert.DoesNotContain(projection.Issues, issue =>
+            issue.Code == "training-profile-conflict");
+    }
+
+    [Fact]
+    public void CompetencyStillRequiresAnActivityAbilityAndSkillsKeepTheirExistingBoundary()
+    {
+        using var fixture = new NativeFixture();
+        var request = fixture.Input() with
+        {
+            Skills = new Dictionary<string, NativeSkillTraining>
+            {
+                ["skill.listen"] = new(Ranks: 1, Proficient: true)
+            },
+            Competencies = new Dictionary<string, NativeSkillTraining>
+            {
+                ["competency.smithing"] = new(Ranks: 1, Proficient: true)
+            }
+        };
+        var projection = new NativeCharacterProjector(fixture.Catalog).Project(request);
+        Assert.Equal("unsupported", projection.Values["skill.listen.total"].Status);
+        Assert.Equal("unsupported", projection.Values["competency.smithing.total"].Status);
+        Assert.Contains(projection.Issues, issue =>
+            issue.Code == "training-profile-conflict" && issue.Path == "skill.listen");
+        Assert.Contains(projection.Issues, issue =>
+            issue.Code == "training-ability-unresolved" &&
+            issue.Path == "competency.smithing");
+        Assert.DoesNotContain(projection.Issues, issue =>
+            issue.Code == "training-profile-conflict" &&
+            issue.Path == "competency.smithing");
+    }
+
+    [Fact]
+    public void LegacyCompetencyFacetsNeverChooseAnActivityAbility()
+    {
+        // Historical facets are not part of the native Competency's ability contract.
+        using var fixture = new NativeFixture(legacyCompetencyFacet: true);
+        var request = fixture.Input() with
+        {
+            Competencies = new Dictionary<string, NativeSkillTraining>
+            {
+                ["competency.smithing"] = new(Ranks: 2, Proficient: true)
+            }
+        };
+        var projection = new NativeCharacterProjector(fixture.Catalog).Project(request);
+        Assert.Equal("unsupported", projection.Values["competency.smithing.total"].Status);
+        Assert.Contains(projection.Issues, issue =>
+            issue.Code == "training-ability-unresolved" &&
+            issue.Path == "competency.smithing");
+    }
+
+    [Fact]
+    public void InvalidCompetencyGrantBatchDoesNotExposePartialTraining()
+    {
+        using var fixture = new NativeFixture();
+        var result = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        [
+            new("feature.valid", "valid", "competency.smithing", Ranks: 1),
+            new("feature.invalid", "invalid", "competency.alchemy", Ranks: -1)
+        ]);
+        Assert.Equal("invalid", result.Status);
+        Assert.Empty(result.Training);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "invalid-competency-grant-effect" &&
+            issue.Path == "invalid");
+    }
+
+    [Fact]
+    public void ValidatedCompetencyGrantsAccumulateRanksAndProficiencyIndependently()
+    {
+        using var fixture = new NativeFixture();
+        var grants = new NativeCompetencyTrainingGrant[]
+        {
+            new("upbringing.dwarf.general", "dwarf-craft", "competency.smithing", Ranks: 1),
+            new("background.smith", "background-craft", "competency.smithing", Proficient: true),
+            new("feat.training", "feat-one", "competency.smithing", Ranks: 1),
+            new("feat.training", "feat-two", "competency.smithing", Ranks: 1),
+            new("upbringing.goliath.general", "clan-craft", "competency.cooking", Ranks: 2)
+        };
+        var result = NativeCompetencyTraining.CombineValidated(fixture.Catalog, grants);
+        Assert.Equal("resolved", result.Status);
+        Assert.Empty(result.Issues);
+        Assert.Equal(3, result.Training["competency.smithing"].Ranks);
+        Assert.True(result.Training["competency.smithing"].Proficient);
+        Assert.Equal(2, result.Training["competency.cooking"].Ranks);
+        Assert.False(result.Training["competency.cooking"].Proficient);
+        Assert.True(NativeCompetencyTraining.CheckPrerequisite(
+            fixture.Catalog, result.Training,
+            new("competency.smithing", MinimumRanks: 3, RequiresProficiency: true)).Satisfied);
+        Assert.True(NativeCompetencyTraining.CheckPrerequisite(
+            fixture.Catalog, result.Training,
+            new("competency.cooking", MinimumRanks: 2)).Satisfied);
+        Assert.False(NativeCompetencyTraining.CheckPrerequisite(
+            fixture.Catalog, result.Training,
+            new("competency.cooking", MinimumRanks: 2, RequiresProficiency: true)).Satisfied);
+        Assert.False(NativeCompetencyTraining.CheckPrerequisite(
+            fixture.Catalog, result.Training,
+            new("competency.smithing", MinimumRanks: 4)).Satisfied);
+    }
+
+    [Fact]
+    public void ProficiencyOnlyGrantsNeverCreateRanksAndRepeatedOccurrencesAreRejected()
+    {
+        using var fixture = new NativeFixture();
+        var valid = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        [
+            new("background.one", "first", "competency.alchemy", Proficient: true),
+            new("feature.two", "second", "competency.alchemy", Proficient: true)
+        ]);
+        Assert.Equal("resolved", valid.Status);
+        Assert.Equal(0, valid.Training["competency.alchemy"].Ranks);
+        Assert.True(valid.Training["competency.alchemy"].Proficient);
+
+        var duplicate = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        [
+            new("feat.training", "same", "competency.alchemy", Ranks: 1),
+            new("feat.training", "same", "competency.alchemy", Ranks: 1)
+        ]);
+        Assert.Equal("invalid", duplicate.Status);
+        Assert.Empty(duplicate.Training);
+        Assert.Contains(duplicate.Issues, issue =>
+            issue.Code == "duplicate-competency-grant-occurrence");
+
+        var wrongKind = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        [
+            new("feature.bad", "once", "skill.listen", Ranks: 1)
+        ]);
+        Assert.Equal("invalid", wrongKind.Status);
+        Assert.Empty(wrongKind.Training);
+        Assert.Contains(wrongKind.Issues, issue =>
+            issue.Code == "unknown-competency-grant-target");
+        Assert.Equal("unresolved", NativeCompetencyTraining.CheckPrerequisite(
+            fixture.Catalog, valid.Training,
+            new("skill.listen", MinimumRanks: 1)).Status);
+    }
+
     [Theory]
     [InlineData(NativeRollMode.Normal, 8, null, "resolved", 8)]
     [InlineData(NativeRollMode.Advantage, 8, 16, "resolved", 16)]
@@ -406,7 +562,8 @@ public sealed class NativeMechanicsTests
     {
         private readonly string _root = Path.Combine(Path.GetTempPath(), "rc-mechanics-" + Guid.NewGuid().ToString("N"));
         public NativeCatalogSnapshot Catalog { get; }
-        public NativeFixture(string progressions = "valid", bool secondClass = false)
+        public NativeFixture(string progressions = "valid", bool secondClass = false,
+            bool legacyCompetencyFacet = false)
         {
             var root = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(root, "native"));
@@ -447,6 +604,31 @@ public sealed class NativeMechanicsTests
                    "composition":{"operation":"arithmetic-mean","rounding":"truncate-toward-zero"}}
                 ]}
                 """);
+            File.WriteAllText(Path.Combine(root, "native", "competencies.json"), """
+                {"competencies":[
+                  {"id":"competency.smithing","name":"Smithing","kind":"competency",
+                   "profile":{"proficiency":"binary","level":"progressive","abilityResolution":"per-activity"}},
+                  {"id":"competency.cooking","name":"Cooking","kind":"competency",
+                   "profile":{"proficiency":"binary","level":"progressive","abilityResolution":"per-activity"}},
+                  {"id":"competency.alchemy","name":"Alchemy","kind":"competency",
+                   "profile":{"proficiency":"binary","level":"progressive","abilityResolution":"per-activity"}},
+                  {"id":"competency.navigation","name":"Navigation","kind":"competency",
+                   "profile":{"proficiency":"binary","level":"progressive","abilityResolution":"per-activity"}}
+                ]}
+                """);
+            if (legacyCompetencyFacet)
+            {
+                // Simulate an obsolete facet that must not supply a task's Ability.
+                var competencyFile = Path.Combine(root, "native", "competencies.json");
+                var original = File.ReadAllText(competencyFile);
+                const string marker = "\"id\":\"competency.smithing\",\"name\":\"Smithing\",\"kind\":\"competency\",";
+                var replaced = original.Replace(marker,
+                    marker + "\"facets\":[{\"governingAbility\":\"intelligence\"}],",
+                    StringComparison.Ordinal);
+                if (replaced == original)
+                    throw new InvalidOperationException("Competency fixture marker not found.");
+                File.WriteAllText(competencyFile, replaced);
+            }
             File.WriteAllText(Path.Combine(root, "native", "conditions.json"), """
                 {"conditions":[
                   {"id":"condition.blinded","name":"Blinded","kind":"condition", "effects":[

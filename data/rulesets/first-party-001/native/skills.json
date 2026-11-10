@@ -112,23 +112,8 @@
       "kind": "skill"
     },
     {
-      "id": "skill.disable-device",
-      "name": "Disable Device",
-      "kind": "skill"
-    },
-    {
-      "id": "skill.disguise",
-      "name": "Disguise",
-      "kind": "skill"
-    },
-    {
       "id": "skill.escape-artist",
       "name": "Escape Artist",
-      "kind": "skill"
-    },
-    {
-      "id": "skill.forgery",
-      "name": "Forgery",
       "kind": "skill"
     },
     {
@@ -387,22 +372,6 @@
       "defaultAbility": "wisdom"
     },
     {
-      "id": "skill.profession-brewer",
-      "name": "Profession (Brewer)",
-      "kind": "skill",
-      "family": "skill.profession",
-      "independentlyRanked": true,
-      "defaultAbility": "wisdom"
-    },
-    {
-      "id": "skill.profession-cook",
-      "name": "Profession (Cook)",
-      "kind": "skill",
-      "family": "skill.profession",
-      "independentlyRanked": true,
-      "defaultAbility": "wisdom"
-    },
-    {
       "id": "skill.profession-driver",
       "name": "Profession (Driver)",
       "kind": "skill",
@@ -429,14 +398,6 @@
     {
       "id": "skill.profession-guide",
       "name": "Profession (Guide)",
-      "kind": "skill",
-      "family": "skill.profession",
-      "independentlyRanked": true,
-      "defaultAbility": "wisdom"
-    },
-    {
-      "id": "skill.profession-herbalist",
-      "name": "Profession (Herbalist)",
       "kind": "skill",
       "family": "skill.profession",
       "independentlyRanked": true,
@@ -678,11 +639,6 @@
     {
       "id": "skill.use-psionic-device",
       "name": "Use Psionic Device",
-      "kind": "skill"
-    },
-    {
-      "id": "skill.use-rope",
-      "name": "Use Rope",
       "kind": "skill"
     }
   ]

@@ -20,7 +20,7 @@
     },
     {
       "id": "craft-alchemy-tool",
-      "kind": "native-crafting-tool-competency",
+      "kind": "native-crafting-competency",
       "input": {
         "sourceMechanics": [
           "Craft (alchemy)",
@@ -29,8 +29,112 @@
       },
       "expect": {
         "competency": "competency.alchemy",
-        "sameLearnedTrainingIdentity": true,
-        "separateNumericProfiles": true
+        "singleNativeTrainingProfile": true,
+        "nativeProficiency": "binary",
+        "nativeLevel": "progressive"
+      }
+    },
+    {
+      "id": "forgery-unified-native",
+      "kind": "native-single-competency",
+      "input": {
+        "sourceMechanics": [
+          "Forgery (historical skill)",
+          "Forgery Kit"
+        ]
+      },
+      "expect": {
+        "competency": "competency.forgery",
+        "noSeparateNativeSkill": "skill.forgery",
+        "associatedTool": "Forgery Kit"
+      }
+    },
+    {
+      "id": "smithing-not-output-category",
+      "kind": "native-single-competency",
+      "input": {
+        "historicalCapabilities": [
+          "Craft (blacksmithing)",
+          "Craft (armorsmithing)",
+          "Craft (weaponsmithing)",
+          "Smith's Tools"
+        ]
+      },
+      "expect": {
+        "nativeCompetency": "competency.smithing",
+        "associatedTool": "Smith's Tools",
+        "noIndependentNativeCompetencies": [
+          "competency.blacksmithing",
+          "competency.armorsmithing",
+          "competency.weaponsmithing"
+        ],
+        "weaponOrArmorManufacture": "use-applicable-method-competency",
+        "itemSpecificModifiers": "not-assigned"
+      }
+    },
+    {
+      "id": "bowmaking-method-based",
+      "kind": "native-crafting-output-reconciliation",
+      "input": {
+        "historicalCapability": "Craft (bowmaking)",
+        "manufacturedProduct": "bow",
+        "sourceEligibleTools": [
+          "Carpenter's Tools",
+          "Woodcarver's Tools"
+        ]
+      },
+      "expect": {
+        "retiredNativeCompetency": "competency.bowmaking",
+        "applicableCompetencies": [
+          "competency.carpentry",
+          "competency.woodcarving"
+        ],
+        "selection": "by-recipe-and-activity",
+        "automaticLevelConversion": false,
+        "bowSpecificModifiers": "not-assigned"
+      }
+    },
+    {
+      "id": "trapmaking-method-based",
+      "kind": "native-crafting-output-reconciliation",
+      "input": {
+        "historicalCapability": "Craft (trapmaking)",
+        "trapTypes": [
+          "mechanical",
+          "structural",
+          "improvised",
+          "magical"
+        ]
+      },
+      "expect": {
+        "retiredNativeCompetency": "competency.trapmaking",
+        "construction": "applicable-method-materials-and-procedure",
+        "placement": "applicable-tool-skill-or-feature",
+        "detection": "applicable-detection-mechanics",
+        "disarming": "applicable-tool-skill-or-feature",
+        "magicalTrap": "spell-or-specific-feature-as-required",
+        "automaticLevelConversion": false,
+        "automaticProficiencyTransfer": false,
+        "trapDesignBonus": "not-assigned"
+      }
+    },
+    {
+      "id": "shipmaking-method-based",
+      "kind": "native-crafting-output-reconciliation",
+      "input": {
+        "historicalCapability": "Craft (shipmaking)",
+        "activity": "construct or repair a vessel or ship component",
+        "source": "VoidSea - Beta 0.1"
+      },
+      "expect": {
+        "retiredNativeCompetency": "competency.shipmaking",
+        "componentConstruction": "applicable-crafting-method-and-future-vessel-rules",
+        "componentRepair": "applicable-tools-by-material-and-vessel-rules",
+        "shipDesign": "deferred",
+        "automaticLevelConversion": false,
+        "automaticProficiencyTransfer": false,
+        "shipwrightModifiers": "not-assigned",
+        "navalSystemImplementation": "deferred"
       }
     },
     {
@@ -134,33 +238,110 @@
       }
     },
     {
-      "id": "tool-distinction",
-      "kind": "skill-versus-tool-competency",
+      "id": "open-lock-with-tools-and-task-based-trap-disarming",
+      "kind": "native-skill-and-equipment-classification",
       "input": {
         "sourceMechanics": [
           "Open Lock",
           "Disable Device",
           "Thieves' Tools"
+        ],
+        "activities": [
+          "picking locks",
+          "disarming traps"
         ]
       },
       "expect": {
-        "independentSkills": true,
-        "competency": "competency.thieves-tools",
-        "relationshipScope": "selected-uses-only"
+        "lockpickingSkill": "skill.open-lock",
+        "thievesTools": "equipment",
+        "noIndependentNativeCompetencies": [
+          "competency.lockpicking",
+          "competency.trap-disarming",
+          "competency.security-bypass",
+          "competency.thieves-tools"
+        ],
+        "trapDisarming": "by-applicable-skill-competency-equipment-spell-or-feature",
+        "trapDetection": "applicable-skill-or-feature",
+        "trapConstruction": "applicable-crafting-method-or-feature",
+        "generalSabotage": "applicable-method-or-feature",
+        "fiveXToolProficiency": "shared-equipment-qualification; check-interactions-pending",
+        "automaticRankConversion": false
+      }
+    },
+    {
+      "id": "shared-equipment-proficiency-qualification",
+      "kind": "native-equipment-qualification-structure",
+      "input": {
+        "equipmentCategories": [
+          "weapon",
+          "armor",
+          "shield",
+          "tool"
+        ],
+        "example": "Thieves' Tools"
+      },
+      "expect": {
+        "sharedEquipmentQualificationFramework": true,
+        "independentlyRankedEquipmentProficiency": false,
+        "proficiencyDistinctFromPossession": true,
+        "explicitGrantRequired": true,
+        "categorySpecificMechanicalEffects": "pending-reconciliation",
+        "proficiencyWithEquipmentDoesNotGrantSkill": "skill.open-lock",
+        "skillDoesNotAutomaticallyGrantEquipmentProficiency": true,
+        "applicableTrapDisarming": "task-specific",
+        "associatedToolsDoNotImplySeparateQualification": true,
+        "smithingAndSmithsTools": "no-automatic-duplicate-training-requirement",
+        "numericCheckInteraction": "pending-reconciliation"
+      }
+    },
+    {
+      "id": "profession-crafting-overlap-consolidated",
+      "kind": "native-skill-and-tool-overlap-consolidation",
+      "input": {
+        "historicalProfessions": [
+          "Profession (Brewer)",
+          "Profession (Cook)",
+          "Profession (Herbalist)"
+        ],
+        "sourceTools": [
+          "Brewer's Supplies",
+          "Cook's Utensils",
+          "Herbalism Kit"
+        ]
+      },
+      "expect": {
+        "nativeCompetencies": [
+          "competency.brewing",
+          "competency.cooking",
+          "competency.herbalism"
+        ],
+        "retiredNativeSkills": [
+          "skill.profession-brewer",
+          "skill.profession-cook",
+          "skill.profession-herbalist"
+        ],
+        "singleAdvancementIdentityPerDiscipline": true,
+        "toolsRemainEquipment": true,
+        "equipmentProficiencyWhenExplicitlyGranted": "shared-equipment-qualification",
+        "noncraftOccupationalActivities": "other-applicable-skills-and-rules",
+        "automaticLevelConversion": false,
+        "automaticBonusStacking": false
       }
     },
     {
       "id": "craft-family",
-      "kind": "crafting-competency-facet",
+      "kind": "historical-craft-family-source",
       "input": {
         "family": "Craft"
       },
       "expect": {
-        "competencyFamily": "crafting",
-        "ability": "intelligence",
-        "usesRanks": true,
-        "trainedOnly": false,
-        "childRankState": "independent"
+        "historicalCompetencyFamily": "crafting",
+        "historicalAbility": "intelligence",
+        "historicalUsesRanks": true,
+        "historicalTrainedOnly": false,
+        "nativeCompetenciesIndividuallyTrainable": true,
+        "nativeAbilityResolution": "per-activity",
+        "nativeLevelScale": "pending-reconciliation"
       }
     },
     {
