@@ -24,9 +24,10 @@
       "id": "soldier-gaming-set",
       "name": "Gaming Set Training",
       "description": "Choose one kind of gaming set and gain training with it.",
-      "grantType": "competency-training",
+      "grantType": "qualification-training",
       "choiceCategory": "gaming-set",
-      "choiceCount": 1
+      "choiceCount": 1,
+      "qualificationCategory": "tool"
     },
     {
       "id": "soldier-land-vehicles",
@@ -103,7 +104,7 @@
   "reviewNotes": [
     "Native reconciliation adopts the 2014 5e Soldier Background rather than the 2024 Soldier source in working/backgrounds/soldier.json.",
     "Athletics and Intimidation remain the two skill grants.",
-    "Retain one gaming-set choice and proficiency with land vehicles; source-shaped category choices are descriptive until native execution support is implemented.",
+    "One gaming-set choice uses the native equipment qualification contract. The separate Land Vehicles qualification remains deferred pending vehicle/operator taxonomy.",
     "Land vehicles are authored as a qualification category because a verified native standalone competency ID for land-vehicle training was not found; do not substitute Navigation or automatically invent a new universal competency identity.",
     "Military Rank is a contextual social relationship/privilege, not blanket command of all military organizations.",
     "No language grant is included. Upbringing normally supplies formative languages.",
@@ -111,5 +112,17 @@
     "The 2014 eight specialties and suggested characteristics are optional narrative aids, not mandatory mechanical subtypes.",
     "The 2024 Savage Attacker Origin feat and fixed ability adjustments are not automatically granted.",
     "Giant Foundling Upbringing and Soldier both grant Intimidation. Preserve the overlap for the corpus-wide duplicate-grant reconciliation rather than granting extra training or changing the approved skill list."
-  ]
+  ],
+  "equipmentProficiencyGrants": {
+    "choices": [
+      {
+        "id": "soldier-gaming-set",
+        "count": 1,
+        "fromCategory": "tool",
+        "fromGroupIds": [
+          "equipment.group.tool.gaming-set"
+        ]
+      }
+    ]
+  }
 }
