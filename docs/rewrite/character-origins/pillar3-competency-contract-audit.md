@@ -1,5 +1,7 @@
 # Pillar 3 — Character Origins / Competency Contract Audit
 
+> **Status update (2026-11-10):** This document records the initial November 9 competency audit. Its references to three unresolved `competency.thieves-tools` identities and the unimplemented equipment qualification contract describe that earlier state. Those dependencies have since been resolved or typed in Origin JSON after PR #135. See [Pillar 3 Equipment Integration — November 10](pillar3-equipment-integration-20261110.md) for the authoritative current status, conditional choice limitations, validation results, and remaining decisions.
+
 **Audit date:** 2026-11-09  
 **Working branch:** `feature/character-origins-competency-audit-20261109`, based on `feature/character-origins-pillar3-life-experiences`  
 **Reference contract:** `main` versions of `docs/rewrite/competency-baseline-v1.md`, `docs/rewrite/native-seed-skills-and-competencies.md`, `docs/rewrite/competency-relationship-review.md`, and native `skills.json` / `competencies.json`.
