@@ -429,8 +429,11 @@ public sealed class NativeEquipmentQualificationsTests
                     id = "feature.repeat-grants",
                     name = "Repeating Grant",
                     kind = "feature",
-                    equipmentProficiencyGrants = new { fixedGrants = repeatedGrants }
-                }).Replace("\\\"fixedGrants\\\"", "\\\"fixed\\\"", StringComparison.Ordinal));
+                    equipmentProficiencyGrants = new Dictionary<string, object>
+                    {
+                        ["fixed"] = repeatedGrants
+                    }
+                }));
             Catalog = NativeCatalogLoader.Load(
                 NativeRulesetLayout.Resolve(_root, "first-party-001"));
         }
