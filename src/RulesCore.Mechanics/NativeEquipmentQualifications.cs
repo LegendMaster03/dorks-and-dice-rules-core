@@ -138,9 +138,11 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
 
             // Both native source shapes are supported for migration, but having
             // both on one source is ambiguous. Never silently prefer either one.
-            var hasRoot = TryObject(definition, "equipmentProficiencyGrants", out var rootGrants);
+            var hasRoot = definition.TryGetProperty("equipmentProficiencyGrants",
+                out var rootGrants);
+            JsonElement nestedGrants = default;
             var hasNested = TryObject(definition, "definition", out var nested) &&
-                TryObject(nested, "equipmentProficiencyGrants", out var nestedGrants);
+                nested.TryGetProperty("equipmentProficiencyGrants", out nestedGrants);
             if (hasRoot && hasNested)
             {
                 issues.Add(new("ambiguous-equipment-grants", source.SourceId,
@@ -154,6 +156,12 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                 continue;
             }
             var grants = hasRoot ? rootGrants : nestedGrants;
+            if (grants.ValueKind != JsonValueKind.Object)
+            {
+                issues.Add(new("invalid-equipment-grants", source.SourceId,
+                    "An equipment grant block must be an object."));
+                continue;
+            }
 
             // Reject unknown keys at the grant-block level as well as on each
             // entry. In particular, future conditional grants must never
