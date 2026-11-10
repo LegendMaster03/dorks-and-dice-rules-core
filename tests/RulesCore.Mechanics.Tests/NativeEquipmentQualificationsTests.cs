@@ -284,6 +284,34 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void ValidChoicesAcrossSourcesCanUseTheFullRequestBudget()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+        var sources = Enumerable.Range(0, 34).Select(i =>
+            new NativeEquipmentQualificationSource("feature.many-choices",
+                "earned-" + i)).ToArray();
+        var selected = new Dictionary<string, IReadOnlyList<string>>(StringComparer.Ordinal);
+        foreach (var source in sources)
+        {
+            selected[source.OccurrenceId + "/game"] = ["equipment.tool.dice-set"];
+            selected[source.OccurrenceId + "/music"] = ["equipment.tool.lute"];
+            selected[source.OccurrenceId + "/weapon"] = ["equipment.weapon.longsword"];
+        }
+
+        // This request contains 102 legitimate selections. The overall
+        // evaluation budget is larger than the old 100-selection input cap.
+        var result = engine.Resolve(fixture.Request(sources) with
+        {
+            SelectedChoices = selected
+        });
+        Assert.Equal("resolved", result.Status);
+        Assert.Empty(result.Issues);
+        Assert.Equal(34, engine.Covers(result, "equipment.weapon.longsword")
+            .Provenance.Count);
+    }
+
+    [Fact]
     public void RepeatedSourcesCannotExpandTheWorkBudgetBeyondTheRequestLimit()
     {
         using var fixture = new Fixture();
