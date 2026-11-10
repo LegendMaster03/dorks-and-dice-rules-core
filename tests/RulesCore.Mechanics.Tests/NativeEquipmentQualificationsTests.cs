@@ -60,6 +60,51 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void SelectableWeaponFamilyExcludesUnlistedBroadGroupProficiencies()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+        var request = fixture.Request(
+            new NativeEquipmentQualificationSource("feature.choose-mace-family", "origin"));
+
+        var awaiting = engine.Resolve(request);
+        Assert.Equal("needs-choices", awaiting.Status);
+        Assert.Equal(["equipment.group.weapon.family.mace"],
+            Assert.Single(awaiting.RequiredChoices).EligibleQualificationIds);
+        Assert.DoesNotContain("equipment.group.weapon.all",
+            Assert.Single(awaiting.RequiredChoices).EligibleQualificationIds);
+
+        var selected = engine.Resolve(request with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["origin/family"] = ["equipment.group.weapon.family.mace"]
+            }
+        });
+        Assert.Equal("resolved", selected.Status);
+        Assert.True(engine.Covers(selected, "equipment.weapon.mace").Proficient);
+        Assert.True(engine.Covers(selected, "equipment.weapon.morningstar").Proficient);
+        Assert.False(engine.Covers(selected, "equipment.weapon.longsword").Proficient);
+
+        var tooBroad = engine.Resolve(request with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["origin/family"] = ["equipment.group.weapon.all"]
+            }
+        });
+        Assert.Equal("unavailable", tooBroad.Status);
+        Assert.Empty(tooBroad.Qualifications);
+        Assert.Contains(tooBroad.Issues, issue => issue.Code == "invalid-equipment-selection");
+
+        var unbounded = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.unbounded-family", "origin")));
+        Assert.Equal("unavailable", unbounded.Status);
+        Assert.Empty(unbounded.Qualifications);
+        Assert.Contains(unbounded.Issues, issue => issue.Code == "invalid-equipment-choice");
+    }
+
+    [Fact]
     public void SpecificWeaponDoesNotConferItsEntireGroup()
     {
         using var f = new Fixture();
@@ -461,6 +506,15 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"class.rogue","name":"Rogue","kind":"class","definition":{
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"tools","targetId":"equipment.tool.thieves-tools"}]}}},
+                  {"id":"feature.choose-mace-family","name":"Choose Mace Family","kind":"feature",
+                    "equipmentProficiencyGrants":{"choices":[
+                      {"id":"family","count":1,"fromCategory":"weapon",
+                       "selectionKind":"equipment-group",
+                       "fromGroupIds":["equipment.group.weapon.family.mace"]}]}},
+                  {"id":"feature.unbounded-family","name":"Unrestricted Group Choice","kind":"feature",
+                    "equipmentProficiencyGrants":{"choices":[
+                      {"id":"family","count":1,"fromCategory":"weapon",
+                       "selectionKind":"equipment-group"}]}},
                   {"id":"feature.mace-family","name":"Mace Family Training","kind":"feature",
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"maces","targetId":"equipment.group.weapon.family.mace"}]}},
