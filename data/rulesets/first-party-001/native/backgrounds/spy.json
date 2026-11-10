@@ -25,10 +25,10 @@
     {
       "id": "spy-tradecraft-competency",
       "name": "Tradecraft Competency",
-      "description": "Choose one Competency from Disguise Kit, Forgery, Thieves' Tools, or Calligraphy, reflecting techniques learned in your work. This grant provides training, not ownership of the associated tools.",
+      "description": "Choose one training choice reflecting your intelligence work: Disguise, Forgery, or Calligraphy Competency training, or the separate Thieves' Tools equipment qualification. This grant does not include ownership of the relevant equipment.",
       "grantType": "competency-training",
       "chooseOne": [
-        "competency.disguise-kit",
+        "competency.disguise",
         "competency.forgery",
         "competency.thieves-tools",
         "competency.calligraphy"
