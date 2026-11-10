@@ -37,6 +37,18 @@ def visit(value):
             yield from visit(child)
 
 
+def strings(value):
+    """Yield canonical references even from lists of selectable alternatives."""
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for child in value.values():
+            yield from strings(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from strings(child)
+
+
 class CharacterOriginsEquipmentContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -60,13 +72,12 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
         """Do not permit an obsolete Skill or tool Competency back into the corpus."""
         for record in (*self.backgrounds.values(), *self.upbringings.values()):
             with self.subTest(origin=record["id"]):
-                for node in visit(record):
-                    for value in node.values():
-                        if isinstance(value, str) and value.startswith("competency."):
-                            self.assertIn(value, self.competencies)
-                        if isinstance(value, str) and value.startswith("skill."):
-                            self.assertIn(value, self.skills)
-                self.assertNotIn("competency.thieves-tools", str(record))
+                for value in strings(record):
+                    if value.startswith("competency."):
+                        self.assertIn(value, self.competencies)
+                    if value.startswith("skill."):
+                        self.assertIn(value, self.skills)
+                    self.assertNotEqual("competency.thieves-tools", value)
 
     def test_authored_equipment_targets_are_known_and_category_consistent(self):
         """Validate root and nested-option grants; do not infer missing catalog types."""
