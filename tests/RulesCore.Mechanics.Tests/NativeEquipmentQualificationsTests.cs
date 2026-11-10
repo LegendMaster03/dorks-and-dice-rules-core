@@ -418,12 +418,19 @@ public sealed class NativeEquipmentQualificationsTests
             // A valid source repeated many times must still respect the total
             // work budget. Generate this fixture rather than authoring eleven
             // identical JSON records into every test case.
-            var repeats = string.Join(",", Enumerable.Range(1, 11).Select(i =>
-                "{\\\"id\\\":\\\"repeat-" + i + "\\\",\\\"targetId\\\":\\\"equipment.weapon.longsword\\\"}"));
+            var repeatedGrants = Enumerable.Range(1, 11).Select(i => new
+            {
+                id = "repeat-" + i,
+                targetId = "equipment.weapon.longsword"
+            }).ToArray();
             File.WriteAllText(Path.Combine(native, "repeat-grants.json"),
-                "{\\\"id\\\":\\\"feature.repeat-grants\\\",\\\"name\\\":\\\"Repeating Grant\\\"," +
-                "\\\"kind\\\":\\\"feature\\\",\\\"equipmentProficiencyGrants\\\":{\\\"fixed\\\":[" +
-                repeats + "]}}");
+                System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    id = "feature.repeat-grants",
+                    name = "Repeating Grant",
+                    kind = "feature",
+                    equipmentProficiencyGrants = new { fixedGrants = repeatedGrants }
+                }).Replace("\\\"fixedGrants\\\"", "\\\"fixed\\\"", StringComparison.Ordinal));
             Catalog = NativeCatalogLoader.Load(
                 NativeRulesetLayout.Resolve(_root, "first-party-001"));
         }
