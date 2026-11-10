@@ -108,15 +108,15 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             }
 
             var definition = entity.Definition;
-            if (TryObject(definition, "definition", out var nested))
-                definition = nested;
             if (source.GrantMode == "multiclass" && entity.Category != "class")
             {
                 issues.Add(new("invalid-equipment-source-mode", source.SourceId,
                     "Multiclass equipment grants apply only to Class sources."));
                 continue;
             }
-            if (!TryObject(definition, "equipmentProficiencyGrants", out var grants))
+            if (!TryObject(definition, "equipmentProficiencyGrants", out var grants) &&
+                (!TryObject(definition, "definition", out var nested) ||
+                 !TryObject(nested, "equipmentProficiencyGrants", out grants)))
             {
                 issues.Add(new("equipment-grants-not-reconciled", source.SourceId,
                     "The source has no executable equipment proficiency grants."));
@@ -144,6 +144,16 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                 }
                 else foreach (var grant in fixedGrants.EnumerateArray())
                 {
+                    // Unrecognized fields could hide conditions. Fail closed
+                    // instead of accidentally granting a conditional benefit.
+                    if (grant.ValueKind != JsonValueKind.Object ||
+                        grant.EnumerateObject().Any(field =>
+                            field.Name is not ("id" or "targetId")))
+                    {
+                        issues.Add(new("unsupported-equipment-grant", source.SourceId,
+                            "Only unconditional fixed qualification targets are supported."));
+                        continue;
+                    }
                     var id = Text(grant, "id");
                     var target = Text(grant, "targetId");
                     if (!ValidId(id) || !ValidId(target) || !ids.Add(id!))
@@ -172,6 +182,14 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             }
             foreach (var choice in choices.EnumerateArray())
             {
+                if (choice.ValueKind != JsonValueKind.Object ||
+                    choice.EnumerateObject().Any(field => field.Name is not
+                        ("id" or "count" or "fromCategory" or "selectionKind" or "fromGroupIds")))
+                {
+                    issues.Add(new("unsupported-equipment-choice", source.SourceId,
+                        "Conditional and unrecognized equipment choices are not executable."));
+                    continue;
+                }
                 var id = Text(choice, "id");
                 var count = Number(choice, "count");
                 var category = Text(choice, "fromCategory");
