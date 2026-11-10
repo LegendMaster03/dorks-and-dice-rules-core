@@ -261,6 +261,29 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void OccurrenceAndChoiceIdsReserveTheirSeparator()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+
+        // Without this restriction, occurrence a/b + choice c collides with
+        // occurrence a + choice b/c in the persisted SelectedChoices map.
+        var invalidOccurrence = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.entertainment", "a/b")));
+        Assert.Equal("unavailable", invalidOccurrence.Status);
+        Assert.Empty(invalidOccurrence.Qualifications);
+        Assert.Contains(invalidOccurrence.Issues, issue =>
+            issue.Code == "invalid-equipment-source");
+
+        var invalidChoice = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.slash-choice", "origin")));
+        Assert.Equal("unavailable", invalidChoice.Status);
+        Assert.Empty(invalidChoice.Qualifications);
+        Assert.Contains(invalidChoice.Issues, issue =>
+            issue.Code == "invalid-equipment-choice");
+    }
+
+    [Fact]
     public void RepeatedSourcesCannotExpandTheWorkBudgetBeyondTheRequestLimit()
     {
         using var fixture = new Fixture();
@@ -400,6 +423,10 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"feature.multiclass-only","name":"No Standard Grants","kind":"feature",
                     "equipmentProficiencyGrants":{"multiclassFixed":[
                       {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
+                  {"id":"feature.slash-choice","name":"Ambiguous Choice Key","kind":"feature",
+                    "equipmentProficiencyGrants":{"choices":[
+                      {"id":"game/dice","count":1,"fromCategory":"tool",
+                       "fromGroupIds":["equipment.group.tool.gaming-set"]}]}},
                   {"id":"feature.many-choices","name":"Several Qualifications","kind":"feature",
                     "equipmentProficiencyGrants":{"choices":[
                       {"id":"game","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.gaming-set"]},
