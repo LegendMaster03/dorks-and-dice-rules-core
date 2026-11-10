@@ -190,8 +190,10 @@ public static class NativeMechanicsEndpoints
                 : Results.Ok(resolved);
         });
 
-        // Callers validate origin/class/feature entitlements before submitting
-        // source occurrences. This endpoint resolves only authored grant scope.
+        // This authenticated endpoint is a calculation surface, not an
+        // entitlement issuer. A "resolved" response confirms the authored
+        // scope and selected types, not ownership of the asserted origins,
+        // classes, or features. The Character backend must verify those first.
         group.MapPost("/characters/equipment-proficiencies",
             (NativeEquipmentQualificationRequest request, NativeCatalogStore store,
                 HttpContext context) =>
@@ -219,6 +221,9 @@ public static class NativeMechanicsEndpoints
                 string.IsNullOrWhiteSpace(request.EquipmentId))
                 return Error(400, "invalid_equipment_qualification_request");
             var engine = new NativeEquipmentQualifications(catalog);
+            // Recompute the projection from native sources on each request:
+            // never accept a client-constructed qualification/provenance set
+            // as proof that a requested equipment type is covered.
             var qualifications = engine.Resolve(request.Qualifications);
             var coverage = engine.Covers(qualifications, request.EquipmentId);
             Timing(context, "native-equipment-coverage", start);
