@@ -7,53 +7,53 @@
     "equipmentProficiencyGrants": {
       "fixed": [
         {
-          "id": "fixed-1",
+          "id": "group-weapon-simple",
           "targetId": "equipment.group.weapon.simple"
         },
         {
-          "id": "fixed-2",
+          "id": "weapon-hand-crossbow",
           "targetId": "equipment.weapon.hand-crossbow"
         },
         {
-          "id": "fixed-3",
+          "id": "weapon-longsword",
           "targetId": "equipment.weapon.longsword"
         },
         {
-          "id": "fixed-4",
+          "id": "weapon-rapier",
           "targetId": "equipment.weapon.rapier"
         },
         {
-          "id": "fixed-5",
+          "id": "weapon-sap",
           "targetId": "equipment.weapon.sap"
         },
         {
-          "id": "fixed-6",
+          "id": "weapon-shortbow",
           "targetId": "equipment.weapon.shortbow"
         },
         {
-          "id": "fixed-7",
+          "id": "weapon-shortsword",
           "targetId": "equipment.weapon.shortsword"
         },
         {
-          "id": "fixed-8",
+          "id": "group-weapon-martial-finesse-or-light",
           "targetId": "equipment.group.weapon.martial-finesse-or-light"
         },
         {
-          "id": "fixed-9",
+          "id": "group-armor-light",
           "targetId": "equipment.group.armor.light"
         },
         {
-          "id": "fixed-10",
+          "id": "tool-thieves-tools",
           "targetId": "equipment.tool.thieves-tools"
         }
       ],
       "multiclassFixed": [
         {
-          "id": "multiclass-1",
+          "id": "group-armor-light",
           "targetId": "equipment.group.armor.light"
         },
         {
-          "id": "multiclass-2",
+          "id": "tool-thieves-tools",
           "targetId": "equipment.tool.thieves-tools"
         }
       ]

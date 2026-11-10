@@ -7,7 +7,7 @@
     "equipmentProficiencyGrants": {
       "fixed": [
         {
-          "id": "fixed-1",
+          "id": "group-weapon-simple",
           "targetId": "equipment.group.weapon.simple"
         }
       ]

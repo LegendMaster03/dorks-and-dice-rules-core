@@ -7,59 +7,59 @@
     "equipmentProficiencyGrants": {
       "fixed": [
         {
-          "id": "fixed-1",
+          "id": "weapon-club",
           "targetId": "equipment.weapon.club"
         },
         {
-          "id": "fixed-2",
+          "id": "weapon-dagger",
           "targetId": "equipment.weapon.dagger"
         },
         {
-          "id": "fixed-3",
+          "id": "weapon-dart",
           "targetId": "equipment.weapon.dart"
         },
         {
-          "id": "fixed-4",
+          "id": "weapon-javelin",
           "targetId": "equipment.weapon.javelin"
         },
         {
-          "id": "fixed-5",
+          "id": "weapon-mace",
           "targetId": "equipment.weapon.mace"
         },
         {
-          "id": "fixed-6",
+          "id": "weapon-quarterstaff",
           "targetId": "equipment.weapon.quarterstaff"
         },
         {
-          "id": "fixed-7",
+          "id": "weapon-scimitar",
           "targetId": "equipment.weapon.scimitar"
         },
         {
-          "id": "fixed-8",
+          "id": "weapon-sickle",
           "targetId": "equipment.weapon.sickle"
         },
         {
-          "id": "fixed-9",
+          "id": "weapon-sling",
           "targetId": "equipment.weapon.sling"
         },
         {
-          "id": "fixed-10",
+          "id": "weapon-spear",
           "targetId": "equipment.weapon.spear"
         },
         {
-          "id": "fixed-11",
+          "id": "weapon-shortspear",
           "targetId": "equipment.weapon.shortspear"
         },
         {
-          "id": "fixed-12",
+          "id": "group-armor-light",
           "targetId": "equipment.group.armor.light"
         },
         {
-          "id": "fixed-13",
+          "id": "group-armor-medium",
           "targetId": "equipment.group.armor.medium"
         },
         {
-          "id": "fixed-14",
+          "id": "group-shield-all",
           "targetId": "equipment.group.shield.all"
         }
       ]

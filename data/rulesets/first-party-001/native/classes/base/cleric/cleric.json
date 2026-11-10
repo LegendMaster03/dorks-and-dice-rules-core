@@ -7,37 +7,37 @@
     "equipmentProficiencyGrants": {
       "fixed": [
         {
-          "id": "fixed-1",
+          "id": "group-weapon-simple",
           "targetId": "equipment.group.weapon.simple"
         },
         {
-          "id": "fixed-2",
+          "id": "group-armor-light",
           "targetId": "equipment.group.armor.light"
         },
         {
-          "id": "fixed-3",
+          "id": "group-armor-medium",
           "targetId": "equipment.group.armor.medium"
         },
         {
-          "id": "fixed-4",
+          "id": "group-armor-heavy",
           "targetId": "equipment.group.armor.heavy"
         },
         {
-          "id": "fixed-5",
+          "id": "group-shield-all",
           "targetId": "equipment.group.shield.all"
         }
       ],
       "multiclassFixed": [
         {
-          "id": "multiclass-1",
+          "id": "group-armor-light",
           "targetId": "equipment.group.armor.light"
         },
         {
-          "id": "multiclass-2",
+          "id": "group-armor-medium",
           "targetId": "equipment.group.armor.medium"
         },
         {
-          "id": "multiclass-3",
+          "id": "group-shield-all",
           "targetId": "equipment.group.shield.all"
         }
       ]
