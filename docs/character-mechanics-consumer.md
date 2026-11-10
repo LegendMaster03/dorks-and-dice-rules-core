@@ -1,5 +1,7 @@
 # Character mechanics consumer contract
 
+> **Native rewrite distinction (2026-11-10):** This document describes the earlier source-normalized Character projection and its translation semantics. The authoritative native ruleset now has a separate binary equipment qualification contract at `docs/rewrite/equipment-qualification-contract.md` with canonical `equipment-type` and `equipment-group` IDs, explicit grants, and coverage evaluation. Do not treat legacy tool-as-Competency mappings below as native equipment qualifications or as new independent crafting-tool training tracks.
+
 Rules Core exposes a normalized consumer contract for character-oriented tools. The contract is intentionally separate from source-native JSON and from Character-owned state.
 
 The ownership boundary is:
