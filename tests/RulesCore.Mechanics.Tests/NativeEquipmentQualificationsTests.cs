@@ -527,7 +527,7 @@ public sealed class NativeEquipmentQualificationsTests
                 }
                 """;
             if (invalid == "unknown")
-                equipment = equipment.Replace("\"equipment.group.weapon.martial\"]",
+                equipment = equipment.Replace("\"equipment.group.weapon.family.sword\"]",
                     "\"equipment.group.weapon.missing\"]", StringComparison.Ordinal);
             if (invalid == "cycle")
                 equipment = equipment.Replace(
@@ -536,7 +536,7 @@ public sealed class NativeEquipmentQualificationsTests
                     StringComparison.Ordinal);
             if (invalid == "cross-category")
                 equipment = equipment.Replace(
-                    "\"equipment.group.weapon.martial\"]",
+                    "\"equipment.group.weapon.family.sword\"]",
                     "\"equipment.group.armor.light\"]", StringComparison.Ordinal);
             File.WriteAllText(Path.Combine(native, "equipment.json"), equipment);
             File.WriteAllText(Path.Combine(native, "sources.json"),
