@@ -8,7 +8,7 @@
 
 **Neither Competency proficiency nor a rank is the default for an Origin.** The existence of a Background or Upbringing does not entitle the character to an unrelated Competency. An Origin may instead offer only Skills, equipment qualifications, languages, social/contextual features, possessions, or other approved benefits.
 
-**Only when converting a previously existing training benefit to the current Competency model**, use the source type as a starting point:
+**Only when converting a previously existing training benefit that was retained in the approved native Origin**, use the source type as a starting point. An earlier edition's tool grant is source evidence, not an entitlement that overrides the approved native redesign. Folk Hero and Hermit deliberately omitted historical tool training; Gladiator deliberately replaced it with a narrow weapon qualification; Explorer's split from Outlander is not a mechanical one-to-one tool import. See [source conversion exceptions and whole-package review](pillar3-origin-training-exceptions-review-20261110.md) for the explicit comparisons.
 
 | Earlier training benefit | Starting conversion candidate |
 | --- | --- |
