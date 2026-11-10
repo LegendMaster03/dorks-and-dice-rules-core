@@ -4,7 +4,7 @@ name: Validate Rules Core Rewrite Structure
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/competency-profile-reconciliation]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -18,6 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install .NET 10 for branch validation
+        if: github.ref == 'refs/heads/feature/competency-profile-reconciliation'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Validate focused Competency mechanics tests
+        if: github.ref == 'refs/heads/feature/competency-profile-reconciliation'
+        shell: bash
+        run: |
+          dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --filter 'FullyQualifiedName~Competency'
       - name: Validate JSON syntax without asserting draft schemas or content counts
         shell: bash
         run: |
