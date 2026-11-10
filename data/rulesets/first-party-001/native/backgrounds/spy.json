@@ -25,7 +25,7 @@
     {
       "id": "spy-tradecraft-competency",
       "name": "Tradecraft Training Choice",
-      "description": "Choose one training benefit reflecting your intelligence work: one rank in Disguise, Forgery, or Calligraphy, or the separate Thieves' Tools equipment qualification. This grant does not include ownership of the relevant equipment.",
+      "description": "Choose one training choice reflecting your intelligence work: Disguise, Forgery, or Calligraphy Competency training, or the separate Thieves' Tools equipment qualification. This grant does not include ownership of the relevant equipment.",
       "grantType": "benefit-choice",
       "choiceCount": 1,
       "options": [
@@ -35,11 +35,7 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.disguise",
-              "competencyTraining": {
-                "ranks": 1,
-                "proficient": false
-              }
+              "competency": "competency.disguise"
             }
           ]
         },
@@ -49,11 +45,7 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.forgery",
-              "competencyTraining": {
-                "ranks": 1,
-                "proficient": false
-              }
+              "competency": "competency.forgery"
             }
           ]
         },
@@ -82,11 +74,7 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.calligraphy",
-              "competencyTraining": {
-                "ranks": 1,
-                "proficient": false
-              }
+              "competency": "competency.calligraphy"
             }
           ]
         }
