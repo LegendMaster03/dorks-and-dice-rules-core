@@ -257,6 +257,34 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                         "Specific weapon proficiency must not cover a family",
                     )
 
+    def test_gladiator_selects_one_base_weapon_without_weapon_mastery(self):
+        """A selected weapon type is not a family, category, or mastery."""
+        gladiator = self.backgrounds["background.gladiator"]
+        arena = benefit(gladiator, "gladiator-arena-weapon")
+        self.assertEqual("qualification-training", arena["grantType"])
+        self.assertEqual("weapon", arena["qualificationCategory"])
+        self.assertEqual(1, arena["choiceCount"])
+        grant = gladiator["equipmentProficiencyGrants"]
+        self.assertNotIn("fixed", grant)
+        choice = self.assert_single(grant["choices"])
+        self.assertEqual("arena-weapon", choice["id"])
+        self.assertEqual("equipment-type",
+                         choice.get("selectionKind", "equipment-type"))
+        self.assertEqual("weapon", choice["fromCategory"])
+        self.assertEqual(1, choice["count"])
+        self.assertEqual(["equipment.group.weapon.all"],
+                         choice["fromGroupIds"])
+        self.assertNotIn("weaponMasteryGrants", gladiator)
+        # The ordinary starting item must use the same choice; neither
+        # inventory nor the broad candidate pool is a proficiency grant.
+        self.assertIn("same-specific-mundane-arena-appropriate-weapon-type",
+                      gladiator["startingEquipment"]["items"][0]
+                      ["choiceConstraint"])
+
+    def assert_single(self, values):
+        self.assertEqual(1, len(values))
+        return values[0]
+
     def test_vehicle_grants_are_not_mislabeled_as_tools(self):
         for origin_id, benefit_id, vehicle_type in (
             ("background.soldier", "soldier-land-vehicles", "land"),
