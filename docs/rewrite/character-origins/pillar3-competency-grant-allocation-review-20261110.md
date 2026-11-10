@@ -61,6 +61,20 @@ These are **hypothetical consequences** using the accepted independent rank-gran
 4. **No standalone Upbringing budget is assumed.** General/Rock Gnome, General Goliath/Giant Foundling, and cultural substitutions must be reviewed as complete Species–Ancestry–Upbringing–Background packages, not by counting one field in isolation.
 5. **Missing specifics are real blockers to full execution, not to this content review.** The exact `crafting-competency` membership, the General Gnome value question, Upbringing-granted Prestidigitation ability, scoped doubled proficiency stacking, selected weapon eligibility, and vehicle operator benefits remain separate Origin-domain questions.
 
+## Alternative distribution sensitivity check — not a second allocation policy
+
+A contrasting **7 P+1 / 4 R+1 / 2 P-only** scenario was considered to test how much the initial packages would change if *formative* learning tended to award ranks only and two mixed alternatives used proficiency only. Its specific downgrades were:
+
+- **Rank-only candidates (R+1):** Aristocratic artistic choice; General Dwarf crafting tradition; General Goliath clan craft; Street-Raised community Competency choice
+- **Proficiency-only candidates (P):** Entertainer's selected Disguise training; Guild Merchant's selected Navigation training
+- **P+1 unchanged:** the other seven initial-training sites
+
+**This 7/4/2 scenario is not preferred or independently justified by the sources.** It is a deliberately contrasting balance test, not an approved or expected ratio. The existing authored descriptions do not establish that childhood/cultural practice is insufficient for proficiency, and reducing an initial grant solely to equalize it with a Gaming Set, Instrument, Thieves' Tools, or language choice would conflate **training meaning** with **choice-value balancing**. A character can have substantial, validated learned proficiency from an Upbringing without any professional employment.
+
+The user's relative frequency expectation applies to **all source conversions**, not necessarily this small set of 13 initial-training sites. Rank-only and proficiency-only may be better represented in later dedicated practice, advancement, specialized experience, and limited-qualification sources. Revisit a particular P+1 candidate when the actual Origin evidence or full-package balance warrants it, rather than forcing a distribution.
+
+Consequently the **working candidate matrix above remains the single source-by-source proposal**. Both distribution scenarios are unapproved, and **no numeric grant effects are committed to the Origin JSON**.
+
 ## Approval and implementation boundary
 
 No number in the proposed candidate column is yet a rule. The existing `grantType: "competency-training"` retains the original descriptive entitlement. Before emitting `NativeCompetencyTrainingGrant` records, the Origin authority must validate the selected Background/Upbringing and its one-of choices, establish a unique source occurrence, and supply the explicitly reviewed `Ranks` and `Proficient` effect.
