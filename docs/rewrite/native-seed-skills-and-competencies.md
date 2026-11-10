@@ -13,7 +13,7 @@ The native JSON describes the Dorks & Dice ruleset rather than imposing the sour
 
 ## Skills
 
-The 84 selected native Skills retain the existing composite and family structures. The former `skill.forgery` is represented solely by the native `competency.forgery`; no duplicate historical intermediate Skill is required. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
+The 81 selected native Skills retain the existing composite and family structures. The former `skill.forgery` is represented solely by the native `competency.forgery`; no duplicate historical intermediate Skill is required. The existing Skills data includes standalone skills, independently addressable children, computed parent Skills, and Perform/Profession skill families.
 
 A Skill has proficiency and level in character state. Its normal Ability-score interactions and any explicit composite calculations belong to the Skill mechanics. Those calculations are not automatically imposed on Competencies.
 
@@ -42,6 +42,18 @@ For example:
 - **Open Lock:** a Skill for opening locks without their intended keys, using suitable equipment. It does not confer Locksmithing or any other manufacturing competency.
 - **Trap disarming:** an activity using the relevant Skill, Competency, equipment, spell, or feature appropriate to the trap. Neither Trap Disarming nor a general Disable Device Skill constitutes a separate native advancement track.
 - **Thieves' Tools:** remain equipment, not a leveled competency. Their proficiency can be granted as a narrow, binary equipment qualification under the shared weapon/armor/shield/tool model. Possession, equipment proficiency, and the Open Lock Skill remain distinct; their check interaction has not yet been selected.
+
+### Crafting-related Profession Skills consolidated
+
+**Brewing, Cooking, and Herbalism** each serve as the single native learned-capability identity for the overlapping 3.x profession-based craft and the 5.x associated tools:
+
+- `skill.profession-brewer` is retired in favor of `competency.brewing` and Brewer's Supplies as applicable equipment.
+- `skill.profession-cook` is retired in favor of `competency.cooking` and Cook's Utensils.
+- `skill.profession-herbalist` is retired in favor of `competency.herbalism` and the Herbalism Kit.
+
+The corresponding occupation is not an additional advancement track. Activities that are not the craft itself may use other appropriate Skills and rules. Other Profession specialties are not retired solely because their names resemble a craft: Apothecary, Tanner, and Scribe require specific activity mapping before a further decision, and the remaining Profession family must be reviewed on its merits.
+
+These consolidations do not set competency level formulas, convert historical ranks, grant or require equipment proficiency automatically, or stack proficiency bonuses.
 
 ### Item categories and conditional benefits
 
