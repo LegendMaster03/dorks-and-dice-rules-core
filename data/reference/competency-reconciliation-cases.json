@@ -295,6 +295,40 @@
       }
     },
     {
+      "id": "profession-crafting-overlap-consolidated",
+      "kind": "native-skill-and-tool-overlap-consolidation",
+      "input": {
+        "historicalProfessions": [
+          "Profession (Brewer)",
+          "Profession (Cook)",
+          "Profession (Herbalist)"
+        ],
+        "sourceTools": [
+          "Brewer's Supplies",
+          "Cook's Utensils",
+          "Herbalism Kit"
+        ]
+      },
+      "expect": {
+        "nativeCompetencies": [
+          "competency.brewing",
+          "competency.cooking",
+          "competency.herbalism"
+        ],
+        "retiredNativeSkills": [
+          "skill.profession-brewer",
+          "skill.profession-cook",
+          "skill.profession-herbalist"
+        ],
+        "singleAdvancementIdentityPerDiscipline": true,
+        "toolsRemainEquipment": true,
+        "equipmentProficiencyWhenExplicitlyGranted": "shared-equipment-qualification",
+        "noncraftOccupationalActivities": "other-applicable-skills-and-rules",
+        "automaticLevelConversion": false,
+        "automaticBonusStacking": false
+      }
+    },
+    {
       "id": "craft-family",
       "kind": "historical-craft-family-source",
       "input": {
