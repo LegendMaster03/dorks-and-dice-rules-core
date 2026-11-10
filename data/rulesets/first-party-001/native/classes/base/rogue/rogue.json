@@ -4,6 +4,60 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "fixed-1",
+          "targetId": "equipment.group.weapon.simple"
+        },
+        {
+          "id": "fixed-2",
+          "targetId": "equipment.weapon.hand-crossbow"
+        },
+        {
+          "id": "fixed-3",
+          "targetId": "equipment.weapon.longsword"
+        },
+        {
+          "id": "fixed-4",
+          "targetId": "equipment.weapon.rapier"
+        },
+        {
+          "id": "fixed-5",
+          "targetId": "equipment.weapon.sap"
+        },
+        {
+          "id": "fixed-6",
+          "targetId": "equipment.weapon.shortbow"
+        },
+        {
+          "id": "fixed-7",
+          "targetId": "equipment.weapon.shortsword"
+        },
+        {
+          "id": "fixed-8",
+          "targetId": "equipment.group.weapon.martial-finesse-or-light"
+        },
+        {
+          "id": "fixed-9",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "fixed-10",
+          "targetId": "equipment.tool.thieves-tools"
+        }
+      ],
+      "multiclassFixed": [
+        {
+          "id": "multiclass-1",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "multiclass-2",
+          "targetId": "equipment.tool.thieves-tools"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,
