@@ -1,8 +1,9 @@
-"""Origin-specific Competency grant defaults and explicit override boundaries.
+"""Validate only explicitly reviewed earlier-edition Origin Competency conversions.
 
-This validates authored sources and choices, not crafting progression or
-character entitlement. The native grant reducer only accepts already-earned
-source occurrences; a selected option must first be authorized.
+There is NO universal Origin Competency grant. An earlier-edition benefit that
+actually needs conversion may receive a source-type starting allocation.
+Newly authored choices retain their approved existence but require separate
+approval for the independent rank/proficiency effects.
 """
 import json
 from pathlib import Path
@@ -12,26 +13,32 @@ import unittest
 NATIVE = (Path(__file__).resolve().parents[1]
           / "data/rulesets/first-party-001/native")
 
-# Explicit currently reviewed Origin benefits. These are not an exhaustive
-# inventory or a fixed total for an actively developed catalog.
-BACKGROUND_SITES = {
+# Source-backed legacy tool/Competency training mapped into one native capability.
+# These current allocations are neither a fixed corpus total nor general Origin rules.
+CONVERTED_BACKGROUNDS = {
     "charlatan": {"charlatan-disguise-kit": None, "charlatan-forgery": None},
     "entertainer": {"entertainer-performance-method": "disguise-kit"},
-    "explorer": {"explorer-field-competency": None},
     "guild-artisan": {"guild-artisan-trade": None},
     "guild-merchant": {"guild-merchant-professional-choice": "navigation"},
     "sailor": {"sailor-navigation": None},
-    "spy": {"spy-tradecraft-competency": ("disguise", "forgery", "calligraphy")},
 }
-UPBRINGING_SITES = {
-    "aristocratic": {"aristocratic-formative-competency":
-                    ("calligraphy", "painting", "cooking")},
+CONVERTED_UPBRINGINGS = {
     "dwarf/general": {"crafting-tradition": None},
-    "goliath/general": {"clan-craft": None},
     "gnome/rock": {"tinkering": None},
-    "street-raised": {"street-raised-community-competency":
-                     ("disguise", "cooking", "forgery")},
 }
+
+# These are independently authored or materially reallocated training outcomes.
+# The earlier source type alone does not determine their numeric/binary amounts.
+AWAITING_SOURCE_SPECIFIC_ALLOCATION = (
+    ("backgrounds", "explorer", "explorer-field-competency", None),
+    ("backgrounds", "spy", "spy-tradecraft-competency",
+     ("disguise", "forgery", "calligraphy")),
+    ("upbringings", "aristocratic", "aristocratic-formative-competency",
+     ("calligraphy", "painting", "cooking")),
+    ("upbringings", "goliath/general", "clan-craft", None),
+    ("upbringings", "street-raised", "street-raised-community-competency",
+     ("disguise", "cooking", "forgery")),
+)
 
 
 def read(kind, name):
@@ -49,7 +56,7 @@ def nodes(value):
             yield from nodes(child)
 
 
-def selected_grants(record, id_, options):
+def grants(record, id_, options):
     outer = next(x for x in record["benefits"] if x["id"] == id_)
     if options is None:
         return [outer]
@@ -58,9 +65,9 @@ def selected_grants(record, id_, options):
             for entry in option["benefits"]]
 
 
-class CharacterOriginsCompetencyBaselineTests(unittest.TestCase):
-    def test_all_native_origin_competency_grants_have_explicit_effects(self):
-        """Future Origin grants must state their own values, not assume global rules."""
+class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
+    def test_explicit_effects_are_valid_when_authored(self):
+        """Unallocated grants are allowed; an authored zero-effect grant is not."""
         for folder in ("backgrounds", "upbringings"):
             for path in (NATIVE / folder).rglob("*.json"):
                 record = json.loads(path.read_text(encoding="utf-8"))
@@ -69,6 +76,8 @@ class CharacterOriginsCompetencyBaselineTests(unittest.TestCase):
                         continue
                     with self.subTest(origin=record["id"],
                                       target=node.get("competency")):
+                        if "competencyTraining" not in node:
+                            continue
                         effect = node["competencyTraining"]
                         self.assertEqual({"ranks", "proficient"}, set(effect))
                         self.assertIs(type(effect["ranks"]), int)
@@ -76,33 +85,58 @@ class CharacterOriginsCompetencyBaselineTests(unittest.TestCase):
                         self.assertIs(type(effect["proficient"]), bool)
                         self.assertTrue(effect["ranks"] or effect["proficient"])
 
-    def test_reviewed_background_grants_add_rank_without_implied_proficiency(self):
-        for name, benefits in BACKGROUND_SITES.items():
+    def test_reviewed_earlier_background_benefits_contribute_one_rank(self):
+        for name, benefits in CONVERTED_BACKGROUNDS.items():
             record = read("backgrounds", name)
             with self.subTest(background=name):
                 self.assertEqual("background." + name, record["id"])
                 for id_, options in benefits.items():
-                    grants = selected_grants(record, id_, options)
-                    self.assertTrue(grants)
-                    for grant in grants:
-                        self.assertEqual("competency-training", grant["grantType"])
+                    entries = grants(record, id_, options)
+                    self.assertTrue(entries)
+                    for entry in entries:
+                        self.assertEqual("competency-training", entry["grantType"])
                         self.assertEqual({"ranks": 1, "proficient": False},
-                                         grant["competencyTraining"])
+                                         entry["competencyTraining"])
 
-    def test_reviewed_upbringing_grants_proficiency_without_implied_rank(self):
-        for name, benefits in UPBRINGING_SITES.items():
+    def test_reviewed_earlier_upbringing_benefits_grant_proficiency(self):
+        for name, benefits in CONVERTED_UPBRINGINGS.items():
             record = read("upbringings", name)
             with self.subTest(upbringing=name):
                 self.assertTrue(record["id"].startswith("upbringing."))
                 for id_, options in benefits.items():
-                    grants = selected_grants(record, id_, options)
-                    self.assertTrue(grants)
-                    for grant in grants:
-                        self.assertEqual("competency-training", grant["grantType"])
+                    entries = grants(record, id_, options)
+                    self.assertTrue(entries)
+                    for entry in entries:
+                        self.assertEqual("competency-training", entry["grantType"])
                         self.assertEqual({"ranks": 0, "proficient": True},
-                                         grant["competencyTraining"])
+                                         entry["competencyTraining"])
 
-    def test_mixed_choices_keep_equipment_and_competency_effects_disjoint(self):
+    def test_newly_authored_training_choices_are_not_automatically_converted(self):
+        """Preserve approved choices but do not invent an independent grant amount."""
+        for kind, name, id_, options in AWAITING_SOURCE_SPECIFIC_ALLOCATION:
+            record = read(kind, name)
+            with self.subTest(origin=record["id"], benefit=id_):
+                entries = grants(record, id_, options)
+                self.assertTrue(entries)
+                for entry in entries:
+                    self.assertEqual("competency-training", entry["grantType"])
+                    self.assertNotIn("competencyTraining", entry)
+
+    def test_origins_with_no_competency_benefit_stay_that_way(self):
+        """Neither is normal, not an exception that needs an explicit empty grant."""
+        for kind, name in (
+            ("backgrounds", "acolyte"), ("backgrounds", "criminal"),
+            ("backgrounds", "noble"), ("backgrounds", "sage"),
+            ("backgrounds", "soldier"), ("upbringings", "wilderness-raised"),
+            ("upbringings", "giant-foundling"),
+        ):
+            record = read(kind, name)
+            with self.subTest(origin=record["id"]):
+                self.assertFalse(any(
+                    node.get("grantType") == "competency-training"
+                    for node in nodes(record)))
+
+    def test_mixed_choices_keep_equipment_and_competency_effects_separate(self):
         cases = (
             ("backgrounds", "entertainer", "entertainer-performance-method",
              "musical-instrument"),
@@ -133,7 +167,6 @@ class CharacterOriginsCompetencyBaselineTests(unittest.TestCase):
                     self.assertNotIn("equipmentProficiencyGrants", option)
                     self.assertTrue(all(
                         b["grantType"] == "competency-training"
-                        and "competencyTraining" in b
                         for b in option["benefits"]))
 
 
