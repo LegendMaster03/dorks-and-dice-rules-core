@@ -54,7 +54,7 @@ Eligible native Classes, Origins, features, feats, and other source entities may
 
 For one specific weapon, use targetId equipment.weapon.longsword. For an entire weapon category, use equipment.group.weapon.martial. Shields use equipment.group.shield.all.
 
-Choice grants declare count and fromCategory; optional fromGroupIds narrow candidates to types in those groups. The default selectionKind is equipment-type. The optional selectionKind equipment-group offers selectable entire group proficiency; use it only when the authored source grants such a broad option.
+Choice grants declare count and fromCategory; optional fromGroupIds narrows candidates to types in the union of the specified groups, and optional fromTypeIds narrows to explicitly enumerated type IDs. When both are supplied, eligible types must satisfy both restrictions. Unknown, duplicate, or cross-category type IDs fail closed. The default selectionKind is equipment-type. fromTypeIds is only valid for equipment-type choices. The optional selectionKind equipment-group offers selectable entire group proficiency; use it only when the authored source grants such a broad option.
 
     {
       "equipmentProficiencyGrants": {
@@ -120,6 +120,6 @@ Conditional grants need trusted, server-validated form/feature state. A client-s
 
 Land and Water Vehicles appear in Origin source grants. Vehicle operation is not necessarily tool handling, and may need distinct driver/operator categories. Keep these grants unresolved for Character Origins until the vehicle qualification taxonomy and effects are approved. Do not remap them to tool or create a fifth general category silently.
 
-The catalog remains partial: expanding native item/type definitions and their authored memberships is separate from the common evaluator. An absent type is unresolved, not automatically untrained. Reconciliation must not invent category membership from historical names.
+For a narrow Gladiator arena-weapon choice, use fromTypeIds with the reviewed allowed native weapon IDs instead of an unrestricted fromCategory weapon choice. The catalog remains partial: expanding native item/type definitions and their authored memberships is separate from the common evaluator. An absent type is unresolved, not automatically untrained. Reconciliation must not invent category membership from historical names.
 
 Validation: NativeEquipmentQualificationsTests exercises coverage, overlap, provenance, actual item links, tool/Skill separation, crafting associations, counted choices, narrow instruments/games, multiclass distinctions, and fail-closed malformed grants and groups. Tests must not assert an exact catalog count or fingerprint.
