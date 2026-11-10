@@ -14,10 +14,12 @@
       "id": "cultural-training",
       "description": "Choose one skill training.",
       "chooseOne": [
-        "insight",
-        "perception",
-        "survival"
-      ]
+        "skill.insight",
+        "skill.perception",
+        "skill.survival"
+      ],
+      "grantType": "skill-training",
+      "choiceCount": 1
     }
   ]
 }
