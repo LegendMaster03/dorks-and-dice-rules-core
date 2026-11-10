@@ -32,6 +32,52 @@ public sealed class NativeCatalogTests
     }
 
     [Fact]
+    public void EveryNativeWeaponHasAnAuthoredFamilyBeneathTheWeaponCategory()
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        var weapons = catalog.Search(category: "equipment-type", limit: 100).Items
+            .Where(entity => entity.Definition.GetProperty("equipmentCategory").GetString()
+                == "weapon").ToArray();
+        Assert.NotEmpty(weapons);
+
+        foreach (var weapon in weapons)
+        {
+            var memberships = weapon.Definition.GetProperty("groupIds")
+                .EnumerateArray().Select(id => id.GetString()!).ToArray();
+
+            // Families are hierarchical subcategories; Simple and Martial
+            // remain separate classification groups and do not replace them.
+            Assert.Contains(memberships, id => id is
+                "equipment.group.weapon.simple" or "equipment.group.weapon.martial");
+            var families = memberships.Where(id => id.StartsWith(
+                "equipment.group.weapon.family.", StringComparison.Ordinal)).ToArray();
+            Assert.NotEmpty(families);
+            foreach (var familyId in families)
+            {
+                Assert.True(catalog.TryGetById(familyId, out var family));
+                Assert.Equal("equipment-group", family!.Category);
+                Assert.Equal("weapon", family.Definition.GetProperty(
+                    "equipmentCategory").GetString());
+                Assert.Contains("equipment.group.weapon.all",
+                    family.Definition.GetProperty("parentGroupIds")
+                        .EnumerateArray().Select(id => id.GetString()!));
+            }
+        }
+
+        Assert.True(catalog.TryGetById("equipment.weapon.mace", out var mace));
+        Assert.True(catalog.TryGetById("equipment.weapon.morningstar", out var morningstar));
+        var maceGroup = "equipment.group.weapon.family.mace";
+        Assert.Contains(maceGroup, mace!.Definition.GetProperty("groupIds")
+            .EnumerateArray().Select(id => id.GetString()));
+        Assert.Contains(maceGroup, morningstar!.Definition.GetProperty("groupIds")
+            .EnumerateArray().Select(id => id.GetString()));
+        Assert.Contains("equipment.group.weapon.simple", mace.Definition.GetProperty(
+            "groupIds").EnumerateArray().Select(id => id.GetString()));
+        Assert.Contains("equipment.group.weapon.martial", morningstar.Definition.GetProperty(
+            "groupIds").EnumerateArray().Select(id => id.GetString()));
+    }
+
+    [Fact]
     public void SearchIsStableCaseInsensitiveAndBounded()
     {
         var location = RepositoryLocation();
