@@ -14,7 +14,7 @@ Alternatives:
 - Separate ranked training systems for weapons, armor, shields, and tools would contradict the approved binary model. Rejected.
 - Chosen: canonical equipment-type and equipment-group entities in NativeCatalogSnapshot, one authored equipmentProficiencyGrants contract, one resolver, category-specific downstream effects.
 
-Native equipment types and groups live in data/rulesets/first-party-001/native/equipment-qualifications.json. This is an intentionally representative type catalog, NOT a complete item inventory or a set of purchasable objects. NativeCatalogLoader checks referenced groups, category consistency, and cycles. No display-name inference is permitted.
+Native equipment types and groups live in data/rulesets/first-party-001/native/equipment-qualifications.json. This is an intentionally representative **proficiency taxonomy**, NOT a complete item inventory, item catalog, or collection of purchasable objects. NativeCatalogLoader checks referenced groups, category consistency, and cycles. No display-name inference is permitted.
 
 **Weapon hierarchy:** Weapon is the top-level equipment category (`equipmentCategory: "weapon"`, with the broad scope `equipment.group.weapon.all`). Weapon families such as **Maces**, **Swords**, and **Axes** are intermediate equipment groups under this category, identified by `equipment.group.weapon.family.*`. Individual canonical weapons remain `equipment-type` leaves. Simple and Martial are overlapping classifications of individual weapons, not replacements for the weapon-family hierarchy. Every currently reconciled native weapon type has an explicit authored family membership; additional source weapon definitions must be assigned a reviewed family when promoted to native content.
 
@@ -60,9 +60,39 @@ Its individual weapon types have both a family membership and a Simple/Martial c
       "kind": "equipment-type", "equipmentCategory": "weapon",
       "groupIds": ["equipment.group.weapon.martial", "equipment.group.weapon.family.mace"] }
 
-Here, the specific `equipment.weapon.mace` identity represents an individual ordinary Mace weapon *type*, while `equipment.group.weapon.family.mace` denotes proficiency with the entire Mace family. The same distinction applies throughout the weapon catalog. Mace-family proficiency covers both native Mace and Morningstar; proficiency with only the individual Mace does not. Simple Weapon proficiency covers the Mace but not the Martial Morningstar. All Weapons covers both.
+Here, `equipment.weapon.mace` denotes the **base Mace weapon type**, not an individual weapon owned by a character. `equipment.group.weapon.family.mace` grants proficiency across the Mace family. This distinction applies throughout the weapon catalog. Mace-family proficiency covers the base Mace and Morningstar; proficiency with only the base Mace does not. Simple Weapon proficiency covers the Mace but not the Martial Morningstar. All Weapons covers both.
 
 Valid categories: weapon, armor, shield, tool. An equipment type can belong to multiple authored groups. Parent groups confer broader coverage; sibling groups do not. A native item can point to a type with equipmentTypeId, but item possession does not infer qualification. Unknown items and missing links return unresolved rather than not proficient.
+
+## Base weapon types, magic variants, item definitions, and inventory instances
+
+The weapon hierarchy stops at the **base weapon type**, not at an owned or named item. The next levels belong to the item system, not to separate proficiency tracks:
+
+1. **Category:** Weapon — `equipmentCategory: "weapon"`.
+2. **Family:** Swords — `equipment.group.weapon.family.sword`.
+3. **Base type:** Longsword — `equipment.weapon.longsword`.
+4. **Item definition:** an ordinary Longsword, a +1 Longsword, or a Flame Tongue Longsword. These are distinct definitions with their own item/magic properties; each can reference the same canonical `equipmentTypeId`.
+5. **Owned instance:** the particular item in a character's inventory, with its own ownership, enchantments, charges, durability, modifications, or other state. Instances are not native proficiency targets.
+
+For **ordinary and magic variants retaining the base weapon's proficiency rules**, native item definitions explicitly link to that base type. Example *illustrative resolved native item definitions* (not currently promoted source content):
+
+    { "id": "item.example.longsword", "name": "Longsword",
+      "kind": "item", "equipmentTypeId": "equipment.weapon.longsword" }
+
+    { "id": "item.example.plus-one-longsword", "name": "+1 Longsword",
+      "kind": "item", "equipmentTypeId": "equipment.weapon.longsword" }
+
+    { "id": "item.example.flame-tongue-longsword", "name": "Flame Tongue Longsword",
+      "kind": "item", "equipmentTypeId": "equipment.weapon.longsword" }
+
+    { "id": "item.example.flame-tongue-rapier", "name": "Flame Tongue Rapier",
+      "kind": "item", "equipmentTypeId": "equipment.weapon.rapier" }
+
+A Longsword proficiency resolves identically for the first three item definitions; it does **not** grant proficiency with the Rapier, even though both magic items use the Flame Tongue variant. Sword-family proficiency can cover both. The `item.example.*` records are examples only; no magic effects or real item identities are created by them.
+
+A reusable magic-variant template (for example, `magicvariant.1-weapon` or `magicvariant.flame-tongue`) is **not** automatically a proficiency target, an owned inventory instance, or a new base type. Composition of base items with variant templates must yield a resolved item definition with an explicit `equipmentTypeId`. The current working corpus contains base items, named magic items, and reusable magic variants, many still awaiting native reconciliation. The equipment resolver does not execute that composition, does not infer type from a source `baseItem` token or a display name, and does not promote working definitions by itself.
+
+**Exceptional magic items require explicit reconciliation.** The retained source for Sun Blade, for example, allows proficiency through either Longswords or Shortswords. A single `equipmentTypeId` cannot represent that alternative. The existing evaluator does not yet have a verified item-specific alternate-proficiency rule, so do not treat a basic Longsword link as a complete Sun Blade implementation. Multi-form weapons or items that change their underlying weapon type require similarly explicit handling. These exceptions should be authored as approved mechanics, not silently inferred from magical names or properties.
 
 ## Authored grants
 
@@ -126,7 +156,7 @@ Choice key: sourceOccurrenceId/choiceId. Both component IDs reserve the slash se
 
 A resolved projection lists each unique qualification and all matching NativeEquipmentQualificationProvenance occurrences. Repeated qualifications are Boolean, with no stacked numerical modifiers.
 
-NativeEquipmentQualifications.Covers(projection, equipmentId) checks an equipment-type ID or a native item explicitly linked by equipmentTypeId. Results:
+NativeEquipmentQualifications.Covers(projection, equipmentId) checks an equipment-type ID or a **resolved native item definition** explicitly linked by equipmentTypeId. Multiple mundane or magical item definitions can link to one canonical type without creating duplicate training. It does not accept an inventory-instance ID or unresolved magic-variant template. Results:
 - resolved: Proficient true or false, plus all matching grant provenance
 - unresolved: Proficient null where the type/link/scope is unknown
 - unavailable: Proficient null when the grant projection has not fully resolved
