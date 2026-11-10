@@ -20,14 +20,18 @@
     },
     {
       "id": "crafting-tradition",
-      "description": "Choose one native crafting Competency.",
+      "description": "Choose one native crafting Competency and gain proficiency in it.",
       "chooseOne": [
         "competency.smithing",
         "competency.brewing",
         "competency.stonemasonry"
       ],
       "grantType": "competency-training",
-      "choiceCount": 1
+      "choiceCount": 1,
+      "competencyTraining": {
+        "ranks": 0,
+        "proficient": true
+      }
     }
   ]
 }
