@@ -11,7 +11,7 @@ public sealed class NativeEquipmentQualificationsTests
     {
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
-        var grants = engine.Resolve(f.Request(new("class.barbarian", "initial")));
+        var grants = engine.Resolve(f.Request(new NativeEquipmentQualificationSource("class.barbarian", "initial")));
         Assert.Equal("resolved", grants.Status);
         Assert.True(engine.Covers(grants, "equipment.weapon.longsword").Proficient);
         Assert.True(engine.Covers(grants, "equipment.shield.shield").Proficient);
@@ -23,7 +23,7 @@ public sealed class NativeEquipmentQualificationsTests
     {
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
-        var grants = engine.Resolve(f.Request(new("feature.sword", "one")));
+        var grants = engine.Resolve(f.Request(new NativeEquipmentQualificationSource("feature.sword", "one")));
         Assert.True(engine.Covers(grants, "equipment.weapon.longsword").Proficient);
         Assert.False(engine.Covers(grants, "equipment.weapon.rapier").Proficient);
     }
@@ -34,8 +34,8 @@ public sealed class NativeEquipmentQualificationsTests
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
         var grants = engine.Resolve(f.Request(
-            new("class.barbarian", "initial"), new("feature.sword", "other"),
-            new("feature.second-sword", "third")));
+            new NativeEquipmentQualificationSource("class.barbarian", "initial"), new NativeEquipmentQualificationSource("feature.sword", "other"),
+            new NativeEquipmentQualificationSource("feature.second-sword", "third")));
         Assert.Equal("resolved", grants.Status);
         Assert.Equal(3, grants.Qualifications.Count);
         var coverage = engine.Covers(grants, "equipment.weapon.longsword");
@@ -50,13 +50,13 @@ public sealed class NativeEquipmentQualificationsTests
     {
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
-        var rogue = engine.Resolve(f.Request(new("class.rogue", "first")));
+        var rogue = engine.Resolve(f.Request(new NativeEquipmentQualificationSource("class.rogue", "first")));
         Assert.True(engine.Covers(rogue, "equipment.tool.thieves-tools").Proficient);
         Assert.True(engine.Covers(rogue, "item.thieves-tools").Proficient);
 
         // A learned Skill is not a tool-grant source, and owning a linked item
         // does not create the qualification fact.
-        var skillOnly = engine.Resolve(f.Request(new("feature.open-lock", "skill")));
+        var skillOnly = engine.Resolve(f.Request(new NativeEquipmentQualificationSource("feature.open-lock", "skill")));
         Assert.False(engine.Covers(skillOnly, "equipment.tool.thieves-tools").Proficient);
         var empty = engine.Resolve(f.Request());
         Assert.False(engine.Covers(empty, "item.thieves-tools").Proficient);
@@ -67,7 +67,7 @@ public sealed class NativeEquipmentQualificationsTests
     {
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
-        var request = f.Request(new("feature.entertainment", "background"));
+        var request = f.Request(new NativeEquipmentQualificationSource("feature.entertainment", "background"));
         var awaiting = engine.Resolve(request);
         Assert.Equal("needs-choices", awaiting.Status);
         Assert.Empty(awaiting.Qualifications);
@@ -109,11 +109,11 @@ public sealed class NativeEquipmentQualificationsTests
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
         var grants = engine.Resolve(f.Request(
-            new("class.barbarian", "enter-later", "multiclass")));
+            new NativeEquipmentQualificationSource("class.barbarian", "enter-later", "multiclass")));
         Assert.True(engine.Covers(grants, "equipment.shield.shield").Proficient);
         Assert.False(engine.Covers(grants, "equipment.weapon.longsword").Proficient);
         var unavailable = engine.Resolve(f.Request(
-            new("feature.sword", "wrong-mode", "multiclass")));
+            new NativeEquipmentQualificationSource("feature.sword", "wrong-mode", "multiclass")));
         Assert.Equal("unavailable", unavailable.Status);
         Assert.Empty(unavailable.Qualifications);
     }
@@ -123,7 +123,7 @@ public sealed class NativeEquipmentQualificationsTests
     {
         using var f = new Fixture();
         var engine = new NativeEquipmentQualifications(f.Catalog);
-        var request = f.Request(new("feature.entertainment", "A")) with {
+        var request = f.Request(new NativeEquipmentQualificationSource("feature.entertainment", "A")) with {
             SelectedChoices = new Dictionary<string, IReadOnlyList<string>> {
                 ["A/game"] = ["equipment.tool.lute"],
                 ["A/music"] = ["equipment.tool.lute"]
@@ -134,7 +134,7 @@ public sealed class NativeEquipmentQualificationsTests
         Assert.Empty(bad.Qualifications);
         Assert.Contains(bad.Issues, issue => issue.Code == "invalid-equipment-selection");
         var duplicate = engine.Resolve(f.Request(
-            new("class.rogue", "same"), new("feature.sword", "same")));
+            new NativeEquipmentQualificationSource("class.rogue", "same"), new NativeEquipmentQualificationSource("feature.sword", "same")));
         Assert.Equal("unavailable", duplicate.Status);
         Assert.Contains(duplicate.Issues,
             issue => issue.Code == "invalid-equipment-source");
