@@ -60,7 +60,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         {
             // Never publish a partial character when a source is malformed or
             // an entitlement remains unselected.
-            var output = status == "resolved"
+            NativeEquipmentQualification[] output = status == "resolved"
                 ? awarded.Select(pair => new NativeEquipmentQualification(pair.Key,
                     CategoryOf(pair.Key)!,
                     (IReadOnlyList<NativeEquipmentQualificationProvenance>)pair.Value.ToArray()))
@@ -280,11 +280,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         var matches = new List<NativeEquipmentQualificationProvenance>();
         foreach (var grant in projection.Qualifications)
         {
-            if (CategoryOf(grant.QualificationId) != CategoryOf(typeId))
-                return new("unresolved", null, [], [
-                    new("invalid-equipment-qualification", grant.QualificationId,
-                        "Qualification category no longer matches its native definition.")
-                ]);
+            if (CategoryOf(grant.QualificationId) != CategoryOf(typeId)) continue;
             bool? covers = grant.QualificationId == typeId ? true :
                 catalog.TryGetById(grant.QualificationId, out var group) &&
                 group?.Category == "equipment-group"
