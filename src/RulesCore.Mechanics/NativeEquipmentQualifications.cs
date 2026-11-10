@@ -184,7 +184,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             {
                 if (choice.ValueKind != JsonValueKind.Object ||
                     choice.EnumerateObject().Any(field => field.Name is not
-                        ("id" or "count" or "fromCategory" or "selectionKind" or "fromGroupIds")))
+                        ("id" or "count" or "fromCategory" or "selectionKind" or "fromGroupIds" or "fromTypeIds")))
                 {
                     issues.Add(new("unsupported-equipment-choice", source.SourceId,
                         "Conditional and unrecognized equipment choices are not executable."));
@@ -225,12 +225,42 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                         else groups.Add(target!);
                     }
                 }
+                // An explicit type list narrows an otherwise eligible category
+                // or group selection. It never widens the approved category.
+                HashSet<string>? eligibleTypeIds = null;
+                if (choice.TryGetProperty("fromTypeIds", out var typeRestrictions))
+                {
+                    if (selectionKind != "equipment-type" ||
+                        typeRestrictions.ValueKind != JsonValueKind.Array ||
+                        typeRestrictions.GetArrayLength() is < 1 or > 100)
+                    {
+                        issues.Add(new("invalid-equipment-choice", id!,
+                            "Explicit type choices require a bounded, nonempty type list."));
+                        continue;
+                    }
+                    eligibleTypeIds = new HashSet<string>(StringComparer.Ordinal);
+                    foreach (var typeReference in typeRestrictions.EnumerateArray())
+                    {
+                        var targetId = typeReference.ValueKind == JsonValueKind.String
+                            ? typeReference.GetString() : null;
+                        if (!ValidId(targetId) ||
+                            !eligibleTypeIds.Add(targetId!) ||
+                            CategoryOf(targetId!) != category ||
+                            !catalog.TryGetById(targetId!, out var typeRule) ||
+                            typeRule?.Category != "equipment-type")
+                        {
+                            issues.Add(new("unknown-equipment-type-choice", id!,
+                                "Every explicit candidate must be a distinct native type in the selected category."));
+                        }
+                    }
+                }
                 var choiceKey = source.OccurrenceId + "/" + id;
                 seenChoices.Add(choiceKey);
                 var eligible = new SortedSet<string>(StringComparer.Ordinal);
                 foreach (var candidate in EquipmentOfKind(selectionKind))
                 {
-                    if (CategoryOf(candidate.Id) != category) continue;
+                    if (CategoryOf(candidate.Id) != category ||
+                        (eligibleTypeIds is not null && !eligibleTypeIds.Contains(candidate.Id))) continue;
                     if (groups.Count == 0)
                     {
                         eligible.Add(candidate.Id);
