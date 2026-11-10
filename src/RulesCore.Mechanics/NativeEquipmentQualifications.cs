@@ -58,10 +58,13 @@ public sealed record NativeEquipmentCoverage(
 /// Resolves authored native qualification grants and scoped equipment coverage.
 /// It neither awards equipment nor converts Skills/Competencies into equipment training.
 /// </summary>
-public sealed partial class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
+public sealed partial class NativeEquipmentQualifications
 {
-    // Shared by the separate mastery entitlement evaluator in this partial class.
-    private readonly NativeCatalogSnapshot masteryCatalog = catalog;
+    // One immutable native snapshot serves both proficiency and mastery.
+    private readonly NativeCatalogSnapshot catalog;
+
+    public NativeEquipmentQualifications(NativeCatalogSnapshot catalog) =>
+        this.catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
     private static readonly HashSet<string> Categories =
         new(["weapon", "armor", "shield", "tool"], StringComparer.Ordinal);
 
