@@ -109,7 +109,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         }
         if (request.Sources is null || request.Sources.Count > 100 ||
             request.SelectedChoices?.Count > 100 ||
-            request.SelectedChoices?.Any(pair => pair.Key.Length > 320 ||
+            request.SelectedChoices?.Any(pair => pair.Key.Length > 321 ||
                 pair.Value is null || pair.Value.Count > 32 ||
                 pair.Value.Any(value => !ValidId(value))) == true)
         {
@@ -121,12 +121,12 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         foreach (var source in request.Sources)
         {
             if (source is null || !ValidId(source.SourceId) ||
-                !ValidId(source.OccurrenceId) ||
+                !ValidChoiceKeyComponent(source.OccurrenceId) ||
                 source.GrantMode is not ("standard" or "multiclass") ||
                 !seenSources.Add(source.OccurrenceId))
             {
                 issues.Add(new("invalid-equipment-source", "sources",
-                    "Every source occurrence must have unique, bounded identities."));
+                    "Every source occurrence needs a unique bounded identity without the choice-key separator."));
                 continue;
             }
             if (!catalog.TryGetById(source.SourceId, out var entity) || entity is null)
@@ -192,7 +192,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                         ? "equipment-multiclass-grants-not-reconciled"
                         : "equipment-grants-not-reconciled",
                     source.SourceId,
-                    "No explicit equipment grant policy exists for the selected Class entry mode."));
+                    "No explicit equipment grant policy exists for the requested source mode."));
                 continue;
             }
             if (grants.TryGetProperty(fixedField, out var fixedGrants))
@@ -262,12 +262,12 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                 var count = Number(choice, "count");
                 var category = Text(choice, "fromCategory");
                 var selectionKind = Text(choice, "selectionKind") ?? "equipment-type";
-                if (!ValidId(id) || !ids.Add(id!) ||
+                if (!ValidChoiceKeyComponent(id) || !ids.Add(id!) ||
                     count is null or < 1 or > 32 || !Categories.Contains(category ?? "") ||
                     selectionKind is not ("equipment-type" or "equipment-group"))
                 {
                     issues.Add(new("invalid-equipment-choice", source.SourceId,
-                        "Choice needs a unique ID, count, category, and supported selection kind."));
+                        "Choice needs an unambiguous ID, count, category, and supported selection kind."));
                     continue;
                 }
                 // A group's descendants are resolved from authored membership
@@ -502,6 +502,11 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
     private static bool ValidId(string? value) =>
         !string.IsNullOrWhiteSpace(value) && value.Length <= 160 &&
         value == value.Trim();
+
+    // A slash separates occurrence from choice in persisted selection keys.
+    // Reserving it in both components makes the mapping injective.
+    private static bool ValidChoiceKeyComponent(string? value) =>
+        ValidId(value) && !value!.Contains('/', StringComparison.Ordinal);
 
     private static bool TryObject(JsonElement obj, string name, out JsonElement value)
     {
