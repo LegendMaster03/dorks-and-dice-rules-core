@@ -23,7 +23,7 @@
     {
       "id": "guild-artisan-trade",
       "name": "Guild Trade Competency",
-      "description": "Choose one existing native crafting Competency suited to the craft you practiced through your guild. The choice provides training in one learned capability, not a separate historical Craft Skill and tool proficiency. Associated equipment is not automatically an additional qualification or an owned item.",
+      "description": "Choose one existing native crafting Competency suited to the craft you practiced through your guild. The choice grants one rank in the selected learned capability, not a separate historical Craft Skill and tool proficiency. Associated equipment is not automatically an additional qualification or an owned item.",
       "grantType": "competency-training",
       "choiceCategory": "crafting-competency",
       "choiceCount": 1,
@@ -39,7 +39,11 @@
         "competency.cartography",
         "competency.brewing",
         "competency.alchemy"
-      ]
+      ],
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
     },
     {
       "id": "guild-artisan-trade-language",
