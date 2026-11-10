@@ -6,10 +6,14 @@ separate from the structural contract checked here.
 """
 import json
 from pathlib import Path
+import sys
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from validate_ruleset_split import matches_preserved_working_evidence
+
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
 
 
@@ -104,6 +108,19 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                             self.assertIn(type_id, self.equipment_types)
                             self.assertEqual(category,
                                              self.equipment_types[type_id]["equipmentCategory"])
+
+    def test_approved_backgrounds_match_preserved_source_divergence_ledger(self):
+        """Selected 2014-first Origins must not overwrite historical source evidence."""
+        for name in ("acolyte", "criminal", "sage", "soldier"):
+            with self.subTest(background=name):
+                native = self.backgrounds["background." + name]
+                source_path = (ROOT / "data/rulesets/first-party-001/working"
+                               / "backgrounds" / (name + ".json"))
+                working = json.loads(source_path.read_text(encoding="utf-8"))
+                self.assertTrue(
+                    matches_preserved_working_evidence(native, working, source_path),
+                    "Record the exact approved native/source difference in the "
+                    "promotion ledger; never rewrite historical working evidence")
 
     def test_fixed_criminal_thieves_tools_and_type_specific_gaming_choice(self):
         criminal = self.backgrounds["background.criminal"]
