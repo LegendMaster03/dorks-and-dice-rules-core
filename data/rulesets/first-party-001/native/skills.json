@@ -372,22 +372,6 @@
       "defaultAbility": "wisdom"
     },
     {
-      "id": "skill.profession-brewer",
-      "name": "Profession (Brewer)",
-      "kind": "skill",
-      "family": "skill.profession",
-      "independentlyRanked": true,
-      "defaultAbility": "wisdom"
-    },
-    {
-      "id": "skill.profession-cook",
-      "name": "Profession (Cook)",
-      "kind": "skill",
-      "family": "skill.profession",
-      "independentlyRanked": true,
-      "defaultAbility": "wisdom"
-    },
-    {
       "id": "skill.profession-driver",
       "name": "Profession (Driver)",
       "kind": "skill",
@@ -414,14 +398,6 @@
     {
       "id": "skill.profession-guide",
       "name": "Profession (Guide)",
-      "kind": "skill",
-      "family": "skill.profession",
-      "independentlyRanked": true,
-      "defaultAbility": "wisdom"
-    },
-    {
-      "id": "skill.profession-herbalist",
-      "name": "Profession (Herbalist)",
       "kind": "skill",
       "family": "skill.profession",
       "independentlyRanked": true,
