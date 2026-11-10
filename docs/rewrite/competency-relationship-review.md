@@ -229,9 +229,9 @@ The other retained native Profession children do not currently have an obvious o
 
 **Disposition:** Keep these remaining entries unchanged while the competency identity and progression work continues. The scan identifies candidates, not approval to create new Competencies or to preserve every profession forever. Revisit redundant Profession Skills during the Skills pass, and prioritize further changes only when the overlapping *learned capability* is demonstrated.
 
-## Competency proficiency and level — progression design proposal (not approved)
+## Competency proficiency and level — earlier candidate models (historical options; see current direction below)
 
-**Status:** Candidate progression mechanics for owner review. The native `profile` is already modeled as binary proficiency and a progressive, independently represented level, with Ability chosen per activity. Neither numerical contributions, level limits, advancement rates, nor unlock thresholds are currently approved. This section does **not** change native gameplay data, the character API, or existing crafting adjudication.
+**Status:** Earlier design exploration, partially superseded by the subsequent decision to permit proficiency and ranks to be granted independently, including ranks without proficiency. The owner favors an additive basic check contribution plus automatic higher-rank abilities; the number of mastery ranks, thresholds, caps, and individual abilities remain under design. Retain the alternatives here as comparison history, not current implementation instructions. This section does **not** change native gameplay data, the character API, or existing crafting adjudication.
 
 ### Design criteria established by previous reconciliation
 
@@ -292,6 +292,58 @@ The effective training contribution may be based on the normal proficiency bonus
 6. **Duplicate grants:** Determine whether a repeated proficiency grants a substitute choice, an explicit level, no additional benefit, or another policy; never silently upgrade a Competency through origin overlap.
 
 **Implementation boundary:** This is a **proposal only**, not an approved progression contract. Keep the current `levelScale: "pending-reconciliation"` in native Competency definitions. Do not alter `NativeCharacterProjector`, `NativeSkillTraining`, or `NativeCraftingResolver` to implement a candidate formula until the required decisions are made.
+
+## Current competency baseline and milestone-benefit study (2026-11-09)
+
+**Approved design direction, distinct from unapproved numerical thresholds and feature implementations:**
+
+- The character's **Competency ranks and Competency proficiency are independent grants and state dimensions**. A rank can exist without proficiency, and proficiency can exist without ranks. Do not require positive ranks to imply proficiency or prohibit them at the character-projector boundary.
+- A typical 5.x **crafting-tool proficiency** can be reconciled into a grant of **one rank in the corresponding native Competency**, with proficiency optionally granted by that source. Explicit source-to-native mappings and chosen grant payloads still require case-specific review. **Thieves' Tools** retain the exception: a separately granted, non-leveling equipment qualification that interacts with Open Lock and applicable trap procedures; do not convert them to a ranked Trap Disarming or Locksmithing grant.
+- The endorsed **basic check candidate** is `d20 + relevant Ability modifier + applicable Competency ranks + normal Proficiency Bonus if proficient + applicable other modifiers`. The exact rank cap, feature interactions, scaling, and final balance are **not yet approved**. There is no assumed automatic second tool-proficiency bonus.
+- Repeated **legitimate, independently earned** rank grants can advance the same Competency. Repeatable feats already consume advancement resources and do not need a special generic ban based solely on repeatability. A *proficiency-only* grant does not silently become a rank.
+- **Automatic milestone benefits** should be associated with appropriate Competency-rank thresholds, with **optional feats** retaining their own meaningful effects or providing additional advancement. The three reference titles **Journeyman, Expert, Master** guide the comparison; Master remains the highest descriptive mastery title. Neither an Apprentice stage nor a fixed number of intermediate numeric ranks is adopted. Determine how many ranks are useful from actual benefits and subsequent balancing, not from equally spaced labels.
+- The **usable baseline** for other rule pillars is narrower than the complete milestone catalog: identity, ranks, proficiency, grants and selections, basic check contract, and rank-prerequisite representation. Features with undefined threshold effects remain unexecuted rather than fabricated.
+
+### Heliana source crosswalk — evidence, not automatic adoption
+
+The published *Heliana's Guide to Monster Hunting* distinguishes manufacturing, enchanting, and forging and separately provides cooking procedures. Its crafting feats show several **kinds** of specialization: improving check reliability, reducing production time, influencing crafting quirks (flaws and boons), changing ingredients, and acquiring broader tool training. The hired Journeyman/Expert/Master craftsperson model is a **reference for professional capacity**, not a player-character rank advancement formula.
+
+| Source example | Mechanic or design lever | Native interpretation to investigate |
+| --- | --- | --- |
+| **Expert Forger / Forgemaster** | Manufacturing/forging reliability, quirk manipulation, greater production throughput; the latter builds upon the former | Possible **manufacturing-procedure** and crafting-mastery effects, not an automatic Smithing-only benefit or independent weapon/armor competence |
+| **Field Cook** | Cook's Utensils training, ingredient flexibility, control of cooking quirks, meal-related Inspiration | Candidate **Cooking** milestone techniques for bounded substitutions and result refinement; keep special meal-related effects meaningful as optional feat benefits |
+| **Expert Enchanter / Weavebonder** | Enchanting reliability, time efficiency, and control of enchanting outcomes | Evidence for a **separate enchanting procedure**; **not** a direct Alchemy level list. Alchemy should not silently grant spellcasting, item enchanting, or magical Forging |
+| **Jack of All Tools** | Breadth of tool training and competence with unfamiliar manufacturing equipment | Model as cross-Competency versatility or an optional feat, not mastery levels in every craft |
+| **Craftsperson ranks** | Journeyman, Expert and Master differ in professional capability and production efficiency | Retain as reference milestones; do not equate NPC check modifiers with player-character rank bonuses |
+
+**Public source references:** [D&D Beyond: turning monsters into loot](https://www.dndbeyond.com/posts/1958-turning-monsters-into-loot-with-helianas-guide-to); [Dungeon Mister: Heliana crafting-feat analysis](https://dungeonmister.com/guides/analysing-the-feats-from-helianas-guide-to-monster-hunting-for-dd-5e/); [Loot Tavern: Harvesting & Crafting Lite scope](https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117). The Lite release **omits the full Cooking system and several advanced crafting options**; do not present it as complete evidence for Cooking/quirk features.
+
+### First three capability studies (all abilities below are proposals, not approved grants)
+
+The labels are conceptual anchors, **not assigned rank numbers**. Every rank would already affect the basic check under the candidate additive model; the proposed benefits below would be **additional effects** at milestones. Benefits must be translated into actual action/recipe/crafting mechanics before they can execute.
+
+| Competency | Journeyman capability candidate | Expert capability candidate | Master capability candidate | Feat-specific space to preserve |
+| --- | --- | --- | --- | --- |
+| **Smithing** | Use an approved smithing maintenance or ordinary repair procedure efficiently; do not add a second Armorsmithing/Weaponsmithing rank | Reduce time on qualifying metalworking procedures or gain limited control over flaws **when that procedure uses quirks** | Greater control over difficult metalworking outcomes or bounded optimization of smithing production, without bypassing recipe/material requirements | Generic Manufacturing/forging bonuses across **multiple** competencies, extra tool choices, and exceptional quirk or time effects can belong to feats or the underlying manufacturing procedure |
+| **Cooking** | Limited substitution of comparable ordinary ingredients in an applicable recipe | Broader but explicitly limited ingredient substitution; possible one-step mitigation of a cooking flaw **if the recipe supports quirks** | Precision over high-complexity meal outcomes or ingredient interactions, without creating recipes or magical ingredients | Party Inspiration, unusual meal outcomes, dramatic substitutions or further flaw/boon manipulation can remain specialized feat effects |
+| **Alchemy** | Reliable use of documented standard reagents and permitted preparation variants | Bounded reagent substitutions or material-efficiency benefits in qualifying alchemical recipes | Greater stability/control in complex formulations when an outcome/quality system exists; access to specialist methods only where recipes explicitly define them | Specialized formula discoveries, cross-disciplinary magic-item enchanting, unusual poison effects, and powerful resource efficiencies remain distinct feats/features/recipe entitlements |
+
+**Cross-cutting constraints for these candidate abilities:**
+
+1. **Smithing is a method, not all Manufacturing:** a universal manufacturing-speed or quality upgrade belongs in the common crafting procedure or a broadly scoped feature, not automatically on Smithing while other manufacturing competencies are excluded.
+2. **Cooking's quirk and recipe vocabulary is procedure-dependent:** establish whether the native Cooking system uses Heliana's cooking quirks, meal Inspiration, and recipe categories before assigning automatic modifications. Preserve the existence of Field Cook as a meaningful optional choice rather than copying all its benefits into ordinary milestones.
+3. **Alchemy is not Enchanting:** distinguish nonmagical preparation, alchemical consumables, magic-item enchanting, and Poisoning; recipe and source entitlements decide what counts as an alchemical activity. Heliana's enchanting feats justify looking at *types of benefits*, not a free magic-item creation entitlement.
+4. **Existing recipes, tools and material rules retain authority:** no milestone unconditionally grants possession of equipment, rare ingredients, recipe knowledge, spellcasting, or guaranteed crafting success.
+5. **Rank-only characters may meet a rank threshold without proficiency** under the independent-grant design. The baseline must explicitly distinguish **knowing a technique** from **qualifying for a procedure**; do not impose an unapproved universal proficiency gate on every rank benefit.
+6. **No automatic stacking of generic bonuses:** any Expertise-like feat, doubled-proficiency interaction, Advantage, or quirk manipulation must use an explicit effect and checked applicability. Rank-derived bonuses alone do not grant these effects.
+
+### What is sufficient to unblock the next pillars
+
+For **Backgrounds, Upbringings, Classes and Character Sheet**, define stable typed operations to (a) grant proficiency, (b) grant a fixed number of ranks, (c) grant both, and (d) select from a set of eligible Competencies; support multiple legitimate rank grants and retain grant provenance. Keep *separate* nonranked equipment-proficiency grants for Thieves' Tools and any other reviewed exceptions.
+
+For **basic checks**, an activity selects the governing Ability, relevant Competency, rank count, proficiency flag, relevant equipment and any required qualification. Ordinary outcomes can then use the candidate additive formula once adopted as executable. An unsupported milestone/recipe effect must remain explicit and must not be fabricated by the consumer.
+
+**Defer** Journeyman/Expert/Master rank thresholds, intermediate levels, maximum ranks, practice/downtime costs, feat rewrites, exact time multipliers, quirk adjustment quantities, and individual advanced-recipe mechanics until their respective procedures and balance work are reconciled. The accepted general direction does not itself authorize these concrete effects.
 
 ## Follow-up decisions needed before ranked progression
 
