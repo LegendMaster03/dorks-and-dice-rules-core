@@ -1,5 +1,7 @@
 # Pillar 3 — Equipment qualification integration after PR #135
 
+> **Conversion clarification (2026-11-10):** No Origin receives Competency training by default. The Upbringing-proficiency/Background-rank guideline is considered **only for prior-version benefits actually being converted**. Criminal's fixed Thieves' Tools, Spy's conditional Thieves' Tools, and Street-Raised's conditional Thieves' Tools are direct, binary equipment-proficiency conversions; they are **not** unsettled ranked Competency conversions. Source-specific current amounts and unallocated native alternatives are recorded in [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md). Later historical candidate allocations below remain research context, not active default effects.
+
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Predecessor:** `feature/character-origins-competency-audit-20261109`  
