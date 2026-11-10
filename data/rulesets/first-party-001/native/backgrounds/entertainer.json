@@ -50,12 +50,25 @@
           "name": "Musical Instrument Training",
           "benefits": [
             {
-              "grantType": "competency-training",
+              "grantType": "qualification-training",
               "choiceCategory": "musical-instrument",
               "choiceCount": 1,
-              "description": "Choose one specific type of musical instrument and gain training with that type. This does not grant other instruments or separate Perform specialty ranks."
+              "description": "Choose one specific type of musical instrument and gain training with that type. This does not grant other instruments or separate Perform specialty ranks.",
+              "qualificationCategory": "tool"
             }
-          ]
+          ],
+          "equipmentProficiencyGrants": {
+            "choices": [
+              {
+                "id": "entertainer-musical-instrument",
+                "count": 1,
+                "fromCategory": "tool",
+                "fromGroupIds": [
+                  "equipment.group.tool.musical-instrument"
+                ]
+              }
+            ]
+          }
         }
       ]
     },
@@ -110,7 +123,7 @@
   "reviewNotes": [
     "Independent 2014-based Entertainer reconciliation; Gladiator is a separate Background, not a child or inherited variant.",
     "Fixed Performance and one choice of Acrobatics, Deception, Persuasion, Sleight of Hand or Insight. Broad Performance does not automatically train independent Perform family child Skills; composite Acrobatics does not separately train Balance or Tumble.",
-    "One total proficiency choice between the existing Disguise Kit Competency and one musical instrument type. This intentionally differs from the 2014 double-tool grant; use the established benefit-choice structure for mixed alternatives.",
+    "One total choice between Disguise Competency training and a specific Musical Instrument equipment proficiency. The instrument equipment choice is nested under its conditional selected option, never granted unconditionally; the Origin choice authority must enforce exclusivity.",
     "No additional language, fixed ability adjustment, 2024 Musician Origin feat, class feature or universal entertainment affiliation is granted.",
     "By Popular Demand provides conditional food and lodging in exchange for actual performances and contextual favorable recognition, not a permanent free-lodging entitlement without suitable work or venues.",
     "The equipment choice is ordinary inventory and should correspond to the chosen performance method; an instrument is not compulsory for a nonmusical entertainer.",
