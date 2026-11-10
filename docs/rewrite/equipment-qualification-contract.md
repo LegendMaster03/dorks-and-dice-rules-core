@@ -78,7 +78,9 @@ Eligible native Classes, Origins, features, feats, and other source entities may
 
 For an individual weapon *type*, use `targetId: "equipment.weapon.longsword"`. For a weapon family, use an explicit group such as `equipment.group.weapon.family.sword`. For all weapons, use `equipment.group.weapon.all`. Simple and Martial remain separate classification scopes (`equipment.group.weapon.simple` and `equipment.group.weapon.martial`). Shields use `equipment.group.shield.all`. Selecting a weapon `equipment-type` never implicitly selects its whole family.
 
-Choice grants declare count and fromCategory; optional fromGroupIds narrows candidates to types in the union of the specified groups, and optional fromTypeIds narrows to explicitly enumerated type IDs. When both are supplied, eligible types must satisfy both restrictions. Unknown, duplicate, or cross-category type IDs fail closed. The default selectionKind is equipment-type. fromTypeIds is only valid for equipment-type choices. The optional selectionKind equipment-group offers selectable entire group proficiency; use it only when the authored source grants such a broad option.
+Choice grants declare count and fromCategory. By default `selectionKind` is `equipment-type`: optional `fromGroupIds` limits candidates to individual types covered by the listed groups, and optional `fromTypeIds` limits them to an explicit set of individual types. Both restrictions apply together if present. Unknown, duplicate, or cross-category type IDs fail closed.
+
+For a choice of **weapon families** or other equipment groups, set `selectionKind` to `equipment-group` and supply a **required** `fromGroupIds` list. In this mode, the list is an exact whitelist of selectable equipment groups, *not* a set of parent scopes to expand. This prevents a choice of one family (Maces or Swords) from inadvertently offering All Weapons or Martial Weapons. `fromTypeIds` is not valid in group-selection mode. Only offer broad categories when the authored source expressly authorizes them.
 
     {
       "equipmentProficiencyGrants": {
@@ -88,6 +90,25 @@ Choice grants declare count and fromCategory; optional fromGroupIds narrows cand
             "count": 1,
             "fromCategory": "tool",
             "fromGroupIds": ["equipment.group.tool.gaming-set"]
+          }
+        ]
+      }
+    }
+
+A family-only selection can use an explicit whitelist:
+
+    {
+      "equipmentProficiencyGrants": {
+        "choices": [
+          {
+            "id": "weapon-family",
+            "count": 1,
+            "fromCategory": "weapon",
+            "selectionKind": "equipment-group",
+            "fromGroupIds": [
+              "equipment.group.weapon.family.mace",
+              "equipment.group.weapon.family.sword"
+            ]
           }
         ]
       }
