@@ -4,6 +4,44 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "fixed-1",
+          "targetId": "equipment.group.weapon.simple"
+        },
+        {
+          "id": "fixed-2",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "fixed-3",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "fixed-4",
+          "targetId": "equipment.group.armor.heavy"
+        },
+        {
+          "id": "fixed-5",
+          "targetId": "equipment.group.shield.all"
+        }
+      ],
+      "multiclassFixed": [
+        {
+          "id": "multiclass-1",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "multiclass-2",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "multiclass-3",
+          "targetId": "equipment.group.shield.all"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,
