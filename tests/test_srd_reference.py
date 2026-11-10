@@ -56,12 +56,6 @@ class SrdSourceIntegrityTests(unittest.TestCase):
         self.assertNotEqual([], self.audit["unmatchedOrChanged"]["spell"])
         self.assertNotIn("nativeRuleReconciliations", self.audit)
 
-    def test_reference_pack_is_not_native_rule_data(self):
-        self.assertTrue((ROOT / "data/rulesets/first-party-001/working/skills.json").exists())
-        self.assertTrue((ROOT / "data/rulesets/first-party-001/working/competencies.json").exists())
-        self.assertFalse((ROOT / "data/rulesets/first-party-001/working/srd51").exists())
-        self.assertFalse((ROOT / "data/rulesets/first-party-001/working/srd52").exists())
-
 
 if __name__ == "__main__":
     unittest.main()

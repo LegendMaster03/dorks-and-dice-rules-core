@@ -4,6 +4,66 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "weapon-club",
+          "targetId": "equipment.weapon.club"
+        },
+        {
+          "id": "weapon-dagger",
+          "targetId": "equipment.weapon.dagger"
+        },
+        {
+          "id": "weapon-dart",
+          "targetId": "equipment.weapon.dart"
+        },
+        {
+          "id": "weapon-javelin",
+          "targetId": "equipment.weapon.javelin"
+        },
+        {
+          "id": "weapon-mace",
+          "targetId": "equipment.weapon.mace"
+        },
+        {
+          "id": "weapon-quarterstaff",
+          "targetId": "equipment.weapon.quarterstaff"
+        },
+        {
+          "id": "weapon-scimitar",
+          "targetId": "equipment.weapon.scimitar"
+        },
+        {
+          "id": "weapon-sickle",
+          "targetId": "equipment.weapon.sickle"
+        },
+        {
+          "id": "weapon-sling",
+          "targetId": "equipment.weapon.sling"
+        },
+        {
+          "id": "weapon-spear",
+          "targetId": "equipment.weapon.spear"
+        },
+        {
+          "id": "weapon-shortspear",
+          "targetId": "equipment.weapon.shortspear"
+        },
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "group-armor-medium",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "group-shield-all",
+          "targetId": "equipment.group.shield.all"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,

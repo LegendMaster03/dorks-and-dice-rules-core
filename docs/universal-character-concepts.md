@@ -2,6 +2,12 @@
 
 Rules Core separates universal Character semantics from source identity and from the rule implementation that calculates a value.
 
+**Scope of this document:** This document describes an earlier source-compatibility and consumer model. It is research context, **not** the current native `first-party-001` Competency schema or a mandate to preserve earlier Character identities. The native ruleset uses one proficiency/level profile per competency, with a single Smithing competency; Blacksmithing, Armorsmithing, Weaponsmithing, Bowmaking, Trapmaking, and Shipmaking have no independent native advancement track. Their obsolete intermediate working definitions are removed. References to those names below describe earlier implementation decisions, not selected gameplay rules, required migration behavior, or ongoing historical catalog obligations. The current consumer contract will be considered after the native schema is approved.
+
+**Current native Profession/craft decision (November 2026):** Brewer, Cook, and Herbalist are consolidated into native Brewing, Cooking, and Herbalism competencies, not maintained as second independently advancing Profession Skills. The older universal-character schema and source relationship tables below describe a historical model; they do not require separate native training. Apothecary, Tanner, and Scribe retain their Skill identities pending activity review.
+
+**Current native Skill/equipment decision (November 2026):** `skill.open-lock` is retained. Thieves' Tools remain equipment rather than an independently advancing native Competency; trap disarming is an activity resolved using relevant capabilities and the trap's procedure. The prior Security Bypass, Lockpicking Competency, Trap Disarming Competency, and separate Disable Device Skill have been retired. The 5.x tool proficiency grants and interactions have not yet been translated into the new mechanics. Historical representations below are not required native identities.
+
 The authoritative flow is:
 
 ```text

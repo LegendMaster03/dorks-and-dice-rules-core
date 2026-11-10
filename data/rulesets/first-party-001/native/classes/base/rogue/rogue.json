@@ -4,6 +4,60 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "group-weapon-simple",
+          "targetId": "equipment.group.weapon.simple"
+        },
+        {
+          "id": "weapon-hand-crossbow",
+          "targetId": "equipment.weapon.hand-crossbow"
+        },
+        {
+          "id": "weapon-longsword",
+          "targetId": "equipment.weapon.longsword"
+        },
+        {
+          "id": "weapon-rapier",
+          "targetId": "equipment.weapon.rapier"
+        },
+        {
+          "id": "weapon-sap",
+          "targetId": "equipment.weapon.sap"
+        },
+        {
+          "id": "weapon-shortbow",
+          "targetId": "equipment.weapon.shortbow"
+        },
+        {
+          "id": "weapon-shortsword",
+          "targetId": "equipment.weapon.shortsword"
+        },
+        {
+          "id": "group-weapon-martial-finesse-or-light",
+          "targetId": "equipment.group.weapon.martial-finesse-or-light"
+        },
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "tool-thieves-tools",
+          "targetId": "equipment.tool.thieves-tools"
+        }
+      ],
+      "multiclassFixed": [
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "tool-thieves-tools",
+          "targetId": "equipment.tool.thieves-tools"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,

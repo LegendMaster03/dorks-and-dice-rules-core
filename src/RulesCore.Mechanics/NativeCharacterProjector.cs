@@ -446,17 +446,18 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
                 }
                 // Composite parents are evaluated from their independently ranked children.
                 if (prefix == "skill" && Array(rule.Definition, "childSkills", out _)) continue;
-                if (state.Proficient && state.Ranks > 0)
+                // Native Competencies permit independently earned ranks and
+                // proficiency on the same discipline. Preserve the older Skill
+                // profile restriction until the general Skill pass resolves it.
+                if (prefix == "skill" && state.Proficient && state.Ranks > 0)
                 {
-                    Issue("training-profile-conflict", id, "Ranked and proficiency facets are separate profiles.");
-                    values[$"{id}.total"] = new("unsupported", null, "Select one approved numeric profile.");
+                    Issue("training-profile-conflict", id, "Ranked and proficiency facets are separate Skill profiles.");
+                    values[$"{id}.total"] = new("unsupported", null, "Select one approved numeric Skill profile.");
                     continue;
                 }
                 var ability = state.Ability ?? String(rule.Definition, "defaultAbility");
-                if (ability is null && prefix == "competency" &&
-                    Array(rule.Definition, "facets", out var facets))
-                    ability = facets.EnumerateArray().Select(f => String(f, "governingAbility"))
-                        .FirstOrDefault(x => x is not null);
+                // A native Competency has no historical Craft/tool facets.
+                // Only the task's explicit ability (or a native default) applies.
                 if (ability is null || !abilityMods.TryGetValue(ability, out var abilityValue))
                 {
                     values[$"{id}.total"] = new("unsupported", null, "No approved governing ability for the selected facet.");

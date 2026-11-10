@@ -1,6 +1,6 @@
-# Dorks & Dice — native rules specification (pre-implementation)
+# Dorks & Dice — native rules specification (living design)
 
-Status: **working game-design specification**, started 2026-10-09. This document records the owner's established gameplay decisions, proposed generalized rules, and unresolved decisions for review. It is **not authorization to implement**, merge, deploy, restore previously disabled public/tester Rules Core access, or treat draft procedures as approved rules.
+Status: **working game-design specification**, started 2026-10-09. This document records established gameplay decisions, proposed generalized rules, and unresolved decisions. Selected native rules and mechanics are implemented incrementally, with executable status recorded in their linked contracts and source files. A proposal here is not, by itself, approval to implement it or treat it as an active rule. This document does not authorize merges, deployments, or changes to public/tester Rules Core access.
 
 ## Mission and compatibility premise
 
@@ -479,6 +479,25 @@ The Sorcerer has the 2024 level-5 **Sorcerous Restoration**: finishing a Short R
 If older mechanics add compatible, nonredundant abilities to a creature, reconcile those abilities *within that creature's coherent definition*, following the five approved rules. If they change attack damage, resource costs, action economy or other mechanical effects, review the consequences instead of stacking them automatically. The DM's tactical discretion does not itself grant an additional mechanical option not present in the native definition. Meaningfully different statistical identities can still be distinct role variants, but **tactics alone are not a variant boundary**.
 
 See `docs/rewrite/monster-variant-family-model.md` for the family model, reviewed aliases, and older abilities pending integration. Do not introduce independent edition defaults or parallel runtime stat blocks.
+
+## Equipment proficiency — shared qualification model (approved 2026-11-09)
+
+**Approved structural direction:** Expand the existing weapon/armor proficiency concept into one coherent **equipment proficiency** qualification framework. The same general grant and eligibility structure may encompass **weapon**, **armor**, **shield**, and **tool** proficiency, without assuming that each category has the same mechanical benefit. This extends the equipment-training model; it does not revive a general independently leveled tool-competency track.
+
+- **Skills** represent the trained execution of applicable actions, such as `skill.open-lock`.
+- **Competencies** represent independently advancing learned disciplines, such as Smithing, Locksmithing, and Tinkering.
+- **Equipment proficiency** represents a narrower qualification in using designated equipment or equipment categories. It is a separate fact from owning or being allowed to use the equipment, and it has no independent proficiency levels or rank progression.
+- **Equipment** itself is a physical item or category; possession, qualification, and successful use are distinct facts.
+
+**Grants and scope:** Classes, backgrounds, species, features, and other approved rules can explicitly grant equipment proficiency at their specified scope. Proficiency with **Thieves' Tools** is available in this shared model but does not automatically grant Open Lock Skill proficiency, knowledge of every trap, or the ability to disarm all traps. Physical, alchemical, structural, and magical traps can call for different relevant Skills, Competencies, equipment qualifications, spells, and features.
+
+**Nonduplication:** Do **not** automatically create a new equipment-proficiency requirement for every Competency that lists associated tools. A Smithing competency paired with Smith's Tools does not inherently require two independently obtained training credentials. If a particular rules source or feature grants equipment proficiency separately, the grant must remain representable and retain its defined scope; the general check rules will later decide its interaction with a relevant Skill or Competency. There is no generic assumed proficiency transfer or automatic stacking.
+
+**Existing implementation boundary:** Native class data already includes `weaponProficiencies` and `armorProficiencies` grants. That is a starting point for a common qualification contract, **not evidence that a unified native equipment-proficiency evaluator already exists**. Do not add or standardize a new `toolProficiencies` field, infer automatic tool-grant rules, or silently reinterpret existing class grants in this design-only pass.
+
+**Still unresolved:** Exact grant data schema and category/individual-item matching; shield classification where needed; whether and how equipment proficiency modifies a check, eligibility, Advantage, bonuses, or penalties; effects of lacking proficiency; duplicate-grant rules; and interactions with independent Skill/Competency proficiency or levels. Weapon, armor, shield, and tool use may each have different consequences. Resolve those in their mechanical subsystems before implementing them or applying source-to-native conversions.
+
+**Implementation update (2026-11-10):** The shared native structural grant, choice, provenance, canonical type/group, and coverage contract is now implemented as described in `docs/rewrite/equipment-qualification-contract.md`. The preceding list of unresolved questions records the state of the November 9 approval; **equipment categories, identity matching, binary duplicate coverage, and the initial grant schema are no longer merely proposed**. Category-specific check effects, untrained consequences, form-conditional qualification, vehicle/operator classification, and full item-catalog reconciliation remain unresolved. Character Origins integration is separate and must validate its source entitlements and mixed benefit choices.
 
 ## Core rules chapters to complete progressively by native subsystem
 

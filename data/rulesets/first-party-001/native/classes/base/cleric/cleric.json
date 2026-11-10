@@ -4,6 +4,44 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "group-weapon-simple",
+          "targetId": "equipment.group.weapon.simple"
+        },
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "group-armor-medium",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "group-armor-heavy",
+          "targetId": "equipment.group.armor.heavy"
+        },
+        {
+          "id": "group-shield-all",
+          "targetId": "equipment.group.shield.all"
+        }
+      ],
+      "multiclassFixed": [
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "group-armor-medium",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "group-shield-all",
+          "targetId": "equipment.group.shield.all"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,

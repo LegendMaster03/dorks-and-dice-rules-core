@@ -53,13 +53,16 @@
     },
     {
       "name": "Disable Device",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.disable-device"
+      "disposition": "task-specific-resolution",
+      "scope": "trap-disarming-sabotage-and-device-manipulation",
+      "notes": "Disarming is an activity using relevant Skills, Competencies, equipment, spells, or features according to trap type. General sabotage uses applicable methods; no separate native Disable Device or Trap Disarming track."
     },
     {
       "name": "Disguise",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.disguise"
+      "disposition": "native-competency",
+      "nativeCompetency": "competency.disguise",
+      "scope": "appearance-and-disguise-preparation",
+      "notes": "Native Disguise competency uses Disguise Kit as equipment. Social deception remains a separate Skill; no automatic bonus stacking."
     },
     {
       "name": "Escape Artist",
@@ -68,8 +71,8 @@
     },
     {
       "name": "Forgery",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.forgery"
+      "disposition": "native-competency",
+      "nativeCompetency": "competency.forgery"
     },
     {
       "name": "Gather Information",
@@ -124,6 +127,8 @@
     {
       "name": "Open Lock",
       "disposition": "native-skill",
+      "scope": "opening-locks-without-intended-keys",
+      "notes": "Open Lock remains a native Skill; Thieves' Tools are equipment. 5.x tool proficiency effects require explicit reconciliation without creating a second independently advancing competency.",
       "nativeSkill": "skill.open-lock"
     },
     {
@@ -197,8 +202,8 @@
     },
     {
       "name": "Use Rope",
-      "disposition": "native-skill",
-      "nativeSkill": "skill.use-rope"
+      "disposition": "no-independent-native-identity",
+      "notes": "Ordinary rope tasks use applicable Skills and equipment procedures. Specialized rigging remains open for a future distinct-identity review."
     },
     {
       "name": "Wilderness Lore (3e)",

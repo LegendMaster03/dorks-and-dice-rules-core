@@ -9,6 +9,9 @@ public sealed record NativeResourceActionRequest(
     NativeCharacterRequest Character, string ResourceId, int Current,
     int? Spend = null, NativeRecoveryEvent? Rest = null);
 
+public sealed record NativeEquipmentQualificationCoverageRequest(
+    NativeEquipmentQualificationRequest Qualifications, string EquipmentId);
+
 public sealed record NativeConditionRollRequest(
     string RulesetId, string Fingerprint, IReadOnlyList<string> ConditionIds,
     NativeRollContext Roll, NativeEffectContext? Facts = null);
@@ -49,6 +52,7 @@ public static class NativeMechanicsEndpoints
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     startingEquipmentResolution = "authored-grants-only",
+                    equipmentQualifications = "authored-scopes-only",
                      manufacturingResolution = "manual-competency-subset",
                      harvestingResolution = "type-monster-manual-edits",
                     conditionRollMode = "conditional-subset",
@@ -184,6 +188,50 @@ public static class NativeMechanicsEndpoints
                 ? Results.Json(resolved, statusCode: resolved.Issues.Any(issue =>
                     issue.Code == "ruleset-version-mismatch") ? 409 : 400)
                 : Results.Ok(resolved);
+        });
+
+        // This authenticated endpoint is a calculation surface, not an
+        // entitlement issuer. A "resolved" response confirms the authored
+        // scope and selected types, not ownership of the asserted origins,
+        // classes, or features. The Character backend must verify those first.
+        group.MapPost("/characters/equipment-proficiencies",
+            (NativeEquipmentQualificationRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null) return Error(400, "invalid_equipment_qualification_request");
+            var result = new NativeEquipmentQualifications(catalog).Resolve(request);
+            Timing(context, "native-equipment-proficiencies", start);
+            return result.Status == "invalid"
+                ? Results.Json(result, statusCode: result.Issues.Any(issue =>
+                    issue.Code == "ruleset-version-mismatch") ? 409 : 400)
+                : Results.Ok(result);
+        });
+
+        group.MapPost("/characters/equipment-proficiencies/coverage",
+            (NativeEquipmentQualificationCoverageRequest request, NativeCatalogStore store,
+                HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null || request.Qualifications is null ||
+                string.IsNullOrWhiteSpace(request.EquipmentId))
+                return Error(400, "invalid_equipment_qualification_request");
+            var engine = new NativeEquipmentQualifications(catalog);
+            // Recompute the projection from native sources on each request:
+            // never accept a client-constructed qualification/provenance set
+            // as proof that a requested equipment type is covered.
+            var qualifications = engine.Resolve(request.Qualifications);
+            var coverage = engine.Covers(qualifications, request.EquipmentId);
+            Timing(context, "native-equipment-coverage", start);
+            return qualifications.Status == "invalid"
+                ? Results.Json(new { qualifications, coverage },
+                    statusCode: qualifications.Issues.Any(issue =>
+                        issue.Code == "ruleset-version-mismatch") ? 409 : 400)
+                : Results.Ok(new { qualifications, coverage });
         });
 
         group.MapPost("/advancements/eligibility", (NativeEligibilityRequest request,
