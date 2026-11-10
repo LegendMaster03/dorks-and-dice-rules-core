@@ -1,83 +1,88 @@
-# Pillar 3 — Character Origins Competency grant baseline
+# Pillar 3 — Historical Origin training conversion scope
 
 **Date:** 2026-11-10  
 **Ruleset:** `first-party-001`  
-**Status:** **Owner-established default, not a universal requirement.** Default effects authored in Origin JSON; exception review remains open. Character Origins only.
+**Status:** Approved conversion *guidance* for historical benefits, not a rule granting training to every Background or Upbringing. See the specific Origin JSON for what is actually authored.
 
-## Source defaults and permitted exceptions
+## Correct default and conversion guideline
 
-| Source or justified exception | Competency proficiency | Competency rank contribution |
+**Neither Competency proficiency nor a rank is the default for an Origin.** The existence of a Background or Upbringing does not entitle the character to an unrelated Competency. An Origin may instead offer only Skills, equipment qualifications, languages, social/contextual features, possessions, or other approved benefits.
+
+**Only when converting a previously existing training benefit to the current Competency model**, use the source type as a starting point:
+
+| Earlier training benefit | Starting conversion candidate |
+| --- | --- |
+| Upbringing's relevant earlier craft/tool training | Proficiency in the matching native Competency |
+| Background's relevant earlier craft/tool training | One rank in the matching native Competency |
+| Source-specific exception established by balance and source review | Both, neither, or another explicitly supported result |
+| No earlier training entitlement to convert | **No newly inferred Competency grant** |
+
+A source that has neither has **no `competency-training` grant**; do not author an empty `{"ranks":0,"proficient":false}` effect. Even where a native `competency-training` choice already exists, the fact that it is inside an Upbringing or Background alone does **not** settle its rank/proficiency allocation. Preserve approved choice identities pending that separate decision.
+
+**Thieves' Tools is a direct conversion, not a candidate ranked Competency conversion.** A previously granted Thieves' Tools proficiency directly becomes the **same narrow binary equipment proficiency**, `equipment.tool.thieves-tools`. It grants neither a Competency proficiency nor a Competency rank; that does **not** make it an exception or a missing benefit. Criminal's fixed grant, Spy's selectable grant, and Street-Raised's selectable grant all use this exact canonical equipment qualification. A redesigned surrounding one-of choice does **not** change the meaning of a chosen Thieves' Tools proficiency. The conditional alternatives still require ordinary choice authorization so the character receives only what they selected.
+
+Other explicitly preserved equipment qualifications (individual Gaming Sets and Musical Instruments) likewise remain equipment, rather than fabricated ranked Competencies. The nature of the source benefit determines its target system; the Upbringing/Background conversion guideline never converts *every* tool into a Competency.
+
+Ranks and proficiency are independent. Existing Competency rank progression, crafting time reductions, unlocked abilities/traits, and check arithmetic are established elsewhere and are **not** reconsidered here.
+
+## Reviewed historical Competency conversions already authored
+
+The following **seven Origin records, containing eight Competency-grant sites**, have direct older training counterparts. Their current effects are authored as `competencyTraining` on the existing source benefit, not in a parallel tool/Skill container.
+
+| Origin | Prior training relationship | Authored conversion |
 | --- | --- | --- |
-| Upbringing baseline | Yes | 0 |
-| Background baseline | No | +1 |
-| Reviewed intensive training exception | Yes | +1 |
-| Reviewed no-training exception | No | 0 |
-| Other source-specific exception | As explicitly established | As explicitly established |
+| Charlatan Background | Disguise Kit and Forgery Kit | Fixed Disguise +1 rank; fixed Forgery +1 rank |
+| Entertainer Background | Disguise Kit | One selected Disguise +1 rank **or** one Musical Instrument equipment proficiency |
+| Guild Artisan Background | One chosen artisan-tool trade | One rank in eligible chosen native craft Competency |
+| Guild Merchant Background | Navigator's Tools **or** extra commercial language | Selected Navigation +1 rank **or** the language |
+| Sailor Background | Navigator's Tools | Fixed Navigation +1 rank, separate from Water Vehicles |
+| General Dwarf Upbringing | Selected traditional craft/tool training | Chosen Smithing/Brewing/Stonemasonry proficiency |
+| Rock Gnome Upbringing | Tinker's Tools | Fixed Tinkering proficiency |
 
-The Upbringing/Background split describes **the default conversion of an Origin grant that actually teaches a Competency**; it **does not require every Origin to grant one**. A Background or Upbringing can award neither, including when its significance is expressed by Skills, languages, a social feature, a contextual effect, or other approved benefits. The source type is not proof of training.
+The above values are **current source-level authoring decisions for conversion**, not a universal algorithm to run when additional records are added. The original options, independently learned Skills, social features, languages, and equipment remain unchanged.
 
-- `competencyTraining: {"ranks": 0, "proficient": true}` explicitly records the Upbringing proficiency-only default.
-- `competencyTraining: {"ranks": 1, "proficient": false}` explicitly records the Background rank-only default.
-- `competencyTraining: {"ranks": 1, "proficient": true}` may be authored **only** for a justified exception.
-- **Neither** is represented by **no `competency-training` grant at all**, *not* by `{"ranks": 0, "proficient": false}`. The existing validated grant reducer correctly rejects a zero-effect grant. Removing a previously approved grant to make room for an exception requires a separate Origin decision; none has been removed in this pass.
+### Direct equipment proficiency conversions
 
-Individual earned rank increments accumulate, and proficiency remains an independent Boolean. Rank progression, crafting time, newly unlocked abilities/traits, and check arithmetic are already established outside this Character Origins pass; **do not redesign them here**. Ranks are **not** treated merely as a one-to-one bonus.
-
-The baseline and the exceptions apply at the **actual selected grant option**, not all alternatives in a mixed benefit. Thieves' Tools, specific Gaming Sets, and specific Musical Instruments remain binary equipment qualifications. Their choices do not imply an extra Competency grant.
-
-## Authored Origin grant sites
-
-The following **13 sites in 12 JSON records** had an existing `competency-training` grant and now carry an explicit `competencyTraining` effect. Some sites have multiple options; the effect applies only to the actually chosen Competency.
-
-| Background | Competency outcome | Current default |
+| Origin | Source benefit | Current executable identity |
 | --- | --- | --- |
-| Charlatan | Fixed Disguise and fixed Forgery (two sites) | Each +1 rank |
-| Entertainer | One rank in Disguise **or** one specific Musical Instrument qualification | +1 rank only if Disguise selected |
-| Explorer | Navigation **or** Cartography | +1 rank in selected Competency |
-| Guild Artisan | One eligible crafting Competency | +1 rank in selected Competency |
-| Guild Merchant | Navigation **or** an extra commercial language | +1 rank only if Navigation selected |
-| Sailor | Fixed Navigation | +1 rank |
-| Spy | Disguise / Forgery / Calligraphy **or** Thieves' Tools qualification | +1 rank only for selected Competency |
+| Criminal Background | Fixed Thieves' Tools training | Fixed `equipment.tool.thieves-tools` |
+| Spy Background | Selected Thieves' Tools alternative | `equipment.tool.thieves-tools`, only if that option wins |
+| Street-Raised Upbringing | Selected Thieves' Tools alternative from formative Urchin source | `equipment.tool.thieves-tools`, only if that option wins |
 
-| Upbringing | Competency outcome | Current default |
+The equipment identity is already known and authored in these three files. The remaining **implementation** task is validating/materializing nested selected option grants through the Origin choice authority, not debating how to translate Thieves' Tools proficiency.
+
+## Independent native choices without a source-approved Competency amount
+
+The following **five approved training-choice sites** were introduced or materially reallocated during the native Origin reconciliation. Their alternatives remain, but generic source-type conversion does not authorize an independent numeric/binary effect:
+
+| Origin | Retained options | Why automatic allocation is inappropriate |
 | --- | --- | --- |
-| Aristocratic | Calligraphy / Painting / Cooking **or** one Gaming Set qualification | Selected Competency proficiency |
-| General Dwarf | Smithing / Brewing / Stonemasonry | Selected Competency proficiency |
-| General Goliath | Cooking / Leatherworking / Navigation | Selected Competency proficiency |
-| Rock Gnome | Fixed Tinkering | Tinkering proficiency |
-| Street-Raised | Disguise / Cooking / Forgery **or** Thieves' Tools qualification | Selected Competency proficiency |
+| Explorer Background | Navigation or Cartography | New independent Background allocated from an Outlander split, not direct preservation of one historical training choice with the same current outcomes |
+| Spy Background | Disguise, Forgery, or Calligraphy **or** Thieves' Tools | The three ranked Competency alternatives are independently designed. **Thieves' Tools alone is already a direct binary conversion.** |
+| Aristocratic Upbringing | Calligraphy, Painting, or Cooking **or** a Gaming Set | New cultural Upbringing; no old source defining the three selected Competency grant amounts |
+| General Goliath Upbringing | Cooking, Leatherworking, or Navigation | A reviewed cultural training choice without direct evidence for a specific rank/proficiency conversion amount |
+| Street-Raised Upbringing | Disguise, Cooking, or Forgery **or** Thieves' Tools | Newly generalized mixed choice: three Competency alternatives need source-specific allocation, but **Thieves' Tools is already a direct conversion of its older proficiency** |
 
-No previously approved Skill, social feature, language, equipment qualification, possession, selected option, or Upbringing parent relationship was changed by this grant-effect pass. Origins without Competency training remain legitimate **neither** cases.
+No `competencyTraining` amount was assigned to the three Competency alternatives in Spy or Street-Raised merely because the binary Thieves' Tools outcome is settled. **Choice existence**, **equipment identity**, and **rank/proficiency amount** are distinct authoring facts.
 
-## Exception review, with the actual full package in mind
+## Exceptions for Origins with substantial specialized training
 
-**General Dwarf — strongest candidate to review for both:** It has Dwarvish, one of three chosen craft proficiencies, and narrow Stonecunning. Compared with General Goliath (Gol-Kaa, a chosen Skill, and a chosen Competency), General Dwarf may have less broadly usable learned training. Its emphasis on making and material craft provides a source-based reason to consider **proficiency +1 rank**. This is **not yet evidence of a net full-character imbalance**: compare the complete Species–Ancestry–Upbringing–Background package and the actual campaign's utility of Stonecunning. No extra rank is granted now.
+The conversion guideline is **not a ceiling**. A craft-centered Upbringing that is also weaker when compared against complete conventional and cross-cultural character packages may justify **both** proficiency and a rank. A historical training benefit may warrant neither if reviewed source semantics support that treatment; removing an already approved grant still requires a specific decision.
 
-**General Goliath — comparative review:** It has a learned language, a chosen Skill, and a chosen practical Competency without another major Upbringing feature. Compare complete conventional and substituted packages, especially Giant Foundling. A particular Goliath clan might warrant intensive craft training, but the baseline General Goliath grant does not assert that intensity; no automatic extra rank.
+- **General Dwarf** is a candidate for source-specific review. Its Dwarvish, one craft choice, and narrow Stonecunning should be compared with other complete packages before adding a rank.
+- **Rock Gnome** is craft-centered but already grants Tinkering, Artificer's Lore, clockwork creation, Prestidigitation, and Magical Tinkering. Its thematic crafting emphasis alone does not justify an extra rank.
+- **Guild Artisan** can be evaluated for a proficiency-plus-rank exception if its entire Background, rather than the profession label alone, supports it.
+- **General Goliath, Aristocratic, and Street-Raised** retain their existing approved Competency alternatives. Their non-equipment training amounts are still open decisions, not automatically Proficient because they are Upbringings.
+- Origins with no existing native `competency-training` grant (for example Acolyte, Criminal, Noble, Soldier, Sage, Wilderness-Raised, and Giant Foundling) remain valid **neither-Competency-grant** cases. Criminal still has **Thieves' Tools equipment proficiency**; neither refers only to ranked Competency effects.
 
-**Rock Gnome — intensive craft identity, but substantial other benefits:** Tinkering, Artificer's Lore, clockwork devices, Prestidigitation, and Magical Tinkering form a strong package with its General Gnome parent language. A craft emphasis alone does **not** establish that the package is underpowered. Keep proficiency-only pending package review.
+## Combined-source examples without inventing unfinished allocations
 
-**Aristocratic and Street-Raised — no automatic crafting upgrade:** Their possible craft Competency is one option within larger packages (language, chosen Skill, and cultural or travel feature), not a categorical promise of advanced crafting. Preserve the selected-Competency proficiency default or their distinct equipment alternative.
+- General Dwarf selects Smithing and Guild Artisan selects Smithing: the authored direct conversions yield Smithing proficiency from Upbringing and +1 rank from Background.
+- Rock Gnome Tinkering and an eligible Guild Artisan Tinkering choice likewise combine proficiency with +1 rank.
+- Spy or Street-Raised selects Thieves' Tools: grant the **binary item-tool proficiency only** from that selected option, with no extra rank or Competency training.
+- Spy or Street-Raised selects one of its *different* Competency alternatives: the option is approved, but its independent rank/proficiency contribution remains to be allocated source by source.
+- Criminal plus Rogue repeats the **binary** Thieves' Tools qualification with independent provenance; duplicate equipment proficiency does not create a Competency rank.
 
-**Backgrounds:** Guild Artisan is an obvious place to evaluate a possible proficiency-plus-rank *exception* because of sustained craft work, but its additional Skills, language, guild feature, and inventory count toward the whole Background. Charlatan already grants **two separate Competency ranks**, and Spy/Guild Merchant/Entertainer contain cross-domain alternatives. No additional proficiency or rank is assumed to balance display counts.
+The current source JSON is **not** an executable Origin selection authority. The native Competency reducer accepts trusted `NativeCompetencyTrainingGrant(SourceId, OccurrenceId, CompetencyId, Ranks, Proficient)` inputs, and the equipment evaluator also requires selected/authorized source occurrences. Neither should infer a grant from mere source names.
 
-**Neither cases:** Acolyte, Folk Hero, Hermit, Sage, Noble, Soldier and other Backgrounds/Upbringings with no existing native `competency-training` remain without one. Their other approved benefits are not deficient merely because no Competency is present. A future source may replace a prior Competency training benefit with a feature-only outcome if its own Origin pass authorizes the change; this migration does **not** revoke existing grants.
-
-## Consequences under current defaults
-
-- General Dwarf (Smithing) + Guild Artisan (Smithing): **proficient Smithing with one rank** from distinct granted sources.
-- General Goliath (Navigation) + Sailor (Navigation): **proficient Navigation with one rank**; Sailor's Water Vehicles qualification is separate.
-- Street-Raised (Forgery) + Charlatan: **proficient Forgery with one rank**; Charlatan also contributes its separate Disguise rank.
-- Rock Gnome Tinkering + Guild Artisan choosing Tinkering, if eligible: **proficient Tinkering with one rank**.
-- Guild Artisan without a matching proficiency source: **one rank**, with proficiency determined separately.
-- Spy choosing Thieves' Tools instead of a Competency: **neither Competency rank nor proficiency from that specific choice**; only the canonical binary equipment qualification.
-
-These examples describe selected source effects. The future Origin selection authority must still validate actual characters, choices, and source occurrences before the existing native reducer combines them.
-
-## Implementation and review boundary
-
-`competencyTraining` is authored data, not a new class or separate container; it is two independent effect fields on the existing **single** `competency-training` benefit. The runtime currently accepts `NativeCompetencyTrainingGrant(SourceId, OccurrenceId, CompetencyId, Ranks, Proficient)` from **already-authorized** inputs. This pass does not implement the Origin grant projector, alter rank progression, or infer extra equipment qualifications.
-
-A future approved exception is a **local change to the justified Origin**. Do not update every Background or Upbringing when one exception is approved. The regression tests should enforce explicit well-formed grant effects and the approved current defaults, without imposing a fixed total number of Origins or a permanent global ban on exceptions.
-
-**Next review:** Evaluate General Dwarf against complete conventional/cross-cultural alternatives, then General Goliath and Guild Artisan as needed. Do not apply the prospective both/neither exceptions without the specific Origin's balance decision.
+**Next step:** Verify the seven authored historical Competency conversions and the three direct Thieves' Tools cases with data-focused tests; separately review exception candidates and the five unallocated independent native choices without applying a universal Origin conversion rule.
