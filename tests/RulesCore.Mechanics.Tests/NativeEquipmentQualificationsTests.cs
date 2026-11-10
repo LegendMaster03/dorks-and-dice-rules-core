@@ -155,6 +155,70 @@ public sealed class NativeEquipmentQualificationsTests
         Assert.Empty(stale.Masteries);
     }
 
+    [Theory]
+    [InlineData("feature.mastery-missing-prerequisite", "invalid-weapon-mastery-choice")]
+    [InlineData("feature.mastery-nonclass-progression", "invalid-weapon-mastery-choice")]
+    [InlineData("feature.mastery-ambiguous", "ambiguous-weapon-mastery-grants")]
+    [InlineData("feature.mastery-unknown-group", "unknown-weapon-mastery-group")]
+    [InlineData("feature.mastery-unknown-type", "unknown-weapon-mastery-type")]
+    [InlineData("feature.mastery-unsupported", "unsupported-weapon-mastery-grants")]
+    [InlineData("feature.mastery-conditional", "unsupported-weapon-mastery-grant")]
+    public void MalformedMasterySourcesFailClosedWithoutPublishingOtherGrants(
+        string sourceId, string issueCode)
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var proficiencies = f.Request(new NativeEquipmentQualificationSource(
+            "feature.sword", "proficient"));
+        var result = engine.ResolveTraining(new(proficiencies, [
+            new NativeWeaponMasterySource("feature.fixed-sword-mastery", "valid"),
+            new NativeWeaponMasterySource(sourceId, "invalid", 10)
+        ]));
+
+        // One valid source must not hide or partially salvage an invalid
+        // source's requested mastery. The whole projection is unavailable.
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Masteries);
+        Assert.Contains(result.Issues, issue => issue.Code == issueCode);
+        var coverage = engine.CoversTraining(result, "equipment.weapon.longsword");
+        Assert.Equal("unavailable", coverage.Status);
+        Assert.Null(coverage.Flags);
+    }
+
+    [Fact]
+    public void FixedFamilyMasteryAndIndividualMasteryOverlapWithoutStacking()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var training = engine.ResolveTraining(new(
+            f.Request(new NativeEquipmentQualificationSource("feature.sword-family", "trained")),
+            [
+                new NativeWeaponMasterySource("feature.fixed-sword-family-mastery", "family"),
+                new NativeWeaponMasterySource("feature.fixed-sword-mastery", "specific")
+            ]));
+        Assert.Equal("resolved", training.Status);
+        Assert.Equal(2, training.Masteries.Count);
+
+        var longsword = engine.CoversTraining(training, "equipment.weapon.longsword");
+        Assert.Equal(3, longsword.Flags);
+        Assert.Equal(2, longsword.MasteryProvenance.Count);
+        Assert.Single(longsword.ProficiencyProvenance);
+
+        // Family mastery is a common scope, not a bonus level that stacks
+        // when the same weapon has both a family and a specific grant.
+        var rapier = engine.CoversTraining(training, "equipment.weapon.rapier");
+        Assert.Equal(3, rapier.Flags);
+        Assert.Single(rapier.MasteryProvenance);
+        Assert.Single(rapier.ProficiencyProvenance);
+    }
+
+    [Fact]
+    public void MasteryRequiresExactlyTheTwoAuthorizedTrainingBits()
+    {
+        for (var state = -1; state <= 7; state++)
+            Assert.Equal(state == 3, NativeEquipmentQualifications.HasUsableMastery(state));
+    }
+
     [Fact]
     public void WeaponFamilyGrantsCoverVariantsAcrossSimpleAndMartialCategories()
     {
@@ -714,6 +778,38 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"feature.fixed-sword-mastery","name":"Longsword Mastery","kind":"feature",
                     "weaponMasteryGrants":{"fixed":[
                       {"id":"longsword","targetId":"equipment.weapon.longsword"}]}},
+                  {"id":"feature.fixed-sword-family-mastery","name":"Sword Family Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"swords","targetId":"equipment.group.weapon.family.sword"}]}},
+                  {"id":"feature.mastery-missing-prerequisite","name":"Missing Prerequisite","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","count":1,
+                       "fromTypeIds":["equipment.weapon.longsword"]}]}},
+                  {"id":"feature.mastery-nonclass-progression","name":"Nonclass Progression","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","countByClassLevel":[[1,1]],
+                       "requireProficiency":true}]}},
+                  {"id":"feature.mastery-ambiguous","name":"Ambiguous Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"weapon","targetId":"equipment.weapon.longsword"}]},
+                    "definition":{"weaponMasteryGrants":{"fixed":[
+                      {"id":"other","targetId":"equipment.weapon.rapier"}]}}},
+                  {"id":"feature.mastery-unknown-group","name":"Wrong Mastery Group","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","count":1,"requireProficiency":true,
+                       "fromGroupIds":["equipment.group.armor.light"]}]}},
+                  {"id":"feature.mastery-unknown-type","name":"Missing Mastery Type","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","count":1,"requireProficiency":true,
+                       "fromTypeIds":["equipment.weapon.missing"]}]}},
+                  {"id":"feature.mastery-unsupported","name":"Unsupported Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"weapon","targetId":"equipment.weapon.longsword"}],
+                     "conditionalFixed":[{"id":"extra","targetId":"equipment.weapon.rapier"}]}},
+                  {"id":"feature.mastery-conditional","name":"Conditional Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"weapon","targetId":"equipment.weapon.longsword",
+                       "condition":{"unverified":true}}]}},
                   {"id":"feature.sword-family","name":"Sword Family Training","kind":"feature",
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"swords","targetId":"equipment.group.weapon.family.sword"}]}},
