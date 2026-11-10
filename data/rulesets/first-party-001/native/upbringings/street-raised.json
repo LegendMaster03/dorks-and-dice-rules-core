@@ -31,9 +31,9 @@
       "id": "street-raised-community-competency",
       "name": "Community Competency",
       "grantType": "competency-training",
-      "description": "Choose one existing Competency from Disguise Kit, Thieves' Tools, Cooking, or Forgery, reflecting practical experience within your formative community. Choosing any of these does not imply that you committed crimes or own the corresponding tools. The chosen Competency grants its established native facets.",
+      "description": "Choose one training benefit from Disguise, Thieves' Tools, Cooking, or Forgery, reflecting practical experience within your formative community. The choice does not imply criminal conduct or ownership of the equipment.",
       "chooseOne": [
-        "competency.disguise-kit",
+        "competency.disguise",
         "competency.thieves-tools",
         "competency.cooking",
         "competency.forgery"
