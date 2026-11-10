@@ -1,5 +1,6 @@
 using System.Text.Json;
 using RulesCore.Content;
+using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -35,7 +36,12 @@ public sealed class NativeCatalogTests
     public void EveryNativeWeaponHasAnAuthoredFamilyBeneathTheWeaponCategory()
     {
         var catalog = NativeCatalogLoader.Load(RepositoryLocation());
-        var weapons = catalog.Search(category: "equipment-type", limit: 100).Items
+        // The catalog is actively expanded. Walk every page rather than
+        // checking only the first 100 records or a fixed expected count.
+        var equipmentTypeCount = catalog.CountByCategory("equipment-type");
+        var weapons = Enumerable.Range(0, (equipmentTypeCount + 99) / 100)
+            .SelectMany(page => catalog.Search(category: "equipment-type",
+                offset: page * 100, limit: 100).Items)
             .Where(entity => entity.Definition.GetProperty("equipmentCategory").GetString()
                 == "weapon").ToArray();
         Assert.NotEmpty(weapons);
@@ -75,6 +81,24 @@ public sealed class NativeCatalogTests
             "groupIds").EnumerateArray().Select(id => id.GetString()));
         Assert.Contains("equipment.group.weapon.martial", morningstar.Definition.GetProperty(
             "groupIds").EnumerateArray().Select(id => id.GetString()));
+
+        // Exercise real Class grants against the production taxonomy, not only
+        // synthetic resolver fixtures. Family and classification scopes are
+        // independent even when both lead to the same canonical weapon.
+        var resolver = new NativeEquipmentQualifications(catalog);
+        var cleric = resolver.Resolve(new NativeEquipmentQualificationRequest(
+            catalog.RulesetId, catalog.Fingerprint,
+            [new NativeEquipmentQualificationSource("class.cleric", "cleric-entry")]));
+        Assert.Equal("resolved", cleric.Status);
+        Assert.True(resolver.Covers(cleric, "equipment.weapon.mace").Proficient);
+        Assert.False(resolver.Covers(cleric, "equipment.weapon.morningstar").Proficient);
+
+        var barbarian = resolver.Resolve(new NativeEquipmentQualificationRequest(
+            catalog.RulesetId, catalog.Fingerprint,
+            [new NativeEquipmentQualificationSource("class.barbarian", "barbarian-entry")]));
+        Assert.Equal("resolved", barbarian.Status);
+        Assert.True(resolver.Covers(barbarian, "equipment.weapon.mace").Proficient);
+        Assert.True(resolver.Covers(barbarian, "equipment.weapon.morningstar").Proficient);
     }
 
     [Fact]
