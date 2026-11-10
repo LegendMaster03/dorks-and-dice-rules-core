@@ -284,7 +284,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                     needsChoices = true;
                     continue;
                 }
-                if (selected.Count != count.Value ||
+                if (selected is null || selected.Count != count.Value ||
                     selected.Distinct(StringComparer.Ordinal).Count() != count.Value ||
                     selected.Any(value => !eligible.Contains(value)))
                 {
