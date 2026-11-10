@@ -1,5 +1,7 @@
 # Pillar 3 — Competency grant allocation review
 
+> **Historical candidate matrix — superseded (2026-11-10):** This P+1 proposal for all 13 benefit sites predates the clarified conversion scope. **Neither is the default** for every Origin. Only a benefit **actually converted from earlier rules content** uses the Upbringing-proficiency or Background-rank guideline as a starting point; the earlier Thieves' Tools proficiency converts directly to a binary equipment qualification. Seven historical Origin records now have explicit Competency amounts, while five independently allocated native choice sites still await source-specific effects. See [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md) for authoritative current status. Do not bulk-apply the older P+1 candidate matrix.
+
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Ruleset:** `first-party-001`  
