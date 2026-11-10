@@ -400,8 +400,12 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
     }
 
     /// <summary>
-    /// Tests a canonical type or a native item declaring equipmentTypeId.
-    /// Unknown or unsupported types never silently count as nonproficient.
+    /// Checks a canonical base equipment type or a reconciled native item
+    /// definition explicitly linked by equipmentTypeId. Different mundane
+    /// and magical item definitions can share that base type and qualification.
+    /// This does not identify inventory instances, compose magic variants,
+    /// or evaluate exceptional item-specific proficiency alternatives.
+    /// Unknown or unsupported links never silently count as nonproficient.
     /// </summary>
     public NativeEquipmentCoverage Covers(
         NativeEquipmentQualificationProjection projection, string equipmentId)
