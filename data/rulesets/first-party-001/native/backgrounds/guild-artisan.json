@@ -93,8 +93,8 @@
   "reviewNotes": [
     "Independently reconciled from the 2014 Guild Artisan Background rather than its 2024 version; Guild Merchant is a separate future Background candidate and not an inherited variant.",
     "The 2014 Skill baseline of Insight and Persuasion is retained.",
-    "Choose one existing native craft Competency corresponding to the guild trade. The exampleCompetencies array is illustrative rather than an exhaustive eligibility list; the common choice executor must resolve the crafting-competency category against the active native catalog and relevant trade. Do not automatically include covert tools such as Thieves' Tools merely because they are Competencies.",
-    "A full native Competency may include multiple training facets, unlike the single 2014 artisan tool proficiency. Comparative mechanical strength must be considered during corpus balance review; different facet types are not automatically interchangeable.",
+    "Choose one existing native craft Competency corresponding to the guild trade. The exampleCompetencies array is illustrative, not an exhaustive eligibility list; the common choice executor must resolve crafting-competency eligibility against active native disciplines. Thieves' Tools proficiency is a narrow equipment qualification, not a craft Competency.",
+    "A native Competency is one learned discipline whose use may span several tasks and associated tools, without automatically creating separate equipment proficiencies. Its starting rank/proficiency value requires the same source-by-source review as other Origin grants.",
     "Learn one language related to the guild's practice or trade relationships, including Common where appropriate.",
     "Guild Membership grants conditional institutional and professional assistance. Maintaining good standing ordinarily requires 5 gp per month; no new guild dues tracking service or mandatory accounting subsystem is implemented.",
     "Existing membership and standing depend on the setting; former members keep their learned training even when access to guild benefits changes.",
