@@ -261,6 +261,38 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void RepeatedSourcesCannotExpandTheWorkBudgetBeyondTheRequestLimit()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+        var sources = Enumerable.Range(0, 67).Select(i =>
+            new NativeEquipmentQualificationSource("feature.many-choices",
+                "earned-" + i)).ToArray();
+
+        // Each source is individually valid. The sum of its authored choices
+        // exceeds the independent request work limit when repeated 67 times.
+        var result = engine.Resolve(fixture.Request(sources));
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Qualifications);
+        Assert.Contains(result.Issues, issue => issue.Code == "invalid-equipment-choices");
+    }
+
+    [Fact]
+    public void FixedGrantOccurrencesAreAlsoBoundedAcrossRepeatedSources()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+        var sources = Enumerable.Range(0, 91).Select(i =>
+            new NativeEquipmentQualificationSource("feature.repeat-grants",
+                "earned-" + i)).ToArray();
+
+        var result = engine.Resolve(fixture.Request(sources));
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Qualifications);
+        Assert.Contains(result.Issues, issue => issue.Code == "invalid-equipment-grants");
+    }
+
+    [Fact]
     public void InvalidCatalogGroupReferencesAreRejectedAtLoad()
     {
         Assert.Throws<NativeCatalogLoadException>(() => new Fixture("unknown"));
@@ -360,9 +392,7 @@ public sealed class NativeEquipmentQualificationsTests
                     "definition":{"equipmentProficiencyGrants":{"fixed":[
                       {"id":"other","targetId":"equipment.weapon.rapier"}]}}},
                   {"id":"feature.malformed","name":"Malformed Root Grants","kind":"feature",
-                    "equipmentProficiencyGrants":[],
-                    "definition":{"equipmentProficiencyGrants":{"fixed":[
-                      {"id":"other","targetId":"equipment.weapon.rapier"}]}}},
+                    "equipmentProficiencyGrants":[]},
                   {"id":"feature.unknown-block","name":"Unsupported Future Grants","kind":"feature",
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"sword","targetId":"equipment.weapon.longsword"}],
@@ -370,6 +400,11 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"feature.multiclass-only","name":"No Standard Grants","kind":"feature",
                     "equipmentProficiencyGrants":{"multiclassFixed":[
                       {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
+                  {"id":"feature.many-choices","name":"Several Qualifications","kind":"feature",
+                    "equipmentProficiencyGrants":{"choices":[
+                      {"id":"game","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.gaming-set"]},
+                      {"id":"music","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.musical-instrument"]},
+                      {"id":"weapon","count":1,"fromCategory":"weapon"}]}},
                   {"id":"feature.open-lock","name":"Open Lock Skill","kind":"feature","equipmentProficiencyGrants":{"fixed":[]}},
                   {"id":"feature.entertainment","name":"Entertainment","kind":"feature","equipmentProficiencyGrants":{"choices":[
                     {"id":"game","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.gaming-set"]},
@@ -380,6 +415,15 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"item.thieves-tools","name":"Owned Thieves' Tools","kind":"item","equipmentTypeId":"equipment.tool.thieves-tools"}
                 ]}
                 """);
+            // A valid source repeated many times must still respect the total
+            // work budget. Generate this fixture rather than authoring eleven
+            // identical JSON records into every test case.
+            var repeats = string.Join(",", Enumerable.Range(1, 11).Select(i =>
+                "{\\\"id\\\":\\\"repeat-" + i + "\\\",\\\"targetId\\\":\\\"equipment.weapon.longsword\\\"}"));
+            File.WriteAllText(Path.Combine(native, "repeat-grants.json"),
+                "{\\\"id\\\":\\\"feature.repeat-grants\\\",\\\"name\\\":\\\"Repeating Grant\\\"," +
+                "\\\"kind\\\":\\\"feature\\\",\\\"equipmentProficiencyGrants\\\":{\\\"fixed\\\":[" +
+                repeats + "]}}");
             Catalog = NativeCatalogLoader.Load(
                 NativeRulesetLayout.Resolve(_root, "first-party-001"));
         }
