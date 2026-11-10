@@ -196,7 +196,7 @@ public sealed class NativeMechanicsApiTests
     [Theory]
     [InlineData("PublicOnly", false)]
     [InlineData("PrivateOnly", true)]
-    public async Task EquipmentTrainingEndpointsReturnVerifiedTwoBitMasks(
+    public async Task EquipmentTrainingEndpointsResolveSourceBasedTwoBitMasks(
         string surface, bool privateIngress)
     {
         await using var fixture = new Fixture();
