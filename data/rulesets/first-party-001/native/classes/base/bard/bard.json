@@ -56,6 +56,16 @@
           "id": "group-armor-light",
           "targetId": "equipment.group.armor.light"
         }
+      ],
+      "choices": [
+        {
+          "id": "one-martial-weapon",
+          "count": 1,
+          "fromCategory": "weapon",
+          "fromGroupIds": [
+            "equipment.group.weapon.martial"
+          ]
+        }
       ]
     },
     "band": 1,
@@ -92,7 +102,8 @@
     "legacySingleMartialWeaponChoice": {
       "source": "3.0",
       "count": 1,
-      "duplicateSelectionNotAdditional": true
+      "duplicateSelectionNotAdditional": true,
+      "implementedByEquipmentGrant": "one-martial-weapon"
     },
     "skillChoices": {
       "count": 3,
