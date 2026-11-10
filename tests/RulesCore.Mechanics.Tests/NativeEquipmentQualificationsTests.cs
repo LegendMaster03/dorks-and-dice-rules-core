@@ -19,6 +19,47 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void WeaponFamilyGrantsCoverVariantsAcrossSimpleAndMartialCategories()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+
+        var family = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.mace-family", "family")));
+        Assert.Equal("resolved", family.Status);
+        Assert.True(engine.Covers(family, "equipment.weapon.mace").Proficient);
+        Assert.True(engine.Covers(family, "equipment.weapon.morningstar").Proficient);
+        Assert.False(engine.Covers(family, "equipment.weapon.longsword").Proficient);
+
+        // Proficiency in one physical weapon type does not confer its family.
+        var oneMace = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.one-mace", "individual")));
+        Assert.True(engine.Covers(oneMace, "equipment.weapon.mace").Proficient);
+        Assert.False(engine.Covers(oneMace, "equipment.weapon.morningstar").Proficient);
+
+        // Family membership and Simple/Martial are orthogonal. One mace is
+        // Simple, while its Morningstar sibling is Martial.
+        var simple = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.simple-weapons", "simple")));
+        Assert.True(engine.Covers(simple, "equipment.weapon.mace").Proficient);
+        Assert.False(engine.Covers(simple, "equipment.weapon.morningstar").Proficient);
+
+        var overlapping = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.simple-weapons", "simple"),
+            new NativeEquipmentQualificationSource("feature.mace-family", "maces")));
+        Assert.Equal(2, engine.Covers(overlapping, "equipment.weapon.mace")
+            .Provenance.Count);
+        Assert.Single(engine.Covers(overlapping, "equipment.weapon.morningstar")
+            .Provenance);
+
+        var allWeapons = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.all-weapons", "all")));
+        Assert.True(engine.Covers(allWeapons, "equipment.weapon.mace").Proficient);
+        Assert.True(engine.Covers(allWeapons, "equipment.weapon.morningstar").Proficient);
+        Assert.True(engine.Covers(allWeapons, "equipment.weapon.longsword").Proficient);
+    }
+
+    [Fact]
     public void SpecificWeaponDoesNotConferItsEntireGroup()
     {
         using var f = new Fixture();
@@ -368,7 +409,10 @@ public sealed class NativeEquipmentQualificationsTests
             var equipment = """
                 {
                   "equipmentGroups": [
-                    {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon"},
+                    {"id":"equipment.group.weapon.all","name":"Weapons","kind":"equipment-group","equipmentCategory":"weapon"},
+                    {"id":"equipment.group.weapon.simple","name":"Simple Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.family.mace","name":"Maces","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.armor.light","name":"Light Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.armor.heavy","name":"Heavy Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.shield.all","name":"Shields","kind":"equipment-group","equipmentCategory":"shield"},
@@ -379,6 +423,8 @@ public sealed class NativeEquipmentQualificationsTests
                   "equipmentTypes": [
                     {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
                     {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
+                    {"id":"equipment.weapon.mace","name":"Mace","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.family.mace"]},
+                    {"id":"equipment.weapon.morningstar","name":"Morningstar","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.mace"]},
                     {"id":"equipment.shield.shield","name":"Shield","kind":"equipment-type","equipmentCategory":"shield","groupIds":["equipment.group.shield.all"]},
                     {"id":"equipment.armor.leather","name":"Leather Armor","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.light"]},
                     {"id":"equipment.armor.chain-mail","name":"Chain Mail","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.heavy"]},
@@ -415,6 +461,18 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"class.rogue","name":"Rogue","kind":"class","definition":{
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"tools","targetId":"equipment.tool.thieves-tools"}]}}},
+                  {"id":"feature.mace-family","name":"Mace Family Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"maces","targetId":"equipment.group.weapon.family.mace"}]}},
+                  {"id":"feature.one-mace","name":"Mace Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"mace","targetId":"equipment.weapon.mace"}]}},
+                  {"id":"feature.simple-weapons","name":"Simple Weapon Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"simple","targetId":"equipment.group.weapon.simple"}]}},
+                  {"id":"feature.all-weapons","name":"All Weapon Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"all","targetId":"equipment.group.weapon.all"}]}},
                   {"id":"feature.sword","name":"Sword Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
                     {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
                   {"id":"feature.second-sword","name":"More Sword Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
