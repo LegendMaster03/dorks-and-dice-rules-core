@@ -179,6 +179,64 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void ExplicitTypeChoiceDoesNotAllowOtherWeaponsInItsCategory()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var request = f.Request(
+            new NativeEquipmentQualificationSource("feature.gladiator", "origin"));
+        var open = engine.Resolve(request);
+        Assert.Equal("needs-choices", open.Status);
+        Assert.Equal(["equipment.weapon.longsword"],
+            Assert.Single(open.RequiredChoices).EligibleQualificationIds);
+        var valid = engine.Resolve(request with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["origin/arena"] = ["equipment.weapon.longsword"]
+            }
+        });
+        Assert.Equal("resolved", valid.Status);
+        Assert.True(engine.Covers(valid, "equipment.weapon.longsword").Proficient);
+        Assert.False(engine.Covers(valid, "equipment.weapon.rapier").Proficient);
+
+        var invalid = engine.Resolve(request with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["origin/arena"] = ["equipment.weapon.rapier"]
+            }
+        });
+        Assert.Equal("unavailable", invalid.Status);
+        Assert.Empty(invalid.Qualifications);
+    }
+
+    [Fact]
+    public void ExplicitTypeListsMustReferenceExistingMatchingTypes()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var result = engine.Resolve(f.Request(
+            new NativeEquipmentQualificationSource("feature.invalid-choice", "origin")));
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Qualifications);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "unknown-equipment-type-choice");
+    }
+
+    [Fact]
+    public void ArmorQualificationsCoverTheirGroupButNotOtherArmorGroups()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var grants = engine.Resolve(f.Request(
+            new NativeEquipmentQualificationSource("feature.light-armor", "armor")));
+        Assert.Equal("resolved", grants.Status);
+        Assert.True(engine.Covers(grants, "equipment.armor.leather").Proficient);
+        Assert.False(engine.Covers(grants, "equipment.armor.chain-mail").Proficient);
+    }
+
+    [Fact]
     public void InvalidCatalogGroupReferencesAreRejectedAtLoad()
     {
         Assert.Throws<NativeCatalogLoadException>(() => new Fixture("unknown"));
@@ -205,6 +263,7 @@ public sealed class NativeEquipmentQualificationsTests
                   "equipmentGroups": [
                     {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon"},
                     {"id":"equipment.group.armor.light","name":"Light Armor","kind":"equipment-group","equipmentCategory":"armor"},
+                    {"id":"equipment.group.armor.heavy","name":"Heavy Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.shield.all","name":"Shields","kind":"equipment-group","equipmentCategory":"shield"},
                     {"id":"equipment.group.tool.all","name":"Tools","kind":"equipment-group","equipmentCategory":"tool"},
                     {"id":"equipment.group.tool.gaming-set","name":"Gaming Sets","kind":"equipment-group","equipmentCategory":"tool","parentGroupIds":["equipment.group.tool.all"]},
@@ -214,6 +273,8 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
                     {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
                     {"id":"equipment.shield.shield","name":"Shield","kind":"equipment-type","equipmentCategory":"shield","groupIds":["equipment.group.shield.all"]},
+                    {"id":"equipment.armor.leather","name":"Leather Armor","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.light"]},
+                    {"id":"equipment.armor.chain-mail","name":"Chain Mail","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.heavy"]},
                     {"id":"equipment.tool.thieves-tools","name":"Thieves' Tools","kind":"equipment-type","equipmentCategory":"tool","groupIds":["equipment.group.tool.all"]},
                     {"id":"equipment.tool.smiths-tools","name":"Smith's Tools","kind":"equipment-type","equipmentCategory":"tool","groupIds":["equipment.group.tool.all"]},
                     {"id":"equipment.tool.dice-set","name":"Dice Set","kind":"equipment-type","equipmentCategory":"tool","groupIds":["equipment.group.tool.gaming-set"]},
@@ -261,6 +322,14 @@ public sealed class NativeEquipmentQualificationsTests
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"sword","targetId":"equipment.weapon.longsword",
                        "condition":{"requires":"unverified"}}]}},
+                  {"id":"feature.gladiator","name":"Gladiator","kind":"feature","equipmentProficiencyGrants":{"choices":[
+                    {"id":"arena","count":1,"fromCategory":"weapon",
+                     "fromTypeIds":["equipment.weapon.longsword"]}]}},
+                  {"id":"feature.invalid-choice","name":"Invalid Weapon Choice","kind":"feature","equipmentProficiencyGrants":{"choices":[
+                    {"id":"arena","count":1,"fromCategory":"weapon",
+                     "fromTypeIds":["equipment.weapon.unknown"]}]}},
+                  {"id":"feature.light-armor","name":"Light Armor Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
+                    {"id":"light","targetId":"equipment.group.armor.light"}]}},
                   {"id":"feature.open-lock","name":"Open Lock Skill","kind":"feature","equipmentProficiencyGrants":{"fixed":[]}},
                   {"id":"feature.entertainment","name":"Entertainment","kind":"feature","equipmentProficiencyGrants":{"choices":[
                     {"id":"game","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.gaming-set"]},
