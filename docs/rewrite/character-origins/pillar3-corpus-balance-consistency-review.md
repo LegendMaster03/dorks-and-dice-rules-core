@@ -1,5 +1,7 @@
 # Pillar 3 — Native Corpus Balance and Consistency Review
 
+> **Further review (2026-11-10):** [Source conversion exceptions and complete-package balance](pillar3-origin-training-exceptions-review-20261110.md) assesses General Dwarf, Rock Gnome, General Goliath and cross-cultural substitutes using the current independent rank/proficiency design. It proposes no new exceptions as already approved.
+
 > **Historical review baseline (2026-11-05):** The counts of 12 Upbringings, 88 Skills, and 33 Competencies, along with former Skill/tool “facets,” describe this earlier review and should not be treated as the current native model. The synchronized working branch now has **13 Upbringings, 81 Skills, and 26 Competencies**. Current equipment integration is recorded in [Pillar 3 Equipment Integration](pillar3-equipment-integration-20261110.md); source-specific proposed training effects and sensitivity analysis are in [Competency Grant Allocation Review](pillar3-competency-grant-allocation-review-20261110.md); mixed-choice semantics and authorization are in [Origin Choice Authorization Plan](pillar3-origin-choice-authorization-plan-20261110.md). The approved original balance observations remain historical evidence, not current implementation claims.
 
 **Review date:** 2026-11-05  
