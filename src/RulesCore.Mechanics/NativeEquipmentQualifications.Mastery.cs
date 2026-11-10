@@ -16,8 +16,10 @@ public enum NativeEquipmentTrainingFlags : byte
 }
 
 /// <summary>
-/// An earned mastery source and its verified parent-Class level when relevant.
-/// The caller must authenticate source ownership, feature level and choices.
+/// A mastery source occurrence asserted by the caller. ClassLevel means the
+/// level in the feature's parent Class, not overall character level. The
+/// resolver checks authored feature thresholds, but the caller MUST verify
+/// that the character actually earned the source and reached that level.
 /// </summary>
 public sealed record NativeWeaponMasterySource(
     string SourceId, string OccurrenceId, int? ClassLevel = null);
@@ -31,12 +33,18 @@ public sealed record NativeEquipmentTrainingRequest(
     IReadOnlyList<NativeWeaponMasterySource> MasterySources,
     IReadOnlyDictionary<string, IReadOnlyList<string>>? SelectedMasteries = null);
 
+/// <summary>Attribution for an authored mastery grant or selected option.</summary>
 public sealed record NativeWeaponMasteryProvenance(
     string SourceId, string SourceOccurrenceId, string GrantId);
 
+/// <summary>One mastery scope with all qualifying grant occurrences retained.</summary>
 public sealed record NativeWeaponMasteryGrant(
     string TargetId, IReadOnlyList<NativeWeaponMasteryProvenance> Provenance);
 
+/// <summary>
+/// One counted selection of base weapon types, already filtered to types
+/// covered by the proficiency projection and the source's authored limits.
+/// </summary>
 public sealed record NativeWeaponMasteryChoice(
     string ChoiceKey, int Count, IReadOnlyList<string> EligibleWeaponTypeIds);
 
@@ -68,9 +76,13 @@ public sealed record NativeEquipmentTrainingCoverage(
 /// </summary>
 public sealed partial class NativeEquipmentQualifications
 {
+    /// <summary>
+    /// This contract has exactly two bits. Values outside 0..3 are invalid,
+    /// not future capabilities that silently enable current mastery effects.
+    /// </summary>
     public static bool HasUsableMastery(int flags) =>
-        (flags & (int)(NativeEquipmentTrainingFlags.Proficiency |
-            NativeEquipmentTrainingFlags.Mastery)) == 3;
+        flags == (int)(NativeEquipmentTrainingFlags.Proficiency |
+            NativeEquipmentTrainingFlags.Mastery);
 
     public NativeEquipmentTrainingProjection ResolveTraining(NativeEquipmentTrainingRequest request)
     {
@@ -155,10 +167,16 @@ public sealed partial class NativeEquipmentQualifications
             JsonElement nested = default;
             var hasNested = TryObject(definition, "definition", out var contents) &&
                 contents.TryGetProperty("weaponMasteryGrants", out nested);
-            if (hasRoot == hasNested)
+            if (hasRoot && hasNested)
+            {
+                issues.Add(new("ambiguous-weapon-mastery-grants", source.SourceId,
+                    "A source cannot declare mastery grants at both root and definition."));
+                continue;
+            }
+            if (!hasRoot && !hasNested)
             {
                 issues.Add(new("weapon-mastery-grants-not-reconciled", source.SourceId,
-                    "A mastery source must define exactly one authored grant block."));
+                    "The source has no executable mastery grant block."));
                 continue;
             }
             var grants = hasRoot ? root : nested;
@@ -236,13 +254,18 @@ public sealed partial class NativeEquipmentQualifications
                 var hasProgression = choice.TryGetProperty("countByClassLevel", out var progression);
                 var count = hasCount ? Number(choice, "count") :
                     hasProgression ? CountForClassLevel(progression, source.ClassLevel) : null;
+                // Counted mastery choices are always selections of trained
+                // weapon types. Require the explicit authoring contract rather
+                // than treating an omitted prerequisite as an implicit default.
+                // Only Class features may scale a choice with parent-Class level.
                 if (!ValidChoiceKeyComponent(id) || !seenGrantIds.Add(id!) ||
                     hasCount == hasProgression || count is null or < 1 or > 32 ||
-                    (choice.TryGetProperty("requireProficiency", out var prerequisite) &&
-                     prerequisite.ValueKind != JsonValueKind.True))
+                    (hasProgression && entity.Category != "classFeature") ||
+                    !choice.TryGetProperty("requireProficiency", out var prerequisite) ||
+                    prerequisite.ValueKind != JsonValueKind.True)
                 {
                     issues.Add(new("invalid-weapon-mastery-choice", source.SourceId,
-                        "A mastery choice needs an ID, valid level-adjusted count and proficiency prerequisite."));
+                        "A mastery choice needs an ID, permitted count and explicit proficiency prerequisite."));
                     continue;
                 }
 
@@ -338,6 +361,8 @@ public sealed partial class NativeEquipmentQualifications
                     Award(target, new(source.SourceId, source.OccurrenceId, id!));
             }
         }
+        // Unknown selection keys are not harmless extras: accepting them
+        // would allow stale or fabricated choices to go unnoticed by callers.
         foreach (var selected in request.SelectedMasteries?.Keys ?? [])
             if (!seenChoices.Contains(selected))
                 issues.Add(new("unexpected-weapon-mastery-selection", selected,
@@ -401,6 +426,10 @@ public sealed partial class NativeEquipmentQualifications
             masteryProvenance.ToArray(), []);
     }
 
+    /// <summary>
+    /// Resolve a stepped Class progression without assuming a fixed level cap.
+    /// Reject malformed, duplicate, or unsorted steps instead of guessing.
+    /// </summary>
     private static int? CountForClassLevel(JsonElement progression, int? classLevel)
     {
         if (classLevel is null || progression.ValueKind != JsonValueKind.Array ||
