@@ -1,6 +1,6 @@
-# Dorks & Dice — native rules specification (pre-implementation)
+# Dorks & Dice — native rules specification (living design)
 
-Status: **working game-design specification**, started 2026-10-09. This document records the owner's established gameplay decisions, proposed generalized rules, and unresolved decisions for review. It is **not authorization to implement**, merge, deploy, restore previously disabled public/tester Rules Core access, or treat draft procedures as approved rules.
+Status: **working game-design specification**, started 2026-10-09. This document records established gameplay decisions, proposed generalized rules, and unresolved decisions. Selected native rules and mechanics are implemented incrementally, with executable status recorded in their linked contracts and source files. A proposal here is not, by itself, approval to implement it or treat it as an active rule. This document does not authorize merges, deployments, or changes to public/tester Rules Core access.
 
 ## Mission and compatibility premise
 
