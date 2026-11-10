@@ -13,7 +13,7 @@
     {
       "id": "stonecunning",
       "description": "Double Proficiency Bonus on qualifying Intelligence (History) checks concerning stonework and its origins.",
-      "skill": "history",
+      "skill": "skill.history",
       "ability": "intelligence",
       "proficiencyBonusMultiplier": 2,
       "scope": "stonework-history"
@@ -25,7 +25,9 @@
         "competency.smithing",
         "competency.brewing",
         "competency.stonemasonry"
-      ]
+      ],
+      "grantType": "competency-training",
+      "choiceCount": 1
     }
   ]
 }
