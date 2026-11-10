@@ -29,16 +29,61 @@
     },
     {
       "id": "street-raised-community-competency",
-      "name": "Community Competency",
-      "grantType": "competency-training",
+      "name": "Community Training Choice",
+      "grantType": "benefit-choice",
       "description": "Choose one training benefit from Disguise, Thieves' Tools, Cooking, or Forgery, reflecting practical experience within your formative community. The choice does not imply criminal conduct or ownership of the equipment.",
-      "chooseOne": [
-        "competency.disguise",
-        "competency.thieves-tools",
-        "competency.cooking",
-        "competency.forgery"
-      ],
-      "choiceCount": 1
+      "choiceCount": 1,
+      "options": [
+        {
+          "id": "disguise",
+          "name": "Disguise Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.disguise"
+            }
+          ]
+        },
+        {
+          "id": "thieves-tools",
+          "name": "Thieves' Tools Proficiency",
+          "benefits": [
+            {
+              "grantType": "qualification-training",
+              "qualificationCategory": "tool",
+              "equipmentTypeId": "equipment.tool.thieves-tools"
+            }
+          ],
+          "equipmentProficiencyGrants": {
+            "fixed": [
+              {
+                "id": "street-raised-thieves-tools",
+                "targetId": "equipment.tool.thieves-tools"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cooking",
+          "name": "Cooking Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.cooking"
+            }
+          ]
+        },
+        {
+          "id": "forgery",
+          "name": "Forgery Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.forgery"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "street-raised-urban-navigation",
@@ -50,8 +95,8 @@
   "reviewNotes": [
     "Approved independent Street-Raised Upbringing, resolving the formative portion of the historical 2014 Urchin source rather than creating a native Urchin Background.",
     "One learned community language; Common is eligible if used by the formative household or community, but is not automatically required or an inherited Species language.",
-    "Initial balance baseline: choose exactly one Skill from Stealth, Sleight of Hand, Perception, Insight, or Survival and exactly one Competency from Disguise Kit, Thieves' Tools, Cooking, or Forgery. The owner explicitly authorized authoring these counts now and revisiting the number of selections during the later corpus-wide balance review.",
-    "The four approved Competency alternatives retain their native semantic facets: Forgery includes both its reviewed Forgery Skill facet and Forgery Kit proficiency. This may differ in strength from the other choices; preserve the identity for the general balance review.",
+    "Initial balance baseline: choose exactly one Skill from Stealth, Sleight of Hand, Perception, Insight, or Survival and exactly one community training benefit from Disguise, Cooking, Forgery, or Thieves' Tools proficiency. The owner authorized the choice counts; later corpus-wide balance review may revisit them.",
+    "Three choices train native Competencies; the fourth, Thieves' Tools, grants a narrow equipment proficiency with no Competency ranks. The conditional tool grant is available only after validating that selected origin option; there is no unconditional equipment grant.",
     "The half-time Urban Navigation rule is approved for accessible routes in substantial settlements outside combat and includes companions following the character's guidance. It does not bypass barriers, grant combat speed, reveal otherwise hidden locations, or create a separate map/pathfinding subsystem.",
     "All Species may select this Upbringing. It does not require poverty, orphanhood, criminality, abandonment, a particular social class, or a criminal future occupation.",
     "This Upbringing is separate from Criminal, Spy, Charlatan, Soldier, Sage, and all other independently chosen Backgrounds. It does not grant their contacts, false identities, military rank, or other Background features.",
