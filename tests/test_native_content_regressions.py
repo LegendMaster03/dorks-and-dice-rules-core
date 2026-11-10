@@ -115,7 +115,15 @@ class NativeContentRegressionTests(unittest.TestCase):
                     self.assertFalse(mechanics["bothMayCoexist"])
                     self.assertEqual("temporary-wild-companion", mechanics["requiresCompanionPathSelection"])
                     source["definition"]["mechanics"] = dict(mechanics)
-                self.assertEqual(source, entry)
+                # Native Weapon Mastery has executable grant metadata not
+                # present in the retained source copy. Compare all historical
+                # feature fields, and validate the new entitlement separately.
+                original = dict(entry)
+                original["definition"] = dict(entry["definition"])
+                if name in ("barbarian", "rogue") and path.name == "weapon-mastery-level-1.json":
+                    self.assertIn("weaponMasteryGrants", original["definition"])
+                    original["definition"].pop("weaponMasteryGrants")
+                self.assertEqual(source, original)
                 self.assertIn(entry["id"], self.catalog)
 
     def test_selected_monsters_preserve_stats_and_roles(self):

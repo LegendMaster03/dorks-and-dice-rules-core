@@ -13,6 +13,15 @@
       "requireProficiency": true,
       "swapAfterLongRest": true,
       "doesNotGrantSneakAttackEligibility": true
+    },
+    "weaponMasteryGrants": {
+      "choices": [
+        {
+          "id": "weapons",
+          "count": 2,
+          "requireProficiency": true
+        }
+      ]
     }
   }
 }

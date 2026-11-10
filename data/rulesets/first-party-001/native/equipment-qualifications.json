@@ -8,7 +8,7 @@
   "equipmentGroups": [
     {
       "id": "equipment.group.weapon.all",
-      "name": "All Weapons",
+      "name": "Weapons",
       "kind": "equipment-group",
       "equipmentCategory": "weapon"
     },
@@ -37,6 +37,159 @@
       "equipmentCategory": "weapon",
       "parentGroupIds": [
         "equipment.group.weapon.martial"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.melee",
+      "name": "Melee Weapons",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.ranged",
+      "name": "Ranged Weapons",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.axe",
+      "name": "Axes",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.bow",
+      "name": "Bows",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.club",
+      "name": "Clubs",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.crossbow",
+      "name": "Crossbows",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.dagger",
+      "name": "Daggers",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.dart",
+      "name": "Darts",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.hammer",
+      "name": "Hammers",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.mace",
+      "name": "Maces",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.sap",
+      "name": "Saps",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.sickle",
+      "name": "Sickles",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.sling",
+      "name": "Slings",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.spear",
+      "name": "Spears",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.staff",
+      "name": "Staves",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.sword",
+      "name": "Swords",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.family.whip",
+      "name": "Whips",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
       ]
     },
     {
@@ -110,7 +263,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.club",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -119,7 +274,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.dagger",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -128,7 +285,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.dart",
+        "equipment.group.weapon.ranged"
       ]
     },
     {
@@ -137,7 +296,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.spear",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -146,7 +307,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.mace",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -155,7 +318,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.staff",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -164,7 +329,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.sickle",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -173,7 +340,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.sling",
+        "equipment.group.weapon.ranged"
       ]
     },
     {
@@ -182,7 +351,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.spear",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -191,7 +362,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.spear",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -200,7 +373,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.simple"
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.bow",
+        "equipment.group.weapon.ranged"
       ]
     },
     {
@@ -209,7 +384,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.martial"
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.family.axe",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -219,7 +396,9 @@
       "equipmentCategory": "weapon",
       "groupIds": [
         "equipment.group.weapon.martial",
-        "equipment.group.weapon.martial-finesse-or-light"
+        "equipment.group.weapon.martial-finesse-or-light",
+        "equipment.group.weapon.family.crossbow",
+        "equipment.group.weapon.ranged"
       ]
     },
     {
@@ -228,7 +407,9 @@
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
       "groupIds": [
-        "equipment.group.weapon.martial"
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.family.sword",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -238,7 +419,9 @@
       "equipmentCategory": "weapon",
       "groupIds": [
         "equipment.group.weapon.martial",
-        "equipment.group.weapon.martial-finesse-or-light"
+        "equipment.group.weapon.martial-finesse-or-light",
+        "equipment.group.weapon.family.sword",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -248,7 +431,9 @@
       "equipmentCategory": "weapon",
       "groupIds": [
         "equipment.group.weapon.martial",
-        "equipment.group.weapon.martial-finesse-or-light"
+        "equipment.group.weapon.martial-finesse-or-light",
+        "equipment.group.weapon.family.sap",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -258,7 +443,9 @@
       "equipmentCategory": "weapon",
       "groupIds": [
         "equipment.group.weapon.martial",
-        "equipment.group.weapon.martial-finesse-or-light"
+        "equipment.group.weapon.martial-finesse-or-light",
+        "equipment.group.weapon.family.sword",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -268,7 +455,9 @@
       "equipmentCategory": "weapon",
       "groupIds": [
         "equipment.group.weapon.martial",
-        "equipment.group.weapon.martial-finesse-or-light"
+        "equipment.group.weapon.martial-finesse-or-light",
+        "equipment.group.weapon.family.sword",
+        "equipment.group.weapon.melee"
       ]
     },
     {
@@ -278,7 +467,75 @@
       "equipmentCategory": "weapon",
       "groupIds": [
         "equipment.group.weapon.martial",
-        "equipment.group.weapon.martial-finesse-or-light"
+        "equipment.group.weapon.martial-finesse-or-light",
+        "equipment.group.weapon.family.whip",
+        "equipment.group.weapon.melee"
+      ]
+    },
+    {
+      "id": "equipment.weapon.greatclub",
+      "name": "Greatclub",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.club",
+        "equipment.group.weapon.melee"
+      ]
+    },
+    {
+      "id": "equipment.weapon.handaxe",
+      "name": "Handaxe",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.axe",
+        "equipment.group.weapon.melee"
+      ]
+    },
+    {
+      "id": "equipment.weapon.light-hammer",
+      "name": "Light Hammer",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple",
+        "equipment.group.weapon.family.hammer",
+        "equipment.group.weapon.melee"
+      ]
+    },
+    {
+      "id": "equipment.weapon.battleaxe",
+      "name": "Battleaxe",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.family.axe",
+        "equipment.group.weapon.melee"
+      ]
+    },
+    {
+      "id": "equipment.weapon.longbow",
+      "name": "Longbow",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.family.bow",
+        "equipment.group.weapon.ranged"
+      ]
+    },
+    {
+      "id": "equipment.weapon.morningstar",
+      "name": "Morningstar",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.family.mace",
+        "equipment.group.weapon.melee"
       ]
     },
     {

@@ -57,6 +57,11 @@ public sealed class NativeMechanicsApiTests
                  "equipmentProficiencyGrants":{"fixed":[
                    {"id":"longsword","targetId":"equipment.weapon.longsword"}]}}
                 """);
+            File.WriteAllText(Path.Combine(package, "native", "mastery-feature.json"), """
+                {"id":"feature.demo-weapon-mastery","name":"Mastery","kind":"feature",
+                 "weaponMasteryGrants":{"fixed":[
+                   {"id":"longsword","targetId":"equipment.weapon.longsword"}]}}
+                """);
             File.WriteAllText(Path.Combine(package, "native", "harvesting.json"), """
                 {"id":"procedure.harvesting.loot-tavern-lite",
                  "name":"Harvesting & Crafting Lite","kind":"harvesting-procedure",
@@ -186,6 +191,89 @@ public sealed class NativeMechanicsApiTests
             }));
         using var stale = await fixture.Client.SendAsync(staleRequest);
         Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+    }
+
+    [Theory]
+    [InlineData("PublicOnly", false)]
+    [InlineData("PrivateOnly", true)]
+    public async Task EquipmentTrainingEndpointsResolveSourceBasedTwoBitMasks(
+        string surface, bool privateIngress)
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync(surface, "character-sheet", ordinary: !privateIngress);
+        var prefix = privateIngress ? "/api/private/mechanics/v1" : "/api/mechanics/v1";
+        using var info = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Get, prefix + "/ruleset"));
+        var metadata = await info.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("proficiency-and-mastery-flags",
+            metadata.GetProperty("capabilities").GetProperty("equipmentTraining").GetString());
+        var fingerprint = metadata.GetProperty("fingerprint").GetString();
+
+        var proficiencies = new {
+            rulesetId = "first-party-001", fingerprint,
+            sources = new[] { new {
+                sourceId = "feature.demo-weapon-training",
+                occurrenceId = "proficient", grantMode = "standard"
+            }}
+        };
+        var training = new {
+            proficiencies,
+            masterySources = new[] { new {
+                sourceId = "feature.demo-weapon-mastery", occurrenceId = "mastered"
+            }}
+        };
+        var url = prefix + "/characters/equipment-training";
+        using var anonymous = await fixture.Client.PostAsJsonAsync(url, training);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var resolveRequest = fixture.Authenticated(HttpMethod.Post, url,
+            JsonContent.Create(training));
+        using var resolveResponse = await fixture.Client.SendAsync(resolveRequest);
+        Assert.Equal(HttpStatusCode.OK, resolveResponse.StatusCode);
+        var resolved = await resolveResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("resolved", resolved.GetProperty("status").GetString());
+        Assert.Equal("equipment.weapon.longsword",
+            resolved.GetProperty("masteries")[0].GetProperty("targetId").GetString());
+
+        var coverageUrl = url + "/coverage";
+        using var coverageRequest = fixture.Authenticated(HttpMethod.Post, coverageUrl,
+            JsonContent.Create(new { training, equipmentId = "equipment.weapon.longsword" }));
+        using var coverageResponse = await fixture.Client.SendAsync(coverageRequest);
+        Assert.Equal(HttpStatusCode.OK, coverageResponse.StatusCode);
+        var covered = await coverageResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(3, covered.GetProperty("coverage").GetProperty("flags").GetInt32());
+        Assert.Equal("mastered", covered.GetProperty("coverage")
+            .GetProperty("masteryProvenance")[0].GetProperty("sourceOccurrenceId").GetString());
+        Assert.Equal("proficient", covered.GetProperty("coverage")
+            .GetProperty("proficiencyProvenance")[0].GetProperty("sourceOccurrenceId").GetString());
+
+        using var otherRequest = fixture.Authenticated(HttpMethod.Post, coverageUrl,
+            JsonContent.Create(new { training, equipmentId = "equipment.weapon.rapier" }));
+        using var otherResponse = await fixture.Client.SendAsync(otherRequest);
+        var other = await otherResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(0, other.GetProperty("coverage").GetProperty("flags").GetInt32());
+
+        // Mastery alone is a valid raw mask (2), but not usable mastery.
+        var emptyProficiencies = new {
+            rulesetId = "first-party-001", fingerprint, sources = Array.Empty<object>()
+        };
+        var masteryOnly = new { proficiencies = emptyProficiencies, training.masterySources };
+        using var dormantRequest = fixture.Authenticated(HttpMethod.Post, coverageUrl,
+            JsonContent.Create(new { training = masteryOnly,
+                equipmentId = "equipment.weapon.longsword" }));
+        using var dormantResponse = await fixture.Client.SendAsync(dormantRequest);
+        var dormant = await dormantResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(2, dormant.GetProperty("coverage").GetProperty("flags").GetInt32());
+
+        using var staleRequest = fixture.Authenticated(HttpMethod.Post, url,
+            JsonContent.Create(new {
+                proficiencies = new {
+                    rulesetId = "first-party-001", fingerprint = "stale", proficiencies.sources
+                },
+                training.masterySources
+            }));
+        using var staleResponse = await fixture.Client.SendAsync(staleRequest);
+        Assert.Equal(HttpStatusCode.Conflict, staleResponse.StatusCode);
     }
 
     [Fact]
