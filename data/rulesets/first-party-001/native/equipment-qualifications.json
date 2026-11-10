@@ -1,0 +1,375 @@
+{
+  "_meta": {
+    "role": "Authoritative native equipment qualification identities; representative type catalog, not a complete purchasable item inventory",
+    "reference": "docs/rewrite/equipment-qualification-contract.md",
+    "policy": "Groups use authored membership only; do not infer a catalog member from its display name, a Competency's associatedTools, or possession",
+    "scope": "Expand types and membership as individual equipment records are reconciled. Vehicle qualifications deferred."
+  },
+  "equipmentGroups": [
+    {
+      "id": "equipment.group.weapon.all",
+      "name": "All Weapons",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon"
+    },
+    {
+      "id": "equipment.group.weapon.simple",
+      "name": "Simple Weapons",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.martial",
+      "name": "Martial Weapons",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.all"
+      ]
+    },
+    {
+      "id": "equipment.group.weapon.martial-finesse-or-light",
+      "name": "Martial Weapons with Finesse or Light",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": [
+        "equipment.group.weapon.martial"
+      ]
+    },
+    {
+      "id": "equipment.group.armor.all",
+      "name": "All Armor",
+      "kind": "equipment-group",
+      "equipmentCategory": "armor"
+    },
+    {
+      "id": "equipment.group.armor.light",
+      "name": "Light Armor",
+      "kind": "equipment-group",
+      "equipmentCategory": "armor",
+      "parentGroupIds": [
+        "equipment.group.armor.all"
+      ]
+    },
+    {
+      "id": "equipment.group.armor.medium",
+      "name": "Medium Armor",
+      "kind": "equipment-group",
+      "equipmentCategory": "armor",
+      "parentGroupIds": [
+        "equipment.group.armor.all"
+      ]
+    },
+    {
+      "id": "equipment.group.armor.heavy",
+      "name": "Heavy Armor",
+      "kind": "equipment-group",
+      "equipmentCategory": "armor",
+      "parentGroupIds": [
+        "equipment.group.armor.all"
+      ]
+    },
+    {
+      "id": "equipment.group.shield.all",
+      "name": "Shields",
+      "kind": "equipment-group",
+      "equipmentCategory": "shield"
+    },
+    {
+      "id": "equipment.group.tool.all",
+      "name": "All Qualified Tools",
+      "kind": "equipment-group",
+      "equipmentCategory": "tool"
+    },
+    {
+      "id": "equipment.group.tool.gaming-set",
+      "name": "Gaming Sets",
+      "kind": "equipment-group",
+      "equipmentCategory": "tool",
+      "parentGroupIds": [
+        "equipment.group.tool.all"
+      ]
+    },
+    {
+      "id": "equipment.group.tool.musical-instrument",
+      "name": "Musical Instruments",
+      "kind": "equipment-group",
+      "equipmentCategory": "tool",
+      "parentGroupIds": [
+        "equipment.group.tool.all"
+      ]
+    }
+  ],
+  "equipmentTypes": [
+    {
+      "id": "equipment.weapon.club",
+      "name": "Club",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.dagger",
+      "name": "Dagger",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.dart",
+      "name": "Dart",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.javelin",
+      "name": "Javelin",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.mace",
+      "name": "Mace",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.quarterstaff",
+      "name": "Quarterstaff",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.sickle",
+      "name": "Sickle",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.sling",
+      "name": "Sling",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.spear",
+      "name": "Spear",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.shortspear",
+      "name": "Shortspear",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.shortbow",
+      "name": "Shortbow",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.simple"
+      ]
+    },
+    {
+      "id": "equipment.weapon.greataxe",
+      "name": "Greataxe",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial"
+      ]
+    },
+    {
+      "id": "equipment.weapon.hand-crossbow",
+      "name": "Hand Crossbow",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.martial-finesse-or-light"
+      ]
+    },
+    {
+      "id": "equipment.weapon.longsword",
+      "name": "Longsword",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial"
+      ]
+    },
+    {
+      "id": "equipment.weapon.rapier",
+      "name": "Rapier",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.martial-finesse-or-light"
+      ]
+    },
+    {
+      "id": "equipment.weapon.sap",
+      "name": "Sap",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.martial-finesse-or-light"
+      ]
+    },
+    {
+      "id": "equipment.weapon.shortsword",
+      "name": "Shortsword",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.martial-finesse-or-light"
+      ]
+    },
+    {
+      "id": "equipment.weapon.scimitar",
+      "name": "Scimitar",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.martial-finesse-or-light"
+      ]
+    },
+    {
+      "id": "equipment.weapon.whip",
+      "name": "Whip",
+      "kind": "equipment-type",
+      "equipmentCategory": "weapon",
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.martial-finesse-or-light"
+      ]
+    },
+    {
+      "id": "equipment.armor.leather",
+      "name": "Leather Armor",
+      "kind": "equipment-type",
+      "equipmentCategory": "armor",
+      "groupIds": [
+        "equipment.group.armor.light"
+      ]
+    },
+    {
+      "id": "equipment.armor.chain-shirt",
+      "name": "Chain Shirt",
+      "kind": "equipment-type",
+      "equipmentCategory": "armor",
+      "groupIds": [
+        "equipment.group.armor.medium"
+      ]
+    },
+    {
+      "id": "equipment.armor.chain-mail",
+      "name": "Chain Mail",
+      "kind": "equipment-type",
+      "equipmentCategory": "armor",
+      "groupIds": [
+        "equipment.group.armor.heavy"
+      ]
+    },
+    {
+      "id": "equipment.shield.shield",
+      "name": "Shield",
+      "kind": "equipment-type",
+      "equipmentCategory": "shield",
+      "groupIds": [
+        "equipment.group.shield.all"
+      ]
+    },
+    {
+      "id": "equipment.tool.thieves-tools",
+      "name": "Thieves' Tools",
+      "kind": "equipment-type",
+      "equipmentCategory": "tool",
+      "groupIds": [
+        "equipment.group.tool.all"
+      ]
+    },
+    {
+      "id": "equipment.tool.dice-set",
+      "name": "Dice Set",
+      "kind": "equipment-type",
+      "equipmentCategory": "tool",
+      "groupIds": [
+        "equipment.group.tool.gaming-set"
+      ]
+    },
+    {
+      "id": "equipment.tool.playing-card-set",
+      "name": "Playing Card Set",
+      "kind": "equipment-type",
+      "equipmentCategory": "tool",
+      "groupIds": [
+        "equipment.group.tool.gaming-set"
+      ]
+    },
+    {
+      "id": "equipment.tool.lute",
+      "name": "Lute",
+      "kind": "equipment-type",
+      "equipmentCategory": "tool",
+      "groupIds": [
+        "equipment.group.tool.musical-instrument"
+      ]
+    },
+    {
+      "id": "equipment.tool.flute",
+      "name": "Flute",
+      "kind": "equipment-type",
+      "equipmentCategory": "tool",
+      "groupIds": [
+        "equipment.group.tool.musical-instrument"
+      ]
+    },
+    {
+      "id": "equipment.tool.drum",
+      "name": "Drum",
+      "kind": "equipment-type",
+      "equipmentCategory": "tool",
+      "groupIds": [
+        "equipment.group.tool.musical-instrument"
+      ]
+    }
+  ]
+}
