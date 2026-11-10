@@ -31,12 +31,16 @@
       "id": "explorer-field-competency",
       "name": "Field Competency",
       "grantType": "competency-training",
-      "description": "Choose Navigation (Navigator's Tools) or Cartography (Cartographer's Tools). This is one training choice; selecting either does not grant the other or training in operating vehicles.",
+      "description": "Choose one rank in Navigation (Navigator's Tools) or Cartography (Cartographer's Tools). This is one rank choice; selecting either does not grant the other or training in operating vehicles.",
       "chooseOne": [
         "competency.navigation",
         "competency.cartography"
       ],
-      "choiceCount": 1
+      "choiceCount": 1,
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
     },
     {
       "id": "explorer-expedition-survey",
