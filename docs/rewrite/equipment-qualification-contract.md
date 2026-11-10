@@ -12,7 +12,7 @@ Alternatives:
 - Reusing legacy Character projection unchanged would preserve legacy source-shaped tool-to-Competency translations, including retired identities. Rejected as a native data model, but its provenance, category, and eligibility concepts were retained.
 - Parsing class weaponProficiencies/armorProficiencies/toolProficiencies display strings directly would conflate source tokens and stable identities. Rejected for executable eligibility; original fields remain as migration evidence.
 - Separate ranked training systems for weapons, armor, shields, and tools would contradict the approved binary model. Rejected.
-- Chosen: canonical equipment-type and equipment-group entities in NativeCatalogSnapshot, one authored equipmentProficiencyGrants contract, one resolver, category-specific downstream effects.
+- Chosen: canonical equipment-type and equipment-group entities in NativeCatalogSnapshot, independent authored `equipmentProficiencyGrants` and `weaponMasteryGrants` contracts in one shared resolver, with category-specific gameplay effects remaining downstream.
 
 Native equipment types and groups live in data/rulesets/first-party-001/native/equipment-qualifications.json. This is an intentionally representative **proficiency taxonomy**, NOT a complete item inventory, item catalog, or collection of purchasable objects. NativeCatalogLoader checks referenced groups, category consistency, and cycles. No display-name inference is permitted.
 
@@ -27,7 +27,11 @@ A specific type:
       "name": "Longsword",
       "kind": "equipment-type",
       "equipmentCategory": "weapon",
-      "groupIds": ["equipment.group.weapon.martial"]
+      "groupIds": [
+        "equipment.group.weapon.martial",
+        "equipment.group.weapon.family.sword",
+        "equipment.group.weapon.melee"
+      ]
     }
 
 A group:
