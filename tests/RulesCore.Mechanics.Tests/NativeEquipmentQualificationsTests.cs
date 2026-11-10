@@ -236,6 +236,30 @@ public sealed class NativeEquipmentQualificationsTests
         Assert.False(engine.Covers(grants, "equipment.armor.chain-mail").Proficient);
     }
 
+    [Theory]
+    [InlineData("feature.ambiguous", "ambiguous-equipment-grants")]
+    [InlineData("feature.malformed", "invalid-equipment-grants")]
+    [InlineData("feature.unknown-block", "unsupported-equipment-grants")]
+    [InlineData("feature.multiclass-only", "equipment-grants-not-reconciled")]
+    public void UnreconciledSourceBlocksNeverProduceSilentEmptyOrPartialTraining(
+        string sourceId, string issueCode)
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+
+        // These sources deliberately contain enough plausible grant content to
+        // regress into a false success if the resolver ignores an unsupported
+        // field, chooses a preferred location, or falls back to a wrong mode.
+        var result = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource(sourceId, "origin-1")));
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Qualifications);
+        Assert.Contains(result.Issues, issue => issue.Code == issueCode);
+        var coverage = engine.Covers(result, "equipment.weapon.longsword");
+        Assert.Equal("unavailable", coverage.Status);
+        Assert.Null(coverage.Proficient);
+    }
+
     [Fact]
     public void InvalidCatalogGroupReferencesAreRejectedAtLoad()
     {
@@ -330,6 +354,22 @@ public sealed class NativeEquipmentQualificationsTests
                      "fromTypeIds":["equipment.weapon.unknown"]}]}},
                   {"id":"feature.light-armor","name":"Light Armor Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
                     {"id":"light","targetId":"equipment.group.armor.light"}]}},
+                  {"id":"feature.ambiguous","name":"Ambiguous Grant Location","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"sword","targetId":"equipment.weapon.longsword"}]},
+                    "definition":{"equipmentProficiencyGrants":{"fixed":[
+                      {"id":"other","targetId":"equipment.weapon.rapier"}]}}},
+                  {"id":"feature.malformed","name":"Malformed Root Grants","kind":"feature",
+                    "equipmentProficiencyGrants":[],
+                    "definition":{"equipmentProficiencyGrants":{"fixed":[
+                      {"id":"other","targetId":"equipment.weapon.rapier"}]}}},
+                  {"id":"feature.unknown-block","name":"Unsupported Future Grants","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"sword","targetId":"equipment.weapon.longsword"}],
+                      "conditionalFixed":[{"id":"conditional","targetId":"equipment.weapon.rapier"}]}},
+                  {"id":"feature.multiclass-only","name":"No Standard Grants","kind":"feature",
+                    "equipmentProficiencyGrants":{"multiclassFixed":[
+                      {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
                   {"id":"feature.open-lock","name":"Open Lock Skill","kind":"feature","equipmentProficiencyGrants":{"fixed":[]}},
                   {"id":"feature.entertainment","name":"Entertainment","kind":"feature","equipmentProficiencyGrants":{"choices":[
                     {"id":"game","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.gaming-set"]},
