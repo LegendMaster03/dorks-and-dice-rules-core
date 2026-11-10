@@ -23,14 +23,13 @@
     {
       "id": "guild-artisan-trade",
       "name": "Guild Trade Competency",
-      "description": "Choose one existing native crafting Competency suited to the craft you practiced through your guild. The selected Competency grants its defined training facets, which may include a crafting skill and/or proficiency with corresponding tools. It does not grant a second unrelated trade.",
+      "description": "Choose one existing native crafting Competency suited to the craft you practiced through your guild. The choice provides training in one learned capability, not a separate historical Craft Skill and tool proficiency. Associated equipment is not automatically an additional qualification or an owned item.",
       "grantType": "competency-training",
       "choiceCategory": "crafting-competency",
       "choiceCount": 1,
       "choiceConstraint": "appropriate-to-character-guild-trade",
       "exampleCompetencies": [
         "competency.smithing",
-        "competency.blacksmithing",
         "competency.leatherworking",
         "competency.cooking",
         "competency.carpentry",
