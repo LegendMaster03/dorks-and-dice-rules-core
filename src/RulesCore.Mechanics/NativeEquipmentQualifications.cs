@@ -208,32 +208,32 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                 {
                     fixedGrantOccurrences += fixedGrants.GetArrayLength();
                     foreach (var grant in fixedGrants.EnumerateArray())
-                {
-                    // Unrecognized fields could hide conditions. Fail closed
-                    // instead of accidentally granting a conditional benefit.
-                    if (grant.ValueKind != JsonValueKind.Object ||
-                        grant.EnumerateObject().Any(field =>
-                            field.Name is not ("id" or "targetId")))
                     {
-                        issues.Add(new("unsupported-equipment-grant", source.SourceId,
-                            "Only unconditional fixed qualification targets are supported."));
-                        continue;
-                    }
-                    var id = Text(grant, "id");
-                    var target = Text(grant, "targetId");
-                    if (!ValidId(id) || !ValidId(target) || !ids.Add(id!))
-                    {
-                        issues.Add(new("invalid-equipment-grant", source.SourceId,
-                            "Grant identity and target must be unique and explicit."));
-                        continue;
-                    }
-                    if (CategoryOf(target!) is null)
-                    {
-                        issues.Add(new("unknown-equipment-qualification", target!,
-                            "Grant target must be a native equipment type or group."));
-                        continue;
-                    }
-                    Add(target!, new(source.SourceId, source.OccurrenceId, id!));
+                        // Unrecognized fields could hide conditions. Fail closed
+                        // instead of accidentally granting a conditional benefit.
+                        if (grant.ValueKind != JsonValueKind.Object ||
+                            grant.EnumerateObject().Any(field =>
+                                field.Name is not ("id" or "targetId")))
+                        {
+                            issues.Add(new("unsupported-equipment-grant", source.SourceId,
+                                "Only unconditional fixed qualification targets are supported."));
+                            continue;
+                        }
+                        var id = Text(grant, "id");
+                        var target = Text(grant, "targetId");
+                        if (!ValidId(id) || !ValidId(target) || !ids.Add(id!))
+                        {
+                            issues.Add(new("invalid-equipment-grant", source.SourceId,
+                                "Grant identity and target must be unique and explicit."));
+                            continue;
+                        }
+                        if (CategoryOf(target!) is null)
+                        {
+                            issues.Add(new("unknown-equipment-qualification", target!,
+                                "Grant target must be a native equipment type or group."));
+                            continue;
+                        }
+                        Add(target!, new(source.SourceId, source.OccurrenceId, id!));
                     }
                 }
             }
