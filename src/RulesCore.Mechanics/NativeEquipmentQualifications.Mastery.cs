@@ -86,8 +86,8 @@ public sealed partial class NativeEquipmentQualifications
         var choiceCount = 0;
 
         var proficiencies = request.Proficiencies is null
-            ? new NativeEquipmentQualificationProjection(1, masteryCatalog.RulesetId,
-                masteryCatalog.Fingerprint, "invalid", [], [],
+            ? new NativeEquipmentQualificationProjection(1, catalog.RulesetId,
+                catalog.Fingerprint, "invalid", [], [],
                 [new NativeIssue("invalid-equipment-qualification-input", "proficiencies",
                     "A source-based proficiency request is required.")])
             : Resolve(request.Proficiencies);
@@ -97,7 +97,7 @@ public sealed partial class NativeEquipmentQualifications
             NativeWeaponMasteryGrant[] masteries = status == "resolved"
                 ? awarded.Select(pair => new NativeWeaponMasteryGrant(pair.Key,
                     pair.Value.ToArray())).ToArray() : [];
-            return new(1, masteryCatalog.RulesetId, masteryCatalog.Fingerprint,
+            return new(1, catalog.RulesetId, catalog.Fingerprint,
                 status, proficiencies, masteries, choices.ToArray(), issues.ToArray());
         }
 
@@ -131,7 +131,7 @@ public sealed partial class NativeEquipmentQualifications
                     "Each source occurrence needs a unique valid identity and level."));
                 continue;
             }
-            if (!masteryCatalog.TryGetById(source.SourceId, out var entity) || entity is null)
+            if (!catalog.TryGetById(source.SourceId, out var entity) || entity is null)
             {
                 issues.Add(new("unknown-weapon-mastery-source", source.SourceId,
                     "The source must exist in the active native catalog."));
@@ -262,7 +262,7 @@ public sealed partial class NativeEquipmentQualifications
                             ? group.GetString() : null;
                         if (!ValidId(target) || !groups.Add(target!) ||
                             CategoryOf(target!) != "weapon" ||
-                            !masteryCatalog.TryGetById(target!, out var entry) ||
+                            !catalog.TryGetById(target!, out var entry) ||
                             entry?.Category != "equipment-group")
                             issues.Add(new("unknown-weapon-mastery-group", source.SourceId,
                                 "Mastery filters must reference distinct authored weapon groups."));
@@ -285,7 +285,7 @@ public sealed partial class NativeEquipmentQualifications
                             ? option.GetString() : null;
                         if (!ValidId(target) || !types.Add(target!) ||
                             CategoryOf(target!) != "weapon" ||
-                            !masteryCatalog.TryGetById(target!, out var entry) ||
+                            !catalog.TryGetById(target!, out var entry) ||
                             entry?.Category != "equipment-type")
                             issues.Add(new("unknown-weapon-mastery-type", source.SourceId,
                                 "Mastery type filters must identify distinct native weapon types."));
@@ -363,8 +363,8 @@ public sealed partial class NativeEquipmentQualifications
     {
         ArgumentNullException.ThrowIfNull(projection);
         if (projection.Status != "resolved" ||
-            projection.RulesetId != masteryCatalog.RulesetId ||
-            projection.Fingerprint != masteryCatalog.Fingerprint)
+            projection.RulesetId != catalog.RulesetId ||
+            projection.Fingerprint != catalog.Fingerprint)
             return new("unavailable", null, [], [], [
                 new("equipment-training-unavailable", "training",
                     "A complete native equipment training projection is required.")
@@ -374,7 +374,7 @@ public sealed partial class NativeEquipmentQualifications
         if (proficiency.Status != "resolved")
             return new(proficiency.Status, null, [], [], proficiency.Issues);
         // The legacy proficiency coverage API already validated the type link.
-        masteryCatalog.TryGetById(equipmentId, out var equipment);
+        catalog.TryGetById(equipmentId, out var equipment);
         var typeId = equipment!.Category == "item"
             ? Text(equipment.Definition, "equipmentTypeId")! : equipmentId;
         var masteryProvenance = new List<NativeWeaponMasteryProvenance>();
@@ -382,7 +382,7 @@ public sealed partial class NativeEquipmentQualifications
         {
             if (CategoryOf(typeId) != "weapon") continue;
             bool? covered = mastery.TargetId == typeId ? true :
-                masteryCatalog.TryGetById(mastery.TargetId, out var group) &&
+                catalog.TryGetById(mastery.TargetId, out var group) &&
                 group?.Category == "equipment-group"
                     ? GroupCovers(mastery.TargetId, typeId) : false;
             if (covered is null)
