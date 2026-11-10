@@ -181,12 +181,53 @@ No shipwright-specific bonus, ship-design proficiency, tool mapping, recipe, che
 
 ### Remaining overlaps
 
-- **Profession (Brewer/Cook/Herbalist/Apothecary)** versus Brewing, Cooking, Herbalism, and Alchemy: decide whether employment/professional knowledge and production skills warrant separate progression.
+- **Profession/crafting overlap:** the Brewer, Cook, and Herbalist Skills have been consolidated into Brewing, Cooking, and Herbalism, respectively. Apothecary, Tanner, and Scribe require activity-specific review; see the approved and pending classifications below.
 - **Performance** (`skill.performance`) versus the **Perform** family: determine whether there are duplicate training identities.
 - **Locksmithing/Tinkering** and **Disguise/Deception**: resolve overlap by activity and the general Skill/Competency mechanics rather than by sharing a tool name.
 - **Shared equipment proficiency**: weapon, armor, shield, and tool qualifications use a common structural grant/eligibility framework. Thieves' Tools proficiency is a narrow qualification, not a leveled Competency; exact data representation and check effects remain open. Do not duplicate Smithing or other Competencies just because they name associated tools.
 
 **Approved equipment-proficiency direction:** Keep binary, non-leveling equipment qualifications within a common weapon/armor/shield/tool framework. Grant them explicitly and apply them only within the relevant equipment scope, without automatically duplicating existing Competency training. **Unresolved:** check effects, grant schema, 5.x tool/Skill interaction, stacking, prerequisites, DCs, and progression formulas. No executable equipment proficiency change is implemented.
+
+## Profession-to-Competency overlap — approved consolidations and remaining review
+
+**Purpose:** Avoid parallel advancement in a historical crafting-related Skill and a 5.x tool-backed Competency where both express the same learned craft. A Competency is the **single native training identity** for the consolidated discipline. This does not require turning every occupation into a craft or reintroducing tool proficiency as a second leveled track.
+
+### Approved direct consolidations
+
+| Retired native Skill | Retained native Competency | Applicable equipment |
+| --- | --- | --- |
+| `skill.profession-brewer` — Profession (Brewer) | `competency.brewing` — Brewing | Brewer's Supplies |
+| `skill.profession-cook` — Profession (Cook) | `competency.cooking` — Cooking | Cook's Utensils |
+| `skill.profession-herbalist` — Profession (Herbalist) | `competency.herbalism` — Herbalism | Herbalism Kit |
+
+For **crafting activities** previously expressed through the corresponding profession or tool proficiency, the applicable native Competency is the learned discipline. The historical `Profession (...)` label is not a second native Skill, rank pool, level, or bonus. Equipment is still equipment; source-granted equipment proficiency, where appropriate, must fit the separately approved narrow equipment-qualification structure, **not automatically add a duplicate independent training level**.
+
+Noncraft occupational activities (e.g., trade administration, negotiating business, managing employees, bookkeeping) can use other relevant Skills, features, or rules. They do **not** justify retaining a parallel Profession (Brewer/Cook/Herbalist) advancement solely to represent having an occupation. No historical 3.x rank becomes a native Competency level automatically, and there is no automatic cross-profile bonus stacking.
+
+### Partially overlapping professions — not yet approved for retirement
+
+| Existing native Skill | Relevant disciplines | Classification issue |
+| --- | --- | --- |
+| `skill.profession-apothecary` | Alchemy, Herbalism, Medicine, possibly Poisoning | Preparing a remedy may use botanical extraction, alchemical processing, or other techniques; diagnosis/dispensing is not automatically the same activity. No single competency covers the entire occupation. **Retain for now; review tasks before consolidation or retirement.** |
+| `skill.profession-tanner` | Leatherworking; possibly chemical treatment methods | Turning raw hides into usable leather is a specialized preparation process; crafting finished leather objects is different. It is not yet established that Leatherworking includes every tanning method. **Retain pending boundary review.** |
+| `skill.profession-scribe` | Calligraphy, Bookbinding; other linguistic or recordkeeping Skills | Copying/transcribing text, decorative lettering, preparing bindings, and maintaining records are not necessarily the same training. **Retain pending task review; do not make a one-to-one name mapping.** |
+
+These three cases were approved for **review by activity**, not approved for automatic conversion or removal. A genuine separate technique may warrant its own capability; a task that is already covered by a Competency does not need a duplicate Profession advancement track.
+
+### Remaining Profession family scan
+
+The other retained native Profession children do not currently have an obvious one-to-one equivalent among the 26 Competencies:
+
+| Activities | Existing Profession specialties | Likely overlap or concern |
+| --- | --- | --- |
+| Resource harvesting and materials | Farmer, Fisher, Hunter, Miner, Lumberjack, Woodcutter | Gathering materials is not the same as transforming them through Carpentry, Woodcarving, or another craft; Lumberjack/Woodcutter may themselves be a redundant Skill pair in the later Skills review |
+| Milling and processing | Miller | Grinding/processing raw grain is not automatically Cooking or Brewing; examine only if a method-specific craft mechanic is developed |
+| Animal husbandry | Herder, Rancher, Stablehand | May interact with Animal Handling and other animal care rules; not a direct crafting Competency overlap |
+| Transport and travel | Boater, Driver, Guide, Sailor, Teamster | May involve Navigation, Ride, vehicle operation, or trade-specific tasks; retaining an occupational label must not automatically duplicate another check |
+| Specialized operations | Siege Engineer | Designing, fabricating, positioning, and operating siege engines can involve different skills, including technical Competencies and battlefield features |
+| Administration and services | Bookkeeper, Innkeeper, Porter | No direct craft/tool-backed equivalent in the currently selected native Competency catalog |
+
+**Disposition:** Keep these remaining entries unchanged while the competency identity and progression work continues. The scan identifies candidates, not approval to create new Competencies or to preserve every profession forever. Revisit redundant Profession Skills during the Skills pass, and prioritize further changes only when the overlapping *learned capability* is demonstrated.
 
 ## Follow-up decisions needed before ranked progression
 
