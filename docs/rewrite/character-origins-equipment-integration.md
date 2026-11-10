@@ -40,9 +40,9 @@ A single specific Gaming Set:
       ]
     }
 
-A Musical Instrument choice uses equipment.group.tool.musical-instrument instead. This chooses one TYPE (for example equipment.tool.lute), not every instrument. Fixed class/category qualifications can overlap the selected qualification without stacking.
+A Musical Instrument choice uses equipment.group.tool.musical-instrument instead. For any narrower, source-specific selection use fromTypeIds rather than broadening the category. This chooses one TYPE (for example equipment.tool.lute), not every instrument. Fixed class/category qualifications can overlap the selected qualification without stacking.
 
-Gladiator's one specific arena-appropriate weapon should choose from the actual allowed eligible native weapon types, not the entire martial or simple category by accident. The current general evaluator can select a type from a category or a named group; if arena-appropriate eligibility is narrower, the Origin author must add an approved canonical group or an authorized origin option with a fixed specific type. An unrestricted fromCategory weapon choice would be too broad.
+Gladiator's one specific arena-appropriate weapon should choose from the actual reviewed native weapon types, not an entire martial or simple category. The equipment choice contract supports fromTypeIds for this purpose. For example: {"id":"arena-weapon","count":1,"fromCategory":"weapon","fromTypeIds":["equipment.weapon.longsword","equipment.weapon.rapier"]}. Replace the example type list with the actually approved arena-eligible types; it is not an official Gladiator entitlement list. An unrestricted fromCategory weapon choice would be too broad.
 
 For an Origin that explicitly grants a full equipment category, use a fixed equipment.group.* target or an intentional selectionKind equipment-group choice. Do NOT convert a one-weapon choice into an entire weapon group.
 
