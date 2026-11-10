@@ -44,7 +44,9 @@ A Musical Instrument choice uses equipment.group.tool.musical-instrument instead
 
 Gladiator's one specific arena-appropriate weapon should choose from the actual reviewed native weapon types, not an entire martial or simple category. The equipment choice contract supports fromTypeIds for this purpose. For example: {"id":"arena-weapon","count":1,"fromCategory":"weapon","fromTypeIds":["equipment.weapon.longsword","equipment.weapon.rapier"]}. Replace the example type list with the actually approved arena-eligible types; it is not an official Gladiator entitlement list. An unrestricted fromCategory weapon choice would be too broad.
 
-For an Origin that explicitly grants a full equipment category, use a fixed equipment.group.* target or an intentional selectionKind equipment-group choice. Do NOT convert a one-weapon choice into an entire weapon group.
+A Longsword is a canonical **base weapon type**, not a particular inventory item. Multiple ordinary or magic item definitions (including +1 Longsword and a Flame Tongue Longsword) may all resolve to `equipment.weapon.longsword`. Character Origins grants proficiency with that base type or a family, not with each magical variant separately. The Character inventory retains individual item instances and their independent magical state. When a reconciled item retains its base weapon's proficiency requirements, its native item definition must explicitly link with `equipmentTypeId`. Exceptional magic items, including Sun Blade's retained alternative Longsword/Shortsword proficiency rule, need separate verified mechanics and must not be collapsed into an ordinary one-base-type lookup.
+
+For an Origin that explicitly grants a full weapon **family**, use the corresponding `equipment.group.weapon.family.*` target (for example, `equipment.group.weapon.family.mace`), or an intentional `selectionKind: "equipment-group"` choice with `fromGroupIds` explicitly listing **only** its allowed families. A group-choice without this whitelist is invalid. Use `equipment.group.weapon.all` only for proficiency with every weapon. Simple and Martial are independent classification scopes, not weapon families. A specific `equipment.weapon.*` target is a single canonical weapon type, not its family. Do NOT convert a one-weapon choice into an entire family or category.
 
 ## Mixed Skill/Competency/tool choices: Spy and Street-Raised
 
@@ -80,7 +82,13 @@ The Character builder must prove that a selected Origin/Class/feature was earned
 
 The equipment resolver looks up the actual native authored grant; it does not accept an arbitrary target ID invented by the consumer. For counted equipment choices, supply SelectedChoices with key occurrenceId/choiceId and the selected canonical qualification IDs. First call without selection returns needs-choices and the active catalog candidate list. Call again with the validated selection.
 
-Coverage calls may target a canonical equipment type or a native item explicitly bearing equipmentTypeId. Unknown types remain unresolved. Repeated source grants are Boolean; provenance is not discarded.
+Coverage calls may target a canonical equipment type or a reconciled native item **definition** explicitly bearing equipmentTypeId. This does not confer an item, create a magic-variant definition, or validate an owned instance. Unknown item links and unresolved magic variants remain unresolved. Repeated source grants are Boolean; provenance is not discarded.
+
+## Shared training mask and Weapon Mastery
+
+The native equipment resolver now also exposes a combined `ResolveTraining` / `CoversTraining` view, with a two-bit mask: 0 = neither, 1 = proficiency only, 2 = mastery entitlement without proficiency (inoperative), 3 = both (usable mastery). Weapon Mastery grants remain **separately authored** as `weaponMasteryGrants`; an Origin granting a weapon, a weapon family, or proficiency does not automatically confer mastery. A Character builder must authenticate Class/feature eligibility and mastery selections independently, then resolve both entitlements through the shared catalog.
+
+The native Barbarian and Rogue Weapon Mastery feature definitions now supply choices over **base weapon types**, not magical item variants or owned instances. The shared equipment resolver does not apply mastery combat effects or decide when a Long Rest permits reselecting mastery weapons. See [the equipment qualification contract](equipment-qualification-contract.md#combined-proficiency-and-weapon-mastery-state).
 
 ## Remaining integration tests
 

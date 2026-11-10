@@ -19,6 +19,336 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void EquipmentTrainingUsesOneTwoBitMaskAcrossOrdinaryAndMagicItems()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var none = engine.ResolveTraining(new(f.Request(), []));
+        Assert.Equal("resolved", none.Status);
+        Assert.Equal(0, engine.CoversTraining(none, "equipment.weapon.longsword").Flags);
+
+        var request = f.Request(new NativeEquipmentQualificationSource("feature.sword", "trained"));
+        var basic = engine.CoversTraining(engine.ResolveTraining(new(request, [])),
+            "equipment.weapon.longsword");
+        Assert.Equal(1, basic.Flags);
+        Assert.Single(basic.ProficiencyProvenance);
+        Assert.Empty(basic.MasteryProvenance);
+
+        var master = new NativeWeaponMasterySource("feature.fixed-sword-mastery", "mastered");
+        var dormant = engine.CoversTraining(engine.ResolveTraining(new(f.Request(), [master])),
+            "equipment.weapon.longsword");
+        Assert.Equal(2, dormant.Flags);
+        Assert.False(NativeEquipmentQualifications.HasUsableMastery(dormant.Flags!.Value));
+
+        var trained = engine.ResolveTraining(new(request, [master]));
+        foreach (var item in new[] { "equipment.weapon.longsword", "item.demo.plain-longsword",
+            "item.demo.plus-one-longsword", "item.demo.flame-tongue-longsword" })
+        {
+            var result = engine.CoversTraining(trained, item);
+            Assert.Equal("resolved", result.Status);
+            Assert.Equal(3, result.Flags);
+            Assert.Single(result.ProficiencyProvenance);
+            Assert.Single(result.MasteryProvenance);
+            Assert.True(NativeEquipmentQualifications.HasUsableMastery(result.Flags!.Value));
+        }
+        Assert.Equal(0, engine.CoversTraining(trained, "item.demo.flame-tongue-rapier").Flags);
+        Assert.Equal("unresolved",
+            engine.CoversTraining(trained, "item.demo.unlinked-longsword").Status);
+    }
+
+    [Fact]
+    public void BarbarianMasteryCountsFollowClassLevelAndOnlyOfferMeleeWeaponTypes()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var proficiency = f.Request(new NativeEquipmentQualificationSource(
+            "class.barbarian", "class-entry"));
+
+        var choiceRequest = new NativeEquipmentTrainingRequest(proficiency,
+            [new NativeWeaponMasterySource("class-feature.barbarian.weapon-mastery-level-1",
+                "mastery-entry", 1)]);
+        var needs = engine.ResolveTraining(choiceRequest);
+        Assert.Equal("needs-choices", needs.Status);
+        Assert.Empty(needs.Masteries);
+        var first = Assert.Single(needs.RequiredMasteryChoices);
+        Assert.Equal(2, first.Count);
+        Assert.Contains("equipment.weapon.mace", first.EligibleWeaponTypeIds);
+        Assert.Contains("equipment.weapon.rapier", first.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.shortbow", first.EligibleWeaponTypeIds);
+
+        var invalid = engine.ResolveTraining(choiceRequest with {
+            SelectedMasteries = new Dictionary<string, IReadOnlyList<string>> {
+                ["mastery-entry/weapons"] = ["equipment.weapon.longsword",
+                    "equipment.weapon.shortbow"]
+            }
+        });
+        Assert.Equal("unavailable", invalid.Status);
+        Assert.Empty(invalid.Masteries);
+
+        var eligible = new[] { "equipment.weapon.longsword", "equipment.weapon.rapier",
+            "equipment.weapon.mace", "equipment.weapon.morningstar" };
+        foreach (var (level, count) in new[] { (1, 2), (4, 3), (10, 4) })
+        {
+            var source = new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery-entry", level);
+            var chosen = eligible.Take(count).ToArray();
+            var result = engine.ResolveTraining(new(proficiency, [source],
+                new Dictionary<string, IReadOnlyList<string>> {
+                    ["mastery-entry/weapons"] = chosen
+                }));
+            Assert.Equal("resolved", result.Status);
+            Assert.Equal(count, result.Masteries.Count);
+            foreach (var weapon in chosen)
+                Assert.Equal(3, engine.CoversTraining(result, weapon).Flags);
+        }
+        var unearned = engine.ResolveTraining(new(proficiency,
+            [new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery-entry")]));
+        Assert.Equal("unavailable", unearned.Status);
+        Assert.Contains(unearned.Issues, x => x.Code == "unearned-weapon-mastery-feature");
+    }
+
+    [Fact]
+    public void RogueMasteryRequiresProficiencyAndInvalidSelectionsFailClosed()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var proficiency = f.Request(
+            new NativeEquipmentQualificationSource("feature.sword", "sword"),
+            new NativeEquipmentQualificationSource("feature.one-mace", "mace"));
+        var request = new NativeEquipmentTrainingRequest(proficiency,
+            [new NativeWeaponMasterySource(
+                "class-feature.rogue.weapon-mastery-level-1", "rogue-feature", 1)]);
+        var needs = engine.ResolveTraining(request);
+        Assert.Equal("needs-choices", needs.Status);
+        var choice = Assert.Single(needs.RequiredMasteryChoices);
+        Assert.Equal(2, choice.Count);
+        Assert.Contains("equipment.weapon.longsword", choice.EligibleWeaponTypeIds);
+        Assert.Contains("equipment.weapon.mace", choice.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.rapier", choice.EligibleWeaponTypeIds);
+
+        var invalid = engine.ResolveTraining(request with {
+            SelectedMasteries = new Dictionary<string, IReadOnlyList<string>> {
+                ["rogue-feature/weapons"] = ["equipment.weapon.longsword",
+                    "equipment.weapon.rapier"]
+            }
+        });
+        Assert.Equal("unavailable", invalid.Status);
+        Assert.Empty(invalid.Masteries);
+        Assert.Contains(invalid.Issues, x => x.Code == "invalid-weapon-mastery-selection");
+
+        var resolved = engine.ResolveTraining(request with {
+            SelectedMasteries = new Dictionary<string, IReadOnlyList<string>> {
+                ["rogue-feature/weapons"] = ["equipment.weapon.longsword",
+                    "equipment.weapon.mace"]
+            }
+        });
+        Assert.Equal("resolved", resolved.Status);
+        Assert.Equal(3, engine.CoversTraining(resolved, "equipment.weapon.longsword").Flags);
+        Assert.Equal(3, engine.CoversTraining(resolved, "equipment.weapon.mace").Flags);
+        Assert.Equal(0, engine.CoversTraining(resolved, "equipment.weapon.rapier").Flags);
+
+        var stale = engine.ResolveTraining(request with {
+            Proficiencies = proficiency with { Fingerprint = "stale" }
+        });
+        Assert.Equal("invalid", stale.Status);
+        Assert.Empty(stale.Masteries);
+    }
+
+    [Theory]
+    [InlineData("feature.mastery-missing-prerequisite", "invalid-weapon-mastery-choice")]
+    [InlineData("feature.mastery-nonclass-progression", "invalid-weapon-mastery-choice")]
+    [InlineData("feature.mastery-ambiguous", "ambiguous-weapon-mastery-grants")]
+    [InlineData("feature.mastery-unknown-group", "unknown-weapon-mastery-group")]
+    [InlineData("feature.mastery-unknown-type", "unknown-weapon-mastery-type")]
+    [InlineData("feature.mastery-unsupported", "unsupported-weapon-mastery-grants")]
+    [InlineData("feature.mastery-conditional", "unsupported-weapon-mastery-grant")]
+    public void MalformedMasterySourcesFailClosedWithoutPublishingOtherGrants(
+        string sourceId, string issueCode)
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var proficiencies = f.Request(new NativeEquipmentQualificationSource(
+            "feature.sword", "proficient"));
+        var result = engine.ResolveTraining(new(proficiencies, [
+            new NativeWeaponMasterySource("feature.fixed-sword-mastery", "valid"),
+            new NativeWeaponMasterySource(sourceId, "invalid", 10)
+        ]));
+
+        // One valid source must not hide or partially salvage an invalid
+        // source's requested mastery. The whole projection is unavailable.
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Masteries);
+        Assert.Contains(result.Issues, issue => issue.Code == issueCode);
+        var coverage = engine.CoversTraining(result, "equipment.weapon.longsword");
+        Assert.Equal("unavailable", coverage.Status);
+        Assert.Null(coverage.Flags);
+    }
+
+    [Fact]
+    public void FixedFamilyMasteryAndIndividualMasteryOverlapWithoutStacking()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var training = engine.ResolveTraining(new(
+            f.Request(new NativeEquipmentQualificationSource("feature.sword-family", "trained")),
+            [
+                new NativeWeaponMasterySource("feature.fixed-sword-family-mastery", "family"),
+                new NativeWeaponMasterySource("feature.fixed-sword-mastery", "specific")
+            ]));
+        Assert.Equal("resolved", training.Status);
+        Assert.Equal(2, training.Masteries.Count);
+
+        var longsword = engine.CoversTraining(training, "equipment.weapon.longsword");
+        Assert.Equal(3, longsword.Flags);
+        Assert.Equal(2, longsword.MasteryProvenance.Count);
+        Assert.Single(longsword.ProficiencyProvenance);
+
+        // Family mastery is a common scope, not a bonus level that stacks
+        // when the same weapon has both a family and a specific grant.
+        var rapier = engine.CoversTraining(training, "equipment.weapon.rapier");
+        Assert.Equal(3, rapier.Flags);
+        Assert.Single(rapier.MasteryProvenance);
+        Assert.Single(rapier.ProficiencyProvenance);
+    }
+
+    [Fact]
+    public void MasteryRequiresExactlyTheTwoAuthorizedTrainingBits()
+    {
+        for (var state = -1; state <= 7; state++)
+            Assert.Equal(state == 3, NativeEquipmentQualifications.HasUsableMastery(state));
+    }
+
+    [Fact]
+    public void WeaponFamilyGrantsCoverVariantsAcrossSimpleAndMartialCategories()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+
+        var family = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.mace-family", "family")));
+        Assert.Equal("resolved", family.Status);
+        Assert.True(engine.Covers(family, "equipment.weapon.mace").Proficient);
+        Assert.True(engine.Covers(family, "equipment.weapon.morningstar").Proficient);
+        Assert.False(engine.Covers(family, "equipment.weapon.longsword").Proficient);
+
+        // Proficiency in one physical weapon type does not confer its family.
+        var oneMace = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.one-mace", "individual")));
+        Assert.True(engine.Covers(oneMace, "equipment.weapon.mace").Proficient);
+        Assert.False(engine.Covers(oneMace, "equipment.weapon.morningstar").Proficient);
+
+        // Family membership and Simple/Martial are orthogonal. One mace is
+        // Simple, while its Morningstar sibling is Martial.
+        var simple = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.simple-weapons", "simple")));
+        Assert.True(engine.Covers(simple, "equipment.weapon.mace").Proficient);
+        Assert.False(engine.Covers(simple, "equipment.weapon.morningstar").Proficient);
+
+        var overlapping = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.simple-weapons", "simple"),
+            new NativeEquipmentQualificationSource("feature.mace-family", "maces")));
+        Assert.Equal(2, engine.Covers(overlapping, "equipment.weapon.mace")
+            .Provenance.Count);
+        Assert.Single(engine.Covers(overlapping, "equipment.weapon.morningstar")
+            .Provenance);
+
+        var allWeapons = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.all-weapons", "all")));
+        Assert.True(engine.Covers(allWeapons, "equipment.weapon.mace").Proficient);
+        Assert.True(engine.Covers(allWeapons, "equipment.weapon.morningstar").Proficient);
+        Assert.True(engine.Covers(allWeapons, "equipment.weapon.longsword").Proficient);
+    }
+
+    [Fact]
+    public void SelectableWeaponFamilyExcludesUnlistedBroadGroupProficiencies()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+        var request = fixture.Request(
+            new NativeEquipmentQualificationSource("feature.choose-mace-family", "origin"));
+
+        var awaiting = engine.Resolve(request);
+        Assert.Equal("needs-choices", awaiting.Status);
+        Assert.Equal(["equipment.group.weapon.family.mace"],
+            Assert.Single(awaiting.RequiredChoices).EligibleQualificationIds);
+        Assert.DoesNotContain("equipment.group.weapon.all",
+            Assert.Single(awaiting.RequiredChoices).EligibleQualificationIds);
+
+        var selected = engine.Resolve(request with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["origin/family"] = ["equipment.group.weapon.family.mace"]
+            }
+        });
+        Assert.Equal("resolved", selected.Status);
+        Assert.True(engine.Covers(selected, "equipment.weapon.mace").Proficient);
+        Assert.True(engine.Covers(selected, "equipment.weapon.morningstar").Proficient);
+        Assert.False(engine.Covers(selected, "equipment.weapon.longsword").Proficient);
+
+        var tooBroad = engine.Resolve(request with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["origin/family"] = ["equipment.group.weapon.all"]
+            }
+        });
+        Assert.Equal("unavailable", tooBroad.Status);
+        Assert.Empty(tooBroad.Qualifications);
+        Assert.Contains(tooBroad.Issues, issue => issue.Code == "invalid-equipment-selection");
+
+        var unbounded = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.unbounded-family", "origin")));
+        Assert.Equal("unavailable", unbounded.Status);
+        Assert.Empty(unbounded.Qualifications);
+        Assert.Contains(unbounded.Issues, issue => issue.Code == "invalid-equipment-choice");
+    }
+
+    [Fact]
+    public void MagicAndOrdinaryItemDefinitionsInheritTheSameBaseWeaponProficiency()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeEquipmentQualifications(fixture.Catalog);
+
+        // Each test item is a distinct item *definition*, not a separate
+        // equipment proficiency identity or a specific owned instance.
+        var longsword = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.sword", "longsword")));
+        Assert.Equal("resolved", longsword.Status);
+        foreach (var item in new[]
+        {
+            "item.demo.plain-longsword",
+            "item.demo.plus-one-longsword",
+            "item.demo.flame-tongue-longsword"
+        })
+        {
+            var coverage = engine.Covers(longsword, item);
+            Assert.Equal("resolved", coverage.Status);
+            Assert.True(coverage.Proficient);
+            Assert.Equal(engine.Covers(longsword, "equipment.weapon.longsword").Provenance,
+                coverage.Provenance);
+        }
+
+        // The same reusable magical variant on a Rapier remains a Rapier for
+        // equipment qualification; a Longsword grant does not cover it.
+        Assert.False(engine.Covers(longsword, "item.demo.flame-tongue-rapier").Proficient);
+        Assert.False(engine.Covers(longsword, "item.demo.plus-one-mace").Proficient);
+
+        var swordFamily = engine.Resolve(fixture.Request(
+            new NativeEquipmentQualificationSource("feature.sword-family", "family")));
+        Assert.True(engine.Covers(swordFamily, "item.demo.flame-tongue-longsword").Proficient);
+        Assert.True(engine.Covers(swordFamily, "item.demo.flame-tongue-rapier").Proficient);
+        Assert.False(engine.Covers(swordFamily, "item.demo.plus-one-mace").Proficient);
+
+        // An unreconciled item lacks a verified canonical type. Never deduce
+        // training from its name or its magic-variant label.
+        var unknown = engine.Covers(longsword, "item.demo.unlinked-longsword");
+        Assert.Equal("unresolved", unknown.Status);
+        Assert.Null(unknown.Proficient);
+    }
+
+    [Fact]
     public void SpecificWeaponDoesNotConferItsEntireGroup()
     {
         using var f = new Fixture();
@@ -37,7 +367,7 @@ public sealed class NativeEquipmentQualificationsTests
             new NativeEquipmentQualificationSource("class.barbarian", "initial"), new NativeEquipmentQualificationSource("feature.sword", "other"),
             new NativeEquipmentQualificationSource("feature.second-sword", "third")));
         Assert.Equal("resolved", grants.Status);
-        Assert.Equal(3, grants.Qualifications.Count);
+        Assert.Equal(4, grants.Qualifications.Count);
         var coverage = engine.Covers(grants, "equipment.weapon.longsword");
         Assert.Equal("resolved", coverage.Status);
         Assert.True(coverage.Proficient);
@@ -368,7 +698,13 @@ public sealed class NativeEquipmentQualificationsTests
             var equipment = """
                 {
                   "equipmentGroups": [
-                    {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon"},
+                    {"id":"equipment.group.weapon.all","name":"Weapons","kind":"equipment-group","equipmentCategory":"weapon"},
+                    {"id":"equipment.group.weapon.simple","name":"Simple Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.melee","name":"Melee Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.ranged","name":"Ranged Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.family.mace","name":"Maces","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.family.sword","name":"Swords","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.armor.light","name":"Light Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.armor.heavy","name":"Heavy Armor","kind":"equipment-group","equipmentCategory":"armor"},
                     {"id":"equipment.group.shield.all","name":"Shields","kind":"equipment-group","equipmentCategory":"shield"},
@@ -377,8 +713,11 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"equipment.group.tool.musical-instrument","name":"Instruments","kind":"equipment-group","equipmentCategory":"tool","parentGroupIds":["equipment.group.tool.all"]}
                   ],
                   "equipmentTypes": [
-                    {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
-                    {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial"]},
+                    {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword","equipment.group.weapon.melee"]},
+                    {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword","equipment.group.weapon.melee"]},
+                    {"id":"equipment.weapon.shortbow","name":"Shortbow","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.ranged"]},
+                    {"id":"equipment.weapon.mace","name":"Mace","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.family.mace","equipment.group.weapon.melee"]},
+                    {"id":"equipment.weapon.morningstar","name":"Morningstar","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.mace","equipment.group.weapon.melee"]},
                     {"id":"equipment.shield.shield","name":"Shield","kind":"equipment-type","equipmentCategory":"shield","groupIds":["equipment.group.shield.all"]},
                     {"id":"equipment.armor.leather","name":"Leather Armor","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.light"]},
                     {"id":"equipment.armor.chain-mail","name":"Chain Mail","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.heavy"]},
@@ -392,7 +731,7 @@ public sealed class NativeEquipmentQualificationsTests
                 }
                 """;
             if (invalid == "unknown")
-                equipment = equipment.Replace("\"equipment.group.weapon.martial\"]",
+                equipment = equipment.Replace("\"equipment.group.weapon.family.sword\",\"equipment.group.weapon.melee\"]",
                     "\"equipment.group.weapon.missing\"]", StringComparison.Ordinal);
             if (invalid == "cycle")
                 equipment = equipment.Replace(
@@ -401,7 +740,7 @@ public sealed class NativeEquipmentQualificationsTests
                     StringComparison.Ordinal);
             if (invalid == "cross-category")
                 equipment = equipment.Replace(
-                    "\"equipment.group.weapon.martial\"]",
+                    "\"equipment.group.weapon.family.sword\",\"equipment.group.weapon.melee\"]",
                     "\"equipment.group.armor.light\"]", StringComparison.Ordinal);
             File.WriteAllText(Path.Combine(native, "equipment.json"), equipment);
             File.WriteAllText(Path.Combine(native, "sources.json"),
@@ -410,11 +749,82 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"class.barbarian","name":"Barbarian","kind":"class","definition":{
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"sword-group","targetId":"equipment.group.weapon.martial"},
+                      {"id":"simple-group","targetId":"equipment.group.weapon.simple"},
                       {"id":"shield","targetId":"equipment.group.shield.all"}
                     ],"multiclassFixed":[{"id":"shield","targetId":"equipment.group.shield.all"}]}}},
                   {"id":"class.rogue","name":"Rogue","kind":"class","definition":{
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"tools","targetId":"equipment.tool.thieves-tools"}]}}},
+                  {"id":"feature.choose-mace-family","name":"Choose Mace Family","kind":"feature",
+                    "equipmentProficiencyGrants":{"choices":[
+                      {"id":"family","count":1,"fromCategory":"weapon",
+                       "selectionKind":"equipment-group",
+                       "fromGroupIds":["equipment.group.weapon.family.mace"]}]}},
+                  {"id":"feature.unbounded-family","name":"Unrestricted Group Choice","kind":"feature",
+                    "equipmentProficiencyGrants":{"choices":[
+                      {"id":"family","count":1,"fromCategory":"weapon",
+                       "selectionKind":"equipment-group"}]}},
+                  {"id":"class-feature.barbarian.weapon-mastery-level-1",
+                    "name":"Barbarian Weapon Mastery","kind":"classFeature",
+                    "parentClass":"class.barbarian","classLevel":1,"definition":{
+                      "weaponMasteryGrants":{"choices":[
+                        {"id":"weapons","countByClassLevel":[[1,2],[4,3],[10,4]],
+                         "fromGroupIds":["equipment.group.weapon.melee"],"requireProficiency":true}]}}},
+                  {"id":"class-feature.rogue.weapon-mastery-level-1",
+                    "name":"Rogue Weapon Mastery","kind":"classFeature",
+                    "parentClass":"class.rogue","classLevel":1,"definition":{
+                      "weaponMasteryGrants":{"choices":[
+                        {"id":"weapons","count":2,"requireProficiency":true}]}}},
+                  {"id":"feature.fixed-sword-mastery","name":"Longsword Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"longsword","targetId":"equipment.weapon.longsword"}]}},
+                  {"id":"feature.fixed-sword-family-mastery","name":"Sword Family Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"swords","targetId":"equipment.group.weapon.family.sword"}]}},
+                  {"id":"feature.mastery-missing-prerequisite","name":"Missing Prerequisite","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","count":1,
+                       "fromTypeIds":["equipment.weapon.longsword"]}]}},
+                  {"id":"feature.mastery-nonclass-progression","name":"Nonclass Progression","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","countByClassLevel":[[1,1]],
+                       "requireProficiency":true}]}},
+                  {"id":"feature.mastery-ambiguous","name":"Ambiguous Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"weapon","targetId":"equipment.weapon.longsword"}]},
+                    "definition":{"weaponMasteryGrants":{"fixed":[
+                      {"id":"other","targetId":"equipment.weapon.rapier"}]}}},
+                  {"id":"feature.mastery-unknown-group","name":"Wrong Mastery Group","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","count":1,"requireProficiency":true,
+                       "fromGroupIds":["equipment.group.armor.light"]}]}},
+                  {"id":"feature.mastery-unknown-type","name":"Missing Mastery Type","kind":"feature",
+                    "weaponMasteryGrants":{"choices":[
+                      {"id":"weapon","count":1,"requireProficiency":true,
+                       "fromTypeIds":["equipment.weapon.missing"]}]}},
+                  {"id":"feature.mastery-unsupported","name":"Unsupported Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"weapon","targetId":"equipment.weapon.longsword"}],
+                     "conditionalFixed":[{"id":"extra","targetId":"equipment.weapon.rapier"}]}},
+                  {"id":"feature.mastery-conditional","name":"Conditional Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"weapon","targetId":"equipment.weapon.longsword",
+                       "condition":{"unverified":true}}]}},
+                  {"id":"feature.sword-family","name":"Sword Family Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"swords","targetId":"equipment.group.weapon.family.sword"}]}},
+                  {"id":"feature.mace-family","name":"Mace Family Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"maces","targetId":"equipment.group.weapon.family.mace"}]}},
+                  {"id":"feature.one-mace","name":"Mace Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"mace","targetId":"equipment.weapon.mace"}]}},
+                  {"id":"feature.simple-weapons","name":"Simple Weapon Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"simple","targetId":"equipment.group.weapon.simple"}]}},
+                  {"id":"feature.all-weapons","name":"All Weapon Training","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"all","targetId":"equipment.group.weapon.all"}]}},
                   {"id":"feature.sword","name":"Sword Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
                     {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
                   {"id":"feature.second-sword","name":"More Sword Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
@@ -467,7 +877,18 @@ public sealed class NativeEquipmentQualificationsTests
                   ]}},
                   {"id":"skill.open-lock","name":"Open Lock","kind":"skill"},
                   {"id":"competency.smithing","name":"Smithing","kind":"competency","associatedTools":["Smith's Tools"]},
-                  {"id":"item.thieves-tools","name":"Owned Thieves' Tools","kind":"item","equipmentTypeId":"equipment.tool.thieves-tools"}
+                  {"id":"item.thieves-tools","name":"Owned Thieves' Tools","kind":"item","equipmentTypeId":"equipment.tool.thieves-tools"},
+                  {"id":"item.demo.plain-longsword","name":"Test Longsword","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.longsword"},
+                  {"id":"item.demo.plus-one-longsword","name":"Test +1 Longsword","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.longsword"},
+                  {"id":"item.demo.flame-tongue-longsword","name":"Test Flame Tongue Longsword","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.longsword"},
+                  {"id":"item.demo.flame-tongue-rapier","name":"Test Flame Tongue Rapier","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.rapier"},
+                  {"id":"item.demo.plus-one-mace","name":"Test +1 Mace","kind":"item",
+                   "equipmentTypeId":"equipment.weapon.mace"},
+                  {"id":"item.demo.unlinked-longsword","name":"Unreconciled Test Longsword","kind":"item"}
                 ]}
                 """);
             // A valid source repeated many times must still respect the total

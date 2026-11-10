@@ -28,6 +28,31 @@
         ]
       ],
       "changeOnLongRest": 1
+    },
+    "weaponMasteryGrants": {
+      "choices": [
+        {
+          "id": "weapons",
+          "countByClassLevel": [
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              10,
+              4
+            ]
+          ],
+          "fromGroupIds": [
+            "equipment.group.weapon.melee"
+          ],
+          "requireProficiency": true
+        }
+      ]
     }
   }
 }

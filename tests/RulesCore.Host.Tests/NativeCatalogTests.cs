@@ -1,5 +1,6 @@
 using System.Text.Json;
 using RulesCore.Content;
+using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -29,6 +30,146 @@ public sealed class NativeCatalogTests
         Assert.Equal("native/rules/conditions.json", chapter!.SourcePath);
         Assert.False(catalog.TryGetById("_meta", out _));
         Assert.False(catalog.TryGetById("size.fine", out _));
+    }
+
+    [Fact]
+    public void EveryNativeWeaponHasAnAuthoredFamilyBeneathTheWeaponCategory()
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        // The catalog is actively expanded. Walk every page rather than
+        // checking only the first 100 records or a fixed expected count.
+        var equipmentTypeCount = catalog.CountByCategory("equipment-type");
+        var weapons = Enumerable.Range(0, (equipmentTypeCount + 99) / 100)
+            .SelectMany(page => catalog.Search(category: "equipment-type",
+                offset: page * 100, limit: 100).Items)
+            .Where(entity => entity.Definition.GetProperty("equipmentCategory").GetString()
+                == "weapon").ToArray();
+        Assert.NotEmpty(weapons);
+
+        foreach (var weapon in weapons)
+        {
+            var memberships = weapon.Definition.GetProperty("groupIds")
+                .EnumerateArray().Select(id => id.GetString()!).ToArray();
+
+            // Families are hierarchical subcategories; Simple and Martial
+            // remain separate classification groups and do not replace them.
+            Assert.Contains(memberships, id => id is
+                "equipment.group.weapon.simple" or "equipment.group.weapon.martial");
+            var families = memberships.Where(id => id.StartsWith(
+                "equipment.group.weapon.family.", StringComparison.Ordinal)).ToArray();
+            Assert.NotEmpty(families);
+            // Melee/Ranged is another independent classification used for
+            // Barbarian mastery eligibility, not a substitute weapon family.
+            var combatScopes = memberships.Where(id => id is
+                "equipment.group.weapon.melee" or "equipment.group.weapon.ranged").ToArray();
+            Assert.Single(combatScopes);
+            foreach (var familyId in families)
+            {
+                Assert.True(catalog.TryGetById(familyId, out var family));
+                Assert.Equal("equipment-group", family!.Category);
+                Assert.Equal("weapon", family.Definition.GetProperty(
+                    "equipmentCategory").GetString());
+                Assert.Contains("equipment.group.weapon.all",
+                    family.Definition.GetProperty("parentGroupIds")
+                        .EnumerateArray().Select(id => id.GetString()!));
+            }
+        }
+
+        Assert.True(catalog.TryGetById("equipment.weapon.mace", out var mace));
+        Assert.True(catalog.TryGetById("equipment.weapon.morningstar", out var morningstar));
+        var maceGroup = "equipment.group.weapon.family.mace";
+        Assert.Contains(maceGroup, mace!.Definition.GetProperty("groupIds")
+            .EnumerateArray().Select(id => id.GetString()));
+        Assert.Contains(maceGroup, morningstar!.Definition.GetProperty("groupIds")
+            .EnumerateArray().Select(id => id.GetString()));
+        Assert.Contains("equipment.group.weapon.simple", mace.Definition.GetProperty(
+            "groupIds").EnumerateArray().Select(id => id.GetString()));
+        Assert.Contains("equipment.group.weapon.martial", morningstar.Definition.GetProperty(
+            "groupIds").EnumerateArray().Select(id => id.GetString()));
+
+        // Exercise real Class grants against the production taxonomy, not only
+        // synthetic resolver fixtures. Family and classification scopes are
+        // independent even when both lead to the same canonical weapon.
+        var resolver = new NativeEquipmentQualifications(catalog);
+        var cleric = resolver.Resolve(new NativeEquipmentQualificationRequest(
+            catalog.RulesetId, catalog.Fingerprint,
+            [new NativeEquipmentQualificationSource("class.cleric", "cleric-entry")]));
+        Assert.Equal("resolved", cleric.Status);
+        Assert.True(resolver.Covers(cleric, "equipment.weapon.mace").Proficient);
+        Assert.False(resolver.Covers(cleric, "equipment.weapon.morningstar").Proficient);
+
+        var barbarian = resolver.Resolve(new NativeEquipmentQualificationRequest(
+            catalog.RulesetId, catalog.Fingerprint,
+            [new NativeEquipmentQualificationSource("class.barbarian", "barbarian-entry")]));
+        Assert.Equal("resolved", barbarian.Status);
+        Assert.True(resolver.Covers(barbarian, "equipment.weapon.mace").Proficient);
+        Assert.True(resolver.Covers(barbarian, "equipment.weapon.morningstar").Proficient);
+    }
+
+    [Theory]
+    [InlineData("barbarian")]
+    [InlineData("rogue")]
+    public void NativeMasteryGrantCountsAgreeWithTheirClassFeatureDefinitions(
+        string className)
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        Assert.True(catalog.TryGetById(
+            "class-feature." + className + ".weapon-mastery-level-1", out var feature));
+
+        // The original mechanics description is retained alongside the new
+        // executable grant block. Check that they do not drift when the Class
+        // features are edited during active rules development.
+        var definition = feature!.Definition.GetProperty("definition");
+        var mechanics = definition.GetProperty("mechanics");
+        Assert.Equal("weapon-mastery", mechanics.GetProperty("kind").GetString());
+        var choice = Assert.Single(definition.GetProperty("weaponMasteryGrants")
+            .GetProperty("choices").EnumerateArray().ToArray());
+        Assert.True(choice.GetProperty("requireProficiency").GetBoolean());
+        if (className == "barbarian")
+        {
+            Assert.True(JsonElement.DeepEquals(
+                mechanics.GetProperty("choices"),
+                choice.GetProperty("countByClassLevel")));
+            Assert.Contains("equipment.group.weapon.melee",
+                choice.GetProperty("fromGroupIds").EnumerateArray()
+                    .Select(value => value.GetString()));
+        }
+        else
+        {
+            Assert.Equal(mechanics.GetProperty("choices").GetInt32(),
+                choice.GetProperty("count").GetInt32());
+            Assert.True(mechanics.GetProperty("requireProficiency").GetBoolean());
+        }
+    }
+
+    [Fact]
+    public void RealClassWeaponMasteryUsesTheSharedNativeWeaponScopes()
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        var engine = new NativeEquipmentQualifications(catalog);
+        var proficiencies = new NativeEquipmentQualificationRequest(
+            catalog.RulesetId, catalog.Fingerprint,
+            [new NativeEquipmentQualificationSource("class.barbarian", "class-entry")]);
+        var mastery = engine.ResolveTraining(new(proficiencies,
+            [new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery", 1)]));
+        Assert.Equal("needs-choices", mastery.Status);
+        var choice = Assert.Single(mastery.RequiredMasteryChoices);
+        Assert.Equal(2, choice.Count);
+        Assert.Contains("equipment.weapon.longsword", choice.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.longbow", choice.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.hand-crossbow", choice.EligibleWeaponTypeIds);
+        Assert.Empty(mastery.Masteries);
+
+        var chosen = engine.ResolveTraining(new(proficiencies,
+            [new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery", 1)],
+            new Dictionary<string, IReadOnlyList<string>> {
+                ["mastery/weapons"] = ["equipment.weapon.longsword", "equipment.weapon.mace"]
+            }));
+        Assert.Equal("resolved", chosen.Status);
+        Assert.Equal(3, engine.CoversTraining(chosen, "equipment.weapon.longsword").Flags);
+        Assert.Equal(1, engine.CoversTraining(chosen, "equipment.weapon.rapier").Flags);
     }
 
     [Fact]
