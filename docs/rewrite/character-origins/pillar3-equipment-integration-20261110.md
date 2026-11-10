@@ -42,6 +42,19 @@ All original Skills, Competency option identities, selected-option counts, start
 
 Expanding the equipment item taxonomy and defining vehicle mechanics are not prerequisites for further Background and Upbringing content or balance review, although the affected proficiency mappings remain unfinished.
 
+## Choice balance implications and catalog coverage
+
+The approved equipment catalog is **representative**, not a complete list of every historically available equipment type. Currently it exposes only **Dice Set** and **Playing Card Set** in the Gaming Set group, and **Lute**, **Flute**, and **Drum** in the Musical Instrument group. The new typed choices correctly avoid inventing entries, but a live menu built from the present catalog would offer a **narrower set of choices** than an unrestricted historical `any gaming set` or `any instrument` grant. This is missing catalog coverage, **not** authorization to restrict the Origin's intended category to those examples.
+
+The more consequential balance question is **cross-domain choice asymmetry**. Under the owner's expected common conversion of **Competency proficiency + one rank**, the Competency outcome may carry wider or more frequently useful advancement than the narrow binary item-tool proficiency. Explicitly compare the following outcomes rather than assuming they are numerically interchangeable:
+
+- **Spy and Street-Raised:** Disguise/Forgery/Calligraphy or Disguise/Cooking/Forgery versus Thieves' Tools.
+- **Entertainer:** Disguise Competency training versus one musical-instrument proficiency.
+- **Aristocratic:** Calligraphy/Painting/Cooking Competency training versus one gaming-set proficiency.
+- **Criminal versus Charlatan:** Criminal's fixed Thieves' Tools plus gaming-set qualifications versus Charlatan's two distinct learned Competencies, while also comparing their separate social features and starting equipment.
+
+These contrasts are **review flags, not approved compensation rules**. A narrower equipment qualification can still have distinct use, especially when relevant item actions are gated or specialized. No extra ranks, bonus tools, substitute choices, or blanket qualifications were introduced merely to equalize the number of displayed grants.
+
 ## Validation and exclusions
 
 **Static checks performed:** The full Origin corpus of **16 Backgrounds + 13 Upbringings** was parsed as JSON. Every `skill.*` and `competency.*` reference recursively found in these 29 records resolves against the current `main` catalogs (**81 Skills, 26 Competencies**). No `competency.thieves-tools` reference remains. The **four root** and **four option-scoped** equipment grant blocks reference existing `main` equipment qualification IDs; the four mixed-domain choices preserve exactly one top-level alternative. The previous audit established that all five native Upbringing parent links resolve without cycles; no inheritance execution test was performed in this pass.
