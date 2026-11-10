@@ -7,9 +7,13 @@
   "benefits": [
     {
       "id": "tinkering",
-      "description": "Gain training in the native Tinkering Competency, associated with Tinker's Tools. The association does not automatically grant equipment ownership or a separate equipment qualification.",
+      "description": "Gain proficiency in the native Tinkering Competency, associated with Tinker's Tools. The association does not automatically grant equipment ownership or a separate equipment qualification.",
       "competency": "competency.tinkering",
-      "grantType": "competency-training"
+      "grantType": "competency-training",
+      "competencyTraining": {
+        "ranks": 0,
+        "proficient": true
+      }
     },
     {
       "id": "artificers-lore",
