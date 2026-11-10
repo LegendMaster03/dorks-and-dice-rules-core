@@ -143,6 +143,42 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void ParentGroupsCoverChildTypesWithoutDuplicatingTraining()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var grants = engine.Resolve(f.Request(
+            new NativeEquipmentQualificationSource("feature.all-tools", "generic")));
+        Assert.True(engine.Covers(grants, "equipment.tool.thieves-tools").Proficient);
+        Assert.True(engine.Covers(grants, "equipment.tool.dice-set").Proficient);
+        Assert.True(engine.Covers(grants, "equipment.tool.lute").Proficient);
+        Assert.False(engine.Covers(grants, "equipment.weapon.longsword").Proficient);
+    }
+
+    [Fact]
+    public void RootGrantsAreRecognizedEvenWhenSourceAlsoHasDefinition()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var grants = engine.Resolve(f.Request(
+            new NativeEquipmentQualificationSource("feature.root", "root")));
+        Assert.Equal("resolved", grants.Status);
+        Assert.True(engine.Covers(grants, "equipment.weapon.longsword").Proficient);
+    }
+
+    [Fact]
+    public void UnapprovedConditionalGrantsNeverBecomeUnconditional()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var result = engine.Resolve(f.Request(
+            new NativeEquipmentQualificationSource("feature.conditional", "conditional")));
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.Qualifications);
+        Assert.Contains(result.Issues, issue => issue.Code == "unsupported-equipment-grant");
+    }
+
+    [Fact]
     public void InvalidCatalogGroupReferencesAreRejectedAtLoad()
     {
         Assert.Throws<NativeCatalogLoadException>(() => new Fixture("unknown"));
@@ -215,6 +251,16 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
                   {"id":"feature.second-sword","name":"More Sword Training","kind":"feature","equipmentProficiencyGrants":{"fixed":[
                     {"id":"another-sword","targetId":"equipment.weapon.longsword"}]}},
+                  {"id":"feature.all-tools","name":"Every Tool","kind":"feature","equipmentProficiencyGrants":{"fixed":[
+                    {"id":"all","targetId":"equipment.group.tool.all"}]}},
+                  {"id":"feature.root","name":"Root Grant with Definition","kind":"feature",
+                    "definition":{"note":"This is not the grant block"},
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"sword","targetId":"equipment.weapon.longsword"}]}},
+                  {"id":"feature.conditional","name":"Conditional Grant","kind":"feature",
+                    "equipmentProficiencyGrants":{"fixed":[
+                      {"id":"sword","targetId":"equipment.weapon.longsword",
+                       "condition":{"requires":"unverified"}}]}},
                   {"id":"feature.open-lock","name":"Open Lock Skill","kind":"feature","equipmentProficiencyGrants":{"fixed":[]}},
                   {"id":"feature.entertainment","name":"Entertainment","kind":"feature","equipmentProficiencyGrants":{"choices":[
                     {"id":"game","count":1,"fromCategory":"tool","fromGroupIds":["equipment.group.tool.gaming-set"]},
