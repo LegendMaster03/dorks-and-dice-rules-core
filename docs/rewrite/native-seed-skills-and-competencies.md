@@ -1,6 +1,6 @@
 # Native Skills and Competencies — corrected baseline
 
-**Status:** Provisional native competency baseline. Numerical progression remains undecided; obsolete intermediate definitions are removed when reconciled, while original external sources remain available for research.
+**Status:** Native competency identity baseline and a limited initial rank/proficiency mechanics slice. The ordinary additive check is implemented on the competency reconciliation branch, but mastery thresholds, caps, entitlement validation, advancement costs, and full crafting integration remain undecided. Obsolete intermediate definitions are removed when reconciled; original external sources remain available for research.
 
 ## Native data organization
 
@@ -26,7 +26,7 @@ The native catalog contains **26** competency identities. The approved `competen
 - **`levelScale`:** undecided pending the numerical progression review;
 - **`abilityResolution`:** activity-dependent rather than inherited from historical Craft rules.
 
-The profile expresses the agreed shape of the capability; it does **not** set a bonus, a tier threshold, an advancement cost, or a proficiency/level dependency.
+The profile expresses the agreed shape of the capability; the initial character-projector calculation now uses independent rank and proficiency contributions. The profile still does **not** define a maximum rank, Journeyman/Expert/Master thresholds, advancement costs, or special techniques.
 
 `associatedTools` lists applicable equipment identities such as Alchemist's Supplies, Carpenter's Tools, Smith's Tools, and Forgery Kit. These names do not create additional training entries or establish possession of an item. Competencies that do not currently have a named tool association are still full competencies.
 
@@ -60,6 +60,14 @@ These consolidations do not set competency level formulas, convert historical ra
 Native crafting competencies identify learned methods and disciplines, rather than always representing a category of manufactured product. Bowmaking, Trapmaking, and Shipmaking have been retired as separate native output-category identities. `Smithing` is a single competency; making weapons or armor does not introduce separate Armorsmithing or Weaponsmithing levels. Specific recipes and applicable rules determine which competencies, tools, and abilities an activity uses.
 
 Item-specific benefits can later be expressed through applicable modifiers or features. **No such benefits, level formula, or multi-competency procedure is assigned by this identity reconciliation.** The existing general parent/child structure remains available for genuinely independent specialized capabilities when justified, but this draft does not use it for armor and weapons.
+
+## Baseline rank and proficiency execution
+
+The current branch's [Competency Baseline v1 contract](competency-baseline-v1.md) permits independently earned **ranks** and **proficiency** on one native Competency, and evaluates the ordinary character check modifier as the applicable Ability modifier plus ranks plus one normal Proficiency Bonus when proficient, plus explicit other modifiers. The final rank cap, costs, milestone techniques and advanced feature stacking remain pending.
+
+Separate feature or origin grants may supply ranks, proficiency, or both; properly validated, distinct occurrences may accumulate ranks. A pure post-validation grant reducer and typed rank/proficiency prerequisite helper exist, but neither establishes source ownership or validates a player's choices. Tool-to-Competency conversion requires a reviewed mapping; Thieves' Tools remain the separately granted, nonleveling equipment qualification exception. Do not silently apply `associatedTools` as a second proficiency bonus or an equipment ownership grant.
+
+This mechanics slice is **not yet an end-to-end Character Sheet or crafting integration**, and it has not been compiled in the current session.
 
 ## Shared equipment proficiency — approved structure
 
