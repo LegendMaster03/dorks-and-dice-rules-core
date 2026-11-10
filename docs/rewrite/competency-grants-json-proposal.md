@@ -106,7 +106,6 @@ A future prerequisite may reference one competency and require independently a m
 
 ~~~json
 {
-  "kind": "competency-training",
   "competencyId": "competency.smithing",
   "minimumRanks": 3,
   "requiresProficiency": true
