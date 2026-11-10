@@ -31,7 +31,7 @@
       "id": "street-raised-community-competency",
       "name": "Community Training Choice",
       "grantType": "benefit-choice",
-      "description": "Choose proficiency in one of the following: Disguise, Thieves' Tools, Cooking, or Forgery, reflecting practical experience within your formative community. The choice does not imply criminal conduct or ownership of the equipment.",
+      "description": "Choose one training benefit from Disguise, Thieves' Tools, Cooking, or Forgery, reflecting practical experience within your formative community. The choice does not imply criminal conduct or ownership of the equipment.",
       "choiceCount": 1,
       "options": [
         {
@@ -40,11 +40,7 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.disguise",
-              "competencyTraining": {
-                "ranks": 0,
-                "proficient": true
-              }
+              "competency": "competency.disguise"
             }
           ]
         },
@@ -73,11 +69,7 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.cooking",
-              "competencyTraining": {
-                "ranks": 0,
-                "proficient": true
-              }
+              "competency": "competency.cooking"
             }
           ]
         },
@@ -87,11 +79,7 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.forgery",
-              "competencyTraining": {
-                "ranks": 0,
-                "proficient": true
-              }
+              "competency": "competency.forgery"
             }
           ]
         }
