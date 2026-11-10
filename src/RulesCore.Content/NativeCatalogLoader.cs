@@ -91,6 +91,9 @@ public static class NativeCatalogLoader
             throw Invalid("invalid_native_json", "Native package has no playable definitions.");
 
         ValidateConditionReferences(entities);
+        // Validate the complete group graph once at load. Coverage requests
+        // subsequently use the immutable snapshot and must not repair or
+        // reinterpret malformed catalog relationships on the fly.
         ValidateEquipmentReferences(entities);
         var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, entities);
         return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint, entities);
@@ -229,6 +232,8 @@ public static class NativeCatalogLoader
             if (entity.Category == "equipment-group") groups[entity.Id] = references;
         }
 
+        // After validating each edge's target and category, DFS checks that
+        // no parent chain can loop. A visited group need not be traversed again.
         var visiting = new HashSet<string>(StringComparer.Ordinal);
         var visited = new HashSet<string>(StringComparer.Ordinal);
         foreach (var id in groups.Keys)
