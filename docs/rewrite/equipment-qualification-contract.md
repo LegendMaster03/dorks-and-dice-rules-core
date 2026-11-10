@@ -16,6 +16,8 @@ Alternatives:
 
 Native equipment types and groups live in data/rulesets/first-party-001/native/equipment-qualifications.json. This is an intentionally representative type catalog, NOT a complete item inventory or a set of purchasable objects. NativeCatalogLoader checks referenced groups, category consistency, and cycles. No display-name inference is permitted.
 
+**Weapon hierarchy:** Weapon is the top-level equipment category (`equipmentCategory: "weapon"`, with the broad scope `equipment.group.weapon.all`). Weapon families such as **Maces**, **Swords**, and **Axes** are intermediate equipment groups under this category, identified by `equipment.group.weapon.family.*`. Individual canonical weapons remain `equipment-type` leaves. Simple and Martial are overlapping classifications of individual weapons, not replacements for the weapon-family hierarchy. Every currently reconciled native weapon type has an explicit authored family membership; additional source weapon definitions must be assigned a reviewed family when promoted to native content.
+
 ## Identity schema
 
 A specific type:
@@ -38,6 +40,28 @@ A group:
       "parentGroupIds": ["equipment.group.weapon.all"]
     }
 
+A weapon family is an intermediate group beneath Weapon:
+
+    {
+      "id": "equipment.group.weapon.family.mace",
+      "name": "Maces",
+      "kind": "equipment-group",
+      "equipmentCategory": "weapon",
+      "parentGroupIds": ["equipment.group.weapon.all"]
+    }
+
+Its individual weapon types have both a family membership and a Simple/Martial classification:
+
+    { "id": "equipment.weapon.mace",
+      "kind": "equipment-type", "equipmentCategory": "weapon",
+      "groupIds": ["equipment.group.weapon.simple", "equipment.group.weapon.family.mace"] }
+
+    { "id": "equipment.weapon.morningstar",
+      "kind": "equipment-type", "equipmentCategory": "weapon",
+      "groupIds": ["equipment.group.weapon.martial", "equipment.group.weapon.family.mace"] }
+
+Here, the specific `equipment.weapon.mace` identity represents an individual ordinary Mace weapon *type*, while `equipment.group.weapon.family.mace` denotes proficiency with the entire Mace family. The same distinction applies throughout the weapon catalog. Mace-family proficiency covers both native Mace and Morningstar; proficiency with only the individual Mace does not. Simple Weapon proficiency covers the Mace but not the Martial Morningstar. All Weapons covers both.
+
 Valid categories: weapon, armor, shield, tool. An equipment type can belong to multiple authored groups. Parent groups confer broader coverage; sibling groups do not. A native item can point to a type with equipmentTypeId, but item possession does not infer qualification. Unknown items and missing links return unresolved rather than not proficient.
 
 ## Authored grants
@@ -52,7 +76,7 @@ Eligible native Classes, Origins, features, feats, and other source entities may
       }
     }
 
-For one specific weapon, use targetId equipment.weapon.longsword. For an entire weapon category, use equipment.group.weapon.martial. Shields use equipment.group.shield.all.
+For an individual weapon *type*, use `targetId: "equipment.weapon.longsword"`. For a weapon family, use an explicit group such as `equipment.group.weapon.family.sword`. For all weapons, use `equipment.group.weapon.all`. Simple and Martial remain separate classification scopes (`equipment.group.weapon.simple` and `equipment.group.weapon.martial`). Shields use `equipment.group.shield.all`. Selecting a weapon `equipment-type` never implicitly selects its whole family.
 
 Choice grants declare count and fromCategory; optional fromGroupIds narrows candidates to types in the union of the specified groups, and optional fromTypeIds narrows to explicitly enumerated type IDs. When both are supplied, eligible types must satisfy both restrictions. Unknown, duplicate, or cross-category type IDs fail closed. The default selectionKind is equipment-type. fromTypeIds is only valid for equipment-type choices. The optional selectionKind equipment-group offers selectable entire group proficiency; use it only when the authored source grants such a broad option.
 
@@ -107,6 +131,7 @@ Example qualification request:
 ## Source-specific boundaries
 
 - Barbarian martial group covers the native Longsword and other explicitly classified martial weapon types; shield proficiency is independently represented.
+- The Weapon category is above individual weapon-family subcategories. A Mace-family grant covers the explicitly grouped Mace (Simple) and Morningstar (Martial). An individual Mace grant does not confer Morningstar proficiency; neither individual grant implies proficiency with the whole family. Group and classification grants can overlap, retaining provenance without stacking.
 - A specific weapon grant does not confer its sibling weapons. Broad and narrow overlapping grants preserve their independent provenance with one binary outcome.
 - Rogue Thieves' Tools proficiency does not imply skill.open-lock. Open Lock Skill does not grant Thieves' Tools proficiency. Possessing the tool item does not confer proficiency.
 - A Gaming Set qualification does not imply every Gaming Set; Musical Instrument qualification does not imply every instrument unless an authored group does so.
