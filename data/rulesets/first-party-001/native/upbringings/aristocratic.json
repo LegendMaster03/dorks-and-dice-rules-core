@@ -39,12 +39,25 @@
           "name": "Gaming Set Proficiency",
           "benefits": [
             {
-              "grantType": "competency-training",
+              "grantType": "qualification-training",
               "choiceCategory": "gaming-set",
               "choiceCount": 1,
-              "description": "Choose proficiency with one particular type of gaming set; do not gain every gaming set type."
+              "description": "Choose proficiency with one particular type of gaming set; do not gain every gaming set type.",
+              "qualificationCategory": "tool"
             }
-          ]
+          ],
+          "equipmentProficiencyGrants": {
+            "choices": [
+              {
+                "id": "aristocratic-gaming-set",
+                "count": 1,
+                "fromCategory": "tool",
+                "fromGroupIds": [
+                  "equipment.group.tool.gaming-set"
+                ]
+              }
+            ]
+          }
         },
         {
           "id": "calligraphy",
@@ -93,7 +106,7 @@
     "One learned language used in the formative household or social setting; Common is eligible when used there, but not automatically required or inherited from Species.",
     "Provisional initial balance baseline approved by owner after corpus review: choose exactly one Skill from History, Insight, Persuasion, Deception, or Performance; and exactly one Competency from one type of gaming set, Calligraphy, Painting, or Cooking. Selection counts may be revisited in the broader balance pass.",
     "The mixed proficiency choice uses one outer benefit-choice with four alternatives. Choosing a gaming set triggers one nested gaming-set category selection; choosing Calligraphy, Painting, or Cooking grants only that existing Competency.",
-    "Calligraphy and Painting include both crafting-skill and tool-proficiency facets; Cooking grants a tool-proficiency facet. These are reviewed native Competency identities, not automatically equal mechanical values. Relative balance and duplicate training require later common review.",
+    "Calligraphy, Painting, and Cooking are native Competencies with independently represented ranks and proficiency; the Gaming Set alternative is a distinct, binary equipment proficiency. Associated tools do not create extra training grants. Review the alternative outcomes together for balance.",
     "Aristocratic Protocol grants reliable knowledge of ordinary protocol in aristocratic settings familiar to the character without an ordinary check solely to recall it. Unknown, secret, or foreign customs remain subject to normal adjudication.",
     "Aristocratic Protocol does not grant social admission, authority, noble status, an audience, property, wealth, or the Noble Background's Position of Privilege.",
     "No Upbringing startingEquipment package, fixed ability increases, Origin feat, household servants, instrument or kit items, or additional Background grants are provided.",
