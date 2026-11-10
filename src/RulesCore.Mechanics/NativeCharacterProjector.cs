@@ -446,10 +446,13 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
                 }
                 // Composite parents are evaluated from their independently ranked children.
                 if (prefix == "skill" && Array(rule.Definition, "childSkills", out _)) continue;
-                if (state.Proficient && state.Ranks > 0)
+                // Native Competencies permit independently earned ranks and
+                // proficiency on the same discipline. Preserve the older Skill
+                // profile restriction until the general Skill pass resolves it.
+                if (prefix == "skill" && state.Proficient && state.Ranks > 0)
                 {
-                    Issue("training-profile-conflict", id, "Ranked and proficiency facets are separate profiles.");
-                    values[$"{id}.total"] = new("unsupported", null, "Select one approved numeric profile.");
+                    Issue("training-profile-conflict", id, "Ranked and proficiency facets are separate Skill profiles.");
+                    values[$"{id}.total"] = new("unsupported", null, "Select one approved numeric Skill profile.");
                     continue;
                 }
                 var ability = state.Ability ?? String(rule.Definition, "defaultAbility");
