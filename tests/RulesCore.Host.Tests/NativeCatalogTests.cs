@@ -106,6 +106,42 @@ public sealed class NativeCatalogTests
         Assert.True(resolver.Covers(barbarian, "equipment.weapon.morningstar").Proficient);
     }
 
+    [Theory]
+    [InlineData("barbarian")]
+    [InlineData("rogue")]
+    public void NativeMasteryGrantCountsAgreeWithTheirClassFeatureDefinitions(
+        string className)
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        Assert.True(catalog.TryGetById(
+            "class-feature." + className + ".weapon-mastery-level-1", out var feature));
+
+        // The original mechanics description is retained alongside the new
+        // executable grant block. Check that they do not drift when the Class
+        // features are edited during active rules development.
+        var definition = feature!.Definition.GetProperty("definition");
+        var mechanics = definition.GetProperty("mechanics");
+        Assert.Equal("weapon-mastery", mechanics.GetProperty("kind").GetString());
+        var choice = Assert.Single(definition.GetProperty("weaponMasteryGrants")
+            .GetProperty("choices").EnumerateArray().ToArray());
+        Assert.True(choice.GetProperty("requireProficiency").GetBoolean());
+        if (className == "barbarian")
+        {
+            Assert.True(JsonElement.DeepEquals(
+                mechanics.GetProperty("choices"),
+                choice.GetProperty("countByClassLevel")));
+            Assert.Contains("equipment.group.weapon.melee",
+                choice.GetProperty("fromGroupIds").EnumerateArray()
+                    .Select(value => value.GetString()));
+        }
+        else
+        {
+            Assert.Equal(mechanics.GetProperty("choices").GetInt32(),
+                choice.GetProperty("count").GetInt32());
+            Assert.True(mechanics.GetProperty("requireProficiency").GetBoolean());
+        }
+    }
+
     [Fact]
     public void RealClassWeaponMasteryUsesTheSharedNativeWeaponScopes()
     {
