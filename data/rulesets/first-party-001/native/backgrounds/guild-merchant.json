@@ -46,7 +46,7 @@
             {
               "grantType": "competency-training",
               "competency": "competency.navigation",
-              "description": "Gain Navigation training, which includes proficiency with Navigator's Tools. It does not grant Land Vehicles training or general vehicle-operation qualifications."
+              "description": "Gain training in the native Navigation Competency, associated with Navigator's Tools. This does not confer vehicle-operation proficiency, an additional equipment qualification, or ownership of the tools."
             }
           ]
         },
