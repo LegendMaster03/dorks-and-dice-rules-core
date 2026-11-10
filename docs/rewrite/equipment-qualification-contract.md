@@ -1,12 +1,12 @@
 # Native equipment qualification contract
 
-Status: executable common scope/grant evaluation; category-specific gameplay effects deferred.
+Status: executable shared proficiency and Weapon Mastery entitlement evaluation; category-specific gameplay effects deferred.
 Ruleset: first-party-001.
 Source decision: docs/rewrite/native-rules-design-specification.md, November 9, 2026.
 
 ## Architectural decision
 
-Equipment proficiency is a binary qualification, not a level or additional Skill/Competency proficiency. The common evaluator answers whether a qualification covers a native equipment type, without awarding an item, permitting an action, or calculating a check. Its results retain all contributing source/occurrence/grant identities but grant no duplicate benefit.
+Equipment proficiency is a binary qualification, not a rank or additional Skill/Competency proficiency. Weapon Mastery is an additional, separately sourced entitlement with a proficiency prerequisite. A single two-bit training mask represents the effective combination without conflating the grants. The common evaluator answers whether a qualification covers a native equipment type, without awarding an item, permitting an action, or calculating a check. Its results retain all contributing source/occurrence/grant identities without stacking duplicate benefits.
 
 Alternatives:
 - Reusing legacy Character projection unchanged would preserve legacy source-shaped tool-to-Competency translations, including retired identities. Rejected as a native data model, but its provenance, category, and eligibility concepts were retained.
@@ -189,6 +189,82 @@ Example qualification request:
 - Smithing, Cooking, Forgery and other native Competencies retain their own ranks/proficiency. Associated tools are equipment associations, not an independent required training track. The engine never derives equipment grants from associatedTools.
 - The Rogue's existing martial-with-finesse-or-light-property scope is currently represented by an explicit native group with membership for the types reconciled so far. It is not a general 5.x item property filter and must grow alongside the equipment catalog.
 - Druid natural attacks in eligible forms are form/combat entitlements, not presumed equipment proficiencies. Existing raw class content is retained for that separate reconciliation.
+
+## Combined proficiency and Weapon Mastery state
+
+`NativeEquipmentQualifications.ResolveTraining` builds a single snapshot-pinned projection from independent **`equipmentProficiencyGrants`** and **`weaponMasteryGrants`**. `CoversTraining` checks an equipment base type or reconciled native item definition. The result exposes a **two-bit integer mask**, not two authoritative booleans:
+
+| Mask | Binary | Meaning |
+| --- | --- | --- |
+| 0 | 00 | Neither proficiency nor mastery |
+| 1 | 01 | Proficiency only |
+| 2 | 10 | A mastery entitlement without proficiency; **not usable mastery** |
+| 3 | 11 | Proficiency and mastery; mastery is usable |
+
+Bits: `NativeEquipmentTrainingFlags.Proficiency = 1`, `NativeEquipmentTrainingFlags.Mastery = 2`. `HasUsableMastery(flags)` is true only when both bits are present (`(flags & 3) == 3`). A fixed mastery group can create state 2 for a weapon the character has not qualified to wield. That bit is retained for provenance but **never authorizes mastery combat effects**; selecting a mastery weapon through a counted choice is instead restricted to currently proficient types. Neither proficiency nor mastery is stored independently on individual magic variants, and no equipment mastery bit indicates the weapon's innate mastery property or executes its effect.
+
+Unlike a ranked Competency, this mask is a combination of **two independent entitlements**, not four skill ranks. No change to existing proficiency-only requests or API is required. The original `Covers` result remains binary for compatibility.
+
+### Authoring and progression
+
+The existing native feature definitions now declare mastery selections without cloning equipment taxonomy:
+
+- `class-feature.barbarian.weapon-mastery-level-1`: count of 2 at Barbarian level 1, 3 at level 4, and 4 at level 10. Eligible candidates must belong to `equipment.group.weapon.melee` and be proficient.
+- `class-feature.rogue.weapon-mastery-level-1`: two eligible proficient base weapon types. Its existing source restriction against treating mastery as Sneak Attack eligibility remains separate.
+- `equipment.group.weapon.melee` and `equipment.group.weapon.ranged` classify the native weapon catalog. These are **orthogonal group memberships** alongside family and Simple/Martial scopes. A Javelin can be a melee weapon with a thrown use; the grouping describes base weapon classification, not the chosen attack action.
+
+Example Barbarian feature grant:
+
+```json
+{
+  "weaponMasteryGrants": {
+    "choices": [{
+      "id": "weapons",
+      "countByClassLevel": [[1, 2], [4, 3], [10, 4]],
+      "fromGroupIds": ["equipment.group.weapon.melee"],
+      "requireProficiency": true
+    }]
+  }
+}
+```
+
+The common resolver supports separate `weaponMasteryGrants.fixed` targets (native weapon base type or group) and `weaponMasteryGrants.choices` (distinct native base weapon types), with optional explicit `fromTypeIds` and/or `fromGroupIds` restrictions. It checks all authored references and rejects invalid, unexpected, stale, duplicated, and incomplete selections without publishing partial mastery grants. The source's `ClassLevel` is an **assertion**, not proof of advancement.
+
+### API
+
+Authenticated endpoints under `/api/mechanics/v1/` (or `/api/private/mechanics/v1/` on private ingress):
+
+- `POST characters/equipment-training`: resolve source-authored proficiency and mastery entitlements.
+- `POST characters/equipment-training/coverage`: recompute entitlements and the mask against a canonical base equipment type or reconciled item definition.
+
+Example training request:
+
+```json
+{
+  "proficiencies": {
+    "rulesetId": "first-party-001",
+    "fingerprint": "<active-native-fingerprint>",
+    "sources": [{"sourceId":"class.barbarian","occurrenceId":"barbarian-entry"}]
+  },
+  "masterySources": [{
+    "sourceId": "class-feature.barbarian.weapon-mastery-level-1",
+    "occurrenceId": "mastery-entry",
+    "classLevel": 1
+  }],
+  "selectedMasteries": {
+    "mastery-entry/weapons": [
+      "equipment.weapon.longsword",
+      "equipment.weapon.mace"
+    ]
+  }
+}
+```
+
+The coverage request wraps the above object in `training` and includes `equipmentId`. The response has a nullable integer `flags` (0–3 on resolved coverage; null when unresolved/unavailable) and independent `proficiencyProvenance` and `masteryProvenance`. It **does not accept** arbitrary caller-supplied flag values as authoritative state. The Character backend must verify source ownership, parent-Class level, prerequisites, and whether long-rest exchanges are permitted before submitting a request. The evaluator verifies source data and selection eligibility, not client identity or rest history.
+
+### Boundaries
+
+Weapon Mastery effects such as Sap, Nick, Push, and Topple remain source content awaiting combat-mechanics reconciliation; mastery bit 3 only establishes that the character can use the weapon's separately defined effect when its combat trigger and rules are satisfied. The resolver does not implement combat maneuvers or execute those effects. Magic variants continue to inherit their base type's training mask when linked explicitly, subject to separately authored exceptions such as Sun Blade's alternate proficiency rule.
 
 ## Outstanding policy
 
