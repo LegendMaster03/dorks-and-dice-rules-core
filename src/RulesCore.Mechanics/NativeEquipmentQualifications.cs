@@ -108,7 +108,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             return Finish("invalid");
         }
         if (request.Sources is null || request.Sources.Count > 100 ||
-            request.SelectedChoices?.Count > 100 ||
+            request.SelectedChoices?.Count > maxChoiceOccurrences ||
             request.SelectedChoices?.Any(pair => pair.Key.Length > 321 ||
                 pair.Value is null || pair.Value.Count > 32 ||
                 pair.Value.Any(value => !ValidId(value))) == true)
