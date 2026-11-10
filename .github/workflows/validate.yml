@@ -23,11 +23,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
-      - name: Validate focused Competency mechanics tests
+      - name: Validate full .NET solution regression suite
         if: github.ref == 'refs/heads/feature/competency-profile-reconciliation'
         shell: bash
         run: |
-          dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --filter 'FullyQualifiedName~Competency'
+          dotnet test RulesCore.slnx -c Release
       - name: Validate JSON syntax without asserting draft schemas or content counts
         shell: bash
         run: |
