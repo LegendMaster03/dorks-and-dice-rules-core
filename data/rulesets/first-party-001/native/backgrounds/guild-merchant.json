@@ -35,7 +35,7 @@
     {
       "id": "guild-merchant-professional-choice",
       "name": "Navigation or Additional Trade Language",
-      "description": "Choose one: gain training with Navigation (Navigator's Tools), or learn one additional language used in commercial dealings. The baseline Trade Language benefit above applies in either case; do not gain both alternatives.",
+      "description": "Choose one: gain one rank in Navigation (Navigator's Tools), or learn one additional language used in commercial dealings. The baseline Trade Language benefit above applies in either case; do not gain both alternatives.",
       "grantType": "benefit-choice",
       "choiceCount": 1,
       "options": [
@@ -46,7 +46,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.navigation",
-              "description": "Gain training in the native Navigation Competency, associated with Navigator's Tools. This does not confer vehicle-operation proficiency, an additional equipment qualification, or ownership of the tools."
+              "description": "Gain one rank in the native Navigation Competency, associated with Navigator's Tools. This does not confer vehicle-operation proficiency, an additional equipment qualification, or ownership of the tools.",
+              "competencyTraining": {
+                "ranks": 1,
+                "proficient": false
+              }
             }
           ]
         },
