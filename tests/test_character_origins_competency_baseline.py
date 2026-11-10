@@ -166,7 +166,9 @@ class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
         for kind, name in (
             ("backgrounds", "acolyte"), ("backgrounds", "criminal"),
             ("backgrounds", "noble"), ("backgrounds", "sage"),
-            ("backgrounds", "soldier"), ("upbringings", "wilderness-raised"),
+            ("backgrounds", "folk-hero"), ("backgrounds", "hermit"),
+            ("backgrounds", "gladiator"), ("backgrounds", "soldier"),
+            ("upbringings", "wilderness-raised"),
             ("upbringings", "giant-foundling"),
         ):
             record = read(kind, name)
@@ -174,6 +176,25 @@ class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
                 self.assertFalse(any(
                     node.get("grantType") == "competency-training"
                     for node in nodes(record)))
+
+    def test_intentionally_discarded_source_tools_are_not_restored(self):
+        """2014 source grants may be omitted through reviewed Origin redesign."""
+        for name in ("folk-hero", "hermit"):
+            record = read("backgrounds", name)
+            with self.subTest(background=name):
+                self.assertNotIn("equipmentProficiencyGrants", record)
+                self.assertFalse(any(
+                    node.get("grantType") in
+                    ("competency-training", "qualification-training")
+                    for node in nodes(record)))
+        gladiator = read("backgrounds", "gladiator")
+        qualifications = [b for b in gladiator["benefits"]
+                          if b.get("grantType") == "qualification-training"]
+        self.assertEqual(1, len(qualifications))
+        self.assertEqual("weapon", qualifications[0]["qualificationCategory"])
+        self.assertFalse(any(
+            b.get("grantType") == "competency-training"
+            for b in gladiator["benefits"]))
 
     def test_mixed_choices_keep_equipment_and_competency_effects_separate(self):
         cases = (
