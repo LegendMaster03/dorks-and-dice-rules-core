@@ -19,9 +19,9 @@ class GoliathUpbringingTests(unittest.TestCase):
     def setUpClass(cls):
         cls.clan = read(UPBRING / "goliath/general.json")
         cls.foundling = read(UPBRING / "giant-foundling.json")
-        cls.skills = {r["id"] for r in read(WORKING / "skills.json")["skills"]}
+        cls.skills = {r["id"] for r in read(NATIVE / "skills.json")["skills"]}
         cls.competencies = {
-            r["id"] for r in read(WORKING / "competencies.json")["competencies"]
+            r["id"] for r in read(NATIVE / "competencies.json")["competencies"]
         }
 
     def test_only_two_selected_goliath_related_upbringings(self):
@@ -45,7 +45,7 @@ class GoliathUpbringingTests(unittest.TestCase):
         base = read(NATIVE / "species/base/goliath.json")
         self.assertEqual(self.clan["id"], base["defaultUpbringing"])
         for type_name in ANCESTRIES:
-            sub = read(NATIVE / "species/subspecies/goliath" / (type_name + ".json"))
+            sub = read(NATIVE / "species/ancestry/goliath" / (type_name + ".json"))
             self.assertEqual("species.goliath", sub["parent"])
             self.assertNotIn("defaultUpbringing", sub)
         policy = read(NATIVE / "rules/species-subspecies-upbringing.json")["upbringings"]
