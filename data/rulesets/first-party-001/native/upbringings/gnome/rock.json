@@ -7,13 +7,14 @@
   "benefits": [
     {
       "id": "tinkering",
-      "description": "Gain native Tinkering Competency, including Tinker's Tools.",
-      "competency": "competency.tinkering"
+      "description": "Gain training in the native Tinkering Competency, associated with Tinker's Tools. The association does not automatically grant equipment ownership or a separate equipment qualification.",
+      "competency": "competency.tinkering",
+      "grantType": "competency-training"
     },
     {
       "id": "artificers-lore",
       "description": "Double Proficiency Bonus on qualifying Intelligence (History) checks involving magical, alchemical or technological objects.",
-      "skill": "history",
+      "skill": "skill.history",
       "ability": "intelligence",
       "proficiencyBonusMultiplier": 2,
       "scope": "magic-alchemy-technology-objects"
