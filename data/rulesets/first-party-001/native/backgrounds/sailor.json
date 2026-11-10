@@ -25,7 +25,11 @@
       "name": "Navigation Training",
       "grantType": "competency-training",
       "competency": "competency.navigation",
-      "description": "Gain training in the native Navigation Competency, associated with Navigator's Tools. This is distinct from training to operate water vehicles and does not grant Cartography, a second equipment qualification, or ownership of the tools."
+      "description": "Gain one rank in the native Navigation Competency, associated with Navigator's Tools. This is distinct from training to operate water vehicles and does not grant Cartography, a second equipment qualification, or ownership of the tools.",
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
     },
     {
       "id": "sailor-water-vehicles",
