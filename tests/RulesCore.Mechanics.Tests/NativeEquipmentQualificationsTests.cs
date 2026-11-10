@@ -19,6 +19,143 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void EquipmentTrainingUsesOneTwoBitMaskAcrossOrdinaryAndMagicItems()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var none = engine.ResolveTraining(new(f.Request(), []));
+        Assert.Equal("resolved", none.Status);
+        Assert.Equal(0, engine.CoversTraining(none, "equipment.weapon.longsword").Flags);
+
+        var request = f.Request(new NativeEquipmentQualificationSource("feature.sword", "trained"));
+        var basic = engine.CoversTraining(engine.ResolveTraining(new(request, [])),
+            "equipment.weapon.longsword");
+        Assert.Equal(1, basic.Flags);
+        Assert.Single(basic.ProficiencyProvenance);
+        Assert.Empty(basic.MasteryProvenance);
+
+        var master = new NativeWeaponMasterySource("feature.fixed-sword-mastery", "mastered");
+        var dormant = engine.CoversTraining(engine.ResolveTraining(new(f.Request(), [master])),
+            "equipment.weapon.longsword");
+        Assert.Equal(2, dormant.Flags);
+        Assert.False(NativeEquipmentQualifications.HasUsableMastery(dormant.Flags!.Value));
+
+        var trained = engine.ResolveTraining(new(request, [master]));
+        foreach (var item in new[] { "equipment.weapon.longsword", "item.demo.plain-longsword",
+            "item.demo.plus-one-longsword", "item.demo.flame-tongue-longsword" })
+        {
+            var result = engine.CoversTraining(trained, item);
+            Assert.Equal("resolved", result.Status);
+            Assert.Equal(3, result.Flags);
+            Assert.Single(result.ProficiencyProvenance);
+            Assert.Single(result.MasteryProvenance);
+            Assert.True(NativeEquipmentQualifications.HasUsableMastery(result.Flags!.Value));
+        }
+        Assert.Equal(0, engine.CoversTraining(trained, "item.demo.flame-tongue-rapier").Flags);
+        Assert.Equal("unresolved",
+            engine.CoversTraining(trained, "item.demo.unlinked-longsword").Status);
+    }
+
+    [Fact]
+    public void BarbarianMasteryCountsFollowClassLevelAndOnlyOfferMeleeWeaponTypes()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var proficiency = f.Request(new NativeEquipmentQualificationSource(
+            "class.barbarian", "class-entry"));
+
+        var choiceRequest = new NativeEquipmentTrainingRequest(proficiency,
+            [new NativeWeaponMasterySource("class-feature.barbarian.weapon-mastery-level-1",
+                "mastery-entry", 1)]);
+        var needs = engine.ResolveTraining(choiceRequest);
+        Assert.Equal("needs-choices", needs.Status);
+        Assert.Empty(needs.Masteries);
+        var first = Assert.Single(needs.RequiredMasteryChoices);
+        Assert.Equal(2, first.Count);
+        Assert.Contains("equipment.weapon.mace", first.EligibleWeaponTypeIds);
+        Assert.Contains("equipment.weapon.rapier", first.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.shortbow", first.EligibleWeaponTypeIds);
+
+        var invalid = engine.ResolveTraining(choiceRequest with {
+            SelectedMasteries = new Dictionary<string, IReadOnlyList<string>> {
+                ["mastery-entry/weapons"] = ["equipment.weapon.longsword",
+                    "equipment.weapon.shortbow"]
+            }
+        });
+        Assert.Equal("unavailable", invalid.Status);
+        Assert.Empty(invalid.Masteries);
+
+        var eligible = new[] { "equipment.weapon.longsword", "equipment.weapon.rapier",
+            "equipment.weapon.mace", "equipment.weapon.morningstar" };
+        foreach (var (level, count) in new[] { (1, 2), (4, 3), (10, 4) })
+        {
+            var source = new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery-entry", level);
+            var chosen = eligible.Take(count).ToArray();
+            var result = engine.ResolveTraining(new(proficiency, [source],
+                new Dictionary<string, IReadOnlyList<string>> {
+                    ["mastery-entry/weapons"] = chosen
+                }));
+            Assert.Equal("resolved", result.Status);
+            Assert.Equal(count, result.Masteries.Count);
+            foreach (var weapon in chosen)
+                Assert.Equal(3, engine.CoversTraining(result, weapon).Flags);
+        }
+        var unearned = engine.ResolveTraining(new(proficiency,
+            [new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery-entry")]));
+        Assert.Equal("unavailable", unearned.Status);
+        Assert.Contains(unearned.Issues, x => x.Code == "unearned-weapon-mastery-feature");
+    }
+
+    [Fact]
+    public void RogueMasteryRequiresProficiencyAndInvalidSelectionsFailClosed()
+    {
+        using var f = new Fixture();
+        var engine = new NativeEquipmentQualifications(f.Catalog);
+        var proficiency = f.Request(
+            new NativeEquipmentQualificationSource("feature.sword", "sword"),
+            new NativeEquipmentQualificationSource("feature.one-mace", "mace"));
+        var request = new NativeEquipmentTrainingRequest(proficiency,
+            [new NativeWeaponMasterySource(
+                "class-feature.rogue.weapon-mastery-level-1", "rogue-feature", 1)]);
+        var needs = engine.ResolveTraining(request);
+        Assert.Equal("needs-choices", needs.Status);
+        var choice = Assert.Single(needs.RequiredMasteryChoices);
+        Assert.Equal(2, choice.Count);
+        Assert.Contains("equipment.weapon.longsword", choice.EligibleWeaponTypeIds);
+        Assert.Contains("equipment.weapon.mace", choice.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.rapier", choice.EligibleWeaponTypeIds);
+
+        var invalid = engine.ResolveTraining(request with {
+            SelectedMasteries = new Dictionary<string, IReadOnlyList<string>> {
+                ["rogue-feature/weapons"] = ["equipment.weapon.longsword",
+                    "equipment.weapon.rapier"]
+            }
+        });
+        Assert.Equal("unavailable", invalid.Status);
+        Assert.Empty(invalid.Masteries);
+        Assert.Contains(invalid.Issues, x => x.Code == "invalid-weapon-mastery-selection");
+
+        var resolved = engine.ResolveTraining(request with {
+            SelectedMasteries = new Dictionary<string, IReadOnlyList<string>> {
+                ["rogue-feature/weapons"] = ["equipment.weapon.longsword",
+                    "equipment.weapon.mace"]
+            }
+        });
+        Assert.Equal("resolved", resolved.Status);
+        Assert.Equal(3, engine.CoversTraining(resolved, "equipment.weapon.longsword").Flags);
+        Assert.Equal(3, engine.CoversTraining(resolved, "equipment.weapon.mace").Flags);
+        Assert.Equal(0, engine.CoversTraining(resolved, "equipment.weapon.rapier").Flags);
+
+        var stale = engine.ResolveTraining(request with {
+            Proficiencies = proficiency with { Fingerprint = "stale" }
+        });
+        Assert.Equal("invalid", stale.Status);
+        Assert.Empty(stale.Masteries);
+    }
+
+    [Fact]
     public void WeaponFamilyGrantsCoverVariantsAcrossSimpleAndMartialCategories()
     {
         using var fixture = new Fixture();
@@ -530,7 +667,7 @@ public sealed class NativeEquipmentQualificationsTests
                 }
                 """;
             if (invalid == "unknown")
-                equipment = equipment.Replace("\"equipment.group.weapon.family.sword\"]",
+                equipment = equipment.Replace("\"equipment.group.weapon.family.sword\",\"equipment.group.weapon.melee\"]",
                     "\"equipment.group.weapon.missing\"]", StringComparison.Ordinal);
             if (invalid == "cycle")
                 equipment = equipment.Replace(
@@ -539,7 +676,7 @@ public sealed class NativeEquipmentQualificationsTests
                     StringComparison.Ordinal);
             if (invalid == "cross-category")
                 equipment = equipment.Replace(
-                    "\"equipment.group.weapon.family.sword\"]",
+                    "\"equipment.group.weapon.family.sword\",\"equipment.group.weapon.melee\"]",
                     "\"equipment.group.armor.light\"]", StringComparison.Ordinal);
             File.WriteAllText(Path.Combine(native, "equipment.json"), equipment);
             File.WriteAllText(Path.Combine(native, "sources.json"),
