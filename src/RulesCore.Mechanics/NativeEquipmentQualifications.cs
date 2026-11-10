@@ -7,7 +7,8 @@ namespace RulesCore.Mechanics;
 /// The caller has already verified that a character owns each named rule source.
 /// Source IDs alone do not establish ownership or satisfy feature prerequisites.
 /// </summary>
-public sealed record NativeEquipmentQualificationSource(string SourceId, string OccurrenceId);
+public sealed record NativeEquipmentQualificationSource(
+    string SourceId, string OccurrenceId, string GrantMode = "standard");
 
 public sealed record NativeEquipmentQualificationRequest(
     string RulesetId, string Fingerprint,
@@ -92,6 +93,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         {
             if (source is null || !ValidId(source.SourceId) ||
                 !ValidId(source.OccurrenceId) ||
+                source.GrantMode is not ("standard" or "multiclass") ||
                 !seenSources.Add(source.OccurrenceId))
             {
                 issues.Add(new("invalid-equipment-source", "sources",
@@ -108,6 +110,12 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             var definition = entity.Definition;
             if (TryObject(definition, "definition", out var nested))
                 definition = nested;
+            if (source.GrantMode == "multiclass" && entity.Category != "class")
+            {
+                issues.Add(new("invalid-equipment-source-mode", source.SourceId,
+                    "Multiclass equipment grants apply only to Class sources."));
+                continue;
+            }
             if (!TryObject(definition, "equipmentProficiencyGrants", out var grants))
             {
                 issues.Add(new("equipment-grants-not-reconciled", source.SourceId,
@@ -116,7 +124,17 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             }
 
             var ids = new HashSet<string>(StringComparer.Ordinal);
-            if (grants.TryGetProperty("fixed", out var fixedGrants))
+            var fixedField = source.GrantMode == "multiclass" ? "multiclassFixed" : "fixed";
+            var choiceField = source.GrantMode == "multiclass" ? "multiclassChoices" : "choices";
+            if (source.GrantMode == "multiclass" &&
+                !grants.TryGetProperty(fixedField, out _) &&
+                !grants.TryGetProperty(choiceField, out _))
+            {
+                issues.Add(new("equipment-multiclass-grants-not-reconciled", source.SourceId,
+                    "No explicit equipment grant policy exists for entering this Class later."));
+                continue;
+            }
+            if (grants.TryGetProperty(fixedField, out var fixedGrants))
             {
                 if (fixedGrants.ValueKind != JsonValueKind.Array ||
                     fixedGrants.GetArrayLength() > 100)
@@ -143,7 +161,7 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                     Add(target!, new(source.SourceId, source.OccurrenceId, id!));
                 }
             }
-            if (!grants.TryGetProperty("choices", out var choices))
+            if (!grants.TryGetProperty(choiceField, out var choices))
                 continue;
             if (choices.ValueKind != JsonValueKind.Array ||
                 choices.GetArrayLength() > 100)
