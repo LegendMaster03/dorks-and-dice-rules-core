@@ -65,7 +65,13 @@ These contrasts are **review flags, not approved compensation rules**. A narrowe
 
 **Observed CI limitation:** An earlier branch validation run (prior to the four ledger additions) failed with five known existing Python/SRD migration cases **and** the four just-recorded Background source divergences. The divergence entries have passed the static exact-path check, but a subsequent complete workflow run has **not** been verified. No passing full native JSON audit, .NET build, native evaluator run against these new Origins, Character choice authorization, inventory materialization, or end-to-end Character Sheet test is claimed. The branch can now be tested against current `main` once the workflow reports its results.
 
-**Competency allocation review:** `pillar3-competency-grant-allocation-review-20261110.md` inventories all 13 Origin Competency grant sites, proposes source-by-source candidate effects, and records potential rank stacking and asymmetries. It does **not** assign numeric rank/proficiency effects or alter approved choices.
+**Competency allocation review:** `pillar3-competency-grant-allocation-review-20261110.md` inventories all 13 Origin Competency grant sites, proposes source-by-source candidate effects, records potential rank stacking and asymmetries, and evaluates a contrasting allocation sensitivity case without imposing a quota. It does **not** assign numeric rank/proficiency effects or alter approved choices.
+
+**Origin choice authorization plan:** `pillar3-origin-choice-authorization-plan-20261110.md` specifies the five heterogeneous benefit choices, trusted selection boundaries, and the critical unresolved issue of making **selected nested equipment options** available as catalog-backed authorized source occurrences. A nested option is **not** executable simply by submitting its parent Origin to the equipment evaluator.
+
+**Fresh synchronized-branch content verification:** All 29 native Origin JSON records parsed, with **129 recursively checked `skill.*`/`competency.*` references** and **8 equipment grant blocks** (four root, four nested). Every checked canonical reference and equipment target/group matched the synchronized native catalogs. Existing Upbringing parent relationships remain five, with no additional parent added. These are static checks, not runtime test results.
+
+**Workflow trigger boundary:** The current `.github/workflows/validate.yml` runs automatically for `main` or pull requests into `main` and may be dispatched manually; ordinary pushes to this working branch alone do **not** establish new passing CI. Existing failed run results predate synchronization and the four exact source divergence records.
 
 ## Remaining Character Origins decisions
 
