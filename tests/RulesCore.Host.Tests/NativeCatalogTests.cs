@@ -58,6 +58,11 @@ public sealed class NativeCatalogTests
             var families = memberships.Where(id => id.StartsWith(
                 "equipment.group.weapon.family.", StringComparison.Ordinal)).ToArray();
             Assert.NotEmpty(families);
+            // Melee/Ranged is another independent classification used for
+            // Barbarian mastery eligibility, not a substitute weapon family.
+            var combatScopes = memberships.Where(id => id is
+                "equipment.group.weapon.melee" or "equipment.group.weapon.ranged").ToArray();
+            Assert.Single(combatScopes);
             foreach (var familyId in families)
             {
                 Assert.True(catalog.TryGetById(familyId, out var family));
@@ -99,6 +104,36 @@ public sealed class NativeCatalogTests
         Assert.Equal("resolved", barbarian.Status);
         Assert.True(resolver.Covers(barbarian, "equipment.weapon.mace").Proficient);
         Assert.True(resolver.Covers(barbarian, "equipment.weapon.morningstar").Proficient);
+    }
+
+    [Fact]
+    public void RealClassWeaponMasteryUsesTheSharedNativeWeaponScopes()
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        var engine = new NativeEquipmentQualifications(catalog);
+        var proficiencies = new NativeEquipmentQualificationRequest(
+            catalog.RulesetId, catalog.Fingerprint,
+            [new NativeEquipmentQualificationSource("class.barbarian", "class-entry")]);
+        var mastery = engine.ResolveTraining(new(proficiencies,
+            [new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery", 1)]));
+        Assert.Equal("needs-choices", mastery.Status);
+        var choice = Assert.Single(mastery.RequiredMasteryChoices);
+        Assert.Equal(2, choice.Count);
+        Assert.Contains("equipment.weapon.longsword", choice.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.longbow", choice.EligibleWeaponTypeIds);
+        Assert.DoesNotContain("equipment.weapon.hand-crossbow", choice.EligibleWeaponTypeIds);
+        Assert.Empty(mastery.Masteries);
+
+        var chosen = engine.ResolveTraining(new(proficiencies,
+            [new NativeWeaponMasterySource(
+                "class-feature.barbarian.weapon-mastery-level-1", "mastery", 1)],
+            new Dictionary<string, IReadOnlyList<string>> {
+                ["mastery/weapons"] = ["equipment.weapon.longsword", "equipment.weapon.mace"]
+            }));
+        Assert.Equal("resolved", chosen.Status);
+        Assert.Equal(3, engine.CoversTraining(chosen, "equipment.weapon.longsword").Flags);
+        Assert.Equal(1, engine.CoversTraining(chosen, "equipment.weapon.rapier").Flags);
     }
 
     [Fact]
