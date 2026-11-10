@@ -4,6 +4,14 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "fixed-1",
+          "targetId": "equipment.group.weapon.simple"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,
