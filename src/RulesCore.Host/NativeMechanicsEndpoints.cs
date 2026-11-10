@@ -238,8 +238,9 @@ public static class NativeMechanicsEndpoints
                 : Results.Ok(new { qualifications, coverage });
         });
 
-        // Weapon Mastery shares the equipment catalog and the verified
-        // proficiency source request, but never executes mastery combat effects.
+        // Weapon Mastery shares the equipment catalog and re-evaluates
+        // caller-asserted proficiency sources; it does NOT authenticate the
+        // character's entitlement to those sources or execute combat effects.
         // A mastery-only bit (2) must not enable effects without proficiency.
         group.MapPost("/characters/equipment-training",
             (NativeEquipmentTrainingRequest request, NativeCatalogStore store,
@@ -268,8 +269,9 @@ public static class NativeMechanicsEndpoints
                 string.IsNullOrWhiteSpace(request.EquipmentId))
                 return Error(400, "invalid_equipment_training_request");
             var engine = new NativeEquipmentQualifications(catalog);
-            // Never trust a client-built flag mask or projection. Recompute it
-            // from active native sources and eligible selections.
+            // The coverage endpoint deliberately accepts source assertions,
+            // not a prior projection or numeric mask supplied by the caller.
+            // Re-resolve both grant domains against the same catalog snapshot.
             var training = engine.ResolveTraining(request.Training);
             var coverage = engine.CoversTraining(training, request.EquipmentId);
             Timing(context, "native-equipment-training-coverage", start);
