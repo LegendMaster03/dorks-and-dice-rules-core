@@ -1,0 +1,23 @@
+{
+  "id": "rule.species-subspecies-upbringing",
+  "kind": "rule",
+  "name": "Character Origin Selection and Inheritance",
+  "status": "selected-native",
+  "upbringings": {
+    "selectedCount": 1,
+    "defaultField": "defaultUpbringing",
+    "speciesRestrictionsByDefault": false,
+    "description": "Select one effective Upbringing. A Species or Ancestry default is a suggestion, not an extra automatically granted Upbringing and not a Species restriction. An explicit Upbringing choice replaces the suggested default. The selected Upbringing inherits any Upbringing parent benefits once, without requiring a second selection."
+  },
+  "originInheritance": {
+    "speciesAncestryParentField": "parent",
+    "upbringingParentField": "parent",
+    "selectedUpbringingParentBenefits": "inherited-once",
+    "defaultIsAdditionalSelection": false
+  },
+  "reviewNotes": [
+    "This rule records already established Pillar 1 and Pillar 3 selection boundaries; it does not decide whether parent Upbringings should remain independently selectable.",
+    "Mixed Ancestry is a separate design question and is not required for directly selected Species and Ancestry.",
+    "Character selection and grant authorization remain unimplemented; this JSON is authoritative content rather than an executable character builder."
+  ]
+}
