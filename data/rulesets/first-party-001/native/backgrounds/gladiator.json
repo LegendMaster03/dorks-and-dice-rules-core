@@ -87,6 +87,19 @@
     "The qualification-training representation follows existing vehicle qualification style but uses weapon category and one specific weapon selection. Execution of this new selection requires later general native qualification-choice support. Do not infer training merely from the starting item.",
     "Arena Performances grants venue-dependent opportunities, food and lodging in exchange for performances, and bounded positive recognition; no guaranteed pay, prizes, safe matches, global fame, or arena authority.",
     "The selected inexpensive mundane arena weapon is ordinary starting inventory and matches the training type. Its item identity and value comparison remain deferred.",
-    "No 2024 Origin feat, ability score increases or extra Upbringing. Weapon-versus-tool strength and duplicate grants require later corpus balance review."
-  ]
+    "No 2024 Origin feat, ability score increases or extra Upbringing. Weapon-versus-tool strength and duplicate grants require later corpus balance review.",
+    "The selected Arena Weapon Proficiency is one canonical base weapon type in the native catalog; the source's mundane, arena-appropriate and matching-starting-item constraints remain part of Origin choice authorization. The All Weapons group is a pool of eligible individual types, not a grant of proficiency in the whole group. This benefit does not grant Weapon Mastery."
+  ],
+  "equipmentProficiencyGrants": {
+    "choices": [
+      {
+        "id": "arena-weapon",
+        "count": 1,
+        "fromCategory": "weapon",
+        "fromGroupIds": [
+          "equipment.group.weapon.all"
+        ]
+      }
+    ]
+  }
 }
