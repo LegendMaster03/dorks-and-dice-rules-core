@@ -1,5 +1,7 @@
 # Rules Core mechanical content schema
 
+> **Scope clarification (2026-11-10):** The source-translation and normalized legacy Character mechanics documented here are distinct from the authoritative native rewrite. Native equipment proficiency is now represented by the scoped, binary qualification contract in `docs/rewrite/equipment-qualification-contract.md`. Historical Thieves' Tools or musical-instrument entries in old translated competency catalogs do not authorize creating retired native Competencies or independent ranked equipment proficiencies.
+
 Rules Core deliberately separates **source/provenance representation** from **mechanical game-data representation**.
 
 The Source Layer is format-neutral. It preserves physical bytes, source-native identity, source-native revisions, access grants, publication evidence, canonical occurrences, and reconciliation metadata.

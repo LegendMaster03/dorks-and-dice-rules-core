@@ -4,6 +4,60 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "group-weapon-simple",
+          "targetId": "equipment.group.weapon.simple"
+        },
+        {
+          "id": "weapon-hand-crossbow",
+          "targetId": "equipment.weapon.hand-crossbow"
+        },
+        {
+          "id": "weapon-longsword",
+          "targetId": "equipment.weapon.longsword"
+        },
+        {
+          "id": "weapon-rapier",
+          "targetId": "equipment.weapon.rapier"
+        },
+        {
+          "id": "weapon-sap",
+          "targetId": "equipment.weapon.sap"
+        },
+        {
+          "id": "weapon-shortsword",
+          "targetId": "equipment.weapon.shortsword"
+        },
+        {
+          "id": "weapon-shortbow",
+          "targetId": "equipment.weapon.shortbow"
+        },
+        {
+          "id": "weapon-whip",
+          "targetId": "equipment.weapon.whip"
+        },
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "group-armor-medium",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "group-shield-all",
+          "targetId": "equipment.group.shield.all"
+        }
+      ],
+      "multiclassFixed": [
+        {
+          "id": "group-armor-light",
+          "targetId": "equipment.group.armor.light"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,

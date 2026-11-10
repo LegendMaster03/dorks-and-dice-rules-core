@@ -1,6 +1,6 @@
-# Dorks & Dice — native rules specification (pre-implementation)
+# Dorks & Dice — native rules specification (living design)
 
-Status: **working game-design specification**, started 2026-10-09. This document records the owner's established gameplay decisions, proposed generalized rules, and unresolved decisions for review. It is **not authorization to implement**, merge, deploy, restore previously disabled public/tester Rules Core access, or treat draft procedures as approved rules.
+Status: **working game-design specification**, started 2026-10-09. This document records established gameplay decisions, proposed generalized rules, and unresolved decisions. Selected native rules and mechanics are implemented incrementally, with executable status recorded in their linked contracts and source files. A proposal here is not, by itself, approval to implement it or treat it as an active rule. This document does not authorize merges, deployments, or changes to public/tester Rules Core access.
 
 ## Mission and compatibility premise
 
@@ -496,6 +496,8 @@ See `docs/rewrite/monster-variant-family-model.md` for the family model, reviewe
 **Existing implementation boundary:** Native class data already includes `weaponProficiencies` and `armorProficiencies` grants. That is a starting point for a common qualification contract, **not evidence that a unified native equipment-proficiency evaluator already exists**. Do not add or standardize a new `toolProficiencies` field, infer automatic tool-grant rules, or silently reinterpret existing class grants in this design-only pass.
 
 **Still unresolved:** Exact grant data schema and category/individual-item matching; shield classification where needed; whether and how equipment proficiency modifies a check, eligibility, Advantage, bonuses, or penalties; effects of lacking proficiency; duplicate-grant rules; and interactions with independent Skill/Competency proficiency or levels. Weapon, armor, shield, and tool use may each have different consequences. Resolve those in their mechanical subsystems before implementing them or applying source-to-native conversions.
+
+**Implementation update (2026-11-10):** The shared native structural grant, choice, provenance, canonical type/group, and coverage contract is now implemented as described in `docs/rewrite/equipment-qualification-contract.md`. The preceding list of unresolved questions records the state of the November 9 approval; **equipment categories, identity matching, binary duplicate coverage, and the initial grant schema are no longer merely proposed**. Category-specific check effects, untrained consequences, form-conditional qualification, vehicle/operator classification, and full item-catalog reconciliation remain unresolved. Character Origins integration is separate and must validate its source entitlements and mixed benefit choices.
 
 ## Core rules chapters to complete progressively by native subsystem
 
