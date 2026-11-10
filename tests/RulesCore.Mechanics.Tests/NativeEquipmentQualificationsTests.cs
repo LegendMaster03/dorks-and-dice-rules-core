@@ -166,7 +166,7 @@ public sealed class NativeEquipmentQualificationsTests
             new NativeEquipmentQualificationSource("class.barbarian", "initial"), new NativeEquipmentQualificationSource("feature.sword", "other"),
             new NativeEquipmentQualificationSource("feature.second-sword", "third")));
         Assert.Equal("resolved", grants.Status);
-        Assert.Equal(3, grants.Qualifications.Count);
+        Assert.Equal(4, grants.Qualifications.Count);
         var coverage = engine.Covers(grants, "equipment.weapon.longsword");
         Assert.Equal("resolved", coverage.Status);
         Assert.True(coverage.Proficient);
@@ -500,6 +500,8 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"equipment.group.weapon.all","name":"Weapons","kind":"equipment-group","equipmentCategory":"weapon"},
                     {"id":"equipment.group.weapon.simple","name":"Simple Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.weapon.martial","name":"Martial Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.melee","name":"Melee Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
+                    {"id":"equipment.group.weapon.ranged","name":"Ranged Weapons","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.weapon.family.mace","name":"Maces","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.weapon.family.sword","name":"Swords","kind":"equipment-group","equipmentCategory":"weapon","parentGroupIds":["equipment.group.weapon.all"]},
                     {"id":"equipment.group.armor.light","name":"Light Armor","kind":"equipment-group","equipmentCategory":"armor"},
@@ -510,10 +512,11 @@ public sealed class NativeEquipmentQualificationsTests
                     {"id":"equipment.group.tool.musical-instrument","name":"Instruments","kind":"equipment-group","equipmentCategory":"tool","parentGroupIds":["equipment.group.tool.all"]}
                   ],
                   "equipmentTypes": [
-                    {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword"]},
-                    {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword"]},
-                    {"id":"equipment.weapon.mace","name":"Mace","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.family.mace"]},
-                    {"id":"equipment.weapon.morningstar","name":"Morningstar","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.mace"]},
+                    {"id":"equipment.weapon.longsword","name":"Longsword","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword","equipment.group.weapon.melee"]},
+                    {"id":"equipment.weapon.rapier","name":"Rapier","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.sword","equipment.group.weapon.melee"]},
+                    {"id":"equipment.weapon.shortbow","name":"Shortbow","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.ranged"]},
+                    {"id":"equipment.weapon.mace","name":"Mace","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.simple","equipment.group.weapon.family.mace","equipment.group.weapon.melee"]},
+                    {"id":"equipment.weapon.morningstar","name":"Morningstar","kind":"equipment-type","equipmentCategory":"weapon","groupIds":["equipment.group.weapon.martial","equipment.group.weapon.family.mace","equipment.group.weapon.melee"]},
                     {"id":"equipment.shield.shield","name":"Shield","kind":"equipment-type","equipmentCategory":"shield","groupIds":["equipment.group.shield.all"]},
                     {"id":"equipment.armor.leather","name":"Leather Armor","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.light"]},
                     {"id":"equipment.armor.chain-mail","name":"Chain Mail","kind":"equipment-type","equipmentCategory":"armor","groupIds":["equipment.group.armor.heavy"]},
@@ -545,6 +548,7 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"class.barbarian","name":"Barbarian","kind":"class","definition":{
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"sword-group","targetId":"equipment.group.weapon.martial"},
+                      {"id":"simple-group","targetId":"equipment.group.weapon.simple"},
                       {"id":"shield","targetId":"equipment.group.shield.all"}
                     ],"multiclassFixed":[{"id":"shield","targetId":"equipment.group.shield.all"}]}}},
                   {"id":"class.rogue","name":"Rogue","kind":"class","definition":{
@@ -559,6 +563,20 @@ public sealed class NativeEquipmentQualificationsTests
                     "equipmentProficiencyGrants":{"choices":[
                       {"id":"family","count":1,"fromCategory":"weapon",
                        "selectionKind":"equipment-group"}]}},
+                  {"id":"class-feature.barbarian.weapon-mastery-level-1",
+                    "name":"Barbarian Weapon Mastery","kind":"classFeature",
+                    "parentClass":"class.barbarian","classLevel":1,"definition":{
+                      "weaponMasteryGrants":{"choices":[
+                        {"id":"weapons","countByClassLevel":[[1,2],[4,3],[10,4]],
+                         "fromGroupIds":["equipment.group.weapon.melee"],"requireProficiency":true}]}}},
+                  {"id":"class-feature.rogue.weapon-mastery-level-1",
+                    "name":"Rogue Weapon Mastery","kind":"classFeature",
+                    "parentClass":"class.rogue","classLevel":1,"definition":{
+                      "weaponMasteryGrants":{"choices":[
+                        {"id":"weapons","count":2,"requireProficiency":true}]}}},
+                  {"id":"feature.fixed-sword-mastery","name":"Longsword Mastery","kind":"feature",
+                    "weaponMasteryGrants":{"fixed":[
+                      {"id":"longsword","targetId":"equipment.weapon.longsword"}]}},
                   {"id":"feature.sword-family","name":"Sword Family Training","kind":"feature",
                     "equipmentProficiencyGrants":{"fixed":[
                       {"id":"swords","targetId":"equipment.group.weapon.family.sword"}]}},
