@@ -78,6 +78,14 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         var seenChoices = new HashSet<string>(StringComparer.Ordinal);
         var needsChoices = false;
 
+        // These are defensive per-request work budgets, not gameplay caps.
+        // Repeating a source occurrence must not amplify authored options
+        // into unbounded catalog scans or provenance allocations.
+        const int maxChoiceOccurrences = 200;
+        const int maxFixedGrantOccurrences = 1000;
+        var choiceOccurrences = 0;
+        var fixedGrantOccurrences = 0;
+
         NativeEquipmentQualificationProjection Finish(string status)
         {
             // Never publish a partial character when a source is malformed or
@@ -190,12 +198,16 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
             if (grants.TryGetProperty(fixedField, out var fixedGrants))
             {
                 if (fixedGrants.ValueKind != JsonValueKind.Array ||
-                    fixedGrants.GetArrayLength() > 100)
+                    fixedGrants.GetArrayLength() > 100 ||
+                    fixedGrantOccurrences > maxFixedGrantOccurrences - fixedGrants.GetArrayLength())
                 {
                     issues.Add(new("invalid-equipment-grants", source.SourceId,
-                        "Fixed grants must be a bounded array."));
+                        "Fixed grants exceed per-source or per-request work limits."));
                 }
-                else foreach (var grant in fixedGrants.EnumerateArray())
+                else
+                {
+                    fixedGrantOccurrences += fixedGrants.GetArrayLength();
+                    foreach (var grant in fixedGrants.EnumerateArray())
                 {
                     // Unrecognized fields could hide conditions. Fail closed
                     // instead of accidentally granting a conditional benefit.
@@ -222,17 +234,20 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                         continue;
                     }
                     Add(target!, new(source.SourceId, source.OccurrenceId, id!));
+                    }
                 }
             }
             if (!grants.TryGetProperty(choiceField, out var choices))
                 continue;
             if (choices.ValueKind != JsonValueKind.Array ||
-                choices.GetArrayLength() > 100)
+                choices.GetArrayLength() > 100 ||
+                choiceOccurrences > maxChoiceOccurrences - choices.GetArrayLength())
             {
                 issues.Add(new("invalid-equipment-choices", source.SourceId,
-                    "Choices must be a bounded array."));
+                    "Choices exceed per-source or per-request work limits."));
                 continue;
             }
+            choiceOccurrences += choices.GetArrayLength();
             foreach (var choice in choices.EnumerateArray())
             {
                 if (choice.ValueKind != JsonValueKind.Object ||
