@@ -229,6 +229,70 @@ The other retained native Profession children do not currently have an obvious o
 
 **Disposition:** Keep these remaining entries unchanged while the competency identity and progression work continues. The scan identifies candidates, not approval to create new Competencies or to preserve every profession forever. Revisit redundant Profession Skills during the Skills pass, and prioritize further changes only when the overlapping *learned capability* is demonstrated.
 
+## Competency proficiency and level — progression design proposal (not approved)
+
+**Status:** Candidate progression mechanics for owner review. The native `profile` is already modeled as binary proficiency and a progressive, independently represented level, with Ability chosen per activity. Neither numerical contributions, level limits, advancement rates, nor unlock thresholds are currently approved. This section does **not** change native gameplay data, the character API, or existing crafting adjudication.
+
+### Design criteria established by previous reconciliation
+
+1. **One discipline, one advancement identity:** Brewing, Cooking, Herbalism, Smithing, Forgery, and the other Competencies merge overlapping crafting-related Skills and 5.x tool-backed training rather than multiplying grant and advancement tracks.
+2. **Specialization must be valuable:** A player investing repeatedly in one Competency should obtain a meaningful benefit over a character who merely possesses basic training, while broad access to ordinary crafting remains possible within applicable rules.
+3. **No automatic unrelated proficiency bonus:** The approved narrow equipment-proficiency structure is separate from owning equipment and from the Competency's own training. A Smithing Competency plus Smith's Tools is not automatically two separately acquired/progressing crafting qualifications. An explicit equipment grant can still matter where a rule says it does.
+4. **Procedures remain activity-driven:** The particular recipe, materials, tools, timing, relevant Ability, and quality/outcome rules determine what happens. Bowmaking, Trapmaking, Shipmaking, and weapon/armor product categories do not create generic additional training levels.
+5. **Preserve mixed-source expectations where possible:** Avoid treating 3.x ranks and 5.x proficiency as interchangeable numeric values. The native system should support an ordinary 5.x-style character without requiring multiple redundant training purchases.
+
+### Candidate state model
+
+**Recommendation for review, not approval:** A Competency has a binary **trained/proficient** state and a separate **mastery level**. A trained Competency with mastery level 0 is a valid novice. Additional mastery levels signify investment in the same discipline rather than acquiring tool training again. A character with positive mastery but no proficiency would be considered inconsistent unless a rule explicitly establishes an exception; that invariant needs owner approval before enforcement.
+
+| Candidate character state | Proposed interpretation |
+| --- | --- |
+| Not proficient, mastery 0 | May attempt any generally permitted untrained tasks, subject to task-specific requirements and qualification penalties |
+| Proficient, mastery 0 | Has baseline discipline training and qualifies for ordinary trained uses; no new craft-specific rank is needed simply to recognize the source grant |
+| Proficient, mastery above 0 | Has invested in the discipline; benefits are determined by the adopted progression scale and any explicitly defined advanced techniques |
+
+The *existing* manufacturing resolver uses a manually supplied competency contribution and qualification flag; it applies Disadvantage to a nonqualified maker without qualified guidance. That is a current procedural integration point, not proof that competency mastery already has a numeric formula. The *existing* character projector, by contrast, reports simultaneous positive `Ranks` and `Proficient` as a profile conflict. Its older skill/tool facet contract must be revised **after** the unified Competency mechanics are approved; it must not determine the native design by accident.
+
+### Three alternative advancement effects
+
+| Model | Ordinary check behavior | Specialization benefit | Risk |
+| --- | --- | --- | --- |
+| **A: Add every mastery level directly to the normal proficiency bonus** | Check bonus increases with each level | Immediate, transparent numerical improvement; optional techniques | Full 3.x-style ranks stacked onto 5.x proficiency can outgrow the intended difficulty range quickly, particularly over extended character levels |
+| **B: Mastery only gates techniques, quality, and task access** | Same ordinary check contribution regardless of mastery level | Specialists unlock advanced methods or better production outcomes | Routine tasks show little difference between novice and master; every Competency needs content-heavy unlock definitions |
+| **C: One bounded effective training contribution plus explicit techniques** (**recommended for review**) | A check uses *one* evaluated training contribution for the relevant Competency; progression can improve it within an approved ceiling | Better ordinary reliability and selective access to advanced methods | Requires a chosen mastery-to-contribution function and rules preventing double-counting with Skills, equipment proficiency, and feature bonuses |
+
+**Candidate C's check shape, not a numeric rule:**
+
+`d20 + relevant Ability modifier + effective Competency training contribution + explicitly applicable situational modifiers`
+
+The effective training contribution may be based on the normal proficiency bonus **and** an independently advancing mastery level, but its *function and cap* must be chosen so that the same proficiency is not automatically counted twice. This is not permission to add full raw mastery levels, another full equipment proficiency bonus, or a Skill bonus on the same check. Exceptional bonuses or roll advantages remain possible when an explicit feature or approved check interaction provides them.
+
+**Source comparisons:** 2014 D&D 5e ordinarily adds a given Proficiency Bonus only once to a check ([2014 ability-score rules](https://www.dndbeyond.com/sources/dnd/basic-rules-2014/using-ability-scores)). 2024 equipment proficiency can also interact with Skill proficiency through Advantage for a tool check ([2024 equipment rules](https://www.dndbeyond.com/sources/dnd/br-2024/equipment)); those are source mechanics, not automatic native adopted combinations. Pathfinder Unchained illustrates discrete skill unlocks at 5, 10, 15, and 20 ranks ([Skill Unlocks](https://legacy.aonprd.com/unchained/skillsAndOptions/skillUnlocks.html)), but its exact ranks and effects are likewise not adopted native thresholds.
+
+### Verification scenarios before selecting the formula
+
+| Scenario | What an approved model should establish |
+| --- | --- |
+| Beginning brewer with Brewing proficiency, no extra mastery levels, and Brewer's Supplies | One baseline trained brewing capability; physical equipment and any separately granted equipment qualification are recognized without automatic bonus duplication |
+| Higher-mastery brewer makes the same ordinary recipe | Some meaningful specialization benefit **if** the hybrid or additive model is selected; no mandatory second Profession (Brewer) check |
+| Master smith manufactures an ordinary iron item or tries an advanced technique | Ordinary work remains possible; advanced methods, efficiency, or output-specific effects only exist where separately defined, not because an item is a weapon |
+| Character attempts an activity without applicable proficiency | Existing manufacturing rules for qualification/guidance and any general untrained attempt policy must remain coherent; no invented universal ban on untrained crafting |
+| One creation involves Carpentry and Smithing | The recipe allocates actual distinct tasks; multiple competencies do not implicitly add all their full contributions to one roll |
+| Character receives the same competency through two origins | No automatic additional mastery, proficiency-bonus stacking, or conversion to equipment proficiency without an approved duplicate-grant rule |
+| Historical 3.x ranks are imported | Preserve the source value in research/import context; translate only through a separately approved mapping, not a one-to-one native mastery conversion |
+| An effect already grants a conditional technique, Expertise-like benefit, or an equipment proficiency | Do not erase the explicit grant; prevent duplicate numeric contributions unless an approved rule intentionally stacks them |
+
+### Owner decisions still required
+
+1. **Entry state:** Is `proficient, level 0` the starting point, and must a positive level always imply proficiency? This would resolve the meaning of binary proficiency versus a progressive level.
+2. **Primary advancement benefit:** Choose between A (direct additive ranks), B (techniques only), and C (bounded effective contribution plus techniques), or propose a fourth formula.
+3. **Advancement scale and allocation:** Define the level range, cost, source of level increases, caps or character-level gates if any, and whether progression is periodic, choice-based, or both. Do not automatically reuse the 20-level character-band model for Competencies.
+4. **Numerical evaluation:** Select and test a concrete function, compare its low/middle/high advancement outcomes with ordinary Skills and the crafting DC range, and specify what happens when a relevant Skill or tool qualification also applies.
+5. **Unlock content:** Decide which individual techniques, recipes, efficiency gains, quality improvements, and feature interactions need explicit rank/level prerequisites. These are content-specific, not universal entitlements merely for reaching a number.
+6. **Duplicate grants:** Determine whether a repeated proficiency grants a substitute choice, an explicit level, no additional benefit, or another policy; never silently upgrade a Competency through origin overlap.
+
+**Implementation boundary:** This is a **proposal only**, not an approved progression contract. Keep the current `levelScale: "pending-reconciliation"` in native Competency definitions. Do not alter `NativeCharacterProjector`, `NativeSkillTraining`, or `NativeCraftingResolver` to implement a candidate formula until the required decisions are made.
+
 ## Follow-up decisions needed before ranked progression
 
 1. **Progression model:** whether ranks measure check bonuses, qualification thresholds, access to techniques, or a combination; whether all competencies use the same rank schedule.
