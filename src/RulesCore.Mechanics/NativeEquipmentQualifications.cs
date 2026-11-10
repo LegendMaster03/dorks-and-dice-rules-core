@@ -270,17 +270,25 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                         "Choice needs an unambiguous ID, count, category, and supported selection kind."));
                     continue;
                 }
-                // A group's descendants are resolved from authored membership
-                // rather than guessing a type from its name or source edition.
+                // For type choices, fromGroupIds filters eligible descendants.
+                // For group choices, it is an explicit whitelist of grantable
+                // groups. Requiring that whitelist prevents an ordinary
+                // "choose a weapon family" option from granting All Weapons.
                 var groups = new List<string>();
+                if (selectionKind == "equipment-group" &&
+                    !choice.TryGetProperty("fromGroupIds", out _))
+                {
+                    issues.Add(new("invalid-equipment-choice", id!,
+                        "Selectable equipment groups require an explicit eligible-group list."));
+                    continue;
+                }
                 if (choice.TryGetProperty("fromGroupIds", out var restrictions))
                 {
-                    if (selectionKind != "equipment-type" ||
-                        restrictions.ValueKind != JsonValueKind.Array ||
+                    if (restrictions.ValueKind != JsonValueKind.Array ||
                         restrictions.GetArrayLength() is < 1 or > 32)
                     {
                         issues.Add(new("invalid-equipment-choice", id!,
-                            "Group filters require a bounded type-selection list."));
+                            "Group filters must enumerate one to 32 eligible groups."));
                         continue;
                     }
                     foreach (var group in restrictions.EnumerateArray())
@@ -327,12 +335,18 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                 var choiceKey = source.OccurrenceId + "/" + id;
                 seenChoices.Add(choiceKey);
                 var eligible = new SortedSet<string>(StringComparer.Ordinal);
-                // Type and group filters are cumulative restrictions; an
-                // authored option must not silently widen when both are given.
+                // Type restrictions narrow authored descendants. Group choices
+                // permit only explicitly enumerated group IDs; they do not
+                // traverse to broader parents (All Weapons, Martial, etc.).
                 foreach (var candidate in EquipmentOfKind(selectionKind))
                 {
                     if (CategoryOf(candidate.Id) != category ||
                         (eligibleTypeIds is not null && !eligibleTypeIds.Contains(candidate.Id))) continue;
+                    if (selectionKind == "equipment-group")
+                    {
+                        if (groups.Contains(candidate.Id)) eligible.Add(candidate.Id);
+                        continue;
+                    }
                     if (groups.Count == 0)
                     {
                         eligible.Add(candidate.Id);
