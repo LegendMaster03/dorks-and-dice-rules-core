@@ -24,9 +24,10 @@
       "id": "noble-gaming-set",
       "name": "Gaming Set Training",
       "description": "Choose one type of gaming set and gain training with it.",
-      "grantType": "competency-training",
+      "grantType": "qualification-training",
       "choiceCategory": "gaming-set",
-      "choiceCount": 1
+      "choiceCount": 1,
+      "qualificationCategory": "tool"
     },
     {
       "id": "noble-learned-language",
@@ -88,7 +89,19 @@
     "Noble and Knight are independent Backgrounds. No Knight variant or Retainers replacement feature is embedded in Noble.",
     "No fixed 2024 ability score increases or automatic Skilled Origin feat.",
     "Starting equipment awaits verified native item identities and materialization into ordinary inventory; it is not a separate inventory collection.",
-    "A gaming-set choice awaits shared native competency-choice resolution.",
+    "The gaming-set choice is represented as one selected native equipment proficiency, not a ranked Competency; authorized choice execution remains Character-owned.",
     "Overlapping grants from Aristocratic Upbringing or other sources await general duplicate-grant semantics rather than automatic proficiency stacking."
-  ]
+  ],
+  "equipmentProficiencyGrants": {
+    "choices": [
+      {
+        "id": "noble-gaming-set",
+        "count": 1,
+        "fromCategory": "tool",
+        "fromGroupIds": [
+          "equipment.group.tool.gaming-set"
+        ]
+      }
+    ]
+  }
 }
