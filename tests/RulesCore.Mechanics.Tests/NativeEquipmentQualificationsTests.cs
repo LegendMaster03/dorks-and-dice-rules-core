@@ -110,8 +110,8 @@ public sealed class NativeEquipmentQualificationsTests
         using var fixture = new Fixture();
         var engine = new NativeEquipmentQualifications(fixture.Catalog);
 
-        // These are four distinct item *definitions*, not four equipment
-        // proficiency identities or instances of the same owned item.
+        // Each test item is a distinct item *definition*, not a separate
+        // equipment proficiency identity or a specific owned instance.
         var longsword = engine.Resolve(fixture.Request(
             new NativeEquipmentQualificationSource("feature.sword", "longsword")));
         Assert.Equal("resolved", longsword.Status);
