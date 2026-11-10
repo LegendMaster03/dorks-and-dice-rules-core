@@ -201,7 +201,7 @@ Example qualification request:
 | 2 | 10 | A mastery entitlement without proficiency; **not usable mastery** |
 | 3 | 11 | Proficiency and mastery; mastery is usable |
 
-Bits: `NativeEquipmentTrainingFlags.Proficiency = 1`, `NativeEquipmentTrainingFlags.Mastery = 2`. `HasUsableMastery(flags)` is true only when both bits are present (`(flags & 3) == 3`). A fixed mastery group can create state 2 for a weapon the character has not qualified to wield. That bit is retained for provenance but **never authorizes mastery combat effects**; selecting a mastery weapon through a counted choice is instead restricted to currently proficient types. Neither proficiency nor mastery is stored independently on individual magic variants, and no equipment mastery bit indicates the weapon's innate mastery property or executes its effect.
+Bits: `NativeEquipmentTrainingFlags.Proficiency = 1`, `NativeEquipmentTrainingFlags.Mastery = 2`. `HasUsableMastery(flags)` is true only for **exactly** `flags == 3`; out-of-contract values are not accepted as additional training states. A fixed mastery group can create state 2 for a weapon the character has not qualified to wield. That bit is retained for provenance but **never authorizes mastery combat effects**; selecting a mastery weapon through a counted choice is instead restricted to currently proficient types. Neither proficiency nor mastery is stored independently on individual magic variants, and no equipment mastery bit indicates the weapon's innate mastery property or executes its effect.
 
 Unlike a ranked Competency, this mask is a combination of **two independent entitlements**, not four skill ranks. No change to existing proficiency-only requests or API is required. The original `Covers` result remains binary for compatibility.
 
@@ -228,7 +228,7 @@ Example Barbarian feature grant:
 }
 ```
 
-The common resolver supports separate `weaponMasteryGrants.fixed` targets (native weapon base type or group) and `weaponMasteryGrants.choices` (distinct native base weapon types), with optional explicit `fromTypeIds` and/or `fromGroupIds` restrictions. It checks all authored references and rejects invalid, unexpected, stale, duplicated, and incomplete selections without publishing partial mastery grants. The source's `ClassLevel` is an **assertion**, not proof of advancement.
+The common resolver supports separate `weaponMasteryGrants.fixed` targets (native weapon base type or group) and `weaponMasteryGrants.choices` (distinct native base weapon types), with optional explicit `fromTypeIds` and/or `fromGroupIds` restrictions. Each counted choice **must** declare `requireProficiency: true`; omission or `false` is invalid rather than an implicit default. Only an authored `classFeature` may use `countByClassLevel`; other sources use a fixed `count`. It checks all authored references and rejects invalid, unexpected, stale, duplicated, and incomplete selections without publishing partial mastery grants. The source's `ClassLevel` is an **assertion**, not proof of advancement.
 
 ### API
 
