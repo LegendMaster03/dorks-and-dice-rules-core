@@ -4,27 +4,44 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// The caller has already verified that a character owns each named rule source.
-/// Source IDs alone do not establish ownership or satisfy feature prerequisites.
+/// One character-earned source occurrence, including its standard or later-Class
+/// grant mode. SourceId and OccurrenceId are assertions from the caller, not
+/// evidence of ownership, Class entry, selected options, or prerequisites.
 /// </summary>
 public sealed record NativeEquipmentQualificationSource(
     string SourceId, string OccurrenceId, string GrantMode = "standard");
 
+/// <summary>
+/// A snapshot-pinned request over caller-authorized source occurrences.
+/// Choice keys are occurrence/choice IDs, not arbitrary equipment grants.
+/// </summary>
 public sealed record NativeEquipmentQualificationRequest(
     string RulesetId, string Fingerprint,
     IReadOnlyList<NativeEquipmentQualificationSource> Sources,
     IReadOnlyDictionary<string, IReadOnlyList<string>>? SelectedChoices = null);
 
+/// <summary>
+/// Every qualifying source contributes independent attribution, including when
+/// several grants result in the same effective Boolean proficiency.
+/// </summary>
 public sealed record NativeEquipmentQualificationProvenance(
     string SourceId, string SourceOccurrenceId, string GrantId);
 
+/// <summary>One canonical equipment type or group and its originating grants.</summary>
 public sealed record NativeEquipmentQualification(
     string QualificationId, string EquipmentCategory,
     IReadOnlyList<NativeEquipmentQualificationProvenance> Provenance);
 
+/// <summary>
+/// A counted choice whose candidates come exclusively from the active native catalog.
+/// </summary>
 public sealed record NativeEquipmentQualificationChoice(
     string ChoiceKey, int Count, IReadOnlyList<string> EligibleQualificationIds);
 
+/// <summary>
+/// A complete grant result only when Status is resolved. Unavailable and
+/// needs-choices deliberately contain no usable partial qualification set.
+/// </summary>
 public sealed record NativeEquipmentQualificationProjection(
     int ContractVersion, string RulesetId, string Fingerprint, string Status,
     IReadOnlyList<NativeEquipmentQualification> Qualifications,
@@ -46,6 +63,10 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
     private static readonly HashSet<string> Categories =
         new(["weapon", "armor", "shield", "tool"], StringComparer.Ordinal);
 
+    /// <summary>
+    /// Combines only explicitly authored grants. Validates definition shape and
+    /// choices, but never attempts to prove that the character earned a source.
+    /// </summary>
     public NativeEquipmentQualificationProjection Resolve(NativeEquipmentQualificationRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -114,24 +135,48 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                     "Multiclass equipment grants apply only to Class sources."));
                 continue;
             }
-            if (!TryObject(definition, "equipmentProficiencyGrants", out var grants) &&
-                (!TryObject(definition, "definition", out var nested) ||
-                 !TryObject(nested, "equipmentProficiencyGrants", out grants)))
+
+            // Both native source shapes are supported for migration, but having
+            // both on one source is ambiguous. Never silently prefer either one.
+            var hasRoot = TryObject(definition, "equipmentProficiencyGrants", out var rootGrants);
+            var hasNested = TryObject(definition, "definition", out var nested) &&
+                TryObject(nested, "equipmentProficiencyGrants", out var nestedGrants);
+            if (hasRoot && hasNested)
+            {
+                issues.Add(new("ambiguous-equipment-grants", source.SourceId,
+                    "A source cannot define equipment grants at both the root and inside definition."));
+                continue;
+            }
+            if (!hasRoot && !hasNested)
             {
                 issues.Add(new("equipment-grants-not-reconciled", source.SourceId,
                     "The source has no executable equipment proficiency grants."));
+                continue;
+            }
+            var grants = hasRoot ? rootGrants : nestedGrants;
+
+            // Reject unknown keys at the grant-block level as well as on each
+            // entry. In particular, future conditional grants must never
+            // silently degrade into an unconditional or empty grant set.
+            if (grants.EnumerateObject().Any(field => field.Name is not
+                ("fixed" or "choices" or "multiclassFixed" or "multiclassChoices")))
+            {
+                issues.Add(new("unsupported-equipment-grants", source.SourceId,
+                    "The equipment grant block contains an unsupported property."));
                 continue;
             }
 
             var ids = new HashSet<string>(StringComparer.Ordinal);
             var fixedField = source.GrantMode == "multiclass" ? "multiclassFixed" : "fixed";
             var choiceField = source.GrantMode == "multiclass" ? "multiclassChoices" : "choices";
-            if (source.GrantMode == "multiclass" &&
-                !grants.TryGetProperty(fixedField, out _) &&
+            if (!grants.TryGetProperty(fixedField, out _) &&
                 !grants.TryGetProperty(choiceField, out _))
             {
-                issues.Add(new("equipment-multiclass-grants-not-reconciled", source.SourceId,
-                    "No explicit equipment grant policy exists for entering this Class later."));
+                issues.Add(new(source.GrantMode == "multiclass"
+                        ? "equipment-multiclass-grants-not-reconciled"
+                        : "equipment-grants-not-reconciled",
+                    source.SourceId,
+                    "No explicit equipment grant policy exists for the selected Class entry mode."));
                 continue;
             }
             if (grants.TryGetProperty(fixedField, out var fixedGrants))
@@ -202,6 +247,8 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                         "Choice needs a unique ID, count, category, and supported selection kind."));
                     continue;
                 }
+                // A group's descendants are resolved from authored membership
+                // rather than guessing a type from its name or source edition.
                 var groups = new List<string>();
                 if (choice.TryGetProperty("fromGroupIds", out var restrictions))
                 {
@@ -257,6 +304,8 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
                 var choiceKey = source.OccurrenceId + "/" + id;
                 seenChoices.Add(choiceKey);
                 var eligible = new SortedSet<string>(StringComparer.Ordinal);
+                // Type and group filters are cumulative restrictions; an
+                // authored option must not silently widen when both are given.
                 foreach (var candidate in EquipmentOfKind(selectionKind))
                 {
                     if (CategoryOf(candidate.Id) != category ||
@@ -373,6 +422,11 @@ public sealed class NativeEquipmentQualifications(NativeCatalogSnapshot catalog)
         }
     }
 
+    /// <summary>
+    /// Follow type membership toward broader parent groups. A parent confers
+    /// coverage to descendants; a sibling group never does. Null indicates
+    /// broken membership rather than an ordinary nonmatch.
+    /// </summary>
     private bool? GroupCovers(string groupId, string typeId)
     {
         if (!catalog.TryGetById(typeId, out var target) ||
