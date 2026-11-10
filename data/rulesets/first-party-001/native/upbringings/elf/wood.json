@@ -16,7 +16,7 @@
     {
       "id": "woodland-fieldcraft",
       "description": "Gain +2 to Survival checks for forest navigation, tracking, foraging and identifying natural woodland hazards. The activity must qualify, not merely the location.",
-      "skill": "survival",
+      "skill": "skill.survival",
       "bonus": 2,
       "scope": [
         "forest-navigation",
