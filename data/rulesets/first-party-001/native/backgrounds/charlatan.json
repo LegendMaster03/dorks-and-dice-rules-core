@@ -95,7 +95,7 @@
   "reviewNotes": [
     "Independent native Background reconciled from 2014 Charlatan, not from the 2024 ability and Origin-feat model.",
     "Fixed Deception and Sleight of Hand training, fixed Disguise Kit and Forgery Competency training, and no additional language.",
-    "The native Forgery Competency has both a Forgery Skill facet and Forgery Kit tool facet. Reuse its established identity rather than inventing a narrower alias; review the resulting value during general balance.",
+    "Forgery is one native Competency rather than a separate Forgery Skill plus kit proficiency. Its associated equipment does not grant a second independent qualification; compare its training benefit against Disguise during the corpus balance review.",
     "Disguise Kit does not independently grant Disguise Skill. Tool training is different from possessing a physical kit.",
     "False Identity grants an already established alternate persona with supporting history, documents, arrangements and acquaintances; it does not generate limitless cover personas.",
     "Document and handwriting imitation from a studied example remains a meaningful feature separate from generic Forgery training, but not guaranteed acceptance by an observer.",
