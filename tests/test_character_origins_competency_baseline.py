@@ -122,6 +122,45 @@ class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
                     self.assertEqual("competency-training", entry["grantType"])
                     self.assertNotIn("competencyTraining", entry)
 
+    def test_direct_thieves_tools_conversions_are_equipment_only(self):
+        """Historical Thieves' Tools proficiency stays binary across Origin choices."""
+        criminal = read("backgrounds", "criminal")
+        fixed = next(x for x in criminal["benefits"]
+                     if x["id"] == "criminal-thieves-tools")
+        self.assertEqual("qualification-training", fixed["grantType"])
+        self.assertEqual("equipment.tool.thieves-tools", fixed["equipmentTypeId"])
+        self.assertNotIn("competencyTraining", fixed)
+        self.assertEqual(
+            "equipment.tool.thieves-tools",
+            criminal["equipmentProficiencyGrants"]["fixed"][0]["targetId"])
+
+        for kind, name, outer_id in (
+            ("backgrounds", "spy", "spy-tradecraft-competency"),
+            ("upbringings", "street-raised", "street-raised-community-competency"),
+        ):
+            record = read(kind, name)
+            outer = next(x for x in record["benefits"] if x["id"] == outer_id)
+            with self.subTest(origin=record["id"]):
+                self.assertEqual("benefit-choice", outer["grantType"])
+                self.assertEqual(1, outer["choiceCount"])
+                option = next(x for x in outer["options"]
+                              if x["id"] == "thieves-tools")
+                self.assertEqual(1, len(option["benefits"]))
+                training = option["benefits"][0]
+                self.assertEqual("qualification-training", training["grantType"])
+                self.assertEqual("tool", training["qualificationCategory"])
+                self.assertEqual("equipment.tool.thieves-tools",
+                                 training["equipmentTypeId"])
+                self.assertNotIn("competencyTraining", training)
+                self.assertEqual(
+                    "equipment.tool.thieves-tools",
+                    option["equipmentProficiencyGrants"]["fixed"][0]["targetId"])
+                self.assertNotIn("equipmentProficiencyGrants", record)
+                for other in outer["options"]:
+                    if other["id"] != "thieves-tools":
+                        self.assertNotIn("equipmentProficiencyGrants", other)
+
+
     def test_origins_with_no_competency_benefit_stay_that_way(self):
         """Neither is normal, not an exception that needs an explicit empty grant."""
         for kind, name in (
