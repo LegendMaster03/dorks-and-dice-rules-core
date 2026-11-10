@@ -24,16 +24,61 @@
     },
     {
       "id": "spy-tradecraft-competency",
-      "name": "Tradecraft Competency",
+      "name": "Tradecraft Training Choice",
       "description": "Choose one training choice reflecting your intelligence work: Disguise, Forgery, or Calligraphy Competency training, or the separate Thieves' Tools equipment qualification. This grant does not include ownership of the relevant equipment.",
-      "grantType": "competency-training",
-      "chooseOne": [
-        "competency.disguise",
-        "competency.forgery",
-        "competency.thieves-tools",
-        "competency.calligraphy"
-      ],
-      "choiceCount": 1
+      "grantType": "benefit-choice",
+      "choiceCount": 1,
+      "options": [
+        {
+          "id": "disguise",
+          "name": "Disguise Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.disguise"
+            }
+          ]
+        },
+        {
+          "id": "forgery",
+          "name": "Forgery Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.forgery"
+            }
+          ]
+        },
+        {
+          "id": "thieves-tools",
+          "name": "Thieves' Tools Proficiency",
+          "benefits": [
+            {
+              "grantType": "qualification-training",
+              "qualificationCategory": "tool",
+              "equipmentTypeId": "equipment.tool.thieves-tools"
+            }
+          ],
+          "equipmentProficiencyGrants": {
+            "fixed": [
+              {
+                "id": "spy-tradecraft-thieves-tools",
+                "targetId": "equipment.tool.thieves-tools"
+              }
+            ]
+          }
+        },
+        {
+          "id": "calligraphy",
+          "name": "Calligraphy Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.calligraphy"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "spy-operational-language",
@@ -90,7 +135,7 @@
   "reviewNotes": [
     "Spy is an independent native Background, not a variant or inheriting subtype of Criminal.",
     "Two distinct Skills are chosen from Deception, Stealth, Investigation, Insight, Perception, and Persuasion. The general native choice executor must eventually honor choiceCount 2 for this grant.",
-    "Choose one Competency from Disguise Kit, Forgery, Thieves' Tools, or Calligraphy; Calligraphy does not automatically convey codebreaking or other unrelated technical abilities.",
+    "Choose exactly one tradecraft outcome: native Disguise, Forgery, or Calligraphy Competency training, or Thieves' Tools equipment proficiency. The Thieves' Tools grant is authored only under its selected option; origin choice authorization is needed before emitting that option as an executable source. Calligraphy does not automatically grant codebreaking.",
     "Learn one language relevant to prior intelligence activity. It need not be foreign or secret and may be Common where justified.",
     "Intelligence Sources is a bounded information-contact feature. It does not provide Criminal Contact's guaranteed channel into an underworld network, nor Sage's Researcher knowledge-source identification.",
     "No automatic false identity or Charlatan feature, free disguises, cryptographic bypass, guaranteed infiltration, criminal allegiance, Origin feat, ability score increases, or class capabilities.",
