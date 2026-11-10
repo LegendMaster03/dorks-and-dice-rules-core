@@ -8,10 +8,8 @@
     {
       "id": "woodland-archery",
       "description": "Gain proficiency with shortbow and longbow.",
-      "weaponProficiencies": [
-        "shortbow",
-        "longbow"
-      ]
+      "grantType": "qualification-training",
+      "qualificationCategory": "weapon"
     },
     {
       "id": "woodland-fieldcraft",
@@ -27,5 +25,17 @@
       "stacksWithTraining": true
     }
   ],
-  "parent": "upbringing.elf.general"
+  "parent": "upbringing.elf.general",
+  "equipmentProficiencyGrants": {
+    "fixed": [
+      {
+        "id": "woodland-archery-shortbow",
+        "targetId": "equipment.weapon.shortbow"
+      },
+      {
+        "id": "woodland-archery-longbow",
+        "targetId": "equipment.weapon.longbow"
+      }
+    ]
+  }
 }
