@@ -217,6 +217,46 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                 self.assertIn(trained["competency"], self.competencies)
                 self.assertNotIn("equipmentProficiencyGrants", record)
 
+    def test_elf_cultural_weapon_training_uses_canonical_base_types(self):
+        """Inherited Elf upbringing grants apply by weapon type, not family.
+
+        Existing cultural training does not imply Weapon Mastery and must not
+        depend on legacy display-name weaponProficiencies arrays.
+        """
+        cases = (
+            ("elf/high", "traditional-weapons",
+             ("longsword", "shortsword", "shortbow", "longbow")),
+            ("elf/wood", "woodland-archery",
+             ("shortbow", "longbow")),
+        )
+        for name, benefit_id, weapon_names in cases:
+            with self.subTest(upbringing=name):
+                origin = load("upbringings/" + name + ".json")
+                grant = origin["equipmentProficiencyGrants"]
+                self.assertNotIn("choices", grant)
+                self.assertEqual(
+                    {"equipment.weapon." + x for x in weapon_names},
+                    {x["targetId"] for x in grant["fixed"]},
+                )
+                self.assertEqual(len(weapon_names), len(grant["fixed"]))
+                self.assertEqual("qualification-training",
+                                 benefit(origin, benefit_id)["grantType"])
+                self.assertEqual("weapon",
+                                 benefit(origin, benefit_id)["qualificationCategory"])
+                self.assertNotIn("weaponProficiencies",
+                                 benefit(origin, benefit_id))
+                self.assertNotIn("weaponMasteryGrants", origin)
+                for item in grant["fixed"]:
+                    self.assertIn(item["targetId"], self.equipment_types)
+                    self.assertEqual(
+                        "weapon",
+                        self.equipment_types[item["targetId"]]["equipmentCategory"],
+                    )
+                    self.assertFalse(
+                        item["targetId"].startswith("equipment.group."),
+                        "Specific weapon proficiency must not cover a family",
+                    )
+
     def test_vehicle_grants_are_not_mislabeled_as_tools(self):
         for origin_id, benefit_id, vehicle_type in (
             ("background.soldier", "soldier-land-vehicles", "land"),
