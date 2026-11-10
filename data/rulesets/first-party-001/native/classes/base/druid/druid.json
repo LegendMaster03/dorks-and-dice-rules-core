@@ -4,6 +4,66 @@
   "kind": "class",
   "definition": {
     "classType": "base",
+    "equipmentProficiencyGrants": {
+      "fixed": [
+        {
+          "id": "fixed-1",
+          "targetId": "equipment.weapon.club"
+        },
+        {
+          "id": "fixed-2",
+          "targetId": "equipment.weapon.dagger"
+        },
+        {
+          "id": "fixed-3",
+          "targetId": "equipment.weapon.dart"
+        },
+        {
+          "id": "fixed-4",
+          "targetId": "equipment.weapon.javelin"
+        },
+        {
+          "id": "fixed-5",
+          "targetId": "equipment.weapon.mace"
+        },
+        {
+          "id": "fixed-6",
+          "targetId": "equipment.weapon.quarterstaff"
+        },
+        {
+          "id": "fixed-7",
+          "targetId": "equipment.weapon.scimitar"
+        },
+        {
+          "id": "fixed-8",
+          "targetId": "equipment.weapon.sickle"
+        },
+        {
+          "id": "fixed-9",
+          "targetId": "equipment.weapon.sling"
+        },
+        {
+          "id": "fixed-10",
+          "targetId": "equipment.weapon.spear"
+        },
+        {
+          "id": "fixed-11",
+          "targetId": "equipment.weapon.shortspear"
+        },
+        {
+          "id": "fixed-12",
+          "targetId": "equipment.group.armor.light"
+        },
+        {
+          "id": "fixed-13",
+          "targetId": "equipment.group.armor.medium"
+        },
+        {
+          "id": "fixed-14",
+          "targetId": "equipment.group.shield.all"
+        }
+      ]
+    },
     "band": 1,
     "levelRange": [
       1,
