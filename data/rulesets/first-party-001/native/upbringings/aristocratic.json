@@ -32,7 +32,7 @@
       "name": "Aristocratic Competency",
       "grantType": "benefit-choice",
       "choiceCount": 1,
-      "description": "Choose exactly one training benefit: one particular type of gaming set, or the native Calligraphy, Painting, or Cooking Competency. These choices reflect practices learned in your formative community and do not include equipment ownership or several unrelated training benefits.",
+      "description": "Choose exactly one training benefit: proficiency with one particular type of gaming set, or proficiency in the native Calligraphy, Painting, or Cooking Competency. These choices reflect practices learned in your formative community and do not include equipment ownership or several unrelated training benefits.",
       "options": [
         {
           "id": "gaming-set",
@@ -66,7 +66,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.calligraphy",
-              "description": "Gain training in the native Calligraphy Competency, associated with Calligrapher's Supplies. The equipment association grants neither ownership nor a second equipment proficiency."
+              "description": "Gain proficiency in the native Calligraphy Competency, associated with Calligrapher's Supplies. The equipment association grants neither ownership nor a second equipment proficiency.",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         },
@@ -77,7 +81,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.painting",
-              "description": "Gain training in the native Painting Competency, associated with Painter's Supplies. The equipment association grants neither ownership nor a second equipment proficiency."
+              "description": "Gain proficiency in the native Painting Competency, associated with Painter's Supplies. The equipment association grants neither ownership nor a second equipment proficiency.",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         },
@@ -88,7 +96,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.cooking",
-              "description": "Gain training in the native Cooking Competency, associated with Cook's Utensils. The equipment association grants neither ownership nor a second equipment proficiency."
+              "description": "Gain proficiency in the native Cooking Competency, associated with Cook's Utensils. The equipment association grants neither ownership nor a second equipment proficiency.",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         }
