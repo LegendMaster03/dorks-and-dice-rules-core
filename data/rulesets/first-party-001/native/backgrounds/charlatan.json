@@ -24,15 +24,15 @@
       "id": "charlatan-disguise-kit",
       "name": "Disguise Kit Training",
       "grantType": "competency-training",
-      "competency": "competency.disguise-kit",
-      "description": "Gain Disguise Kit training. This does not automatically train the independent Disguise Skill."
+      "competency": "competency.disguise",
+      "description": "Gain training in the native Disguise Competency, associated with a Disguise Kit. This does not grant ownership of a physical Disguise Kit."
     },
     {
       "id": "charlatan-forgery",
       "name": "Forgery Training",
       "grantType": "competency-training",
       "competency": "competency.forgery",
-      "description": "Gain the native Forgery Competency, including its established Forgery Skill facet and Forgery Kit tool-proficiency facet. Training does not grant a physical Forgery Kit."
+      "description": "Gain training in the native Forgery Competency, associated with a Forgery Kit. There is no separate native Forgery Skill, and this grant does not include a physical Forgery Kit."
     },
     {
       "id": "charlatan-false-identity",
