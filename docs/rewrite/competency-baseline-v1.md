@@ -72,6 +72,41 @@ RequiresProficiency   boolean (default: false)
 
 These fields are the minimal contract for future explicit rank-gated feats, features, recipes, class choices, and techniques. Do not invent missing threshold values for the current catalog. Higher-rank milestone content is not implemented by the existence of a requirement shape.
 
+## Existing equipment associations for source conversion
+
+The current **26** native Competencies have **22** definitions with named associated equipment. These are **candidate identity relationships** for reconciling source-edition tool proficiency grants; they do not themselves award ranks or proficiency, validate source rights, or imply that a tool grant covers every possible task.
+
+| Associated source equipment | Candidate native Competency |
+| --- | --- |
+| Alchemist's Supplies | `competency.alchemy` |
+| Brewer's Supplies | `competency.brewing` |
+| Calligrapher's Supplies | `competency.calligraphy` |
+| Carpenter's Tools | `competency.carpentry` |
+| Cartographer's Tools | `competency.cartography` |
+| Cobbler's Tools | `competency.cobbling` |
+| Cook's Utensils | `competency.cooking` |
+| Disguise Kit | `competency.disguise` |
+| Forgery Kit | `competency.forgery` |
+| Glassblower's Tools | `competency.glassblowing` |
+| Herbalism Kit | `competency.herbalism` |
+| Jeweler's Tools | `competency.gemcutting` |
+| Leatherworker's Tools | `competency.leatherworking` |
+| Mason's Tools | `competency.stonemasonry` |
+| Navigator's Tools | `competency.navigation` |
+| Painter's Supplies | `competency.painting` |
+| Poisoner's Kit | `competency.poisoning` |
+| Potter's Tools | `competency.pottery` |
+| Smith's Tools | `competency.smithing` |
+| Tinker's Tools | `competency.tinkering` |
+| Weaver's Tools | `competency.weaving` |
+| Woodcarver's Tools | `competency.woodcarving` |
+
+Four currently selected Competencies have no named associated tool in the catalog: `competency.basketweaving`, `competency.bookbinding`, `competency.locksmithing`, `competency.sculpting`. They remain full trainable Competencies; that absence does not prevent origin, class, feat, or practice-based rank grants.
+
+**Exception:** Thieves' Tools do not map to a leveled Competency. Their separate binary equipment proficiency can interact with `skill.open-lock` and relevant trap procedures only as specified by the actual equipment/check rules. Do not map Thieves' Tools to Locksmithing or a retired Trap Disarming identity.
+
+The crosswalk is **identity guidance**, not a universal conversion effect. When an actual Background/Upbringing/Class/feat source is reconciled, separately assign its **rank increment**, **proficiency grant**, or both. Also validate the source-grant choice and its entitlement before aggregation.
+
 ## Integration to unblock the remaining pillars
 
 | Consumer or rule concept | Immediately useful contract | Remaining independent integration |
