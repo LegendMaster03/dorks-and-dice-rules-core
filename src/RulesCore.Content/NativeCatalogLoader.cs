@@ -91,6 +91,7 @@ public static class NativeCatalogLoader
             throw Invalid("invalid_native_json", "Native package has no playable definitions.");
 
         ValidateConditionReferences(entities);
+        ValidateEquipmentReferences(entities);
         var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, entities);
         return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint, entities);
     }
@@ -165,6 +166,84 @@ public static class NativeCatalogLoader
 
         entities.Add(new NativeRuleEntity(
             rulesetId, id, name, category, path, element.Clone()));
+    }
+
+    /// <summary>
+    /// Equipment scope IDs are native catalog identities, not display-name
+    /// matches. Reject dangling, cross-category, and cyclic memberships.
+    /// </summary>
+    private static void ValidateEquipmentReferences(IReadOnlyList<NativeRuleEntity> entities)
+    {
+        var byId = entities.ToDictionary(entity => entity.Id, StringComparer.Ordinal);
+        var categories = new HashSet<string>(["weapon", "armor", "shield", "tool"],
+            StringComparer.Ordinal);
+        var groups = new Dictionary<string, string[]>(StringComparer.Ordinal);
+
+        static string[] References(JsonElement definition, string property, bool required)
+        {
+            if (!definition.TryGetProperty(property, out var value))
+            {
+                if (required) throw Invalid("invalid_equipment_reference",
+                    "Equipment type is missing its group membership list.");
+                return [];
+            }
+            if (value.ValueKind != JsonValueKind.Array || value.GetArrayLength() > 100 ||
+                value.EnumerateArray().Any(id => id.ValueKind != JsonValueKind.String ||
+                    string.IsNullOrWhiteSpace(id.GetString())))
+                throw Invalid("invalid_equipment_reference",
+                    "Equipment membership must be a bounded list of group IDs.");
+            var refs = value.EnumerateArray().Select(id => id.GetString()!).ToArray();
+            if (refs.Distinct(StringComparer.Ordinal).Count() != refs.Length)
+                throw Invalid("invalid_equipment_reference", "Duplicate equipment group references.");
+            return refs;
+        }
+
+        foreach (var entity in entities)
+        {
+            if (entity.Category == "item" &&
+                entity.Definition.TryGetProperty("equipmentTypeId", out var equipmentType))
+            {
+                if (equipmentType.ValueKind != JsonValueKind.String ||
+                    !byId.TryGetValue(equipmentType.GetString()!, out var resolved) ||
+                    resolved.Category != "equipment-type")
+                    throw Invalid("invalid_equipment_reference",
+                        "Item equipmentTypeId must identify an existing equipment type.");
+            }
+            if (entity.Category is not ("equipment-type" or "equipment-group"))
+                continue;
+            var category = ReadString(entity.Definition, "equipmentCategory");
+            if (category is null || !categories.Contains(category))
+                throw Invalid("invalid_equipment_reference",
+                    "Equipment categories must be weapon, armor, shield, or tool.");
+
+            var references = entity.Category == "equipment-type"
+                ? References(entity.Definition, "groupIds", required: true)
+                : References(entity.Definition, "parentGroupIds", required: false);
+            foreach (var reference in references)
+                if (!byId.TryGetValue(reference, out var target) ||
+                    target.Category != "equipment-group" ||
+                    ReadString(target.Definition, "equipmentCategory") != category)
+                    throw Invalid("invalid_equipment_reference",
+                        "Equipment group identity is missing or has a different category.");
+
+            if (entity.Category == "equipment-group") groups[entity.Id] = references;
+        }
+
+        var visiting = new HashSet<string>(StringComparer.Ordinal);
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var id in groups.Keys)
+            Visit(id);
+
+        void Visit(string id)
+        {
+            if (visited.Contains(id)) return;
+            if (!visiting.Add(id))
+                throw Invalid("invalid_equipment_reference",
+                    "Equipment group membership must not contain cycles.");
+            foreach (var parent in groups[id]) Visit(parent);
+            visiting.Remove(id);
+            visited.Add(id);
+        }
     }
 
     private static void ValidateConditionReferences(IReadOnlyList<NativeRuleEntity> entities)
