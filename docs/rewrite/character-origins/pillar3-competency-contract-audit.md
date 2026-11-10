@@ -79,6 +79,16 @@ The first-party `main` Competency and Skill catalogs contain 26 + 81 identities.
 
 There are no other invalid values matching these canonical identity prefixes in the scanned 29 Origin records. This check does not validate free-form equipment/item identifiers, language eligibility, selection authorization, contextual triggers, or the older native catalogs currently present on the unintegrated development branch.
 
+## Deferred dependency — shared equipment proficiency
+
+**Status:** Await separate equipment-proficiency reconciliation; do not block further Pillar 3 Background/Upbringing content and balance review.
+
+The shared equipment proficiency framework is **architecturally approved but its native grant schema and evaluation are not yet complete**. The responsible follow-up work will address weapons, armor, shields, and comparatively rare equipment/tool qualifications. Most traditional crafting tools are represented through a single ranked Competency instead; its `associatedTools` does not automatically create or require a second tool proficiency. The independent tool-qualification category remains relevant for Thieves' Tools, Gaming Sets, Musical Instruments, and explicit exceptions. Vehicle qualifications require scoped review rather than assumed inclusion.
+
+For now, **preserve the intended benefits and choice cardinality** and mark unresolved equipment grants for later reconciliation instead of fabricating `competency.*` identities, numeric ranks, or an ad hoc qualification schema. The three legacy `competency.thieves-tools` references (Criminal; Spy; Street-Raised), existing gaming-set/instrument choices, qualified weapon/vehicle selections, and broad-vs-specific proficiency overlaps remain tracked in this audit. When the shared contract is available, convert these in one targeted pass with a canonical reference and entitlement check.
+
+This temporary deferral does **not** postpone Competency grant review: the owner's expected relative frequency for native Competency grants is **proficiency + one rank**, then **one rank only**, then **proficiency only**, assigned source by source. These grant types do not apply to nonleveling item-tool qualifications.
+
 ## Proposed mechanical allocations — **not approved**
 
 1. **Owner-specified expected conversion frequency (2026-11-10):** The expected order for converting learned-Competency source grants is **(most common) binary Competency proficiency plus one rank**, **(next) one rank only**, and **(least common) binary Competency proficiency only**. These are three independent grant effects, **not** successive stages, universal mandatory source mappings, or an approved record-by-record allocation. This revises the earlier proficiency-only-first recommendation.
