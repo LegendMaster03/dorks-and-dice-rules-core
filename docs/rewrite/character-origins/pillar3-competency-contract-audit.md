@@ -129,6 +129,9 @@ These are representative interactions, not an exhaustive Class catalog review.
 
 **Static checks executed:** Each edited file was parsed as JSON; the complete post-edit set of 16 Backgrounds and 13 Upbringings was independently parsed and scanned against the **current `main`** canonical IDs. Results: **29/29 parse**, **3 remaining invalid Competency references** (all noted above), and no other invalid `skill.*` / `competency.*` strings.
 
+
+**Additional static checks:** All 13 Upbringing records have unique effective IDs. Their five parent relationships resolve to existing Upbringings with no cycles (three Elf children and two Gnome children). Their benefits include six explicit fixed-language grants and five additional-language choices. These facts check references and representation only; no runtime inherited-benefit application or prevention of duplicate learned languages was tested.
+
 **Not executed:** Full native JSON schema and inventory resolution, Character Origins entitlement/choice authorization, inheritance execution, .NET compile/test suite, and end-to-end Character Sheet tests. Those are not valid passing test claims. The working branch still requires a deliberate synchronization with `main` without discarding existing Origins work, plus revalidation after integration.
 
 **Next safe step:** obtain decisions on tool-qualification encoding and provisional competency training grants, then resolve the three remaining references and review early-character balance without imposing a global rank scale or unrelated C# changes.
