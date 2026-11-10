@@ -32,7 +32,7 @@
       "name": "Performance Method Training",
       "grantType": "benefit-choice",
       "choiceCount": 1,
-      "description": "Choose exactly one proficiency: Disguise Kit, or one specific type of musical instrument. This does not grant both, an instrument item automatically, or ranks in separate Perform specialties.",
+      "description": "Choose exactly one training benefit: native Disguise Competency training or proficiency with one specific type of musical instrument. This does not grant both, an instrument item automatically, or ranks in separate Perform specialties.",
       "options": [
         {
           "id": "disguise-kit",
