@@ -456,10 +456,8 @@ public sealed class NativeCharacterProjector(NativeCatalogSnapshot catalog)
                     continue;
                 }
                 var ability = state.Ability ?? String(rule.Definition, "defaultAbility");
-                if (ability is null && prefix == "competency" &&
-                    Array(rule.Definition, "facets", out var facets))
-                    ability = facets.EnumerateArray().Select(f => String(f, "governingAbility"))
-                        .FirstOrDefault(x => x is not null);
+                // A native Competency has no historical Craft/tool facets.
+                // Only the task's explicit ability (or a native default) applies.
                 if (ability is null || !abilityMods.TryGetValue(ability, out var abilityValue))
                 {
                     values[$"{id}.total"] = new("unsupported", null, "No approved governing ability for the selected facet.");
