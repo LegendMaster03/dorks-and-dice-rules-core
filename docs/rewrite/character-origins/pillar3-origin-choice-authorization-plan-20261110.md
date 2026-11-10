@@ -1,5 +1,7 @@
 # Pillar 3 — Origin choice authorization and grant projection plan
 
+> **Updated source allocation boundary (2026-11-10):** The Origin choice executor must project only grants **already authored and actually earned**. Some converted prior-version Competency benefits now have explicit rank/proficiency effects; five independently authored native choice sites still await amounts. The Thieves' Tools option itself is a **direct conversion to binary** `equipment.tool.thieves-tools` for Criminal, Spy, and Street-Raised, not an unresolved numeric Competency grant. See [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md).
+
 **Date:** 2026-11-10  
 **Status:** Design/integration plan for future Character Origins execution. **Not an approved new gameplay rule or completed runtime.** No C# choice executor or Character Sheet integration is implemented by this document.
 
