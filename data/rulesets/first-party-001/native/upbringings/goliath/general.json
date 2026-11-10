@@ -27,18 +27,14 @@
     {
       "id": "clan-craft",
       "name": "Clan Craft",
-      "description": "Choose one Competency from Cooking, Leatherworking, or Navigation and gain proficiency in it, reflecting practical community traditions.",
+      "description": "Choose one Competency from Cooking, Leatherworking, or Navigation, reflecting practical community traditions.",
       "grantType": "competency-training",
       "chooseOne": [
         "competency.cooking",
         "competency.leatherworking",
         "competency.navigation"
       ],
-      "choiceCount": 1,
-      "competencyTraining": {
-        "ranks": 0,
-        "proficient": true
-      }
+      "choiceCount": 1
     }
   ],
   "reviewNotes": [
