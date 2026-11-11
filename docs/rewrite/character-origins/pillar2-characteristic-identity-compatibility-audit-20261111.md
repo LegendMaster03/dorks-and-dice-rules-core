@@ -68,6 +68,19 @@ The audit records repeated source-trait offers as **different parameter configur
 
 The report does not calculate damage, action costs or use pools; those are fixed authored behavior of the trait, not a Pillar 2 combat task.
 
+## Distinct trait variants versus hypothetical ancestral relationships
+
+The [Rock Gnome reconstruction example](pillar2-gnome-dwarf-rock-gnome-reconstruction-20261111.md) deliberately distinguishes Stonebound Tremorsense (Dwarf) from Earthbound Tremorsense (Rock Gnome), even though both are members of the same sensory family. A possible historical origin in a Gnome–Dwarf population may explain why such a variant exists **without** implying that two present-day contributor records automatically generate it.
+
+For future rule design, **mechanical-family membership**, **variant identity**, **historical/population relationship**, and **direct Heritage eligibility** must be independent. In particular:
+
+- Same `sense: tremorsense` can justify a shared mechanical vocabulary, not automatic feature equivalence.
+- A narrative hypothesis about population ancestry is not a contributor occurrence, an inheritable parameter, or proof of a particular individual's ancestry.
+- A distinct established trait variant can be offered by its actual source without requiring a complete ancestral recipe.
+- Any rule authorizing derived traits from specific contributors would be an **explicit additional rule**, not an implication of the existence of shared components.
+
+A read-only illustrative [hypothesis fixture](pillar2-illustrative-ancestry-relationships-20261111.json) and tests keep that distinction visible. It is **not** Rock Gnome canon or an approved inheritance policy.
+
 ## Suggested future identity contract (not approved)
 
 A future typed definition may need separate, explicit concepts of:
