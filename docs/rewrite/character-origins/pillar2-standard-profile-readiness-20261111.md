@@ -36,6 +36,12 @@ This audit uses the complete native parent lineage for each selectable Species/A
 | **Red Dragonborn** | Dragon type, Medium size, walking/climbing speeds; base Breath Weapon, Draconic Resistance, and Chromatic Warding with their own source-bound parameters | No missing source-parameter binding in this current sample; cross-trait consistency between different damage-type choices for mixed Heritage requires a separate design decision |
 | **Rock Gnome** | Gnome base traits and intrinsic properties plus Earthbound Tremorsense | No missing first-party source trait in the current prototype; Rock Gnome Upbringing remains separate |
 
+### Dragonborn expansion is a content requirement, not a closed schema
+
+Each Dragonborn ancestry is intended to have an authored **category, related skin material, damage type, complete Breath Weapon shape/dimensions, and hoard-related Upbringing**. More categories and leaves are planned, including damage types repeated across major categories. See the [Dragonborn expansion design record](pillar2-dragonborn-expansion-dimensions-20261111.md).
+
+Today's standard-preset audit **can not infer skin material or hoard-related Upbringing for native records that do not author those associations**. Current Red and Bronze native leaves do not have a `defaultUpbringing`, and there is not yet an approved skin-material field. That is an identified future content/modeling gap, not a reason to infer culture from a contributor or collapse category and affinity into one identity.
+
 ### Completed source bindings: ordinary Dragonborn resistance and Chromatic Warding
 
 The source binding contracts already carried `damageResistance.damageTypeFrom` and `damageResistanceOverride.damageTypeFrom`. The missing part was the **experimental Origin parameter registry**, which initially contained only ordinary Breath Weapon.
