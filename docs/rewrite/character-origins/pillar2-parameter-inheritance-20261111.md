@@ -19,9 +19,9 @@ For the existing Dragonborn ordinary Breath Weapon:
 
 ## Expansion constraint: ancestry category is not damage type
 
-The [planned Dragonborn ancestry dimensions](pillar2-dragonborn-expansion-dimensions-20261111.md) distinguish category, category-related skin material, elemental/damage association, complete Breath Weapon geometry, and hoard-related Upbringing. Future ancestry expansion targets multiple categories and at least one leaf for each relevant damage type within each major category.
+The [Dragonborn three-factor Ancestry model](pillar2-dragonborn-expansion-dimensions-20261111.md) identifies a standard Ancestry through **category, category-related skin material, and damage type**. Complete Breath Weapon shape/dimensions **usually derive from its category's authored default**. Upbringing is a separate cultural Character Origins component and not part of this Ancestry formula. Future expansion targets multiple categories and at least one leaf for each relevant damage type within each major category.
 
-A selected Dragonborn leaf currently supplies the damage value to a source-binding contract. That does **not** make the damage type a unique identifier for its category, skin material, or culture, and the current Chromatic/Metallic sample can not justify such an inference. The approved independent damage-type/whole-area Breath Weapon parameter policy remains unchanged.
+The selected Dragonborn leaf currently supplies damage type, while family lineage usually supplies the area. This source-binding pattern must not be mistaken for a mandatory mixed-Heritage linkage: **the approved ordinary Breath Weapon rule independently selects an eligible damage type and complete area from contributors**. Neither damage type nor area alone identifies the Ancestry category, physical material, or any cultural choice.
 
 ## Trait-level parameter inheritance policy
 
