@@ -122,6 +122,19 @@ Historical combined run (before removing the out-of-scope preview): [CI run 4295
 
 The two alternative duplicate-Competency proficiency policies remain exposed for manual experimental playtesting, with the mode and outcome recorded for each test. The former internal C# mixed-choice preview has been deleted; the authored options and content-level conformance checks remain. Full Character Origins execution, Character Sheet integration and mixed-ancestry manifestation remain deferred until Pillar 2.
 
+## Final scope cleanup and content sign-off checks
+
+The requested Pillars 1 and 3 reconciliation ends at **authoritative native content, approved provisional rules, source-level contracts, and validation**. It does not implement Species/Ancestry selection or inheritance: Pillar 2 will determine mixed-Ancestry, origination, contributed heritage and manifested-trait structures, and those decisions can substantially revise current `species/`, `ancestry/` and selection-policy JSON. Retain `selected-native` for reviewed content without claiming the schema is frozen.
+
+- Removed the out-of-scope `NativeOriginMixedChoicePreviewer`, its C# test file and the test-only `InternalsVisibleTo` configuration. The five-choice, sixteen-outcome **static JSON conformance matrix** remains to detect source-data drift.
+- Reviewed all **16 Backgrounds** and **13 Upbringings** for duplicate benefit IDs, exclusive benefit-choice branches, equipment/inventory choice references and Upbringing parent relationships; the focused audit found no new inconsistencies. Previously approved choices, Competency allocations and parent-selection exceptions are unchanged.
+- The Gladiator's ordinary starting weapon still matches its single selected base weapon type; **the DM judges arena suitability**, and no automatic arena suitability algorithm or fixed allowlist is approved. Entertainer still has one Disguise-or-Instrument benefit and a matching branch-specific starting item.
+- The separate, already approved experimental duplicate-Competency policy (`add-rank` or `alternate-proficiency`) and its mechanics tests are **preserved**. Neither variant resolves Pillar 2's mixed heritage questions.
+
+[Final cleanup CI run 42954589518](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/42954589518) passed the Release build (**0 warnings, 0 errors**), **93/93 Mechanics**, **111/111 Host**, **44/44 Character Origins**, **7/7 Goliath**, **6/6 native weapon training** and rewrite-structure validation. The broad Python suite completed **380 tests with 2 existing failures** in creature inheritance/working evidence and overall native/working consistency. Consequently, the full workflow is not green and downstream Docker checks did not execute. No new Origin-specific test failure was observed.
+
+**Disposition:** The current direct-selection corpus is ready to conclude as a **provisionally structured content specification**. Pillar 1's selection and inheritance schema remains open for Pillar 2, and all whole-character authorization, inventory materialization, runtime and Character Sheet integration remain out of scope.
+
 ## Completion conditions for this phase
 
 1. The **currently authored, directly selectable** Species/Ancestry, Upbringing, and Background sources have resolvable references and selection metadata; nonselectable Upbringing parents are inherited rather than chosen directly. This validates the interim corpus only, **not** future mixed-Ancestry or manifested-trait combinations from Pillar 2.
