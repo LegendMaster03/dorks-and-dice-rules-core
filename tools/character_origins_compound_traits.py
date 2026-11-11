@@ -64,8 +64,11 @@ def _symbolic_references(value, prefix=""):
     if isinstance(value, dict):
         for field, child in value.items():
             path = f"{prefix}.{field}" if prefix else field
+            # chooseFrom describes an authored choice pool, not a
+            # lineage-field parameter binding. It must remain a complete
+            # trait entitlement, rather than being deferred as unresolved.
             if isinstance(child, str) and (
-                field.endswith("From")
+                (field.endswith("From") and field != "chooseFrom")
                 or child.startswith(("selected-", "chosen-"))
             ):
                 yield path, child
