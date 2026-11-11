@@ -68,8 +68,8 @@ def grants(record, id_, options):
 
 
 class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
-    def test_explicit_effects_are_valid_when_authored(self):
-        """Unallocated grants are allowed; an authored zero-effect grant is not."""
+    def test_all_origin_competency_effects_are_explicit_and_valid(self):
+        """Every approved Competency grant now has a nonempty training effect."""
         for folder in ("backgrounds", "upbringings"):
             for path in (NATIVE / folder).rglob("*.json"):
                 record = json.loads(path.read_text(encoding="utf-8"))
@@ -78,8 +78,7 @@ class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
                         continue
                     with self.subTest(origin=record["id"],
                                       target=node.get("competency")):
-                        if "competencyTraining" not in node:
-                            continue
+                        self.assertIn("competencyTraining", node)
                         effect = node["competencyTraining"]
                         self.assertEqual({"ranks", "proficient"}, set(effect))
                         self.assertIs(type(effect["ranks"]), int)
