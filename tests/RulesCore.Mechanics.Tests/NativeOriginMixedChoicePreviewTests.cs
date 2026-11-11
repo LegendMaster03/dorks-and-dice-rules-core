@@ -258,7 +258,7 @@ public sealed class NativeOriginMixedChoicePreviewTests
             // A preview must reject it, even though the native loader can
             // retain this source record for later reconciliation.
             File.WriteAllText(Path.Combine(location.NativeDirectory, "background.json"),
-                $"""
+                $$"""
                 {
                   "id":"background.demo","name":"Demo","kind":"background",
                   "benefits":[{"id":"demo-choice","grantType":"benefit-choice","choiceCount":1,
