@@ -1,77 +1,71 @@
-# Pillar 2 — Dragonborn ancestry dimensions and expansion constraints
+# Pillar 2 — Dragonborn standard-Ancestry formula and expansion constraints
 
 **Date:** 2026-11-11  
-**Status:** Owner-established Dragonborn content direction and Pillar 2 modeling implications. This does not authorize new native records, inferred gameplay effects, final mixed-Heritage selection grouping, or automatic Upbringing grants.
+**Status:** Owner-established content direction and Pillar 2 design evidence. Not an approved mixed-Heritage grouping policy, final schema, new native record, or executable rule.
 
-## Design intent: every ancestry has five defining associations
+## Three defining factors of a standard Dragonborn Ancestry
 
-Each Dragonborn ancestry is intended to have all of the following:
+A **standard Dragonborn Ancestry is determined by three factors**:
 
-1. **Category:** Its broader Dragonborn family, such as Chromatic or Metallic. More categories are planned.
-2. **Skin material:** A physical material or quality **related to its category**. This is an intended category-related physical expression, not necessarily an independently inheritable parameter or an approved gameplay property.
-3. **Damage type:** The ancestry's elemental/damage association. The same damage type is planned to be possible in **multiple major categories**.
-4. **Breath Weapon area:** The full authored shape **and dimensions** (size). The approved mixed-Heritage ordinary Breath Weapon rule lets an eligible damage type and one *whole* eligible area be selected independently. Length/width or shape/dimensions are not separately interchangeable unless explicitly defined.
-5. **Hoard-related Upbringing:** A cultural Upbringing thematically related to what the associated dragon hoards. **Upbringing remains a separate, independently selectable cultural part of Character Origins**, not a biological grant inherited with the Dragonborn's skin, category, or Breath Weapon. The correspondence can provide a meaningful **suggestion**; it does not force the character to adopt that culture.
+1. **Category** — Chromatic, Metallic, Gem, or another authored Dragonborn family. More categories are planned.
+2. **Skin material** — the category-related physical material or presentation distinguishing the Ancestry (for example, a particular color, metal, or gem). The material belongs to the category's conceptual vocabulary but is not mechanically inferred solely from the category name.
+3. **Damage type** — the Ancestry's elemental/damage affinity. The same damage type may occur **in multiple categories**. The long-term content plan targets at least one Ancestry for each relevant damage type within each major category.
 
-The owner intends to expand **both the set of Dragonborn categories and the ancestries within each category**. The longer-term goal is to represent **at least one ancestry for each relevant damage type in every major category**. The present native sample was limited for scope, not because Chromatic and Metallic (plus a nonselectable Gem placeholder) exhaust the taxonomy. Nor should the existing category-specific leaf count be treated as a permanent limit.
+The current native Chromatic and Metallic leaves, and nonselectable Gem placeholder, are an intentionally limited starting corpus rather than an exhaustive set or an indication that categories map one-to-one to damage types.
 
-## Expansion should be content authoring, not repeated implementation
+**The three factors identify the standard Ancestry; they are not necessarily three unrestricted decisions during mixed-Heritage character creation.** Any inherited grouping, eligibility or cross-trait affinity policy must be decided separately.
 
-The complexity of declaring Dragonborn-wide dimensions and their relationships is **up-front, reusable model work**. Once the underlying generic Origin system supports these kinds of definitions, adding another Dragonborn ancestry that uses existing mechanics should mainly require authoring and validating a new leaf (and any new category, trait definitions, or cultural Upbringing records that actually belong to it). The system must not need a new branch of Dragonborn-specific code or a manually expanded list of recognized category/damage combinations for each new leaf.
+## Consequences that are not defining factors
 
-The intended architecture is:
+**Ordinary Breath Weapon area usually follows the category.** The complete authored geometry consists of a shape and its dimensions. In the current native corpus, for example, the Chromatic family supplies a 30-by-5-foot line and Metallic supplies a 15-foot cone. A category default may be overridden by specifically authored content; do not invent an absolute rule that every future leaf must use the same geometry.
 
-- **General Origin/Heritage machinery:** source-neutral lineage, characteristic identity, candidate values, parameter bindings, constraints, manifestation, and provenance.
-- **Species-level definitions:** reusable Dragonborn characteristic relationships, defaults, and permitted ancestry-family structures, expressed as data rather than a hard-coded Dragonborn resolver.
-- **Category/family records:** category-specific relationships and abilities, authored without assuming a closed set of categories.
-- **Ancestry records:** the actual category-related skin/material expression, damage type, full Breath Weapon geometry, distinctive traits, and associated cultural suggestion, as the authored content becomes available.
-- **Upbringing records:** independently selectable cultural definitions; a hoard association can suggest one but never confer it biologically.
+This **standard-Ancestry derivation** does not contradict the **already approved mixed-Heritage Breath Weapon rule**: damage type and complete area are independently eligible parameters drawn from contributors. A mixed character may select a complete eligible area supplied by one contributor and a damage type supplied by another. Shape, length and width do not become separately inheritable subparameters.
 
-This architecture should be reused by **other Species**, whose defining characteristics may be entirely different. A new Species should not require a new engine if all its abilities can be represented using existing general capabilities. Equally, a new Ancestry can require *new generalized mechanic work* if it introduces something genuinely not yet modeled. **Content expansion should be routine; capability expansion should be exceptional and source-neutral.**
+**Upbringing is not part of this Dragonborn ancestry-definition or Pillar 2 inheritance system.** It is an independently selected cultural part of Character Origins (Pillar 3). A dragon's hoard might motivate an associated or suggested Upbringing in separate cultural content; that narrative connection does not make it a defining factor, physical characteristic, mandatory choice or inherited ability.
 
-An extensibility test should add synthetic Dragonborn categories and leaves—including the same damage type in different categories—and verify all five authored associations are preserved without updating generic resolver logic. This is an acceptance goal; the fully declarative schema and its integration are not yet approved or implemented.
+Other authored Ancestry-specific traits may exist, but their availability and semantics belong to the relevant trait definitions; their existence does not expand the three-factor identity formula or grant them automatically in mixed Heritage.
 
-## What the current native corpus actually expresses
+## Content-driven structure
 
-| Dimension | Current source evidence | Current limitation |
+The initial work should establish reusable characteristic relationships once. Afterward, creating another Dragonborn Ancestry using supported mechanics should be primarily **content authoring and validation**, not a new engine implementation:
+
+- **General Origin/Heritage system:** Source-neutral characteristic identities, contributor evidence, candidate pools, manifestation, parameter bindings, constraints, dependencies and provenance.
+- **Species-level Dragonborn model:** Reusable definitions for category, related skin material and damage type, with links to existing general mechanics.
+- **Category/family records:** Authored family abilities and the **usual default** for Breath Weapon geometry, without a closed category enumeration or hard-coded source-name switches.
+- **Ancestry records:** The defining category–material–damage combination, plus any authored exceptions or distinct trait definitions.
+- **Upbringing:** A **separate** cultural selection system, not a field required to define or reconstruct an inherited Dragonborn Ancestry.
+
+These are conceptual responsibilities, not an approved native JSON layout. Another Species may have a very different pattern while using the same general machinery.
+
+The true boundary for future engineering is **new generalized capability versus additional authored content**. A new Species using existing mechanics might be content-only; a new Ancestry introducing genuinely novel mechanics could require generalized engine work.
+
+## Present native evidence and gaps
+
+| Concern | Existing native source | Modeling consequence |
 | --- | --- | --- |
-| Category | Explicit Species/Ancestry `parent` lineage through nonselectable family records | Only presently authored families; future taxonomy not enumerated |
-| Skin material | Not a normalized, authoritative dedicated field in the audited sample | Do not derive a universal material/skin mechanical property from `Chromatic` or `Metallic` names |
-| Damage type | Leaf `damageType` field | It describes an authored association, not a one-to-one category classifier |
-| Breath geometry | Family/leaf `breathWeaponArea` resolved through an explicit binding contract | Whole area only; more categories may author different shapes/dimensions |
-| Hoard-related Upbringing | Ancestries support `defaultUpbringing` as an optional cultural suggestion | Current Red and Bronze native leaves explicitly **have no Upbringing default yet**; the future hoard-linked Upbringings and their associations have not been authored |
+| Category | Explicit `parent` lineage through a family record | Must remain extensible beyond currently authored families |
+| Skin material | No authoritative normalized skin-material field in reviewed sample | Do not infer a new material grant or field from record names |
+| Damage type | Leaf `damageType` | Must not identify or imply a unique category |
+| Ordinary Breath Weapon area | Category/family `breathWeaponArea` resolved by a source binding, with potential authored leaf source | Normally derived from category for a standard Ancestry; complete area remains a separate approved parameter for mixed Heritage |
+| Upbringing | Separate Pillar 3 content; optional `defaultUpbringing` suggestions may exist | **Not one of the three determining factors** and not a Pillar 2 inherited characteristic |
 
-The absence of material or hoard-related Upbringing data in today's source files is a **content gap relative to the intended expanded design**, not evidence that those concepts are prohibited or that Pillar 2 should guess them from a color, metal, gem, or damage type.
+No new native records, skin materials, future category geometry, or hoard-related cultural mechanics can be inferred from the present sample.
 
-**Important:** The five associations describe a **standard authored ancestry definition**. They do **not** automatically mean five unrestricted, independent mixed-Heritage choices. The user is considering fewer choices with broader consequences; relationships among category, physical material, elemental affinity, traits and allowed options remain a distinct design problem.
+## Future acceptance tests
 
-## Consequences for characteristic and profile structure
+1. **Same damage type, different categories:** Add synthetic leaves under two categories using the same damage type and verify distinct Ancestry identity, skin materials and category-derived defaults.
+2. **Multiple damage types, same category:** Add leaves that differ in affinity and material, while inheriting the same authored category Breath Weapon geometry.
+3. **New category without new resolver logic:** Supply a synthetic category with a different default area and family trait; new leaves should resolve the data through general ancestry lineage and binding contracts.
+4. **Authored area exception:** Verify that a leaf-supplied complete area can be resolved without hard-coded category dispatch; do not infer a new universal override policy solely from this example.
+5. **Mixed contributor recombination:** Retain Red + Bronze Fire/Lightning and Line/Cone as the already approved ordinary Breath Weapon eligibility example; this test does not determine category/material manifestation or cross-trait affinity coupling.
+6. **Culture is not inherited:** Upbringing choice and any hoard-themed suggestion remain out of the inherited Origin characteristic set.
 
-**Separate identity from relationship.** Category and elemental affinity must be distinguishable because the long-term content plan crosses every major category with damage types. However, skin material is related to category, and a hoard-related Upbringing is a *cultural association*, not another inherited characteristic.
+Tests are future acceptance criteria, not assertions that these capabilities are already integrated.
 
-**Separate direct preset from mixed manifestation.** A standard ancestry can author a coherent package (category, related material, damage type, whole area and cultural suggestion). A mixed Origin must not automatically inherit every part of every contributor's package or assume all links have been severed. The selected damage type may be a powerful shared parameter, but any cross-trait coupling must be defined explicitly rather than inferred from today's leaf layout.
+## Remaining design decisions
 
-**Preserve existing approved mechanics.** Ordinary Breath Weapon remains one compound trait with independently selectable contributor-supplied damage type and complete area. Draconic Resistance is a separate ability; Chromatic Warding remains a category-sourced distinct ability that overrides same-type resistance when used. Whether a single manifested affinity should drive several of these traits is a **current design proposal**, not an implemented or owner-approved general selection rule. The existing default Red Dragonborn source consistently uses Fire for all three; that source example is not a universal constraint on future category–element pairs.
+- Does manifested category constrain the available **skin material** for mixed contributors, and what would that grouping mean when contributors span categories?
+- Should one selected elemental affinity configure Breath Weapon, Draconic Resistance and eligible category features, or are some trait instances independently parameterized? No cross-trait affinity coupling has been approved.
+- How are category-specific traits represented when several category contributions are available without automatically granting every family ability?
 
-**Do not assume category names are mechanics.** The trait structure should resolve any future category-specific features through **authored definitions and explicit source lineage**, not by a permanent switch over the currently known categories. The same principle applies to physical material: its narrative description and any actual gameplay properties need separate authoring.
-
-**Preserve the cultural boundary.** Upbringing choices remain free from a mandatory biological connection. The hoard relationship informs a suggested cultural default, where authored, without forcing an inherited benefit or preventing another Upbringing selection.
-
-## Representative future-facing questions (not answered here)
-
-- Is the manifested **skin material** always tied to the manifested **category**, and if so what is the precise grouping rule for mixed contributors?
-- Does a single **elemental affinity** drive Breath Weapon damage, Draconic Resistance and eligible family-specific effects, or can one or more be independently configured?
-- How are category-specific traits (Chromatic Warding, Metallic Breath Weapon and future families' alternatives) made available when an Origin has multiple category contributors?
-- How should a **hoard-related Upbringing suggestion** be authored per ancestry, and how does its provenance remain separate from the character's actual independent cultural choice?
-
-Do not settle these with automatic selection rules or new native fields until the relevant design decisions are made.
-
-## Compatibility examples for later testing
-
-1. **Cross-category matching damage type:** Two future leaves, in different categories, may share a damage type. A default-source audit must not reject them as duplicate or infer that they have identical skin material or family traits.
-2. **Multiple damage types within one category:** A category must not hardcode a single elemental affinity.
-3. **Skin–category association:** A selectable leaf should be able to identify its physical material without automatically granting every other category member's physical features.
-4. **Hoard culture:** A leaf may suggest an upbringing related to its dragon's hoard without automatically selecting, granting, or restricting the character's cultural choice.
-5. **Present Red + Bronze example:** Fire/Lightning and Line/Cone retain the already approved independent ordinary Breath Weapon parameter selection; the other characteristic relationships remain explicitly governed or unresolved.
-
-**Implementation boundary:** This document is a design record and future acceptance guide. No active first-party Species/Ancestry, Upbringing, creature mechanics, or character-creation API is modified by this clarification.
+**Scope:** This document corrects the earlier inaccurate five-factor model. Nothing here changes active first-party gameplay, cultural Upbringings, or a runtime Origin API.
