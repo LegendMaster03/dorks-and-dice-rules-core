@@ -1,0 +1,27 @@
+{
+  "id": "rule.competency-duplicate-proficiency",
+  "kind": "rule",
+  "name": "Duplicate Competency Proficiency",
+  "status": "selected-native",
+  "defaultResolution": "add-rank",
+  "supportedResolutions": [
+    "add-rank",
+    "alternate-proficiency"
+  ],
+  "resolutions": {
+    "add-rank": {
+      "description": "Each separately authorized duplicate proficiency beyond the first adds exactly one rank in that same Competency. Independently authored ranks are unaffected."
+    },
+    "alternate-proficiency": {
+      "description": "Each separately authorized duplicate proficiency instead permits an explicitly chosen proficiency in a different native Competency that does not already receive proficiency. The choice must preserve the source occurrence, and explicit ranks remain on their original Competency."
+    }
+  },
+  "scope": "all-authorized-character-training-sources",
+  "description": "A trusted ruleset or campaign setting selects exactly one duplicate-proficiency resolution. An occurrence of the same grant twice is invalid and is never a means of acquiring a benefit.",
+  "reviewNotes": [
+    "The provisional default favors specialization; the alternate policy favors breadth. Their relative balance awaits playtest and broader rank progression review.",
+    "Both policies are supported now, but this is a ruleset-level switch rather than an exposed player-facing optional rule toggle. A later balance review may justify an explicit optional rule.",
+    "The Competency reducer validates catalog references, occurrence identity, replacement completeness and uniqueness. Source authorization and the permission to select the configured policy remain upstream.",
+    "Skill and tool duplicate proficiencies use separate same-kind replacements. Binary weapon qualifications, language knowledge, and Weapon Mastery are not Competency training."
+  ]
+}

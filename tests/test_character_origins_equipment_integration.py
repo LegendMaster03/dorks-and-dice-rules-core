@@ -307,7 +307,7 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
         self.assertEqual(1, choice["count"])
         self.assertEqual(["equipment.group.weapon.all"],
                          choice["fromGroupIds"])
-        # The arena restriction is a contextual authorization gate. A static
+        # The DM decides whether a weapon is suitable for an arena. A static
         # type allowlist would silently exclude otherwise suitable weapons.
         self.assertNotIn("fromTypeIds", choice)
         self.assertNotIn("weaponMasteryGrants", gladiator)
@@ -323,13 +323,12 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
             "sameBaseWeaponTypeAsChoice": True,
             "mundane": True,
             "inexpensive": True,
-            "arenaAppropriate": True,
         }, inventory_item["itemRequirements"])
         self.assertIn("same-specific-mundane-arena-appropriate-weapon-type",
                       inventory_item["choiceConstraint"])
-        # The native taxonomy only enumerates candidate base types. The
-        # future Origin choice executor must establish arena suitability,
-        # actual item identity, price, and mundane status before selection.
+        # The DM judges arena suitability. The future Origin executor only
+        # needs to preserve the common weapon-type choice and create one
+        # matching ordinary starting item.
         self.assertNotIn("itemId", inventory_item)
         self.assertNotIn("equipmentTypeId", inventory_item)
         self.assertFalse(any(x.startswith("equipment.group.weapon.")
