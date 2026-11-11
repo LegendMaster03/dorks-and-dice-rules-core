@@ -52,6 +52,18 @@ This lets a directly selected Red Dragonborn proposal record Fire for all three 
 
 The two added single-parameter definitions currently use the existing `linked` policy, which is indistinguishable from `independent` for a single slot. This is a representation choice in a provisional fixture, **not a new global trait composition policy**.
 
+### Explicit intrinsic choices without an automatic override rule
+
+The standard-source proposal also supports a read-only **explicit choice preview**:
+
+`preview_explicit_standard_intrinsic_choices(selected_source_id, chosen_values, ...)` re-derives the standard candidate pool, checks that a particular intrinsic dimension was unresolved, and accepts **only an explicitly offered value**. It records the exact source occurrence that offered the chosen value and leaves all unrelated choices pending. The resulting selections can be inspected through the same draft manifestation profile format as mixed Heritage, without granting or activating anything.
+
+For **Wood Elf**, the base source records a 30-foot walk speed and the ancestry records 35 feet. Their relationship is now identified as `ancestor-descendant-authored-values`, with `defaultOverrideDecision: not-approved`. An explicit preview can choose either authored value, but the tool does **not** proclaim that standard Wood Elf characters should choose freely between 30 and 35 feet; **that is not the approved default**. We still need a design decision about whether the descendant value replaces its ancestor for a normal standard selection.
+
+For **Human**, Small or Medium are author-written alternatives from one `sizeChoice`, not a parent-child replacement conflict. The same preview can select either, while keeping Human's Skillful proficiency, Versatile feat, and rank allocation choices unresolved.
+
+The purpose is to prove that both situations use a common choice and provenance representation, while keeping the **standard preset policy**, **optional custom selection**, and **actual manifested character state** distinct. No implicit higher-value selection, value addition, or global child-overrides-parent rule is introduced.
+
 ### What this reveals
 
 - **Source correctness is not the same as complete Origin correctness.** An entitlement can be recorded before its dependent selection is made. Missing symbolic bindings must not be silently ignored.
@@ -62,7 +74,7 @@ The two added single-parameter definitions currently use the existing `linked` p
 ## Outstanding Pillar 2 tasks
 
 1. Audit any other missing trait parameter-binding definitions and retain unmodeled source parameters explicitly. Draconic Resistance and Chromatic Warding now have provisional mappings through the shared blueprint registry; this establishes no cross-trait dependency policy.
-2. Define the **standard-selection intrinsic composition contract** (parent/descendant replacement, explicit choices and same-value provenance). Then decide how this differs for mixed contributors.
+2. Decide the **default standard-selection intrinsic composition contract**, particularly whether a descendant's authored replacement value prevails over its parent. Explicit source-backed preview choices and same-value provenance are now representable, but this is not a decision about what default Wood Elf speed should be. Then decide how standard composition differs from mixed contributors.
 3. Define **dependent choice contracts** for existing trait entitlements and linked spellcasting ability choices. The fact that a feature is manifested does not automatically select a skill, spell, feat or ability.
 4. Define semantic characteristic identities and overlap rules, so duplicate and partially overlapping feature grants are not incorrectly stacked or collapsed.
 5. Re-audit every selectable standard source against those rules, then evaluate proposed trait-budget and optional balance policies separately.
