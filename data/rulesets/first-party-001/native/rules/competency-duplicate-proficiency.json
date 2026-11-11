@@ -1,0 +1,58 @@
+{
+  "id": "rule.competency-duplicate-proficiency",
+  "kind": "rule",
+  "name": "Duplicate Competency Proficiency",
+  "status": "selected-native",
+  "defaultResolution": "add-rank",
+  "supportedResolutions": [
+    "add-rank",
+    "alternate-proficiency"
+  ],
+  "resolutions": {
+    "add-rank": {
+      "description": "Each separately authorized duplicate proficiency beyond the first adds exactly one rank in that same Competency. Independently authored ranks are unaffected."
+    },
+    "alternate-proficiency": {
+      "description": "Each separately authorized duplicate proficiency instead permits an explicitly chosen proficiency in a different native Competency that does not already receive proficiency. The choice must preserve the source occurrence, and explicit ranks remain on their original Competency."
+    }
+  },
+  "scope": "all-authorized-character-training-sources",
+  "description": "An experimental optional rule offers two playable treatments for independently earned duplicate Competency proficiencies. A DM or playtest organizer selects one campaign/session setting, which the authorized Character/Origin controller passes to the Competency reducer. Each original grant remains source-tracked; repeating the same occurrence is invalid.",
+  "reviewNotes": [
+    "The provisional default favors specialization; the alternate favors breadth. Balance is deliberately unresolved so playtesters can compare both outcomes before any permanent rule decision.",
+    "Both supported resolutions are exposed as an experimental optional rule in the authoritative JSON for manual playtests. The Character Sheet / Origin UI is not yet implemented; no interactive UI control or automatic reporting is implied.",
+    "The Competency reducer validates catalog references, occurrence identity, replacement completeness and uniqueness. Source authorization and the permission to select the configured policy remain upstream.",
+    "Skill and tool duplicate proficiencies use separate same-kind replacements. Binary weapon qualifications, language knowledge, and Weapon Mastery are not Competency training."
+  ],
+  "optionalRule": {
+    "id": "optional-rule.competency-duplicate-proficiency",
+    "status": "experimental-playtest",
+    "settingKey": "competencyDuplicateProficiencyResolution",
+    "selectionScope": "campaign-or-playtest-session",
+    "defaultValue": "add-rank",
+    "options": [
+      {
+        "value": "add-rank",
+        "label": "Specialization — gain a rank in the same Competency",
+        "description": "An additional independently granted proficiency in an already-proficient Competency becomes one rank in that Competency."
+      },
+      {
+        "value": "alternate-proficiency",
+        "label": "Versatility — choose another Competency proficiency",
+        "description": "An additional independently granted proficiency in an already-proficient Competency becomes proficiency in a different Competency that is not already proficient."
+      }
+    ],
+    "description": "The DM or playtest organizer chooses and records one mode before testing. Both are available now to compare specialization against versatility. The rule may be changed between test sessions, with each recorded result tied to its active setting; do not switch an existing character's resolution without recalculating from the retained source grants."
+  },
+  "playtestFeedback": {
+    "selectedRuleField": "competencyDuplicateProficiencyResolution",
+    "minimumFields": [
+      "sessionOrBuildId",
+      "selectedResolution",
+      "competencyAndSourceOccurrences",
+      "resolvedRankOrAlternativeProficiency",
+      "observedUseAndBalanceFeedback"
+    ],
+    "description": "Record the mode and its concrete duplicate-grant outcomes, even when a player reports that the chosen mode produced no duplicate during the session. Compare effectiveness and opportunity cost over playtests; do not presume that the two modes are balanced."
+  }
+}

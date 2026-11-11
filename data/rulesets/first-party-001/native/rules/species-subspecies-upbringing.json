@@ -7,7 +7,12 @@
     "selectedCount": 1,
     "defaultField": "defaultUpbringing",
     "speciesRestrictionsByDefault": false,
-    "description": "Select one effective Upbringing. A Species or Ancestry default is a suggestion, not an extra automatically granted Upbringing and not a Species restriction. An explicit Upbringing choice replaces the suggested default. The selected Upbringing inherits any Upbringing parent benefits once, without requiring a second selection. Only records with selectable: true can be chosen directly; an inheritance-only parent contributes benefits solely through a selected child."
+    "description": "Select one effective Upbringing. A Species or Ancestry default is a suggestion, not an extra automatically granted Upbringing and not a Species restriction. An explicit Upbringing choice replaces the suggested default. The selected Upbringing inherits any Upbringing parent benefits once, without requiring a second selection. Only records with selectable: true can be chosen directly; an inheritance-only parent contributes benefits solely through a selected child.",
+    "parentSelectability": {
+      "default": "inheritance-only",
+      "directSelectionExceptionField": "allowParentSelection",
+      "description": "Any Upbringing referenced as another Upbringing's parent is nonselectable by default. It may be independently chosen only when it explicitly sets both selectable: true and allowParentSelection: true. Nonselectable parents grant benefits through one selected child, never as an additional selection."
+    }
   },
   "originInheritance": {
     "speciesAncestryParentField": "parent",
@@ -19,6 +24,34 @@
   "reviewNotes": [
     "Mixed Ancestry is a separate design question and is not required for directly selected Species and Ancestry.",
     "Character selection and grant authorization remain unimplemented; this JSON is authoritative content rather than an executable character builder.",
-    "General Elf and General Gnome are inheritance-only nonselectable parents. Their children retain inherited cultural benefits; Species defaults cannot point to these parents."
-  ]
+    "General Elf and General Gnome are inheritance-only nonselectable parents. Their children retain inherited cultural benefits; Species defaults cannot point to these parents.",
+    "Upbringings serving as parents are inheritance-only by default; a separately selectable parent requires explicit allowParentSelection.",
+    "Duplicate Skill and specific-tool proficiencies follow same-kind replacement. Duplicate Competency proficiency follows the separate optional-resolution contract; duplicate languages and broad/narrow weapon overlap do not create automatic alternatives."
+  ],
+  "duplicateTraining": {
+    "skillProficiency": {
+      "duplicateResolution": "choose-another-same-kind",
+      "replacementKind": "skill",
+      "authorizedChoiceRequired": true,
+      "description": "If independent authorized sources grant the same Skill proficiency, choose a different Skill proficiency instead of losing the redundant grant. Do not add a rank."
+    },
+    "toolProficiency": {
+      "duplicateResolution": "choose-another-same-kind",
+      "replacementKind": "tool",
+      "authorizedChoiceRequired": true,
+      "description": "If independently earned binary proficiencies cover the same specific tool type, choose another eligible tool proficiency. Do not turn a tool qualification into a ranked Competency."
+    },
+    "competencyProficiency": {
+      "ruleId": "rule.competency-duplicate-proficiency",
+      "description": "Competency duplication follows the separately configured policy: provisional same-Competency rank conversion or an authorized alternative Competency proficiency."
+    },
+    "weaponAndOtherEquipment": {
+      "duplicateResolution": "single-effective-boolean",
+      "description": "Repeated or overlapping broad/narrow weapon and other non-tool equipment qualifications retain source provenance. They do not award another proficiency or mastery by implication."
+    },
+    "language": {
+      "duplicateResolution": "retain-without-automatic-replacement",
+      "description": "Language duplication is not covered by the 5e Skill/tool duplicate rule; no new language grant has been approved by this pass."
+    }
+  }
 }

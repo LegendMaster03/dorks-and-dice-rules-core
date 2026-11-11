@@ -204,6 +204,92 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                         self.assertIn(option["benefits"][0]["competency"],
                                       self.competencies)
 
+    def test_guild_merchant_trade_language_is_exclusive_of_navigation(self):
+        """The fifth mixed-domain benefit is language OR Competency, not both.
+
+        This tests the approved authored shape, not the future Character
+        authorization runtime. A selected branch must suppress the other.
+        """
+        merchant = self.backgrounds["background.guild-merchant"]
+        outer = benefit(merchant, "guild-merchant-professional-choice")
+        self.assertEqual("benefit-choice", outer["grantType"])
+        self.assertEqual(1, outer["choiceCount"])
+        options = {x["id"]: x for x in outer["options"]}
+        self.assertEqual({"navigation", "additional-trade-language"}, set(options))
+
+        nav = self.assert_single(options["navigation"]["benefits"])
+        self.assertEqual("competency-training", nav["grantType"])
+        self.assertEqual("competency.navigation", nav["competency"])
+        self.assertEqual({"ranks": 1, "proficient": False},
+                         nav["competencyTraining"])
+        self.assertNotIn("extraLanguages", nav)
+
+        language = self.assert_single(
+            options["additional-trade-language"]["benefits"])
+        self.assertEqual(1, language["extraLanguages"])
+        self.assertEqual("learned-through-commercial-dealings",
+                         language["choiceConstraint"])
+        self.assertNotIn("competency", language)
+        self.assertNotIn("competencyTraining", language)
+
+        for option in options.values():
+            self.assertNotIn("equipmentProficiencyGrants", option)
+        self.assertNotIn("equipmentProficiencyGrants", merchant)
+        self.assertNotIn("weaponMasteryGrants", merchant)
+
+    def test_ordinary_competencies_do_not_imply_separate_tool_grants(self):
+        for origin_id, trained_id in (
+            ("background.charlatan", "charlatan-forgery"),
+            ("background.sailor", "sailor-navigation"),
+            ("upbringing.gnome.rock", "tinkering"),
+        ):
+            with self.subTest(origin=origin_id):
+                record = (self.backgrounds | self.upbringings)[origin_id]
+                trained = benefit(record, trained_id)
+                self.assertEqual("competency-training", trained["grantType"])
+                self.assertIn(trained["competency"], self.competencies)
+                self.assertNotIn("equipmentProficiencyGrants", record)
+
+    def test_elf_cultural_weapon_training_uses_canonical_base_types(self):
+        """Inherited Elf upbringing grants apply by weapon type, not family.
+
+        Existing cultural training does not imply Weapon Mastery and must not
+        depend on legacy display-name weaponProficiencies arrays.
+        """
+        cases = (
+            ("elf/high", "traditional-weapons",
+             ("longsword", "shortsword", "shortbow", "longbow")),
+            ("elf/wood", "woodland-archery",
+             ("shortbow", "longbow")),
+        )
+        for name, benefit_id, weapon_names in cases:
+            with self.subTest(upbringing=name):
+                origin = load("upbringings/" + name + ".json")
+                grant = origin["equipmentProficiencyGrants"]
+                self.assertNotIn("choices", grant)
+                self.assertEqual(
+                    {"equipment.weapon." + x for x in weapon_names},
+                    {x["targetId"] for x in grant["fixed"]},
+                )
+                self.assertEqual(len(weapon_names), len(grant["fixed"]))
+                self.assertEqual("qualification-training",
+                                 benefit(origin, benefit_id)["grantType"])
+                self.assertEqual("weapon",
+                                 benefit(origin, benefit_id)["qualificationCategory"])
+                self.assertNotIn("weaponProficiencies",
+                                 benefit(origin, benefit_id))
+                self.assertNotIn("weaponMasteryGrants", origin)
+                for item in grant["fixed"]:
+                    self.assertIn(item["targetId"], self.equipment_types)
+                    self.assertEqual(
+                        "weapon",
+                        self.equipment_types[item["targetId"]]["equipmentCategory"],
+                    )
+                    self.assertFalse(
+                        item["targetId"].startswith("equipment.group."),
+                        "Specific weapon proficiency must not cover a family",
+                    )
+
     def test_entertainer_item_obeys_selected_performance_method(self):
         """One physical item follows the outer benefit option and any inner type.
 
@@ -296,91 +382,6 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                 self.assertFalse(any(x["equipmentCategory"] == "vehicle"
                                      for x in self.equipment_types.values()))
 
-    def test_guild_merchant_trade_language_is_exclusive_of_navigation(self):
-        """The fifth mixed-domain benefit is language OR Competency, not both.
-
-        This tests the approved authored shape, not the future Character
-        authorization runtime. A selected branch must suppress the other.
-        """
-        merchant = self.backgrounds["background.guild-merchant"]
-        outer = benefit(merchant, "guild-merchant-professional-choice")
-        self.assertEqual("benefit-choice", outer["grantType"])
-        self.assertEqual(1, outer["choiceCount"])
-        options = {x["id"]: x for x in outer["options"]}
-        self.assertEqual({"navigation", "additional-trade-language"}, set(options))
-
-        nav = self.assert_single(options["navigation"]["benefits"])
-        self.assertEqual("competency-training", nav["grantType"])
-        self.assertEqual("competency.navigation", nav["competency"])
-        self.assertEqual({"ranks": 1, "proficient": False},
-                         nav["competencyTraining"])
-        self.assertNotIn("extraLanguages", nav)
-
-        language = self.assert_single(
-            options["additional-trade-language"]["benefits"])
-        self.assertEqual(1, language["extraLanguages"])
-        self.assertEqual("learned-through-commercial-dealings",
-                         language["choiceConstraint"])
-        self.assertNotIn("competency", language)
-        self.assertNotIn("competencyTraining", language)
-
-        for option in options.values():
-            self.assertNotIn("equipmentProficiencyGrants", option)
-        self.assertNotIn("equipmentProficiencyGrants", merchant)
-        self.assertNotIn("weaponMasteryGrants", merchant)
-
-    def test_ordinary_competencies_do_not_imply_separate_tool_grants(self):
-        for origin_id, trained_id in (
-            ("background.charlatan", "charlatan-forgery"),
-            ("background.sailor", "sailor-navigation"),
-            ("upbringing.gnome.rock", "tinkering"),
-        ):
-            with self.subTest(origin=origin_id):
-                record = (self.backgrounds | self.upbringings)[origin_id]
-                trained = benefit(record, trained_id)
-                self.assertEqual("competency-training", trained["grantType"])
-                self.assertIn(trained["competency"], self.competencies)
-                self.assertNotIn("equipmentProficiencyGrants", record)
-
-    def test_elf_cultural_weapon_training_uses_canonical_base_types(self):
-        """Inherited Elf upbringing grants apply by weapon type, not family.
-
-        Existing cultural training does not imply Weapon Mastery and must not
-        depend on legacy display-name weaponProficiencies arrays.
-        """
-        cases = (
-            ("elf/high", "traditional-weapons",
-             ("longsword", "shortsword", "shortbow", "longbow")),
-            ("elf/wood", "woodland-archery",
-             ("shortbow", "longbow")),
-        )
-        for name, benefit_id, weapon_names in cases:
-            with self.subTest(upbringing=name):
-                origin = load("upbringings/" + name + ".json")
-                grant = origin["equipmentProficiencyGrants"]
-                self.assertNotIn("choices", grant)
-                self.assertEqual(
-                    {"equipment.weapon." + x for x in weapon_names},
-                    {x["targetId"] for x in grant["fixed"]},
-                )
-                self.assertEqual(len(weapon_names), len(grant["fixed"]))
-                self.assertEqual("qualification-training",
-                                 benefit(origin, benefit_id)["grantType"])
-                self.assertEqual("weapon",
-                                 benefit(origin, benefit_id)["qualificationCategory"])
-                self.assertNotIn("weaponProficiencies",
-                                 benefit(origin, benefit_id))
-                self.assertNotIn("weaponMasteryGrants", origin)
-                for item in grant["fixed"]:
-                    self.assertIn(item["targetId"], self.equipment_types)
-                    self.assertEqual(
-                        "weapon",
-                        self.equipment_types[item["targetId"]]["equipmentCategory"],
-                    )
-                    self.assertFalse(
-                        item["targetId"].startswith("equipment.group."),
-                        "Specific weapon proficiency must not cover a family",
-                    )
 
     def test_gladiator_selects_one_base_weapon_without_weapon_mastery(self):
         """A selected weapon type is not a family, category, or mastery."""
@@ -399,7 +400,7 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
         self.assertEqual(1, choice["count"])
         self.assertEqual(["equipment.group.weapon.all"],
                          choice["fromGroupIds"])
-        # The arena restriction is a contextual authorization gate. A static
+        # The DM decides whether a weapon is suitable for an arena. A static
         # type allowlist would silently exclude otherwise suitable weapons.
         self.assertNotIn("fromTypeIds", choice)
         self.assertNotIn("weaponMasteryGrants", gladiator)
@@ -415,13 +416,12 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
             "sameBaseWeaponTypeAsChoice": True,
             "mundane": True,
             "inexpensive": True,
-            "arenaAppropriate": True,
         }, inventory_item["itemRequirements"])
         self.assertIn("same-specific-mundane-arena-appropriate-weapon-type",
                       inventory_item["choiceConstraint"])
-        # The native taxonomy only enumerates candidate base types. The
-        # future Origin choice executor must establish arena suitability,
-        # actual item identity, price, and mundane status before selection.
+        # The DM judges arena suitability. The future Origin executor only
+        # needs to preserve the common weapon-type choice and create one
+        # matching ordinary starting item.
         self.assertNotIn("itemId", inventory_item)
         self.assertNotIn("equipmentTypeId", inventory_item)
         self.assertFalse(any(x.startswith("equipment.group.weapon.")
