@@ -28,14 +28,41 @@ class ParameterInheritanceError(ValueError):
     """Invalid input, blueprint, or proposed parameter configuration."""
 
 
-def read_blueprint(path=DEFAULT_BLUEPRINT):
-    """Read a provisional mechanic/parameter association, not active rules."""
+def read_blueprints(path=DEFAULT_BLUEPRINT):
+    """Read all provisional source-to-parameter bindings, never active rules.
+
+    Keep the per-trait eligibility policy with its own mechanic definition.
+    Distinct trait entries do not establish cross-trait inheritance coupling.
+    """
     data = json.loads(Path(path).read_text(encoding="utf-8"))
-    if len(data.get("traits", [])) != 1:
+    traits = data.get("traits") if isinstance(data, dict) else None
+    if not isinstance(traits, list) or not traits:
+        raise ParameterInheritanceError("Missing parameter blueprint records")
+    by_occurrence = {}
+    mechanics = set()
+    for trait in traits:
+        _validate_blueprint(trait)
+        occurrence = trait["definitionOccurrenceId"]
+        if occurrence in by_occurrence or trait["mechanicId"] in mechanics:
+            raise ParameterInheritanceError("Repeated trait or mechanic identity")
+        mechanics.add(trait["mechanicId"])
+        by_occurrence[occurrence] = copy.deepcopy(trait)
+    return by_occurrence
+
+
+def read_blueprint(path=DEFAULT_BLUEPRINT,
+                   occurrence_id="species.dragonborn#trait:breath-weapon"):
+    """Keep the focused Breath Weapon example stable for existing studies.
+
+    Call read_blueprints for the full registry; this legacy helper does not
+    select a trait implicitly for Origin construction.
+    """
+    registry = read_blueprints(path)
+    if occurrence_id not in registry:
         raise ParameterInheritanceError(
-            "This focused prototype accepts exactly one trait definition"
+            f"Unknown blueprint occurrence: {occurrence_id}"
         )
-    return data["traits"][0]
+    return registry[occurrence_id]
 
 
 def _validate_blueprint(blueprint):
