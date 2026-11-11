@@ -7,8 +7,5 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../RulesCore.Content/RulesCore.Content.csproj" />
-    <!-- Internal preview evaluator is accessible only to the test assembly.
-         It is not a public Host request contract or character authority. -->
-    <InternalsVisibleTo Include="RulesCore.Mechanics.Tests" />
   </ItemGroup>
 </Project>
