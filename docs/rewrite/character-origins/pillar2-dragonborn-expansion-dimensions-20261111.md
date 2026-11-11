@@ -15,6 +15,22 @@ Each Dragonborn ancestry is intended to have all of the following:
 
 The owner intends to expand **both the set of Dragonborn categories and the ancestries within each category**. The longer-term goal is to represent **at least one ancestry for each relevant damage type in every major category**. The present native sample was limited for scope, not because Chromatic and Metallic (plus a nonselectable Gem placeholder) exhaust the taxonomy. Nor should the existing category-specific leaf count be treated as a permanent limit.
 
+## Expansion should be content authoring, not repeated implementation
+
+The complexity of declaring Dragonborn-wide dimensions and their relationships is **up-front, reusable model work**. Once the underlying generic Origin system supports these kinds of definitions, adding another Dragonborn ancestry that uses existing mechanics should mainly require authoring and validating a new leaf (and any new category, trait definitions, or cultural Upbringing records that actually belong to it). The system must not need a new branch of Dragonborn-specific code or a manually expanded list of recognized category/damage combinations for each new leaf.
+
+The intended architecture is:
+
+- **General Origin/Heritage machinery:** source-neutral lineage, characteristic identity, candidate values, parameter bindings, constraints, manifestation, and provenance.
+- **Species-level definitions:** reusable Dragonborn characteristic relationships, defaults, and permitted ancestry-family structures, expressed as data rather than a hard-coded Dragonborn resolver.
+- **Category/family records:** category-specific relationships and abilities, authored without assuming a closed set of categories.
+- **Ancestry records:** the actual category-related skin/material expression, damage type, full Breath Weapon geometry, distinctive traits, and associated cultural suggestion, as the authored content becomes available.
+- **Upbringing records:** independently selectable cultural definitions; a hoard association can suggest one but never confer it biologically.
+
+This architecture should be reused by **other Species**, whose defining characteristics may be entirely different. A new Species should not require a new engine if all its abilities can be represented using existing general capabilities. Equally, a new Ancestry can require *new generalized mechanic work* if it introduces something genuinely not yet modeled. **Content expansion should be routine; capability expansion should be exceptional and source-neutral.**
+
+An extensibility test should add synthetic Dragonborn categories and leaves—including the same damage type in different categories—and verify all five authored associations are preserved without updating generic resolver logic. This is an acceptance goal; the fully declarative schema and its integration are not yet approved or implemented.
+
 ## What the current native corpus actually expresses
 
 | Dimension | Current source evidence | Current limitation |
