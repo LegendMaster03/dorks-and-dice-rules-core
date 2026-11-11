@@ -88,6 +88,36 @@ class CharacterOriginsCrossPillarConsistencyTests(unittest.TestCase):
                 # its Species default, not silently awarding the parent.
                 self.assertTrue(self.upbringings[target]["selectable"])
 
+    def test_nonselectable_parents_cannot_be_selected_directly(self):
+        """Only child Upbringings select the inherited Elf/Gnome package."""
+        children = {
+            "upbringing.elf.general": ("upbringing.elf.drow",
+                                       "upbringing.elf.high",
+                                       "upbringing.elf.wood"),
+            "upbringing.gnome.general": ("upbringing.gnome.forest",
+                                         "upbringing.gnome.rock"),
+        }
+        for parent_id, child_ids in children.items():
+            with self.subTest(parent=parent_id):
+                self.assertFalse(self.upbringings[parent_id]["selectable"])
+                for child_id in child_ids:
+                    child = self.upbringings[child_id]
+                    self.assertTrue(child["selectable"])
+                    self.assertEqual(parent_id, child["parent"])
+                    chain = parent_chain(child_id, self.upbringings)
+                    self.assertEqual([child_id, parent_id], chain)
+
+        for species_id in ("species.elf", "species.gnome"):
+            self.assertNotIn("defaultUpbringing", self.species[species_id])
+        for ancestry_id in ("ancestry.elf.drow", "ancestry.elf.high",
+                            "ancestry.elf.wood", "ancestry.gnome.forest",
+                            "ancestry.gnome.rock"):
+            with self.subTest(ancestry=ancestry_id):
+                ancestry = self.ancestries[ancestry_id]
+                self.assertTrue(
+                    self.upbringings[ancestry["defaultUpbringing"]]
+                    ["selectable"])
+
     def test_parent_graphs_resolve_without_cycles(self):
         all_species = self.species | self.ancestries
         for identifier, record in self.ancestries.items():
