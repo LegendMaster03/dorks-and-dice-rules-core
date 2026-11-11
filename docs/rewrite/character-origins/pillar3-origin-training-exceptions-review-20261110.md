@@ -1,5 +1,7 @@
 # Pillar 3 — Source conversion exceptions and complete-package balance review
 
+> **Updated approved allocations (2026-11-10):** This is a historical evidence review preceding the final choices. Explorer/Spy now award one rank only; Aristocratic/General Goliath/Street-Raised proficiency only; General Dwarf proficiency only; Guild Artisan one rank only. Guild Artisan's shared crafting-method category and both scoped History multipliers are now native JSON. Descriptions below of unallocated outcomes are historical, not outstanding. See [current allocation decisions](pillar3-competency-origin-baseline-20261110.md).
+
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Status:** Evidence-based review of existing selected-native Origins. **No new both/rank/proficiency exceptions are approved or granted by this report.** See [historical Origin training conversion scope](pillar3-competency-origin-baseline-20261110.md) for the current authored allocations.
