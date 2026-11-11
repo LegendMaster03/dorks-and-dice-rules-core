@@ -1,5 +1,7 @@
 # Pillar 3 — Guild Artisan and Guild Merchant Source Reconciliation
 
+> **Current native decision (2026-11-10):** Both Guild Artisan and Guild Merchant are now selected-native independent Backgrounds. Guild Artisan grants one rank only in one guild-appropriate Competency from the authoritative shared `competency-category.crafting-method` list in `native/competencies.json`, referenced by `choiceCategoryId`. Prior statements below calling Guild Merchant unapproved or the category unresolved describe an older review stage. See [current training scope](pillar3-competency-origin-baseline-20261110.md).
+
 **Status:** Guild Artisan approved and authored in the native catalog; Guild Merchant remains a separate unapproved candidate. Earlier proposal and approval-boundary sections below are historical analysis, superseded by the final decision.
 
 **Ruleset:** `first-party-001`  
