@@ -34,14 +34,14 @@ That input **requests** the Thieves' Tools branch. It does not grant `equipment.
 
 A server-owned authority checks the character's actual selected/earned sources and the active, immutable Rules Core ruleset snapshot. It resolves all required choices against the relevant **authoritative native** source entities. Only after **all** checks succeed may it emit a trusted projection for the separate domain resolvers.
 
-The following shape illustrates an **internal result**, not a new accepted public API or an existing C# record:
+The following is an **internal projection fragment** showing how one authorized branch retains provenance, **not** a complete resolved character. Spy also has additional required selections (including Skills), omitted here deliberately. A full result may be marked `resolved` only after *all* of them have been validated. This is neither an accepted public API nor an existing C# record:
 
 ```json
 {
   "contractVersion": 1,
   "rulesetId": "first-party-001",
   "fingerprint": "<active-native-fingerprint>",
-  "status": "resolved",
+  "exampleOnly": true,
   "appliedSources": [
     {
       "sourceId": "background.spy",
@@ -70,7 +70,7 @@ The following shape illustrates an **internal result**, not a new accepted publi
 }
 ```
 
-A future implementation may use equivalent typed records rather than this exact JSON. It must preserve the **content IDs, occurrence provenance, all-or-nothing validation, and trust boundary**. The actual stable occurrence identifier comes from the Character/backend's verified acquisition records, never from the client or the example placeholder. Reconstructing this projection from user-supplied fields without validation would defeat the contract.
+A future implementation may use equivalent typed records rather than this fragment. It must preserve the **content IDs, occurrence provenance, all-or-nothing validation, and trust boundary**. It must never treat the example fragment as a usable completed projection. The actual stable occurrence identifier comes from the Character/backend's verified acquisition records, never from the client or the example placeholder. Reconstructing this projection from user-supplied fields without validation would defeat the contract.
 
 ## Source selection and inheritance
 
