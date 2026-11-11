@@ -72,6 +72,23 @@ The following is an **internal projection fragment** showing how one authorized 
 
 A future implementation may use equivalent typed records rather than this fragment. It must preserve the **content IDs, occurrence provenance, all-or-nothing validation, and trust boundary**. It must never treat the example fragment as a usable completed projection. The actual stable occurrence identifier comes from the Character/backend's verified acquisition records, never from the client or the example placeholder. Reconstructing this projection from user-supplied fields without validation would defeat the contract.
 
+## Implemented internal preview-only mechanics slice (PR #138)
+
+`src/RulesCore.Mechanics/NativeOriginMixedChoicePreview.cs` provides an **internal** `NativeOriginMixedChoicePreviewer` for the current five mixed-domain `benefit-choice` sources. Its test assembly is the only explicit friend assembly; no Host endpoint or Character backend route accepts its request contract.
+
+The input carries an asserted native `SourceId`, `SourceOccurrenceId`, `BenefitId`, optional `OptionId`, optional nested equipment type selections, and the active ruleset fingerprint. **None of these assertions authenticates acquisition or ownership.** The returned `CandidateEffects` are explicitly previews, not earned proficiencies, granted Competency ranks or applied languages. No result is named `resolved`; successful source-content validation has status `preview`.
+
+The previewer currently:
+
+- Looks up the exact Background/Upbringing and its actual selected nested option from the immutable native snapshot; a foreign benefit or option is rejected.
+- Preserves the sixteen approved outcomes without substituting other skills, tools or extra bonuses. Competency effects retain independent `ranks` and `proficient` values, and a language choice retains its existing contextual constraint.
+- Validates fixed Thieves' Tools references or the one counted Musical Instrument/Gaming Set selection. Tool candidates are determined from authoritative equipment-type and hierarchical group membership, not client-supplied target allowlists.
+- Returns `needs-choices` without partial candidate effects when an outer option or required inner equipment type remains unspecified.
+- Rejects unknown option fields and conditional metadata, unsupported grant domains, wrong tool groups, extra or duplicate equipment selections, nonnative references and stale fingerprints. Invalid/unavailable proposals never return partial effects.
+- Does **not** combine whole character Origins, establish parental inheritance, select Skills, authenticate earned sources, issue qualified equipment bits, materialize starting inventory, or resolve vehicle operation or mastery combat effects.
+
+`tests/RulesCore.Mechanics.Tests/NativeOriginMixedChoicePreviewTests.cs` covers all current options and malformed authoring cases. This internal slice is deliberately **not** the future trusted grant adapter: it produces potential effects for examination, not a certificate or capability that a Character service may blindly apply. The authorization service must independently authenticate the character, validate the complete Origin selection and its item constraints, and then recheck the active snapshot before issuing earned grants.
+
 ## Source selection and inheritance
 
 - Select **one** Background and **one** effective Upbringing. Species and applicable Ancestry are separately selected per their native selection rule. A Species or Ancestry `defaultUpbringing` is only a *suggestion*; it is not another source.
