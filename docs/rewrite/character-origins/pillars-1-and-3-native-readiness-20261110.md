@@ -78,7 +78,7 @@ The pinned source-coverage manifest retains four historical `subspecies.*` ident
 
 **Parent Upbringings:** Parents are inheritance-only by default. A directly selectable parent needs an explicit exception; inherited benefits apply once.
 
-**Policy switch status:** Both Competency outcomes are mechanically supported, but no player-facing optional rule toggle is exposed. Future balance review can compare specialization, breadth, and rank milestone timing.
+**Policy switch status:** Both outcomes are exposed in native JSON as an **experimental optional rule for playtest selection**, with `competencyDuplicateProficiencyResolution` set to `add-rank` (specialization) or `alternate-proficiency` (versatility). The DM/playtest organizer chooses the mode and records it with the character/session results. The future Character Sheet can expose a UI control, but a UI is not required to try either rule now. Relative balance and future rank-milestone pacing remain open empirical questions, not prerequisites to testing.
 
 **Audit integration:** Recursive reference checks, fixed Skill overlap detection, all directly selectable Origin combinations and five mutually exclusive mixed-domain Origin choices are tested at the content level. These checks do not imply that Character Origin authorization has been implemented.
 
@@ -92,8 +92,15 @@ The branch was tested through a temporary push-only GitHub Actions trigger on co
 - Repository-wide Python suite: **376 executed, 2 failed**. Those failures are the already documented `test_native_creature_types_reconciled` inherited working-evidence comparison and `test_ruleset_split` broad authoritative/working conflicts. No newly added Origin assertion failed.
 - As the full Python step failed, later Docker validation steps were **skipped**; this run does not demonstrate full repository CI health or end-to-end Origin character creation.
 
-The `add-rank` policy remains the provisional default. `alternate-proficiency` remains a fully tested ruleset-level alternative, but a player-facing optional toggle and any assertion of balance equivalence are deferred until competency rank milestones and breadth/specialization tradeoffs have been evaluated.
+The `add-rank` policy is the provisional default; `alternate-proficiency` is an available experimental playtest option. **Neither is presumed balanced against the other.** Both are usable via manually selected campaign/session policy and the existing typed reducer. A Character Sheet control and automatic collection of feedback are still unimplemented.
 
+## Experimental duplicate-Competency rule: playtest procedure
+
+The ruleset exposes two supported experimental variants through `rule.competency-duplicate-proficiency` and `optionalRule.settingKey = competencyDuplicateProficiencyResolution`. Choose **one** before a campaign/playtest session: `add-rank` converts every additional distinct proficiency grant into a rank in the same Competency, while `alternate-proficiency` converts it into a new, authorized proficiency in a different Competency. Both variants preserve separate explicit rank grants; no same-source occurrence may be replayed.
+
+Record the session or build identifier, the **selected policy value**, the affected Competency and original grant sources, the actual extra rank or new proficiency, and what happened during relevant checks or rank-dependent features. A session with no duplicates should still record the selected value so the denominator of the comparison remains visible. Changing the setting between sessions requires recalculating character training from retained source occurrences, not stacking the new interpretation on the prior projection.
+
+Playtest feedback should compare opportunities used, limitations encountered, and perceived tradeoffs between specialization and broader access. **Do not decide equivalence before observing results.** The future Origin authority and Character Sheet should eventually offer the setting directly; the current source-only test phase can use manual selection and recorded feedback.
 ## Completion conditions for this phase
 
 1. Every playable Species/Ancestry/Upbringing/Background combination has resolvable references and a selection path; nonselectable nodes are only inherited, not direct choices.

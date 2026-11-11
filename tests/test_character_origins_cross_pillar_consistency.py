@@ -175,6 +175,30 @@ class CharacterOriginsCrossPillarConsistencyTests(unittest.TestCase):
                          set(policy["resolutions"]))
         self.assertEqual("all-authorized-character-training-sources",
                          policy["scope"])
+        optional = policy["optionalRule"]
+        self.assertEqual("optional-rule.competency-duplicate-proficiency",
+                         optional["id"])
+        self.assertEqual("experimental-playtest", optional["status"])
+        self.assertEqual("competencyDuplicateProficiencyResolution",
+                         optional["settingKey"])
+        self.assertEqual("campaign-or-playtest-session",
+                         optional["selectionScope"])
+        self.assertEqual(policy["defaultResolution"],
+                         optional["defaultValue"])
+        self.assertEqual(policy["supportedResolutions"],
+                         [entry["value"] for entry in optional["options"]])
+        for option in optional["options"]:
+            with self.subTest(option=option["value"]):
+                self.assertTrue(option["label"].strip())
+                self.assertTrue(option["description"].strip())
+        feedback = policy["playtestFeedback"]
+        self.assertEqual(optional["settingKey"],
+                         feedback["selectedRuleField"])
+        self.assertIn("selectedResolution", feedback["minimumFields"])
+        self.assertIn("competencyAndSourceOccurrences",
+                      feedback["minimumFields"])
+        self.assertIn("resolvedRankOrAlternativeProficiency",
+                      feedback["minimumFields"])
 
     def test_parent_graphs_resolve_without_cycles(self):
         all_species = self.species | self.ancestries
