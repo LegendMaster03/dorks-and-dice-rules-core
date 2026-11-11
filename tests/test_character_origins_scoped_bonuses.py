@@ -34,7 +34,16 @@ class OriginScopedBonusTests(unittest.TestCase):
                 self.assertEqual("skill.history", b["skill"])
                 self.assertEqual("intelligence", b["ability"])
                 self.assertEqual(2, b["proficiencyBonusMultiplier"])
+                self.assertEqual("replace-normal-proficiency-contribution",
+                                 b["proficiencyBonusApplication"])
+                self.assertIs(b["appliesWithoutSkillProficiency"], True)
                 self.assertEqual(scope, b["scope"])
+                # Stonecunning considers the character proficient only for
+                # this check; Artificer's Lore supplies the multiplier
+                # without awarding general or check-local proficiency.
+                self.assertEqual(
+                    name == "stonecunning",
+                    b.get("consideredProficientOnQualifyingCheck", False))
                 self.assertNotIn("grantType", b)
                 self.assertNotIn("competency", b)
                 self.assertNotIn("ranks", b)
@@ -75,6 +84,15 @@ class OriginScopedBonusTests(unittest.TestCase):
                 self.assertEqual(parent["id"], child["parent"])
                 self.assertNotIn("cultural-training",
                                  {b["id"] for b in child["benefits"]})
+
+    def test_rock_gnome_cantrip_chooses_one_spellcasting_ability(self):
+        gnome = load("gnome/rock.json")
+        spell = benefit(gnome, "prestidigitation")
+        self.assertEqual("prestidigitation", spell["spell"])
+        self.assertEqual(["intelligence", "wisdom", "charisma"],
+                         spell["spellcastingAbilityChoice"])
+        self.assertNotIn("spellcastingAbilityChoice", gnome)
+        self.assertNotIn("competencyTraining", spell)
 
     def test_gnome_tinkering_does_not_make_history_a_competency_grant(self):
         gnome = load("gnome/rock.json")
