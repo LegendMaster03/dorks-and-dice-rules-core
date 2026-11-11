@@ -210,7 +210,8 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
     def test_identical_local_trait_names_across_species_do_not_merge(self):
         p = self.pool([
             direct("orc", "species.orc"),
-            direct("goliath", "species.goliath"),
+            # Base Goliath is inherited through selectable ancestries.
+            direct("goliath", "ancestry.goliath.cloud"),
         ])
         both = [x["identity"] for x in p["offers"]
                 if x["kind"] == "trait"
