@@ -19,7 +19,7 @@ from character_origins_compound_traits import read_contracts
 from character_origins_manifestation_inventory import (
     characteristic_candidate_pool,
 )
-from character_origins_parameter_inheritance import _value_key, read_blueprint
+from character_origins_parameter_inheritance import _value_key, read_blueprints
 from character_origins_source_inventory import (
     read_catalog, source_lineage,
 )
@@ -248,8 +248,7 @@ def main():
                        help="All currently selectable native sources")
     args = parser.parse_args()
     catalog = read_catalog()
-    blueprint = read_blueprint()
-    blueprints = {blueprint["definitionOccurrenceId"]: blueprint}
+    blueprints = read_blueprints()
     data = (
         audit_standard_corpus(catalog, read_contracts(), blueprints)
         if args.all else
