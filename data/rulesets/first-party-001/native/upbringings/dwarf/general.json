@@ -12,11 +12,14 @@
     },
     {
       "id": "stonecunning",
-      "description": "Double Proficiency Bonus on qualifying Intelligence (History) checks concerning stonework and its origins.",
+      "description": "On qualifying Intelligence (History) checks concerning stonework and its origins, count as proficient for that check and apply twice your Proficiency Bonus instead of any ordinary proficiency contribution, even if you lack History proficiency. This does not grant general History proficiency or a Competency rank.",
       "skill": "skill.history",
       "ability": "intelligence",
       "proficiencyBonusMultiplier": 2,
-      "scope": "stonework-history"
+      "scope": "stonework-history",
+      "proficiencyBonusApplication": "replace-normal-proficiency-contribution",
+      "appliesWithoutSkillProficiency": true,
+      "consideredProficientOnQualifyingCheck": true
     },
     {
       "id": "crafting-tradition",
