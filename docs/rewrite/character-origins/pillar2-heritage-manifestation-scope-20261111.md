@@ -9,17 +9,11 @@ An Origin profile should identify **how a character originated, where potential 
 
 **Established principle:** Origination establishes how an individual came into existence. Heritage identifies sources from which inherent characteristics *may* derive. The actual character is determined by manifest traits or explicit Origin decisions. Contributor identity, parenthood, and inheritance candidacy do not automatically grant a complete source's traits.
 
-## Framework guidance and table authority
+## Application of the system-wide table customization principle
 
-**Design principle:** Character Origins should provide a **consistent, usable default framework**, not claim to exhaust every possible origin or prevent a table from adapting the rules. As in other tabletop roleplaying games, a DM and players may agree to alter characteristics, create new Ancestries or Heritage configurations, and use mechanical differences to tell their own stories.
+The [native rules design specification](../native-rules-design-specification.md#governing-design-principle--the-rules-are-a-framework-not-a-constraint-on-the-table) establishes **table customization as a standing principle for all Dorks & Dice rules**, not a Pillar 2-specific exception.
 
-The first-party rules still matter: a standard selection should be reproducible, a proposed change should not masquerade as an existing grant, and the framework should clearly show when a configuration is **source-supported**, **homebrew**, or **explicitly adjudicated by the DM**. These are distinctions for clarity and provenance, not an attempt to police what a table may create.
-
-In particular, a generic inheritance model is **one character-creation aid**, not a requirement that every established Ancestry be derivable from a fixed set of parents. Nor should a hypothetical historical narrative be presented as proof that an individual automatically possesses a specific trait. A table can adopt a new variant without encoding generations of simulated genetics.
-
-The Rock Gnome example below illustrates this: Gnome + Dwarf does not reconstruct the existing passive Earthbound Tremorsense as a **default**; that does not forbid a DM from approving a similar character or a custom trait. A homebrew or DM-approved exception should be representable explicitly, without silently rewriting the first-party Rock Gnome or Dwarf rules.
-
-**Implementation boundary:** The current Pillar 2 prototypes test evidence and baseline eligibility. Their rejection of an unsupported first-party combination means **not granted by the unmodified default sources**, not **forbidden at the table**. Future character-creation integration should preserve an explicit customization/adjudication path, subject to separate design of its exact structure and permissions.
+In Character Origins, an unmodified Heritage candidate pool describes **default-source eligibility**, not every character a DM may approve. The Rock Gnome example below demonstrates the difference: Gnome + Dwarf does not inherently supply Rock Gnome's passive Earthbound Tremorsense under the current first-party data, but a table may explicitly authorize a custom variant or Origin. Such a customization should remain distinguishable from the first-party source characteristics and retain its own provenance; the exact customization mechanism is not yet designed.
 
 ## Separate concepts
 
