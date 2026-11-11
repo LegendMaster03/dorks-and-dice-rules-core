@@ -16,6 +16,18 @@
 
 These are design goals and boundaries. They do **not** approve a particular trait allocation, point cost, parent contributor limit, stacking rule, character schema, or automated import policy.
 
+## Data-driven Species and Ancestry extensibility
+
+**Owner design direction (2026-11-11):** The extra effort to model a Species and its characteristic relationships should be invested **once in reusable definitions**, so future Ancestries within that Species normally require **new content records**, rather than dedicated code or an inheritance-rule redesign for every leaf. Dragonborn is a stress test because additional categories and many additional Ancestries are planned.
+
+The **universal Origin engine** must remain source-neutral: it should consume declarative Species, optional intermediate family/category records, Ancestries, trait/parameter contracts, constraints, and independently suggested cultural Upbringings. A Species may supply a reusable set of characteristic dimensions and links; its Ancestries supply concrete values, distinct authored traits, and any explicit deviations. This is **not** a separate custom engine for each Species, nor a requirement that all Species share Dragonborn's five defining associations.
+
+**Normal extension acceptance:** A new Dragonborn ancestry using already-defined characteristic families and mechanics should be able to specify its category, category-related physical material, damage type, complete Breath Weapon area, any distinctive leaf trait, and suggested hoard-related Upbringing by content authoring and validation alone. Existing standard-preset reconstruction and mixed-Heritage logic should process it without source-name switches, hard-coded enumerations, runtime code changes, or fixed corpus-count tests.
+
+**Important qualification:** A new Species is one likely occasion for defining new characteristic relationships, but **not the only occasion for engineering work**. A newly added Ancestry can also introduce a genuinely new mechanic, dependency, or characteristic dimension that the current model does not support. Conversely, a new Species composed entirely of existing generic traits and rules should be possible through content alone. The correct implementation boundary is **new generalized capability versus new authored content**, not **new Species versus new Ancestry**.
+
+Future acceptance tests should use **synthetic additional Ancestries** under one existing Species, including (a) an additional category, (b) two categories using the same damage type, (c) multiple types within one category, (d) distinct family-sourced abilities, and (e) a separate cultural suggestion. Test that existing resolution discovers them without source-ID conditionals or unintended grants. The fixtures should not change authoritative first-party content or imply every hypothetical combination is already approved for a manifested character.
+
 ## First slice: lossless native source inventory (implemented as tooling only)
 
 The read-only tool:
