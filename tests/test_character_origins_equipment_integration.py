@@ -307,6 +307,9 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
         self.assertEqual(1, choice["count"])
         self.assertEqual(["equipment.group.weapon.all"],
                          choice["fromGroupIds"])
+        # The arena restriction is a contextual authorization gate. A static
+        # type allowlist would silently exclude otherwise suitable weapons.
+        self.assertNotIn("fromTypeIds", choice)
         self.assertNotIn("weaponMasteryGrants", gladiator)
         # The single authorized selection must feed both the narrow
         # proficiency grant and one ordinary inventory entry. Neither the
