@@ -73,6 +73,20 @@ The [Dragonborn three-factor Ancestry formula](pillar2-dragonborn-expansion-dime
 
 **Upbringing is outside this Pillar 2 Dragonborn system.** It belongs to independently selected cultural Character Origins content, even when a separate hoard-related cultural suggestion is authored. The three defining ancestry factors are not automatically three unrestricted mixed-Heritage selection choices. The previously approved independent damage-type/whole-area recombination for ordinary Breath Weapon **still applies to mixed Heritage**, while other characteristic grouping and cross-trait dependencies remain open.
 
+## Mixed Ancestry versus mixed Species
+
+**Design inference from the Species/Ancestry separation:** Combining multiple Ancestries **within one Species** should normally be simpler than combining different Species. Same-Species contributors already share a defined Species foundation, so the character's Origin can focus on the Ancestries' distinct eligible traits, characteristic values, category relationships, and manifestation decisions. For Dragonborn, the standard ancestry variation is largely expressed through **category, category-related skin material, and damage type**. A category usually supplies ordinary Breath Weapon geometry for a standard Ancestry; the separately approved mixed-Heritage rule still permits an eligible whole area and damage type to be inherited independently.
+
+**Cross-Species composition** may require reconciling several Species foundations, including possibly incompatible creature types, size, movement, senses, physical anatomy and complete traits. The presence of two Species contributors does not authorize automatically stacking or inheriting both complete foundations. Contributors remain evidence for candidate characteristics, not guaranteed grants.
+
+These are **two common cases handled by the same general Origin/Heritage engine**, not a mandate for separate evaluators or two incompatible rulesets:
+
+- **Shared Species foundation:** When contributors share a Species, retain that common definition once as a source of eligible characteristics; inspect the distinct Ancestry contributions and their dependencies without pretending that the shared Species grants stack.
+- **Distinct Species foundations:** When contributors differ in Species, preserve each foundation's candidate evidence and resolve competing intrinsic values, dependencies and trait interactions through generalized, explicitly selected rules.
+- **Neither is automatically unrestricted:** Same-Species mixed Ancestries can still have category/material or trait conflicts. Some cross-Species combinations may be mechanically straightforward. Complexity is a consequence of actual characteristic differences, not an arbitrary prohibition or a mandatory extra budget.
+
+**Implementation implication:** Source/characteristic identity, parameter bindings, manifestation and conflict handling should be reusable in both cases. An optimization or clearer user experience for shared-Species composition is reasonable, but should not become a Dragonborn-only solver or a hard-coded requirement that every custom Origin have biological parents. The final permissions, default manifestation groups and conflicting Species foundation policies remain to be determined.
+
 ## Reference example for future rules: Rock Gnome divergence
 
 The [Gnome + Dwarf → Rock Gnome reconstruction](pillar2-gnome-dwarf-rock-gnome-reconstruction-20261111.md) is an intentional counterexample to the assumption that every Ancestry must be recreatable as an immediate sum of its plausible predecessors. Gnome + Dwarf offers the Gnome baseline and a Dwarf Tremorsense trait, but **not** Rock Gnome's different passive Tremorsense trait.
