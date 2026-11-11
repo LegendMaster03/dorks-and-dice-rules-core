@@ -86,6 +86,22 @@ If the goal is to make Gnome + Dwarf reconstruct Earthbound Tremorsense exactly,
 
 This comparison should remain a regression fixture when the canonical trait registry and overlap/compatibility policies are designed. It does not implement or prescribe those future policies.
 
+## Optional illustrative hypothesis overlay
+
+A separate, non-canonical evidence fixture records the **possibility** of long-term Gnome–Dwarf ancestry producing a divergent Rock Gnome Tremorsense variant:
+
+- `pillar2-illustrative-ancestry-relationships-20261111.json` contains the proposed historical relationship, the two distinct trait occurrence IDs and the common Tremorsense field. It has `inheritanceEffect: "none"`.
+- `tools/character_origins_heritage_hypotheses.py` displays that hypothesis **beside** the ordinary reconstruction report. The report's 5/6 exact candidate count is unchanged, and the annotation confers no eligibility.
+- `tests/test_character_origins_pillar2_heritage_hypotheses.py` checks that the hypothesis does not authorize Earthbound Tremorsense and that unknown or tampered relationship evidence is rejected.
+
+The illustrative historical relationship is optional: a direct Rock Gnome remains a complete standard source even if the story is not adopted, and neither Rock Gnome nor Dwarf Tremorsense has been modified.
+
+```bash
+python3 tools/character_origins_heritage_hypotheses.py \
+  --target ancestry.gnome.rock \
+  --contributors species.gnome species.dwarf
+```
+
 ## Run
 
 ```bash
