@@ -1,15 +1,9 @@
-# CC SRD attribution and native baseline context
+# SRD reference, attribution, and migration evidence
 
-Native Dorks & Dice rules live in `data/native/`, not in a runtime SRD source layer. `manifest.json` records the identities, license and attribution for the official SRD 5.1 and SRD 5.2.1 materials consulted in the baseline. **The native JSON is intended to be authoritative, not the upstream SRD or 5etools at runtime.**
+The authoritative Dorks & Dice rules are in `data/rulesets/first-party-001/native/`, not in the retired `data/native/` layout or the SRD reference tree. `structured/` preserves the pinned structured SRD 5.1 and SRD 5.2.1 inputs; `structured-manifest.json` tracks the source files. Source material and derived work require applicable attribution, license checks, and verification against official SRD publication boundaries.
 
-The initial skill content has been curated directly from the structured `srd` and `srd52` skill records in 5etools at pinned commit `90d343cde64cf8dce1083ea0525a6b0b9e545f2e`. This is not a claim of importing the complete SRDs or independently verifying every text passage against the official PDFs. The project must fulfill CC BY 4.0 obligations and verify its redistributed excerpt coverage.
+The native ruleset is intentionally independent of any source edition at runtime. Candidate records and cross-edition evidence belong under `data/rulesets/first-party-001/working/`, `data/reference/`, or `data/conversions/`. These are never fallback native rules. Only approved, coherent definitions under `native/` are served.
 
-No baseline importer is required. Future user imports and third-party source support will have separate versioned conversion and provenance requirements. See `docs/rewrite/native-seed-skills-and-competencies.md`.
+The original structured-source comparison and native staging were historical migration steps. See [baseline import record](../../../docs/rewrite/srd-baseline-status.md), [native staging record](../../../docs/rewrite/native-srd-baseline-complete.md), and [migration audit](../../../docs/rewrite/phase-1a-audit.md) for their dated counts; those records must not be interpreted as current native catalog totals.
 
-The compact, corrected starter skill data is in `data/native/skills.json`. It uses short descriptions selected from candidate SRD 5.2.1-marked material, subject to official-SRD checking. Older-edition names and decisions are not stored in the native skill records. Attribution remains relevant even though external source material is not an engine dependency.
-
-## Current baseline status
-
-The pinned structured SRD-only pack is now copied in full under `structured/`; the file-hash manifest is `structured-manifest.json`, and the comparison inventory is `reconciliation-inventory.json`. Both source books are included. See `docs/rewrite/srd-baseline-status.md` for coverage limits and native-reconciliation status.
-
-The temporary one-off GitHub Actions copy/audit workflows have been removed. The normal validation workflow checks the copied files' SHA-256 hashes and the existence of the required content categories.
+For current constraints see [Rules Core architecture](../../../docs/architecture.md), [data tree guidance](../../README.md), and the authoritative `native/` data. Source imports and external conversions require separate reviewed design and do not automatically extend the native package.

@@ -1,5 +1,8 @@
 # Rules Layer relationships
 
+> **Historical reference only.** This document describes the former Rules Core implementation and is retained because `data/reference/competency-reconciliation-cases.json` cites it as provenance. Its old API, database, and character contracts are **not** current native runtime requirements. See [current architecture](architecture.md) and [native mechanics](native-mechanics-api.md).
+
+
 Rules Core keeps relationships between rule concepts separate from source provenance and canonical identity.
 
 Canonical identity answers whether two source representations are the same rule concept. Relationship metadata answers how distinct concepts are structurally or mechanically connected. A relationship must therefore never create a canonical alias or erase a distinct source entity.
@@ -93,4 +96,4 @@ Knowledge specialties are not deferred family relationships: `Knowledge (X)` use
 The relationship representation remains generic enough to add partial contributions, one-to-many splits, scoped cross-type relationships, skill-to-saving-throw relationships, and future relationship kinds without placing those semantics in canonical identity.
 ## Character mechanics consumers
 
-Character-oriented consumers use the normalized mechanics contract documented in `docs/character-mechanics-consumer.md`. Composite competency rulings exposed there are the same persisted Rules Layer rulings described above; the Character Sheet must not create a parallel relationship interpretation.
+In the former implementation, Character consumers used a normalized source-mechanics contract, and the same persisted Rules Layer rulings informed composite competencies. This is historical provenance, not an instruction to recreate the retired contract; consult [native mechanics](native-mechanics-api.md) for current behavior.

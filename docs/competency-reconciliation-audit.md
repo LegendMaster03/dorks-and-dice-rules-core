@@ -1,5 +1,8 @@
 # Competency reconciliation audit
 
+> **Historical reference only.** This document describes the former Rules Core implementation and is retained because `data/reference/skill-reconciliation-audit.json` cites it as provenance. Its old API, database, and character contracts are **not** current native runtime requirements. See [current architecture](architecture.md) and [native mechanics](native-mechanics-api.md).
+
+
 This document classifies the reviewed 3e/3.5e competency corpus for the cross-edition Character contract. It is an implementation/audit map, not a claim that similarly named rules are interchangeable.
 
 **Native ruleset distinction:** This is a historical research/audit document describing an earlier importer and Character contract, not normative native rules or a requirement to preserve legacy identities. The developing `first-party-001/native/competencies.json` defines each competency as one learned capability with proficiency and level. Smithing replaces the provisional Blacksmithing identity; Armorsmithing, Weaponsmithing, Bowmaking, Trapmaking, and Shipmaking are retired as independent native advancement tracks. Their obsolete intermediate working definitions have been removed. Original edition materials may still be consulted for research, but they impose no native compatibility or retention obligations. Ship construction and naval design are deferred to their own subsystem review.

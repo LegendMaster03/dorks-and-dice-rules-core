@@ -1,5 +1,8 @@
 # Universal Character concepts
 
+> **Historical reference only.** This document describes the former Rules Core implementation and is retained because `data/reference/competency-reconciliation-cases.json` cites it as provenance. Its old API, database, and character contracts are **not** current native runtime requirements. See [current architecture](architecture.md) and [native mechanics](native-mechanics-api.md).
+
+
 Rules Core separates universal Character semantics from source identity and from the rule implementation that calculates a value.
 
 **Scope of this document:** This document describes an earlier source-compatibility and consumer model. It is research context, **not** the current native `first-party-001` Competency schema or a mandate to preserve earlier Character identities. The native ruleset uses one proficiency/level profile per competency, with a single Smithing competency; Blacksmithing, Armorsmithing, Weaponsmithing, Bowmaking, Trapmaking, and Shipmaking have no independent native advancement track. Their obsolete intermediate working definitions are removed. References to those names below describe earlier implementation decisions, not selected gameplay rules, required migration behavior, or ongoing historical catalog obligations. The current consumer contract will be considered after the native schema is approved.

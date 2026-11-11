@@ -46,7 +46,7 @@ Repository review found:
 
 - `src/RulesCore.Infrastructure/Rules/CharacterProjection/CharacterThreeXCombatResolver.cs` computes `combat.grapple` from 3.x BAB, Strength modifier, size-specific grapple modifier, and other modifiers, and also projects 3.x Armor Class variants and saving throws.
 - `src/RulesCore.Domain/Rules/CharacterMechanics.cs` declares `combat.grapple` as a numeric mechanic.
-- `docs/character-mechanics-consumer.md` retains target defenses, roll modes, and applicable target states as separate concepts; advantage is not equivalent to Flat-Footed AC or a touch attack.
+- The native mechanics model keeps roll modes distinct from target defenses and conditions; advantage is not equivalent to Flat-Footed AC or a touch attack. See `docs/native-mechanics-api.md` for current executable boundaries.
 - The current repository search did **not** identify first-class CMB/CMD mechanic identities or a general maneuver resolver for trip, bull rush, disarm, sunder, overrun, and related actions. This is a **scoped evidence finding**, not proof that no relevant imported raw/source rules exist.
 
 The distinction is important: **a grapple modifier is not a complete grapple action procedure**, and a collection of independently imported special attacks is not a unified Dorks & Dice combat-maneuver model.
@@ -102,10 +102,10 @@ Competency ranks and facets, reviewed composite-skill arithmetic, Craft/Perform/
 - `docs/competency-reconciliation-audit.md`
 - `docs/universal-character-concepts.md`
 - `docs/mechanical-relationships.md`
-- `docs/character-advancement-eligibility.md`
-- `docs/epic-content-modeling.md`
-- `docs/character-mechanics-consumer.md`
-- `docs/source-versioning.md`
+- `src/RulesCore.Mechanics/NativeAdvancementEligibility.cs`
+- `docs/rewrite/native-rules-design-specification.md`
+- `docs/native-mechanics-api.md`
+- `docs/rewrite/native-rules-design-specification.md`
 
 ## Pathfinder sources (PF1e, not PF2e)
 

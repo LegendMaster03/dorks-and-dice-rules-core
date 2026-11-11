@@ -1,5 +1,8 @@
 # Built-in source and rules baseline
 
+> **Historical reference only.** This document describes the former Rules Core implementation and is retained because `data/reference/srd/class-reconciliation-decisions.json` cites it as provenance. Its old API, database, and character contracts are **not** current native runtime requirements. See [current architecture](architecture.md) and [native mechanics](native-mechanics-api.md).
+
+
 Rules Core initializes a deterministic public baseline after the database schema is ready. Source registration, acquisition metadata, immutable source representations, canonical recognition, and Rules Layer adjudication remain separate so provenance is not collapsed into house rules.
 
 ## Startup behavior

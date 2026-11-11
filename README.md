@@ -58,10 +58,12 @@ injection.
 
 GET /health reports process liveness and remains HTTP 200 when content is
 unavailable. GET /ready is HTTP 200 only with a validated catalog, otherwise
-HTTP 503 with a safe reason. PublicOnly maps only /api/rulesets native GET
-operations; PrivateOnly maps only authenticated /api/private/rulesets operations.
-Neither mode exposes legacy /api/rules or the other's endpoint family. The
-current first-party native package has no public-distribution authorization.
+HTTP 503 with a safe reason. PublicOnly maps the distribution-gated /api/rulesets reference API, the
+Site-authenticated /api/consumer/v1/rulesets reference API, and authenticated
+/api/mechanics/v1 evaluation. PrivateOnly maps authenticated
+/api/private/rulesets and /api/private/mechanics/v1. Neither surface exposes
+legacy /api/rules. The current first-party native package has no anonymous
+public-distribution authorization.
 
 Run from the repository root:
 
@@ -76,11 +78,10 @@ For an alternate working directory, configure Rulesets__ContentRoot to the
 absolute path of data/rulesets. Docker embeds the manifest and native content,
 but excludes working drafts and conversion/reference data.
 
-See docs/rewrite/phase-2-native-catalog.md for validation, 
-docs/rewrite/phase-3a-native-private-reference-api.md for the private Wiki boundary,
-and docs/rewrite/phase-3b-native-public-consumer-api.md for public DTOs,
-distribution policy, consumer migration, and Phase 4 release gates.
-
-Historical phase documents under `docs/rewrite/` describe earlier implementation
-checkpoints. They do not supersede the current repository tree, API contracts,
-or the manual deployment workflow.
+See [the documentation index](docs/README.md) for the current contract map,
+[architecture](docs/architecture.md) for content and API authority,
+[native mechanics](docs/native-mechanics-api.md) for supported calculations,
+and [private tunnel deployment](docs/private-tool-tunnel-deployment.md) for
+network isolation. [Native rules design](docs/rewrite/native-rules-design-specification.md)
+is a living game-design specification; a proposal in it is not necessarily an
+implemented mechanic.
