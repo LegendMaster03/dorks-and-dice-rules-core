@@ -17,6 +17,12 @@ For the existing Dragonborn ordinary Breath Weapon:
 - Its **area** comes from its selected ancestry family/leaf.
 - The prototype uses the existing source-qualified Breath Weapon trait occurrence and resolves the existing native source values using the declarative bindings in `pillar2-legacy-binding-evidence-20261111.json`. It does **not** copy a distinct full Breath Weapon implementation for every ancestry.
 
+## Expansion constraint: ancestry category is not damage type
+
+The [planned Dragonborn ancestry dimensions](pillar2-dragonborn-expansion-dimensions-20261111.md) distinguish category, category-related skin material, elemental/damage association, complete Breath Weapon geometry, and hoard-related Upbringing. Future ancestry expansion targets multiple categories and at least one leaf for each relevant damage type within each major category.
+
+A selected Dragonborn leaf currently supplies the damage value to a source-binding contract. That does **not** make the damage type a unique identifier for its category, skin material, or culture, and the current Chromatic/Metallic sample can not justify such an inference. The approved independent damage-type/whole-area Breath Weapon parameter policy remains unchanged.
+
 ## Trait-level parameter inheritance policy
 
 The provisional trait definition specifies a `parameterInheritance.mode`:
