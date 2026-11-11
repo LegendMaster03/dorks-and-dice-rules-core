@@ -37,7 +37,20 @@ MOVEMENT_ROOT_FIELDS = {
 
 
 def _distinct_occurrences(entries):
-    return {entry["identity"] for entry in entries}
+    """Preserve source qualification, including nested manifested profiles."""
+    values = set()
+    for entry in entries:
+        occurrence = entry.get("sourceOccurrenceId")
+        if not occurrence:
+            source = entry["provenance"]
+            if source["kind"] == "manifested-profile":
+                occurrence = (
+                    f"{source['profileId']}#manifested:{entry['identity']}"
+                )
+            else:
+                occurrence = entry["identity"]
+        values.add(occurrence)
+    return values
 
 
 def _stable_value_groups(entries, field):
