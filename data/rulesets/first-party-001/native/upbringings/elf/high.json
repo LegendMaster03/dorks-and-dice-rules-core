@@ -8,18 +8,34 @@
     {
       "id": "traditional-weapons",
       "description": "Gain proficiency with longsword, shortsword, shortbow and longbow.",
-      "weaponProficiencies": [
-        "longsword",
-        "shortsword",
-        "shortbow",
-        "longbow"
-      ]
+      "grantType": "qualification-training",
+      "qualificationCategory": "weapon"
     },
     {
       "id": "additional-language",
-      "description": "Learn one additional language of choice without replacing inherited Elvish.",
+      "description": "Learn one additional language of choice without replacing Elvish learned through the General Elf Upbringing.",
       "extraLanguages": 1
     }
   ],
-  "parent": "upbringing.elf.general"
+  "parent": "upbringing.elf.general",
+  "equipmentProficiencyGrants": {
+    "fixed": [
+      {
+        "id": "traditional-weapons-longsword",
+        "targetId": "equipment.weapon.longsword"
+      },
+      {
+        "id": "traditional-weapons-shortsword",
+        "targetId": "equipment.weapon.shortsword"
+      },
+      {
+        "id": "traditional-weapons-shortbow",
+        "targetId": "equipment.weapon.shortbow"
+      },
+      {
+        "id": "traditional-weapons-longbow",
+        "targetId": "equipment.weapon.longbow"
+      }
+    ]
+  }
 }

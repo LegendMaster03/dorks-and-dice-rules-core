@@ -98,6 +98,17 @@ class NativeContentRegressionTests(unittest.TestCase):
                 original = dict(cls)
                 original["definition"] = dict(cls["definition"])
                 original["definition"].pop("equipmentProficiencyGrants", None)
+                if name == "bard":
+                    # The native executable Martial-weapon choice records a
+                    # link to its retained 3.0 source decision. That link is
+                    # native-only metadata; verify it, then compare the
+                    # historical fields without modifying the working copy.
+                    native_choice = cls["definition"]["equipmentProficiencyGrants"]["choices"]
+                    self.assertEqual(1, len(native_choice))
+                    legacy = dict(original["definition"]["legacySingleMartialWeaponChoice"])
+                    self.assertEqual(native_choice[0]["id"],
+                                     legacy.pop("implementedByEquipmentGrant"))
+                    original["definition"]["legacySingleMartialWeaponChoice"] = legacy
                 self.assertEqual(source, original)
 
     def test_feature_dependencies_and_provenance(self):

@@ -1,0 +1,107 @@
+{
+  "id": "background.noble",
+  "name": "Noble",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "Your experiences include possessing or exercising recognized noble standing within a society. That position may come from family, appointment, service, adoption, marriage, or another accepted path. This Background does not require an aristocratic childhood, a particular Species, or continuing approval from every political authority.",
+  "benefits": [
+    {
+      "id": "noble-history",
+      "name": "History Training",
+      "description": "Gain training in History.",
+      "skill": "skill.history",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "noble-persuasion",
+      "name": "Persuasion Training",
+      "description": "Gain training in Persuasion.",
+      "skill": "skill.persuasion",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "noble-gaming-set",
+      "name": "Gaming Set Training",
+      "description": "Choose one type of gaming set and gain training with it.",
+      "grantType": "qualification-training",
+      "choiceCategory": "gaming-set",
+      "choiceCount": 1,
+      "qualificationCategory": "tool"
+    },
+    {
+      "id": "noble-learned-language",
+      "name": "Additional Language",
+      "description": "Learn one language of your choice through the education, dealings, or relationships associated with your noble experience. This grant is separate from languages learned through Upbringing.",
+      "extraLanguages": 1
+    },
+    {
+      "id": "noble-position-of-privilege",
+      "name": "Position of Privilege",
+      "grantType": "background-feature",
+      "description": "Where your standing is recognized, you are generally treated as a member of the noble social order. You can make appropriate requests for introductions, hospitality, or audiences within its conventions, including opportunities not ordinarily offered to outsiders. The response depends on jurisdiction, relationships, available access, and the people involved; this feature does not confer universal command, guaranteed admission, or automatic cooperation. A change in your recognized standing does not erase your acquired training."
+    }
+  ],
+  "startingEquipment": {
+    "description": "Fine clothes, a signet ring, a document establishing pedigree or bestowed standing, and a purse containing 25 gp. A charter or commission can replace a lineage record for a character elevated to noble standing later in life. These possessions enter ordinary inventory.",
+    "items": [
+      {
+        "name": "Fine clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Signet ring",
+        "quantity": 1
+      },
+      {
+        "name": "Record of pedigree or bestowed noble standing",
+        "quantity": 1,
+        "examples": [
+          "Pedigree scroll",
+          "Charter of nobility",
+          "Commission establishing rank"
+        ]
+      },
+      {
+        "name": "Purse",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 25
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Personality traits, ideals, bonds, flaws, family standing, political loyalties, and obligations are optional prompts, not prerequisites. Nobility need not be inherited and does not impose a particular attitude toward other people.",
+    "prompts": [
+      "How was your standing recognized or acquired?",
+      "Which responsibilities or relationships came with your position?",
+      "Where is your title or standing acknowledged, and where is it disputed?",
+      "How has that experience shaped your dealings with people outside noble circles?"
+    ]
+  },
+  "reviewNotes": [
+    "Native reconciliation follows the 2014 5e Noble Background as an independent package rather than inheriting Aristocratic Upbringing.",
+    "The 2014 History, Persuasion, one Gaming Set type, one learned language, Position of Privilege, and 25 gp inventory baseline are retained.",
+    "The social feature is contextual to recognized rank and institutions; it does not enforce a biological genealogy, prescribe aristocratic childhood, or guarantee unconditional access.",
+    "The record establishing status may be an award or legal grant rather than hereditary pedigree, allowing later ennoblement.",
+    "Noble and Knight are independent Backgrounds. No Knight variant or Retainers replacement feature is embedded in Noble.",
+    "No fixed 2024 ability score increases or automatic Skilled Origin feat.",
+    "Starting equipment awaits verified native item identities and materialization into ordinary inventory; it is not a separate inventory collection.",
+    "The gaming-set choice is represented as one selected native equipment proficiency, not a ranked Competency; authorized choice execution remains Character-owned.",
+    "Overlapping grants from Aristocratic Upbringing or other sources await general duplicate-grant semantics rather than automatic proficiency stacking."
+  ],
+  "equipmentProficiencyGrants": {
+    "choices": [
+      {
+        "id": "noble-gaming-set",
+        "count": 1,
+        "fromCategory": "tool",
+        "fromGroupIds": [
+          "equipment.group.tool.gaming-set"
+        ]
+      }
+    ]
+  }
+}

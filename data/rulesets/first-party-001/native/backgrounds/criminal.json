@@ -1,0 +1,115 @@
+{
+  "id": "background.criminal",
+  "name": "Criminal",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "Your previous experiences include illicit activity, the networks around it, or work performed beyond the law. You may have acted independently or within an organization. This Background does not determine your current occupation, loyalties, morals, or personal history.",
+  "benefits": [
+    {
+      "id": "criminal-deception",
+      "name": "Deception Training",
+      "description": "Gain training in Deception.",
+      "skill": "skill.deception",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "criminal-stealth",
+      "name": "Stealth Training",
+      "description": "Gain training in Stealth.",
+      "skill": "skill.stealth",
+      "grantType": "skill-training"
+    },
+    {
+      "id": "criminal-thieves-tools",
+      "name": "Thieves' Tools Proficiency",
+      "description": "Gain training with Thieves' Tools.",
+      "grantType": "qualification-training",
+      "qualificationCategory": "tool",
+      "equipmentTypeId": "equipment.tool.thieves-tools"
+    },
+    {
+      "id": "criminal-gaming-set",
+      "name": "Gaming Set Training",
+      "description": "Choose one type of gaming set and gain training with it.",
+      "grantType": "qualification-training",
+      "choiceCategory": "gaming-set",
+      "choiceCount": 1,
+      "qualificationCategory": "tool"
+    },
+    {
+      "id": "criminal-contact",
+      "name": "Criminal Contact",
+      "description": "You have an established contact who can carry messages between you and a criminal network. You know how to reach the contact through appropriate channels, including when separated by distance. This relationship does not guarantee access, information, assistance, or cooperation from every criminal organization.",
+      "grantType": "background-feature"
+    }
+  ],
+  "startingEquipment": {
+    "description": "A crowbar, dark common clothes with a hood, and a pouch containing 15 gp. Add these as ordinary inventory possessions.",
+    "items": [
+      {
+        "name": "Crowbar",
+        "quantity": 1
+      },
+      {
+        "name": "Dark common clothes with hood",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedSpecialties": [
+    "Blackmailer",
+    "Burglar",
+    "Enforcer",
+    "Fence",
+    "Highway Robber",
+    "Hired Killer",
+    "Pickpocket",
+    "Smuggler"
+  ],
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Personality traits, ideals, bonds, flaws, and criminal specialties are optional inspiration. They impose no morality, alignment, current membership, or required personal history.",
+    "prompts": [
+      "How did you first become involved in illicit work?",
+      "What kind of relationship do you maintain with your contact?",
+      "Which rules, if any, do you refuse to break?",
+      "Do you still work in that world, or have you left it behind?"
+    ]
+  },
+  "reviewNotes": [
+    "Native reconciliation follows the 2014 5e Criminal Background, rather than the 2024 definition preserved separately in working/backgrounds/criminal.json.",
+    "The 2014 two-skill baseline is Deception and Stealth, not the 2024 Sleight of Hand and Stealth pairing.",
+    "One gaming-set type is a selectable equipment proficiency; it does not grant a ranked Competency. The native equipment evaluator uses the approved equipmentProficiencyGrants choice, subject to authorized character selection.",
+    "No language grant is included. A character's Upbringing normally supplies formative languages, while later learned languages require another justification.",
+    "Criminal Contact is a relationship-based social feature, not unrestricted underworld privilege.",
+    "Specialties and suggested characteristics are optional narrative guidance without additional mechanical grants. Spy is a separately selectable native Background, not a Criminal variant.",
+    "The 2014 starting equipment is descriptive pending native item identity matching and ordinary inventory materialization; no separate equipment bag is created.",
+    "The 2024 Alert Origin feat and fixed ability adjustments are not automatically granted."
+  ],
+  "equipmentProficiencyGrants": {
+    "fixed": [
+      {
+        "id": "criminal-thieves-tools",
+        "targetId": "equipment.tool.thieves-tools"
+      }
+    ],
+    "choices": [
+      {
+        "id": "criminal-gaming-set",
+        "count": 1,
+        "fromCategory": "tool",
+        "fromGroupIds": [
+          "equipment.group.tool.gaming-set"
+        ]
+      }
+    ]
+  }
+}

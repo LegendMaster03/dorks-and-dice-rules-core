@@ -1,0 +1,87 @@
+{
+  "id": "background.hermit",
+  "name": "Hermit",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You spent a significant period apart from ordinary society, whether alone or in a sheltered community, and made a consequential discovery during that time. Your seclusion may have occurred early or later in life; it need not imply a particular religion, Species, Upbringing, isolation throughout childhood, spellcasting, poverty, exile, or permanent withdrawal.",
+  "benefits": [
+    {
+      "id": "hermit-seclusion-skills",
+      "name": "Seclusion Skills",
+      "grantType": "skill-training",
+      "description": "Choose two distinct Skills from Medicine, Religion, Nature, Survival, Arcana, History, Investigation, or Insight to reflect what you learned or practiced during seclusion. Medicine and Religion remain a possible combination, but neither is required.",
+      "chooseFrom": [
+        "skill.medicine",
+        "skill.religion",
+        "skill.nature",
+        "skill.survival",
+        "skill.arcana",
+        "skill.history",
+        "skill.investigation",
+        "skill.insight"
+      ],
+      "choiceCount": 2,
+      "distinctChoices": true
+    },
+    {
+      "id": "hermit-discovery",
+      "name": "Discovery",
+      "grantType": "background-feature",
+      "description": "During your time apart from ordinary society, you uncovered one meaningful truth about a person, place, event, practice, or aspect of the world that was not generally understood in the circles you knew. Work with the GM to establish what you discovered, how you came to know it, and why it may matter. The agreed discovery is genuine within its established circumstances, although your understanding of its causes, scope, and implications may be incomplete. When you apply that discovery during play, you know the established information without needing an ordinary knowledge check merely to rediscover it. This does not grant an unapproved spell, item, ability, access right, guaranteed solution to a future challenge, or a continuing power to demand additional hidden facts. The GM determines undiscovered details and how the world responds to the information."
+    }
+  ],
+  "startingEquipment": {
+    "description": "One scroll case holding personal notes or a notebook of studies, observations, drawings, or reflections from seclusion; one winter blanket or comparable modest bedding; common or practical clothes; one ordinary personal item used during seclusion agreed with the GM without guaranteed resale value, tool proficiency, or special effects; and 5 gp. All items are ordinary character inventory. No Herbalism Kit, other tool kit, or valuable relic is automatically guaranteed.",
+    "items": [
+      {
+        "name": "Personal notes in a scroll case or notebook",
+        "quantity": 1,
+        "options": [
+          "Scroll case with personal notes",
+          "Notebook of personal notes"
+        ],
+        "choiceCount": 1
+      },
+      {
+        "name": "Winter blanket or comparable modest bedding",
+        "quantity": 1
+      },
+      {
+        "name": "Common or practical clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Ordinary personal item used during seclusion",
+        "quantity": 1,
+        "choiceConstraint": "gm-agreed-ordinary-item-without-guaranteed-resale-value-training-or-special-effects"
+      }
+    ],
+    "currency": {
+      "gp": 5
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "The reason for seclusion, the community or environment involved, and the nature of the discovery are developed through the character's history and setting, rather than mandatory personality, religion, or childhood assumptions.",
+    "prompts": [
+      "What circumstances led you to live apart from ordinary society?",
+      "What occupied your studies, work, or contemplation during that period?",
+      "What meaningful truth did you uncover, and how was its scope established with the GM?",
+      "What remains uncertain about the discovery, and why did you return to wider society?"
+    ]
+  },
+  "reviewNotes": [
+    "Approved as an independent native Hermit Background, using flexible skill Model C rather than retaining the source's fixed ascetic-healer training package.",
+    "Choose two distinct Skills from Medicine, Religion, Nature, Survival, Arcana, History, Investigation, and Insight. The source Medicine and Religion pair is available but not mandatory.",
+    "Intentionally grants no automatic Herbalism Competency, extra learned language, other vocational proficiency, or vehicle qualification. This differs from the 2014 Hermit source and is subject to later corpus-wide balance review.",
+    "Discovery establishes one genuine, meaningful GM-agreed piece of information learned during sustained seclusion; the core established truth need not be rediscovered by an ordinary check. The character's interpretations and any previously unknown details remain uncertain.",
+    "Discovery is not a reusable secret-finding power, automatically invented major plot truth, spell, valuable item, access right, skill bonus, or assured solution to a future challenge.",
+    "The player and GM should define the discovery during character creation where feasible. If the setting is not sufficiently established, agree on its nature before the feature is invoked; do not retroactively invent a guaranteed solution after encountering a challenge.",
+    "Discovery is distinct from Sage's Researcher (locating a possible source for unknown lore), Explorer's Expedition Survey (interpreting current field evidence), Acolyte's Shelter of the Faithful (institutional relationships), and Wilderness-Raised's provisioning.",
+    "Seclusion can occur during childhood, adolescence or later experience, alone or within a secluded community. It is not an automatic Isolated-Raised Upbringing, whose possible creation remains a separate unapproved decision.",
+    "Starting equipment consists of personal notes in a scroll case or notebook, a winter blanket or equivalent bedding, everyday clothes, one DM-agreed ordinary personal item without guaranteed value or training, and 5 gp in ordinary inventory. There is no guaranteed Herbalism Kit or relic.",
+    "No fixed 2024 ability increases, Origin feat, spellcasting, class powers, exclusive Species, forced religious role or social-isolation subsystem.",
+    "Execution of two distinct Skill choices, discovery information projection, ordinary item identity/materialization, cross-package duplicate grants, and relative feature strength remain deferred to shared mechanics/integration."
+  ]
+}

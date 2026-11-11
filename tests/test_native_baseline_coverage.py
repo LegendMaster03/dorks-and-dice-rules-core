@@ -44,6 +44,10 @@ class NativeSrdBaselineTests(unittest.TestCase):
         paths = set()
         for row in self.entries:
             cid = row["nativeId"]
+            # Preserve the pinned SRD source identity even when approved
+            # rules use a different canonical native identity (subrace ->
+            # Ancestry). Only the explicit mapping may resolve that rename.
+            target_id = row.get("reconciledAsNativeId", cid)
             self.assertNotIn(cid, seen, cid)
             seen.add(cid)
             self.assertRegex(cid, r"^[a-z0-9-]+(?:\.[a-z0-9-]+)+$")
@@ -58,12 +62,12 @@ class NativeSrdBaselineTests(unittest.TestCase):
             if path.parent in (WORKING, AUTHORITATIVE):
                 catalog = load(path)
                 matches = [x for v in catalog.values() if isinstance(v, list)
-                           for x in v if isinstance(x, dict) and x.get("id") == cid]
+                           for x in v if isinstance(x, dict) and x.get("id") == target_id]
                 self.assertEqual(1, len(matches), cid)
                 native = matches[0]
             else:
                 native = load(path)
-                self.assertEqual(cid, native["id"], relative)
+                self.assertEqual(target_id, native["id"], relative)
             if cid.startswith("condition.") or cid == "rule.conditions":
                 self.assertNotIn("baselineStatus", native, cid)
                 self.assertNotIn("candidateDefinitions", native, cid)
@@ -82,7 +86,17 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 self.assertTrue(path.is_relative_to(AUTHORITATIVE), relative)
                 self.assertNotIn("baselineStatus", native, cid)
                 self.assertNotIn("candidateDefinitions", native, cid)
-                self.assertEqual({"race": "species", "subrace": "subspecies"}.get(row["kind"], row["kind"]), native["kind"], cid)
+                expected_kind = {"race": "species", "subrace": "subspecies"}.get(
+                    row["kind"], row["kind"])
+                if target_id != cid:
+                    # An explicit approved migration maps historical subrace
+                    # evidence to the independently selected native Ancestry.
+                    self.assertEqual("subrace", row["kind"], cid)
+                    self.assertTrue(cid.startswith("subspecies."), cid)
+                    self.assertEqual("ancestry." + cid.removeprefix("subspecies."),
+                                     target_id)
+                    expected_kind = "ancestry"
+                self.assertEqual(expected_kind, native["kind"], cid)
                 self.assertIn("name", native, cid)
                 self.assertEqual("selected-native", native.get("status"), cid)
                 continue
@@ -153,6 +167,21 @@ class NativeSrdBaselineTests(unittest.TestCase):
             self.assertEqual("retained-native-definition", entity["baselineStatus"])
             self.assertEqual("class.wizard", entity["parentClass"])
             self.assertIsInstance(entity["definition"]["mechanics"], dict)
+
+    def test_historical_subrace_aliases_map_only_to_reviewed_ancestries(self):
+        """Retain source traceability without reviving retired native IDs."""
+        expected = {
+            "subspecies.dwarf.hill": "ancestry.dwarf.hill",
+            "subspecies.elf.high": "ancestry.elf.high",
+            "subspecies.gnome.rock": "ancestry.gnome.rock",
+            "subspecies.halfling.lightfoot": "ancestry.halfling.lightfoot",
+        }
+        mapped = {r["nativeId"]: r["reconciledAsNativeId"]
+                  for r in self.entries if "reconciledAsNativeId" in r}
+        self.assertEqual(expected, mapped)
+        for row in self.entries:
+            if row["nativeId"] not in expected:
+                self.assertNotIn("reconciledAsNativeId", row)
 
     def test_native_skill_and_competency_ids_are_unique(self):
         # These catalogs evolve during reconciliation; do not pin provisional
@@ -231,8 +260,6 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
         expected_defaults = {
             "species.dwarf": "upbringing.dwarf.general",
-            "species.elf": "upbringing.elf.general",
-            "species.gnome": "upbringing.gnome.general",
             "species.goliath": "upbringing.goliath.general",
             "ancestry.elf.high": "upbringing.elf.high",
             "ancestry.elf.wood": "upbringing.elf.wood",
@@ -245,6 +272,21 @@ class NativeSrdBaselineTests(unittest.TestCase):
             {id: item["defaultUpbringing"] for id, item in all_species.items()
              if "defaultUpbringing" in item}
         )
+
+        # General Elf and Gnome are inherited structural parents, not
+        # directly selectable Upbringings or valid Species-level defaults.
+        for cultural_parent in ("upbringing.elf.general",
+                                "upbringing.gnome.general"):
+            self.assertIn(cultural_parent, upbringings)
+            self.assertFalse(upbringings[cultural_parent]["selectable"])
+        for species_id in ("species.elf", "species.gnome"):
+            self.assertNotIn("defaultUpbringing", all_species[species_id])
+        for child_id in ("upbringing.elf.high", "upbringing.elf.wood",
+                         "upbringing.elf.drow", "upbringing.gnome.forest",
+                         "upbringing.gnome.rock"):
+            child = upbringings[child_id]
+            self.assertTrue(child["selectable"])
+            self.assertFalse(upbringings[child["parent"]]["selectable"])
 
         def nearest_default(id):
             current = id

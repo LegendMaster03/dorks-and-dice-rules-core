@@ -7,16 +7,23 @@
   "benefits": [
     {
       "id": "tinkering",
-      "description": "Gain native Tinkering Competency, including Tinker's Tools.",
-      "competency": "competency.tinkering"
+      "description": "Gain proficiency in the native Tinkering Competency, associated with Tinker's Tools. The association does not automatically grant equipment ownership or a separate equipment qualification.",
+      "competency": "competency.tinkering",
+      "grantType": "competency-training",
+      "competencyTraining": {
+        "ranks": 0,
+        "proficient": true
+      }
     },
     {
       "id": "artificers-lore",
-      "description": "Double Proficiency Bonus on qualifying Intelligence (History) checks involving magical, alchemical or technological objects.",
-      "skill": "history",
+      "description": "On qualifying Intelligence (History) checks involving magical, alchemical, or technological objects, apply twice your Proficiency Bonus instead of any ordinary proficiency contribution, even if you lack History proficiency. This does not grant general History proficiency or a Competency rank.",
+      "skill": "skill.history",
       "ability": "intelligence",
       "proficiencyBonusMultiplier": 2,
-      "scope": "magic-alchemy-technology-objects"
+      "scope": "magic-alchemy-technology-objects",
+      "proficiencyBonusApplication": "replace-normal-proficiency-contribution",
+      "appliesWithoutSkillProficiency": true
     },
     {
       "id": "clockwork-tinker",
@@ -24,8 +31,13 @@
     },
     {
       "id": "prestidigitation",
-      "description": "Learn Prestidigitation as a cantrip.",
-      "spell": "prestidigitation"
+      "description": "Learn Prestidigitation as a cantrip. Choose Intelligence, Wisdom, or Charisma as its spellcasting ability when you gain this Upbringing benefit.",
+      "spell": "prestidigitation",
+      "spellcastingAbilityChoice": [
+        "intelligence",
+        "wisdom",
+        "charisma"
+      ]
     },
     {
       "id": "magical-tinkering",
@@ -34,6 +46,6 @@
   ],
   "parent": "upbringing.gnome.general",
   "reviewNotes": [
-    "Spellcasting ability for Upbringing-granted Prestidigitation remains unresolved."
+    "Prestidigitation uses one chosen Intelligence, Wisdom, or Charisma spellcasting ability; this choice applies to that Upbringing-granted spell, not to all spells the character knows."
   ]
 }

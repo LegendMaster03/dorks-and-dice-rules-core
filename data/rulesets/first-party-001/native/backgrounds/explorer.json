@@ -1,0 +1,101 @@
+{
+  "id": "background.explorer",
+  "name": "Explorer",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have meaningful experience exploring, surveying, documenting, or taking part in expeditions through unfamiliar places. Your work may have involved ruins, waterways, wilderness, subterranean regions, or other terrain. You need not have grown up outdoors, practiced subsistence gathering, served a military or commercial organization, or held any particular upbringing or ancestry.",
+  "benefits": [
+    {
+      "id": "explorer-perception",
+      "name": "Perception Training",
+      "grantType": "skill-training",
+      "skill": "skill.perception",
+      "description": "Gain training in Perception through observation and field experience. Composite Perception training does not independently train Listen or Spot."
+    },
+    {
+      "id": "explorer-expedition-skill",
+      "name": "Expedition Skill",
+      "grantType": "skill-training",
+      "description": "Choose one Skill from Survival, Investigation, History, Nature, or Athletics, based on the environments and kinds of expeditions you undertook.",
+      "chooseOne": [
+        "skill.survival",
+        "skill.investigation",
+        "skill.history",
+        "skill.nature",
+        "skill.athletics"
+      ],
+      "choiceCount": 1
+    },
+    {
+      "id": "explorer-field-competency",
+      "name": "Field Competency",
+      "grantType": "competency-training",
+      "description": "Choose Navigation (Navigator's Tools) or Cartography (Cartographer's Tools). The selected Competency gains one rank, without an automatic proficiency grant. This is one training choice; selecting either does not grant the other or training in operating vehicles.",
+      "chooseOne": [
+        "competency.navigation",
+        "competency.cartography"
+      ],
+      "choiceCount": 1,
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
+    },
+    {
+      "id": "explorer-expedition-survey",
+      "name": "Expedition Survey",
+      "grantType": "background-feature",
+      "description": "When you have a reasonable opportunity to survey a distinct area through observation, travel, or usable maps or accounts, you can ask the GM for one reliable, actionable conclusion supported by that evidence about visible or documented terrain, landmarks, or routes. Examples include a plausible approach to a visible or mapped destination, an orientation landmark, or a relationship between observed paths. When the available evidence supports such a conclusion, the GM provides it without a separate check merely to interpret that evidence; if it does not, the GM explains that the evidence is insufficient instead of inventing information. You can reliably recall major landmarks, turns, and junctions of routes you personally surveyed without a separate check solely to remember the route. Repeated questions about unchanged observations do not generate unlimited new facts. This feature does not reveal concealed places, guarantee a short or safe route, or remove ordinary checks for getting lost, recognizing that you are lost, or choosing a new course under uncertain conditions."
+    }
+  ],
+  "startingEquipment": {
+    "description": "A field journal or notes, map paper, a writing implement, traveler's clothes, and a pouch containing 10 gp. These are ordinary inventory possessions and do not grant a complete map of unknown places, guaranteed discoveries, or extra navigation equipment.",
+    "items": [
+      {
+        "name": "Field journal or notes",
+        "quantity": 1
+      },
+      {
+        "name": "Map paper",
+        "quantity": 1
+      },
+      {
+        "name": "Writing implement",
+        "quantity": 1
+      },
+      {
+        "name": "Traveler's clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Exploration may be academic, personal, commercial, charitable, or opportunistic. The character need not be an expert survivalist or have a designated sponsor.",
+    "prompts": [
+      "Which places did you explore or survey, and why?",
+      "What landmark, route, or discovery do you remember best?",
+      "Which companions or contacts helped on your expeditions?",
+      "What unknown region or question continues to interest you?"
+    ]
+  },
+  "reviewNotes": [
+    "Explorer is a standalone Background inspired by the professional and geographical portions of the 2014 Outlander source; Wilderness-Raised is a separate selected-native Upbringing.",
+    "Fixed Perception and a single Skill choice from Survival, Investigation, History, Nature, and Athletics. Composite training does not automatically train independently ranked children.",
+    "One Competency choice is Navigation or Cartography. It does not automatically grant water/land vehicle qualification or both tool proficiencies.",
+    "No additional Background language is granted.",
+    "Expedition Survey gives one reliable evidence-supported and actionable navigational conclusion during meaningful surveying, plus recall of major landmarks and junctions on personally surveyed routes. It is not perfect cartographic memory, hidden map revelation, or an automatic bypass of uncertain routefinding checks.",
+    "The existing Rules Core travel/environment contract defines navigation checks and the Hex Crawl consumer owns expedition map, route and lost state. This Background does not create a competing travel subsystem, new check bonus, speed multiplier, or automated survey action.",
+    "Starting equipment is ordinary inventory; item identity and materialization remain deferred. No 2014 Outlander staff, trap, or animal trophy is automatically inherited.",
+    "No Wilderness Provisioning, additional language, fixed ability score increase, Origin feat, universal safe travel, or class feature is added.",
+    "Differences between the expedition feature and ordinary skill use, cross-package duplicates, and comparative utility require the later general balance audit and playtesting."
+  ]
+}

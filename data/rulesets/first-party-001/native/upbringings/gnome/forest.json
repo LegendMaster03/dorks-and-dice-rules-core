@@ -9,10 +9,12 @@
       "id": "naturalist-training",
       "description": "Choose one skill training.",
       "chooseOne": [
-        "nature",
-        "survival",
-        "animal-handling"
-      ]
+        "skill.nature",
+        "skill.survival",
+        "skill.animal-handling"
+      ],
+      "grantType": "skill-training",
+      "choiceCount": 1
     }
   ],
   "parent": "upbringing.gnome.general"

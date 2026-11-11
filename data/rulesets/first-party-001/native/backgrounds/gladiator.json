@@ -1,0 +1,115 @@
+{
+  "id": "background.gladiator",
+  "name": "Gladiator",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have significant experience performing in organized combat exhibitions, arena contests, staged duels, or other physical spectacles before spectators. This Background does not assume enslavement, killing, a particular social class, military standing, weapons class, Species, Upbringing or moral outlook.",
+  "benefits": [
+    {
+      "id": "gladiator-performance",
+      "name": "Performance Training",
+      "grantType": "skill-training",
+      "skill": "skill.performance",
+      "description": "Gain Performance training through presenting physical contests and combat exhibitions before audiences. It does not train separate Perform specialties automatically."
+    },
+    {
+      "id": "gladiator-arena-skill",
+      "name": "Arena Skill",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.athletics",
+        "skill.acrobatics",
+        "skill.intimidation"
+      ],
+      "choiceCount": 1,
+      "description": "Choose one Skill from Athletics, Acrobatics or Intimidation to reflect your arena discipline. Composite Athletics and Acrobatics do not automatically train their independently ranked child Skills."
+    },
+    {
+      "id": "gladiator-arena-weapon",
+      "name": "Arena Weapon Proficiency",
+      "grantType": "qualification-training",
+      "qualificationCategory": "weapon",
+      "choiceCategory": "specific-weapon",
+      "choiceCount": 1,
+      "choiceConstraint": "one-specific-existing-mundane-arena-appropriate-weapon-type",
+      "description": "Choose one specific mundane weapon type appropriate to the fighting discipline you performed and gain proficiency with that type. Trident and net are examples, not an exhaustive list. This single-weapon proficiency replaces ordinary tool training; it does not grant Disguise Kit, Musical Instrument training, proficiency with a whole weapon category, fighting styles, maneuvers, additional attacks, armor proficiency, or ownership of every weapon of that type. The chosen weapon type should match your ordinary starting arena weapon.",
+      "equipmentTypeChoiceId": "arena-weapon"
+    },
+    {
+      "id": "gladiator-arena-performances",
+      "name": "Arena Performances",
+      "grantType": "background-feature",
+      "description": "Where organized combat exhibitions or spectator contests are a recognized kind of entertainment, you can generally find a suitable organizer or venue willing to consider you for an appropriate demonstration or match. When you regularly perform as agreed, you may receive modest or comfortable food and lodging through the venue without an additional room-and-board fee. Spectators who recognize your past exhibitions may initially regard you favorably as a performer. This does not guarantee victory, prizes, employment where no suitable spectacle exists, safe contests, legal immunity, access to restricted arena areas, or authority over organizers. Performances may be staged or nonlethal; they do not require killing an opponent."
+    }
+  ],
+  "startingEquipment": {
+    "description": "One ordinary, inexpensive arena weapon of the same specific type selected for Arena Weapon Proficiency, an admirer favor or personal token, an arena costume, and a pouch with 15 gp. The weapon is a normal inventory item and not a proficiency grant by possession. Trident and net are historical examples, not an exclusive allowed list. No magic, automatic armor, second weapon, arena ownership, entourage, permit, or guaranteed sponsor.",
+    "items": [
+      {
+        "name": "Arena weapon matching selected proficiency",
+        "quantity": 1,
+        "choiceCategory": "specific-weapon",
+        "choiceConstraint": "same-specific-mundane-arena-appropriate-weapon-type-as-proficiency-and-inexpensive",
+        "equipmentTypeChoiceId": "arena-weapon",
+        "itemRequirements": {
+          "sameBaseWeaponTypeAsChoice": true,
+          "mundane": true,
+          "inexpensive": true
+        }
+      },
+      {
+        "name": "Admirer's favor or personal token",
+        "quantity": 1
+      },
+      {
+        "name": "Arena costume",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Arena role, contested results, treatment by organizers and local public recognition are narrative details. Gladiators need not have fought lethal matches or served an owner.",
+    "prompts": [
+      "What type of exhibitions did you participate in?",
+      "What weapon or fighting discipline became your specialty?",
+      "Where have spectators seen you fight?",
+      "What organizers, rivals, or audiences remember your performances?"
+    ]
+  },
+  "reviewNotes": [
+    "Gladiator is a standalone Background with independent grants, not an inherited Entertainer variant.",
+    "The 2014 Gladiator variant shared Entertainer's tool proficiencies and substituted an unusual weapon only as equipment. This approved native package deliberately grants one narrow weapon proficiency IN PLACE OF a tool proficiency.",
+    "Fixed Performance and one Skill from Athletics, Acrobatics or Intimidation. Composite Skills do not train their separately ranked components automatically.",
+    "The selected proficiency covers exactly one specific arena-appropriate native weapon type. Trident and net are examples, not a required two-item pool; item and weapon catalogs must establish actual allowed identities at execution time.",
+    "No automatic Disguise Kit, Musical Instrument, other tool training, extra language, martial weapon category, armor proficiency, combat maneuvers, fighting style, additional attack, or class features.",
+    "The qualification-training representation follows existing vehicle qualification style but uses weapon category and one specific weapon selection. Execution of this new selection requires later general native qualification-choice support. Do not infer training merely from the starting item.",
+    "Arena Performances grants venue-dependent opportunities, food and lodging in exchange for performances, and bounded positive recognition; no guaranteed pay, prizes, safe matches, global fame, or arena authority.",
+    "The selected inexpensive mundane arena weapon is ordinary starting inventory and matches the training type. Its item identity and value comparison remain deferred.",
+    "No 2024 Origin feat, ability score increases or extra Upbringing. Weapon-versus-tool strength and duplicate grants require later corpus balance review.",
+    "The chosen base weapon type is linked to the ordinary starting item by equipmentTypeChoiceId. Arena appropriateness is descriptive and adjudicated by the DM, not a machine-enforced eligibility predicate; the All Weapons group supplies candidate base types, not a granted group proficiency. This does not grant Weapon Mastery.",
+    "Approved selection scope: any one existing mundane base weapon type appropriate to the character's arena discipline. The equipment catalog enumerates base types and the DM judges arena suitability; software needs only enforce the specific selected weapon proficiency and matching ordinary starting item. This is neither a whole-family proficiency nor Weapon Mastery.",
+    "The `gladiator-arena-weapon` benefit and first ordinary starting item both reference the executable choice `arena-weapon` through `equipmentTypeChoiceId`. Item requirements are authored constraints, not a claim that the current common equipment resolver validates mundane cost, arena context or inventory instances."
+  ],
+  "equipmentProficiencyGrants": {
+    "choices": [
+      {
+        "id": "arena-weapon",
+        "count": 1,
+        "fromCategory": "weapon",
+        "fromGroupIds": [
+          "equipment.group.weapon.all"
+        ],
+        "selectionKind": "equipment-type"
+      }
+    ]
+  }
+}

@@ -361,5 +361,38 @@
         "Woodcarver's Tools"
       ]
     }
+  ],
+  "competencyCategories": [
+    {
+      "id": "competency-category.crafting-method",
+      "kind": "competency-category",
+      "name": "Crafting Methods and Disciplines",
+      "choiceCategory": "crafting-competency",
+      "description": "Eligible native manufacturing and material-working methods, not separate product categories. An Origin must still authorize the chosen method, and category membership does not confer proficiency, ranks, or equipment.",
+      "competencyIds": [
+        "competency.alchemy",
+        "competency.basketweaving",
+        "competency.bookbinding",
+        "competency.brewing",
+        "competency.calligraphy",
+        "competency.carpentry",
+        "competency.cartography",
+        "competency.cobbling",
+        "competency.cooking",
+        "competency.gemcutting",
+        "competency.glassblowing",
+        "competency.herbalism",
+        "competency.leatherworking",
+        "competency.locksmithing",
+        "competency.painting",
+        "competency.pottery",
+        "competency.sculpting",
+        "competency.smithing",
+        "competency.stonemasonry",
+        "competency.tinkering",
+        "competency.weaving",
+        "competency.woodcarving"
+      ]
+    }
   ]
 }

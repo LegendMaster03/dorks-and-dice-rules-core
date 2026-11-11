@@ -26,6 +26,13 @@ jobs:
           dotnet build RulesCore.slnx -c Release --no-restore
       - name: Complete C# test suite (includes real HTTP public/private ingress tests)
         run: dotnet test RulesCore.slnx -c Release --no-build
+      # Keep Origin-specific results independently visible even while the
+      # wider experimental ruleset has unrelated native/working baseline failures.
+      - name: Character Origins Pillars 1 and 3 contract regressions
+        run: |
+          python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v
+          python3 -m unittest discover -s tests -p 'test_goliath_upbringings.py' -v
+          python3 -m unittest discover -s tests -p 'test_native_weapon_training_grants.py' -v
       - name: Existing Python SRD and migration validation suite
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validate authoritative/working split

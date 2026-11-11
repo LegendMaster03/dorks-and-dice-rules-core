@@ -469,6 +469,68 @@
       "changedPaths": [
         "/status"
       ]
+    },
+    "background.acolyte": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillar3-acolyte-reconciliation.md",
+      "sourceBaselineStatus": "pending-native-reconciliation",
+      "reason": "The approved 2014-first native Acolyte separates formative language from the selected Background, retains Insight/Religion and bounded faith-network shelter, and intentionally supersedes the 2014/2024 candidate records still preserved under working/.",
+      "changedPaths": [
+        "/benefits",
+        "/candidateDefinitions",
+        "/description",
+        "/reviewNotes",
+        "/selectable",
+        "/startingEquipment",
+        "/status",
+        "/suggestedCharacteristics"
+      ]
+    },
+    "background.criminal": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillar3-2014-background-intake.md",
+      "reason": "The selected native Criminal follows the reviewed 2014 Deception/Stealth, Criminal Contact, and starting possessions. It expresses Thieves' Tools and one Gaming Set through the shared native equipment grant contract, intentionally distinct from retained source-edition working evidence.",
+      "changedPaths": [
+        "/benefits",
+        "/definition",
+        "/description",
+        "/equipmentProficiencyGrants",
+        "/reviewNotes",
+        "/selectable",
+        "/startingEquipment",
+        "/status",
+        "/suggestedCharacteristics",
+        "/suggestedSpecialties"
+      ]
+    },
+    "background.sage": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillar3-2014-background-intake.md",
+      "reason": "The selected native Sage uses the reviewed 2014 Arcana/History and Researcher benefits with one learned language, deliberately replacing the preserved 2024 source-shaped working definition.",
+      "changedPaths": [
+        "/benefits",
+        "/definition",
+        "/description",
+        "/reviewNotes",
+        "/selectable",
+        "/startingEquipment",
+        "/status",
+        "/suggestedCharacteristics",
+        "/suggestedSpecialties"
+      ]
+    },
+    "background.soldier": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillar3-2014-background-intake.md",
+      "reason": "The selected native Soldier follows the reviewed 2014 Athletics/Intimidation, Gaming Set, Land Vehicles, Military Rank and starting possessions, rather than the preserved 2024 definition; the Gaming Set qualification is now represented using the native equipment grant contract.",
+      "changedPaths": [
+        "/benefits",
+        "/definition",
+        "/description",
+        "/equipmentProficiencyGrants",
+        "/reviewNotes",
+        "/selectable",
+        "/startingEquipment",
+        "/status",
+        "/suggestedCharacteristics",
+        "/suggestedSpecialties"
+      ]
     }
   },
   "conditionReadiness": {

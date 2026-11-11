@@ -1,0 +1,114 @@
+{
+  "id": "background.sailor",
+  "name": "Sailor",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have meaningful experience serving or working aboard vessels on seas, rivers, lakes, or other navigable waters. Your service may have been commercial, exploratory, civilian, or military. This Background does not require a particular childhood, current shipboard employment, naval rank, ownership of a vessel, or a specific moral outlook.",
+  "benefits": [
+    {
+      "id": "sailor-athletics",
+      "name": "Athletics Training",
+      "grantType": "skill-training",
+      "skill": "skill.athletics",
+      "description": "Gain training in Athletics. As a composite Skill, Athletics does not automatically train the independently ranked Climb, Jump, or Swim components."
+    },
+    {
+      "id": "sailor-perception",
+      "name": "Perception Training",
+      "grantType": "skill-training",
+      "skill": "skill.perception",
+      "description": "Gain training in Perception. As a composite Skill, Perception does not automatically train the independently ranked Listen or Spot components."
+    },
+    {
+      "id": "sailor-navigation",
+      "name": "Navigation Training",
+      "grantType": "competency-training",
+      "competency": "competency.navigation",
+      "description": "Gain one rank in the native Navigation Competency, associated with Navigator's Tools. This is distinct from training to operate water vehicles and does not grant Cartography, a second equipment qualification, or ownership of the tools.",
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
+    },
+    {
+      "id": "sailor-water-vehicles",
+      "name": "Water Vehicles Training",
+      "grantType": "qualification-training",
+      "qualificationCategory": "vehicle",
+      "vehicleType": "water",
+      "description": "Gain training with water vehicles through practical shipboard experience. This does not grant Land Vehicles training, ownership of a ship, or command over its crew."
+    },
+    {
+      "id": "sailor-ships-passage",
+      "name": "Ship's Passage",
+      "grantType": "background-feature",
+      "description": "Through your former service and relationships with other seafarers, you can usually arrange passage aboard a vessel for yourself and your traveling companions without paying the ordinary passenger fare. You may rely on a ship or crew you know or on maritime contacts. The route, departure, and duration depend on journeys and vessels actually available; you can not require a particular destination, departure time, or travel schedule. In exchange, you and your companions are expected to assist with reasonable shipboard duties during the voyage. This benefit does not grant ownership of a vessel or authority over its captain and crew."
+    }
+  ],
+  "startingEquipment": {
+    "description": "A belaying pin that can serve as a club, 50 feet of silk rope, one ordinary lucky charm or trinket, common clothes, and a pouch containing 10 gp. All are ordinary starting inventory possessions. The charm has no automatic supernatural effect.",
+    "items": [
+      {
+        "name": "Belaying pin",
+        "quantity": 1,
+        "notes": "Can serve as an ordinary club."
+      },
+      {
+        "name": "Silk rope",
+        "quantity": 1,
+        "lengthFeet": 50
+      },
+      {
+        "name": "Lucky charm or ordinary trinket",
+        "quantity": 1
+      },
+      {
+        "name": "Common clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 10
+    }
+  },
+  "suggestedSpecialties": [
+    "Deckhand",
+    "Navigator",
+    "Cook",
+    "Lookout",
+    "Boatswain",
+    "Ship's Officer",
+    "Sailmaker",
+    "Quartermaster",
+    "River Pilot",
+    "Fisher",
+    "Merchant Mariner"
+  ],
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "Shipboard roles, destinations, crews, maritime customs, and past obligations are optional prompts and do not create additional mechanical variants. Former service aboard a pirate ship does not automatically grant Pirate's distinct feature.",
+    "prompts": [
+      "What sort of vessel did you serve aboard, and what were your duties?",
+      "Which shipmates or maritime contacts still recognize you?",
+      "What voyages shaped your professional experience?",
+      "What circumstances brought you away from your former crew?"
+    ]
+  },
+  "reviewNotes": [
+    "This standalone Background adopts the 2014 5e Sailor source's Athletics, Perception, Navigator's Tools, Water Vehicles, Ship's Passage, and ordinary starting equipment without making a 2024 Sailor substitution.",
+    "The native Navigation Competency (competency.navigation) represents Navigator's Tools training. It does not imply a water-vehicle qualification, which is granted separately.",
+    "Water Vehicles is authored as a qualification-training vehicle category with vehicleType water, mirroring the independently approved Soldier Land Vehicles category. Do not invent a nonexistent water-vehicle Competency ID.",
+    "No additional language is granted. This is intentional, consistent with the source and with Upbringing's separate formative role.",
+    "Ship's Passage can benefit the Sailor and traveling companions without ordinary fare; it is subject to actual available ships, routes, sailing times, and reasonable shared shipboard labor. No guaranteed voyage, instant travel, ship ownership, crew command, or free cargo service is created.",
+    "Composite Athletics training does not separately train Climb, Jump, or Swim; composite Perception training does not separately train Listen or Spot.",
+    "A belaying pin can be treated as a club and the 50-foot silk rope and other possessions enter ordinary inventory. Item identity resolution and materialization await general integration.",
+    "Pirate is reserved as a distinct possible future Background with independently reviewed Bad Reputation mechanics; Sailor does not inherit Pirate and has no Pirate variant record.",
+    "No fixed ability score increases, Origin feat, automatic language, spellcasting, or inherited Species feature.",
+    "Native grant execution of vehicle categories, equipment identity, and duplicate training remain part of later integration and corpus-wide review."
+  ]
+}

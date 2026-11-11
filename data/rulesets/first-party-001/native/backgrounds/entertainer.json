@@ -1,0 +1,159 @@
+{
+  "id": "background.entertainer",
+  "name": "Entertainer",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have substantial experience performing for audiences through music, acting, storytelling, dance, comedy, acrobatics, sleight of hand, or similar public entertainment. This Background describes an acquired practice, not a mandatory performing-family childhood, Species, patron, current employment or reputation in every settlement.",
+  "benefits": [
+    {
+      "id": "entertainer-performance",
+      "name": "Performance Training",
+      "grantType": "skill-training",
+      "skill": "skill.performance",
+      "description": "Gain training in Performance through regularly presenting entertainment to audiences. This broad Skill does not automatically grant ranks in the separately ranked Perform specialties."
+    },
+    {
+      "id": "entertainer-performance-specialty",
+      "name": "Performance Specialty",
+      "grantType": "skill-training",
+      "chooseOne": [
+        "skill.acrobatics",
+        "skill.deception",
+        "skill.persuasion",
+        "skill.sleight-of-hand",
+        "skill.insight"
+      ],
+      "choiceCount": 1,
+      "description": "Choose one Skill reflecting how you perform: Acrobatics, Deception, Persuasion, Sleight of Hand, or Insight. Composite Acrobatics does not separately train Balance or Tumble."
+    },
+    {
+      "id": "entertainer-performance-method",
+      "name": "Performance Method Training",
+      "grantType": "benefit-choice",
+      "choiceCount": 1,
+      "description": "Choose exactly one benefit: one rank in the native Disguise Competency or proficiency with one specific type of musical instrument. This does not grant both, an instrument item automatically, or ranks in separate Perform specialties.",
+      "options": [
+        {
+          "id": "disguise-kit",
+          "name": "Disguise Kit Training",
+          "benefits": [
+            {
+              "grantType": "competency-training",
+              "competency": "competency.disguise",
+              "description": "Gain one rank in the native Disguise Competency, associated with a Disguise Kit. This does not include ownership of the equipment or ranks in separate Perform specialties.",
+              "competencyTraining": {
+                "ranks": 1,
+                "proficient": false
+              }
+            }
+          ]
+        },
+        {
+          "id": "musical-instrument",
+          "name": "Musical Instrument Training",
+          "benefits": [
+            {
+              "grantType": "qualification-training",
+              "choiceCategory": "musical-instrument",
+              "choiceCount": 1,
+              "description": "Choose one specific type of musical instrument and gain training with that type. This does not grant other instruments or separate Perform specialty ranks.",
+              "qualificationCategory": "tool",
+              "equipmentTypeChoiceId": "entertainer-musical-instrument"
+            }
+          ],
+          "equipmentProficiencyGrants": {
+            "choices": [
+              {
+                "id": "entertainer-musical-instrument",
+                "count": 1,
+                "fromCategory": "tool",
+                "fromGroupIds": [
+                  "equipment.group.tool.musical-instrument"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "entertainer-by-popular-demand",
+      "name": "By Popular Demand",
+      "grantType": "background-feature",
+      "description": "In a settlement or venue where your kind of entertainment can reasonably attract an audience, you can generally secure an opportunity to perform through ordinary hosts or organizers. While you fulfill the agreed engagements, including regular evening performances when required, your host provides food and lodging of modest or comfortable quality appropriate to the establishment without an additional room-and-board fee. People who recognize your past performances may be favorably disposed toward you at first. This benefit does not guarantee payment, universal fame, private lodging for companions, an available venue where none exists, entry to closed establishments, or authority over hosts. Suitable venues, agreements and circumstances are adjudicated by the GM."
+    }
+  ],
+  "startingEquipment": {
+    "description": "Choose one ordinary performance item consistent with your selected performance-method training: an instrument of your trained type if musical training was selected, or a physical Disguise Kit or suitable mundane stage prop if Disguise Kit training was selected. Also receive a mundane admirer favor or token, one costume, and a pouch containing 15 gp. All equipment enters ordinary inventory. Instrument and Disguise Kit proficiencies do not themselves supply items; this starting item is separately granted. No magic, guild membership, or guaranteed audiences are included.",
+    "items": [
+      {
+        "name": "Performance item",
+        "quantity": 1,
+        "options": [
+          "Musical instrument matching trained instrument type",
+          "Disguise Kit",
+          "Mundane performance prop"
+        ],
+        "choiceCount": 1,
+        "choiceConstraint": "match-selected-performance-method-and-be-an-ordinary-item",
+        "sourceBenefitChoiceId": "entertainer-performance-method",
+        "conditionalItemChoices": [
+          {
+            "whenOptionId": "disguise-kit",
+            "ordinaryItemOptions": [
+              "Disguise Kit",
+              "Mundane performance prop"
+            ],
+            "itemRequirements": {
+              "mundane": true
+            }
+          },
+          {
+            "whenOptionId": "musical-instrument",
+            "equipmentTypeChoiceId": "entertainer-musical-instrument",
+            "itemRequirements": {
+              "sameBaseEquipmentTypeAsChoice": true,
+              "mundane": true
+            }
+          }
+        ]
+      },
+      {
+        "name": "Admirer's favor or token",
+        "quantity": 1
+      },
+      {
+        "name": "Performance costume",
+        "quantity": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "The form, venue, audience, career circumstances and reputation are narrative choices, not mandatory skill specialties or inherited origin traits.",
+    "prompts": [
+      "What kind of performances did you give?",
+      "Which venues or audiences know your work?",
+      "What performance item or costume do you favor?",
+      "What circumstances brought you into or out of public performance?"
+    ]
+  },
+  "reviewNotes": [
+    "Independent 2014-based Entertainer reconciliation; Gladiator is a separate Background, not a child or inherited variant.",
+    "Fixed Performance and one choice of Acrobatics, Deception, Persuasion, Sleight of Hand or Insight. Broad Performance does not automatically train independent Perform family child Skills; composite Acrobatics does not separately train Balance or Tumble.",
+    "One total choice between Disguise Competency training and a specific Musical Instrument equipment proficiency. The instrument equipment choice is nested under its conditional selected option, never granted unconditionally; the Origin choice authority must enforce exclusivity.",
+    "No additional language, fixed ability adjustment, 2024 Musician Origin feat, class feature or universal entertainment affiliation is granted.",
+    "By Popular Demand provides conditional food and lodging in exchange for actual performances and contextual favorable recognition, not a permanent free-lodging entitlement without suitable work or venues.",
+    "The equipment choice is ordinary inventory and should correspond to the chosen performance method; an instrument is not compulsory for a nonmusical entertainer.",
+    "Item identity, the nested benefit choice, overlapping Skills/competencies, performance venue adjudication, and corpus balance remain for common integration; no consumer/runtime changes are part of this content approval.",
+    "The one Performance Item references `entertainer-performance-method` through `sourceBenefitChoiceId`; conditionalItemChoices maps each selected outer option to its permitted ordinary item. The Musical Instrument branch reuses the nested instrument proficiency choice ID, while the Disguise branch grants a physical Disguise Kit or mundane prop without awarding any separate equipment proficiency. No item is materialized before the Origin choice authority validates this relationship."
+  ]
+}

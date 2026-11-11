@@ -120,8 +120,21 @@ def check_srd_coverage():
             except (OSError, ValueError, UnicodeError) as exc:
                 errors.append(f"missing/invalid coverage file {path_text}: {exc}")
                 cache[path] = []
-        if sum(rec.get("id") == ident for rec in cache[path]) != 1:
-            errors.append(f"coverage record {ident} is missing or duplicated in {path_text}")
+        # The pinned nativeId belongs to the original SRD inventory, so
+        # changing it would corrupt the migration ledger. A separately
+        # approved native Ancestry can instead be linked by an explicit
+        # destination identity while retaining the historical source ID.
+        native_id = row.get("reconciledAsNativeId", ident)
+        if native_id != ident and not (
+                row["status"] == "approved-native-reconciled"
+                and row["kind"] == "subrace"
+                and ident.startswith("subspecies.")
+                and native_id == "ancestry." + ident.removeprefix("subspecies.")
+                and path_text.startswith(
+                    "data/rulesets/first-party-001/native/species/ancestry/")):
+            errors.append(f"invalid SRD-to-native ancestry mapping: {ident} -> {native_id}")
+        if sum(rec.get("id") == native_id for rec in cache[path]) != 1:
+            errors.append(f"coverage record {ident} ({native_id}) is missing or duplicated in {path_text}")
     return errors, len(rows)
 
 

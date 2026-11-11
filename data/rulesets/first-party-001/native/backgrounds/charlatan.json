@@ -1,0 +1,116 @@
+{
+  "id": "background.charlatan",
+  "name": "Charlatan",
+  "kind": "background",
+  "status": "selected-native",
+  "selectable": true,
+  "description": "You have practiced misrepresentation, impersonation, confidence schemes, or similar deception and established believable false presentations of yourself or your dealings. Your experience does not require a particular Upbringing, Species, criminal organization, continued unlawful activity, or moral outlook.",
+  "benefits": [
+    {
+      "id": "charlatan-deception",
+      "name": "Deception Training",
+      "grantType": "skill-training",
+      "skill": "skill.deception",
+      "description": "Gain training in Deception through convincing false claims, presentations, and personas."
+    },
+    {
+      "id": "charlatan-sleight-of-hand",
+      "name": "Sleight of Hand Training",
+      "grantType": "skill-training",
+      "skill": "skill.sleight-of-hand",
+      "description": "Gain training in Sleight of Hand through concealed manipulation and practiced tricks."
+    },
+    {
+      "id": "charlatan-disguise-kit",
+      "name": "Disguise Kit Training",
+      "grantType": "competency-training",
+      "competency": "competency.disguise",
+      "description": "Gain one rank in the native Disguise Competency, associated with a Disguise Kit. This does not grant ownership of a physical Disguise Kit.",
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
+    },
+    {
+      "id": "charlatan-forgery",
+      "name": "Forgery Training",
+      "grantType": "competency-training",
+      "competency": "competency.forgery",
+      "description": "Gain one rank in the native Forgery Competency, associated with a Forgery Kit. There is no separate native Forgery Skill, and this grant does not include a physical Forgery Kit.",
+      "competencyTraining": {
+        "ranks": 1,
+        "proficient": false
+      }
+    },
+    {
+      "id": "charlatan-false-identity",
+      "name": "False Identity",
+      "grantType": "background-feature",
+      "description": "You have established one alternate persona supported by plausible documents, suitable disguise arrangements, and acquaintances who recognize you by that identity. Where its history and evidence are credible, you can present yourself as the persona without having to create its identity from nothing. You know how to imitate official or personal documents and a person's handwriting after examining an appropriate example, given suitable materials, time, and opportunity. Making an imitation does not guarantee acceptance or resistance to scrutiny. The persona does not confer genuine noble rank, official authority, legal privileges, unrestricted access, criminal-network contacts, or intelligence sources. Suspicion, verification, exposure, and changing circumstances remain subject to ordinary play and GM adjudication."
+    }
+  ],
+  "startingEquipment": {
+    "description": "Fine clothes, one physical Disguise Kit, one choice of ordinary con-related props (ten small stoppered bottles of colored liquid, weighted dice, marked playing cards, or a signet ring referring to a fictional noble), and a pouch with 15 gp. These are ordinary inventory possessions. They grant no magic, gaming proficiency, actual noble rank, or automatic success. False Identity provides supporting documents and relationships through its feature, not unlimited salable evidence or a separate physical Forgery Kit.",
+    "items": [
+      {
+        "name": "Fine clothes",
+        "quantity": 1
+      },
+      {
+        "name": "Disguise Kit",
+        "quantity": 1
+      },
+      {
+        "name": "Con-related props",
+        "quantity": 1,
+        "options": [
+          "Ten small stoppered bottles of colored liquid",
+          "Weighted dice",
+          "Marked playing cards",
+          "Signet ring referring to a fictional noble"
+        ],
+        "choiceCount": 1
+      },
+      {
+        "name": "Pouch",
+        "quantity": 1
+      }
+    ],
+    "currency": {
+      "gp": 15
+    }
+  },
+  "suggestedSchemes": [
+    "Confidence pitches",
+    "False investments",
+    "Forged references",
+    "Altered documents",
+    "Impersonation",
+    "Rigged games",
+    "Stage cons",
+    "Fraudulent sales"
+  ],
+  "suggestedCharacteristics": {
+    "optional": true,
+    "description": "A charlatan may have abandoned deception, retained a cover for protection, or adopted a stage persona. These prompts do not impose alignment, current criminal activity, or extra mechanical variants.",
+    "prompts": [
+      "What did your alternate persona claim to be?",
+      "Which people know that persona and what do they believe?",
+      "Which scheme or disguise did you practice most?",
+      "What consequences would exposure have?"
+    ]
+  },
+  "reviewNotes": [
+    "Independent native Background reconciled from 2014 Charlatan, not from the 2024 ability and Origin-feat model.",
+    "Fixed Deception and Sleight of Hand training, fixed Disguise Kit and Forgery Competency training, and no additional language.",
+    "Forgery is one native Competency rather than a separate Forgery Skill plus kit proficiency. Its associated equipment does not grant a second independent qualification; compare its training benefit against Disguise during the corpus balance review.",
+    "Disguise Kit does not independently grant Disguise Skill. Tool training is different from possessing a physical kit.",
+    "False Identity grants an already established alternate persona with supporting history, documents, arrangements and acquaintances; it does not generate limitless cover personas.",
+    "Document and handwriting imitation from a studied example remains a meaningful feature separate from generic Forgery training, but not guaranteed acceptance by an observer.",
+    "People who recognize the persona are not automatically Criminal Contacts or Spy Intelligence Sources. A fabricated noble identity grants no genuine rank or authority.",
+    "The ordinary starting inventory includes a physical Disguise Kit and one mutually exclusive con-prop package, but no physical Forgery Kit. The fictional signet and rigged game props do not grant privileged standing or gaming proficiency.",
+    "The established cover's supporting documents remain available in fiction without creating unlimited salable inventory. Later item identity and inventory materialization remain deferred.",
+    "No automatic Origin feat, ability adjustments, class powers, culturally inherited characteristics, or mandatory criminal affiliation.",
+    "Duplicate training, feature execution, specialized document adjudication, and equipment balance await later common mechanics work."
+  ]
+}
