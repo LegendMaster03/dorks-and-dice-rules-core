@@ -217,7 +217,11 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
         options = {option["id"]: option for option in outer["options"]}
         self.assertEqual({"disguise-kit", "musical-instrument"}, set(options))
 
-        item = self.assert_single(entertainer["startingEquipment"]["items"][:1])
+        starting_items = entertainer["startingEquipment"]["items"]
+        item = starting_items[0]
+        self.assertFalse(any("sourceBenefitChoiceId" in other or
+                             "conditionalItemChoices" in other
+                             for other in starting_items[1:]))
         self.assertEqual("Performance item", item["name"])
         self.assertEqual(1, item["quantity"])
         self.assertEqual(1, item["choiceCount"])
@@ -287,7 +291,8 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                     self.assertNotIn("vehicle", group["targetId"])
                 for choice in equipment.get("choices", []):
                     self.assertNotEqual("vehicle", choice["fromCategory"])
-                self.assertNotIn("vehicle", self.equipment_groups)
+                self.assertFalse(any(x["equipmentCategory"] == "vehicle"
+                                     for x in self.equipment_groups.values()))
                 self.assertFalse(any(x["equipmentCategory"] == "vehicle"
                                      for x in self.equipment_types.values()))
 
