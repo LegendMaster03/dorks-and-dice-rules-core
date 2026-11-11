@@ -1,7 +1,7 @@
 # Pillar 2 — inheritable trait parameters and contributor provenance
 
 **Date:** 2026-11-11  
-**Status:** Provisional design proposal plus read-only eligibility prototype. The user approved *supporting* linked and independent parameter-selection policies on a per-trait basis, **not** which policy is authoritative for any specific trait.  
+**Status:** Provisional read-only eligibility prototype. The user approved **independent selection for the ordinary Dragonborn Breath Weapon's damage type and complete area configuration** when those values come from the contributors. Both linked and independent policies remain supported for other traits, subject to their individual rules. These decisions are not active runtime grants.  
 **Code:** `tools/character_origins_parameter_inheritance.py`  
 **Test-only blueprint:** `pillar2-parameter-inheritance-evidence-20261111.json`  
 **Tests:** `tests/test_character_origins_pillar2_parameter_inheritance.py`
@@ -28,11 +28,11 @@ The provisional trait definition specifies a `parameterInheritance.mode`:
 
 For Red (Fire, 30-by-5-foot line) and Bronze (Lightning, 15-foot cone):
 
-- **Linked** allows (Fire, line) or (Lightning, cone); it rejects (Fire, cone).
-- **Independent** additionally allows (Fire, cone) and (Lightning, line), because both values in each pairing are separately represented in the candidate pool.
-- Both policies are supported by one generic evaluator, configured by the trait's policy. The provisional fixture currently shows `linked` as an *example* only; no native Dragonborn parameter-inheritance policy has been finalized.
+- **The approved Breath Weapon example uses `independent`.** It permits all four combinations: (Fire, line), (Fire, cone), (Lightning, line), and (Lightning, cone). Both the Fire + Cone and Lightning + Line pairings are valid because each component is available from a contributor.
+- **An explicitly linked trait** would allow only (Fire, line) or (Lightning, cone); it would reject (Fire, cone) and (Lightning, line). This remains an available trait-level policy, not the policy for ordinary Dragonborn Breath Weapon.
+- Both policies use the same generic eligibility evaluator; no new Species-specific evaluator or individual Breath Weapon variation is required.
 
-This first proof supports one linkage policy for all designated inheritable parameters of a trait. **Mixed groups**, per-parameter dependencies, conditional eligibility, and more complicated relationships remain future design matters. Do not infer automatic cross-combination where the final trait definition has not explicitly allowed it.
+This first proof supports one linkage policy for all designated inheritable parameters of a trait. **Mixed groups**, per-parameter dependencies, conditional eligibility, and more complicated relationships remain future design matters. Independent recombination is authorized for this Breath Weapon example only because its trait policy permits it; other traits can explicitly require linked values.
 
 ## Contributor evidence and choice authorization
 
@@ -82,4 +82,4 @@ python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -
 
 Review how a **configured trait instance** can serve as the same reusable object for: (1) a direct standard Species preset, (2) a mixed-Heritage character, and (3) a homebrew Species. The shared evaluation and trusted manifestation authority must preserve resource/action constraints and all embedded effect rules. A candidate pool alone is not yet a gameplay evaluator or a balance model.
 
-The current user decision does not authorize changing standard Dragonborn benefits, assigning point costs, selecting a default parameter policy for all traits, or merging/deploying any of these experimental artifacts.
+The current decision establishes independent inheritance of the ordinary Breath Weapon's damage type and complete area among contributor-supplied values. It does **not** authorize changing standard Dragonborn benefits, assigning point costs, choosing a default parameter policy for unrelated traits, or merging/deploying these experimental artifacts.
