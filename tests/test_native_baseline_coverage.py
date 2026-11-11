@@ -231,8 +231,6 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
         expected_defaults = {
             "species.dwarf": "upbringing.dwarf.general",
-            "species.elf": "upbringing.elf.general",
-            "species.gnome": "upbringing.gnome.general",
             "species.goliath": "upbringing.goliath.general",
             "ancestry.elf.high": "upbringing.elf.high",
             "ancestry.elf.wood": "upbringing.elf.wood",
@@ -245,6 +243,21 @@ class NativeSrdBaselineTests(unittest.TestCase):
             {id: item["defaultUpbringing"] for id, item in all_species.items()
              if "defaultUpbringing" in item}
         )
+
+        # General Elf and Gnome are inherited structural parents, not
+        # directly selectable Upbringings or valid Species-level defaults.
+        for cultural_parent in ("upbringing.elf.general",
+                                "upbringing.gnome.general"):
+            self.assertIn(cultural_parent, upbringings)
+            self.assertFalse(upbringings[cultural_parent]["selectable"])
+        for species_id in ("species.elf", "species.gnome"):
+            self.assertNotIn("defaultUpbringing", all_species[species_id])
+        for child_id in ("upbringing.elf.high", "upbringing.elf.wood",
+                         "upbringing.elf.drow", "upbringing.gnome.forest",
+                         "upbringing.gnome.rock"):
+            child = upbringings[child_id]
+            self.assertTrue(child["selectable"])
+            self.assertFalse(upbringings[child["parent"]]["selectable"])
 
         def nearest_default(id):
             current = id
