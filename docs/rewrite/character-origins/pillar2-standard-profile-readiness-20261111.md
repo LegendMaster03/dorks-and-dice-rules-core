@@ -33,8 +33,24 @@ This audit uses the complete native parent lineage for each selectable Species/A
 | **Human** | Humanoid type, 30-foot walking speed; Skillful, Versatile, Adaptable Learning | Small or Medium selection; Skillful skill choice; Versatile feat choice; skill-rank allocation |
 | **High Elf** | Base Elf traits, Medium/Fey/30-foot intrinsic facts, Arcane Cantrip, Detect Magic, Misty Step entitlements | Wizard cantrip choice; choice of spellcasting ability from the ancestry field; prose-only trait semantics |
 | **Wood Elf** | Base Elf traits and Wood Elf spell traits | Base 30-foot vs Wood 35-foot walk speed must be reconciled explicitly; spellcasting ability choice |
-| **Red Dragonborn** | Dragon type, Medium size, walking/climbing speeds; base Breath Weapon and other resolvable source traits | Draconic Resistance and Chromatic Warding currently have unmodeled symbolic bindings, though Breath Weapon's damage/area parameters are bound |
+| **Red Dragonborn** | Dragon type, Medium size, walking/climbing speeds; base Breath Weapon, Draconic Resistance, and Chromatic Warding with their own source-bound parameters | No missing source-parameter binding in this current sample; cross-trait consistency between different damage-type choices for mixed Heritage requires a separate design decision |
 | **Rock Gnome** | Gnome base traits and intrinsic properties plus Earthbound Tremorsense | No missing first-party source trait in the current prototype; Rock Gnome Upbringing remains separate |
+
+### Completed source bindings: ordinary Dragonborn resistance and Chromatic Warding
+
+The source binding contracts already carried `damageResistance.damageTypeFrom` and `damageResistanceOverride.damageTypeFrom`. The missing part was the **experimental Origin parameter registry**, which initially contained only ordinary Breath Weapon.
+
+The registry now includes three separate **existing** trait definitions:
+
+| Trait occurrence | Configurable source slot | Fixed behavior retained |
+| --- | --- | --- |
+| `species.dragonborn#trait:breath-weapon` | Damage type and whole area | Attack replacement, saves, damage scaling and uses |
+| `species.dragonborn#trait:draconic-resistance` | Damage type | Authored 50% resistance |
+| `ancestry.dragonborn.chromatic#trait:chromatic-warding` | Damage type | Authored 100% override, replacement policy, activation, duration and uses |
+
+This lets a directly selected Red Dragonborn proposal record Fire for all three traits, while Bronze Dragonborn has resistance and Breath Weapon but **not** Chromatic Warding. It does not create a new inheritance rule requiring or permitting independent damage-type choices across the three traits in a mixed Heritage character. That is a **cross-trait compatibility question** for a later Pillar 2 decision. In particular, passing per-trait candidate validation alone must not be interpreted as approving an inconsistent full character package.
+
+The two added single-parameter definitions currently use the existing `linked` policy, which is indistinguishable from `independent` for a single slot. This is a representation choice in a provisional fixture, **not a new global trait composition policy**.
 
 ### What this reveals
 
@@ -45,7 +61,7 @@ This audit uses the complete native parent lineage for each selectable Species/A
 
 ## Outstanding Pillar 2 tasks
 
-1. Review the explicit, still-missing parameter-binding definitions, beginning with Draconic Resistance and Chromatic Warding; do not make unmodeled source parameters vanish.
+1. Audit any other missing trait parameter-binding definitions and retain unmodeled source parameters explicitly. Draconic Resistance and Chromatic Warding now have provisional mappings through the shared blueprint registry; this establishes no cross-trait dependency policy.
 2. Define the **standard-selection intrinsic composition contract** (parent/descendant replacement, explicit choices and same-value provenance). Then decide how this differs for mixed contributors.
 3. Define **dependent choice contracts** for existing trait entitlements and linked spellcasting ability choices. The fact that a feature is manifested does not automatically select a skill, spell, feat or ability.
 4. Define semantic characteristic identities and overlap rules, so duplicate and partially overlapping feature grants are not incorrectly stacked or collapsed.
