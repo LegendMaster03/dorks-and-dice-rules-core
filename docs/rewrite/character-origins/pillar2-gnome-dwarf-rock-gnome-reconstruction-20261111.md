@@ -38,6 +38,23 @@ A future generic Tremorsense mechanic could support parameters such as range, ac
 
 A direct Rock Gnome source *does* supply that original trait; comparing Rock Gnome with itself yields all six modeled characteristics.
 
+## Design example: distinct traits arising through ancestral divergence
+
+**Narrative hypothesis, not established Rock Gnome canon:** Rock Gnomes might descend from a population with both Gnome and Dwarf ancestry. Over many generations, their Tremorsense might have developed into a distinct, shorter-range passive sense. The current Gnome and Dwarf definitions need **not** combine to produce that trait in a first-generation mixed character. The shared Tremorsense family makes this a plausible example of mechanical storytelling, not proof of a particular biological history.
+
+The example distinguishes **four questions** that the Pillar 2 rules must not collapse:
+
+1. **Possible historical origin:** Which populations might an Ancestry have descended from? Narrative worldbuilding, potentially uncertain, and not itself an eligibility rule.
+2. **Shared mechanical family:** Are two distinct traits implementations or variants of a general capability (here, Tremorsense)? This is a content-authoring relationship, not proof of grant equivalence.
+3. **Immediate Heritage eligibility:** Which traits and parameter values are actually available from the character's direct contributors? The Dwarf's Stonebound Tremorsense does not independently offer Rock Gnome's passive Earthbound configuration.
+4. **Manifested characteristic:** What trait does the character actually possess? A Rock Gnome can manifest its established Earthbound Tremorsense from a Rock Gnome source regardless of whether distant population history is known.
+
+This is a useful **regression example for the future rule**: a related descendant trait must be expressible as an established, distinct trait variant, without requiring an exhaustive reproduction of all historical generations or pretending that any combination of its distant ancestral traits automatically produces it. Conversely, describing a possible historical origin should **never** cause a first-generation Gnome + Dwarf character to automatically receive Earthbound Tremorsense.
+
+A general variant/derivation relationship may become useful documentation for a canonical characteristic registry. Whether any such relationship ever has selectable mechanics is a **separate explicit rules decision**, and no inheritance-by-divergence or genetics simulation is approved here.
+
+**Disposition:** Retain both Tremorsense definitions unchanged. Treat the hypothetical interbreeding history as optional narrative evidence for future design, not a new Rock Gnome origin rule.
+
 ## Additional contributor facts and potential conflicts
 
 The Dwarf provides alternatives that are **not** part of the standard Rock Gnome target: Humanoid instead of Fey, Medium instead of Small, 60-foot Darkvision alongside Low-Light Vision, Dwarven Toughness, Dwarven Resilience and Stonebound Tremorsense. This could form a distinct custom Heritage; no automatic replacement, summation, or simultaneous size/type assignment is authorized.
