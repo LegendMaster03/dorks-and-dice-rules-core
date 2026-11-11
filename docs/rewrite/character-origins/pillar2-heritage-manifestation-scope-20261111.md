@@ -61,6 +61,16 @@ This decision does not establish unrestricted recombination for all traits. Link
 
 This illustrates **relationships only**. It is not an adopted ID format, mandatory Origin form, contributor count, generation algorithm, or permission to manifest Breath Weapon. In particular, the profile does not grant all other Dragonborn traits by omission, and `method: author-defined` is not an approved origination type.
 
+## Reference example for future rules: Rock Gnome divergence
+
+The [Gnome + Dwarf → Rock Gnome reconstruction](pillar2-gnome-dwarf-rock-gnome-reconstruction-20261111.md) is an intentional counterexample to the assumption that every Ancestry must be recreatable as an immediate sum of its plausible predecessors. Gnome + Dwarf offers the Gnome baseline and a Dwarf Tremorsense trait, but **not** Rock Gnome's different passive Tremorsense trait.
+
+**Illustrative historical possibility, not canon:** A population descended from Gnomes and Dwarves might, over many generations, have developed Rock Gnome's distinct Tremorsense. The narrative relationship would not grant a first-generation character that variant automatically.
+
+Future Pillar 2 rules should distinguish **possible ancestry history**, **shared mechanical family**, **the actual available trait variants and their parameters**, and **what manifests on the character**. No genetic algorithm or forced recipe across generations is needed. An established descendant variant may be acquired through its actual source even if its distant historical origin is unknown. A new direct derivation recipe, if desired, requires separate explicit approval.
+
+The read-only [illustrative relationship fixture](pillar2-illustrative-ancestry-relationships-20261111.json) and regression tests preserve this as a future rule-design example without changing native Gnome, Dwarf, or Rock Gnome gameplay content.
+
 ## Pillar 2 decisions to resolve in order
 
 | Priority | Question | Acceptance evidence |
