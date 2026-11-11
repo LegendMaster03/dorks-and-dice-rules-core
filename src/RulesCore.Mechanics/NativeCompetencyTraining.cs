@@ -224,8 +224,16 @@ public static class NativeCompetencyTraining
             }
         }
 
+        // Proficiency groups are discovered in caller order, but audit results must
+        // not depend on that order. Stable provenance is important when replaying
+        // the same authorized grants after switching a playtest policy.
+        var orderedResolutions = resolutions
+            .OrderBy(resolution => resolution.CompetencyId, StringComparer.Ordinal)
+            .ThenBy(resolution => resolution.OccurrenceId, StringComparer.Ordinal)
+            .ToArray();
+
         return issues.Count == 0
-            ? new("resolved", training, [], resolutions)
+            ? new("resolved", training, [], orderedResolutions)
             : new("invalid", new Dictionary<string, NativeCompetencyTrainingState>(),
                 issues.ToArray(), []);
     }
