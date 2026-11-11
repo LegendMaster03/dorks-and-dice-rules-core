@@ -26,7 +26,8 @@
     "Character selection and grant authorization remain unimplemented; this JSON is authoritative content rather than an executable character builder.",
     "General Elf and General Gnome are inheritance-only nonselectable parents. Their children retain inherited cultural benefits; Species defaults cannot point to these parents.",
     "Upbringings serving as parents are inheritance-only by default; a separately selectable parent requires explicit allowParentSelection.",
-    "Duplicate Skill and specific-tool proficiencies follow same-kind replacement. Duplicate Competency proficiency follows the separate optional-resolution contract; duplicate languages and broad/narrow weapon overlap do not create automatic alternatives."
+    "Duplicate Skill and specific-tool proficiencies follow same-kind replacement. Duplicate Competency proficiency follows the separate optional-resolution contract; duplicate languages and broad/narrow weapon overlap do not create automatic alternatives.",
+    "Pillar 1 Species/Ancestry parent, default and direct-selection fields are provisional native content for the currently reviewed direct-selection corpus. Pillar 2 will define mixed-Ancestry, origination, contributed heritage and manifested-trait representation; it may substantially revise these structures. Do not implement Species/Ancestry selection, inheritance execution or persisted character schemas from this interim model."
   ],
   "duplicateTraining": {
     "skillProficiency": {
