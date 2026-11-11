@@ -42,4 +42,16 @@ The other currently selected-native Species/Ancestries, Backgrounds, and Upbring
 
 The content review checked the **25** existing native weapon types, their **21** weapon groups/classification identities, the **eight** native base classes, **two** native Mastery feature sources and **three** current Origin weapon-grant sources. All **179** manually evaluated static contract/reference assertions passed following these changes. The added regression tests check authored grant targets, choice identity/cardinality, the three orthogonal weapon classification dimensions, and prerequisite-gated Mastery without freezing catalog sizes.
 
-The Python test suite, .NET build, and end-to-end authorization paths have **not** been executed against this updated branch here. Existing GitHub Actions failures are not new-run evidence for these commits. No change was merged into `main` in this audit.
+### Executed branch validation (PR #138, November 10 US Eastern / November 11 UTC)
+
+GitHub Actions ran against the Character Origins branch after the audit:
+
+- **.NET Release build:** passed with zero warnings and zero errors.
+- **Mechanics / Host tests:** **99/99** and **111/111** passed.
+- **Dedicated Pillars 1/3 tests:** **32/32** Character Origins, **7/7** Goliath Upbringing, and **6/6** native weapon training tests passed (**45/45** total).
+- **Rewrite structure validation:** passed.
+- **Full Python suite:** **368 tests**, **two remaining failures**. One is the unrelated native Creature-type inheritance-versus-working-evidence mismatch; the other is the wider native/working comparison reporting multiple class, Competency and Weapon Mastery content differences already outside this Origin-specific validation pass. CI stops before later Docker and end-to-end smoke stages. Those stages are **not certified** by this run.
+
+The earlier Bard retained-source comparison failure was corrected by verifying its new executable Martial-weapon choice link without changing the historical working copy. Four pinned SRD `subspecies.*` source identities (Hill Dwarf, High Elf, Rock Gnome and Lightfoot Halfling) now explicitly map to their already approved `ancestry.*` native IDs in the source coverage manifest. Original SRD identities, kinds and pinned source counts remain unchanged; the baseline and split validators check the mapped targets. This is **migration bookkeeping**, not a new Species or Ancestry gameplay rule.
+
+**Status:** The authored weapon proficiency and Mastery grants have executable static test coverage, but actual Character source authorization, item-instance matching, conditional Pact entitlements and mastery combat effects remain unimplemented. PR #138 is draft only; no Character Origins changes have been merged into `main`.
