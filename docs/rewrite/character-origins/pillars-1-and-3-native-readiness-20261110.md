@@ -84,7 +84,7 @@ The pinned source-coverage manifest retains four historical `subspecies.*` ident
 
 ## Finalization branch validation (PR #139)
 
-The branch was tested through a temporary push-only GitHub Actions trigger on commit `6f3abc70437157d8d7f8bb279618235a54fc85ba` ([workflow run 42948414412](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/42948414412)). The original main-only workflow configuration was restored after validation; it is **not** part of the final PR diff.
+The finalization review branch was tested through a temporary push-only GitHub Actions trigger on commit `6f3abc70437157d8d7f8bb279618235a54fc85ba` ([workflow run 42948414412](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/42948414412)). The original main-only workflow configuration was restored after validation; it is **not** part of the final PR diff.
 
 - Release restore/build: **passed**.
 - Entire C# test suite: **93/93 Mechanics** and **111/111 Host tests passed**; this includes the two duplicate-Competency proficiency policy modes.
@@ -111,6 +111,17 @@ These tests confirm the authored, discoverable playtest choice contract; they do
 
 Pillars 1 and 3 can be accepted as a reviewed **native content specification**, not as a functioning Character Origin execution system. Pillar 2 has not completed the mixed-Ancestry and manifestation rules needed to finalize acquisition, authorized inheritance, and Character Sheet behavior. The trusted projection document remains a **proposal** and its accompanying static matrix and source preview do not bypass that dependency. No Origin authorization runtime, stored character schema or character sheet UI is approved by this pass. The optional Competency duplicate mode may be selected and recorded manually for playtesting now.
 
+## Combined Origin specification validation (2026-11-10)
+
+After reconciling the concurrent mixed-choice preview work and correcting the preview test raw string, [combined CI run 42952001168](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/42952001168) recorded:
+
+- Release restore and build: **passed**, with no C# compile errors.
+- Complete C# suite: **118/118 Mechanics** and **111/111 Host** tests passed.
+- Origin Python contract suite: **44/44** passed; Goliath Upbringing: **7/7**; native weapon training: **6/6**. **57/57** targeted Python tests passed.
+- Broad Python suite: **380 tests**, **2 existing unrelated failures** (`test_native_creature_types_reconciled` inherited working evidence and `test_ruleset_split` native/working evidence). These prevent the overall CI workflow from turning green and leave downstream Docker checks skipped; they do not demonstrate an Origin regression.
+
+The two alternative duplicate-Competency proficiency policies remain exposed for manual experimental playtesting, with the mode and outcome recorded for each test. The new internal C# mixed-choice **preview** only inspects source-authored options; it is not an authenticated character authority. Full Character Origins execution, Character Sheet integration and mixed-ancestry manifestation remain deferred until Pillar 2.
+
 ## Completion conditions for this phase
 
 1. Every playable Species/Ancestry/Upbringing/Background combination has resolvable references and a selection path; nonselectable nodes are only inherited, not direct choices.
@@ -120,4 +131,4 @@ Pillars 1 and 3 can be accepted as a reviewed **native content specification**, 
 5. Source-specific and comparative balance exceptions are reviewed without imposing equal budgets or changing unrelated mechanics.
 6. Content validation and the relevant Origin tests run successfully on the current branch; unrelated pre-existing suite failures are separated from these changes.
 
-**Next highest-value work:** Finish combined feature-branch content validation, then complete Pillar 2. The [trusted Origin grant-projection contract](pillar3-trusted-origin-grant-projection-contract-20261110.md) and [five-choice conformance matrix](pillar3-authorized-option-cases-20261110.json) are provisional implementation references, not an approved executable character creation contract. The existing `NativeOriginMixedChoicePreviewer` is a non-authoritative preview, not an Origin authorization engine. Revisit the proposed contract after Pillar 2; do not start Character Sheet or Origin executor integration in this pass. Vehicle mechanics remain separate, and the experimental Competency duplicate policy is ready for manual playtesting without assuming balance equivalence.
+**Next highest-value work:** The combined feature-branch content validation passed all targeted tests; proceed to Pillar 2. The [trusted Origin grant-projection contract](pillar3-trusted-origin-grant-projection-contract-20261110.md) and [five-choice conformance matrix](pillar3-authorized-option-cases-20261110.json) are provisional implementation references, not an approved executable character creation contract. The existing `NativeOriginMixedChoicePreviewer` is a non-authoritative preview, not an Origin authorization engine. Revisit the proposed contract after Pillar 2; do not start Character Sheet or Origin executor integration in this pass. Vehicle mechanics remain separate, and the experimental Competency duplicate policy is ready for manual playtesting without assuming balance equivalence.
