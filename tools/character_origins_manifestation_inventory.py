@@ -404,7 +404,12 @@ def characteristic_candidate_pool(contributors, registry, blueprints, catalog,
             ],
         }
         for dimension, groups in dimensions.items()
-        if len(groups) > 1
+        if len(groups) > 1 and not all(
+            item.get("authoredField") == "sizeChoice"
+            for item in offers
+            if item["kind"] == "intrinsic"
+            and item["identity"] == dimension
+        )
     ]
     # A low-light vision trait and Darkvision are different source facts;
     # whether they coexist, replace, or interact is not decided here.
