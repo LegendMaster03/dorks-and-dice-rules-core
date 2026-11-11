@@ -1,0 +1,61 @@
+# Pillar 2 — Rites of Rebirth and exceptional Dragonborn
+
+**Date:** 2026-11-11  
+**Status:** Owner-approved conceptual replacement rules and Dragonborn content direction. Ritual procedures, exact exceptional traits, data contracts, runtime behavior, and balance are not yet designed or implemented.
+
+## Rite of Rebirth — general transformation rule
+
+A **Rite of Rebirth** is a ritual that **completely replaces a creature's current Species and Ancestry configuration** with a new Species and Ancestry configuration. **Draconic Rebirth** is one specialization of this general class of rituals, not a separate character-creation or inheritance engine.
+
+- **Complete configuration replacement:** The previous Species and Ancestry cease to be the source of the character's *current* inherent mechanical characteristics. All traits, proficiencies, affinities, resistances, intrinsic values, and other benefits granted **by the former Species or Ancestry** are replaced by those granted by the new configuration. A character does not retain an old trait solely because it once manifested or because a historical parent offered it.
+- **No accumulated Species/Ancestry packages:** Rebirth is not trait addition, cross-Species inheritance, or a mixed-Heritage candidate merge. A subsequent Rite replaces the then-current configuration as a whole, even if one Species label happens to remain the same. It must not collect earlier configurations' grants.
+- **Independent grants remain independent:** A proficiency or benefit that still exists through an unrelated source (for example, Background, Upbringing, class, or training) is not removed merely because the old Species also granted a similar benefit. Attribution of a grant matters.
+- **History does not change:** Biological parents and other historical contributors remain who they were. The original Species/Ancestry and the rite itself belong in the character's history, but historical records do **not** automatically restore old trait eligibility or alter the new manifestation.
+- **Life experience does not reset:** Background and Upbringing remain unchanged. The character's origination and prior experiences are not rewritten by the physical or supernatural transformation.
+- **Source-neutral framework:** Different rites specify their own target configuration, eligibility, participants, materials, prerequisites and procedure. No universal ritual requirements, durations, costs, power budget, or repeatability restrictions have yet been approved.
+
+**Boundary:** A change that modifies only one trait or separately adjusts only Species *or* Ancestry is not the complete replacement defined here. Other transformation mechanics can be designed independently; this Rite of Rebirth framework must not silently treat partial changes as full rebirths.
+
+### Illustrative outcomes (not new native records)
+
+| Previous configuration | Specialized rite and source | New current Species/Ancestry |
+| --- | --- | --- |
+| Human | Draconic Rebirth involving a Red Dragon | Dragonborn / Red |
+| Dragonborn / Red | Draconic Rebirth involving a Gold Dragon | Dragonborn / Gold, replacing Red traits |
+| Any mixed Species/Ancestry configuration | Draconic Rebirth involving a Blue Dragon | Dragonborn / Blue; previous contributions remain historical |
+| Dragonborn / Gold | Proposed exceptional Draconic Rebirth involving Bahamut | Dragonborn / exceptional Platinum |
+
+These examples establish the **replacement behavior**, not the right of every named source to perform a ritual, an automatic grant, or finalized ritual procedures. The proposed dragon-to-result mapping extends the inspiration from *Fizban's Treasury of Dragons*' Draconic Rebirth gift and the earlier *Races of the Dragon* Rite of Rebirth; the Dorks & Dice general framework is an adaptation, not a claim that the published options are identical.
+
+## Dragonborn exceptional Ancestries
+
+The [three-factor formula](pillar2-dragonborn-expansion-dimensions-20261111.md) remains the content pattern for **ordinary** Dragonborn Ancestries: category, category-related skin material, and damage type. It does not require extraordinary category-leader Ancestries to follow the same pattern.
+
+**Owner direction:** Exceptional forms are not normally available at initial character creation without DM approval. Their intended ordinary in-game acquisition path is an appropriate **Draconic Rebirth** rite. The ritual's qualifying source and requirements must be authored, not inferred from the category alone.
+
+Two structural patterns are supported:
+
+1. **Composite leader — Chromatic:** Inspired by Tiamat's five traditional Chromatic types (Black, Blue, Green, Red, White). An extraordinary form may combine characteristics of those **defined founding houses**, rather than recomputing its source list whenever new Chromatic Ancestries are published. The precise manifestations, limits, and whether multiple affinities can be selected or held simultaneously are **unresolved**. Composite does **not** mean an automatic union of all five complete trait packages.
+2. **Singular leader — Metallic:** Inspired by Bahamut's Platinum identity. An extraordinary Platinum Ancestry is a **distinct singular material/type**, not a composite of Copper, Bronze, Brass, Silver, and Gold. Its damage affinity and exceptional abilities require separate design; no automatic access to all Metallic features or any particular new damage type is approved.
+
+Other Dragonborn categories may later use composite, singular, or different exceptional patterns, or have no exceptional Ancestry. Sardior/Ruby for Gem Dragons is a possible future example, **not an approved playable record or trait specification**.
+
+**Separation from ordinary mixed Heritage:** The already approved ordinary Breath Weapon rule permits independent selection of a contributed damage type and **complete** area. That rule continues to apply to eligible ordinary mixed-Heritage candidates; it does not give a player access to an exceptional Ancestry, merge five separate Breath Weapons, or resolve exceptional abilities.
+
+## Pillar 2 representation consequences (design requirements, not finalized schema)
+
+1. Track **historical origination/contributors** separately from **current Species/Ancestry** and their manifested characteristic provenance. A rebirth can change the latter without modifying the former.
+2. The prospective Rite operation needs explicit **complete replacement semantics** and source-qualified removal/retention of grants, not the general inherited-candidate pool's merge procedure.
+3. Make **ordinary versus exceptional** eligibility explicit in authored content; material names or compatible damage types alone must not accidentally unlock ritual-only options through ordinary creation or mixing.
+4. Preserve the specific exceptional form's authored identity and constituents; do not derive a composite's membership dynamically from every new category leaf.
+5. Reuse source-neutral characteristic definitions and rules where appropriate. No dedicated Dragonborn-only Origin engine is needed, but ritual eligibility and transformation must be general-purpose concepts.
+6. Neither the present read-only Pillar 2 profiles nor the existing native catalogs currently execute rebirth, remove grants, or enforce ritual-gated character creation.
+
+## Unresolved design decisions
+
+- General Rite of Rebirth procedure, actor/source requirements, costs, timing, failure conditions, reversibility, and whether exceptional sources must participate directly.
+- Exact Dragonborn exceptional traits, damage choices and resistances, balancing, and interactions with standard category powers.
+- Final persistent schema and rules-engine representation for successive rebirths and their historical record.
+- Whether more Dragon categories receive leader-associated forms and how those are acquired.
+
+**Scope:** Design record only. No first-party Species/Ancestry content changes, character creation permissions, runtime APIs, combat rules, or ritual execution are authorized by this document.

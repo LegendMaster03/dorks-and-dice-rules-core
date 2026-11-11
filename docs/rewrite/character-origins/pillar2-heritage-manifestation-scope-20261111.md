@@ -80,6 +80,14 @@ The [Dragonborn three-factor Ancestry formula](pillar2-dragonborn-expansion-dime
 
 **Upbringing is outside this Pillar 2 Dragonborn system.** It belongs to independently selected cultural Character Origins content, even when a separate hoard-related cultural suggestion is authored. The three defining ancestry factors are not automatically three unrestricted mixed-Heritage selection choices. The previously approved independent damage-type/whole-area recombination for ordinary Breath Weapon **still applies to mixed Heritage**, while other characteristic grouping and cross-trait dependencies remain open.
 
+## Rites of Rebirth — post-origin Species/Ancestry replacement
+
+**Owner-established design direction:** A **Rite of Rebirth** completely replaces the character's current Species **and** Ancestry configuration, including the former configuration's inherent grants. It is not a new inheritance merge or an additive feature package. A later Rite replaces the then-current configuration again. Historical parents, origination records, Background, and Upbringing are preserved. Independently obtained benefits are retained according to their own sources, rather than copied forward as old Species traits.
+
+**Draconic Rebirth** is the Dragonborn specialization. It also provides the planned acquisition path for exceptional category-leader Dragonborn forms, normally inaccessible at character creation without DM approval. Chromatic composite and Metallic singular Platinum are distinct patterns; neither grants every category trait automatically. See [Rites of Rebirth and exceptional Dragonborn](pillar2-rites-of-rebirth-20261111.md) for agreed boundaries and unresolved requirements.
+
+This is an approved **conceptual replacement rule**, not an implementation of ritual execution, persistent transformations, or the present provisional Origin profile schema.
+
 ## Mixed Ancestry versus mixed Species
 
 **Design inference from the Species/Ancestry separation:** Combining multiple Ancestries **within one Species** should normally be simpler than combining different Species. Same-Species contributors already share a defined Species foundation, so the character's Origin can focus on the Ancestries' distinct eligible traits, characteristic values, category relationships, and manifestation decisions. For Dragonborn, the standard ancestry variation is largely expressed through **category, category-related skin material, and damage type**. A category usually supplies ordinary Breath Weapon geometry for a standard Ancestry; the separately approved mixed-Heritage rule still permits an eligible whole area and damage type to be inherited independently.
