@@ -58,7 +58,8 @@
               "choiceCategory": "musical-instrument",
               "choiceCount": 1,
               "description": "Choose one specific type of musical instrument and gain training with that type. This does not grant other instruments or separate Perform specialty ranks.",
-              "qualificationCategory": "tool"
+              "qualificationCategory": "tool",
+              "equipmentTypeChoiceId": "entertainer-musical-instrument"
             }
           ],
           "equipmentProficiencyGrants": {
@@ -95,7 +96,28 @@
           "Mundane performance prop"
         ],
         "choiceCount": 1,
-        "choiceConstraint": "match-selected-performance-method-and-be-an-ordinary-item"
+        "choiceConstraint": "match-selected-performance-method-and-be-an-ordinary-item",
+        "sourceBenefitChoiceId": "entertainer-performance-method",
+        "conditionalItemChoices": [
+          {
+            "whenOptionId": "disguise-kit",
+            "ordinaryItemOptions": [
+              "Disguise Kit",
+              "Mundane performance prop"
+            ],
+            "itemRequirements": {
+              "mundane": true
+            }
+          },
+          {
+            "whenOptionId": "musical-instrument",
+            "equipmentTypeChoiceId": "entertainer-musical-instrument",
+            "itemRequirements": {
+              "sameBaseEquipmentTypeAsChoice": true,
+              "mundane": true
+            }
+          }
+        ]
       },
       {
         "name": "Admirer's favor or token",
@@ -131,6 +153,7 @@
     "No additional language, fixed ability adjustment, 2024 Musician Origin feat, class feature or universal entertainment affiliation is granted.",
     "By Popular Demand provides conditional food and lodging in exchange for actual performances and contextual favorable recognition, not a permanent free-lodging entitlement without suitable work or venues.",
     "The equipment choice is ordinary inventory and should correspond to the chosen performance method; an instrument is not compulsory for a nonmusical entertainer.",
-    "Item identity, the nested benefit choice, overlapping Skills/competencies, performance venue adjudication, and corpus balance remain for common integration; no consumer/runtime changes are part of this content approval."
+    "Item identity, the nested benefit choice, overlapping Skills/competencies, performance venue adjudication, and corpus balance remain for common integration; no consumer/runtime changes are part of this content approval.",
+    "The one Performance Item references `entertainer-performance-method` through `sourceBenefitChoiceId`; conditionalItemChoices maps each selected outer option to its permitted ordinary item. The Musical Instrument branch reuses the nested instrument proficiency choice ID, while the Disguise branch grants a physical Disguise Kit or mundane prop without awarding any separate equipment proficiency. No item is materialized before the Origin choice authority validates this relationship."
   ]
 }

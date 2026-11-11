@@ -290,6 +290,99 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                         "Specific weapon proficiency must not cover a family",
                     )
 
+    def test_entertainer_item_obeys_selected_performance_method(self):
+        """One physical item follows the outer benefit option and any inner type.
+
+        These checks validate source-authored relationships, not the future
+        source-ownership authorization or real inventory materialization.
+        """
+        entertainer = self.backgrounds["background.entertainer"]
+        outer = benefit(entertainer, "entertainer-performance-method")
+        self.assertEqual("benefit-choice", outer["grantType"])
+        self.assertEqual(1, outer["choiceCount"])
+        options = {option["id"]: option for option in outer["options"]}
+        self.assertEqual({"disguise-kit", "musical-instrument"}, set(options))
+
+        starting_items = entertainer["startingEquipment"]["items"]
+        item = starting_items[0]
+        self.assertFalse(any("sourceBenefitChoiceId" in other or
+                             "conditionalItemChoices" in other
+                             for other in starting_items[1:]))
+        self.assertEqual("Performance item", item["name"])
+        self.assertEqual(1, item["quantity"])
+        self.assertEqual(1, item["choiceCount"])
+        self.assertEqual(outer["id"], item["sourceBenefitChoiceId"])
+        branches = item["conditionalItemChoices"]
+        self.assertEqual(len(options), len(branches))
+        self.assertEqual(set(options), {branch["whenOptionId"]
+                                        for branch in branches})
+        self.assertEqual(len(branches),
+                         len({branch["whenOptionId"] for branch in branches}))
+
+        disguise = next(x for x in branches if x["whenOptionId"] == "disguise-kit")
+        self.assertEqual(["Disguise Kit", "Mundane performance prop"],
+                         disguise["ordinaryItemOptions"])
+        self.assertEqual({"mundane": True}, disguise["itemRequirements"])
+        self.assertNotIn("equipmentTypeChoiceId", disguise)
+        self.assertNotIn("equipmentProficiencyGrants", options["disguise-kit"])
+        disguise_training = self.assert_single(options["disguise-kit"]["benefits"])
+        self.assertEqual("competency.disguise", disguise_training["competency"])
+        self.assertEqual({"ranks": 1, "proficient": False},
+                         disguise_training["competencyTraining"])
+
+        instrument = next(x for x in branches
+                          if x["whenOptionId"] == "musical-instrument")
+        grant = self.assert_single(options["musical-instrument"][
+            "equipmentProficiencyGrants"]["choices"])
+        self.assertEqual("entertainer-musical-instrument", grant["id"])
+        self.assertEqual(grant["id"], instrument["equipmentTypeChoiceId"])
+        training = self.assert_single(options["musical-instrument"]["benefits"])
+        self.assertEqual(grant["id"], training["equipmentTypeChoiceId"])
+        self.assertEqual("equipment-type",
+                         grant.get("selectionKind", "equipment-type"))
+        self.assertEqual(["equipment.group.tool.musical-instrument"],
+                         grant["fromGroupIds"])
+        self.assertEqual(1, grant["count"])
+        self.assertEqual({"sameBaseEquipmentTypeAsChoice": True,
+                          "mundane": True}, instrument["itemRequirements"])
+        self.assertNotIn("ordinaryItemOptions", instrument)
+        self.assertNotIn("equipmentProficiencyGrants", entertainer)
+        self.assertNotIn("weaponMasteryGrants", entertainer)
+        self.assertNotIn("itemId", item)
+
+    def test_vehicle_operations_remain_distinct_source_qualifications(self):
+        """Vehicle training is neither a tool nor a ranked Competency.
+
+        Do not route an Origin's land/water operator training through the
+        existing binary equipment training or weapon Mastery contracts.
+        """
+        expected = {
+            "background.soldier": ("soldier-land-vehicles", "land"),
+            "background.sailor": ("sailor-water-vehicles", "water"),
+        }
+        for source_id, (benefit_id, scope) in expected.items():
+            with self.subTest(origin=source_id):
+                origin = self.backgrounds[source_id]
+                vehicle_grants = [x for x in origin["benefits"]
+                                  if x.get("qualificationCategory") == "vehicle"]
+                self.assertEqual([benefit_id], [x["id"] for x in vehicle_grants])
+                training = vehicle_grants[0]
+                self.assertEqual("qualification-training", training["grantType"])
+                self.assertEqual(scope, training["vehicleType"])
+                self.assertNotIn("equipmentTypeId", training)
+                self.assertNotIn("competencyTraining", training)
+                self.assertNotIn("weaponMasteryGrants", origin)
+                equipment = origin.get("equipmentProficiencyGrants", {})
+                for group in equipment.get("fixed", []):
+                    self.assertNotIn("vehicle", group["targetId"])
+                for choice in equipment.get("choices", []):
+                    self.assertNotEqual("vehicle", choice["fromCategory"])
+                self.assertFalse(any(x["equipmentCategory"] == "vehicle"
+                                     for x in self.equipment_groups.values()))
+                self.assertFalse(any(x["equipmentCategory"] == "vehicle"
+                                     for x in self.equipment_types.values()))
+
+
     def test_gladiator_selects_one_base_weapon_without_weapon_mastery(self):
         """A selected weapon type is not a family, category, or mastery."""
         gladiator = self.backgrounds["background.gladiator"]

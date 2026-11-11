@@ -95,3 +95,27 @@ A future executor must resolve the whole source-owned choice together:
 - **Testing:** Add eventual tests for partial/malformed mixed choices, stale eligibility categories, duplicate parent inheritance, unselected nested grants, two distinct Skill selections, and broad-versus-specific equipment coverage. The current Python content checks cannot prove these runtime authorization properties.
 
 This plan deliberately stops before implementing a new C# choice executor or changing Origin balance, progression, and class-feature mechanics.
+
+
+## Entertainer performance method and ordinary item binding
+
+The approved `entertainer-performance-method` is one outer `benefit-choice`, **not** two parallel grants. Its single starting `Performance item` now declares `sourceBenefitChoiceId: "entertainer-performance-method"` and two `conditionalItemChoices` keyed by the same `whenOptionId` values as the authored training alternatives:
+
+| Selected outer option | Actual training | Permitted ordinary starting item | Additional validation |
+| --- | --- | --- | --- |
+| `disguise-kit` | One rank in `competency.disguise`, **not** a separate Disguise Kit proficiency | A physical Disguise Kit or mundane performance prop | One ordinary item; no extra tool training from receiving it |
+| `musical-instrument` | One specific type of Musical Instrument proficiency | The instrument of the **same selected type** | Its `equipmentTypeChoiceId: "entertainer-musical-instrument"` must match the nested equipment qualification choice; ordinary, nonmagical item |
+
+The instrument branch's inner `equipmentProficiencyGrants.choices` is applicable **only when** the outer `musical-instrument` option is chosen. Neither its raw nested grant metadata nor its matching physical item can be treated as earned from `background.entertainer` alone. An unselected option yields no training and no matching-item rights. The Display `options` text on the starting item is explanatory; `conditionalItemChoices` is the structural record of branch correspondence.
+
+The future Origin authority must authenticate the Background, validate one outer choice, validate a single eligible musical-instrument base type when applicable, resolve an ordinary physical item permitted by that selected branch, and **commit the whole selection consistently**. The current native equipment resolver can check proficiency in an explicitly selected canonical instrument type, but can not authorize nested Origin choices or materialize inventory. These JSON fields are **not** a claim of implemented runtime selection.
+
+## Vehicle operation qualifications: explicit boundary
+
+Soldier's `soldier-land-vehicles` and Sailor's `sailor-water-vehicles` already have independent source-authored `qualification-training` benefits with `qualificationCategory: "vehicle"` and `vehicleType: "land"` or `"water"`. These are **operator qualifications**, neither item ownership nor Navigator's Tools/Navigation Competency nor tool proficiency. They are not interchangeable; receiving one does not grant the other.
+
+The shared `equipment-qualifications.json` currently supports the four equipment categories `weapon`, `armor`, `shield`, and `tool`, and its two-bit mask includes Weapon Mastery only within that equipment-training contract. Do **not** silently introduce `equipmentCategory: "vehicle"`, turn these into tool IDs, or pass the existing vehicle-benefit objects to `NativeEquipmentQualifications` as if it supported them. Likewise, owning a cart, ship or riding animal does not confer operation training.
+
+**Next implementation decision (not made here):** Either create a separately approved vehicle-operation qualification contract with canonical land/water scopes and provenance, or explicitly extend the equipment taxonomy and resolver with reviewed vehicle semantics and no Weapon Mastery implication. A future Character/Origin executor must preserve the existing source meanings and ensure duplicated valid vehicle training remains one entitlement with retained source provenance. Until that design is approved, the source benefits remain authored but **not executable** through the current equipment resolver. No additional Soldier/Sailor benefits are awarded by this note.
+
+**Current phase boundary:** Vehicle mechanics and their evaluator are deferred outside Pillars 1 and 3. Retaining operator source entitlements does not block content completion.
