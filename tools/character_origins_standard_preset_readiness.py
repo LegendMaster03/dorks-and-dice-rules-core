@@ -19,7 +19,9 @@ from character_origins_compound_traits import read_contracts
 from character_origins_manifestation_inventory import (
     characteristic_candidate_pool,
 )
-from character_origins_parameter_inheritance import _value_key, read_blueprints
+from character_origins_parameter_inheritance import (
+    ParameterInheritanceError, _value_key, read_blueprints,
+)
 from character_origins_source_inventory import (
     read_catalog, source_lineage,
 )
@@ -136,6 +138,16 @@ def propose_standard_preset(selected_source_id, catalog, contracts,
                 ),
                 "identity": dimension,
                 "options": choices,
+                "lineageRelationship": (
+                    "one-authored-choice"
+                    if is_single_authored_choice
+                    else "ancestor-descendant-authored-values"
+                    if len({
+                        row.get("sourceId") for row in rows
+                    }) > 1
+                    else "same-source-competing-values"
+                ),
+                "defaultOverrideDecision": "not-approved",
             })
 
     for item in trait_offers:
@@ -214,6 +226,77 @@ def propose_standard_preset(selected_source_id, catalog, contracts,
             "A completed proposal needs explicit decisions and validation."
         ),
     }
+
+
+def preview_explicit_standard_intrinsic_choices(
+        selected_source_id, chosen_values, catalog, contracts, blueprints):
+    """Preview explicit choices without selecting an automatic override.
+
+    The ordinary standard proposal is re-derived from supplied source data,
+    rather than trusting a caller-supplied template or candidate options.
+    A specific value can be chosen from a documented ambiguity; this is
+    NOT a general rule choosing the nearest ancestor, descendant or maximum.
+    """
+    if not isinstance(chosen_values, dict) or any(
+        not isinstance(key, str) or not key for key in chosen_values
+    ):
+        raise ParameterInheritanceError(
+            "Intrinsic choices must be an object with named dimensions"
+        )
+    result = propose_standard_preset(
+        selected_source_id, catalog, contracts, blueprints
+    )
+    pending = {
+        entry["identity"]: entry
+        for entry in result["unresolvedOriginDecisions"]
+        if entry["kind"] in (
+            "explicit-intrinsic-choice-required",
+            "competing-intrinsic-values-require-policy",
+        )
+    }
+    unexpected = set(chosen_values) - set(pending)
+    if unexpected:
+        raise ParameterInheritanceError(
+            f"Intrinsic choices not pending: {sorted(unexpected)}"
+        )
+    applied = []
+    for identity, value in chosen_values.items():
+        issue = pending[identity]
+        options = [
+            option for option in issue["options"]
+            if _value_key(option["value"]) == _value_key(value)
+        ]
+        if len(options) != 1:
+            raise ParameterInheritanceError(
+                f"Intrinsic choice not offered: {identity}"
+            )
+        result["proposedSelections"].append({
+            "kind": "intrinsic",
+            "identity": identity,
+            "value": copy.deepcopy(value),
+        })
+        applied.append({
+            "identity": identity,
+            "selectedValue": copy.deepcopy(value),
+            "contributedBySourceOccurrences": copy.deepcopy(
+                options[0]["sourceOccurrences"]
+            ),
+            "status": "explicit-preview-choice-not-default-policy",
+        })
+    result["unresolvedOriginDecisions"] = [
+        issue for issue in result["unresolvedOriginDecisions"]
+        if not (
+            issue["kind"] in (
+                "explicit-intrinsic-choice-required",
+                "competing-intrinsic-values-require-policy",
+            )
+            and issue["identity"] in chosen_values
+        )
+    ]
+    result["explicitIntrinsicDecisions"] = applied
+    result["templateComplete"] = not result["unresolvedOriginDecisions"]
+    result["status"] = "explicit-standard-origin-proposal-not-authorized"
+    return result
 
 
 def audit_standard_corpus(catalog, contracts, blueprints):
