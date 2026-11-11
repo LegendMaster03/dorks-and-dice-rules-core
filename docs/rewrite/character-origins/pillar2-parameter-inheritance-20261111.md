@@ -32,7 +32,9 @@ For Red (Fire, 30-by-5-foot line) and Bronze (Lightning, 15-foot cone):
 - **An explicitly linked trait** would allow only (Fire, line) or (Lightning, cone); it would reject (Fire, cone) and (Lightning, line). This remains an available trait-level policy, not the policy for ordinary Dragonborn Breath Weapon.
 - Both policies use the same generic eligibility evaluator; no new Species-specific evaluator or individual Breath Weapon variation is required.
 
-This first proof supports one linkage policy for all designated inheritable parameters of a trait. **Mixed groups**, per-parameter dependencies, conditional eligibility, and more complicated relationships remain future design matters. Independent recombination is authorized for this Breath Weapon example only because its trait policy permits it; other traits can explicitly require linked values.
+The experimental registry now supports **multiple independently identified authored traits**, each with its own linked/independent policy. The legacy `read_blueprint` helper still selects the focused ordinary Breath Weapon example; `read_blueprints` returns the complete provisional registry. Draconic Resistance and Chromatic Warding have **one inherited damage-type slot each**, mapped through previously authored binding contracts. Those single-slot studies do not decide any *cross-trait* damage-type alignment or whether multiple related traits can combine in a mixed character.
+
+The proof still supports only one linkage policy for all designated inheritable parameters **within a trait**. **Mixed groups**, per-parameter dependencies, conditional eligibility, **cross-trait constraints**, and more complicated relationships remain future design matters. Independent recombination is approved for the ordinary Breath Weapon example only; other traits require independent review.
 
 ## Contributor evidence and choice authorization
 
