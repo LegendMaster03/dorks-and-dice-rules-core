@@ -1,6 +1,6 @@
 {
   "status": "provisional-design-fixture",
-  "note": "Read-only inheritance eligibility fixture reflecting the approved Pillar 2 Breath Weapon example: damage type and complete area configuration can be independently selected from available contributor values. This does not grant a trait or activate a runtime rule.",
+  "note": "Read-only parameter-binding evidence for several existing Dragonborn abilities. The ordinary Breath Weapon's approved independent damage-type/whole-area selection is preserved. The single-value resistance and Chromatic Warding mappings are provisional eligibility studies only: whether distinct inherited traits must share the same damage type is an unresolved cross-trait dependency decision, not authorized here.",
   "traits": [
     {
       "mechanicId": "ability.breath-weapon",
@@ -15,6 +15,30 @@
       },
       "parameterInheritance": {
         "mode": "independent"
+      }
+    },
+    {
+      "mechanicId": "ability.draconic-resistance",
+      "definitionOccurrenceId": "species.dragonborn#trait:draconic-resistance",
+      "parameters": {
+        "damageType": {
+          "bindingPath": "damageResistance.damageTypeFrom"
+        }
+      },
+      "parameterInheritance": {
+        "mode": "linked"
+      }
+    },
+    {
+      "mechanicId": "ability.chromatic-warding",
+      "definitionOccurrenceId": "ancestry.dragonborn.chromatic#trait:chromatic-warding",
+      "parameters": {
+        "damageType": {
+          "bindingPath": "damageResistanceOverride.damageTypeFrom"
+        }
+      },
+      "parameterInheritance": {
+        "mode": "linked"
       }
     }
   ]
