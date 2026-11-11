@@ -23,7 +23,7 @@ A source that has neither has **no `competency-training` grant**; do not author 
 
 Other explicitly preserved equipment qualifications (individual Gaming Sets and Musical Instruments) likewise remain equipment, rather than fabricated ranked Competencies. The nature of the source benefit determines its target system; the Upbringing/Background conversion guideline never converts *every* tool into a Competency.
 
-Ranks and proficiency are independent. Existing Competency rank progression, crafting time reductions, unlocked abilities/traits, and check arithmetic are established elsewhere and are **not** reconsidered here.
+Ranks and proficiency are independent per individual source grant. Distinct duplicate proficiency grants follow the shared `rule.competency-duplicate-proficiency` policy: `add-rank` is the provisional default and `alternate-proficiency` is the supported breadth option. These are aggregation rules, **not** additional individual Background or Upbringing allocations. Existing progression and check mechanics are **not** reconsidered here.
 
 ## Reviewed historical Competency conversions already authored
 
@@ -79,11 +79,13 @@ The conversion guideline is **not a ceiling**. A craft-centered Upbringing that 
 
 ## Combined-source examples using approved allocations
 
-- General Dwarf selects Smithing and Guild Artisan selects Smithing: the authored direct conversions yield Smithing proficiency from Upbringing and +1 rank from Background.
+- General Dwarf selects Smithing and Guild Artisan selects Smithing: one source gives proficiency and the other one rank. These complement one another and do **not** trigger an extra duplicate-proficiency rank.
 - Rock Gnome Tinkering and an eligible Guild Artisan Tinkering choice likewise combine proficiency with +1 rank.
 - Spy or Street-Raised selects Thieves' Tools: grant the **binary item-tool proficiency only** from that selected option, with no extra rank or Competency training.
 - Spy selects a Competency alternative: gain **one rank only**. Street-Raised selects a Competency alternative: gain **proficiency only**. Neither grants the mutually exclusive Thieves' Tools option.
 - Criminal plus Rogue repeats the **binary** Thieves' Tools qualification with independent provenance; duplicate equipment proficiency does not create a Competency rank.
+
+Two separately authorized proficiency grants in the same Competency now permit either one additional rank in that same Competency (default) or one explicitly authorized alternate Competency proficiency. A rank-only grant does not trigger the conversion. A future balance comparison may justify an optional rule toggle; the native data merely supports the two modes now.
 
 The current source JSON is **not** an executable Origin selection authority. The native Competency reducer accepts trusted `NativeCompetencyTrainingGrant(SourceId, OccurrenceId, CompetencyId, Ranks, Proficient)` inputs, and the equipment evaluator also requires selected/authorized source occurrences. Neither should infer a grant from mere source names.
 

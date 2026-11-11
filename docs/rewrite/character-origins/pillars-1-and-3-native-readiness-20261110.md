@@ -3,7 +3,7 @@
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Authoritative content:** `data/rulesets/first-party-001/native/`  
-**Status:** Reconciliation checklist updated after the approved November 10 Origin decisions and executed PR #138 validation. Native JSON and source-contract tests are reviewed; a Character Origins choice executor and full repository CI certification remain separate.
+**Status:** Finalization branch includes approved parent selectability, duplicate-proficiency variants and DM-adjudicated Gladiator scope. Native JSON and source-contract changes require current-branch validation; Origin choice execution and full repository CI are separate.
 
 ## Intended deliverable
 
@@ -23,7 +23,7 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 - **Pillar 3:** Sixteen native Backgrounds and thirteen Upbringings. The **nonselectable** Elf General parent is inherited by Drow, High and Wood Elf Upbringings; the **nonselectable** Gnome General parent is inherited by Forest and Rock Gnome Upbringings. General Dwarf and General Goliath are currently independent, selectable cultural packages, not inheritance parents.
 - **Crafting identities:** 26 native Competencies, with Smithing retained and historical product-specific Bowmaking, Armorsmithing, Weaponsmithing, Shipmaking and Trapmaking retired. Bow manufacture is associated with the appropriate woodworking method/recipe (Carpentry or Woodcarving, for example) rather than a Bowmaking advancement track.
 - **Selection policy authored:** `native/rules/species-subspecies-upbringing.json` defines one effective Upbringing, valid selectable defaults, nonselectable inherited parents and benefit inheritance once. The base Elf/Gnome Species no longer suggest nonselectable parents; their Ancestries provide playable default suggestions.
-- **Tests kept current:** `test_goliath_upbringings.py` now refers to `species/ancestry/goliath/` and the authoritative `native/skills.json` / `native/competencies.json`. `test_character_origins_cross_pillar_consistency.py` tests identity, ancestry/upbringing parent graphs, default eligibility, canonical references, and absence of retired product-Competency IDs. `test_character_origins_equipment_integration.py` now asserts the six exact canonical High/Wood Elf weapon-type grants and absence of implied mastery. The targeted Origin, Goliath and weapon-training suites have now executed and passed in PR #138 (46/46 tests).
+- **Tests kept current:** `test_goliath_upbringings.py` now refers to `species/ancestry/goliath/` and the authoritative `native/skills.json` / `native/competencies.json`. `test_character_origins_cross_pillar_consistency.py` tests identity, ancestry/upbringing parent graphs, default eligibility, canonical references, and absence of retired product-Competency IDs. `test_character_origins_equipment_integration.py` now asserts the six exact canonical High/Wood Elf weapon-type grants and absence of implied mastery. The original targeted Origin, Goliath and weapon-training suites passed in PR #138 (46/46 tests); expanded finalization tests need independent execution.
 
 ## Remaining Pillar 1/Pillar 3 decisions and fixes
 
@@ -32,10 +32,10 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 | **Resolved** | **Five independent native Competency choice sites** | All 11 grant effects explicitly authored: Explorer and Spy **one rank only**; Aristocratic, General Goliath and Street-Raised **proficiency only** | Every existing Competency alternative has an authored amount, with mixed equipment alternatives kept separate |
 | **Resolved** | **Guild Artisan shared crafting-method eligibility** | `native/competencies.json` now contains `competency-category.crafting-method` and a canonical member list referenced by `background.guild-artisan` | Guild Artisan chooses one eligible method appropriate to its guild trade and grants **one rank only** |
 | **Resolved** | **General Elf and General Gnome inheritance-only** | Both now have `selectable: false`; corresponding base Species defaults are removed, Ancestry defaults remain selectable, and inherited parent benefits are unchanged | One effective Upbringing, no invalid Species suggestion, and no parent-as-second-choice |
-| **P1** | **Some specific equipment and inventory choices remain conditional** | **Resolved:** High/Wood Elf exact canonical weapon proficiencies include Longbow; Gladiator now has one canonical base-weapon type choice from the All Weapons pool; Bard's retained one-martial-weapon choice is also typed. **Partially resolved in native JSON:** Gladiator's proficiency and starting-item records now share `equipmentTypeChoiceId: "arena-weapon"` and the item declares ordinary/low-cost/arena-specific requirements. **Open in runtime:** actual item eligibility, matching materialization, and Land/Water Vehicle operator qualifications still require Origin authorization and domain-specific representation | Typed proficiency choices resolve against the catalog; source-specific contextual eligibility and inventory matching are separate |
+| **Resolved in content** | **Equipment and ordinary starting items** | High/Wood Elf Longbow grants are canonical. Gladiator selects one native base weapon type and links a matching ordinary starting item. Arena suitability is a DM judgment, not a machine restriction. Vehicle mechanics belong to another system. | Later general Origin execution must preserve authorized types and inventory; no new content decision is required here |
 | **Resolved in JSON** | **Scoped History proficiency multipliers** | Both features now explicitly replace the normal proficiency contribution with **2×PB on qualifying History checks**, including when History is untrained. Stonecunning's considered-proficient status applies only to that check | Actual Skill/check evaluator integration remains separate |
 | **Resolved in JSON** | **Rock Gnome Prestidigitation casting Ability** | Select **Intelligence, Wisdom, or Charisma** for the Upbringing-granted Prestidigitation cantrip | Spell authorization/execution is a later implementation concern |
-| **P2** | **General Gnome shared cultural knowledge** | Decide whether its approved-in-principle but unallocated cultural feature exists as a concrete benefit, or whether a language-only General Gnome parent is intentional | Qualitative completeness; does not justify inventing an extra universal Competency |
+| **Deferred** | **General Gnome shared cultural knowledge** | The proposed general cultural feature has no approved mechanical allocation. General Gnome currently grants its language and its children supply their own features. | Do not fabricate a new grant or block completion on this idea; revisit with further evidence |
 | **Resolved allocation; monitor playtest** | **Craft-focused conversion exceptions** | General Dwarf remains **proficiency only** and Guild Artisan remains **one rank only**. No automatic both allocation was approved | Later balance changes require new source-specific evidence, not inferred default grants |
 
 **Settled boundaries not to reopen during this pass:**
@@ -61,6 +61,27 @@ The dedicated Character Origins CI step now runs independently of the repository
 
 The pinned source-coverage manifest retains four historical `subspecies.*` identifiers but explicitly links them to corresponding approved `ancestry.*` records. This corrects the legacy path/identity mismatch without resurrecting old Subspecies mechanics or altering the pinned SRD source count. The full Python suite now reports two remaining cross-domain failures, so the full CI workflow is not green and downstream smoke tests have not run.
 
+## Final comparative review and approved policy disposition
+
+| Combination or issue | Final interpretation |
+| --- | --- |
+| Giant Foundling + Soldier | Both sources grant Intimidation. A second authorized Skill proficiency permits a different Skill of the same kind, not a rank. |
+| General Dwarf + Guild Artisan, both choosing Smithing | One grants proficiency; the other grants one rank. They complement each other, so no duplicate-proficiency conversion applies. |
+| General Goliath + Sailor, both choosing Navigation | One grants proficiency and the other one rank; Water Vehicles belongs to the separate vehicle domain. |
+| Street-Raised + Spy, both choosing Thieves' Tools | A duplicated specific-tool qualification permits another eligible tool proficiency after authorization, never a Competency rank. |
+| Aristocratic + Noble, overlapping Gaming Set choice | Duplicate game-set qualifications follow same-kind replacement; their social features remain distinct. |
+| High Elf and broad weapon coverage | Wide/narrow weapon overlaps preserve proficiency provenance but do not generate wildcard weapon choices or mastery. |
+| Forest versus Rock Gnome | Keep asymmetric approved benefits; the unallocated General Gnome cultural feature is deferred, not automatically added. |
+| Gladiator | One mundane base weapon proficiency and its matching ordinary starting item; DM adjudicates arena suitability. |
+| Duplicate Competency proficiency | The independent policy supports `add-rank` (provisional default) and `alternate-proficiency`, without changing individual Origin grants. |
+| Duplicate languages | Preserve learned-language sources; automatic extra language choice has not been approved. |
+
+**Parent Upbringings:** Parents are inheritance-only by default. A directly selectable parent needs an explicit exception; inherited benefits apply once.
+
+**Policy switch status:** Both Competency outcomes are mechanically supported, but no player-facing optional rule toggle is exposed. Future balance review can compare specialization, breadth, and rank milestone timing.
+
+**Audit integration:** Recursive reference checks, fixed Skill overlap detection, all directly selectable Origin combinations and five mutually exclusive mixed-domain Origin choices are tested at the content level. These checks do not imply that Character Origin authorization has been implemented.
+
 ## Completion conditions for this phase
 
 1. Every playable Species/Ancestry/Upbringing/Background combination has resolvable references and a selection path; nonselectable nodes are only inherited, not direct choices.
@@ -70,4 +91,4 @@ The pinned source-coverage manifest retains four historical `subspecies.*` ident
 5. Source-specific and comparative balance exceptions are reviewed without imposing equal budgets or changing unrelated mechanics.
 6. Content validation and the relevant Origin tests run successfully on the current branch; unrelated pre-existing suite failures are separated from these changes.
 
-**Next highest-value work:** Complete the outstanding **source-specific Origin authorization design** (Gladiator matched mundane inventory, nested mutually exclusive choices, and vehicle operator qualifications) without inventing gameplay allocations. The complete Python suite on PR #138 ran 369 tests and retains **two unrelated or cross-domain failures**: creature inheritance evidence and broad native/working source divergences. Original SRD `subspecies.*` IDs are now preserved with explicit links to four approved `ancestry.*` native records, and the pinned baseline integrity test passes. No Character builder or combat-effect implementation is implied by the source-level pass.
+**Next highest-value work:** Run the expanded source-contract and Mechanics tests in this finalization branch; distinguish new regressions from previously documented repository-wide migration-suite failures. Review and integrate the finalization changes into the existing Origin feature branch without merging into main. Character Origin execution and vehicle mechanics are future implementation work.

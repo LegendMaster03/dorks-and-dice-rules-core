@@ -6,7 +6,7 @@
 
 - A native **Competency** represents one learned capability. Brewing, Cooking, Herbalism, Smithing, Alchemy, and similar methods consolidate overlapping craft Skills and 5.x crafting-tool training.
 - A Competency has a **nonnegative rank count** and an independent **binary proficiency flag**. Each can be granted separately, or the same source can grant both. No rank inherently confers proficiency, and proficiency does not imply a rank.
-- Legitimate **multiple rank grants accumulate**, even when they refer to the same Competency. A repeated feat can be represented by **distinct purchase occurrences**. A repeated *proficiency-only* grant remains proficiency only and never becomes a rank by implication.
+- Legitimate **multiple rank grants accumulate**, even when they refer to the same Competency. A repeated feat can be represented by **distinct purchase occurrences**. Duplicate proficiencies from **distinct authorized source occurrences** follow the selected ruleset policy: the provisional default grants **one rank in that same Competency per additional proficiency**, while the alternative requires an authorized proficiency choice in another unproficient Competency. Repeating a source occurrence itself remains invalid.
 - Source-based training grants must specify their effect, rather than assuming every 5.x tool proficiency becomes rank + proficiency. A reviewed source-to-native conversion can grant one rank and optionally proficiency, but the conversion value is **not automatically determined by the name of the tool**.
 - **Thieves' Tools** remain a separately granted, binary, nonleveling equipment qualification. `skill.open-lock` is a Skill; trap disarming is task-dependent. A crafting Competency's associated equipment does not give the character the item or automatically confer a second equipment proficiency.
 - The established **Journeyman, Expert, and Master** titles are reference milestones, with **Master** at the top. Their rank thresholds, extra techniques, caps, and advancement costs remain future content/balance work. The number of numeric ranks should follow the design of meaningful benefits, rather than a predetermined count.
@@ -40,10 +40,13 @@ The mechanics helper `NativeCompetencyTraining.CombineValidated` accepts an arra
 | `CompetencyId` | A native `competency.*` identity that exists in the loaded catalog |
 | `Ranks` | Nonnegative rank increment, possibly zero |
 | `Proficient` | Whether this occurrence grants proficiency |
+| `DuplicateProficiencyAlternativeCompetencyId` | Optional source-authorized replacement in `ChooseAnotherProficiency` mode only |
 
 A grant must supply a positive rank increment, proficiency, or both. Valid grants with different occurrence IDs **add rank increments** and combine proficiency through logical OR. Any invalid grant or duplicate occurrence invalidates the **entire input batch**, preventing a partly calculated training result.
 
-**Authority boundary:** This is a **pure reducer, not an API for obtaining grants**. It checks identity, numerical validity, and occurrence uniqueness, but it **does not** prove the source was earned, ensure a character selected an eligible option, determine whether a feat could repeat, resolve source-edition tool names, or enforce a maximum gameplay rank. The authorized class/origin/feat selection engine **must validate those facts before invoking the reducer**. Do not accept a client-supplied `SourceId` as authorization. Maintain actual grant provenance in the calling character/campaign workflow.
+**Duplicate policy:** The native rule `rule.competency-duplicate-proficiency` supports `add-rank` (provisional default) and `alternate-proficiency` (breadth option). `NativeCompetencyTraining.CombineValidated` accepts a typed `NativeCompetencyDuplicateProficiencyPolicy`, validates required alternatives, and returns source-occurrence resolutions. One base proficiency remains; each additional distinct proficiency becomes a rank or a proficiency in one other valid, unproficient Competency. Explicit rank grants remain on their original Competency. A missing, repeated, or invalid alternative fails without exposing partial training. The policy mode is selected by trusted ruleset configuration, **not by a player-facing optional-rule toggle**. A later balance review may justify exposing such a toggle.
+
+**Authority boundary:** This is a **pure reducer, not an API for obtaining grants**. It checks identity, numerical validity, and occurrence uniqueness, but it **does not** prove the source was earned, ensure a character selected an eligible option, determine whether a feat could repeat, resolve source-edition tool names, or enforce a maximum gameplay rank. The authorized class/origin/feat selection engine **must validate those facts, any replacement choice, and the active ruleset policy before invoking the reducer**. Do not accept a client-supplied `SourceId` as authorization. Maintain actual grant provenance in the calling character/campaign workflow.
 
 ### Example (illustrative, not an approved origin allocation)
 
@@ -122,7 +125,7 @@ The crosswalk is **identity guidance**, not a universal conversion effect. When 
 - A character with ranks and proficiency gains the ability, rank, and proficiency contributions exactly once in its ordinary Competency check.
 - Rank-only and proficiency-only states produce their respective contributions; an unresolved governing Ability does not silently choose one.
 - Skills retain their current independent behavior (this slice does **not** remove the existing Skill combined-profile restriction).
-- Validated distinct grant occurrences accumulate ranks; repeated proficiency-only grants do not add ranks.
+- Validated distinct grant occurrences accumulate explicit ranks; repeated proficiency grants add one rank each by default or resolve to authorized alternate Competency proficiencies in alternate mode.
 - Duplicate grant occurrences, non-Competency targets, and invalid rank amounts fail closed.
 - A rank prerequisite does not imply proficiency, and a proficiency prerequisite does not imply ranks.
 
@@ -130,4 +133,4 @@ The crosswalk is **identity guidance**, not a universal conversion effect. When 
 
 Journeyman/Expert/Master thresholds; additional rank titles; a finalized rank maximum; practice and training schedules; feat cost and duplicate-choice balance; rank-based abilities, crafting speed, quirk control, ingredient/reagent substitution; formal source conversion matrices; multi-Competency manufacturing procedure; and full client/server entitlement enforcement.
 
-**Testing limitation:** The C# test cases have been added in the mechanics test project, but a .NET SDK and executable checkout were not available in the current environment. Review and compilation must occur before declaring the slice tested or deploy-ready.
+**Validation boundary:** Mechanics tests now exercise both duplicate policies, preserved rank grants, replacement eligibility, provenance, occurrence replay, and order independence. These new tests must run in branch CI before declaring them executed.
