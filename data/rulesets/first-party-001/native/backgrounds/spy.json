@@ -35,7 +35,11 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.disguise"
+              "competency": "competency.disguise",
+              "competencyTraining": {
+                "ranks": 1,
+                "proficient": false
+              }
             }
           ]
         },
@@ -45,7 +49,11 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.forgery"
+              "competency": "competency.forgery",
+              "competencyTraining": {
+                "ranks": 1,
+                "proficient": false
+              }
             }
           ]
         },
@@ -74,7 +82,11 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.calligraphy"
+              "competency": "competency.calligraphy",
+              "competencyTraining": {
+                "ranks": 1,
+                "proficient": false
+              }
             }
           ]
         }
@@ -140,6 +152,7 @@
     "Intelligence Sources is a bounded information-contact feature. It does not provide Criminal Contact's guaranteed channel into an underworld network, nor Sage's Researcher knowledge-source identification.",
     "No automatic false identity or Charlatan feature, free disguises, cryptographic bypass, guaranteed infiltration, criminal allegiance, Origin feat, ability score increases, or class capabilities.",
     "Starting equipment is ordinary inventory, with item identity and materialization deferred to later implementation.",
-    "Native consumer execution of multi-skill and competency choices, and general duplication and benefit balance review, are deferred."
+    "Native consumer execution of multi-skill and competency choices, and general duplication and benefit balance review, are deferred.",
+    "The chosen Disguise, Forgery, or Calligraphy Competency grants one rank and no automatic proficiency. The Thieves' Tools alternative grants only its separate binary equipment qualification."
   ]
 }
