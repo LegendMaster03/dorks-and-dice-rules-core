@@ -11,7 +11,7 @@ from character_origins_compound_traits import read_contracts  # noqa: E402
 from character_origins_manifestation_inventory import (  # noqa: E402
     draft_manifestation_profile,
 )
-from character_origins_parameter_inheritance import read_blueprint  # noqa: E402
+from character_origins_parameter_inheritance import read_blueprints  # noqa: E402
 from character_origins_source_inventory import (  # noqa: E402
     read_catalog, source_inventory,
 )
@@ -26,8 +26,7 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
     def setUpClass(cls):
         cls.catalog = read_catalog()
         cls.contracts = read_contracts()
-        blueprint = read_blueprint()
-        cls.blueprints = {blueprint["definitionOccurrenceId"]: blueprint}
+        cls.blueprints = read_blueprints()
 
     def propose(self, selected, catalog=None):
         return propose_standard_preset(
@@ -176,26 +175,33 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
             report["upbringingStatus"],
         )
 
-    def test_red_dragonborn_retains_unresolved_ancestry_bound_traits(self):
+    def test_red_dragonborn_tracks_all_three_parameter_bound_traits(self):
         report = self.propose("ancestry.dragonborn.red")
         proposed = {x["identity"]: x for x in self.entries(report, "trait")}
-        self.assertIn("species.dragonborn#trait:breath-weapon", proposed)
         self.assertEqual(
             {"damageType": "fire",
              "area": {"shape": "line", "lengthFeet": 30, "widthFeet": 5}},
             proposed["species.dragonborn#trait:breath-weapon"]["parameters"],
         )
-        unresolved = {x["field"] for x in report["deferredSourceEvidence"]}
-        self.assertIn(
-            "species.dragonborn#trait:draconic-resistance", unresolved,
+        self.assertEqual(
+            {"damageType": "fire"},
+            proposed["species.dragonborn#trait:draconic-resistance"]["parameters"],
         )
-        self.assertIn(
-            "ancestry.dragonborn.chromatic#trait:chromatic-warding",
-            unresolved,
+        self.assertEqual(
+            {"damageType": "fire"},
+            proposed["ancestry.dragonborn.chromatic#trait:chromatic-warding"]["parameters"],
         )
-        self.assertIn("damageType", unresolved)
-        self.assertIn("breathWeaponArea", unresolved)
-        self.assertFalse(report["templateComplete"])
+        deferred = {x["field"] for x in report["deferredSourceEvidence"]}
+        self.assertNotIn(
+            "species.dragonborn#trait:draconic-resistance", deferred,
+        )
+        self.assertNotIn(
+            "ancestry.dragonborn.chromatic#trait:chromatic-warding", deferred,
+        )
+        # Authored leaf/family source fields are not separate Origin grants.
+        self.assertIn("damageType", deferred)
+        self.assertIn("breathWeaponArea", deferred)
+        self.assertTrue(report["templateComplete"])
 
     def test_rock_gnome_stays_a_distinct_standard_source(self):
         report = self.propose("ancestry.gnome.rock")
