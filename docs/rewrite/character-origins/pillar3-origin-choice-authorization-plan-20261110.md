@@ -54,6 +54,23 @@ There is **one** outer grant entitlement per row, not a separately earned grant 
 
 An outer Origin benefit can have multiple mechanical consequences only if explicitly authored as such; a mixed `benefit-choice` is not that authorization. Feature-specific checks and contextual modifiers remain separate from these grant projections.
 
+## Gladiator weapon-selection and starting-item binding
+
+The native Gladiator Background now gives the proficiency benefit `gladiator-arena-weapon` and its **first** ordinary starting-item entry the same `equipmentTypeChoiceId: "arena-weapon"`. This points to the one canonical `equipmentProficiencyGrants.choices` record with `count: 1`, `selectionKind: "equipment-type"`, and `fromGroupIds: ["equipment.group.weapon.all"]`. The All Weapons group is only the *eligible base-type pool*. It is not a proficiency grant for a group, weapon family, or magic item.
+
+The item's `itemRequirements` records the already approved conditions: `sameBaseWeaponTypeAsChoice`, `mundane`, `inexpensive`, and `arenaAppropriate`. These are **authored conditions awaiting Origin item authorization**, not accepted predicates on existing `NativeEquipmentQualifications` inputs, and not a new class of proficiency grants. No canonical item ID is invented here.
+
+A future executor must resolve the whole source-owned choice together:
+
+1. Authenticate that the character earned `background.gladiator` and obtain one stable choice occurrence for `arena-weapon`.
+2. Resolve exactly one **existing canonical base weapon type** eligible under `equipment.group.weapon.all`; do not accept group IDs, arbitrary item identifiers, or a magical variant as the selection.
+3. Establish that the player's chosen type is appropriate to their stated arena discipline. This needs source-specific adjudication; neither the weapon family nor the word "arena" in an item name proves it.
+4. Resolve one ordinary item definition/instance linked to that **same** base type and verify that it is **mundane** and **inexpensive**, under the adopted item/equipment rules. The current catalog is intentionally not sufficient to perform those checks.
+5. Apply the single selected weapon proficiency and materialize the single matching starting item **only after both validations succeed**. A missing/invalid item, stale type reference, mismatched type, unsupported arena judgment, or unrecognized price/magic properties cannot silently substitute a different item or create a broader proficiency.
+6. Keep weapon Mastery independent: this Background provides no `weaponMasteryGrants`. The selected item alone never grants mastery or proficiency.
+
+**Boundary:** The new metadata is a source-level linkage, not an executable runtime binding or confirmation that every current native type can be bought as an arena weapon. The historical Net/Trident examples remain unreconciled. The Entertainer's performance-item choice has an analogous item/training relationship, but its *Disguise versus Instrument* branches differ; future authorization must preserve that mutual exclusivity and cannot inherit Gladiator's one-weapon constraint.
+
 ## Worked source cases (no new gameplay allocations)
 
 **Spy selects Thieves' Tools:** A validated Spy Background and exactly the `thieves-tools` tradecraft option yield the canonical binary `equipment.tool.thieves-tools` qualification. None of Spy's Disguise, Forgery, or Calligraphy alternatives is earned. If Rogue also grants Thieves' Tools, the outcome is one proficiency with independent provenance.
