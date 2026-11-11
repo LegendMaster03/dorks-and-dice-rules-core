@@ -3,7 +3,7 @@
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Authoritative content:** `data/rulesets/first-party-001/native/`  
-**Status:** Finalization branch includes approved parent selectability, duplicate-proficiency variants and DM-adjudicated Gladiator scope. Native JSON and source-contract changes require current-branch validation; Origin choice execution and full repository CI are separate.
+**Status:** Finalization branch includes approved parent selectability, duplicate-proficiency variants and DM-adjudicated Gladiator scope. Native JSON, source-contract tests and both Competency duplicate policies were validated on PR #139; the two existing full-suite Python failures and Origin execution remain separate.
 
 ## Intended deliverable
 
@@ -81,6 +81,18 @@ The pinned source-coverage manifest retains four historical `subspecies.*` ident
 **Policy switch status:** Both Competency outcomes are mechanically supported, but no player-facing optional rule toggle is exposed. Future balance review can compare specialization, breadth, and rank milestone timing.
 
 **Audit integration:** Recursive reference checks, fixed Skill overlap detection, all directly selectable Origin combinations and five mutually exclusive mixed-domain Origin choices are tested at the content level. These checks do not imply that Character Origin authorization has been implemented.
+
+## Finalization branch validation (PR #139)
+
+The branch was tested through a temporary push-only GitHub Actions trigger on commit `6f3abc70437157d8d7f8bb279618235a54fc85ba` ([workflow run 42948414412](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/42948414412)). The original main-only workflow configuration was restored after validation; it is **not** part of the final PR diff.
+
+- Release restore/build: **passed**.
+- Entire C# test suite: **93/93 Mechanics** and **111/111 Host tests passed**; this includes the two duplicate-Competency proficiency policy modes.
+- Origin source-contract regressions: **40/40** passed. Goliath Upbringing tests: **7/7** passed. Native weapon-training tests: **6/6** passed.
+- Repository-wide Python suite: **376 executed, 2 failed**. Those failures are the already documented `test_native_creature_types_reconciled` inherited working-evidence comparison and `test_ruleset_split` broad authoritative/working conflicts. No newly added Origin assertion failed.
+- As the full Python step failed, later Docker validation steps were **skipped**; this run does not demonstrate full repository CI health or end-to-end Origin character creation.
+
+The `add-rank` policy remains the provisional default. `alternate-proficiency` remains a fully tested ruleset-level alternative, but a player-facing optional toggle and any assertion of balance equivalence are deferred until competency rank milestones and breadth/specialization tradeoffs have been evaluated.
 
 ## Completion conditions for this phase
 
