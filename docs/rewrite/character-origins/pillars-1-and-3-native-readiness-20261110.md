@@ -47,6 +47,14 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 - **Parent benefits** are inherited once. The effective Upbringing is chosen once and can be cross-cultural. Species, Ancestry, cultural traits, and occupational experience should not be remerged just to follow an old Race/Background package.
 - No actual persisted characters use this experimental content. No migration/compatibility accounting for existing ranks is necessary.
 
+## Content validation from the approved allocation pass
+
+- **All 16 Backgrounds and 13 Upbringings** were read as live branch JSON. All **19** authored Competency-training objects now have explicit, nonempty `competencyTraining` effects with valid rank/proficiency types. Canonical Skill and Competency references checked without error.
+- **All nine base Species** were checked for valid identity/default behavior. The five Elf/Gnome Ancestry suggestions still target their respective selectable Upbringings; the two general cultural parents are nonselectable and the base Elf/Gnome defaults were removed.
+- **Guild Artisan** references the authoritative `competency-category.crafting-method` with 22 valid native method members; its illustrative list is a subset and does not override the shared category.
+- **Scoped History and Rock Gnome spell selection** fields were checked for the approved replacement/eligibility semantics. **Gladiator** selects one individual weapon type through the approved equipment selector and grants no mastery.
+- These are **live JSON static contract checks performed through GitHub**, not executed results of the committed Python unittest files. An executable checkout/CI run remains necessary for final test certification. No C# changes or runtime verification are claimed.
+
 ## Completion conditions for this phase
 
 1. Every playable Species/Ancestry/Upbringing/Background combination has resolvable references and a selection path; nonselectable nodes are only inherited, not direct choices.
