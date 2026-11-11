@@ -285,6 +285,30 @@ class Pillar2ParameterInheritanceTests(unittest.TestCase):
                  "uses": {"value": 999}},
             )
 
+    def test_parameter_values_require_exact_json_types(self):
+        # Python normally considers True == 1; the heritage evaluator may not
+        # silently reinterpret a boolean parameter as a numeric grant.
+        p = {
+            "traitCandidateAvailable": True,
+            "parameterInheritance": {"mode": "linked"},
+            "parameterOptions": {"example": [{
+                "value": 1, "contributedBy": [{"contributorId": "one"}],
+            }]},
+            "candidateConfigurations": [{
+                "contributorId": "one", "parameters": {"example": 1},
+            }],
+        }
+        self.assertFalse(
+            validate_parameter_proposal(p, {"example": True})["eligible"]
+        )
+        p["parameterInheritance"]["mode"] = "independent"
+        self.assertFalse(
+            validate_parameter_proposal(p, {"example": True})["eligible"]
+        )
+        self.assertTrue(
+            validate_parameter_proposal(p, {"example": 1})["eligible"]
+        )
+
     def test_pool_does_not_mutate_source_or_policy(self):
         before_catalog = copy.deepcopy(self.catalog)
         before_policy = copy.deepcopy(self.blueprint)
