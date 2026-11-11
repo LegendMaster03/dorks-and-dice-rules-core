@@ -245,14 +245,15 @@ class Pillar2ConfiguredTraitTests(unittest.TestCase):
             )
 
     def test_unmaterializable_path_is_rejected(self):
+        # A missing binding can not be treated as a resolved parameter.
         bp = copy.deepcopy(self.blueprint)
         bp["parameters"]["damageType"]["bindingPath"] = "damage.progression"
-        with self.assertRaises(ParameterInheritanceError):
-            self.preview(
-                [contributor("red", "ancestry.dragonborn.red")],
-                {"damageType": "fire", "area": LINE},
-                blueprint=bp,
-            )
+        p = self.preview(
+            [contributor("red", "ancestry.dragonborn.red")],
+            {"damageType": "fire", "area": LINE}, blueprint=bp,
+        )
+        self.assertFalse(p["configured"])
+        self.assertNotIn("configuredDefinition", p)
 
     def test_homebrew_uses_identical_generic_materialization(self):
         catalog = copy.deepcopy(self.catalog)
