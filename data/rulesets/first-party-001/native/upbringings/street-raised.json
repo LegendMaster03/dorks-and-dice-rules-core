@@ -40,7 +40,11 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.disguise"
+              "competency": "competency.disguise",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         },
@@ -69,7 +73,11 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.cooking"
+              "competency": "competency.cooking",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         },
@@ -79,7 +87,11 @@
           "benefits": [
             {
               "grantType": "competency-training",
-              "competency": "competency.forgery"
+              "competency": "competency.forgery",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         }
@@ -102,6 +114,7 @@
     "This Upbringing is separate from Criminal, Spy, Charlatan, Soldier, Sage, and all other independently chosen Backgrounds. It does not grant their contacts, false identities, military rank, or other Background features.",
     "The original Urchin Background equipment, city map, pet mouse, parent's keepsake, knife, clothing, and money do not create a second Upbringing equipment package. No startingEquipment grant is included.",
     "No fixed ability changes, Origin feat, mandatory tool ownership, separate criminal affiliation, or automatic training of composite Perception's independently ranked Listen/Spot components.",
-    "Shared future work includes generic Skill/Competency choice execution, language choices, conditional urban travel integration, the corpus-level duplication policy, and testing whether one Skill plus one Competency alongside Urban Navigation is appropriately balanced against other Upbringings."
+    "Shared future work includes generic Skill/Competency choice execution, language choices, conditional urban travel integration, the corpus-level duplication policy, and testing whether one Skill plus one Competency alongside Urban Navigation is appropriately balanced against other Upbringings.",
+    "The chosen Disguise, Cooking, or Forgery Competency grants proficiency and no ranks. The Thieves' Tools alternative grants only its separate binary equipment qualification."
   ]
 }
