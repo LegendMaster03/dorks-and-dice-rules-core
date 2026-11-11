@@ -69,9 +69,9 @@ This illustrates **relationships only**. It is not an adopted ID format, mandato
 
 ## Dragonborn expansion reference
 
-The [Dragonborn category and ancestry dimensions](pillar2-dragonborn-expansion-dimensions-20261111.md) record the planned five associations for **each** ancestry: category, category-related skin material, damage type, complete Breath Weapon area, and an **independent hoard-related cultural Upbringing**. More categories and ancestry options within them are planned, eventually including at least one ancestry for each relevant damage type in every major category. Today's native leaves are only the initial scoped sample.
+The [Dragonborn three-factor Ancestry formula](pillar2-dragonborn-expansion-dimensions-20261111.md) identifies each **standard Dragonborn Ancestry** through **category, category-related skin material, and damage type**. The ordinary Breath Weapon's complete area **usually follows the category** for a standard Ancestry; it is not a fourth independent defining factor. Additional categories and Ancestries are planned, with a long-term goal of each relevant damage type appearing within every major category. Today's native sample is deliberately limited.
 
-This intended structure does **not** automatically authorize five independently selectable characteristics for mixed Heritage. Category and damage type are distinct dimensions; material is related to category; the whole area remains an approved independently inherited Breath Weapon parameter; and the Upbringing connection is a cultural association rather than a biological grant. Cross-trait dependency and mixed-Heritage grouping remain open.
+**Upbringing is outside this Pillar 2 Dragonborn system.** It belongs to independently selected cultural Character Origins content, even when a separate hoard-related cultural suggestion is authored. The three defining ancestry factors are not automatically three unrestricted mixed-Heritage selection choices. The previously approved independent damage-type/whole-area recombination for ordinary Breath Weapon **still applies to mixed Heritage**, while other characteristic grouping and cross-trait dependencies remain open.
 
 ## Reference example for future rules: Rock Gnome divergence
 
