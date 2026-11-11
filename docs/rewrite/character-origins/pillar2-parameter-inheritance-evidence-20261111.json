@@ -1,6 +1,6 @@
 {
   "status": "provisional-design-fixture",
-  "note": "Read-only inheritance eligibility experiment; linked is an illustrative selection policy, not an approved Dragonborn rule. Compare with independent in tests. This does not grant a trait.",
+  "note": "Read-only inheritance eligibility fixture reflecting the approved Pillar 2 Breath Weapon example: damage type and complete area configuration can be independently selected from available contributor values. This does not grant a trait or activate a runtime rule.",
   "traits": [
     {
       "mechanicId": "ability.breath-weapon",
@@ -14,7 +14,7 @@
         }
       },
       "parameterInheritance": {
-        "mode": "linked"
+        "mode": "independent"
       }
     }
   ]
