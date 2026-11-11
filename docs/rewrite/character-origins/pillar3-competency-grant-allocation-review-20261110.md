@@ -1,11 +1,11 @@
 # Pillar 3 — Competency grant allocation review
 
-> **Historical candidate matrix — superseded (2026-11-10):** This P+1 proposal for all 13 benefit sites predates the clarified conversion scope. **Neither is the default** for every Origin. Only a benefit **actually converted from earlier rules content** uses the Upbringing-proficiency or Background-rank guideline as a starting point; the earlier Thieves' Tools proficiency converts directly to a binary equipment qualification. Seven historical Origin records now have explicit Competency amounts, while five independently allocated native choice sites still await source-specific effects. See [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md) for authoritative current status. Do not bulk-apply the older P+1 candidate matrix.
+> **Historical candidate matrix — superseded (2026-11-10):** This P+1 proposal for all 13 benefit sites predates the clarified conversion scope. **Neither is the default** for every Origin. Only a benefit **actually converted from earlier rules content** uses the Upbringing-proficiency or Background-rank guideline as a starting point; the earlier Thieves' Tools proficiency converts directly to a binary equipment qualification. Seven historical Origin records and all five independently designed choice sites now have explicit source-specific effects in native JSON. The approved independent allocations are Explorer/Spy one rank only and Aristocratic/General Goliath/Street-Raised proficiency only; General Dwarf remains proficiency only and Guild Artisan one rank only. See [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md) for authoritative current status. Do not bulk-apply the older P+1 candidate matrix.
 
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Ruleset:** `first-party-001`  
-**Status:** **Source-specific proposals, not approved numeric Origin grants.** No rank, proficiency, or choice effects are changed by this report.
+**Status:** Historical allocation proposals only. Native JSON now contains separately approved effects; **do not use the candidate matrix below to replace them.** This report itself changed no Origin grants.
 
 This review follows the canonical Competency mechanics in `docs/rewrite/competency-baseline-v1.md` and the Origin/qualification integration documented in `pillar3-equipment-integration-20261110.md`. It addresses **Character Origins only**, not general feat/class progression or a new equipment subsystem.
 
