@@ -3,7 +3,7 @@
   "name": "General Gnome Upbringing",
   "kind": "upbringing",
   "status": "selected-native",
-  "selectable": true,
+  "selectable": false,
   "benefits": [
     {
       "id": "gnomish",
@@ -12,6 +12,7 @@
     }
   ],
   "reviewNotes": [
-    "Shared cultural knowledge was approved in principle; exact mechanical grant remains unresolved and is not invented here."
+    "Shared cultural knowledge was approved in principle; exact mechanical grant remains unresolved and is not invented here.",
+    "Inheritance-only cultural foundation. Forest Gnome and Rock Gnome Upbringings inherit Gnomish once; General Gnome is not an independent Upbringing selection."
   ]
 }
