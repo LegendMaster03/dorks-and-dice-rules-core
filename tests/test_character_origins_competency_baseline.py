@@ -1,9 +1,8 @@
-"""Validate only explicitly reviewed earlier-edition Origin Competency conversions.
+"""Validate approved Origin Competency allocations without universal grants.
 
-There is NO universal Origin Competency grant. An earlier-edition benefit that
-actually needs conversion may receive a source-type starting allocation.
-Newly authored choices retain their approved existence but require separate
-approval for the independent rank/proficiency effects.
+Previously converted training and five independently authored Origin choices
+each have explicit source-reviewed rank/proficiency effects. Neither rank nor
+proficiency is inferred merely from being a Background or an Upbringing.
 """
 import json
 from pathlib import Path
@@ -27,19 +26,22 @@ CONVERTED_UPBRINGINGS = {
     "gnome/rock": {"tinkering": None},
 }
 
-# These are independently authored or materially reallocated training outcomes.
-# The earlier source type alone does not determine their numeric/binary amounts.
-AWAITING_SOURCE_SPECIFIC_ALLOCATION = (
-    ("backgrounds", "explorer", "explorer-field-competency", None),
+# Independently authored choices use individually approved effects.
+APPROVED_NATIVE_ALLOCATIONS = (
+    ("backgrounds", "explorer", "explorer-field-competency", None,
+     {"ranks": 1, "proficient": False}),
     ("backgrounds", "spy", "spy-tradecraft-competency",
-     ("disguise", "forgery", "calligraphy")),
+     ("disguise", "forgery", "calligraphy"),
+     {"ranks": 1, "proficient": False}),
     ("upbringings", "aristocratic", "aristocratic-formative-competency",
-     ("calligraphy", "painting", "cooking")),
-    ("upbringings", "goliath/general", "clan-craft", None),
+     ("calligraphy", "painting", "cooking"),
+     {"ranks": 0, "proficient": True}),
+    ("upbringings", "goliath/general", "clan-craft", None,
+     {"ranks": 0, "proficient": True}),
     ("upbringings", "street-raised", "street-raised-community-competency",
-     ("disguise", "cooking", "forgery")),
+     ("disguise", "cooking", "forgery"),
+     {"ranks": 0, "proficient": True}),
 )
-
 
 def read(kind, name):
     path = NATIVE / kind / (name + ".json")
@@ -111,16 +113,16 @@ class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
                         self.assertEqual({"ranks": 0, "proficient": True},
                                          entry["competencyTraining"])
 
-    def test_newly_authored_training_choices_are_not_automatically_converted(self):
-        """Preserve approved choices but do not invent an independent grant amount."""
-        for kind, name, id_, options in AWAITING_SOURCE_SPECIFIC_ALLOCATION:
+    def test_native_training_choices_have_their_specific_approved_effects(self):
+        """A single selected alternative grants its authored training only."""
+        for kind, name, id_, options, effect in APPROVED_NATIVE_ALLOCATIONS:
             record = read(kind, name)
             with self.subTest(origin=record["id"], benefit=id_):
                 entries = grants(record, id_, options)
                 self.assertTrue(entries)
                 for entry in entries:
                     self.assertEqual("competency-training", entry["grantType"])
-                    self.assertNotIn("competencyTraining", entry)
+                    self.assertEqual(effect, entry["competencyTraining"])
 
     def test_direct_thieves_tools_conversions_are_equipment_only(self):
         """Historical Thieves' Tools proficiency stays binary across Origin choices."""
