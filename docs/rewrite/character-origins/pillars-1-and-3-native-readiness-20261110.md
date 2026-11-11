@@ -101,6 +101,12 @@ The ruleset exposes two supported experimental variants through `rule.competency
 Record the session or build identifier, the **selected policy value**, the affected Competency and original grant sources, the actual extra rank or new proficiency, and what happened during relevant checks or rank-dependent features. A session with no duplicates should still record the selected value so the denominator of the comparison remains visible. Changing the setting between sessions requires recalculating character training from retained source occurrences, not stacking the new interpretation on the prior projection.
 
 Playtest feedback should compare opportunities used, limitations encountered, and perceived tradeoffs between specialization and broader access. **Do not decide equivalence before observing results.** The future Origin authority and Character Sheet should eventually offer the setting directly; the current source-only test phase can use manual selection and recorded feedback.
+### Experimental optional-rule contract verification
+
+The optional-rule metadata and feedback fields were checked in [finalization CI run 42949159902](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/42949159902). The .NET build and full C# tests passed (**93 Mechanics**, **111 Host**). The focused Python suites passed (**40 Character Origins**, **7 Goliath**, **6 native weapon training**). The existing full-suite Python stage still has **2 unrelated failures in 376 tests**, concerning creature source inheritance and the native/working split; remaining Docker stages were skipped. The temporary workflow trigger used to run this branch check was restored afterward.
+
+These tests confirm the authored, discoverable playtest choice contract; they do not constitute a deployed Character Sheet UI or automatic collection of playtest observations.
+
 ## Completion conditions for this phase
 
 1. Every playable Species/Ancestry/Upbringing/Background combination has resolvable references and a selection path; nonselectable nodes are only inherited, not direct choices.
