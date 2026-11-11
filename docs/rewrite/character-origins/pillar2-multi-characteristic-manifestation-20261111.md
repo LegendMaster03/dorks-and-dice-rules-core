@@ -33,7 +33,7 @@ A directly selectable Species or Ancestry resolves its authored source lineage. 
 | `spellcastingAbilityChoice`, `ancestrySelection` | Choice/control evidence only | Requires a dependent choice or source-selection contract; **not** a free standalone characteristic |
 | Unknown root fields | Explicit deferred evidence | Never silently dropped or interpreted as an inheritable ability |
 
-The only currently configured compound mechanic in the experimental registry is ordinary Dragonborn Breath Weapon. Its parameter slots remain damage type and **complete area**. Its fixed cost, uses, and progression remain inside the unchanged trait record. A source trait with unmodeled symbolic bindings, such as Draconic Resistance, is **deferred** rather than guessed or silently granted.
+The experimental registry currently maps ordinary Dragonborn Breath Weapon (damage type and **complete area**), Draconic Resistance (damage type), and Chromatic Warding (damage type). Fixed costs, uses, restrictions, and progression remain in each unchanged authored trait. Source traits with any **other** unmodeled symbolic binding are **deferred**, not guessed or silently granted. Cross-trait compatibility between separately configured damage types is not yet approved.
 
 Prose-only traits, including Halfling Luck and Elf Magical Sleep, can be recorded as authored traits for Origin review with a `prose-only-effect` flag. That is not executable semantic completion.
 
