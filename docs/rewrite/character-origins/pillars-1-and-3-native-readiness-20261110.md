@@ -3,7 +3,7 @@
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Authoritative content:** `data/rulesets/first-party-001/native/`  
-**Status:** Reconciliation checklist updated after the owner's approved 2026-11-10 Origin decisions. The JSON changes below are authored; executable Origin choice authorization and test execution remain separate.
+**Status:** Reconciliation checklist updated after the approved November 10 Origin decisions and executed PR #138 validation. Native JSON and source-contract tests are reviewed; a Character Origins choice executor and full repository CI certification remain separate.
 
 ## Intended deliverable
 
@@ -23,7 +23,7 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 - **Pillar 3:** Sixteen native Backgrounds and thirteen Upbringings. The **nonselectable** Elf General parent is inherited by Drow, High and Wood Elf Upbringings; the **nonselectable** Gnome General parent is inherited by Forest and Rock Gnome Upbringings. General Dwarf and General Goliath are currently independent, selectable cultural packages, not inheritance parents.
 - **Crafting identities:** 26 native Competencies, with Smithing retained and historical product-specific Bowmaking, Armorsmithing, Weaponsmithing, Shipmaking and Trapmaking retired. Bow manufacture is associated with the appropriate woodworking method/recipe (Carpentry or Woodcarving, for example) rather than a Bowmaking advancement track.
 - **Selection policy authored:** `native/rules/species-subspecies-upbringing.json` defines one effective Upbringing, valid selectable defaults, nonselectable inherited parents and benefit inheritance once. The base Elf/Gnome Species no longer suggest nonselectable parents; their Ancestries provide playable default suggestions.
-- **Tests kept current:** `test_goliath_upbringings.py` now refers to `species/ancestry/goliath/` and the authoritative `native/skills.json` / `native/competencies.json`. `test_character_origins_cross_pillar_consistency.py` tests identity, ancestry/upbringing parent graphs, default eligibility, canonical references, and absence of retired product-Competency IDs. `test_character_origins_equipment_integration.py` now asserts the six exact canonical High/Wood Elf weapon-type grants and absence of implied mastery. These test definitions still need a local or CI execution.
+- **Tests kept current:** `test_goliath_upbringings.py` now refers to `species/ancestry/goliath/` and the authoritative `native/skills.json` / `native/competencies.json`. `test_character_origins_cross_pillar_consistency.py` tests identity, ancestry/upbringing parent graphs, default eligibility, canonical references, and absence of retired product-Competency IDs. `test_character_origins_equipment_integration.py` now asserts the six exact canonical High/Wood Elf weapon-type grants and absence of implied mastery. The targeted Origin, Goliath and weapon-training suites have now executed and passed in PR #138 (45/45 tests).
 
 ## Remaining Pillar 1/Pillar 3 decisions and fixes
 
@@ -53,7 +53,13 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 - **All nine base Species** were checked for valid identity/default behavior. The five Elf/Gnome Ancestry suggestions still target their respective selectable Upbringings; the two general cultural parents are nonselectable and the base Elf/Gnome defaults were removed.
 - **Guild Artisan** references the authoritative `competency-category.crafting-method` with 22 valid native method members; its illustrative list is a subset and does not override the shared category.
 - **Scoped History and Rock Gnome spell selection** fields were checked for the approved replacement/eligibility semantics. **Gladiator** selects one individual weapon type through the approved equipment selector and grants no mastery.
-- These are **live JSON static contract checks performed through GitHub**, not executed results of the committed Python unittest files. An executable checkout/CI run remains necessary for final test certification. No C# changes or runtime verification are claimed.
+- The original static JSON review is supplemented by **executed GitHub Actions** on PR #138: 45/45 dedicated Origin/Goliath/weapon-training Python tests, 99/99 Mechanics tests, 111/111 Host tests, and the rewrite structure validator passed. The .NET Release build completed with zero warnings or errors. This is source-contract and shared-resolver validation, **not** proof of a Character choice executor or end-to-end Origin authorization.
+
+## Executed validation status
+
+The dedicated Character Origins CI step now runs independently of the repository-wide migration suite. In PR #138 the **32 Character Origins**, **7 Goliath Upbringings**, and **6 weapon-training** tests passed. The .NET build, **99 Mechanics** tests, **111 Host** tests, and rewrite structure validation passed as well.
+
+The pinned source-coverage manifest retains four historical `subspecies.*` identifiers but explicitly links them to corresponding approved `ancestry.*` records. This corrects the legacy path/identity mismatch without resurrecting old Subspecies mechanics or altering the pinned SRD source count. The full Python suite now reports two remaining cross-domain failures, so the full CI workflow is not green and downstream smoke tests have not run.
 
 ## Completion conditions for this phase
 
@@ -64,4 +70,4 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 5. Source-specific and comparative balance exceptions are reviewed without imposing equal budgets or changing unrelated mechanics.
 6. Content validation and the relevant Origin tests run successfully on the current branch; unrelated pre-existing suite failures are separated from these changes.
 
-**Next highest-value work:** Run the relevant Python content suites and cross-pillar static checks on a complete checkout. Review outstanding Origin-domain integration dependencies (including Gladiator matched inventory, vehicle operator qualifications, general check execution, and unresolved cultural feature specifics) without reopening the approved allocations. No character-builder implementation is required to judge the authored JSON.
+**Next highest-value work:** Complete the outstanding **source-specific Origin authorization design** (Gladiator matched mundane inventory, nested mutually exclusive choices, and vehicle operator qualifications) without inventing gameplay allocations. The complete Python suite on PR #138 ran 368 tests and retains **two unrelated or cross-domain failures**: creature inheritance evidence and broad native/working source divergences. Original SRD `subspecies.*` IDs are now preserved with explicit links to four approved `ancestry.*` native records, and the pinned baseline integrity test passes. No Character builder or combat-effect implementation is implied by the source-level pass.
