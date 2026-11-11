@@ -275,11 +275,29 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
         self.assertEqual(["equipment.group.weapon.all"],
                          choice["fromGroupIds"])
         self.assertNotIn("weaponMasteryGrants", gladiator)
-        # The ordinary starting item must use the same choice; neither
-        # inventory nor the broad candidate pool is a proficiency grant.
+        # The single authorized selection must feed both the narrow
+        # proficiency grant and one ordinary inventory entry. Neither the
+        # inventory item nor the All Weapons candidate pool confers mastery
+        # or proficiency with any other type.
+        inventory_item = gladiator["startingEquipment"]["items"][0]
+        self.assertEqual(choice["id"], arena["equipmentTypeChoiceId"])
+        self.assertEqual(choice["id"], inventory_item["equipmentTypeChoiceId"])
+        self.assertEqual(1, inventory_item["quantity"])
+        self.assertEqual({
+            "sameBaseWeaponTypeAsChoice": True,
+            "mundane": True,
+            "inexpensive": True,
+            "arenaAppropriate": True,
+        }, inventory_item["itemRequirements"])
         self.assertIn("same-specific-mundane-arena-appropriate-weapon-type",
-                      gladiator["startingEquipment"]["items"][0]
-                      ["choiceConstraint"])
+                      inventory_item["choiceConstraint"])
+        # The native taxonomy only enumerates candidate base types. The
+        # future Origin choice executor must establish arena suitability,
+        # actual item identity, price, and mundane status before selection.
+        self.assertNotIn("itemId", inventory_item)
+        self.assertNotIn("equipmentTypeId", inventory_item)
+        self.assertFalse(any(x.startswith("equipment.group.weapon.")
+                             for x in (choice.get("fromTypeIds") or [])))
 
     def assert_single(self, values):
         self.assertEqual(1, len(values))
