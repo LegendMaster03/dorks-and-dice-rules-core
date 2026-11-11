@@ -5,6 +5,13 @@
 
 ## Pillar 2 outcome
 
+## Work sequence: general model first
+
+**Owner decision (2026-11-11):** Establish and validate the **universal Character Origins characteristic, contributor, manifestation and compatibility model** before introducing rules for any particular same-Species mixed-Ancestry pairing. [General Origin model work plan](pillar2-universal-origin-model-first-20261111.md) is the active architectural priority.
+
+The Dragonborn formula, shared-foundation audit, same-Species pair matrix, and synthetic compatibility contracts remain useful **design probes** and future acceptance fixtures. They do **not** justify selecting Dragonborn category/material grouping, damage-type coupling or pair exceptions before the shared framework is defined. The same general pipeline must accept direct standard, mixed Ancestry, mixed Species, nested and homebrew contributors, with only actual authored differences changing its review outcomes.
+
+
 An Origin profile should identify **how a character originated, where potential inherited characteristics came from, and which characteristics actually manifest**. It must be possible to produce the same profile structure for direct standard Species/Ancestry selection, custom Heritage, and homebrew. Nothing about Pillar 2 requires implementing the mechanics of Breath Weapon, combat, condition resolution, spells, or the Character Sheet.
 
 **Established principle:** Origination establishes how an individual came into existence. Heritage identifies sources from which inherent characteristics *may* derive. The actual character is determined by manifest traits or explicit Origin decisions. Contributor identity, parenthood, and inheritance candidacy do not automatically grant a complete source's traits.
