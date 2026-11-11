@@ -274,10 +274,6 @@ class Pillar2NestedHeritageTests(unittest.TestCase):
         self.assertTrue(first["created"])
         self.assertEqual([], first["contributors"])
         self.assertEqual([], first["manifestedTraits"])
-        with self.assertRaises(ParameterInheritanceError):
-            self.draft(
-                "not-offered", [], {"damageType": "fire", "area": LINE}
-            ) if False else None  # no exception required for denied choice
         # A requested trait with no eligible source is rejected, not granted.
         denied = self.draft(
             "not-offered", [], {"damageType": "fire", "area": LINE}
