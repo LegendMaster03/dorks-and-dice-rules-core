@@ -33,7 +33,8 @@
       "choiceCategory": "specific-weapon",
       "choiceCount": 1,
       "choiceConstraint": "one-specific-existing-mundane-arena-appropriate-weapon-type",
-      "description": "Choose one specific mundane weapon type appropriate to the fighting discipline you performed and gain proficiency with that type. Trident and net are examples, not an exhaustive list. This single-weapon proficiency replaces ordinary tool training; it does not grant Disguise Kit, Musical Instrument training, proficiency with a whole weapon category, fighting styles, maneuvers, additional attacks, armor proficiency, or ownership of every weapon of that type. The chosen weapon type should match your ordinary starting arena weapon."
+      "description": "Choose one specific mundane weapon type appropriate to the fighting discipline you performed and gain proficiency with that type. Trident and net are examples, not an exhaustive list. This single-weapon proficiency replaces ordinary tool training; it does not grant Disguise Kit, Musical Instrument training, proficiency with a whole weapon category, fighting styles, maneuvers, additional attacks, armor proficiency, or ownership of every weapon of that type. The chosen weapon type should match your ordinary starting arena weapon.",
+      "equipmentTypeChoiceId": "arena-weapon"
     },
     {
       "id": "gladiator-arena-performances",
@@ -49,7 +50,14 @@
         "name": "Arena weapon matching selected proficiency",
         "quantity": 1,
         "choiceCategory": "specific-weapon",
-        "choiceConstraint": "same-specific-mundane-arena-appropriate-weapon-type-as-proficiency-and-inexpensive"
+        "choiceConstraint": "same-specific-mundane-arena-appropriate-weapon-type-as-proficiency-and-inexpensive",
+        "equipmentTypeChoiceId": "arena-weapon",
+        "itemRequirements": {
+          "sameBaseWeaponTypeAsChoice": true,
+          "mundane": true,
+          "inexpensive": true,
+          "arenaAppropriate": true
+        }
       },
       {
         "name": "Admirer's favor or personal token",
@@ -89,7 +97,8 @@
     "The selected inexpensive mundane arena weapon is ordinary starting inventory and matches the training type. Its item identity and value comparison remain deferred.",
     "No 2024 Origin feat, ability score increases or extra Upbringing. Weapon-versus-tool strength and duplicate grants require later corpus balance review.",
     "The selected Arena Weapon Proficiency is one canonical base weapon type in the native catalog; the source's mundane, arena-appropriate and matching-starting-item constraints remain part of Origin choice authorization. The All Weapons group is a pool of eligible individual types, not a grant of proficiency in the whole group. This benefit does not grant Weapon Mastery.",
-    "Approved selection scope: any one existing mundane base weapon type appropriate to the character's arena discipline. The equipment catalog enumerates base types, while Origin choice authority enforces arena suitability, nonmagical starting equipment, and the shared selected weapon type; this is neither a whole-family proficiency nor Weapon Mastery."
+    "Approved selection scope: any one existing mundane base weapon type appropriate to the character's arena discipline. The equipment catalog enumerates base types, while Origin choice authority enforces arena suitability, nonmagical starting equipment, and the shared selected weapon type; this is neither a whole-family proficiency nor Weapon Mastery.",
+    "The `gladiator-arena-weapon` benefit and first ordinary starting item both reference the executable choice `arena-weapon` through `equipmentTypeChoiceId`. Item requirements are authored constraints, not a claim that the current common equipment resolver validates mundane cost, arena context or inventory instances."
   ],
   "equipmentProficiencyGrants": {
     "choices": [
