@@ -204,6 +204,39 @@ class CharacterOriginsEquipmentContractTests(unittest.TestCase):
                         self.assertIn(option["benefits"][0]["competency"],
                                       self.competencies)
 
+    def test_guild_merchant_trade_language_is_exclusive_of_navigation(self):
+        """The fifth mixed-domain benefit is language OR Competency, not both.
+
+        This tests the approved authored shape, not the future Character
+        authorization runtime. A selected branch must suppress the other.
+        """
+        merchant = self.backgrounds["background.guild-merchant"]
+        outer = benefit(merchant, "guild-merchant-professional-choice")
+        self.assertEqual("benefit-choice", outer["grantType"])
+        self.assertEqual(1, outer["choiceCount"])
+        options = {x["id"]: x for x in outer["options"]}
+        self.assertEqual({"navigation", "additional-trade-language"}, set(options))
+
+        nav = self.assert_single(options["navigation"]["benefits"])
+        self.assertEqual("competency-training", nav["grantType"])
+        self.assertEqual("competency.navigation", nav["competency"])
+        self.assertEqual({"ranks": 1, "proficient": False},
+                         nav["competencyTraining"])
+        self.assertNotIn("extraLanguages", nav)
+
+        language = self.assert_single(
+            options["additional-trade-language"]["benefits"])
+        self.assertEqual(1, language["extraLanguages"])
+        self.assertEqual("learned-through-commercial-dealings",
+                         language["choiceConstraint"])
+        self.assertNotIn("competency", language)
+        self.assertNotIn("competencyTraining", language)
+
+        for option in options.values():
+            self.assertNotIn("equipmentProficiencyGrants", option)
+        self.assertNotIn("equipmentProficiencyGrants", merchant)
+        self.assertNotIn("weaponMasteryGrants", merchant)
+
     def test_ordinary_competencies_do_not_imply_separate_tool_grants(self):
         for origin_id, trained_id in (
             ("background.charlatan", "charlatan-forgery"),
