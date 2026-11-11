@@ -4,7 +4,7 @@ name: Rules Core Phase 3B Public Native API CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, "feature/character-origins-approved-finalization-20261110"]
   pull_request:
     branches: [main]
   workflow_dispatch:
