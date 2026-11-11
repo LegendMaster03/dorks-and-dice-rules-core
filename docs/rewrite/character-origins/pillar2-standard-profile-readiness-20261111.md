@@ -38,9 +38,9 @@ This audit uses the complete native parent lineage for each selectable Species/A
 
 ### Dragonborn expansion is a content requirement, not a closed schema
 
-Each Dragonborn ancestry is intended to have an authored **category, related skin material, damage type, complete Breath Weapon shape/dimensions, and hoard-related Upbringing**. More categories and leaves are planned, including damage types repeated across major categories. See the [Dragonborn expansion design record](pillar2-dragonborn-expansion-dimensions-20261111.md).
+A standard Dragonborn Ancestry is defined by **category, category-related skin material, and damage type**. Complete Breath Weapon geometry **usually comes from the category**, rather than acting as a fourth defining factor. Future leaves will expand the categories and repeat damage types across them. See the [Dragonborn three-factor design record](pillar2-dragonborn-expansion-dimensions-20261111.md).
 
-Today's standard-preset audit **can not infer skin material or hoard-related Upbringing for native records that do not author those associations**. Current Red and Bronze native leaves do not have a `defaultUpbringing`, and there is not yet an approved skin-material field. That is an identified future content/modeling gap, not a reason to infer culture from a contributor or collapse category and affinity into one identity.
+Today's standard-preset audit **can not infer a skin material from records that do not author one**. The existing family and leaf lineage already represents the category and provides the ordinary area default and damage type. **Upbringing belongs to separate cultural Character Origins content, not the Dragonborn characteristic framework**, whether or not a future cultural suggestion relates to that dragon's hoard. No inferred culture or mandatory Upbringing is part of standard Dragonborn source reconstruction.
 
 ### Completed source bindings: ordinary Dragonborn resistance and Chromatic Warding
 
