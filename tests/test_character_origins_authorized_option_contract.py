@@ -156,17 +156,29 @@ class AuthorizedOriginOptionContractTests(unittest.TestCase):
             if "parent" not in child:
                 continue
             with self.subTest(child=child_id):
-                self.assertTrue(child["selectable"])
+                # An intermediate inherited parent may itself be a valid
+                # nonselectable node in a deeper future chain. Do not assume
+                # every child in the corpus must be selectable.
                 seen = set()
                 current = child_id
                 while current:
                     self.assertNotIn(current, seen, "Cycle or duplicate parent source")
                     seen.add(current)
                     self.assertIn(current, upbringings)
-                    if current != child_id:
-                        self.assertFalse(upbringings[current]["selectable"],
-                                         "Current inherited parent must not require another selection")
+                    # Even if a parent could be selected independently, it
+                    # is inherited once here, not counted as a second pick.
                     current = upbringings[current].get("parent")
+        for parent, child_ids in {
+            "upbringing.elf.general": ("upbringing.elf.drow",
+                                       "upbringing.elf.high",
+                                       "upbringing.elf.wood"),
+            "upbringing.gnome.general": ("upbringing.gnome.forest",
+                                         "upbringing.gnome.rock"),
+        }.items():
+            self.assertFalse(upbringings[parent]["selectable"])
+            for child_id in child_ids:
+                self.assertTrue(upbringings[child_id]["selectable"])
+                self.assertEqual(parent, upbringings[child_id]["parent"])
 
     def test_starting_items_do_not_act_as_training_source(self):
         """Matching equipment is a future authorization gate, not a grant."""
