@@ -267,6 +267,49 @@ public sealed class NativeMechanicsTests
     }
 
     [Fact]
+    public void DuplicateCompetencyAuditOrderDoesNotDependOnGrantInputOrder()
+    {
+        using var fixture = new NativeFixture();
+        foreach (var policy in new[]
+        {
+            NativeCompetencyDuplicateProficiencyPolicy.AddRank,
+            NativeCompetencyDuplicateProficiencyPolicy.ChooseAnotherProficiency
+        })
+        {
+            var alternate = policy ==
+                NativeCompetencyDuplicateProficiencyPolicy.ChooseAnotherProficiency;
+            NativeCompetencyTrainingGrant[] grants =
+            [
+                new("upbringing", "smith-0", "competency.smithing", Proficient: true),
+                new("background", "smith-1", "competency.smithing", Proficient: true,
+                    DuplicateProficiencyAlternativeCompetencyId:
+                        alternate ? "competency.navigation" : null),
+                new("upbringing", "alchemy-0", "competency.alchemy", Proficient: true),
+                new("background", "alchemy-1", "competency.alchemy", Proficient: true,
+                    DuplicateProficiencyAlternativeCompetencyId:
+                        alternate ? "competency.cooking" : null)
+            ];
+            var forward = NativeCompetencyTraining.CombineValidated(
+                fixture.Catalog, grants, policy);
+            var reversed = NativeCompetencyTraining.CombineValidated(
+                fixture.Catalog, grants.Reverse().ToArray(), policy);
+
+            Assert.Equal("resolved", forward.Status);
+            Assert.Equal("resolved", reversed.Status);
+            // The alchemy group is encountered second but sorts first in the audit.
+            Assert.Equal(new[]
+            {
+                "competency.alchemy:alchemy-1",
+                "competency.smithing:smith-1"
+            }, forward.DuplicateResolutions!.Select(resolution =>
+                $"{resolution.CompetencyId}:{resolution.OccurrenceId}").ToArray());
+            Assert.Equal(forward.DuplicateResolutions, reversed.DuplicateResolutions);
+            foreach (var item in forward.Training)
+                Assert.Equal(item.Value, reversed.Training[item.Key]);
+        }
+    }
+
+    [Fact]
     public void EmphasisSpecialCancellationOverridesReroll()
     {
         Assert.Equal("counteract", NativeRolls.Resolve(NativeRollMode.Emphasis, 1, 20,
