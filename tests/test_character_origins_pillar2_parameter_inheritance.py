@@ -1,7 +1,7 @@
 """Provisional trait/parameter inheritance eligibility (not actual grants).
 
-The comparison between linked and independent rules is intentional test
-evidence, not an approval of either rule for the native Breath Weapon.
+Breath Weapon's two inheritance parameters are independently selectable from
+contributing sources. Linked selection is retained for other trait policies.
 """
 import copy
 import sys
@@ -53,7 +53,7 @@ class Pillar2ParameterInheritanceTests(unittest.TestCase):
         ])
         self.assertEqual("eligibility-evidence-only", p["status"])
         self.assertEqual("ability.breath-weapon", p["mechanicId"])
-        self.assertEqual("linked", p["parameterInheritance"]["mode"])
+        self.assertEqual("independent", p["parameterInheritance"]["mode"])
         self.assertTrue(p["traitCandidateAvailable"])
         self.assertFalse(p["unresolvedContributors"])
         self.assertEqual(
@@ -91,11 +91,13 @@ class Pillar2ParameterInheritanceTests(unittest.TestCase):
         self.assertNotIn("activation", p["parameterOptions"])
         self.assertNotIn("uses", p["parameterOptions"])
 
-    def test_linked_mode_rejects_crossed_pairs(self):
+    def test_linked_mode_rejects_crossed_pairs_for_explicit_linked_trait(self):
+        bp = copy.deepcopy(self.blueprint)
+        bp["parameterInheritance"]["mode"] = "linked"
         p = self.pool([
             contributor("red", "ancestry.dragonborn.red"),
             contributor("bronze", "ancestry.dragonborn.bronze"),
-        ])
+        ], blueprint=bp)
         possible = validate_parameter_proposal(
             p, {"damageType": FIRE, "area": LINE}
         )
@@ -113,13 +115,12 @@ class Pillar2ParameterInheritanceTests(unittest.TestCase):
         )
         self.assertFalse(crossed_reverse["eligible"])
 
-    def test_independent_mode_allows_authorized_parameter_recombination(self):
-        bp = copy.deepcopy(self.blueprint)
-        bp["parameterInheritance"]["mode"] = "independent"
+    def test_breath_weapon_allows_both_crossed_pairs_from_contributors(self):
         p = self.pool([
             contributor("red", "ancestry.dragonborn.red"),
             contributor("bronze", "ancestry.dragonborn.bronze"),
-        ], blueprint=bp)
+        ])
+        self.assertEqual("independent", p["parameterInheritance"]["mode"])
         crossed = validate_parameter_proposal(
             p, {"damageType": FIRE, "area": CONE}
         )
@@ -157,7 +158,14 @@ class Pillar2ParameterInheritanceTests(unittest.TestCase):
         )
         self.assertTrue(result["eligible"])
         self.assertEqual(
-            ["first", "second"], result["configurationContributors"]
+            ["first", "second"],
+            [row["contributorId"] for row in
+             result["parameterProvenance"]["damageType"]],
+        )
+        self.assertEqual(
+            ["first", "second"],
+            [row["contributorId"] for row in
+             result["parameterProvenance"]["area"]],
         )
         # This shows a matching standard parameter set is *permitted*.
         # It does not prove full mechanical character reconstruction.
