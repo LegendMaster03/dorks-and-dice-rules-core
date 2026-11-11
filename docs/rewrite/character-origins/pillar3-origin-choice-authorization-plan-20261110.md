@@ -7,6 +7,8 @@
 
 ## Authority and scope
 
+**Follow-on execution interface:** [Trusted Origin Grant-Projection Contract](pillar3-trusted-origin-grant-projection-contract-20261110.md) describes the proposed server verification boundary, source/option provenance, no-partial-grants behavior and per-domain adapters. Its [mixed-option conformance matrix](pillar3-authorized-option-cases-20261110.json) is a static test reference for the five current option-choice sources, not runtime authority. This plan remains the approved-content integration inventory, not an executable resolver.
+
 The canonical selected sources are **one Background** and **one effective Upbringing** with its authored Upbringing parent chain. Species and Ancestry are selected through their own origin rules; a Species-default Upbringing is a suggestion, **not** an extra automatically inherited package. A character may use an applicable cross-cultural Upbringing. Neither biological heritage nor a named parent mechanically awards that parent's entire cultural package.
 
 The Character/backend selection authority must prove each Origin and each selection **before** projecting grants into native mechanics. Rules Core defines applicable authored rule data and performs validated mechanics; a consumer-requested `sourceId` or option path alone is **not** evidence of entitlement.
@@ -58,44 +60,18 @@ An outer Origin benefit can have multiple mechanical consequences only if explic
 
 The native Gladiator Background now gives the proficiency benefit `gladiator-arena-weapon` and its **first** ordinary starting-item entry the same `equipmentTypeChoiceId: "arena-weapon"`. This points to the one canonical `equipmentProficiencyGrants.choices` record with `count: 1`, `selectionKind: "equipment-type"`, and `fromGroupIds: ["equipment.group.weapon.all"]`. The All Weapons group is only the *eligible base-type pool*. It is not a proficiency grant for a group, weapon family, or magic item.
 
-The item's `itemRequirements` records `sameBaseWeaponTypeAsChoice`, `mundane`, and `inexpensive`; arena suitability remains a written condition for the DM, not a machine-enforced predicate. These descriptors are not accepted predicates on existing `NativeEquipmentQualifications` inputs and do not create another proficiency category.
+The item's `itemRequirements` records `sameBaseWeaponTypeAsChoice`, `mundane`, and `inexpensive`. The written arena-suitability condition is judged by the DM, not automated eligibility logic. These requirements are ordinary equipment/identity constraints, not independent proficiency grants. No canonical item ID is invented here.
 
 A future executor must resolve the whole source-owned choice together:
 
 1. Authenticate that the character earned `background.gladiator` and obtain one stable choice occurrence for `arena-weapon`.
 2. Resolve exactly one **existing canonical base weapon type** eligible under `equipment.group.weapon.all`; do not accept group IDs, arbitrary item identifiers, or a magical variant as the selection.
-3. Leave arena appropriateness to the DM under the written rule. Do not add a static arena-weapon allowlist or an automated arena-suitability determination.
+3. The DM determines whether the chosen type suits the character's arena discipline under the written rule. The selector does not implement an arena-weapon allowlist or algorithmic arena-suitability validation.
 4. Resolve one ordinary item definition/instance linked to that **same** base type and verify that it is **mundane** and **inexpensive**, under the adopted item/equipment rules. The current catalog is intentionally not sufficient to perform those checks.
-5. Preserve exactly one selected weapon type across the narrow proficiency and its matching ordinary starting item. Invalid or mismatched native types must not silently create another proficiency or substitute a different weapon. The DM judges arena suitability; item value and mundane status are described by the Background without requiring an arena-suitability algorithm.
+5. Apply the single selected weapon proficiency and materialize its matching ordinary starting item only after the canonical type and ordinary item requirements resolve. Do not generate an unrelated weapon or broader proficiency when the type or item is invalid. DM arena judgment does not require machine verification.
 6. Keep weapon Mastery independent: this Background provides no `weaponMasteryGrants`. The selected item alone never grants mastery or proficiency.
 
 **Boundary:** The new metadata is a source-level linkage, not an executable runtime binding or confirmation that every current native type can be bought as an arena weapon. The historical Net/Trident examples remain unreconciled. The Entertainer's performance-item choice has an analogous item/training relationship, but its *Disguise versus Instrument* branches differ; future authorization must preserve that mutual exclusivity and cannot inherit Gladiator's one-weapon constraint.
-
-## Worked source cases (no new gameplay allocations)
-
-**Spy selects Thieves' Tools:** A validated Spy Background and exactly the `thieves-tools` tradecraft option yield the canonical binary `equipment.tool.thieves-tools` qualification. None of Spy's Disguise, Forgery, or Calligraphy alternatives is earned. If Rogue also grants Thieves' Tools, the outcome is one proficiency with independent provenance.
-
-**Street-Raised selects Forgery and Charlatan also grants Forgery:** The Upbringing choice and the fixed Charlatan benefit are two different, earned **Competency** grant occurrences. The Street-Raised choice now grants proficiency only, while Charlatan's fixed Forgery grants one rank only. Together, the character becomes proficient in Forgery and gains one rank; overlapping proficiency is Boolean and ranks accumulate only from actually authored distinct rank grants. This does not introduce `skill.forgery` or an extra Forgery Kit proficiency.
-
-**Knight selects a flute:** The one-total-choice rule admits one specific `equipment.tool.flute` proficiency from the approved Musical Instrument group. It does not also grant a Gaming Set or the entire Musical Instrument group.
-
-**Aristocratic selects Cooking:** The nested Gaming Set source must not be projected. Only the approved Cooking Competency proficiency (zero ranks) is eligible.
-
-**Guild Merchant selects a second trade language:** Navigation Competency training is not earned from that same choice. The separate baseline trade-language grant remains, subject to rules for distinct language selections.
-
-**General Elf + High Elf:** Inherit exactly the General Elf Upbringing parent benefits alongside the High Elf-specific grants; do not also apply General Gnome, General Dwarf, a second default Upbringing, or unrelated ancestry grants.
-
-## Data and validation prerequisites
-
-- **Choice categories:** The native Competency catalog publishes `competency-category.crafting-method` with an explicit member list; Guild Artisan references it through `choiceCategoryId`. The remaining Origin authority must validate the chosen method against the actual guild trade, not derive it by display-name matching.
-- **Conditional child sources:** The equipment evaluator currently reads authored grants at canonical source root/`definition`. An Origin child option must be made an authorized, inspectable catalog-backed grant source before the same mechanics path can resolve it. This belongs with future Origin selection execution, not an informal client shortcut.
-- **Equipment coverage:** Longbow is canonical, and High/Wood Elf grants resolve. Gladiator has one typed weapon choice linked to an ordinary starting item; the DM judges arena suitability. Net and Trident do not yet have native base types. Land/Water Vehicle mechanics belong to the vehicle system and do not block Origin content.
-- **Competency amounts:** Eight historical conversion effects and eleven independently designed Competency outcome effects are now explicitly authored in the native JSON. The five newer choice sites were individually approved: Explorer/Spy one rank only, Aristocratic/General Goliath/Street-Raised proficiency only. The earlier P+1-for-all candidate matrix remains superseded; see `pillar3-competency-origin-baseline-20261110.md`.
-- **Duplicate fixed Skills:** Giant Foundling + Soldier both grant Intimidation. The approved same-kind rule permits one alternative Skill proficiency after an authorized character choice, retaining both source occurrences. No rank is inferred. Specific-tool duplicates similarly permit another tool proficiency; broad/narrow weapon overlaps do not.
-- **Testing:** Add eventual tests for partial/malformed mixed choices, stale eligibility categories, duplicate parent inheritance, unselected nested grants, two distinct Skill selections, and broad-versus-specific equipment coverage. The current Python content checks cannot prove these runtime authorization properties.
-
-This plan deliberately stops before implementing a new C# choice executor or changing Origin balance, progression, and class-feature mechanics.
-
 
 ## Entertainer performance method and ordinary item binding
 
@@ -118,4 +94,29 @@ The shared `equipment-qualifications.json` currently supports the four equipment
 
 **Next implementation decision (not made here):** Either create a separately approved vehicle-operation qualification contract with canonical land/water scopes and provenance, or explicitly extend the equipment taxonomy and resolver with reviewed vehicle semantics and no Weapon Mastery implication. A future Character/Origin executor must preserve the existing source meanings and ensure duplicated valid vehicle training remains one entitlement with retained source provenance. Until that design is approved, the source benefits remain authored but **not executable** through the current equipment resolver. No additional Soldier/Sailor benefits are awarded by this note.
 
-**Current phase boundary:** Vehicle mechanics and their evaluator are deferred outside Pillars 1 and 3. Retaining operator source entitlements does not block content completion.
+## Worked source cases (no new gameplay allocations)
+
+**Spy selects Thieves' Tools:** A validated Spy Background and exactly the `thieves-tools` tradecraft option yield the canonical binary `equipment.tool.thieves-tools` qualification. None of Spy's Disguise, Forgery, or Calligraphy alternatives is earned. If Rogue independently grants Thieves' Tools too, the character keeps both source occurrences and may choose an authorized replacement proficiency of the same tool kind under the approved duplicate rule.
+
+**Street-Raised selects Forgery and Charlatan also grants Forgery:** The Upbringing choice and the fixed Charlatan benefit are two different, earned **Competency** grant occurrences. The Street-Raised choice now grants proficiency only, while Charlatan's fixed Forgery grants one rank only. Together, the character becomes proficient in Forgery and gains one rank; overlapping proficiency is Boolean and ranks accumulate only from actually authored distinct rank grants. This does not introduce `skill.forgery` or an extra Forgery Kit proficiency.
+
+**Knight selects a flute:** The one-total-choice rule admits one specific `equipment.tool.flute` proficiency from the approved Musical Instrument group. It does not also grant a Gaming Set or the entire Musical Instrument group.
+
+**Aristocratic selects Cooking:** The nested Gaming Set source must not be projected. Only the approved Cooking Competency proficiency (zero ranks) is eligible.
+
+**Guild Merchant selects a second trade language:** Navigation Competency training is not earned from that same choice. The separate baseline trade-language grant remains, subject to rules for distinct language selections.
+
+**General Elf + High Elf:** Inherit exactly the General Elf Upbringing parent benefits alongside the High Elf-specific grants; do not also apply General Gnome, General Dwarf, a second default Upbringing, or unrelated ancestry grants.
+
+## Data and validation prerequisites
+
+- **Choice categories:** The native Competency catalog publishes `competency-category.crafting-method` with an explicit member list; Guild Artisan references it through `choiceCategoryId`. The remaining Origin authority must validate the chosen method against the actual guild trade, not derive it by display-name matching.
+- **Conditional child sources:** The equipment evaluator currently reads authored grants at canonical source root/`definition`. An Origin child option must be made an authorized, inspectable catalog-backed grant source before the same mechanics path can resolve it. This belongs with future Origin selection execution, not an informal client shortcut.
+- **Equipment coverage:** Longbow is now a canonical type and High/Wood Elf grants resolve. Gladiator has a typed one-weapon selection whose chosen base type also identifies an ordinary starting item; the DM judges arena suitability without software enforcement. Net and Trident remain unavailable in the native catalog until their base types are reconciled. Land/Water Vehicle operator mechanics remain a separate system outside this content phase.
+- **Competency amounts:** Eight historical conversion effects and eleven independently designed Competency outcome effects are now explicitly authored in the native JSON. The five newer choice sites were individually approved: Explorer/Spy one rank only, Aristocratic/General Goliath/Street-Raised proficiency only. The earlier P+1-for-all candidate matrix remains superseded; see `pillar3-competency-origin-baseline-20261110.md`.
+- **Duplicate fixed Skills:** Giant Foundling + Soldier both grant Intimidation. Preserve both grant sources and use an authorized same-kind alternative Skill proficiency for the duplicate; do not grant an extra rank.
+- **Testing:** `tests/test_character_origins_authorized_option_contract.py` now checks all five current nested choices (sixteen alternative effects) against the native corpus, inheritance graph behavior and starting-item linkage. Still add **runtime** tests for forged source/occurrence, partial/malformed selections, stale eligibility categories, duplicate parent application, unselected nested grants, two distinct Skill selections, and broad-versus-specific equipment coverage when authorization is implemented. Static Python tests cannot prove a runtime trust boundary.
+
+This plan deliberately stops before implementing a new C# choice executor or changing Origin balance, progression, and class-feature mechanics.
+
+**Pillar 2 implementation gate:** The proposed trusted selection contract is reference material only. Full Character Origins execution, inventory authorization, and Character Sheet integration are deferred until Pillar 2 resolves mixed Ancestry and inherited-trait semantics. Do not interpret the existing non-authoritative choice preview as that integration.

@@ -3,7 +3,7 @@
 **Date:** 2026-11-10  
 **Branch:** `feature/character-origins-equipment-contract-20261110`  
 **Authoritative content:** `data/rulesets/first-party-001/native/`  
-**Status:** Finalization branch includes approved parent selectability, duplicate-proficiency variants and DM-adjudicated Gladiator scope. Native JSON, source-contract tests and both Competency duplicate policies were validated on PR #139; the two existing full-suite Python failures and Origin execution remain separate.
+**Status:** Pillars 1 and 3 native content finalization. The approved parent, duplicate-proficiency, and Gladiator choices are authored and have passed targeted tests on the review branch. Full Origin execution is **intentionally deferred until Pillar 2** provides its mixed-Ancestry and inheritance rules; this is not a Pillar 1/3 blocker.
 
 ## Intended deliverable
 
@@ -23,7 +23,7 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 - **Pillar 3:** Sixteen native Backgrounds and thirteen Upbringings. The **nonselectable** Elf General parent is inherited by Drow, High and Wood Elf Upbringings; the **nonselectable** Gnome General parent is inherited by Forest and Rock Gnome Upbringings. General Dwarf and General Goliath are currently independent, selectable cultural packages, not inheritance parents.
 - **Crafting identities:** 26 native Competencies, with Smithing retained and historical product-specific Bowmaking, Armorsmithing, Weaponsmithing, Shipmaking and Trapmaking retired. Bow manufacture is associated with the appropriate woodworking method/recipe (Carpentry or Woodcarving, for example) rather than a Bowmaking advancement track.
 - **Selection policy authored:** `native/rules/species-subspecies-upbringing.json` defines one effective Upbringing, valid selectable defaults, nonselectable inherited parents and benefit inheritance once. The base Elf/Gnome Species no longer suggest nonselectable parents; their Ancestries provide playable default suggestions.
-- **Tests kept current:** `test_goliath_upbringings.py` now refers to `species/ancestry/goliath/` and the authoritative `native/skills.json` / `native/competencies.json`. `test_character_origins_cross_pillar_consistency.py` tests identity, ancestry/upbringing parent graphs, default eligibility, canonical references, and absence of retired product-Competency IDs. `test_character_origins_equipment_integration.py` now asserts the six exact canonical High/Wood Elf weapon-type grants and absence of implied mastery. The original targeted Origin, Goliath and weapon-training suites passed in PR #138 (48/48 tests); expanded finalization tests need independent execution.
+- **Tests kept current:** `test_goliath_upbringings.py` now refers to `species/ancestry/goliath/` and the authoritative `native/skills.json` / `native/competencies.json`. `test_character_origins_cross_pillar_consistency.py` tests identity, ancestry/upbringing parent graphs, default eligibility, canonical references, and absence of retired product-Competency IDs. `test_character_origins_equipment_integration.py` now asserts the six exact canonical High/Wood Elf weapon-type grants and absence of implied mastery. The active Origin feature branch recorded 52/52 targeted Origin/Goliath/weapon-training tests before finalization. The review branch separately passed 53/53 targeted tests in run 42949159902; the combined branch requires a fresh run.
 
 ## Remaining Pillar 1/Pillar 3 decisions and fixes
 
@@ -53,11 +53,11 @@ Review source-edition mechanics as reference evidence. Do not automatically rest
 - **All nine base Species** were checked for valid identity/default behavior. The five Elf/Gnome Ancestry suggestions still target their respective selectable Upbringings; the two general cultural parents are nonselectable and the base Elf/Gnome defaults were removed.
 - **Guild Artisan** references the authoritative `competency-category.crafting-method` with 22 valid native method members; its illustrative list is a subset and does not override the shared category.
 - **Scoped History and Rock Gnome spell selection** fields were checked for the approved replacement/eligibility semantics. **Gladiator** selects one individual weapon type through the approved equipment selector and grants no mastery.
-- The original static JSON review is supplemented by **executed GitHub Actions** on PR #138: 48/48 dedicated Origin/Goliath/weapon-training Python tests, 99/99 Mechanics tests, 111/111 Host tests, and the rewrite structure validator passed. The .NET Release build completed with zero warnings or errors. This is source-contract and shared-resolver validation, **not** proof of a Character choice executor or end-to-end Origin authorization.
+- The original static JSON review is supplemented by **executed GitHub Actions** on PR #138: 52/52 dedicated Origin/Goliath/weapon-training Python tests, 99/99 Mechanics tests, 111/111 Host tests, and the rewrite structure validator passed. The .NET Release build completed with zero warnings or errors. This is source-contract and shared-resolver validation, **not** proof of a Character choice executor or end-to-end Origin authorization.
 
 ## Executed validation status
 
-The dedicated Character Origins CI step now runs independently of the repository-wide migration suite. In PR #138 the **35 Character Origins**, **7 Goliath Upbringings**, and **6 weapon-training** tests passed. The .NET build, **99 Mechanics** tests, **111 Host** tests, and rewrite structure validation passed as well.
+The dedicated Character Origins CI step now runs independently of the repository-wide migration suite. In PR #138 the **39 Character Origins**, **7 Goliath Upbringings**, and **6 weapon-training** tests passed. The .NET build, **99 Mechanics** tests, **111 Host** tests, and rewrite structure validation passed as well.
 
 The pinned source-coverage manifest retains four historical `subspecies.*` identifiers but explicitly links them to corresponding approved `ancestry.*` records. This corrects the legacy path/identity mismatch without resurrecting old Subspecies mechanics or altering the pinned SRD source count. The full Python suite now reports two remaining cross-domain failures, so the full CI workflow is not green and downstream smoke tests have not run.
 
@@ -80,7 +80,7 @@ The pinned source-coverage manifest retains four historical `subspecies.*` ident
 
 **Policy switch status:** Both outcomes are exposed in native JSON as an **experimental optional rule for playtest selection**, with `competencyDuplicateProficiencyResolution` set to `add-rank` (specialization) or `alternate-proficiency` (versatility). The DM/playtest organizer chooses the mode and records it with the character/session results. The future Character Sheet can expose a UI control, but a UI is not required to try either rule now. Relative balance and future rank-milestone pacing remain open empirical questions, not prerequisites to testing.
 
-**Audit integration:** Recursive reference checks, fixed Skill overlap detection, all directly selectable Origin combinations and five mutually exclusive mixed-domain Origin choices are tested at the content level. These checks do not imply that Character Origin authorization has been implemented.
+**Audit integration:** Recursive reference checks, fixed Skill overlap detection, all directly selectable Origin combinations and five mutually exclusive mixed-domain Origin choices are tested at the content level. The newer five-choice, sixteen-outcome conformance matrix and non-authoritative C# choice preview are additional checks, not a character acquisition/authorization implementation.
 
 ## Finalization branch validation (PR #139)
 
@@ -107,6 +107,10 @@ The optional-rule metadata and feedback fields were checked in [finalization CI 
 
 These tests confirm the authored, discoverable playtest choice contract; they do not constitute a deployed Character Sheet UI or automatic collection of playtest observations.
 
+## Pillar 2 dependency and current-phase boundary
+
+Pillars 1 and 3 can be accepted as a reviewed **native content specification**, not as a functioning Character Origin execution system. Pillar 2 has not completed the mixed-Ancestry and manifestation rules needed to finalize acquisition, authorized inheritance, and Character Sheet behavior. The trusted projection document remains a **proposal** and its accompanying static matrix and source preview do not bypass that dependency. No Origin authorization runtime, stored character schema or character sheet UI is approved by this pass. The optional Competency duplicate mode may be selected and recorded manually for playtesting now.
+
 ## Completion conditions for this phase
 
 1. Every playable Species/Ancestry/Upbringing/Background combination has resolvable references and a selection path; nonselectable nodes are only inherited, not direct choices.
@@ -116,4 +120,4 @@ These tests confirm the authored, discoverable playtest choice contract; they do
 5. Source-specific and comparative balance exceptions are reviewed without imposing equal budgets or changing unrelated mechanics.
 6. Content validation and the relevant Origin tests run successfully on the current branch; unrelated pre-existing suite failures are separated from these changes.
 
-**Next highest-value work:** Run the expanded source-contract and Mechanics tests in this finalization branch; distinguish new regressions from previously documented repository-wide migration-suite failures. Review and integrate the finalization changes into the existing Origin feature branch without merging into main. Character Origin execution and vehicle mechanics are future implementation work.
+**Next highest-value work:** Finish combined feature-branch content validation, then complete Pillar 2. The [trusted Origin grant-projection contract](pillar3-trusted-origin-grant-projection-contract-20261110.md) and [five-choice conformance matrix](pillar3-authorized-option-cases-20261110.json) are provisional implementation references, not an approved executable character creation contract. The existing `NativeOriginMixedChoicePreviewer` is a non-authoritative preview, not an Origin authorization engine. Revisit the proposed contract after Pillar 2; do not start Character Sheet or Origin executor integration in this pass. Vehicle mechanics remain separate, and the experimental Competency duplicate policy is ready for manual playtesting without assuming balance equivalence.

@@ -1,0 +1,192 @@
+{
+  "contractVersion": 1,
+  "purpose": "Static conformance examples for future trusted Origin selection; not executable grants or user-supplied authorization",
+  "choices": [
+    {
+      "sourceId": "background.entertainer",
+      "benefitId": "entertainer-performance-method",
+      "count": 1,
+      "options": [
+        {
+          "optionId": "disguise-kit",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.disguise",
+            "ranks": 1,
+            "proficient": false
+          }
+        },
+        {
+          "optionId": "musical-instrument",
+          "effect": {
+            "domain": "equipment",
+            "grantKind": "choice",
+            "grantId": "entertainer-musical-instrument",
+            "count": 1,
+            "category": "tool",
+            "fromGroupIds": [
+              "equipment.group.tool.musical-instrument"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "background.guild-merchant",
+      "benefitId": "guild-merchant-professional-choice",
+      "count": 1,
+      "options": [
+        {
+          "optionId": "navigation",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.navigation",
+            "ranks": 1,
+            "proficient": false
+          }
+        },
+        {
+          "optionId": "additional-trade-language",
+          "effect": {
+            "domain": "language",
+            "count": 1,
+            "choiceConstraint": "learned-through-commercial-dealings"
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "background.spy",
+      "benefitId": "spy-tradecraft-competency",
+      "count": 1,
+      "options": [
+        {
+          "optionId": "disguise",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.disguise",
+            "ranks": 1,
+            "proficient": false
+          }
+        },
+        {
+          "optionId": "forgery",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.forgery",
+            "ranks": 1,
+            "proficient": false
+          }
+        },
+        {
+          "optionId": "thieves-tools",
+          "effect": {
+            "domain": "equipment",
+            "grantKind": "fixed",
+            "grantId": "spy-tradecraft-thieves-tools",
+            "targetId": "equipment.tool.thieves-tools"
+          }
+        },
+        {
+          "optionId": "calligraphy",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.calligraphy",
+            "ranks": 1,
+            "proficient": false
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "upbringing.aristocratic",
+      "benefitId": "aristocratic-formative-competency",
+      "count": 1,
+      "options": [
+        {
+          "optionId": "gaming-set",
+          "effect": {
+            "domain": "equipment",
+            "grantKind": "choice",
+            "grantId": "aristocratic-gaming-set",
+            "count": 1,
+            "category": "tool",
+            "fromGroupIds": [
+              "equipment.group.tool.gaming-set"
+            ]
+          }
+        },
+        {
+          "optionId": "calligraphy",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.calligraphy",
+            "ranks": 0,
+            "proficient": true
+          }
+        },
+        {
+          "optionId": "painting",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.painting",
+            "ranks": 0,
+            "proficient": true
+          }
+        },
+        {
+          "optionId": "cooking",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.cooking",
+            "ranks": 0,
+            "proficient": true
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "upbringing.street-raised",
+      "benefitId": "street-raised-community-competency",
+      "count": 1,
+      "options": [
+        {
+          "optionId": "disguise",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.disguise",
+            "ranks": 0,
+            "proficient": true
+          }
+        },
+        {
+          "optionId": "thieves-tools",
+          "effect": {
+            "domain": "equipment",
+            "grantKind": "fixed",
+            "grantId": "street-raised-thieves-tools",
+            "targetId": "equipment.tool.thieves-tools"
+          }
+        },
+        {
+          "optionId": "cooking",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.cooking",
+            "ranks": 0,
+            "proficient": true
+          }
+        },
+        {
+          "optionId": "forgery",
+          "effect": {
+            "domain": "competency",
+            "targetId": "competency.forgery",
+            "ranks": 0,
+            "proficient": true
+          }
+        }
+      ]
+    }
+  ]
+}
