@@ -1,0 +1,25 @@
+{
+  "status": "illustrative-hypotheses-not-canon-or-grants",
+  "note": "Narrative/research evidence only. No source relationship here changes current eligibility, trait configuration, manifestation, or ancestry selection.",
+  "hypotheses": [
+    {
+      "hypothesisId": "gnome-dwarf-possible-rock-gnome-history",
+      "descendantSourceId": "ancestry.gnome.rock",
+      "possibleHistoricalSourceIds": [
+        "species.gnome",
+        "species.dwarf"
+      ],
+      "narrative": "Rock Gnomes might be descendants of a population with both Gnome and Dwarf ancestry; their distinct tremorsense may have developed across generations.",
+      "traitVariantEvidence": [
+        {
+          "descendantOccurrenceId": "ancestry.gnome.rock#trait:earthbound-tremorsense",
+          "relatedSourceOccurrenceId": "species.dwarf#trait:stonebound-tremorsense",
+          "sharedAuthoredField": "sense",
+          "sharedAuthoredValue": "tremorsense",
+          "proposedRelationship": "possibly-divergent-mechanical-variants",
+          "inheritanceEffect": "none"
+        }
+      ]
+    }
+  ]
+}
