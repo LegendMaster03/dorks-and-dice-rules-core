@@ -18,6 +18,9 @@ These are design goals and boundaries. They do **not** approve a particular trai
 
 ## Data-driven Species and Ancestry extensibility
 
+**Current sequencing decision:** [Establish the universal Origin model first](pillar2-universal-origin-model-first-20261111.md). General contributor evidence, canonical characteristic identities, manifestation, dependent choices, composition and adjudication precede **all** Species-specific mixed-Ancestry tuning. The following Dragonborn examples are stress tests for later validation, not the implementation order or universal selection schema.
+
+
 **Owner design direction (2026-11-11):** The extra effort to model a Species and its characteristic relationships should be invested **once in reusable definitions**, so future Ancestries within that Species normally require **new content records**, rather than dedicated code or an inheritance-rule redesign for every leaf. Dragonborn is a stress test because additional categories and many additional Ancestries are planned.
 
 The **universal Origin engine** must remain source-neutral: it should consume declarative Species, optional intermediate family/category records, Ancestries, trait/parameter contracts, constraints, manifestation, and provenance. Cultural Upbringing is separate from the inherent-characteristic system. A Species may supply a reusable set of characteristic dimensions and links; its Ancestries supply concrete values, distinct authored traits, and any explicit deviations. This is **not** a separate custom engine for each Species, nor a requirement that all Species share Dragonborn's three-factor standard-Ancestry formula.
