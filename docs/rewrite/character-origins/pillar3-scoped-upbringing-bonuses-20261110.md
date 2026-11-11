@@ -1,7 +1,7 @@
 # Pillar 3 — Scoped Upbringing check benefits
 
 **Date:** 2026-11-10  
-**Status:** Existing authored benefits and source comparison; specific stacking semantics below are **proposed for owner review**, not implemented in the check evaluator.
+**Status:** **Approved native JSON semantics for Origin check bonuses**, not yet implemented in the common check evaluator. Competing non-Origin multipliers remain for general Skill/check reconciliation.
 
 ## Authored data and historical evidence
 
@@ -18,9 +18,9 @@ The preserved **2014 SRD source** in `data/reference/srd/structured/races.json` 
 - Historical Artificer's Lore permits **twice the Proficiency Bonus instead of any proficiency bonus normally applied**, without wording that awards general History proficiency.
 - Native Drow/Wood Elf effects are already specifically authored flat `+2` effects. Their task scopes, rather than merely being in a forest or underground, determine applicability.
 
-## Proposed clarification: self-contained scoped History bonus
+## Approved clarification: self-contained scoped History bonus
 
-**Recommended interpretation for the current two scoped History benefits:** When its task qualifies, the feature supplies a **2 × normal character Proficiency Bonus check contribution** even if the character is not generally proficient in History. This contribution **replaces**, rather than adds to, an ordinary History proficiency or Expertise contribution for that check.
+**Approved native interpretation for the current two scoped History benefits:** When its task qualifies, the feature supplies a **2 × normal character Proficiency Bonus check contribution** even if the character is not generally proficient in History. This contribution **replaces**, rather than adds to, an ordinary History proficiency or Expertise contribution for that check.
 
 The selected benefit thus does not require the character to acquire an otherwise unrelated History proficiency merely to function. Both features retain their own narrow scopes; neither automatically grants a rank, Skill training across all History checks, or a new ranked Competency.
 
@@ -28,7 +28,7 @@ The selected benefit thus does not require the character to acquire an otherwise
 
 **Illustrative outcomes, with PB = +3 (not a fixed character-level assumption):**
 
-| Relevant check | Without scoped benefit | With proposed scoped benefit |
+| Relevant check | Without scoped benefit | With approved scoped benefit |
 | --- | ---: | ---: |
 | Untrained History on qualifying stonework | +0 PB contribution | +6 PB contribution from Stonecunning |
 | History proficient on qualifying stonework | +3 | +6 **total** PB contribution, not +9 |
@@ -58,6 +58,6 @@ The same separation applies if the ordinary Skill uses a context-selected Abilit
 
 ## Pending decisions
 
-- Owner confirmation of self-contained **2 × PB replacement even without ordinary History proficiency** for each scoped History feature, and whether Stonecunning's check-local considered-proficient language should be retained explicitly.
+- **Resolved and authored:** both features replace normal History proficiency contributions with 2 × PB even if the character is untrained. Stonecunning considers the character proficient only for its qualifying check; Artificer's Lore does not award Skill proficiency.
 - Global resolution if two independent Expertise/PB multiplier replacements both apply to one check. The source wording rules out automatic addition; exact general composition remains for the Skill/check subsystem.
-- No C# or JSON mechanical rewrite is warranted until the general check composition rule and Origin entitlement path are reviewed. The present `proficiencyBonusMultiplier` field alone does not prove the runtime correctly handles untrained History.
+- **Still pending in code:** the common check evaluator must honor `proficiencyBonusApplication: replace-normal-proficiency-contribution` and `appliesWithoutSkillProficiency: true` from these Origin benefits, without granting general History training or adding normal proficiency twice. No C# implementation is part of this content-only pass.
