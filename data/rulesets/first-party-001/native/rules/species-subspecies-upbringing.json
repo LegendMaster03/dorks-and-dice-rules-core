@@ -7,17 +7,18 @@
     "selectedCount": 1,
     "defaultField": "defaultUpbringing",
     "speciesRestrictionsByDefault": false,
-    "description": "Select one effective Upbringing. A Species or Ancestry default is a suggestion, not an extra automatically granted Upbringing and not a Species restriction. An explicit Upbringing choice replaces the suggested default. The selected Upbringing inherits any Upbringing parent benefits once, without requiring a second selection."
+    "description": "Select one effective Upbringing. A Species or Ancestry default is a suggestion, not an extra automatically granted Upbringing and not a Species restriction. An explicit Upbringing choice replaces the suggested default. The selected Upbringing inherits any Upbringing parent benefits once, without requiring a second selection. Only records with selectable: true can be chosen directly; an inheritance-only parent contributes benefits solely through a selected child."
   },
   "originInheritance": {
     "speciesAncestryParentField": "parent",
     "upbringingParentField": "parent",
     "selectedUpbringingParentBenefits": "inherited-once",
-    "defaultIsAdditionalSelection": false
+    "defaultIsAdditionalSelection": false,
+    "nonselectableUpbringingParents": "inherit-through-selectable-child-only"
   },
   "reviewNotes": [
-    "This rule records already established Pillar 1 and Pillar 3 selection boundaries; it does not decide whether parent Upbringings should remain independently selectable.",
     "Mixed Ancestry is a separate design question and is not required for directly selected Species and Ancestry.",
-    "Character selection and grant authorization remain unimplemented; this JSON is authoritative content rather than an executable character builder."
+    "Character selection and grant authorization remain unimplemented; this JSON is authoritative content rather than an executable character builder.",
+    "General Elf and General Gnome are inheritance-only nonselectable parents. Their children retain inherited cultural benefits; Species defaults cannot point to these parents."
   ]
 }
