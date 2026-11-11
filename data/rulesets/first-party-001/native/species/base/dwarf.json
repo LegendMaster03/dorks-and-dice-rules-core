@@ -19,7 +19,8 @@
         ]
       },
       "damageResistance": {
-        "poison": 50
+        "percent": 50,
+        "damageType": "poison"
       }
     },
     {
