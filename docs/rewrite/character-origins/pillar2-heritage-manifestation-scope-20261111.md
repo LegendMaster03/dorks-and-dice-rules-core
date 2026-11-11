@@ -87,6 +87,26 @@ These are **two common cases handled by the same general Origin/Heritage engine*
 
 **Implementation implication:** Source/characteristic identity, parameter bindings, manifestation and conflict handling should be reusable in both cases. An optimization or clearer user experience for shared-Species composition is reasonable, but should not become a Dragonborn-only solver or a hard-coded requirement that every custom Origin have biological parents. The final permissions, default manifestation groups and conflicting Species foundation policies remain to be determined.
 
+## Mixed-Species limits, balance expectations, and table authority
+
+**Owner-established expectation:** The generalized Origin system should support as many mixed-Species combinations as reasonably feasible, but the rules do **not** promise that every Species combination has a mechanically coherent default configuration or comparable balance with standard characters. This is a realistic design boundary, **not** an instruction to stop investigating difficult combinations or to reject a combination solely because its contributor Species differ.
+
+**Proposed player-facing disclaimer (wording subject to later editorial approval):**
+
+> **Mixed-Species Character Creation**
+>
+> Mixed-Species characters offer additional customization, but some combinations may introduce mechanical incompatibilities or balance differences not present in standard Species and Ancestry options. The rules aim to support as many combinations as practical; not every combination is guaranteed to have a compatible or equally balanced default configuration. Some may require DM adjudication or custom adjustments. The DM and players may agree on alternatives appropriate for their campaign.
+
+**Implementation implications:**
+
+- Distinguish **supported default composition**, **unresolved or incompatible default composition**, and **explicitly table-customized composition**. Do not silently assign conflicting creature types, size, movement, traits, or other foundational characteristics merely to produce a result.
+- A failure to construct a valid **default** combination must report the actual unresolved dependency or conflict, rather than claiming that the fictional character or a DM-approved homebrew character is inherently impossible.
+- Balance remains an **evidence and playtest question**. Neither this disclaimer nor the mere existence of a candidate profile establishes equal power, balance certification, an automatic compensation budget, or an unreviewed restriction.
+- Mixed Ancestry within one shared Species remains a primary tractable case; the disclaimer is not a pretext to skip expected support for ordinary same-Species composition. Mixed Species should still use the **same** generalized characteristic engine with the additional reconciliation it actually needs.
+- The standing [system-wide table customization principle](../native-rules-design-specification.md#governing-design-principle--the-rules-are-a-framework-not-a-constraint-on-the-table) continues to apply. A table's custom adjustment is not silently represented as an unmodified first-party default.
+
+This records the **accepted limitation and a draft disclaimer**, not final approved text, a blacklist of Species pairs, or an automated compatibility classifier.
+
 ## Reference example for future rules: Rock Gnome divergence
 
 The [Gnome + Dwarf → Rock Gnome reconstruction](pillar2-gnome-dwarf-rock-gnome-reconstruction-20261111.md) is an intentional counterexample to the assumption that every Ancestry must be recreatable as an immediate sum of its plausible predecessors. Gnome + Dwarf offers the Gnome baseline and a Dwarf Tremorsense trait, but **not** Rock Gnome's different passive Tremorsense trait.
