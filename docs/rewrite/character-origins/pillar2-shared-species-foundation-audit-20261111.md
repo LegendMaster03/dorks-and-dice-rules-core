@@ -38,6 +38,23 @@ In particular, grouping one base Species definition does **not** silently give a
 
 This projection deliberately **does not** decide whether distinct Species roots are compatible. It does not claim all mixes are balanced, nor does it issue blanket prohibitions. As recorded in the [Pillar 2 scope](pillar2-heritage-manifestation-scope-20261111.md#mixed-species-limits-balance-expectations-and-table-authority), the eventual rules will support as many combinations as reasonably practical while acknowledging that some have no coherent or balanced **default** configuration. A table may explicitly adjudicate or customize those combinations under the standing system-wide table customization principle.
 
+## Systematic same-Species coverage, without inventing pairwise policies
+
+The companion `tools/character_origins_same_species_pair_audit.py` builds a **review matrix for all currently selectable same-Species pairs**, including matching sources. The matrix is generated from the current source catalog, so new Ancestries are included automatically without a hard-coded pair list. It does **not** generate or claim exhaustive cross-Species coverage.
+
+Each pair reports shared source nodes, all generic source review flags, review flags **newly visible only when the two contributors are combined**, and a count of deferred/unmodeled source evidence. The audit distinguishes existing authored-source ambiguity (for example, Wood Elf's base 30 versus leaf 35-foot walk speed) from newly introduced two-contributor ambiguity. Neither category is assumed to be a proven mechanical incompatibility.
+
+Every pair remains `defaultCompatibility: not-evaluated` and `balance: not-evaluated`. A pair with no detected review flags is **not certified compatible**; missing category/material rules, unknown trait semantics and balance questions may remain. Species-authored compatibility relationships and narrow exceptions will be future **declarative data for the same generalized engine**, not this tool's inferred rules.
+
+The matrix is a practical next step toward intentional same-Species coverage: when the owner approves formal compatibility policies for a formulaic Species, generated cases can verify their completeness. It is **not** appropriate to require a comparable exhaustive matrix across every pair of different Species; those should rely on generalized characteristic-conflict logic and selected curated exceptions.
+
+```bash
+python3 tools/character_origins_same_species_pair_audit.py \
+  --species species.dragonborn
+python3 -m unittest discover -s tests \
+  -p 'test_character_origins_pillar2_same_species_pair_audit.py' -v
+```
+
 ## Scope of this study
 
 The first audit accepts **only directly selectable source contributors**. It explicitly rejects nested profile inputs to avoid falsely treating their historical roots as active manifested foundations. The existing `characteristic_candidate_pool` already has a separate **verified nested-profile** path and exports previously manifested characteristics, but the idea that *only* manifested traits transmit to descendants remains a provisional design hypothesis, not a finalized genetic rule.
