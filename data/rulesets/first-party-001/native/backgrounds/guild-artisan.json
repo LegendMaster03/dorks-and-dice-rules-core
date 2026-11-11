@@ -23,7 +23,7 @@
     {
       "id": "guild-artisan-trade",
       "name": "Guild Trade Competency",
-      "description": "Choose one existing native crafting Competency suited to the craft you practiced through your guild. The choice grants one rank in the selected learned capability, not a separate historical Craft Skill and tool proficiency. Associated equipment is not automatically an additional qualification or an owned item.",
+      "description": "Choose one existing native Competency from the shared crafting-method category appropriate to the craft you practiced through your guild. Gain one rank in that Competency, without automatically becoming proficient. This does not grant a separate historical Craft Skill, additional tool proficiency, or equipment ownership.",
       "grantType": "competency-training",
       "choiceCategory": "crafting-competency",
       "choiceCount": 1,
@@ -43,7 +43,8 @@
       "competencyTraining": {
         "ranks": 1,
         "proficient": false
-      }
+      },
+      "choiceCategoryId": "competency-category.crafting-method"
     },
     {
       "id": "guild-artisan-trade-language",
@@ -97,8 +98,8 @@
   "reviewNotes": [
     "Independently reconciled from the 2014 Guild Artisan Background rather than its 2024 version; Guild Merchant is a separate future Background candidate and not an inherited variant.",
     "The 2014 Skill baseline of Insight and Persuasion is retained.",
-    "Choose one existing native craft Competency corresponding to the guild trade. The exampleCompetencies array is illustrative, not an exhaustive eligibility list; the common choice executor must resolve crafting-competency eligibility against active native disciplines. Thieves' Tools proficiency is a narrow equipment qualification, not a craft Competency.",
-    "A native Competency is one learned discipline whose use may span several tasks and associated tools, without automatically creating separate equipment proficiencies. Its starting rank/proficiency value requires the same source-by-source review as other Origin grants.",
+    "The shared authoritative category competency-category.crafting-method defines eligible native craft disciplines. exampleCompetencies is illustrative only, not the eligible-choice authority. The selected discipline must suit the character's actual guild trade; unrelated noncraft activities do not become eligible merely through associated equipment.",
+    "A native Competency is one learned discipline whose use may span several tasks and associated tools, without automatically creating separate equipment proficiencies. This approved guild benefit grants one rank and no proficiency.",
     "Learn one language related to the guild's practice or trade relationships, including Common where appropriate.",
     "Guild Membership grants conditional institutional and professional assistance. Maintaining good standing ordinarily requires 5 gp per month; no new guild dues tracking service or mandatory accounting subsystem is implemented.",
     "Existing membership and standing depend on the setting; former members keep their learned training even when access to guild benefits changes.",
