@@ -9,6 +9,9 @@
 
 ## Purpose and boundary
 
+**Work-order clarification:** [The universal Origin model takes precedence](pillar2-universal-origin-model-first-20261111.md) over any Species-specific mixing policy. This prototype demonstrates a limited expression language with a deliberately Species-scoped fixture; it must **not** be promoted to an Origin engine contract or integrated into actual Dragonborn, Elf or cross-Species outcomes yet. The general profile, identity, provenance, choice and authorization boundaries require design and validation first.
+
+
 A formulaic Species can define the characteristic dimensions and known interactions among its Ancestries in **data**, rather than accumulating individual `Red + Bronze`-style code paths. This prototype demonstrates a small general-purpose **constraint/exception representation** that can be authored, validated and used to review a proposed combination.
 
 **The JSON fixture is entirely invented.** Its `species.synthetic-scaled` root, `test.chromatic` and `test.metallic` values, material aliases, shared-defense rule and cold/glass exception are **not rules for actual Dragonborn**. They are synthetic examples used to test mechanics of the *contract language*. In particular, the fixture's `test.shared-affinity` rule **must not** be interpreted as owner approval of a global Dragonborn Breath Weapon/Resistance/Warding coupling.
