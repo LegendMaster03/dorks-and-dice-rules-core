@@ -207,7 +207,7 @@ def validate_parameter_proposal(pool, proposed):
     if pool["parameterInheritance"]["mode"] == "linked":
         matching = [
             candidate for candidate in pool["candidateConfigurations"]
-            if candidate["parameters"] == proposed
+            if _value_key(candidate["parameters"]) == _value_key(proposed)
         ]
         if not matching:
             return {"eligible": False, "reason": "linked-configuration-not-offered"}
@@ -224,7 +224,7 @@ def validate_parameter_proposal(pool, proposed):
         for name, selected in proposed.items():
             matching = next((
                 option for option in pool["parameterOptions"][name]
-                if option["value"] == selected
+                if _value_key(option["value"]) == _value_key(selected)
             ), None)
             if matching is None:
                 return {
