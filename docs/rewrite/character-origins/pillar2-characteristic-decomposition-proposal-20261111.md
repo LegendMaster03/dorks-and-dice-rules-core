@@ -71,7 +71,7 @@ The base Elf supplies Fey type, Medium size, 30-foot walk speed, Low-Light Visio
 - The Chromatic family supplies a 30-by-5-foot line geometry and Chromatic Warding at level 5, bound to the same chosen damage type. It is a nonselectable parent, not a second player selection.
 - Red contributes Fire as the bound damage type, plus a 15-foot climbing speed and its constrained Natural Climber trait. The speed appears at both record and trait level today; it represents **one** capability, not two additive grants.
 
-The study intentionally **does not** resolve placeholder strings such as `selected-dragonborn-leaf` or `selected-dragonborn-family-or-leaf`. Binding them safely and generally is a future task, not an excuse to add Dragonborn-specific special-case code.
+The **initial lossless source-inventory slice** intentionally did not resolve placeholders such as `selected-dragonborn-leaf` or `selected-dragonborn-family-or-leaf`. Subsequent read-only Pillar 2 source-binding and parameter-registry studies now resolve ordinary Breath Weapon, Draconic Resistance, and Chromatic Warding for standard Dragonborn examples, preserving their native authored definitions. This does **not** settle how distinct damage-type traits must interact when inherited from different contributors.
 
 A second test case inventories Gold Dragonborn and preserves the Metallic family cone, separate Metallic Breath resource, choice of two breath modes, and Amphibious leaf trait.
 
