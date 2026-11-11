@@ -211,10 +211,69 @@ public sealed class NativeOriginMixedChoicePreviewTests
         Assert.Empty(unrelated.CandidateEffects);
     }
 
+    [Theory]
+    [InlineData(
+        """{"grantType":"competency-training","competency":"competency.demo","competencyTraining":{"ranks":1,"proficient":false},"when":"unverified"}""",
+        "", "invalid-origin-competency-option")]
+    [InlineData(
+        """{"grantType":"competency-training","competency":"competency.demo","competencyTraining":{"ranks":1,"proficient":false,"bonus":10}}""",
+        "", "invalid-origin-competency-option")]
+    [InlineData(
+        """{"grantType":"competency-training","competency":"competency.demo","competencyTraining":{"ranks":1,"proficient":false}}""",
+        ""","when":"unverified" """, "invalid-origin-option")]
+    public void UnsupportedAuthoredConditionsNeverProduceCandidateEffects(
+        string effectJson, string extraOptionFields, string issueCode)
+    {
+        using var fixture = new MalformedOriginFixture(effectJson, extraOptionFields);
+        var result = new NativeOriginMixedChoicePreviewer(fixture.Catalog).Preview(
+            new("first-party-001", fixture.Catalog.Fingerprint,
+                "background.demo", "claimed", "demo-choice", "chosen"));
+        Assert.Equal("unavailable", result.Status);
+        Assert.Empty(result.CandidateEffects);
+        Assert.Contains(result.Issues, issue => issue.Code == issueCode);
+    }
+
     private static NativeOriginMixedChoiceRequest Request(
         string source, string benefit, string? option) =>
         new(SharedCatalog.Value.RulesetId, SharedCatalog.Value.Fingerprint,
             source, "asserted-not-authorized", benefit, option);
+
+    private sealed class MalformedOriginFixture : IDisposable
+    {
+        private readonly string root = Path.Combine(Path.GetTempPath(),
+            "origin-option-preview-" + Guid.NewGuid().ToString("N"));
+        internal NativeCatalogSnapshot Catalog { get; }
+
+        internal MalformedOriginFixture(string effectJson, string extraOptionFields)
+        {
+            var location = NativeRulesetLayout.Resolve(
+                Path.Combine(root, "rulesets"), "first-party-001");
+            Directory.CreateDirectory(location.NativeDirectory);
+            File.WriteAllText(Path.Combine(location.ContentRoot,
+                "first-party-001", "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+            File.WriteAllText(Path.Combine(location.NativeDirectory, "competency.json"),
+                """{"id":"competency.demo","name":"Demo","kind":"competency"}""");
+            // A deliberately malformed authored option is still valid JSON.
+            // A preview must reject it, even though the native loader can
+            // retain this source record for later reconciliation.
+            File.WriteAllText(Path.Combine(location.NativeDirectory, "background.json"),
+                $"""
+                {
+                  "id":"background.demo","name":"Demo","kind":"background",
+                  "benefits":[{"id":"demo-choice","grantType":"benefit-choice","choiceCount":1,
+                    "options":[
+                      {"id":"chosen","benefits":[{{effectJson}}]{{extraOptionFields}}},
+                      {"id":"other","benefits":[
+                        {"extraLanguages":1,"choiceConstraint":"trade"}]}
+                    ]}]
+                }
+                """);
+            Catalog = NativeCatalogLoader.Load(location);
+        }
+
+        public void Dispose() => Directory.Delete(root, true);
+    }
 
     private static NativeRulesetLocation RepositoryLocation()
     {

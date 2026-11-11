@@ -95,6 +95,8 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
         if (matched.Length != 1 ||
             Text(matched[0], "grantType") != "benefit-choice" ||
             Number(matched[0], "choiceCount") != 1 ||
+            !OnlyFields(matched[0], "id", "name", "description",
+                "grantType", "choiceCount", "options") ||
             !Array(matched[0], "options", out var authored) ||
             authored.GetArrayLength() is < 2 or > 32)
         {
@@ -107,7 +109,10 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
         foreach (var entry in authored.EnumerateArray())
         {
             var id = Text(entry, "id");
-            if (!ValidComponent(id) || !byId.TryAdd(id!, entry))
+            if (!ValidComponent(id) ||
+                !OnlyFields(entry, "id", "name", "description", "benefits",
+                    "equipmentProficiencyGrants") ||
+                !byId.TryAdd(id!, entry))
             {
                 Issue("invalid-origin-option", request.BenefitId,
                     "Every authored option needs a distinct stable identity.");
@@ -140,6 +145,12 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
             return Finish("unavailable");
         }
         var selectedEffect = optionBenefits[0];
+        if (selectedEffect.ValueKind != JsonValueKind.Object)
+        {
+            Issue("unsupported-origin-option-effect", request.OptionId,
+                "An option effect must be an authored native object.");
+            return Finish("unavailable");
+        }
         var competencyTraining = Text(selectedEffect, "grantType") == "competency-training";
         var equipmentTraining = Text(selectedEffect, "grantType") == "qualification-training";
         var language = selectedEffect.TryGetProperty("extraLanguages", out _);
@@ -153,10 +164,13 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
         if (competencyTraining)
         {
             var target = Text(selectedEffect, "competency");
-            if (!ValidComponent(target) ||
+            if (!OnlyFields(selectedEffect, "grantType", "competency", "description",
+                    "competencyTraining") ||
+                !ValidComponent(target) ||
                 !catalog.TryGetById(target!, out var competency) ||
                 competency?.Category != "competency" ||
                 !Object(selectedEffect, "competencyTraining", out var training) ||
+                !OnlyFields(training, "ranks", "proficient") ||
                 Number(training, "ranks") is not int ranks || ranks is < 0 or > 1000 ||
                 !Boolean(training, "proficient").HasValue ||
                 (ranks == 0 && Boolean(training, "proficient") == false) ||
@@ -175,7 +189,9 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
         {
             var count = Number(selectedEffect, "extraLanguages");
             var constraint = Text(selectedEffect, "choiceConstraint");
-            if (count is not 1 || !ValidComponent(constraint) ||
+            if (!OnlyFields(selectedEffect, "extraLanguages", "choiceConstraint",
+                    "description") ||
+                count is not 1 || !ValidComponent(constraint) ||
                 option.TryGetProperty("equipmentProficiencyGrants", out _) ||
                 request.SelectedEquipmentTypes is { Count: > 0 })
             {
@@ -189,8 +205,12 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
         }
         else
         {
-            if (!Object(option, "equipmentProficiencyGrants", out var grants) ||
-                grants.EnumerateObject().Any(prop => prop.Name is not ("fixed" or "choices")) ||
+            if (!OnlyFields(selectedEffect, "grantType", "qualificationCategory",
+                    "equipmentTypeId", "equipmentTypeChoiceId", "choiceCategory",
+                    "choiceCount", "description") ||
+                Text(selectedEffect, "qualificationCategory") != "tool" ||
+                !Object(option, "equipmentProficiencyGrants", out var grants) ||
+                !OnlyFields(grants, "fixed", "choices") ||
                 (grants.TryGetProperty("fixed", out _) ==
                  grants.TryGetProperty("choices", out _)))
             {
@@ -213,7 +233,10 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
                     !ValidComponent(id) || !ValidComponent(target) ||
                     !ValidToolType(target!) ||
                     request.SelectedEquipmentTypes is { Count: > 0 } ||
-                    Text(selectedEffect, "equipmentTypeId") != target)
+                    Text(selectedEffect, "equipmentTypeId") != target ||
+                    selectedEffect.TryGetProperty("equipmentTypeChoiceId", out _) ||
+                    selectedEffect.TryGetProperty("choiceCategory", out _) ||
+                    selectedEffect.TryGetProperty("choiceCount", out _))
                 {
                     Issue("invalid-origin-equipment-option", request.OptionId,
                         "Only the authored fixed tool type can be previewed.");
@@ -239,6 +262,11 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
                          "fromTypeIds" or "selectionKind")) ||
                     !ValidComponent(choiceId) || count is not 1 ||
                     category != "tool" || Text(choice, "selectionKind") is not (null or "equipment-type") ||
+                    Text(selectedEffect, "equipmentTypeId") is not null ||
+                    Number(selectedEffect, "choiceCount") != count ||
+                    !ValidComponent(Text(selectedEffect, "choiceCategory")) ||
+                    (Text(selectedEffect, "equipmentTypeChoiceId") is string link &&
+                     link != choiceId) ||
                     !Array(choice, "fromGroupIds", out var groupIds) ||
                     groupIds.GetArrayLength() is < 1 or > 32)
                 {
@@ -274,13 +302,13 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
                     {
                         if (candidate.ValueKind != JsonValueKind.String ||
                             !ValidToolType(candidate.GetString()!) ||
-                            !InAnyGroup(candidate.GetString()!, groups))
+                            !InAnyGroup(candidate.GetString()!, groups) ||
+                            !permitted.Add(candidate.GetString()!))
                         {
                             Issue("invalid-origin-equipment-types", request.OptionId,
                                 "Explicit type list contains a noncanonical or excluded tool.");
                             return Finish("unavailable");
                         }
-                        permitted.Add(candidate.GetString()!);
                     }
                 }
                 else
@@ -370,6 +398,13 @@ internal sealed class NativeOriginMixedChoicePreviewer(NativeCatalogSnapshot cat
             return false;
         }
     }
+
+    // Unknown fields can carry unmodeled conditions. Never silently turn
+    // an authored conditional option into an unconditional preview.
+    private static bool OnlyFields(JsonElement source, params string[] allowed) =>
+        source.ValueKind == JsonValueKind.Object &&
+        source.EnumerateObject().All(field => allowed.Contains(field.Name,
+            StringComparer.Ordinal));
 
     private static bool ValidComponent(string? value) =>
         !string.IsNullOrWhiteSpace(value) && value.Length <= 160 &&
