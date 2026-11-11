@@ -67,6 +67,12 @@ This decision does not establish unrestricted recombination for all traits. Link
 
 This illustrates **relationships only**. It is not an adopted ID format, mandatory Origin form, contributor count, generation algorithm, or permission to manifest Breath Weapon. In particular, the profile does not grant all other Dragonborn traits by omission, and `method: author-defined` is not an approved origination type.
 
+## Dragonborn expansion reference
+
+The [Dragonborn category and ancestry dimensions](pillar2-dragonborn-expansion-dimensions-20261111.md) record the planned five associations for **each** ancestry: category, category-related skin material, damage type, complete Breath Weapon area, and an **independent hoard-related cultural Upbringing**. More categories and ancestry options within them are planned, eventually including at least one ancestry for each relevant damage type in every major category. Today's native leaves are only the initial scoped sample.
+
+This intended structure does **not** automatically authorize five independently selectable characteristics for mixed Heritage. Category and damage type are distinct dimensions; material is related to category; the whole area remains an approved independently inherited Breath Weapon parameter; and the Upbringing connection is a cultural association rather than a biological grant. Cross-trait dependency and mixed-Heritage grouping remain open.
+
 ## Reference example for future rules: Rock Gnome divergence
 
 The [Gnome + Dwarf → Rock Gnome reconstruction](pillar2-gnome-dwarf-rock-gnome-reconstruction-20261111.md) is an intentional counterexample to the assumption that every Ancestry must be recreatable as an immediate sum of its plausible predecessors. Gnome + Dwarf offers the Gnome baseline and a Dwarf Tremorsense trait, but **not** Rock Gnome's different passive Tremorsense trait.
