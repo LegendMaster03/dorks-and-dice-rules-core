@@ -1,6 +1,6 @@
 # Pillar 3 — Origin choice authorization and grant projection plan
 
-> **Updated source allocation boundary (2026-11-10):** The Origin choice executor must project only grants **already authored and actually earned**. Some converted prior-version Competency benefits now have explicit rank/proficiency effects; five independently authored native choice sites still await amounts. The Thieves' Tools option itself is a **direct conversion to binary** `equipment.tool.thieves-tools` for Criminal, Spy, and Street-Raised, not an unresolved numeric Competency grant. See [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md).
+> **Updated source allocation boundary (2026-11-10):** The Origin choice executor must project only grants **already authored and actually earned**. Some converted prior-version Competency benefits now have explicit rank/proficiency effects; the five independently authored native choice sites now carry individually approved rank/proficiency amounts. The Thieves' Tools option itself is a **direct conversion to binary** `equipment.tool.thieves-tools` for Criminal, Spy, and Street-Raised, not an unresolved numeric Competency grant. See [Historical Origin Training Conversion Scope](pillar3-competency-origin-baseline-20261110.md).
 
 **Date:** 2026-11-10  
 **Status:** Design/integration plan for future Character Origins execution. **Not an approved new gameplay rule or completed runtime.** No C# choice executor or Character Sheet integration is implemented by this document.
@@ -19,9 +19,9 @@ No element in this plan depends on the separate mixed-Ancestry combining design.
 | --- | --- | --- |
 | Fixed `skill-training` | Criminal Deception / Stealth | Source acquired; target canonical `skill.*` |
 | Skill `chooseOne` or `chooseFrom` with `choiceCount` | General Elf one of Insight/Perception/Survival; Spy two distinct intelligence Skills | Exactly the authored number, from the current eligible source list; `distinctChoices` honored |
-| Fixed `competency-training` | Charlatan Forgery; Rock Gnome Tinkering; Sailor Navigation | Source acquired; future reviewed **Ranks/Proficient** contribution, no implicit separate tool qualification |
+| Fixed `competency-training` | Charlatan Forgery; Rock Gnome Tinkering; Sailor Navigation | Source acquired; use its **already authored** Ranks/Proficient effect, with no implicit separate tool qualification |
 | Competency `chooseOne` | Explorer Navigation/Cartography; General Dwarf craft; General Goliath clan craft | Exactly one authorized Competency target; preserve source occurrence and the selected outcome |
-| Semantic `choiceCategory` not yet catalog-backed | Guild Artisan `crafting-competency` | Resolve to a reviewed, explicit eligible set; neither `associatedTools` nor all native Competencies define that set automatically |
+| Catalog-backed `choiceCategoryId` | Guild Artisan `competency-category.crafting-method` | Resolve to the member Competency IDs in the authoritative shared category. A source-specific guild-trade constraint still applies; neither `associatedTools` nor all native Competencies determine eligibility |
 | Top-level `equipmentProficiencyGrants.fixed` | Criminal Thieves' Tools | Authored fixed equipment type and acquired source; no item ownership or independent Competency granted |
 | Top-level `equipmentProficiencyGrants.choices` | Criminal / Noble / Soldier Gaming Set; Knight Gaming Set **or** Instrument | Select exactly the authored number of distinct **specific equipment types** within approved groups, not a complete group unless explicitly granted |
 | `benefit-choice` containing heterogeneous outcomes | Spy; Street-Raised; Entertainer; Aristocratic; Guild Merchant | Authorize one **outer option** first, then authorize only that option's nested Competency / equipment / language result |
@@ -58,11 +58,11 @@ An outer Origin benefit can have multiple mechanical consequences only if explic
 
 **Spy selects Thieves' Tools:** A validated Spy Background and exactly the `thieves-tools` tradecraft option yield the canonical binary `equipment.tool.thieves-tools` qualification. None of Spy's Disguise, Forgery, or Calligraphy alternatives is earned. If Rogue also grants Thieves' Tools, the outcome is one proficiency with independent provenance.
 
-**Street-Raised selects Forgery and Charlatan also grants Forgery:** The Upbringing choice and the fixed Charlatan benefit are two different, earned **Competency** grant occurrences. If later approved allocations give both a rank increment, those increments accumulate. Their proficiency effects, if any, combine as a Boolean. This does not introduce `skill.forgery` or an extra Forgery Kit proficiency.
+**Street-Raised selects Forgery and Charlatan also grants Forgery:** The Upbringing choice and the fixed Charlatan benefit are two different, earned **Competency** grant occurrences. The Street-Raised choice now grants proficiency only, while Charlatan's fixed Forgery grants one rank only. Together, the character becomes proficient in Forgery and gains one rank; overlapping proficiency is Boolean and ranks accumulate only from actually authored distinct rank grants. This does not introduce `skill.forgery` or an extra Forgery Kit proficiency.
 
 **Knight selects a flute:** The one-total-choice rule admits one specific `equipment.tool.flute` proficiency from the approved Musical Instrument group. It does not also grant a Gaming Set or the entire Musical Instrument group.
 
-**Aristocratic selects Cooking:** The nested Gaming Set source must not be projected. Only the approved Cooking Competency grant (once its numeric/binary effect is selected) is eligible.
+**Aristocratic selects Cooking:** The nested Gaming Set source must not be projected. Only the approved Cooking Competency proficiency (zero ranks) is eligible.
 
 **Guild Merchant selects a second trade language:** Navigation Competency training is not earned from that same choice. The separate baseline trade-language grant remains, subject to rules for distinct language selections.
 
@@ -70,10 +70,10 @@ An outer Origin benefit can have multiple mechanical consequences only if explic
 
 ## Data and validation prerequisites
 
-- **Choice categories:** The current native Competency catalog includes stable IDs but does not publish a canonical `crafting-competency` eligibility taxonomy. Guild Artisan needs a reviewed mapping, not guessed string matching.
+- **Choice categories:** The native Competency catalog publishes `competency-category.crafting-method` with an explicit member list; Guild Artisan references it through `choiceCategoryId`. The remaining Origin authority must validate the chosen method against the actual guild trade, not derive it by display-name matching.
 - **Conditional child sources:** The equipment evaluator currently reads authored grants at canonical source root/`definition`. An Origin child option must be made an authorized, inspectable catalog-backed grant source before the same mechanics path can resolve it. This belongs with future Origin selection execution, not an informal client shortcut.
 - **Equipment coverage:** Longbow is now a canonical type and High/Wood Elf grants resolve. Gladiator has a typed one-weapon selection from the reviewed native weapon catalog (the All Weapons group is a *pool of types*, not an awarded group proficiency). Its arena-appropriate/mundane restrictions and linked ordinary starting item still require Origin selection authorization; Net and Trident remain unavailable until their base types are reconciled. Land/Water Vehicles remain separate domain questions.
-- **Competency amounts:** Eight historical conversion grant outcomes have explicit source-authored rank/proficiency effects in the native JSON. Eleven independently designed Competency outcomes across Explorer, Spy, Aristocratic, General Goliath, and Street-Raised still lack a reviewed amount. The earlier P+1-for-all allocation matrix is superseded; see `pillar3-competency-origin-baseline-20261110.md`. Missing amounts must not silently acquire default values from the source type.
+- **Competency amounts:** Eight historical conversion effects and eleven independently designed Competency outcome effects are now explicitly authored in the native JSON. The five newer choice sites were individually approved: Explorer/Spy one rank only, Aristocratic/General Goliath/Street-Raised proficiency only. The earlier P+1-for-all candidate matrix remains superseded; see `pillar3-competency-origin-baseline-20261110.md`.
 - **Duplicate fixed skills:** Giant Foundling + Soldier both grant Intimidation. The system must retain source provenance without assuming a free substitution or automatic extra rank.
 - **Testing:** Add eventual tests for partial/malformed mixed choices, stale eligibility categories, duplicate parent inheritance, unselected nested grants, two distinct Skill selections, and broad-versus-specific equipment coverage. The current Python content checks cannot prove these runtime authorization properties.
 
