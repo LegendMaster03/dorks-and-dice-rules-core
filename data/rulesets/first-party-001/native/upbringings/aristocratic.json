@@ -66,7 +66,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.calligraphy",
-              "description": "Gain training in the native Calligraphy Competency, associated with Calligrapher's Supplies. The equipment association grants neither ownership nor a second equipment proficiency."
+              "description": "Gain training in the native Calligraphy Competency, associated with Calligrapher's Supplies. The equipment association grants neither ownership nor a second equipment proficiency.",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         },
@@ -77,7 +81,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.painting",
-              "description": "Gain training in the native Painting Competency, associated with Painter's Supplies. The equipment association grants neither ownership nor a second equipment proficiency."
+              "description": "Gain training in the native Painting Competency, associated with Painter's Supplies. The equipment association grants neither ownership nor a second equipment proficiency.",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         },
@@ -88,7 +96,11 @@
             {
               "grantType": "competency-training",
               "competency": "competency.cooking",
-              "description": "Gain training in the native Cooking Competency, associated with Cook's Utensils. The equipment association grants neither ownership nor a second equipment proficiency."
+              "description": "Gain training in the native Cooking Competency, associated with Cook's Utensils. The equipment association grants neither ownership nor a second equipment proficiency.",
+              "competencyTraining": {
+                "ranks": 0,
+                "proficient": true
+              }
             }
           ]
         }
@@ -111,6 +123,7 @@
     "Aristocratic Protocol does not grant social admission, authority, noble status, an audience, property, wealth, or the Noble Background's Position of Privilege.",
     "No Upbringing startingEquipment package, fixed ability increases, Origin feat, household servants, instrument or kit items, or additional Background grants are provided.",
     "Aristocratic Upbringing and Noble Background may be selected together without implying one from the other. Overlapping Skills, languages, or Gaming Set training await the single corpus-wide duplicate-grant policy.",
-    "Native mixed-benefit choice execution, Skill/Competency and language projection, parent/default selection, and cross-Species combinations remain deferred to common implementation."
+    "Native mixed-benefit choice execution, Skill/Competency and language projection, parent/default selection, and cross-Species combinations remain deferred to common implementation.",
+    "The chosen Calligraphy, Painting, or Cooking Competency grants proficiency and no ranks. The Gaming Set alternative grants only its selected equipment qualification."
   ]
 }
