@@ -94,10 +94,11 @@ Characteristic definitions and parameter bindings         [future design]
                                Manifestation and conflict rules
                                        |
                                        v
-                               Trusted earned grants/choices
+                               Proposed manifested Origin profile
                                        |
                                        v
-                               Shared Rules Core evaluators
+                               Future trusted Rules Core integration
+                               [outside Pillar 2 design pass]
 ```
 
 **Proposed distinction:**
@@ -115,8 +116,8 @@ The eventual round-trip tests should perform the following against **each** sele
 
 1. Decompose the approved Species/Ancestry source chain into reusable mechanic definitions, preserving exact source provenance.
 2. Bind every actual authorized choice and conditional parameter (including character-level progression), rather than assuming a single default.
-3. Construct the standard configuration **using the same characteristic acquisition and evaluation pipeline** used for a mixed-Heritage character. The standard path may supply a predefined choice preset, but may not bypass the shared mechanics.
-4. Compare *effective gameplay outcomes* at levels relevant to its traits (e.g., levels 1, 3, 5, 11, and 17 where applicable), including costs, restrictions, and resources. Matching text fields or JSON arrays alone is insufficient.
+3. Construct the standard configuration **using the same Origin trait-and-parameter selection model** used for mixed Heritage, without applying a separate Species-specific inheritance system. The standard selection path may supply a predefined package, but may not silently skip provenance, dependencies, or the approved characteristic structure.
+4. Compare the **resulting Origin characteristics**: manifested trait identities, fixed behavior references, selected parameters, restrictions, conditions, progression definitions, and source provenance. This is an Origin-content equivalence test, **not** a requirement to implement attacks, saves, damage or any combat subsystem in Pillar 2.
 5. Verify that matching contributors *can* produce the corresponding standard configuration when allowed to express its characteristics. This is an **existence** property, not a mandatory auto-grant or a requirement to copy two full packages.
 6. Confirm that an independently authored homebrew Species can participate in the same pipeline without custom code keyed to its Species name.
 
@@ -137,6 +138,6 @@ These decisions must remain reviewable, with first-party and homebrew following 
 
 ## Next implementation milestone
 
-**Approve the universal characteristic meaning/parameter model before rewriting Pillar 1 JSON.** Start by classifying Human choice grants, High Elf spell progression, and Dragonborn parameter bindings, then prove an evaluated standard reconstruction with a shared evaluator. Preserve the source-inventory tool as design evidence; do not expose its output as authorized character state.
+**Complete the Pillar 2 Origin model before runtime integration.** Define Heritage contributors (including mixed contributors), inheritability of traits and their parameter values, eligibility dependencies, manifestation versus mere source availability, conflict/duplicate resolution, and preservation of standard presets. The next proof should construct **Origin profiles**, not execute the mechanics those profiles refer to. Preserve source-inventory and configured-trait tools as design evidence; do not expose their outputs as authorized character state.
 
-**Release boundary:** No changes in this branch to selected-native Species/Ancestry gameplay, Backgrounds, Upbringings, trusted Origin acquisition, Character Sheet, or deployed API. Pillar 2 remains incomplete until the acquisition, manifestation, and reconstruction decisions are made and implemented.
+**Release boundary:** No changes in this branch to selected-native Species/Ancestry gameplay, Backgrounds, Upbringings, trusted Origin acquisition, Character Sheet, deployed API, or combat execution. Pillar 2 remains incomplete until the contributor, manifestation, parameter-composition, and Origin-profile reconstruction decisions are made and validated.
