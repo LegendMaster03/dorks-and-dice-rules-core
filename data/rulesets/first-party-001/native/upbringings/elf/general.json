@@ -3,7 +3,7 @@
   "name": "General Elf Upbringing",
   "kind": "upbringing",
   "status": "selected-native",
-  "selectable": true,
+  "selectable": false,
   "benefits": [
     {
       "id": "elvish",
@@ -21,5 +21,8 @@
       "grantType": "skill-training",
       "choiceCount": 1
     }
+  ],
+  "reviewNotes": [
+    "Inheritance-only cultural foundation. High Elf, Wood Elf and Drow Upbringings inherit Elvish and this one Skill choice once; General Elf is not an independent Upbringing selection."
   ]
 }
