@@ -1,0 +1,21 @@
+{
+  "status": "provisional-design-fixture",
+  "note": "Read-only inheritance eligibility experiment; linked is an illustrative selection policy, not an approved Dragonborn rule. Compare with independent in tests. This does not grant a trait.",
+  "traits": [
+    {
+      "mechanicId": "ability.breath-weapon",
+      "definitionOccurrenceId": "species.dragonborn#trait:breath-weapon",
+      "parameters": {
+        "damageType": {
+          "bindingPath": "damage.typeFrom"
+        },
+        "area": {
+          "bindingPath": "areaFrom"
+        }
+      },
+      "parameterInheritance": {
+        "mode": "linked"
+      }
+    }
+  ]
+}
