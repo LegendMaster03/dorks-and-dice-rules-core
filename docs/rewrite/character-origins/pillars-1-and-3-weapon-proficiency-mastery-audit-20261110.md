@@ -48,9 +48,9 @@ GitHub Actions ran against the Character Origins branch after the audit:
 
 - **.NET Release build:** passed with zero warnings and zero errors.
 - **Mechanics / Host tests:** **99/99** and **111/111** passed.
-- **Dedicated Pillars 1/3 tests:** **32/32** Character Origins, **7/7** Goliath Upbringing, and **6/6** native weapon training tests passed (**45/45** total).
+- **Dedicated Pillars 1/3 tests:** **33/33** Character Origins, **7/7** Goliath Upbringing, and **6/6** native weapon training tests passed (**46/46** total).
 - **Rewrite structure validation:** passed.
-- **Full Python suite:** **368 tests**, **two remaining failures**. One is the unrelated native Creature-type inheritance-versus-working-evidence mismatch; the other is the wider native/working comparison reporting multiple class, Competency and Weapon Mastery content differences already outside this Origin-specific validation pass. CI stops before later Docker and end-to-end smoke stages. Those stages are **not certified** by this run.
+- **Full Python suite:** **369 tests**, **two remaining failures**. One is the unrelated native Creature-type inheritance-versus-working-evidence mismatch; the other is the wider native/working comparison reporting multiple class, Competency and Weapon Mastery content differences already outside this Origin-specific validation pass. CI stops before later Docker and end-to-end smoke stages. Those stages are **not certified** by this run.
 
 The earlier Bard retained-source comparison failure was corrected by verifying its new executable Martial-weapon choice link without changing the historical working copy. Four pinned SRD `subspecies.*` source identities (Hill Dwarf, High Elf, Rock Gnome and Lightfoot Halfling) now explicitly map to their already approved `ancestry.*` native IDs in the source coverage manifest. Original SRD identities, kinds and pinned source counts remain unchanged; the baseline and split validators check the mapped targets. This is **migration bookkeeping**, not a new Species or Ancestry gameplay rule.
 
