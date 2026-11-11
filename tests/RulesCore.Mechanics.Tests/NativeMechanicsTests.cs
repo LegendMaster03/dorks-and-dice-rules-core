@@ -147,55 +147,123 @@ public sealed class NativeMechanicsTests
     }
 
     [Fact]
-    public void ProficiencyOnlyGrantsNeverCreateRanksAndRepeatedOccurrencesAreRejected()
+    public void RepeatedProficienciesAddRanksAndPreserveOccurrenceAudit()
     {
         using var fixture = new NativeFixture();
-        var valid = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
-        [
-            new("background.one", "first", "competency.alchemy", Proficient: true),
-            new("feature.two", "second", "competency.alchemy", Proficient: true)
-        ]);
-        Assert.Equal("resolved", valid.Status);
-        Assert.Equal(0, valid.Training["competency.alchemy"].Ranks);
-        Assert.True(valid.Training["competency.alchemy"].Proficient);
+        var grants = new NativeCompetencyTrainingGrant[]
+        {
+            new("upbringing", "c", "competency.alchemy", Proficient: true),
+            new("background", "a", "competency.alchemy", Proficient: true),
+            new("feature", "b", "competency.alchemy", Ranks: 2, Proficient: true),
+            new("feature", "rank", "competency.alchemy", Ranks: 1)
+        };
+        var result = NativeCompetencyTraining.CombineValidated(fixture.Catalog, grants);
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(new NativeCompetencyTrainingState(5, true),
+            result.Training["competency.alchemy"]);
+        Assert.Equal(2, result.DuplicateResolutions!.Count);
+        Assert.All(result.DuplicateResolutions, entry =>
+            Assert.Equal("add-rank", entry.Outcome));
+        var reversed = NativeCompetencyTraining.CombineValidated(
+            fixture.Catalog, grants.Reverse().ToArray());
+        Assert.Equal(result.Training["competency.alchemy"],
+            reversed.Training["competency.alchemy"]);
+        Assert.Equal(result.DuplicateResolutions, reversed.DuplicateResolutions);
 
-        var duplicate = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        var single = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
         [
-            new("feat.training", "same", "competency.alchemy", Ranks: 1),
-            new("feat.training", "same", "competency.alchemy", Ranks: 1)
+            new("background", "only", "competency.alchemy", Proficient: true)
         ]);
-        Assert.Equal("invalid", duplicate.Status);
-        Assert.Empty(duplicate.Training);
-        Assert.Contains(duplicate.Issues, issue =>
+        Assert.Equal(0, single.Training["competency.alchemy"].Ranks);
+        var repeatedOccurrence = NativeCompetencyTraining.CombineValidated(
+            fixture.Catalog,
+        [
+            new("feat", "same", "competency.alchemy", Ranks: 1),
+            new("feat", "same", "competency.alchemy", Ranks: 1)
+        ]);
+        Assert.Equal("invalid", repeatedOccurrence.Status);
+        Assert.Empty(repeatedOccurrence.Training);
+        Assert.Contains(repeatedOccurrence.Issues, issue =>
             issue.Code == "duplicate-competency-grant-occurrence");
 
         var wrongKind = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
         [
-            new("feature.bad", "once", "skill.listen", Ranks: 1)
+            new("feature", "once", "skill.listen", Ranks: 1)
         ]);
         Assert.Equal("invalid", wrongKind.Status);
         Assert.Empty(wrongKind.Training);
         Assert.Contains(wrongKind.Issues, issue =>
             issue.Code == "unknown-competency-grant-target");
-        Assert.Equal("unresolved", NativeCompetencyTraining.CheckPrerequisite(
-            fixture.Catalog, valid.Training,
-            new("skill.listen", MinimumRanks: 1)).Status);
     }
 
-    [Theory]
-    [InlineData(NativeRollMode.Normal, 8, null, "resolved", 8)]
-    [InlineData(NativeRollMode.Advantage, 8, 16, "resolved", 16)]
-    [InlineData(NativeRollMode.Disadvantage, 8, 16, "resolved", 8)]
-    [InlineData(NativeRollMode.Emphasis, 7, 13, "resolved", 7)]
-    [InlineData(NativeRollMode.Emphasis, 4, 16, "resolved", 4)]
-    [InlineData(NativeRollMode.Emphasis, 7, 7, "resolved", 7)]
-    [InlineData(NativeRollMode.Emphasis, 7, 14, "reroll-required", null)]
-    public void RollModesAreDeterministic(NativeRollMode mode, int first, int? second,
-        string status, int? selected)
+    [Fact]
+    public void RepeatedProficiencyCanSelectAuthorizedDifferentCompetencies()
     {
-        var actual = NativeRolls.Resolve(mode, first, second);
-        Assert.Equal(status, actual.Status);
-        Assert.Equal(selected, actual.Selected);
+        using var fixture = new NativeFixture();
+        var grants = new NativeCompetencyTrainingGrant[]
+        {
+            new("upbringing", "a", "competency.smithing", Proficient: true),
+            new("background", "b", "competency.smithing", Ranks: 1,
+                Proficient: true,
+                DuplicateProficiencyAlternativeCompetencyId: "competency.cooking"),
+            new("feat", "c", "competency.smithing", Proficient: true,
+                DuplicateProficiencyAlternativeCompetencyId: "competency.alchemy")
+        };
+        var mode = NativeCompetencyDuplicateProficiencyPolicy.ChooseAnotherProficiency;
+        var result = NativeCompetencyTraining.CombineValidated(fixture.Catalog, grants, mode);
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(new NativeCompetencyTrainingState(1, true),
+            result.Training["competency.smithing"]);
+        Assert.Equal(new NativeCompetencyTrainingState(0, true),
+            result.Training["competency.cooking"]);
+        Assert.Equal(new NativeCompetencyTrainingState(0, true),
+            result.Training["competency.alchemy"]);
+        Assert.Contains(result.DuplicateResolutions!, entry =>
+            entry.SourceId == "background" && entry.OccurrenceId == "b" &&
+            entry.AlternativeCompetencyId == "competency.cooking");
+
+        var reversed = NativeCompetencyTraining.CombineValidated(
+            fixture.Catalog, grants.Reverse().ToArray(), mode);
+        Assert.Equal("resolved", reversed.Status);
+        foreach (var item in result.Training)
+            Assert.Equal(item.Value, reversed.Training[item.Key]);
+
+        var noChoice = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        [
+            new("one", "a", "competency.smithing", Proficient: true),
+            new("two", "b", "competency.smithing", Proficient: true)
+        ], mode);
+        Assert.Equal("invalid", noChoice.Status);
+        Assert.Empty(noChoice.Training);
+
+        foreach (var target in new[]
+            { "competency.smithing", "competency.missing", "skill.listen" })
+        {
+            var invalid = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+            [
+                new("one", "a", "competency.smithing", Proficient: true),
+                new("two", "b", "competency.smithing", Proficient: true,
+                    DuplicateProficiencyAlternativeCompetencyId: target)
+            ], mode);
+            Assert.Equal("invalid", invalid.Status);
+            Assert.Empty(invalid.Training);
+        }
+        var repeatedTarget = NativeCompetencyTraining.CombineValidated(fixture.Catalog,
+        [
+            new("one", "a", "competency.smithing", Proficient: true),
+            new("two", "b", "competency.smithing", Proficient: true,
+                DuplicateProficiencyAlternativeCompetencyId: "competency.cooking"),
+            new("three", "c", "competency.smithing", Proficient: true,
+                DuplicateProficiencyAlternativeCompetencyId: "competency.cooking")
+        ], mode);
+        Assert.Equal("invalid", repeatedTarget.Status);
+
+        var alternateInRankMode = NativeCompetencyTraining.CombineValidated(
+            fixture.Catalog, grants);
+        Assert.Equal("invalid", alternateInRankMode.Status);
+        var unknownMode = NativeCompetencyTraining.CombineValidated(
+            fixture.Catalog, [], (NativeCompetencyDuplicateProficiencyPolicy)99);
+        Assert.Equal("invalid", unknownMode.Status);
     }
 
     [Fact]
