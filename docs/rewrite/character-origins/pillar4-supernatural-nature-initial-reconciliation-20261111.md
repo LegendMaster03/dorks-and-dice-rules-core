@@ -60,6 +60,24 @@ This is not a universal claim about the published rules for vampires, lycanthrop
 
 **Consequences for the earlier proposal:** "Effect-specific replacement policies" now include an explicit *terminal outcome* and stage-dependent changes. "Lineage versus Bloodline" remains a distinct open classification question; being gradual does not itself make a change a Bloodline, and being reconstructive does not require a Bloodline.
 
+## Owner direction: three supernatural change categories
+
+**Status:** Owner-selected taxonomy (2026-11-12); implementation details and particular supernatural progressions remain unapproved. This **refines**, rather than contradicts, the earlier broad two-outcome distinction by dividing persistent additive supernatural effects into two categories.
+
+| Category | Ongoing effect | Alternate form behavior | Terminal result |
+| --- | --- | --- | --- |
+| **1. Modification-only** | Modifies the existing Species/Ancestry configuration and/or other sourced characteristics | No separate temporary replacement of the active configuration is required | Underlying Species/Ancestry remains authoritative |
+| **2. Modification with temporary transformation** | May modify the character between transformations | A particular form can temporarily substitute a different **effective** Species/Ancestry and other gameplay characteristics; reversion re-resolves the *current* authoritative baseline | Underlying Species/Ancestry remains authoritative |
+| **3. Progressive permanent reconstruction** | Intermediate changes can modify, suppress, or progressively displace characteristics | A completed transformation replaces the authoritative underlying Species/Ancestry configuration, not merely the active form; the previous configuration remains historical | New Species/Ancestry is authoritative |
+
+These are **categories of how a supernatural effect interacts with an Origin**, not separate engines, classes, creature types, or mandatory advancement tracks. A single supernatural condition can have several authored alternate forms with different replacement scopes. The individual form determines which active characteristics are retained, modified, suspended or temporarily replaced, potentially including ability scores, Class features, spellcasting, equipment usability, actions and resources. Underlying Class levels, equipment records, historical grants, and other persistent character state are not deleted simply because the form makes them unavailable. Persistent resource and effect interaction must be authored, not reset implicitly.
+
+**Important distinction:** Category 2 contains a *persistent additive condition* and a *temporary active replacement*. It does not qualify as Pillar 2's `supernatural-reconstruction` origination, which is needed only for the eventual permanent replacement in category 3. The Rite of Rebirth remains a specific immediate/complete-replacement process, equivalent to a category 3 endpoint without obligatory intermediate stages. If a category 3 effect progresses over time, every stage's actual effective characteristics must be specified; do not treat partial development as a completed Species replacement.
+
+The three categories do not prescribe how frequently advancement occurs, how many stages exist, whether a form is controllable, what triggers it, whether a change is curable, or which features are gained. Each supernatural effect and setting supplies those rules where relevant. An authorized DM/table ruling can override any level of classification, stage, form replacement profile, trigger, or result.
+
+**Provisional examples, not finalized native content:** A draconic influence that only modifies existing traits fits category 1; a werewolf retaining its baseline but using alternate wolf/hybrid forms fits category 2; gradual ceremorphosis ultimately replacing Species/Ancestry fits category 3. Other published or homebrew versions of these phenomena may use different rules.
+
 ## Owner direction: general progression framework and individual progression rules
 
 **Status:** Owner design direction, 2026-11-11. Each individual supernatural condition, Lineage, Bloodline or transformation may require its **own authored progression specification**. This does not authorize particular milestones, numerical benefits, mandatory uniform staging, or a new software engine per option.
