@@ -53,6 +53,24 @@ internal static class NativeOriginDependentBinder
                     other.Identity.IntrinsicSlotId == slot &&
                     other.Identity.Occurrence.Source == grant.Identity.Occurrence.Source)
                     .ToArray();
+                // Previously manifested contributors already carry the parameter
+                // that was resolved when their actual feature was acquired.
+                // Do not invent a new intrinsic choice in the next generation.
+                // If a new choice from that source is also present, they must agree.
+                if (parameters.TryGetValue(binding.Name, out var inherited))
+                {
+                    if (matching.Length > 0 &&
+                        (matching.Length != 1 || matching[0].EffectiveValue is null ||
+                         !JsonElement.DeepEquals(inherited, matching[0].EffectiveValue.Value)))
+                    {
+                        issues.Add(new("origin-binding-parameter-conflict",
+                            grant.Id + ":" + binding.Name,
+                            NativeOriginIssueSeverity.Conflict,
+                            "An inherited parameter differs from the currently selected source choice."));
+                        incomplete = true;
+                    }
+                    continue;
+                }
                 if (matching.Length != 1 || matching[0].EffectiveValue is null)
                 {
                     issues.Add(new(matching.Length == 0 ?
