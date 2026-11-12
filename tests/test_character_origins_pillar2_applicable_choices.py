@@ -265,7 +265,7 @@ class ApplicableChoiceTests(unittest.TestCase):
         )
         self.assertNotIn(
             "ancestrySelection",
-            {x["authoredField"]
+            {x["choiceEvidence"]["authoredField"]
              for x in report["applicableNativeChoiceEvidence"]},
         )
 
