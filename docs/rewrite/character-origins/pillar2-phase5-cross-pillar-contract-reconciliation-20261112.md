@@ -99,6 +99,45 @@ that incomplete Human and mixed Human–Elf produce no active intrinsic
 projection. This is a narrow first-party mechanics increment, not general
 Rite or effective-character projection support.
 
+## Initial passive-sense execution: native Low-Light Vision
+
+The first explicitly executable Species trait beyond the three basic
+intrinsic slots is `rule.low-light-vision`. The authoritative selected-native
+rule currently has exactly one typed effect, `actualLightLevel: dim` to
+`perceivedLightLevel: bright`. It has no separate range limit and does
+**not** change the perception of Darkness.
+
+`NativeOriginVisionProjector` reads the already-adjudicated native Origin
+and accepts the passive sense only when the full **direct initial**
+construction is authorized; the ordinary intrinsic baseline is resolved;
+the current and underlying configurations match; and exactly one
+fully approved native `low-light-vision` trait is granted with a matching
+eligible candidate occurrence and unchanged authored trait definition.
+It checks `rule.low-light-vision` against the selected native catalog,
+including the rule's *exact* effect, rather than trusting a description,
+a client-entered Species label, or a plausible-looking source grant.
+Duplicate/forged occurrences, unsupported trait fields and unresolved
+Origin results fail closed.
+
+The new native preview `vision` object is stateless and
+`previewOnly: true`. It retains the exact grant ID, source ID,
+occurrence path and rule/effect names. The narrow `Perceive` evaluator
+maps only the three supported light levels (bright, dim, darkness) and
+does not invent visibility, range, line of sight or other senses.
+A Species without this trait is `none`; a profile unable to authorize
+it is `unresolved`. Orc, Elf and Gnome provide the authored trait;
+Dwarf does not automatically obtain it through an unrelated Darkvision
+definition.
+
+Character Sheet's separate committed-Origin verification reads this
+native result **server-side**, matches the exact stored trait occurrence
+and shows the authorized low-light effect in the `Senses` presentation
+collection. It does not let a browser preview create a sense entitlement
+and does not change the Character's source profile or make unrelated
+Species traits executable. Core Host, Mechanics and cross-repository
+tests cover the approved effect, the unmodified Darkness level and
+forged, duplicate or incomplete grants.
+
 ## Shared permanent reconstruction
 
 `NativeOriginPermanentReconstructionEngine` now owns the existing Rite replacement sequence; `NativeOriginRebirthEngine` remains a Rite-specific compatibility facade. Both use `NativeOriginConstructionEngine.EvaluateReconstructionTarget` for a post-origination target. Ordinary construction still rejects a post-origination method as an initial-creation shortcut.
