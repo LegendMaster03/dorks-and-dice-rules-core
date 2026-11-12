@@ -678,4 +678,115 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal("previously-mixed", result.EvaluatedProposal.Contributors.Single().Id);
     }
 
+    [Fact]
+    public void MixedElvenSpellcastingSourcesDoNotSilentlyCombineAbilityChoices()
+    {
+        var proposal = Proposal("dual-elven-spell", NativeOriginIntent.Mixed,
+            contributors: [Contributor("high", "ancestry.elf.high"),
+                Contributor("wood", "ancestry.elf.wood")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var chosen = offers.Where(x =>
+            x.Identity.Occurrence.Source.Id is "ancestry.elf.high" or "ancestry.elf.wood" &&
+            (x.Identity.IntrinsicSlotId == "spellcastingAbility" ||
+             x.Identity.Occurrence.OccurrencePath == "/traits/1" &&
+             x.Identity.Occurrence.Source.Id == "ancestry.elf.high" ||
+             x.Identity.Occurrence.OccurrencePath == "/traits/0" &&
+             x.Identity.Occurrence.Source.Id == "ancestry.elf.wood")).ToArray();
+        Assert.Equal(4, chosen.Length);
+        var manifests = chosen.Select((c, i) => new NativeOriginManifestation("spells-" + i,
+            c.Id, Choices: c.Identity.IntrinsicSlotId == "spellcastingAbility" ?
+                [new NativeOriginChoiceSelection("spellcastingAbility",
+                    [c.Identity.Occurrence.Source.Id == "ancestry.elf.high" ?
+                        "intelligence" : "wisdom"])] : null)).ToArray();
+        var permissions = chosen.Select((c, i) => Decision("permission-" + i,
+            "candidate", c.Id, new { eligibility = "eligible" })).ToArray();
+        var result = Evaluate(proposal with
+        {
+            Manifestations = manifests, TableDecisions = permissions
+        }, new TestAuthority(), false);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "intrinsic-slot-interaction-unresolved");
+        Assert.Contains(result.Issues, x => x.Code == "origin-binding-choice-missing");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.Occurrence.Source.Id is "ancestry.elf.high" or "ancestry.elf.wood" &&
+            x.Identity.Kind == NativeOriginCharacteristicKind.Trait);
+    }
+
+    [Fact]
+    public void RedBronzeMixPreservesDistinctParameterOffersWithoutStackingBreathWeapon()
+    {
+        var proposal = Proposal("cross-dragonborn", NativeOriginIntent.Mixed,
+            contributors: [Contributor("red", "ancestry.dragonborn.red"),
+                Contributor("bronze", "ancestry.dragonborn.bronze")]);
+        var breaths = Evaluate(proposal).EvaluatedProposal.Candidates.Where(x =>
+            x.Identity.Occurrence.Source.Id == "species.dragonborn" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/2")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(2, breaths.Length);
+        Assert.Equal(new[] { "fire", "lightning" },
+            breaths.Select(x => x.OfferedParameters!["damageType"].GetString())
+                .OrderBy(x => x, StringComparer.Ordinal));
+        Assert.Equal(new[] { "cone", "line" },
+            breaths.Select(x => x.OfferedParameters!["area"]
+                .GetProperty("shape").GetString())
+                .OrderBy(x => x, StringComparer.Ordinal));
+
+        var result = Evaluate(proposal with
+        {
+            Manifestations = breaths.Select((x, i) =>
+                new NativeOriginManifestation("breath-" + i, x.Id)).ToArray(),
+            TableDecisions = breaths.Select((x, i) =>
+                Decision("allow-breath-" + i, "candidate", x.Id,
+                    new { eligibility = "eligible" })).ToArray()
+        }, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "same-definition-different-manifestations");
+        Assert.Empty(result.Profile!.Underlying.InherentGrants);
+    }
+
+    [Fact]
+    public void NestedSpellTraitRetainsItsAlreadyManifestedParameterValue()
+    {
+        var source = Evaluate(Proposal("caster-parent", ancestry: "ancestry.elf.high"))
+            .EvaluatedProposal;
+        var ability = source.Candidates.Single(x =>
+            x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        var cantrip = source.Candidates.Single(x =>
+            x.Identity.Occurrence.Source.Id == "ancestry.elf.high" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/0");
+        var parent = Evaluate(Proposal("caster-parent", ancestry: "ancestry.elf.high",
+            manifests:
+            [
+                new("ability", ability.Id,
+                    Choices: [new("spellcastingAbility", ["intelligence"])]),
+                new("cantrip", cantrip.Id,
+                    Choices: [new("selection", ["spell.fire-bolt"],
+                        "verified-catalog-proof")])
+            ]), new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
+        var feature = parent.Profile!.Current.InherentGrants.Single(x =>
+            x.Identity.Occurrence.Source.Id == "ancestry.elf.high" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/1");
+        Assert.Equal("intelligence", feature.Parameters!["spellcastingAbility"].GetString());
+
+        var inherited = new NativeOriginContributor("parent",
+            new(NativeOriginInputKind.BiologicalParent),
+            new(NativeOriginSourceKind.ManifestedProfile, parent.Profile.Id),
+            new("species.elf", "ancestry.elf.high", [feature]),
+            ["species.human", "species.elf"]);
+        var proposal = Proposal("caster-child", NativeOriginIntent.Mixed,
+            contributors: [inherited]);
+        var offer = Assert.Single(Evaluate(proposal).EvaluatedProposal.Candidates);
+        var result = Evaluate(proposal with
+        {
+            Manifestations = [new("inherited-spell", offer.Id)],
+            TableDecisions = [Decision("transmission", "candidate", offer.Id,
+                new { eligibility = "eligible" })]
+        }, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var effective = Assert.Single(result.Profile!.Underlying.InherentGrants);
+        Assert.Equal("intelligence", effective.Parameters!["spellcastingAbility"].GetString());
+        Assert.Equal("ancestry.elf.high", effective.Identity.Occurrence.Source.Id);
+    }
+
 }
