@@ -302,6 +302,28 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 Add("history-event-invalid", "history", NativeOriginIssueSeverity.Invalid,
                     "Historical events require their own identity and method reference.");
 
+        // The existing Origin configuration in a proposal always means the
+        // authoritative baseline, including while a separate form is active.
+        // This checks representation only; no transition or source eligibility
+        // is inferred from the presence of a form.
+        if (proposal.ActiveTemporaryTransformation is { } active)
+        {
+            if (proposal.ExistingConfiguration is null ||
+                proposal.ExistingEffectiveConfiguration is null)
+                Add("active-proposal-configurations-required", "activeTemporaryTransformation",
+                    NativeOriginIssueSeverity.Invalid,
+                    "An active-form proposal needs both baseline and effective inputs.");
+            CheckActiveTransformation(active, proposal.TableDecisions, null,
+                "activeTemporaryTransformation", Add);
+        }
+        else if (proposal.ExistingEffectiveConfiguration is not null &&
+                 (proposal.ExistingConfiguration is null ||
+                  !SameConfiguration(proposal.ExistingConfiguration,
+                      proposal.ExistingEffectiveConfiguration)))
+            Add("proposal-effective-without-active-effect",
+                "existingEffectiveConfiguration", NativeOriginIssueSeverity.Unresolved,
+                "A different effective input needs a separately identified active effect.");
+
         return Result(issues);
     }
 
@@ -317,97 +339,143 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         var issues = new List<NativeOriginContractIssue>();
         void Add(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
-        if (Blank(profile.Id) || profile.Current is null ||
-            profile.Current?.InherentGrants is null ||
+
+        if (Blank(profile.Id) || profile.Underlying is null ||
+            profile.Underlying?.InherentGrants is null ||
+            profile.Current is null || profile.Current?.InherentGrants is null ||
             profile.IndependentGrants is null || profile.History is null ||
             profile.Adjudication is null)
         {
             Add("profile-required-fields", "profile", NativeOriginIssueSeverity.Invalid,
-                "Current, independent and historical state must remain separate.");
+                "Underlying, effective, independent and historical state must be separate.");
             return Result(issues);
         }
-        var grants = Index(profile.Current.InherentGrants, g => g?.Id, "current.grants", Add);
-        var independent = Index(profile.IndependentGrants, g => g?.Id, "independentGrants", Add);
-        foreach (var id in grants.Keys)
-            if (independent.ContainsKey(id))
-                Add("duplicate-grant-across-sources", "profile", NativeOriginIssueSeverity.Invalid,
-                    "Current inherent and independent grants must have distinct grant identities.");
 
-        var slotGroups = grants.Values
-            .Where(g => g.Identity?.Kind == NativeOriginCharacteristicKind.Intrinsic &&
-                        !Blank(g.Identity.IntrinsicSlotId))
-            .GroupBy(g => g.Identity.IntrinsicSlotId, StringComparer.Ordinal);
-        foreach (var group in slotGroups)
-            if (group.Count() > 1)
-                Add("intrinsic-slot-policy-unresolved", "current." + group.Key,
-                    NativeOriginIssueSeverity.Unresolved,
-                    "A repeated intrinsic slot needs explicit whole-profile reconciliation.");
+        var baselineGrants = Index(profile.Underlying.InherentGrants,
+            g => g?.Id, "underlying.grants", Add);
+        var effectiveGrants = Index(profile.Current.InherentGrants,
+            g => g?.Id, "current.grants", Add);
+        var independent = Index(profile.IndependentGrants,
+            g => g?.Id, "independentGrants", Add);
 
+        foreach (var (path, grants) in new[]
+            { ("underlying", baselineGrants), ("current", effectiveGrants) })
+        {
+            foreach (var id in grants.Keys)
+                if (independent.ContainsKey(id))
+                    Add("duplicate-grant-across-sources", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Inherent and independent grants must have distinct identities.");
+
+            foreach (var group in grants.Values
+                .Where(g => g.Identity?.Kind == NativeOriginCharacteristicKind.Intrinsic &&
+                            !Blank(g.Identity.IntrinsicSlotId))
+                .GroupBy(g => g.Identity.IntrinsicSlotId, StringComparer.Ordinal))
+                if (group.Count() > 1)
+                    Add("intrinsic-slot-policy-unresolved", path + "." + group.Key,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "Repeated intrinsic slots need explicit whole-profile reconciliation.");
+
+            foreach (var grant in grants.Values)
+                if (Blank(grant.ManifestationId) ||
+                    grant.SourceCandidateIds is null || grant.SourceCandidateIds.Count == 0 ||
+                    grant.Identity?.Occurrence?.Source is null)
+                    Add("grant-provenance-required", path + ".grants." + grant.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Each inherent grant needs manifestation, candidate and source provenance.");
+        }
+
+        var persistent = Index(profile.PersistentInfluences ?? [],
+            p => p?.Id, "persistentInfluences", Add);
+        foreach (var (id, effect) in persistent)
+        {
+            if (effect.Source is null || Blank(effect.Source.Id) ||
+                Blank(effect.AcquisitionEvidenceId))
+                Add("persistent-influence-provenance-required", "persistentInfluences." + id,
+                    NativeOriginIssueSeverity.Invalid,
+                    "A persistent effect needs its actual source and acquisition provenance.");
+            CheckTableAuthorization(effect.Authorization, proposal?.TableDecisions,
+                "persistentInfluences." + id, Add);
+        }
+
+        if (profile.ActiveTemporaryTransformation is { } active)
+        {
+            CheckActiveTransformation(active, proposal?.TableDecisions, persistent,
+                "activeTemporaryTransformation", Add);
+            foreach (var id in active.EffectiveFormGrantIds ?? [])
+                if (!effectiveGrants.ContainsKey(id))
+                    Add("active-form-grant-missing", "activeTemporaryTransformation",
+                        NativeOriginIssueSeverity.Invalid,
+                        "A form grant reference must identify an effective inherent grant.");
+        }
+        else if (!SameConfiguration(profile.Underlying, profile.Current))
+            Add("effective-state-without-active-effect", "current",
+                NativeOriginIssueSeverity.Unresolved,
+                "Differing effective Species/Ancestry requires an identified active effect.");
+
+        // A form's effective grants may come from a different authored source.
+        // The baseline proposal never supplies implicit permissions for those grants.
+        // Only validate proposal-level grant origins against the underlying state.
         Dictionary<string, NativeOriginCandidate>? candidates = null;
-        Dictionary<string, NativeOriginManifestation>? selectedManifestations = null;
+        Dictionary<string, NativeOriginManifestation>? manifestations = null;
         if (proposal is not null)
         {
             if (profile.ProposalId != proposal.Id)
-                Add("profile-proposal-mismatch", "proposalId", NativeOriginIssueSeverity.Invalid,
-                    "Profile provenance must identify the proposal it was built from.");
+                Add("profile-proposal-mismatch", "proposalId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Profile provenance must identify its construction proposal.");
             candidates = (proposal.Candidates ?? [])
                 .Where(c => c is not null && !Blank(c.Id))
                 .GroupBy(c => c.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
-            selectedManifestations = (proposal.Manifestations ?? [])
+            manifestations = (proposal.Manifestations ?? [])
                 .Where(m => m is not null && !Blank(m.Id))
                 .GroupBy(m => m.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
-        foreach (var grant in grants.Values)
+        foreach (var grant in baselineGrants.Values)
         {
-            if (grant.Authorization?.Adjudication == NativeOriginAdjudication.DmAuthorized &&
-                (Blank(grant.Authorization.TableDecisionId) ||
-                 proposal?.TableDecisions?.All(d => d.Id != grant.Authorization.TableDecisionId) != false))
-                Add("grant-dm-decision-unverified", "current.grants." + grant.Id,
-                    NativeOriginIssueSeverity.Unresolved,
-                    "Grant authority needs a referenced ruling and trusted verification.");
-            if (Blank(grant.ManifestationId) ||
-                grant.SourceCandidateIds is null || grant.SourceCandidateIds.Count == 0 ||
-                grant.Identity?.Occurrence?.Source is null)
-                Add("grant-provenance-required", "current.grants." + grant.Id,
-                    NativeOriginIssueSeverity.Invalid,
-                    "An inherent grant must identify a manifestation, offers, and its source occurrence.");
-            if (selectedManifestations is not null)
+            var path = "underlying.grants." + grant.Id;
+            CheckTableAuthorization(grant.Authorization, proposal?.TableDecisions, path, Add);
+
+            if (manifestations is not null)
             {
-                if (!selectedManifestations.TryGetValue(grant.ManifestationId ?? "", out var selectedManifestation))
-                    Add("unknown-manifestation-grant", "current.grants." + grant.Id,
-                        NativeOriginIssueSeverity.Invalid,
-                        "An inherent grant must derive from a selected manifestation.");
+                if (!manifestations.TryGetValue(grant.ManifestationId ?? "", out var selected))
+                    Add("unknown-manifestation-grant", path, NativeOriginIssueSeverity.Invalid,
+                        "A baseline grant must derive from an explicitly selected manifestation.");
                 else
                 {
                     if (grant.SourceCandidateIds is null ||
-                        !grant.SourceCandidateIds.Contains(selectedManifestation.CandidateId, StringComparer.Ordinal))
-                        Add("grant-selected-offer-mismatch", "current.grants." + grant.Id,
-                            NativeOriginIssueSeverity.Invalid,
-                            "The selected offer must appear in grant provenance.");
+                        !grant.SourceCandidateIds.Contains(selected.CandidateId, StringComparer.Ordinal))
+                        Add("grant-selected-offer-mismatch", path, NativeOriginIssueSeverity.Invalid,
+                            "The selected offer must occur in the grant's provenance.");
                     if (candidates is not null &&
-                        candidates.TryGetValue(selectedManifestation.CandidateId, out var selected) &&
-                        grant.Identity != selected.Identity)
-                        Add("grant-definition-mismatch", "current.grants." + grant.Id,
-                            NativeOriginIssueSeverity.Invalid,
-                            "The grant identity must match its selected source occurrence.");
+                        candidates.TryGetValue(selected.CandidateId, out var offered) &&
+                        grant.Identity != offered.Identity)
+                        Add("grant-definition-mismatch", path, NativeOriginIssueSeverity.Invalid,
+                            "Grant identity must match the selected authored occurrence.");
                 }
             }
             if (candidates is not null && grant.SourceCandidateIds is not null)
                 foreach (var candidateId in grant.SourceCandidateIds)
                     if (!candidates.ContainsKey(candidateId))
-                        Add("unknown-grant-offer", "current.grants." + grant.Id,
-                            NativeOriginIssueSeverity.Invalid,
-                            "Grant evidence must name actual candidates, not invented ancestors.");
+                        Add("unknown-grant-offer", path, NativeOriginIssueSeverity.Invalid,
+                            "Grant provenance must identify actual candidates.");
+
         }
-        var repeatedManifestations = grants.Values.Where(g => !Blank(g.ManifestationId))
-            .GroupBy(g => g.ManifestationId, StringComparer.Ordinal);
-        foreach (var repeated in repeatedManifestations)
-            if (repeated.Count() > 1)
-                Add("manifestation-repeat-unresolved", "current.grants",
+        foreach (var group in baselineGrants.Values.Where(g => !Blank(g.ManifestationId))
+            .GroupBy(g => g.ManifestationId, StringComparer.Ordinal))
+            if (group.Count() > 1)
+                Add("manifestation-repeat-unresolved", "underlying.grants",
                     NativeOriginIssueSeverity.Unresolved,
-                    "Multiple grants from one manifestation require a separately authored rule.");
+                    "Multiple grants from one manifestation need an authored rule.");
+
+        // Effective-form grants may also carry scoped DM rulings, but the
+        // baseline's candidate selection is not the correct proof for them.
+        if (profile.ActiveTemporaryTransformation is not null)
+            foreach (var grant in effectiveGrants.Values)
+                CheckTableAuthorization(grant.Authorization, proposal?.TableDecisions,
+                    "current.grants." + grant.Id, Add);
 
         var historyIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var ev in profile.History)
@@ -415,23 +483,23 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             if (ev is null || Blank(ev.Id) || !historyIds.Add(ev.Id) || ev.Method is null ||
                 ev.ContributorIds is null)
                 Add("history-event-invalid", "history", NativeOriginIssueSeverity.Invalid,
-                    "Each historical event must have a unique ID, method and contributor list.");
+                    "Each event needs a unique ID, method and contributor list.");
             else if (ev.Stage == NativeOriginEventStage.Completed &&
                      ev.ReplacesConfiguration && ev.PreviousConfiguration is null)
                 Add("replacement-history-incomplete", "history." + ev.Id,
                     NativeOriginIssueSeverity.Incomplete,
-                    "A completed replacement must retain the former configuration as history.");
+                    "A permanent replacement must retain its prior baseline as history.");
         }
         if (profile.Adjudication.Adjudication == NativeOriginAdjudication.DmAuthorized)
         {
             if (Blank(profile.Adjudication.TableDecisionId))
                 Add("profile-dm-decision-required", "adjudication", NativeOriginIssueSeverity.Invalid,
-                    "A DM-authorized outcome needs a scoped table-decision ID.");
+                    "A DM-authorized result needs a scoped table-decision ID.");
             else if (proposal?.TableDecisions?.Any(d =>
                 d.Id == profile.Adjudication.TableDecisionId) != true)
                 Add("profile-dm-decision-unverified", "adjudication",
                     NativeOriginIssueSeverity.Unresolved,
-                    "A claimed table ruling must be linked to an explicit scoped decision.");
+                    "A claimed table ruling must reference an explicit scoped decision.");
         }
         if (profile.Adjudication.Adjudication == NativeOriginAdjudication.Unresolved)
             Add("profile-outcome-unresolved", "adjudication",
@@ -439,9 +507,52 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         if (profile.Adjudication.Adjudication == NativeOriginAdjudication.Conflict)
             Add("profile-outcome-conflict", "adjudication",
                 NativeOriginIssueSeverity.Conflict, "The recorded outcome is conflicting.");
-        // This verifies structural evidence only: an external authorization and
-        // evaluation layer must validate any claimed rule/DM authority.
+        // No effect/trait precedence, agency, transition or reversion is executed.
         return Result(issues);
+    }
+
+    /// <summary>
+    /// Exact state comparison is appropriate only with no active substitution:
+    /// a non-form persistent condition may grant independent benefits without
+    /// changing the inherent Species/Ancestry configuration.
+    /// </summary>
+    private static bool SameConfiguration(
+        NativeOriginCurrentConfiguration underlying,
+        NativeOriginCurrentConfiguration effective) =>
+        JsonElement.DeepEquals(JsonSerializer.SerializeToElement(underlying),
+            JsonSerializer.SerializeToElement(effective));
+
+    private static void CheckActiveTransformation(
+        NativeOriginActiveTemporaryTransformation active,
+        IReadOnlyList<NativeTableRuleDecision>? tableDecisions,
+        IReadOnlyDictionary<string, NativeOriginPersistentInfluence>? persistent,
+        string path, Action<string, string, NativeOriginIssueSeverity, string> add)
+    {
+        if (Blank(active.Id) || Blank(active.FormId) || active.EffectSource is null ||
+            Blank(active.EffectSource?.Id) || Blank(active.ActivationEvidenceId))
+            add("active-form-provenance-required", path, NativeOriginIssueSeverity.Invalid,
+                "An active form needs a form ID, source and activation evidence.");
+        if (!Blank(active.PersistentInfluenceId) && persistent is not null &&
+            !persistent.ContainsKey(active.PersistentInfluenceId!))
+            add("active-form-influence-missing", path, NativeOriginIssueSeverity.Invalid,
+                "A referenced persistent influence must exist on this profile.");
+        if (active.EffectiveFormGrantIds is { } ids &&
+            (ids.Any(Blank) || ids.Distinct(StringComparer.Ordinal).Count() != ids.Count))
+            add("active-form-grant-ids-invalid", path, NativeOriginIssueSeverity.Invalid,
+                "Form grant identities must be nonempty and unique.");
+        CheckTableAuthorization(active.Authorization, tableDecisions, path, add);
+    }
+
+    private static void CheckTableAuthorization(
+        NativeOriginDecisionBasis? basis,
+        IReadOnlyList<NativeTableRuleDecision>? decisions,
+        string path, Action<string, string, NativeOriginIssueSeverity, string> add)
+    {
+        if (basis?.Adjudication != NativeOriginAdjudication.DmAuthorized) return;
+        if (Blank(basis.TableDecisionId) ||
+            decisions?.Any(d => d.Id == basis.TableDecisionId) != true)
+            add("table-decision-unverified", path, NativeOriginIssueSeverity.Unresolved,
+                "An explicit scoped table ruling must accompany the claimed DM authority.");
     }
 
     private static Dictionary<string, T> Index<T>(IEnumerable<T> entries, Func<T, string?> getId,
