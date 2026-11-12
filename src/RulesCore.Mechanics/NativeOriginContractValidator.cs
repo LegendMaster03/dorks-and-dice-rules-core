@@ -319,11 +319,20 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         else if (proposal.ExistingEffectiveConfiguration is not null &&
                  (proposal.ExistingConfiguration is null ||
                   !SameConfiguration(proposal.ExistingConfiguration,
-                      proposal.ExistingEffectiveConfiguration)))
+                      proposal.ExistingEffectiveConfiguration)) &&
+                 proposal.ExistingEffectiveConfigurationBasis is null)
             Add("proposal-effective-without-active-effect",
                 "existingEffectiveConfiguration", NativeOriginIssueSeverity.Unresolved,
-                "A different effective input needs a separately identified active effect.");
+                "A different effective input needs an identified effect or authored/DM basis.");
 
+        if (proposal.ExistingEffectiveConfigurationBasis is { } effectiveBasis)
+            CheckExplicitDecisionBasis(effectiveBasis, proposal.TableDecisions,
+                "existingEffectiveConfigurationBasis", Add);
+
+        CheckConcurrentTemporaryTransformations(proposal.ActiveTemporaryTransformation,
+            proposal.OtherActiveTemporaryTransformations,
+            proposal.TemporaryTransformationPrecedence, proposal.TableDecisions,
+            null, "temporaryTransformations", Add);
         return Result(issues);
     }
 
@@ -408,10 +417,19 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                         NativeOriginIssueSeverity.Invalid,
                         "A form grant reference must identify an effective inherent grant.");
         }
-        else if (!SameConfiguration(profile.Underlying, profile.Current))
+        else if (!SameConfiguration(profile.Underlying, profile.Current) &&
+                 profile.EffectiveConfigurationBasis is null)
             Add("effective-state-without-active-effect", "current",
                 NativeOriginIssueSeverity.Unresolved,
-                "Differing effective Species/Ancestry requires an identified active effect.");
+                "Differing effective Species/Ancestry requires an active effect or authored/DM basis.");
+
+        if (profile.EffectiveConfigurationBasis is { } effectiveBasis)
+            CheckExplicitDecisionBasis(effectiveBasis, proposal?.TableDecisions,
+                "effectiveConfigurationBasis", Add);
+        CheckConcurrentTemporaryTransformations(profile.ActiveTemporaryTransformation,
+            profile.OtherActiveTemporaryTransformations,
+            profile.TemporaryTransformationPrecedence, proposal?.TableDecisions,
+            persistent, "temporaryTransformations", Add);
 
         // A form's effective grants may come from a different authored source.
         // The baseline proposal never supplies implicit permissions for those grants.
@@ -557,6 +575,93 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             add("active-form-grant-ids-invalid", path, NativeOriginIssueSeverity.Invalid,
                 "Form grant identities must be nonempty and unique.");
         CheckTableAuthorization(active.Authorization, tableDecisions, path, add);
+    }
+
+    /// <summary>
+    /// More than one active form has no implicit winner. The selected active
+    /// record identifies the claimed effective source, but only explicit policy
+    /// evidence or a scoped ruling can resolve interactions. No rule is executed.
+    /// </summary>
+    private static void CheckConcurrentTemporaryTransformations(
+        NativeOriginActiveTemporaryTransformation? selected,
+        IReadOnlyList<NativeOriginActiveTemporaryTransformation>? others,
+        NativeOriginDecisionBasis? precedence,
+        IReadOnlyList<NativeTableRuleDecision>? tableDecisions,
+        IReadOnlyDictionary<string, NativeOriginPersistentInfluence>? persistent,
+        string path, Action<string, string, NativeOriginIssueSeverity, string> add)
+    {
+        if (others is null || others.Count == 0)
+        {
+            if (precedence is not null)
+                CheckExplicitDecisionBasis(precedence, tableDecisions,
+                    path + ".precedence", add);
+            return;
+        }
+
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+        if (selected is not null && !string.IsNullOrWhiteSpace(selected.Id))
+            ids.Add(selected.Id);
+        foreach (var other in others)
+        {
+            if (other is null)
+            {
+                add("temporary-form-record-invalid", path, NativeOriginIssueSeverity.Invalid,
+                    "Every active transformation must identify its provenance.");
+                continue;
+            }
+
+            CheckActiveTransformation(other, tableDecisions, persistent,
+                path + "." + (other.Id ?? ""), add);
+            if (!string.IsNullOrWhiteSpace(other.Id) && !ids.Add(other.Id))
+                add("temporary-form-duplicate-id", path, NativeOriginIssueSeverity.Invalid,
+                    "Simultaneously active transformation identities must be distinct.");
+        }
+
+        if (selected is null)
+            add("effective-form-unselected", path, NativeOriginIssueSeverity.Unresolved,
+                "No effective form is identified among competing active effects.");
+
+        if (precedence is null)
+            add("temporary-form-precedence-unresolved", path,
+                NativeOriginIssueSeverity.Unresolved,
+                "Concurrent effects require authored precedence or an explicit scoped DM decision.");
+        else
+            CheckExplicitDecisionBasis(precedence, tableDecisions,
+                path + ".precedence", add);
+    }
+
+    /// <summary>
+    /// A supplied decision can describe a source-specific modifier, form
+    /// precedence or restoration ruling. Its source/DM reference is structural
+    /// evidence, not trusted proof of authorization or correctness.
+    /// </summary>
+    private static void CheckExplicitDecisionBasis(
+        NativeOriginDecisionBasis basis,
+        IReadOnlyList<NativeTableRuleDecision>? tableDecisions,
+        string path, Action<string, string, NativeOriginIssueSeverity, string> add)
+    {
+        switch (basis.Adjudication)
+        {
+            case NativeOriginAdjudication.Supported:
+                if (string.IsNullOrWhiteSpace(basis.NativeRuleReference))
+                    add("effective-rule-reference-required", path,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "A supported resolution needs an authored rule reference.");
+                break;
+            case NativeOriginAdjudication.DmAuthorized:
+                CheckTableAuthorization(basis, tableDecisions, path, add);
+                break;
+            case NativeOriginAdjudication.Unresolved:
+                add("effective-precedence-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The recorded effect interaction has not been resolved.");
+                break;
+            case NativeOriginAdjudication.Conflict:
+                add("effective-precedence-conflict", path,
+                    NativeOriginIssueSeverity.Conflict,
+                    "The authored effect interaction is recorded as conflicting.");
+                break;
+        }
     }
 
     private static void CheckTableAuthorization(
