@@ -79,7 +79,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 if (Blank(previous.ProfileId) || previous.InherentGrants is null)
                     Add("nested-current-profile-required", path, NativeOriginIssueSeverity.Invalid,
                         "A nested contributor must identify its current manifested configuration.");
-                if (contributor.Source.Kind != NativeOriginSourceKind.ManifestedProfile)
+                if (contributor.Source?.Kind != NativeOriginSourceKind.ManifestedProfile)
                     Add("nested-source-mismatch", path, NativeOriginIssueSeverity.Invalid,
                         "A contributed current profile must be attributed to a manifested-profile source.");
             }
@@ -451,7 +451,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         foreach (var entry in entries)
         {
             var id = entry is null ? null : getId(entry);
-            if (Blank(id) || !indexed.TryAdd(id, entry!))
+            if (id is null || Blank(id) || !indexed.TryAdd(id, entry!))
                 add("duplicate-or-missing-id", path, NativeOriginIssueSeverity.Invalid,
                     "Occurrence IDs must be present and unique within their collection.");
         }
@@ -462,7 +462,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         IReadOnlyDictionary<string, NativeTableRuleDecision> decisions,
         Action<string, string, NativeOriginIssueSeverity, string> add)
     {
-        if (Blank(id) || !decisions.ContainsKey(id))
+        if (id is null || Blank(id) || !decisions.ContainsKey(id))
             add("table-decision-required", path, NativeOriginIssueSeverity.Invalid,
                 "An explicit DM/table disposition must reference a recorded scoped decision.");
     }

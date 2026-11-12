@@ -44,6 +44,6 @@ Validated commands (branch CI):
 - `dotnet test RulesCore.slnx -c Release --no-build`
 - `python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -v`
 
-The preceding CI run passed the complete .NET build, **116 Mechanics tests**, and **345 Pillar 2 Python tests**. The final revision runs the full .NET solution suite and adds three explicit boundary tests. Existing unrelated native/working corpus divergences in the full Python suite are not silently reclassified as Origin contract regressions.
+CI run [43161832144](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43161832144) passed the complete .NET solution build, **119 Mechanics tests**, **111 Host tests**, and **345 Pillar 2 Python tests**. The contract test class has **25 focused tests**. No failures occurred in those suites. The final nullability-warning cleanup does not alter contract behavior. The full repository-wide Python suite was not rerun; the separate previously known native/working corpus divergences remain outside this phase gate.
 
 **Phase boundary:** No API/Character Sheet integration, general Origin executor, Species-specific mixture rules, or native exceptional Dragonborn Ancestry records are created here. Phase 2 begins only under separate authorization.
