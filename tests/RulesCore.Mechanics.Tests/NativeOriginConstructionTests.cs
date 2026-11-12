@@ -266,4 +266,123 @@ public sealed class NativeOriginConstructionTests
         Assert.Empty(result.Profile.Current.InherentGrants);
         Assert.NotEmpty(result.Profile.Underlying.InherentGrants);
     }
+    [Fact]
+    public void DragonbornLeafDeconstructsTheCompleteAuthoredAncestryChain()
+    {
+        var result = Evaluate(Proposal("red-dragonborn", species: "species.dragonborn",
+            ancestry: "ancestry.dragonborn.red"));
+        var ids = result.EvaluatedProposal.Candidates
+            .Select(x => x.Identity.Occurrence.Source.Id).ToHashSet(StringComparer.Ordinal);
+        Assert.Contains("species.dragonborn", ids);
+        Assert.Contains("ancestry.dragonborn.chromatic", ids);
+        Assert.Contains("ancestry.dragonborn.red", ids);
+        Assert.DoesNotContain(result.Issues, x => x.Code == "ancestry-parent-mismatch");
+        Assert.DoesNotContain(result.Issues, x => x.Code == "origin-source-restricted" &&
+            x.Path is "species.dragonborn" or "ancestry.dragonborn.chromatic");
+    }
+
+    [Fact]
+    public void CrossSourceIntrinsicConflictsDoNotUseIterationOrderAsAPolicy()
+    {
+        var first = Contributor("human", "species.human");
+        var second = Contributor("elf", "species.elf");
+        var initial = Proposal("cross-source", NativeOriginIntent.Mixed, contributors: [first, second]);
+        var offered = Evaluate(initial).EvaluatedProposal.Candidates
+            .Where(x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(2, offered.Length);
+        var decisions = offered.Select((x, i) =>
+            Decision("accept-" + i, "candidate", x.Id, new { eligibility = "eligible" })).ToArray();
+        var picks = offered.Select((x, i) => new NativeOriginManifestation("pick-" + i,
+            x.Id, JsonSerializer.SerializeToElement(30))).ToArray();
+        var proposal = initial with { Manifestations = picks, TableDecisions = decisions };
+        var forward = Evaluate(proposal, new TestAuthority());
+        var reversed = Evaluate(proposal with { Contributors = [second, first] },
+            new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, forward.Status);
+        Assert.Empty(forward.Profile!.Underlying.InherentGrants);
+        Assert.Contains(forward.Issues, x => x.Code == "intrinsic-slot-interaction-unresolved");
+        Assert.Equal(JsonSerializer.Serialize(forward.Profile.Underlying),
+            JsonSerializer.Serialize(reversed.Profile!.Underlying));
+    }
+
+    [Fact]
+    public void ScopedDmResolutionCanSelectOneOfTwoIncompatibleIntrinsics()
+    {
+        var proposal = Proposal("chosen", NativeOriginIntent.Mixed,
+            contributors: [Contributor("h", "species.human"), Contributor("e", "species.elf")]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates
+            .Where(x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        var relation = new NativeOriginRelationship("choose-speed",
+            NativeOriginRelationshipKind.Exclusion, offered.Select(x => x.Id).ToArray());
+        var decisions = offered.Select((x, i) =>
+            Decision("accept-" + i, "candidate", x.Id, new { eligibility = "eligible" }))
+            .Append(Decision("choose", "relationship", "choose-speed",
+                new { action = "retain-first" })).ToArray();
+        var result = Evaluate(proposal with
+        {
+            Manifestations = offered.Select((x, i) =>
+                new NativeOriginManifestation("pick-" + i, x.Id,
+                    JsonSerializer.SerializeToElement(30))).ToArray(),
+            TableDecisions = decisions,
+            Relationships = [relation],
+            Resolutions = [new NativeOriginResolution("choose-speed",
+                NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "choose"))]
+        }, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Single(result.Profile!.Underlying.InherentGrants);
+    }
+
+    [Fact]
+    public void VerifiedWholeProfileExclusionSuppressesConflictingGrants()
+    {
+        var proposal = Proposal("constraint", species: "species.human");
+        var source = Evaluate(proposal).EvaluatedProposal;
+        var speed = source.Candidates.Single(x =>
+            x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var ranks = source.Candidates.Single(x =>
+            x.Identity.Occurrence.OccurrencePath == "/traits/2");
+        var decision = Decision("enforce-exclusion", "constraint", "no-combo",
+            new { enforce = true });
+        var exclusion = new NativeOriginConstraint("no-combo",
+            NativeOriginRelationshipKind.Exclusion,
+            [new(CandidateId: speed.Id)], [new(CandidateId: ranks.Id)],
+            TableDecisionId: decision.Id);
+        var result = Evaluate(proposal with
+        {
+            TableDecisions = [decision], Constraints = [exclusion]
+        }, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Conflicting, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "authored-exclusion");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet" ||
+                 x.Identity.Occurrence.OccurrencePath == "/traits/2");
+    }
+
+    [Fact]
+    public void DmAuthoredProcessRequirementsCountRolesNotHardCodedParents()
+    {
+        var decision = Decision("material-requirement", "input-requirement", "material",
+            new { minimumCount = 1, maximumCount = 2 });
+        var requirement = new NativeOriginInputRequirement("material",
+            new(NativeOriginInputKind.Material), 1, 2,
+            TableDecisionId: decision.Id);
+        var incomplete = Evaluate(Proposal("assembly", NativeOriginIntent.Custom,
+            decisions: [decision]) with { InputRequirements = [requirement] },
+            new TestAuthority());
+        Assert.Contains(incomplete.Issues, x => x.Code == "process-input-incomplete");
+        var material = new NativeOriginContributor("iron",
+            new(NativeOriginInputKind.Material),
+            new(NativeOriginSourceKind.Custom, "material.iron"));
+        var withMaterial = Evaluate(Proposal("assembly", NativeOriginIntent.Custom,
+            contributors: [material], decisions: [decision]) with
+        {
+            InputRequirements = [requirement]
+        }, new TestAuthority());
+        Assert.DoesNotContain(withMaterial.Issues, x => x.Code == "process-input-incomplete");
+        Assert.Empty(withMaterial.Profile!.Underlying.InherentGrants);
+    }
+
 }
