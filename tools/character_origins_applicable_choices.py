@@ -97,6 +97,16 @@ def project_applicable_choice_evidence(
                     "Native selected source is not in current catalog"
                 )
             source_occurrence = occurrence.split("#", 1)[0]
+            if source_occurrence not in {
+                x["id"] for x in source_lineage(source_id, catalog)
+            }:
+                raise ApplicableChoiceError(
+                    "Native source occurrence is outside selected lineage"
+                )
+            if candidate["sourceTraitOrFieldId"] != offer["identity"]:
+                raise ApplicableChoiceError(
+                    "Characteristic identity differs from native offer"
+                )
             authored = catalog.get(source_occurrence)
             if not isinstance(authored, dict):
                 raise ApplicableChoiceError(
@@ -117,6 +127,19 @@ def project_applicable_choice_evidence(
                 if field not in authored:
                     raise ApplicableChoiceError(
                         "Native intrinsic occurrence no longer authored"
+                    )
+                value = offer.get("value")
+                authored_value = authored[field]
+                allowed = (
+                    isinstance(authored_value, dict)
+                    and isinstance(authored_value.get("from"), list)
+                    and value in authored_value["from"]
+                    if field == "sizeChoice"
+                    else value == authored_value
+                )
+                if not allowed:
+                    raise ApplicableChoiceError(
+                        "Native intrinsic value is not from authored source"
                     )
             else:
                 raise ApplicableChoiceError(
