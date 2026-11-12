@@ -90,6 +90,10 @@ public static class NativeOriginApiEndpoints
                     !string.Equals(request.Fingerprint, catalog.Fingerprint,
                         StringComparison.Ordinal),
                 previewOnly = true,
+                // Interpretation of the *freshly evaluated* native intrinsic
+                // grants only. This is not proof that any caller owns the
+                // proposed Origin or that its traits are active on a Sheet.
+                intrinsics = NativeOriginIntrinsicProjector.Project(result),
                 result
             });
         });
