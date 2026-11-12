@@ -1,0 +1,73 @@
+{
+  "id": "rule.creature-origination",
+  "kind": "rule",
+  "name": "Creature Type Origination Methods and Compatibility",
+  "status": "selected-native",
+  "scope": "General tabletop origination-method defaults, not an executable Character Origins builder or automatic Species/Ancestry grants.",
+  "methodDefinitions": [
+    {
+      "id": "biological",
+      "name": "Biological reproduction",
+      "description": "A living contributor reproduces by an appropriate biological process; the specific process establishes contributions and prerequisites."
+    },
+    {
+      "id": "plant-reproduction",
+      "name": "Plant reproduction",
+      "description": "A distinct Plant origination family that can later define pollination, fertilization, spores, or other plant/fungal processes without assuming animal reproduction."
+    },
+    {
+      "id": "construct-assembly",
+      "name": "Construct assembly",
+      "description": "Materials, design, assembly, and any animating force may play different input roles; creator Species traits are not inherited automatically."
+    },
+    {
+      "id": "elemental-manifestation",
+      "name": "Elemental manifestation",
+      "description": "Elemental beings may coalesce or manifest from elemental or magical sources; specific processes and component roles are defined by the Species or scenario."
+    },
+    {
+      "id": "spawning",
+      "name": "Spawning",
+      "description": "A nonbiological or otherwise distinct spawning process, with its own input requirements and permitted contributors."
+    },
+    {
+      "id": "division",
+      "name": "Division",
+      "description": "Creation through separation of an existing creature or mass, subject to individual creature rules."
+    },
+    {
+      "id": "reanimation",
+      "name": "Reanimation",
+      "description": "An existing creature or remains becomes animated through an applicable process; this does not imply biological descent."
+    },
+    {
+      "id": "transformation",
+      "name": "Transformation",
+      "description": "An existing individual changes its configuration or type under an explicit effect or process; existing Heritage is not erased by relabeling."
+    }
+  ],
+  "methodInheritance": {
+    "field": "originationMethods",
+    "genericCreatureDefault": [],
+    "rule": "A creature type inherits the nearest explicitly authored list along its type-parent chain. Its own list replaces that default; a Species or Ancestry may explicitly add, restrict, or replace applicable methods.",
+    "multipleMethodsAllowed": true,
+    "noListMeans": "inherit",
+    "emptyListMeans": "no general method granted; not an absolute ban",
+    "creatureTypeDoesNotDetermineIndividualHistory": true
+  },
+  "compatibility": {
+    "biologicalAndPlantReproduction": "A contributing creature must support the selected reproductive method or be specifically authorized to participate. Different creature types are not inherently incompatible.",
+    "specificProcessRequirements": "Apply the selected process's contributor roles, number of required inputs, and explicit restrictions, including full-set conditions; do not assume exactly two parents.",
+    "unknown": "Unsupported or undocumented combinations remain unresolved under first-party rules, not categorically forbidden.",
+    "explicitRestrictions": "A type, Species, Ancestry, or origination process can impose a more specific restriction.",
+    "dmOverride": "The DM can explicitly authorize otherwise unsupported combinations and record the decision without changing first-party defaults.",
+    "distinctFromManifestation": "Compatibility and origination do not automatically grant source characteristics, choose an effective creature type, or establish mechanical coherence."
+  },
+  "reviewNotes": [
+    "First-party method support is intentionally permissive and incomplete; an individual creature can have an exception and a type can have multiple methods.",
+    "Plant reproduction is a distinct method, not the generic biological-reproduction method.",
+    "Genies remain Elementals; their potential for biological offspring is Species-specific and does not require all Elementals to support biological reproduction.",
+    "Removing Monstrous Humanoid and True Elemental does not automatically change preexisting monster stat blocks, material-body properties, or targeting semantics of other types.",
+    "The general rules remain understandable and usable at the table without Rules Core software."
+  ]
+}
