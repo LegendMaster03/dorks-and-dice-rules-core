@@ -5,7 +5,7 @@
 **Rule set:** `first-party-001`  
 **Design branch:** `feature/pillar4-supernatural-nature-design-20261111`  
 **Pillar 2 reviewed:** `feature/pillar2-characteristic-inventory-20261111` at `ad23a720f4aab7af97b8934a0be545a4ac48e437` (PR #141, draft against `main`).  
-**Parallel Pillar 2 work inspected:** `feature/pillar2-phase4-origination-rebirth-20261112` at `6c4fa27975141b813e41b33cd068c43ca3e4ad29` (unmerged Phase 4 work at review).  
+**Parallel Pillar 2 work inspected:** `feature/pillar2-phase4-origination-rebirth-20261112` at `b296d2a8c034920cbe371d1bc348f12f60164b11` (unmerged Phase 4 work at review).  
 **Pillar 4 prototype implementation reviewed:** draft PRs [#146](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/146), [#148](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/148), [#149](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/149). All remain separate from `main`.
 
 ## Executive decision
@@ -37,6 +37,7 @@ Pillar 2's unmerged Phase 4 branch advanced while this review was underway. Its 
 - Preserves separately earned `IndependentGrants` and records the old baseline as a completed replacement history event. Old inherent grants are excluded by default; a scoped, verified Rite decision may retain particular old grants or suppress particular new grants.
 - Rejects incomplete/unauthorized Rites without publishing a new effective baseline. Repeated Rites use the latest authoritative underlying configuration.
 - If a temporary form is active, the initial implementation permits preserving it only with a specific verified `rite-form-interaction` decision; it does not silently restore an activation-time baseline or guess form precedence.
+- A subsequent correction explicitly **blocks a post-origination Rite from ordinary new-character construction**. The construction engine now has a controlled internal `EvaluateReconstructionTarget` path called only by the authorized Rite transition. Pillar 4 should maintain that distinction for ceremorphosis and other permanent reconstructions.
 - **Current limitations:** The executable method is deliberately restricted to the specific `rite-of-rebirth` operation, with a specific **DM-scoped rite authorization** because the selected native catalog does not yet supply an executable individual Rite. It does not run general ceremorphosis, supernatural progression, alternate-form activation, reversion, or first-party native form authorization. Source-state authenticity and persistence still depend on the authenticated host.
 - `NativeOriginPhase4Tests.cs` contains atomic Rite and contrasting-process test cases on the branch; **no passing Phase 4 CI run was verified at this review snapshot**. These are not equivalent to merged production readiness.
 
