@@ -1,0 +1,481 @@
+using System.Text.Json;
+using RulesCore.Content;
+using RulesCore.Mechanics;
+using Xunit;
+
+namespace RulesCore.Mechanics.Tests;
+
+/// <summary>
+/// Contract coverage uses deliberately different Origin sources and methods.
+/// Passing these tests proves expression and structural validation, not that
+/// the Phase 2 evaluator or table authorization service is implemented.
+/// </summary>
+public sealed class NativeOriginContractTests
+{
+    private static NativeOriginMethodReference Method(string id = "biological") =>
+        new("rule.creature-origination", id);
+
+    private static NativeOriginSourceReference Source(string id = "species.human",
+        NativeOriginSourceKind kind = NativeOriginSourceKind.Native) => new(kind, id);
+
+    private static NativeOriginCharacteristicIdentity Trait(string label,
+        string source = "species.human", string? definition = null,
+        NativeOriginSourceKind kind = NativeOriginSourceKind.Native) =>
+        new(NativeOriginCharacteristicKind.Trait,
+            new(Source(source, kind), "/definition/traits/" + label),
+            definition ?? "mechanic." + label);
+
+    private static NativeOriginCharacteristicIdentity Intrinsic(string slot,
+        string source = "species.human") =>
+        new(NativeOriginCharacteristicKind.Intrinsic,
+            new(Source(source), "/definition/" + slot),
+            IntrinsicSlotId: slot);
+
+    private static NativeOriginCandidate Candidate(string id,
+        NativeOriginCharacteristicIdentity identity, string? contributor = null,
+        IReadOnlyList<NativeOriginChoiceRequirement>? choices = null,
+        IReadOnlyList<string>? unresolved = null) =>
+        new(id, identity, new(NativeOriginEligibility.Eligible, "rule.test-origin"),
+            contributor, RequiredChoices: choices, UnresolvedEvidence: unresolved);
+
+    private static NativeOriginManifestation Manifest(string id, string candidate,
+        JsonElement? value = null, IReadOnlyList<NativeOriginChoiceSelection>? choices = null) =>
+        new(id, candidate, value, Choices: choices);
+
+    private static NativeOriginEffectiveGrant Grant(string id,
+        NativeOriginManifestation manifest, NativeOriginCandidate candidate,
+        params string[] sourceCandidates) =>
+        new(id, manifest.Id, candidate.Identity,
+            sourceCandidates.Length == 0 ? [candidate.Id] : sourceCandidates);
+
+    private static NativeOriginContributor Parent(string id, string species) =>
+        new(id, new(NativeOriginInputKind.BiologicalParent), Source(species));
+
+    private static NativeOriginProposal Proposal(string id, string method = "biological",
+        NativeOriginIntent intent = NativeOriginIntent.Direct,
+        IReadOnlyList<NativeOriginContributor>? contributors = null,
+        IReadOnlyList<NativeOriginCandidate>? candidates = null,
+        IReadOnlyList<NativeOriginManifestation>? manifestations = null) =>
+        new(id, intent, Method(method), contributors ?? [], candidates ?? [],
+            manifestations ?? []);
+
+    private static NativeOriginProfile Profile(NativeOriginProposal proposal,
+        IReadOnlyList<NativeOriginEffectiveGrant>? inherited = null,
+        IReadOnlyList<NativeOriginEffectiveGrant>? independent = null,
+        IReadOnlyList<NativeOriginHistoryEvent>? history = null,
+        NativeOriginDecisionBasis? basis = null) =>
+        new("profile-" + proposal.Id,
+            new(proposal.SelectedSpeciesId, proposal.SelectedAncestryId, inherited ?? []),
+            independent ?? [], history ?? [],
+            basis ?? new(NativeOriginAdjudication.Supported, "rule.test-origin"),
+            proposal.Id);
+
+    private sealed class Fixture : IDisposable
+    {
+        private readonly string _root = Path.Combine(Path.GetTempPath(),
+            "rc-origin-contract-" + Guid.NewGuid().ToString("N"));
+        public NativeOriginContractValidator Validator { get; }
+
+        public Fixture()
+        {
+            var package = Path.Combine(_root, "first-party-001");
+            Directory.CreateDirectory(Path.Combine(package, "native"));
+            File.WriteAllText(Path.Combine(package, "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(package, "native", "origination.json"),
+                """
+                {"id":"rule.creature-origination","kind":"rule","name":"Origination fixture",
+                 "methodDefinitions":[
+                    {"id":"biological","name":"Biological"},
+                    {"id":"plant-reproduction","name":"Plant reproduction"},
+                    {"id":"construct-assembly","name":"Assembly"},
+                    {"id":"spawning","name":"Spawning"},
+                    {"id":"rite-of-rebirth","name":"Rite","specializes":"transformation",
+                     "stage":"post-origination","createsNewIndividual":false,
+                     "operation":"replace-complete-species-and-ancestry-configuration"},
+                    {"id":"supernatural-reconstruction","name":"Supernatural reconstruction",
+                     "specializes":"transformation","stage":"post-origination",
+                     "createsNewIndividual":false}
+                 ]}
+                """);
+            var catalog = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(_root, "first-party-001"));
+            Validator = new NativeOriginContractValidator(catalog);
+        }
+        public void Dispose()
+        {
+            if (Directory.Exists(_root)) Directory.Delete(_root, true);
+        }
+    }
+
+    [Fact]
+    public void HumanDirectOriginRequiresNoInventedBiologicalParents()
+    {
+        using var fixture = new Fixture();
+        var candidate = Candidate("human-speed", Intrinsic("movement.walk.speed"));
+        var manifest = Manifest("speed-selection", candidate.Id, JsonSerializer.SerializeToElement(30));
+        var proposal = Proposal("human", candidates: [candidate], manifestations: [manifest])
+            with { SelectedSpeciesId = "species.human" };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        var profile = Profile(proposal, [Grant("speed-grant", manifest, candidate)]);
+        Assert.Equal("species.human", profile.Current.SpeciesId);
+        Assert.Empty(proposal.Contributors);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(profile, proposal).Status);
+    }
+
+    [Fact]
+    public void DirectSpeciesWithAncestryRetainsBothSourceOccurrences()
+    {
+        using var fixture = new Fixture();
+        var root = Candidate("elf-root", Trait("senses", "species.elf"));
+        var leaf = Candidate("wood-leaf", Trait("wood-trait", "ancestry.wood-elf"));
+        var rootPick = Manifest("root-pick", root.Id);
+        var leafPick = Manifest("leaf-pick", leaf.Id);
+        var proposal = Proposal("wood", candidates: [root, leaf],
+            manifestations: [rootPick, leafPick]) with
+            { SelectedSpeciesId = "species.elf", SelectedAncestryId = "ancestry.wood-elf" };
+        var profile = Profile(proposal,
+            [Grant("root-grant", rootPick, root), Grant("leaf-grant", leafPick, leaf)]);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(profile, proposal).Status);
+        Assert.NotEqual(profile.Current.InherentGrants[0].Identity.Occurrence.Source.Id,
+            profile.Current.InherentGrants[1].Identity.Occurrence.Source.Id);
+    }
+
+    [Fact]
+    public void MixedSpeciesDoNotReceiveAnAutomaticWinnerForCreatureType()
+    {
+        using var fixture = new Fixture();
+        var human = Candidate("human-type", Intrinsic("creature.type", "species.human"), "human");
+        var elf = Candidate("elf-type", Intrinsic("creature.type", "species.elf"), "elf");
+        var proposal = Proposal("mixed", intent: NativeOriginIntent.Mixed,
+            contributors: [Parent("human", "species.human"), Parent("elf", "species.elf")],
+            candidates: [human, elf],
+            manifestations: [Manifest("pick-human", human.Id, JsonSerializer.SerializeToElement("humanoid")),
+                             Manifest("pick-elf", elf.Id, JsonSerializer.SerializeToElement("fey"))])
+            with { Relationships = [new("creature-type-conflict", NativeOriginRelationshipKind.Exclusion,
+                        [human.Id, elf.Id])] };
+        var report = fixture.Validator.ReviewProposal(proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, report.Status);
+        Assert.Contains(report.Issues, i => i.Code == "relationship-awaits-decision");
+        Assert.Equal(2, proposal.Contributors.Count);
+        Assert.Empty(Profile(proposal).Current.InherentGrants);
+    }
+
+    [Fact]
+    public void ConstructAssemblyAcceptsArbitraryNonParentInputRoles()
+    {
+        using var fixture = new Fixture();
+        var roles = new[] {
+            NativeOriginInputKind.Material, NativeOriginInputKind.Creator,
+            NativeOriginInputKind.MagicalSource, NativeOriginInputKind.Animator
+        };
+        var contributors = roles.Select((role, n) => new NativeOriginContributor(
+            "input-" + n, new(role), Source("source." + n))).ToList();
+        contributors.Add(new("assembly-plan", new(NativeOriginInputKind.ProcessSpecific, "blueprint"),
+            Source("source.blueprint", NativeOriginSourceKind.Custom)));
+        var proposal = Proposal("construct", "construct-assembly", NativeOriginIntent.Custom,
+            contributors);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal(5, proposal.Contributors.Count);
+        Assert.Empty(proposal.Candidates);
+    }
+
+    [Fact]
+    public void NestedMixedContributorTransmitsOnlyExplicitCurrentCandidateEvidence()
+    {
+        using var fixture = new Fixture();
+        var inherited = Candidate("prior", Trait("vision", "species.elf"));
+        var priorPick = Manifest("prior-pick", inherited.Id);
+        var now = new NativeOriginCurrentConfiguration(null, null,
+            [Grant("prior-grant", priorPick, inherited)], "verified-parent-profile");
+        var parent = new NativeOriginContributor("parent",
+            new(NativeOriginInputKind.BiologicalParent),
+            Source("verified-parent-profile", NativeOriginSourceKind.ManifestedProfile),
+            now, ["species.elf", "species.human", "ancestry.wood-elf"]);
+        var offer = Candidate("actual-offer",
+            Trait("vision", "verified-parent-profile",
+                kind: NativeOriginSourceKind.ManifestedProfile), parent.Id);
+        var proposal = Proposal("nested", intent: NativeOriginIntent.Mixed,
+            contributors: [parent], candidates: [offer]);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Single(proposal.Candidates);
+        Assert.Equal("verified-parent-profile", offer.Identity.Occurrence.Source.Id);
+        Assert.DoesNotContain(proposal.Candidates, c =>
+            c.Identity.Occurrence.Source.Id == "ancestry.wood-elf");
+    }
+
+    [Fact]
+    public void OfferedCandidatesAndUnselectedTraitsDoNotCreateGrants()
+    {
+        using var fixture = new Fixture();
+        var proposal = Proposal("offers", candidates: [
+            Candidate("vision-1", Trait("vision", "species.elf")),
+            Candidate("vision-2", Trait("vision", "species.human"))
+        ]);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        var profile = Profile(proposal);
+        Assert.Empty(profile.Current.InherentGrants);
+        Assert.Empty(proposal.Manifestations);
+    }
+
+    [Fact]
+    public void SharedDefinitionsDoNotAutomaticallyDoubleEffectiveBenefits()
+    {
+        using var fixture = new Fixture();
+        var first = Candidate("offer-a", Trait("amphibious", "species.a", "mechanic.amphibious"));
+        var second = Candidate("offer-b", Trait("amphibious", "species.b", "mechanic.amphibious"));
+        var pick = Manifest("one-pick", first.Id);
+        var proposal = Proposal("duplicate", intent: NativeOriginIntent.Mixed,
+            candidates: [first, second], manifestations: [pick]);
+        var consolidated = Grant("one-grant", pick, first, first.Id, second.Id);
+        var profile = Profile(proposal, [consolidated]);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(profile, proposal).Status);
+        Assert.Single(profile.Current.InherentGrants);
+        Assert.Equal(2, consolidated.SourceCandidateIds.Count);
+        Assert.NotEqual(first.Identity.Occurrence, second.Identity.Occurrence);
+    }
+
+    [Fact]
+    public void PersistentDependentChoiceCanBeIncompleteInvalidOrSupplied()
+    {
+        using var fixture = new Fixture();
+        var identity = Trait("skillful");
+        var requirement = new NativeOriginChoiceRequirement("skill", identity.Occurrence,
+            NativeOriginChoiceTiming.Creation, 1, 1, FiniteOptions: ["skill.listen", "skill.spot"]);
+        var candidate = Candidate("skill-candidate", identity, choices: [requirement]);
+        var incomplete = Proposal("choice", candidates: [candidate],
+            manifestations: [Manifest("pick", candidate.Id)]);
+        Assert.Equal(NativeOriginReviewStatus.Incomplete,
+            fixture.Validator.ReviewProposal(incomplete).Status);
+        var invalid = incomplete with { Manifestations = [
+            Manifest("pick", candidate.Id, choices: [
+                new("skill", ["skill.listen", "skill.spot"])
+            ]) ] };
+        Assert.Equal(NativeOriginReviewStatus.Invalid, fixture.Validator.ReviewProposal(invalid).Status);
+        var complete = incomplete with { Manifestations = [
+            Manifest("pick", candidate.Id, choices: [new("skill", ["skill.listen"])]) ] };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(complete).Status);
+    }
+
+    [Fact]
+    public void UnknownCatalogAndSymbolicBindingsStayUnresolved()
+    {
+        using var fixture = new Fixture();
+        var choice = new NativeOriginChoiceRequirement("feat", Trait("versatile").Occurrence,
+            NativeOriginChoiceTiming.Creation, 1, 1, OptionCatalogId: "catalog.feats");
+        var candidate = Candidate("candidate", Trait("versatile"),
+            choices: [choice], unresolved: ["source-symbolic-binding"]);
+        var proposal = Proposal("symbolic", candidates: [candidate],
+            manifestations: [Manifest("pick", candidate.Id, choices: [
+                new("feat", ["feat.unknown"])
+            ])]);
+        var report = fixture.Validator.ReviewProposal(proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, report.Status);
+        Assert.Contains(report.Issues, i => i.Code == "choice-catalog-proof-required");
+        Assert.Contains(report.Issues, i => i.Code == "unresolved-source-evidence");
+    }
+
+    [Fact]
+    public void OnUseChoiceIsNotPersistedAsAnOriginChoice()
+    {
+        using var fixture = new Fixture();
+        var choice = new NativeOriginChoiceRequirement("breath-mode", Trait("breath").Occurrence,
+            NativeOriginChoiceTiming.OnUse, 1, 1, FiniteOptions: ["line", "cone"]);
+        var candidate = Candidate("breath", Trait("breath"), choices: [choice]);
+        var proposal = Proposal("on-use", candidates: [candidate],
+            manifestations: [Manifest("pick", candidate.Id)]);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        var invalid = proposal with { Manifestations = [
+            Manifest("pick", candidate.Id, choices: [new("breath-mode", ["line"])]) ] };
+        Assert.Equal(NativeOriginReviewStatus.Invalid,
+            fixture.Validator.ReviewProposal(invalid).Status);
+    }
+
+    [Fact]
+    public void ScopedDmDecisionCanReplaceRulesNotMerelyWaiveEligibility()
+    {
+        using var fixture = new Fixture();
+        var decision = new NativeOriginTableDecision("ruling",
+            new("dm.actor", "campaign-authorization-record"),
+            new("campaign", "campaign-one"),
+            new("origin.configuration", "character-one"),
+            JsonSerializer.SerializeToElement(new
+            {
+                replaceCreatureType = "dragon", newTrait = "custom.feature"
+            }));
+        var candidate = Candidate("offer", Trait("custom"));
+        var proposal = Proposal("authorized", candidates: [candidate],
+            manifestations: [new("selected", candidate.Id, TableDecisionId: decision.Id)]) with {
+            TableDecisions = [decision],
+            Relationships = [new("custom-resolution", NativeOriginRelationshipKind.Substitution,
+                [candidate.Id])],
+            Resolutions = [new("custom-resolution", NativeOriginResolutionAction.Replace,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: decision.Id))]
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal("campaign", decision.Scope.Kind);
+        Assert.Equal("custom.feature",
+            decision.EffectiveOutcome.GetProperty("newTrait").GetString());
+        var noAuthority = proposal with { TableDecisions = [] };
+        Assert.Equal(NativeOriginReviewStatus.Invalid,
+            fixture.Validator.ReviewProposal(noAuthority).Status);
+    }
+
+    [Fact]
+    public void RiteReplacesCurrentInherentGrantsButRetainsIndependentAndHistoricalState()
+    {
+        using var fixture = new Fixture();
+        var oldTrait = Candidate("old-offer", Trait("old", "species.human"));
+        var oldManifest = Manifest("old-manifest", oldTrait.Id);
+        var oldGrant = Grant("old-grant", oldManifest, oldTrait);
+        var newTrait = Candidate("new-offer", Trait("new", "species.dragonborn"));
+        var newManifest = Manifest("new-manifest", newTrait.Id);
+        var newGrant = Grant("new-grant", newManifest, newTrait);
+        var independent = new NativeOriginEffectiveGrant("training-grant", "training-manifest",
+            Trait("training", "background.scholar"), ["training-offer"]);
+        var old = new NativeOriginCurrentConfiguration("species.human", null,
+            [oldGrant], "before-rebirth");
+        var proposal = Proposal("rebirth", "rite-of-rebirth",
+            NativeOriginIntent.Transformation, candidates: [newTrait],
+            manifestations: [newManifest]) with { ExistingConfiguration = old };
+        var riteEvent = new NativeOriginHistoryEvent("rite-event", Method("rite-of-rebirth"),
+            NativeOriginEventStage.Completed, [], true, old, "after-rebirth");
+        var profile = Profile(proposal, [newGrant], [independent], [riteEvent]) with {
+            Current = new("species.dragonborn", "ancestry.red", [newGrant], "after-rebirth")
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(profile, proposal).Status);
+        Assert.DoesNotContain(profile.Current.InherentGrants, g => g.Id == oldGrant.Id);
+        Assert.Single(profile.IndependentGrants);
+        Assert.Equal("species.human", riteEvent.PreviousConfiguration!.SpeciesId);
+    }
+
+    [Fact]
+    public void SupernaturalReconstructionAllowsStagesBeforeReplacement()
+    {
+        using var fixture = new Fixture();
+        var existing = new NativeOriginCurrentConfiguration("species.human", null, [],
+            "human-profile");
+        var proposal = Proposal("reconstruction", "supernatural-reconstruction",
+            NativeOriginIntent.Transformation) with { ExistingConfiguration = existing };
+        var progress = new NativeOriginHistoryEvent("early", proposal.Method,
+            NativeOriginEventStage.InProgress, ["subject"], false);
+        var pending = Profile(proposal, history: [progress]) with { Current = existing };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(pending).Status);
+        var complete = new NativeOriginHistoryEvent("last", proposal.Method,
+            NativeOriginEventStage.Completed, ["subject"], true, existing, "zombie-profile");
+        var final = pending with {
+            Current = new("species.zombie", null, [], "zombie-profile"),
+            History = [progress, complete]
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(final).Status);
+        var native = fixture.Validator.FindMethod(proposal.Method);
+        Assert.Equal("transformation", native!.Specializes);
+        Assert.False(native.CreatesNewIndividual);
+    }
+
+    [Fact]
+    public void CustomSpeciesAndUnknownMethodRemainRepresentableWithoutHardcodedLogic()
+    {
+        using var fixture = new Fixture();
+        var custom = Candidate("new-offer", Trait("new-mechanic", "homebrew.species.new",
+            kind: NativeOriginSourceKind.Custom));
+        var proposal = Proposal("homebrew", "homebrew-genesis",
+            NativeOriginIntent.Custom, candidates: [custom],
+            manifestations: [Manifest("new", custom.Id)]);
+        var report = fixture.Validator.ReviewProposal(proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, report.Status);
+        Assert.DoesNotContain(report.Issues, i => i.Severity == NativeOriginIssueSeverity.Invalid);
+        Assert.Contains(report.Issues, i => i.Code == "method-not-in-native-catalog");
+        Assert.Null(Profile(proposal).Current.SpeciesId);
+    }
+
+    [Fact]
+    public void InvalidReferencesAndDuplicateOccurrenceIdsAreRejected()
+    {
+        using var fixture = new Fixture();
+        var candidate = Candidate("same", Trait("trait"));
+        var malformed = Proposal("broken", candidates: [candidate, candidate],
+            manifestations: [Manifest("orphan", "missing")]);
+        var result = fixture.Validator.ReviewProposal(malformed);
+        Assert.Equal(NativeOriginReviewStatus.Invalid, result.Status);
+        Assert.Contains(result.Issues, issue => issue.Code == "duplicate-or-missing-id");
+        Assert.Contains(result.Issues, issue => issue.Code == "manifestation-candidate-missing");
+    }
+
+    [Fact]
+    public void DuplicateIntrinsicSlotsRequireAWholeProfileRule()
+    {
+        using var fixture = new Fixture();
+        var first = Candidate("human", Intrinsic("creature.type", "species.human"));
+        var second = Candidate("elf", Intrinsic("creature.type", "species.elf"));
+        var a = Manifest("a", first.Id, JsonSerializer.SerializeToElement("humanoid"));
+        var b = Manifest("b", second.Id, JsonSerializer.SerializeToElement("fey"));
+        var proposal = Proposal("intrinsic", candidates: [first, second],
+            manifestations: [a, b]);
+        var current = Profile(proposal, [Grant("g1", a, first), Grant("g2", b, second)]);
+        var review = fixture.Validator.ReviewProfile(current, proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, review.Status);
+        Assert.Contains(review.Issues, issue => issue.Code == "intrinsic-slot-policy-unresolved");
+    }
+
+    [Fact]
+    public void UnsupportedMechanicalIdentityIsUnresolvedNotEquivalentByName()
+    {
+        using var fixture = new Fixture();
+        var identity = Trait("powerful-build", "species.orc") with
+            { MechanicalDefinitionId = null, TraitConceptId = "concept.powerful-build" };
+        var proposal = Proposal("unmapped", candidates: [Candidate("offer", identity)]);
+        var review = fixture.Validator.ReviewProposal(proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, review.Status);
+        Assert.Contains(review.Issues, i => i.Code == "mechanical-identity-unresolved");
+    }
+
+    [Fact]
+    public void ProposalAndProfileRoundTripPreserveSelectionsAndHistory()
+    {
+        using var fixture = new Fixture();
+        var candidate = Candidate("origin-a", Intrinsic("size"));
+        var manifest = Manifest("size-selection", candidate.Id,
+            JsonSerializer.SerializeToElement("small"));
+        var proposal = Proposal("serialize", candidates: [candidate],
+            manifestations: [manifest]);
+        var previous = new NativeOriginCurrentConfiguration("species.human", null, []);
+        var history = new NativeOriginHistoryEvent("history", Method("rite-of-rebirth"),
+            NativeOriginEventStage.Completed, [], true, previous, "current");
+        var profile = Profile(proposal, [Grant("small-grant", manifest, candidate)],
+            history: [history]);
+        var proposalCopy = JsonSerializer.Deserialize<NativeOriginProposal>(
+            JsonSerializer.Serialize(proposal))!;
+        var profileCopy = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(profile))!;
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposalCopy).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(profileCopy, proposalCopy).Status);
+        Assert.Equal("small",
+            proposalCopy.Manifestations.Single().SelectedValue!.Value.GetString());
+        Assert.Equal("species.human",
+            profileCopy.History.Single().PreviousConfiguration!.SpeciesId);
+        Assert.Equal("origin-a",
+            profileCopy.Current.InherentGrants.Single().SourceCandidateIds.Single());
+    }
+}
