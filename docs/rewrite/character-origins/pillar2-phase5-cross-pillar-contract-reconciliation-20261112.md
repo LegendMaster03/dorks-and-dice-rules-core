@@ -64,6 +64,41 @@ deliberately unresolved feat catalog. Character Sheet's temporary Phase 5
 branch-to-branch probe exercises the same native Human Skill contract against
 the **unmerged** Rules Core branch rather than `main`.
 
+## First-party native intrinsic projection (current increment)
+
+`NativeOriginIntrinsicProjector` interprets a deliberately small subset
+of the **evaluated** native `NativeOriginProfile.Current.InherentGrants`:
+`creatureType`, `size`, and `walkingSpeedFeet`. It requires an
+`Authorized`, zero-issue, first-party supported **Direct** initial Origin,
+`Current` identical to `Underlying`, no temporary form, no independent
+grants or persistent influences, and exact, eligible native candidate
+occurrence provenance for every projected intrinsic grant. Missing slots
+remain explicitly partial; duplicate slots, mismatched source evidence or
+unsupported forms fail closed. It does not combine traits or infer a value
+from the name of the selected Species.
+
+The stateless authenticated `/api/mechanics/v1/origins/preview` response
+now carries `intrinsics`, containing at most those source-attributed
+scalars and `previewOnly: true` **in addition** to the existing evaluated
+proposal. These are not permissions, parentage, DM rulings, or persistent
+entitlements: browser previews cannot activate them. The present native
+`NativeCharacterProjector` already accepts an explicit `BaseWalkSpeed`
+and can resolve `movement.walk` including supported condition effects;
+it still does **not** accept an entire authorized Origin profile or execute
+other Species/Ancestry traits.
+
+Character Sheet's Phase 5 feature branch now revalidates its own committed
+initial direct Origin against the **latest** Rules Core profile and matches
+each intrinsic scalar, grant ID, source ID and occurrence path against the
+immutable committed configuration before passing base speed into native
+character projection. Base size and creature type are labeled distinctly
+from complete/effective character mechanics; everything else stays partial.
+No old fingerprint is used as an authorization gate. The cross-repository
+probe exercises real Orc (Medium, Humanoid, base walk 30 feet) and verifies
+that incomplete Human and mixed Human–Elf produce no active intrinsic
+projection. This is a narrow first-party mechanics increment, not general
+Rite or effective-character projection support.
+
 ## Shared permanent reconstruction
 
 `NativeOriginPermanentReconstructionEngine` now owns the existing Rite replacement sequence; `NativeOriginRebirthEngine` remains a Rite-specific compatibility facade. Both use `NativeOriginConstructionEngine.EvaluateReconstructionTarget` for a post-origination target. Ordinary construction still rejects a post-origination method as an initial-creation shortcut.
