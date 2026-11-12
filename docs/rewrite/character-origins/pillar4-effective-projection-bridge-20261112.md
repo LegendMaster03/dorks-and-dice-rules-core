@@ -13,7 +13,7 @@ The first Pillar 4 effective-character slice can calculate authorized ability-sc
 2. Requires the unmodified character scores to match the scores supplied for effect evaluation, and uses the **same selected catalog** as the existing Character projector. The catalog fingerprint equality is inherited from the current native character request contract; this does not introduce ruleset-fingerprint-based authoring approval or a new deployment gate.
 3. Calls `NativeEffectiveCharacterEffects.Evaluate` to resolve approved source-qualified numeric directives before applying the resulting ability-score dictionary to `NativeCharacterProjector.Project`.
 4. Returns **only a numeric value map** as `calculated-subset` when the existing projector fully resolves. It does **not** expose its Class feature grants, Resource entitlements, or any independent claim of a playable character.
-5. Fails closed without numerical output if the Origin or character input is untrusted, if effective state is an active temporary form or differs mechanically from the underlying Species/Ancestry, if a Class/other independent grant is suppressed, or if native projection reports unresolved or invalid derived mechanics. The absence of a calculated subset is not a direction to display unmodified scores as if authorized.
+5. Fails closed without numerical output if the Origin or character input is untrusted, if effective state is an active temporary form or differs mechanically from the underlying Species/Ancestry, if a Class/other independent grant is suppressed, or if native projection reports unresolved or invalid derived mechanics. A change to effective Constitution is withheld until a current-HP/maximum-HP transition policy exists; the native projector can recalculate HP maximum but the wider character state must not be silently rewritten. The absence of a calculated subset is not a direction to display unmodified scores as if authorized.
 
 This remains intentionally narrower than the three approved transformation categories. It is one technical milestone for **Type 1 modification-only numeric effects**, not an implementation of actual Draconic Bloodline content or of a supernatural source/progression.
 
@@ -28,7 +28,7 @@ This remains intentionally narrower than the three approved transformation categ
 
 ## Verification scope
 
-Synthetic tests exercise numeric modifier derivation, no mutation of the underlying character scores, unverified input/references, absent independent entitlement, mismatched baseline, catalog mismatch, suppression and alternate form failure, and projector incompleteness. This does not prove actual first-party supernatural mechanics.
+Synthetic tests exercise numeric modifier derivation, no mutation of the underlying character scores, unverified input/references, absent independent entitlement, mismatched baseline, catalog mismatch, suppression and alternate form failure, Constitution/HP-policy deferral, and projector incompleteness. This does not prove actual first-party supernatural mechanics.
 
 The shared architectural specification and four-case fixture remain on the independent Pillar 4 design branch:
 - [Design specification](https://github.com/LegendMaster03/dorks-and-dice-rules-core/blob/feature/pillar4-supernatural-nature-design-20261111/docs/rewrite/character-origins/pillar4-shared-effect-and-replacement-profiles-20261112.md)
