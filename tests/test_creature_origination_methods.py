@@ -66,7 +66,7 @@ class CreatureOriginationMethodTests(unittest.TestCase):
         self.assertNotIn("biological", self.resolve("creature-type.construct"))
         self.assertNotIn("biological", self.resolve("creature-type.elemental"))
         self.assertEqual("creature-type.outsider", self.types["creature-type.elemental"]["parent"])
-        self.assertIn("No", "No")  # A sentinel that does not infer biology from common ancestry.
+        self.assertEqual([], self.resolve("creature-type.celestial"))
         self.assertTrue(self.contract["methodInheritance"]["multipleMethodsAllowed"])
         self.assertEqual("rule.creature-origination", self.contract["id"])
 
