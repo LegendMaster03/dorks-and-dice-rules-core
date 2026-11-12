@@ -28,9 +28,8 @@ internal static class NativeOriginDependentBinder
                 continue;
             }
 
-            var parameters = new Dictionary<string, JsonElement>(
-                grant.Parameters ?? new Dictionary<string, JsonElement>(),
-                StringComparer.Ordinal);
+            var parameters = (grant.Parameters ?? new Dictionary<string, JsonElement>())
+                .ToDictionary(x => x.Key, x => x.Value, StringComparer.Ordinal);
             var incomplete = false;
 
             foreach (var binding in definitions.EnumerateObject())
