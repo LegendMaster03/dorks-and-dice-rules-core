@@ -113,7 +113,7 @@ public sealed class NativeEffectiveCharacterProjectionBridge(NativeCatalogSnapsh
                     : projected.Issues.ToArray());
 
         return new("calculated-subset",
-            new Dictionary<string, NativeNumeric>(projected.Values,
+            projected.Values.ToDictionary(pair => pair.Key, pair => pair.Value,
                 StringComparer.Ordinal),
             []);
     }
@@ -129,6 +129,11 @@ public sealed class NativeEffectiveCharacterProjectionBridge(NativeCatalogSnapsh
         // The normal-form current state must not replace an inherited grant
         // with a similarly named but mechanically different occurrence.
         // Exact instance provenance matters; do not use grant display names.
+        if (underlying.InherentGrants.Any(x => x is null || string.IsNullOrWhiteSpace(x.Id)) ||
+            effective.InherentGrants.Any(x => x is null || string.IsNullOrWhiteSpace(x.Id)) ||
+            underlying.InherentGrants.Select(x => x.Id).Distinct(StringComparer.Ordinal).Count()
+                != underlying.InherentGrants.Count)
+            return false;
         var grants = underlying.InherentGrants.ToDictionary(x => x.Id,
             StringComparer.Ordinal);
         return effective.InherentGrants.All(x =>
