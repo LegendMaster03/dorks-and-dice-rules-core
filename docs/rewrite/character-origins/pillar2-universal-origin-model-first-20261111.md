@@ -99,6 +99,12 @@ The next concrete implementation work is to **review authoritative mechanical-de
 
 The [cross-source trait-definition audit](pillar2-definition-relationship-review-20261111.md) is the next source-neutral proof following the characteristic-identity projection. It compares authored native trait definitions without assuming equivalent effects from shared names, shared rule references, or matching structured fields. It distinguishes possible exact matches, possible structural extensions, divergent implementations and prose-only uncertainty, and flags source-dependent symbolic bindings. **Canonical identity mapping and duplicate/replacement policy remain unapproved**. This study creates review evidence before any Species-specific mixed-Heritage rules are authored.
 
+## Drift-checked native identity evidence
+
+The [curated native identity review](pillar2-curated-native-identity-review-20261111.md) records two **exact complete authored-definition groups** (four Amphibious occurrences and four Low-Light Vision occurrences), with three separately unresolved comparison cases (Tiefling Low-Light Vision, Red/Copper Natural Climber, and Orc/Goliath Powerful Build). Each relationship is **verified against current native source content** so later wording or mechanic changes require renewed review rather than silently inheriting an outdated identity claim.
+
+An optional annotation in the read-only characteristic candidate projection connects these reviewed native-occurrence groups back to **actual offered characteristics**, preserving source definitions, contributor provenance, parameter values and explicit non-grant status. Forged native evidence and unverified nested/custom offers do **not** obtain this annotation from matching an ID string alone. **None of these literal comparisons becomes an approved cross-source mechanic, duplicate policy, or manifestation rule.**
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
