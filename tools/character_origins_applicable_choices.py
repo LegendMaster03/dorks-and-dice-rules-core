@@ -103,7 +103,15 @@ def project_applicable_choice_evidence(
                 raise ApplicableChoiceError(
                     "Native source occurrence is outside selected lineage"
                 )
-            if candidate["sourceTraitOrFieldId"] != offer["identity"]:
+            # Intrinsic candidates use a source occurrence ID for
+            # provenance but identify their mechanic by the shared slot.
+            # Traits use their source-qualified trait identity directly.
+            identity_matches = (
+                candidate["intrinsicSlotId"] == offer["identity"]
+                if candidate["kind"] == "intrinsic"
+                else candidate["sourceTraitOrFieldId"] == offer["identity"]
+            )
+            if not identity_matches:
                 raise ApplicableChoiceError(
                     "Characteristic identity differs from native offer"
                 )
