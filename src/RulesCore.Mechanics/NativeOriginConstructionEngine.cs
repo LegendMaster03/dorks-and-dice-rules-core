@@ -15,7 +15,19 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
 
     public NativeOriginConstructionResult Evaluate(NativeOriginConstructionRequest request,
-        INativeOriginAuthority? authority = null)
+        INativeOriginAuthority? authority = null) =>
+        EvaluateCore(request, authority, reconstructionTarget: false);
+
+    // Only the trusted, result-oriented reconstruction service may construct
+    // a target under a post-origination method without claiming a new birth.
+    internal NativeOriginConstructionResult EvaluateReconstructionTarget(
+        NativeOriginConstructionRequest request,
+        INativeOriginAuthority? authority = null) =>
+        EvaluateCore(request, authority, reconstructionTarget: true);
+
+    private NativeOriginConstructionResult EvaluateCore(
+        NativeOriginConstructionRequest request, INativeOriginAuthority? authority,
+        bool reconstructionTarget)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Proposal);
@@ -107,6 +119,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var nativeMethod = _validator.FindMethod(proposal.Method);
         issues.AddRange(NativeOriginProcessEvaluator.Evaluate(proposal,
             nativeMethod, Verified));
+        if (!reconstructionTarget && proposal.Intent == NativeOriginIntent.Direct &&
+            nativeMethod?.Stage == "post-origination")
+            Add("post-origin-method-requires-existing-individual", "method",
+                NativeOriginIssueSeverity.Unresolved,
+                "A post-origination method is not an initial-creation acquisition path; its authorized target must be executed against an existing individual.");
 
         // A creature-type list is a default, not an exhaustive method ban.
         // A process type supplied by a caller is not trusted unless it follows
