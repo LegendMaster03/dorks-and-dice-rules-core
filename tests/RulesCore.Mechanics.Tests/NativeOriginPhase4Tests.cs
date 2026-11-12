@@ -153,9 +153,13 @@ public sealed class NativeOriginPhase4Tests
             decisions.Add(Rule("allow-method-" + id, "method", method, new { allow = true }));
         var proposal = new NativeOriginProposal(id, NativeOriginIntent.Custom,
             new("rule.creature-origination", method), contributors, [candidate],
-            [new("synthetic-manifest:" + id, candidate.Id)],
+            [new("synthetic-manifest:" + id, candidate.Id,
+                SelectedValue: JsonSerializer.SerializeToElement(creatureType))],
             TableDecisions: decisions,
-            InputRequirements: requirements,
+            InputRequirements: requirements.Select(x => x with
+            {
+                TableDecisionId = "require-" + x.Id
+            }).ToArray(),
             ProcessCreatureTypeId: "creature-type." + creatureType);
         return new NativeOriginConstructionEngine(Catalog()).Evaluate(
             new(proposal, Scope), new Authority());
