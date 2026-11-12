@@ -23,14 +23,48 @@ The recently added read-only shared-foundation audit, same-Species pair matrix, 
 
 **Scope of this abstraction:** It handles shared-Species mixed Ancestry, different-Species mixtures, nonbiological origination, nested Heritage and custom/homebrew sources by the same rules. Species-specific patterns and exceptions are **authored data for later study**, not special resolution engines. Separately selected cultural Background/Upbringing is not treated as inherited Species material. A later Rite of Rebirth is a **complete configuration replacement operation**, not a contributor mixture.
 
+## Three workflow stages with five internal operations
+
+**Owner clarification:** The system need not start from exactly two existing Species or Ancestries. Contributors can themselves have mixed Heritage, and a future creation experience may begin with **fully or partially custom characteristic selections**, rather than a fixed pair of standard sources. The user favors retaining the **five conceptual operations**, while considering a **three-stage workflow presentation**. These are two views of the same system, not competing architectures.
+
+| Workflow stage | Internal operations | General behavior |
+| --- | --- | --- |
+| **1. Deconstruct and assemble** | Deconstruct + combine | Resolve whichever sources exist, expand them into reusable characteristic candidates, or accept explicitly permitted custom inputs. Preserve source and contributor occurrence provenance. Do not insist on two biological parents or two preset ancestry IDs. |
+| **2. Reconcile and manifest** | Reconcile + manifest | Evaluate eligibility, dependencies, replacement and conflicts alongside explicit trait/parameter choices. These two operations **iterate** until all required decisions are complete or an unresolved issue is reported. |
+| **3. Reconstruct** | Reconstruct | Create the resulting coherent current inherent-characteristic profile, including actual characteristics, chosen parameters, validation/adjudication status, and provenance. Historical lineage is retained separately from active grants. |
+
+The **three stages** are appropriate for a creation workflow or public API orchestration; the **five operations** remain distinct internal functions and validation boundaries. No choice between them is required to design the data model.
+
+### Inputs must not assume two unmodified source packages
+
+The same core engine should support:
+
+- **Direct standard presets:** One standard Species/Ancestry configuration, reconstructed through the general system.
+- **Mixed contributors:** Zero or more *eligible* contributor records, including mixed parents or other previously manifested custom configurations. Contributor counts and nonbiological origination methods must not be hard-coded as if every character has exactly two parents.
+- **Partially custom Origin:** A standard or previously constructed configuration plus expressly authorized replacements, additions, omissions or altered parameters. Preserve the distinction between the original content source and the actual custom selection.
+- **Fully custom Origin:** An explicitly selected set of characteristic definitions and parameter values from a **permitted** catalog, without requiring a standard Species/Ancestry parent. Such grants must carry **custom authoring or table authority provenance**, not fictitious biological inheritance or a false first-party Species lineage.
+- **Homebrew content:** Independently authored Species/Ancestry/characteristic definitions processed by the same validation and reconstruction model, not by a dedicated homebrew evaluator.
+
+**Trait availability differs by creation policy.** A mechanical trait's existence in the catalog does not grant inheritance eligibility, unrestricted custom selection or permission to ignore prerequisites. The generalized engine should separate **candidate source**, **authorized selection policy**, **manifestation**, and **mechanical validity**. Fully custom and partially custom modes may use different eligibility and budgeting policies while still sharing the same composition and reconstruction implementation. Those allocation policies are **not decided here**.
+
+### Reconstructed configurations are usable independently of their creation method
+
+The reconstructed **current Heritage profile** is a concrete composition of inherent mechanical characteristics and their provenance. It may originate from a standard preset, mixed ancestors, a partial customization or a fully custom selection. A later character may reference an **existing verified manifested profile** without automatically expanding or granting everything belonging to that profile's historical ancestry.
+
+Distinguish **a saved individual configuration** from **publishing a reusable Heritage template**. The former is a character's current state; the latter would be an authored selection definition with explicit availability and DM/table authority. Reconstructing a custom character does not automatically make its combination available as a universally selectable first-party Ancestry or prove it balanced.
+
+**Open rule:** whether latent/unmanifested inherited characteristics can pass between generations is not resolved. The contributor representation must allow a future explicit latent-heritage policy without accidentally restoring all traits of historical ancestors by default.
+
+**No enforced Species label:** the profile should contain its actual inherent mechanical properties even when a fully custom Origin has no pre-existing standard Species or Ancestry identifier. Any new named Heritage identity is separate authored metadata, not a prerequisite for the engine to reconstruct the character.
+
 ## One pipeline, multiple source situations
 
 ```text
-  Standard source     Mixed direct sources     Previously mixed sources
-         |                    |                          |
-         +--------------------+--------------------------+
-                              |
-                    Resolve source evidence
+ Standard preset     Mixed contributors    Custom characteristic set
+         |                   |                        |
+         +-------------------+------------------------+
+                             |
+              Resolve source/selection evidence
              (including verified provenance)
                               |
                     Candidate characteristic set
