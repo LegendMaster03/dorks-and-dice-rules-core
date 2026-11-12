@@ -66,6 +66,7 @@ public sealed class NativeOriginContractTests
         NativeOriginDecisionBasis? basis = null) =>
         new("profile-" + proposal.Id,
             new(proposal.SelectedSpeciesId, proposal.SelectedAncestryId, inherited ?? []),
+            new(proposal.SelectedSpeciesId, proposal.SelectedAncestryId, inherited ?? []),
             independent ?? [], history ?? [],
             basis ?? new(NativeOriginAdjudication.Supported, "rule.test-origin"),
             proposal.Id);
@@ -417,8 +418,10 @@ public sealed class NativeOriginContractTests
             manifestations: [newManifest]) with { ExistingConfiguration = old };
         var riteEvent = new NativeOriginHistoryEvent("rite-event", Method("rite-of-rebirth"),
             NativeOriginEventStage.Completed, [], true, old, "after-rebirth");
+        var newBaseline = new NativeOriginCurrentConfiguration(
+            "species.dragonborn", "ancestry.red", [newGrant], "after-rebirth");
         var profile = Profile(proposal, [newGrant], [independent], [riteEvent]) with {
-            Current = new("species.dragonborn", "ancestry.red", [newGrant], "after-rebirth")
+            Underlying = newBaseline, Current = newBaseline
         };
         Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
             fixture.Validator.ReviewProposal(proposal).Status);
@@ -439,13 +442,16 @@ public sealed class NativeOriginContractTests
             NativeOriginIntent.Transformation) with { ExistingConfiguration = existing };
         var progress = new NativeOriginHistoryEvent("early", proposal.Method,
             NativeOriginEventStage.InProgress, ["subject"], false);
-        var pending = Profile(proposal, history: [progress]) with { Current = existing };
+        var pending = Profile(proposal, history: [progress]) with
+            { Underlying = existing, Current = existing };
         Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
             fixture.Validator.ReviewProfile(pending).Status);
         var complete = new NativeOriginHistoryEvent("last", proposal.Method,
             NativeOriginEventStage.Completed, ["subject"], true, existing, "zombie-profile");
+        var zombieBaseline = new NativeOriginCurrentConfiguration(
+            "species.zombie", null, [], "zombie-profile");
         var final = pending with {
-            Current = new("species.zombie", null, [], "zombie-profile"),
+            Underlying = zombieBaseline, Current = zombieBaseline,
             History = [progress, complete]
         };
         Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
@@ -642,4 +648,241 @@ public sealed class NativeOriginContractTests
         Assert.Equal("origin-a",
             profileCopy.Current.InherentGrants.Single().SourceCandidateIds.Single());
     }
+    private static NativeOriginPersistentInfluence Lycanthropy() =>
+        new("werewolf-influence", Source("condition.lycanthropy"), "event.acquired-lycanthropy");
+
+    private static NativeOriginActiveTemporaryTransformation WolfActivation() =>
+        new("shift-wolf-one", "form.wolf", Source("condition.lycanthropy"),
+            "event.shift-wolf-one", "werewolf-influence", ["wolf-form-grant"]);
+
+    private static (NativeOriginProposal Proposal, NativeOriginProfile Profile,
+        NativeOriginCurrentConfiguration Human) HumanWithLycanthropy(bool active)
+    {
+        var human = Candidate("human-sense-offer", Trait("human-sense", "species.human"));
+        var selection = Manifest("human-sense-selection", human.Id);
+        var proposal = Proposal("human-with-lycanthropy", candidates: [human],
+            manifestations: [selection]) with { SelectedSpeciesId = "species.human" };
+        var baseline = new NativeOriginCurrentConfiguration("species.human", null,
+            [Grant("human-sense-grant", selection, human)], "underlying-human-current");
+        var profile = Profile(proposal, baseline.InherentGrants) with
+        {
+            Underlying = baseline, Current = baseline,
+            PersistentInfluences = [Lycanthropy()]
+        };
+        if (active)
+        {
+            var wolf = Candidate("wolf-form-offer", Trait("wolf-sense", "form.wolf"));
+            var wolfSelection = Manifest("wolf-sense-selection", wolf.Id);
+            var effective = new NativeOriginCurrentConfiguration("species.wolf-form", null,
+                [Grant("wolf-form-grant", wolfSelection, wolf)], "active-wolf-form");
+            profile = profile with
+            {
+                Current = effective,
+                ActiveTemporaryTransformation = WolfActivation()
+            };
+        }
+        return (proposal, profile, baseline);
+    }
+
+    [Fact]
+    public void InactiveLycanthropyIsPersistentAndLeavesHumanBaselineEffective()
+    {
+        using var fixture = new Fixture();
+        var (proposal, profile, human) = HumanWithLycanthropy(active: false);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(profile, proposal).Status);
+        Assert.Equal("species.human", profile.Underlying.SpeciesId);
+        Assert.Equal("species.human", profile.Current.SpeciesId);
+        Assert.Null(profile.ActiveTemporaryTransformation);
+        Assert.Single(profile.PersistentInfluences!);
+        Assert.Single(profile.Current.InherentGrants);
+        Assert.Equal("biological", proposal.Method.MethodId);
+        Assert.Equal(human.ProfileId, profile.Current.ProfileId);
+    }
+
+    [Fact]
+    public void WolfFormReplacesEffectiveSpeciesWithoutOverwritingHumanOrStackingTraits()
+    {
+        using var fixture = new Fixture();
+        var (proposal, transformed, _) = HumanWithLycanthropy(active: true);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(transformed, proposal).Status);
+        Assert.Equal("species.human", transformed.Underlying.SpeciesId);
+        Assert.Equal("species.wolf-form", transformed.Current.SpeciesId);
+        Assert.DoesNotContain(transformed.Current.InherentGrants,
+            grant => grant.Id == "human-sense-grant");
+        Assert.Single(transformed.Current.InherentGrants);
+        Assert.Equal("human-sense-grant", Assert.Single(transformed.Underlying.InherentGrants).Id);
+        Assert.Equal("condition.lycanthropy",
+            transformed.ActiveTemporaryTransformation!.EffectSource.Id);
+        Assert.Equal("event.shift-wolf-one",
+            transformed.ActiveTemporaryTransformation.ActivationEvidenceId);
+        Assert.Equal("biological", proposal.Method.MethodId);
+    }
+
+    [Fact]
+    public void ReversionCanRepresentLatestUnderlyingHumanWithoutRunningATransition()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, human) = HumanWithLycanthropy(active: true);
+        var reverted = wolf with
+        {
+            Current = human,
+            ActiveTemporaryTransformation = null
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(reverted, proposal).Status);
+        Assert.Equal("species.human", reverted.Current.SpeciesId);
+        Assert.Single(reverted.PersistentInfluences!);
+        Assert.Equal("human-sense-grant", Assert.Single(reverted.Current.InherentGrants).Id);
+        Assert.DoesNotContain(reverted.Current.InherentGrants,
+            grant => grant.Id == "wolf-form-grant");
+    }
+
+    [Fact]
+    public void UnderlyingRebirthDuringWolfFormDoesNotRestoreSupersededHumanGrants()
+    {
+        using var fixture = new Fixture();
+        var (_, wolf, human) = HumanWithLycanthropy(active: true);
+        var elfTrait = Candidate("elf-trait-offer", Trait("elf-sense", "species.elf"));
+        var elfSelection = Manifest("elf-selection", elfTrait.Id);
+        var elf = new NativeOriginCurrentConfiguration("species.elf", "ancestry.high-elf",
+            [Grant("elf-sense-grant", elfSelection, elfTrait)], "updated-authoritative-elf");
+        var rite = new NativeOriginHistoryEvent("baseline-rebirth",
+            Method("rite-of-rebirth"), NativeOriginEventStage.Completed, [],
+            true, human, elf.ProfileId);
+        var proposal = Proposal("underlying-rebirth", "rite-of-rebirth",
+            NativeOriginIntent.Transformation, candidates: [elfTrait],
+            manifestations: [elfSelection]) with
+        {
+            ExistingConfiguration = human,
+            ExistingEffectiveConfiguration = wolf.Current,
+            ActiveTemporaryTransformation = wolf.ActiveTemporaryTransformation,
+            SelectedSpeciesId = elf.SpeciesId, SelectedAncestryId = elf.AncestryId
+        };
+        var during = wolf with
+        {
+            ProposalId = proposal.Id,
+            Underlying = elf,
+            // The active effective form has not been replaced by this recorded
+            // baseline change. Whether it may remain active is a separate rule.
+            Current = wolf.Current,
+            History = [rite]
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(during, proposal).Status);
+        Assert.Equal("species.elf", during.Underlying.SpeciesId);
+        Assert.Equal("species.wolf-form", during.Current.SpeciesId);
+        Assert.Equal("shift-wolf-one", during.ActiveTemporaryTransformation!.Id);
+        Assert.DoesNotContain(during.Underlying.InherentGrants,
+            grant => grant.Id == "human-sense-grant");
+
+        var reverted = during with
+        {
+            Current = during.Underlying,
+            ActiveTemporaryTransformation = null
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(reverted, proposal).Status);
+        Assert.Equal("species.elf", reverted.Current.SpeciesId);
+        Assert.Equal("ancestry.high-elf", reverted.Current.AncestryId);
+        Assert.Equal("elf-sense-grant", Assert.Single(reverted.Current.InherentGrants).Id);
+        Assert.DoesNotContain(reverted.Current.InherentGrants,
+            grant => grant.Id == "human-sense-grant");
+        Assert.Equal("species.human", rite.PreviousConfiguration!.SpeciesId);
+    }
+
+    [Fact]
+    public void TemporaryFormDoesNotUseHistoryReplacementOrObsoleteBaselineSnapshot()
+    {
+        var (_, wolf, _) = HumanWithLycanthropy(active: true);
+        Assert.Empty(wolf.History);
+        Assert.Null(typeof(NativeOriginActiveTemporaryTransformation)
+            .GetProperty("PreviousConfiguration"));
+        Assert.Null(typeof(NativeOriginActiveTemporaryTransformation)
+            .GetProperty("RestoreConfiguration"));
+        Assert.NotEqual(wolf.Underlying.ProfileId, wolf.Current.ProfileId);
+    }
+
+    [Fact]
+    public void ActiveFormAndPersistentInfluenceRequireRealReferences()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var invalid = wolf with
+        {
+            ActiveTemporaryTransformation = WolfActivation() with
+            {
+                PersistentInfluenceId = "condition.unknown",
+                EffectiveFormGrantIds = ["missing-form-grant"]
+            }
+        };
+        var review = fixture.Validator.ReviewProfile(invalid, proposal);
+        Assert.Equal(NativeOriginReviewStatus.Invalid, review.Status);
+        Assert.Contains(review.Issues, issue => issue.Code == "active-form-influence-missing");
+        Assert.Contains(review.Issues, issue => issue.Code == "active-form-grant-missing");
+        var unknownEffect = wolf with
+        {
+            Current = wolf.Current,
+            ActiveTemporaryTransformation = null
+        };
+        var unresolved = fixture.Validator.ReviewProfile(unknownEffect, proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, unresolved.Status);
+        Assert.Contains(unresolved.Issues,
+            issue => issue.Code == "effective-state-without-active-effect");
+
+        var invalidProposal = proposal with {
+            ActiveTemporaryTransformation = WolfActivation(),
+            ExistingConfiguration = wolf.Underlying,
+            ExistingEffectiveConfiguration = null
+        };
+        Assert.Equal(NativeOriginReviewStatus.Invalid,
+            fixture.Validator.ReviewProposal(invalidProposal).Status);
+    }
+
+    [Fact]
+    public void ActiveFormDmAuthorityRequiresExplicitTableDecisionEvidence()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var custom = wolf with
+        {
+            ActiveTemporaryTransformation = WolfActivation() with
+            {
+                Authorization = new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: "ruling.custom-wolf")
+            }
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(custom, proposal).Status);
+
+        var ruling = new NativeTableRuleDecision("ruling.custom-wolf",
+            new("dm.actor", "authorization.record"),
+            new("campaign", "campaign.one"),
+            new("origin.form", "form.wolf"),
+            JsonSerializer.SerializeToElement(new { retainTrait = "feature.custom" }));
+        var withDecision = proposal with { TableDecisions = [ruling] };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(custom, withDecision).Status);
+    }
+
+    [Fact]
+    public void TemporaryFormAndUnderlyingStateSurviveJsonRoundTrip()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var copy = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(wolf))!;
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(copy, proposal).Status);
+        Assert.Equal("species.human", copy.Underlying.SpeciesId);
+        Assert.Equal("species.wolf-form", copy.Current.SpeciesId);
+        Assert.Equal("condition.lycanthropy",
+            Assert.Single(copy.PersistentInfluences!).Source.Id);
+        Assert.Equal("form.wolf", copy.ActiveTemporaryTransformation!.FormId);
+        Assert.Single(copy.ActiveTemporaryTransformation.EffectiveFormGrantIds!);
+    }
+
 }
