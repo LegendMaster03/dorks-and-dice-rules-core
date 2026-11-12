@@ -370,6 +370,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
+        // Source-authored parameters that reference another selected characteristic
+        // are resolved only after the intrinsic candidates have been reconciled.
+        // Unresolved prerequisites cannot leave an active dependent trait behind.
+        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(resolved);
+        resolved = bound;
+        issues.AddRange(bindingIssues);
         if (reconciliationDm)
             foreach (var resolution in proposal.Resolutions ?? [])
             {
