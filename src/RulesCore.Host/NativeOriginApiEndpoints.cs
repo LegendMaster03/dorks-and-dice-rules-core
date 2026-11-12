@@ -106,6 +106,12 @@ public static class NativeOriginApiEndpoints
                 campaignId,
                 characterId = request.CharacterId,
                 approvalEvidenceId = request.ApprovalEvidenceId,
+                // The actual Rules Core evaluator, not Character Sheet, supplies
+                // the source-attributed intrinsic and visual-sense projection.
+                // Each projection remains previewOnly until an authoritative
+                // Character Sheet commit validates the exact resulting grants.
+                intrinsics = NativeOriginIntrinsicProjector.Project(result),
+                vision = NativeOriginVisionProjector.Project(catalog, result),
                 result
             });
         });
