@@ -67,6 +67,8 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(NativeOriginConstructionStatus.Incomplete, result.Status);
         Assert.Empty(result.EvaluatedProposal.Contributors);
         Assert.Equal("species.human", result.Profile!.Underlying.SpeciesId);
+        Assert.Equal(NativeOriginEventStage.Pending,
+            result.Profile.History.Single(x => x.Id == "construction:origin").Stage);
         Assert.Equal(result.Profile.Underlying, result.Profile.Current);
         Assert.Contains(result.EvaluatedProposal.Candidates, x =>
             x.Identity.IntrinsicSlotId == "size" && x.RequiredChoices?.Count == 1);
@@ -117,7 +119,9 @@ public sealed class NativeOriginConstructionTests
             Manifestations = manifests, TableDecisions = decisions
         }, new TestAuthority(), false);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
-        var grant = Assert.Single(result.Profile!.Underlying.InherentGrants);
+        Assert.Equal(NativeOriginEventStage.Completed,
+            result.Profile!.History.Single(x => x.Id == "construction:shared").Stage);
+        var grant = Assert.Single(result.Profile.Underlying.InherentGrants);
         Assert.Equal(2, grant.SourceCandidateIds.Count);
         Assert.Equal(NativeOriginAdjudication.DmAuthorized, grant.Authorization!.Adjudication);
     }
