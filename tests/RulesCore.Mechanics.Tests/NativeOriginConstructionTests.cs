@@ -394,14 +394,17 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
-    public void IntermediateAncestryFamilyCanContributeItsInheritedNativeTraits()
+    public void IntermediateAncestryFamilyRemainsOfferedButUnboundLeafGrantsStayUnresolved()
     {
         var result = Evaluate(Proposal("red-family", species: "species.dragonborn",
             ancestry: "ancestry.dragonborn.red"));
-        Assert.Contains(result.Profile!.Underlying.InherentGrants, grant =>
-            grant.Identity.Occurrence.Source.Id == "ancestry.dragonborn.chromatic");
-        Assert.DoesNotContain(result.Issues, x =>
-            x.Code == "selection-eligibility-unresolved" &&
+        Assert.Contains(result.EvaluatedProposal.Candidates, x =>
+            x.Identity.Occurrence.Source.Id == "ancestry.dragonborn.chromatic");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, grant =>
+            grant.Identity.Occurrence.Source.Id == "ancestry.dragonborn.chromatic" &&
+            grant.Identity.Occurrence.OccurrencePath.StartsWith("/traits/",
+                StringComparison.Ordinal));
+        Assert.Contains(result.Issues, x => x.Code == "unsupported-source-binding" &&
             x.Path.Contains("ancestry.dragonborn.chromatic", StringComparison.Ordinal));
     }
 
