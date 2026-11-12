@@ -31,9 +31,38 @@ A production *state-changing* Origin operation must, on the trusted server side:
 6. Commit the authoritative decisions, result, source/event identities and next revision **atomically** with an optimistic-concurrency check and an idempotent completed-event identifier. Failure leaves the earlier authorized character unchanged.
 7. Project only current authorized grants; independent entitlements remain separate and must not be silently removed, duplicated, or granted through historical evidence.
 
-**No privileged API operation has yet been exposed.** The existing `/api/mechanics/v1/origins/preview` is authenticated but stateless, accepts only an initial-construction proposal, rejects purported previous profiles/history/temporary forms/DM state, supplies no trusted grant lists, does not commit anything, and marks output `previewOnly`. The client cannot turn its response into a trusted persistence record without a server reevaluation.
+**Rules Core exposes no privileged Origin mutation API.** Its `/api/mechanics/v1/origins/preview` is authenticated and stateless; it rejects client assertions of previously authorized profiles, history, temporary forms and DM authority, supplies no independent earned grants, and marks output `previewOnly`. A browser cannot convert preview output into trusted persistent state. The separate Character Sheet Phase 5 branch now implements a restricted native **initial direct** activation route, which rechecks the saved draft and Rules Core evaluation before a character-owned atomic commit. No generic Rite, mixed/DM, or form activation route exists.
 
 A fixed native fingerprint is not a permission. It detects content drift; stored character choices must be revalidated on actual relevant content changes rather than automatically accepted or rejected by the fingerprint alone.
+
+## First-party creation-choice eligibility (current increment)
+
+`NativeOriginFirstPartyChoiceEvaluator` now supplies current-catalog
+membership verification for a selected-native **Skill** chosen from the
+authored `any-native-skill` requirement. Its evidence is derived by Rules Core
+from its immutable `NativeCatalogSnapshot`, the actual direct source
+candidate, the current catalog fingerprint, and an exact `skill` category
+match. The client is not a trusted evidence issuer: stateless preview rejects
+caller-supplied `CatalogEligibilityEvidenceId`, and the evaluator inserts
+a source-checked reference only after validating the selected Skill.
+
+This is **catalog membership**, not an authorization token, DM ruling, or
+guarantee that any separately earned Training occurrence is already present.
+`INativeOriginAuthority.Authorizes` in the native-only evaluator always
+returns false, and the internal catalog sentinel scope is never a campaign
+permission. Mixed, custom and transformational Origins receive no automatic
+catalog evidence. Unrecognized catalog types (including `feat:origin`)
+remain unresolved pending an authored eligibility/prerequisite contract;
+we do not infer an Origin feat from its name or from an unrelated feat list.
+Finite choices such as Human size continue to use their authored finite
+options. Real native Human construction can now verify its Skill choice, but
+remains incomplete while required Origin feat selection is unsupported.
+
+The Rules Core unit and authenticated HTTP tests cover valid native Skills,
+invalid category substitution, forged client catalog evidence, and the
+deliberately unresolved feat catalog. Character Sheet's temporary Phase 5
+branch-to-branch probe exercises the same native Human Skill contract against
+the **unmerged** Rules Core branch rather than `main`.
 
 ## Shared permanent reconstruction
 
@@ -61,4 +90,4 @@ The earlier focused post-merge Origin run passed **186 Mechanics + 111 Host + 34
 
 The broader `test_ruleset_split.NativeWorkingBoundaryTests.test_current_native_and_working_contracts` failed with 33 `authoritative <ID> conflicts with preserved working evidence` errors. The checker requires an exact preserved mirror or documented `sourceDivergences` ledger entry. The checked promotion ledger lacks divergence entries for representative failing entries (`class.barbarian`, `class.bard`, `competency.alchemy`, `class-feature.barbarian.weapon-mastery-level-1`). That establishes the **reason for the check failure**, not that authoritative native content is wrong. Audit and reconcile individually with the source-promotion owner; do not silently rewrite native rules or disable all mirror checks.
 
-Phase 5's full end-to-end milestone still requires the Character Sheet trusted state loader, PostgreSQL Origin persistence and revision checks, authentic DM/campaign authority, persistent Rite commit, builder UI, effective projection, security regressions, and actual development deployment acceptance. No database migration or live merge/deployment is claimed by these corrections.
+Character Sheet now has a distinct authorized-Origin storage substrate, revisioned receipts and a restricted first-party initial activation service, with related PostgreSQL tests; that does not constitute a general trusted grant loader. Phase 5 still requires authentic DM/campaign ruling evidence, persistent Rite/reconstruction commit, effective cross-pillar projection, Origin builder UI, and actual development acceptance. No live merge/deployment is claimed by these corrections.
