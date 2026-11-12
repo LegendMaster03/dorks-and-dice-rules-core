@@ -105,7 +105,8 @@ public sealed class NativeMechanicsApiTests
                    "kind":"creatureType","parent":"creature",
                    "originationMethods":["biological"]},
                   {"id":"species.fixture","name":"Fixture Species","kind":"species",
-                   "selectable":true,"creatureType":"humanoid","traits":[
+                   "selectable":true,"creatureType":"humanoid",
+                   "size":"medium","walkingSpeedFeet":30,"traits":[
                      {"id":"skilled","name":"Skilled",
                       "grantType":"skill-proficiency",
                       "chooseFrom":"any-native-skill","choiceCount":1}]},
@@ -294,6 +295,19 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal((int)NativeOriginEventStage.Completed,
             result.GetProperty("profile").GetProperty("history")[0]
                 .GetProperty("stage").GetInt32());
+        var intrinsics = document.GetProperty("intrinsics");
+        Assert.True(intrinsics.GetProperty("previewOnly").GetBoolean());
+        Assert.Equal("resolved", intrinsics.GetProperty("status").GetString());
+        Assert.Empty(intrinsics.GetProperty("unresolvedSlots").EnumerateArray());
+        Assert.Equal("medium", intrinsics.GetProperty("size")
+            .GetProperty("value").GetString());
+        Assert.Equal(30, intrinsics.GetProperty("walkingSpeedFeet")
+            .GetProperty("value").GetInt32());
+        Assert.Equal("species.fixture", intrinsics.GetProperty("walkingSpeedFeet")
+            .GetProperty("sourceId").GetString());
+        Assert.Equal("/walkingSpeedFeet", intrinsics.GetProperty("walkingSpeedFeet")
+            .GetProperty("occurrencePath").GetString());
+
 
         // An unrelated category can never be approved by the same Skill grant.
         using var wrongCatalog = await fixture.Client.SendAsync(fixture.Authenticated(
@@ -311,6 +325,11 @@ public sealed class NativeMechanicsApiTests
         var denied = await wrongCatalog.Content.ReadFromJsonAsync<JsonElement>();
         Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
             denied.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.Equal("unresolved",
+            denied.GetProperty("intrinsics").GetProperty("status").GetString());
+        Assert.True(denied.GetProperty("intrinsics")
+            .GetProperty("previewOnly").GetBoolean());
+
         Assert.Contains(denied.GetProperty("result").GetProperty("issues").EnumerateArray(),
             x => x.GetProperty("code").GetString() == "choice-authorization-unresolved");
     }
