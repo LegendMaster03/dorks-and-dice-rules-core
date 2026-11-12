@@ -414,9 +414,10 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 resolved, profileId);
         var current = proposal.ExistingEffectiveConfiguration ?? underlying;
         var history = (proposal.History ?? []).ToList();
-        if (!history.Any(x => x.Id == "construction:" + proposal.Id))
+        var addedConstructionEvent = !history.Any(x => x.Id == "construction:" + proposal.Id);
+        if (addedConstructionEvent)
             history.Add(new("construction:" + proposal.Id, proposal.Method,
-                NativeOriginEventStage.Completed,
+                NativeOriginEventStage.Pending,
                 (proposal.Contributors ?? []).Select(x => x.Id)
                     .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
                 false, ResultingProfileId: profileId));
@@ -459,6 +460,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
         var status = Status();
+        // An evaluation preview must not claim an Origin event already happened.
+        // Only an authorized result promotes this evaluation's event to completed.
+        if (addedConstructionEvent && status == NativeOriginConstructionStatus.Authorized)
+            profile = profile with { History = history.Select(x =>
+                x.Id == "construction:" + proposal.Id
+                    ? x with { Stage = NativeOriginEventStage.Completed } : x).ToArray() };
         return new(status, proposal, status == NativeOriginConstructionStatus.Invalid ? null : profile,
             issues.OrderBy(x => x.Path, StringComparer.Ordinal)
                 .ThenBy(x => x.Code, StringComparer.Ordinal).Distinct().ToArray());
