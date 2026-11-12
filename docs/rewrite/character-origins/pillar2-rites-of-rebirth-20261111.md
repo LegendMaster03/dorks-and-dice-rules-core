@@ -36,10 +36,14 @@ The [three-factor formula](pillar2-dragonborn-expansion-dimensions-20261111.md) 
 
 **Power intent:** Exceptional Dragonborn are intentionally and substantially more powerful than ordinary starting Dragonborn Ancestries. Equal mechanical strength with ordinary Ancestries is **not** a balancing objective. Restricted initial selection and the exceptional Rite are acquisition gates, not claims of mechanical parity. When designing these forms, consider the expected campaign power tier, party progression and playtest evidence without using ordinary character-creation balance as the required ceiling. The exact strength, features and progression remain open.
 
-Two structural patterns are supported:
+Two structural patterns—composite and singular—are supported across three current exceptional concepts:
 
 1. **Composite leader — Chromatic:** The exceptional Chromatic form represents the sovereign of the five founding Chromatic houses (Black, Blue, Green, Red, White). An extraordinary form may combine characteristics of those **defined founding houses**, rather than recomputing its source list whenever new Chromatic Ancestries are published. The precise manifestations, limits, and whether multiple affinities can be selected or held simultaneously are **unresolved**. Composite does **not** mean an automatic union of all five complete trait packages.
 2. **Singular leader — Metallic:** The Platinum form represents the singular sovereign of Metallic Dragons. An extraordinary Platinum Ancestry is a **distinct singular material/type**, not a composite of Copper, Bronze, Brass, Silver, and Gold. Its damage affinity and exceptional abilities require separate design; no automatic access to all Metallic features or any particular new damage type is approved.
+
+### Platinum — Heart, Mind, and Wings (working concept)
+
+Platinum is a **singular exceptional Ancestry** representing the Metallic sovereign, not a combination of the standard Metallic leaves. The preliminary design organizes its identity around three complementary expressions—**Heart** (draconic essence and projected power), **Mind** (perception and self-command), and **Wings** (flight and aerial presence)—inspired by 3.5 research. Whether all three manifest or one gains emphasis, along with exact abilities and progression, **remains unresolved**. See the separate [Platinum Heart, Mind, and Wings working concept](pillar2-platinum-heart-mind-wings-concept-20261111.md); it grants no playable features.
 
 ### Fivefold Chromatic — working mechanical concept (not approved)
 
