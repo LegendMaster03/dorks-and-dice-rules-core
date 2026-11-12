@@ -203,6 +203,27 @@ public sealed class NativeMechanicsApiTests
                 refusal.GetProperty("error").GetString());
         }
 
+        // First-party option eligibility is verified from the current native
+        // catalog. A client must not present even a correctly formatted proof
+        // as if it were an independently authenticated entitlement.
+        var selfAssertedChoice = clean with
+        {
+            Manifestations = [new NativeOriginManifestation("choice-1", "unknown",
+                Choices: [new NativeOriginChoiceSelection("selection",
+                    ["skill.intimidation"], "native-catalog:spoof")])]
+        };
+        using var forgedChoiceRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new
+            {
+                rulesetId = "first-party-001", fingerprint = "outdated",
+                proposal = selfAssertedChoice
+            }));
+        using var forgedChoice = await fixture.Client.SendAsync(forgedChoiceRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, forgedChoice.StatusCode);
+        var deniedChoice = await forgedChoice.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("trusted_origin_state_required",
+            deniedChoice.GetProperty("error").GetString());
+
         // An ordinary content update changes the fingerprint, not user permission.
         using var previewRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
             JsonContent.Create(new { rulesetId = "first-party-001",
