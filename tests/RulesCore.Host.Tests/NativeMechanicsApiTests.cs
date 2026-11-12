@@ -94,6 +94,25 @@ public sealed class NativeMechanicsApiTests
                     "subject":"attacks-by-affected-creature","mode":"disadvantage",
                     "when":{"fearSourceWithinLineOfSight":true}}]}]}
                 """);
+            // A compact first-party Origin fixture proves that only the
+            // authenticated server may populate catalog eligibility evidence.
+            File.WriteAllText(Path.Combine(package, "native", "origin-fixture.json"), """
+                {"entries":[
+                  {"id":"rule.creature-origination","name":"Origination",
+                   "kind":"rule","methodDefinitions":[
+                     {"id":"biological","name":"Biological"}]},
+                  {"id":"creature-type.humanoid","name":"Humanoid",
+                   "kind":"creatureType","parent":"creature",
+                   "originationMethods":["biological"]},
+                  {"id":"species.fixture","name":"Fixture Species","kind":"species",
+                   "selectable":true,"creatureType":"humanoid","traits":[
+                     {"id":"skilled","name":"Skilled",
+                      "grantType":"skill-proficiency",
+                      "chooseFrom":"any-native-skill","choiceCount":1}]},
+                  {"id":"skill.intimidation","name":"Intimidation","kind":"skill"},
+                  {"id":"competency.alchemy","name":"Alchemy","kind":"competency"}
+                ]}
+                """);
             App = RulesCoreApplication.Create([], builder => {
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
                 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?> {
@@ -235,6 +254,65 @@ public sealed class NativeMechanicsApiTests
         Assert.True(content.GetProperty("contentChangedSinceRequest").GetBoolean());
         Assert.Equal("first-party-001", content.GetProperty("rulesetId").GetString());
         Assert.True(content.GetProperty("result").TryGetProperty("issues", out _));
+    }
+
+    [Fact]
+    public async Task NativeChoicePreviewMintsCatalogEvidenceOnlyForRealNativeSkills()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var proposal = new NativeOriginProposal(
+            "fixture-skill", NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [],
+            [new NativeOriginManifestation("fixture-selected",
+                "direct:species.fixture:/traits/0",
+                Choices: [new("selection", ["skill.intimidation"])])],
+            SelectedSpeciesId: "species.fixture");
+
+        using var response = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = "first-party-001",
+                fingerprint = "old-contents-are-not-auth",
+                proposal
+            })));
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var document = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(document.GetProperty("previewOnly").GetBoolean());
+        Assert.True(document.GetProperty("contentChangedSinceRequest").GetBoolean());
+        var result = document.GetProperty("result");
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            result.GetProperty("status").GetInt32());
+        var proof = result.GetProperty("evaluatedProposal").GetProperty("manifestations")
+            .EnumerateArray().Single(x =>
+                x.GetProperty("id").GetString() == "fixture-selected")
+            .GetProperty("choices")[0]
+            .GetProperty("catalogEligibilityEvidenceId").GetString();
+        Assert.Equal("native-catalog:first-party-001:" +
+            document.GetProperty("fingerprint").GetString(), proof);
+        Assert.Equal((int)NativeOriginEventStage.Completed,
+            result.GetProperty("profile").GetProperty("history")[0]
+                .GetProperty("stage").GetInt32());
+
+        // An unrelated category can never be approved by the same Skill grant.
+        using var wrongCatalog = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = "first-party-001",
+                proposal = proposal with
+                {
+                    Manifestations = [new NativeOriginManifestation(
+                        "fixture-selected", "direct:species.fixture:/traits/0",
+                        Choices: [new("selection", ["competency.alchemy"])])]
+                }
+            })));
+        Assert.Equal(HttpStatusCode.OK, wrongCatalog.StatusCode);
+        var denied = await wrongCatalog.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            denied.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.Contains(denied.GetProperty("result").GetProperty("issues").EnumerateArray(),
+            x => x.GetProperty("code").GetString() == "choice-authorization-unresolved");
     }
 
     [Theory]
