@@ -1,7 +1,7 @@
 # Pillar 2 — Fivefold Chromatic Dragonborn: exceptional ancestry design
 
 **Date:** 2026-11-11
-**Status:** **Owner-approved Fivefold core and staged Chromatic Flare/Wrath progression (2026-11-11)**: one Breath Weapon choosing among five founding Chromatic damage types and two whole areas, simultaneous 50% resistance to all five, one enhanced Warding, Wings at levels **1–4 / 5–10 / 11+**, **automatic Chromatic Flare from level 1** when first reduced to 0 HP, and **level-11 Chromatic Wrath** adding HP recovery and an immediate-or-delayed Flare choice. **Breath Weapon damage dice, Warding unlock level, and proposed fear/save defenses remain undecided.** No exceptional native gameplay or ordinary mixed-Heritage eligibility has been activated.
+**Status:** **OWNER-APPROVED FIVEFOLD CHROMATIC MECHANICAL DESIGN (2026-11-11).** All features, level gates and numeric progressions are approved: one Breath Weapon (five selectable damage types; 60-foot line or 30-foot cone; **2d10/4d10/6d10/8d10** at levels 1/5/11/17), five simultaneous 50% resistances, **level-5 enhanced Warding**, **level-1 fear-originated immunity**, **level-9 limited failed-save success**, Wings at **1–4 / 5–10 / 11+**, and **level-1 Flare upgraded by level-11 Wrath**. No offensive fear rider. **Native exceptional gameplay and the general Pillar 2 implementation remain pending.**
 
 ## Approved identity and acquisition boundaries
 
@@ -24,7 +24,7 @@ Source references: https://www.dndbeyond.com/sources/dnd/ftod ; https://2014.5e.
 
 ## Approved Fivefold Elemental Sovereignty — core mechanics
 
-**Approval recorded (2026-11-11):** Fivefold's composite nature is expressed through **choice of one founding Chromatic damage type on each Breath Weapon use**, rather than five separate breaths, plus five simultaneous defenses and one corresponding Warding feature. The approval covers the **underlying feature package**, not all missing numeric details.
+**Approval recorded (2026-11-11):** Fivefold's composite nature is expressed through **choice of one founding Chromatic damage type on each Breath Weapon use**, rather than five separate breaths, plus five simultaneous defenses and one corresponding Warding feature. **All feature choices and numerical progressions are now approved.**
 
 ### One breath, with a damage-type choice
 
@@ -32,7 +32,7 @@ Source references: https://www.dndbeyond.com/sources/dnd/ftod ; https://2014.5e.
 - **On each use**, choose exactly **one** damage type: **Acid, Cold, Fire, Lightning, or Poison**. A breath use deals **only that chosen damage type**, not five simultaneous damage types or an automatic mix of them. Different uses may select different types without a rest-based reconfiguration.
 - Continue using the existing Dragonborn principle of **replacing one attack during the Attack action** and a Dexterity saving throw against **8 + PB + Constitution modifier** (half damage on success), unless the subsequent geometry/numeric pass establishes a justified exception.
 - **On each use**, independently of the damage-type choice, select **one whole Breath Weapon area**: a **60-foot line, 5 feet wide**, or a **30-foot cone**. The line retains Chromatic's defining shape while extending its reach for an exceptional ancestry; the cone gives wider coverage. Both have the same attack-replacement, save, damage dice and shared resource. **Neither activation produces both areas.** The two shapes are expressly authored exceptional options, **not** an alteration of ordinary Chromatic's 30-by-5-foot line or permission to mix component dimensions in the ordinary mixed-Heritage rules.
-- Damage scales by **total character level**, including at the level when rebirth occurs. **Exact dice remain undecided**; Platinum's 2d10/4d10/6d10/8d10 at 1/5/11/17 is a comparison, not an automatic grant.
+- **Approved damage progression:** At total character levels **1–4 / 5–10 / 11–16 / 17+**, Breath Weapon deals **2d10 / 4d10 / 6d10 / 8d10** of the chosen damage type, matching Platinum's damage dice. It uses the already established **PB uses per Long Rest** and one-attack replacement. A successful Dexterity save against **8 + PB + Constitution modifier** halves damage. Late rebirth uses current total level immediately.
 
 ### Five simultaneous resistances
 
@@ -44,26 +44,27 @@ Source references: https://www.dndbeyond.com/sources/dnd/ftod ; https://2014.5e.
 
 - **One Chromatic Warding activation** upgrades **all five approved 50% resistances to 100%** for the same **one-minute** duration. These percentages **replace**, rather than add to, the usual resistance for each of the five types.
 - Preserve the ordinary native activation model of **one Action and one use per Long Rest**, with **one shared expenditure** for the entire five-affinity defense; there are not five independent Warding uses.
-- **The level required to unlock this enhanced Warding remains undecided.** Native Chromatic Warding's level-5 threshold is the default starting point for the next numerical pass, not an independently approved level gate for the exceptional form.
+- **Approved minimum character level: 5.** As an Action, once per Long Rest, all five 50% resistances simultaneously become **100% resistance for one minute**; existing values are replaced, not added, and no associated condition immunity is implied.
 
-### Other abilities still to evaluate separately
+### Approved champion defenses and excluded fear rider
 
-- The published *Dragonborn of Tiamat* champion's **necrotic/fear breath** is **not** the approved central Fivefold breath. Necrotic damage is outside the five established founding affinities. A **fear rider** on the existing single breath remains a possible *additional* feature, not automatically granted through the approval.
-- **Fear-sourced condition immunity and a limited failed-save intervention** occur among published exceptional Dragonborn champions and in the approved Platinum design. Whether they apply to Fivefold is **not settled**; the shared source motif alone is not permission to copy them.
-- Do **not** infer extra heads, extra bite attacks, spellcasting, monster Legendary Actions, or automatic imports of the sovereign's full stat block. **Wings and the bounded Chromatic Wrath/Flare sequence are now expressly approved exceptions.** Any later ancestry expression must be evaluated independently from a possible Dragon Warlock Patron.
+- **Fear immunity, character level 1:** Immunity to **fear-originated** impairments across native Shaken, Frightened, Panicked, and fear-derived Cowering (`rule.fear-family`). Independently caused Cowering and unrelated nonfear impairments are unaffected.
+- **Limited failed-save intervention, character level 9:** **Once per Long Rest**, after failing a saving throw, change that failure to success without an Action. This does not modify ability checks or provide monster Legendary Actions.
+- **Offensive fear:** **No added fear rider** on Breath Weapon or Chromatic Flare. The published champion's necrotic fear breath is a distinct source model, not a sixth affinity or a second granted breath.
+- **Excluded monster/Platinum abilities:** No automatic extra heads, extra bite attacks, Truesight, blanket condition immunities, spellcasting, monster mythic actions, the sovereign's planar attack, or Platinum's Darkvision, Blindsense, paralysis or magical-sleep immunities. The separately approved Wings and Flare/Wrath progression remain intact.
 
 **Interaction with the Rite:** Rebirth removes prior Species/Ancestry abilities and grants the approved Fivefold identity and its currently level-eligible benefits. It does **not** preserve an earlier ordinary Dragonborn leaf's resistance/warding as extra stacking resources. Historical parents, Background and Upbringing remain unchanged; no additional mixed-Heritage contributor route is created.
 
 ## Aspect of Tiamat-led development — approved Wings and Chromatic Wrath/Flare (2026-11-11)
 
-**Reason for this pass:** Equalizing breath dice and copying fear immunity alone fails to give Fivefold a feature package as developed as Platinum's Heart/Mind/Wings. The user has directed a fuller **source-led study based on the Aspect of Tiamat**, and a modest earlier-flight adjustment for legendary Dragonborn. **The Wings progression and bounded Chromatic Wrath/Flare mechanics below are now owner-approved.** The separate breath damage dice, Warding level and fear/save protection remain unapproved proposals. Earlier numerical comparisons are historical wherever they conflict.
+**Reason for this pass:** Equalizing breath dice and copying fear immunity alone fails to give Fivefold a feature package as developed as Platinum's Heart/Mind/Wings. The user has directed a fuller **source-led study based on the Aspect of Tiamat**, and a modest earlier-flight adjustment for legendary Dragonborn. **Wings, staged Flare/Wrath, breath dice, level-5 Warding, fear-source immunity and level-9 failed-save protection are all owner-approved.** Historical alternatives below are retained for research only.
 
 ### Source-mechanic mapping
 
 | 5e *Fizban's Treasury of Dragons* Aspect of Tiamat (p. 166) | Fivefold adaptation | Disposition |
 | --- | --- | --- |
-| **Chromatic Flames** chooses one of the five founding damage types for a huge breath cone | The **already approved** Fivefold one-element-per-use breath, with exceptional **60-by-5-foot line or 30-foot cone** | Core approved, **dice pending** |
-| **Five elemental damage immunities** | The **already approved** five simultaneous 50% resistances; enhanced single Warding raises all five to 100% for one minute | Core approved, **Warding minimum level pending** |
+| **Chromatic Flames** chooses one of the five founding damage types for a huge breath cone | The **already approved** Fivefold one-element-per-use breath, with exceptional **60-by-5-foot line or 30-foot cone** | **Approved, including damage dice** |
+| **Five elemental damage immunities** | The **already approved** five simultaneous 50% resistances; enhanced single Warding raises all five to 100% for one minute | **Approved, including level-5 unlock** |
 | **120-foot flying speed** | Dragonborn-scaled **gliding → limited flight → sustained flight** without importing monster speed | **Approved progression below** |
 | **Chromatic Wrath** restores a large second health pool when reduced to zero and opens a mythic phase | Character-scaled **last-stand survival** triggered at zero HP, with an explicit once-per-rest limit | **Approved level-11 feature** |
 | **Chromatic Flare** is a selectable-element burst available during the mythic phase | A bounded, selective elemental **death-throes burst from level 1**, upgraded at level 11 with recovery and optional delayed release | **Approved staged feature** |
@@ -111,17 +112,54 @@ Reference: *Fizban's Treasury of Dragons* (2021), Aspect of Tiamat, p. 166. A me
 
 **Implementation boundary:** This **complete staged progression is approved as a design**, superseding the old level-11-only timing; native record promotion and executable condition/HP transition semantics await Pillar 2 integration. In particular, the engine must resolve the low-level triggered burst consistently with standard 0-HP and Unconscious timing, without treating the automatic burst as a normal Action.
 
-### Consolidated Fivefold identity — approved features and remaining proposals
+### Consolidated Fivefold identity — approved mechanics
 
-- **Elemental sovereignty:** Already-approved five type choices and two areas for the one damaging breath; **2d10/4d10/6d10/8d10** at level 1/5/11/17 remains the leading unapproved numerical candidate.
-- **Chromatic scales:** Already-approved five simultaneous 50% resistances and one upgraded Warding; **level 5** remains the leading unapproved minimum-level candidate.
+- **Elemental sovereignty:** Approved five-type selection, two complete areas, and **2d10/4d10/6d10/8d10** Breath Weapon dice at total levels **1/5/11/17**.
+- **Chromatic scales:** Approved five simultaneous 50% resistances, with **enhanced level-5 Warding** raising all five to 100% for one minute once per Long Rest.
 - **Legendary wings:** **Approved** glide levels **1–4**, limited powered flight **5–10**, and sustained flight **11+**, also adopted by Platinum.
-- **Champion resilience:** Proposed native fear-source immunity and one failed-save-to-success per Long Rest from level 9, same as the earlier candidate; **not yet approved**.
+- **Champion resilience:** Approved **level-1 fear-source immunity** and **level-9 one failed-save-to-success per Long Rest**; no offensive fear rider.
 - **Chromatic Flare and Wrath:** **Approved** automatic death-throes Flare from **level 1**, dealing **1d10 / 2d10 / 3d10 / 4d10** at levels **1 / 5 / 11 / 17**. At **level 11**, Wrath also restores HP to **twice total character level**, and the Flare can resolve **immediately without an Action or be delayed up to one minute for an Action release**. The entire sequence shares **one use per Long Rest**, with no proactive Flare.
 
-**Approval boundary:** The adjusted Wings and specified Wrath/Flare package are **approved alongside Fivefold's prior core**. Breath damage dice, Warding unlock level, fear immunity, and level-9 failed-save intervention remain **unapproved**. Native exceptional content and runtime grants still await Pillar 2 integration.
+**Approval boundary:** **The entire Fivefold mechanical design is approved**, but native exceptional ancestry content, source-qualified grant overrides, Rite resource transitions, and executable Pillar 2 support remain unimplemented.
 
-## Earlier numerical proposal — historical research; superseded for Wings and Wrath/Flare
+## Final approved numerical and defensive decisions — 2026-11-11
+
+**Owner approval 2026-11-11:** The final five numerical and defensive decisions are **approved** alongside the existing breath geometry, five resistances, Wings, and staged Flare/Wrath. They complete the singular Fivefold mechanical design.
+
+| Decision | Approved value | Basis |
+| --- | --- | --- |
+| **Breath Weapon dice** | **2d10 / 4d10 / 6d10 / 8d10** at total levels **1 / 5 / 11 / 17** | Match Platinum's direct breath damage. Fivefold exchanges its healing for **five selectable types**, fivefold resistance/warding and its independent Flare/Wrath offensive sequence. More breath damage is not necessary to correct the formerly missing flight and burst abilities. |
+| **Enhanced Warding unlock** | **Character level 5** | Retain the native ordinary Chromatic Warding threshold; one Action and one use per Long Rest still upgrades **all five 50% resistances to 100% for one minute** as already approved. No extra separate uses or immunity to unrelated conditions. |
+| **Fear-source immunity** | **Character level 1**, like Platinum's approved champion motif | Immunity to **fear-originated** Shaken, Frightened, Panicked and fear-derived Cowering under native `rule.fear-family`; independently caused Cowering or nonfear effects are **not** negated. Do not silently add the Aspect's unrelated Blinded, Charmed, Deafened, Poisoned or Stunned immunities. |
+| **Failed-save protection** | **Beginning at character level 9**, once per Long Rest, after failure, turn **one failed saving throw into a success** | Uses the champion NPC's bounded protection translated to the existing Platinum character-level threshold; no monster Legendary Actions and no ability to change a roll that was not a saving throw. |
+| **Offensive fear** | **No fear rider on the Breath Weapon or Flare** | Retain the approved five-element breath and independent Flare identity rather than merging them with the **different** published champion's necrotic/fear breath. A new Dread mechanic would need separate justification and approval. |
+
+### Comparative balance at each progression point
+
+- **Levels 1–4:** Fivefold has five 50% resistances, damage-type versatility, the approved 2d10 breath and one automatic 1d10 near-defeat Flare. Platinum has 2d10 breath **plus selective healing** and much broader Mind condition/sense benefits. The proposed fear immunity partially parallels Platinum without importing its sleep/paralysis immunity or Darkvision.
+- **Level 5:** Both gain the approved temporary powered flight stage; Fivefold's approved enhanced Warding upgrades five types for one minute (Action, once per Long Rest) whereas Platinum gains broader healing at 4d10/2d10. **Fivefold can dominate an encounter whose threats rely on those five damage types**; this is exceptional-ancestry power, not ordinary balance.
+- **Level 9:** A once-per-Long-Rest failed-save intervention is shared with Platinum. This is a general champion defense, but Fivefold still lacks Platinum's progressive senses and other Mind immunities. At this level Fivefold also has its 2d10 death-throes Flare.
+- **Level 11+:** Both have continuous flight. Fivefold's already approved **Chromatic Wrath** now prevents one otherwise qualifying zero-HP collapse, restores **2 × total level HP**, and lets the player immediately release or delay a **3d10/4d10 Flare**. Platinum instead heals through its breath and continues to improve its senses. Fivefold emphasizes survival and retaliation; Platinum retains sustained support/perception advantages.
+
+### Source distinctions and restraint
+
+*Fizban's Treasury of Dragons* (2021), **Aspect of Tiamat** (p. 166) supports five independent elemental affinities, fivefold immunity, flight, a mythic near-death return and Flare; **Dragonborn of Tiamat** (p. 185) separately provides frightened immunity, one failed-save success per day and a **necrotic fear breath**. The **Aspect has broader condition immunities** than the champion, but **none are automatically granted** to the Fivefold ancestry. Existing owner-approved Dragonborn design already adapts the sovereign features; the approved champion-style defenses are shared with Platinum without merging the champion's otherwise incompatible offensive breath.
+
+**Why no further powers:** Additional damage dice, free proactive Flare, monster-scale condition immunities or multiple independent breaths would increase complexity and dilute the established Flare-first last-stand character. The approved package is intentionally powerful and encounter-dependent; it is **not a claim of numerical parity** with Platinum under every circumstance.
+
+**Design boundary:** These five decisions are approved specifically for Fivefold, not as a generic exceptional ancestry chassis. Native promotion and executable rules remain separate from design approval; Ruby is a separate, unapproved singular Gem sovereign.
+
+## Design closure and integration handoff
+
+**Fivefold Chromatic is mechanically design-complete as of 2026-11-11.** No remaining ancestry feature, level gate, damage-dice progression, or defensive decision requires approval. This conclusion applies to **design**, not to executable native content.
+
+Further work is **Pillar 2 implementation and validation**: author an exceptional-only ancestry with explicit replacement of ordinary Dragonborn breath/resistance/warding grants, support five damage types and two complete areas without resource duplication, implement the Flare event and Wrath HP transition in the death-save system, apply total-character-level gates after late rebirth, track spent resources across Rites, and validate condition/grant behavior against ordinary Dragonborn regression tests. Playtests may produce new design changes later.
+
+## Historical source and balance proposals (superseded)
+
+**Archive notice:** Earlier proposals and their historical labels (“pending,” “proposed,” “not yet approved”) are preserved below as design traceability. The **approved specification above supersedes them**. None of the Fivefold mechanical decisions remain open.
+
+### Earlier candidate mechanics and rationale
 
 **Proposal prepared 2026-11-11:** The already approved core remains unchanged: one Breath Weapon with **one** chosen Acid/Cold/Fire/Lightning/Poison damage type and **one** complete 60-foot-by-5-foot line or 30-foot cone per use; simultaneous 50% resistance to all five; one Warding activation that increases all five to 100% for one minute. The following **numbers and additional resilience features require express owner acceptance**. They are not inferred approvals from the existing Platinum design.
 
@@ -160,44 +198,6 @@ The published *Fizban's Treasury of Dragons* **Dragonborn of Tiamat** has Fright
 Upon a successful sovereign-participated Rite, Fivefold receives its **currently eligible** benefits at the character's **current total character level**. For example, a level-12 reborn character would immediately have a **6d10** chosen-element breath, two authored area choices, all five 50% resistances, level-5 enhanced Warding, fear-source immunity and one failed-save protection per Long Rest **if the above proposal is approved**. Do not restart ancestry progression at level 1, grant five ordinary family resource copies or reset all old character resources automatically. The Rite's **generalized spent-resource carryover and replacement** is still an implementation question across all exceptional forms, not a special Fivefold rule.
 
 **Approval boundary:** This section is a **review-ready candidate**, not finalized selected-native mechanics. Previously approved Fivefold features and geometry remain final; numeric dice, level-5 Warding gate, fear-source immunity and level-9 failed-save protection require their own approval. Ruby and broader category expansion remain outside this scope.
-
-## Final unresolved decisions — consolidated recommendation (owner approval pending)
-
-**Review 2026-11-11:** This section evaluates the **only remaining Fivefold feature choices** after the owner's approval of its five-type elemental core, flexible 60-foot line/30-foot cone, five simultaneous resistances, enhanced Warding behavior, Wings at 1–4/5–10/11+, and automatic death-throes Flare at levels 1+ with recovery and delayed release at level 11+. **Recommendations below are not yet owner-approved**, and do not amend those already settled mechanics.
-
-| Remaining decision | Recommended value | Why |
-| --- | --- | --- |
-| **Breath Weapon dice** | **2d10 / 4d10 / 6d10 / 8d10** at total levels **1 / 5 / 11 / 17** | Match Platinum's direct breath damage. Fivefold exchanges its healing for **five selectable types**, fivefold resistance/warding and its independent Flare/Wrath offensive sequence. More breath damage is not necessary to correct the formerly missing flight and burst abilities. |
-| **Enhanced Warding unlock** | **Character level 5** | Retain the native ordinary Chromatic Warding threshold; one Action and one use per Long Rest still upgrades **all five 50% resistances to 100% for one minute** as already approved. No extra separate uses or immunity to unrelated conditions. |
-| **Fear-source immunity** | **Character level 1**, like Platinum's proposed champion motif | Immunity to **fear-originated** Shaken, Frightened, Panicked and fear-derived Cowering under native `rule.fear-family`; independently caused Cowering or nonfear effects are **not** negated. Do not silently add the Aspect's unrelated Blinded, Charmed, Deafened, Poisoned or Stunned immunities. |
-| **Failed-save protection** | **Beginning at character level 9**, once per Long Rest, after failure, turn **one failed saving throw into a success** | Uses the champion NPC's bounded protection translated to the existing Platinum character-level threshold; no monster Legendary Actions and no ability to change a roll that was not a saving throw. |
-| **Offensive fear** | **No fear rider on the Breath Weapon or Flare** | Retain the approved five-element breath and independent Flare identity rather than merging them with the **different** published champion's necrotic/fear breath. A new Dread mechanic would need separate justification and approval. |
-
-### Comparative balance at each progression point
-
-- **Levels 1–4:** Fivefold has five 50% resistances, damage-type versatility, the proposed 2d10 breath and one automatic 1d10 near-defeat Flare. Platinum has 2d10 breath **plus selective healing** and much broader Mind condition/sense benefits. The proposed fear immunity partially parallels Platinum without importing its sleep/paralysis immunity or Darkvision.
-- **Level 5:** Both gain the approved temporary powered flight stage; Fivefold's proposed enhanced Warding upgrades five types for one minute (Action, once per Long Rest) whereas Platinum gains broader healing at 4d10/2d10. **Fivefold can dominate an encounter whose threats rely on those five damage types**; this is exceptional-ancestry power, not ordinary balance.
-- **Level 9:** A once-per-Long-Rest failed-save intervention would be shared with Platinum. This is a general champion defense, but Fivefold still lacks Platinum's progressive senses and other Mind immunities. At this level Fivefold also has its 2d10 death-throes Flare.
-- **Level 11+:** Both have continuous flight. Fivefold's already approved **Chromatic Wrath** now prevents one otherwise qualifying zero-HP collapse, restores **2 × total level HP**, and lets the player immediately release or delay a **3d10/4d10 Flare**. Platinum instead heals through its breath and continues to improve its senses. Fivefold emphasizes survival and retaliation; Platinum retains sustained support/perception advantages.
-
-### Source distinctions and restraint
-
-*Fizban's Treasury of Dragons* (2021), **Aspect of Tiamat** (p. 166) supports five independent elemental affinities, fivefold immunity, flight, a mythic near-death return and Flare; **Dragonborn of Tiamat** (p. 185) separately provides frightened immunity, one failed-save success per day and a **necrotic fear breath**. The **Aspect has broader condition immunities** than the champion, but **none are automatically granted** to the Fivefold ancestry. Existing owner-approved Dragonborn design already adapts the sovereign features; the remaining champion-style defenses can be shared with Platinum without merging the champion's otherwise incompatible offensive breath.
-
-**Why no further powers:** Additional damage dice, free proactive Flare, monster-scale condition immunities or multiple independent breaths would increase complexity and dilute the established Flare-first last-stand character. The proposed package is intentionally powerful and encounter-dependent; it is **not a claim of numerical parity** with Platinum under every circumstance.
-
-**Approval boundary:** The five rows are a **single coherent recommended final set**, but each is an outstanding owner decision. Do **not** promote them to selected-native, update the Rite as approved, or infer a category-wide legendary chassis from this study. Once the user approves or modifies these values, update the authoritative Fivefold section and the Rite/summary docs, leaving Ruby's distinct sovereign design for its next pass.
-
-## Remaining choices before Fivefold is finalized
-
-**The staged Flare-first progression above is authoritative**, along with the approved Wings schedule. Historical numerical suggestions and the former level-11-only Flare design are retained only as research history where mentioned; they do not override the current approved feature package.
-
-**Approved area choice:** 60-foot-by-5-foot line or 30-foot cone, independently selected from the five approved damage types on each use. This explicitly exceptional feature is also available to Platinum Heart. It is not extended to ordinary Chromatic, Metallic or Gem ancestry.
-
-1. **Resolve only the remaining proposed mechanics:** **2d10 / 4d10 / 6d10 / 8d10** for the separate Breath Weapon at levels **1 / 5 / 11 / 17**, enhanced Warding at **level 5**, **fear-source immunity** at level 1, **one failed-save-to-success per Long Rest at level 9**, and **no offensive fear rider**. Wings and the **level-1 Flare / level-11 Wrath progression** are already approved.
-2. **After numerical approval:** Mark the Fivefold design finalized; validate exact source-qualified resistance/warding override semantics with the Pillar 2 general engine at implementation time.
-3. **General Rite integration:** Confirm resource transitions through rebirth without authoring a unique Fivefold exception.
-4. **Later playtesting:** Compare tactical strength against Platinum and Ruby without requiring equal feature counts or baseline ancestry parity.
 
 ## Explicit non-goals
 
