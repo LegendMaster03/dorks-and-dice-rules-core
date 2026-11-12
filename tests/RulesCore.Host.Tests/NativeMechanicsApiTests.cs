@@ -165,6 +165,44 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal("trusted_origin_state_required",
             denied.GetProperty("error").GetString());
 
+        // A stateless preview cannot authenticate a manifested biological
+        // parent or a previously completed transformation supplied by the caller.
+        var untrustedContributor = clean with
+        {
+            Contributors = [new NativeOriginContributor("claimed-parent",
+                new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.ManifestedProfile, "claimed-parent-state"),
+                new NativeOriginCurrentConfiguration("species.human", null, []))]
+        };
+        var forgedDecision = clean with
+        {
+            Resolutions = [new NativeOriginResolution("relationship",
+                NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: "unverified-dm-decision"))]
+        };
+        var forgedRequirement = clean with
+        {
+            InputRequirements = [new NativeOriginInputRequirement("claimed-requirement",
+                new(NativeOriginInputKind.Material), 0,
+                TableDecisionId: "claimed-decision")]
+        };
+        foreach (var unsafeProposal in new[]
+            { untrustedContributor, forgedDecision, forgedRequirement })
+        {
+            using var unsafeRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal = unsafeProposal
+                }));
+            using var refused = await fixture.Client.SendAsync(unsafeRequest);
+            Assert.Equal(HttpStatusCode.BadRequest, refused.StatusCode);
+            var refusal = await refused.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("trusted_origin_state_required",
+                refusal.GetProperty("error").GetString());
+        }
+
         // An ordinary content update changes the fingerprint, not user permission.
         using var previewRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
             JsonContent.Create(new { rulesetId = "first-party-001",

@@ -24,9 +24,14 @@ public static class NativeOriginApiEndpoints
                 return Error(503, "native_catalog_unavailable");
 
             if (request is null || request.Proposal is null ||
+                request.Proposal.Method is null ||
                 request.Proposal.Contributors is null ||
                 request.Proposal.Candidates is null ||
-                request.Proposal.Manifestations is null)
+                request.Proposal.Manifestations is null ||
+                request.Proposal.Contributors.Any(c => c is null || c.Source is null) ||
+                request.Proposal.Candidates.Any(c => c is null ||
+                    c.Identity is null || c.SelectionBasis is null) ||
+                request.Proposal.Manifestations.Any(m => m is null))
                 return Error(400, "invalid_origin_preview_request");
 
             if (!string.Equals(request.RulesetId, catalog.RulesetId,
@@ -46,8 +51,26 @@ public static class NativeOriginApiEndpoints
                 proposal.TemporaryTransformationPrecedence is not null ||
                 (proposal.History?.Count ?? 0) != 0 ||
                 (proposal.TableDecisions?.Count ?? 0) != 0 ||
+                // These are trusted inputs only after the actual contributor's
+                // saved manifested state and acquisition have been verified.
+                proposal.Contributors.Any(contributor =>
+                    contributor.Source.Kind == NativeOriginSourceKind.ManifestedProfile ||
+                    contributor.ManifestedProfile is not null ||
+                    (contributor.HistoricalSourceIds?.Count ?? 0) != 0) ||
+                // A scoped table decision cannot be smuggled in through a
+                // candidate, resolution, requirement or manifestation.
                 proposal.Candidates.Any(candidate =>
-                    candidate.SelectionBasis?.Eligibility == NativeOriginEligibility.DmAuthorized) ||
+                    candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized ||
+                    !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId)) ||
+                (proposal.Resolutions?.Any(resolution => resolution?.Basis is null ||
+                    resolution.Basis.Adjudication == NativeOriginAdjudication.DmAuthorized ||
+                    !string.IsNullOrWhiteSpace(resolution.Basis.TableDecisionId)) ?? false) ||
+                (proposal.Constraints?.Any(constraint =>
+                    constraint is null ||
+                    !string.IsNullOrWhiteSpace(constraint.TableDecisionId)) ?? false) ||
+                (proposal.InputRequirements?.Any(requirement =>
+                    requirement is null ||
+                    !string.IsNullOrWhiteSpace(requirement.TableDecisionId)) ?? false) ||
                 proposal.Manifestations.Any(manifest =>
                     !string.IsNullOrWhiteSpace(manifest.TableDecisionId)))
                 return Error(400, "trusted_origin_state_required");
