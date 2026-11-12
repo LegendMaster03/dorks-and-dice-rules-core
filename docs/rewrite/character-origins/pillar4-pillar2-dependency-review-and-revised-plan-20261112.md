@@ -8,6 +8,8 @@
 **Pillar 2 Phase 4:** `feature/pillar2-phase4-origination-rebirth-20261112`, merged as [PR #150](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/150) into the Pillar 2 development branch on November 12, 2026.  
 **Pillar 4 prototype implementation reviewed:** draft PRs [#146](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/146), [#148](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/148), [#149](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/149). All remain separate from `main`.
 
+**Shared integration contract (review handoff):** [Pillar 2/Pillar 4 provenance, authorization and transition reconciliation](pillar4-shared-origin-effect-contract-reconciliation-20261112.md). This follow-up distinguishes pre-API Pillar 2 contract corrections from the supernatural mechanics that remain Pillar 4 responsibilities.
+
 ## Executive decision
 
 **Pause expansion of the three Pillar 4 implementation PRs while reconciling them with the evolving Pillar 2 implementation.** Retain them as tested, restricted technical experiments; do not merge them into the Pillar 2 development branch without a deliberate contract-alignment pass.
