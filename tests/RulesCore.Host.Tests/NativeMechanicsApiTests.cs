@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Host;
+using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -124,6 +125,57 @@ public sealed class NativeMechanicsApiTests
             if (App is not null) await App.DisposeAsync();
             if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task OriginPreviewRejectsUntrustedBaselineAndDoesNotRequireFixedFingerprint()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var clean = new NativeOriginProposal(
+            "draft-1", NativeOriginIntent.Direct,
+            new NativeOriginMethodReference("unknown-method-rule", "direct"),
+            [], [], []);
+
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint, new
+        {
+            rulesetId = "first-party-001", fingerprint = "outdated",
+            proposal = clean
+        });
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var wrongIdentity = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new {
+                rulesetId = "unrelated-ruleset", fingerprint = "outdated",
+                proposal = clean
+            })));
+        Assert.Equal(HttpStatusCode.Conflict, wrongIdentity.StatusCode);
+
+        using var forgedBaseline = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "outdated",
+                proposal = clean with {
+                    ExistingConfiguration = new NativeOriginCurrentConfiguration(
+                        "species.human", null, [])
+                }
+            })));
+        Assert.Equal(HttpStatusCode.BadRequest, forgedBaseline.StatusCode);
+        var denied = await forgedBaseline.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("trusted_origin_state_required",
+            denied.GetProperty("error").GetString());
+
+        // An ordinary content update changes the fingerprint, not user permission.
+        using var previewRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new { rulesetId = "first-party-001",
+                fingerprint = "outdated", proposal = clean }));
+        using var preview = await fixture.Client.SendAsync(previewRequest);
+        Assert.Equal(HttpStatusCode.OK, preview.StatusCode);
+        var content = await preview.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(content.GetProperty("previewOnly").GetBoolean());
+        Assert.True(content.GetProperty("contentChangedSinceRequest").GetBoolean());
+        Assert.Equal("first-party-001", content.GetProperty("rulesetId").GetString());
+        Assert.True(content.GetProperty("result").TryGetProperty("issues", out _));
     }
 
     [Theory]
