@@ -124,8 +124,8 @@ public sealed class NativeOriginPermanentReconstructionEngine(NativeCatalogSnaps
 
         // The method entry alone never authorizes a completed transition.
         // Rite currently has no selected-native individual procedure, so it
-        // retains its exact scoped-DM authorization requirement. Other methods
-        // may later use a native completion service verifying authored rules.
+        // requires a scoped DM decision in practice. Any method may later use
+        // a verified selected-native individual completion procedure.
         var completion = Verified(rite ? "rite" : "permanent-reconstruction",
             request.CompletionId);
         var outcome = completion?.EffectiveOutcome ?? default;
@@ -137,7 +137,7 @@ public sealed class NativeOriginPermanentReconstructionEngine(NativeCatalogSnaps
             MatchesTarget(outcome, "targetAncestryId", ancestryId);
         // A verified but denying or mismatching DM decision cannot be silently
         // overridden by an unrelated first-party completion.
-        var nativeProof = !rite && completion is null && method is not null
+        var nativeProof = completion is null && method is not null
             ? nativeCompletionAuthority?.VerifyNativeCompletion(
                 method, request.CompletionId, existing, target)
             : null;
