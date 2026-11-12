@@ -74,6 +74,18 @@ This decision does **not** yet approve any exact abilities, numerical effects, a
 - A prospective **Draconic Warlock Patron** may reuse broad dragon-themed expressions through its own negotiated arrangements and source-specific progression. It is **only a future idea**, not an approved Patron or a prerequisite to Platinum rebirth. Warlock Patron, Pact, Invocations, and the Rite remain distinct systems.
 - Do not automatically confer a personality, alignment, duty, loyalty, or Upbringing because of the new Ancestry. The Metallic leader's direct participation does not by itself determine contractual terms.
 
+## Vassal ability allocation — 2026-11-11 working direction
+
+The *Vassal of Bahamut* prestige-class features are now **primarily candidate material for a future Draconic Warlock Patron**, not default Platinum Ancestry features. No source feature has been approved for either implementation.
+
+**Potential ancestry exception:** **Dragon Senses** aligns naturally with Platinum **Mind** because heightened innate sensory capacity is a characteristic of what the creature has become. This is a candidate only; exact senses, range and progression remain unsettled.
+
+**Dragonwrack**, despite its draconic name, is a specialized anti-dragon attack and retaliation effect, and appears more closely associated with a dragon's granted mission or power than innate Platinum biology. It remains a future Patron/prestige adaptation candidate, not a Heart grant.
+
+Imperious Aura, Platinum Armor, Shared Trove, bonus feats and divine spells are similarly **external patron/service-based candidate concepts**. They need not all become automatic Warlock class features: armor or trove could be negotiated gifts, feats might represent training, and spells could inform patron-specific spell access. Do not convert them into ancestry traits solely because the inspiration is Bahamut-linked.
+
+The prior **Sovereign Breath** proposal remains a separate, *unapproved* Heart exploration; none of these Vassal features supplies proof of or automatic content for it. The design boundary remains **inherent transformed characteristics versus externally granted patron benefits**.
+
 ## Research provenance and editorial boundary
 
 Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (Heart, Mind, Wings selection and HD-based enhancements); and *Book of Exalted Deeds* (3.5), **Vassal of Bahamut** as a distinct prestige-class source. Retain these as **internal source references only**. Player-facing first-party rules should use descriptive category-leader identities and independently written lore, rather than naming or reconstructing a recognizable D&D-specific character portrayal. Retaining the broad design themes does not authorize copying source prose or unique expression.
