@@ -328,6 +328,7 @@ class CharacteristicIdentityEvidenceTests(unittest.TestCase):
                         offer["provenance"],
                         candidate["contributorProvenance"]
                     )
+                    self.assertEqual(offer, candidate["originalOffer"])
                     self.assertIsNone(candidate["grantInstanceId"])
 
     def test_projection_is_pure_deterministic_and_does_not_modify_inputs(self):
