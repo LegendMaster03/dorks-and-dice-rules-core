@@ -71,6 +71,10 @@ A nested mixed parent can eventually provide a previously manifested copy of a m
 
 A fully custom character may someday select a permitted mechanic without a biological contributor. That is an **eligibility/authorization policy**, not a second trait-definition system. The current curated registry does not authorize custom selection.
 
+## Initial general reconciliation preview
+
+The companion [general proposed-characteristic reviewer](pillar2-general-reconciliation-preview-20261111.md) can consume the read-only identity projection, including curated literal identity annotations. It identifies when two proposed Amphibious offers use identical authored content and when comparable candidate definitions have distinct parameter configurations. **This only produces unresolved review relationships**. It does not modify the curated semantic review queue, turn a provisional definition ID into a grant, or select a duplicate-handling policy.
+
 ## Acceptance and next design work
 
 1. Continue **careful canonical trait review** of complete authored effects, particularly cases whose names or structures look similar but whose restrictions differ.
