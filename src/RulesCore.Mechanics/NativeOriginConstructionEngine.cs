@@ -106,6 +106,72 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         issues.AddRange(NativeOriginProcessEvaluator.Evaluate(proposal,
             _validator.FindMethod(proposal.Method), Verified));
 
+        // An authenticated table may replace a source acquisition gate or
+        // authorize a new method without rewriting native catalog metadata.
+        issues.RemoveAll(issue =>
+            issue.Code == "origin-source-restricted" &&
+            JsonString(Verified("source", issue.Path)?.EffectiveOutcome ?? default,
+                "eligibility") == "eligible" ||
+            issue.Code == "method-not-in-native-catalog" &&
+            ReadBool(Verified("method", proposal.Method.MethodId)?.EffectiveOutcome ?? default,
+                "allow") == true);
+        if (proposal.Intent is NativeOriginIntent.Mixed or NativeOriginIntent.Custom &&
+            manifests.Count == 0)
+            Add("origin-selection-incomplete", "manifestations",
+                NativeOriginIssueSeverity.Incomplete,
+                "A proposed mixed or custom Origin needs selected, authorized characteristics.");
+
+        // These fields represent preexisting state, not executable transformations.
+        // Untrusted serialized authority claims must never certify alternate forms.
+        if (proposal.ActiveTemporaryTransformation is { } active &&
+            ReadBool(Verified("active-form", active.Id)?.EffectiveOutcome ?? default,
+                "allow") != true)
+            Add("active-form-authorization-deferred", active.Id,
+                NativeOriginIssueSeverity.Unresolved,
+                "Phase 2 preserves active form evidence but does not verify the form transition.");
+        if (proposal.ExistingEffectiveConfigurationBasis is { } effectiveBasis)
+        {
+            var decision = Verified("configuration", proposal.Id);
+            var matches = decision is not null && decision.Id == effectiveBasis.TableDecisionId &&
+                decision.EffectiveOutcome.ValueKind == JsonValueKind.Object &&
+                decision.EffectiveOutcome.TryGetProperty("configuration", out var config) &&
+                proposal.ExistingEffectiveConfiguration is not null &&
+                JsonElement.DeepEquals(config,
+                    JsonSerializer.SerializeToElement(proposal.ExistingEffectiveConfiguration));
+            if (effectiveBasis.Adjudication == NativeOriginAdjudication.DmAuthorized && !matches)
+                Add("effective-configuration-claim-unverified", "existingEffectiveConfigurationBasis",
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The full alternate configuration lacks a matching authenticated ruling.");
+            if (effectiveBasis.Adjudication == NativeOriginAdjudication.Supported)
+                Add("effective-configuration-rule-not-executed", "existingEffectiveConfigurationBasis",
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The authored non-form configuration rule has not been executed.");
+        }
+        if (proposal.TemporaryTransformationPrecedence is { } precedence)
+        {
+            var approved = Verified("form-precedence", proposal.Id);
+            var matches = approved?.Id == precedence.TableDecisionId &&
+                JsonString(approved!.EffectiveOutcome, "effectiveFormId") ==
+                    proposal.ActiveTemporaryTransformation?.FormId;
+            if (precedence.Adjudication == NativeOriginAdjudication.DmAuthorized && !matches ||
+                precedence.Adjudication == NativeOriginAdjudication.Supported)
+                Add("form-precedence-not-executed", "temporaryTransformationPrecedence",
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Concurrent form precedence needs executed native or matching authenticated evidence.");
+        }
+        foreach (var applicability in request.IndependentGrantApplicability ?? [])
+            if (applicability.Basis?.Adjudication == NativeOriginAdjudication.DmAuthorized)
+            {
+                var decision = Verified("independent-grant", applicability.GrantId);
+                if (decision?.Id != applicability.Basis.TableDecisionId ||
+                    JsonString(decision!.EffectiveOutcome, "state") !=
+                        applicability.State.ToString())
+                    Add("independent-applicability-claim-unverified", applicability.GrantId,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "Independent grant applicability needs matching authenticated evidence.");
+            }
+
+
         if (proposal.Intent == NativeOriginIntent.Direct)
             foreach (var candidate in proposal.Candidates.Where(x =>
                 x.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
@@ -381,6 +447,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         return !selected.Any(id => issue.Path.StartsWith("candidates." + id,
             StringComparison.Ordinal));
     }
+
+    private static bool? ReadBool(JsonElement value, string key) =>
+        value.ValueKind == JsonValueKind.Object &&
+        value.TryGetProperty(key, out var result) &&
+        result.ValueKind is JsonValueKind.True or JsonValueKind.False
+            ? result.GetBoolean() : null;
 
     private static bool SameJson(JsonElement x, JsonElement y) =>
         JsonElement.DeepEquals(x, y);
