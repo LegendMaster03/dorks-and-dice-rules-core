@@ -772,7 +772,8 @@ public sealed class NativeOriginConstructionTests
         var inherited = new NativeOriginContributor("parent",
             new(NativeOriginInputKind.BiologicalParent),
             new(NativeOriginSourceKind.ManifestedProfile, parent.Profile.Id),
-            new("species.elf", "ancestry.elf.high", [feature]),
+            new("species.elf", "ancestry.elf.high", [feature],
+                parent.Profile.Current.ProfileId),
             ["species.human", "species.elf"]);
         var proposal = Proposal("caster-child", NativeOriginIntent.Mixed,
             contributors: [inherited]);
