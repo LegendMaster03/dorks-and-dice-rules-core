@@ -1,13 +1,13 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (working concept)
 
 **Date:** 2026-11-11  
-**Status:** Exploratory mechanical direction only; not approved native Ancestry, playable traits, feature progression, or finalized numbers. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn); mechanical feature candidates, advancement, and numeric values remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Purpose
 
 A Platinum Dragonborn should **represent the singular sovereign of Metallic Dragons**, not simply be a stronger Gold Dragonborn or a sum of all five common Metallic Ancestries. Its exceptional qualities should communicate the physical and supernatural identity of that sovereign through three complementary expressions: **Heart, Mind, and Wings**.
 
-These are independent design themes, **not a decision to reproduce the original 3.5 aspect rules, require selecting exactly one, or create a separate class advancement path**. The character remains Dragonborn of the Dragon creature type. Exceptional rebirth completely replaces the existing Species/Ancestry configuration, preserves historical parentage and cultural history, and normally requires the Metallic leader's direct personal participation. Exceptional forms are not ordinary creation options without DM approval, and are intentionally substantially stronger than standard Dragonborn.
+**Approved structure:** Every Platinum Dragonborn manifests **Heart, Mind, and Wings together** through the exceptional rebirth. None is an exclusive selection or an optional replacement for another. These three expressions establish ancestry identity, **not** the original 3.5 aspect-selection mechanic, a separate class, three automatic fully specified feature packages, or any approved feature progression. The character remains Dragonborn of the Dragon creature type. Exceptional rebirth completely replaces the existing Species/Ancestry configuration, preserves historical parentage and cultural history, and normally requires the Metallic leader's direct personal participation. Exceptional forms are not ordinary creation options without DM approval, and are intentionally substantially stronger than standard Dragonborn.
 
 The three-factor **ordinary** Dragonborn formula (category, skin material, damage type) does not dictate the exceptional Platinum's mechanical architecture or automatically select an elemental damage type.
 
@@ -20,7 +20,7 @@ The three-factor **ordinary** Dragonborn formula (category, skin material, damag
 
 **Design consequence:** Simply offering an additional breath mode, more vision range, or a duplicate resistance does not alone establish the exceptional sovereign's identity. Each expression should change what the character *can do* in a recognizable way.
 
-## Three expressions: candidate mechanical roles
+## Three inherent expressions: candidate mechanical roles
 
 | Expression | Core role | Preliminary candidates, explicitly **not** grants |
 | --- | --- | --- |
@@ -34,13 +34,11 @@ These are **mechanical roles and possible expressions**, not numeric choices, ex
 
 A later feature could combine **Heart** (projects a protective or forceful effect), **Mind** (identifies or anticipates the relevant threat), and **Wings** (interposes or directs the effect across space). This is one possible way to represent the sovereign as a whole, rather than assigning three disconnected abilities. No unique action, reaction, cost, timing, duration, targeting, or power tier has been selected.
 
-## Proposed structural alternatives for review
+## Approved expression structure and pending feature design
 
-1. **Exclusive aspect:** At rebirth choose only Heart, Mind, or Wings, as in the historical source inspiration. Advantage: strong specialization. Concern: each character may exhibit only a fraction of what should define the singular Platinum sovereign.
-2. **All three expressions:** Rebirth grants a coherent initial manifestation of each; their power can scale or receive explicit enhancements. Advantage: every Platinum Dragonborn represents the complete leader identity. Concern: too many simultaneous features can become complicated even when intentionally powerful.
-3. **All three, with one emphasis:** Every Platinum Dragonborn manifests Heart, Mind, and Wings, while a chosen emphasis gains extra or earlier refinements. Advantage: whole-leader identity plus individual variation. Concern: introduces a selection contract and separate progression balance, which needs its own justification.
+**Every Platinum Dragonborn has all three expressions: Heart, Mind, and Wings.** The Rite grants the complete Platinum ancestry; there is **no one-of-three choice** and no need to select a preferred expression to receive the others. All three must be represented in its eventual authored mechanical identity.
 
-**Working recommendation:** Explore **all three expressions** as the shared foundation, with **optional emphasis** considered only if it improves meaningful character differentiation. Do **not** approve a required choice, three independent feature trees, or fixed advancement milestones yet.
+This decision does **not** yet approve any exact abilities, numerical effects, activation requirements, trait resources, or level thresholds. A future proposal could investigate extra customization within an expression, but no emphasis/specialization choice, competing progression trees, or substitute aspect path is part of the current approved design. Avoid presenting them as default acquisition options.
 
 ## Timing and cross-pillar separation
 
@@ -56,7 +54,7 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 
 ## Questions for a later decision pass
 
-1. Should every Platinum Dragonborn possess all three expressions, or does a favored expression add meaningful progression diversity?
+1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
 2. What is the Platinum Breath's distinctive mechanic relative to ordinary Breath Weapon **and** the Metallic family's Enervating/Repulsion options? Which damage affinity, if any, defines it?
 3. Does Mind emphasize sensing, anticipation, will, or a linked progression without making all special senses permanently available?
 4. Does Wings grant permanent flight immediately on rebirth, and what secondary wing ability makes it distinctive?
