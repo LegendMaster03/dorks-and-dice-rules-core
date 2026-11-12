@@ -119,6 +119,57 @@
         "https://www.d20srd.org/srd/combat/actionsInCombat.htm",
         "https://www.35srd.com/combat/attacksofopportunity/"
       ]
+    },
+    "ownerConversionAndAccessibilityConcerns": {
+      "status": "owner concern and option exploration; NOT approval to enable or implement a variant",
+      "expectedPrimaryUse": "Owner expects many adopters to convert 5.x characters, creatures, abilities, and encounters into Dorks & Dice. This is an expectation to test, not verified usage statistics.",
+      "desiredGameplayValue": "Future borrowing makes reacting a forward-looking opportunity-cost decision and may reward planning, positioning, and deliberate ability use; strict shared-pool coupling is less attractive to the owner.",
+      "obstacle": "An optional universal future-borrowing rule may change action costs and effective power across imported 5.x features that assumed independent Bonus Action and Reaction allowances. The rule could also create a substantial unfamiliarity barrier for players accustomed to 5.x.",
+      "asymmetricConsequences": [
+        "A combatant with a frequently useful Bonus Action loses more on future borrowing than a combatant with no useful Bonus Action.",
+        "Imported defensive Reactions, opportunity attacks, and cooperative Reaction contributions can become less attractive or unexpectedly expensive.",
+        "Converted enemy statblocks and mixed-complexity parties may also experience behavior changes; source conversion cannot guarantee original encounter balance under a different action economy.",
+        "A campaign-wide optional action economy could require a second supported balance/acceptance matrix for converted content, rather than becoming safe just by being optional."
+      ],
+      "ownerIntent": "Interested in retaining the tactical trade-off as an optional rule if viable, but currently considers the balance and onboarding implications serious enough that adopting it as an ordinary or supported optional rule may be unreasonable.",
+      "architectureBoundary": "A change to shared action budgets is an encounter/campaign rule, not an individual player's independent rules mode; the established single coherent encounter applies regardless of Standard/Complex Combatant model.",
+      "openAlternatives": [
+        {
+          "id": "familiar-default",
+          "status": "proposal",
+          "description": "Retain independent 5.x-like Bonus Action/Reaction costs as the ordinary native baseline; assess whether any variant is feasible separately."
+        },
+        {
+          "id": "experimental-campaign-variant",
+          "status": "proposal",
+          "description": "If design and playtests eventually justify it, offer explicit opt-in at campaign/encounter scope with visible compatibility and balancing warnings, not automatic activation for converted 5.x content."
+        },
+        {
+          "id": "feature-specific-advanced-tradeoffs",
+          "status": "proposal",
+          "description": "Consider explicitly granted native abilities that incur a future Bonus Action cost without making every standard 5.x Reaction or imported feature pay that cost."
+        },
+        {
+          "id": "tactical-depth-without-global-coupling",
+          "status": "proposal",
+          "description": "Investigate positioning, telegraphed behaviors, Ready-like commitments, defenses and advanced maneuvers as sources of planning decisions without altering all imported reaction costs."
+        }
+      ],
+      "decisionsNotMade": [
+        "No global or variant future-borrowing rule approved",
+        "No 5.x compatibility mode or campaign setting approved",
+        "No import rebalance/conversion algorithm approved",
+        "No feature-specific resource borrowing grant approved",
+        "No native default Reaction budget or refresh contract approved"
+      ],
+      "acceptanceQuestions": [
+        "Does the variant meaningfully improve ordinary encounter decisions rather than merely make reactions rarer?",
+        "What existing 5.x Bonus Action/Reaction-heavy builds or monster features become weaker or stronger, and is this acceptable?",
+        "Do converted 5.x encounters remain playable without manual rebalancing?",
+        "Can first-time 5.x players understand and consciously opt into a different cost model?",
+        "Can simpler and advanced players still participate in one coherent encounter?",
+        "Are the development, testing and support costs justified compared with targeted tactical features?"
+      ]
     }
   }
 }
