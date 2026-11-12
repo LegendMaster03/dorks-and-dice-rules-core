@@ -66,20 +66,63 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             }
         }
 
+        // Binding contexts follow the selected leaf to its root. A shared Species
+        // characteristic may depend on an authored descendant field, without
+        // changing the source occurrence of the characteristic itself.
+        var directLineage = ancestors.ToList();
+        if (parentSpecies is not null) directLineage.Add(parentSpecies);
+
         if (proposal.Intent == NativeOriginIntent.Direct)
         {
             if (selectedSpecies is not null)
-                AddSource(new(NativeOriginSourceKind.Native, selectedSpecies), null, true);
+                AddSource(new(NativeOriginSourceKind.Native, selectedSpecies), null, true,
+                    lineage: directLineage);
             foreach (var ancestor in ancestors.AsEnumerable().Reverse())
                 AddSource(new(NativeOriginSourceKind.Native, ancestor.Id), null, true,
-                    ancestor.Id != selectedAncestry);
+                    ancestor.Id != selectedAncestry, directLineage);
         }
 
         foreach (var contributor in proposal.Contributors ?? [])
         {
             if (contributor is null || contributor.Source is null) continue;
             if (contributor.Source.Kind == NativeOriginSourceKind.Native)
-                AddSource(contributor.Source, contributor.Id, false);
+            {
+                // An Ancestry contributor supplies its actual Species/family source
+                // chain as separate offers. Repeated shared roots remain identical
+                // authored occurrences, not a second full grant package.
+                var lineage = new List<NativeRuleEntity>();
+                var visitedLineage = new HashSet<string>(StringComparer.Ordinal);
+                string? next = contributor.Source.Id;
+                while (next is not null && visitedLineage.Add(next) &&
+                    visitedLineage.Count <= 64)
+                {
+                    if (!catalog.TryGetById(next, out var entity) || entity is null ||
+                        entity.Category is not ("species" or "ancestry"))
+                    {
+                        Issue("contributor-lineage-unavailable", contributor.Id + ":" + next,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "Contributor parentage must resolve to native Species/Ancestry.");
+                        break;
+                    }
+                    lineage.Add(entity);
+                    if (entity.Category == "species") break;
+                    next = String(entity.Definition, "parent");
+                    if (next is null)
+                        Issue("contributor-lineage-incomplete", contributor.Id + ":" + entity.Id,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The contributor Ancestry has no authored parent.");
+                }
+                if (next is not null && visitedLineage.Count > 64 ||
+                    next is not null && visitedLineage.Contains(next) &&
+                    lineage.Count > 0 && lineage[^1].Id != next)
+                    Issue("contributor-lineage-cycle", contributor.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A contributor's Ancestry chain contains a cycle.");
+                foreach (var entity in lineage.AsEnumerable().Reverse())
+                    AddSource(new(NativeOriginSourceKind.Native, entity.Id,
+                        contributor.Source.Version), contributor.Id, false,
+                        lineage: lineage);
+            }
             else if (contributor.Source.Kind == NativeOriginSourceKind.ManifestedProfile)
             {
                 if (contributor.ManifestedProfile is null)
@@ -135,7 +178,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             issues.Add(new(code, path, severity, detail));
 
         void AddSource(NativeOriginSourceReference source, string? contributorId, bool direct,
-            bool inheritedFamily = false)
+            bool inheritedFamily = false, IReadOnlyList<NativeRuleEntity>? lineage = null)
         {
             if (!catalog.TryGetById(source.Id, out var entity) || entity is null ||
                 entity.Category is not ("species" or "ancestry"))
@@ -232,18 +275,51 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                     if (!trait.EnumerateObject().Any(p =>
                         p.Name is not ("id" or "name" or "description" or "reviewNotes")))
                         unresolved.Add("Source trait has descriptive text but no normalized mechanics.");
-                    // Source-dependent references must be bound by authored policy in later phases.
-                    if (trait.GetRawText().Contains("selected-dragonborn-", StringComparison.Ordinal))
-                        unresolved.Add("Leaf-dependent source binding requires an approved relationship.");
+                    var parameters = new Dictionary<string, JsonElement>(StringComparer.Ordinal);
+                    if (trait.TryGetProperty("originBindings", out var bindingDefinitions) &&
+                        bindingDefinitions.ValueKind == JsonValueKind.Object)
+                    {
+                        foreach (var binding in bindingDefinitions.EnumerateObject())
+                        {
+                            var field = String(binding.Value, "sourceField");
+                            var lookup = String(binding.Value, "lookup");
+                            IReadOnlyList<NativeRuleEntity> targets = lineage is { Count: > 0 } ?
+                                lineage : [entity];
+                            // An effective intrinsic choice is bound only after the
+                            // selected grants survive reconciliation.
+                            if (lookup == "manifested-intrinsic") continue;
+                            var sourceEntity = lookup switch
+                            {
+                                "leaf" => targets.FirstOrDefault(),
+                                "nearest" => targets.FirstOrDefault(x => field is not null &&
+                                    x.Definition.TryGetProperty(field, out _)),
+                                _ => null
+                            };
+                            if (field is null || sourceEntity is null ||
+                                !sourceEntity.Definition.TryGetProperty(field, out var bound) ||
+                                bound.ValueKind is JsonValueKind.Null or JsonValueKind.Undefined)
+                                unresolved.Add("Unresolved authored source binding: " + binding.Name);
+                            else
+                                parameters[binding.Name] = bound.Clone();
+                        }
+                    }
+                    // Symbolic fields are not executable without a complete authored
+                    // parameter mapping. The bound values remain separate from the
+                    // immutable source trait definition.
+                    if (trait.GetRawText().Contains("selected-dragonborn-", StringComparison.Ordinal) &&
+                        (bindingDefinitions.ValueKind != JsonValueKind.Object ||
+                         parameters.Count != bindingDefinitions.EnumerateObject().Count()))
+                        unresolved.Add("Source-dependent trait parameters remain unbound.");
                     var id = "trait:" + (String(trait, "id") ?? (index - 1).ToString());
                     Add(path, NativeOriginCharacteristicKind.Trait, null, offered, choices,
-                        source.Id + "#" + id, unresolved);
+                        source.Id + "#" + id, unresolved, parameters);
                 }
             }
 
             void Add(string property, NativeOriginCharacteristicKind kind, string? slot,
                 JsonElement? value, IReadOnlyList<NativeOriginChoiceRequirement>? choices = null,
-                string? definitionId = null, IReadOnlyList<string>? unresolved = null)
+                string? definitionId = null, IReadOnlyList<string>? unresolved = null,
+                IReadOnlyDictionary<string, JsonElement>? parameters = null)
             {
                 var path = property.StartsWith('/') ? property : "/" + property;
                 var candidateId = (contributorId is null ? "direct" : "contributor:" + contributorId) +
@@ -252,7 +328,8 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                     new(source, path), definitionId ?? entity.Id + "#" + path,
                     IntrinsicSlotId: slot);
                 candidates.TryAdd(candidateId, new(candidateId, identity, basis, contributorId, value,
-                    RequiredChoices: choices, UnresolvedEvidence: unresolved));
+                    OfferedParameters: parameters, RequiredChoices: choices,
+                    UnresolvedEvidence: unresolved));
             }
         }
     }

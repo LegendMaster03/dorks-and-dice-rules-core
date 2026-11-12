@@ -8,6 +8,13 @@
   "traits": [
     {
       "id": "arcane-cantrip",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "description": "Know one Wizard cantrip; replace it with another Wizard cantrip after each Long Rest.",
       "spellList": "wizard",
       "level": 1,
@@ -15,6 +22,13 @@
     },
     {
       "id": "detect-magic",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "description": "At level 3, know Detect Magic; once per Long Rest free, and also with spell slots.",
       "spell": "detect-magic",
       "level": 3,
@@ -24,6 +38,13 @@
     },
     {
       "id": "misty-step",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "description": "At level 5, know Misty Step; once per Long Rest free, and also with spell slots.",
       "spell": "misty-step",
       "level": 5,

@@ -265,7 +265,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 if (req.OptionCatalogId is not null &&
                     (string.IsNullOrWhiteSpace(choice.CatalogEligibilityEvidenceId) ||
                      authority is null || request.TrustedScope is null ||
-                     choice.SelectedOptionIds.Any(x => !authority.AuthorizesCatalogChoice(
+                     (choice.SelectedOptionIds ?? []).Any(x => !authority.AuthorizesCatalogChoice(
                          req.OptionCatalogId, x, choice.CatalogEligibilityEvidenceId!))))
                 {
                     Add("choice-authorization-unresolved", candidate.Id + ":" + req.Id,
@@ -334,7 +334,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             if (candidate.OfferedValue is null &&
                 candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
                 requirements.Count > 0 && !choices.Any(x =>
-                    x.SelectedOptionIds.Any(id => value?.ValueKind == JsonValueKind.String &&
+                    (x.SelectedOptionIds ?? []).Any(id => value?.ValueKind == JsonValueKind.String &&
                         value.Value.GetString() == id)))
             {
                 Add("intrinsic-choice-value-mismatch", candidate.Id,
@@ -370,11 +370,18 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
+        // Source-authored parameters that reference another selected characteristic
+        // are resolved only after the intrinsic candidates have been reconciled.
+        // Unresolved prerequisites cannot leave an active dependent trait behind.
+        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(resolved);
+        resolved = bound;
+        issues.AddRange(bindingIssues);
         if (reconciliationDm)
             foreach (var resolution in proposal.Resolutions ?? [])
             {
                 var decision = Verified("relationship", resolution.RelationshipId);
-                if (decision?.Id == resolution.Basis?.TableDecisionId)
+                if (decision is not null &&
+                    decision.Id == resolution.Basis?.TableDecisionId)
                     verifiedDmDecisionIds.Add(decision.Id);
             }
 
