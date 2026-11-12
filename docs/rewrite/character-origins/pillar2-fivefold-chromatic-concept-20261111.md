@@ -101,6 +101,27 @@ Reference: *Fizban's Treasury of Dragons* (2021), Aspect of Tiamat, p. 166. A me
 
 **Approved tradeoff:** Flare is **only available through a Chromatic Wrath activation**, at most once in the following one-minute window. It cannot be activated proactively. A separate proactive Flare is merely a possible later playtest alternative, not a second approved use.
 
+### Flare-first progression — new proposal, pending owner approval (2026-11-11)
+
+**New owner direction for evaluation:** Chromatic Flare should be available **before** level 11, functioning as a death-throes elemental eruption while the character is reduced to **0 HP and begins death saving throws**. **Chromatic Wrath's HP restoration and the option to defer Flare** arrive later. This is a **proposed revision to the previously approved level-11-only Wrath/Flare package**; until accepted, the existing approved level-11 sequence above remains authoritative. The following exact lower-level dice, levels and activation semantics are recommended implementation details, not yet separately approved.
+
+| Total character level | Suggested Flare damage | Trigger, recovery and timing |
+| --- | --- | --- |
+| **1–4** | **1d10** | When damage reduces the character to 0 HP without killing them outright, **Flare immediately and automatically resolves**, with **no Action or Reaction**. The character still becomes Unconscious and begins normal death saves; **no HP is restored**. |
+| **5–10** | **2d10** | Same automatic zero-HP trigger, no recovery and no timing choice. |
+| **11–16** | **3d10** | **Chromatic Wrath** now prevents the 0-HP outcome, leaving the character conscious with HP equal to **twice current character level**. Player may release **one Flare automatically at that moment**, or delay it up to **one minute** and release it with **one Action** while able to act. |
+| **17+** | **4d10** | Same Wrath recovery and choice of immediate or delayed Flare. |
+
+**Proposed invariant parameters:** One **15-foot-radius** elemental burst centered on the Dragonborn, affecting **other creatures selected at resolution** within that area. Choose **one** Acid, Cold, Fire, Lightning or Poison damage type per Flare; affected targets make a Dexterity save against DC **8 + PB + Constitution modifier**, taking half damage on success. The **entire Flare/Wrath sequence has one shared use per Long Rest**. It neither spends a normal Breath Weapon charge nor restores Breath Weapon, Warding, limited-save protection, or other spent resources. The feature grants neither extra turns nor any monster Legendary Actions.
+
+**0-HP/Unconscious interaction:** Dorks & Dice keeps 5e-style death saving throws and its native Unconscious condition imposes Incapacitated. Accordingly, the lower-level Flare must be an **explicit automatic triggered effect**, not an ordinary Action, Reaction, or permission to act while Unconscious. Resolve the damage event and verify the creature is **not killed outright**, then resolve the triggered Flare as a specific exception to ordinary incapacitation; the Dragonborn **remains at 0 HP**, becomes Unconscious and proceeds with death saving throws under ordinary timing. Target and damage-type selection are limited decisions made to resolve this intrinsic triggered effect; they grant no broader awareness or ability to take actions while unconscious. If a separate effect actually prevents the drop to 0 HP, this Flare trigger does not automatically occur. A character who was already at 0 HP does not receive a second trigger from additional damage.
+
+**Level-11+ recovery and timing:** Chromatic Wrath replaces the entry into death saves for this trigger, retaining the original approved **2 × total character level HP**, once per Long Rest. The Flare may erupt **immediately at no Action cost** (the earlier-level behavior still exists), or be **held** for up to a minute and released using an Action; both consume the **same single shared use**. A Flare not released by the end of the minute expires. Being incapacitated during the optional release prevents taking that Action. Holding Flare does **not** delay or repeat the Wrath recovery.
+
+**Balance and scope:** At low levels Flare is a last-chance area attack and **does not save the Dragonborn from dying**, so its triggering during death saves adds offensive identity without the extraordinary level-11 recovery. At high levels, recovery and controlled timing transform the same feature rather than giving a second free power. The proposed lower dice follow the existing **3d10 at 11–16 / 4d10 at 17+** approved endpoint, with 1d10/2d10 at earlier level bands. This does not change the separate, unapproved Fivefold **Breath Weapon** dice proposal. Compare low-level playtest lethality, friendly-fire selection, and overlaps with other 0-HP prevention features before implementation.
+
+**Approval checkpoint:** This subsection is a **candidate staged replacement** for the level-11-only trigger. It does **not** amend the existing approved feature until the owner selects this progression. The existing approved level-11 Wrath/Flare timing remains in force meanwhile; no native JSON or runtime changes are made.
+
 ### Consolidated Fivefold identity — approved features and remaining proposals
 
 - **Elemental sovereignty:** Already-approved five type choices and two areas for the one damaging breath; **2d10/4d10/6d10/8d10** at level 1/5/11/17 remains the leading unapproved numerical candidate.
