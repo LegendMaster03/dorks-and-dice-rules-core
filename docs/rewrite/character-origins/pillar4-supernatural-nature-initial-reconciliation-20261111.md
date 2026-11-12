@@ -126,6 +126,23 @@ These examples do not prescribe official published mechanics or approve original
 - https://bg3.wiki/wiki/Partial-illithid
 - https://bg3.wiki/wiki/Full-illithid
 
+## Owner-selected primary framework tests: four distinct cases
+
+**Status:** Owner-selected design coverage (2026-11-12). All four examples remain **primary test cases**. This selection does not approve individual supernatural features, numerical progression, balance, creature classifications, transmission mechanics, or native content.
+
+| Primary case | Principal category or scope | Key framework pressure |
+| --- | --- | --- |
+| **Draconic Bloodline** | **Type 1 — modification only** | Progressive inherited supernatural traits without a new Species/Ancestry configuration, a required active alternate form, or automatic Sorcerer levels |
+| **Full vampire** | Extensive **persistent supernatural modification**; **Type 2** as well if an authored vampire has alternate forms | Persistent changes to anatomy/needs, weaknesses, feeding or other resource dependencies, creature classification, Class-feature applicability, and potential alternate forms and restrictions |
+| **Lycanthropy** | **Type 2 — modification plus temporary effective form replacement** | Multiple alternate forms with varying mechanical replacement scopes; active Species/Ancestry substitution, reversion, form-dependent Class/equipment access, and setting-specific triggers and agency |
+| **Ceremorphosis** | **Type 3 — modifications progressing to permanent reconstruction** | Optional powers and intermediate changes, alternate progression paths, eventual authoritative Species/Ancestry replacement, and explicit selective retention of independently earned abilities |
+
+**Do not collapse full vampire into a trivial modification-only boundary test or remove the Bloodline case.** They examine different potential failures: the Bloodline tests source-limited progressive acquisition without replacement; full vampirism tests broad persistent effects that remain mechanically significant even when no alternate form is active. Lycanthropy primarily stresses **temporary** replacement and restoration, and ceremorphosis **permanent** reconstruction. Vampirism may also use the temporary-form mechanism but does not have to do so under every authored variant.
+
+**Coverage is not a forced one-to-one mapping to the three categories.** The four examples are selected because they exercise independent dimensions of the shared framework; particular implementations may combine categories or use different authored policies. Each must have its own authored progression definition when the corresponding individual mechanics are reconciled.
+
+**Implementation sequence:** First specify common effect operations and form-specific replacement/retention/suppression scope against the existing Pillar 2 contract, then draft bounded acceptance scenarios for **all four** cases before building extensive native progressions. Keep ordinary Origin records, earned Class levels, inventory and resource histories authoritative; a temporary form may affect applicability without deleting entitlements. The actual evaluation and coordination with non-Origin mechanics belongs to shared Rules Core. DM/table overrides apply at every level.
+
 ## Three primary design cases
 
 ### Elf transformed into a Dhampir (reference-only, not native content)
