@@ -143,6 +143,12 @@ These examples do not prescribe official published mechanics or approve original
 
 **Implementation sequence:** First specify common effect operations and form-specific replacement/retention/suppression scope against the existing Pillar 2 contract, then draft bounded acceptance scenarios for **all four** cases before building extensive native progressions. Keep ordinary Origin records, earned Class levels, inventory and resource histories authoritative; a temporary form may affect applicability without deleting entitlements. The actual evaluation and coordination with non-Origin mechanics belongs to shared Rules Core. DM/table overrides apply at every level.
 
+### Shared effect/replacement-profile design handoff (2026-11-12)
+
+The four owner-selected primary architecture tests now have a [shared effect and replacement-profile specification](pillar4-shared-effect-and-replacement-profiles-20261112.md) and a [30-scenario design acceptance fixture](pillar4-four-case-profile-acceptance-20261112.json). The fixture consists of six shared invariants and six specific scenarios for each of **Draconic Bloodline**, **full vampire**, **lycanthropy**, and **ceremorphosis**. It is not executable gameplay validation or approved first-party progression content.
+
+The existing Pillar 2 production contract represents underlying/effective Species, persistent sources and temporary form provenance; its validator does **not** execute transformations. The proposed shared effect layer extends the effective character projection to Class-feature applicability, actions, casting, equipment use, ability scores, creature type, resources, and conditions **without deleting earned entitlements or duplicating the Origin engine**. General operations are proposed as retain, modify, suspend, replace and source-authorized grant, with explicit resolution of unknown rules and universal authorized DM overrides.
+
 ## Three primary design cases
 
 ### Elf transformed into a Dhampir (reference-only, not native content)
