@@ -104,8 +104,23 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                     "The selected source is not a playable native Species/Ancestry.");
                 return;
             }
-            var selectable = entity.Definition.TryGetProperty("selectable", out var flag) &&
-                flag.ValueKind == JsonValueKind.False ? NativeOriginEligibility.Restricted :
+            // A nonselectable base Species may be the required foundation of a
+            // playable Ancestry; this does not make the base selectable alone.
+            var paired = direct && entity.Category == "species" &&
+                selectedAncestry is not null &&
+                catalog.TryGetById(selectedAncestry, out var leaf) &&
+                leaf?.Category == "ancestry" &&
+                String(leaf.Definition, "parent") == entity.Id &&
+                (!leaf.Definition.TryGetProperty("selectable", out var leafFlag) ||
+                 leafFlag.ValueKind != JsonValueKind.False);
+            var restricted = entity.Definition.TryGetProperty("selectable", out var flag) &&
+                flag.ValueKind == JsonValueKind.False && !paired;
+            if (entity.Definition.TryGetProperty("acquisitionMethods", out var methods) &&
+                methods.ValueKind == JsonValueKind.Array &&
+                !methods.EnumerateArray().Any(x => x.ValueKind == JsonValueKind.String &&
+                    x.GetString() == proposal.Method.MethodId))
+                restricted = true;
+            var selectable = restricted ? NativeOriginEligibility.Restricted :
                 direct ? NativeOriginEligibility.Eligible : NativeOriginEligibility.Unreviewed;
             if (direct && selectable == NativeOriginEligibility.Restricted)
                 Issue("origin-source-restricted", source.Id, NativeOriginIssueSeverity.Unresolved,
