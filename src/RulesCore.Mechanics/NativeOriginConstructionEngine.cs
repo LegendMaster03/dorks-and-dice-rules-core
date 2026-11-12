@@ -103,6 +103,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         candidates = proposal.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var structural = _validator.ReviewProposal(proposal);
         issues.AddRange(structural.Issues.Where(x => !UnselectedOfferIssue(x, selected)));
+        issues.AddRange(NativeOriginProcessEvaluator.Evaluate(proposal,
+            _validator.FindMethod(proposal.Method), Verified));
 
         if (proposal.Intent == NativeOriginIntent.Direct)
             foreach (var candidate in proposal.Candidates.Where(x =>
