@@ -283,6 +283,16 @@ public sealed class NativeOriginPhase4Tests
     }
 
     [Fact]
+    public void PostOriginationRiteMethodAloneIsNotInitialCreationPermission()
+    {
+        var direct = new NativeOriginConstructionEngine(Catalog()).Evaluate(
+            new(Target("unexecuted-direct")));
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, direct.Status);
+        Assert.Contains(direct.Issues, x =>
+            x.Code == "post-origin-method-requires-existing-individual");
+    }
+
+    [Fact]
     public void UnauthorizedAndIncompleteRitesLeaveTheOldProfileUnchanged()
     {
         var old = Human();
