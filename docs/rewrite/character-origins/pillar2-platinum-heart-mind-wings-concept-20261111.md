@@ -1,7 +1,7 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (approved design)
 
 **Date:** 2026-11-11  
-**Status:** **OWNER-APPROVED PLATINUM MECHANICAL DESIGN** (2026-11-11). Heart, Mind and Wings, their numerical progressions, corresponding native baseline replacements, and total-character-level rebirth semantics are selected in the authoritative specification immediately below. **Implementation is pending** the broader Character Origins/Pillar 2 integration. Optional involuntary-fall protection and Rite resource carryover remain unapproved. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** **OWNER-APPROVED PLATINUM MECHANICAL DESIGN**, including the subsequent **per-use breath-area choice** (2026-11-11). Heart, Mind and Wings, their numerical progressions, corresponding native baseline replacements, and total-character-level rebirth semantics are selected in the authoritative specification immediately below. **Implementation is pending** the broader Character Origins/Pillar 2 integration. Optional involuntary-fall protection and Rite resource carryover remain unapproved. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Approved Platinum mechanics — authoritative design
 
@@ -19,17 +19,19 @@
 
 | Concern | Approved mechanic | Basis |
 | --- | --- | --- |
-| **Area** | **30-foot cone** from the Dragonborn | Adapted from the 5e champion rather than ordinary Metallic 15-foot cone |
+| **Area** | **Choose one complete area per use: a 60-foot line, 5 feet wide, or a 30-foot cone** | Exceptional flexibility; the line provides reach and the cone provides breadth. This does not change the ordinary Metallic 15-foot cone |
 | **Activation** | On your turn, **replace one attack of your Attack action** | Reuses the existing native Dragonborn action contract |
-| **Save** | All damaged creatures in the cone make a **Dexterity** save against **8 + PB + Constitution modifier**; success takes half damage | Reuses the native save formula |
+| **Save** | All damaged creatures in the **chosen area** make a **Dexterity** save against **8 + PB + Constitution modifier**; success takes half damage | Reuses the native save formula for either area |
 | **Damage** | **Radiant** damage: character levels **1–4: 2d10**, **5–10: 4d10**, **11–16: 6d10**, **17+: 8d10** | Double ordinary Dragonborn dice; *not* NPC 8d10 at all levels |
-| **Restoration** | When using the breath, designate **up to three other creatures in the cone**. They take **no damage from that breath** and instead regain HP: **1d10 / 2d10 / 3d10 / 4d10** at the same level thresholds | Source-inspired recipient count, half the damage dice |
+| **Restoration** | When using the breath, designate **up to three other creatures in the chosen area**. They take **no damage from that breath** and instead regain HP: **1d10 / 2d10 / 3d10 / 4d10** at the same level thresholds | Source-inspired recipient count, half the damage dice; identical healing rules for line and cone |
 | **Target semantics** | Chosen recipients are selected by the player, irrespective of creature alignment, ally/enemy relationship, or prior conditions; chosen recipients are healed **instead of** damaged. Other creatures in the area, including allies not chosen, face the save/damage. | One area, activation and output-selection contract |
 | **Healing cap** | Healing does not exceed the target's HP maximum; can restore a living creature at **0 HP**, but does **not revive a dead creature**, cure conditions, grant temporary HP, or heal the user unless within the authored area | No resurrection or independent Healing Touch |
 | **Use resource** | **PB uses per Long Rest**, shared across all uses of this one breath | Native Dragonborn model; not separate NPC Recharge 6 |
 | **Resistance** | Platinum's innate resistance is **50% radiant** (not permanent immunity) | Explicit singular-ancestry affinity |
 
-**One-attack consequence:** Replacing one attack, rather than using a full separate action, is intentional because ordinary Dragonborn already use that contract. **One use produces only one 30-foot cone**, even when the character has Extra Attack, Action Surge or similar effects; taking a separate legal Attack action could permit another use if resources remain. Prevent a single attack replacement from duplicating the area or reapplying healing. Existing ordinary Metallic secondary breath is excluded from the approved singular Platinum leaf.
+**One-attack consequence:** Replacing one attack, rather than using a separate full Action, is intentional because ordinary Dragonborn already use that contract. **At each activation choose exactly one area: either the full 60-foot-by-5-foot line or the full 30-foot cone.** The same single breath then damages unselected creatures and heals up to three selected other creatures **within that one chosen area**, not across both shapes. Extra Attack, Action Surge or similar effects do **not** cause a single breath use to create both shapes; another legal Attack action may permit another use if resources remain. Prevent one attack replacement from duplicating the area or reapplying healing. Ordinary Metallic secondary breath remains excluded from the singular Platinum leaf.
+
+**Area-selection authority:** This is an explicitly approved **exceptional Platinum Heart feature**. It does **not** change the ordinary Dragonborn category-area defaults or the existing mixed-Heritage rule under which each contributing **whole** area is independently eligible. The two complete geometries are fixed options granted by this exceptional breath; line length/width and cone length are not separately recombined.
 
 **Balance visibility (averages on dice, before saves/resistance):**
 

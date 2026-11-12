@@ -1,7 +1,7 @@
 # Pillar 2 — Fivefold Chromatic Dragonborn: exceptional ancestry design
 
 **Date:** 2026-11-11
-**Status:** **Owner-approved Fivefold core mechanics (2026-11-11)**: one Breath Weapon with a per-use choice among the five founding Chromatic damage types, simultaneous 50% resistance to those five types, and a single enhanced Chromatic Warding activation covering all five. **Exact breath geometry and dice, Warding unlock level, and any further fear or champion abilities remain undecided.** No selected-native exceptional gameplay or ordinary mixed-Heritage eligibility is authorized.
+**Status:** **Owner-approved Fivefold core mechanics (2026-11-11)**: one Breath Weapon with a per-use choice among the five founding Chromatic damage types, simultaneous 50% resistance to those five types, and a single enhanced Chromatic Warding activation covering all five. **Breath-area selection is also approved: a 60-foot-by-5-foot line or a 30-foot cone, chosen on each use. Breath damage dice, Warding unlock level, and any further fear or champion abilities remain undecided.** No selected-native exceptional gameplay or ordinary mixed-Heritage eligibility is authorized.
 
 ## Approved identity and acquisition boundaries
 
@@ -31,7 +31,7 @@ Source references: https://www.dndbeyond.com/sources/dnd/ftod ; https://2014.5e.
 - The exceptional Dragonborn receives **one Breath Weapon**, with **one normal PB-uses-per-Long-Rest resource**. This replaces the ordinary single-affinity Dragonborn Breath Weapon; it does **not** add five separate attack options with independent charges.
 - **On each use**, choose exactly **one** damage type: **Acid, Cold, Fire, Lightning, or Poison**. A breath use deals **only that chosen damage type**, not five simultaneous damage types or an automatic mix of them. Different uses may select different types without a rest-based reconfiguration.
 - Continue using the existing Dragonborn principle of **replacing one attack during the Attack action** and a Dexterity saving throw against **8 + PB + Constitution modifier** (half damage on success), unless the subsequent geometry/numeric pass establishes a justified exception.
-- The **shape and dimensions** of the area remain **unapproved**: candidates are the ordinary Chromatic **30-by-5-foot line**, the sovereign's **single 30-foot cone**, or another explicitly specified *whole* authored area. The approved mixed-Heritage parameter rules do **not** authorize independent recombination of cone/line subdimensions or automatically give Fivefold multiple area shapes.
+- **On each use**, independently of the damage-type choice, select **one whole Breath Weapon area**: a **60-foot line, 5 feet wide**, or a **30-foot cone**. The line retains Chromatic's defining shape while extending its reach for an exceptional ancestry; the cone gives wider coverage. Both have the same attack-replacement, save, damage dice and shared resource. **Neither activation produces both areas.** The two shapes are expressly authored exceptional options, **not** an alteration of ordinary Chromatic's 30-by-5-foot line or permission to mix component dimensions in the ordinary mixed-Heritage rules.
 - Damage scales by **total character level**, including at the level when rebirth occurs. **Exact dice remain undecided**; Platinum's 2d10/4d10/6d10/8d10 at 1/5/11/17 is a comparison, not an automatic grant.
 
 ### Five simultaneous resistances
@@ -56,12 +56,13 @@ Source references: https://www.dndbeyond.com/sources/dnd/ftod ; https://2014.5e.
 
 ## Remaining choices before Fivefold is finalized
 
-1. **Breath area:** Adopt the category-native 30-by-5-foot line, a sovereign-inspired 30-foot cone, or a separately justified single geometry.
-2. **Breath dice:** Define actual damage progression using **total character level** and compare directly with Platinum and the ordinary Dragonborn progression.
-3. **Warding threshold:** Confirm whether the approved one-minute, one-Action, one-use all-five defense begins at character level 5 or at another level.
-4. **Exceptional champion resilience:** Explicitly decide whether a fear rider, immunity to native fear-origin effects, or a limited failed-save success belongs to Fivefold; do not import these by default.
-5. **Late rebirth/resource accounting:** Specify level-gated feature availability immediately on rebirth and defer the generalized resource-transition policy to the Rite infrastructure.
-6. **Final cross-ancestry comparison:** Compare the completed Fivefold features with Platinum and eventually Ruby, without imposing ordinary starting-character parity.
+**Approved area choice:** 60-foot-by-5-foot line or 30-foot cone, independently selected from the five approved damage types on each use. This explicitly exceptional feature is also available to Platinum Heart. It is not extended to ordinary Chromatic, Metallic or Gem ancestry.
+
+1. **Breath dice:** Define actual damage progression using **total character level** and compare directly with Platinum and the ordinary Dragonborn progression.
+2. **Warding threshold:** Confirm whether the approved one-minute, one-Action, one-use all-five defense begins at character level 5 or at another level.
+3. **Exceptional champion resilience:** Explicitly decide whether a fear rider, immunity to native fear-origin effects, or a limited failed-save success belongs to Fivefold; do not import these by default.
+4. **Late rebirth/resource accounting:** Specify level-gated feature availability immediately on rebirth and defer the generalized resource-transition policy to the Rite infrastructure.
+5. **Final cross-ancestry comparison:** Compare the completed Fivefold features with Platinum and eventually Ruby, without imposing ordinary starting-character parity.
 
 ## Explicit non-goals
 
