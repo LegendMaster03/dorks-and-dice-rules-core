@@ -32,7 +32,9 @@ These examples establish the **replacement behavior**, not the right of every na
 
 The [three-factor formula](pillar2-dragonborn-expansion-dimensions-20261111.md) remains the content pattern for **ordinary** Dragonborn Ancestries: category, category-related skin material, and damage type. It does not require extraordinary category-leader Ancestries to follow the same pattern.
 
-**Owner direction:** Exceptional forms are not normally available at initial character creation without DM approval. Their intended ordinary in-game acquisition path is an appropriate **Draconic Rebirth** rite. The ritual's qualifying source and requirements must be authored, not inferred from the category alone.
+**Owner direction:** Exceptional forms are not normally available at initial character creation without DM approval. Their intended ordinary in-game acquisition path is an appropriate **Draconic Rebirth** rite requiring the **direct, personal participation of the corresponding category leader**. For the currently proposed forms, this means Tiamat for the composite Chromatic form and Bahamut for the singular Platinum form. Participation by another powerful dragon, an intermediary, or an artifact is not an automatic substitute. Future exceptional forms must author their own corresponding leader rather than relying on an unrestricted powerful-dragon threshold.
+
+**Power intent:** Exceptional Dragonborn are intentionally and substantially more powerful than ordinary starting Dragonborn Ancestries. Equal mechanical strength with ordinary Ancestries is **not** a balancing objective. Restricted initial selection and the exceptional Rite are acquisition gates, not claims of mechanical parity. When designing these forms, consider the expected campaign power tier, party progression and playtest evidence without using ordinary character-creation balance as the required ceiling. The exact strength, features and progression remain open.
 
 Two structural patterns are supported:
 
@@ -54,7 +56,7 @@ Other Dragonborn categories may later use composite, singular, or different exce
 
 ## Unresolved design decisions
 
-- General Rite of Rebirth procedure, actor/source requirements, costs, timing, failure conditions, reversibility, and whether exceptional sources must participate directly.
+- General Rite of Rebirth procedure, costs, timing, failure conditions and reversibility; the exceptional Draconic Rebirth requirement for direct category-leader participation is established, but the remaining details of that participation are not.
 - Exact Dragonborn exceptional traits, damage choices and resistances, balancing, and interactions with standard category powers.
 - Final persistent schema and rules-engine representation for successive rebirths and their historical record.
 - Whether more Dragon categories receive leader-associated forms and how those are acquired.
