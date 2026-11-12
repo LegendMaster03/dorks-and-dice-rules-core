@@ -220,11 +220,18 @@ def review_proposed_manifestation(identity_report, selected_candidate_ids):
         "deferredSourceFields": copy.deepcopy(
             identity_report["deferredSourceFields"]
         ),
+        # Diagnostics from all offered sources may describe candidates the
+        # player did not propose to manifest. Preserve those diagnostics,
+        # but do not incorrectly label them as conflicts in this selection.
         "reconciliationStatus": (
             "relationships-require-general-policy"
-            if relations or identity_report["reviewFlags"]
-            or identity_report["deferredSourceFields"]
-            else "no-identified-relations-not-certified"
+            if relations else "no-identified-relations-not-certified"
+        ),
+        "candidatePoolEvidenceStatus": (
+            "contains-unresolved-source-evidence"
+            if (identity_report["reviewFlags"]
+                or identity_report["deferredSourceFields"])
+            else "no-reported-source-evidence-gaps"
         ),
         "traitsGranted": False,
         "authorization": "not-authorized",
