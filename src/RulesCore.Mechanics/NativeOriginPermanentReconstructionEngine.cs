@@ -73,7 +73,7 @@ public sealed class NativeOriginPermanentReconstructionEngine(NativeCatalogSnaps
             return null;
         }
 
-        var method = _validator.FindMethod(proposal.Method);
+        var method = proposal.Method is null ? null : _validator.FindMethod(proposal.Method);
         if (proposal.Intent != NativeOriginIntent.Direct ||
             method?.Stage != "post-origination" ||
             method.CreatesNewIndividual != false)
