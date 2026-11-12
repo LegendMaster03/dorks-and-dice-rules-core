@@ -607,6 +607,12 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal("medium", mixedScalars.Size?.Value);
         Assert.Equal(30, mixedScalars.WalkingSpeedFeet?.Value);
         Assert.Empty(mixedScalars.UnresolvedSlots);
+        var nativeVision = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal("resolved", nativeVision.Status);
+        Assert.Equal("rule.low-light-vision", nativeVision.LowLightVision?.RuleId);
+        Assert.Equal("species.elf", nativeVision.LowLightVision?.SourceId);
+        Assert.Equal("/traits/0", nativeVision.LowLightVision?.OccurrencePath);
+        Assert.Equal("unresolved", NativeOriginVisionProjector.Project(Catalog(), result).Status);
         Assert.Equal("humanoid", result.Profile.Underlying.InherentGrants.Single(x =>
             x.Identity.IntrinsicSlotId == "creatureType").EffectiveValue!.Value.GetString());
         Assert.Equal(NativeOriginEventStage.Completed, result.Profile.History.Single().Stage);
