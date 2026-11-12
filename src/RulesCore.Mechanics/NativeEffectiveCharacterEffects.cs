@@ -17,7 +17,8 @@ public sealed record NativeEffectiveEffectDirective(
     string Id, string SourceGrantId, string RuleId,
     NativeEffectiveEffectTarget Target, string TargetId,
     NativeEffectiveEffectOperation Operation,
-    int? NumericValue = null, string? RequiredFormId = null);
+    int? NumericValue = null, string? RequiredFormId = null,
+    string? DefinitionId = null);
 
 /// <summary>
 /// The authenticated host and authored native-rule evaluator must implement this
