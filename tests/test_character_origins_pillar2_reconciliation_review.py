@@ -304,6 +304,29 @@ class ReconciliationReviewTests(unittest.TestCase):
         self.assertNotEqual("authorized", out["reconciliationStatus"])
         self.assertEqual("not-authorized", out["authorization"])
 
+    def test_unselected_candidate_source_conflicts_are_not_selection_conflicts(self):
+        r = self.identity([direct("wood", "ancestry.elf.wood")])
+        self.assertTrue(any(
+            x.get("identity") == "movement.walk.speed"
+            for x in r["reviewFlags"]
+        ))
+        choice = self.locate(
+            r, source_id="ancestry.elf.wood#trait:druidcraft"
+        )
+        self.assertEqual(1, len(choice))
+        out = self.review(r, *choice)
+        self.assertEqual([], out["pairwiseRelationships"])
+        self.assertEqual(
+            "no-identified-relations-not-certified",
+            out["reconciliationStatus"],
+        )
+        self.assertEqual(
+            "contains-unresolved-source-evidence",
+            out["candidatePoolEvidenceStatus"],
+        )
+        self.assertEqual(r["reviewFlags"], out["sourceReviewFlags"])
+        self.assertEqual("not-authorized", out["authorization"])
+
     def test_nested_contributor_evidence_survives_selection(self):
         parent = draft_manifestation_profile(
             "parent", [direct("orc", "species.orc")],
