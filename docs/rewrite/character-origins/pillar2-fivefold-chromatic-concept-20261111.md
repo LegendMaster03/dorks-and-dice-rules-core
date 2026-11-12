@@ -1,7 +1,7 @@
 # Pillar 2 — Fivefold Chromatic Dragonborn: exceptional ancestry design
 
 **Date:** 2026-11-11
-**Status:** **Owner-approved Fivefold core mechanics (2026-11-11)**: one Breath Weapon with a per-use choice among the five founding Chromatic damage types, simultaneous 50% resistance to those five types, and a single enhanced Chromatic Warding activation covering all five. **Breath-area selection is also approved: a 60-foot-by-5-foot line or a 30-foot cone, chosen on each use. Breath damage dice, Warding unlock level, and any further fear or champion abilities remain undecided.** No selected-native exceptional gameplay or ordinary mixed-Heritage eligibility is authorized.
+**Status:** **Owner-approved Fivefold core mechanics (2026-11-11)**: one Breath Weapon with a per-use choice among the five founding Chromatic damage types, simultaneous 50% resistance to those five types, and a single enhanced Chromatic Warding activation covering all five. **Breath-area selection is also approved: a 60-foot-by-5-foot line or a 30-foot cone, chosen on each use. A decision-ready proposal now covers breath dice, Warding unlock level and champion resilience; those additional values are pending approval.** No selected-native exceptional gameplay or ordinary mixed-Heritage eligibility is authorized.
 
 ## Approved identity and acquisition boundaries
 
@@ -54,15 +54,54 @@ Source references: https://www.dndbeyond.com/sources/dnd/ftod ; https://2014.5e.
 
 **Interaction with the Rite:** Rebirth removes prior Species/Ancestry abilities and grants the approved Fivefold identity and its currently level-eligible benefits. It does **not** preserve an earlier ordinary Dragonborn leaf's resistance/warding as extra stacking resources. Historical parents, Background and Upbringing remain unchanged; no additional mixed-Heritage contributor route is created.
 
+## Decision-ready final numerical package — proposed, not yet approved
+
+**Proposal prepared 2026-11-11:** The already approved core remains unchanged: one Breath Weapon with **one** chosen Acid/Cold/Fire/Lightning/Poison damage type and **one** complete 60-foot-by-5-foot line or 30-foot cone per use; simultaneous 50% resistance to all five; one Warding activation that increases all five to 100% for one minute. The following **numbers and additional resilience features require express owner acceptance**. They are not inferred approvals from the existing Platinum design.
+
+### Proposed Breath Weapon progression
+
+| Current total character level | Damage per affected creature (failed save) | Save | Uses |
+| --- | --- | --- | --- |
+| **1–4** | **2d10** of the chosen Chromatic type | Dexterity, DC **8 + PB + Constitution modifier**, half on success | PB per Long Rest |
+| **5–10** | **4d10** | Same | Same |
+| **11–16** | **6d10** | Same | Same |
+| **17+** | **8d10** | Same | Same |
+
+**Why these numbers:** The damage dice match Platinum's exceptional Heart breath but lack its substitute healing. Fivefold instead has **five damage-type choices and five simultaneous resistances** plus a notably stronger defensive Warding. Doubling the ordinary Dragonborn 1d10/2d10/3d10/4d10 progression preserves the same level bands and is more coherent than assigning damage from an unrelated CR-7 champion's 8d8 necrotic breath or a CR-30 sovereign monster. Choose exactly one type and exactly one area **per use**, independently; no split-damage mode, double area, bonus attacks or increased resource budget. Attack replacement remains **one attack during the Attack action**.
+
+**Balance caution:** Platinum's breath may heal up to three creatures in the chosen area **in place of damage**, while Fivefold's breath only damages. Fivefold's sustained five-type resistance and temporary five-type immunity are a different, strongly encounter-dependent advantage, not an assertion of equal numeric power across all encounters. Reassess through playtesting rather than adding unrequested extra damage or control effects.
+
+### Proposed enhanced Warding level
+
+Set **character level 5** as the unlock for the **already approved** enhanced Chromatic Warding. This preserves the native ordinary Chromatic Warding level threshold, using the already approved **one Action, once per Long Rest, one-minute** duration, but upgrades **all five resistances from 50% to 100% simultaneously** rather than the ordinary leaf's one. An active immunity to one damage type does not confer immunity to associated conditions or effects. The resource is one use **for all five types together**.
+
+**Tradeoff:** Five-type full immunity at level 5 can negate some encounters almost completely; the Action cost and once-per-Long-Rest limit matter but do **not** make this comparable to ordinary Warding. Fivefold is intended to be an exceptional narrative transformation and intentionally strong. It is not subject to ordinary starting-ancestry parity.
+
+### Proposed bounded champion resilience
+
+The published *Fizban's Treasury of Dragons* **Dragonborn of Tiamat** has Frightened immunity, **one failed-save-to-success use/day**, and a **separate 8d8 necrotic / Wisdom-save fear breath**. The *Aspect of Tiamat* instead models the five selectable elemental damage types. These are distinct published source models, not a license to combine all their attacks.
+
+- **At character level 1**, grant **immunity to fear-originated effects**, covering sources of native Shaken, Frightened, Panicked and fear-derived Cowering, **but not** independently imposed Cowering or other effects with a nonfear cause. This matches the native `rule.fear-family` decomposition rather than assuming its four conditions are synonyms.
+- **At character level 9**, grant **one failed saving throw per Long Rest that may instead succeed**, declared after the failed result without requiring a separate Action. This matches the bounded Platinum-style intervention and is a proposed scaling adaptation of the champion's 1/day Legendary Resistance, not an import of monster Legendary Actions.
+- **Do not add an offensive fear rider** to Fivefold's approved one-type elemental Breath Weapon. The combination of selectable damage types, whole-area shape choice and five-type defense is its distinguishing ancestry package. Any later Dread or fear ability should require a separate approved source/feature path, not be implicit.
+- **Do not grant** magical sleep/paralysis immunities, Platinum's sensory improvements, innate flight, the champion's necrotic greataxe, or full Aspect abilities to Fivefold through this proposal. Those belong to the Platinum identity, another independent power source, or a separate later decision.
+
+**Reasoning:** All three published Dragonborn champion NPCs share frightened immunity and limited failed-save protection, making them plausible **exceptional champion defensive motifs**. However, owner approval of Platinum's Mind package does **not** by itself authorize them for Fivefold or Ruby. The level-9 gate is a deliberate character-level proposal, consistent with Platinum while preserving strong offensive and defensive differences.
+
+### Late rebirth and open engine integration
+
+Upon a successful sovereign-participated Rite, Fivefold receives its **currently eligible** benefits at the character's **current total character level**. For example, a level-12 reborn character would immediately have a **6d10** chosen-element breath, two authored area choices, all five 50% resistances, level-5 enhanced Warding, fear-source immunity and one failed-save protection per Long Rest **if the above proposal is approved**. Do not restart ancestry progression at level 1, grant five ordinary family resource copies or reset all old character resources automatically. The Rite's **generalized spent-resource carryover and replacement** is still an implementation question across all exceptional forms, not a special Fivefold rule.
+
+**Approval boundary:** This section is a **review-ready candidate**, not finalized selected-native mechanics. Previously approved Fivefold features and geometry remain final; numeric dice, level-5 Warding gate, fear-source immunity and level-9 failed-save protection require their own approval. Ruby and broader category expansion remain outside this scope.
+
 ## Remaining choices before Fivefold is finalized
 
 **Approved area choice:** 60-foot-by-5-foot line or 30-foot cone, independently selected from the five approved damage types on each use. This explicitly exceptional feature is also available to Platinum Heart. It is not extended to ordinary Chromatic, Metallic or Gem ancestry.
 
-1. **Breath dice:** Define actual damage progression using **total character level** and compare directly with Platinum and the ordinary Dragonborn progression.
-2. **Warding threshold:** Confirm whether the approved one-minute, one-Action, one-use all-five defense begins at character level 5 or at another level.
-3. **Exceptional champion resilience:** Explicitly decide whether a fear rider, immunity to native fear-origin effects, or a limited failed-save success belongs to Fivefold; do not import these by default.
-4. **Late rebirth/resource accounting:** Specify level-gated feature availability immediately on rebirth and defer the generalized resource-transition policy to the Rite infrastructure.
-5. **Final cross-ancestry comparison:** Compare the completed Fivefold features with Platinum and eventually Ruby, without imposing ordinary starting-character parity.
+1. **Approve or adjust the consolidated candidate:** **2d10 / 4d10 / 6d10 / 8d10** breath at levels **1 / 5 / 11 / 17**, enhanced Warding at **level 5**, **fear-source immunity** at level 1, **one failed-save-to-success per Long Rest at level 9**, and **no added fear rider**.
+2. **After numerical approval:** Mark the Fivefold design finalized; validate exact source-qualified resistance/warding override semantics with the Pillar 2 general engine at implementation time.
+3. **General Rite integration:** Confirm resource transitions through rebirth without authoring a unique Fivefold exception.
+4. **Later playtesting:** Compare tactical strength against Platinum and Ruby without requiring equal feature counts or baseline ancestry parity.
 
 ## Explicit non-goals
 
