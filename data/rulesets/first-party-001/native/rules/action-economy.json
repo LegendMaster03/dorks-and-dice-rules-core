@@ -2,7 +2,7 @@
   "id": "rule.action-economy",
   "name": "Shared Action Economy — Design Decisions",
   "kind": "rule",
-  "status": "approved-terminology-and-structural-baseline; detailed-resolution-pending",
+  "status": "approved-unified-bonus-swift-baseline; other-action-details-pending",
   "scope": "One native action economy used by all combatants regardless of Standard or Complex model, character options, or selected initiative mode.",
   "approvedDecisions": {
     "unifiedSystem": "Use one Dorks & Dice action economy for 3.x/PF1e and 5.x concepts rather than parallel edition-specific turns.",
@@ -15,18 +15,32 @@
       "rationale": "Preserve the established D&D 5.x term for familiarity.",
       "decisionDate": "2026-11-12",
       "doesNotImply": [
-        "A fixed Bonus Action count or refresh schedule is now approved.",
-        "A 3.x/PF1e Swift Action is necessarily interchangeable with a Bonus Action.",
-        "Immediate Actions are automatically equivalent to Reactions or spend the same resource.",
-        "Any actor may perform any Bonus Action without an applicable grant or rule."
+        "Immediate Actions are automatically equivalent to Reactions or consume the same resource.",
+        "Every imported Swift Action feature overrides its own prerequisites, targets, resource costs, or other explicit restrictions.",
+        "Any actor may perform a Bonus Action without an applicable grant or rule."
       ]
     },
-    "initiative": "Standard initiative and optional Block Initiative use the same per-combatant action-economy rules; Block Initiative does not pool allied action budgets."
+    "initiative": "Standard initiative and optional Block Initiative use the same per-combatant action-economy rules; Block Initiative does not pool allied action budgets.",
+    "bonusActionSwiftUnification": {
+      "nativeCategory": "bonus-action",
+      "sourceActionTypes": [
+        "5x-bonus-action",
+        "3x-swift-action",
+        "pf1e-swift-action"
+      ],
+      "unifiedBudget": "One Bonus Action opportunity per combatant turn under the ordinary baseline. A qualifying Swift Action or Bonus Action spends that same opportunity; possessing options from both sources does not grant an additional action.",
+      "eligibility": "A feature, spell, item, or applicable rule must explicitly authorize the activity. Multiple authorized choices compete for the same allowance.",
+      "timing": "The ordinary allowance is used on the actor's turn unless a more specific approved rule establishes a valid exception; it does not grant out-of-turn activation.",
+      "preservation": "Preserve individual source-derived ability prerequisites, casting components, resource costs, effect limits, and explicitly authorized exceptions during conversion. Consolidating action categories does not erase those properties.",
+      "immediateActionBoundary": "3.x Immediate Action timing and its historical use of a current or upcoming Swift Action are NOT automatically imported as native Bonus Action/Reaction costs; establish a separate explicit mapping before implementing those interactions.",
+      "initiative": "The allowance belongs to each combatant under either standard initiative or optional Block Initiative, not a shared allied block pool.",
+      "decisionDate": "2026-11-12"
+    }
   },
   "pendingDecisions": [
-    "Ordinary Bonus Action budget, eligibility and refresh timing.",
-    "Conversion of 3.x/PF1e Swift Action permissions, costs and timing into native Bonus Actions.",
-    "Whether and how Immediate Actions interact with Reactions or future Bonus Actions.",
+    "Feature-specific exceptions to the ordinary one-Bonus-Action-per-turn allowance and timing, if justified by a distinct grant.",
+    "Precise conversion of atypical 3.x/PF1e Swift Action timing restrictions, and how swift casting interacts with native spellcasting limitations.",
+    "Whether and how Immediate Actions interact with Reactions and the current or upcoming Bonus Action budget; this is a separate design decision.",
     "Native opportunity attack triggers, eligible reactive actions and reaction refresh.",
     "Nonmovement move-equivalent action conversion, Action substitution and full-turn constraints.",
     "Free activity/object interaction limits, interruption ordering, durations and Block Initiative timing details."

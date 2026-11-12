@@ -38,7 +38,7 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 | Combat area | Shared foundation | Optional mechanical depth |
 | --- | --- | --- |
-| **Action economy** | One native Action, independently splittable movement, a proposed shared Bonus/Swift category, and an individual Reaction framework | Rule-specific full-round commitments, attack substitutions, specialized reactions, and feature-specific restrictions |
+| **Action economy** | One native Action, independently splittable movement, one shared Bonus Action category (including qualifying Swift Actions), and an individual Reaction framework | Rule-specific full-round commitments, attack substitutions, specialized reactions, and feature-specific restrictions |
 | **Multiple attacks** | Straightforward ordinary Attack action using attacks actually granted to the character | BAB-derived iterative/full attacks, dual-wielding combinations, and specialized attack sequences where granted and correctly costed |
 | **Attacks and defenses** | Consistent attack resolution against the relevant ordinary, Touch, Flat-Footed or other defined defense | Features targeting particular defenses, specialized modifiers, and additional attack options; defense categories are shared rules, **not player-selectable physics** |
 | **Combat maneuvers** | Ordinary grapple, shove, or similar actions where the native baseline permits them | Additional maneuvers, improved techniques, attack replacements, and specialized combinations |
@@ -49,7 +49,7 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 | **Weapon Mastery** | An ordinary weapon attack remains fully functional without mastery | Eligible characters gain weapon-specific effects and tactical options **on top of** normal combat |
 | **Combo attacks** | Ordinary combat remains complete without participation | An optional **parallel cooperative procedure** inspired by Ryoko, operating without modification under either standard or Block Initiative |
 
-**Important classifications:** This is a contrast between **shared procedures** and **additional depth**, not a prescription to move all 3.x features into feats. BAB iterative attacks and full-round limits may be part of a character's legitimate source-derived abilities or inherent costs; Touch/Flat-Footed AC, criticals and conditions belong to the shared rules; an optional spellcasting procedure may already be granted by class/spell features. The table does **not** establish final opportunity triggers, a final flanking rule, a default universal list of maneuvers, or Bonus/Swift-to-Immediate conversion. The options must be evaluated on actual source permissions and their costs, not labeled "advanced" simply because their text is long.
+**Important classifications:** This is a contrast between **shared procedures** and **additional depth**, not a prescription to move all 3.x features into feats. BAB iterative attacks and full-round limits may be part of a character's legitimate source-derived abilities or inherent costs; Touch/Flat-Footed AC, criticals and conditions belong to the shared rules; an optional spellcasting procedure may already be granted by class/spell features. The table does **not** establish final opportunity triggers, a final flanking rule, a default universal list of maneuvers, or the unresolved Immediate Action/Reaction-to-Bonus-Action interaction. The options must be evaluated on actual source permissions and their costs, not labeled "advanced" simply because their text is long.
 
 **The three patterns for implementing that matrix:**
 
@@ -594,13 +594,13 @@ These examples exclude static damage bonuses and other dice deliberately. The ow
 
 **Owner direction:** The D&D 3.x / Pathfinder 1e and D&D 5.x action economies are close enough to **merge into a single native Dorks & Dice action economy** rather than remain separate edition-specific turn systems. This is an accepted **structural design decision**. The owner has also approved **5.x-style flexible movement as the native baseline**: movement is an independently spendable allowance and may be divided around other permitted activities, including between attacks where the attack/feature permits it. **A particular action or ability can explicitly impose full-turn/full-round restrictions** that constrain ordinary flexible movement. Other budget and conversion details below remain working candidates, not yet confirmed gameplay rules.
 
-**Owner terminology decision (2026-11-12):** The native action category is named **Bonus Action**, retaining the familiar D&D 5.x term instead of the provisional **Quick Action** name. This is a terminology approval only. It does **not** settle the native number or refresh of Bonus Actions, automatically equate 3.x Swift Actions with Bonus Actions, or decide the costs of Immediate Actions and Reactions. The authoritative design-data record is `data/rulesets/first-party-001/native/rules/action-economy.json`.
+**Owner action-category decision (2026-11-12):** The native action category is named **Bonus Action**, retaining the familiar D&D 5.x term instead of the provisional **Quick Action** name. **3.x/PF1e Swift Actions and 5.x Bonus Actions map to this single native category and share one ordinary per-turn allowance.** An applicable grant or rule must authorize each use; several qualifying options do not produce additional allowances. Preserve feature-specific prerequisites and costs during source conversion. **Immediate Actions are not automatically the same as Reactions**: their historical borrowing of Swift Action availability must be reconciled separately. The authoritative design-data record is `data/rulesets/first-party-001/native/rules/action-economy.json`.
 
 | Working native concept | D&D 3.0 / 3.5 / PF1e analogue | D&D 2014 / 2024 analogue | Conversion warning |
 | --- | --- | --- | --- |
 | **Action** | Standard action | Action | Most directly similar, but a 3.x standard attack is not automatically a 5.x Extra Attack action |
 | **Movement / move-type activity** | Move action or move-equivalent action | Movement; occasionally Action to perform some nonmovement activity | **Native baseline is independent, splittable 5.x-style movement**, not a mandatory 3.x move action. How an imported nonmovement move-equivalent activity consumes native resources remains **undecided** |
-| **Bonus Action** (approved native name) | Swift action (3.5 supplements / PF1e; no universal 3.0 equivalent) | Bonus Action | A feature must authorize the activity; a Swift Action's cost and timing are not automatically equivalent to the native Bonus Action. Map permissions and costs without granting an unrestricted additional action |
+| **Bonus Action** (approved shared category) | Swift action (3.5 supplements / PF1e; no universal 3.0 equivalent) | Bonus Action | One ordinary shared opportunity on the actor's turn, spent by either qualifying source action. Preserve prerequisites, feature costs and restrictions; do not import Immediate Action timing by implication |
 | **Reaction** | Immediate action / attacks of opportunity | Reaction / opportunity attack | A 3.x immediate action may spend the upcoming swift action; 3.x opportunity attacks may have multiple uses and separate triggers. Do not quietly erase those costs |
 | **Free activity** | Free action or no-action activity | Free activity, one ordinary object interaction, or feature-defined no-action activity | Number and scope of interactions differ; unlimited free object manipulation cannot be inferred |
 | **Full-turn commitment** (working name) | Full-round action | Activities that require, constrain or span the character's turn | **Keep an explicit full-turn restriction when a particular rule requires it.** A 3.x full attack commonly restricts movement to a 5-foot step, while 5.x Extra Attack permits movement between attacks; they are **not automatically interchangeable** |
@@ -611,7 +611,7 @@ The common model should answer **what portion of a turn an activity consumes**, 
 
 **Approved movement behavior:** Each participant has a movement allowance independent of the primary Action. In ordinary play, movement can be split before and after other permitted activities; multiple attacks may have movement between them when the applicable attack procedure allows it. A **source-specific full-turn/full-round requirement overrides this flexibility only for that particular activity**. Do not automatically assign a 3.x full attack restriction to a 5.x Extra Attack, or remove an explicit full-round restriction during automated conversion.
 
-**Working candidate, for owner review:** Each participant ordinarily has a primary Action, eligible Bonus Actions, reactions to valid triggers and reasonable Free Activities. A Full-Turn Action would be a **constraint on existing resources**, not an extra independent action granted in addition to them. The precise Bonus Action and Reaction budgets, possible exchanges between primary Action and movement resources, and other restricted-turn treatment are not yet approved.
+**Working candidate, for owner review:** Each participant ordinarily has a primary Action, eligible Bonus Actions, reactions to valid triggers and reasonable Free Activities. A Full-Turn Action would be a **constraint on existing resources**, not an extra independent action granted in addition to them. The ordinary Bonus Action allowance is one qualifying use per combatant turn. The Reaction budget, exceptional action grants, possible exchanges between primary Action and movement resources, and other restricted-turn treatment remain unresolved.
 
 A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have different movement/attack restrictions even if both present multiple attacks. Likewise, the 3.x five-foot step, move-equivalent actions, free object interactions, swift/immediate resource coupling, and 3.x opportunity-attack counts must be **explicitly reconciled**, not dismissed as synonyms.
 
@@ -624,7 +624,7 @@ A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have diff
 1. Move before/after an Action; movement between attacks granted by a 5e class feature.
 2. 3.x full attack with iterative BAB attacks and its 5-foot-step restriction; no added full-turn resource beyond the consumed action/movement.
 3. 3.x move-equivalent activity (stand, draw or manipulate equipment, depending on source) when the character could otherwise move.
-4. Swift/immediate action interaction and 5.x Bonus Action/Reaction, including when a character has both 3.x and 5.x features.
+4. A character with eligible Swift and Bonus Action features spends one shared Bonus Action per turn; determine separately whether an Immediate Action affects the current or upcoming Bonus Action and/or Reaction budget.
 5. Opportunity attacks under 3.x threatened-square triggers and 5.x leaving-reach triggers; this is a **separate still-open native opportunity rule**, even though the action-budget concept is unified.
 6. A healing potion's previously approved Bonus Action (rolled healing) versus Action (maximum healing) policy using the unified budget.
 7. **Both initiative modes:** standard individual ordering and optional Block Initiative with multiple allies in one block, including reactions, refresh, interruptions and durations.
@@ -633,9 +633,9 @@ A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have diff
 
 - **Move-equivalent conversion:** With independent, splittable 5.x-style movement **now approved**, how do imported nonmovement 3.x **move actions** consume Action, movement allowance, or another resource? The baseline itself is not open.
 - **Full-turn operations:** **Explicit rule-specific full-turn restrictions are preserved.** Which activities impose them, precisely what movement remains permissible, and whether a 3.x five-foot step is permitted only for specified features or generally are still to be defined.
-- **Bonus Action/Reaction relationship:** How do imported Swift Actions map to the native Bonus Action, and do Immediate Actions use an ordinary Reaction, a future Bonus Action, or both? How many opportunity attacks can be made?
+- **Bonus Action/Reaction relationship:** Swift and Bonus Actions already share one native per-turn allowance. Do Immediate Actions spend an ordinary Reaction, the current/upcoming Bonus Action, or both? How many opportunity attacks can be made?
 - **Action substitution:** Can a standard Action be converted to additional movement or to a move-equivalent task, and can an Action be used to perform an otherwise eligible Bonus Action?
-- **Eligibility and refresh:** What is the default availability of Bonus Actions, Free Activities and Reactions, and how do they replenish under **standard and Block Initiative**?
+- **Eligibility and refresh:** One eligible Bonus Action is available on each actor's turn in either initiative mode. How do Reactions and Free Activities refresh, and do exceptional grants change the ordinary Bonus Action allowance?
 
 These questions refine the unified action economy; **they do not reopen the owner's decisions to unify action economy, use 5.x-style splittable movement by default, or retain explicit full-turn restrictions where a rule requires them**.
 
@@ -723,8 +723,8 @@ This is analogous to the existing universal-competency approach: a shared concep
 ### Exactly what owner decisions are still needed
 
 **Action-economy alignment (high priority):**
-1. Whether **Quick Actions** unify Bonus/Swift actions into one ordinary turn allowance, and how Immediate actions consume or borrow the same allowance versus Reactions. **The selected standard or Block Initiative option** determines individual turn/block ordering; refresh and interruptions require explicit rules for both.
-2. How nonmovement 3.x **move-equivalent actions** are charged under approved flexible movement; what full-round restrictions permit; whether primary Action can substitute for movement/Quick Action.
+1. **Bonus Actions now unify Swift and Bonus Action options into one ordinary per-combatant-turn allowance.** Determine separately if and how Immediate Actions consume or borrow that allowance versus Reactions. **The selected standard or Block Initiative option** determines individual turn/block ordering; Reaction refresh and interruptions require explicit rules for both.
+2. How nonmovement 3.x **move-equivalent actions** are charged under approved flexible movement; what full-round restrictions permit; whether primary Action can substitute for movement/Bonus Action.
 3. How **BAB iterative attacks, 5.x Extra Attack and feature-created attacks** interact on a mixed character, including whether multiple sources add attacks, override each other or remain alternative attack schedules.
 
 **Maneuver and mastery alignment (high priority):**
