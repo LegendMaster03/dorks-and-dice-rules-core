@@ -385,6 +385,72 @@ public sealed class NativeOriginPhase4Tests
     }
 
     [Fact]
+    public void MissingTypeDefaultNeedsSeparateMethodPermissionRatherThanABan()
+    {
+        var unapproved = SyntheticProcess("fiend-not-construct", "construct-assembly",
+            "fiend", [], []);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unapproved.Status);
+        Assert.Contains(unapproved.Issues, x => x.Code == "process-method-not-default");
+
+        var approved = SyntheticProcess("fiend-custom-assembly", "construct-assembly",
+            "fiend", [], [], approveMethod: true);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, approved.Status);
+    }
+
+    [Fact]
+    public void TargetGrantIdentityCollisionDoesNotDeleteIndependentEntitlement()
+    {
+        var old = Human();
+        var preview = Rebirth(old, Target(decisions: [Authorize()]), new Authority());
+        Assert.True(preview.IsMechanicallyAuthorized);
+        var targetType = preview.ResultingProfile!.Underlying.InherentGrants.Single(x =>
+            x.Identity.IntrinsicSlotId == "creatureType");
+        var earned = new NativeOriginEffectiveGrant(targetType.Id,
+            "independent-entitlement",
+            new(NativeOriginCharacteristicKind.Trait,
+                new(new(NativeOriginSourceKind.Custom, "class.collision"), "/traits/0"),
+                "class.collision#benefit"), ["independent-candidate"]);
+        old = old with { IndependentGrants = [earned] };
+
+        var result = Rebirth(old, Target(decisions: [Authorize()]), new Authority());
+        Assert.True(result.IsMechanicallyAuthorized,
+            string.Join("; ", result.Issues.Select(x => x.Code)));
+        Assert.Equal(earned, Assert.Single(result.ResultingProfile!.IndependentGrants));
+        Assert.Contains(result.ResultingProfile.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "creatureType" &&
+                x.EffectiveValue?.GetString() == "dragon" && x.Id != earned.Id);
+    }
+
+    [Fact]
+    public void VerifiedRiteMayReplaceDefaultCreatureTypeOutcome()
+    {
+        var old = Human();
+        var priorType = old.Underlying.InherentGrants.Single(x =>
+            x.Identity.IntrinsicSlotId == "creatureType");
+        var preview = Rebirth(old, Target(decisions: [Authorize()]), new Authority());
+        Assert.True(preview.IsMechanicallyAuthorized);
+        var newType = preview.ResultingProfile!.Underlying.InherentGrants.Single(x =>
+            x.Identity.IntrinsicSlotId == "creatureType");
+        var decision = Authorize("override-type", new
+        {
+            allow = true,
+            targetSpeciesId = "species.dragonborn",
+            targetAncestryId = "ancestry.dragonborn.red",
+            retainPreviousGrantIds = new[] { priorType.Id },
+            suppressTargetGrantIds = new[] { newType.Id }
+        });
+        var result = Rebirth(old, Target("override-type", [decision]), new Authority());
+        Assert.True(result.IsMechanicallyAuthorized,
+            string.Join("; ", result.Issues.Select(x => x.Code)));
+        var finalType = result.ResultingProfile!.Underlying.InherentGrants.Single(x =>
+            x.Identity.IntrinsicSlotId == "creatureType");
+        Assert.Equal("humanoid", finalType.EffectiveValue!.Value.GetString());
+        Assert.Equal("species.human", finalType.Identity.Occurrence.Source.Id);
+        Assert.Equal("species.dragonborn", result.ResultingProfile.Underlying.SpeciesId);
+        Assert.Equal(decision.Id, result.ResultingProfile.History.Last().TableDecisionId);
+    }
+
+    [Fact]
     public void RiteOnlyAncestryCannotBeSelectedThroughOrdinaryCreation()
     {
         var root = Path.Combine(Path.GetTempPath(), "rules-core-p4-" + Guid.NewGuid());
