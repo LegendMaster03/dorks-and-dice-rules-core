@@ -121,7 +121,7 @@ The *Vassal of Bahamut* prestige-class features are now **primarily candidate ma
 
 Imperious Aura, Platinum Armor, Shared Trove, bonus feats and divine spells are similarly **external patron/service-based candidate concepts**. They need not all become automatic Warlock class features: armor or trove could be negotiated gifts, feats might represent training, and spells could inform patron-specific spell access. Do not convert them into ancestry traits solely because the inspiration is Bahamut-linked.
 
-The prior **Sovereign Breath** proposal remains a separate, *unapproved* Heart exploration; none of these Vassal features supplies proof of or automatic content for it. The design boundary remains **inherent transformed characteristics versus externally granted patron benefits**.
+Heart's current **one combined damaging-and-healing breath** is supported by the separate 5e *Dragonborn of Bahamut* champion NPC and is now an **approved structural direction**, but not an approved numeric rules package. The original invented **Sovereign Breath** name, proposed effects and resource details were not separately approved, and the 3.5 Vassal features do not automatically become part of Heart. The boundary remains **inherent transformed characteristics versus externally granted patron benefits**.
 
 ## Research provenance and editorial boundary
 
