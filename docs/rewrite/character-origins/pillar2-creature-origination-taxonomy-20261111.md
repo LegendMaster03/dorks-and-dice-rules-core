@@ -83,6 +83,25 @@ assign their mechanics, or make the Rite executable.
 See [the Rite specification](pillar2-rites-of-rebirth-20261111.md) for the
 approved complete-replacement semantics and exceptional acquisition decisions.
 
+## DM overrides apply at every level
+
+All rules in this document are **first-party defaults**, including creature
+classification, available methods, contributor roles, compatibility, and
+manifested characteristics. A DM may replace, extend, or waive any of them.
+This includes the result of a Rite, not merely permission to perform it.
+
+At the table: identify the default, state the alternative, and apply it for
+the chosen character or campaign. In software, the decision needs only its
+authority, scope, target, and effective rule or result. It must remain
+distinguishable from the published default and must not silently change other
+campaigns. A DM can also define new types, processes, traits, and mechanics,
+subject to ordinary application access controls.
+
+The universal override policy is in the native
+`rule.creature-origination` contract. Its illustrative scope examples are
+**not** an exclusive list of overridable stages. Engine support for recording
+and evaluating these decisions is still pending.
+
 ## Human-readable compatibility procedure
 
 1. Choose a type-supported method, a specific authored ritual/transformation, or an explicitly DM-authorized exception.

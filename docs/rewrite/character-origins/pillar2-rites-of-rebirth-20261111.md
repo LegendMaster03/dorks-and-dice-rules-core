@@ -20,6 +20,16 @@ current selection rules. Exceptional Dragonborn Ancestries are still
 design concepts awaiting native content authoring, not selectable records.
 
 
+**DM authority across the entire Rite:** The full Species/Ancestry
+replacement, retained non-Species grants, ritual participants and prerequisites,
+and restricted Ancestry acquisition are all **first-party defaults**, not
+software-enforced limits on table decisions. A DM may authorize a different
+outcome, including partial retention or a changed replacement, and explicitly
+define any additional mechanics required. This must be recorded as the
+table-effective exception rather than silently changing the published Rite.
+The universal `dmOverridePolicy` in the native creature origination contract
+governs this and every other Origin stage.
+
 A **Rite of Rebirth** is a ritual that **completely replaces a creature's current Species and Ancestry configuration** with a new Species and Ancestry configuration. **Draconic Rebirth** is one specialization of this general class of rituals, not a separate character-creation or inheritance engine.
 
 - **Complete configuration replacement:** The previous Species and Ancestry cease to be the source of the character's *current* inherent mechanical characteristics. All traits, proficiencies, affinities, resistances, intrinsic values, **creature type**, and other benefits granted **by the former Species or Ancestry** are replaced by those granted by the new configuration. A character does not retain an old trait or creature type solely because it once manifested or because a historical parent offered it.

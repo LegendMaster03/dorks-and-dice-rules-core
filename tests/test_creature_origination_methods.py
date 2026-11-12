@@ -125,6 +125,40 @@ class CreatureOriginationMethodTests(unittest.TestCase):
             with self.subTest(path=str(path)):
                 self.assertNotIn("acquisitionMethods", data)
 
+    def test_dm_override_policy_is_universal(self):
+        policy = self.contract["dmOverridePolicy"]
+        self.assertTrue(policy["allLevelsOverridable"])
+        self.assertEqual("universal-character-origin", policy["level"])
+        self.assertIn("not limited", policy["rule"])
+        for concept in (
+            "creature-type membership", "origination methods",
+            "contributor counts", "compatibility", "transmitted characteristics",
+            "choices", "resulting creature type", "Rite of Rebirth",
+            "custom/homebrew definitions"
+        ):
+            with self.subTest(concept=concept):
+                self.assertIn(concept, policy["scope"])
+        self.assertIn("not form a whitelist", policy["scope"])
+        self.assertEqual(
+            {"authority", "scope", "target", "effectiveDecision"},
+            set(policy["recordWhenAutomated"]["minimum"])
+        )
+        self.assertIn("first-party", policy["resolution"]["precedence"])
+        self.assertIn("unchanged", policy["resolution"]["firstPartyCatalog"])
+        self.assertIn("effective rules", policy["resolution"]["consistency"])
+        self.assertIn("application authentication", policy["resolution"]["softwareAuthorization"])
+
+    def test_dm_can_override_rite_effect_not_only_rite_access(self):
+        rite = self.contract["riteOfRebirth"]
+        self.assertIn("full replacement behavior", rite["dmOverride"])
+        self.assertIn("partial retention", rite["dmOverride"])
+        self.assertIn("change this requirement",
+                      rite["targetAcquisition"]["restrictedAncestryRule"])
+        self.assertIn("remove, modify, or add",
+                      self.contract["methodAvailability"]["dmOverride"])
+        self.assertIn("method requirement",
+                      self.contract["compatibility"]["dmOverride"])
+
     def test_src_mirror_tracks_new_type_defaults(self):
         working = read(WORKING / "creature-types.json")
         originals = {t["id"]: t for t in working["types"]}

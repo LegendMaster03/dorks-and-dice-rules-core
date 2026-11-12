@@ -70,7 +70,7 @@
     "specificProcessRequirements": "Apply the selected process's contributor roles, number of required inputs, and explicit restrictions, including full-set conditions; do not assume exactly two parents.",
     "unknown": "Unsupported or undocumented combinations remain unresolved under first-party rules, not categorically forbidden.",
     "explicitRestrictions": "A type, Species, Ancestry, or origination process can impose a more specific restriction.",
-    "dmOverride": "The DM can explicitly authorize otherwise unsupported combinations and record the decision without changing first-party defaults.",
+    "dmOverride": "Any origination compatibility default, restriction, or method requirement can be replaced by an authorized DM/table ruling, including new contributor arrangements and otherwise unsupported combinations; record the table-effective decision without changing first-party defaults.",
     "distinctFromManifestation": "Compatibility and origination do not automatically grant source characteristics, choose an effective creature type, or establish mechanical coherence."
   },
   "reviewNotes": [
@@ -80,21 +80,22 @@
     "Removing Monstrous Humanoid and True Elemental does not automatically change preexisting monster stat blocks, material-body properties, or targeting semantics of other types.",
     "The general rules remain understandable and usable at the table without Rules Core software.",
     "Rite of Rebirth is a post-origination complete replacement operation, offered by a qualifying specific Rite or a DM exception, not by default to all members of any creature type.",
-    "Ancestry acquisitionMethods may restrict default acquisition to a validated Rite; current exceptional Dragonborn concepts are not yet native selectable Ancestry definitions."
+    "Ancestry acquisitionMethods may restrict default acquisition to a validated Rite; current exceptional Dragonborn concepts are not yet native selectable Ancestry definitions.",
+    "DM/table decisions can override any Origin rule at any level; first-party descriptions and validation are defaults, never an exhaustive restriction on the table's allowed mechanics."
   ],
   "methodAvailability": {
     "typeDefault": "Creature-type originationMethods provide ordinary available methods, but are not an exhaustive list of rituals, transformations, or DM-authorized exceptions.",
     "explicitProcess": "An authored Rite can authorize its transformation independently of the subject's creature-type default originationMethods. A method's existence in the catalog alone does not grant access to a Rite or its target Ancestry.",
-    "dmOverride": "A recorded DM/table exception may authorize an otherwise unavailable process or target; it does not alter the general first-party type defaults."
+    "dmOverride": "The DM can permit, remove, modify, or add any origination method, contribution role, requirement, or source restriction at the specified table scope, including overriding any creature-type default."
   },
   "riteOfRebirth": {
     "methodId": "rite-of-rebirth",
     "specializes": "transformation",
     "subject": "existing-creature",
-    "authorization": "specific-rite-requirements-or-explicit-dm-override",
+    "authorization": "specific-rite-requirements-or-authorized-dm-table-rule",
     "targetAcquisition": {
       "field": "acquisitionMethods",
-      "restrictedAncestryRule": "An Ancestry authored with acquisitionMethods containing only rite-of-rebirth is unavailable through ordinary initial Species/Ancestry selection or ordinary mixed-Heritage candidate selection, unless a recorded DM/table override authorizes it.",
+      "restrictedAncestryRule": "An Ancestry authored with acquisitionMethods containing only rite-of-rebirth is unavailable through ordinary initial Species/Ancestry selection or ordinary mixed-Heritage candidate selection under the first-party defaults. An authorized DM/table ruling can allow another acquisition path or otherwise change this requirement.",
       "unspecifiedField": "Existing Ancestries without an acquisitionMethods restriction retain their prior selection behavior; merely defining the Rite does not restrict them.",
       "specificRitesMayRequire": "Explicit participants, materials, permissions, prerequisites, and a specific target Species/Ancestry; no universal ritual procedure is imposed."
     },
@@ -110,6 +111,43 @@
       "riteEvent": "record-in-history",
       "subsequentRite": "replace-then-current-species-and-ancestry"
     },
-    "doesNotAuthorize": "The Rite's listing does not grant target access, expose restricted extraordinary traits in ordinary mixed-Heritage pools, define ritual costs, or create native exceptional Ancestry records."
+    "doesNotAuthorize": "The Rite's listing does not grant target access, expose restricted extraordinary traits in ordinary mixed-Heritage pools, define ritual costs, or create native exceptional Ancestry records.",
+    "dmOverride": "Every Rite rule, including participant/prerequisite requirements, acquisition gates, full replacement behavior, which grants are retained or changed, and even whether a particular transformation counts as a Rite, may be changed by an explicit DM/table ruling. Complete replacement remains the first-party default, not an immutable engine restriction."
+  },
+  "dmOverridePolicy": {
+    "level": "universal-character-origin",
+    "allLevelsOverridable": true,
+    "rule": "Every first-party classification, inherited default, process, requirement, restriction, eligibility rule, characteristic, selection, reconciliation decision, manifestation, reconstruction, and transformation outcome may be replaced, supplemented, or waived by an explicit DM/table decision. An override is not limited to granting exceptions to prohibitions.",
+    "scope": "All stages and nested operations of Character Origins, including creature-type membership and hierarchy, available origination methods, source/input roles, contributor counts, biological and nonbiological compatibility, transmitted characteristics, choices and parameters, resulting creature type, character grants, Rite of Rebirth acquisition requirements and replacement behavior, and custom/homebrew definitions. These examples do not form a whitelist.",
+    "tableProcedure": [
+      "Identify the published default or unresolved question.",
+      "State the table's alternative decision, including any new or modified characteristics necessary to use it.",
+      "Apply that decision within the scope chosen by the DM, then construct or validate the resulting Origin under the effective table rules."
+    ],
+    "recordWhenAutomated": {
+      "minimum": [
+        "authority",
+        "scope",
+        "target",
+        "effectiveDecision"
+      ],
+      "authority": "A DM or other actor authorized under the table's campaign permissions.",
+      "scope": "The campaign, character, creature, creation event, or narrower context to which the decision applies.",
+      "target": "The affected rule, entity, stage, or whole configuration; may include new table-authored content.",
+      "effectiveDecision": "The rule or resulting outcome adopted by the table, including a custom mechanic where needed.",
+      "optional": [
+        "rationale",
+        "sourceVersion",
+        "priorDecision"
+      ]
+    },
+    "resolution": {
+      "precedence": "Within its declared scope, an authorized DM/table decision takes precedence over conflicting first-party defaults; outside that scope the published defaults remain unchanged.",
+      "firstPartyCatalog": "An override changes the effective table rules, not the global published catalog or the rules another campaign uses.",
+      "unresolved": "Unknown mechanics may be defined by an explicit table decision. Do not silently infer mechanics or treat a missing rule as automatic approval.",
+      "consistency": "Evaluate the whole resulting configuration against the table's effective rules, not only the unmodified first-party defaults. Any remaining contradictions can themselves be adjudicated.",
+      "softwareAuthorization": "Game-rule overrides do not bypass application authentication, ownership permissions, access controls, or data validation for safely representing the decision.",
+      "runtimeStatus": "Declarative policy only; a trusted override authoring, storage, precedence, and grant-evaluation executor is not implemented in this content change."
+    }
   }
 }
