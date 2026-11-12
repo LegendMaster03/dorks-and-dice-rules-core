@@ -407,6 +407,38 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 "persistentInfluences." + id, Add);
         }
 
+        // Source entitlements and their present mechanical applicability are
+        // separate. In particular, an alternate form does not erase a Class
+        // grant, nor does an earned Class grant automatically remain usable.
+        var applicabilityIds = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var entry in profile.IndependentGrantApplicability ?? [])
+        {
+            if (entry is null || Blank(entry.GrantId) ||
+                !applicabilityIds.Add(entry.GrantId))
+            {
+                Add("independent-applicability-identity-invalid",
+                    "independentGrantApplicability", NativeOriginIssueSeverity.Invalid,
+                    "Applicability entries must identify each independent grant once.");
+                continue;
+            }
+            var path = "independentGrantApplicability." + entry.GrantId;
+            if (!independent.ContainsKey(entry.GrantId) ||
+                !Enum.IsDefined(entry.State))
+                Add("independent-applicability-reference-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Applicability must reference an earned grant and a known state.");
+            if (entry.State == NativeOriginGrantApplicabilityState.Unresolved)
+                Add("independent-grant-applicability-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "This independent grant's use in the current form is unresolved.");
+            else if (entry.Basis is null)
+                Add("independent-grant-applicability-unevidenced", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "A claimed active or suppressed state needs an authored or DM basis.");
+            if (entry.Basis is { } basis)
+                CheckExplicitDecisionBasis(basis, proposal?.TableDecisions, path, Add);
+        }
+
         if (profile.ActiveTemporaryTransformation is { } active)
         {
             CheckActiveTransformation(active, proposal?.TableDecisions, persistent,
