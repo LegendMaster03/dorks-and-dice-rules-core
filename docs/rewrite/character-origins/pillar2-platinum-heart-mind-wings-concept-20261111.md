@@ -1,7 +1,7 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (working concept)
 
 **Date:** 2026-11-11  
-**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn) and **one combined Heart breath** that damages creatures in its area while healing selected creatures instead, with scaling effectiveness and a single resource. Exact mechanics, damage/healing numbers, progression thresholds, and relationship to ordinary breath features remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn), **one combined Heart breath** with selective damage/healing and scaling effectiveness, and **Mind's combined sensory-progression and limited-resilience direction** drawing on the 3.5 transformation and 5e champion. Exact features, values, progressions, and rules-engine behavior remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Purpose
 
@@ -25,7 +25,7 @@ The three-factor **ordinary** Dragonborn formula (category, skin material, damag
 | Expression | Core role | Preliminary candidates, explicitly **not** grants |
 | --- | --- | --- |
 | **Heart** | Draconic breath and extraordinary vitality | One combined damaging-and-healing breath, modeled on the published *Dragonborn of Bahamut* NPC's selective Radiant Breath; separate Healing Touch remains a non-approved reference candidate |
-| **Mind** | Heightened draconic perception and resilience | Source-grounded Darkvision/Blindsense progression (3.5), Truesight and specified condition protections (5e); precise translated senses, triggers and limits pending |
+| **Mind** | Heightened draconic perception and resilience | **Approved combined direction:** progressive Darkvision/Blindsense (3.5) alongside the 5e champion's fear immunity and limited failed-save protection; original 3.5 paralysis/magical-sleep protection remains a relevant candidate. Exact manifestation, acquisition timing and uses pending; Truesight not approved. |
 | **Wings** | Physical draconic flight | Source-grounded visible wings and progressive gliding/flight (3.5), with Bahamut's flight as a higher-power reference (5e); speed, maneuverability, endurance and acquisition milestones pending |
 
 These are **mechanical roles and possible expressions**, not numeric choices, exact conditions, damage types, guaranteed immunity, specified ability resources, or a fixed moral/alignment profile. In particular, radiant damage, broad healing, a permanent protective aura, and truesight are **not automatically approved** by invoking a platinum theme.
@@ -87,13 +87,30 @@ The source-inspired action is **one breath ability and one resource**, not separ
 - **Scaling:** Both outputs grow after rebirth; exact character-level brackets, formulas and handling of rebirth at high character level are unresolved.
 - **Resource/action contract:** Determine whether to preserve the base Dragonborn's Attack-action attack replacement, Proficiency Bonus uses per Long Rest, or introduce an explicit exceptional resource/recharge; do **not** silently copy the NPC's Action + Recharge 6.
 
-**Other source abilities**—Healing Touch, fear immunity, Legendary Resistance, wing-based flight and weapon flash—are individual candidates. They are not authorized by approving the combined breath.
+**Other source abilities:** Healing Touch and weapon flash remain unapproved individual candidates. **Fear immunity and limited failed-save protection now form part of Mind's approved combined design direction**, but their exact effects, timing, and resource rules are not approved by the Heart breath decision. Wing-based flight awaits its own mechanical pass.
 
-### Mind and Wings — next source-led design passes
+### Mind — approved combined sensory and resilience direction (mechanics pending)
 
-**Mind:** Start with the 3.5 Dragonborn's progressive visual/Blindsense abilities and protection against paralysis/magical sleep, then compare Bahamut's 5e Truesight and broader condition defenses. Because the native Dragonborn already has Low-Light Vision, simple low-light duplication adds nothing. Decide what distinct senses or protections are genuinely inherent, and how acquisition at different levels affects progression. Do **not** assume all monster immunities.
+**Owner-approved design direction (2026-11-11):** Platinum's **Mind** should combine **the progressive sensing capabilities associated with the 3.5 Dragonborn of Bahamut** with **the fear immunity and limited saving-throw protection represented in the 5e Dragonborn of Bahamut champion**. These belong in a single coherent Mind expression, not competing paths or mutually exclusive options. The 3.5 paralysis and magical-sleep protections are relevant source candidates within the same defensive theme; their exact disposition and levels have not been decided.
 
-**Wings:** Start with the original 3.5 progression of wings -> gliding -> restricted flight -> sustained flight, then compare the 5e aspect's powerful flying movement. All Platinum Dragonborn have the Wings expression, but the precise initial movement capabilities and advancement milestones are still open. Do **not** infer that they must use the original 3.5 Hit Dice milestones without adaptation.
+| Source precedent | Proposed place in Mind | What remains undecided |
+| --- | --- | --- |
+| 3.5 low-light vision / Darkvision progression | **Progressive Darkvision** beyond the native Dragonborn's existing Low-Light Vision. Source milestones: 30 ft initially, then 60/90/120 ft at 6/9/12 Hit Dice. | How to translate those distances and progression thresholds into native character-level scaling, particularly for characters reborn at high level. Do not grant redundant Low-Light Vision as a separate reward. |
+| 3.5 Blindsense (30 ft at 15 Hit Dice) | **Advanced sensing** after Darkvision. | Its exact range, sense rules, interaction with Invisibility, total concealment, hiding, and whether it functions while blinded. Blindsense must not silently become Blindsight or Truesight. |
+| 3.5 immunity to paralysis and magical sleep | Additional **defensive resilience** candidate, consistent with Mind. | Whether and when it manifests, exact native conditions/effect categories covered, and interaction with other conditions. |
+| 5e champion immunity to Frightened | **Fear immunity** as part of the approved Mind capability direction. | Whether present immediately after rebirth or gained with progression; whether it applies to every fear effect or specifically the native Frightened condition. |
+| 5e champion Legendary Resistance (1/day) | **Limited failed-saving-throw protection** as part of the approved Mind capability direction. | Player-facing expression and eligibility, use count, recharge, timing of invoking the effect, and initial-versus-later availability. **One/day and automatic success are source mechanics, not yet native approvals.** |
+| 5e Aspect of Bahamut's Truesight and much broader immunities | **Higher-power reference only**, not presently in the approved Mind feature set. | Whether any advanced equivalents are needed at all. |
+
+**Progression constraint:** All Platinum Dragonborn possess **Mind from rebirth**. That does **not** establish that every advanced sensory and defensive mechanic is granted immediately. A progressive profile should not reset an already high-level reborn character to level-1 functionality by default; the exact eligibility rule remains open. Keeping capabilities separate within one Mind expression permits coherent advancement without requiring a separate Mind class or three independent leveling tracks.
+
+**Shared-champion observation:** The published Dragonborn of Tiamat and Dragonborn of Sardior NPCs also have fear immunity and limited Legendary Resistance. That supports evaluating those two defenses later as **general exceptional-champion features**, but does **not** automatically grant them to Fivefold Chromatic or Ruby Dragonborn or change the approved Platinum design direction.
+
+**Boundaries:** Do not inherit NPC legendary-action rules, the full monster save profile, unrelated immunities, or a universal alignment-based condition rule. Native game-condition semantics and actual source-qualified player-character grants must be specified before implementation.
+
+### Wings — next source-led design pass
+
+**Wings:** Start with the original 3.5 progression of wings -> gliding -> restricted flight -> sustained flight, then compare the 5e champion's flying movement and the 5e Aspect's greater flying speed. Every Platinum Dragonborn inherently possesses Wings on rebirth, but its exact initial mobility and progression remain open. Do **not** presume the original 3.5 Hit Dice thresholds automatically apply to reborn characters at all levels.
 
 **Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth, including **one combined Heart breath with selective damage/healing and scaling effectiveness**. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No specific level thresholds, die formulas, resource quantities/recharge schedule, spell-like effects or native executable data are approved by this design pass.
 
@@ -131,7 +148,7 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
 2. For the **approved combined damaging-and-healing Breath Weapon**, how should it replace/enhance/coexist with the base and Metallic Breath Weapons? What damage affinity, shape, number of recipients, scaling formula, healing conditions, action, uses and recharge schedule should be selected?
-3. Which **source-established** Mind features (progressive Darkvision/Blindsense, paralysis/sleep protection, later Truesight or comparable resilience) should manifest, and at what progression?
+3. For **approved Mind's combined sensory and resilience direction**, which Darkvision/Blindsense ranges and milestones apply? When do fear immunity and limited failed-save protection begin, how many uses apply, and are paralysis/magical-sleep protections also selected? Truesight is only a future candidate.
 4. How should Wings adapt the 3.5 glide/flight progression for a character reborn at any level? Which abilities are available immediately and which scale?
 5. Should the three expressions combine in a unique later ability, and what triggers advancement for characters reborn at different levels?
 6. What small set of feature interactions provides the intended substantial power increase without creating redundant or contradictory feature packages?
