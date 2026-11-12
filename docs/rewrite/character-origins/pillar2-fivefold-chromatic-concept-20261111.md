@@ -161,6 +161,33 @@ Upon a successful sovereign-participated Rite, Fivefold receives its **currently
 
 **Approval boundary:** This section is a **review-ready candidate**, not finalized selected-native mechanics. Previously approved Fivefold features and geometry remain final; numeric dice, level-5 Warding gate, fear-source immunity and level-9 failed-save protection require their own approval. Ruby and broader category expansion remain outside this scope.
 
+## Final unresolved decisions — consolidated recommendation (owner approval pending)
+
+**Review 2026-11-11:** This section evaluates the **only remaining Fivefold feature choices** after the owner's approval of its five-type elemental core, flexible 60-foot line/30-foot cone, five simultaneous resistances, enhanced Warding behavior, Wings at 1–4/5–10/11+, and automatic death-throes Flare at levels 1+ with recovery and delayed release at level 11+. **Recommendations below are not yet owner-approved**, and do not amend those already settled mechanics.
+
+| Remaining decision | Recommended value | Why |
+| --- | --- | --- |
+| **Breath Weapon dice** | **2d10 / 4d10 / 6d10 / 8d10** at total levels **1 / 5 / 11 / 17** | Match Platinum's direct breath damage. Fivefold exchanges its healing for **five selectable types**, fivefold resistance/warding and its independent Flare/Wrath offensive sequence. More breath damage is not necessary to correct the formerly missing flight and burst abilities. |
+| **Enhanced Warding unlock** | **Character level 5** | Retain the native ordinary Chromatic Warding threshold; one Action and one use per Long Rest still upgrades **all five 50% resistances to 100% for one minute** as already approved. No extra separate uses or immunity to unrelated conditions. |
+| **Fear-source immunity** | **Character level 1**, like Platinum's proposed champion motif | Immunity to **fear-originated** Shaken, Frightened, Panicked and fear-derived Cowering under native `rule.fear-family`; independently caused Cowering or nonfear effects are **not** negated. Do not silently add the Aspect's unrelated Blinded, Charmed, Deafened, Poisoned or Stunned immunities. |
+| **Failed-save protection** | **Beginning at character level 9**, once per Long Rest, after failure, turn **one failed saving throw into a success** | Uses the champion NPC's bounded protection translated to the existing Platinum character-level threshold; no monster Legendary Actions and no ability to change a roll that was not a saving throw. |
+| **Offensive fear** | **No fear rider on the Breath Weapon or Flare** | Retain the approved five-element breath and independent Flare identity rather than merging them with the **different** published champion's necrotic/fear breath. A new Dread mechanic would need separate justification and approval. |
+
+### Comparative balance at each progression point
+
+- **Levels 1–4:** Fivefold has five 50% resistances, damage-type versatility, the proposed 2d10 breath and one automatic 1d10 near-defeat Flare. Platinum has 2d10 breath **plus selective healing** and much broader Mind condition/sense benefits. The proposed fear immunity partially parallels Platinum without importing its sleep/paralysis immunity or Darkvision.
+- **Level 5:** Both gain the approved temporary powered flight stage; Fivefold's proposed enhanced Warding upgrades five types for one minute (Action, once per Long Rest) whereas Platinum gains broader healing at 4d10/2d10. **Fivefold can dominate an encounter whose threats rely on those five damage types**; this is exceptional-ancestry power, not ordinary balance.
+- **Level 9:** A once-per-Long-Rest failed-save intervention would be shared with Platinum. This is a general champion defense, but Fivefold still lacks Platinum's progressive senses and other Mind immunities. At this level Fivefold also has its 2d10 death-throes Flare.
+- **Level 11+:** Both have continuous flight. Fivefold's already approved **Chromatic Wrath** now prevents one otherwise qualifying zero-HP collapse, restores **2 × total level HP**, and lets the player immediately release or delay a **3d10/4d10 Flare**. Platinum instead heals through its breath and continues to improve its senses. Fivefold emphasizes survival and retaliation; Platinum retains sustained support/perception advantages.
+
+### Source distinctions and restraint
+
+*Fizban's Treasury of Dragons* (2021), **Aspect of Tiamat** (p. 166) supports five independent elemental affinities, fivefold immunity, flight, a mythic near-death return and Flare; **Dragonborn of Tiamat** (p. 185) separately provides frightened immunity, one failed-save success per day and a **necrotic fear breath**. The **Aspect has broader condition immunities** than the champion, but **none are automatically granted** to the Fivefold ancestry. Existing owner-approved Dragonborn design already adapts the sovereign features; the remaining champion-style defenses can be shared with Platinum without merging the champion's otherwise incompatible offensive breath.
+
+**Why no further powers:** Additional damage dice, free proactive Flare, monster-scale condition immunities or multiple independent breaths would increase complexity and dilute the established Flare-first last-stand character. The proposed package is intentionally powerful and encounter-dependent; it is **not a claim of numerical parity** with Platinum under every circumstance.
+
+**Approval boundary:** The five rows are a **single coherent recommended final set**, but each is an outstanding owner decision. Do **not** promote them to selected-native, update the Rite as approved, or infer a category-wide legendary chassis from this study. Once the user approves or modifies these values, update the authoritative Fivefold section and the Rite/summary docs, leaving Ruby's distinct sovereign design for its next pass.
+
 ## Remaining choices before Fivefold is finalized
 
 **The staged Flare-first progression above is authoritative**, along with the approved Wings schedule. Historical numerical suggestions and the former level-11-only Flare design are retained only as research history where mentioned; they do not override the current approved feature package.
