@@ -175,6 +175,10 @@ def examine_reconciliation_decisions(review, decision_contract):
             decision.get("firstCandidateId"),
             decision.get("secondCandidateId"),
         )
+        if not all(_nonempty(value) for value in pair):
+            raise ReconciliationDecisionError(
+                "Decision references malformed candidate identifiers"
+            )
         if pair not in indexed:
             raise ReconciliationDecisionError(
                 "Decision does not refer to an observed relationship"
