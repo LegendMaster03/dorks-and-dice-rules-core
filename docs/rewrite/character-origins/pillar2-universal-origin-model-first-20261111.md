@@ -95,6 +95,10 @@ A separate **source-free custom proposal** can be represented as candidate evide
 
 The next concrete implementation work is to **review authoritative mechanical-definition identity** and define the distinct current-grant identity/authorization contract. General conflict and manifestation logic must follow those identity decisions rather than reconstructing them separately for each Species.
 
+## Review of cross-source definition relationships
+
+The [cross-source trait-definition audit](pillar2-definition-relationship-review-20261111.md) is the next source-neutral proof following the characteristic-identity projection. It compares authored native trait definitions without assuming equivalent effects from shared names, shared rule references, or matching structured fields. It distinguishes possible exact matches, possible structural extensions, divergent implementations and prose-only uncertainty, and flags source-dependent symbolic bindings. **Canonical identity mapping and duplicate/replacement policy remain unapproved**. This study creates review evidence before any Species-specific mixed-Heritage rules are authored.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
