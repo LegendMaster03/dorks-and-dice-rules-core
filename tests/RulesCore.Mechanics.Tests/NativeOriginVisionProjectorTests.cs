@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
@@ -133,11 +134,11 @@ public sealed class NativeOriginVisionProjectorTests
                 "#trait:low-light-vision", StringComparison.Ordinal) == true);
 
         var originalJson = sense.EffectiveValue!.Value;
-        var modified = JsonDocument.Parse(originalJson.GetRawText().Replace(
-            "\"rule\":\"rule.low-light-vision\"",
-            "\"rule\":\"rule.unapproved\"",
-            StringComparison.Ordinal));
-        var replacement = sense with { EffectiveValue = modified.RootElement.Clone() };
+        var modified = JsonNode.Parse(originalJson.GetRawText())!;
+        modified["rule"] = "rule.unapproved";
+        var replacement = sense with {
+            EffectiveValue = JsonSerializer.SerializeToElement(modified)
+        };
         var config = profile.Current with
         {
             InherentGrants = profile.Current.InherentGrants
