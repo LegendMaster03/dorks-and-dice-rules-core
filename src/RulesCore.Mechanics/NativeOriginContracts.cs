@@ -165,8 +165,10 @@ public sealed record NativeOriginEffectiveGrant(
     NativeOriginDecisionBasis? Authorization = null);
 
 /// <summary>
-/// Only InherentGrants belong to the current Species/Ancestry configuration.
-/// A mixed or custom profile may have no named first-party Species or Ancestry.
+/// A complete inherent Species/Ancestry configuration, usable as either the
+/// authoritative underlying baseline or the currently effective form. Neither
+/// role is implicit in this value type; the owning profile distinguishes them.
+/// A mixed or custom configuration may have no first-party Species label.
 /// </summary>
 public sealed record NativeOriginCurrentConfiguration(
     string? SpeciesId, string? AncestryId,
@@ -174,15 +176,39 @@ public sealed record NativeOriginCurrentConfiguration(
     string? ProfileId = null);
 
 /// <summary>
-/// A completed event may preserve the prior configuration for audit, but it does
-/// not confer any grant from that configuration on the current character.
-/// Stages permit delayed supernatural reconstruction without a forced instant swap.
+/// A completed historical reconstruction may retain its former baseline for audit,
+/// but the snapshot is not a restoration target or a current grant source.
+/// ReplacesConfiguration describes a persistent baseline replacement (for example,
+/// a Rite), not activation of a temporary alternate form. Stages permit delayed
+/// permanent reconstruction; reversible form activations remain separate state.
 /// </summary>
 public sealed record NativeOriginHistoryEvent(
     string Id, NativeOriginMethodReference Method, NativeOriginEventStage Stage,
     IReadOnlyList<string> ContributorIds, bool ReplacesConfiguration,
     NativeOriginCurrentConfiguration? PreviousConfiguration = null,
     string? ResultingProfileId = null, string? TableDecisionId = null);
+
+/// <summary>
+/// Persistent effects are separate from inherent Species/Ancestry. Their presence
+/// does not imply an available form, an active shift, or additional baseline grants.
+/// AcquisitionEvidenceId identifies provenance, not automatically a native Origin
+/// method or an approved progression.
+/// </summary>
+public sealed record NativeOriginPersistentInfluence(
+    string Id, NativeOriginSourceReference Source, string AcquisitionEvidenceId,
+    NativeOriginDecisionBasis? Authorization = null);
+
+/// <summary>
+/// Identifies the currently active temporary substitution and its evidence.
+/// The effective grants live in NativeOriginProfile.Current; the authoritative
+/// baseline lives in NativeOriginProfile.Underlying. There is deliberately no
+/// captured baseline or reversion snapshot on this record.
+/// </summary>
+public sealed record NativeOriginActiveTemporaryTransformation(
+    string Id, string FormId, NativeOriginSourceReference EffectSource,
+    string ActivationEvidenceId, string? PersistentInfluenceId = null,
+    IReadOnlyList<string>? EffectiveFormGrantIds = null,
+    NativeOriginDecisionBasis? Authorization = null);
 
 public sealed record NativeOriginProposal(
     string Id, NativeOriginIntent Intent, NativeOriginMethodReference Method,
@@ -196,19 +222,30 @@ public sealed record NativeOriginProposal(
     IReadOnlyList<NativeTableRuleDecision>? TableDecisions = null,
     IReadOnlyList<NativeOriginHistoryEvent>? History = null,
     IReadOnlyList<NativeOriginConstraint>? Constraints = null,
-    IReadOnlyList<NativeOriginInputRequirement>? InputRequirements = null);
+    IReadOnlyList<NativeOriginInputRequirement>? InputRequirements = null,
+    // ExistingConfiguration is the underlying baseline, never an active form.
+    NativeOriginCurrentConfiguration? ExistingEffectiveConfiguration = null,
+    NativeOriginActiveTemporaryTransformation? ActiveTemporaryTransformation = null);
 
 /// <summary>
-/// Independent grants are separated so a Rite does not discard class, Background,
-/// Upbringing, training, or other non-Species grants. Historical configurations
-/// are not active packages. No public runtime Origin evaluator exists in Phase 1.
+/// Underlying is the latest authoritative baseline, including any permanent Rite
+/// or other legitimate baseline changes. Current is the mechanically effective
+/// configuration. Without an active temporary transformation they should match.
+/// When a temporary form is active, Current contains exactly the inherent grants
+/// applicable to that form, not an automatic union with Underlying.
+/// Independent grants and the persistent condition are stored separately.
+/// Reversion must resolve Underlying at the time of reversion; no runtime
+/// transition or reversion logic is implemented by this Phase 1 contract.
 /// </summary>
 public sealed record NativeOriginProfile(
-    string Id, NativeOriginCurrentConfiguration Current,
+    string Id, NativeOriginCurrentConfiguration Underlying,
+    NativeOriginCurrentConfiguration Current,
     IReadOnlyList<NativeOriginEffectiveGrant> IndependentGrants,
     IReadOnlyList<NativeOriginHistoryEvent> History,
     NativeOriginDecisionBasis Adjudication,
-    string? ProposalId = null);
+    string? ProposalId = null,
+    IReadOnlyList<NativeOriginPersistentInfluence>? PersistentInfluences = null,
+    NativeOriginActiveTemporaryTransformation? ActiveTemporaryTransformation = null);
 
 public sealed record NativeOriginContractIssue(
     string Code, string Path, NativeOriginIssueSeverity Severity, string Detail);
