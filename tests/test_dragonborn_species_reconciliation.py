@@ -39,7 +39,8 @@ class DragonbornReconciliationTests(unittest.TestCase):
                 for name in names:
                     leaf = read(DRAGONBORN / f"ancestry/dragonborn/{family}/{name}.json")
                     self.assertEqual(node["id"], leaf["parent"])
-                    self.assertTrue(leaf["selectable"])
+                    self.assertEqual(family != "gem", leaf["selectable"],
+                                     "Gem ancestry leaves are temporarily nonselectable pending psionics")
                     self.assertEqual("selected-native", leaf["status"])
                     self.assertEqual("ancestry", leaf["kind"])
                     if family == "gem":
@@ -100,7 +101,8 @@ class DragonbornReconciliationTests(unittest.TestCase):
             with self.subTest(slug=slug):
                 leaf = read(folder / (slug + ".json"))
                 self.assertEqual("ancestry.dragonborn." + slug, leaf["id"])
-                self.assertTrue(leaf["selectable"])
+                self.assertFalse(leaf["selectable"],
+                                 "Ordinary Gem leaves must remain unavailable pending psionics")
                 self.assertEqual("selected-native", leaf["status"])
                 self.assertEqual(gem["id"], leaf["parent"])
                 self.assertEqual(affinity, leaf["damageType"])

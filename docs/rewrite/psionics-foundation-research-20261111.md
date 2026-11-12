@@ -1,7 +1,7 @@
 # Psionics foundation — research and Ruby Dragonborn dependency
 
 **Date:** 2026-11-11  
-**Status:** Research and architecture options **only**. This document does not approve psionic mechanics, resource pools, class features, Ruby ancestry traits, or native implementation.
+**Status:** **PARKED / OUT OF SCOPE for the current Character Origins Pillar 2 stage (2026-11-11).** Historical research and architecture options only; this document does not approve psionic mechanics, resource pools, class features, Ruby ancestry traits or native implementation. **Ordinary Gem leaves are temporarily `selectable: false` until a separate future psionics pass and explicit re-enablement.** Its research sequence is not a current project obligation.
 
 ## Why this is a shared Rules Core dependency
 
@@ -62,7 +62,7 @@ References: https://media.dndbeyond.com/compendium-images/ua/the-psion/mXCPWlh2y
 
 A manifestation definition should be able to identify **origin, power/discipline identifiers, grants, trigger/action, targets and visibility, save/DC, damage or non-damage outcome, duration/concentration, resource/cost, scaling, and explicit interaction exceptions**. Not every entry needs every field. Innate telepathy may be at-will; a class may require points; an object may have charges. **None of these defaults have been approved.**
 
-## Suggested research and implementation sequence
+## Parked future research and implementation sequence
 
 1. **Reconcile existing content and sources.** Audit native psionic-associated skills, Gem Psionic Mind, psychic damage, creature telepathy, current spellcasting resources and the published 3.5/2024 source models.
 2. **Approve the shared foundation.** Establish a power descriptor, effect semantics, magic-interaction policy, resource/augmentation separation and source-specific advancement. Make the written rules manually interpretable, not engine-dependent.
