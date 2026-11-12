@@ -9,6 +9,20 @@
 
 The recently added read-only shared-foundation audit, same-Species pair matrix, and synthetic compatibility-contract evaluator are **provisional study tools**. Their existence is not authorization to develop actual Dragonborn category/material mixing policies, ancestry-pair exceptions, or source-specific selection rules now.
 
+## Fundamental operation: decompose, mix, reconcile, manifest, reconstruct
+
+**Owner's conceptual model:** Mixed Species must be constructed by **breaking down each contributor's Species/Ancestry configuration into its constituent characteristics**, combining what those contributors can offer, **reconciling those components under an explicit general rule system**, and reconstructing a new coherent configuration. A Species is therefore mechanically a **composition of characteristics**, not an indivisible inherited label or an all-or-nothing package.
+
+1. **Deconstruct source configurations losslessly.** Inventory intrinsic properties, mechanical traits, reusable effect identities, trait parameters, restrictions, choice dependencies and source provenance. Retain source-level semantics even if the generic model does not yet know how to interpret them. A contributing standard Species/Ancestry must be reconstructible from its parts without silently losing behavior.
+2. **Combine eligible candidates.** Pool source-qualified characteristics and available parameter values, retaining duplicate offers and contributor lineage as evidence **without multiplying grants**. Distinguish each contributor's actual manifested state (when already mixed) from merely historical or potentially latent ancestry; the transmissibility policy is still open.
+3. **Reconcile characteristics by general rules.** Evaluate semantic equivalence, duplication, alternatives, replacement, prerequisite/dependency relationships, linked values, mutually exclusive intrinsic properties and explicit permitted exceptions. Unknown mechanics and unresolvable conflicts stay visible. No attempt to infer an automatically balanced or universally compatible mix is authorized.
+4. **Determine the manifested configuration through choices and adjudication.** Select actual traits and values within the candidate and policy boundaries, record DM-approved variations distinctly, and validate the resulting *whole character*. In practice, **reconciliation and manifestation are iterative**: a choice may reveal dependencies or new conflicts, and a conflict may require a different choice. Neither step should be specified as an irreversible one-pass filter.
+5. **Reconstruct one current Origin configuration.** Produce a source-conserving, verifiable profile of the final manifested intrinsic characteristics, traits and parameters, preserving complete operational definitions and grant provenance for later trusted Rules Core integration. **Historical contributors are not extra current Species packages**.
+
+**Standard round-trip invariant:** Applying this process to a directly selected standard Species/Ancestry should reproduce its authored configuration and required player choices through the same machinery as mixed Heritage. If decomposition cannot support reconstruction of an unchanged standard source, the model is incomplete; it should not be considered ready to authorize mixed Species.
+
+**Scope of this abstraction:** It handles shared-Species mixed Ancestry, different-Species mixtures, nonbiological origination, nested Heritage and custom/homebrew sources by the same rules. Species-specific patterns and exceptions are **authored data for later study**, not special resolution engines. Separately selected cultural Background/Upbringing is not treated as inherited Species material. A later Rite of Rebirth is a **complete configuration replacement operation**, not a contributor mixture.
+
 ## One pipeline, multiple source situations
 
 ```text
@@ -22,11 +36,10 @@ The recently added read-only shared-foundation audit, same-Species pair matrix, 
                     Candidate characteristic set
              (intrinsics, traits, parameter offerings)
                               |
-                   Explicit manifestation choices
-                (and their dependent/subchoices)
-                              |
-                    General interaction review
-             (duplicates, override, conflict, dependency)
+                   Manifestation + reconciliation
+               (explicit choices, general interactions,
+               dependencies, conflicts, adjudication;
+                 repeat review as choices evolve)
                               |
                      Authorization/adjudication
              (standard, unresolved, DM custom decision)
