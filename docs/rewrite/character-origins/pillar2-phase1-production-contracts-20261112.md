@@ -10,7 +10,7 @@ The production C# types reside in \`src/RulesCore.Mechanics/NativeOriginContract
 
 The model distinguishes:
 
-- **Origination:** A native \`rule.creature-origination\` method reference, resolved by reading the selected catalog's \`methodDefinitions\` without a second method registry or a fixed method count. Contributors have typed general roles and optional process-specific role IDs. Arbitrary input counts are supported.
+- **Origination:** A native \`rule.creature-origination\` method reference, resolved by reading the selected catalog's \`methodDefinitions\` without a second method registry or a fixed method count. Contributors have typed general roles and optional process-specific role IDs. Arbitrary input counts and explicit process-specific contributor-count requirements are representable without enforcing a universal parent count.
 - **Source:** Named native, custom, or previously manifested profiles. A previously mixed parent includes its **current manifested configuration**, with historical source IDs retained separately. History is never a source of automatic entitlement.
 - **Identity:** The source occurrence is always separate from an optional canonical mechanical definition, trait concept and intrinsic slot. Equal names, values, concepts or provisional mappings do not prove equivalent mechanics.
 - **Eligibility:** A candidate carries its own selection basis, authored source occurrence, offered value/parameters and unresolved evidence. Candidate existence does not create a manifestation or a grant. Unknown native bindings remain unresolved.
@@ -22,7 +22,7 @@ The model distinguishes:
 
 ## What structural inspection can and cannot establish
 
-\`ReviewProposal\` checks catalog method references, unique input/candidate/selection IDs, contributor and source occurrence provenance, authored choice references and bounds, unresolved eligibility/evidence, explicit relationship dispositions and table-decision references. \`ReviewProfile\` checks grant attribution, independent versus inherent grant identity, historical preservation and repeated intrinsic slots. Results are **structurally consistent**, **incomplete**, **unresolved**, **conflicting** or **invalid**. A structurally consistent result is never a mechanically authorized or playable Origin.
+\`ReviewProposal\` checks catalog method references, unique input/candidate/selection IDs and contributor-requirement bounds, contributor and source occurrence provenance, authored choice references and bounds, unresolved eligibility/evidence, explicit relationship dispositions and table-decision references. \`ReviewProfile\` checks grant attribution, independent versus inherent grant identity, historical preservation and repeated intrinsic slots. Results are **structurally consistent**, **incomplete**, **unresolved**, **conflicting** or **invalid**. A structurally consistent result is never a mechanically authorized or playable Origin.
 
 The validator intentionally does not issue effective grants or certify DM authority. The standalone profile records in tests represent possible states the Phase 2 engine will later need to produce. They are not examples of grant issuance by this Phase 1 validator. The data model permits more detailed authored relationships and arbitrary effective decisions without requiring Species-specific executable rules.
 

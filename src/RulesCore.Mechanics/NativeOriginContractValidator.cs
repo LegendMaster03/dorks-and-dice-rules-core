@@ -238,6 +238,26 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                     NativeOriginIssueSeverity.Unresolved,
                     "Relationship evidence alone is not a duplicate, stacking or replacement rule.");
 
+        var requiredInputs = Index(proposal.InputRequirements ?? [], c => c?.Id,
+            "inputRequirements", Add);
+        foreach (var (id, req) in requiredInputs)
+        {
+            var path = "inputRequirements." + id;
+            if (req.Role is null ||
+                (req.Role?.Kind == NativeOriginInputKind.ProcessSpecific &&
+                 Blank(req.Role.ProcessRoleId)) ||
+                req.MinimumCount < 0 || req.MaximumCount is < 0 ||
+                (req.MaximumCount.HasValue && req.MaximumCount.Value < req.MinimumCount))
+                Add("input-requirement-invalid", path, NativeOriginIssueSeverity.Invalid,
+                    "Process roles and minimum/maximum contributor bounds must be valid.");
+            if (!Blank(req.TableDecisionId))
+                RequireDecision(req.TableDecisionId, path, decisions, Add);
+            else if (Blank(req.NativeRuleReference))
+                Add("input-requirement-policy-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Process input requirements need authored native or table-policy evidence.");
+        }
+
         var constraints = Index(proposal.Constraints ?? [], c => c?.Id, "constraints", Add);
         foreach (var (id, constraint) in constraints)
         {

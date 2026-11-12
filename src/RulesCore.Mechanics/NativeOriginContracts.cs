@@ -50,6 +50,15 @@ public sealed record NativeOriginSourceReference(
 public sealed record NativeOriginInputRole(
     NativeOriginInputKind Kind, string? ProcessRoleId = null);
 
+/// <summary>
+/// Authored requirements for a particular process, including nonparent roles.
+/// These are evidence for Phase 2 to check, not a hard-coded parent count.
+/// </summary>
+public sealed record NativeOriginInputRequirement(
+    string Id, NativeOriginInputRole Role, int MinimumCount,
+    int? MaximumCount = null, string? NativeRuleReference = null,
+    string? TableDecisionId = null);
+
 public sealed record NativeOriginContributor(
     string Id, NativeOriginInputRole Role, NativeOriginSourceReference Source,
     NativeOriginCurrentConfiguration? ManifestedProfile = null,
@@ -201,7 +210,8 @@ public sealed record NativeOriginProposal(
     IReadOnlyList<NativeOriginResolution>? Resolutions = null,
     IReadOnlyList<NativeOriginTableDecision>? TableDecisions = null,
     IReadOnlyList<NativeOriginHistoryEvent>? History = null,
-    IReadOnlyList<NativeOriginConstraint>? Constraints = null);
+    IReadOnlyList<NativeOriginConstraint>? Constraints = null,
+    IReadOnlyList<NativeOriginInputRequirement>? InputRequirements = null);
 
 /// <summary>
 /// Independent grants are separated so a Rite does not discard class, Background,

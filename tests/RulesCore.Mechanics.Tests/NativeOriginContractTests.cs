@@ -109,6 +109,38 @@ public sealed class NativeOriginContractTests
     }
 
     [Fact]
+    public void ActualSelectedNativeMethodCatalogIsResolvedWithoutFixedCounts()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        string? root = null;
+        while (directory is not null)
+        {
+            var path = Path.Combine(directory.FullName, "data", "rulesets",
+                "first-party-001", "native", "rules", "creature-origination.json");
+            if (File.Exists(path)) { root = directory.FullName; break; }
+            directory = directory.Parent;
+        }
+        Assert.NotNull(root);
+        using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine(root!,
+            "data", "rulesets", "first-party-001", "native", "rules",
+            "creature-origination.json")));
+        var snapshot = NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(
+            Path.Combine(root!, "data", "rulesets"), "first-party-001"));
+        var validator = new NativeOriginContractValidator(snapshot);
+        foreach (var method in document.RootElement.GetProperty("methodDefinitions").EnumerateArray())
+        {
+            var id = method.GetProperty("id").GetString()!;
+            Assert.NotNull(validator.FindMethod(Method(id)));
+        }
+        var reconstruction = validator.FindMethod(Method("supernatural-reconstruction"));
+        Assert.Equal("transformation", reconstruction?.Specializes);
+        Assert.False(reconstruction?.CreatesNewIndividual);
+        Assert.Equal("post-origination", reconstruction?.Stage);
+        Assert.Equal("replace-complete-species-and-ancestry-configuration",
+            validator.FindMethod(Method("rite-of-rebirth"))?.Operation);
+    }
+
+    [Fact]
     public void HumanDirectOriginRequiresNoInventedBiologicalParents()
     {
         using var fixture = new Fixture();
@@ -184,6 +216,34 @@ public sealed class NativeOriginContractTests
             fixture.Validator.ReviewProposal(proposal).Status);
         Assert.Equal(5, proposal.Contributors.Count);
         Assert.Empty(proposal.Candidates);
+    }
+
+    [Fact]
+    public void PlantAndFiendMethodsSupportDifferentInputRequirements()
+    {
+        using var fixture = new Fixture();
+        var requirement = new NativeOriginInputRequirement("pollinator",
+            new(NativeOriginInputKind.ProcessSpecific, "pollination-source"), 0, 3,
+            NativeRuleReference: "rule.synthetic-plant-process");
+        var plant = Proposal("plant", "plant-reproduction", NativeOriginIntent.Custom,
+            contributors: [
+                new("source", new(NativeOriginInputKind.PlantSource), Source("plant.spore"))
+            ]) with { InputRequirements = [requirement] };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(plant).Status);
+        Assert.NotNull(fixture.Validator.FindMethod(Method("biological")));
+        Assert.NotNull(fixture.Validator.FindMethod(Method("spawning")));
+        var fiend = Proposal("fiend", "spawning", NativeOriginIntent.Custom,
+            contributors: [
+                new("summoner", new(NativeOriginInputKind.MagicalSource), Source("power.abyss"))
+            ]);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(fiend).Status);
+        var malformed = plant with {
+            InputRequirements = [requirement with { MaximumCount = -1 }]
+        };
+        Assert.Equal(NativeOriginReviewStatus.Invalid,
+            fixture.Validator.ReviewProposal(malformed).Status);
     }
 
     [Fact]
