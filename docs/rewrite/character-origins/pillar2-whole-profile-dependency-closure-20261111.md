@@ -61,6 +61,12 @@ A record that passes a synthetic constraint is **satisfied evidence** only. It d
 - Untouched native source ambiguity such as Wood Elf walking speed remains reported in the source evidence without contaminating a Druidcraft-only proposal.
 - All outputs remain **non-authoritative** and retain exact proposal fingerprint and source diagnostics, even when no declared rule reports a conflict.
 
+## Authored choice-schema follow-up
+
+The [choice-schema authoring audit](pillar2-native-choice-schema-audit-20261111.md) has begun classifying actual native Species/Ancestry choice fields and their timing, rather than relying only on a synthetic `requires-choice` test rule. The active-choice projection applies those observations **only to tentatively retained evidence**, with direct-source lineage and definition checks. **It does not close a real first-party choice requirement**: open catalogs, source-wide controls, prior nested contributor choice history and deferred parameter bindings still need complete authorized semantics.
+
+A Metallic Breath Weapon's **on-use option** must not become a compulsory persistent character-creation choice. A Human Skillful entitlement requires an actual eligible skill catalog and selection. Both use the same overall Origin characteristic model, but different choice timing and validation rules.
+
 ## Production work still required
 
 1. **Authoritative prerequisite and choice schema:** Build a general content contract that covers current native traits and their embedded, dependent choices. A heuristic observation is not equivalent to interpreting an effect.
