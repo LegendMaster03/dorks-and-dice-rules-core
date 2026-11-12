@@ -151,21 +151,6 @@ public sealed record NativeOriginResolution(
     string RelationshipId, NativeOriginResolutionAction Action,
     NativeOriginDecisionBasis Basis);
 
-public sealed record NativeOriginAuthority(
-    string ActorId, string AuthorizationEvidenceId);
-public sealed record NativeOriginDecisionScope(string Kind, string Id);
-public sealed record NativeOriginDecisionTarget(string Kind, string Id);
-
-/// <summary>
-/// EffectiveOutcome may contain replacement rules, altered characteristics, or a
-/// complete custom configuration, not just an exemption from a restriction.
-/// A serialized authorization claim must still be verified by application policy.
-/// </summary>
-public sealed record NativeOriginTableDecision(
-    string Id, NativeOriginAuthority Authority, NativeOriginDecisionScope Scope,
-    NativeOriginDecisionTarget Target, JsonElement EffectiveOutcome,
-    string? Rationale = null, string? SupersedesDecisionId = null);
-
 /// <summary>
 /// This identity is earned by the future evaluator, not by candidate discovery.
 /// Candidate IDs provide offer provenance; manifestation and grant IDs identify
@@ -208,7 +193,7 @@ public sealed record NativeOriginProposal(
     NativeOriginCurrentConfiguration? ExistingConfiguration = null,
     IReadOnlyList<NativeOriginRelationship>? Relationships = null,
     IReadOnlyList<NativeOriginResolution>? Resolutions = null,
-    IReadOnlyList<NativeOriginTableDecision>? TableDecisions = null,
+    IReadOnlyList<NativeTableRuleDecision>? TableDecisions = null,
     IReadOnlyList<NativeOriginHistoryEvent>? History = null,
     IReadOnlyList<NativeOriginConstraint>? Constraints = null,
     IReadOnlyList<NativeOriginInputRequirement>? InputRequirements = null);

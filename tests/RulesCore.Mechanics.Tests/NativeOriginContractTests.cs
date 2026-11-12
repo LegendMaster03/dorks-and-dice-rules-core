@@ -366,7 +366,7 @@ public sealed class NativeOriginContractTests
     public void ScopedDmDecisionCanReplaceRulesNotMerelyWaiveEligibility()
     {
         using var fixture = new Fixture();
-        var decision = new NativeOriginTableDecision("ruling",
+        var decision = new NativeTableRuleDecision("ruling",
             new("dm.actor", "campaign-authorization-record"),
             new("campaign", "campaign-one"),
             new("origin.configuration", "character-one"),
@@ -385,6 +385,11 @@ public sealed class NativeOriginContractTests
         };
         Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
             fixture.Validator.ReviewProposal(proposal).Status);
+        var dmProfile = Profile(proposal,
+            basis: new(NativeOriginAdjudication.DmAuthorized,
+                TableDecisionId: decision.Id));
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(dmProfile, proposal).Status);
         Assert.Equal("campaign", decision.Scope.Kind);
         Assert.Equal("custom.feature",
             decision.EffectiveOutcome.GetProperty("newTrait").GetString());
@@ -548,7 +553,7 @@ public sealed class NativeOriginContractTests
                 basis: new(NativeOriginAdjudication.Unresolved))).Status);
         var dm = Profile(proposal,
             basis: new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "ruling"));
-        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
             fixture.Validator.ReviewProfile(dm).Status);
         // This verifies the claim's shape, not the actor's actual authority.
         Assert.Equal("ruling", dm.Adjudication.TableDecisionId);

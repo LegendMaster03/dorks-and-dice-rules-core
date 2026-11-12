@@ -422,10 +422,17 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                     NativeOriginIssueSeverity.Incomplete,
                     "A completed replacement must retain the former configuration as history.");
         }
-        if (profile.Adjudication.Adjudication == NativeOriginAdjudication.DmAuthorized &&
-            Blank(profile.Adjudication.TableDecisionId))
-            Add("profile-dm-decision-required", "adjudication", NativeOriginIssueSeverity.Invalid,
-                "A DM-authorized outcome needs a scoped table-decision ID.");
+        if (profile.Adjudication.Adjudication == NativeOriginAdjudication.DmAuthorized)
+        {
+            if (Blank(profile.Adjudication.TableDecisionId))
+                Add("profile-dm-decision-required", "adjudication", NativeOriginIssueSeverity.Invalid,
+                    "A DM-authorized outcome needs a scoped table-decision ID.");
+            else if (proposal?.TableDecisions?.Any(d =>
+                d.Id == profile.Adjudication.TableDecisionId) != true)
+                Add("profile-dm-decision-unverified", "adjudication",
+                    NativeOriginIssueSeverity.Unresolved,
+                    "A claimed table ruling must be linked to an explicit scoped decision.");
+        }
         if (profile.Adjudication.Adjudication == NativeOriginAdjudication.Unresolved)
             Add("profile-outcome-unresolved", "adjudication",
                 NativeOriginIssueSeverity.Unresolved, "No supported or table-effective outcome is established.");
@@ -452,7 +459,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     }
 
     private static void RequireDecision(string? id, string path,
-        IReadOnlyDictionary<string, NativeOriginTableDecision> decisions,
+        IReadOnlyDictionary<string, NativeTableRuleDecision> decisions,
         Action<string, string, NativeOriginIssueSeverity, string> add)
     {
         if (Blank(id) || !decisions.ContainsKey(id))
