@@ -153,6 +153,30 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
         self.assertEqual(2, len(breath["options"]))
         self.assertEqual("amphibious", p["lineage"][2]["traits"][0]["localTraitId"])
 
+    def test_gem_leaf_inventory_reuses_shared_family_traits(self):
+        for slug, damage in (
+            ("amethyst", "force"), ("crystal", "radiant"),
+            ("emerald", "psychic"), ("sapphire", "thunder"),
+            ("topaz", "necrotic"),
+        ):
+            with self.subTest(slug=slug):
+                sid = "ancestry.dragonborn." + slug
+                p = source_inventory(sid, self.catalog)
+                self.assertEqual([
+                    "species.dragonborn", "ancestry.dragonborn.gem", sid],
+                    [x["sourceId"] for x in p["lineage"]],
+                )
+                base, family, leaf = p["lineage"]
+                self.assertEqual("dragon", base["intrinsicFields"]["creatureType"])
+                self.assertEqual({"shape": "cone", "lengthFeet": 15},
+                                 family["intrinsicFields"]["breathWeaponArea"])
+                self.assertEqual(
+                    {"psionic-mind", "gem-flight"},
+                    {t["localTraitId"] for t in family["traits"]},
+                )
+                self.assertEqual(damage, leaf["intrinsicFields"]["damageType"])
+                self.assertEqual([], leaf["traits"])
+
     def test_qualified_occurrences_preserve_same_named_different_traits(self):
         # Orc and Goliath each author Powerful Build, but those effects differ.
         orc = source_inventory("species.orc", self.catalog)

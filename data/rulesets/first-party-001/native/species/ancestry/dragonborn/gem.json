@@ -5,11 +5,57 @@
   "status": "selected-native",
   "selectable": false,
   "parent": "species.dragonborn",
-  "traits": [],
+  "traits": [
+    {
+      "id": "psionic-mind",
+      "name": "Psionic Mind",
+      "description": "You can communicate a telepathic message to one creature you can see within 30 feet. It understands the message if it understands at least one language, whether or not you share a language. This sends a message only: it does not read thoughts or grant the recipient a telepathic reply.",
+      "atWill": true,
+      "communicationMode": "telepathic-message",
+      "rangeFeet": 30,
+      "targetCount": 1,
+      "requiresSight": true,
+      "requiresRecipientLanguage": true,
+      "requiresSharedLanguage": false,
+      "oneWay": true,
+      "grantsThoughtReading": false
+    },
+    {
+      "id": "gem-flight",
+      "name": "Gem Flight",
+      "description": "Starting at character level 5, you can use a Bonus Action on your turn to manifest spectral wings for 1 minute. While they last, you gain a flying speed equal to your current walking speed and can hover. You can use this trait once per Long Rest; it is independent of your Breath Weapon.",
+      "requiredCharacterLevel": 5,
+      "activation": {
+        "action": "bonus-action",
+        "timing": "on-your-turn"
+      },
+      "duration": {
+        "minutes": 1
+      },
+      "uses": {
+        "value": 1,
+        "recharge": "long-rest",
+        "resource": "gem-flight",
+        "independentOf": "breath-weapon"
+      },
+      "manifestation": "spectral-wings",
+      "flyingSpeed": {
+        "equalTo": "current-walking-speed"
+      },
+      "canHover": true,
+      "grantsPermanentFlight": false
+    }
+  ],
   "reviewNotes": [
-    "This native record establishes only the approved nonselectable Gem family inheritance node; it is not a playable Dragonborn selection.",
-    "Amethyst, Crystal, Emerald, Sapphire and Topaz leaves are reserved for later reconciliation and have not been created in native.",
-    "Gem-specific breath weapon geometry, elemental or other damage affinity, resistance mapping, special traits and inherited adaptations remain unresolved. No mechanics should be inferred from the empty traits array.",
-    "No Upbringing is selected or assigned by default. The currently selectable Dragonborn leaves remain the five Chromatic and five Metallic types."
-  ]
+    "Nonselectable Gem family; select an ordinary Amethyst, Crystal, Emerald, Sapphire or Topaz leaf.",
+    "Inherit base Dragonborn Dragon type, Low-Light Vision, movement, 50% resistance to the leaf's damage type and the ordinary Breath Weapon with proficiency-bonus uses per Long Rest. This family supplies its 15-foot cone area.",
+    "Psionic Mind only sends messages to a visible language-understanding recipient; it grants no learned language, mind reading or two-way telepathy.",
+    "Gem Flight is a separate once-per-Long-Rest level-5 feature, granting temporary hovering flight at current walking speed rather than permanent flight.",
+    "The five ordinary leaf identities configure separate affinities; they do not require additional invented innate adaptations or selected Upbringings.",
+    "Source basis: Fizban's Treasury of Dragons (2021), Gem Dragonborn, adapted to the native Dorks & Dice Dragon-type and percentage resistance system. Exceptional Ruby remains a separate nonstandard design."
+  ],
+  "breathWeaponArea": {
+    "shape": "cone",
+    "lengthFeet": 15
+  }
 }
