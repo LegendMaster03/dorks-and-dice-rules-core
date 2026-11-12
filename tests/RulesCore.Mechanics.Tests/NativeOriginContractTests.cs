@@ -1145,4 +1145,91 @@ public sealed class NativeOriginContractTests
     }
 
 
+    [Fact]
+    public void IndependentEntitlementPersistsWhenTemporaryFormSuppressesItsUse()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var classGrant = new NativeOriginEffectiveGrant("class-grant",
+            "class-choice", Trait("class-feature", "class.warlock"),
+            ["class-offer"]);
+        var suppressed = wolf with
+        {
+            IndependentGrants = [classGrant],
+            IndependentGrantApplicability =
+            [
+                new("class-grant", NativeOriginGrantApplicabilityState.Suppressed,
+                    new(NativeOriginAdjudication.Supported,
+                        NativeRuleReference: "rule.form-class-compatibility"))
+            ]
+        };
+
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(suppressed, proposal).Status);
+        Assert.Equal("class-grant", Assert.Single(suppressed.IndependentGrants).Id);
+        Assert.Equal(NativeOriginGrantApplicabilityState.Suppressed,
+            Assert.Single(suppressed.IndependentGrantApplicability!).State);
+
+        // These are two representable states, not an implemented transition.
+        var reverted = suppressed with
+        {
+            Current = suppressed.Underlying,
+            ActiveTemporaryTransformation = null,
+            IndependentGrantApplicability =
+            [
+                new("class-grant", NativeOriginGrantApplicabilityState.Applicable,
+                    new(NativeOriginAdjudication.Supported,
+                        NativeRuleReference: "rule.form-class-compatibility"))
+            ]
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(reverted, proposal).Status);
+        Assert.Equal("class-grant", Assert.Single(reverted.IndependentGrants).Id);
+
+        var copy = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(suppressed))!;
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(copy, proposal).Status);
+        Assert.Equal(NativeOriginGrantApplicabilityState.Suppressed,
+            Assert.Single(copy.IndependentGrantApplicability!).State);
+    }
+
+    [Fact]
+    public void IndependentGrantUseCannotBeInventedOrReferToMissingEntitlements()
+    {
+        using var fixture = new Fixture();
+        var (proposal, profile, _) = HumanWithLycanthropy(active: false);
+        var absent = profile with
+        {
+            IndependentGrantApplicability =
+                [new("not-earned", NativeOriginGrantApplicabilityState.Applicable)]
+        };
+        var invalid = fixture.Validator.ReviewProfile(absent, proposal);
+        Assert.Equal(NativeOriginReviewStatus.Invalid, invalid.Status);
+        Assert.Contains(invalid.Issues,
+            x => x.Code == "independent-applicability-reference-invalid");
+
+        var grant = new NativeOriginEffectiveGrant("earned", "class-choice",
+            Trait("training", "class.fighter"), ["class-offer"]);
+        var withoutEvidence = profile with
+        {
+            IndependentGrants = [grant],
+            IndependentGrantApplicability =
+                [new("earned", NativeOriginGrantApplicabilityState.Applicable)]
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(withoutEvidence, proposal).Status);
+
+        var unknown = withoutEvidence with
+        {
+            IndependentGrantApplicability =
+                [new("earned", NativeOriginGrantApplicabilityState.Unresolved)]
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(unknown, proposal).Status);
+        Assert.Contains(fixture.Validator.ReviewProfile(unknown, proposal).Issues,
+            x => x.Code == "independent-grant-applicability-unresolved");
+    }
+
+
 }
