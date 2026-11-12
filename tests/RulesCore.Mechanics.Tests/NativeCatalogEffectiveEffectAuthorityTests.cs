@@ -71,10 +71,11 @@ public sealed class NativeCatalogEffectiveEffectAuthorityTests
 
     private static NativeOriginEffectiveGrant Grant(string id = "earned-gift",
         string source = "feature.test-gift", string path = "/traits/gift",
-        string mechanic = "mechanic.gift") =>
+        string mechanic = "mechanic.gift",
+        NativeOriginSourceKind kind = NativeOriginSourceKind.Native) =>
         new(id, "manifest:" + id,
             new(NativeOriginCharacteristicKind.Trait,
-                new(new(NativeOriginSourceKind.Native, source), path),
+                new(new(kind, source), path),
                 mechanic),
             ["candidate:" + id]);
 
@@ -234,7 +235,8 @@ public sealed class NativeCatalogEffectiveEffectAuthorityTests
         {
             Grant(source: "feature.unknown"),
             Grant(path: "/traits/wrong"),
-            Grant(mechanic: "mechanic.other")
+            Grant(mechanic: "mechanic.other"),
+            Grant(kind: NativeOriginSourceKind.Custom)
         };
         foreach (var grant in variants)
         {
