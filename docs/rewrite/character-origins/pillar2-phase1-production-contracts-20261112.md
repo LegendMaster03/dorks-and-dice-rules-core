@@ -62,7 +62,7 @@ The validator checks source and activation evidence, optional linkage to persist
 
 ### Outstanding transformation precedence decisions
 
-No general rule has been adopted for overlapping temporary forms, polymorph, permanent Rite execution during an active form, changing baseline trait bindings while the form is active, form persistence after death/cure/dispel, precedence among other active effects, or when a form-specific grant should cease or be retained. Form-specific creature type, targeting, anatomy, available actions, and suppression/retention of underlying traits still require authored rules or an authorized DM decision. In particular, the reversion invariant identifies the **latest authoritative baseline** as the source of truth but does not authorize or implement a transition algorithm.
+No general rule has been adopted for overlapping temporary forms, polymorph, permanent Rite execution during an active form, changing baseline trait bindings while the form is active, form persistence after death/cure/dispel, precedence among other active effects, or when a form-specific grant should cease or be retained. A transformed contributor's effective form versus underlying inheritable characteristics also requires an explicit transmission policy; neither is automatically eligible. Form-specific creature type, targeting, anatomy, available actions, and suppression/retention of underlying traits still require authored rules or an authorized DM decision. In particular, the reversion invariant identifies the **latest authoritative baseline** as the source of truth but does not authorize or implement a transition algorithm.
 
 No universal trigger, moon phase, loss of control, alignment change, stage unlock, animal Hit Dice, or werewolf monster features have been added. No `supernatural-reconstruction` origination method is attached to an ordinary reversible form change; permanent reconstructive processes remain separate. The shared Origin evaluator and transformation execution belong to later phases.
 
@@ -76,6 +76,8 @@ Validated commands (branch CI):
 - `dotnet test RulesCore.slnx -c Release --no-build`
 - `python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -v`
 
-CI run [43161832144](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43161832144) passed the complete .NET solution build, **119 Mechanics tests**, **111 Host tests**, and **345 Pillar 2 Python tests**. The contract test class has **25 focused tests**. No failures occurred in those suites. The final nullability-warning cleanup does not alter contract behavior. The full repository-wide Python suite was not rerun; the separate previously known native/working corpus divergences remain outside this phase gate.
+Phase 1 baseline CI run [43161998430](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43161998430) passed the complete .NET solution build, **119 Mechanics tests**, **111 Host tests**, and **345 Pillar 2 Python tests**, with zero warnings.
+
+Temporary effective configuration follow-up CI run [43164074228](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43164074228) passed **130 Mechanics tests**, **111 Host tests**, and **345 Pillar 2 Python tests**, with **zero warnings and zero errors**. The updated Origin contract test class has **36 focused tests**. The full repository-wide Python suite was not rerun; previously known native/working corpus divergences remain outside this Phase 1 follow-up.
 
 **Phase boundary:** No API/Character Sheet integration, general Origin executor, Species-specific mixture rules, or native exceptional Dragonborn Ancestry records are created here. Phase 2 begins only under separate authorization.
