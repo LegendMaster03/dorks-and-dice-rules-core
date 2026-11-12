@@ -24,7 +24,8 @@ public sealed record NativeOriginRebirthResult(
 public sealed class NativeOriginRebirthEngine(NativeCatalogSnapshot catalog)
 {
     public NativeOriginRebirthResult Execute(NativeOriginRebirthRequest request,
-        INativeOriginAuthority? authority = null)
+        INativeOriginAuthority? authority = null,
+        INativeOriginNativeCompletionAuthority? nativeCompletionAuthority = null)
     {
         ArgumentNullException.ThrowIfNull(request);
         // A Rite cannot opt into native completion by guessing another method ID.
@@ -34,7 +35,7 @@ public sealed class NativeOriginRebirthEngine(NativeCatalogSnapshot catalog)
                     "Rite execution requires the native rite-of-rebirth method.")]);
         var result = new NativeOriginPermanentReconstructionEngine(catalog).Execute(
             new(request.ExistingProfile, request.TargetProposal, request.RiteId,
-                request.TrustedScope), authority);
+                request.TrustedScope), authority, nativeCompletionAuthority);
         return new(result.Status, result.ResultingProfile,
             result.TargetConstruction, result.Issues);
     }
