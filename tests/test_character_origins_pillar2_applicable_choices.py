@@ -252,6 +252,23 @@ class ApplicableChoiceTests(unittest.TestCase):
         ):
             self.apply(tampered, whole)
 
+    def test_full_corpus_choice_audit_does_not_leak_other_source_controls(self):
+        preview, whole = self.pipeline(
+            [direct("human", "species.human")],
+            lambda x: x["sourceTraitOrFieldId"] ==
+            "species.human#trait:skillful",
+        )
+        report = self.apply(preview, whole)
+        self.assertEqual(
+            [],
+            report["sourceConfigurationControlsNotApplied"],
+        )
+        self.assertNotIn(
+            "ancestrySelection",
+            {x["authoredField"]
+             for x in report["applicableNativeChoiceEvidence"]},
+        )
+
     def test_foreign_unselected_candidates_are_not_projected(self):
         preview, whole = self.pipeline(
             [direct("human", "species.human"),
