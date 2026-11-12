@@ -202,7 +202,7 @@ public sealed class NativeAuthenticatedApiTests
             approvalEvidenceId = "approval:123",
             proposal = new
             {
-                id = "mixed-1", intent = "Mixed",
+                id = "mixed-1", intent = 1,
                 method = new { ruleId = "rule.creature-origination", methodId = "biological" },
                 contributors = Array.Empty<object>(),
                 candidates = Array.Empty<object>(),
