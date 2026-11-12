@@ -90,6 +90,12 @@ The **initial lossless source-inventory slice** intentionally did not resolve pl
 
 A second test case inventories Gold Dragonborn and preserves the Metallic family cone, separate Metallic Breath resource, choice of two breath modes, and Amphibious leaf trait.
 
+## Identity/provenance model — further general-purpose evidence
+
+The [universal characteristic identity study](pillar2-characteristic-identity-boundaries-20261111.md) now demonstrates why **source-qualified trait evidence** is not the same as a cross-source **mechanical definition identity**, a conceptual trait family, or a character's **current acquired grant**. A source trait can appear in several contributor offers; mapped identical definitions still have distinct offer provenance and must not automatically stack. This evidence is synthetic and does not finalize semantic equivalence for any first-party traits.
+
+This projection retains each input offer verbatim and carries existing unresolved source fields forward. It supports proposed custom candidate input **without inventing a biological contributor**, although eligibility policies, actual custom authoring, manifestation authorization, and standard round-trip reconstruction remain open. This is a dependency of the general composition engine, not an ancestry-specific rule.
+
 ## Proposed universal processing boundary
 
 ```text
