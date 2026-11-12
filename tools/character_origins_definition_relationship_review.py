@@ -15,6 +15,7 @@ import copy
 import itertools
 import json
 
+from character_origins_compound_traits import _symbolic_references
 from character_origins_source_inventory import read_catalog
 
 
@@ -75,6 +76,9 @@ def _occurrences(catalog):
                     trait["rule"] if isinstance(trait.get("rule"), str)
                     and trait["rule"] else None
                 ),
+                "symbolicReferencePaths": [
+                    path for path, _ in _symbolic_references(mechanical)
+                ],
             })
     return result
 
@@ -132,6 +136,10 @@ def _relation(first, second):
         "matchingMechanicalFieldNames": common,
         "differingMechanicalFieldNames": different,
         "proseDescriptionsDiffer": prose_differs,
+        "symbolicBindingContextRequired": bool(
+            first["symbolicReferencePaths"]
+            or second["symbolicReferencePaths"]
+        ),
         "mechanicalEquivalence": "not-established",
         "relationshipAuthority": "requires-manual-review",
         "grantsOrInheritance": "not-evaluated",
