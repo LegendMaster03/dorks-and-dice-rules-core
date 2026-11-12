@@ -134,12 +134,20 @@ class OriginCharacteristicFacetTests(unittest.TestCase):
         self.assertFalse(gold["diagnostics"])
         self.assertEqual(3, len(gold["sources"]))
 
-    def test_prose_only_traits_are_reported_for_review(self):
+    def test_normalized_sleep_and_prose_only_traits_are_audited(self):
         elf = project_facets("ancestry.elf.high", self.catalog)
         traits = [t for s in elf["sources"] for t in s["traits"]]
         magical = next(t for t in traits
                        if t["localTraitId"] == "magical-sleep")
-        self.assertEqual(["prose-only-effect"], magical["reviewRequired"])
+        self.assertEqual([], magical["reviewRequired"])
+        normalized = next(
+            f for f in magical["candidateFacets"]
+            if f["nativeField"] == "magicalSleep"
+        )
+        self.assertEqual(
+            {"immune": True, "mayConsentToSpecificEffect": True},
+            normalized["authoredValue"],
+        )
         keen = next(t for t in traits if t["localTraitId"] == "keen-senses")
         self.assertEqual([], keen["reviewRequired"])
         high_spell = next(
