@@ -97,6 +97,35 @@ These examples do not prescribe official published mechanics or approve original
 
 **Design boundary:** Distinct authored progressions should use shared state/event/characteristic processing rather than bespoke resolvers in C# or Character Sheet. The generic framework should support nonlinear, branched, reversible and condition-driven transitions when justified, without forcing that complexity into the ordinary character-creation path. Before implementing specific cases, use representative contrasting examples to prove that the framework is expressive enough; revise shared structures if a concrete case exposes a gap.
 
+## Comparative reference: Baldur's Gate 3 ceremorphosis (owner-suggested)
+
+**Status:** Historical/comparative gameplay example only, identified by the owner on 2026-11-12. **Not approved** as the first-party Illithid or ceremorphosis progression, no native records or numerical bonuses authorized.
+
+*Baldur's Gate 3* distinguishes several related but mechanically independent decisions:
+
+| BG3 state or event | Actual gameplay distinction | Potential generalizable Pillar 4 requirement |
+| --- | --- | --- |
+| Tadpole infection and optional powers | Parasite specimens unlock elective psionic powers in a separate tree while the character retains original Race and Class | A developing supernatural influence can provide individually acquired grants without itself replacing Origin |
+| Astral-Touched Tadpole / partial illithid | An explicit optional evolution event changes appearance, grants several powers, and unlocks an elite power tier, but **does not** make the character a full Mind Flayer | A progression milestone can alter a persistent condition and feature eligibility without completing Species/Ancestry reconstruction |
+| Full ceremorphosis | A distinct late-game choice replaces Race with Mind Flayer, Type with Aberration, changes ability scores, and grants/changes illithid powers | A terminal event explicitly reconstructs authoritative Species/Ancestry and reconciles affected grants and characteristics |
+| Existing character capabilities after full transformation | The player character/Karlach retain previous abilities and proficiencies, despite the Race, Type and ability-score changes; transformed Orpheus has different retention | The terminal reconstruction has an **individual authored replacement profile**, not a universal wipe of Class/skill abilities |
+
+**Critical nonlinearity:** Full ceremorphosis does **not** require first undergoing partial ceremorphosis. Therefore, the BG3 reference is **not** a required strict sequence `infection → partial → full`. A first-party ceremorphosis progression may use a different path and timing; the general framework must support an effect-authorized direct transition to reconstruction and paths that never culminate in reconstruction. An optional supernatural power tree must not be mistaken for automatic biological/species replacement.
+
+**Critical distinction from full gameplay substitution:** Unlike the Skyrim-inspired *complete temporary form replacement* concept discussed for other transformations, BG3's fully transformed player character does **not** lose all existing Class abilities. The question of which original Species grants, abilities, classes, equipment usage, effects, or resources remain effective at the terminal stage is specific to the authored transformation. Preserve underlying provenance and avoid implicit resets.
+
+**Adaptation candidates for later ceremorphosis reconciliation (not rules):**
+- Separate `infection/source`, `earned illithid powers`, `partial-ceremorphosis condition`, and `completed permanent reconstruction`.
+- Treat the Astral-Touched Tadpole analogue as an event-gated transition whose effects are specified, not a general level threshold.
+- Allow independent acquisition choices, stage-gated feature pools, optional stages, and direct completion when a specific process authorizes it.
+- Evaluate the terminal event against Pillar 2's `supernatural-reconstruction` reference while leaving intermediate changes as modifications; never apply permanent replacement before its explicitly completed stage.
+- Record source occurrence, authorized decision, previously accrued grants, and replacement/retention/suppression policy for every effective subsystem. Keep DM override available throughout.
+
+**Reference sources (game-specific, not D&D tabletop canon):**
+- https://bg3.wiki/wiki/Illithid_powers
+- https://bg3.wiki/wiki/Partial-illithid
+- https://bg3.wiki/wiki/Full-illithid
+
 ## Three primary design cases
 
 ### Elf transformed into a Dhampir (reference-only, not native content)
