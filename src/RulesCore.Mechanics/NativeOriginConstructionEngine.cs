@@ -334,7 +334,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             if (candidate.OfferedValue is null &&
                 candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
                 requirements.Count > 0 && !choices.Any(x =>
-                    x.SelectedOptionIds.Any(id => value?.ValueKind == JsonValueKind.String &&
+                    (x.SelectedOptionIds ?? []).Any(id => value?.ValueKind == JsonValueKind.String &&
                         value.Value.GetString() == id)))
             {
                 Add("intrinsic-choice-value-mismatch", candidate.Id,
@@ -380,7 +380,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             foreach (var resolution in proposal.Resolutions ?? [])
             {
                 var decision = Verified("relationship", resolution.RelationshipId);
-                if (decision?.Id == resolution.Basis?.TableDecisionId)
+                if (decision is not null &&
+                    decision.Id == resolution.Basis?.TableDecisionId)
                     verifiedDmDecisionIds.Add(decision.Id);
             }
 
