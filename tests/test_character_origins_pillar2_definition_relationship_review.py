@@ -211,6 +211,32 @@ class DefinitionRelationshipReviewTests(unittest.TestCase):
         self.assertIn("rangeFeet", pair["differingMechanicalFieldNames"])
         self.assertEqual("not-established", pair["mechanicalEquivalence"])
 
+    def test_same_symbolic_template_requires_source_binding_context(self):
+        catalog = {
+            "species.first": source("species.first", trait(
+                "breath", damage={"typeFrom": "selected-element"},
+                activation={"action": "action"}
+            )),
+            "species.second": source("species.second", trait(
+                "breath", damage={"typeFrom": "selected-element"},
+                activation={"action": "action"}
+            )),
+        }
+        report = self.review(catalog)
+        pair = self.pair(
+            report,
+            "species.first#trait:breath", "species.second#trait:breath"
+        )
+        self.assertEqual(
+            "identical-structured-fields-review", pair["classification"]
+        )
+        self.assertTrue(pair["symbolicBindingContextRequired"])
+        self.assertEqual(
+            ["damage.typeFrom"],
+            report["sourceTraitDefinitions"][0]["symbolicReferencePaths"]
+        )
+        self.assertEqual("not-established", pair["mechanicalEquivalence"])
+
     def test_shared_common_field_alone_is_not_a_mechanical_identity(self):
         catalog = {
             "species.first": source("species.first", trait(
