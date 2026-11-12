@@ -16,6 +16,14 @@ An Origin profile should identify **how a character originated, where potential 
 
 **Established principle:** Origination establishes how an individual came into existence. Heritage identifies sources from which inherent characteristics *may* derive. The actual character is determined by manifest traits or explicit Origin decisions. Contributor identity, parenthood, and inheritance candidacy do not automatically grant a complete source's traits.
 
+## Expanded input model and creation experiences
+
+[The universal Origin model](pillar2-universal-origin-model-first-20261111.md#three-workflow-stages-with-five-internal-operations) can be explained as **three major stages** (deconstruct/assemble, reconcile/manifest, reconstruct), retaining the **five internal operations** for implementation and validation. The same engine should process standard, mixed, nested, partially custom and potentially **fully custom** Heritage configurations. No fixed count of biological parents or inherited standard Species is a prerequisite for all creation modes.
+
+A *previously mixed contributor* supplies a verified current configuration plus historical provenance, not necessarily a directly selectable standard source. Whether latent traits may transmit is unresolved. A **fully custom** configuration can instead select approved characteristics without inventing parental lineage. In all cases, trait source, selection authority, mechanical validity, and final manifestation are separate concerns. Catalog presence alone does not confer inheritance or custom selection rights.
+
+**Future-facing proposal, not approved allocation rules:** Players may be offered inherited, partially custom and fully custom construction paths within one Origin model, each potentially having different eligibility/DM authority policies. Saving an individual custom Heritage does not automatically publish a reusable first-party Species/Ancestry. Existing prototypes generally require native or verified-profile contributors and have **not** implemented fully custom source-free creation.
+
 ## Application of the system-wide table customization principle
 
 The [native rules design specification](../native-rules-design-specification.md#governing-design-principle--the-rules-are-a-framework-not-a-constraint-on-the-table) establishes **table customization as a standing principle for all Dorks & Dice rules**, not a Pillar 2-specific exception.
