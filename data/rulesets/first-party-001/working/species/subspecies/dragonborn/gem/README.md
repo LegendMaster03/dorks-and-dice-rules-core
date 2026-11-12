@@ -1,6 +1,6 @@
 # Gem Dragonborn — ordinary family selected-native
 
-**Status (2026-11-11):** The Gem parent family and five ordinary leaves are selected-native on the Pillar 2 feature branch. Character Origins runtime grant and mixed-Heritage rules remain under development.
+**Status (2026-11-11, updated):** The Gem family and five ordinary leaves remain **selected-native reference data** but are all **`selectable: false`**. Ordinary Gem Dragonborn are temporarily unavailable for character creation and ordinary mixed-Heritage contributor selection until a later psionics pass. The existing mechanics are unchanged, and the general Pillar 2 runtime remains under development.
 
 ## Native source hierarchy
 
@@ -25,4 +25,4 @@ The mechanics are independently expressed for Dorks & Dice from the *Fizban's Tr
 
 Hoard-focused research is separate in [HOARD_TRADITIONS_RESEARCH.md](HOARD_TRADITIONS_RESEARCH.md). No Gem ancestry automatically grants an Upbringing, cultural preference, alignment, or learned language. Exceptional **Ruby** remains a separate sovereign rebirth concept, not a sixth ordinary Gem leaf or automatically eligible mixed-Heritage component.
 
-The selected Gem mechanics are complete as data. General mixed-heritage compatibility, trait manifestation and executable character-state grants remain pending in Pillar 2. The level-5 Gem Flight hovering ability should be compared during playtesting with Platinum's different approved level-6 limited flight; neither should automatically be rewritten.
+Gem mechanics remain as authored reference data; their five ordinary leaves are **not currently selectable** and must not be treated as mixed-Heritage contributors while disabled. Re-enabling the category is a separate future approval, not an automatic result of developing a Psion class. The approved Platinum/Fivefold limited flight now begins at **level 5** (continuous at level 11) without hover; ordinary Gem Flight retains its authored hover identity for later review.
