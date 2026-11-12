@@ -15,7 +15,18 @@ class NativeCreatureTypeTests(unittest.TestCase):
         source={e["id"]:e for e in working["types"]}
         self.assertEqual(set(source),set(types))
         self.assertEqual(working["genericParent"],foundation["genericParent"])
-        self.assertEqual(working["inheritance"],foundation["inheritance"])
+        # working/ retains historical descriptive design evidence. Native policy
+        # now explicitly scopes monster/NPC defaults away from playable Species.
+        # Compare shared executable structure, not superseded design prose.
+        self.assertEqual(
+            working["inheritance"]["multipleInheritance"],
+            foundation["inheritance"]["multipleInheritance"],
+        )
+        self.assertTrue(
+            foundation["applicationScope"]["monsterAndNpcStatblockDefaults"][
+                "doesNotAutomaticallyGrantToPlayableCharacters"
+            ]
+        )
         self.assertEqual([e["id"] for e in working["types"]],foundation["typeIds"])
         self.assertEqual(working["deferred"],foundation["unresolved"])
         for identity,entry in types.items():
