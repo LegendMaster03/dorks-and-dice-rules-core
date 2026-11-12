@@ -1,7 +1,7 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (working concept)
 
 **Date:** 2026-11-11  
-**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn), **one combined Heart breath** with selective damage/healing and scaling effectiveness, and **Mind's combined sensory-progression and limited-resilience direction** drawing on the 3.5 transformation and 5e champion. Exact features, values, progressions, and rules-engine behavior remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn), **one combined Heart breath** with selective damage/healing and scaling effectiveness, **Mind's combined sensory-progression and limited-resilience direction**, and **Wings' character-level progression (1–5 gliding, 6–11 limited powered flight, 12+ sustained flight)**. Exact flight mechanics, other feature values/progression, and rules-engine behavior remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Purpose
 
@@ -108,9 +108,21 @@ The source-inspired action is **one breath ability and one resource**, not separ
 
 **Boundaries:** Do not inherit NPC legendary-action rules, the full monster save profile, unrelated immunities, or a universal alignment-based condition rule. Native game-condition semantics and actual source-qualified player-character grants must be specified before implementation.
 
-### Wings — next source-led design pass
+### Wings — approved character-level progression structure (mechanics pending)
 
-**Wings:** Start with the original 3.5 progression of wings -> gliding -> restricted flight -> sustained flight, then compare the 5e champion's flying movement and the 5e Aspect's greater flying speed. Every Platinum Dragonborn inherently possesses Wings on rebirth, but its exact initial mobility and progression remain open. Do **not** presume the original 3.5 Hit Dice thresholds automatically apply to reborn characters at all levels.
+**Owner-approved Wings progression (2026-11-11):** Translate the three historical stages from *Races of the Dragon* (3.5), **Dragonborn of Bahamut**, into **total Dorks & Dice character level**, not Hit Dice or class-specific levels. All Platinum Dragonborn receive the Wings expression upon exceptional Draconic Rebirth. The **current total character level** determines the immediately available flight stage:
+
+| Total character level | Approved capability stage | Source relationship |
+| --- | --- | --- |
+| **1–5** | **Gliding**: physical wings permit controlled descent and horizontal gliding, but not powered/sustained flight | Original 3.5 Wings stage from 1–5 total Hit Dice |
+| **6–11** | **Limited powered flight**: active flying is possible, subject to an endurance/duration limitation; gliding remains available | Original 3.5 flight unlock at 6 Hit Dice |
+| **12+** | **Sustained flight**: the special endurance limitation from the intermediate stage no longer applies | Original 3.5 unrestricted sustained-flight unlock at 12 Hit Dice |
+
+**Late rebirth and advancement:** The character does **not** restart Wings progression at its first stage merely because the Rite happened late. A character reborn at level 15 immediately qualifies for the **12+ sustained-flight stage**. Subsequent character-level advancement changes the permitted stage without new ancestry selection or a separate Wings level.
+
+**Not yet approved:** Exact gliding speed, vertical-to-horizontal travel ratio, carrying restrictions, fall prevention, flying speed, maneuverability, flight-duration/fatigue formula for levels 6–11, midair failure/consciousness rules, and interactions with conditions and the movement system. The original 3.5 rules (30-foot glide/fly speed, glide ratio, constitution-based endurance, fatigue, etc.) are *research precedents*, **not automatically imported values**. The 5e Dragonborn of Bahamut NPC's 30-foot flight is a cross-edition comparison, not an override of this approved staged progression.
+
+**Scaling consistency:** Wings advances by **total character level**, consistent with the existing native Dragonborn Breath Weapon's character-level scaling and with a source-neutral rebirth model. This decides the **metric and stage thresholds for Wings only**; it does not yet approve copying the Wings thresholds to Mind or Heart, which each have their own unresolved numerical progression.
 
 **Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth, including **one combined Heart breath with selective damage/healing and scaling effectiveness**. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No specific level thresholds, die formulas, resource quantities/recharge schedule, spell-like effects or native executable data are approved by this design pass.
 
@@ -149,7 +161,7 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
 2. For the **approved combined damaging-and-healing Breath Weapon**, how should it replace/enhance/coexist with the base and Metallic Breath Weapons? What damage affinity, shape, number of recipients, scaling formula, healing conditions, action, uses and recharge schedule should be selected?
 3. For **approved Mind's combined sensory and resilience direction**, which Darkvision/Blindsense ranges and milestones apply? When do fear immunity and limited failed-save protection begin, how many uses apply, and are paralysis/magical-sleep protections also selected? Truesight is only a future candidate.
-4. How should Wings adapt the 3.5 glide/flight progression for a character reborn at any level? Which abilities are available immediately and which scale?
+4. For the **approved Wings stages at character levels 1–5, 6–11 and 12+**, what speed, gliding descent ratio, limited-flight endurance, fall protection and movement restrictions should apply? Which original 3.5 values, if any, should be adapted?
 5. Should the three expressions combine in a unique later ability, and what triggers advancement for characters reborn at different levels?
 6. What small set of feature interactions provides the intended substantial power increase without creating redundant or contradictory feature packages?
 
