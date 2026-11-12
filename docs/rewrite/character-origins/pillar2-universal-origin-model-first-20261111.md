@@ -105,6 +105,12 @@ The [curated native identity review](pillar2-curated-native-identity-review-2026
 
 An optional annotation in the read-only characteristic candidate projection connects these reviewed native-occurrence groups back to **actual offered characteristics**, preserving source definitions, contributor provenance, parameter values and explicit non-grant status. Forged native evidence and unverified nested/custom offers do **not** obtain this annotation from matching an ID string alone. **None of these literal comparisons becomes an approved cross-source mechanic, duplicate policy, or manifestation rule.**
 
+## First source-neutral reconciliation preview
+
+The [draft characteristic interaction reviewer](pillar2-general-reconciliation-preview-20261111.md) now accepts **explicit proposed candidate IDs** from the universal identity projection. It distinguishes repeated offers, identical versus competing intrinsic values, authored options, differently configured traits, literal definition matches, related but different definitions, partial component overlaps and trait/intrinsic movement mirrors. **None of these observations grants an ability or chooses a duplicate/upgrade/stacking outcome.** Unrelated pairs do not imply mechanical compatibility, and all unresolved source evidence is retained.
+
+This moves the evidence pipeline from just **identifying** definitions to **reviewing a proposed set of characteristics** as part of Stage 2, without yet approving the policies needed to reconstruct a valid final character. The next phase should define the **general resolution contract and decision provenance**, not Species-specific compatibility exceptions.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
