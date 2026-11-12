@@ -498,6 +498,63 @@ public sealed class NativeOriginContractTests
     }
 
     [Fact]
+    public void SameConceptButDifferentTraitDefinitionsNeverImplyEquivalence()
+    {
+        using var fixture = new Fixture();
+        var orc = Candidate("orc", Trait("powerful-build", "species.orc",
+            "mechanic.orc-powerful-build") with { TraitConceptId = "concept.powerful-build" });
+        var goliath = Candidate("goliath", Trait("powerful-build", "species.goliath",
+            "mechanic.goliath-powerful-build") with { TraitConceptId = "concept.powerful-build" });
+        var proposal = Proposal("distinct-definitions", candidates: [orc, goliath],
+            manifestations: [Manifest("orc-pick", orc.Id)]) with {
+            Relationships = [new("definition-review", NativeOriginRelationshipKind.Unknown,
+                [orc.Id, goliath.Id])]
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Equal(orc.Identity.TraitConceptId, goliath.Identity.TraitConceptId);
+        Assert.NotEqual(orc.Identity.MechanicalDefinitionId,
+            goliath.Identity.MechanicalDefinitionId);
+    }
+
+    [Fact]
+    public void DescendantIntrinsicReplacementDoesNotUseAnArbitraryMaximum()
+    {
+        using var fixture = new Fixture();
+        var elf = Candidate("elf-speed", Intrinsic("movement.walk.speed", "species.elf"));
+        var wood = Candidate("wood-speed", Intrinsic("movement.walk.speed", "ancestry.wood-elf"));
+        var proposal = Proposal("wood-speed", candidates: [elf, wood],
+            manifestations: [Manifest("wood-pick", wood.Id,
+                JsonSerializer.SerializeToElement(35))]) with {
+            Relationships = [new("speed-replacement", NativeOriginRelationshipKind.Substitution,
+                [elf.Id, wood.Id])]
+        };
+        var review = fixture.Validator.ReviewProposal(proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, review.Status);
+        Assert.Contains(review.Issues, i => i.Code == "relationship-awaits-decision");
+        Assert.Single(proposal.Manifestations);
+    }
+
+    [Fact]
+    public void ConflictingUnresolvedAndDmAuthorizedStatusesRemainDistinct()
+    {
+        using var fixture = new Fixture();
+        var proposal = Proposal("adjudication");
+        Assert.Equal(NativeOriginReviewStatus.Conflicting,
+            fixture.Validator.ReviewProfile(Profile(proposal,
+                basis: new(NativeOriginAdjudication.Conflict))).Status);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(Profile(proposal,
+                basis: new(NativeOriginAdjudication.Unresolved))).Status);
+        var dm = Profile(proposal,
+            basis: new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "ruling"));
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(dm).Status);
+        // This verifies the claim's shape, not the actor's actual authority.
+        Assert.Equal("ruling", dm.Adjudication.TableDecisionId);
+    }
+
+    [Fact]
     public void UnsupportedMechanicalIdentityIsUnresolvedNotEquivalentByName()
     {
         using var fixture = new Fixture();

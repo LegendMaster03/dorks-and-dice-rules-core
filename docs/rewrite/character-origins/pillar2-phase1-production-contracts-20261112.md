@@ -1,16 +1,16 @@
 # Pillar 2, Phase 1 — production Origin contract boundary
 
 **Date:** 2026-11-12
-**Implementation branch:** \`feature/pillar2-phase1-origin-contracts-20261112\`
+**Implementation branch:** `feature/pillar2-phase1-origin-contracts-20261112`
 **Roadmap:** [Pillar 2 implementation roadmap](pillar2-implementation-roadmap-20261111.md)
 
 ## Implemented contract
 
-The production C# types reside in \`src/RulesCore.Mechanics/NativeOriginContracts.cs\`, with bounded structural inspection in \`NativeOriginContractValidator.cs\`. They are not an API, character-creation workflow, inherited-trait policy, or source-to-grant evaluator.
+The production C# types reside in `src/RulesCore.Mechanics/NativeOriginContracts.cs`, with bounded structural inspection in `NativeOriginContractValidator.cs`. They are not an API, character-creation workflow, inherited-trait policy, or source-to-grant evaluator.
 
 The model distinguishes:
 
-- **Origination:** A native \`rule.creature-origination\` method reference, resolved by reading the selected catalog's \`methodDefinitions\` without a second method registry or a fixed method count. Contributors have typed general roles and optional process-specific role IDs. Arbitrary input counts and explicit process-specific contributor-count requirements are representable without enforcing a universal parent count.
+- **Origination:** A native `rule.creature-origination` method reference, resolved by reading the selected catalog's `methodDefinitions` without a second method registry or a fixed method count. Contributors have typed general roles and optional process-specific role IDs. Arbitrary input counts and explicit process-specific contributor-count requirements are representable without enforcing a universal parent count.
 - **Source:** Named native, custom, or previously manifested profiles. A previously mixed parent includes its **current manifested configuration**, with historical source IDs retained separately. History is never a source of automatic entitlement.
 - **Identity:** The source occurrence is always separate from an optional canonical mechanical definition, trait concept and intrinsic slot. Equal names, values, concepts or provisional mappings do not prove equivalent mechanics.
 - **Eligibility:** A candidate carries its own selection basis, authored source occurrence, offered value/parameters and unresolved evidence. Candidate existence does not create a manifestation or a grant. Unknown native bindings remain unresolved.
@@ -22,7 +22,7 @@ The model distinguishes:
 
 ## What structural inspection can and cannot establish
 
-\`ReviewProposal\` checks catalog method references, unique input/candidate/selection IDs and contributor-requirement bounds, contributor and source occurrence provenance, authored choice references and bounds, unresolved eligibility/evidence, explicit relationship dispositions and table-decision references. \`ReviewProfile\` checks grant attribution, independent versus inherent grant identity, historical preservation and repeated intrinsic slots. Results are **structurally consistent**, **incomplete**, **unresolved**, **conflicting** or **invalid**. A structurally consistent result is never a mechanically authorized or playable Origin.
+`ReviewProposal` checks catalog method references, unique input/candidate/selection IDs and contributor-requirement bounds, contributor and source occurrence provenance, authored choice references and bounds, unresolved eligibility/evidence, explicit relationship dispositions and table-decision references. `ReviewProfile` checks grant attribution, independent versus inherent grant identity, historical preservation and repeated intrinsic slots. Results are **structurally consistent**, **incomplete**, **unresolved**, **conflicting** or **invalid**. A structurally consistent result is never a mechanically authorized or playable Origin.
 
 The validator intentionally does not issue effective grants or certify DM authority. The standalone profile records in tests represent possible states the Phase 2 engine will later need to produce. They are not examples of grant issuance by this Phase 1 validator. The data model permits more detailed authored relationships and arbitrary effective decisions without requiring Species-specific executable rules.
 
@@ -32,12 +32,18 @@ The validator intentionally does not issue effective grants or certify DM author
 - **Explicitly unresolved:** General descendant-versus-parent intrinsic precedence (including Wood Elf movement), cross-source mechanical equivalence, duplicate resource/trait stacking, upgrade/substitution policy, incompatible physical properties, contributor transmission of latent traits, unrestricted custom-selection permission, and complete choice/parameter eligibility. A relation with no approved disposition remains unresolved rather than guessed.
 - **Phase 2 dependencies:** Source deconstruction using the actual native definitions, catalog-backed option eligibility, choice binding, whole-profile dependency closure, scoped DM authorization verification and execution, grant/retraction attribution, and a single coherent composition/reconstruction evaluator. Full Rite execution and Pillar 4 progression remain later phases.
 
-The contract permits all current native origination methods by reference, including \`supernatural-reconstruction\`, without adding an independent C# taxonomy. It preserves future method fields by retaining a clone of the authored JSON and does not interpret unknown fields as approved behavior. The fixture tests exercise more than one method and unknown future methods without freezing the first-party catalog count.
+The contract permits all current native origination methods by reference, including `supernatural-reconstruction`, without adding an independent C# taxonomy. It preserves future method fields by retaining a clone of the authored JSON and does not interpret unknown fields as approved behavior. The fixture tests exercise more than one method and unknown future methods without freezing the first-party catalog count.
 
 ## Validation
 
-Tests: \`tests/RulesCore.Mechanics.Tests/NativeOriginContractTests.cs\`.
+Tests: `tests/RulesCore.Mechanics.Tests/NativeOriginContractTests.cs`.
 
-Run \`dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj\` and \`python -m unittest discover -s tests\` from the repository root. Report results separately from passing structural fixtures and do not treat unrelated existing content errors as newly introduced Origin regressions.
+Validated commands (branch CI):
+- `dotnet restore RulesCore.slnx`
+- `dotnet build RulesCore.slnx -c Release --no-restore`
+- `dotnet test RulesCore.slnx -c Release --no-build`
+- `python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -v`
+
+The preceding CI run passed the complete .NET build, **116 Mechanics tests**, and **345 Pillar 2 Python tests**. The final revision runs the full .NET solution suite and adds three explicit boundary tests. Existing unrelated native/working corpus divergences in the full Python suite are not silently reclassified as Origin contract regressions.
 
 **Phase boundary:** No API/Character Sheet integration, general Origin executor, Species-specific mixture rules, or native exceptional Dragonborn Ancestry records are created here. Phase 2 begins only under separate authorization.

@@ -3,7 +3,7 @@ name: Pillar 2 Phase 1 Origin Contracts CI
 on:
   push:
     branches:
-      - feature/pillar2-phase1-origin-contracts-20261112
+      - feature/pillar2-characteristic-inventory-20261111
   pull_request:
     branches:
       - feature/pillar2-characteristic-inventory-20261111
@@ -24,7 +24,7 @@ jobs:
         run: |
           dotnet restore RulesCore.slnx
           dotnet build RulesCore.slnx -c Release --no-restore
-      - name: Origin contract and existing mechanics regressions
-        run: dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --no-build
+      - name: Complete .NET test suite, including Origin contracts
+        run: dotnet test RulesCore.slnx -c Release --no-build
       - name: Pillar 2 Python studies
         run: python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -v
