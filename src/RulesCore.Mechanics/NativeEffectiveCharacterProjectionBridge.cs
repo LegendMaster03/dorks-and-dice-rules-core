@@ -113,18 +113,36 @@ public sealed class NativeEffectiveCharacterProjectionBridge(NativeCatalogSnapsh
             character with { AbilityScores = evaluated.EffectiveAbilityScores },
             cancellationToken);
 
-        if (projected.Status != "resolved" || projected.Issues.Count != 0)
+        // The general projector can legitimately return Partial when equipment,
+        // movement, or other subsystems are not implemented. Do not turn that
+        // partial character into a playable projection. Only copy the exact
+        // ability scores and modifiers it actually resolved, and surface every
+        // non-ability issue unchanged to consumers.
+        if (projected.Status is not ("resolved" or "partial"))
             return new("unresolved",
                 new Dictionary<string, NativeNumeric>(StringComparer.Ordinal),
-                projected.Issues.Count == 0
-                    ? [new NativeIssue("effective-bridge-projection-unresolved", "character",
-                        "The native character projection did not resolve completely.")]
-                    : projected.Issues.ToArray());
+                projected.Issues.ToArray());
 
-        return new("calculated-subset",
-            projected.Values.ToDictionary(pair => pair.Key, pair => pair.Value,
-                StringComparer.Ordinal),
-            []);
+        var resolvedAbilities = new SortedDictionary<string, NativeNumeric>(
+            StringComparer.Ordinal);
+        foreach (var key in new[]
+            { "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma" })
+        {
+            var score = "ability." + key + ".score";
+            var modifier = "ability." + key + ".modifier";
+            if (!projected.Values.TryGetValue(score, out var scoreValue) ||
+                !projected.Values.TryGetValue(modifier, out var modifierValue) ||
+                scoreValue.Status != "resolved" || scoreValue.Value is null ||
+                modifierValue.Status != "resolved" || modifierValue.Value is null)
+            {
+                issues.AddRange(projected.Issues);
+                return Failed("effective-bridge-ability-unresolved", key,
+                    "All six abilities must be calculated before releasing a numeric subset.");
+            }
+            resolvedAbilities.Add(score, scoreValue);
+            resolvedAbilities.Add(modifier, modifierValue);
+        }
+        return new("calculated-subset", resolvedAbilities, projected.Issues.ToArray());
     }
 
     private static bool SameInherentConfiguration(
