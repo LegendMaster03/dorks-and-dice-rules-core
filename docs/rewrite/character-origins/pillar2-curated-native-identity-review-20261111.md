@@ -47,6 +47,22 @@ The validation tool checks each curated occurrence against the **current native 
 
 The output contains **`semanticEquivalence: not-promoted`** for exact authored groups, **`semanticEquivalence: unresolved`** for near matches, and **`grantOrDuplicatePolicy: not-evaluated`** for all entries. No characteristic is selected or granted.
 
+## Verified evidence overlay for current native offers
+
+The existing `character_origins_characteristic_identity.py` evidence projection can optionally use this curated registry **after** validating it against the current native catalog:
+
+```bash
+python3 tools/character_origins_characteristic_identity.py \
+  --contributors ancestry.dragonborn.black ancestry.dragonborn.green \
+  --curated-native-evidence
+```
+
+A trusted direct native-source trait offer matching a curated literal group receives `literalAuthoredIdentityCandidateId` and `literalAuthoredIdentityStatus: verified-native-authored-content-only`, while retaining the entire original offer, its configured parameters and its independent contributor provenance. **The candidate is still unselected and unauthorized.**
+
+The projection **checks the offer's actual authored definition against the catalog**. A caller cannot obtain a verified native identity annotation merely by assigning a matching string to an unrelated custom trait. Nested manifested profiles continue preserving their historical source identity but are **not automatically promoted** as newly verified native-source offers; their current provenance must be validated through the separate nested-profile pipeline. An unrecognized or changed native definition requires fresh review.
+
+This bridges curated real-world source evidence into the universal candidate representation without creating a duplicate rule, manifested grant, inheritance permission or player-selectable custom catalog.
+
 ## Relationship to the three-stage Origin workflow
 
 This evidence supports **deconstruct and assemble**: a trait definition can be identified precisely, and the origin of each contributor's offer can be preserved. It does not yet implement **reconcile and manifest**; the rules for duplicate grants, upgrades, overlapping mechanics, prerequisites, incompatibilities and selection permissions remain to be written.
