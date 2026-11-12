@@ -156,6 +156,56 @@ class Pillar2DragonbornBindingTests(unittest.TestCase):
         self.assertFalse(p["configured"])
         self.assertEqual("no-complete-contributor-configuration", p["reason"])
 
+    def test_gem_breath_and_resistance_use_existing_generic_bindings(self):
+        # Gem contributes a normal leaf damage type and a complete family
+        # cone. No Gem-specific resolver branch or Chromatic Warding is needed.
+        expected = {
+            "amethyst": "force", "crystal": "radiant",
+            "emerald": "psychic", "sapphire": "thunder",
+            "topaz": "necrotic",
+        }
+        area = {"shape": "cone", "lengthFeet": 15}
+        for slug, damage in expected.items():
+            with self.subTest(slug=slug):
+                gem = contributor(slug, "ancestry.dragonborn." + slug)
+                breath = self.pool(BREATH, gem)
+                resistance = self.pool(RESISTANCE, gem)
+                self.assertTrue(breath["traitCandidateAvailable"])
+                self.assertTrue(resistance["traitCandidateAvailable"])
+                self.assertEqual(
+                    [damage],
+                    [row["value"] for row in
+                     breath["parameterOptions"]["damageType"]],
+                )
+                self.assertEqual(
+                    [area],
+                    [row["value"] for row in
+                     breath["parameterOptions"]["area"]],
+                )
+                self.assertEqual(
+                    [damage],
+                    [row["value"] for row in
+                     resistance["parameterOptions"]["damageType"]],
+                )
+                self.assertFalse(self.pool(WARDING, gem)
+                                 ["traitCandidateAvailable"])
+                self.assertTrue(validate_parameter_proposal(
+                    breath, {"damageType": damage, "area": area}
+                )["eligible"])
+
+        # Cross-category sources preserve the approved independent eligible
+        # damage-type versus whole-area selection; this is not an earned grant.
+        red = contributor("red", "ancestry.dragonborn.red")
+        crystal = contributor("crystal", "ancestry.dragonborn.crystal")
+        mixed = self.pool(BREATH, red, crystal)
+        line = {"shape": "line", "lengthFeet": 30, "widthFeet": 5}
+        self.assertTrue(validate_parameter_proposal(
+            mixed, {"damageType": "radiant", "area": line}
+        )["eligible"])
+        self.assertTrue(validate_parameter_proposal(
+            mixed, {"damageType": "fire", "area": area}
+        )["eligible"])
+
     def test_multiple_contributors_keep_each_trait_eligibility_separate(self):
         red = contributor("red", "ancestry.dragonborn.red")
         bronze = contributor("bronze", "ancestry.dragonborn.bronze")
