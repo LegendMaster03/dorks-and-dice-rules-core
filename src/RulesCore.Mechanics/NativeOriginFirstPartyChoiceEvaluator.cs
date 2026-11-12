@@ -25,7 +25,7 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
         var (discovered, _) = _sources.Deconstruct(submitted);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var proofId = ProofForCatalog(catalog);
-        var normalized = submitted.Manifestations.Select(manifest =>
+        var normalized = (submitted.Manifestations ?? []).Select(manifest =>
         {
             if (manifest.Choices is null ||
                 !candidates.TryGetValue(manifest.CandidateId, out var candidate) ||

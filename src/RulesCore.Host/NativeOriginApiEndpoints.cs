@@ -72,14 +72,15 @@ public static class NativeOriginApiEndpoints
                     requirement is null ||
                     !string.IsNullOrWhiteSpace(requirement.TableDecisionId)) ?? false) ||
                 proposal.Manifestations.Any(manifest =>
-                    !string.IsNullOrWhiteSpace(manifest.TableDecisionId)))
+                    !string.IsNullOrWhiteSpace(manifest.TableDecisionId) ||
+                    (manifest.Choices?.Any(choice => choice is null ||
+                        choice.CatalogEligibilityEvidenceId is not null) ?? false)))
                 return Error(400, "trusted_origin_state_required");
 
-            // Neither INativeOriginAuthority nor TrustedScope is supplied.
-            // Candidate eligibility and decisions must be earned by the
-            // native construction pipeline, not an assertion in JSON.
-            var result = new NativeOriginConstructionEngine(catalog).Evaluate(
-                new NativeOriginConstructionRequest(proposal));
+            // Only native catalog membership proof is supplied internally.
+            // Table authorization always fails; the stateless API will never
+            // trust a client-provided choice proof or a DM ruling.
+            var result = new NativeOriginFirstPartyChoiceEvaluator(catalog).Evaluate(proposal);
             return Results.Ok(new
             {
                 contractVersion = 1,
