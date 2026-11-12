@@ -1,0 +1,190 @@
+{
+  "id": "pillar4.lycanthropy.werewolf.progression-experiment",
+  "status": "design-fixture-not-authoritative",
+  "rulesetId": "first-party-001",
+  "kind": "illustrative-supernatural-progression",
+  "sourceDocument": "docs/rewrite/character-origins/pillar4-lycanthropy-reconciliation-20261112.md",
+  "approvalBoundary": "No playable features, schedule, form statistics, transmission, triggers, agency changes, or runtime contract is approved by this fixture.",
+  "ownerSelectedModel": {
+    "persistentOutcome": "additive-supernatural-nature",
+    "baseSpeciesAncestry": "retained-and-modified-in-place",
+    "alternateFormEffect": "temporary-replacement-of-effective-species-ancestry",
+    "restoringFromForm": "recompute-current-authoritative-baseline",
+    "agencyAndTrigger": "setting-or-effect-specific-no-universal-default",
+    "noIndependentOrigination": true
+  },
+  "separateDimensions": {
+    "acquisition": {
+      "sampleValues": [
+        "inherited",
+        "afflicted",
+        "supernatural-event"
+      ],
+      "eachRequiresActualSource": true,
+      "doesNotDetermineControl": true
+    },
+    "expression": {
+      "sampleStates": [
+        "potential",
+        "wolf-form-expression",
+        "hybrid-form-expression"
+      ],
+      "schedule": "unapproved-example-only"
+    },
+    "currentForm": {
+      "sampleValues": [
+        "baseline",
+        "wolf",
+        "hybrid"
+      ],
+      "noAutomaticFormAccess": true
+    },
+    "triggers": {
+      "policy": "unassigned",
+      "notImplicit": [
+        "full-moon",
+        "combat-damage",
+        "forced-shift"
+      ]
+    },
+    "agency": {
+      "policy": "unassigned",
+      "notImplicit": [
+        "loss-of-control",
+        "dm-control",
+        "alignment-change"
+      ]
+    }
+  },
+  "illustrativeExpressionStates": [
+    {
+      "id": "potential",
+      "prerequisites": "author-specific",
+      "candidateFormUnlocks": [],
+      "noAutomaticFeatureGrants": true
+    },
+    {
+      "id": "wolf-form-expression",
+      "prerequisites": "author-specific",
+      "candidateFormUnlocks": [
+        "example.form.wolf"
+      ],
+      "noAutomaticFeatureGrants": true
+    },
+    {
+      "id": "hybrid-form-expression",
+      "prerequisites": "author-specific",
+      "candidateFormUnlocks": [
+        "example.form.wolf",
+        "example.form.hybrid"
+      ],
+      "noAutomaticFeatureGrants": true
+    }
+  ],
+  "illustrativeForms": [
+    {
+      "id": "example.form.baseline",
+      "operation": "current-authoritative-species-ancestry",
+      "source": "verified-baseline",
+      "authoritative": false
+    },
+    {
+      "id": "example.form.wolf",
+      "operation": "temporarily-replace-effective-species-ancestry",
+      "formDefinitionStatus": "intentionally-unassigned",
+      "authoritative": false
+    },
+    {
+      "id": "example.form.hybrid",
+      "operation": "temporarily-replace-effective-species-ancestry",
+      "formDefinitionStatus": "intentionally-unassigned",
+      "authoritative": false
+    }
+  ],
+  "conformanceScenarios": [
+    {
+      "id": "acquisition-without-awakening",
+      "given": "Human baseline with verified supernatural source",
+      "when": "condition acquired but no form unlocked",
+      "expect": [
+        "Human remains effective baseline",
+        "No automatic moon trigger, form grants, or agency changes"
+      ]
+    },
+    {
+      "id": "wolf-form-transition",
+      "given": "Verified baseline and authorized wolf expression",
+      "when": "authorized change into example.form.wolf",
+      "expect": [
+        "Wolf form temporarily replaces effective Species/Ancestry configuration",
+        "Original baseline remains stored and historical",
+        "No full wolf monster stat block imported"
+      ]
+    },
+    {
+      "id": "reversion",
+      "given": "A temporary wolf form is active",
+      "when": "form ends under specific effect policy",
+      "expect": [
+        "Temporary form ends",
+        "Current authoritative baseline is reevaluated and restored",
+        "Lycanthropic nature itself remains unless independently ended"
+      ]
+    },
+    {
+      "id": "control-independence",
+      "given": "Setting specifies compulsory transformation but no loss of player agency",
+      "when": "setting-specific trigger occurs",
+      "expect": [
+        "Form transition may be compelled",
+        "Agency remains independently determined by applicable setting rule"
+      ]
+    },
+    {
+      "id": "voluntary-setting",
+      "given": "Setting authorizes voluntary changes without any compulsory triggers",
+      "when": "voluntary change is requested",
+      "expect": [
+        "No implicit control roll",
+        "No mandatory full-moon requirement"
+      ]
+    },
+    {
+      "id": "hybrid-unlock",
+      "given": "Wolf form exists; hybrid form not yet unlocked",
+      "when": "expression state progresses under authorized rule",
+      "expect": [
+        "Hybrid form becomes eligible only if authored",
+        "No implied new class levels or full monster grants"
+      ]
+    },
+    {
+      "id": "baseline-altered-during-form",
+      "given": "Base Origin is legitimately changed while wolf form is active",
+      "when": "temporary form ends",
+      "expect": [
+        "Reversion uses the new authoritative baseline",
+        "Superseded Species/Ancestry grants are not resurrected by a stale saved snapshot"
+      ]
+    },
+    {
+      "id": "cure",
+      "given": "Supernatural influence and its form-specific grants exist",
+      "when": "authorized effect removes the influence",
+      "expect": [
+        "Remove only influence-related entitlement",
+        "Unrelated Class, Background, Upbringing and historical facts persist",
+        "Reversion when currently transformed must follow a specifically authored rule or be adjudicated"
+      ]
+    },
+    {
+      "id": "dm-overrides",
+      "given": "Authorized campaign-specific override",
+      "when": "custom stage, form, trigger or agency rule is selected",
+      "expect": [
+        "Only the authorized effective table state changes",
+        "Global first-party definitions remain unchanged"
+      ]
+    }
+  ]
+}
