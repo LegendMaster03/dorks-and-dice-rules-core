@@ -10,6 +10,8 @@
 
 **Shared integration contract (review handoff):** [Pillar 2/Pillar 4 provenance, authorization and transition reconciliation](pillar4-shared-origin-effect-contract-reconciliation-20261112.md). This follow-up distinguishes pre-API Pillar 2 contract corrections from the supernatural mechanics that remain Pillar 4 responsibilities.
 
+**Phase 5 correction verification (updated 2026-11-12):** Pillar 2 draft PR #151 now implements the method-neutral permanent reconstruction engine and a separate first-party completion authority contract, plus restricted authenticated initial-Origin preview and provenance-backed intrinsic/Low-Light Vision projection. See [Pillar 4 Phase 5 verification and resumption gate](pillar4-phase5-contract-verification-and-resumption-20261112.md). The earlier immediate freeze is superseded by permission to **resume Pillar 4 library-level reconciliation and test work in a new branch**; PRs #146/#148/#149 remain drafts and should not be merged as-is. Phase 5 remains unmerged and does not yet authorize general supernatural acquisition, temporary form execution or persistent native reconstruction.
+
 ## Executive decision
 
 **Pause expansion of the three Pillar 4 implementation PRs while reconciling them with the evolving Pillar 2 implementation.** Retain them as tested, restricted technical experiments; do not merge them into the Pillar 2 development branch without a deliberate contract-alignment pass.
