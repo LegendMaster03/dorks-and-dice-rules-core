@@ -111,11 +111,9 @@ public static class NativeOriginApiEndpoints
                 // Each projection remains previewOnly until an authoritative
                 // Character Sheet commit validates the exact resulting grants.
                 intrinsics = NativeOriginApprovedMixedIntrinsicProjector.Project(result),
-                // Vision remains unresolved for DM-created mixed outcomes until
-                // each trait occurrence has a separate approved interpreter.
-                // Never reuse the direct-first-party vision projector here.
-                vision = new NativeOriginVisionProjector.View(
-                    "unresolved", null, ["mixed-vision-not-yet-interpreted"]),
+                // A separate mixed interpreter verifies the exact approved
+                // native vision occurrence; direct-only rules remain closed.
+                vision = NativeOriginVisionProjector.ProjectApprovedMixed(catalog, result),
                 result
             });
         });
