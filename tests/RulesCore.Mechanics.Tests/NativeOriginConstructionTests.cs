@@ -385,4 +385,39 @@ public sealed class NativeOriginConstructionTests
         Assert.Empty(withMaterial.Profile!.Underlying.InherentGrants);
     }
 
+    [Fact]
+    public void DirectProposalWithoutSpeciesAncestryOrExistingBaselineIsIncomplete()
+    {
+        var result = Evaluate(Proposal("missing-source"));
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "origin-source-required");
+    }
+
+    [Fact]
+    public void IntermediateAncestryFamilyCanContributeItsInheritedNativeTraits()
+    {
+        var result = Evaluate(Proposal("red-family", species: "species.dragonborn",
+            ancestry: "ancestry.dragonborn.red"));
+        Assert.Contains(result.Profile!.Underlying.InherentGrants, grant =>
+            grant.Identity.Occurrence.Source.Id == "ancestry.dragonborn.chromatic");
+        Assert.DoesNotContain(result.Issues, x =>
+            x.Code == "selection-eligibility-unresolved" &&
+            x.Path.Contains("ancestry.dragonborn.chromatic", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void TableOnlyConfigurationOverrideRetainsItsVerifiedAdjudicationEvidence()
+    {
+        var decision = Decision("custom-profile", "configuration", "unlabeled",
+            new { speciesId = "custom.marshfolk" });
+        var proposal = Proposal("unlabeled", NativeOriginIntent.Custom,
+            manifests: [], decisions: [decision]);
+        // An empty proposal is still incomplete. The verified decision must
+        // nonetheless remain attributable when the table decides the label.
+        var result = Evaluate(proposal, new TestAuthority());
+        Assert.Equal("custom.marshfolk", result.Profile!.Underlying.SpeciesId);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, result.Status);
+        Assert.DoesNotContain(result.Issues, x => x.Code == "profile-dm-decision-required");
+    }
+
 }
