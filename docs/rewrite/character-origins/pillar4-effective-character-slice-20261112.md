@@ -18,7 +18,7 @@ Supported directives in this first slice:
 - **Replace** an explicitly authorized numeric effective ability score.
 - **Suspend** use of an earned **independent grant**, without removing its entitlement or any stored state.
 
-An effect identifies the specific **earned SourceGrantId** and rule, the subsystem target, and an optional `RequiredFormId`. A form-scoped directive only applies while that exact form is active. A source must be an applicable earned independent grant or an actual current-form grant; the named supernatural influence by itself cannot award powers.
+An effect identifies the specific **earned SourceGrantId** and rule, the subsystem target, and an optional `RequiredFormId`. A form-scoped directive only applies while that exact form is active. A source must be an applicable earned independent grant or an actual current-form grant; the named supernatural influence by itself cannot award powers. A form claiming a persistent influence must match its source occurrence exactly, and inherent/independent grants may not reuse a grant ID.
 
 The output records current effective Species/Ancestry from the **existing Pillar 2 `Current`** configuration, effective ability scores, and grant applicability. The authoritative `Underlying` remains untouched. Temporary form expiry is represented by the next correctly reconstructed Origin state; this evaluator does not execute reversion.
 
@@ -40,7 +40,7 @@ A caller must not expose this new evaluator with an unconditional-true authoriza
 
 ## Regression coverage and next gate
 
-`tests/RulesCore.Mechanics.Tests/NativeEffectiveCharacterEffectsTests.cs` exercises a hypothetical Draconic Bloodline persistent modifier, wolf-form Class-grant suppression, reversion to an updated baseline, untrusted origin/form/source rejection, duplicate-target uncertainty, missing applicability, unsupported resource-free arithmetic and invalid Origin status. The fixture **does not** grant an actual playable Bloodline or werewolf.
+`tests/RulesCore.Mechanics.Tests/NativeEffectiveCharacterEffectsTests.cs` exercises a hypothetical Draconic Bloodline persistent modifier, wolf-form Class-grant suppression, reversion to an updated baseline, untrusted origin/form/source rejection, mismatched persistent-influence provenance, inherent/independent grant-ID collisions, duplicate-target uncertainty, missing applicability, supported numeric replacement, out-of-range arithmetic, and invalid Origin status. The fixture **does not** grant an actual playable Bloodline or werewolf.
 
 Next gate: demonstrate this slice on a genuinely verified constructed Origin with a real authenticated rule/authority adapter and a native-authored effect. Only then begin integrating the effective values into the character projector. Keep grant acquisition and gameplay authorization strictly in shared Rules Core rather than Character Sheet.
 
