@@ -46,13 +46,13 @@
       "description": "An existing individual changes its configuration or type under an explicit effect or process; existing Heritage is not erased by relabeling."
     },
     {
-      "id": "supernatural-transformation",
-      "name": "Supernatural transformation",
+      "id": "supernatural-reconstruction",
+      "name": "Supernatural reconstruction",
       "specializes": "transformation",
       "stage": "post-origination",
       "createsNewIndividual": false,
       "typeDefault": false,
-      "description": "An existing creature undergoes a supernatural change, immediately or over time. The outcome may be additive, retaining the underlying Species/Ancestry configuration, or reconstructive, eventually replacing it. Individual progression and mechanical effects are defined by the specific supernatural nature under Pillar 4; this method does not independently grant access or traits."
+      "description": "An existing creature undergoes a supernatural transformation that ultimately replaces its current Species/Ancestry configuration, immediately or through stages. The individual progression and replacement mechanics belong to Pillar 4. Additive supernatural changes instead modify the existing Species/Ancestry configuration in place and do not constitute a separate origination method. This reference alone grants no access or traits."
     },
     {
       "id": "rite-of-rebirth",
