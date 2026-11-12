@@ -34,6 +34,21 @@ The [three-factor formula](pillar2-dragonborn-expansion-dimensions-20261111.md) 
 
 **Owner direction:** Exceptional forms are not normally available at initial character creation without DM approval. Their intended ordinary in-game acquisition path is an appropriate **Draconic Rebirth** rite requiring the **direct, personal participation of the corresponding category leader**. For the three current exceptional concepts, this means direct participation by the respective Chromatic, Metallic, or Gem category leader. Participation by another powerful dragon, an intermediary, or an artifact is not an automatic substitute. Future exceptional forms must author their own corresponding leader rather than relying on an unrestricted powerful-dragon threshold.
 
+### Intended uses and ordinary-Heritage boundary (owner direction, 2026-11-11)
+
+The reason these exceptional Ancestries are **not ordinarily selectable during initial character creation** is not only their intentionally greater power: exposing them as ordinary Species/Ancestry options could **undermine the mixed-Species and mixed-Ancestry design**, permitting normal candidate selection to assemble extraordinary leader-specific powers without the transformation that defines them.
+
+**Default selection expectation, not a hard narrative prohibition:** In ordinary initial creation and ordinary mixed-Heritage assembly, exceptional category-leader Ancestries and their extraordinary traits are **not automatically eligible contributors or selectable choices**. That does **not** rewrite the character's biological history or prohibit exceptional Dragonborn from having descendants. Exactly what an exceptional parent might contribute to a later character's ordinary inheritance remains a **separate, unapproved design question**; do not silently authorize either the entire exceptional trait package or a universal absolute ban. A DM can expressly authorize extraordinary character origins or make other campaign-specific exceptions.
+
+**Two primary intended story uses, neither an exhaustive restriction on DM authority:**
+
+1. **Major campaign plot:** A narrative directly involving the corresponding extraordinary category leader leads to an exceptional Rite of Rebirth. The rite is part of an event or relationship with that leader rather than ordinary ancestry construction.
+2. **Draconic Warlock bargain:** A pact **with the corresponding leader** (for Platinum, the Metallic sovereign; internal research reference: Bahamut) may include Draconic Rebirth among its negotiated terms. Having a Draconic Patron does **not automatically** grant rebirth; the terms and the leader's **direct personal participation** still matter. The Rite is usable outside Warlock, and the Patron is not contingent upon the character already being reborn.
+
+The DM remains free to use these forms differently. Do not implement a two-option whitelist, forbid all exceptional ancestry parentage, or impose universal pact terms solely from these narrative examples.
+
+**Pillar 2 acceptance implications:** (a) Ordinary mixed-Heritage candidate enumeration must not accidentally expose a leader's full exceptional Ancestry through its usual parent/trait inputs. (b) An expressly DM-authorized exceptional origin or a validated exceptional Rite may manifest that Ancestry as a **complete current Species/Ancestry replacement**. (c) Historical parentage and ancestry provenance remain independently recorded. (d) Whether any exceptional aspect can be inherited in a nonexceptional descendant requires an explicitly authored rule, not implicit all-or-nothing inheritance. No executable data/schema behavior is approved by this documentation.
+
 **Power intent:** Exceptional Dragonborn are intentionally and substantially more powerful than ordinary starting Dragonborn Ancestries. Equal mechanical strength with ordinary Ancestries is **not** a balancing objective. Restricted initial selection and the exceptional Rite are acquisition gates, not claims of mechanical parity. When designing these forms, consider the expected campaign power tier, party progression and playtest evidence without using ordinary character-creation balance as the required ceiling. The exact strength, features and progression remain open.
 
 Two structural patterns—composite and singular—are supported across three current exceptional concepts:
