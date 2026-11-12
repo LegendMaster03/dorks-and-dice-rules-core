@@ -110,8 +110,12 @@ public static class NativeOriginApiEndpoints
                 // the source-attributed intrinsic and visual-sense projection.
                 // Each projection remains previewOnly until an authoritative
                 // Character Sheet commit validates the exact resulting grants.
-                intrinsics = NativeOriginIntrinsicProjector.Project(result),
-                vision = NativeOriginVisionProjector.Project(catalog, result),
+                intrinsics = NativeOriginApprovedMixedIntrinsicProjector.Project(result),
+                // Vision remains unresolved for DM-created mixed outcomes until
+                // each trait occurrence has a separate approved interpreter.
+                // Never reuse the direct-first-party vision projector here.
+                vision = new NativeOriginVisionProjector.View(
+                    "unresolved", null, ["mixed-vision-not-yet-interpreted"]),
                 result
             });
         });
