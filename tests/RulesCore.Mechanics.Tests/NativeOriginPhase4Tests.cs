@@ -451,6 +451,49 @@ public sealed class NativeOriginPhase4Tests
     }
 
     [Fact]
+    public void AuthoredProcessSpecificRequirementsMatchTheFullRoleIdentity()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "rules-core-p4-process-" + Guid.NewGuid());
+        var native = Path.Combine(root, "first-party-001", "native");
+        try
+        {
+            Directory.CreateDirectory(native);
+            File.WriteAllText(Path.Combine(root, "first-party-001", "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/","schemaVersion":1}""");
+            File.WriteAllText(Path.Combine(native, "fixture.json"), """
+                {"id":"rule.creature-origination","kind":"rule","name":"Process fixture",
+                 "methodDefinitions":[{"id":"plant-reproduction","name":"Plant reproduction",
+                  "inputRequirements":[{"id":"propagule","role":"ProcessSpecific",
+                    "processRoleId":"spore","minimumCount":1,"maximumCount":1}]}]}
+                """);
+            var snapshot = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(root, "first-party-001"));
+            var source = Input("spore-source", NativeOriginInputKind.ProcessSpecific,
+                "fixture.spores", "spore");
+            NativeOriginProposal ProposalForRole(string roleId) => new(
+                "specific-role", NativeOriginIntent.Custom,
+                new("rule.creature-origination", "plant-reproduction"),
+                [source], [], [],
+                InputRequirements:
+                [
+                    new("propagule", new(NativeOriginInputKind.ProcessSpecific, roleId),
+                        1, 1, NativeRuleReference: "rule.creature-origination")
+                ]);
+            var engine = new NativeOriginConstructionEngine(snapshot);
+            var matched = engine.Evaluate(new(ProposalForRole("spore")));
+            var mismatch = engine.Evaluate(new(ProposalForRole("seed")));
+            Assert.DoesNotContain(matched.Issues,
+                x => x.Code == "process-input-policy-unresolved");
+            Assert.Contains(mismatch.Issues,
+                x => x.Code == "process-input-policy-unresolved");
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void RiteOnlyAncestryCannotBeSelectedThroughOrdinaryCreation()
     {
         var root = Path.Combine(Path.GetTempPath(), "rules-core-p4-" + Guid.NewGuid());
