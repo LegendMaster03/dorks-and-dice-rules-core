@@ -123,6 +123,14 @@ The [experimental whole-profile dependency review](pillar2-whole-profile-depende
 
 Crucially, this separates **decision consistency** from **full mechanical coherence**. A list of internally consistent pairwise decisions can still omit a prerequisite, violate a whole-profile limit or lack the binding required for a selected trait. Neither a synthetic rule match nor a zero-conflict report constitutes a valid/authorized character. The next design gate must establish **complete authoritative choice/dependency semantics**, eligibility and actual grant reconstruction, starting with unchanged standard Species/Ancestry profiles.
 
+## Choice-schema audit and applicability projection
+
+The [general native-choice schema audit](pillar2-native-choice-schema-audit-20261111.md) now inventories current Species and Ancestry choice authoring without Species-specific dispatch. It separates finite intrinsic/ability choices, open skill and feat catalogs, spell-list selections, player allocations, source-selection controls, derived parameter bindings, and **on-use action options**. Missing timing, catalog resolvers and unmodeled source bindings remain visible, not silently assumed complete.
+
+The companion active-choice projection ties these authored records only to **tentatively retained current characteristics**. It verifies direct native offer lineage and source-authored definitions/values, excludes unselected trait choices, and keeps source-wide standard-selection controls **unapplied** in mixed/custom construction. Nested contributor choice history and custom authoring authority remain separately unresolved. **No rule or grant is authorized by this audit**.
+
+This is the next general architectural boundary before actual standard-Origin round-trip reconstruction: first-party choice timing, eligibility, persistence, and choice-instance identity must become trusted data, not source-text heuristics.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
