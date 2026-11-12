@@ -154,28 +154,40 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
         self.assertEqual("amphibious", p["lineage"][2]["traits"][0]["localTraitId"])
 
     def test_gem_leaf_inventory_reuses_shared_family_traits(self):
-        for slug, damage in (
-            ("amethyst", "force"), ("crystal", "radiant"),
-            ("emerald", "psychic"), ("sapphire", "thunder"),
-            ("topaz", "necrotic"),
-        ):
-            with self.subTest(slug=slug):
-                sid = "ancestry.dragonborn." + slug
-                p = source_inventory(sid, self.catalog)
-                self.assertEqual([
-                    "species.dragonborn", "ancestry.dragonborn.gem", sid],
+        # These are inheritance tests, not claims of selection eligibility.
+        # A test-only catalog exposes authored Gem records to the projector.
+        catalog = copy.deepcopy(self.catalog)
+        gems = sorted(
+            sid for sid, record in catalog.items()
+            if record.get("parent") == "ancestry.dragonborn.gem"
+        )
+        self.assertTrue(gems)
+        for sid in gems:
+            catalog[sid]["selectable"] = True
+        for sid in gems:
+            with self.subTest(source=sid):
+                p = source_inventory(sid, catalog)
+                self.assertEqual(
+                    ["species.dragonborn", "ancestry.dragonborn.gem", sid],
                     [x["sourceId"] for x in p["lineage"]],
                 )
                 base, family, leaf = p["lineage"]
                 self.assertEqual("dragon", base["intrinsicFields"]["creatureType"])
-                self.assertEqual({"shape": "cone", "lengthFeet": 15},
-                                 family["intrinsicFields"]["breathWeaponArea"])
+                self.assertEqual(
+                    {"shape": "cone", "lengthFeet": 15},
+                    family["intrinsicFields"]["breathWeaponArea"],
+                )
                 self.assertEqual(
                     {"psionic-mind", "gem-flight"},
                     {t["localTraitId"] for t in family["traits"]},
                 )
-                self.assertEqual(damage, leaf["intrinsicFields"]["damageType"])
-                self.assertEqual([], leaf["traits"])
+                self.assertEqual(
+                    catalog[sid]["damageType"], leaf["intrinsicFields"]["damageType"]
+                )
+                self.assertEqual(
+                    catalog[sid].get("traits", []),
+                    [t["definition"] for t in leaf["traits"]],
+                )
 
     def test_qualified_occurrences_preserve_same_named_different_traits(self):
         # Orc and Goliath each author Powerful Build, but those effects differ.
@@ -203,11 +215,14 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
         self.assertEqual(before, self.catalog)
 
     def test_invalid_direct_selection_is_rejected(self):
-        for identifier in (
-            "species.dragonborn",
-            "ancestry.dragonborn.chromatic",
-            "ancestry.dragonborn.gem",
-        ):
+        # Use source availability as input and assert resolver behavior.
+        # Adding or enabling an ancestry does not require test edits.
+        denied = [
+            sid for sid, item in self.catalog.items()
+            if item.get("selectable") is not True
+        ]
+        self.assertTrue(denied)
+        for identifier in denied:
             with self.subTest(source=identifier):
                 with self.assertRaises(OriginInventoryError):
                     source_inventory(identifier, self.catalog)

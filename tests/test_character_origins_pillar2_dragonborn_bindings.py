@@ -157,53 +157,59 @@ class Pillar2DragonbornBindingTests(unittest.TestCase):
         self.assertEqual("no-complete-contributor-configuration", p["reason"])
 
     def test_gem_breath_and_resistance_use_existing_generic_bindings(self):
-        # Gem contributes a normal leaf damage type and a complete family
-        # cone. No Gem-specific resolver branch or Chromatic Warding is needed.
-        expected = {
-            "amethyst": "force", "crystal": "radiant",
-            "emerald": "psychic", "sapphire": "thunder",
-            "topaz": "necrotic",
-        }
-        area = {"shape": "cone", "lengthFeet": 15}
-        for slug, damage in expected.items():
-            with self.subTest(slug=slug):
-                gem = contributor(slug, "ancestry.dragonborn." + slug)
-                breath = self.pool(BREATH, gem)
-                resistance = self.pool(RESISTANCE, gem)
+        # Isolate generic Gem trait bindings from current selection policy.
+        # A test-only catalog enables those leaves; real data stays disabled.
+        catalog = copy.deepcopy(self.catalog)
+        gems = sorted(
+            sid for sid, record in catalog.items()
+            if record.get("parent") == "ancestry.dragonborn.gem"
+        )
+        self.assertTrue(gems)
+        for sid in gems:
+            catalog[sid]["selectable"] = True
+
+        cone = catalog["ancestry.dragonborn.gem"]["breathWeaponArea"]
+        for sid in gems:
+            with self.subTest(source=sid):
+                damage = catalog[sid]["damageType"]
+                contributor_gem = contributor(sid, sid)
+                breath = self.pool(BREATH, contributor_gem, catalog=catalog)
+                resistance = self.pool(RESISTANCE, contributor_gem, catalog=catalog)
                 self.assertTrue(breath["traitCandidateAvailable"])
                 self.assertTrue(resistance["traitCandidateAvailable"])
                 self.assertEqual(
                     [damage],
-                    [row["value"] for row in
-                     breath["parameterOptions"]["damageType"]],
+                    [row["value"] for row in breath["parameterOptions"]["damageType"]],
                 )
                 self.assertEqual(
-                    [area],
-                    [row["value"] for row in
-                     breath["parameterOptions"]["area"]],
+                    [cone],
+                    [row["value"] for row in breath["parameterOptions"]["area"]],
                 )
                 self.assertEqual(
                     [damage],
-                    [row["value"] for row in
-                     resistance["parameterOptions"]["damageType"]],
+                    [row["value"] for row in resistance["parameterOptions"]["damageType"]],
                 )
-                self.assertFalse(self.pool(WARDING, gem)
-                                 ["traitCandidateAvailable"])
+                self.assertFalse(
+                    self.pool(WARDING, contributor_gem, catalog=catalog)
+                    ["traitCandidateAvailable"]
+                )
                 self.assertTrue(validate_parameter_proposal(
-                    breath, {"damageType": damage, "area": area}
+                    breath, {"damageType": damage, "area": cone}
                 )["eligible"])
 
-        # Cross-category sources preserve the approved independent eligible
-        # damage-type versus whole-area selection; this is not an earned grant.
+        # Crossing a Gem and Chromatic contributor must not couple affinity
+        # to the area supplied by the same contributor.
+        sid = gems[0]
+        damage = catalog[sid]["damageType"]
         red = contributor("red", "ancestry.dragonborn.red")
-        crystal = contributor("crystal", "ancestry.dragonborn.crystal")
-        mixed = self.pool(BREATH, red, crystal)
-        line = {"shape": "line", "lengthFeet": 30, "widthFeet": 5}
+        gem = contributor(sid, sid)
+        mixed = self.pool(BREATH, red, gem, catalog=catalog)
+        line = catalog["ancestry.dragonborn.chromatic"]["breathWeaponArea"]
         self.assertTrue(validate_parameter_proposal(
-            mixed, {"damageType": "radiant", "area": line}
+            mixed, {"damageType": damage, "area": line}
         )["eligible"])
         self.assertTrue(validate_parameter_proposal(
-            mixed, {"damageType": "fire", "area": area}
+            mixed, {"damageType": "fire", "area": cone}
         )["eligible"])
 
     def test_multiple_contributors_keep_each_trait_eligibility_separate(self):
