@@ -8,6 +8,7 @@ must not acquire new first-party grants or have their prior choices invented.
 import copy
 
 from character_origins_reconciliation_decisions import proposal_fingerprint
+from character_origins_source_inventory import source_lineage
 
 
 class ApplicableChoiceError(ValueError):
@@ -48,6 +49,16 @@ def project_applicable_choice_evidence(
             or any(cid not in proposals for cid in chosen)):
         raise ApplicableChoiceError("Retained candidates lack source evidence")
 
+    # Source-level controls are observed only for source lineages actually
+    # participating in this proposal. Do not expose unrelated Species
+    # controls from an audit of the full native catalog.
+    relevant_source_ids = set()
+    for candidate in preview["selectedCandidateEvidence"]:
+        prov = candidate["contributorProvenance"]
+        if prov["kind"] == "native-source":
+            for node in source_lineage(prov["selectedSourceId"], catalog):
+                relevant_source_ids.add(node["id"])
+
     by_occurrence = {}
     source_controls = []
     for choice in choice_report["choiceObservations"]:
@@ -60,7 +71,8 @@ def project_applicable_choice_evidence(
         if choice["choiceScope"] == "source-configuration" and (
             choice["authoredField"] != "sizeChoice"
         ):
-            source_controls.append(copy.deepcopy(choice))
+            if choice["sourceId"] in relevant_source_ids:
+                source_controls.append(copy.deepcopy(choice))
             continue
         by_occurrence.setdefault(choice["authoredOccurrenceId"], []).append(
             choice
