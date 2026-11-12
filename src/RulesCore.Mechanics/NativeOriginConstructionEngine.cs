@@ -68,9 +68,6 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         }
 
         var proposal = discovered with { Manifestations = manifests.ToArray() };
-        var structural = _validator.ReviewProposal(proposal);
-        issues.AddRange(structural.Issues.Where(x =>
-            !UnselectedOfferIssue(x, selected)));
         var seen = new HashSet<string>(StringComparer.Ordinal);
         var accepted = new List<NativeOriginSelectedGrant>();
         var usedDm = false;
@@ -89,6 +86,22 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             }
             return null;
         }
+
+        // Replace untrusted eligibility claims only after verifying the exact decision.
+        // The structural validator then inspects the actual table-authorized basis.
+        proposal = proposal with { Candidates = proposal.Candidates.Select(candidate =>
+        {
+            var d = Verified("candidate", candidate.Id) ??
+                Verified("source", candidate.Identity.Occurrence.Source.Id);
+            return d is not null &&
+                JsonString(d.EffectiveOutcome, "eligibility") == "eligible" &&
+                selected.Contains(candidate.Id)
+                ? candidate with { SelectionBasis = new(NativeOriginEligibility.DmAuthorized,
+                    TableDecisionId: d.Id) } : candidate;
+        }).ToArray() };
+        candidates = proposal.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
+        var structural = _validator.ReviewProposal(proposal);
+        issues.AddRange(structural.Issues.Where(x => !UnselectedOfferIssue(x, selected)));
 
         if (proposal.Intent == NativeOriginIntent.Direct)
             foreach (var candidate in proposal.Candidates.Where(x =>
