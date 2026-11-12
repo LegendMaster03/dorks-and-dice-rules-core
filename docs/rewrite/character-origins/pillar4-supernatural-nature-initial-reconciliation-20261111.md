@@ -58,6 +58,25 @@ This is not a universal claim about the published rules for vampires, lycanthrop
 
 **Consequences for the earlier proposal:** "Effect-specific replacement policies" now include an explicit *terminal outcome* and stage-dependent changes. "Lineage versus Bloodline" remains a distinct open classification question; being gradual does not itself make a change a Bloodline, and being reconstructive does not require a Bloodline.
 
+## Owner direction: general progression framework and individual progression rules
+
+**Status:** Owner design direction, 2026-11-11. Each individual supernatural condition, Lineage, Bloodline or transformation may require its **own authored progression specification**. This does not authorize particular milestones, numerical benefits, mandatory uniform staging, or a new software engine per option.
+
+The shared Character Origins/Rules Core framework must represent and resolve **general progression operations**: current state, eligible transitions, conditions/triggers, choice and grant evaluation, modifications, additive and reconstructive transformations, suppression/restoration, history, dependency revalidation, and authorized DM/table decisions. It must not impose one fixed schedule or a single obligatory progression variable on all supernatural options.
+
+Each actual supernatural option specifies **its own progression rules and structure** where needed: ordered or branching stages, event-driven development, character-level conditions, time/exposure/resource triggers, voluntary versus involuntary change, transformations between forms, regression or stabilization, and any cure/removal semantics. These are capabilities of the general framework, **not automatic properties** of every option. An option that grants its effect immediately need not have a progression track at all.
+
+Illustrative studies for later individual reconciliation:
+- Lycanthropy: shifts in control, forms, and circumstances triggering change.
+- Vampirism: supernatural capabilities alongside possible weaknesses and feeding requirements.
+- Ceremorphosis: staged replacement of former characteristics, culminating in a reconstructed Species/Ancestry configuration.
+- Zombification: potentially staged change ending in an alternative creature configuration.
+- Draconic inherited potential: progressive manifestation without necessarily changing Species/Ancestry.
+
+These examples do not prescribe official published mechanics or approve original first-party details.
+
+**Design boundary:** Distinct authored progressions should use shared state/event/characteristic processing rather than bespoke resolvers in C# or Character Sheet. The generic framework should support nonlinear, branched, reversible and condition-driven transitions when justified, without forcing that complexity into the ordinary character-creation path. Before implementing specific cases, use representative contrasting examples to prove that the framework is expressive enough; revise shared structures if a concrete case exposes a gap.
+
 ## Three primary design cases
 
 ### Elf transformed into a Dhampir (reference-only, not native content)
