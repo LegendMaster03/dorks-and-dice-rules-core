@@ -241,7 +241,10 @@ public sealed record NativeOriginProposal(
     IReadOnlyList<NativeOriginActiveTemporaryTransformation>?
         OtherActiveTemporaryTransformations = null,
     NativeOriginDecisionBasis? TemporaryTransformationPrecedence = null,
-    NativeOriginDecisionBasis? ExistingEffectiveConfigurationBasis = null);
+    NativeOriginDecisionBasis? ExistingEffectiveConfigurationBasis = null,
+    // Process classification is an eligibility input, not an effective creature-type
+    // grant. A custom claim requires a verified process-type table decision.
+    string? ProcessCreatureTypeId = null);
 
 /// <summary>
 /// Underlying is the latest authoritative Species/Ancestry baseline; Current is
