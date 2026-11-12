@@ -1,7 +1,7 @@
 # Pillar 2 — Ruby Dragonborn: exceptional Gem ancestry research
 
 **Date:** 2026-11-11
-**Status:** **Initial source audit and design candidates only; no mechanics approved.** Ordinary Gem family infrastructure is now selected-native. Do not promote exceptional Ruby to native gameplay or standard mixed-Heritage selection before an independent mechanical pass.
+**Status:** **Initial mechanical candidates only; no Ruby mechanics approved.** A separate [first-party source corpus and edition comparison](pillar2-ruby-dragonborn-source-corpus-20261111.md) now covers the original 1980 singular Ruby Dragon, the 2003 WotC sovereign, the 2021 champion and ordinary Gem Dragonborn. The **source audit supersedes this document's original champion-only source scope**, not the approved singular exceptional identity or Rite boundary. Do not promote Ruby to native gameplay or standard mixed-Heritage selection without an independent mechanical pass.
 
 ## Approved identity, boundary and ordinary Gem foundation
 
@@ -27,7 +27,7 @@ The *Fizban's Treasury of Dragons* (2021) **Dragonborn of Sardior** champion, p.
 
 Research references: https://www.dndbeyond.com/sources/dnd/ftod ; https://anyflip.com/ilydf/lppy/basic/201-250 ; https://dnd-wiki.org/wiki/Dragonborn_of_Sardior_%285e%29
 
-## Initial Ruby direction for owner evaluation (not approved)
+**Historical source correction (2026-11-11):** The 2021 champion is **not the complete Ruby corpus**. The original *Dragon* #37 Ruby sovereign uses shriek and dazzling-cloud breaths; the Wizards of the Coast 2003 *Legend of Sardior* specifies **Force, brilliant Light and Fire** breath options and broader psionics; *Fizban's* supplies the **Fire/metal-heating champion**. There is **no confirmed official 5e Aspect of Sardior** stat block (online "Aspects" are community homebrew). Consequently, Fire/Heat is **one option for a later design**, not a settled Ruby identity. See the [source corpus](pillar2-ruby-dragonborn-source-corpus-20261111.md).\n\n## Initial Ruby direction for owner evaluation (not approved)
 
 **Distinct identity:** Prefer **psionic control and defensive projection** coupled with an **exceptional heat-based breath**, rather than a five-type Gem composite. This preserves the distinction between ordinary Gem Dragonborn, Ruby, and Fivefold Chromatic.
 
