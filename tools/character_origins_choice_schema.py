@@ -291,6 +291,10 @@ def audit_native_choice_schema(catalog, source_ids=None):
                 "timing-or-selection-policy-unresolved",
             )
         ],
+        "unresolvedTimingEvidenceIds": [
+            n["choiceEvidenceId"] for n in records
+            if n["timing"] in ("timing-unspecified", "unknown")
+        ],
         "status": "origin-native-choice-schema-evidence-only",
         "authorization": "not-authorized",
         "completeness": "not-certified",
