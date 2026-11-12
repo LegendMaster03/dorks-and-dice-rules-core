@@ -192,7 +192,7 @@ public sealed class NativeOriginRebirthEngine(NativeCatalogSnapshot catalog)
         var next = new NativeOriginProfile(existing.Id, baseline,
             hasTemporary ? existing.Current : baseline,
             existing.IndependentGrants,
-            [.. existing.History, new NativeOriginHistoryEvent(eventId, proposal.Method,
+            [.. (existing.History ?? []), new NativeOriginHistoryEvent(eventId, proposal.Method,
                 NativeOriginEventStage.Completed,
                 proposal.Contributors.Select(x => x.Id)
                     .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
