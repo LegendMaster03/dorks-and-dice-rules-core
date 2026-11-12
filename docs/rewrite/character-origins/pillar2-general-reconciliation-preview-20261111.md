@@ -28,7 +28,7 @@ A proposed choice **does not** become an authorized Origin grant just because th
 | Matching local IDs without a trusted broader identity | `same-local-trait-id-unknown-equivalence` | Conflate names and complete mechanics |
 | A trait and intrinsic representing the same kind of movement speed | `trait-and-intrinsic-movement-same-value` or `...different-values` | Double a speed or silently override disagreement |
 
-**Unrelated pairs** yield no pair relationship. That does **not** certify full compatibility: other unmodeled effects, prerequisites, global allocation limits and missing authoring policies still require review.
+**Unrelated pairs** yield no pair relationship. That does **not** certify full compatibility: other unmodeled effects, prerequisites, global allocation limits and missing authoring policies still require review. The output also separates **selected-proposal relationship status** from **candidate-pool-wide diagnostics**. An unresolved field or collision among *unselected* offered characteristics must remain visible for source review, but must not be misreported as a conflict between the actual proposed selections. For example, Wood Elf's unresolved authored movement-speed relationship remains visible even when the only proposed trait is Druidcraft.
 
 ## Examples from the currently authored corpus
 
