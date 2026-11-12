@@ -265,7 +265,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 if (req.OptionCatalogId is not null &&
                     (string.IsNullOrWhiteSpace(choice.CatalogEligibilityEvidenceId) ||
                      authority is null || request.TrustedScope is null ||
-                     choice.SelectedOptionIds.Any(x => !authority.AuthorizesCatalogChoice(
+                     (choice.SelectedOptionIds ?? []).Any(x => !authority.AuthorizesCatalogChoice(
                          req.OptionCatalogId, x, choice.CatalogEligibilityEvidenceId!))))
                 {
                     Add("choice-authorization-unresolved", candidate.Id + ":" + req.Id,
