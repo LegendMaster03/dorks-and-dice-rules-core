@@ -18,22 +18,60 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
         var selectedSpecies = proposal.SelectedSpeciesId;
         var selectedAncestry = proposal.SelectedAncestryId;
 
-        if (proposal.Intent == NativeOriginIntent.Direct && selectedAncestry is not null &&
-            catalog.TryGetById(selectedAncestry, out var ancestry) && ancestry?.Category == "ancestry")
+        // The native ancestry graph may contain intermediate families (for
+        // example, Dragonborn -> Chromatic -> Red). Walk its actual parent
+        // references; never assume every leaf points directly to Species.
+        var ancestors = new List<NativeRuleEntity>();
+        NativeRuleEntity? parentSpecies = null;
+        if (proposal.Intent == NativeOriginIntent.Direct && selectedAncestry is not null)
         {
-            var parent = String(ancestry.Definition, "parent");
-            if (selectedSpecies is null && parent is not null) selectedSpecies = parent;
-            else if (parent is not null && selectedSpecies != parent)
-                Issue("ancestry-parent-mismatch", selectedAncestry, NativeOriginIssueSeverity.Conflict,
-                    "The selected Ancestry declares a different Species parent.");
+            var next = selectedAncestry;
+            var visited = new HashSet<string>(StringComparer.Ordinal);
+            while (next is not null && visited.Add(next) && visited.Count <= 64)
+            {
+                if (!catalog.TryGetById(next, out var entity) || entity is null)
+                {
+                    Issue("ancestry-parent-unavailable", next, NativeOriginIssueSeverity.Unresolved,
+                        "An authored Ancestry parent is unavailable in the native catalog.");
+                    break;
+                }
+                if (entity.Category == "species")
+                {
+                    parentSpecies = entity;
+                    break;
+                }
+                if (entity.Category != "ancestry")
+                {
+                    Issue("ancestry-parent-invalid", next, NativeOriginIssueSeverity.Invalid,
+                        "Ancestry parentage must resolve through ancestry or species definitions.");
+                    break;
+                }
+                ancestors.Add(entity);
+                next = String(entity.Definition, "parent");
+                if (next is null)
+                    Issue("ancestry-parent-unresolved", entity.Id, NativeOriginIssueSeverity.Unresolved,
+                        "This ancestry has no authored root Species relationship.");
+            }
+            if (next is not null && visited.Count >= 64)
+                Issue("ancestry-parent-cycle", selectedAncestry, NativeOriginIssueSeverity.Invalid,
+                    "Ancestry parent chains must terminate in the native catalog.");
+            if (parentSpecies is not null)
+            {
+                if (selectedSpecies is null) selectedSpecies = parentSpecies.Id;
+                else if (selectedSpecies != parentSpecies.Id)
+                    Issue("ancestry-parent-mismatch", selectedAncestry,
+                        NativeOriginIssueSeverity.Conflict,
+                        "The selected Species disagrees with the authored Ancestry parent chain.");
+            }
         }
 
         if (proposal.Intent == NativeOriginIntent.Direct)
         {
-            if (selectedSpecies is not null) AddSource(new(NativeOriginSourceKind.Native, selectedSpecies),
-                null, true);
-            if (selectedAncestry is not null) AddSource(new(NativeOriginSourceKind.Native, selectedAncestry),
-                null, true);
+            if (selectedSpecies is not null)
+                AddSource(new(NativeOriginSourceKind.Native, selectedSpecies), null, true);
+            foreach (var ancestor in ancestors.AsEnumerable().Reverse())
+                AddSource(new(NativeOriginSourceKind.Native, ancestor.Id), null, true,
+                    ancestor.Id != selectedAncestry);
         }
 
         foreach (var contributor in proposal.Contributors ?? [])
@@ -95,7 +133,8 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
         void Issue(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
 
-        void AddSource(NativeOriginSourceReference source, string? contributorId, bool direct)
+        void AddSource(NativeOriginSourceReference source, string? contributorId, bool direct,
+            bool inheritedFamily = false)
         {
             if (!catalog.TryGetById(source.Id, out var entity) || entity is null ||
                 entity.Category is not ("species" or "ancestry"))
@@ -107,14 +146,11 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             // A nonselectable base Species may be the required foundation of a
             // playable Ancestry; this does not make the base selectable alone.
             var paired = direct && entity.Category == "species" &&
-                selectedAncestry is not null &&
-                catalog.TryGetById(selectedAncestry, out var leaf) &&
-                leaf?.Category == "ancestry" &&
-                String(leaf.Definition, "parent") == entity.Id &&
-                (!leaf.Definition.TryGetProperty("selectable", out var leafFlag) ||
+                parentSpecies?.Id == entity.Id && ancestors.Count > 0 &&
+                (!ancestors[0].Definition.TryGetProperty("selectable", out var leafFlag) ||
                  leafFlag.ValueKind != JsonValueKind.False);
             var restricted = entity.Definition.TryGetProperty("selectable", out var flag) &&
-                flag.ValueKind == JsonValueKind.False && !paired;
+                flag.ValueKind == JsonValueKind.False && !paired && !inheritedFamily;
             if (entity.Definition.TryGetProperty("acquisitionMethods", out var methods) &&
                 methods.ValueKind == JsonValueKind.Array &&
                 !methods.EnumerateArray().Any(x => x.ValueKind == JsonValueKind.String &&
