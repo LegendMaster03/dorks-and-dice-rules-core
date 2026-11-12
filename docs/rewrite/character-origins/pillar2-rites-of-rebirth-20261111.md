@@ -1,9 +1,24 @@
 # Pillar 2 — Rites of Rebirth and exceptional Dragonborn
 
 **Date:** 2026-11-11  
-**Status:** Owner-approved conceptual replacement rules and Dragonborn content direction. Ritual procedures, exact exceptional traits, data contracts, runtime behavior, and balance are not yet designed or implemented.
+**Status:** Owner-approved complete-replacement rules and Dragonborn acquisition direction. The general Rite method and its declarative acquisition-gate contract are now recorded in selected-native content; ritual procedures, actual exceptional Ancestry records, runtime behavior, and remaining unapproved mechanics are not implemented.
 
 ## Rite of Rebirth — general transformation rule
+
+**Catalog integration:** The native [creature origination rules](../../../data/rulesets/first-party-001/native/rules/creature-origination.json)
+now list `rite-of-rebirth` as a distinct, post-origination specialization
+of `transformation`. It is **not** a type-inherited ordinary reproductive
+default: a specific authored Rite or a recorded DM/table exception permits
+it. This is a data-only rule and does not yet execute the transformation.
+
+An Ancestry can declare `acquisitionMethods: ["rite-of-rebirth"]`
+to require a qualifying Rite as its ordinary acquisition path and to exclude
+that Ancestry from default initial character creation and mixed-Heritage
+candidate pools. An explicit DM/table exception may authorize another path.
+Existing native Ancestries with no such field remain governed by their
+current selection rules. Exceptional Dragonborn Ancestries are still
+design concepts awaiting native content authoring, not selectable records.
+
 
 A **Rite of Rebirth** is a ritual that **completely replaces a creature's current Species and Ancestry configuration** with a new Species and Ancestry configuration. **Draconic Rebirth** is one specialization of this general class of rituals, not a separate character-creation or inheritance engine.
 

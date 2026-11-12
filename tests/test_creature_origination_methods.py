@@ -80,6 +80,51 @@ class CreatureOriginationMethodTests(unittest.TestCase):
             effective_type = type_value["type"] if isinstance(type_value, dict) else type_value
             self.assertEqual("elemental", effective_type, name)
 
+    def test_rite_of_rebirth_is_a_post_origin_transformation(self):
+        rite = next(m for m in self.contract["methodDefinitions"]
+                    if m["id"] == "rite-of-rebirth")
+        self.assertEqual("transformation", rite["specializes"])
+        self.assertEqual("post-origination", rite["stage"])
+        self.assertFalse(rite["createsNewIndividual"])
+        self.assertFalse(rite["typeDefault"])
+        self.assertEqual("replace-complete-species-and-ancestry-configuration",
+                         rite["operation"])
+        self.assertEqual("rite-of-rebirth", self.contract["riteOfRebirth"]["methodId"])
+        self.assertEqual("existing-creature", self.contract["riteOfRebirth"]["subject"])
+        self.assertNotIn("rite-of-rebirth",
+                         self.foundation["genericParent"]["originationMethods"])
+        for identity in self.types:
+            with self.subTest(identity=identity):
+                self.assertNotIn("rite-of-rebirth", self.resolve(identity))
+
+    def test_rebirth_acquisition_gate_and_replacement_scope(self):
+        contract = self.contract["riteOfRebirth"]
+        self.assertEqual("acquisitionMethods", contract["targetAcquisition"]["field"])
+        self.assertIn("initial", contract["targetAcquisition"]["restrictedAncestryRule"])
+        self.assertIn("mixed-Heritage", contract["targetAcquisition"]["restrictedAncestryRule"])
+        self.assertIn("override", contract["targetAcquisition"]["restrictedAncestryRule"])
+        replacement = contract["replacement"]
+        self.assertEqual("replace-complete-current-configuration",
+                         replacement["speciesAndAncestry"])
+        self.assertEqual("remove-only-grants-attributable-to-old-configuration",
+                         replacement["speciesAncestryTraitsAndGrants"])
+        self.assertTrue(replacement["noOldNewPackageStacking"])
+        for key in ("independentGrants", "background", "upbringing",
+                    "existingContributorAndOriginationHistory"):
+            self.assertEqual("preserve", replacement[key])
+        self.assertEqual("record-in-history", replacement["riteEvent"])
+        self.assertEqual("replace-then-current-species-and-ancestry",
+                         replacement["subsequentRite"])
+
+    def test_rite_does_not_restrict_ordinary_dragonborn_ancestries(self):
+        self.assertIn("Ancestries without an acquisitionMethods restriction",
+                      self.contract["riteOfRebirth"]["targetAcquisition"]["unspecifiedField"])
+        dragonborn = NATIVE / "species/ancestry/dragonborn"
+        for path in dragonborn.rglob("*.json"):
+            data = read(path)
+            with self.subTest(path=str(path)):
+                self.assertNotIn("acquisitionMethods", data)
+
     def test_src_mirror_tracks_new_type_defaults(self):
         working = read(WORKING / "creature-types.json")
         originals = {t["id"]: t for t in working["types"]}

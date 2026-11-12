@@ -54,9 +54,38 @@ A creator, material component, ancestor, blueprint and animating force
 are different kinds of inputs. None grants its own Species traits merely
 by being involved in creation.
 
+## Rite of Rebirth as a post-origination method
+
+Rite of Rebirth is included in the same method catalog, but is a specialization
+of Transformation, **not** a new individual being created and not a default
+method inherited by all creature types. A qualifying specific Rite authorizes
+the operation regardless of the creature's type-default method list. Its
+presence in the catalog is not a universal right to perform a Rite.
+
+The Rite replaces the entire current Species/Ancestry configuration, its
+associated mechanical grants, and its Species-derived effective creature type.
+It does not merge new Ancestry candidates with old ones. Independent grants,
+Background, Upbringing, and historical contributors remain. Subsequent Rites
+replace the then-current configuration instead of stacking previous grants.
+
+A native Ancestry may explicitly declare `acquisitionMethods` as
+[`"rite-of-rebirth"`]. That makes the Rite its normal acquisition gate,
+excluding ordinary initial character creation and mixed-Heritage candidate
+selection. An explicit DM/table override can still authorize other access.
+Unannotated existing Ancestries are not newly restricted by this policy.
+
+The exceptional Platinum, Fivefold Chromatic, and Ruby Dragonborn concepts
+have such a **design-intended** Rite gate, with the specific category leader's
+direct participation under the approved design. They have not yet become
+native Ancestry definitions, so this change does not fabricate their records,
+assign their mechanics, or make the Rite executable.
+
+See [the Rite specification](pillar2-rites-of-rebirth-20261111.md) for the
+approved complete-replacement semantics and exceptional acquisition decisions.
+
 ## Human-readable compatibility procedure
 
-1. Choose a method supported by the relevant type or a specific Species rule.
+1. Choose a type-supported method, a specific authored ritual/transformation, or an explicitly DM-authorized exception.
 2. Identify the inputs and contribution roles required by that method.
 3. Check applicable process restrictions. Different creature types alone do
    not make biological contributors incompatible.
@@ -78,6 +107,8 @@ not simulate genetics, nor does it create a per-pair compatibility table.
   content-only rule intentionally does not claim execution support.
 - Exercise biological, plant-reproduction, construct-assembly and Fiend
   spawning paths in regression tests, including DM-authorized exceptions.
+- Implement Rite-specific acquisition checks and full Species/Ancestry grant
+  replacement once the general Origin engine is executable.
 
 The working source copy preserves the selected type hierarchy for the
 existing mirror comparison. No main branch or existing PR branch is modified.

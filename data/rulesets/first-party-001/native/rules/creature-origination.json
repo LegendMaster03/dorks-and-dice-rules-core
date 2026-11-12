@@ -44,6 +44,16 @@
       "id": "transformation",
       "name": "Transformation",
       "description": "An existing individual changes its configuration or type under an explicit effect or process; existing Heritage is not erased by relabeling."
+    },
+    {
+      "id": "rite-of-rebirth",
+      "name": "Rite of Rebirth",
+      "specializes": "transformation",
+      "stage": "post-origination",
+      "createsNewIndividual": false,
+      "typeDefault": false,
+      "operation": "replace-complete-species-and-ancestry-configuration",
+      "description": "A qualifying ritual completely replaces the current Species and Ancestry configuration of an existing creature. It is a specific transformation, not biological reproduction, contributor mixing, or a second individual being born."
     }
   ],
   "methodInheritance": {
@@ -68,6 +78,38 @@
     "Plant reproduction is a distinct method, not the generic biological-reproduction method.",
     "Genies remain Elementals; their potential for biological offspring is Species-specific and does not require all Elementals to support biological reproduction.",
     "Removing Monstrous Humanoid and True Elemental does not automatically change preexisting monster stat blocks, material-body properties, or targeting semantics of other types.",
-    "The general rules remain understandable and usable at the table without Rules Core software."
-  ]
+    "The general rules remain understandable and usable at the table without Rules Core software.",
+    "Rite of Rebirth is a post-origination complete replacement operation, offered by a qualifying specific Rite or a DM exception, not by default to all members of any creature type.",
+    "Ancestry acquisitionMethods may restrict default acquisition to a validated Rite; current exceptional Dragonborn concepts are not yet native selectable Ancestry definitions."
+  ],
+  "methodAvailability": {
+    "typeDefault": "Creature-type originationMethods provide ordinary available methods, but are not an exhaustive list of rituals, transformations, or DM-authorized exceptions.",
+    "explicitProcess": "An authored Rite can authorize its transformation independently of the subject's creature-type default originationMethods. A method's existence in the catalog alone does not grant access to a Rite or its target Ancestry.",
+    "dmOverride": "A recorded DM/table exception may authorize an otherwise unavailable process or target; it does not alter the general first-party type defaults."
+  },
+  "riteOfRebirth": {
+    "methodId": "rite-of-rebirth",
+    "specializes": "transformation",
+    "subject": "existing-creature",
+    "authorization": "specific-rite-requirements-or-explicit-dm-override",
+    "targetAcquisition": {
+      "field": "acquisitionMethods",
+      "restrictedAncestryRule": "An Ancestry authored with acquisitionMethods containing only rite-of-rebirth is unavailable through ordinary initial Species/Ancestry selection or ordinary mixed-Heritage candidate selection, unless a recorded DM/table override authorizes it.",
+      "unspecifiedField": "Existing Ancestries without an acquisitionMethods restriction retain their prior selection behavior; merely defining the Rite does not restrict them.",
+      "specificRitesMayRequire": "Explicit participants, materials, permissions, prerequisites, and a specific target Species/Ancestry; no universal ritual procedure is imposed."
+    },
+    "replacement": {
+      "speciesAndAncestry": "replace-complete-current-configuration",
+      "speciesAncestryTraitsAndGrants": "remove-only-grants-attributable-to-old-configuration",
+      "creatureType": "use-new-species-ancestry-type-with-independent-effects-preserved",
+      "noOldNewPackageStacking": true,
+      "independentGrants": "preserve",
+      "background": "preserve",
+      "upbringing": "preserve",
+      "existingContributorAndOriginationHistory": "preserve",
+      "riteEvent": "record-in-history",
+      "subsequentRite": "replace-then-current-species-and-ancestry"
+    },
+    "doesNotAuthorize": "The Rite's listing does not grant target access, expose restricted extraordinary traits in ordinary mixed-Heritage pools, define ritual costs, or create native exceptional Ancestry records."
+  }
 }
