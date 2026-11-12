@@ -41,6 +41,23 @@ Research references:
 8. **Allow multiple influences when their actual rules permit coexistence.** Multiple sources may coexist, but the common engine must detect shared grant identity, conflicts, intrinsic slots, resource overlap, and dependencies. It cannot assert that an unresolved composition is balanced or mechanically valid.
 9. **Balance requires source-specific acquisition terms.** Progression by itself does not balance an unrestricted extra feature track. Use explicit eligibility, source-related replacements, limited feature selection, tradeoffs, resources or campaign-award conditions where justified, measured against ordinary Species and class progression. Do not adopt generic supernatural point-buy or mandatory historical Bloodline levels at this stage.
 
+## Owner direction: transformation outcome and tempo
+
+**Status:** Owner-selected *conceptual distinction* (2026-11-11), not approval of individual creature mechanics, transformation milestones, numeric grants, or native JSON.
+
+A supernatural transformation's **duration/progression** is independent of its **eventual effect on the underlying Species/Ancestry configuration**. The general Character Origins pipeline should therefore accommodate at least two outcomes:
+
+1. **Additive transformation:** The subject retains its underlying Species/Ancestry identity and configuration at full manifestation, while a supernatural condition or nature modifies or adds characteristics. Werewolves and vampires are the owner's conceptual examples. A particular supernatural effect can explicitly modify, suppress, or replace individual traits or change effective creature classification without by itself replacing the Species/Ancestry configuration.
+2. **Reconstructive transformation:** Over time or immediately, the subject's underlying Species/Ancestry configuration is replaced by a different one. Developing into an illithid or zombie is the owner's conceptual example. The intermediate stages may preserve, modify, suppress, or replace selected original characteristics. Upon completion, old Species/Ancestry grants no longer remain active merely because they existed in a preceding stage. Historical identity and unrelated independently sourced grants remain, subject to the applicable effect's explicitly authored interactions.
+
+Neither outcome prescribes a particular speed, number of stages, stage prerequisites, ability advancement schedule, reversibility, or narrative process. A Rite of Rebirth continues to specify **complete configuration replacement** under its approved first-party default; not every reconstructive transformation is a Rite, and this classification does not alter the Rite's approved grant semantics. Both outcomes must reuse the common event/characteristic reconciliation operations rather than separate engines.
+
+**Shared-system implication:** A gradual transformation should be representable as a series of authorized transitions, each yielding a coherent current state (or explicit unresolved issues) with recorded source occurrences, progression triggers, active/suppressed/superseded grants, and history. The terminal stage's scope of replacement must be **explicit**, including cases where an effect changes effective creature type without wholesale Species replacement. Do not treat the *first* increment of a future reconstructive transformation as already completing its final replacement unless the rule states so.
+
+This is not a universal claim about the published rules for vampires, lycanthropes, illithids, or zombies; they are illustrative design cases. Their actual Dorks & Dice implementations, including any effects on consciousness, ability scores, Creature type, classes, Background, Upbringing and independently sourced supernatural grants, require separate reconciliation.
+
+**Consequences for the earlier proposal:** "Effect-specific replacement policies" now include an explicit *terminal outcome* and stage-dependent changes. "Lineage versus Bloodline" remains a distinct open classification question; being gradual does not itself make a change a Bloodline, and being reconstructive does not require a Bloodline.
+
 ## Three primary design cases
 
 ### Elf transformed into a Dhampir (reference-only, not native content)
