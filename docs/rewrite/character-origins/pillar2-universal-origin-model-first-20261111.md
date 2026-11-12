@@ -111,6 +111,12 @@ The [draft characteristic interaction reviewer](pillar2-general-reconciliation-p
 
 This moves the evidence pipeline from just **identifying** definitions to **reviewing a proposed set of characteristics** as part of Stage 2, without yet approving the policies needed to reconstruct a valid final character. The next phase should define the **general resolution contract and decision provenance**, not Species-specific compatibility exceptions.
 
+## Explicit, reviewable resolution decisions
+
+The [experimental general decision contract](pillar2-reconciliation-decision-contract-20261111.md) extends the proposal-stage interaction audit with **source-bound, explicitly documented dispositions** and global consistency checks. Each decision identifies the exact reviewed relationship, its proposed choice, rationale and design/table proposal provenance. It also detects contradictory keep/suppress decisions across several candidate pairs and recognizes where a single-valued intrinsic slot needs a special policy. These are **not automatically authorized rules or granted abilities**.
+
+A decision document is bound to the full candidate snapshot, because provisional `evidence-N` identifiers are not persistent grant IDs. Later production design must replace hypothetical authority references with validated rule/table approval, verify source eligibility, complete embedded choices/dependencies, and only then reconstruct authorized current grants.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
