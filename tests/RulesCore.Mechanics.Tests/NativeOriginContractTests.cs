@@ -795,6 +795,70 @@ public sealed class NativeOriginContractTests
     }
 
     [Fact]
+    public void StaleHumanRestorationIsUnresolvedAfterUnderlyingRebirth()
+    {
+        using var fixture = new Fixture();
+        var (_, wolf, human) = HumanWithLycanthropy(active: true);
+        var updated = new NativeOriginCurrentConfiguration("species.elf", null, [],
+            "new-authoritative-elf");
+        var changedDuringForm = wolf with { Underlying = updated };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(changedDuringForm).Status);
+
+        // Returning to an old snapshot is not an authorized reversion.
+        var staleRestore = changedDuringForm with {
+            ActiveTemporaryTransformation = null,
+            Current = human
+        };
+        var review = fixture.Validator.ReviewProfile(staleRestore);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, review.Status);
+        Assert.Contains(review.Issues,
+            issue => issue.Code == "effective-state-without-active-effect");
+
+        var correct = changedDuringForm with {
+            ActiveTemporaryTransformation = null,
+            Current = changedDuringForm.Underlying
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(correct).Status);
+    }
+
+    [Fact]
+    public void EffectiveAndUnderlyingProfileIdsNeedNotMatchWhenMechanicsDo()
+    {
+        using var fixture = new Fixture();
+        var (proposal, profile, _) = HumanWithLycanthropy(active: false);
+        var equivalent = profile with {
+            Current = profile.Current with { ProfileId = "effective-human-snapshot" }
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(equivalent, proposal).Status);
+    }
+
+    [Fact]
+    public void FormReplacementDoesNotEraseIndependentGrants()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var independent = new NativeOriginEffectiveGrant(
+            "class-grant", "class-choice", Trait("trained", "class.warlock"),
+            ["class-candidate"]);
+        var withClass = wolf with { IndependentGrants = [independent] };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(withClass, proposal).Status);
+        Assert.Equal("class-grant", Assert.Single(withClass.IndependentGrants).Id);
+        Assert.DoesNotContain(withClass.Current.InherentGrants,
+            grant => grant.Id == independent.Id);
+        var reverted = withClass with {
+            Current = withClass.Underlying,
+            ActiveTemporaryTransformation = null
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(reverted, proposal).Status);
+        Assert.Equal("class-grant", Assert.Single(reverted.IndependentGrants).Id);
+    }
+
+    [Fact]
     public void TemporaryFormDoesNotUseHistoryReplacementOrObsoleteBaselineSnapshot()
     {
         var (_, wolf, _) = HumanWithLycanthropy(active: true);

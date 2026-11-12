@@ -518,9 +518,25 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     /// </summary>
     private static bool SameConfiguration(
         NativeOriginCurrentConfiguration underlying,
-        NativeOriginCurrentConfiguration effective) =>
-        JsonElement.DeepEquals(JsonSerializer.SerializeToElement(underlying),
-            JsonSerializer.SerializeToElement(effective));
+        NativeOriginCurrentConfiguration effective)
+    {
+        // Snapshot IDs and grant collection order are not mechanical differences.
+        // Grant identity, source attribution, parameters and selections are.
+        var baseline = underlying with
+        {
+            ProfileId = null,
+            InherentGrants = underlying.InherentGrants
+                .OrderBy(g => g.Id, StringComparer.Ordinal).ToArray()
+        };
+        var active = effective with
+        {
+            ProfileId = null,
+            InherentGrants = effective.InherentGrants
+                .OrderBy(g => g.Id, StringComparer.Ordinal).ToArray()
+        };
+        return JsonElement.DeepEquals(JsonSerializer.SerializeToElement(baseline),
+            JsonSerializer.SerializeToElement(active));
+    }
 
     private static void CheckActiveTransformation(
         NativeOriginActiveTemporaryTransformation active,
