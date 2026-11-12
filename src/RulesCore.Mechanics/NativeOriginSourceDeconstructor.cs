@@ -193,12 +193,22 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                 parentSpecies?.Id == entity.Id && ancestors.Count > 0 &&
                 (!ancestors[0].Definition.TryGetProperty("selectable", out var leafFlag) ||
                  leafFlag.ValueKind != JsonValueKind.False);
+            var hasAcquisitionGate =
+                entity.Definition.TryGetProperty("acquisitionMethods", out var methods) &&
+                methods.ValueKind == JsonValueKind.Array;
+            var permitsSelectedMethod = hasAcquisitionGate &&
+                methods.EnumerateArray().Any(x => x.ValueKind == JsonValueKind.String &&
+                    x.GetString() == proposal.Method.MethodId);
+            // Nonselectable Ancestries with an explicit Rite-only acquisition path
+            // can be selected by that Rite, not by ordinary initial creation.
+            // This is still only target eligibility: the Rite itself must be
+            // separately authorized before any baseline is replaced.
+            var riteAcquisition = direct && proposal.Method.MethodId == "rite-of-rebirth" &&
+                permitsSelectedMethod;
             var restricted = entity.Definition.TryGetProperty("selectable", out var flag) &&
-                flag.ValueKind == JsonValueKind.False && !paired && !inheritedFamily;
-            if (entity.Definition.TryGetProperty("acquisitionMethods", out var methods) &&
-                methods.ValueKind == JsonValueKind.Array &&
-                !methods.EnumerateArray().Any(x => x.ValueKind == JsonValueKind.String &&
-                    x.GetString() == proposal.Method.MethodId))
+                flag.ValueKind == JsonValueKind.False && !paired && !inheritedFamily &&
+                !riteAcquisition;
+            if (hasAcquisitionGate && !permitsSelectedMethod)
                 restricted = true;
             var selectable = restricted ? NativeOriginEligibility.Restricted :
                 direct ? NativeOriginEligibility.Eligible : NativeOriginEligibility.Unreviewed;
