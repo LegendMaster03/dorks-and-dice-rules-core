@@ -214,7 +214,6 @@ public sealed class NativeCatalogEffectiveEffectAuthorityTests
             approved with { NumericValue = 20 },
             approved with { TargetId = "dexterity" },
             approved with { Operation = NativeEffectiveEffectOperation.Replace },
-            approved with { RequiredFormId = "form.test-wolf" },
             approved with { RuleId = "rule.does-not-exist" }
         };
 
@@ -225,6 +224,27 @@ public sealed class NativeCatalogEffectiveEffectAuthorityTests
             Assert.False(result.IsResolved);
             Assert.Contains(result.Issues, x => x.Code == "effective-directive-unauthorized");
         }
+    }
+
+    [Fact]
+    public void AFormScopedEffectWithTheWrongScopeIsNotNativeAuthorized()
+    {
+        using var fixture = new CatalogFixture();
+        var origin = Origin();
+        var authority = Authority(fixture, origin, new TrustedFixture(origin));
+        var incorrectlyScoped = NativeDirective() with
+        {
+            RequiredFormId = "form.test-wolf"
+        };
+
+        // Authorizer rejects the incorrect scope. Evaluation itself correctly
+        // skips a form-only effect when the form is not active; skipping must
+        // not be confused with permission to execute the effect.
+        Assert.False(authority.AuthorizesDirective(incorrectlyScoped, origin.Profile!));
+        var noActiveForm = NativeEffectiveCharacterEffects.Evaluate(
+            Request(origin, incorrectlyScoped), authority);
+        Assert.True(noActiveForm.IsResolved);
+        Assert.Equal(12, noActiveForm.EffectiveAbilityScores["strength"]);
     }
 
     [Fact]
