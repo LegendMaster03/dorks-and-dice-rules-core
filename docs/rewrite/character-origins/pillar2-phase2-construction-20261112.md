@@ -27,7 +27,7 @@ All components reuse the Phase 1 NativeOriginProposal, NativeOriginCandidate, Na
 
 ## Authorization and effective-state boundaries
 
-Authorized, Incomplete, Unresolved, Conflicting, and Invalid results are distinguishable. A **partial profile is not an authorized playable profile**. Consumers must check IsMechanicallyAuthorized rather than treating a nonnull Profile as permission.
+Authorized, Incomplete, Unresolved, Conflicting, and Invalid results are distinguishable. A **partial profile is not an authorized playable profile**. Consumers must check IsMechanicallyAuthorized rather than treating a nonnull Profile as permission. Construction history added by an incomplete or unresolved evaluation remains **Pending**; only an authorized result marks its own new construction event **Completed**.
 
 The authenticated host is responsible for supplying the trusted scope, table authority, and open-catalog option proof. Each effective table outcome is scoped to its decision target and does not alter first-party native definitions. Raw client-supplied decisions and option evidence are not accepted as authority.
 
