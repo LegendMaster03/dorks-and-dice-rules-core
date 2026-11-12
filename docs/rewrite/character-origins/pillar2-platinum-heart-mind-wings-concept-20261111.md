@@ -1,7 +1,7 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (working concept)
 
 **Date:** 2026-11-11  
-**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn); mechanical feature candidates, advancement, and numeric values remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn) and Heart's two alternative damaging/restorative breath modes acquired together at rebirth with scaling effectiveness and one shared resource. Exact mechanics, damage/healing numbers, progression thresholds, and relationship to ordinary breath features remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Purpose
 
@@ -32,7 +32,7 @@ These are **mechanical roles and possible expressions**, not numeric choices, ex
 
 ## Published Bahamut mechanics — source baseline, not adopted gameplay
 
-**Owner direction (2026-11-11):** Develop Platinum primarily from **established mechanics of Bahamut and the historical Dragonborn of Bahamut**, instead of inventing a new thematic power set and searching for justification afterward. **Only** the inherent presence of Heart, Mind and Wings has been approved. Published abilities, labels and exact numbers below are historical research, not automatically approved Dorks & Dice features.
+**Owner direction (2026-11-11):** Develop Platinum primarily from **established mechanics of Bahamut and the historical Dragonborn of Bahamut**, instead of inventing a new thematic power set and searching for justification afterward. Approved design commitments are the three inherent expressions and Heart's two alternative breath modes gained together with scaling effectiveness. Published numeric values and other source abilities remain historical research, not automatically approved Dorks & Dice features.
 
 ### Primary historical source comparison
 
@@ -53,12 +53,14 @@ Published mechanical evidence:
 
 The published depictions differ **across editions and rules contexts**. We may adapt selected mechanical ideas to the existing Dorks & Dice system, but should not imply that a 3.5 transformed ancestry, a deity's high-level 5e creature aspect, and a prestige class have the same playable abilities.
 
-### Heart — revised leading candidate: two-mode Platinum Breath
+### Heart — approved structure: two-mode Platinum Breath (mechanics pending)
 
-**Working direction, not owner-approved mechanics:** Use **one coherent Breath Weapon resource** offering **two distinct output modes**:
+**Owner-approved structural direction:** When a character becomes a Platinum Dragonborn through exceptional Draconic Rebirth, **both breath modes are available immediately** as parts of the Heart expression. They **share one Breath Weapon resource**, and **the effectiveness of each mode scales afterward**. The character **chooses one mode each time the breath is used**, rather than applying both at once. Acquisition of one mode never requires choosing against, replacing, or separately unlocking the other. This approves the two-mode structure and scaling principle, **not** an amount, frequency, resource count, recharge schedule, damage affinity, area, action economy, healing target rules, or specific advancement milestones.
 
-1. **Offensive breath:** Inspired by the 5e aspect's radiant damaging breath and the 3.5 Dragonborn's scaling line breath. Proposed Dorks & Dice damage affinity, geometry and scaling **remain open**.
-2. **Restorative breath:** Inspired by the 5e aspect's separate healing breath. Determine how to translate beneficial targets, healing amount, and level-gated revival (if any), rather than silently granting mass resurrection to every reborn character.
+The two outputs are:
+
+1. **Offensive breath:** A damaging manifestation, inspired by the 5e aspect's radiant damaging breath and the 3.5 Dragonborn's scaling line breath. Dorks & Dice damage affinity, geometry, saving throw, and the **amount/formula** of its scaling **remain open**.
+2. **Restorative breath:** A healing manifestation, inspired by the 5e aspect's separate restorative breath. Beneficial targeting, healing amount, the **amount/formula** of its scaling, and possible advanced revival (if any) **remain open**. The approval of a restorative breath does **not** grant resurrection.
 
 A character chooses one mode on each use. **No default rule permits damaging opponents and healing or shielding allies simultaneously with the same breath.** That earlier combined **Sovereign Breath** proposal was an independently invented alternative and is **superseded as the preferred working direction** by source-grounded alternative modes. It may be reconsidered only as an explicitly new design, not misrepresented as a published Bahamut mechanic.
 
@@ -72,7 +74,7 @@ A character chooses one mode on each use. **No default rule permits damaging opp
 
 **Wings:** Start with the original 3.5 progression of wings -> gliding -> restricted flight -> sustained flight, then compare the 5e aspect's powerful flying movement. All Platinum Dragonborn have the Wings expression, but the precise initial movement capabilities and advancement milestones are still open. Do **not** infer that they must use the original 3.5 Hit Dice milestones without adaptation.
 
-**Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No levels, die formulas, resources, spell-like effects or native data are approved by this research pass.
+**Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth, including **both Heart breath modes with a shared resource and scaling effectiveness**. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No specific level thresholds, die formulas, resource quantities/recharge schedule, spell-like effects or native executable data are approved by this design pass.
 
 ## Approved expression structure and pending feature design
 
@@ -107,7 +109,7 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 ## Questions for a later decision pass
 
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
-2. Should Platinum Heart implement **alternative damaging and restorative breath modes sharing one resource**, as in the 5e Aspect, and how do they relate to the existing base and Metallic Breath Weapons? What affinity, scaling, area, healing limits and optional revival rules apply?
+2. For the **approved damaging and restorative breath modes sharing one resource**, how do they relate to the existing base and Metallic Breath Weapons? What affinity, scaling formula, area, healing limits, action, use count, recharge schedule and optional advanced revival rules apply?
 3. Which **source-established** Mind features (progressive Darkvision/Blindsense, paralysis/sleep protection, later Truesight or comparable resilience) should manifest, and at what progression?
 4. How should Wings adapt the 3.5 glide/flight progression for a character reborn at any level? Which abilities are available immediately and which scale?
 5. Should the three expressions combine in a unique later ability, and what triggers advancement for characters reborn at different levels?
