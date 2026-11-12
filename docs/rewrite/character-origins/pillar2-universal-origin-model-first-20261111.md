@@ -117,6 +117,12 @@ The [experimental general decision contract](pillar2-reconciliation-decision-con
 
 A decision document is bound to the full candidate snapshot, because provisional `evidence-N` identifiers are not persistent grant IDs. Later production design must replace hypothetical authority references with validated rule/table approval, verify source eligibility, complete embedded choices/dependencies, and only then reconstruct authorized current grants.
 
+## Whole-configuration dependency closure evidence
+
+The [experimental whole-profile dependency review](pillar2-whole-profile-dependency-closure-20261111.md) extends the source-neutral pipeline beyond pairwise interactions. It evaluates **tentatively retained** candidate characteristics under **explicit hypothetical rules** for prerequisite presence, exclusions, selection cardinality, dependent choices, linked trait parameters and shared resource policies. It also carries forward currently authored choice evidence that is not covered by a trusted choice schema.
+
+Crucially, this separates **decision consistency** from **full mechanical coherence**. A list of internally consistent pairwise decisions can still omit a prerequisite, violate a whole-profile limit or lack the binding required for a selected trait. Neither a synthetic rule match nor a zero-conflict report constitutes a valid/authorized character. The next design gate must establish **complete authoritative choice/dependency semantics**, eligibility and actual grant reconstruction, starting with unchanged standard Species/Ancestry profiles.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
