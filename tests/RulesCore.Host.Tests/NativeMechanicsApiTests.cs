@@ -101,6 +101,8 @@ public sealed class NativeMechanicsApiTests
                   {"id":"rule.creature-origination","name":"Origination",
                    "kind":"rule","methodDefinitions":[
                      {"id":"biological","name":"Biological"}]},
+                  {"id":"rule.low-light-vision","name":"Low-Light Vision","kind":"rule",
+                   "effects":[{"actualLightLevel":"dim","perceivedLightLevel":"bright"}]},
                   {"id":"creature-type.humanoid","name":"Humanoid",
                    "kind":"creatureType","parent":"creature",
                    "originationMethods":["biological"]},
@@ -109,7 +111,9 @@ public sealed class NativeMechanicsApiTests
                    "size":"medium","walkingSpeedFeet":30,"traits":[
                      {"id":"skilled","name":"Skilled",
                       "grantType":"skill-proficiency",
-                      "chooseFrom":"any-native-skill","choiceCount":1}]},
+                      "chooseFrom":"any-native-skill","choiceCount":1},
+                     {"id":"low-light-vision","name":"Low-Light Vision",
+                      "rule":"rule.low-light-vision"}]},
                   {"id":"skill.intimidation","name":"Intimidation","kind":"skill"},
                   {"id":"competency.alchemy","name":"Alchemy","kind":"competency"}
                 ]}
@@ -307,6 +311,16 @@ public sealed class NativeMechanicsApiTests
             .GetProperty("sourceId").GetString());
         Assert.Equal("/walkingSpeedFeet", intrinsics.GetProperty("walkingSpeedFeet")
             .GetProperty("occurrencePath").GetString());
+        var vision = document.GetProperty("vision");
+        Assert.Equal("resolved", vision.GetProperty("status").GetString());
+        Assert.True(vision.GetProperty("previewOnly").GetBoolean());
+        Assert.Empty(vision.GetProperty("unresolvedReasons").EnumerateArray());
+        var lowLight = vision.GetProperty("lowLightVision");
+        Assert.Equal("species.fixture", lowLight.GetProperty("sourceId").GetString());
+        Assert.Equal("/traits/1", lowLight.GetProperty("occurrencePath").GetString());
+        Assert.Equal("rule.low-light-vision", lowLight.GetProperty("ruleId").GetString());
+        Assert.Equal("dim", lowLight.GetProperty("actualLightLevel").GetString());
+        Assert.Equal("bright", lowLight.GetProperty("perceivedLightLevel").GetString());
 
 
         // An unrelated category can never be approved by the same Skill grant.
@@ -327,6 +341,8 @@ public sealed class NativeMechanicsApiTests
             denied.GetProperty("result").GetProperty("status").GetInt32());
         Assert.Equal("unresolved",
             denied.GetProperty("intrinsics").GetProperty("status").GetString());
+        Assert.Equal("unresolved",
+            denied.GetProperty("vision").GetProperty("status").GetString());
         Assert.True(denied.GetProperty("intrinsics")
             .GetProperty("previewOnly").GetBoolean());
 
