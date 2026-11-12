@@ -15,7 +15,7 @@ This is a **Phase 5 integration record**, not a grant of new Species, supernatur
 | Post-origination replacement | Rite already has a complete, atomic replacement algorithm; copying it for supernatural terminal transformations would be wrong | Shared engine implemented; native completion requirements still missing |
 | Rite DM authorization | Necessary with the current selected-native content because an individual executable Rite is unavailable | Retained, but not a universal rule for other methods |
 | Shared effect directive authoring | `effectiveEffectDefinitions` on Pillar 4's experiment is not an approved native grammar | Deferred to Pillar 4/shared mechanics |
-| Broad native/working check | The failing consistency check reports 32 source-mirror conflicts across seven Classes, Competencies and Weapon Mastery features | Independent content-promotion audit required |
+| Broad native/working check | The failing consistency check reports 33 source-mirror conflicts across seven Classes, Competencies and Weapon Mastery features | Independent content-promotion audit required |
 
 ## Trusted state and ownership
 
@@ -59,6 +59,6 @@ A shared effective-character projection adapter may be required later for arbitr
 
 The earlier focused post-merge Origin run passed **186 Mechanics + 111 Host + 345 focused Python tests**, but reported `CS8602` on the Rite history collection. The shared executor uses `existing.History ?? []` when appending events to eliminate that nullable dereference. Check the newest branch CI for confirmation.
 
-The broader `test_ruleset_split.NativeWorkingBoundaryTests.test_current_native_and_working_contracts` failed with 32 `authoritative <ID> conflicts with preserved working evidence` errors. The checker requires an exact preserved mirror or documented `sourceDivergences` ledger entry. The checked promotion ledger lacks divergence entries for representative failing entries (`class.barbarian`, `class.bard`, `competency.alchemy`, `class-feature.barbarian.weapon-mastery-level-1`). That establishes the **reason for the check failure**, not that authoritative native content is wrong. Audit and reconcile individually with the source-promotion owner; do not silently rewrite native rules or disable all mirror checks.
+The broader `test_ruleset_split.NativeWorkingBoundaryTests.test_current_native_and_working_contracts` failed with 33 `authoritative <ID> conflicts with preserved working evidence` errors. The checker requires an exact preserved mirror or documented `sourceDivergences` ledger entry. The checked promotion ledger lacks divergence entries for representative failing entries (`class.barbarian`, `class.bard`, `competency.alchemy`, `class-feature.barbarian.weapon-mastery-level-1`). That establishes the **reason for the check failure**, not that authoritative native content is wrong. Audit and reconcile individually with the source-promotion owner; do not silently rewrite native rules or disable all mirror checks.
 
 Phase 5's full end-to-end milestone still requires the Character Sheet trusted state loader, PostgreSQL Origin persistence and revision checks, authentic DM/campaign authority, persistent Rite commit, builder UI, effective projection, security regressions, and actual development deployment acceptance. No database migration or live merge/deployment is claimed by these corrections.
