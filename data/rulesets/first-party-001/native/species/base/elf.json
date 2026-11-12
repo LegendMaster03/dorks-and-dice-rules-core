@@ -36,7 +36,8 @@
     },
     {
       "id": "magical-sleep",
-      "description": "Immune to magical sleep that is not willingly accepted. Can consent to a specific magical sleep effect; this is not a general immunity toggle."
+      "description": "Immune to magical sleep that is not willingly accepted. Can consent to a specific magical sleep effect; this is not a general immunity toggle.",
+      "magicalSleep": { "immune": true, "mayConsentToSpecificEffect": true }
     }
   ],
   "creatureType": "fey",
