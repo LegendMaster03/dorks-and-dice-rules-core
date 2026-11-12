@@ -1,0 +1,30 @@
+name: Pillar 2 Phase 1 Origin Contracts CI
+
+on:
+  push:
+    branches:
+      - feature/pillar2-characteristic-inventory-20261111
+  pull_request:
+    branches:
+      - feature/pillar2-characteristic-inventory-20261111
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Build and test Phase 1 contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore and build complete solution
+        run: |
+          dotnet restore RulesCore.slnx
+          dotnet build RulesCore.slnx -c Release --no-restore
+      - name: Complete .NET test suite, including Origin contracts
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Pillar 2 Python studies
+        run: python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -v
