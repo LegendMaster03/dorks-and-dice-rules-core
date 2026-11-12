@@ -54,8 +54,8 @@ The DM remains free to use these forms differently. Do not implement a two-optio
 Two structural patterns—composite and singular—are supported across three current exceptional concepts:
 
 1. **Composite leader — Chromatic:** The exceptional Chromatic form represents the sovereign of the five founding Chromatic houses (Black, Blue, Green, Red, White). An extraordinary form may combine characteristics of those **defined founding houses**, rather than recomputing its source list whenever new Chromatic Ancestries are published. The precise manifestations, limits, and whether multiple affinities can be selected or held simultaneously are **unresolved**. Composite does **not** mean an automatic union of all five complete trait packages.
-2. **Singular leader — Metallic:** The Platinum form represents the singular sovereign of Metallic Dragons. An extraordinary Platinum Ancestry is a **distinct singular material/type**, not a composite of Copper, Bronze, Brass, Silver, and Gold. Its damage affinity and exceptional abilities require separate design; no automatic access to all Metallic features or any particular new damage type is approved.
-3. **Singular leader — Gem:** Ruby Dragonborn represents the exceptional sovereign of Gem Dragons, as a singular Ruby identity rather than an automatic combination of all ordinary Gem Ancestries. Its powers and manifestations remain undesigned, and it is **not yet an approved playable record or trait specification**.
+2. **Singular leader — Metallic:** The Platinum form represents the singular sovereign of Metallic Dragons. An extraordinary Platinum Ancestry is a **distinct singular material/type**, not a composite of Copper, Bronze, Brass, Silver, and Gold. Its **Platinum feature package is approved** in the separate design specification; the exceptional ancestry is not yet an executable native record and does not gain an automatic copy of ordinary Metallic features.
+3. **Singular leader — Gem:** Ruby Dragonborn represents the exceptional sovereign of Gem Dragons, as a singular Ruby identity rather than an automatic combination of all ordinary Gem Ancestries. Its [initial source and mechanics study](pillar2-ruby-dragonborn-concept-20261111.md) compares psionic defenses, heat breath, mental weaponry and sustained hover with the now selected-native ordinary Gem family. These are **unapproved candidates**, not a playable record or approved feature specification.
 
 ### Platinum — Heart, Mind, and Wings (working concept)
 
@@ -68,7 +68,9 @@ Platinum is a **singular exceptional Ancestry** representing the Metallic sovere
 
 **Boundary:** This is an approved **design** and does not mean native gameplay content, an executable Rite, or general mixed-Heritage eligibility are implemented. Platinum is not an ordinary initial-creation/mixed-ancestry selection without DM authorization. Open **general implementation** matters include the exact engine representation of magical sleep, Blindsense/condition interactions, involuntary falling while incapacitated, and how limited-use resources carry over through successive rebirths. An optional **1d6 involuntary-fall damage cap** and a proposed spent-resource carryover formula are not approved Platinum grants. No additional Platinum feature-design pass is required before integration; future playtesting may motivate adjustments.
 
-### Fivefold Chromatic — working mechanical concept (not approved)
+### Fivefold Chromatic — source-led mechanical concept (not approved)
+
+See the [dedicated Fivefold Chromatic source and mechanics study](pillar2-fivefold-chromatic-concept-20261111.md), including the published sovereign's five-type breath and the champion's distinct necrotic/fear breath. These alternatives are **not the same mechanic**; no Fivefold numerical feature package has been approved.
 
 The initial candidate is a **single exceptional Chromatic Dragonborn Ancestry** associated with the sovereign of the traditional Black, Blue, Green, Red, and White houses. This is a **design exploration only**; no trait, resource, resistance, or numeric progression is yet approved.
 
