@@ -199,10 +199,11 @@ public sealed record NativeOriginPersistentInfluence(
     NativeOriginDecisionBasis? Authorization = null);
 
 /// <summary>
-/// Identifies the currently active temporary substitution and its evidence.
-/// The effective grants live in NativeOriginProfile.Current; the authoritative
-/// baseline lives in NativeOriginProfile.Underlying. There is deliberately no
-/// captured baseline or reversion snapshot on this record.
+/// Identifies an active temporary form and its evidence. When selected as the
+/// effective form, its grants appear in NativeOriginProfile.Current. Other
+/// simultaneously active forms can be represented without deciding precedence.
+/// The authoritative baseline lives in NativeOriginProfile.Underlying; no
+/// activation-time baseline or reversion snapshot is stored here.
 /// </summary>
 public sealed record NativeOriginActiveTemporaryTransformation(
     string Id, string FormId, NativeOriginSourceReference EffectSource,
@@ -225,17 +226,22 @@ public sealed record NativeOriginProposal(
     IReadOnlyList<NativeOriginInputRequirement>? InputRequirements = null,
     // ExistingConfiguration is the underlying baseline, never an active form.
     NativeOriginCurrentConfiguration? ExistingEffectiveConfiguration = null,
-    NativeOriginActiveTemporaryTransformation? ActiveTemporaryTransformation = null);
+    NativeOriginActiveTemporaryTransformation? ActiveTemporaryTransformation = null,
+    IReadOnlyList<NativeOriginActiveTemporaryTransformation>?
+        OtherActiveTemporaryTransformations = null,
+    NativeOriginDecisionBasis? TemporaryTransformationPrecedence = null,
+    NativeOriginDecisionBasis? ExistingEffectiveConfigurationBasis = null);
 
 /// <summary>
-/// Underlying is the latest authoritative baseline, including any permanent Rite
-/// or other legitimate baseline changes. Current is the mechanically effective
-/// configuration. Without an active temporary transformation they should match.
-/// When a temporary form is active, Current contains exactly the inherent grants
-/// applicable to that form, not an automatic union with Underlying.
-/// Independent grants and the persistent condition are stored separately.
-/// Reversion must resolve Underlying at the time of reversion; no runtime
-/// transition or reversion logic is implemented by this Phase 1 contract.
+/// Underlying is the latest authoritative Species/Ancestry baseline; Current is
+/// the effective configuration. A difference without an active temporary form
+/// requires an explicit effective-configuration basis (for example, a sourced
+/// modifier or scoped DM ruling). The active form record identifies the proposed
+/// source of Current; other active transformations can coexist, but their
+/// precedence must be explicitly resolved or recorded as unresolved.
+/// Independent source entitlements remain separate from form applicability.
+/// Reversion must use the latest Underlying, never an activation-time snapshot.
+/// No runtime transition or reversion logic is implemented by Phase 1.
 /// </summary>
 public sealed record NativeOriginProfile(
     string Id, NativeOriginCurrentConfiguration Underlying,
@@ -245,7 +251,11 @@ public sealed record NativeOriginProfile(
     NativeOriginDecisionBasis Adjudication,
     string? ProposalId = null,
     IReadOnlyList<NativeOriginPersistentInfluence>? PersistentInfluences = null,
-    NativeOriginActiveTemporaryTransformation? ActiveTemporaryTransformation = null);
+    NativeOriginActiveTemporaryTransformation? ActiveTemporaryTransformation = null,
+    IReadOnlyList<NativeOriginActiveTemporaryTransformation>?
+        OtherActiveTemporaryTransformations = null,
+    NativeOriginDecisionBasis? TemporaryTransformationPrecedence = null,
+    NativeOriginDecisionBasis? EffectiveConfigurationBasis = null);
 
 public sealed record NativeOriginContractIssue(
     string Code, string Path, NativeOriginIssueSeverity Severity, string Detail);
