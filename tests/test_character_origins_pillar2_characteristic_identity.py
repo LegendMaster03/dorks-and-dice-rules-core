@@ -17,6 +17,7 @@ from character_origins_characteristic_identity import (  # noqa: E402
     IdentityEvidenceError, project_characteristic_identity_evidence,
     read_identity_mapping, validate_identity_mapping,
 )
+from character_origins_curated_identity_review import read_curated_evidence  # noqa: E402
 from character_origins_compound_traits import read_contracts  # noqa: E402
 from character_origins_manifestation_inventory import (  # noqa: E402
     characteristic_candidate_pool, draft_manifestation_profile,
@@ -330,6 +331,127 @@ class CharacteristicIdentityEvidenceTests(unittest.TestCase):
                     )
                     self.assertEqual(offer, candidate["originalOffer"])
                     self.assertIsNone(candidate["grantInstanceId"])
+
+    def test_literal_source_evidence_annotates_native_amphibious_offers(self):
+        pool = self.pool([
+            direct("black", "ancestry.dragonborn.black"),
+            direct("green", "ancestry.dragonborn.green"),
+        ])
+        report = project_characteristic_identity_evidence(
+            pool, self.mapping, curated=read_curated_evidence(),
+            catalog=self.catalog,
+        )
+        offers = [
+            x for x in report["candidates"]
+            if x["sourceTraitOrFieldId"].endswith("#trait:amphibious")
+        ]
+        self.assertEqual(2, len(offers))
+        self.assertEqual(
+            {"study.definition.amphibious-air-water"},
+            {x["literalAuthoredIdentityCandidateId"] for x in offers},
+        )
+        self.assertEqual(
+            {"verified-native-authored-content-only"},
+            {x["literalAuthoredIdentityStatus"] for x in offers},
+        )
+        for item in offers:
+            self.assertIsNone(item["grantInstanceId"])
+            self.assertEqual("not-selected", item["manifestation"])
+        self.assertEqual("not-authorized", report["authority"])
+
+    def test_same_literal_group_does_not_grant_or_stack_low_light_vision(self):
+        pool = self.pool([
+            direct("orc", "species.orc"),
+            direct("elf", "ancestry.elf.high"),
+        ])
+        report = project_characteristic_identity_evidence(
+            pool, self.mapping, curated=read_curated_evidence(),
+            catalog=self.catalog,
+        )
+        lowlight = [x for x in report["candidates"]
+                    if x["sourceTraitOrFieldId"].endswith(
+                        "#trait:low-light-vision"
+                    )]
+        self.assertEqual(2, len(lowlight))
+        self.assertEqual(
+            {"study.definition.low-light-vision"},
+            {x["literalAuthoredIdentityCandidateId"] for x in lowlight}
+        )
+        self.assertEqual(
+            ["orc", "elf"],
+            [x["contributorProvenance"]["contributorId"]
+             for x in lowlight]
+        )
+        self.assertTrue(all(x["grantInstanceId"] is None
+                            for x in lowlight))
+
+    def test_nested_or_custom_trait_cannot_impersonate_a_verified_source(self):
+        parent = draft_manifestation_profile(
+            "parent", [direct("orc", "species.orc")],
+            [{"kind": "trait",
+              "identity": "species.orc#trait:low-light-vision",
+              "parameters": {}}],
+            {}, self.blueprints, self.catalog, self.contracts,
+        )
+        pool = self.pool(
+            [{"contributorId": "parent", "profileId": "parent"}],
+            {"parent": parent},
+        )
+        report = project_characteristic_identity_evidence(
+            pool, self.mapping, curated=read_curated_evidence(),
+            catalog=self.catalog,
+        )
+        trait = self.find(report, "species.orc#trait:low-light-vision")[0]
+        # The historical definition is still traceable through the
+        # nested profile, but the immediate offer is not a native source.
+        self.assertIsNone(trait["literalAuthoredIdentityCandidateId"])
+        self.assertEqual("manifested-profile",
+                         trait["contributorProvenance"]["kind"])
+
+        pool["offers"][0]["provenance"] = {
+            "kind": "custom-proposal", "contributorId": "manual",
+            "proposedAuthorityRef": "study.custom",
+        }
+        pool["offers"][0]["sourceOccurrenceId"] = None
+        report = project_characteristic_identity_evidence(
+            pool, self.mapping, curated=read_curated_evidence(),
+            catalog=self.catalog,
+        )
+        self.assertIsNone(
+            report["candidates"][0]["literalAuthoredIdentityCandidateId"]
+        )
+
+    def test_curated_evidence_rejects_forged_native_trait_mechanics(self):
+        pool = self.pool([direct("orc", "species.orc")])
+        offer = next(x for x in pool["offers"]
+                     if x["identity"] ==
+                     "species.orc#trait:low-light-vision")
+        offer["authoredDefinition"]["rule"] = "rule.changed"
+        with self.assertRaisesRegex(
+            IdentityEvidenceError, "Native offer differs"
+        ):
+            project_characteristic_identity_evidence(
+                pool, self.mapping, curated=read_curated_evidence(),
+                catalog=self.catalog,
+            )
+
+    def test_curated_evidence_requires_current_native_catalog(self):
+        pool = self.pool([direct("orc", "species.orc")])
+        with self.assertRaisesRegex(
+            IdentityEvidenceError, "requires a source catalog"
+        ):
+            project_characteristic_identity_evidence(
+                pool, self.mapping, curated=read_curated_evidence()
+            )
+        altered = copy.deepcopy(self.catalog)
+        altered["species.orc"]["traits"][0]["description"] += " Revised."
+        with self.assertRaisesRegex(
+            IdentityEvidenceError, "no longer matches native data"
+        ):
+            project_characteristic_identity_evidence(
+                pool, self.mapping, curated=read_curated_evidence(),
+                catalog=altered,
+            )
 
     def test_projection_is_pure_deterministic_and_does_not_modify_inputs(self):
         pool = self.pool([
