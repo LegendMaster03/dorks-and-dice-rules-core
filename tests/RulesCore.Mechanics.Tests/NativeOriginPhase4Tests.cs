@@ -297,6 +297,65 @@ public sealed class NativeOriginPhase4Tests
     }
 
     [Fact]
+    public void RiteAndMethodNeutralReconstructionShareTheSameAtomicOperation()
+    {
+        var existing = Human();
+        var proposed = Target("shared-rite", [Authorize("shared-rite")]);
+        var wrapped = Rebirth(existing, proposed, new Authority());
+        var shared = new NativeOriginPermanentReconstructionEngine(Catalog()).Execute(
+            new(existing, proposed, "rite.draconic-test", Scope), new Authority());
+
+        Assert.True(wrapped.IsMechanicallyAuthorized,
+            string.Join("; ", wrapped.Issues.Select(x => x.Code)));
+        Assert.True(shared.IsMechanicallyAuthorized,
+            string.Join("; ", shared.Issues.Select(x => x.Code)));
+        Assert.Equal(wrapped.ResultingProfile!.Underlying.SpeciesId,
+            shared.ResultingProfile!.Underlying.SpeciesId);
+        Assert.Equal(wrapped.ResultingProfile.History.Last().Id,
+            shared.ResultingProfile.History.Last().Id);
+        Assert.Equal(wrapped.ResultingProfile.Underlying.InherentGrants.Select(x => x.Id),
+            shared.ResultingProfile.Underlying.InherentGrants.Select(x => x.Id));
+        Assert.Empty(existing.History.Where(x => x.Id == "rite:shared-rite"));
+    }
+
+    [Fact]
+    public void SupernaturalMethodListingDoesNotAuthorizePermanentReconstruction()
+    {
+        var existing = Human();
+        var proposed = Target("unexecuted-supernatural") with
+        {
+            Method = new("rule.creature-origination", "supernatural-reconstruction"),
+            TableDecisions = []
+        };
+        var engine = new NativeOriginPermanentReconstructionEngine(Catalog());
+        var result = engine.Execute(
+            new(existing, proposed, "supernatural-completion", Scope),
+            new Authority());
+
+        Assert.False(result.IsMechanicallyAuthorized);
+        Assert.Null(result.ResultingProfile);
+        Assert.Contains(result.Issues, x =>
+            x.Code == "reconstruction-operation-unavailable");
+        Assert.Empty(existing.History.Where(x =>
+            x.Id == "reconstruction:supernatural-reconstruction:unexecuted-supernatural"));
+    }
+
+    [Fact]
+    public void SharedExecutorRejectsDuplicateCompletionEvents()
+    {
+        var initial = Rebirth(Human(), Target(decisions: [Authorize()]), new Authority());
+        Assert.True(initial.IsMechanicallyAuthorized);
+        var repeated = new NativeOriginPermanentReconstructionEngine(Catalog()).Execute(
+            new(initial.ResultingProfile!, Target(decisions: [Authorize()]),
+                "rite.draconic-test", Scope), new Authority());
+        Assert.False(repeated.IsMechanicallyAuthorized);
+        Assert.Null(repeated.ResultingProfile);
+        Assert.Contains(repeated.Issues, x => x.Code == "rebirth-event-duplicate");
+        Assert.Single(initial.ResultingProfile!.History.Where(x =>
+            x.Id == "rite:red-rebirth"));
+    }
+
+    [Fact]
     public void UnauthorizedAndIncompleteRitesLeaveTheOldProfileUnchanged()
     {
         var old = Human();
