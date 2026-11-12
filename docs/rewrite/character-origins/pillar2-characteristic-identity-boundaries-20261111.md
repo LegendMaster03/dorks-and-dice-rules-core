@@ -67,6 +67,12 @@ The regression suite uses:
 
 The companion [definition relationship review](pillar2-definition-relationship-review-20261111.md) now audits all authored Species/Ancestry trait definitions, including unselectable parent families, for repeated local trait IDs, shared explicit rule references and identical complete structured fields. It flags possible structural extension relationships, differing prose and unresolved symbolic bindings. **None of these candidates is assumed equivalent or automatically converted into an upgrade or additional grant.** The result is a review queue for future canonical-definition decisions, not a substitute for them.
 
+## Curated native evidence and drift validation
+
+The [curated native identity evidence](pillar2-curated-native-identity-review-20261111.md) now records **exact complete authored-definition matches** for four Amphibious occurrences and four Low-Light Vision occurrences, plus separate unresolved reviews for Tiefling Low-Light Vision, Red/Copper Natural Climber, and Orc/Goliath Powerful Build.
+
+An optional **verified native-offer annotation** on the read-only identity projection carries that literal evidence forward without assigning an authoritative mechanic definition or grant. Source changes, forged native definitions and outdated relationship judgments fail validation. Non-native and nested offers do not become verified native grants based merely on a source-qualified ID.
+
 ## Next substantive requirements
 
 1. **Review canonical mechanical identity assignments.** A final authoritative registry must be grounded in complete mechanic behavior and constraints, not simply a matching name or field. Where exact equivalence is unknown, leave it unresolved.
