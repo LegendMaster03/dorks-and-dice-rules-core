@@ -295,6 +295,63 @@ public sealed class NativeEffectiveCharacterEffectsTests
     }
 
     [Fact]
+    public void FormCannotClaimAnUnrelatedPersistentInfluence()
+    {
+        var (profile, restriction) = WolfProfile();
+        var forged = profile with
+        {
+            ActiveTemporaryTransformation = profile.ActiveTemporaryTransformation! with
+            {
+                PersistentInfluenceId = "not-the-lycanthropy-source"
+            }
+        };
+        var result = NativeEffectiveCharacterEffects.Evaluate(
+            Request(forged, restriction), new TrustedFixtureAuthority());
+
+        Assert.False(result.IsResolved);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "effective-form-influence-mismatch");
+    }
+
+    [Fact]
+    public void IndependentAndInherentSourcesCannotShareSameGrantOccurrenceId()
+    {
+        var duplicate = Grant("duplicate-source", "influence.draconic");
+        var original = Base();
+        var profile = Profile(independent: [duplicate],
+            applicability: [Applicable(duplicate.Id)]) with
+        {
+            Underlying = original with { InherentGrants = [duplicate] },
+            Current = original with { InherentGrants = [duplicate] }
+        };
+        var result = NativeEffectiveCharacterEffects.Evaluate(
+            Request(profile), new TrustedFixtureAuthority());
+
+        Assert.False(result.IsResolved);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "effective-grant-identity-conflict");
+    }
+
+    [Fact]
+    public void AuthorizedReplacementOnlyChangesTheEffectiveScore()
+    {
+        var source = Grant("source", "influence.draconic");
+        var profile = Profile(independent: [source],
+            applicability: [Applicable(source.Id)]);
+        var directive = new NativeEffectiveEffectDirective("replace",
+            source.Id, "test.rule.override",
+            NativeEffectiveEffectTarget.AbilityScore, "strength",
+            NativeEffectiveEffectOperation.Replace, NumericValue: 18);
+
+        var result = NativeEffectiveCharacterEffects.Evaluate(
+            Request(profile, directive), new TrustedFixtureAuthority());
+
+        Assert.True(result.IsResolved);
+        Assert.Equal(18, result.EffectiveAbilityScores["strength"]);
+        Assert.Equal(12, Request(profile).AbilityScores["strength"]);
+    }
+
+    [Fact]
     public void AnUnresolvedOriginIsNotTreatedAsPlayableEvenWithTrustedAdapter()
     {
         var request = Request(Profile());
