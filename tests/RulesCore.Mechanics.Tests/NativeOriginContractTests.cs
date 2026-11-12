@@ -949,4 +949,200 @@ public sealed class NativeOriginContractTests
         Assert.Single(copy.ActiveTemporaryTransformation.EffectiveFormGrantIds!);
     }
 
+    [Fact]
+    public void SimultaneousTemporaryFormsPreserveSourcesButDoNotInventPrecedence()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var polymorph = new NativeOriginActiveTemporaryTransformation(
+            "shift-polymorph", "form.eagle", Source("effect.polymorph"),
+            "event.external-polymorph");
+        var combined = wolf with
+        {
+            OtherActiveTemporaryTransformations = [polymorph]
+        };
+
+        var unresolved = fixture.Validator.ReviewProfile(combined, proposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, unresolved.Status);
+        Assert.Contains(unresolved.Issues,
+            issue => issue.Code == "temporary-form-precedence-unresolved");
+        Assert.Equal("species.human", combined.Underlying.SpeciesId);
+        Assert.Equal("species.wolf-form", combined.Current.SpeciesId);
+        Assert.Equal("effect.polymorph",
+            Assert.Single(combined.OtherActiveTemporaryTransformations!).EffectSource.Id);
+
+        var copy = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(combined))!;
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(copy, proposal).Status);
+        Assert.Equal("event.external-polymorph",
+            Assert.Single(copy.OtherActiveTemporaryTransformations!).ActivationEvidenceId);
+
+        // An Origin proposal can also retain both competing effective inputs.
+        var inProgressProposal = proposal with
+        {
+            ExistingConfiguration = wolf.Underlying,
+            ExistingEffectiveConfiguration = wolf.Current,
+            ActiveTemporaryTransformation = wolf.ActiveTemporaryTransformation,
+            OtherActiveTemporaryTransformations = [polymorph]
+        };
+        var proposalReview = fixture.Validator.ReviewProposal(inProgressProposal);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved, proposalReview.Status);
+        Assert.Contains(proposalReview.Issues,
+            issue => issue.Code == "temporary-form-precedence-unresolved");
+    }
+
+    [Fact]
+    public void CompetingFormPrecedenceCanBeAuthoredOrDmAuthorized()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var second = new NativeOriginActiveTemporaryTransformation(
+            "shift-alternate", "form.other", Source("effect.external"),
+            "event.external");
+        var multi = wolf with { OtherActiveTemporaryTransformations = [second] };
+        var native = multi with
+        {
+            TemporaryTransformationPrecedence =
+                new(NativeOriginAdjudication.Supported, NativeRuleReference: "rule.form-priority")
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(native, proposal).Status);
+
+        var unproven = multi with {
+            TemporaryTransformationPrecedence = new(NativeOriginAdjudication.Supported)
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(unproven, proposal).Status);
+
+        var conflicting = multi with {
+            TemporaryTransformationPrecedence = new(NativeOriginAdjudication.Conflict)
+        };
+        Assert.Equal(NativeOriginReviewStatus.Conflicting,
+            fixture.Validator.ReviewProfile(conflicting, proposal).Status);
+
+        var ruling = new NativeTableRuleDecision("ruling.form-priority",
+            new("dm.actor", "campaign-authority"),
+            new("campaign", "test"),
+            new("origin.temporary-form-precedence", "shift-wolf-one"),
+            JsonSerializer.SerializeToElement(new { selectedForm = "form.wolf" }));
+        var dm = multi with
+        {
+            TemporaryTransformationPrecedence = new(NativeOriginAdjudication.DmAuthorized,
+                TableDecisionId: ruling.Id)
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(dm, proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(dm, proposal with { TableDecisions = [ruling] }).Status);
+    }
+
+    [Fact]
+    public void ConcurrentFormIdsMustBeDistinct()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var invalid = wolf with
+        {
+            OtherActiveTemporaryTransformations =
+                [WolfActivation() with { FormId = "form.other" }]
+        };
+        var review = fixture.Validator.ReviewProfile(invalid, proposal);
+        Assert.Equal(NativeOriginReviewStatus.Invalid, review.Status);
+        Assert.Contains(review.Issues,
+            issue => issue.Code == "temporary-form-duplicate-id");
+    }
+
+    [Fact]
+    public void SourcedNonFormModifierMayChangeEffectiveConfiguration()
+    {
+        using var fixture = new Fixture();
+        var (proposal, human, _) = HumanWithLycanthropy(active: false);
+        var modifier = new NativeOriginEffectiveGrant(
+            "condition-grant", "condition-manifestation", Trait("blessing", "effect.blessing"),
+            ["condition-candidate"]);
+        var adjusted = human with
+        {
+            Current = human.Current with {
+                InherentGrants = [..human.Current.InherentGrants, modifier]
+            },
+            EffectiveConfigurationBasis =
+                new(NativeOriginAdjudication.Supported, NativeRuleReference: "rule.blessing")
+        };
+        Assert.Null(adjusted.ActiveTemporaryTransformation);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(adjusted, proposal).Status);
+        Assert.DoesNotContain(adjusted.Underlying.InherentGrants,
+            grant => grant.Id == "condition-grant");
+        Assert.Equal("effect.blessing",
+            adjusted.Current.InherentGrants.Single(x => x.Id == "condition-grant")
+                .Identity.Occurrence.Source.Id);
+    }
+
+    [Fact]
+    public void DmAuthorizedReversionVariationNeedsScopedEvidence()
+    {
+        using var fixture = new Fixture();
+        var (proposal, wolf, _) = HumanWithLycanthropy(active: true);
+        var ruling = new NativeTableRuleDecision("ruling.reversion",
+            new("dm.actor", "campaign-authority"),
+            new("campaign", "test"),
+            new("origin.reversion", "character.human-lycanthrope"),
+            JsonSerializer.SerializeToElement(new { effectiveSpecies = "species.custom-human" }));
+        // The temporary form has ended. The ordinary baseline remains authoritative;
+        // any different effective configuration has separately stated authority.
+        var changed = wolf with
+        {
+            Current = wolf.Underlying with { SpeciesId = "species.custom-human" },
+            ActiveTemporaryTransformation = null,
+            EffectiveConfigurationBasis = new(NativeOriginAdjudication.DmAuthorized,
+                TableDecisionId: ruling.Id)
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(changed, proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProfile(changed,
+                proposal with { TableDecisions = [ruling] }).Status);
+        Assert.Equal("species.human", changed.Underlying.SpeciesId);
+        Assert.Equal("species.custom-human", changed.Current.SpeciesId);
+        Assert.Equal("ruling.reversion",
+            changed.EffectiveConfigurationBasis!.TableDecisionId);
+        Assert.Null(changed.ActiveTemporaryTransformation);
+
+        var withProposal = proposal with
+        {
+            ExistingConfiguration = wolf.Underlying,
+            ExistingEffectiveConfiguration = changed.Current,
+            ExistingEffectiveConfigurationBasis = changed.EffectiveConfigurationBasis,
+            TableDecisions = [ruling]
+        };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(withProposal).Status);
+    }
+
+    [Fact]
+    public void ModifiedEffectiveStateWithoutARealRuleOrRulingIsUnresolved()
+    {
+        using var fixture = new Fixture();
+        var (proposal, human, _) = HumanWithLycanthropy(active: false);
+        var changed = human with {
+            Current = human.Current with { SpeciesId = "species.other" }
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(changed, proposal).Status);
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProfile(changed with {
+                EffectiveConfigurationBasis =
+                    new(NativeOriginAdjudication.Supported)
+            }, proposal).Status);
+        var proposalWithDifferentEffective = proposal with
+        {
+            ExistingConfiguration = human.Underlying,
+            ExistingEffectiveConfiguration = changed.Current
+        };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProposal(proposalWithDifferentEffective).Status);
+    }
+
+
 }
