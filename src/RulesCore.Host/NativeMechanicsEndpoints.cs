@@ -42,6 +42,10 @@ public static class NativeMechanicsEndpoints
         // The ordinary delegated surface serves calculations, not unrestricted content.
         if (privateTunnel) group.MapNativeCharacterCatalog();
 
+        // Origin preview inherits the same authenticated ingress as other mechanics.
+        // No persisted state or table-authority claims are accepted by this route.
+        group.MapNativeOriginPreview();
+
         group.MapGet("/ruleset", (NativeCatalogStore store) =>
         {
             var catalog = store.Snapshot;
@@ -54,6 +58,8 @@ public static class NativeMechanicsEndpoints
                     conditionValueIsolation = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
+                    originPreview = "stateless-first-party",
+                    originPersistence = false, originDmAdjudication = false,
                     startingEquipmentResolution = "authored-grants-only",
                     equipmentQualifications = "authored-scopes-only",
                      equipmentTraining = "proficiency-and-mastery-flags",
