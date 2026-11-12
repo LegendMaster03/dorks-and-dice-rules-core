@@ -72,6 +72,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var seen = new HashSet<string>(StringComparer.Ordinal);
         var accepted = new List<NativeOriginSelectedGrant>();
         var usedDm = false;
+        var verifiedDmDecisionIds = new SortedSet<string>(StringComparer.Ordinal);
 
         NativeTableRuleDecision? Verified(string kind, string id)
         {
@@ -108,6 +109,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 
         // An authenticated table may replace a source acquisition gate or
         // authorize a new method without rewriting native catalog metadata.
+        var methodOverride = Verified("method", proposal.Method.MethodId);
+        if (methodOverride is not null &&
+            ReadBool(methodOverride.EffectiveOutcome, "allow") == true)
+        {
+            usedDm = true;
+            verifiedDmDecisionIds.Add(methodOverride.Id);
+        }
         issues.RemoveAll(issue =>
             issue.Code == "origin-source-restricted" &&
             JsonString(Verified("source", issue.Path)?.EffectiveOutcome ?? default,
@@ -115,6 +123,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             issue.Code == "method-not-in-native-catalog" &&
             ReadBool(Verified("method", proposal.Method.MethodId)?.EffectiveOutcome ?? default,
                 "allow") == true);
+        if (proposal.Intent == NativeOriginIntent.Direct &&
+            proposal.SelectedSpeciesId is null && proposal.SelectedAncestryId is null &&
+            proposal.ExistingConfiguration is null)
+            Add("origin-source-required", "selectedSpeciesId",
+                NativeOriginIssueSeverity.Incomplete,
+                "A direct Origin needs an actual selected native Species or Ancestry.");
         if (proposal.Intent is NativeOriginIntent.Mixed or NativeOriginIntent.Custom &&
             manifests.Count == 0)
             Add("origin-selection-incomplete", "manifestations",
@@ -194,10 +208,10 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             var source = candidate.Identity.Occurrence.Source;
             var nativeSource = source.Kind == NativeOriginSourceKind.Native &&
                 catalog.TryGetById(source.Id, out var native) && native is not null;
-            var direct = proposal.Intent == NativeOriginIntent.Direct &&
+            // Deconstruction already checked the selected Species/Ancestry chain,
+            // including any intermediate native Ancestry family.
+            var baseEligible = nativeSource && proposal.Intent == NativeOriginIntent.Direct &&
                 candidate.ContributorId is null &&
-                (source.Id == proposal.SelectedSpeciesId || source.Id == proposal.SelectedAncestryId);
-            var baseEligible = nativeSource && direct &&
                 candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible;
             var permission = Verified("candidate", candidate.Id) ?? Verified("source", source.Id);
             var decisionEligible = permission is not null &&
@@ -209,7 +223,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     "Contributor or custom availability is not an approved effective grant.");
                 continue;
             }
-            if (decisionEligible) usedDm = true;
+            if (decisionEligible)
+            {
+                usedDm = true;
+                verifiedDmDecisionIds.Add(permission!.Id);
+            }
 
             var needsDecision = !nativeSource && !decisionEligible;
             if (needsDecision) continue;
@@ -309,6 +327,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     continue;
                 }
                 usedDm = true;
+                verifiedDmDecisionIds.Add(modification.Id);
             }
             // A selected value on a choice-driven slot must agree with its finite
             // option; it cannot inject an unrelated intrinsic value.
@@ -338,10 +357,26 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _constraints.Apply(proposal, accepted, Verified);
         issues.AddRange(constraintIssues);
         usedDm |= constraintsDm;
+        if (constraintsDm)
+            foreach (var constraint in proposal.Constraints ?? [])
+            {
+                var decision = Verified("constraint", constraint.Id);
+                if (decision is not null &&
+                    (ReadBool(decision.EffectiveOutcome, "allow") == true ||
+                     ReadBool(decision.EffectiveOutcome, "enforce") == true))
+                    verifiedDmDecisionIds.Add(decision.Id);
+            }
         var (resolved, reconciliationIssues, reconciliationDm) =
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
+        if (reconciliationDm)
+            foreach (var resolution in proposal.Resolutions ?? [])
+            {
+                var decision = Verified("relationship", resolution.RelationshipId);
+                if (decision?.Id == resolution.Basis?.TableDecisionId)
+                    verifiedDmDecisionIds.Add(decision.Id);
+            }
 
         // Phase 2 does not execute permanent or temporary form transitions. A
         // supplied baseline remains authoritative, and the active effective form
@@ -369,6 +404,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 configuredSpecies = JsonString(outcome, "speciesId");
                 configuredAncestry = JsonString(outcome, "ancestryId");
                 usedDm = true;
+                verifiedDmDecisionIds.Add(configure.Id);
             }
         }
 
@@ -403,9 +439,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             ? new NativeOriginDecisionBasis(usedDm ? NativeOriginAdjudication.DmAuthorized :
                 NativeOriginAdjudication.Supported,
                 usedDm ? null : proposal.Method.RuleId,
-                usedDm ? (configure?.Id ??
-                    resolved.FirstOrDefault(x => x.Authorization?.TableDecisionId is not null)?
-                        .Authorization?.TableDecisionId) : null)
+                usedDm ? verifiedDmDecisionIds.FirstOrDefault() : null)
             : new NativeOriginDecisionBasis(preliminary == NativeOriginConstructionStatus.Conflicting ?
                 NativeOriginAdjudication.Conflict : NativeOriginAdjudication.Unresolved);
         // If multiple independent rulings apply, the profile-level basis names one
