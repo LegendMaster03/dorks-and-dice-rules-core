@@ -1,0 +1,35 @@
+{
+  "id": "rule.action-economy",
+  "name": "Shared Action Economy — Design Decisions",
+  "kind": "rule",
+  "status": "approved-terminology-and-structural-baseline; detailed-resolution-pending",
+  "scope": "One native action economy used by all combatants regardless of Standard or Complex model, character options, or selected initiative mode.",
+  "approvedDecisions": {
+    "unifiedSystem": "Use one Dorks & Dice action economy for 3.x/PF1e and 5.x concepts rather than parallel edition-specific turns.",
+    "movement": "Independent 5.x-style movement allowance may be split around permitted activities, including between attacks when their procedures permit it.",
+    "fullTurnConstraints": "Explicitly authorized full-turn/full-round restrictions constrain ordinary movement and action usage when their own rules require them; they are not automatically erased by flexible movement.",
+    "nativeTerminology": {
+      "category": "bonus-action",
+      "displayName": "Bonus Action",
+      "formerWorkingName": "Quick Action",
+      "rationale": "Preserve the established D&D 5.x term for familiarity.",
+      "decisionDate": "2026-11-12",
+      "doesNotImply": [
+        "A fixed Bonus Action count or refresh schedule is now approved.",
+        "A 3.x/PF1e Swift Action is necessarily interchangeable with a Bonus Action.",
+        "Immediate Actions are automatically equivalent to Reactions or spend the same resource.",
+        "Any actor may perform any Bonus Action without an applicable grant or rule."
+      ]
+    },
+    "initiative": "Standard initiative and optional Block Initiative use the same per-combatant action-economy rules; Block Initiative does not pool allied action budgets."
+  },
+  "pendingDecisions": [
+    "Ordinary Bonus Action budget, eligibility and refresh timing.",
+    "Conversion of 3.x/PF1e Swift Action permissions, costs and timing into native Bonus Actions.",
+    "Whether and how Immediate Actions interact with Reactions or future Bonus Actions.",
+    "Native opportunity attack triggers, eligible reactive actions and reaction refresh.",
+    "Nonmovement move-equivalent action conversion, Action substitution and full-turn constraints.",
+    "Free activity/object interaction limits, interruption ordering, durations and Block Initiative timing details."
+  ],
+  "implementationBoundary": "Design data only. No new runtime action budget, source conversion or gameplay effect is implemented by adding this record."
+}
