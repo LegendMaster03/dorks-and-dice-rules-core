@@ -110,6 +110,22 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             }
         }
 
+        // Even an explicitly shared canonical mechanic does not license duplicate
+        // effective benefits from different authored occurrences. Require a real
+        // relationship policy instead of treating shared identity as stacking.
+        foreach (var group in active.Values.Where(x => !ignored.Contains(x.Candidate.Id) &&
+            x.Candidate.Identity.MechanicalDefinitionId is not null)
+            .GroupBy(x => x.Candidate.Identity.MechanicalDefinitionId!, StringComparer.Ordinal))
+        {
+            var entries = group.ToArray();
+            if (entries.Select(x => x.Candidate.Identity.Occurrence)
+                .Distinct().Count() < 2) continue;
+            foreach (var x in entries) ignored.Add(x.Candidate.Id);
+            Issue("shared-definition-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Shared canonical mechanics from distinct occurrences require an authored disposition.");
+        }
+
         // Different occurrences offering the same intrinsic slot have no general
         // first-party winner, even where values happen to coincide.
         foreach (var group in active.Values.Where(x => !ignored.Contains(x.Candidate.Id) &&
