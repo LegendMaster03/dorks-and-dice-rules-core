@@ -96,6 +96,12 @@
       "Exact budget refresh, on-turn reactions, first-turn behavior and special grants",
       "Interaction with future class redesign and mixed-complexity players"
     ],
-    "implementationBoundary": "Comparison only; preserves prior approved one-Bonus-Action-per-turn category and changes no runtime action economy."
+    "implementationBoundary": "Comparison only; preserves prior approved one-Bonus-Action-per-turn category and changes no runtime action economy.",
+    "ownerComparativeAssessment": {
+      "status": "comparative preference only; no mechanics approved",
+      "preferredOverStrictShared": "future-borrowing",
+      "reason": "The 3.x-style model borrows from the next turn rather than denying a Reaction because of a Bonus Action already spent on the preceding turn. It can preserve the opportunity to react and make the subsequent tradeoff more meaningful.",
+      "boundary": "Owner prefers future borrowing to the earlier strict shared-resource proposal, but has NOT selected future borrowing as the native rule. Independent budgets, selective coupling, the scope of affected Reactions, and all timing/refresh details remain open."
+    }
   }
 }

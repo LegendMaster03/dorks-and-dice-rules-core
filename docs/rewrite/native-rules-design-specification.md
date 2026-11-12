@@ -636,6 +636,8 @@ A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have diff
 
 **Test before choosing:** (1) no Bonus Action feature or no Reaction trigger, (2) Cunning Action or dual wielding followed by opportunity attacks, (3) defensive reactions and spells, (4) Reaction after turn followed by a desired Bonus Action, (5) reactions during own turn, (6) group combo contributions, (7) both initiative systems and Standard/Complex combatants, (8) source conversions from Immediate Actions vs ordinary opportunity attacks.
 
+**Owner clarification (2026-11-12):** The owner regards **3.x-style borrowing from the upcoming turn as preferable to the earlier strict shared-resource proposal** because it does not deny a reaction based on a previously spent Bonus Action and makes the next-turn tradeoff more meaningful. This is a **comparative preference, not approval** of future borrowing as the native Dorks & Dice rule. The independent-budget and selective-coupling alternatives remain open.
+
 **Unresolved:** Whether coupling exists at all; which of these timing models it uses; whether all Reactions participate; refresh rules, exceptions, and how future class redesign affects the rationale. No code or native runtime resolution may be inferred from this proposal. The structured candidate records are in `native/rules/action-economy.json`.
 
 ### Cases to verify before adopting final action-budget numbers
