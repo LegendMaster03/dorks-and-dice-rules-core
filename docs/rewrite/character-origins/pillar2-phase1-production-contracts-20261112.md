@@ -36,7 +36,7 @@ The contract permits all current native origination methods by reference, includ
 
 ## Phase 1 follow-up: temporary effective Species/Ancestry substitution
 
-**Sources:** [Pillar 4 initial reconciliation](pillar4-supernatural-nature-initial-reconciliation-20261111.md) and [lycanthropy reconciliation](pillar4-lycanthropy-reconciliation-20261112.md), approved architectural boundaries only. Their individual supernatural progression candidates and numerical mechanics are *not* approved gameplay.
+**Sources:** [Pillar 4 initial reconciliation](https://github.com/LegendMaster03/dorks-and-dice-rules-core/blob/feature/pillar4-supernatural-nature-design-20261111/docs/rewrite/character-origins/pillar4-supernatural-nature-initial-reconciliation-20261111.md) and [lycanthropy reconciliation](https://github.com/LegendMaster03/dorks-and-dice-rules-core/blob/feature/pillar4-supernatural-nature-design-20261111/docs/rewrite/character-origins/pillar4-lycanthropy-reconciliation-20261112.md), approved architectural boundaries only. Their individual supernatural progression candidates and numerical mechanics are *not* approved gameplay.
 
 The shared `NativeOriginProfile` holds three orthogonal concepts:
 
