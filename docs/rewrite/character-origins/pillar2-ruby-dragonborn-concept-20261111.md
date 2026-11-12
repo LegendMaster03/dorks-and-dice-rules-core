@@ -27,7 +27,13 @@ The *Fizban's Treasury of Dragons* (2021) **Dragonborn of Sardior** champion, p.
 
 Research references: https://www.dndbeyond.com/sources/dnd/ftod ; https://anyflip.com/ilydf/lppy/basic/201-250 ; https://dnd-wiki.org/wiki/Dragonborn_of_Sardior_%285e%29
 
-**Historical source correction (2026-11-11):** The 2021 champion is **not the complete Ruby corpus**. The original *Dragon* #37 Ruby sovereign uses shriek and dazzling-cloud breaths; the Wizards of the Coast 2003 *Legend of Sardior* specifies **Force, brilliant Light and Fire** breath options and broader psionics; *Fizban's* supplies the **Fire/metal-heating champion**. There is **no confirmed official 5e Aspect of Sardior** stat block (online "Aspects" are community homebrew). Consequently, Fire/Heat is **one option for a later design**, not a settled Ruby identity. See the [source corpus](pillar2-ruby-dragonborn-source-corpus-20261111.md).\n\n## Initial Ruby direction for owner evaluation (not approved)
+**Historical source correction (2026-11-11):** The 2021 champion is **not the complete Ruby corpus**. The original *Dragon* #37 Ruby sovereign uses shriek and dazzling-cloud breaths; the Wizards of the Coast 2003 *Legend of Sardior* specifies **Force, brilliant Light and Fire** breath options and broader psionics; *Fizban's* supplies the **Fire/metal-heating champion**. There is **no confirmed official 5e Aspect of Sardior** stat block (online "Aspects" are community homebrew). Consequently, Fire/Heat is **one option for a later design**, not a settled Ruby identity. See the [source corpus](pillar2-ruby-dragonborn-source-corpus-20261111.md).\n\n## Shared psionics prerequisite — research identified (2026-11-11)
+
+Ruby's sovereign source material crosses telepathy, perception, mind control, psychic defense, telekinesis and energy manipulation. The [shared psionics foundation audit](../psionics-foundation-research-20261111.md) identifies the common Rules Core contracts to settle before Ruby's specific ability selection: power authorization, shared effect resolution, source-specific resource pools, psionics–magic interactions, advancement and mental-action limitations. **Do not implement a Ruby-only psionic rules engine.**
+
+The recommended sequence is a **small coherent psionics foundation** and representative vertical slice, then Ruby feature design. A complete 3.5 psionic power catalog or a Psion class is **not** required merely to design Ruby. The prerequisite's architecture options and all Ruby mechanics remain **unapproved**.
+
+## Initial Ruby direction for owner evaluation (not approved)
 
 **Distinct identity:** Prefer **psionic control and defensive projection** coupled with an **exceptional heat-based breath**, rather than a five-type Gem composite. This preserves the distinction between ordinary Gem Dragonborn, Ruby, and Fivefold Chromatic.
 
