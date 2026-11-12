@@ -283,7 +283,11 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                         {
                             var field = String(binding.Value, "sourceField");
                             var lookup = String(binding.Value, "lookup");
-                            var targets = lineage is { Count: > 0 } ? lineage : [entity];
+                            IReadOnlyList<NativeRuleEntity> targets = lineage is { Count: > 0 } ?
+                                lineage : [entity];
+                            // An effective intrinsic choice is bound only after the
+                            // selected grants survive reconciliation.
+                            if (lookup == "manifested-intrinsic") continue;
                             var sourceEntity = lookup switch
                             {
                                 "leaf" => targets.FirstOrDefault(),
