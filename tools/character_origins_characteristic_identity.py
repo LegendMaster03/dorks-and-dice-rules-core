@@ -14,6 +14,10 @@ import copy
 import json
 from pathlib import Path
 
+from character_origins_curated_identity_review import (
+    CuratedIdentityReviewError, audit_curated_identity_evidence,
+    read_curated_evidence,
+)
 from character_origins_compound_traits import read_contracts
 from character_origins_manifestation_inventory import characteristic_candidate_pool
 from character_origins_parameter_inheritance import read_blueprints
@@ -127,13 +131,30 @@ def _check_offer(offer):
         raise IdentityEvidenceError("Offer values must be valid JSON") from exc
 
 
-def project_characteristic_identity_evidence(candidate_pool, mapping):
+def project_characteristic_identity_evidence(candidate_pool, mapping,
+                                             curated=None, catalog=None):
     """Annotate candidates without combining, validating, or granting them.
 
     Candidate IDs are ephemeral positions in this read-only projection,
     NOT stable persisted grant IDs. The original provenance is kept intact.
     """
     by_source = validate_identity_mapping(mapping)
+    literal_groups = {}
+    if curated is not None:
+        if catalog is None:
+            raise IdentityEvidenceError(
+                "Curated native identity evidence requires a source catalog"
+            )
+        try:
+            review = audit_curated_identity_evidence(catalog, curated)
+        except CuratedIdentityReviewError as exc:
+            raise IdentityEvidenceError(
+                "Curated source-identity evidence no longer matches native data"
+            ) from exc
+        for group in review["identicalAuthoredGroups"]:
+            for occurrence in group["sourceOccurrenceIds"]:
+                literal_groups[occurrence] = group["candidateDefinitionId"]
+
     if (not isinstance(candidate_pool, dict)
             or candidate_pool.get("status")
             != "origin-characteristic-candidates-only"
@@ -176,6 +197,29 @@ def project_characteristic_identity_evidence(candidate_pool, mapping):
             # Source-qualified identity is *not* a universal definition ID.
             # A mapping may be absent even for a well-formed, real ability.
             related = by_source.get(offer["identity"])
+            literal = None
+            if literal_groups and offer["provenance"]["kind"] == "native-source":
+                sid = offer["sourceOccurrenceId"]
+                if sid in literal_groups:
+                    # Do not treat a custom proposal or forged candidate as
+                    # a verified native definition merely because it reuses
+                    # a source-qualified trait ID.
+                    if sid != offer["identity"] or "#trait:" not in sid:
+                        raise IdentityEvidenceError(
+                            "Native occurrence does not match trait identity"
+                        )
+                    source_id, trait_id = sid.split("#trait:", 1)
+                    native = catalog.get(source_id)
+                    actual = next((
+                        trait for trait in native.get("traits", [])
+                        if trait.get("id") == trait_id
+                    ), None) if isinstance(native, dict) else None
+                    if (actual is None
+                            or offer.get("authoredDefinition") != actual):
+                        raise IdentityEvidenceError(
+                            "Native offer differs from curated source definition"
+                        )
+                    literal = literal_groups[sid]
             item.update({
                 "intrinsicSlotId": None,
                 "traitConceptId": (
@@ -187,6 +231,11 @@ def project_characteristic_identity_evidence(candidate_pool, mapping):
                 "identityStatus": (
                     "explicit-synthetic-mapping" if related
                     else "cross-source-identity-unresolved"
+                ),
+                "literalAuthoredIdentityCandidateId": literal,
+                "literalAuthoredIdentityStatus": (
+                    "verified-native-authored-content-only" if literal
+                    else "not-asserted"
                 ),
                 "parameters": copy.deepcopy(offer["parameters"]),
                 "reviewRequired": copy.deepcopy(
@@ -229,6 +278,10 @@ def main():
         metavar="SELECTABLE_SOURCE_ID",
     )
     parser.add_argument("--mapping", type=Path, default=DEFAULT_MAPPING)
+    parser.add_argument(
+        "--curated-native-evidence", action="store_true",
+        help="Annotate trusted direct source offers with drift-checked literal identity evidence",
+    )
     args = parser.parse_args()
     pool = characteristic_candidate_pool(
         [{"contributorId": f"source-{n + 1}",
@@ -237,7 +290,10 @@ def main():
         {}, read_blueprints(), read_catalog(), read_contracts()
     )
     result = project_characteristic_identity_evidence(
-        pool, read_identity_mapping(args.mapping)
+        pool, read_identity_mapping(args.mapping),
+        curated=(read_curated_evidence()
+                 if args.curated_native_evidence else None),
+        catalog=(read_catalog() if args.curated_native_evidence else None),
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
