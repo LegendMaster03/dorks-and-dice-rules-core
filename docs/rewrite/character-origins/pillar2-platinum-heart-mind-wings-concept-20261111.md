@@ -1,7 +1,7 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (approved design)
 
 **Date:** 2026-11-11  
-**Status:** **OWNER-APPROVED PLATINUM MECHANICAL DESIGN**, including the subsequent **per-use breath-area choice** (2026-11-11). Heart, Mind and Wings, their numerical progressions, corresponding native baseline replacements, and total-character-level rebirth semantics are selected in the authoritative specification immediately below. **Implementation is pending** the broader Character Origins/Pillar 2 integration. Optional involuntary-fall protection and Rite resource carryover remain unapproved. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** **OWNER-APPROVED PLATINUM MECHANICAL DESIGN**, including the subsequent **per-use breath-area choice** and **earlier level-5/11 Wings milestones** (2026-11-11). Heart, Mind and Wings, their numerical progressions, corresponding native baseline replacements, and total-character-level rebirth semantics are selected in the authoritative specification immediately below. **Implementation is pending** the broader Character Origins/Pillar 2 integration. Optional involuntary-fall protection and Rite resource carryover remain unapproved. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Approved Platinum mechanics — authoritative design
 
@@ -62,13 +62,13 @@ This is **substantially stronger** than ordinary Dragonborn (1d10/2d10/3d10/4d10
 
 ### Wings — approved levels and numerical movement rules
 
-The **1–5 / 6–11 / 12+ stages**, **total-character-level metric**, and following movement numbers and limits are approved:
+The **revised 1–4 / 5–10 / 11+ stages**, **total-character-level metric**, and following movement numbers and limits are approved, superseding the older 1–5 / 6–11 / 12+ progression:
 
 | Total level | Approved mobility |
 | --- | --- |
-| **1–5** | Wings can **glide at up to 30 feet of horizontal movement per turn** while descending at least **5 feet for each 20 feet traveled horizontally**. Controlled gliding prevents falling damage on a safe landing and requires space to deploy wings. **No powered ascent, hover or sustained flight** |
-| **6–11** | Gain a **30-foot flying speed** for a period of **up to 1 minute**, usable **once per Short or Long Rest**. Once spent, the character can still glide. Do not copy the original 3.5 fatigue/Constitution-round/10-minute-per-day bookkeeping into a new condition system |
-| **12+** | The **30-foot flying speed** becomes **continuous** with no special duration or usage restriction; gliding and controlled landing remain available |
+| **1–4** | Wings can **glide at up to 30 feet of horizontal movement per turn** while descending at least **5 feet for each 20 feet traveled horizontally**. Controlled gliding prevents falling damage on a safe landing and requires space to deploy wings. **No powered ascent, hover or sustained flight** |
+| **5–10** | Gain a **30-foot flying speed** for a period of **up to 1 minute**, usable **once per Short or Long Rest**. Once spent, the character can still glide. Do not copy the original 3.5 fatigue/Constitution-round/10-minute-per-day bookkeeping into a new condition system |
+| **11+** | The **30-foot flying speed** becomes **continuous** with no special duration or usage restriction; gliding and controlled landing remain available |
 
 **Flight edge handling:** Gliding is **not** hovering. When limited powered flight ends in midair, the character may continue to glide while descending; this is not levitation. A creature blocked from moving by a condition still obeys that condition; no special permission to move through obstacles or hover is implied. Existing carrying/encumbrance and movement limitations apply. **Deferred:** exact handling when incapacitated in midair, including the previously floated optional **1d6 maximum involuntary-fall damage**, is not part of this approval and must be reconciled with general falling rules before implementing it.
 
@@ -98,11 +98,11 @@ These examples illustrate the **approved Platinum design**, but **do not claim t
 **Implementation boundary:** The Platinum **design is approved**, but this commit is documentation-only. Native ancestry records, ordinary mixed-Heritage exclusion, rebirth engine/resource handling, executable combat rules and validation tests require the planned broader Pillar 2 integration. Exceptional Platinum is still **not** an ordinary character-creation selection without explicit DM authorization. No main-branch merge or native gameplay change is made by this decision.
 
 
-### Proposed shared legendary Wings timing adjustment (not yet approved)
+### Approved subsequent revision — shared legendary Wings timing
 
-**Review request (2026-11-11):** Ordinary Gem Dragonborn gain a once-per-Long-Rest minute of hovering flight at character level **5**, while Platinum's approved stage thresholds still place its first powered flight at **level 6**. To correct this without discarding the already approved glide/limited/sustained stages, propose **glide at levels 1–4, 30-foot powered flight for one minute once per Short or Long Rest at levels 5–10, and continuous 30-foot flight beginning at level 11**. Fivefold Chromatic would use the same proposed schedule; Ruby will be evaluated separately. The limited flight refresh remains more frequent than Gem Flight, but Gem's hovering remains distinct.
+**Owner-approved revision (2026-11-11):** Ordinary Gem Dragonborn gain one minute of hovering flight at level **5**. Platinum now gains limited powered flight at **level 5** instead of 6, and continuous flight at **level 11** instead of 12. The approved schedule is **gliding at levels 1–4**, **one-minute 30-foot flight once per Short or Long Rest at levels 5–10**, and **continuous 30-foot flight at level 11+**, shared with Fivefold Chromatic. Platinum still does not hover; Ruby remains a separate design.
 
-**Approval boundary:** This is a **proposal**, not a revision to the Platinum mechanics already approved above. Until separately approved, the authoritative Platinum Wings thresholds remain **1–5 gliding / 6–11 limited powered flight / 12+ sustained flight**. No other Platinum ability or numerical progression changes in this study. See [Fivefold's Aspect of Tiamat-led comparison](pillar2-fivefold-chromatic-concept-20261111.md) for the shared timing rationale.
+**Approval boundary:** This **supersedes** Platinum's original Wings milestones but changes no other Platinum feature. The older 1–5 / 6–11 / 12+ progression is historical source-design discussion only. No exceptional native JSON or executable runtime behavior is implied. See [Fivefold's Aspect-led study](pillar2-fivefold-chromatic-concept-20261111.md).
 
 ## Prior design history and source comparisons
 
