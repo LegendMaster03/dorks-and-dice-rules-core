@@ -26,7 +26,8 @@ public sealed class NativeAuthenticatedApiTests
          {"id":"condition.prone","name":"Prone","kind":"condition"}]
         """;
 
-    private sealed class SiteHandler(string? source = null, string mode = "dorks-and-dice") : HttpMessageHandler
+    private sealed class SiteHandler(string? source = null, string mode = "dorks-and-dice",
+        bool dm = false) : HttpMessageHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)
@@ -43,7 +44,11 @@ public sealed class NativeAuthenticatedApiTests
                     contractVersion = 1, toolKey = "rules-core", siteMode = mode,
                     user = new { id = "d66a7a7b-bc0f-4677-829d-0ccf40470d2f" },
                     delegatedFromToolKey = source,
-                    privateTunnelSourceToolKey = (string?)null
+                    privateTunnelSourceToolKey = (string?)null,
+                    campaigns = dm ? new[]
+                    {
+                        new { id = "99d41ce8-36fc-43df-b8cd-bb1829b20982", name = "Test", role = "DM" }
+                    } : Array.Empty<object>()
                 }), Encoding.UTF8, "application/json")
             });
         }
@@ -64,7 +69,8 @@ public sealed class NativeAuthenticatedApiTests
         }
 
         public static async Task<Fixture> StartAsync(
-            string surface = "PublicOnly", string? source = null, string mode = "dorks-and-dice")
+            string surface = "PublicOnly", string? source = null, string mode = "dorks-and-dice",
+            bool dm = false)
         {
             var root = Path.Combine(Path.GetTempPath(), "native-consumer-" + Guid.NewGuid().ToString("N"));
             var package = Path.Combine(root, Ruleset);
@@ -86,7 +92,7 @@ public sealed class NativeAuthenticatedApiTests
             }, services =>
             {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
-                    .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, mode));
+                    .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, mode, dm));
             });
             await app.StartAsync();
             var server = app.Services.GetRequiredService<IServer>();
@@ -181,6 +187,62 @@ public sealed class NativeAuthenticatedApiTests
         await using var wrongMode = await Fixture.StartAsync(mode: "another-mode");
         using var deniedMode = await wrongMode.Client.SendAsync(wrongMode.Authorized(Catalog));
         Assert.Equal(HttpStatusCode.Forbidden, deniedMode.StatusCode);
+    }
+
+    [Fact]
+    public async Task ApprovedMixedEvaluationRequiresSiteDelegatedDmRoleAndValidatedRequest()
+    {
+        const string path = "/api/mechanics/v1/origins/evaluate-approved-mixed";
+        const string campaignId = "99d41ce8-36fc-43df-b8cd-bb1829b20982";
+        var requestBody = new
+        {
+            rulesetId = Ruleset,
+            characterId = "44eb66e6-3b5c-44e2-aa71-4986d4b346c0",
+            campaignId,
+            approvalEvidenceId = "approval:123",
+            proposal = new
+            {
+                id = "mixed-1", intent = "Mixed",
+                method = new { ruleId = "rule.creature-origination", methodId = "biological" },
+                contributors = Array.Empty<object>(),
+                candidates = Array.Empty<object>(),
+                manifestations = Array.Empty<object>()
+            }
+        };
+
+        static async Task<HttpResponseMessage> SendAsync(
+            Fixture fixture, string endpoint, object body)
+        {
+            using var request = fixture.Authorized(endpoint);
+            request.Method = HttpMethod.Post;
+            request.Content = JsonContent.Create(body);
+            return await fixture.Client.SendAsync(request);
+        }
+
+        await using var player = await Fixture.StartAsync(source: "character-sheet");
+        using var playerResponse = await SendAsync(player, path, requestBody);
+        Assert.Equal(HttpStatusCode.Forbidden, playerResponse.StatusCode);
+        Assert.Contains("campaign_dm_authority_required",
+            await playerResponse.Content.ReadAsStringAsync());
+
+        await using var direct = await Fixture.StartAsync(dm: true);
+        using var directResponse = await SendAsync(direct, path, requestBody);
+        Assert.Equal(HttpStatusCode.Forbidden, directResponse.StatusCode);
+
+        await using var dm = await Fixture.StartAsync(source: "character-sheet", dm: true);
+        using var malformedResponse = await SendAsync(dm, path, requestBody);
+        Assert.Equal(HttpStatusCode.BadRequest, malformedResponse.StatusCode);
+        Assert.Contains("invalid_approved_mixed_proposal",
+            await malformedResponse.Content.ReadAsStringAsync());
+
+        using var wrongCampaignResponse = await SendAsync(dm, path,
+            new
+            {
+                requestBody.rulesetId, requestBody.characterId,
+                campaignId = "d18df570-4574-4d10-872e-351a88843a27",
+                requestBody.approvalEvidenceId, requestBody.proposal
+            });
+        Assert.Equal(HttpStatusCode.Forbidden, wrongCampaignResponse.StatusCode);
     }
 
     [Fact]
