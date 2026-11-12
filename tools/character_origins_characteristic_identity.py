@@ -154,6 +154,9 @@ def project_characteristic_identity_evidence(candidate_pool, mapping):
             "candidateId": candidate_id,
             "kind": kind,
             "sourceTraitOrFieldId": evidence_id,
+            # Lossless input evidence is retained. Identity annotations must
+            # never discard authored mechanics or ancestor context.
+            "originalOffer": copy.deepcopy(offer),
             "contributorProvenance": copy.deepcopy(offer["provenance"]),
             "candidateEligibility": "offered-not-authorized",
             "manifestation": "not-selected",
