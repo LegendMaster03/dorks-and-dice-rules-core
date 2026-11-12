@@ -1,9 +1,35 @@
 # Pillar 2 — Rites of Rebirth and exceptional Dragonborn
 
 **Date:** 2026-11-11  
-**Status:** Owner-approved conceptual replacement rules and exceptional Dragonborn direction. **Platinum and Fivefold mechanics are fully designed and approved**; Ruby remains undecided. General ritual procedures, data contracts, runtime behavior, and native exceptional implementations are still pending.
+**Status:** Owner-approved complete-replacement rules and exceptional Dragonborn direction. **Platinum and Fivefold mechanics are fully designed and approved**; Ruby remains undecided. The general Rite method and declarative acquisition-gate contract are selected native data; ritual procedures, executable Origin contracts and native exceptional Ancestry implementations remain pending.
 
 ## Rite of Rebirth — general transformation rule
+
+
+**Catalog integration:** The native [creature origination rules](../../../data/rulesets/first-party-001/native/rules/creature-origination.json)
+now list `rite-of-rebirth` as a distinct, post-origination specialization
+of `transformation`. It is **not** a type-inherited ordinary reproductive
+default: a specific authored Rite or a recorded DM/table exception permits
+it. This is a data-only rule and does not yet execute the transformation.
+
+An Ancestry can declare `acquisitionMethods: ["rite-of-rebirth"]`
+to require a qualifying Rite as its ordinary acquisition path and to exclude
+that Ancestry from default initial character creation and mixed-Heritage
+candidate pools. An explicit DM/table exception may authorize another path.
+Existing native Ancestries with no such field remain governed by their
+current selection rules. Exceptional Dragonborn Ancestries are still
+design concepts awaiting native content authoring, not selectable records.
+
+
+**DM authority across the entire Rite:** The full Species/Ancestry
+replacement, retained non-Species grants, ritual participants and prerequisites,
+and restricted Ancestry acquisition are all **first-party defaults**, not
+software-enforced limits on table decisions. A DM may authorize a different
+outcome, including partial retention or a changed replacement, and explicitly
+define any additional mechanics required. This must be recorded as the
+table-effective exception rather than silently changing the published Rite.
+The universal `dmOverridePolicy` in the native creature origination contract
+governs this and every other Origin stage.
 
 A **Rite of Rebirth** is a ritual that **completely replaces a creature's current Species and Ancestry configuration** with a new Species and Ancestry configuration. **Draconic Rebirth** is one specialization of this general class of rituals, not a separate character-creation or inheritance engine.
 

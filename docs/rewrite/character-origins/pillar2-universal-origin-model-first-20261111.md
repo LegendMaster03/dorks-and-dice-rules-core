@@ -9,6 +9,32 @@
 
 The recently added read-only shared-foundation audit, same-Species pair matrix, and synthetic compatibility-contract evaluator are **provisional study tools**. Their existence is not authorization to develop actual Dragonborn category/material mixing policies, ancestry-pair exceptions, or source-specific selection rules now.
 
+## System-wide DM override authority
+
+**Owner decision:** Every level of Character Origins accepts explicit DM
+overrides. This includes the creature-type hierarchy and assignments,
+origination processes and inputs, reproductive compatibility, Species and
+Ancestry eligibility, choice requirements, characteristic contributions,
+reconciliation, manifested traits and parameters, whole-profile validation,
+and post-origination transformations including Rites of Rebirth. This is
+not limited to exceptions to bans: the table may define or change a rule,
+characteristic, or resulting Origin itself. No first-party Character Origins
+rule is an immutable gameplay gate against an authorized DM decision.
+
+**Human-readable process:** Identify the default, choose the replacement or
+exception, and use the resulting table-effective rules. The published default
+remains available as reference and remains in force outside the stated scope.
+For software, minimum decision metadata is authority, scope, target, and
+effective decision. Custom content and independent source grants must remain
+attributed correctly rather than masquerading as first-party grants.
+
+This policy does not assert that the current experimental Python studies or
+C# Rules Core runtime already execute arbitrary DM rule changes. Implement
+the policy once as a common table-rules evaluation layer, not as separate
+special-case overrides for each Species, method, or Origin stage.
+Application authentication, data access, and system security are distinct
+from game adjudication and are not changed by DM rulings.
+
 ## Fundamental operation: decompose, mix, reconcile, manifest, reconstruct
 
 **Owner's conceptual model:** Mixed Species must be constructed by **breaking down each contributor's Species/Ancestry configuration into its constituent characteristics**, combining what those contributors can offer, **reconciling those components under an explicit general rule system**, and reconstructing a new coherent configuration. A Species is therefore mechanically a **composition of characteristics**, not an indivisible inherited label or an all-or-nothing package.
