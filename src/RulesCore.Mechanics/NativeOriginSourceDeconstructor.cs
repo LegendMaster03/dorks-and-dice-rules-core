@@ -52,7 +52,8 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                     Issue("ancestry-parent-unresolved", entity.Id, NativeOriginIssueSeverity.Unresolved,
                         "This ancestry has no authored root Species relationship.");
             }
-            if (next is not null && visited.Count >= 64)
+            if (parentSpecies is null && next is not null &&
+                (visited.Count > 64 || visited.Contains(next) && ancestors.Count > 0))
                 Issue("ancestry-parent-cycle", selectedAncestry, NativeOriginIssueSeverity.Invalid,
                     "Ancestry parent chains must terminate in the native catalog.");
             if (parentSpecies is not null)
