@@ -94,6 +94,11 @@ public static class NativeOriginApiEndpoints
                 // grants only. This is not proof that any caller owns the
                 // proposed Origin or that its traits are active on a Sheet.
                 intrinsics = NativeOriginIntrinsicProjector.Project(result),
+                // Authoritative authored low-light-vision rule, interpreted
+                // only from an adjudicated and provenance-matched trait.
+                // As with intrinsics, this remains preview-only until the
+                // Character Sheet independently verifies committed state.
+                vision = NativeOriginVisionProjector.Project(catalog, result),
                 result
             });
         });
