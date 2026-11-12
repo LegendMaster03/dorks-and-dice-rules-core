@@ -102,6 +102,23 @@
       "preferredOverStrictShared": "future-borrowing",
       "reason": "The 3.x-style model borrows from the next turn rather than denying a Reaction because of a Bonus Action already spent on the preceding turn. It can preserve the opportunity to react and make the subsequent tradeoff more meaningful.",
       "boundary": "Owner prefers future borrowing to the earlier strict shared-resource proposal, but has NOT selected future borrowing as the native rule. Independent budgets, selective coupling, the scope of affected Reactions, and all timing/refresh details remain open."
+    },
+    "reactionOpportunityCostObservation": {
+      "status": "owner observation and comparative analysis; NOT an approved mechanics change",
+      "insight": "In 5.x, offensive opportunity attacks and defensive reactive abilities both consume the same Reaction. A combatant must choose whether to use that out-of-turn allowance to attack or to preserve it for defense. This offers a meaningful reactive choice without drawing on Bonus Action availability.",
+      "historicalDistinction": "In the ordinary 3.5e/PF1e models, attacks of opportunity have an allowance distinct from Swift/Immediate Actions. Immediate Actions borrow the next Swift Action when used out of turn; ordinary attacks of opportunity do not automatically make that exchange.",
+      "implication": "If the 5.x shared offensive/defensive Reaction remains native, making every Reaction also borrow the next Bonus Action would add a second cost to an already competing resource, not merely reproduce the original 3.x choice. Test the extra cost before endorsing universal borrowing.",
+      "doesNotDecide": [
+        "Whether the native Reaction allowance and default opportunity attack costs follow 5.x precisely",
+        "Whether future borrowing should apply to any or all native Reactions",
+        "Whether some defensive/offensive reactions justify explicit extra costs",
+        "Class-redesign policy for Bonus Action choices or any refresh timing"
+      ],
+      "sources": [
+        "https://www.dndbeyond.com/sources/dnd/basic-rules-2014/combat",
+        "https://www.d20srd.org/srd/combat/actionsInCombat.htm",
+        "https://www.35srd.com/combat/attacksofopportunity/"
+      ]
     }
   }
 }
