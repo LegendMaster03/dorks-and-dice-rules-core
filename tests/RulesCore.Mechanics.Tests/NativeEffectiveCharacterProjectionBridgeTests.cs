@@ -261,6 +261,26 @@ public sealed class NativeEffectiveCharacterProjectionBridgeTests
     }
 
     [Fact]
+    public void ConstitutionModificationRequiresAnExplicitHitPointPolicy()
+    {
+        var catalog = Catalog();
+        var character = Character(catalog);
+        var effect = StrengthModifier() with
+        {
+            Id = "constitution-modification",
+            TargetId = "constitution"
+        };
+        var result = new NativeEffectiveCharacterProjectionBridge(catalog).Project(
+            character, EffectInput(character, Origin(), effect),
+            new TrustedEffects(), new TrustedCharacter());
+
+        Assert.False(result.HasCalculatedValues);
+        Assert.Empty(result.Values);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "effective-bridge-hitpoints-policy-unimplemented");
+    }
+
+    [Fact]
     public void MissingIndependentGrantEntitlementWithholdsResult()
     {
         var catalog = Catalog();
