@@ -619,6 +619,25 @@ A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have diff
 
 **Standard initiative and Block Initiative are alternative turn-order procedures**; neither is a hidden prerequisite for normal attacks, maneuvers, Weapon Mastery or optional combos. The table's selected procedure governs **whose turn or block is active**. The unified action model governs **what each actor can do** without imposing an initiative choice. Define start/end-of-turn durations, individual actions, reaction refresh, opportunity attacks, interrupts, and cooperative contributions under **both** turn-order options. Never assume one pooled party-wide action budget from Block Initiative.
 
+### Design investigation — shared Bonus Action and Reaction resources (2026-11-12)
+
+**Owner proposal, NOT an approved gameplay rule:** Sharing the Bonus Action and Reaction resource might make an unused Bonus Action feel like reactive insurance, avoiding pressure to equip every class with a Bonus Action feature. Alternatively, revisit Bonus Action coverage when redesigning classes after Warlock playtesting.
+
+**Qualification:** In 5.x, having no eligible Bonus Action does not take away the character's Reaction. Coupling would not grant a new defensive opportunity; it would instead impose opportunity costs on characters who already have Bonus Action choices.
+
+| Candidate | Rule direction | Main consequence |
+| --- | --- | --- |
+| Independent budgets | Keep 5.x-like independent Bonus Action and Reaction availability | Familiar, but absent Bonus Action options remain a class design issue |
+| Strict shared allowance | Spend one common resource on either Bonus Action or Reaction until refresh | Spending a Bonus Action can prevent a later defensive or cooperative Reaction |
+| 3.x-inspired future borrowing | React after your turn at the expense of your **next** Bonus Action, even if you used one on the preceding turn | Preserves emergency reactions but adds timing complexity and a future cost |
+| Explicit ability-specific coupling | Keep independent ordinary budgets; selected abilities consume the next Bonus Action as an additional cost | More precise but requires per-ability review and explicit conversion |
+
+**Do not conflate this with historical 3.x rules:** Swift and Immediate Actions share availability, but attacks of opportunity were not all Immediate Actions. A universal Reactions/Bonus Actions coupling would be a new Dorks & Dice decision.
+
+**Test before choosing:** (1) no Bonus Action feature or no Reaction trigger, (2) Cunning Action or dual wielding followed by opportunity attacks, (3) defensive reactions and spells, (4) Reaction after turn followed by a desired Bonus Action, (5) reactions during own turn, (6) group combo contributions, (7) both initiative systems and Standard/Complex combatants, (8) source conversions from Immediate Actions vs ordinary opportunity attacks.
+
+**Unresolved:** Whether coupling exists at all; which of these timing models it uses; whether all Reactions participate; refresh rules, exceptions, and how future class redesign affects the rationale. No code or native runtime resolution may be inferred from this proposal. The structured candidate records are in `native/rules/action-economy.json`.
+
 ### Cases to verify before adopting final action-budget numbers
 
 1. Move before/after an Action; movement between attacks granted by a 5e class feature.

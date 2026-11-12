@@ -38,6 +38,7 @@
     }
   },
   "pendingDecisions": [
+    "Whether ordinary Reactions and Bonus Actions share an allowance, including a strict shared pool versus borrowing the next turn's Bonus Action.",
     "Feature-specific exceptions to the ordinary one-Bonus-Action-per-turn allowance and timing, if justified by a distinct grant.",
     "Precise conversion of atypical 3.x/PF1e Swift Action timing restrictions, and how swift casting interacts with native spellcasting limitations.",
     "Whether and how Immediate Actions interact with Reactions and the current or upcoming Bonus Action budget; this is a separate design decision.",
@@ -45,5 +46,56 @@
     "Nonmovement move-equivalent action conversion, Action substitution and full-turn constraints.",
     "Free activity/object interaction limits, interruption ordering, durations and Block Initiative timing details."
   ],
-  "implementationBoundary": "Design data only. No new runtime action budget, source conversion or gameplay effect is implemented by adding this record."
+  "implementationBoundary": "Design data only. No new runtime action budget, source conversion or gameplay effect is implemented by adding this record.",
+  "openDesignInvestigation": {
+    "id": "shared-bonus-reaction-budget",
+    "status": "owner-proposed; undecided; not an approved gameplay rule",
+    "ownerHypothesis": "A shared Bonus Action and Reaction resource could make unused Bonus Action capacity feel like reactive insurance, reducing the need to assign routine Bonus Actions to all classes.",
+    "qualification": "In 5.x a character without an eligible Bonus Action already has a Reaction allowance. Coupling would primarily increase the cost of Bonus Actions for other characters; it grants no new Reaction.",
+    "candidates": [
+      {
+        "id": "independent",
+        "approval": "unapproved",
+        "rule": "Bonus Action and Reaction have separate allowances, as in 5.x.",
+        "risk": "Some characters have no Bonus Action choice; could address separately through class design."
+      },
+      {
+        "id": "strict-shared",
+        "approval": "unapproved",
+        "rule": "Using either Bonus Action or Reaction spends the same allowance until the next refresh.",
+        "risk": "Using a Bonus Action could disable opportunity attacks, defense and cooperative Reactions before the next turn."
+      },
+      {
+        "id": "future-borrowing",
+        "approval": "unapproved",
+        "rule": "An out-of-turn Reaction can borrow the upcoming Bonus Action, even if the previous turn used one; on-turn costs and Reaction limits require explicit timing rules.",
+        "risk": "More complex resource state and possible extra cost for ordinary Reactions unlike historical 3.x opportunity attacks."
+      },
+      {
+        "id": "selective-extra-cost",
+        "approval": "unapproved",
+        "rule": "Ordinary budgets are separate, but an explicitly identified high-impact Reaction can consume the upcoming Bonus Action.",
+        "risk": "Mechanics and source conversions must distinguish which abilities bear additional costs."
+      }
+    ],
+    "alternative": "Future class redesign could offer worthwhile eligible Bonus Action options; Warlock remains the only playable class experiment and no general class-design decision has been approved.",
+    "keyTests": [
+      "Character with no eligible Bonus Action, whether a Reaction trigger appears or not",
+      "Character uses Bonus Action on own turn and an enemy then provokes an opportunity attack",
+      "Dual-wielding, Rogue Cunning Action and defensive spell interactions",
+      "Out-of-turn Reaction followed by a desired Bonus Action on the next turn",
+      "On-turn Reaction, Ready, interruption and refresh timing",
+      "Cooperative combo contributors using Reactions",
+      "Standard versus Block Initiative per-actor timing and mixed Standard/Complex Combatants",
+      "Separate treatment of imported 3.x Immediate Actions and ordinary opportunity attacks"
+    ],
+    "decisionNeeded": [
+      "Whether any universal coupling is desirable",
+      "Strict shared allowance versus borrowing next turn versus independent baseline",
+      "Whether ordinary opportunity attacks and all other Reactions participate",
+      "Exact budget refresh, on-turn reactions, first-turn behavior and special grants",
+      "Interaction with future class redesign and mixed-complexity players"
+    ],
+    "implementationBoundary": "Comparison only; preserves prior approved one-Bonus-Action-per-turn category and changes no runtime action economy."
+  }
 }
