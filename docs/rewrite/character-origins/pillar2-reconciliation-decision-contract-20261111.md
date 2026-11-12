@@ -62,6 +62,12 @@ The tests include Human + High Elf competing creature types, Human Small/Medium 
 
 These examples cover **standard, mixed Ancestry, mixed Species, nested Heritage, and candidate-level custom policy concepts** using one general contract. None of them authorizes a particular mixed-Species combination or establishes an actual DM override.
 
+## First whole-character dependency review
+
+The [source-neutral whole-Origin dependency reviewer](pillar2-whole-profile-dependency-closure-20261111.md) now evaluates tentative retained characteristics **after** this decision contract, against explicitly declared synthetic prerequisites, exclusions, choice counts, option sets, linked parameters, and resource-coordination requirements. It reports missing or incompatible choices and preserves unresolved authored trait choices, rather than declaring a coherent character simply because every pairwise interaction has a proposed disposition.
+
+The new review **does not promote** a hypothetical decision authority, prove actual inherited eligibility, authorize traits or establish the complete rules corpus. Its output explicitly remains `fullDependencyClosure: not-certified`. The remaining critical boundary is trusted, complete rule/choice authoring and eventual current-grant reconstruction.
+
 ## What must follow before reconstruction
 
 1. **Define authoritative rule and table-decision provenance.** A `table-proposal` string is not proof of the DM's approval or authorization of an action. Trusted Rules Core must eventually validate actual rule IDs/versions and explicitly authorized table decisions.
