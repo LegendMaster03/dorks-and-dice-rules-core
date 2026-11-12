@@ -53,6 +53,12 @@ The **three-stage Origin workflow** remains:
 
 The new preview specifically covers an **early part of Stage 2**. It shows what questions need decisions, not how the final rules should always answer them.
 
+## Explicit decision evidence, still not authorized
+
+The [experimental reconciliation decision contract](pillar2-reconciliation-decision-contract-20261111.md) now records **a proposed disposition, rationale and authority reference** against each exact observed relationship, with a fingerprint of the complete candidate evidence. It reports missing decisions, inconsistent keep/suppress proposals across multiple pairs, and proposals to preserve incompatible alternatives of a normally single-valued intrinsic slot.
+
+This does **not** authorize trait selection, consolidate resource pools, perform dependency closure or turn hypothetical DM authority into actual permission. A complete proposal remains non-authoritative. The universal engine still needs an approved decision/eligibility contract and whole-profile verification before reconstructed grants can be trusted.
+
 ## Policy questions that require separate owner review
 
 1. **Equivalent grant** — when should two equivalent offers yield one effective ability, two independent grants, or a replacement?
