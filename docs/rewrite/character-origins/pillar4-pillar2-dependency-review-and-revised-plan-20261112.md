@@ -4,8 +4,8 @@
 **Status:** **Proposed execution plan for owner review**, not authorization to merge or approve individual supernatural mechanics.  
 **Rule set:** `first-party-001`  
 **Design branch:** `feature/pillar4-supernatural-nature-design-20261111`  
-**Pillar 2 reviewed:** `feature/pillar2-characteristic-inventory-20261111` at `ad23a720f4aab7af97b8934a0be545a4ac48e437` (PR #141, draft against `main`).  
-**Parallel Pillar 2 work inspected:** `feature/pillar2-phase4-origination-rebirth-20261112` at `b296d2a8c034920cbe371d1bc348f12f60164b11` (unmerged Phase 4 work at review).  
+**Pillar 2 reviewed:** `feature/pillar2-characteristic-inventory-20261111` at `d6f06a6ab058` after Phase 4 PR #150 merged; PR #141 remains draft against `main`.  
+**Pillar 2 Phase 4:** `feature/pillar2-phase4-origination-rebirth-20261112`, merged as [PR #150](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/150) into the Pillar 2 development branch on November 12, 2026.  
 **Pillar 4 prototype implementation reviewed:** draft PRs [#146](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/146), [#148](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/148), [#149](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/149). All remain separate from `main`.
 
 ## Executive decision
@@ -24,14 +24,14 @@ Pillar 4 should not become a second Origin constructor, supernatural-specific ch
 | **Phase 2** (PR #145) | Merged. `NativeOriginConstructionEngine` performs catalog-backed deconstruct/combine/reconcile/manifest/reconstruct for direct and selected mixed Origins, source-qualified grants, issue statuses and scoped DM checks. Partial results are not mechanically authorized | Consume actual authorized results, not arbitrary profiles with `Status=Authorized`; do not use unresolved grants for gameplay |
 | **Phase 3** (PR #147) | Merged. Full native ancestry parent chains, explicit `originBindings` for Dragonborn parameters, `NativeOriginDependentBinder` for Elf spellcasting choice, provenance-aware nested contribution, real-catalog tests | Use resolved, **parameterized** `NativeOriginEffectiveGrant` data; avoid rebuilding lineage, child-leaf binding, or ancestral feature eligibility in Pillar 4 |
 | **Phase 3 limits** | General mixed-transmission policy, direct descendant intrinsic precedence (e.g., Wood Elf speed), shared resource interaction, several cross-Ancestry cases, latent trait transmission and reproduction during a temporary form are still **unapproved**. Human–Elf coherent case is **table-authorized**, not a general first-party recipe | Do not assert that all mixed Origins or form-induced inheritance cases are supported by first-party defaults |
-| **Phase 4 in progress** (`feature/pillar2-phase4-origination-rebirth-20261112`) | Adds creature-type origination defaults, specific method/acquisition checks, and **`NativeOriginRebirthEngine.Execute`** for a complete **atomic, DM-authorized Rite of Rebirth**. It replaces the authoritative `Underlying` Species/Ancestry and inherent grants, preserves independent grants and history, and requires explicit interaction with an active form. This is not generalized supernatural reconstruction, form activation or reversion, and remains on a separate unmerged branch | **Reuse/generalize this transition boundary** for ceremorphosis rather than adding a Pillar 4-specific permanent Origin replacement engine |
+| **Phase 4 complete on Pillar 2 branch** (PR #150) | Common construction tests now cover method defaults and synthetic Plant/Construct/Fiend processes. **`NativeOriginRebirthEngine.Execute`** implements atomic, DM-authorized **Rite of Rebirth** complete replacement; preserves existing independent entitlements and history; requires explicit interaction with an active form. The construction engine blocks initial creation via post-origination methods. **No** generalized supernatural reconstruction or form activation/reversion exists | Reuse the **merged** transition design for ceremorphosis; agree a method-neutral entrypoint, not a separate P4 replacement engine |
 | **Phase 5** | Rules Core Origin persistence/public API and Character Sheet integration remain in the Pillar 2 roadmap, not completed by these merges | Do not wire temporary local state directly into Character Sheet as a bypass of Rules Core authority |
 
 **CI note:** Pillar 2's focused Origin workflow passed on `ad23a720` (run [43179614478](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43179614478)). Its broader public-native-API workflow run [43179623337](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43179623337) failed in the existing Python native/working boundary check (`test_ruleset_split.NativeWorkingBoundaryTests.test_current_native_and_working_contracts`). This does not demonstrate a Pillar 4 regression; it means overall repository readiness must not be inferred from only the focused workflow. Verify the cause with the owning workstream before promotion.
 
-### Phase 4 Rite findings at later review snapshot
+### Phase 4 completion review (PR #150 merged)
 
-Pillar 2's unmerged Phase 4 branch advanced while this review was underway. Its `NativeOriginRebirthEngine` is a **real C# transition executor**, not only a representation of a historical event:
+Phase 4's `NativeOriginRebirthEngine` is a **real C# transition executor**, merged into the Pillar 2 development branch, not only a representation of a historical event:
 
 - Requires a new target proposal, validates the existing Origin, uses `NativeOriginConstructionEngine` to construct the authorized target, then **atomically** replaces the underlying Species/Ancestry configuration only if the complete transition resolves.
 - Preserves separately earned `IndependentGrants` and records the old baseline as a completed replacement history event. Old inherent grants are excluded by default; a scoped, verified Rite decision may retain particular old grants or suppress particular new grants.
@@ -39,9 +39,20 @@ Pillar 2's unmerged Phase 4 branch advanced while this review was underway. Its 
 - If a temporary form is active, the initial implementation permits preserving it only with a specific verified `rite-form-interaction` decision; it does not silently restore an activation-time baseline or guess form precedence.
 - A subsequent correction explicitly **blocks a post-origination Rite from ordinary new-character construction**. The construction engine now has a controlled internal `EvaluateReconstructionTarget` path called only by the authorized Rite transition. Pillar 4 should maintain that distinction for ceremorphosis and other permanent reconstructions.
 - **Current limitations:** The executable method is deliberately restricted to the specific `rite-of-rebirth` operation, with a specific **DM-scoped rite authorization** because the selected native catalog does not yet supply an executable individual Rite. It does not run general ceremorphosis, supernatural progression, alternate-form activation, reversion, or first-party native form authorization. Source-state authenticity and persistence still depend on the authenticated host.
-- `NativeOriginPhase4Tests.cs` contains atomic Rite and contrasting-process test cases on the branch; **no passing Phase 4 CI run was verified at this review snapshot**. These are not equivalent to merged production readiness.
+- `NativeOriginPhase4Tests.cs` covers atomic Rite and contrasting processes. **CI validation is verified**: final Phase 4 branch run [43184004933](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43184004933) passed; post-merge focused Origin run [43184621839](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43184621839) passed **186 Mechanics, 111 Host, and 345 focused Pillar 2 Python tests** with **0 errors and 1 nullable-reference warning** in `NativeOriginRebirthEngine.cs:195`. The post-merge broader native-API run [43184631143](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43184631143) failed its existing `test_ruleset_split.NativeWorkingBoundaryTests.test_current_native_and_working_contracts` Python consistency check. The complete repository check is **not green**.
 
-**Planning consequence:** The permanent Species/Ancestry replacement primitive is **emerging in Pillar 2** and should become the foundation for Pillar 4's terminal reconstruction. The necessary follow-up is to **generalize the authorized transition contract across method-specific processes** (including `supernatural-reconstruction`) while preserving Rite-specific acquisition rules. A second "ceremorphosis replacement engine" would duplicate state ownership and create an eventual divergence risk. The P4 form and resource evaluator still needs its own cross-domain applicability behavior, not an independent Origin constructor.
+**Planning consequence:** The permanent Species/Ancestry replacement primitive is **implemented for Rite of Rebirth in Pillar 2** and should become the foundation for Pillar 4's terminal reconstruction. The necessary follow-up is to **generalize the authorized transition contract across method-specific processes** (including `supernatural-reconstruction`) while preserving Rite-specific acquisition rules. A second "ceremorphosis replacement engine" would duplicate state ownership and create an eventual divergence risk. The P4 form and resource evaluator still needs its own cross-domain applicability behavior, not an independent Origin constructor.
+
+### Phase 4 completion implications for Pillar 4
+
+1. **No separate baseline-change implementation:** The merged Rite engine already provides a coherent, atomic, provenance-aware replacement procedure. Generalize process authorization for `supernatural-reconstruction` instead of copying that implementation.
+2. **Separate permission from mechanics:** The present Rite requires a specific DM-scoped `rite` decision because individual native Rite procedures are not yet selected-native executable. A valid **first-party supernatural reconstruction** must ultimately have its own native authorization path, with DM changes as overrides rather than mandatory approvals.
+3. **Form coexistence is a partially solved interaction, not transition support:** The Rite preserves a temporary `Current` only after a verified form interaction decision. It still does **not** enter, exit, expire, or re-evaluate a form. Pillar 4's temporary-form evaluator and latest-baseline reversion remain required.
+4. **Historical and independently earned state persists:** Repeated Rites replace the *latest* underlying baseline; Class/Background/Upbringing and supernatural-independent grants remain independent. An individual terminal transformation can alter applicability only through separately authored and authorized mechanics.
+5. **Prove source authenticity at the host boundary:** The Rite engine accepts `ExistingProfile` on the explicit condition that it is authoritative server-held state. Phase 5 persistence/API authentication remains a requirement; clients can not fabricate an already-approved Origin.
+6. **Preserve original method identity:** `rite-of-rebirth` and `supernatural-reconstruction` are distinct methods. Do not pretend that successful Rite tests authorize unimplemented supernatural transitions, or change a character's baseline merely by infection or an intermediate stage.
+
+This completion resolves the earlier uncertainty over whether Pillar 2 will provide *an executable atomic replacement*. It does **not** resolve native supernatural completion criteria, progression grants, active form execution, class/equipment/resource policies, or any production API/Character Sheet dependency.
 
 ## What the existing Pillar 4 PRs prove and what they do not
 
@@ -72,7 +83,7 @@ Pillar 2's unmerged Phase 4 branch advanced while this review was underway. Its 
 
 ## Revised execution sequence
 
-### Track A — Align before coding (immediate; no dependency on unfinished Pillar 2 Phase 4)
+### Track A — Align before coding (immediate; Pillar 2 Phase 4 is merged)
 
 1. Freeze new mechanical surface area in PRs #146, #148 and #149; leave drafts intact for review. Do not merge or discard their regression coverage.
 2. Review **latest Pillar 2 Phase 3/4 commits** and agree a precise common contract for a grant **source occurrence**, independent Class/Background/Upbringing entitlements, supernatural-acquired grants, and form-only grants. Preserve `NativeOriginEffectiveGrant` only where it actually describes the grant; avoid making all powers look like Species traits.
@@ -82,7 +93,7 @@ Pillar 2's unmerged Phase 4 branch advanced while this review was underway. Its 
 
 **Exit:** Written common contract and owner review of unresolved semantics; no duplicate Origin constructor, no unsupported grants, and no mandatory DM ruling for a supported native form. Previous tests still run once rebased.
 
-### Track B — Prove one real persistent-effect vertical slice (can advance alongside Pillar 2 Phase 4)
+### Track B — Prove one real persistent-effect vertical slice (independent of Rite expansion)
 
 1. Use a **real, completely authorized** direct Origin from the actual selected native catalog and source it through `NativeOriginConstructionEngine`, not a hand-constructed test result with `Authorized`.
 2. Feed one genuinely earned, host-verified supernatural grant into the common entitlement model. It is **not** automatically granted just because a character has a supernatural influence.
@@ -101,7 +112,7 @@ Pillar 2's unmerged Phase 4 branch advanced while this review was underway. Its 
 
 **Exit:** Authorized entry, evaluation, and exit all execute through Rules Core; independently earned entitlements survive and the latest underlying Origin is reconstructed on exit. No snapshot restoration or automatic monster CR/Hit Dice/progression.
 
-### Track D — Complete permanent supernatural reconstruction (coordination gate: generalize Pillar 2's initial Rite executor)
+### Track D — Complete permanent supernatural reconstruction (coordination gate: adapt merged Rite transition contract)
 
 1. Review Pillar 2's **initial `NativeOriginRebirthEngine`** as the concrete atomic baseline-transition implementation. It currently accepts a specifically authorized **`rite-of-rebirth`** target and must not be treated as an already-general `supernatural-reconstruction` executor. Agree how to share its verified target-construction, history, replacement and rollback guarantees across additional method-specific completion events **without** copying the engine. The authoritative change occurs **at a completed authorized event**, not infection or optional power unlock.
 2. Test optional independent progression, partial modification, and direct terminal completion without a mandatory partial stage (BG3 comparison is illustrative, not canonical D&D mechanics).
