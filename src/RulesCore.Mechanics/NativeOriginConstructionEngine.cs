@@ -345,7 +345,10 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             proposal.ExistingEffectiveConfigurationBasis,
             request.IndependentGrantApplicability);
 
-        var profileReview = _validator.ReviewProfile(profile, proposal);
+        // Previously acquired baseline grants belong to an earlier construction proposal.
+        // Do not demand that their original manifestations appear in this proposal.
+        var profileReview = _validator.ReviewProfile(profile,
+            proposal.ExistingConfiguration is null ? proposal : null);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
         var status = Status();
