@@ -1,7 +1,7 @@
 # Pillar 2 — Platinum Dragonborn: Heart, Mind, and Wings (working concept)
 
 **Date:** 2026-11-11  
-**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn) and Heart's two alternative damaging/restorative breath modes acquired together at rebirth with scaling effectiveness and one shared resource. Exact mechanics, damage/healing numbers, progression thresholds, and relationship to ordinary breath features remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
+**Status:** Owner-approved three-expression identity (all three inherent to every Platinum Dragonborn) and **one combined Heart breath** that damages creatures in its area while healing selected creatures instead, with scaling effectiveness and a single resource. Exact mechanics, damage/healing numbers, progression thresholds, and relationship to ordinary breath features remain unapproved. Not a native playable Ancestry. Preserve the approved exceptional Dragonborn acquisition/rebirth boundary in [Rites of Rebirth](pillar2-rites-of-rebirth-20261111.md).
 
 ## Purpose
 
@@ -24,7 +24,7 @@ The three-factor **ordinary** Dragonborn formula (category, skin material, damag
 
 | Expression | Core role | Preliminary candidates, explicitly **not** grants |
 | --- | --- | --- |
-| **Heart** | Draconic breath and extraordinary vitality | Published damaging and restorative **alternative breath modes** sharing one resource; consider a later distinct defensive manifestation, but not automatically combined damage and healing |
+| **Heart** | Draconic breath and extraordinary vitality | One combined damaging-and-healing breath, modeled on the published *Dragonborn of Bahamut* NPC's selective Radiant Breath; separate Healing Touch remains a non-approved reference candidate |
 | **Mind** | Heightened draconic perception and resilience | Source-grounded Darkvision/Blindsense progression (3.5), Truesight and specified condition protections (5e); precise translated senses, triggers and limits pending |
 | **Wings** | Physical draconic flight | Source-grounded visible wings and progressive gliding/flight (3.5), with Bahamut's flight as a higher-power reference (5e); speed, maneuverability, endurance and acquisition milestones pending |
 
@@ -32,7 +32,7 @@ These are **mechanical roles and possible expressions**, not numeric choices, ex
 
 ## Published Bahamut mechanics — source baseline, not adopted gameplay
 
-**Owner direction (2026-11-11):** Develop Platinum primarily from **established mechanics of Bahamut and the historical Dragonborn of Bahamut**, instead of inventing a new thematic power set and searching for justification afterward. Approved design commitments are the three inherent expressions and Heart's two alternative breath modes gained together with scaling effectiveness. Published numeric values and other source abilities remain historical research, not automatically approved Dorks & Dice features.
+**Owner direction (2026-11-11):** Develop Platinum primarily from **established mechanics of Bahamut and the historical Dragonborn of Bahamut**, instead of inventing a new thematic power set and searching for justification afterward. Approved design commitments are the three inherent expressions and **one Heart breath with selective damage and healing in the same activation**, available through rebirth and improving afterward. Published numeric values and other source abilities remain historical research, not automatically approved Dorks & Dice features.
 
 ### Primary historical source comparison
 
@@ -41,32 +41,53 @@ These are **mechanical roles and possible expressions**, not numeric choices, ex
 | *Races of the Dragon* (3.5), **Dragonborn of Bahamut** | **Heart:** shining line breath, choice of acid/cold/electricity/fire at use, Hit Dice-based damage/length, recharges in 1d4 rounds | Precedent for a versatile but **single** scaled offensive breath; does not establish radiant or healing breath for the original 3.5 Dragonborn |
 | Same, **Mind** | Progressive low-light/Darkvision, eventual Blindsense; defense against paralysis and magical sleep | Direct mechanical starting point for the inherent **Mind** expression |
 | Same, **Wings** | Wings enable gliding; flight arrives with higher Hit Dice and initially has endurance restrictions before becoming sustained | Direct mechanical starting point for inherent **Wings** and progressive aerial capability |
-| *Fizban's Treasury of Dragons* (5e, 2021), **Aspect of Bahamut**, pp. 164–165 | **Platinum Breath:** radiant-damage cone; **Exalting Breath:** restorative cone healing chosen creatures and potentially restoring recently deceased creatures; the two modes share the same breath recharge | **Most concrete reference for Heart:** distinguish *offensive* versus *restorative* breath. They are **alternatives on each use, not simultaneous damaging and healing outputs** |
+| *Fizban's Treasury of Dragons* (5e, 2021), **Aspect of Bahamut**, pp. 164–165 | **Platinum Breath** damages; **Exalting Breath** restores health and can revive the recently deceased. These are separate alternative breath outputs sharing recharge. | A **different Bahamut portrayal**, useful for eventual advanced options but **not the current approved combined Heart breath**. Do not merge the Aspect's resurrection or monster-scale values into a player ancestry. |
+| *Fizban's Treasury of Dragons* (5e, 2021), **Dragonborn of Bahamut** NPC, pp. 184–185 | **Radiant Breath** deals radiant damage in a cone while exempting up to three selected creatures and restoring their HP instead; also has Healing Touch, flight, fear immunity, limited Legendary Resistance, radiant/blinding sword attacks. | **Primary direct precedent** for Platinum Heart's now-approved **one selective damage-and-healing breath**. Other NPC abilities must be allocated individually rather than copied as one ancestry package. |
 | Same, defense and senses | Truesight, several damage/condition immunities, Legendary Resistance; **Platinum Brilliance** provides an additional powerful phase after an otherwise fatal defeat | High-end examples for Mind and exceptional resilience, **not blanket player immunities, full Truesight or automatic extra lives** |
 | Same, mobility and mythic features | High flight speed, **Celestial Shield** temporary HP, **Celestial Lances** force attack | Flight supports Wings. Shield/lances are **separate abilities**, not Breath Weapon outputs and not necessarily inherent wing features |
 
 Published mechanical evidence:
 - 3.5 **Dragonborn of Bahamut** comparison: https://dnd3-5.wikidot.com/dragonbornrace (secondary transcription of *Races of the Dragon*).
 - 5e **Aspect of Bahamut** comparison: https://onyx5e.com/en/bestiary/aspect-of-bahamut/ (secondary transcription of *Fizban's Treasury of Dragons*, pp. 164–165).
+- 5e **Dragonborn of Bahamut** NPC comparison: https://onyx5e.com/en/bestiary/dragonborn-of-bahamut/ (*Fizban's Treasury of Dragons*, pp. 184–185; NPC statistics, not a playable Ancestry grant).
+- Compare neighboring champion NPCs in the same source: https://onyx5e.com/en/bestiary/dragonborn-of-tiamat/ and https://onyx5e.com/en/bestiary/dragonborn-of-sardior/.
 - Historical 3.5 Dragonborn notes: `data/rulesets/first-party-001/working/species/subspecies/dragonborn/SHARED_BREATH_REFERENCE.md`.
 - 3.5 *Dragon Magic* also offers **Discorporating Breath of Bahamut** as an advanced **Dragonfire Adept breath effect**. That is **not Bahamut's creature stat block or an automatic Dragonborn of Bahamut grant**; consider separately as class/invocation or advanced option research, not proof of Platinum ancestry entitlement.
 
 The published depictions differ **across editions and rules contexts**. We may adapt selected mechanical ideas to the existing Dorks & Dice system, but should not imply that a 3.5 transformed ancestry, a deity's high-level 5e creature aspect, and a prestige class have the same playable abilities.
 
-### Heart — approved structure: two-mode Platinum Breath (mechanics pending)
+### *Dragonborn of Bahamut* NPC — detailed source audit (research only)
 
-**Owner-approved structural direction:** When a character becomes a Platinum Dragonborn through exceptional Draconic Rebirth, **both breath modes are available immediately** as parts of the Heart expression. They **share one Breath Weapon resource**, and **the effectiveness of each mode scales afterward**. The character **chooses one mode each time the breath is used**, rather than applying both at once. Acquisition of one mode never requires choosing against, replacing, or separately unlocking the other. This approves the two-mode structure and scaling principle, **not** an amount, frequency, resource count, recharge schedule, damage affinity, area, action economy, healing target rules, or specific advancement milestones.
+The *Fizban's* Dragonborn of Bahamut (CR 8 NPC; pp. 184–185) should be examined **as a complete source**, not reduced to the Aspect of Bahamut's breath modes. Historical numerical values are listed for comparison only, **not approved player-character features**:
 
-The two outputs are:
+| NPC feature | Source mechanic (paraphrased) | Current Platinum interpretation |
+| --- | --- | --- |
+| **Radiant Breath** | A **30-foot cone**; **DC 15 Dexterity** save; **8d10 radiant** damage (half on success). At activation, **up to three chosen creatures inside** receive **4d10 healing instead of taking damage**. **Recharge 6**. | **Approved structural inspiration for Heart:** one breath, one area/use; chosen recipients are healed **instead of** damaged. Exact figures, damage type, cone geometry, count, recharge, action cost, and scaling **not selected**. |
+| **Healing Touch** | **Once/day** touch healing of **40 HP** to another creature; removes its diseases and poisons. | **Separate candidate**, not an inherent automatic Heart benefit; decide later whether an independent advanced restorative feature belongs to ancestry or patron progression. |
+| **Wings/Flight** | **30-foot flying speed** with prominent platinum wings, no staged glide-to-flight limit in the stat block. | Strong **Wings** precedent for full flight, distinct from 3.5's progressive gliding/flight; exact movement mechanics remain open. |
+| **Fear immunity** | Immune to the Frightened condition. | Possible **Mind** defense; notably **also present** on the two other category-leader champion NPCs, so not uniquely Platinum. |
+| **Legendary Resistance** | Can change **one failed save/day** into success. | Also shared by all three champion NPCs; may be an exceptional-champion motif, an advanced resilience candidate, or NPC-only power. **Not an automatic ancestry grant**. |
+| **Radiant sword/blinding strike** | Three sword attacks on Multiattack; extra radiant damage; once/turn radiant flash can briefly blind a struck target. | Weapon/combat and NPC action-economy mechanics are **not intrinsically biological**. Consider for future Patron, training or other advancement; do not automatically confer three attacks, weapon grants, or scaling weapon damage. |
+| **Other profile** | Medium **Humanoid**, CR 8, AC 18 from equipment, mundane Athletics/Perception/Persuasion skill entries, typical alignment. | Native Dorks & Dice Dragonborn have **Dragon** type. NPC CR, gear, skills, alignment, class/organization role, and ability scores **do not override** our player-Ancestry or Upbringing boundaries. The NPC does not establish a Rite of Rebirth requirement. |
 
-1. **Offensive breath:** A damaging manifestation, inspired by the 5e aspect's radiant damaging breath and the 3.5 Dragonborn's scaling line breath. Dorks & Dice damage affinity, geometry, saving throw, and the **amount/formula** of its scaling **remain open**.
-2. **Restorative breath:** A healing manifestation, inspired by the 5e aspect's separate restorative breath. Beneficial targeting, healing amount, the **amount/formula** of its scaling, and possible advanced revival (if any) **remain open**. The approval of a restorative breath does **not** grant resurrection.
+**Cross-champion pattern within the same book:** The Dragonborn of **Tiamat** (CR 7) and **Sardior** (CR 6) also have fear immunity and once/day Legendary Resistance. Their unique attacks and powers diverge: the former uses **necrotic breath with a fear effect**, while the latter has **psionic spellcasting, a mind blade, hovering flight and heat breath**. This suggests separating any future general exceptional-champion chassis from the **category-specific breath, senses, magic and movement**. It does **not** approve a generic champion rules package or revise the already separate Fivefold Chromatic/Ruby design concepts.
 
-A character chooses one mode on each use. **No default rule permits damaging opponents and healing or shielding allies simultaneously with the same breath.** That earlier combined **Sovereign Breath** proposal was an independently invented alternative and is **superseded as the preferred working direction** by source-grounded alternative modes. It may be reconsidered only as an explicitly new design, not misrepresented as a published Bahamut mechanic.
+**Edition distinction:** The 3.5 *Races of the Dragon* **Dragonborn of Bahamut** is a **transformation/ancestry** with a **choice** of Heart, Mind or Wings and Hit Dice-based advancement. The 5e *Fizban's* **Dragonborn of Bahamut** is a **champion NPC**, not documentation for that same transformation. Dorks & Dice combines **all three expressions** through its independent exceptional Draconic Rebirth framework, without automatically adopting the 5e champion's external/martial grants or original creature type.
 
-**Interaction with existing native Dragonborn rules:** Ordinary Breath Weapon replaces one Attack-action attack (PB uses per Long Rest). Metallic Breath Weapon is a separate level-5, once-per-Long-Rest Enervating/Repulsion choice affecting creatures in its area, including allies. The Platinum ancestry must explicitly decide whether the two new modes **replace, extend or coexist** with those existing grants; do not silently append a third pool or treat historical 5e monster recharge as already applicable to player characters.
+### Heart — approved combined Radiant Breath structure; exact mechanics pending
 
-**Other published Bahamut mechanics** such as Platinum Brilliance (a mythic survival-phase mechanic), Celestial Shield (temporary HP) or Celestial Lances (force damage) are separate optional research candidates. They need not be included in Heart, and some may better fit later character progression or a future Draconic Patron. Previous decisions to keep the unrelated **Vassal of Bahamut** prestige-class powers largely in the future Patron candidate pool remain unchanged.
+**Owner-approved direction (supersedes the former two-mode breath design):** A Platinum Dragonborn receives **one combined offensive/restorative Breath Weapon through exceptional rebirth**. In one use, it produces one authored area. **Some eligible creatures in that area are selected to receive healing instead of damage; other affected creatures receive the damaging effect.** A creature receiving healing from that activation does **not** also take its damage. The breath's **damage and healing effectiveness increase with advancement**. This is an ability of Heart, which all Platinum Dragonborn inherently possess.
+
+The source-inspired action is **one breath ability and one resource**, not separate damaging and restorative breath modes or independent usage pools. This is the direct 5e NPC precedent—not the 5e Aspect's alternative damaging/restorative breaths. That earlier two-mode decision is **explicitly superseded**. Selective recipients should be determined by an actual **player choice**, not assumed moral alignment or friendship.
+
+**Still to reconcile for Dorks & Dice:**
+- **Inheritance and native Breath Weapon:** Specify whether this combined breath replaces, enhances or coexists with the base Dragonborn Breath Weapon and the ordinary Metallic family's separate Enervating/Repulsion breath; no silent duplication or removal.
+- **Targeting:** Determine area shape, eligibility, maximum protected/healed creatures, exclusions, whether willing targets are required, interaction with allies/enemies, and targeting information. The NPC's up-to-three selection is a **source number**, not an approval.
+- **Damage/healing:** Determine damage affinity (the NPC uses radiant), damage/save formula, healing dice, whether healing stabilizes or affects creatures at 0 HP, and whether healing can restore more than current HP. Reviving dead creatures is **not** part of the current approved ability.
+- **Scaling:** Both outputs grow after rebirth; exact character-level brackets, formulas and handling of rebirth at high character level are unresolved.
+- **Resource/action contract:** Determine whether to preserve the base Dragonborn's Attack-action attack replacement, Proficiency Bonus uses per Long Rest, or introduce an explicit exceptional resource/recharge; do **not** silently copy the NPC's Action + Recharge 6.
+
+**Other source abilities**—Healing Touch, fear immunity, Legendary Resistance, wing-based flight and weapon flash—are individual candidates. They are not authorized by approving the combined breath.
 
 ### Mind and Wings — next source-led design passes
 
@@ -74,7 +95,7 @@ A character chooses one mode on each use. **No default rule permits damaging opp
 
 **Wings:** Start with the original 3.5 progression of wings -> gliding -> restricted flight -> sustained flight, then compare the 5e aspect's powerful flying movement. All Platinum Dragonborn have the Wings expression, but the precise initial movement capabilities and advancement milestones are still open. Do **not** infer that they must use the original 3.5 Hit Dice milestones without adaptation.
 
-**Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth, including **both Heart breath modes with a shared resource and scaling effectiveness**. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No specific level thresholds, die formulas, resource quantities/recharge schedule, spell-like effects or native executable data are approved by this design pass.
+**Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth, including **one combined Heart breath with selective damage/healing and scaling effectiveness**. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No specific level thresholds, die formulas, resource quantities/recharge schedule, spell-like effects or native executable data are approved by this design pass.
 
 ## Approved expression structure and pending feature design
 
@@ -109,7 +130,7 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 ## Questions for a later decision pass
 
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
-2. For the **approved damaging and restorative breath modes sharing one resource**, how do they relate to the existing base and Metallic Breath Weapons? What affinity, scaling formula, area, healing limits, action, use count, recharge schedule and optional advanced revival rules apply?
+2. For the **approved combined damaging-and-healing Breath Weapon**, how should it replace/enhance/coexist with the base and Metallic Breath Weapons? What damage affinity, shape, number of recipients, scaling formula, healing conditions, action, uses and recharge schedule should be selected?
 3. Which **source-established** Mind features (progressive Darkvision/Blindsense, paralysis/sleep protection, later Truesight or comparable resilience) should manifest, and at what progression?
 4. How should Wings adapt the 3.5 glide/flight progression for a character reborn at any level? Which abilities are available immediately and which scale?
 5. Should the three expressions combine in a unique later ability, and what triggers advancement for characters reborn at different levels?
