@@ -50,9 +50,14 @@ public static class NativeOriginIntrinsicProjector
             var slot = grant.Identity.IntrinsicSlotId;
             var source = grant.Identity.Occurrence.Source;
             if (source.Kind != NativeOriginSourceKind.Native ||
-                !IsOriginSource(profile, source.Id) ||
                 grant.Authorization?.Adjudication != NativeOriginAdjudication.Supported ||
                 grant.SourceCandidateIds.Count == 0 ||
+                !grant.SourceCandidateIds.All(id =>
+                    result.EvaluatedProposal.Candidates.Any(candidate =>
+                        candidate.Id == id &&
+                        candidate.ContributorId is null &&
+                        candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                        candidate.Identity == grant.Identity)) ||
                 !supported.TryAdd(slot!, grant))
             {
                 issues.Add("unsupported-or-conflicting-intrinsic:" + slot);
@@ -99,13 +104,4 @@ public static class NativeOriginIntrinsicProjector
         }
     }
 
-    private static bool IsOriginSource(NativeOriginProfile profile, string sourceId) =>
-        profile.Current.SpeciesId == sourceId ||
-        profile.Current.AncestryId == sourceId ||
-        // An Ancestry can inherit its base Species through an authored
-        // lineage; verification of that chain is done by the native
-        // deconstructor, not inferred from these ID strings.
-        profile.Current.InherentGrants.Any(x =>
-            x.Identity.Occurrence.Source.Id == sourceId &&
-            x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic);
 }
