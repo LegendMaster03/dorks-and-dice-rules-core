@@ -12,6 +12,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginContractValidator _validator = new(catalog);
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
+    private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
 
     public NativeOriginConstructionResult Evaluate(NativeOriginConstructionRequest request,
         INativeOriginAuthority? authority = null)
@@ -265,8 +266,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             accepted.Add(new(candidate, manifest, grant));
         }
 
+        var (constrained, constraintIssues, constraintsDm) =
+            _constraints.Apply(proposal, accepted, Verified);
+        issues.AddRange(constraintIssues);
+        usedDm |= constraintsDm;
         var (resolved, reconciliationIssues, reconciliationDm) =
-            _reconciler.Reconcile(proposal, accepted, Verified);
+            _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
 
