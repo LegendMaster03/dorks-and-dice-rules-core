@@ -66,6 +66,12 @@ The output remains `authoritativeChoiceClosure: not-certified`, `selectionEligib
 
 **Tests:** `tests/test_character_origins_pillar2_applicable_choices.py`.
 
+## Proposed choice-instance validation and previously mixed history
+
+The [choice-instance and nested-Heritage history study](pillar2-choice-instances-and-nested-history-20261111.md) now checks **explicit proposed selections** against exact retained characteristic/choice identities, authored finite option sets, and a separately declared **synthetic** catalog evidence snapshot. It refuses to persist use-time options or treat derived bindings and player allocations as independent finite choice selections. Missing timing and genuine authoring gaps remain unresolved.
+
+A separate version-bound proposed sidecar demonstrates how a previously mixed parent might **record** its actual choices against its specific manifested profile, rather than reselecting them for a descendant. The fingerprint only detects profile drift; it does **not** certify that the parent made that choice, that a catalog entitlement is valid, or that the choice is inheritable. A production profile must eventually store authenticated choice instances with its grants.
+
 ## Next general implementation work
 
 1. **Project applicable choices from the tentative reconstructed characteristic set**, distinguishing native direct offers from previously manifested mixed contributors and custom selections. A trait offered but not selected should not introduce a mandatory character-creation choice.
