@@ -15,7 +15,19 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
 
     public NativeOriginConstructionResult Evaluate(NativeOriginConstructionRequest request,
-        INativeOriginAuthority? authority = null)
+        INativeOriginAuthority? authority = null) =>
+        EvaluateCore(request, authority, reconstructionTarget: false);
+
+    // Only the trusted, result-oriented reconstruction service may construct
+    // a target under a post-origination method without claiming a new birth.
+    internal NativeOriginConstructionResult EvaluateReconstructionTarget(
+        NativeOriginConstructionRequest request,
+        INativeOriginAuthority? authority = null) =>
+        EvaluateCore(request, authority, reconstructionTarget: true);
+
+    private NativeOriginConstructionResult EvaluateCore(
+        NativeOriginConstructionRequest request, INativeOriginAuthority? authority,
+        bool reconstructionTarget)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Proposal);
@@ -104,8 +116,61 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         candidates = proposal.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var structural = _validator.ReviewProposal(proposal);
         issues.AddRange(structural.Issues.Where(x => !UnselectedOfferIssue(x, selected)));
+        var nativeMethod = _validator.FindMethod(proposal.Method);
         issues.AddRange(NativeOriginProcessEvaluator.Evaluate(proposal,
-            _validator.FindMethod(proposal.Method), Verified));
+            nativeMethod, Verified));
+        if (!reconstructionTarget && proposal.Intent == NativeOriginIntent.Direct &&
+            nativeMethod?.Stage == "post-origination")
+            Add("post-origin-method-requires-existing-individual", "method",
+                NativeOriginIssueSeverity.Unresolved,
+                "A post-origination method is not an initial-creation acquisition path; its authorized target must be executed against an existing individual.");
+
+        // A creature-type list is a default, not an exhaustive method ban.
+        // A process type supplied by a caller is not trusted unless it follows
+        // the selected native Species or an exact authenticated table ruling.
+        string? selectedNativeType = null;
+        if (proposal.Intent == NativeOriginIntent.Direct &&
+            proposal.SelectedSpeciesId is string speciesId &&
+            catalog.TryGetById(speciesId, out var species) &&
+            species?.Category == "species" &&
+            species.Definition.TryGetProperty("creatureType", out var typeValue) &&
+            typeValue.ValueKind == JsonValueKind.String)
+            selectedNativeType = "creature-type." + typeValue.GetString();
+        var processType = proposal.ProcessCreatureTypeId ?? selectedNativeType;
+        if (processType is not null)
+        {
+            var normalizedType = processType.StartsWith("creature-type.",
+                StringComparison.Ordinal) ? processType : "creature-type." + processType;
+            var processTypeDecision = Verified("process-type", proposal.Id);
+            var trustedType = normalizedType == selectedNativeType;
+            if (!trustedType && processTypeDecision is not null &&
+                JsonString(processTypeDecision.EffectiveOutcome, "creatureTypeId") ==
+                    normalizedType)
+            {
+                trustedType = true;
+                usedDm = true;
+                verifiedDmDecisionIds.Add(processTypeDecision.Id);
+            }
+            if (!trustedType)
+                Add("process-type-unverified", "processCreatureTypeId",
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The proposed process creature type lacks native source or verified table evidence.");
+            else if (nativeMethod?.Stage != "post-origination")
+            {
+                var available = new NativeOriginMethodAvailabilityEvaluator(catalog)
+                    .Resolve(normalizedType, proposal.Method);
+                if (available.Status == NativeOriginMethodDefaultStatus.Unresolved)
+                    Add("process-type-default-unresolved", "method",
+                        NativeOriginIssueSeverity.Unresolved,
+                        "The selected native type or method default cannot be resolved.");
+                else if (available.Status == NativeOriginMethodDefaultStatus.NotGranted &&
+                    ReadBool(Verified("method", proposal.Method.MethodId)?.EffectiveOutcome ??
+                        default, "allow") != true)
+                    Add("process-method-not-default", "method",
+                        NativeOriginIssueSeverity.Unresolved,
+                        "No ordinary method default is granted for this creature type; an authored process or verified table permission is needed.");
+            }
+        }
 
         // An authenticated table may replace a source acquisition gate or
         // authorize a new method without rewriting native catalog metadata.

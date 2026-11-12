@@ -63,6 +63,8 @@ internal static class NativeOriginProcessEvaluator
         return definitions.EnumerateArray().Any(entry =>
             Text(entry, "id") == requirement.Id &&
             Text(entry, "role") == requirement.Role.Kind.ToString() &&
+            (requirement.Role.Kind != NativeOriginInputKind.ProcessSpecific ||
+             Text(entry, "processRoleId") == requirement.Role.ProcessRoleId) &&
             ReadInt(entry, "minimumCount") == requirement.MinimumCount &&
             ReadInt(entry, "maximumCount") == requirement.MaximumCount);
     }
