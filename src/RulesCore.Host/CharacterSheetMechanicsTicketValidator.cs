@@ -9,6 +9,15 @@ namespace RulesCore.Host;
 /// Separate Site Tool-to-Tool authorization for Character Sheet mechanics.
 /// A Wiki ticket must never authorize a mechanics request. Fail closed.
 /// </summary>
+/// <summary>
+/// Identity and currently active campaign roles verified by a redeemed Site ticket.
+/// Only the trusted validator may place this record in HttpContext.Items.
+/// </summary>
+internal sealed record VerifiedCharacterSheetToolIdentity(
+    Guid UserId, IReadOnlyList<VerifiedCharacterSheetCampaign> Campaigns);
+
+internal sealed record VerifiedCharacterSheetCampaign(Guid Id, string Role);
+
 public sealed class CharacterSheetMechanicsTicketValidator(HttpClient siteClient)
 {
     private const string TicketHeader = "X-Dorks-Tool-Auth-Ticket";
@@ -17,13 +26,15 @@ public sealed class CharacterSheetMechanicsTicketValidator(HttpClient siteClient
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     private sealed record SiteUser(string? Id);
+    private sealed record SiteCampaign(Guid Id, string? Name, string? Role);
     private sealed record SiteContext(
         int ContractVersion,
         string? ToolKey,
         string? SiteMode,
         SiteUser? User,
         string? PrivateTunnelSourceToolKey,
-        string? DelegatedFromToolKey);
+        string? DelegatedFromToolKey,
+        IReadOnlyList<SiteCampaign>? Campaigns);
 
     public Task<IResult?> ValidateAsync(HttpContext context, bool requirePrivateTunnel = true) =>
         ValidateCoreAsync(context, requirePrivateTunnel, directConsumerCatalog: false);
@@ -81,6 +92,17 @@ public sealed class CharacterSheetMechanicsTicketValidator(HttpClient siteClient
             else if (session.DelegatedFromToolKey != "character-sheet" ||
                      session.PrivateTunnelSourceToolKey is not null)
                 return Fail(403, "mechanics_access_denied");
+            if (!Guid.TryParse(session.User.Id, out var userId) || userId == Guid.Empty)
+                return Fail(401, "invalid_ticket");
+            context.Items[typeof(VerifiedCharacterSheetToolIdentity)] =
+                new VerifiedCharacterSheetToolIdentity(
+                    userId,
+                    (session.Campaigns ?? [])
+                        .Where(campaign => campaign.Id != Guid.Empty &&
+                            !string.IsNullOrWhiteSpace(campaign.Role))
+                        .Select(campaign => new VerifiedCharacterSheetCampaign(
+                            campaign.Id, campaign.Role!))
+                        .ToArray());
             return null;
         }
         catch (OperationCanceledException) when (!context.RequestAborted.IsCancellationRequested)
