@@ -118,7 +118,11 @@ public sealed class NativeEffectiveCharacterProjectionBridgeTests
         Assert.Equal(14, result.Values["ability.strength.score"].Value);
         Assert.Equal(2, result.Values["ability.strength.modifier"].Value);
         Assert.Equal(12, character.AbilityScores["strength"]);
-        Assert.Empty(result.Issues);
+        // NativeCharacterProjector still reports unresolved equipment/defense
+        // inputs. Ability-only calculations remain separately usable.
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "defense-input-required");
+        Assert.DoesNotContain("proficiency.bonus", result.Values.Keys);
     }
 
     [Fact]
