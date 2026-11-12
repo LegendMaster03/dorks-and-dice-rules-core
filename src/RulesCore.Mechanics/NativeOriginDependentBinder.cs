@@ -61,7 +61,7 @@ internal static class NativeOriginDependentBinder
                 {
                     if (matching.Length > 0 &&
                         (matching.Length != 1 || matching[0].EffectiveValue is null ||
-                         !JsonElement.DeepEquals(inherited, matching[0].EffectiveValue.Value)))
+                         !JsonElement.DeepEquals(inherited, matching[0].EffectiveValue!.Value)))
                     {
                         issues.Add(new("origin-binding-parameter-conflict",
                             grant.Id + ":" + binding.Name,
