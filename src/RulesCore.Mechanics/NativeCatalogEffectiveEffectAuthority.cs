@@ -81,6 +81,8 @@ public sealed class NativeCatalogEffectiveEffectAuthority(
         if (string.IsNullOrWhiteSpace(directive.DefinitionId) ||
             grant.Identity?.Occurrence?.Source is null ||
             grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
+            !catalog.TryGetById(grant.Identity.Occurrence.Source.Id, out var nativeSource) ||
+            nativeSource is null || nativeSource.RulesetId != catalog.RulesetId ||
             !catalog.TryGetById(directive.RuleId, out var rule) || rule is null ||
             rule.Category != "rule" || rule.RulesetId != catalog.RulesetId ||
             !rule.Definition.TryGetProperty("effectiveEffectDefinitions", out var definitions) ||
