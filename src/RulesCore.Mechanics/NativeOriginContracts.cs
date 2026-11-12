@@ -30,6 +30,7 @@ public enum NativeOriginAdjudication { Supported, Conflict, Unresolved, DmAuthor
 public enum NativeOriginReviewStatus { StructurallyConsistent, Incomplete, Unresolved, Conflicting, Invalid }
 public enum NativeOriginIssueSeverity { Incomplete, Unresolved, Conflict, Invalid }
 public enum NativeOriginEventStage { Pending, InProgress, Completed }
+public enum NativeOriginGrantApplicabilityState { Applicable, Suppressed, Unresolved }
 
 /// <summary>A method ID in the selected native rule, not a second hard-coded method taxonomy.</summary>
 public sealed record NativeOriginMethodReference(string RuleId, string MethodId);
@@ -165,6 +166,16 @@ public sealed record NativeOriginEffectiveGrant(
     NativeOriginDecisionBasis? Authorization = null);
 
 /// <summary>
+/// A separately earned grant remains part of the character's entitlements even
+/// if a current form makes it temporarily unusable. Missing applicability
+/// records mean that applicability has not been determined, not that all
+/// independent grants are usable. Basis identifies authored/DM evidence.
+/// </summary>
+public sealed record NativeOriginIndependentGrantApplicability(
+    string GrantId, NativeOriginGrantApplicabilityState State,
+    NativeOriginDecisionBasis? Basis = null);
+
+/// <summary>
 /// A complete inherent Species/Ancestry configuration, usable as either the
 /// authoritative underlying baseline or the currently effective form. Neither
 /// role is implicit in this value type; the owning profile distinguishes them.
@@ -255,7 +266,9 @@ public sealed record NativeOriginProfile(
     IReadOnlyList<NativeOriginActiveTemporaryTransformation>?
         OtherActiveTemporaryTransformations = null,
     NativeOriginDecisionBasis? TemporaryTransformationPrecedence = null,
-    NativeOriginDecisionBasis? EffectiveConfigurationBasis = null);
+    NativeOriginDecisionBasis? EffectiveConfigurationBasis = null,
+    IReadOnlyList<NativeOriginIndependentGrantApplicability>?
+        IndependentGrantApplicability = null);
 
 public sealed record NativeOriginContractIssue(
     string Code, string Path, NativeOriginIssueSeverity Severity, string Detail);
