@@ -24,41 +24,55 @@ The three-factor **ordinary** Dragonborn formula (category, skin material, damag
 
 | Expression | Core role | Preliminary candidates, explicitly **not** grants |
 | --- | --- | --- |
-| **Heart** | The sovereign's draconic essence and power projected into the world | A **distinct Platinum Breath** or enhancement to the existing single Breath Weapon that can both exert force against threats and project a protective effect; a personal aura or ward reflecting the same heart rather than a second unrelated pool of breath attacks |
-| **Mind** | Perception, awareness, and command of one's own will | Senses beyond ordinary Low-Light Vision, potentially detecting threatening draconic/magical phenomena; improved defenses against hostile mental effects; a limited anticipatory awareness effect with a defined trigger rather than omniscience or automatic mind reading |
-| **Wings** | Majestic physical manifestation and influence over aerial space | Permanent wings and flight, eventually enhanced maneuverability or control of movement; an active wing-based ability that can protect or reposition others, so Wings remains significant even after ordinary flight is commonplace |
+| **Heart** | Draconic breath and extraordinary vitality | Published damaging and restorative **alternative breath modes** sharing one resource; consider a later distinct defensive manifestation, but not automatically combined damage and healing |
+| **Mind** | Heightened draconic perception and resilience | Source-grounded Darkvision/Blindsense progression (3.5), Truesight and specified condition protections (5e); precise translated senses, triggers and limits pending |
+| **Wings** | Physical draconic flight | Source-grounded visible wings and progressive gliding/flight (3.5), with Bahamut's flight as a higher-power reference (5e); speed, maneuverability, endurance and acquisition milestones pending |
 
 These are **mechanical roles and possible expressions**, not numeric choices, exact conditions, damage types, guaranteed immunity, specified ability resources, or a fixed moral/alignment profile. In particular, radiant damage, broad healing, a permanent protective aura, and truesight are **not automatically approved** by invoking a platinum theme.
 
-### Heart design pass — Sovereign Breath (working candidate; no mechanics approved)
+## Published Bahamut mechanics — source baseline, not adopted gameplay
 
-**Design target:** Heart should visibly represent the Platinum sovereign's **exceptional power and protective influence**, not only a stronger ordinary elemental attack. The **single coherent Breath Weapon** remains the preferred starting unit to study; do not treat the different outputs below as multiple separately earned Breath Weapons or automatic independent usage pools.
+**Owner direction (2026-11-11):** Develop Platinum primarily from **established mechanics of Bahamut and the historical Dragonborn of Bahamut**, instead of inventing a new thematic power set and searching for justification afterward. **Only** the inherent presence of Heart, Mind and Wings has been approved. Published abilities, labels and exact numbers below are historical research, not automatically approved Dorks & Dice features.
 
-Three alternatives considered:
+### Primary historical source comparison
 
-| Alternative | Benefit | Main concern | Disposition |
-| --- | --- | --- | --- |
-| Stronger damaging breath alone | Straightforward link to the existing breath | Magnitude increases without an exceptional identity | Weak fit |
-| Choose damage *or* protection each use | Clear choice and relatively simple resolution | Could resemble another ordinary Metallic secondary-breath mode | Viable fallback |
-| **Sovereign Breath: selective destructive/protective projection in one use** | Distinct battlefield identity; both overwhelming force and selective protection | Requires careful area/target/resource contract; high combined action value | **Preferred working candidate**, not approved |
+| Source | Published mechanics (paraphrased) | Implications for Platinum ancestry |
+| --- | --- | --- |
+| *Races of the Dragon* (3.5), **Dragonborn of Bahamut** | **Heart:** shining line breath, choice of acid/cold/electricity/fire at use, Hit Dice-based damage/length, recharges in 1d4 rounds | Precedent for a versatile but **single** scaled offensive breath; does not establish radiant or healing breath for the original 3.5 Dragonborn |
+| Same, **Mind** | Progressive low-light/Darkvision, eventual Blindsense; defense against paralysis and magical sleep | Direct mechanical starting point for the inherent **Mind** expression |
+| Same, **Wings** | Wings enable gliding; flight arrives with higher Hit Dice and initially has endurance restrictions before becoming sustained | Direct mechanical starting point for inherent **Wings** and progressive aerial capability |
+| *Fizban's Treasury of Dragons* (5e, 2021), **Aspect of Bahamut**, pp. 164–165 | **Platinum Breath:** radiant-damage cone; **Exalting Breath:** restorative cone healing chosen creatures and potentially restoring recently deceased creatures; the two modes share the same breath recharge | **Most concrete reference for Heart:** distinguish *offensive* versus *restorative* breath. They are **alternatives on each use, not simultaneous damaging and healing outputs** |
+| Same, defense and senses | Truesight, several damage/condition immunities, Legendary Resistance; **Platinum Brilliance** provides an additional powerful phase after an otherwise fatal defeat | High-end examples for Mind and exceptional resilience, **not blanket player immunities, full Truesight or automatic extra lives** |
+| Same, mobility and mythic features | High flight speed, **Celestial Shield** temporary HP, **Celestial Lances** force attack | Flight supports Wings. Shield/lances are **separate abilities**, not Breath Weapon outputs and not necessarily inherent wing features |
 
-**Illustrative usage, not a finalized rule:** On the Platinum Dragonborn's turn, a single breath manifestation projects over an authored area. The player designates eligible creatures for a **destructive** effect or a **protective** effect, without relying on inferred alignment, moral status, or whether the creature is an ally or enemy. An affected creature would ordinarily receive one designated output rather than stacking both. A single activation could strike chosen opponents while shielding chosen companions in the same area. This is a mechanical example only; exact eligibility, geometries, saving throws, damage, ward effect, duration, resources and activation timing remain open.
+Published mechanical evidence:
+- 3.5 **Dragonborn of Bahamut** comparison: https://dnd3-5.wikidot.com/dragonbornrace (secondary transcription of *Races of the Dragon*).
+- 5e **Aspect of Bahamut** comparison: https://onyx5e.com/en/bestiary/aspect-of-bahamut/ (secondary transcription of *Fizban's Treasury of Dragons*, pp. 164–165).
+- Historical 3.5 Dragonborn notes: `data/rulesets/first-party-001/working/species/subspecies/dragonborn/SHARED_BREATH_REFERENCE.md`.
+- 3.5 *Dragon Magic* also offers **Discorporating Breath of Bahamut** as an advanced **Dragonfire Adept breath effect**. That is **not Bahamut's creature stat block or an automatic Dragonborn of Bahamut grant**; consider separately as class/invocation or advanced option research, not proof of Platinum ancestry entitlement.
 
-**Identity distinctions from native records:**
+The published depictions differ **across editions and rules contexts**. We may adapt selected mechanical ideas to the existing Dorks & Dice system, but should not imply that a 3.5 transformed ancestry, a deity's high-level 5e creature aspect, and a prestige class have the same playable abilities.
 
-- Base Dragonborn Breath Weapon already replaces **one attack** during the Attack action, deals ancestry-linked damage, and has Proficiency Bonus uses per Long Rest. Sovereign Breath might **enhance/replace that one entitlement** and preserve one shared resource rather than adding a separate damage pool. The use/action contract must be decided explicitly.
-- Ordinary Metallic Breath Weapon is a **different** level-5, once-per-Long-Rest ability with Enervating/Repulsion options, affecting allies too. If Platinum is modeled under the Metallic family, its inherited secondary Breath must be explicitly **retained, superseded, or integrated**; it cannot be silently duplicated or dropped. None of those relationships is approved by this proposal.
-- The native base Breath Weapon and Draconic Resistance both derive their damage type from the **selected ordinary Dragonborn leaf**. Platinum's singular identity does **not** yet define an affinity. Its own explicit ancestry value or source-qualified override will be required before proposing an executable definition. **Radiant, force, or any ordinary metallic damage affinity is not selected** by this design pass.
-- A shield could mean temporary hit points, one-use damage prevention, a limited damage reduction, or a bounded protective condition. These have different timing, stacking and balance consequences. Do not automatically equate protection with healing, universal immunity, or granting an existing resistance to every ally.
-- This ancestry is supposed to be **substantially more powerful** than ordinary Dragonborn. That permits a strong combined ability but does not remove the need to define who is affected, once-per-use accounting, whether effects repeat on multiple attacks, and whether multiple overlapping wards stack.
+### Heart — revised leading candidate: two-mode Platinum Breath
 
-**Heart's relationship to Mind and Wings:** Mind may later make threats easier to identify and distinguish; Wings may later improve positioning and spatial reach. **Neither expression should be a prerequisite to using Heart**, because all three manifest together at rebirth. A combined advanced ability can be designed separately once each expression's actual mechanics exist.
+**Working direction, not owner-approved mechanics:** Use **one coherent Breath Weapon resource** offering **two distinct output modes**:
 
-**Open approval gates:** (1) Is selective simultaneous damage-and-protection the desired core Heart identity? (2) Is protection an effect of Sovereign Breath, a separate persistent/activated Heartward, or both? (3) Does Platinum explicitly replace the ordinary Breath Weapon and/or Metallic secondary breath? (4) What affinity, damage/ward effects, activation, area, and scaling are authored? No answer is implied by the sample.
+1. **Offensive breath:** Inspired by the 5e aspect's radiant damaging breath and the 3.5 Dragonborn's scaling line breath. Proposed Dorks & Dice damage affinity, geometry and scaling **remain open**.
+2. **Restorative breath:** Inspired by the 5e aspect's separate healing breath. Determine how to translate beneficial targets, healing amount, and level-gated revival (if any), rather than silently granting mass resurrection to every reborn character.
 
-### Unifying ability: all three expressions acting together (candidate)
+A character chooses one mode on each use. **No default rule permits damaging opponents and healing or shielding allies simultaneously with the same breath.** That earlier combined **Sovereign Breath** proposal was an independently invented alternative and is **superseded as the preferred working direction** by source-grounded alternative modes. It may be reconsidered only as an explicitly new design, not misrepresented as a published Bahamut mechanic.
 
-A later feature could combine **Heart** (projects a protective or forceful effect), **Mind** (identifies or anticipates the relevant threat), and **Wings** (interposes or directs the effect across space). This is one possible way to represent the sovereign as a whole, rather than assigning three disconnected abilities. No unique action, reaction, cost, timing, duration, targeting, or power tier has been selected.
+**Interaction with existing native Dragonborn rules:** Ordinary Breath Weapon replaces one Attack-action attack (PB uses per Long Rest). Metallic Breath Weapon is a separate level-5, once-per-Long-Rest Enervating/Repulsion choice affecting creatures in its area, including allies. The Platinum ancestry must explicitly decide whether the two new modes **replace, extend or coexist** with those existing grants; do not silently append a third pool or treat historical 5e monster recharge as already applicable to player characters.
+
+**Other published Bahamut mechanics** such as Platinum Brilliance (a mythic survival-phase mechanic), Celestial Shield (temporary HP) or Celestial Lances (force damage) are separate optional research candidates. They need not be included in Heart, and some may better fit later character progression or a future Draconic Patron. Previous decisions to keep the unrelated **Vassal of Bahamut** prestige-class powers largely in the future Patron candidate pool remain unchanged.
+
+### Mind and Wings — next source-led design passes
+
+**Mind:** Start with the 3.5 Dragonborn's progressive visual/Blindsense abilities and protection against paralysis/magical sleep, then compare Bahamut's 5e Truesight and broader condition defenses. Because the native Dragonborn already has Low-Light Vision, simple low-light duplication adds nothing. Decide what distinct senses or protections are genuinely inherent, and how acquisition at different levels affects progression. Do **not** assume all monster immunities.
+
+**Wings:** Start with the original 3.5 progression of wings -> gliding -> restricted flight -> sustained flight, then compare the 5e aspect's powerful flying movement. All Platinum Dragonborn have the Wings expression, but the precise initial movement capabilities and advancement milestones are still open. Do **not** infer that they must use the original 3.5 Hit Dice milestones without adaptation.
+
+**Preserve approved architecture:** All three expressions manifest together in exceptional Draconic Rebirth. Neither ancestry Heart powers nor the overall Rite require becoming a Warlock, selecting a Vassal-inspired prestige class, or receiving a fixed contractual term. No levels, die formulas, resources, spell-like effects or native data are approved by this research pass.
 
 ## Approved expression structure and pending feature design
 
@@ -93,9 +107,9 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 ## Questions for a later decision pass
 
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
-2. Should the proposed **Sovereign Breath** affect selected creatures destructively and protectively in one use, and how should it explicitly relate to the base and Metallic Breath Weapons? What affinity, ward effect, geometry, action and resource does it require?
-3. Does Mind emphasize sensing, anticipation, will, or a linked progression without making all special senses permanently available?
-4. Does Wings grant permanent flight immediately on rebirth, and what secondary wing ability makes it distinctive?
+2. Should Platinum Heart implement **alternative damaging and restorative breath modes sharing one resource**, as in the 5e Aspect, and how do they relate to the existing base and Metallic Breath Weapons? What affinity, scaling, area, healing limits and optional revival rules apply?
+3. Which **source-established** Mind features (progressive Darkvision/Blindsense, paralysis/sleep protection, later Truesight or comparable resilience) should manifest, and at what progression?
+4. How should Wings adapt the 3.5 glide/flight progression for a character reborn at any level? Which abilities are available immediately and which scale?
 5. Should the three expressions combine in a unique later ability, and what triggers advancement for characters reborn at different levels?
 6. What small set of feature interactions provides the intended substantial power increase without creating redundant or contradictory feature packages?
 
