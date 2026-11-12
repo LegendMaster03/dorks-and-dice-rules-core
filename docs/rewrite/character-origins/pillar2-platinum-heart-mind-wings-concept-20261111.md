@@ -98,6 +98,12 @@ These examples illustrate the **approved Platinum design**, but **do not claim t
 **Implementation boundary:** The Platinum **design is approved**, but this commit is documentation-only. Native ancestry records, ordinary mixed-Heritage exclusion, rebirth engine/resource handling, executable combat rules and validation tests require the planned broader Pillar 2 integration. Exceptional Platinum is still **not** an ordinary character-creation selection without explicit DM authorization. No main-branch merge or native gameplay change is made by this decision.
 
 
+### Proposed shared legendary Wings timing adjustment (not yet approved)
+
+**Review request (2026-11-11):** Ordinary Gem Dragonborn gain a once-per-Long-Rest minute of hovering flight at character level **5**, while Platinum's approved stage thresholds still place its first powered flight at **level 6**. To correct this without discarding the already approved glide/limited/sustained stages, propose **glide at levels 1–4, 30-foot powered flight for one minute once per Short or Long Rest at levels 5–10, and continuous 30-foot flight beginning at level 11**. Fivefold Chromatic would use the same proposed schedule; Ruby will be evaluated separately. The limited flight refresh remains more frequent than Gem Flight, but Gem's hovering remains distinct.
+
+**Approval boundary:** This is a **proposal**, not a revision to the Platinum mechanics already approved above. Until separately approved, the authoritative Platinum Wings thresholds remain **1–5 gliding / 6–11 limited powered flight / 12+ sustained flight**. No other Platinum ability or numerical progression changes in this study. See [Fivefold's Aspect of Tiamat-led comparison](pillar2-fivefold-chromatic-concept-20261111.md) for the shared timing rationale.
+
 ## Prior design history and source comparisons
 
 **Historical record:** The following exploratory discussions predate the final approval above. Any statement that mechanics, values, or progression were still candidates is superseded by the authoritative approved specification. The separate Vassal/patron discussion and the distinctions between published NPC mechanics and this ancestry remain relevant.
