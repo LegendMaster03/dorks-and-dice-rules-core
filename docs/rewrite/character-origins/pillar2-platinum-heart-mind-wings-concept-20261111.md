@@ -156,7 +156,99 @@ Heart's current **one combined damaging-and-healing breath** is supported by the
 
 Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (Heart, Mind, Wings selection and HD-based enhancements); and *Book of Exalted Deeds* (3.5), **Vassal of Bahamut** as a distinct prestige-class source. Retain these as **internal source references only**. Player-facing first-party rules should use descriptive category-leader identities and independently written lore, rather than naming or reconstructing a recognizable D&D-specific character portrayal. Retaining the broad design themes does not authorize copying source prose or unique expression.
 
-## Questions for a later decision pass
+## Consolidated numerical proposal — decision-ready, not approved
+
+**Review status (2026-11-11):** This is a **concrete mechanical package for owner review**, not executable content or an authorization to treat unapproved numbers as settled. It consolidates the already approved three inherent expressions, combined breath, Mind direction, Wings stage thresholds, and total-character-level advancement into a single testable proposal. The proposals below deliberately **do not require ordinary starting-ancestry parity**; exceptional Platinum is acquired by a DM-authorized exception or the Metallic sovereign's direct participation in an exceptional Rite.
+
+### Proposed unified Platinum ancestry inheritance
+
+- The Platinum record is a **singular exceptional Dragonborn leaf directly under Dragonborn Species**, not a standard Metallic leaf inheriting the ordinary Metallic family's secondary Enervating/Repulsion Breath. Its thematic family is Metallic, but it does **not** inherit all ordinary Metallic abilities simply because of that label.
+- Keep the Dragonborn Species' **Dragon creature type, Medium size, 30-foot walking speed, and Low-Light Vision**, unless later independent species work changes them.
+- **Replace the ordinary Dragonborn Breath Weapon** with the one exceptional combined Heart breath below, rather than stacking two damaging breaths or creating an additional independent breath resource. **Do not inherit ordinary Metallic secondary Breath** for this exceptional leaf; this keeps the approved **single breath attack** straightforward. This is a proposed parent/trait-resolution design, not yet an approved change to shared catalogs.
+- The base Species' **50% Draconic Resistance** depends on a leaf-defined affinity. **Propose explicit radiant affinity and 50% radiant resistance** on Platinum rather than inferring one of the ordinary Metallic damage types. Radiant is taken from the 5e Dragonborn of Bahamut champion's breath; this new Platinum affinity still requires owner approval.
+- The base record's traits must be **source-overridden deliberately**; a direct ancestry parent alone must not produce **two overlapping Breath Weapon grants**.
+
+### Heart — one Breath Weapon with selective healing
+
+| Concern | Concrete mechanical proposal | Status |
+| --- | --- | --- |
+| **Area** | **30-foot cone** from the Dragonborn | Candidate; matches 5e champion rather than ordinary Metallic 15-foot cone |
+| **Activation** | On your turn, **replace one attack of your Attack action** (existing native Dragonborn action contract) | Candidate to minimize new engine behavior |
+| **Save** | All damaged creatures in the cone make a **Dexterity** save against **8 + PB + Constitution modifier**; success takes half damage | Reuse native formula; candidate for exceptional breath |
+| **Damage** | **Radiant** damage: character levels **1–4: 2d10**, **5–10: 4d10**, **11–16: 6d10**, **17+: 8d10** | Proposed ~double the normal Dragonborn damage progression; *not* NPC 8d10 at all levels |
+| **Restoration** | When using the breath, designate **up to three other creatures in the cone**. They take **no damage from that breath** and instead regain HP: **1d10 / 2d10 / 3d10 / 4d10** at the same level thresholds | Selected source-inspired recipient count; proposed half of the damage dice |
+| **Target semantics** | Chosen recipients are selected by the player, irrespective of creature alignment, ally/enemy relationship, or prior conditions; chosen recipients are healed **instead of** damaged. Other creatures in the area, including allies not chosen, face the save/damage. | One area, activation and output-selection contract |
+| **Healing cap** | Ordinary healing can not exceed the target's HP maximum; can restore a living creature at **0 HP**, but does **not revive a dead creature**, cure conditions, grant temporary HP, or heal the user unless within the authored area | Candidate; no unsupported resurrection/Healing Touch import |
+| **Use resource** | **PB uses per Long Rest**, shared across all uses of this one breath | Candidate reuse of selected native Dragonborn resource, not a separate 5e NPC Recharge 6 |
+| **Resistance** | Platinum's separate innate resistance is **50% radiant** (not permanent immunity) | Candidate explicit affinity in the singular leaf |
+
+**One-attack consequence:** Replacing one attack, rather than using a full separate action, is intentional because ordinary Dragonborn already use that contract. **One use produces only one 30-foot cone**, even when the character has Extra Attack, Action Surge or similar effects; taking a separate legal Attack action could permit another use if resources remain. Prevent a single attack replacement from duplicating the area or reapplying healing. Existing ordinary Metallic secondary breath is excluded from the proposed singular Platinum leaf.
+
+**Balance visibility (averages on dice, before saves/resistance):**
+
+| Total level | Damage to each nonselected creature on failed save | Healing to **each** of up to 3 selected creatures | Uses/Long Rest |
+| --- | --- | --- | --- |
+| 1–4 | 11 | 5.5 | PB (usually 2) |
+| 5–10 | 22 | 11 | PB (typically 3–4) |
+| 11–16 | 33 | 16.5 | PB (typically 4–5) |
+| 17+ | 44 | 22 | PB (typically 6) |
+
+This is **substantially stronger** than the baseline ordinary Dragonborn (1d10/2d10/3d10/4d10) because each breath also heals up to three targets. This strength is intentional; test actual encounters and whether healing all three targets simultaneously is satisfactory before selecting it as final.
+
+### Mind — senses and resilience as character-level abilities
+
+| Total character level | Proposed innate Mind benefits |
+| --- | --- |
+| **1+** | **Darkvision 30 ft** in addition to native Low-Light Vision; immunity to the native **Frightened** condition; immunity to **Paralyzed** and magical sleep effects, following the 3.5 original Mind defensive precedent |
+| **6+** | Darkvision increases to **60 ft** |
+| **9+** | Darkvision increases to **90 ft**; **one failed saving throw per Long Rest may instead succeed**, declared after a failure (limited champion-style protection, not NPC Legendary Actions) |
+| **12+** | Darkvision increases to **120 ft** |
+| **15+** | **Blindsense 30 ft**, not Blindsight or Truesight |
+
+**Sense contract:** Darkvision does not displace Low-Light Vision, but its actual light/darkness behavior must match the authoritative Dorks & Dice sense rules. Blindsense indicates the **location/presence** of a creature within 30 ft when ordinary sight is insufficient, subject to occlusion and environment rules; it is not equivalent to seeing a creature, automatically bypassing hidden/invisible-target restrictions, or making the creature immune to blindness. Precise authored rule references and concealment handling must be reconciled before native implementation.
+
+**Defense contract:** Frightened and Paralyzed immunity should reference native conditions. Immunity to *magical sleep* needs an explicit rule effect/category; it is **not** immunity to ordinary rest, unconsciousness, every effect that renders a character unconscious, or every charm/mind-control effect. The saving-throw intervention is **once per Long Rest**, usable only after the result would fail, without a separate Action; it should not negate a roll that was never a saving throw. Condition terminology and ability triggers must be validated against native authoritative IDs.
+
+**Not part of this proposal:** blanket Truesight, every Legendary Resistance from the 5e monster Aspect, universal condition immunity, spellcasting, or weapon flashes. Future generalized exceptional-champion content may also consider fear immunity and limited save protection for other leaders, but this does not automatically grant those features to Chromatic or Ruby.
+
+### Wings — approved levels, proposed numerical movement rules
+
+The **1–5 / 6–11 / 12+ stage thresholds and total-character-level metric are already approved**. The following **numbers and handling** remain proposed:
+
+| Total level | Concrete mobility proposal |
+| --- | --- |
+| **1–5** | Wings can **glide at up to 30 feet of horizontal movement per turn** while descending at least **5 feet for each 20 feet traveled horizontally**. Controlled gliding prevents falling damage on a safe landing and requires space to deploy wings. **No powered ascent, hover or sustained flight** |
+| **6–11** | Gain a **30-foot flying speed** for a period of **up to 1 minute**, usable **once per Short or Long Rest**. Once spent, the character can still glide. Do not copy the original 3.5 fatigue/Constitution-round/10-minute-per-day bookkeeping into a new condition system |
+| **12+** | The **30-foot flying speed** becomes **continuous** with no special duration or usage restriction; gliding and controlled landing remain available |
+
+**Flight edge handling candidates:** Gliding is not hovering. Running out of limited powered flight while airborne permits continued gliding rather than automatic unsupported levitation. If incapacitated in midair, controlled flight/gliding generally ceases; a source-inspired possibility is to cap involuntary-fall damage at **1d6** due to reflexive wing deployment, but **the exact incapacitated/falling exception is not selected yet**. A creature blocked from moving by a condition still obeys that condition; no special ability to fly through solid obstacles or hover is implied. Existing game-wide carrying/encumbrance and movement limitations continue to apply rather than introducing a new Wings-only weight subsystem.
+
+**Reason for simplifying early flight:** The original 3.5 rule used Constitution-modifier rounds and fatigue plus a daily cumulative flight budget. A single 1-minute use per Short or Long Rest is easier for the existing action/resource model and preserves a difference between limited flight and sustained flight. The choice is open for owner review; source-faithful fatigue is **not** silently a native Dorks & Dice requirement.
+
+### Rebirth at any level — proposed operational semantics
+
+At the **instant the completed Rite takes effect**, replace the entire former Species/Ancestry-derived intrinsic package with the Platinum Species/Ancestry configuration, including creature type and source-qualified traits. Resolve **every level-gated Platinum benefit against current total character level**, not the old Species' Hit Dice, the source creature's CR, Warlock level, the time since transformation, or a newly created ancestry level.
+
+- **Level 3 rebirth:** Combined Heart Breath at **2d10 damage/1d10 healing**, Mind Darkvision 30 ft and initial defenses, Wings gliding.
+- **Level 8 rebirth:** Combined Heart Breath at **4d10/2d10**, Mind Darkvision 60 ft and initial defenses, Wings limited flight.
+- **Level 15 rebirth:** Combined Heart Breath at **6d10/3d10**, Mind Darkvision 120 ft, Blindsense 30 ft, one failed-save intervention per Long Rest, Wings sustained flight.
+- **Level 20 rebirth:** Combined Heart Breath at **8d10/4d10**, Mind's full proposed senses/defenses, Wings sustained flight.
+
+These examples presume the **entire numerical proposal** is approved later; they do not authorize live rules. The original parents, Heritage contributors, Background and Upbringing remain historical/independent and **are not rewritten**. A DM-authorized exceptional starting character uses the same current-level rules. Ordinary mixed-Heritage eligibility remains gated against automatically selecting the complete exceptional Platinum package.
+
+**Usage resources on rebirth:** The rules engine must explicitly establish how already-spent Species/Ancestry resource counts are replaced, including preventing a second full allocation by repeatedly transforming during a single rest cycle. **Recommended anti-exploit rule for review:** when a rebirth occurs during an active rest interval, the new breath and limited flight start with their full capacity **minus the amount already spent from mechanically corresponding old grants in that same interval, capped to the new capacity**, unless the Rite explicitly restores them. Different resource entitlements should not be conflated solely because they are sourced from Species. This accounting remains unapproved and may require generalized provenance support.
+
+### Closing disposition and boundaries
+
+**Approved:** All three aspects acquired together; one combined damaging/healing Breath Weapon structure; Mind combines progressive senses with limited resilience; Wings advances through gliding at levels 1–5, limited flight at 6–11, sustained flight at 12+; **all Wings progression uses total character level**.
+
+**This section proposes, but does not yet approve:** precise Heart damage/healing/targets/save/action/recharge and radiant resistance; Mind ranges, conditions, milestones and save protection count; Wings movement speed, duration and falling behavior; handling of resources on the instant of rebirth. These can be accepted as one coherent package or adjusted individually during owner review.
+
+**Deliberately not included:** Vassal-derived patron/service powers, Healing Touch as a separate action, automatically granted resurrection, 5e NPC Multiattack/equipment/alignment/CR or independent mythic phases. Rebirth and Draconic Patron remain separate; no hard two-path narrative enforcement or unrestricted mixed-ancestry access is introduced. No further Platinum-specific feature families are needed to complete this ancestry concept unless playtesting identifies a real gap.
+
+**Implementation/approval boundary:** Documentation-only proposal. Do not create first-party native Platinum records, selectable options, runtime rules, API adaptations, or test expectations from the unresolved numeric values without explicit approval.
+
+## Earlier open questions (research history; consolidated answers proposed above)
 
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
 2. For the **approved combined damaging-and-healing Breath Weapon**, how should it replace/enhance/coexist with the base and Metallic Breath Weapons? What damage affinity, shape, number of recipients, scaling formula, healing conditions, action, uses and recharge schedule should be selected?
