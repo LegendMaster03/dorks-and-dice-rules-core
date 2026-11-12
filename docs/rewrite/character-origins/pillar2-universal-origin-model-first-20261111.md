@@ -87,6 +87,14 @@ An ordinary direct standard Species/Ancestry may be a **preset selection** in th
 
 **Common source lineage is an optimization of evidence representation, not a grant rule.** It does not remove the need for a manifestation decision, and a character need not have biological parent contributors.
 
+## Initial universal characteristic identity proof
+
+The [read-only identity evidence study](pillar2-characteristic-identity-boundaries-20261111.md) now explicitly distinguishes **intrinsic mechanical slots**, **trait concepts**, **complete mechanical definitions**, **authored source occurrences**, **contributor offers**, and eventual **manifested grants**. It preserves each original source offer and existing unresolved evidence instead of inferring equality from matching local trait names or values. An explicitly synthetic cross-source mapping demonstrates the identity layers without deciding duplicate, upgrade, stacking, inheritance or actual selected-grant rules.
+
+A separate **source-free custom proposal** can be represented as candidate evidence with its proposed authoring-policy provenance and no fabricated parent. That is **not yet** a fully custom character creation implementation or an approved trait allocation. The identity layer must ultimately work regardless of whether eligible offers originate with a standard Species, a nested mixed contributor or authorized custom content.
+
+The next concrete implementation work is to **review authoritative mechanical-definition identity** and define the distinct current-grant identity/authorization contract. General conflict and manifestation logic must follow those identity decisions rather than reconstructing them separately for each Species.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
