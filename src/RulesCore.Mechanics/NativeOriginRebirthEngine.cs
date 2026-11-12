@@ -101,8 +101,8 @@ public sealed class NativeOriginRebirthEngine(NativeCatalogSnapshot catalog)
         if (issues.Any(x => x.Severity == NativeOriginIssueSeverity.Invalid))
             return Result();
 
-        target = _construction.Evaluate(new NativeOriginConstructionRequest(proposal,
-            request.TrustedScope), authority);
+        target = _construction.EvaluateReconstructionTarget(
+            new NativeOriginConstructionRequest(proposal, request.TrustedScope), authority);
         issues.AddRange(target.Issues);
         if (!target.IsMechanicallyAuthorized || target.Profile is null)
             return Result();
