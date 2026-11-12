@@ -284,6 +284,44 @@ class ApplicableChoiceTests(unittest.TestCase):
                 "choiceEvidence"]["authoredOccurrenceId"]
         )
 
+    def test_native_offer_from_unrelated_selected_species_is_rejected(self):
+        pool = characteristic_candidate_pool(
+            [direct("human", "species.human")], {},
+            self.blueprints, self.catalog, self.contracts,
+        )
+        item = next(x for x in pool["offers"]
+                    if x["identity"] == "species.human#trait:skillful")
+        item["provenance"]["selectedSourceId"] = "ancestry.elf.high"
+        preview, whole = self.pipeline(
+            [], lambda x: x["sourceTraitOrFieldId"] ==
+            "species.human#trait:skillful",
+            pool=pool,
+        )
+        with self.assertRaisesRegex(
+            ApplicableChoiceError, "outside selected lineage"
+        ):
+            self.apply(preview, whole)
+
+    def test_native_intrinsic_value_is_verified_against_authored_source(self):
+        pool = characteristic_candidate_pool(
+            [direct("human", "species.human")], {},
+            self.blueprints, self.catalog, self.contracts,
+        )
+        item = next(x for x in pool["offers"]
+                    if x["kind"] == "intrinsic"
+                    and x["identity"] == "creature.size"
+                    and x["value"] == "small")
+        item["value"] = "huge"
+        preview, whole = self.pipeline(
+            [], lambda x: x.get("intrinsicSlotId") ==
+            "creature.size" and x.get("value") == "huge",
+            pool=pool,
+        )
+        with self.assertRaisesRegex(
+            ApplicableChoiceError, "not from authored source"
+        ):
+            self.apply(preview, whole)
+
     def test_bad_projection_and_choice_audit_are_rejected(self):
         preview, whole = self.pipeline(
             [direct("human", "species.human")],
