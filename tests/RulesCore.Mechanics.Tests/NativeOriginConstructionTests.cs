@@ -599,6 +599,14 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         Assert.Equal("custom.human-elf", result.Profile!.Underlying.SpeciesId);
         Assert.Equal(5, result.Profile.Underlying.InherentGrants.Count);
+        // Direct first-party projection must stay closed to mixed construction.
+        Assert.Equal("unresolved", NativeOriginIntrinsicProjector.Project(result).Status);
+        var mixedScalars = NativeOriginApprovedMixedIntrinsicProjector.Project(result);
+        Assert.Equal("resolved", mixedScalars.Status);
+        Assert.Equal("humanoid", mixedScalars.CreatureType?.Value);
+        Assert.Equal("medium", mixedScalars.Size?.Value);
+        Assert.Equal(30, mixedScalars.WalkingSpeedFeet?.Value);
+        Assert.Empty(mixedScalars.UnresolvedSlots);
         Assert.Equal("humanoid", result.Profile.Underlying.InherentGrants.Single(x =>
             x.Identity.IntrinsicSlotId == "creatureType").EffectiveValue!.Value.GetString());
         Assert.Equal(NativeOriginEventStage.Completed, result.Profile.History.Single().Stage);
