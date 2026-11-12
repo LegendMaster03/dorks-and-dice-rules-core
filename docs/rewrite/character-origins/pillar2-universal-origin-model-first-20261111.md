@@ -131,6 +131,12 @@ The companion active-choice projection ties these authored records only to **ten
 
 This is the next general architectural boundary before actual standard-Origin round-trip reconstruction: first-party choice timing, eligibility, persistence, and choice-instance identity must become trusted data, not source-text heuristics.
 
+## Choice instances and mixed-parent choice-history boundary
+
+The [choice-instance provenance study](pillar2-choice-instances-and-nested-history-20261111.md) extends the general active-choice audit with explicit **candidate/choice-instance pairing** and declared option values. The tool distinguishes authored finite choices from synthetic catalog-backed choice evidence, rejects unsupported selections or false entitlements, and prohibits recording on-use effect options as permanent inherited traits. The resulting instances are **proposed**, not authorized grants; unresolved timing, allocations, dependent bindings and real catalog eligibility remain visible.
+
+The study also introduces a **version-bound proposed choice-history sidecar** for already mixed parent profiles, because the existing draft Origin profile does not record independent choices. A matching historical sidecar is **not verified selection authority or transmission eligibility**. Future reconstruction must store accepted choice instances in the same verified current profile as the manifested grant, and then separately determine what the next generation may receive. This avoids inventing ancestry, re-running old ancestor choices, or claiming that inherited choice values automatically reproduce.
+
 ## Universal contracts to establish, in dependency order
 
 | Boundary | Required general behavior | Current evidence and unresolved work |
