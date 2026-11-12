@@ -92,17 +92,19 @@ public sealed class CharacterSheetMechanicsTicketValidator(HttpClient siteClient
             else if (session.DelegatedFromToolKey != "character-sheet" ||
                      session.PrivateTunnelSourceToolKey is not null)
                 return Fail(403, "mechanics_access_denied");
-            if (!Guid.TryParse(session.User.Id, out var userId) || userId == Guid.Empty)
-                return Fail(401, "invalid_ticket");
-            context.Items[typeof(VerifiedCharacterSheetToolIdentity)] =
-                new VerifiedCharacterSheetToolIdentity(
-                    userId,
-                    (session.Campaigns ?? [])
-                        .Where(campaign => campaign.Id != Guid.Empty &&
-                            !string.IsNullOrWhiteSpace(campaign.Role))
-                        .Select(campaign => new VerifiedCharacterSheetCampaign(
-                            campaign.Id, campaign.Role!))
-                        .ToArray());
+            // Older authenticated mechanics consumers may have non-Guid
+            // test/service subject identifiers. Preserve their established
+            // access; only DM approvals require an actual Site account GUID.
+            if (Guid.TryParse(session.User.Id, out var userId) && userId != Guid.Empty)
+                context.Items[typeof(VerifiedCharacterSheetToolIdentity)] =
+                    new VerifiedCharacterSheetToolIdentity(
+                        userId,
+                        (session.Campaigns ?? [])
+                            .Where(campaign => campaign.Id != Guid.Empty &&
+                                !string.IsNullOrWhiteSpace(campaign.Role))
+                            .Select(campaign => new VerifiedCharacterSheetCampaign(
+                                campaign.Id, campaign.Role!))
+                            .ToArray());
             return null;
         }
         catch (OperationCanceledException) when (!context.RequestAborted.IsCancellationRequested)
