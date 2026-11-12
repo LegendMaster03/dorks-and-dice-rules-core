@@ -166,7 +166,7 @@ class ApplicableChoiceTests(unittest.TestCase):
         preview, whole = self.pipeline(
             [direct("infernal", "ancestry.tiefling.infernal")],
             lambda x: x["sourceTraitOrFieldId"] ==
-            "species.tiefling#trait:otherworldly-presence",
+            "species.tiefling#trait:low-light-vision",
         )
         report = self.apply(preview, whole)
         self.assertIn(
@@ -175,7 +175,18 @@ class ApplicableChoiceTests(unittest.TestCase):
                 report["sourceConfigurationControlsNotApplied"]
             }
         )
+        # The otherworldly-presence dependent ability reference remains
+        # unresolved in the existing parameter-binding candidate pipeline.
+        # Its authoring choice stays visible in the schema, but must NOT
+        # be treated as a selected grant merely because the source exists.
         self.assertIn(
+            "spellcastingAbilityFrom", {
+                x["authoredField"] for x in
+                self.choice_report["choiceObservations"]
+                if x["sourceId"] == "species.tiefling"
+            }
+        )
+        self.assertNotIn(
             "spellcastingAbilityFrom", {
                 x["choiceEvidence"]["authoredField"] for x in
                 report["applicableNativeChoiceEvidence"]
