@@ -30,6 +30,32 @@ The three-factor **ordinary** Dragonborn formula (category, skin material, damag
 
 These are **mechanical roles and possible expressions**, not numeric choices, exact conditions, damage types, guaranteed immunity, specified ability resources, or a fixed moral/alignment profile. In particular, radiant damage, broad healing, a permanent protective aura, and truesight are **not automatically approved** by invoking a platinum theme.
 
+### Heart design pass — Sovereign Breath (working candidate; no mechanics approved)
+
+**Design target:** Heart should visibly represent the Platinum sovereign's **exceptional power and protective influence**, not only a stronger ordinary elemental attack. The **single coherent Breath Weapon** remains the preferred starting unit to study; do not treat the different outputs below as multiple separately earned Breath Weapons or automatic independent usage pools.
+
+Three alternatives considered:
+
+| Alternative | Benefit | Main concern | Disposition |
+| --- | --- | --- | --- |
+| Stronger damaging breath alone | Straightforward link to the existing breath | Magnitude increases without an exceptional identity | Weak fit |
+| Choose damage *or* protection each use | Clear choice and relatively simple resolution | Could resemble another ordinary Metallic secondary-breath mode | Viable fallback |
+| **Sovereign Breath: selective destructive/protective projection in one use** | Distinct battlefield identity; both overwhelming force and selective protection | Requires careful area/target/resource contract; high combined action value | **Preferred working candidate**, not approved |
+
+**Illustrative usage, not a finalized rule:** On the Platinum Dragonborn's turn, a single breath manifestation projects over an authored area. The player designates eligible creatures for a **destructive** effect or a **protective** effect, without relying on inferred alignment, moral status, or whether the creature is an ally or enemy. An affected creature would ordinarily receive one designated output rather than stacking both. A single activation could strike chosen opponents while shielding chosen companions in the same area. This is a mechanical example only; exact eligibility, geometries, saving throws, damage, ward effect, duration, resources and activation timing remain open.
+
+**Identity distinctions from native records:**
+
+- Base Dragonborn Breath Weapon already replaces **one attack** during the Attack action, deals ancestry-linked damage, and has Proficiency Bonus uses per Long Rest. Sovereign Breath might **enhance/replace that one entitlement** and preserve one shared resource rather than adding a separate damage pool. The use/action contract must be decided explicitly.
+- Ordinary Metallic Breath Weapon is a **different** level-5, once-per-Long-Rest ability with Enervating/Repulsion options, affecting allies too. If Platinum is modeled under the Metallic family, its inherited secondary Breath must be explicitly **retained, superseded, or integrated**; it cannot be silently duplicated or dropped. None of those relationships is approved by this proposal.
+- The native base Breath Weapon and Draconic Resistance both derive their damage type from the **selected ordinary Dragonborn leaf**. Platinum's singular identity does **not** yet define an affinity. Its own explicit ancestry value or source-qualified override will be required before proposing an executable definition. **Radiant, force, or any ordinary metallic damage affinity is not selected** by this design pass.
+- A shield could mean temporary hit points, one-use damage prevention, a limited damage reduction, or a bounded protective condition. These have different timing, stacking and balance consequences. Do not automatically equate protection with healing, universal immunity, or granting an existing resistance to every ally.
+- This ancestry is supposed to be **substantially more powerful** than ordinary Dragonborn. That permits a strong combined ability but does not remove the need to define who is affected, once-per-use accounting, whether effects repeat on multiple attacks, and whether multiple overlapping wards stack.
+
+**Heart's relationship to Mind and Wings:** Mind may later make threats easier to identify and distinguish; Wings may later improve positioning and spatial reach. **Neither expression should be a prerequisite to using Heart**, because all three manifest together at rebirth. A combined advanced ability can be designed separately once each expression's actual mechanics exist.
+
+**Open approval gates:** (1) Is selective simultaneous damage-and-protection the desired core Heart identity? (2) Is protection an effect of Sovereign Breath, a separate persistent/activated Heartward, or both? (3) Does Platinum explicitly replace the ordinary Breath Weapon and/or Metallic secondary breath? (4) What affinity, damage/ward effects, activation, area, and scaling are authored? No answer is implied by the sample.
+
 ### Unifying ability: all three expressions acting together (candidate)
 
 A later feature could combine **Heart** (projects a protective or forceful effect), **Mind** (identifies or anticipates the relevant threat), and **Wings** (interposes or directs the effect across space). This is one possible way to represent the sovereign as a whole, rather than assigning three disconnected abilities. No unique action, reaction, cost, timing, duration, targeting, or power tier has been selected.
@@ -55,7 +81,7 @@ Original inspiration: *Races of the Dragon* (3.5), **Dragonborn of Bahamut** (He
 ## Questions for a later decision pass
 
 1. What inherent feature best expresses **each** of Heart, Mind, and Wings, and how should their effects interact without redundancy?
-2. What is the Platinum Breath's distinctive mechanic relative to ordinary Breath Weapon **and** the Metallic family's Enervating/Repulsion options? Which damage affinity, if any, defines it?
+2. Should the proposed **Sovereign Breath** affect selected creatures destructively and protectively in one use, and how should it explicitly relate to the base and Metallic Breath Weapons? What affinity, ward effect, geometry, action and resource does it require?
 3. Does Mind emphasize sensing, anticipation, will, or a linked progression without making all special senses permanently available?
 4. Does Wings grant permanent flight immediately on rebirth, and what secondary wing ability makes it distinctive?
 5. Should the three expressions combine in a unique later ability, and what triggers advancement for characters reborn at different levels?
