@@ -41,15 +41,17 @@ class ReconciliationReviewTests(unittest.TestCase):
         cls.identity_mapping = read_identity_mapping()
         cls.curated = read_curated_evidence()
 
-    def identity(self, contributors, registry=None, curated=True):
+    def identity(self, contributors, registry=None, curated=True,
+                 catalog=None):
+        source_catalog = self.catalog if catalog is None else catalog
         pool = characteristic_candidate_pool(
             contributors, {} if registry is None else registry,
-            self.blueprints, self.catalog, self.contracts
+            self.blueprints, source_catalog, self.contracts
         )
         return project_characteristic_identity_evidence(
             pool, self.identity_mapping,
             curated=self.curated if curated else None,
-            catalog=self.catalog if curated else None,
+            catalog=source_catalog if curated else None,
         )
 
     @staticmethod
@@ -277,16 +279,19 @@ class ReconciliationReviewTests(unittest.TestCase):
         )
 
     def test_unequal_trait_intrinsic_movement_remains_unresolved(self):
-        r = self.identity([direct("red", "ancestry.dragonborn.red")])
+        changed_catalog = copy.deepcopy(self.catalog)
+        changed_catalog["ancestry.dragonborn.red"][
+            "climbingSpeedFeet"
+        ] = 20
+        r = self.identity(
+            [direct("red", "ancestry.dragonborn.red")],
+            catalog=changed_catalog,
+        )
         trait = self.locate(
             r, source_id="ancestry.dragonborn.red#trait:natural-climber"
         )[0]
         intrinsic = self.locate(r, dimension="movement.climb.speed")[0]
-        changed = copy.deepcopy(r)
-        item = next(x for x in changed["candidates"]
-                    if x["candidateId"] == intrinsic)
-        item["value"] = 20
-        out = self.review(changed, trait, intrinsic)
+        out = self.review(r, trait, intrinsic)
         self.one_relation(
             out, "trait-and-intrinsic-movement-different-values"
         )
