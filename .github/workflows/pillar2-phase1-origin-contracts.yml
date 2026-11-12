@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - feature/pillar2-characteristic-inventory-20261111
+      - feature/pillar2-phase1-temporary-effective-configuration-20261112
   pull_request:
     branches:
       - feature/pillar2-characteristic-inventory-20261111
+      - feature/pillar2-phase1-origin-contracts-20261112
 
 permissions:
   contents: read

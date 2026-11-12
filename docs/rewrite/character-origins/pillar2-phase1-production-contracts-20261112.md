@@ -34,6 +34,38 @@ The validator intentionally does not issue effective grants or certify DM author
 
 The contract permits all current native origination methods by reference, including `supernatural-reconstruction`, without adding an independent C# taxonomy. It preserves future method fields by retaining a clone of the authored JSON and does not interpret unknown fields as approved behavior. The fixture tests exercise more than one method and unknown future methods without freezing the first-party catalog count.
 
+## Phase 1 follow-up: temporary effective Species/Ancestry substitution
+
+**Source:** [Pillar 4 lycanthropy reconciliation](pillar4-lycanthropy-reconciliation-20261112.md), approved architectural boundaries only. Its werewolf progression candidates and numerical mechanics are *not* approved gameplay.
+
+The shared `NativeOriginProfile` holds three orthogonal concepts:
+
+1. **`Underlying`** — the latest authoritative Species/Ancestry configuration, including current intrinsic grants and any permanent reconstruction. This baseline persists while a separate form is active.
+2. **`Current`** — the momentarily effective Species/Ancestry configuration. Without an identified active effect it must match `Underlying`; an unexplained difference is reported as unresolved. With an active form, this is an independent, complete form-specific inherent-grant set; the baseline is *not* automatically unioned into it.
+3. **`ActiveTemporaryTransformation`** — a source-qualified active form, activation evidence, optional reference to a persistent influence, optional explicit form-grant identities, and optional shared DM adjudication. This record **does not** store a baseline or any `RestoreConfiguration` snapshot.
+
+`PersistentInfluences` records acquired or inherited long-lived conditions and their provenance independently of the currently active form. Having lycanthropy does not imply that the subject has unlocked wolf form, is transformed, has lost control, or has inherited a monster stat block. A Human with an inactive werewolf influence has `Underlying == Current` in its Species/Ancestry state even when the influence record persists.
+
+`NativeOriginCurrentConfiguration` remains a reusable configuration value record and can represent either role depending on its owning profile. `NativeOriginHistoryEvent.ReplacesConfiguration` continues to describe **permanent baseline** replacements such as a completed Rite of Rebirth; temporary form activation is not misclassified as origination or permanent reconstruction. Any historical `PreviousConfiguration` is audit data, not a restoration target.
+
+`NativeOriginProposal.ExistingConfiguration` identifies the authoritative **underlying** state at proposal time, not an active form. The optional `ExistingEffectiveConfiguration` and `ActiveTemporaryTransformation` capture the two distinct inputs when a proposal is considered during an existing form. They do not confer entitlement or execute transitions.
+
+### Acceptance examples and reversion invariant
+
+- **Dormant influence:** Human underlying and effective, persistent lycanthropy source, no active form.
+- **Active wolf:** Human underlying and wolf-form effective, wolf activation evidence and form grants recorded separately; Human-specific grants need not remain active in the effective form.
+- **Human reversion:** A later explicit state has no active form and `Current` matches `Underlying`. The test constructs this new state; the Phase 1 validator does not perform a reversion.
+- **Change during wolf form:** A completed authorized Rite may replace the underlying Human with another Species/Ancestry while wolf remains the recorded effective form. This represents a possible intermediate state, **not** a universal rule that the wolf effect necessarily survives the Rite.
+- **Updated reversion:** A later explicit state uses the **new** underlying configuration for `Current`, without resurrecting superseded Human grants from the previous baseline or an activation-time snapshot.
+
+The validator checks source and activation evidence, optional linkage to persistent influences and named form grants, missing distinct baseline/effective inputs on an active proposal, and independent/inherent grant identity. Baseline grant verification uses the baseline proposal; it does not falsely demand that a wolf-form grant originate from a Human candidate. These are *structural* checks, not proof of actual effect authority, player agency, or effective gameplay mechanics.
+
+### Outstanding transformation precedence decisions
+
+No general rule has been adopted for overlapping temporary forms, polymorph, permanent Rite execution during an active form, changing baseline trait bindings while the form is active, form persistence after death/cure/dispel, precedence among other active effects, or when a form-specific grant should cease or be retained. Form-specific creature type, targeting, anatomy, available actions, and suppression/retention of underlying traits still require authored rules or an authorized DM decision. In particular, the reversion invariant identifies the **latest authoritative baseline** as the source of truth but does not authorize or implement a transition algorithm.
+
+No universal trigger, moon phase, loss of control, alignment change, stage unlock, animal Hit Dice, or werewolf monster features have been added. No `supernatural-reconstruction` origination method is attached to an ordinary reversible form change; permanent reconstructive processes remain separate. The shared Origin evaluator and transformation execution belong to later phases.
+
 ## Validation
 
 Tests: `tests/RulesCore.Mechanics.Tests/NativeOriginContractTests.cs`.
