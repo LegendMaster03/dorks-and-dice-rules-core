@@ -1,20 +1,15 @@
-# Gem Dragonborn — standard family reconciliation prerequisite to Ruby
+# Gem Dragonborn — ordinary family selected-native
 
-The five standard Gem types are **Amethyst, Crystal, Emerald, Sapphire and Topaz**. Their nonselectable family inheritance node is implemented as `native/species/subspecies/dragonborn/gem.json` with parent `species.dragonborn`. It has no Gem-specific mechanics. The five individual Gem leaves remain deferred and are not playable in the current first pass.
+**Status (2026-11-11):** The Gem parent family and five ordinary leaves are selected-native on the Pillar 2 feature branch. Character Origins runtime grant and mixed-Heritage rules remain under development.
 
-- `HOARD_TRADITIONS_RESEARCH.md` records *Fizban's* preferred-hoard themes for all five and separates them from unapproved learned Upbringings.
-- Ruby/Sardior exceptional forms are a separate deferred topic.
-- The current active Species/Subspecies reconciliation covers only five Chromatic and five Metallic types.
+## Native source hierarchy
 
-The native family node is an approved structural record only. No playable Gem leaf records, Gem-specific family benefits, breath geometry, damage affinities, resistance mappings or Upbringing defaults are approved.
+The nonselectable `ancestry.dragonborn.gem` family inherits the Dragonborn Species' creature type **Dragon**, 30-foot walking speed, Low-Light Vision, ordinary Breath Weapon and 50% affinity resistance. The Gem family authors **15-foot cone** geometry and two shared traits:
 
-## Current reconciliation sequence (2026-11-11)
+- **Psionic Mind:** One-way telepathic messages to one creature the Dragonborn can see within 30 feet, provided the recipient understands at least one language. No shared language, mind reading, telepathic reply or automatically learned language is granted.
+- **Gem Flight:** Starting at character level 5, Bonus Action spectral wings for one minute, with flying speed equal to current walking speed and hover. One use per Long Rest, independently of ordinary Breath Weapon uses. This grants no permanent flying speed.
 
-**Owner direction:** Define and validate the **ordinary Gem Dragonborn infrastructure** before designing exceptional Ruby. See [Character Origins — standard Dragonborn expansion and Gem foundation](../../../../../../../docs/rewrite/character-origins/pillar2-dragonborn-expansion-dimensions-20261111.md).
-
-The family record already exists but is empty. The five ordinary Gem leaf records **have not been promoted to native**. The five affinity pairs from *Fizban's Treasury of Dragons* are **source references only**:
-
-| Ordinary Gem leaf | Published damage affinity |
+| Ordinary Gem Ancestry | Damage affinity |
 | --- | --- |
 | Amethyst | Force |
 | Crystal | Radiant |
@@ -22,9 +17,12 @@ The family record already exists but is empty. The five ordinary Gem leaf record
 | Sapphire | Thunder |
 | Topaz | Necrotic |
 
-Shared family candidates for review are **15-foot cone Breath Weapon geometry**, **30-foot telepathic communication**, and **temporary Gem Flight with hover beginning at level 5**. Their published existence does **not** imply approval or compatibility with the native condition, flight, rest, or mixed-Heritage system. The shared Dragonborn base already defines the common breath resource and damage progression, creature type, and affinity-dependent resistance; Gem should author only incremental/override semantics.
+The ordinary leaves contain no extra invented adaptation: they author lineage identity and damage type, while the Gem family grants its inherited traits once. The shared Dragonborn Breath Weapon retains one attack replacement, Dexterity saving throw, 1d10/2d10/3d10/4d10 character-level dice progression, and Proficiency Bonus uses per Long Rest.
 
-Ruby is **not** an ordinary sixth Gem leaf and is **not** automatically available to mixed Heritage. It remains a singular exceptional ancestry requiring separate Rite/DM permission and future mechanics after the ordinary Gem family is reconciled.
+## Scope and references
 
-**Implementation status:** Research and sequencing only. No Gem trait, five Gem leaves, or Ruby abilities are approved native content yet. No Upbringing is inherited or selected from Gem hoard themes. Reference comparison: https://www.dndbeyond.com/posts/1097-explore-the-chromatic-and-gem-dragonborn-from
+The mechanics are independently expressed for Dorks & Dice from the *Fizban's Treasury of Dragons* (2021) Gem Dragonborn reference: https://www.dndbeyond.com/posts/1097-explore-the-chromatic-and-gem-dragonborn-from
 
+Hoard-focused research is separate in [HOARD_TRADITIONS_RESEARCH.md](HOARD_TRADITIONS_RESEARCH.md). No Gem ancestry automatically grants an Upbringing, cultural preference, alignment, or learned language. Exceptional **Ruby** remains a separate sovereign rebirth concept, not a sixth ordinary Gem leaf or automatically eligible mixed-Heritage component.
+
+The selected Gem mechanics are complete as data. General mixed-heritage compatibility, trait manifestation and executable character-state grants remain pending in Pillar 2. The level-5 Gem Flight hovering ability should be compared during playtesting with Platinum's different approved level-6 limited flight; neither should automatically be rewritten.
