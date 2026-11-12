@@ -97,6 +97,15 @@ public sealed class NativeEffectiveCharacterProjectionBridge(NativeCatalogSnapsh
             return Failed("effective-bridge-feature-suppression-unimplemented", "independentGrants",
                 "Class/other feature suppression must not be bypassed by the existing projector.");
 
+        // Current HP and form-specific HP policies are not represented by this
+        // numeric bridge. Recalculating maximum HP with a changed Constitution
+        // without an authored current-HP transition would be misleading.
+        if (character.AbilityScores.TryGetValue("constitution", out var oldConstitution) &&
+            evaluated.EffectiveAbilityScores.TryGetValue("constitution", out var effectiveConstitution) &&
+            effectiveConstitution != oldConstitution)
+            return Failed("effective-bridge-hitpoints-policy-unimplemented", "ability.constitution",
+                "Changing Constitution requires an explicit HP/resource transition policy.");
+
         // The first bridge passes only the effective ability values; the
         // projector remains the single authority for derived arithmetic.
         // No class, equipment or resource entitlement is minted here.
@@ -122,7 +131,8 @@ public sealed class NativeEffectiveCharacterProjectionBridge(NativeCatalogSnapsh
         NativeOriginCurrentConfiguration underlying,
         NativeOriginCurrentConfiguration effective)
     {
-        if (underlying.SpeciesId != effective.SpeciesId ||
+        if (underlying.InherentGrants is null || effective.InherentGrants is null ||
+            underlying.SpeciesId != effective.SpeciesId ||
             underlying.AncestryId != effective.AncestryId ||
             underlying.InherentGrants.Count != effective.InherentGrants.Count)
             return false;
