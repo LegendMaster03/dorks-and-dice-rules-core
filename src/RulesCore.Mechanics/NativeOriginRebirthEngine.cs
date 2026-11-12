@@ -168,7 +168,10 @@ public sealed class NativeOriginRebirthEngine(NativeCatalogSnapshot catalog)
         // Preserve independent entitlements by identity. Previous inherent grants
         // are excluded by default regardless of trait name or matching mechanics.
         // Only the authenticated Rite outcome may explicitly retain old ones.
-        var grants = retainedIds.Select(id => oldGrants[id]).ToList();
+        // Exact retained grants are historical exceptions; sorting avoids a
+        // HashSet's iteration order becoming an observable reconstruction rule.
+        var grants = retainedIds.OrderBy(id => id, StringComparer.Ordinal)
+            .Select(id => oldGrants[id]).ToList();
         var usedIds = existing.IndependentGrants.Select(x => x.Id)
             .Concat(grants.Select(x => x.Id)).ToHashSet(StringComparer.Ordinal);
         foreach (var grant in newGrants.Values.OrderBy(x => x.Id, StringComparer.Ordinal))
