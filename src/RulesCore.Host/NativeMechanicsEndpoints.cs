@@ -84,7 +84,7 @@ public static class NativeMechanicsEndpoints
                 !SingleQueryValue(request, "q", out var query) ||
                 !SingleQueryValue(request, "limit", out var limitText) ||
                 !SingleQueryValue(request, "offset", out var offsetText) ||
-                category is not ("class" or "subclass" or "patron" or "pact" or
+                category is not ("species" or "ancestry" or "class" or "subclass" or "patron" or "pact" or
                     "invocation" or "condition" or "leveled-condition" or
                     "skill" or "competency" or "monster" or "item" or
                     "feat" or "spell") ||
