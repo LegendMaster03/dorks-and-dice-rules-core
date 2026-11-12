@@ -1,0 +1,366 @@
+{
+  "id": "pillar4.shared-replacement-profiles.four-case-acceptance",
+  "rulesetId": "first-party-001",
+  "status": "design-only-unapproved",
+  "date": "2026-11-12",
+  "sourceDocument": "docs/rewrite/character-origins/pillar4-shared-effect-and-replacement-profiles-20261112.md",
+  "validationScope": "Declarative examples for architectural evaluation; no runtime executor, official progression, numerical character option or gameplay authorization.",
+  "existingPillar2Reference": "feature/pillar2-characteristic-inventory-20261111 (PR #143 production contracts)",
+  "notAssumptions": [
+    "No universal form stages, moon trigger, alignment change or loss of control",
+    "No automatic monster statblock grants",
+    "No default free Bloodline Class levels or XP penalties",
+    "No automatic class or inventory record deletion",
+    "No default resource refill or reset on transformation"
+  ],
+  "proposedOperationVocabulary": [
+    "retain",
+    "modify",
+    "suspend",
+    "replace",
+    "grant"
+  ],
+  "proposedTargetCategories": [
+    "species-ancestry",
+    "creature-type",
+    "ability-score",
+    "class-feature-applicability",
+    "spellcasting-capability",
+    "equipment-usability",
+    "movement",
+    "senses",
+    "actions",
+    "resource",
+    "condition-or-ongoing-effect",
+    "physical-needs",
+    "weakness",
+    "progression-entitlement"
+  ],
+  "sharedScenarios": [
+    {
+      "id": "shared.entitlement-versus-applicability",
+      "given": "A character earned a Class or Background feature and entered a form that suspends its use.",
+      "when": "The effective profile is projected and later reverted.",
+      "expect": [
+        "The earned grant and provenance persist",
+        "Applicability changes only for the authored interval",
+        "Reversion does not re-award the feature or reset its resources"
+      ]
+    },
+    {
+      "id": "shared.no-default-full-monster-statblock",
+      "given": "An authored supernatural form resembles a native SRD monster.",
+      "when": "The form is activated.",
+      "expect": [
+        "Only individually authored/authorized form grants are available",
+        "CR, monster HD, legendary actions, monster HP and proficiency bonus are not automatically imported"
+      ]
+    },
+    {
+      "id": "shared.concurrent-forms",
+      "given": "Two independently sourced temporary forms target the sole effective Species/Ancestry slot.",
+      "when": "Both are simultaneously active without a precedence rule.",
+      "expect": [
+        "No implicit first/last source wins",
+        "The conflict is recorded as unresolved until an authored rule or scoped DM decision resolves it"
+      ]
+    },
+    {
+      "id": "shared.resource-preservation",
+      "given": "A character has expended slots or a tracked resource and gains/loses a form.",
+      "when": "The resource becomes inaccessible or its displayed maximum changes.",
+      "expect": [
+        "Spent quantities and occurrence identities remain historical",
+        "No automatic refilling, resetting, capping or refunding occurs",
+        "Over-cap and ongoing-effect behavior require explicitly authored policies"
+      ]
+    },
+    {
+      "id": "shared.dm-and-provenance",
+      "given": "The DM authorizes a scoped alteration to a transformation restriction.",
+      "when": "The effective character is evaluated.",
+      "expect": [
+        "First-party defaults remain unchanged",
+        "The ruling identifies authority, scope, target and effective decision",
+        "Untrusted client assertions cannot create grants or software permissions"
+      ]
+    },
+    {
+      "id": "shared.unknown-target-policy",
+      "given": "A source replaces the full movement subsystem without supplying complete movement values.",
+      "when": "The effective movement profile is projected.",
+      "expect": [
+        "Unspecified affected movement slots are unresolved",
+        "The engine neither silently retains obsolete values nor infers values from a similarly named monster"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "draconic-bloodline",
+      "category": "modification-only",
+      "role": "Primary progressive supernatural inheritance test; no form required",
+      "reference": "3.5e Unearthed Arcana Bloodlines (comparative only)",
+      "scenarios": [
+        {
+          "id": "db.acquisition",
+          "given": "A character inherits an authored draconic influence with no earned powers.",
+          "when": "The influence is recorded.",
+          "expect": [
+            "Baseline Species and Ancestry stay authoritative",
+            "No automatic Dragon type, Dragonborn traits, breath weapon, or Sorcerer levels",
+            "Unmanifested potential does not become an active grant"
+          ]
+        },
+        {
+          "id": "db.staged-grants",
+          "given": "Two independently authored bloodline milestones have distinct prerequisite triggers.",
+          "when": "One milestone becomes eligible and is authorized.",
+          "expect": [
+            "Only that milestone's selected feature becomes an earned grant",
+            "Its source, occurrence, choices and prerequisite evidence remain attributable",
+            "No automatic grants from the other milestone"
+          ]
+        },
+        {
+          "id": "db.resource-overlap",
+          "given": "The character has a Dragonborn breath feature and independently earns a bloodline ability with a similar name.",
+          "when": "Both entitlements exist.",
+          "expect": [
+            "Do not merge their uses or grant identity based on similar names",
+            "Shared resources or incompatibility require an actual rule or a scoped ruling"
+          ]
+        },
+        {
+          "id": "db.class-independence",
+          "given": "The character is a non-Sorcerer who gains draconic supernatural traits.",
+          "when": "The effective character is projected.",
+          "expect": [
+            "No Class advancement, Sorcery Points or class-exclusive feature is inferred",
+            "Existing independent Class choices remain earned"
+          ]
+        },
+        {
+          "id": "db.stage-regression",
+          "given": "A source-specific rule suppresses a manifested supernatural trait without undoing a Class level.",
+          "when": "Suppression ends.",
+          "expect": [
+            "The trait's entitlement and progress history remain identifiable",
+            "Restoration and prerequisites are rechecked",
+            "No class-level penalty or automatic rollback is inferred"
+          ]
+        },
+        {
+          "id": "db.balance",
+          "given": "An optional bloodline progression grants additional powers beyond normal Species and Class features.",
+          "when": "The acquired feature is reviewed.",
+          "expect": [
+            "Acquisition terms or balancing rules must be authored",
+            "An unrestricted free parallel progression is not silently certified as balanced"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "full-vampire",
+      "category": "persistent-extensive-modification-with-optional-temporary-forms",
+      "role": "Primary persistent physiological effects, vulnerabilities and heterogeneous form policy test",
+      "reference": "Native selected monster.vampire, plus 3.5e vampire template (comparative only)",
+      "scenarios": [
+        {
+          "id": "vamp.persistent-normal-form",
+          "given": "A person has an authorized full-vampire influence in their normal appearance.",
+          "when": "No bat or mist alternate form is active.",
+          "expect": [
+            "Persistent source-linked supernatural characteristics and weaknesses can be active",
+            "Underlying Species/Ancestry remains unless a separately authorized permanent reconstruction occurs",
+            "Original Class and Background entitlements are not erased by the influence"
+          ]
+        },
+        {
+          "id": "vamp.creature-type",
+          "given": "An authored full-vampire rule changes effective type to Undead.",
+          "when": "The normal-form effective profile is projected.",
+          "expect": [
+            "Creature-type targeting uses the explicitly authored effective classification",
+            "Underlying Species/Ancestry is not automatically replaced merely because effective type changed",
+            "Monster Undead statblock benefits are not automatically copied to the player character"
+          ]
+        },
+        {
+          "id": "vamp.bat-form",
+          "given": "An authored vampire has a bat form with form-specific movement, speech and equipment handling.",
+          "when": "The form is activated.",
+          "expect": [
+            "Only the authored effective slots are modified or replaced",
+            "Independent grants remain earned while use depends on the form policy",
+            "No blanket assumption that gear is dropped or inaccessible"
+          ]
+        },
+        {
+          "id": "vamp.mist-form",
+          "given": "The same vampire has a mist form with broader action and manipulation restrictions.",
+          "when": "The form is activated.",
+          "expect": [
+            "Actions, speaking and manipulating objects may be suspended by explicit form rules",
+            "The bat form's narrower policies are not silently copied",
+            "Inventory ownership and Class progression remain intact"
+          ]
+        },
+        {
+          "id": "vamp.weakness-and-feeding",
+          "given": "The vampire has source-defined sunlight weakness and a feeding dependency.",
+          "when": "The character is in normal or alternate form.",
+          "expect": [
+            "Each exposure, timing and resource condition resolves under an authored rule",
+            "The influence does not gain monster regeneration or bite numbers by resemblance alone",
+            "A transformation does not erase previously tracked damage or resource spending"
+          ]
+        },
+        {
+          "id": "vamp.spawn-versus-full",
+          "given": "Selected-native vampire and vampire spawn are distinct monster records.",
+          "when": "A player supernatural progression is considered.",
+          "expect": [
+            "Full vampire, spawn and player-acquired vampire are not automatically equivalent",
+            "No CR, Hit Dice, legendary actions or monster Class progression is inherited",
+            "Specific vampire acquisition and balance remain open design decisions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lycanthropy",
+      "category": "additive-condition-with-temporary-replacement",
+      "role": "Primary temporary Species/Ancestry replacement and reversion test",
+      "reference": "Existing pillar4-lycanthropy-reconciliation-20261112.md and native monster.werewolf",
+      "scenarios": [
+        {
+          "id": "lyc.dormant-influence",
+          "given": "A Human has lycanthropy but no currently active wolf form.",
+          "when": "The effective configuration is evaluated.",
+          "expect": [
+            "Underlying and effective baseline Species remain Human absent a separately authored modifier",
+            "Having the influence does not imply unlocked forms or involuntary shifting",
+            "Source/character history is preserved"
+          ]
+        },
+        {
+          "id": "lyc.wolf-effective",
+          "given": "A Human with a legally unlocked wolf form performs an authorized transition.",
+          "when": "The wolf form is active.",
+          "expect": [
+            "Wolf form temporarily replaces effective Species/Ancestry",
+            "Underlying Human remains authoritative",
+            "Old inherent grants are not automatically unioned with new form grants"
+          ]
+        },
+        {
+          "id": "lyc.hybrid-scope",
+          "given": "The same character has an independently authored hybrid form with a less restrictive replacement profile.",
+          "when": "Hybrid is activated.",
+          "expect": [
+            "Hybrid and full-wolf profiles can differ in weapon, speech, equipment and Class-feature applicability",
+            "No universal full Class-feature suspension is inferred"
+          ]
+        },
+        {
+          "id": "lyc.setting-control",
+          "given": "One setting uses voluntary shifts and another has an authored forced trigger with separate player-agency rules.",
+          "when": "A trigger resolves.",
+          "expect": [
+            "Triggering a change and controlling actions are separate policies",
+            "No universal full moon, involuntary check, alignment change or DM control"
+          ]
+        },
+        {
+          "id": "lyc.latest-baseline-reversion",
+          "given": "Human underlying is permanently replaced by Elf during an active wolf form through an authorized Rite.",
+          "when": "The wolf form ends under a valid rule.",
+          "expect": [
+            "Reversion uses the latest underlying Elf configuration",
+            "Superseded Human grants are not restored from an old snapshot",
+            "Independent Class/Background entitlements persist subject to new-form applicability"
+          ]
+        },
+        {
+          "id": "lyc.form-versus-origination",
+          "given": "The character shifts between wolf and normal form.",
+          "when": "Form history is inspected.",
+          "expect": [
+            "The shift is an active temporary transformation, not supernatural-reconstruction origination",
+            "Only a separate permanent reconstruction event can change the authoritative baseline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ceremorphosis",
+      "category": "progressive-permanent-reconstruction",
+      "role": "Primary optional powers, event-gated progression, and terminal baseline reconstruction test",
+      "reference": "BG3 Illithid powers and full-illithid paths (comparative only)",
+      "scenarios": [
+        {
+          "id": "cere.powers-without-reconstruction",
+          "given": "An infected character chooses and earns an authored psionic feature.",
+          "when": "The ability is granted.",
+          "expect": [
+            "Source-qualified additional power is recorded",
+            "Underlying Species and Class remain unchanged",
+            "No compulsory final reconstruction or creature-type change is inferred"
+          ]
+        },
+        {
+          "id": "cere.partial-condition",
+          "given": "A specific authorized event introduces partial physiological changes.",
+          "when": "The intermediate state is applied.",
+          "expect": [
+            "Changes affect only the explicitly authored current slots and grants",
+            "The original authoritative Species remains in place until a completed reconstruction event",
+            "Partial transformation is not mechanically equivalent to terminal reconstruction"
+          ]
+        },
+        {
+          "id": "cere.bypass-partial",
+          "given": "An authored route permits complete reconstruction without partial transformation.",
+          "when": "Its explicit final event occurs.",
+          "expect": [
+            "A non-linear direct terminal transition is representable",
+            "The engine does not require intermediate stage IDs that the route does not specify"
+          ]
+        },
+        {
+          "id": "cere.final-authority",
+          "given": "An authored ceremorphosis process completes permanent replacement with a new Illithid Species/Ancestry.",
+          "when": "The terminal event is authorized and completed.",
+          "expect": [
+            "Underlying Species/Ancestry is replaced and earlier inherent grants are superseded as defined",
+            "Previous underlying state remains historical but not effective",
+            "Effective creature type is resolved according to its authored rule",
+            "No automatically invented monster abilities"
+          ]
+        },
+        {
+          "id": "cere.selective-retention",
+          "given": "The completed illithid profile explicitly retains a previously earned Class ability but replaces other active systems.",
+          "when": "The full character profile is projected.",
+          "expect": [
+            "Retained Class entitlement remains available where authorized",
+            "Other affected capabilities follow their replacement or suspension policies",
+            "Class levels and inventory history are not implicitly deleted"
+          ]
+        },
+        {
+          "id": "cere.stage-and-form-overlap",
+          "given": "A character is temporarily transformed during an authorized permanent ceremorphosis event.",
+          "when": "The permanent baseline changes.",
+          "expect": [
+            "The new underlying baseline becomes authoritative",
+            "What happens to the temporary form must follow explicit interaction/precedence rules",
+            "Reversion must not resurrect the old baseline"
+          ]
+        }
+      ]
+    }
+  ]
+}
