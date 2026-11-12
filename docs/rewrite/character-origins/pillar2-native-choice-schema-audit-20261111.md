@@ -51,6 +51,21 @@ The report includes `unmodeledEvidenceIds` for unrecognized choice fields or unr
 
 **Reconstruct:** Store permitted persistent choices as part of the actual manifested configuration, while leaving on-use action options available for gameplay rather than permanently resolving them at creation. If a required choice remains unresolved, the profile is incomplete; absence of authored timing/schema data is not authorization to make a guess.
 
+## Applicability to tentative characteristics
+
+The companion `tools/character_origins_applicable_choices.py` now projects this choice evidence onto the actual **tentatively retained** characteristics from the general reconciliation and whole-profile studies. The relevant source-qualified trait occurrence must match the candidate's current native definition; the tool does **not** infer a grant from a source's mere presence.
+
+- **Selected direct native traits:** carry only their own authored choice evidence, with explicit `active-trait-choice-needs-authority` or `use-time-option-not-creation` status. Unselected entitlements do not become mandatory current choices.
+- **Intrinsic source choices:** a selected Human `creature.size` candidate retains the single applicable `sizeChoice` declaration as provenance. The projection does not create both sizes or authorize the selection.
+- **Source-wide controls:** `ancestrySelection` and `spellcastingAbilityChoice` are visible **only for participating native source lineages**, and are explicitly **not applied** as new inherent grants in mixed/custom construction. An unrelated Species' control must never leak into the current proposal.
+- **Previously mixed contributors:** the existing nested profile carries the manifested trait but may not preserve a trusted record of earlier internal-choice decisions. Report `prior-choice-history-not-verified`; **do not force an unapproved reselection or regenerate hidden ancestral grants**.
+- **Fully custom proposals:** no fictitious Species lineage, and no native entitlement inferred by copying a source-qualified trait ID. Proposed custom authoring authority remains distinct and unapproved.
+- **Unresolved binding:** a native trait deferred by the source-to-parameter binder, such as Tiefling Otherworldly Presence's `spellcastingAbilityFrom`, remains **source authoring evidence**. It is not automatically counted as an active manifested trait until the binding contract is resolved.
+
+The output remains `authoritativeChoiceClosure: not-certified`, `selectionEligibility: not-evaluated`, and `grantsIssued: false`. These distinctions are necessary to build a trusted persistent choice schema later, not a replacement for it.
+
+**Tests:** `tests/test_character_origins_pillar2_applicable_choices.py`.
+
 ## Next general implementation work
 
 1. **Project applicable choices from the tentative reconstructed characteristic set**, distinguishing native direct offers from previously manifested mixed contributors and custom selections. A trait offered but not selected should not introduce a mandatory character-creation choice.
