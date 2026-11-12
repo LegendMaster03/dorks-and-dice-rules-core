@@ -115,6 +115,17 @@ public static class NativeEffectiveCharacterEffects
                 "The active form must have verified source, activation, and rules.");
             return Failed("unresolved");
         }
+        // An active form claiming a persistent influence must point to that exact
+        // source occurrence. The form's name alone never establishes its source.
+        if (form?.PersistentInfluenceId is { } influenceId &&
+            origin.PersistentInfluences?.Any(influence => influence is not null &&
+                influence.Id == influenceId &&
+                influence.Source == form.EffectSource) != true)
+        {
+            Issue("effective-form-influence-mismatch", "origin.activeForm",
+                "Active form must reference its actual persistent influence and source.");
+            return Failed("unresolved");
+        }
 
         var scores = new SortedDictionary<string, int>(StringComparer.Ordinal);
         foreach (var pair in request.AbilityScores)
@@ -142,6 +153,11 @@ public static class NativeEffectiveCharacterEffects
                 !effectiveSources.Add(grant.Id))
                 Issue("effective-source-invalid", "current.grants",
                     "Effective inherent grants must have distinct source IDs.");
+
+        foreach (var id in independent.Keys)
+            if (effectiveSources.Contains(id))
+                Issue("effective-grant-identity-conflict", id,
+                    "Effective inherent and independent grant occurrences must be distinct.");
 
         var states = new Dictionary<string, NativeOriginGrantApplicabilityState>(StringComparer.Ordinal);
         foreach (var applicability in origin.IndependentGrantApplicability ?? [])
@@ -189,8 +205,8 @@ public static class NativeEffectiveCharacterEffects
                 continue;
 
             var sourceIsApplicableIndependent = independent.ContainsKey(effect.SourceGrantId) &&
-                states.GetValueOrDefault(effect.SourceGrantId) ==
-                    NativeOriginGrantApplicabilityState.Applicable;
+                states.TryGetValue(effect.SourceGrantId, out var sourceApplicability) &&
+                sourceApplicability == NativeOriginGrantApplicabilityState.Applicable;
             var sourceIsActiveFormGrant = effectiveSources.Contains(effect.SourceGrantId) &&
                 (form is null || form.EffectiveFormGrantIds?.Contains(
                     effect.SourceGrantId, StringComparer.Ordinal) == true);
