@@ -112,6 +112,24 @@ public sealed record NativeOriginRelationship(
     string Id, NativeOriginRelationshipKind Kind, IReadOnlyList<string> CandidateIds,
     string? AuthoredRuleReference = null, string? Detail = null);
 
+/// <summary>A cross-characteristic selector, not an inferred mechanic equivalence.</summary>
+public sealed record NativeOriginCharacteristicSelector(
+    string? CandidateId = null, string? MechanicalDefinitionId = null,
+    string? IntrinsicSlotId = null, string? SourceId = null,
+    string? ParameterKey = null, JsonElement? ExpectedValue = null);
+
+/// <summary>
+/// Explicit whole-profile prerequisites, exclusions, cardinalities and
+/// linked parameters; authoring evidence is not executed by Phase 1.
+/// </summary>
+public sealed record NativeOriginConstraint(
+    string Id, NativeOriginRelationshipKind Kind,
+    IReadOnlyList<NativeOriginCharacteristicSelector> Subjects,
+    IReadOnlyList<NativeOriginCharacteristicSelector> Conditions,
+    int? Minimum = null, int? Maximum = null,
+    IReadOnlyDictionary<string, string>? LinkedParameterPaths = null,
+    string? NativeRuleReference = null, string? TableDecisionId = null);
+
 public sealed record NativeOriginDecisionBasis(
     NativeOriginAdjudication Adjudication, string? NativeRuleReference = null,
     string? TableDecisionId = null, string? Explanation = null);
@@ -182,7 +200,8 @@ public sealed record NativeOriginProposal(
     IReadOnlyList<NativeOriginRelationship>? Relationships = null,
     IReadOnlyList<NativeOriginResolution>? Resolutions = null,
     IReadOnlyList<NativeOriginTableDecision>? TableDecisions = null,
-    IReadOnlyList<NativeOriginHistoryEvent>? History = null);
+    IReadOnlyList<NativeOriginHistoryEvent>? History = null,
+    IReadOnlyList<NativeOriginConstraint>? Constraints = null);
 
 /// <summary>
 /// Independent grants are separated so a Rite does not discard class, Background,

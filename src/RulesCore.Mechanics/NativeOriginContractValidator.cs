@@ -106,6 +106,11 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                     "Availability evidence must be separate from an actual grant.");
             else
             {
+                if (candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                    Blank(candidate.SelectionBasis.RuleReference))
+                    Add("candidate-rule-evidence-required", path,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "Claimed eligibility needs an authoritative rule reference.");
                 if (candidate.SelectionBasis.Eligibility is NativeOriginEligibility.Unreviewed or
                     NativeOriginEligibility.Unresolved or NativeOriginEligibility.Restricted)
                     Add("candidate-eligibility-unresolved", path, NativeOriginIssueSeverity.Unresolved,
@@ -186,7 +191,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 !manifest.SelectedValue.HasValue)
                 Add("intrinsic-value-incomplete", path, NativeOriginIssueSeverity.Incomplete,
                     "An intrinsic manifestation needs an explicit selected value.");
-            foreach (var key in (manifest.SelectedParameters ?? []).Keys)
+            foreach (var key in manifest.SelectedParameters?.Keys ?? Enumerable.Empty<string>())
                 if (candidate.OfferedParameters is null ||
                     !candidate.OfferedParameters.ContainsKey(key))
                     Add("parameter-binding-unresolved", path + "." + key,
@@ -232,6 +237,34 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 Add("relationship-awaits-decision", "relationships." + id,
                     NativeOriginIssueSeverity.Unresolved,
                     "Relationship evidence alone is not a duplicate, stacking or replacement rule.");
+
+        var constraints = Index(proposal.Constraints ?? [], c => c?.Id, "constraints", Add);
+        foreach (var (id, constraint) in constraints)
+        {
+            var path = "constraints." + id;
+            var selectors = (constraint.Subjects ?? []).Concat(constraint.Conditions ?? []);
+            if (constraint.Subjects is null || constraint.Subjects.Count == 0 ||
+                constraint.Conditions is null ||
+                selectors.Any(s => s is null ||
+                    (Blank(s.CandidateId) && Blank(s.MechanicalDefinitionId) &&
+                     Blank(s.IntrinsicSlotId) && Blank(s.SourceId))))
+                Add("constraint-selectors-invalid", path, NativeOriginIssueSeverity.Invalid,
+                    "Constraints require nonempty subjects and identifiable selectors.");
+            foreach (var selector in selectors)
+                if (selector?.CandidateId is string key && !candidates.ContainsKey(key))
+                    Add("constraint-candidate-missing", path, NativeOriginIssueSeverity.Invalid,
+                        "Exact candidate selectors must reference this proposal.");
+            if (constraint.Minimum is < 0 || constraint.Maximum is < 0 ||
+                (constraint.Minimum.HasValue && constraint.Maximum.HasValue &&
+                 constraint.Minimum.Value > constraint.Maximum.Value))
+                Add("constraint-cardinality-invalid", path, NativeOriginIssueSeverity.Invalid,
+                    "Constraint bounds must be coherent.");
+            if (!Blank(constraint.TableDecisionId))
+                RequireDecision(constraint.TableDecisionId, path, decisions, Add);
+            else if (Blank(constraint.NativeRuleReference))
+                Add("constraint-policy-unresolved", path, NativeOriginIssueSeverity.Unresolved,
+                    "A constraint requires approved rule or table-policy evidence.");
+        }
 
         foreach (var (id, decision) in decisions)
         {
@@ -291,7 +324,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                     "A repeated intrinsic slot needs explicit whole-profile reconciliation.");
 
         Dictionary<string, NativeOriginCandidate>? candidates = null;
-        HashSet<string>? manifestationIds = null;
+        Dictionary<string, NativeOriginManifestation>? selectedManifestations = null;
         if (proposal is not null)
         {
             if (profile.ProposalId != proposal.Id)
@@ -301,22 +334,46 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 .Where(c => c is not null && !Blank(c.Id))
                 .GroupBy(c => c.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
-            manifestationIds = (proposal.Manifestations ?? [])
+            selectedManifestations = (proposal.Manifestations ?? [])
                 .Where(m => m is not null && !Blank(m.Id))
-                .Select(m => m.Id).ToHashSet(StringComparer.Ordinal);
+                .GroupBy(m => m.Id, StringComparer.Ordinal)
+                .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
         foreach (var grant in grants.Values)
         {
+            if (grant.Authorization?.Adjudication == NativeOriginAdjudication.DmAuthorized &&
+                (Blank(grant.Authorization.TableDecisionId) ||
+                 proposal?.TableDecisions?.All(d => d.Id != grant.Authorization.TableDecisionId) != false))
+                Add("grant-dm-decision-unverified", "current.grants." + grant.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Grant authority needs a referenced ruling and trusted verification.");
             if (Blank(grant.ManifestationId) ||
                 grant.SourceCandidateIds is null || grant.SourceCandidateIds.Count == 0 ||
                 grant.Identity?.Occurrence?.Source is null)
                 Add("grant-provenance-required", "current.grants." + grant.Id,
                     NativeOriginIssueSeverity.Invalid,
                     "An inherent grant must identify a manifestation, offers, and its source occurrence.");
-            if (manifestationIds is not null && !manifestationIds.Contains(grant.ManifestationId))
-                Add("unknown-manifestation-grant", "current.grants." + grant.Id,
-                    NativeOriginIssueSeverity.Invalid,
-                    "Current inherent grant must derive from an explicit selected manifestation.");
+            if (selectedManifestations is not null)
+            {
+                if (!selectedManifestations.TryGetValue(grant.ManifestationId ?? "", out var selectedManifestation))
+                    Add("unknown-manifestation-grant", "current.grants." + grant.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "An inherent grant must derive from a selected manifestation.");
+                else
+                {
+                    if (grant.SourceCandidateIds is null ||
+                        !grant.SourceCandidateIds.Contains(selectedManifestation.CandidateId, StringComparer.Ordinal))
+                        Add("grant-selected-offer-mismatch", "current.grants." + grant.Id,
+                            NativeOriginIssueSeverity.Invalid,
+                            "The selected offer must appear in grant provenance.");
+                    if (candidates is not null &&
+                        candidates.TryGetValue(selectedManifestation.CandidateId, out var selected) &&
+                        grant.Identity != selected.Identity)
+                        Add("grant-definition-mismatch", "current.grants." + grant.Id,
+                            NativeOriginIssueSeverity.Invalid,
+                            "The grant identity must match its selected source occurrence.");
+                }
+            }
             if (candidates is not null && grant.SourceCandidateIds is not null)
                 foreach (var candidateId in grant.SourceCandidateIds)
                     if (!candidates.ContainsKey(candidateId))

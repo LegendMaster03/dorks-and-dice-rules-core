@@ -450,6 +450,48 @@ public sealed class NativeOriginContractTests
     }
 
     [Fact]
+    public void WholeProfileConstraintCanExpressDependenciesWithoutExecutingThem()
+    {
+        using var fixture = new Fixture();
+        var wing = Candidate("wing", Trait("flight"));
+        var body = Candidate("body", Trait("winged-body"));
+        var constraint = new NativeOriginConstraint("wings-need-body",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: wing.Id)], [new(CandidateId: body.Id)],
+            NativeRuleReference: "rule.flight-forms");
+        var proposal = Proposal("constraint", candidates: [wing, body],
+            manifestations: [Manifest("wing-pick", wing.Id)]) with
+            { Constraints = [constraint] };
+        Assert.Equal(NativeOriginReviewStatus.StructurallyConsistent,
+            fixture.Validator.ReviewProposal(proposal).Status);
+        Assert.Single(proposal.Manifestations);
+        var unsupported = proposal with
+            { Constraints = [constraint with { NativeRuleReference = null }] };
+        Assert.Equal(NativeOriginReviewStatus.Unresolved,
+            fixture.Validator.ReviewProposal(unsupported).Status);
+        var badReference = proposal with { Constraints = [constraint with {
+            Conditions = [new NativeOriginCharacteristicSelector(CandidateId: "missing")]
+        }] };
+        Assert.Equal(NativeOriginReviewStatus.Invalid,
+            fixture.Validator.ReviewProposal(badReference).Status);
+    }
+
+    [Fact]
+    public void GrantsMustMatchTheSelectedManifestationAndDefinition()
+    {
+        using var fixture = new Fixture();
+        var a = Candidate("a", Trait("first"));
+        var b = Candidate("b", Trait("second"));
+        var pick = Manifest("pick", a.Id);
+        var proposal = Proposal("bad-provenance", candidates: [a, b],
+            manifestations: [pick]);
+        var review = fixture.Validator.ReviewProfile(Profile(proposal, [Grant("wrong", pick, b)]), proposal);
+        Assert.Equal(NativeOriginReviewStatus.Invalid, review.Status);
+        Assert.Contains(review.Issues, i => i.Code == "grant-selected-offer-mismatch");
+        Assert.Contains(review.Issues, i => i.Code == "grant-definition-mismatch");
+    }
+
+    [Fact]
     public void ProposalAndProfileRoundTripPreserveSelectionsAndHistory()
     {
         using var fixture = new Fixture();
