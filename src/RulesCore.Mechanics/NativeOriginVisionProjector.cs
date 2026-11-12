@@ -22,18 +22,32 @@ public static class NativeOriginVisionProjector
     public sealed record LightPerception(string Status, string? PerceivedLightLevel);
 
     public static View Project(NativeCatalogSnapshot catalog,
-        NativeOriginConstructionResult result)
+        NativeOriginConstructionResult result) =>
+        ProjectCore(catalog, result, approvedMixed: false);
+
+    /// <summary>
+    /// A DM-approved mixed construction may include an explicitly selected
+    /// native low-light-vision trait. Resolve only that single, unmodified
+    /// occurrence after the separate mixed intrinsic projector has verified
+    /// the completed table authorization. This never synthesizes unselected
+    /// inherited senses or grants any broader vision effect.
+    /// </summary>
+    public static View ProjectApprovedMixed(NativeCatalogSnapshot catalog,
+        NativeOriginConstructionResult result) =>
+        ProjectCore(catalog, result, approvedMixed: true);
+
+    private static View ProjectCore(NativeCatalogSnapshot catalog,
+        NativeOriginConstructionResult result, bool approvedMixed)
     {
         ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(result);
-
-        // The baseline projector already rejects incomplete choices, mixed
-        // inputs, active transformations, independently asserted grants and
-        // post-origination reconstruction. Its result is not a permission for
-        // this separate trait: we verify the individual occurrence as well.
-        if (NativeOriginIntrinsicProjector.Project(result).Status != "resolved" ||
-            result.Profile is not { } profile)
-            return new("unresolved", null, ["origin-not-a-supported-direct-baseline"]);
+        var baseline = approvedMixed
+            ? NativeOriginApprovedMixedIntrinsicProjector.Project(result)
+            : NativeOriginIntrinsicProjector.Project(result);
+        if (baseline.Status != "resolved" || result.Profile is not { } profile)
+            return new("unresolved", null,
+                [approvedMixed ? "mixed-native-intrinsics-unverified"
+                    : "origin-not-a-supported-direct-baseline"]);
 
         var candidates = profile.Current.InherentGrants
             .Where(grant => grant.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
@@ -43,23 +57,31 @@ public static class NativeOriginVisionProjector
             .ToArray();
         if (candidates.Length == 0)
             return new("none", null, []);
-
-        // There is no approved stacking or upgrade rule for multiple low-light
-        // occurrences, including an Ancestry that offers the same trait twice.
+        // Distinct occurrences do not stack, even for several native parents.
         if (candidates.Length != 1)
             return new("unresolved", null, ["duplicate-low-light-vision"]);
 
         var trait = candidates[0];
         var occurrence = trait.Identity.Occurrence;
+        var expectedAdjudication = approvedMixed
+            ? NativeOriginAdjudication.DmAuthorized
+            : NativeOriginAdjudication.Supported;
+        var expectedEligibility = approvedMixed
+            ? NativeOriginEligibility.DmAuthorized
+            : NativeOriginEligibility.Eligible;
         if (occurrence.Source.Kind != NativeOriginSourceKind.Native ||
             !catalog.TryGetById(occurrence.Source.Id, out var species) ||
             species is null || species.Category is not ("species" or "ancestry") ||
-            trait.Authorization?.Adjudication != NativeOriginAdjudication.Supported ||
+            trait.Authorization?.Adjudication != expectedAdjudication ||
             trait.SourceCandidateIds.Count != 1 ||
             !result.EvaluatedProposal.Candidates.Any(offered =>
                 offered.Id == trait.SourceCandidateIds[0] &&
-                offered.ContributorId is null &&
-                offered.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                (approvedMixed ? offered.ContributorId is not null :
+                    offered.ContributorId is null) &&
+                offered.SelectionBasis.Eligibility == expectedEligibility &&
+                (!approvedMixed ||
+                    offered.SelectionBasis.TableDecisionId ==
+                        trait.Authorization.TableDecisionId) &&
                 offered.Identity == trait.Identity &&
                 offered.OfferedValue is { } offeredValue &&
                 trait.EffectiveValue is { } grantedValue &&
