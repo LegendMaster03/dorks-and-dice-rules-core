@@ -33,6 +33,26 @@ Two design patterns are established: a **composite Fivefold Chromatic** form ass
 
 See [Rites of Rebirth and exceptional Dragonborn](pillar2-rites-of-rebirth-20261111.md) for the complete replacement semantics and the separation of historical heritage from current characteristics. Ordinary mixed-Heritage Breath Weapon parameter choices are unchanged.
 
+## Gem family foundation before exceptional Ruby (sequencing direction, 2026-11-11)
+
+**Owner direction:** Do not begin the exceptional **Ruby** ancestry design until the **ordinary Gem Dragonborn foundation** is reconciled. This is a sequencing decision, **not approval of the specific Gem feature proposals below**. Fivefold Chromatic and Platinum remain separate exceptional design work; Platinum's mechanical design is already approved.
+
+**Current native status:** `native/species/ancestry/dragonborn/gem.json` establishes a **nonselectable Gem family** parented to `species.dragonborn` with **no authored Gem traits**. No ordinary Gem leaf is currently selected-native. The existing Dragonborn Species already supplies creature type **Dragon**, movement, Low-Light Vision, **Breath Weapon (PB uses/Long Rest, 1d10/2d10/3d10/4d10 by character level)**, and **50% affinity-dependent resistance**. The Gem family must not duplicate those base mechanics.
+
+**Reference baseline:** *Fizban's Treasury of Dragons* (2021), Gem Dragonborn, provides five candidate leaf affinities: **Amethyst/Force, Crystal/Radiant, Emerald/Psychic, Sapphire/Thunder, Topaz/Necrotic**; a **15-foot cone** area; **30-foot one-way telepathic messaging**; and **temporary hovering flight at level 5** (bonus action, 1 minute, flight speed equal to walking speed, once per Long Rest). Original source creature type, ability-score adjustments, language allocation and narrative outlook are **not** copied into Dorks & Dice merely because the mechanics are studied. Source overview: https://www.dndbeyond.com/posts/1097-explore-the-chromatic-and-gem-dragonborn-from
+
+**Required Gem foundation review before Ruby:**
+
+1. **Category/family:** Reconcile a Gem family default for the **complete Breath Weapon geometry** (candidate: 15-foot cone), plus any distinct Gem-wide inheritable traits. Determine whether **psionic communication** and **temporary flight** belong in first-party Gem Dragonborn and author precise senses, targets, communication, hover, duration, resource and movement semantics if selected. These features are **not yet approved grants**.
+2. **Five ordinary leaves:** Reconcile **Amethyst, Crystal, Emerald, Sapphire and Topaz** with explicit category, skin-material identity, damage type, and any independently selected innate adaptations. Do not presume five unique adaptations are mandatory or infer abilities from hoard traditions. Preserve original source/category/leaf provenance.
+3. **Cross-trait rules:** Verify that the selected leaf damage affinity binds the ordinary Breath Weapon and Draconic Resistance in a direct standard ancestry. Mixed-Heritage contributors continue to offer the approved **independent damage-type and whole-area selection**; do not introduce a new hidden requirement to couple all traits or let Ruby enter ordinary candidate pools.
+4. **Reuse the general system:** Gem family/leaf authoring must use the existing source-neutral Species/Ancestry model and read-only Pillar 2 reconciliation contracts. A genuinely new general mechanic (e.g., a telepathic message or flight/hover event) should be implemented as a **reusable capability**, not a hard-coded Gem-only path.
+5. **Validation:** Validate parent hierarchy, five ordinary leaf identities, source-qualified damage/area/resistance bindings, family trait deduplication, mixed-contributor candidate provenance, character-level gates, and no inferred Upbringing or Ruby eligibility. Keep source-reference claims distinct from author-approved native behavior.
+
+**Balance/cross-category watchpoint:** Force/Psychic/Necrotic/Radiant resistances and Gem Flight may differ significantly in value from ordinary Chromatic and Metallic features. The proposed level-5 **hovering** Gem Flight would also differ from the already approved exceptional Platinum **level-6 limited flight without assumed hover**; that is a specific cross-family comparison for later review, **not a reason to invent a restriction or to weaken Platinum automatically**.
+
+**Exit criteria:** A fully defined, reviewed ordinary Gem family with five standard leaves, their native trait choices and validation is the **prerequisite for exceptional Ruby mechanics**. The present sequence record **does not promote** the Gem leaves, approve source mechanics, change any runtime API, or claim that the family is already playable.
+
 ## Content-driven structure
 
 The initial work should establish reusable characteristic relationships once. Afterward, creating another Dragonborn Ancestry using supported mechanics should be primarily **content authoring and validation**, not a new engine implementation:
