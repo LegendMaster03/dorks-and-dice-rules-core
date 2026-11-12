@@ -63,6 +63,10 @@ The regression suite uses:
 
 **No guarantee is made about final mixed-Heritage compatibility or balance.** The same generic identity rules apply whether a character uses one Species, mixed Ancestries, mixed Species or fully custom construction.
 
+## Cross-source relationship audit
+
+The companion [definition relationship review](pillar2-definition-relationship-review-20261111.md) now audits all authored Species/Ancestry trait definitions, including unselectable parent families, for repeated local trait IDs, shared explicit rule references and identical complete structured fields. It flags possible structural extension relationships, differing prose and unresolved symbolic bindings. **None of these candidates is assumed equivalent or automatically converted into an upgrade or additional grant.** The result is a review queue for future canonical-definition decisions, not a substitute for them.
+
 ## Next substantive requirements
 
 1. **Review canonical mechanical identity assignments.** A final authoritative registry must be grounded in complete mechanic behavior and constraints, not simply a matching name or field. Where exact equivalence is unknown, leave it unresolved.
