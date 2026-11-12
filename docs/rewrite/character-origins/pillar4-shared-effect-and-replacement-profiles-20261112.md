@@ -102,6 +102,21 @@ All examples are **read-only design**. The linked fixture contains identifiers, 
 - The 3.5e *Unearthed Arcana* Bloodline rules show progressive grants, but mandatory bloodline levels and experience penalties are not approved Dorks & Dice defaults. https://srd.dndtools.org/srd/variant/unearthedBloodlines.html
 - BG3's tadpole powers, partial illithid and full ceremorphosis are useful **comparative game systems**; they do not prescribe first-party Illithid progression or require partial evolution before the final event. https://bg3.wiki/wiki/Illithid_powers ; https://bg3.wiki/wiki/Full-illithid
 
+## Four-case design dry run — evaluated against existing contracts
+
+**Method:** Walk the 30 design-only acceptance scenarios through (a) the current Pillar 2 `Underlying` / `Current` / influence and form contracts, (b) existing Character/Equipment/Resource projection boundaries, and (c) the proposed effect operations. These are **specification conformance arguments, not executed gameplay tests**. They do not prove a runtime capability or balance.
+
+| Case | Representable today | Additional shared mechanics needed | Design outcome |
+| --- | --- | --- | --- |
+| **Draconic Bloodline** | Persist an influence and preserve Species/Ancestry; identify source-qualified independent grants | Individual progression eligibility, earned grant authority, source-specific stacking/resource coordination, projection of traits | **No structural blocker to modification-only model; executor and balancing policy absent** |
+| **Full vampire** | Identify a persistent influence, independently earned grants and an active bat/mist form | Persistent creature-type changes, susceptibility/needs and periodic effects, form-specific actions/speech/equipment, physical inventory policy and resource/HP updates | **Proposed operations cover distinct cases; no executable cross-domain projection** |
+| **Lycanthropy** | Underlying Human vs active wolf Species; source-qualified effects; explicit unresolved overlap; reversion to current baseline as a recorded state | Authorized transitions, form-specific Class/gear/actions projection, time/setting triggers, form and grant interaction evaluation | **Pillar 2 representation adequate for Species; actual replacement of other subsystems remains missing** |
+| **Ceremorphosis** | Record a staged permanent history event, old and new baselines, and independent Class entitlement | Nonlinear progression, executed terminal `supernatural-reconstruction`, grant removal/retention, effective creature type and resource adjustment | **Terminal event shape exists; no executable permanent reconstruction or cross-system retention evaluator** |
+
+**Result:** The four cases expose **one shared missing capability**: an authoritative effective-character composition pass across character subsystems after the Origin result is known. The existing Origin contract should **not** be copied into a parallel "supernatural character" record. A single staged Origins framework also does **not** imply that every supernatural feature has to advance by Character/Class level.
+
+**Why this is not a green-light for implementation yet:** The proposed operation vocabulary and target selectors have not been approved, trust/scope resolution is not executable, and several resource/HP/equipment/ongoing-effect interactions lack first-party rules. The design fixture passes *structural completeness checks*, not runtime conformance; all four progression systems and final numerical grants remain to be reconciled individually.
+
 ## Open decisions; do not silently implement
 
 1. The **canonical shape of effective-character projection** across Origin, Class, conditions, inventory and actions. Should the common resolution layer return domain-specific projections plus an aggregate result, rather than one large mutable character record? **Recommendation:** compose typed domain results with source references and a common issue list; do not duplicate each subsystem's engine.
