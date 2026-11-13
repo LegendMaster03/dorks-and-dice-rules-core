@@ -68,8 +68,9 @@
       {
         "id": "future-borrowing",
         "approval": "unapproved",
-        "rule": "An out-of-turn Reaction can borrow the upcoming Bonus Action, even if the previous turn used one; on-turn costs and Reaction limits require explicit timing rules.",
-        "risk": "More complex resource state and possible extra cost for ordinary Reactions unlike historical 3.x opportunity attacks."
+        "rule": "One shared Bonus Action/Reaction allowance refreshes at the end of each combatant's own turn. An available allowance can pay for a qualifying Bonus Action on the combatant's turn or a qualifying Reaction when its trigger occurs. An out-of-turn Reaction spends the allowance until the end of the combatant's next turn, thereby displacing their next Bonus Action without recording a separate debt. Spending a Bonus Action during a turn does not block Reactions after that turn ends, because the allowance refreshes at turn end.",
+        "risk": "This is simple to track, but can still change 5.x conversion balance, penalize frequent Bonus Action users, and prevent multiple uses of this shared resource between refreshes. Reaction trigger eligibility, initial resource state, explicit extra grants, end-of-turn order, and Block Initiative semantics still need specification.",
+        "label": "One shared resource, end-of-turn refresh (future-borrowing behavior)"
       },
       {
         "id": "selective-extra-cost",
@@ -169,6 +170,26 @@
         "Can first-time 5.x players understand and consciously opt into a different cost model?",
         "Can simpler and advanced players still participate in one coherent encounter?",
         "Are the development, testing and support costs justified compared with targeted tactical features?"
+      ]
+    },
+    "ownerTimingSimplification": {
+      "status": "owner clarification of candidate mechanics; not approval",
+      "candidateId": "future-borrowing",
+      "suggestedRule": "A combatant has one shared allowance for an eligible Bonus Action or Reaction. The allowance refreshes at the end of that combatant's turn.",
+      "realization": "The future-turn cost follows directly from the refresh timing. There is no need for a 'borrowed next turn' ledger or separate future debt.",
+      "sequence": [
+        "Combatant enters their own turn with the allowance available, provided they have not reacted since their previous end-of-turn refresh.",
+        "If the combatant spends the allowance on an eligible Bonus Action during their turn, it refreshes when their turn ends.",
+        "If the combatant then uses a qualifying Reaction before their next turn, the allowance remains spent at the start of the next turn.",
+        "They cannot spend that allowance on a Bonus Action during the next turn; it refreshes again when that turn ends."
+      ],
+      "compatibilityWarning": "This simplifies state tracking but does not resolve differences in effective 5.x class power, imported monster reactions, cooperative actions, or player familiarity.",
+      "stillOpen": [
+        "Whether to adopt the shared end-of-turn-refresh allowance at all, even as an optional campaign rule",
+        "Whether all reactions or only a defined subset consume it",
+        "Start-of-encounter availability and turn-end ordering for reactions or triggers occurring at the boundary",
+        "Extra/replaced actions, reactions during one's own turn, and Block Initiative per-combatant turn boundaries",
+        "Compatibility and balancing tests for 5.x converted content"
       ]
     }
   }
