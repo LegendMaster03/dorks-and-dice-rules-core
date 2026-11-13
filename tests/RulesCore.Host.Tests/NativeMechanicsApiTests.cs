@@ -370,8 +370,14 @@ public sealed class NativeMechanicsApiTests
                 .EnumerateArray(),
             issue => issue.GetProperty("severity").GetInt32() ==
                 (int)NativeOriginIssueSeverity.Invalid);
-        Assert.Empty(outcome.Body.GetProperty("result").GetProperty("profile")
-            .GetProperty("underlying").GetProperty("inherentGrants").EnumerateArray());
+        // Invalid proposals may have no reconstructed profile at all. If a
+        // partial profile is returned, it still must not contain the grant.
+        var malformedProfile = outcome.Body.GetProperty("result").GetProperty("profile");
+        if (malformedProfile.ValueKind == JsonValueKind.Object)
+            Assert.Empty(malformedProfile.GetProperty("underlying")
+                .GetProperty("inherentGrants").EnumerateArray());
+        else
+            Assert.Equal(JsonValueKind.Null, malformedProfile.ValueKind);
 
         // A null nested record is a controlled input error at HTTP ingress.
         using var nullRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
