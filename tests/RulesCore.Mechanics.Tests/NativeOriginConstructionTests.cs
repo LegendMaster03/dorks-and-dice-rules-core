@@ -167,6 +167,53 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
+    public void IntrinsicNormalizationRejectsMalformedChoicesWithoutPublishingGrants()
+    {
+        var origin = Proposal("mixed-malformed", NativeOriginIntent.Mixed,
+            contributors: [Contributor("parent-one", "species.human"),
+                Contributor("parent-two", "species.elf")]);
+        var speed = Evaluate(origin, defaults: false).EvaluatedProposal.Candidates
+            .Single(candidate => candidate.ContributorId == "parent-one" &&
+                candidate.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var malformed = new IReadOnlyList<NativeOriginChoiceSelection>?[]
+        {
+            [new("forged-one", ["x"]), new("forged-two", ["y"])],
+            [null!],
+            [new("unrecognized", null!)],
+            [new("duplicate", ["x"]), new("duplicate", ["x"])],
+            [new("conflict", ["x"]), new("conflict", ["y"])]
+        };
+        foreach (var selections in malformed)
+        {
+            var proposed = origin with { Manifestations =
+                [new NativeOriginManifestation("speed", speed.Id, Choices: selections)] };
+            var result = Evaluate(proposed, defaults: false);
+            Assert.NotEqual(NativeOriginConstructionStatus.Authorized, result.Status);
+            Assert.Contains(result.Issues,
+                issue => issue.Severity == NativeOriginIssueSeverity.Invalid);
+            Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [],
+                grant => grant.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        }
+    }
+
+    [Fact]
+    public void ValidSingleFiniteIntrinsicChoiceStillNormalizes()
+    {
+        var baseline = Evaluate(Proposal("finite", species: "species.human"),
+            defaults: false);
+        var size = baseline.EvaluatedProposal.Candidates.Single(candidate =>
+            candidate.Identity.Occurrence.OccurrencePath == "/sizeChoice");
+        var result = Evaluate(Proposal("finite", species: "species.human",
+            manifests: [new("size", size.Id,
+                Choices: [new("size", ["medium"])])]), defaults: false);
+        Assert.Contains(result.Profile!.Underlying.InherentGrants, grant =>
+            grant.Identity.IntrinsicSlotId == "size" &&
+            grant.EffectiveValue?.GetString() == "medium");
+        Assert.DoesNotContain(result.Issues,
+            issue => issue.Code == "dependent-choice-invalid");
+    }
+
+    [Fact]
     public void NestedContributorsExposeCurrentManifestationButNotHistoricalGrants()
     {
         var parent = Evaluate(Proposal("parent", species: "species.human")).Profile!;

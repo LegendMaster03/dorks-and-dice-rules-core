@@ -106,6 +106,13 @@ public sealed class NativeMechanicsApiTests
                   {"id":"creature-type.humanoid","name":"Humanoid",
                    "kind":"creatureType","parent":"creature",
                    "originationMethods":["biological"]},
+                  {"id":"species.human","name":"Human","kind":"species",
+                   "selectable":true,"creatureType":"humanoid",
+                   "sizeChoice":{"from":["small","medium"],"when":"character-creation"},
+                   "walkingSpeedFeet":30},
+                  {"id":"species.elf","name":"Elf","kind":"species",
+                   "selectable":true,"creatureType":"fey","size":"medium",
+                   "walkingSpeedFeet":30},
                   {"id":"species.fixture","name":"Fixture Species","kind":"species",
                    "selectable":true,"creatureType":"humanoid",
                    "size":"medium","walkingSpeedFeet":30,"traits":[
@@ -320,6 +327,83 @@ public sealed class NativeMechanicsApiTests
             }));
         using var accepted = await fixture.Client.SendAsync(acceptedRequest);
         Assert.Equal(HttpStatusCode.OK, accepted.StatusCode);
+    }
+
+    [Fact]
+    public async Task HumanElfPreviewRejectsMalformedIntrinsicChoiceWithoutHttp500()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var humanElf = new NativeOriginProposal(
+            "malformed-human-elf", NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("parent-one", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.human")),
+             new("parent-two", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.elf"))],
+            [], []);
+        var speedId = "contributor:parent-one:species.human:/walkingSpeedFeet";
+
+        async Task<(HttpStatusCode Status, JsonElement Body)> Preview(
+            NativeOriginProposal proposal)
+        {
+            using var message = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal
+                }));
+            using var response = await fixture.Client.SendAsync(message);
+            return (response.StatusCode,
+                await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        // Exact two-forged-requirement reproduction from independent review.
+        var bad = humanElf with { Manifestations = [
+            new("bad-multiple-choices", speedId, Choices:
+                [new("forged-one", ["x"]), new("forged-two", ["y"])])] };
+        var outcome = await Preview(bad);
+        Assert.Equal(HttpStatusCode.OK, outcome.Status);
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            outcome.Body.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.Contains(outcome.Body.GetProperty("result").GetProperty("issues")
+                .EnumerateArray(),
+            issue => issue.GetProperty("severity").GetInt32() ==
+                (int)NativeOriginIssueSeverity.Invalid);
+        Assert.Empty(outcome.Body.GetProperty("result").GetProperty("profile")
+            .GetProperty("underlying").GetProperty("inherentGrants").EnumerateArray());
+
+        // A null nested record is a controlled input error at HTTP ingress.
+        using var nullRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new {
+                rulesetId = "first-party-001", proposal = humanElf with {
+                    Manifestations = [new NativeOriginManifestation("null", speedId,
+                        Choices: [null!])] }
+            }));
+        using var nullResponse = await fixture.Client.SendAsync(nullRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, nullResponse.StatusCode);
+
+        foreach (var selections in new IReadOnlyList<NativeOriginChoiceSelection>[]
+            {
+                [new("unknown", null!)],
+                [new("duplicate", ["x"]), new("duplicate", ["x"])],
+                [new("conflict", ["x"]), new("conflict", ["y"])]
+            })
+        {
+            var malformed = await Preview(humanElf with { Manifestations =
+                [new NativeOriginManifestation("bad", speedId, Choices: selections)] });
+            Assert.Equal(HttpStatusCode.OK, malformed.Status);
+            Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+                malformed.Body.GetProperty("result").GetProperty("status").GetInt32());
+        }
+
+        // Ordinary Human–Elf preview remains available and grants nothing
+        // until campaign DM authority is independently verified.
+        var ordinary = await Preview(humanElf);
+        Assert.Equal(HttpStatusCode.OK, ordinary.Status);
+        Assert.True(ordinary.Body.GetProperty("previewOnly").GetBoolean());
+        Assert.Empty(ordinary.Body.GetProperty("result").GetProperty("profile")
+            .GetProperty("underlying").GetProperty("inherentGrants").EnumerateArray());
     }
 
     [Fact]

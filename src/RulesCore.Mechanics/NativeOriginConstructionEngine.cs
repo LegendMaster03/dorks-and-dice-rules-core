@@ -69,11 +69,18 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 !candidates.TryGetValue(manifest.CandidateId, out var candidate) ||
                 candidate.Identity.Kind != NativeOriginCharacteristicKind.Intrinsic)
                 continue;
-            var choice = manifest.Choices?.SingleOrDefault();
-            var requirement = candidate.RequiredChoices?.SingleOrDefault();
-            if (choice is not null && requirement is not null &&
-                choice.RequirementId == requirement.Id && choice.SelectedOptionIds.Count == 1 &&
-                requirement.FiniteOptions?.Contains(choice.SelectedOptionIds[0], StringComparer.Ordinal) == true)
+            // This shortcut applies only to an unambiguous single finite
+            // choice. Multiple or malformed records belong to the structural
+            // validator, not SingleOrDefault() (which throws for two choices).
+            if (manifest.Choices is not { Count: 1 } choices ||
+                choices[0] is not { SelectedOptionIds: { Count: 1 } } choice ||
+                candidate.RequiredChoices is not { Count: 1 } requirements ||
+                requirements[0] is not { } requirement ||
+                choice.RequirementId != requirement.Id ||
+                requirement.FiniteOptions?.Contains(choice.SelectedOptionIds[0],
+                    StringComparer.Ordinal) != true)
+                continue;
+            if (choice.SelectedOptionIds[0] is not null)
                 manifests[i] = manifest with
                 {
                     SelectedValue = JsonSerializer.SerializeToElement(choice.SelectedOptionIds[0])
@@ -299,6 +306,22 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 
             var requirements = candidate.RequiredChoices ?? [];
             var choices = manifest.Choices ?? [];
+            // Do not publish a grant from an invalid choice collection, even
+            // when a different entry would satisfy an authored requirement.
+            // The structural validator also reports these errors by path.
+            if (choices.Any(choice => choice is null ||
+                string.IsNullOrWhiteSpace(choice.RequirementId) ||
+                choice.SelectedOptionIds is null ||
+                choice.SelectedOptionIds.Any(string.IsNullOrWhiteSpace)) ||
+                choices.Where(choice => choice is not null)
+                    .GroupBy(choice => choice.RequirementId, StringComparer.Ordinal)
+                    .Any(group => group.Count() > 1))
+            {
+                Add("dependent-choice-invalid", candidate.Id,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Choice records must be nonnull, uniquely identified and contain valid option lists.");
+                continue;
+            }
             var incomplete = false;
             foreach (var req in requirements)
             {
