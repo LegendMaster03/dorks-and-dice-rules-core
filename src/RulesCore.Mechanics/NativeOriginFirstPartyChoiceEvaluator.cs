@@ -27,7 +27,11 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
         var proofId = ProofForCatalog(catalog);
         var normalized = (submitted.Manifestations ?? []).Select(manifest =>
         {
-            if (manifest is null || manifest.Choices is null ||
+            if (manifest.Choices is null ||
+                // Never derive eligibility from malformed records. Preserve
+                // them unchanged so the construction validator can report
+                // the invalid selection without awarding a source grant.
+                manifest.Choices.Any(choice => choice is null) ||
                 !candidates.TryGetValue(manifest.CandidateId, out var candidate) ||
                 candidate.ContributorId is not null ||
                 candidate.SelectionBasis.Eligibility != NativeOriginEligibility.Eligible ||
@@ -40,10 +44,7 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
             {
                 Choices = manifest.Choices.Select(choice =>
                 {
-                    // Preserve malformed records for structured validation; no
-                    // catalog eligibility proof may be minted from a null choice.
-                    if (choice is null ||
-                        !requirements.TryGetValue(choice.RequirementId, out var req) ||
+                    if (!requirements.TryGetValue(choice.RequirementId, out var req) ||
                         req.Timing != NativeOriginChoiceTiming.Creation ||
                         req.OptionCatalogId is null ||
                         choice.SelectedOptionIds is null ||
