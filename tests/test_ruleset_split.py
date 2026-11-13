@@ -6,10 +6,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-import validate_ruleset_split
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+import validate_ruleset_split
 from validate_ruleset_split import (validate_native_tree, check_migration_ledger,
                                     matches_preserved_working_evidence, main)
 
