@@ -72,7 +72,7 @@ class NativeWorkingBoundaryTests(unittest.TestCase):
         self.assertFalse(matches_preserved_working_evidence(
             native, source, working_path.with_name("unreviewed.json")))
         self.assertFalse(matches_preserved_working_evidence(
-            dict(native, profile={"proficiency": "invented"}), source, working_path))
+            dict(native, name="Unreviewed Alchemy"), source, working_path))
 
         original_read = validate_ruleset_split.read_json
 
