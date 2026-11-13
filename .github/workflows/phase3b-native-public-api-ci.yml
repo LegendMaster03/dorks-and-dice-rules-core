@@ -3,8 +3,10 @@
 name: Rules Core Phase 3B Public Native API CI
 
 on:
+  # Phase 5 executes the exact release suite before integration; deployment
+  # continues to require a separate successful main-push run for its final SHA.
   push:
-    branches: [main]
+    branches: [main, feature/pillar2-phase5-origin-api-20261112]
   pull_request:
     branches: [main]
   workflow_dispatch:
