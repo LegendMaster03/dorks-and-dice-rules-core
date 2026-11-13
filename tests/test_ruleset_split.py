@@ -4,6 +4,9 @@ import sys
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+
+import validate_ruleset_split
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -58,6 +61,30 @@ class NativeWorkingBoundaryTests(unittest.TestCase):
             native, dict(source, candidateDefinitions=[{"key": "candidate-a"}]), working_path))
         self.assertFalse(matches_preserved_working_evidence(
             native, dict(source, baselineStatus="pending-native-reconciliation"), working_path))
+
+    def test_provisional_competency_source_uses_exact_file_status_and_ledger(self):
+        native_path = ROOT / "data/rulesets/first-party-001/native/competencies.json"
+        working_path = ROOT / "data/rulesets/first-party-001/working/competencies.json"
+        native = next(row for row in json.loads(native_path.read_text(encoding="utf-8"))["competencies"]
+                      if row["id"] == "competency.alchemy")
+        source = next(row for row in json.loads(working_path.read_text(encoding="utf-8"))["competencies"]
+                      if row["id"] == "competency.alchemy")
+        self.assertTrue(matches_preserved_working_evidence(native, source, working_path))
+        self.assertFalse(matches_preserved_working_evidence(
+            native, source, working_path.with_name("unreviewed.json")))
+        self.assertFalse(matches_preserved_working_evidence(
+            dict(native, profile={"proficiency": "invented"}), source, working_path))
+
+        original_read = validate_ruleset_split.read_json
+
+        def unreviewed_source(path):
+            data = original_read(path)
+            if path == working_path:
+                return dict(data, _meta=dict(data["_meta"], status="unreviewed"))
+            return data
+
+        with patch.object(validate_ruleset_split, "read_json", side_effect=unreviewed_source):
+            self.assertFalse(matches_preserved_working_evidence(native, source, working_path))
 
     def test_selected_warlock_may_supersede_preserved_source_candidates(self):
         native_path = ROOT / "data/rulesets/first-party-001/native/classes/base/warlock/warlock.json"

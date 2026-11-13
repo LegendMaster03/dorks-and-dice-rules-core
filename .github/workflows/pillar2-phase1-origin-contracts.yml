@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/pillar2-characteristic-inventory-20261111
+      - feature/pillar2-phase5-origin-api-20261112
   pull_request:
     branches:
       - feature/pillar2-characteristic-inventory-20261111
@@ -28,3 +29,9 @@ jobs:
         run: dotnet test RulesCore.slnx -c Release --no-build
       - name: Pillar 2 Python studies
         run: python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -v
+      - name: Complete Python content and migration tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Full native/working source boundary
+        run: |
+          python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict
+          python3 tools/validate_ruleset_split.py
