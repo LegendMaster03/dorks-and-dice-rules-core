@@ -652,6 +652,8 @@ A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have diff
 
 **Unresolved:** Whether coupling exists at all; which of these timing models it uses; whether all Reactions participate; refresh rules, exceptions, and how future class redesign affects the rationale. No code or native runtime resolution may be inferred from this proposal. The structured candidate records are in `native/rules/action-economy.json`.
 
+**Prototype implementation note (2026-11-12; no rule approval):** A stateless, authenticated, explicitly selected resource evaluator now supports `independent` (5.x-like separate allowances, start-of-own-turn refresh) and `shared-end-turn` (single allowance, end-of-own-turn refresh) on a development branch. It only tracks resources: it neither grants nor resolves any action, checks any trigger, or changes imported 5.x features. The policies must be tested in separate comparable encounters, with one policy shared by all participating combatants. No policy is approved or activated for live play. See [action-budget playtest protocol](combat-action-budget-playtest.md).
+
 ### Cases to verify before adopting final action-budget numbers
 
 1. Move before/after an Action; movement between attacks granted by a 5e class feature.

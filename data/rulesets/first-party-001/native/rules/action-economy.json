@@ -46,7 +46,7 @@
     "Nonmovement move-equivalent action conversion, Action substitution and full-turn constraints.",
     "Free activity/object interaction limits, interruption ordering, durations and Block Initiative timing details."
   ],
-  "implementationBoundary": "Design data only. No new runtime action budget, source conversion or gameplay effect is implemented by adding this record.",
+  "implementationBoundary": "The two action-budget policies have experimental, opt-in resource-only runtime evaluation. Neither policy is an approved native action-economy rule, automatically activated, integrated with combat effects, or a source-conversion default.",
   "openDesignInvestigation": {
     "id": "shared-bonus-reaction-budget",
     "status": "owner-proposed; undecided; not an approved gameplay rule",
@@ -192,5 +192,33 @@
         "Compatibility and balancing tests for 5.x converted content"
       ]
     }
+  },
+  "playtestPrototype": {
+    "status": "experimental-code-slice; game-rule-selection-not-approved",
+    "implementation": "RulesCore.Mechanics.NativeActionBudgetExperiment",
+    "authenticatedEndpoint": "POST /api/mechanics/v1/experimental/combat/action-budget (delegated), or /api/private/mechanics/v1/experimental/combat/action-budget (private tunnel)",
+    "policies": [
+      {
+        "id": "independent",
+        "label": "Independent 5.x-style budgets",
+        "refresh": "Both Bonus Action and Reaction allowances refresh at the start of each individual combatant's turn.",
+        "cost": "A Bonus Action spends only the Bonus Action allowance. A Reaction spends only the Reaction allowance."
+      },
+      {
+        "id": "shared-end-turn",
+        "label": "Single shared allowance, end-of-turn refresh",
+        "refresh": "The combined Bonus Action/Reaction allowance refreshes at the end of each individual combatant's turn.",
+        "cost": "Either eligible Bonus Action or Reaction spends the combined allowance. Out-of-turn Reaction use can leave the next turn without an available Bonus Action."
+      }
+    ],
+    "use": "Explicitly opt into one policy for an entire playtest encounter; persist resource snapshots per combatant in the consumer. No policy is implicitly selected or activated for conversion.",
+    "constraints": [
+      "No changes to action kinds, named ability eligibility, legal triggers, costs other than action-resource accounting, or effects.",
+      "Applies equally to Standard and Complex Combatants and to either initiative mode.",
+      "Authorization of activities and reaction triggers remains the responsibility of the encounter consumer; a budget showing available is not permission to act.",
+      "This prototype cannot validate that the caller kept one policy for all combatants or that caller-submitted state is authentic; encounter tooling must enforce those boundaries.",
+      "No authoritative game-rule selection, state persistence, UI integration, source conversion, or release is implied."
+    ],
+    "review": "See docs/rewrite/combat-action-budget-playtest.md; neither profile is approved or balanced."
   }
 }

@@ -28,8 +28,11 @@ The following paths are relative to the appropriate `/api/**/mechanics/v1` base:
 | POST | `/conditions/roll-mode` | Conditional roll-mode effects |
 | GET | `/creatures/{entityId}` | Supported native creature facts |
 | POST | `/resources/resolve` | Resource expenditure or recovery |
+| POST | `/experimental/combat/action-budget` | Explicit, stateless action-resource comparison (**not an approved combat rule**); see [playtest guide](rewrite/combat-action-budget-playtest.md) |
 
 The private mechanics surface additionally maps `GET /catalog/rules` and `POST /catalog/resolve`. Newer or incomplete mechanics must be verified against code and tests rather than inferred from this navigation table.
+
+**Experimental resource evaluator:** The `/experimental/combat/action-budget` operation is exposed behind the existing authenticated mechanics boundary for controlled playtesting. An encounter must explicitly choose `independent` or `shared-end-turn`; the API does not choose a default, verify activity eligibility, store combatant state, or activate either policy for existing games. It rejects mismatched content fingerprints. Do not infer production readiness or balance from its presence.
 
 ## Related design
 

@@ -20,6 +20,14 @@ public sealed record NativeConditionRollRequest(
     NativeRollContext Roll, NativeEffectContext? Facts = null);
 
 /// <summary>
+/// Explicitly selected experimental action-budget comparison. This state is not
+/// authoritative encounter persistence; callers retain each actor's snapshot.
+/// </summary>
+public sealed record NativeActionBudgetExperimentRequest(
+    string RulesetId, string Fingerprint, string PolicyId, string Command,
+    NativeActionBudgetState? State = null);
+
+/// <summary>
 /// Versioned, authenticated mechanics surface. Ordinary Character Sheet delegation
 /// is accepted only on the public ingress; private-tunnel provenance only on the
 /// private ingress. Neither surface accepts anonymous requests.
@@ -60,6 +68,7 @@ public static class NativeMechanicsEndpoints
                      manufacturingResolution = "manual-competency-subset",
                      harvestingResolution = "type-monster-manual-edits",
                     conditionRollMode = "conditional-subset",
+                    actionBudgetExperiment = "unapproved-opt-in-prototype",
                     creatureProjection = "partial", sourceConversion = false,
                     campaignEffectiveRules = false }
             });
@@ -348,6 +357,42 @@ public static class NativeMechanicsEndpoints
             var result = new NativeCreatureProjector(catalog).Project(entityId);
             Timing(context, "native-creature-project", start);
             return result.Status == "unavailable" ? Results.NotFound(result) : Results.Ok(result);
+        });
+
+        // Experimental resource accounting only. It neither authorizes activities
+        // nor changes the campaign's action-economy rules. Every call explicitly
+        // supplies a policy, and the caller persists per-combatant state.
+        group.MapPost("/experimental/combat/action-budget",
+            (NativeActionBudgetExperimentRequest request,
+                NativeCatalogStore store, HttpContext context) =>
+        {
+            var start = Stopwatch.GetTimestamp();
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null || string.IsNullOrWhiteSpace(request.PolicyId) ||
+                string.IsNullOrWhiteSpace(request.Command))
+                return Error(400, "invalid_action_budget_request");
+            if (request.RulesetId != catalog.RulesetId ||
+                request.Fingerprint != catalog.Fingerprint)
+                return Error(409, "ruleset_version_mismatch");
+
+            var result = NativeActionBudgetExperiment.Resolve(
+                request.PolicyId, request.Command, request.State);
+            Timing(context, "experimental-action-budget", start);
+            var response = new
+            {
+                contractVersion = 1,
+                experimental = true,
+                status = result.Status,
+                state = result.State,
+                reason = result.Reason
+            };
+            return result.Status switch
+            {
+                "resolved" => Results.Ok(response),
+                "unavailable" => Results.Json(response, statusCode: 422),
+                _ => Results.Json(response, statusCode: 400)
+            };
         });
 
         group.MapPost("/resources/resolve", (NativeResourceActionRequest request,
