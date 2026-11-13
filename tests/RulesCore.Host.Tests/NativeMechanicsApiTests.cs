@@ -262,6 +262,67 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task OriginPreviewBoundsUntrustedCollectionsBeforeNativeEvaluation()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var clean = new NativeOriginProposal(
+            "bounded-preview", NativeOriginIntent.Direct,
+            new NativeOriginMethodReference("rule.creature-origination", "biological"),
+            [], [], []);
+        var tooManyContributors = clean with {
+            Contributors = Enumerable.Range(0, 33).Select(index =>
+                new NativeOriginContributor(
+                    "source-" + index,
+                    new NativeOriginInputRole(NativeOriginInputKind.BiologicalParent),
+                    new NativeOriginSourceReference(
+                        NativeOriginSourceKind.Native, "species.fixture"))).ToArray()
+        };
+        var tooManyManifestations = clean with {
+            Manifestations = Enumerable.Range(0, 257).Select(index =>
+                new NativeOriginManifestation("offered-" + index, "candidate-" + index))
+                .ToArray()
+        };
+        var tooManyRequirements = clean with {
+            InputRequirements = Enumerable.Range(0, 129).Select(index =>
+                new NativeOriginInputRequirement(
+                    "requirement-" + index,
+                    new NativeOriginInputRole(NativeOriginInputKind.Material), 0)).ToArray()
+        };
+        var tooManyChoices = clean with {
+            Manifestations = [new NativeOriginManifestation("choice", "offered",
+                Choices: Enumerable.Range(0, 33).Select(index =>
+                    new NativeOriginChoiceSelection(
+                        "requirement-" + index, ["skill.fixture"])).ToArray())]
+        };
+        foreach (var oversized in new[] {
+            tooManyContributors, tooManyManifestations,
+            tooManyRequirements, tooManyChoices
+        })
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal = oversized
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("origin_request_limits_exceeded",
+                body.GetProperty("error").GetString());
+        }
+        // A normal sized request continues through the existing evaluator.
+        using var acceptedRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "outdated",
+                proposal = clean
+            }));
+        using var accepted = await fixture.Client.SendAsync(acceptedRequest);
+        Assert.Equal(HttpStatusCode.OK, accepted.StatusCode);
+    }
+
+    [Fact]
     public async Task NativeChoicePreviewMintsCatalogEvidenceOnlyForRealNativeSkills()
     {
         await using var fixture = new Fixture();

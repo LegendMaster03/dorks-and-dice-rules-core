@@ -50,6 +50,9 @@ public static class NativeOriginApiEndpoints
                 return Error(403, "campaign_dm_authority_required");
 
             var proposal = request.Proposal;
+            // An HTTP size guard, not a gameplay limit on biological inputs.
+            if (ExceedsUntrustedOriginLimits(proposal))
+                return Error(400, "origin_request_limits_exceeded");
             var decisions = proposal.TableDecisions;
             var actorId = identity.UserId.ToString("D");
             var campaignId = request.CampaignId.ToString("D");
@@ -156,6 +159,8 @@ public static class NativeOriginApiEndpoints
                     c.Identity is null || c.SelectionBasis is null) ||
                 request.Proposal.Manifestations.Any(m => m is null))
                 return Error(400, "invalid_origin_preview_request");
+            if (ExceedsUntrustedOriginLimits(request.Proposal))
+                return Error(400, "origin_request_limits_exceeded");
 
             if (!string.Equals(request.RulesetId, catalog.RulesetId,
                     StringComparison.Ordinal))
@@ -226,6 +231,29 @@ public static class NativeOriginApiEndpoints
             });
         });
     }
+
+    /// <summary>
+    /// Bound the fanout of browser-controlled collections before native
+    /// evaluation. These are per-request resource limits, not game mechanics.
+    /// </summary>
+    private static bool ExceedsUntrustedOriginLimits(NativeOriginProposal proposal) =>
+        (proposal.Contributors?.Count ?? 0) > 32 ||
+        (proposal.Candidates?.Count ?? 0) > 256 ||
+        (proposal.Manifestations?.Count ?? 0) > 256 ||
+        (proposal.Relationships?.Count ?? 0) > 128 ||
+        (proposal.Resolutions?.Count ?? 0) > 128 ||
+        (proposal.Constraints?.Count ?? 0) > 128 ||
+        (proposal.InputRequirements?.Count ?? 0) > 128 ||
+        (proposal.TableDecisions?.Count ?? 0) > 128 ||
+        (proposal.Candidates?.Any(candidate => candidate is not null &&
+            ((candidate.RequiredChoices?.Count ?? 0) > 32 ||
+             (candidate.UnresolvedEvidence?.Count ?? 0) > 128 ||
+             (candidate.OfferedParameters?.Count ?? 0) > 128)) ?? false) ||
+        (proposal.Manifestations?.Any(manifest => manifest is not null &&
+            ((manifest.Choices?.Count ?? 0) > 32 ||
+             (manifest.SelectedParameters?.Count ?? 0) > 128 ||
+             (manifest.Choices?.Any(choice => choice is not null &&
+                 (choice.SelectedOptionIds?.Count ?? 0) > 32) ?? false))) ?? false);
 
     private static IResult Error(int status, string code) =>
         Results.Json(new { error = code }, statusCode: status);
