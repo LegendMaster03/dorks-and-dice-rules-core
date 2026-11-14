@@ -11,58 +11,7 @@
   },
   "traits": [
     {
-      "id": "metallic-breath-weapon",
-      "name": "Metallic Breath Weapon",
-      "description": "Starting at character level 5, when you take the Attack action on your turn, you can replace one attack with a 15-foot cone of non-damaging Metallic Breath. Choose Enervating Breath or Repulsion Breath when used. Each creature in the area, including allies, makes the saving throw for the chosen effect against DC 8 + your Proficiency Bonus + your Constitution modifier. You can use either option once per Long Rest in total; this is a separate resource from ordinary Breath Weapon uses.",
-      "requiredCharacterLevel": 5,
-      "activation": {
-        "action": "attack",
-        "replaces": "one-attack",
-        "timing": "on-your-turn"
-      },
-      "uses": {
-        "value": 1,
-        "recharge": "long-rest",
-        "resource": "metallic-breath-weapon",
-        "independentOf": "breath-weapon"
-      },
-      "area": {
-        "shape": "cone",
-        "lengthFeet": 15,
-        "targets": "each-creature-in-area",
-        "affectsAllies": true
-      },
-      "choiceTiming": "on-use",
-      "options": [
-        {
-          "id": "enervating-breath",
-          "name": "Enervating Breath",
-          "savingThrow": {
-            "ability": "constitution",
-            "dc": "8 + proficiency-bonus + constitution-modifier",
-            "onSuccess": "no-effect"
-          },
-          "onFailure": {
-            "applyCondition": "condition.incapacitated",
-            "endsAt": "start-of-your-next-turn"
-          }
-        },
-        {
-          "id": "repulsion-breath",
-          "name": "Repulsion Breath",
-          "savingThrow": {
-            "ability": "strength",
-            "dc": "8 + proficiency-bonus + constitution-modifier",
-            "onSuccess": "no-effect"
-          },
-          "onFailure": {
-            "pushFeet": 20,
-            "direction": "directly-away-from-you",
-            "forcedMovement": "instantaneous",
-            "applyCondition": "condition.prone"
-          }
-        }
-      ]
+      "traitId": "trait.dragonborn.metallic.metallic-breath-weapon"
     }
   ],
   "reviewNotes": [

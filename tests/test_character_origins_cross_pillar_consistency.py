@@ -21,11 +21,12 @@ def load(path):
 def records(folder):
     result = {}
     for path in (NATIVE / folder).rglob("*.json"):
-        record = load(path)
-        identifier = record["id"]
-        if identifier in result:
-            raise AssertionError(f"Duplicate ID {identifier}: {path}")
-        result[identifier] = record
+        value = load(path)
+        for record in value if isinstance(value, list) else [value]:
+            identifier = record["id"]
+            if identifier in result:
+                raise AssertionError(f"Duplicate ID {identifier}: {path}")
+            result[identifier] = record
     return result
 
 
@@ -67,6 +68,7 @@ class CharacterOriginsCrossPillarConsistencyTests(unittest.TestCase):
     def setUpClass(cls):
         cls.species = records("species/base")
         cls.ancestries = records("species/ancestry")
+        cls.traits = records("traits")
         cls.upbringings = records("upbringings")
         cls.backgrounds = records("backgrounds")
         cls.skills = {r["id"] for r in load(NATIVE / "skills.json")["skills"]}
@@ -237,7 +239,8 @@ class CharacterOriginsCrossPillarConsistencyTests(unittest.TestCase):
         # chooseOne/chooseFrom arrays. Source content may introduce new
         # option or prerequisite structures without changing this test.
         for source in (
-            self.species | self.ancestries | self.upbringings | self.backgrounds
+            self.species | self.ancestries | self.traits |
+            self.upbringings | self.backgrounds
         ).values():
             for value in canonical_reference_strings(source):
                 if value.startswith("skill."):

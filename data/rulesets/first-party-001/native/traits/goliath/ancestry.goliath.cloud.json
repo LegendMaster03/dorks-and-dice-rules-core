@@ -1,0 +1,89 @@
+[
+  {
+    "id": "trait.goliath.cloud.clouds-jaunt",
+    "name": "Cloud's Jaunt",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "clouds-jaunt",
+      "name": "Cloud's Jaunt",
+      "description": "As a Bonus Action, you teleport up to 30 feet to an unoccupied space you can see. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "activation": {
+        "action": "bonus-action"
+      },
+      "teleport": {
+        "maximumDistanceFeet": 30,
+        "destination": "unoccupied-space-you-can-see"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    }
+  },
+  {
+    "id": "trait.goliath.cloud.cloud-strike",
+    "name": "Cloud Strike",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "cloud-strike",
+      "name": "Cloud Strike",
+      "requiredCharacterLevel": 1,
+      "description": "Once per turn, when you hit with a melee weapon or thrown-weapon ranged attack, spend one use of Cloud's Jaunt to deal 1d4 additional Thunder damage. A creature struck makes a Wisdom saving throw; on failure, you become invisible only to that creature until the start of your next turn or until immediately after you make an attack roll or cast a spell. This does not conceal you from other creatures.",
+      "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+      "oncePerTurn": true,
+      "extraDamage": {
+        "dice": "1d4",
+        "damageType": "thunder",
+        "target": "same-target"
+      },
+      "savingThrow": {
+        "ability": "wisdom",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-visibility-effect"
+      },
+      "invisibility": {
+        "onlyAgainst": "struck-creature",
+        "onFailedSave": true,
+        "endsAt": "start-of-your-next-turn",
+        "alsoEndsImmediatelyAfter": [
+          "you-make-an-attack-roll",
+          "you-cast-a-spell"
+        ],
+        "notGlobalCondition": true
+      },
+      "sharedUsesFromTrait": "clouds-jaunt",
+      "extraUsesGranted": false
+    }
+  },
+  {
+    "id": "trait.goliath.cloud.cloudy-escape",
+    "name": "Cloudy Escape",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "cloudy-escape",
+      "name": "Cloudy Escape",
+      "requiredCharacterLevel": 4,
+      "description": "When a creature you can see hits you with an attack, you can use your Reaction to resist the damage of that attack by 50 percent, then teleport up to 30 feet to an unoccupied space you can see. This defensive use has its own Proficiency Bonus uses per Long Rest.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "visible-creature-hits-you-with-an-attack-roll"
+      },
+      "damageResistance": {
+        "percent": 50,
+        "scope": "triggering-attack",
+        "duration": "triggering-attack-only",
+        "stacking": "existing-resistance-rules"
+      },
+      "teleport": {
+        "maximumDistanceFeet": 30,
+        "destination": "unoccupied-space-you-can-see",
+        "timing": "after-triggering-damage-is-resolved"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      },
+      "independentUsesFrom": "clouds-jaunt"
+    }
+  }
+]

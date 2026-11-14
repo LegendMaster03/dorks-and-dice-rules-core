@@ -15,31 +15,13 @@
   "walkingSpeedFeet": 30,
   "traits": [
     {
-      "id": "skillful",
-      "name": "Skillful",
-      "description": "At character creation, choose one additional Skill in which you gain proficiency. This choice is separate from your additional skill ranks and from any Upbringing benefits.",
-      "grantType": "skill-proficiency",
-      "chooseFrom": "any-native-skill",
-      "choiceCount": 1,
-      "when": "character-creation"
+      "traitId": "trait.human.skillful"
     },
     {
-      "id": "versatile",
-      "name": "Versatile",
-      "description": "At character creation, choose one additional Origin feat. This choice is in addition to any feat granted by your other character-creation selections.",
-      "grantType": "feat-choice",
-      "featCategory": "origin",
-      "choiceCount": 1,
-      "when": "character-creation"
+      "traitId": "trait.human.versatile"
     },
     {
-      "id": "adaptable-learning",
-      "name": "Adaptable Learning",
-      "description": "Gain four additional skill ranks to allocate at character level 1. At each subsequent character level, gain one additional skill rank to allocate. These ranks supplement normal advancement and are allocated by the player under the usual skill-rank limits.",
-      "additionalRanksAtCharacterLevel1": 4,
-      "additionalRanksPerSubsequentCharacterLevel": 1,
-      "allocation": "player-choice",
-      "obeysNormalSkillRankLimits": true
+      "traitId": "trait.human.adaptable-learning"
     }
   ],
   "reviewNotes": [

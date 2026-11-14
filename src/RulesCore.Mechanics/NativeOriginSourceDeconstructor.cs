@@ -321,8 +321,14 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                          parameters.Count != bindingDefinitions.EnumerateObject().Count()))
                         unresolved.Add("Source-dependent trait parameters remain unbound.");
                     var id = "trait:" + (String(trait, "id") ?? (index - 1).ToString());
+                    // Canonical mechanics are reusable across sources, but an
+                    // offer still belongs to its own source and /traits/N path.
+                    // The source-qualified fallback supports legacy inline
+                    // fixture catalogs, not a second identity for native refs.
+                    var definitionId = catalog.OriginTraitDefinitionId(entity.Id, index - 1)
+                        ?? source.Id + "#" + id;
                     Add(path, NativeOriginCharacteristicKind.Trait, null, offered, choices,
-                        source.Id + "#" + id, unresolved, parameters);
+                        definitionId, unresolved, parameters);
                 }
             }
 

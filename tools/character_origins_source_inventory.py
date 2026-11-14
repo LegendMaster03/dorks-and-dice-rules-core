@@ -38,7 +38,22 @@ class OriginInventoryError(ValueError):
 
 
 def read_catalog(native_root=NATIVE):
-    """Read all source records without modifying their native definitions."""
+    """Project canonical trait references into the legacy source inventory view.
+
+    This is a read-only compatibility projection for Pillar 2 research tools;
+    the separately stored trait definitions remain authoritative.
+    """
+    definitions = {}
+    for path in sorted((Path(native_root) / "traits").rglob("*.json")):
+        records = json.loads(path.read_text(encoding="utf-8"))
+        for record in records if isinstance(records, list) else [records]:
+            if record.get("kind") != "origin-trait":
+                raise OriginInventoryError(f"Invalid trait kind in {path}")
+            identity = record.get("id")
+            if not isinstance(identity, str) or identity in definitions:
+                raise OriginInventoryError(f"Duplicate or invalid trait ID in {path}")
+            definitions[identity] = record["trait"]
+
     catalog = {}
     for folder in SOURCE_FOLDERS:
         for path in sorted((Path(native_root) / folder).rglob("*.json")):
@@ -52,6 +67,19 @@ def read_catalog(native_root=NATIVE):
                 raise OriginInventoryError(f"Unsupported source kind in {path}")
             if not isinstance(source.get("traits", []), list):
                 raise OriginInventoryError(f"Invalid traits array in {path}")
+
+            expanded = []
+            for occurrence in source.get("traits", []):
+                if "traitId" not in occurrence:
+                    expanded.append(occurrence)
+                    continue
+                if set(occurrence) != {"traitId"}:
+                    raise OriginInventoryError(f"Unsupported trait reference in {path}")
+                ref = occurrence["traitId"]
+                if ref not in definitions:
+                    raise OriginInventoryError(f"Unknown trait {ref} in {path}")
+                expanded.append(copy.deepcopy(definitions[ref]))
+            source["traits"] = expanded
 
             ids = [trait.get("id") for trait in source.get("traits", [])]
             if any(not isinstance(value, str) or not value for value in ids):

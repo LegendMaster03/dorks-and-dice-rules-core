@@ -53,6 +53,11 @@ public static class NativeOriginVisionProjector
             .Where(grant => grant.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
                 (grant.Identity.MechanicalDefinitionId?.EndsWith(
                     "#trait:low-light-vision", StringComparison.Ordinal) == true ||
+                 // Independently stored traits use canonical IDs. A changed
+                 // payload must still reach the verification gate below,
+                 // rather than silently disappearing as an absent sense.
+                 grant.Identity.MechanicalDefinitionId?.EndsWith(
+                    ".low-light-vision", StringComparison.Ordinal) == true ||
                  IsLowLightRule(grant.EffectiveValue)))
             .ToArray();
         if (candidates.Length == 0)

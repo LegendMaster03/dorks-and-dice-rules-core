@@ -1,0 +1,53 @@
+[
+  {
+    "id": "trait.elf.keen-senses",
+    "name": "Keen Senses",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "keen-senses",
+      "description": "Gain +2 Listen and +2 Spot. Existing Perception composite calculation uses these bonuses.",
+      "skillBonuses": {
+        "skill.listen": 2,
+        "skill.spot": 2
+      }
+    }
+  },
+  {
+    "id": "trait.elf.fey-ancestry",
+    "name": "Fey Ancestry",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "fey-ancestry",
+      "description": "Advantage on saving throws to resist or end Charmed.",
+      "savingThrows": {
+        "advantageAgainst": [
+          "condition.charmed"
+        ]
+      }
+    }
+  },
+  {
+    "id": "trait.elf.trance",
+    "name": "Trance",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "trance",
+      "description": "Complete a Long Rest through four hours of trancelike meditation. Elves do not need to sleep.",
+      "longRestHours": 4,
+      "sleepRequired": false
+    }
+  },
+  {
+    "id": "trait.elf.magical-sleep",
+    "name": "Magical Sleep",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "magical-sleep",
+      "description": "Immune to magical sleep that is not willingly accepted. Can consent to a specific magical sleep effect; this is not a general immunity toggle.",
+      "magicalSleep": {
+        "immune": true,
+        "mayConsentToSpecificEffect": true
+      }
+    }
+  }
+]

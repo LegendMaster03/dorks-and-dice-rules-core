@@ -5,6 +5,8 @@ from pathlib import Path
 import re
 import unittest
 
+from tools.native_origin_trait_projection import expand_species_traits
+
 ROOT = Path(__file__).resolve().parents[1]
 WORKING = ROOT / "data/rulesets/first-party-001/working"
 AUTHORITATIVE = ROOT / "data/rulesets/first-party-001/native"
@@ -12,7 +14,7 @@ REF = ROOT / "data/reference/srd"
 
 
 def load(path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return expand_species_traits(json.loads(path.read_text(encoding="utf-8")), path)
 
 
 class NativeSrdBaselineTests(unittest.TestCase):

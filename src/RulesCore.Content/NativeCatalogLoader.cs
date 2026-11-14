@@ -90,13 +90,17 @@ public static class NativeCatalogLoader
         if (entities.Count == 0)
             throw Invalid("invalid_native_json", "Native package has no playable definitions.");
 
-        ValidateConditionReferences(entities);
+        // References are authoritative in native files; the expanded view keeps
+        // existing consumers of source.Definition.traits backward compatible.
+        var (resolvedEntities, traitReferences) = ResolveOriginTraitReferences(entities);
+        ValidateConditionReferences(resolvedEntities);
         // Validate the complete group graph once at load. Coverage requests
         // subsequently use the immutable snapshot and must not repair or
         // reinterpret malformed catalog relationships on the fly.
-        ValidateEquipmentReferences(entities);
-        var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, entities);
-        return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint, entities);
+        ValidateEquipmentReferences(resolvedEntities);
+        var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, resolvedEntities);
+        return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint,
+            resolvedEntities, traitReferences);
     }
 
     private static void ParseFile(JsonElement root, string path, string rulesetId,
@@ -169,6 +173,103 @@ public static class NativeCatalogLoader
 
         entities.Add(new NativeRuleEntity(
             rulesetId, id, name, category, path, element.Clone()));
+    }
+
+    /// <summary>
+    /// Resolve authored Species/Ancestry occurrences against independent trait
+    /// entities. Only the canonical entity stores the mechanical definition on
+    /// disk; the projection is for existing catalog consumers. Source paths and
+    /// array indices remain authored occurrence identities, not definition IDs.
+    /// Legacy inline occurrences are accepted for isolated catalog fixtures.
+    /// </summary>
+    private static (List<NativeRuleEntity> Entities, Dictionary<string, string> References)
+        ResolveOriginTraitReferences(IReadOnlyList<NativeRuleEntity> entities)
+    {
+        var byId = entities.ToDictionary(e => e.Id, StringComparer.Ordinal);
+        var references = new Dictionary<string, string>(StringComparer.Ordinal);
+        var resolved = new List<NativeRuleEntity>(entities.Count);
+
+        foreach (var entity in entities)
+        {
+            if (entity.Category is not ("species" or "ancestry") ||
+                !entity.Definition.TryGetProperty("traits", out var traits))
+            {
+                resolved.Add(entity);
+                continue;
+            }
+
+            if (traits.ValueKind != JsonValueKind.Array)
+                throw Invalid("invalid_origin_trait_reference",
+                    "Species/Ancestry traits must be an array.");
+
+            using var buffer = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(buffer))
+            {
+                writer.WriteStartObject();
+                foreach (var property in entity.Definition.EnumerateObject())
+                {
+                    writer.WritePropertyName(property.Name);
+                    if (property.Name != "traits")
+                    {
+                        property.Value.WriteTo(writer);
+                        continue;
+                    }
+
+                    writer.WriteStartArray();
+                    var index = 0;
+                    var seenLocalIds = new HashSet<string>(StringComparer.Ordinal);
+                    foreach (var occurrence in traits.EnumerateArray())
+                    {
+                        if (occurrence.ValueKind != JsonValueKind.Object)
+                            throw Invalid("invalid_origin_trait_reference",
+                                "Trait occurrences must be objects.");
+
+                        // Only reference entries acquire a canonical mechanical ID.
+                        // Inline entries remain supported for legacy test fixtures.
+                        var isReference = occurrence.TryGetProperty("traitId", out var reference);
+                        JsonElement payload;
+                        if (isReference)
+                        {
+                            if (occurrence.EnumerateObject().Count() != 1 ||
+                                reference.ValueKind != JsonValueKind.String ||
+                                !byId.TryGetValue(reference.GetString()!, out var definition) ||
+                                definition.Category != "origin-trait" ||
+                                !definition.Definition.TryGetProperty("trait", out var trait) ||
+                                trait.ValueKind != JsonValueKind.Object)
+                                throw Invalid("invalid_origin_trait_reference",
+                                    "Trait reference must identify an independent origin-trait definition.");
+                            payload = trait;
+                            references.Add(entity.Id + "#" + index, definition.Id);
+                        }
+                        else
+                        {
+                            payload = occurrence;
+                        }
+
+                        // Older consumers also identify traits by their local
+                        // source-qualified ID. Two occurrences with that same ID
+                        // become indistinguishable in inventories even when their
+                        // canonical definition IDs differ.
+                        var localId = ReadString(payload, "id");
+                        if ((isReference && (string.IsNullOrWhiteSpace(localId) ||
+                                !string.Equals(localId, localId.Trim(), StringComparison.Ordinal))) ||
+                            (localId is not null && !seenLocalIds.Add(localId)))
+                            throw Invalid("invalid_origin_trait_reference",
+                                "Source trait local IDs must be nonempty and unique.");
+
+                        payload.WriteTo(writer);
+                        index++;
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
+                writer.Flush();
+            }
+            using var document = JsonDocument.Parse(buffer.ToArray(), JsonOptions);
+            resolved.Add(entity with { Definition = document.RootElement.Clone() });
+        }
+
+        return (resolved, references);
     }
 
     /// <summary>

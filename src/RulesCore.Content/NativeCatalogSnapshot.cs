@@ -28,6 +28,7 @@ public sealed class NativeCatalogSnapshot
     private sealed record SearchEntry(NativeRuleEntity Entity, string SearchText);
 
     private readonly FrozenDictionary<string, NativeRuleEntity> _byId;
+    private readonly FrozenDictionary<string, string> _originTraitReferences;
     private readonly ImmutableArray<SearchEntry> _all;
     private readonly FrozenDictionary<string, ImmutableArray<SearchEntry>> _byCategory;
     private readonly FrozenDictionary<string, ImmutableArray<SearchEntry>> _trigrams;
@@ -42,8 +43,12 @@ public sealed class NativeCatalogSnapshot
         string rulesetId,
         int schemaVersion,
         string fingerprint,
-        IReadOnlyCollection<NativeRuleEntity> entities)
+        IReadOnlyCollection<NativeRuleEntity> entities,
+        IReadOnlyDictionary<string, string>? originTraitReferences = null)
     {
+        _originTraitReferences = (originTraitReferences ??
+            new Dictionary<string, string>(StringComparer.Ordinal))
+            .ToFrozenDictionary(StringComparer.Ordinal);
         RulesetId = rulesetId;
         SchemaVersion = schemaVersion;
         Fingerprint = fingerprint;
@@ -94,6 +99,13 @@ public sealed class NativeCatalogSnapshot
         ArgumentNullException.ThrowIfNull(id);
         return _byId.TryGetValue(id, out entity);
     }
+
+    /// <summary>
+    /// Resolve the canonical mechanical identity for an authored source trait
+    /// without replacing its distinct occurrence path or grant provenance.
+    /// </summary>
+    public string? OriginTraitDefinitionId(string sourceId, int traitIndex) =>
+        _originTraitReferences.TryGetValue(sourceId + "#" + traitIndex, out var id) ? id : null;
 
     public int CountByCategory(string category)
     {

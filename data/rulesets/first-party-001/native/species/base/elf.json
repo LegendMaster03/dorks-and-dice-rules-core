@@ -6,38 +6,19 @@
   "selectable": true,
   "traits": [
     {
-      "id": "low-light-vision",
-      "name": "Low-Light Vision",
-      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
-      "rule": "rule.low-light-vision"
+      "traitId": "trait.shared.low-light-vision"
     },
     {
-      "id": "keen-senses",
-      "description": "Gain +2 Listen and +2 Spot. Existing Perception composite calculation uses these bonuses.",
-      "skillBonuses": {
-        "skill.listen": 2,
-        "skill.spot": 2
-      }
+      "traitId": "trait.elf.keen-senses"
     },
     {
-      "id": "fey-ancestry",
-      "description": "Advantage on saving throws to resist or end Charmed.",
-      "savingThrows": {
-        "advantageAgainst": [
-          "condition.charmed"
-        ]
-      }
+      "traitId": "trait.elf.fey-ancestry"
     },
     {
-      "id": "trance",
-      "description": "Complete a Long Rest through four hours of trancelike meditation. Elves do not need to sleep.",
-      "longRestHours": 4,
-      "sleepRequired": false
+      "traitId": "trait.elf.trance"
     },
     {
-      "id": "magical-sleep",
-      "description": "Immune to magical sleep that is not willingly accepted. Can consent to a specific magical sleep effect; this is not a general immunity toggle.",
-      "magicalSleep": { "immune": true, "mayConsentToSpecificEffect": true }
+      "traitId": "trait.elf.magical-sleep"
     }
   ],
   "creatureType": "fey",
