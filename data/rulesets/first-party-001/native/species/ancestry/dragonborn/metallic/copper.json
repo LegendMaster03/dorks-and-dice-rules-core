@@ -9,16 +9,7 @@
   "climbingSpeedFeet": 15,
   "traits": [
     {
-      "id": "natural-climber",
-      "name": "Natural Climber",
-      "description": "You have a Climb Speed of 15 feet. This does not grant Spider Climb, ceiling traversal, or automatic success on exceptionally difficult surfaces.",
-      "movementMode": "climb",
-      "speedFeet": 15,
-      "doesNotGrant": [
-        "spider-climb",
-        "ceiling-traversal",
-        "automatic-success-on-exceptionally-difficult-surfaces"
-      ]
+      "traitId": "trait.dragonborn.copper.natural-climber"
     }
   ],
   "reviewNotes": [

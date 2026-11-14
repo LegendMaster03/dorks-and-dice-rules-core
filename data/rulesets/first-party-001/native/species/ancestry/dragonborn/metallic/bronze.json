@@ -8,14 +8,7 @@
   "damageType": "lightning",
   "traits": [
     {
-      "id": "amphibious",
-      "name": "Amphibious",
-      "description": "You can breathe air and water indefinitely. This trait does not grant a swimming speed.",
-      "canBreathe": [
-        "air",
-        "water"
-      ],
-      "grantsSwimSpeed": false
+      "traitId": "trait.shared.amphibious"
     }
   ],
   "reviewNotes": [

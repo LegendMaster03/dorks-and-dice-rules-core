@@ -9,65 +9,13 @@
   "walkingSpeedFeet": 30,
   "traits": [
     {
-      "id": "low-light-vision",
-      "name": "Low-Light Vision",
-      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit you to see through Darkness.",
-      "rule": "rule.low-light-vision"
+      "traitId": "trait.shared.low-light-vision"
     },
     {
-      "id": "draconic-resistance",
-      "description": "You have 50 percent resistance to the damage type associated with your specific dragon ancestry.",
-      "damageResistance": {
-        "percent": 50,
-        "damageTypeFrom": "selected-dragonborn-leaf"
-      },
-      "originBindings": {
-        "damageType": { "lookup": "leaf", "sourceField": "damageType" }
-      }
+      "traitId": "trait.dragonborn.draconic-resistance"
     },
     {
-      "id": "breath-weapon",
-      "description": "On your turn when you take the Attack action, you can replace one of the attacks with your Breath Weapon. Targets in the area defined by your dragon ancestry make a Dexterity saving throw against DC 8 + your Proficiency Bonus + your Constitution modifier. A failed save deals damage of your dragon ancestry's type; a successful save takes half damage. Uses equal Proficiency Bonus and all expended uses return after a Long Rest.",
-      "activation": {
-        "action": "attack",
-        "replaces": "one-attack",
-        "timing": "on-your-turn"
-      },
-      "uses": {
-        "value": "proficiency-bonus",
-        "recharge": "long-rest"
-      },
-      "savingThrow": {
-        "ability": "dexterity",
-        "dc": "8 + proficiency-bonus + constitution-modifier",
-        "onSuccess": "half-damage"
-      },
-      "damage": {
-        "typeFrom": "selected-dragonborn-leaf",
-        "progression": [
-          {
-            "characterLevel": 1,
-            "dice": "1d10"
-          },
-          {
-            "characterLevel": 5,
-            "dice": "2d10"
-          },
-          {
-            "characterLevel": 11,
-            "dice": "3d10"
-          },
-          {
-            "characterLevel": 17,
-            "dice": "4d10"
-          }
-        ]
-      },
-      "areaFrom": "selected-dragonborn-family-or-leaf",
-      "originBindings": {
-        "damageType": { "lookup": "leaf", "sourceField": "damageType" },
-        "area": { "lookup": "nearest", "sourceField": "breathWeaponArea" }
-      }
+      "traitId": "trait.dragonborn.breath-weapon"
     }
   ],
   "reviewNotes": [
