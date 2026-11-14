@@ -80,6 +80,28 @@ public sealed class NativeCatalogTests
     }
 
     [Fact]
+    public void CanonicalOriginTraitsRequireDistinctNonblankLocalIdsPerSource()
+    {
+        using var blank = new Fixture();
+        blank.Native("traits/blank.json",
+            """{"id":"trait.blank","name":"Blank","kind":"origin-trait","trait":{"id":" "}}""");
+        blank.Native("species.json",
+            """{"id":"species.example","name":"Example","kind":"species","traits":[{"traitId":"trait.blank"}]}""");
+        Assert.Equal("invalid_origin_trait_reference", Failure(blank).ReasonCode);
+
+        using var duplicates = new Fixture();
+        duplicates.Native("traits/one.json",
+            """{"id":"trait.one","name":"One","kind":"origin-trait","trait":{"id":"repeated"}}""");
+        duplicates.Native("traits/two.json",
+            """{"id":"trait.two","name":"Two","kind":"origin-trait","trait":{"id":"repeated"}}""");
+        duplicates.Native("species.json",
+            """{"id":"species.example","name":"Example","kind":"species","traits":[{"traitId":"trait.one"},{"traitId":"trait.two"}]}""");
+        // Canonical IDs are distinct, but legacy source-qualified IDs would
+        // collide and turn these two authored occurrences into one identity.
+        Assert.Equal("invalid_origin_trait_reference", Failure(duplicates).ReasonCode);
+    }
+
+    [Fact]
     public void EveryNativeWeaponHasAnAuthoredFamilyBeneathTheWeaponCategory()
     {
         var catalog = NativeCatalogLoader.Load(RepositoryLocation());
