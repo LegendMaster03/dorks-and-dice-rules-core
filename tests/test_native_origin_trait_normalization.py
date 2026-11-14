@@ -1,7 +1,10 @@
 """Integrity checks for independently stored inherent trait definitions."""
 import json
 from pathlib import Path
+import tempfile
 import unittest
+
+from tools.native_origin_trait_projection import expand_species_traits
 
 NATIVE = (Path(__file__).resolve().parents[1]
           / "data/rulesets/first-party-001/native")
@@ -77,6 +80,34 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
         self.assertEqual(1, len(owners["trait.goliath.powerful-build"]))
         self.assertEqual(1, len(owners["trait.orc.powerful-build"]))
         self.assertNotIn("trait.shared.powerful-build", owners)
+
+    def test_research_projection_reads_changed_trait_content_without_stale_cache(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            native = Path(temporary) / "native"
+            source_path = native / "species" / "base" / "example.json"
+            source_path.parent.mkdir(parents=True)
+            trait_path = native / "traits" / "example.json"
+            trait_path.parent.mkdir(parents=True)
+            source = {
+                "id": "species.example", "kind": "species", "name": "Example",
+                "traits": [{"traitId": "trait.example"}],
+            }
+            source_path.write_text(json.dumps(source), encoding="utf-8")
+
+            def write_trait(local_id):
+                trait_path.write_text(json.dumps({
+                    "id": "trait.example", "name": "Example",
+                    "kind": "origin-trait", "trait": {"id": local_id},
+                }), encoding="utf-8")
+
+            write_trait("before")
+            self.assertEqual("before",
+                             expand_species_traits(source, source_path)["traits"][0]["id"])
+            write_trait("after")
+            self.assertEqual("after",
+                             expand_species_traits(source, source_path)["traits"][0]["id"])
+            # Projection must not replace references in the caller's source.
+            self.assertEqual([{"traitId": "trait.example"}], source["traits"])
 
     def test_approved_choice_and_parameter_shapes_remain_in_definitions(self):
         def trait(identity):
