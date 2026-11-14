@@ -321,8 +321,10 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                          parameters.Count != bindingDefinitions.EnumerateObject().Count()))
                         unresolved.Add("Source-dependent trait parameters remain unbound.");
                     var id = "trait:" + (String(trait, "id") ?? (index - 1).ToString());
+                    var definitionId = catalog.OriginTraitDefinitionId(entity.Id, index - 1)
+                        ?? source.Id + "#" + id;
                     Add(path, NativeOriginCharacteristicKind.Trait, null, offered, choices,
-                        source.Id + "#" + id, unresolved, parameters);
+                        definitionId, unresolved, parameters);
                 }
             }
 
