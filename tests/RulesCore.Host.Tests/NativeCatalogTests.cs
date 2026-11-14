@@ -33,6 +33,53 @@ public sealed class NativeCatalogTests
     }
 
     [Fact]
+    public void NormalizedOriginTraitsPreserveCatalogProjectionAndCanonicalIdentity()
+    {
+        var catalog = NativeCatalogLoader.Load(RepositoryLocation());
+        Assert.True(catalog.CountByCategory("origin-trait") > 0);
+        Assert.True(catalog.TryGetById("trait.shared.low-light-vision", out var shared));
+        Assert.Equal("origin-trait", shared!.Category);
+        foreach (var sourceId in new[] { "species.dragonborn", "species.elf",
+            "species.gnome", "species.orc" })
+        {
+            Assert.True(catalog.TryGetById(sourceId, out var source));
+            Assert.Equal("trait.shared.low-light-vision",
+                catalog.OriginTraitDefinitionId(sourceId, 0));
+            Assert.True(JsonElement.DeepEquals(shared.Definition.GetProperty("trait"),
+                source!.Definition.GetProperty("traits")[0]));
+        }
+        Assert.Equal("trait.human.skillful",
+            catalog.OriginTraitDefinitionId("species.human", 0));
+        Assert.Equal("trait.elf.high.arcane-cantrip",
+            catalog.OriginTraitDefinitionId("ancestry.elf.high", 0));
+        Assert.True(catalog.TryGetById("ancestry.elf.high", out var highElf));
+        Assert.Equal("manifested-intrinsic",
+            highElf!.Definition.GetProperty("traits")[0]
+                .GetProperty("originBindings").GetProperty("spellcastingAbility")
+                .GetProperty("lookup").GetString());
+        Assert.True(catalog.TryGetById("species.dragonborn", out var dragonborn));
+        Assert.Equal("leaf", dragonborn!.Definition.GetProperty("traits")[2]
+            .GetProperty("originBindings").GetProperty("damageType")
+            .GetProperty("lookup").GetString());
+    }
+
+    [Fact]
+    public void MissingOrNonTraitOriginDefinitionFailsCatalogLoad()
+    {
+        using var missing = new Fixture();
+        missing.Native("species.json",
+            """{"id":"species.example","name":"Example","kind":"species","traits":[{"traitId":"trait.unknown"}]}""");
+        Assert.Equal("invalid_origin_trait_reference", Failure(missing).ReasonCode);
+
+        using var wrongKind = new Fixture();
+        wrongKind.Native("rule.json",
+            """{"id":"trait.not-a-trait","name":"Not a Trait","kind":"rule"}""");
+        wrongKind.Native("species.json",
+            """{"id":"species.example","name":"Example","kind":"species","traits":[{"traitId":"trait.not-a-trait"}]}""");
+        Assert.Equal("invalid_origin_trait_reference", Failure(wrongKind).ReasonCode);
+    }
+
+    [Fact]
     public void EveryNativeWeaponHasAnAuthoredFamilyBeneathTheWeaponCategory()
     {
         var catalog = NativeCatalogLoader.Load(RepositoryLocation());

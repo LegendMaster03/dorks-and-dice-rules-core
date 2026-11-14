@@ -1,4 +1,5 @@
 """Tiefling first-pass Species, ancestry, and source-coverage checks."""
+from tools.native_origin_trait_projection import expand_species_traits
 import json
 from pathlib import Path
 import unittest
@@ -13,7 +14,7 @@ COVERAGE = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
 
 def read(path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return expand_species_traits(json.loads(path.read_text(encoding="utf-8")), path)
 
 
 class TieflingSpeciesReconciliationTests(unittest.TestCase):
