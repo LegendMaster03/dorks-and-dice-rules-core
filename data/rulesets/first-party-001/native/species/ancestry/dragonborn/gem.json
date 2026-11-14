@@ -7,43 +7,10 @@
   "parent": "species.dragonborn",
   "traits": [
     {
-      "id": "psionic-mind",
-      "name": "Psionic Mind",
-      "description": "You can communicate a telepathic message to one creature you can see within 30 feet. It understands the message if it understands at least one language, whether or not you share a language. This sends a message only: it does not read thoughts or grant the recipient a telepathic reply.",
-      "atWill": true,
-      "communicationMode": "telepathic-message",
-      "rangeFeet": 30,
-      "targetCount": 1,
-      "requiresSight": true,
-      "requiresRecipientLanguage": true,
-      "requiresSharedLanguage": false,
-      "oneWay": true,
-      "grantsThoughtReading": false
+      "traitId": "trait.dragonborn.gem.psionic-mind"
     },
     {
-      "id": "gem-flight",
-      "name": "Gem Flight",
-      "description": "Starting at character level 5, you can use a Bonus Action on your turn to manifest spectral wings for 1 minute. While they last, you gain a flying speed equal to your current walking speed and can hover. You can use this trait once per Long Rest; it is independent of your Breath Weapon.",
-      "requiredCharacterLevel": 5,
-      "activation": {
-        "action": "bonus-action",
-        "timing": "on-your-turn"
-      },
-      "duration": {
-        "minutes": 1
-      },
-      "uses": {
-        "value": 1,
-        "recharge": "long-rest",
-        "resource": "gem-flight",
-        "independentOf": "breath-weapon"
-      },
-      "manifestation": "spectral-wings",
-      "flyingSpeed": {
-        "equalTo": "current-walking-speed"
-      },
-      "canHover": true,
-      "grantsPermanentFlight": false
+      "traitId": "trait.dragonborn.gem.gem-flight"
     }
   ],
   "reviewNotes": [
