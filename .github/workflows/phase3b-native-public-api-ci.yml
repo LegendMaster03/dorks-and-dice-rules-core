@@ -26,8 +26,8 @@ jobs:
           dotnet build RulesCore.slnx -c Release --no-restore
       - name: Complete C# test suite (includes real HTTP public/private ingress tests)
         run: dotnet test RulesCore.slnx -c Release --no-build
-      # Keep Origin-specific results independently visible even while the
-      # wider experimental ruleset has unrelated native/working baseline failures.
+      # Keep Origin-specific and adjacent character-source regressions
+      # visible alongside the complete suite, without inventing release exceptions.
       - name: Character Origins Pillars 1 and 3 contract regressions
         run: |
           python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v

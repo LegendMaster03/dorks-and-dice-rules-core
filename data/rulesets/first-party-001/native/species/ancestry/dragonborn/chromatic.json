@@ -31,7 +31,10 @@
         "damageTypeFrom": "selected-dragonborn-leaf",
         "stacking": "replace-lower-same-type"
       },
-      "doesNotGrantConditionImmunity": true
+      "doesNotGrantConditionImmunity": true,
+      "originBindings": {
+        "damageType": { "lookup": "leaf", "sourceField": "damageType" }
+      }
     }
   ],
   "reviewNotes": [

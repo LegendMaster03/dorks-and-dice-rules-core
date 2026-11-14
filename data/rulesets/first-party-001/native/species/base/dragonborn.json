@@ -20,6 +20,9 @@
       "damageResistance": {
         "percent": 50,
         "damageTypeFrom": "selected-dragonborn-leaf"
+      },
+      "originBindings": {
+        "damageType": { "lookup": "leaf", "sourceField": "damageType" }
       }
     },
     {
@@ -60,7 +63,11 @@
           }
         ]
       },
-      "areaFrom": "selected-dragonborn-family-or-leaf"
+      "areaFrom": "selected-dragonborn-family-or-leaf",
+      "originBindings": {
+        "damageType": { "lookup": "leaf", "sourceField": "damageType" },
+        "area": { "lookup": "nearest", "sourceField": "breathWeaponArea" }
+      }
     }
   ],
   "reviewNotes": [

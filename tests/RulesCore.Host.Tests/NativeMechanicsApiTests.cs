@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Host;
+using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -93,6 +94,37 @@ public sealed class NativeMechanicsApiTests
                     "subject":"attacks-by-affected-creature","mode":"disadvantage",
                     "when":{"fearSourceWithinLineOfSight":true}}]}]}
                 """);
+            // A compact first-party Origin fixture proves that only the
+            // authenticated server may populate catalog eligibility evidence.
+            File.WriteAllText(Path.Combine(package, "native", "origin-fixture.json"), """
+                {"entries":[
+                  {"id":"rule.creature-origination","name":"Origination",
+                   "kind":"rule","methodDefinitions":[
+                     {"id":"biological","name":"Biological"}]},
+                  {"id":"rule.low-light-vision","name":"Low-Light Vision","kind":"rule",
+                   "effects":[{"actualLightLevel":"dim","perceivedLightLevel":"bright"}]},
+                  {"id":"creature-type.humanoid","name":"Humanoid",
+                   "kind":"creatureType","parent":"creature",
+                   "originationMethods":["biological"]},
+                  {"id":"species.human","name":"Human","kind":"species",
+                   "selectable":true,"creatureType":"humanoid",
+                   "sizeChoice":{"from":["small","medium"],"when":"character-creation"},
+                   "walkingSpeedFeet":30},
+                  {"id":"species.elf","name":"Elf","kind":"species",
+                   "selectable":true,"creatureType":"fey","size":"medium",
+                   "walkingSpeedFeet":30},
+                  {"id":"species.fixture","name":"Fixture Species","kind":"species",
+                   "selectable":true,"creatureType":"humanoid",
+                   "size":"medium","walkingSpeedFeet":30,"traits":[
+                     {"id":"skilled","name":"Skilled",
+                      "grantType":"skill-proficiency",
+                      "chooseFrom":"any-native-skill","choiceCount":1},
+                     {"id":"low-light-vision","name":"Low-Light Vision",
+                      "rule":"rule.low-light-vision"}]},
+                  {"id":"skill.intimidation","name":"Intimidation","kind":"skill"},
+                  {"id":"competency.alchemy","name":"Alchemy","kind":"competency"}
+                ]}
+                """);
             App = RulesCoreApplication.Create([], builder => {
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
                 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?> {
@@ -124,6 +156,349 @@ public sealed class NativeMechanicsApiTests
             if (App is not null) await App.DisposeAsync();
             if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task OriginPreviewRejectsUntrustedBaselineAndDoesNotRequireFixedFingerprint()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var clean = new NativeOriginProposal(
+            "draft-1", NativeOriginIntent.Direct,
+            new NativeOriginMethodReference("unknown-method-rule", "direct"),
+            [], [], []);
+
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint, new
+        {
+            rulesetId = "first-party-001", fingerprint = "outdated",
+            proposal = clean
+        });
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var wrongIdentity = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new {
+                rulesetId = "unrelated-ruleset", fingerprint = "outdated",
+                proposal = clean
+            })));
+        Assert.Equal(HttpStatusCode.Conflict, wrongIdentity.StatusCode);
+
+        using var forgedBaseline = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "outdated",
+                proposal = clean with {
+                    ExistingConfiguration = new NativeOriginCurrentConfiguration(
+                        "species.human", null, [])
+                }
+            })));
+        Assert.Equal(HttpStatusCode.BadRequest, forgedBaseline.StatusCode);
+        var denied = await forgedBaseline.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("trusted_origin_state_required",
+            denied.GetProperty("error").GetString());
+
+        // A stateless preview cannot authenticate a manifested biological
+        // parent or a previously completed transformation supplied by the caller.
+        var untrustedContributor = clean with
+        {
+            Contributors = [new NativeOriginContributor("claimed-parent",
+                new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.ManifestedProfile, "claimed-parent-state"),
+                new NativeOriginCurrentConfiguration("species.human", null, []))]
+        };
+        var forgedDecision = clean with
+        {
+            Resolutions = [new NativeOriginResolution("relationship",
+                NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: "unverified-dm-decision"))]
+        };
+        var forgedRequirement = clean with
+        {
+            InputRequirements = [new NativeOriginInputRequirement("claimed-requirement",
+                new(NativeOriginInputKind.Material), 0,
+                TableDecisionId: "claimed-decision")]
+        };
+        foreach (var unsafeProposal in new[]
+            { untrustedContributor, forgedDecision, forgedRequirement })
+        {
+            using var unsafeRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal = unsafeProposal
+                }));
+            using var refused = await fixture.Client.SendAsync(unsafeRequest);
+            Assert.Equal(HttpStatusCode.BadRequest, refused.StatusCode);
+            var refusal = await refused.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("trusted_origin_state_required",
+                refusal.GetProperty("error").GetString());
+        }
+
+        // First-party option eligibility is verified from the current native
+        // catalog. A client must not present even a correctly formatted proof
+        // as if it were an independently authenticated entitlement.
+        var selfAssertedChoice = clean with
+        {
+            Manifestations = [new NativeOriginManifestation("choice-1", "unknown",
+                Choices: [new NativeOriginChoiceSelection("selection",
+                    ["skill.intimidation"], "native-catalog:spoof")])]
+        };
+        using var forgedChoiceRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new
+            {
+                rulesetId = "first-party-001", fingerprint = "outdated",
+                proposal = selfAssertedChoice
+            }));
+        using var forgedChoice = await fixture.Client.SendAsync(forgedChoiceRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, forgedChoice.StatusCode);
+        var deniedChoice = await forgedChoice.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("trusted_origin_state_required",
+            deniedChoice.GetProperty("error").GetString());
+
+        // An ordinary content update changes the fingerprint, not user permission.
+        using var previewRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new { rulesetId = "first-party-001",
+                fingerprint = "outdated", proposal = clean }));
+        using var preview = await fixture.Client.SendAsync(previewRequest);
+        Assert.Equal(HttpStatusCode.OK, preview.StatusCode);
+        var content = await preview.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(content.GetProperty("previewOnly").GetBoolean());
+        Assert.True(content.GetProperty("contentChangedSinceRequest").GetBoolean());
+        Assert.Equal("first-party-001", content.GetProperty("rulesetId").GetString());
+        Assert.True(content.GetProperty("result").TryGetProperty("issues", out _));
+    }
+
+    [Fact]
+    public async Task OriginPreviewBoundsUntrustedCollectionsBeforeNativeEvaluation()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var clean = new NativeOriginProposal(
+            "bounded-preview", NativeOriginIntent.Direct,
+            new NativeOriginMethodReference("rule.creature-origination", "biological"),
+            [], [], []);
+        var tooManyContributors = clean with {
+            Contributors = Enumerable.Range(0, 33).Select(index =>
+                new NativeOriginContributor(
+                    "source-" + index,
+                    new NativeOriginInputRole(NativeOriginInputKind.BiologicalParent),
+                    new NativeOriginSourceReference(
+                        NativeOriginSourceKind.Native, "species.fixture"))).ToArray()
+        };
+        var tooManyManifestations = clean with {
+            Manifestations = Enumerable.Range(0, 257).Select(index =>
+                new NativeOriginManifestation("offered-" + index, "candidate-" + index))
+                .ToArray()
+        };
+        var tooManyRequirements = clean with {
+            InputRequirements = Enumerable.Range(0, 129).Select(index =>
+                new NativeOriginInputRequirement(
+                    "requirement-" + index,
+                    new NativeOriginInputRole(NativeOriginInputKind.Material), 0)).ToArray()
+        };
+        var tooManyChoices = clean with {
+            Manifestations = [new NativeOriginManifestation("choice", "offered",
+                Choices: Enumerable.Range(0, 33).Select(index =>
+                    new NativeOriginChoiceSelection(
+                        "requirement-" + index, ["skill.fixture"])).ToArray())]
+        };
+        foreach (var oversized in new[] {
+            tooManyContributors, tooManyManifestations,
+            tooManyRequirements, tooManyChoices
+        })
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal = oversized
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("origin_request_limits_exceeded",
+                body.GetProperty("error").GetString());
+        }
+        // A normal sized request continues through the existing evaluator.
+        using var acceptedRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new {
+                rulesetId = "first-party-001", fingerprint = "outdated",
+                proposal = clean
+            }));
+        using var accepted = await fixture.Client.SendAsync(acceptedRequest);
+        Assert.Equal(HttpStatusCode.OK, accepted.StatusCode);
+    }
+
+    [Fact]
+    public async Task HumanElfPreviewRejectsMalformedIntrinsicChoiceWithoutHttp500()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var humanElf = new NativeOriginProposal(
+            "malformed-human-elf", NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("parent-one", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.human")),
+             new("parent-two", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.elf"))],
+            [], []);
+        var speedId = "contributor:parent-one:species.human:/walkingSpeedFeet";
+
+        async Task<(HttpStatusCode Status, JsonElement Body)> Preview(
+            NativeOriginProposal proposal)
+        {
+            using var message = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal
+                }));
+            using var response = await fixture.Client.SendAsync(message);
+            return (response.StatusCode,
+                await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        // Exact two-forged-requirement reproduction from independent review.
+        var bad = humanElf with { Manifestations = [
+            new("bad-multiple-choices", speedId, Choices:
+                [new("forged-one", ["x"]), new("forged-two", ["y"])])] };
+        var outcome = await Preview(bad);
+        Assert.Equal(HttpStatusCode.OK, outcome.Status);
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            outcome.Body.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.Contains(outcome.Body.GetProperty("result").GetProperty("issues")
+                .EnumerateArray(),
+            issue => issue.GetProperty("severity").GetInt32() ==
+                (int)NativeOriginIssueSeverity.Invalid);
+        // Invalid proposals may have no reconstructed profile at all. If a
+        // partial profile is returned, it still must not contain the grant.
+        var malformedProfile = outcome.Body.GetProperty("result").GetProperty("profile");
+        if (malformedProfile.ValueKind == JsonValueKind.Object)
+            Assert.Empty(malformedProfile.GetProperty("underlying")
+                .GetProperty("inherentGrants").EnumerateArray());
+        else
+            Assert.Equal(JsonValueKind.Null, malformedProfile.ValueKind);
+
+        // A null nested record is a controlled input error at HTTP ingress.
+        using var nullRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(new {
+                rulesetId = "first-party-001", proposal = humanElf with {
+                    Manifestations = [new NativeOriginManifestation("null", speedId,
+                        Choices: [null!])] }
+            }));
+        using var nullResponse = await fixture.Client.SendAsync(nullRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, nullResponse.StatusCode);
+
+        foreach (var selections in new IReadOnlyList<NativeOriginChoiceSelection>[]
+            {
+                [new("unknown", null!)],
+                [new("duplicate", ["x"]), new("duplicate", ["x"])],
+                [new("conflict", ["x"]), new("conflict", ["y"])]
+            })
+        {
+            var malformed = await Preview(humanElf with { Manifestations =
+                [new NativeOriginManifestation("bad", speedId, Choices: selections)] });
+            Assert.Equal(HttpStatusCode.OK, malformed.Status);
+            Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+                malformed.Body.GetProperty("result").GetProperty("status").GetInt32());
+        }
+
+        // Ordinary Human–Elf preview remains available and grants nothing
+        // until campaign DM authority is independently verified.
+        var ordinary = await Preview(humanElf);
+        Assert.Equal(HttpStatusCode.OK, ordinary.Status);
+        Assert.True(ordinary.Body.GetProperty("previewOnly").GetBoolean());
+        Assert.Empty(ordinary.Body.GetProperty("result").GetProperty("profile")
+            .GetProperty("underlying").GetProperty("inherentGrants").EnumerateArray());
+    }
+
+    [Fact]
+    public async Task NativeChoicePreviewMintsCatalogEvidenceOnlyForRealNativeSkills()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var proposal = new NativeOriginProposal(
+            "fixture-skill", NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [],
+            [new NativeOriginManifestation("fixture-selected",
+                "direct:species.fixture:/traits/0",
+                Choices: [new("selection", ["skill.intimidation"])])],
+            SelectedSpeciesId: "species.fixture");
+
+        using var response = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = "first-party-001",
+                fingerprint = "old-contents-are-not-auth",
+                proposal
+            })));
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var document = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(document.GetProperty("previewOnly").GetBoolean());
+        Assert.True(document.GetProperty("contentChangedSinceRequest").GetBoolean());
+        var result = document.GetProperty("result");
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            result.GetProperty("status").GetInt32());
+        var proof = result.GetProperty("evaluatedProposal").GetProperty("manifestations")
+            .EnumerateArray().Single(x =>
+                x.GetProperty("id").GetString() == "fixture-selected")
+            .GetProperty("choices")[0]
+            .GetProperty("catalogEligibilityEvidenceId").GetString();
+        Assert.Equal("native-catalog:first-party-001:" +
+            document.GetProperty("fingerprint").GetString(), proof);
+        Assert.Equal((int)NativeOriginEventStage.Completed,
+            result.GetProperty("profile").GetProperty("history")[0]
+                .GetProperty("stage").GetInt32());
+        var intrinsics = document.GetProperty("intrinsics");
+        Assert.True(intrinsics.GetProperty("previewOnly").GetBoolean());
+        Assert.Equal("resolved", intrinsics.GetProperty("status").GetString());
+        Assert.Empty(intrinsics.GetProperty("unresolvedSlots").EnumerateArray());
+        Assert.Equal("medium", intrinsics.GetProperty("size")
+            .GetProperty("value").GetString());
+        Assert.Equal(30, intrinsics.GetProperty("walkingSpeedFeet")
+            .GetProperty("value").GetInt32());
+        Assert.Equal("species.fixture", intrinsics.GetProperty("walkingSpeedFeet")
+            .GetProperty("sourceId").GetString());
+        Assert.Equal("/walkingSpeedFeet", intrinsics.GetProperty("walkingSpeedFeet")
+            .GetProperty("occurrencePath").GetString());
+        var vision = document.GetProperty("vision");
+        Assert.Equal("resolved", vision.GetProperty("status").GetString());
+        Assert.True(vision.GetProperty("previewOnly").GetBoolean());
+        Assert.Empty(vision.GetProperty("unresolvedReasons").EnumerateArray());
+        var lowLight = vision.GetProperty("lowLightVision");
+        Assert.Equal("species.fixture", lowLight.GetProperty("sourceId").GetString());
+        Assert.Equal("/traits/1", lowLight.GetProperty("occurrencePath").GetString());
+        Assert.Equal("rule.low-light-vision", lowLight.GetProperty("ruleId").GetString());
+        Assert.Equal("dim", lowLight.GetProperty("actualLightLevel").GetString());
+        Assert.Equal("bright", lowLight.GetProperty("perceivedLightLevel").GetString());
+
+
+        // An unrelated category can never be approved by the same Skill grant.
+        using var wrongCatalog = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = "first-party-001",
+                proposal = proposal with
+                {
+                    Manifestations = [new NativeOriginManifestation(
+                        "fixture-selected", "direct:species.fixture:/traits/0",
+                        Choices: [new("selection", ["competency.alchemy"])])]
+                }
+            })));
+        Assert.Equal(HttpStatusCode.OK, wrongCatalog.StatusCode);
+        var denied = await wrongCatalog.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            denied.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.Equal("unresolved",
+            denied.GetProperty("intrinsics").GetProperty("status").GetString());
+        Assert.Equal("unresolved",
+            denied.GetProperty("vision").GetProperty("status").GetString());
+        Assert.True(denied.GetProperty("intrinsics")
+            .GetProperty("previewOnly").GetBoolean());
+
+        Assert.Contains(denied.GetProperty("result").GetProperty("issues").EnumerateArray(),
+            x => x.GetProperty("code").GetString() == "choice-authorization-unresolved");
     }
 
     [Theory]
@@ -620,7 +995,7 @@ public sealed class NativeMechanicsApiTests
         Assert.False(result.GetProperty("options")[0].TryGetProperty("sourcePath", out _));
         // Skill and Competency summaries are safe identities only, not raw
         // native definitions or private content. Empty result sets are valid.
-        foreach (var category in new[] { "skill", "competency", "monster", "item", "feat", "spell" })
+        foreach (var category in new[] { "species", "ancestry", "skill", "competency", "monster", "item", "feat", "spell" })
         {
             using var catalogSearch = await fixture.Client.SendAsync(fixture.Authenticated(
                 HttpMethod.Get, "/api/mechanics/v1/catalog/options?fingerprint=" +

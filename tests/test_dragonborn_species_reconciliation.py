@@ -15,51 +15,79 @@ def read(path):
 
 
 class DragonbornReconciliationTests(unittest.TestCase):
-    def test_selected_family_and_ten_leaves(self):
+    def test_dragonborn_family_and_leaf_parent_links(self):
+        # The data corpus grows independently of this structural contract.
+        # Do not pin leaf counts, names, or selectable flags in this test.
         base = read(DRAGONBORN / "base/dragonborn.json")
         self.assertEqual("species.dragonborn", base["id"])
         self.assertEqual("dragon", base["creatureType"])
         self.assertEqual(30, base["walkingSpeedFeet"])
-        self.assertFalse(base["selectable"])
-        families = {
-            "chromatic": ("black", "blue", "green", "red", "white"),
-            "metallic": ("brass", "bronze", "copper", "gold", "silver"),
-        }
+        root = DRAGONBORN / "ancestry/dragonborn"
+        families = sorted(root.glob("*.json"))
+        self.assertTrue(families)
         ids = {base["id"]}
-        for family, names in families.items():
-            with self.subTest(family=family):
-                node = read(DRAGONBORN / f"ancestry/dragonborn/{family}.json")
-                self.assertEqual("species.dragonborn", node["parent"])
-                self.assertFalse(node["selectable"])
-                self.assertEqual("selected-native", node["status"])
-                self.assertNotIn("defaultUpbringing", node)
-                self.assertNotIn(node["id"], ids)
-                ids.add(node["id"])
-                for name in names:
-                    leaf = read(DRAGONBORN / f"ancestry/dragonborn/{family}/{name}.json")
-                    self.assertEqual(node["id"], leaf["parent"])
-                    self.assertTrue(leaf["selectable"])
-                    self.assertEqual("selected-native", leaf["status"])
-                    self.assertEqual("ancestry", leaf["kind"])
-                    self.assertGreaterEqual(len(leaf["traits"]), 1)
-                    self.assertNotIn("defaultUpbringing", leaf)
-                    self.assertNotIn(leaf["id"], ids)
-                    ids.add(leaf["id"])
-        self.assertEqual(13, len(ids))
+        for family_path in families:
+            with self.subTest(family=family_path.stem):
+                family = read(family_path)
+                self.assertEqual(base["id"], family["parent"])
+                self.assertEqual("ancestry", family["kind"])
+                self.assertNotIn(family["id"], ids)
+                ids.add(family["id"])
+                for path in sorted((root / family_path.stem).glob("*.json")):
+                    with self.subTest(leaf=path.stem):
+                        leaf = read(path)
+                        self.assertEqual("ancestry", leaf["kind"])
+                        self.assertEqual(family["id"], leaf["parent"])
+                        self.assertNotIn(leaf["id"], ids)
+                        ids.add(leaf["id"])
 
-    def test_gem_family_is_nonselectable_and_structural_only(self):
-        base = read(DRAGONBORN / "base/dragonborn.json")
+    def test_gem_family_and_leaf_mechanics(self):
         gem = read(DRAGONBORN / "ancestry/dragonborn/gem.json")
-        self.assertEqual("ancestry.dragonborn.gem", gem["id"])
-        self.assertEqual("ancestry", gem["kind"])
+        base = read(DRAGONBORN / "base/dragonborn.json")
+        self.assertEqual("species.dragonborn", gem["parent"])
         self.assertEqual("selected-native", gem["status"])
-        self.assertFalse(base["selectable"])
-        self.assertFalse(gem["selectable"])
-        self.assertEqual(base["id"], gem["parent"])
-        self.assertEqual([], gem["traits"])
-        for unresolved in ("breathWeaponArea", "damageType", "defaultUpbringing"):
-            self.assertNotIn(unresolved, gem)
-        self.assertFalse((DRAGONBORN / "ancestry/dragonborn/gem").exists())
+        self.assertEqual({"shape": "cone", "lengthFeet": 15},
+                         gem["breathWeaponArea"])
+        self.assertNotIn("defaultUpbringing", gem)
+        self.assertNotIn("damageType", gem)
+        t = {x["id"]: x for x in gem["traits"]}
+        self.assertEqual({"psionic-mind", "gem-flight"}, set(t))
+        mind = t["psionic-mind"]
+        self.assertTrue(mind["atWill"])
+        self.assertEqual("telepathic-message", mind["communicationMode"])
+        self.assertEqual(30, mind["rangeFeet"])
+        self.assertEqual(1, mind["targetCount"])
+        self.assertTrue(mind["requiresSight"])
+        self.assertTrue(mind["requiresRecipientLanguage"])
+        self.assertFalse(mind["requiresSharedLanguage"])
+        self.assertTrue(mind["oneWay"])
+        self.assertFalse(mind["grantsThoughtReading"])
+        flight = t["gem-flight"]
+        self.assertEqual(5, flight["requiredCharacterLevel"])
+        self.assertEqual("bonus-action", flight["activation"]["action"])
+        self.assertEqual({"minutes": 1}, flight["duration"])
+        self.assertEqual(1, flight["uses"]["value"])
+        self.assertEqual("long-rest", flight["uses"]["recharge"])
+        self.assertEqual("breath-weapon", flight["uses"]["independentOf"])
+        self.assertEqual({"equalTo": "current-walking-speed"},
+                         flight["flyingSpeed"])
+        self.assertTrue(flight["canHover"])
+        self.assertFalse(flight["grantsPermanentFlight"])
+        self.assertEqual("dragon", base["creatureType"])
+        self.assertEqual("selected-dragonborn-family-or-leaf",
+                         next(x for x in base["traits"]
+                              if x["id"] == "breath-weapon")["areaFrom"])
+        folder = DRAGONBORN / "ancestry/dragonborn/gem"
+        leaves = sorted(folder.glob("*.json"))
+        self.assertTrue(leaves)
+        for path in leaves:
+            with self.subTest(leaf=path.stem):
+                leaf = read(path)
+                self.assertEqual("ancestry.dragonborn." + path.stem, leaf["id"])
+                self.assertEqual(gem["id"], leaf["parent"])
+                self.assertIsInstance(leaf["damageType"], str)
+                self.assertTrue(leaf["damageType"])
+                self.assertEqual([], leaf["traits"])
 
     def test_dragonborn_inherits_unrestricted_low_light_vision(self):
         base = read(DRAGONBORN / "base/dragonborn.json")
@@ -71,9 +99,10 @@ class DragonbornReconciliationTests(unittest.TestCase):
         self.assertEqual("bright", rule["effects"][0]["perceivedLightLevel"])
         self.assertTrue(any("No separate Low-Light Vision range" in x
                             for x in rule["clarifications"]))
-        for family in ("chromatic", "metallic"):
-            root = DRAGONBORN / "ancestry/dragonborn"
-            node = read(root / (family + ".json"))
+        root = DRAGONBORN / "ancestry/dragonborn"
+        for path in sorted(root.glob("*.json")):
+            family = path.stem
+            node = read(path)
             self.assertNotIn("darkvisionFeet", node)
             self.assertNotIn("lowLightVision", node)
             for file in (root / family).glob("*.json"):

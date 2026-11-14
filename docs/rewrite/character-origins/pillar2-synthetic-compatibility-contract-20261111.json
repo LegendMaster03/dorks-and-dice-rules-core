@@ -1,0 +1,75 @@
+{
+  "status": "synthetic-design-fixture-only",
+  "speciesRootId": "species.synthetic-scaled",
+  "dimensions": [
+    "category",
+    "skinMaterial",
+    "damageType",
+    "resistanceDamageType",
+    "breathArea"
+  ],
+  "rules": [
+    {
+      "id": "test.category-material-a",
+      "when": {
+        "dimension": "category",
+        "equals": "test.chromatic"
+      },
+      "requires": {
+        "dimension": "skinMaterial",
+        "oneOf": [
+          "test.crimson-scale",
+          "test.azure-scale"
+        ]
+      }
+    },
+    {
+      "id": "test.category-material-b",
+      "when": {
+        "dimension": "category",
+        "equals": "test.metallic"
+      },
+      "requires": {
+        "dimension": "skinMaterial",
+        "oneOf": [
+          "test.bronze-alloy",
+          "test.silver-alloy"
+        ]
+      }
+    },
+    {
+      "id": "test.shared-affinity",
+      "when": null,
+      "requires": {
+        "dimension": "resistanceDamageType",
+        "sameAs": "damageType"
+      }
+    },
+    {
+      "id": "test.glass-cold-exclusion",
+      "when": {
+        "dimension": "category",
+        "equals": "test.glass"
+      },
+      "excludes": {
+        "dimension": "damageType",
+        "oneOf": [
+          "cold"
+        ]
+      }
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "test.glass-cold-review",
+      "match": {
+        "category": "test.glass",
+        "damageType": "cold"
+      },
+      "waiveRuleIds": [
+        "test.glass-cold-exclusion"
+      ],
+      "reason": "Synthetic narrow exception demonstrates review workflow; not a first-party combination or automatic permission."
+    }
+  ]
+}

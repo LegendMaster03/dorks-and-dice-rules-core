@@ -24,6 +24,12 @@ repository rather than treated as a fixed phase milestone. Earlier phase
 migration evidence is preserved separately. Native data updates do not require
 recompilation of RulesCore.Content or RulesCore.Host.
 
+## Rules and table authority
+
+**Dorks & Dice is a tabletop roleplaying framework, not a restriction on how a table may play.** The published first-party rules are shared defaults; the DM and players may adapt them or introduce homebrew. Supporting tools should distinguish first-party content from explicit campaign decisions and preserve both accurately, rather than treat custom play as forbidden. This is a **system-wide design principle**, not a Character Origins exception.
+
+See the [living rules design specification](docs/rewrite/native-rules-design-specification.md#governing-design-principle--the-rules-are-a-framework-not-a-constraint-on-the-table) for the governing decision and its software boundaries.
+
 ## Manual deployment
 
 Open **GitHub Actions → Deploy native Rules Core → Run workflow** on `main`.

@@ -1,0 +1,54 @@
+{
+  "status": "review-evidence-only",
+  "identicalAuthoredGroups": [
+    {
+      "candidateDefinitionId": "study.definition.amphibious-air-water",
+      "sourceOccurrenceIds": [
+        "ancestry.dragonborn.black#trait:amphibious",
+        "ancestry.dragonborn.green#trait:amphibious",
+        "ancestry.dragonborn.bronze#trait:amphibious",
+        "ancestry.dragonborn.gold#trait:amphibious"
+      ],
+      "evidence": "same-complete-authored-definition"
+    },
+    {
+      "candidateDefinitionId": "study.definition.low-light-vision",
+      "sourceOccurrenceIds": [
+        "species.dragonborn#trait:low-light-vision",
+        "species.elf#trait:low-light-vision",
+        "species.gnome#trait:low-light-vision",
+        "species.orc#trait:low-light-vision"
+      ],
+      "evidence": "same-complete-authored-definition"
+    }
+  ],
+  "semanticReviewGroups": [
+    {
+      "reviewId": "study.review.low-light-tiefling",
+      "sourceOccurrenceIds": [
+        "species.orc#trait:low-light-vision",
+        "species.tiefling#trait:low-light-vision"
+      ],
+      "expectedEvidence": "same-structure-different-prose",
+      "notes": "Both refer to rule.low-light-vision; Tiefling uses shorter prose. Check actual shared rule semantics before extending canonical identity."
+    },
+    {
+      "reviewId": "study.review.natural-climber",
+      "sourceOccurrenceIds": [
+        "ancestry.dragonborn.red#trait:natural-climber",
+        "ancestry.dragonborn.copper#trait:natural-climber"
+      ],
+      "expectedEvidence": "same-structure-different-prose",
+      "notes": "Structured climb-speed and explicit exclusions match. Confirm whether wording variations change a rule before declaring semantic equivalence."
+    },
+    {
+      "reviewId": "study.review.powerful-build",
+      "sourceOccurrenceIds": [
+        "species.orc#trait:powerful-build",
+        "species.goliath#trait:powerful-build"
+      ],
+      "expectedEvidence": "same-local-id-different-structure",
+      "notes": "Orc includes pushing, dragging and lifting equivalence; Goliath grants grapple-escape advantage. Similar names do not make these grants equivalent."
+    }
+  ]
+}

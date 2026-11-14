@@ -42,6 +42,13 @@ public static class NativeMechanicsEndpoints
         // The ordinary delegated surface serves calculations, not unrestricted content.
         if (privateTunnel) group.MapNativeCharacterCatalog();
 
+        // Origin preview inherits the same authenticated ingress as other mechanics.
+        // No persisted state or table-authority claims are accepted by this route.
+        group.MapNativeOriginPreview();
+        // Separate trusted DM-reviewed evaluation. The caller must still
+        // commit any authorized result through Character Sheet's store.
+        if (!privateTunnel) group.MapNativeOriginApprovedMixedEvaluation();
+
         group.MapGet("/ruleset", (NativeCatalogStore store) =>
         {
             var catalog = store.Snapshot;
@@ -54,6 +61,8 @@ public static class NativeMechanicsEndpoints
                     conditionValueIsolation = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
+                    originPreview = "stateless-first-party",
+                    originPersistence = false, originDmAdjudication = false,
                     startingEquipmentResolution = "authored-grants-only",
                     equipmentQualifications = "authored-scopes-only",
                      equipmentTraining = "proficiency-and-mastery-flags",
@@ -78,7 +87,7 @@ public static class NativeMechanicsEndpoints
                 !SingleQueryValue(request, "q", out var query) ||
                 !SingleQueryValue(request, "limit", out var limitText) ||
                 !SingleQueryValue(request, "offset", out var offsetText) ||
-                category is not ("class" or "subclass" or "patron" or "pact" or
+                category is not ("species" or "ancestry" or "class" or "subclass" or "patron" or "pact" or
                     "invocation" or "condition" or "leveled-condition" or
                     "skill" or "competency" or "monster" or "item" or
                     "feat" or "spell") ||
