@@ -94,8 +94,8 @@ public sealed class NativeOriginVisionProjectorTests
         var original = Evaluate(catalog, "species.orc");
         var profile = original.Profile!;
         var sense = profile.Current.InherentGrants.Single(grant =>
-            grant.Identity.MechanicalDefinitionId?.EndsWith(
-                "#trait:low-light-vision", StringComparison.Ordinal) == true);
+            grant.Identity.MechanicalDefinitionId ==
+                catalog.OriginTraitDefinitionId("species.orc", 0));
 
         var duplicated = profile.Current with
         {
@@ -130,8 +130,8 @@ public sealed class NativeOriginVisionProjectorTests
         var original = Evaluate(catalog, "species.orc");
         var profile = original.Profile!;
         var sense = profile.Current.InherentGrants.Single(grant =>
-            grant.Identity.MechanicalDefinitionId?.EndsWith(
-                "#trait:low-light-vision", StringComparison.Ordinal) == true);
+            grant.Identity.MechanicalDefinitionId ==
+                catalog.OriginTraitDefinitionId("species.orc", 0));
 
         var originalJson = sense.EffectiveValue!.Value;
         var modified = JsonNode.Parse(originalJson.GetRawText())!;
