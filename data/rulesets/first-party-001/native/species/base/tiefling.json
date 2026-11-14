@@ -28,19 +28,10 @@
   },
   "traits": [
     {
-      "id": "low-light-vision",
-      "name": "Low-Light Vision",
-      "description": "You perceive Dim Light as Bright Light, without a separate range limit. This does not permit vision through Darkness.",
-      "rule": "rule.low-light-vision"
+      "traitId": "trait.tiefling.low-light-vision"
     },
     {
-      "id": "otherworldly-presence",
-      "name": "Otherworldly Presence",
-      "description": "Know Thaumaturgy at character level 1 and cast it at will. Use the spellcasting ability chosen for your Fiendish Ancestry.",
-      "spell": "thaumaturgy",
-      "level": 1,
-      "atWill": true,
-      "spellcastingAbilityFrom": "selected-tiefling-ancestry"
+      "traitId": "trait.tiefling.otherworldly-presence"
     }
   ],
   "reviewNotes": [
