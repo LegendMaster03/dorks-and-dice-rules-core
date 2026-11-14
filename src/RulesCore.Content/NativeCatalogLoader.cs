@@ -217,30 +217,46 @@ public static class NativeCatalogLoader
 
                     writer.WriteStartArray();
                     var index = 0;
+                    var seenLocalIds = new HashSet<string>(StringComparer.Ordinal);
                     foreach (var occurrence in traits.EnumerateArray())
                     {
                         if (occurrence.ValueKind != JsonValueKind.Object)
                             throw Invalid("invalid_origin_trait_reference",
                                 "Trait occurrences must be objects.");
-                        if (!occurrence.TryGetProperty("traitId", out var reference))
+
+                        // Only reference entries acquire a canonical mechanical ID.
+                        // Inline entries remain supported for legacy test fixtures.
+                        var isReference = occurrence.TryGetProperty("traitId", out var reference);
+                        JsonElement payload;
+                        if (isReference)
                         {
-                            // Existing isolated catalog fixtures may still use
-                            // inline traits; first-party content uses references.
-                            occurrence.WriteTo(writer);
-                            index++;
-                            continue;
+                            if (occurrence.EnumerateObject().Count() != 1 ||
+                                reference.ValueKind != JsonValueKind.String ||
+                                !byId.TryGetValue(reference.GetString()!, out var definition) ||
+                                definition.Category != "origin-trait" ||
+                                !definition.Definition.TryGetProperty("trait", out var trait) ||
+                                trait.ValueKind != JsonValueKind.Object)
+                                throw Invalid("invalid_origin_trait_reference",
+                                    "Trait reference must identify an independent origin-trait definition.");
+                            payload = trait;
+                            references.Add(entity.Id + "#" + index, definition.Id);
                         }
-                        if (occurrence.EnumerateObject().Count() != 1 ||
-                            reference.ValueKind != JsonValueKind.String ||
-                            !byId.TryGetValue(reference.GetString()!, out var definition) ||
-                            definition.Category != "origin-trait" ||
-                            !definition.Definition.TryGetProperty("trait", out var payload) ||
-                            payload.ValueKind != JsonValueKind.Object ||
-                            ReadString(payload, "id") is null)
+                        else
+                        {
+                            payload = occurrence;
+                        }
+
+                        // Older consumers also identify traits by their local
+                        // source-qualified ID. Two occurrences with that same ID
+                        // become indistinguishable in inventories even when their
+                        // canonical definition IDs differ.
+                        var localId = ReadString(payload, "id");
+                        if ((isReference && (string.IsNullOrWhiteSpace(localId) ||
+                                !string.Equals(localId, localId.Trim(), StringComparison.Ordinal))) ||
+                            (localId is not null && !seenLocalIds.Add(localId)))
                             throw Invalid("invalid_origin_trait_reference",
-                                "Trait reference must identify an independent origin-trait definition.");
-                        var key = entity.Id + "#" + index;
-                        references.Add(key, definition.Id);
+                                "Source trait local IDs must be nonempty and unique.");
+
                         payload.WriteTo(writer);
                         index++;
                     }
