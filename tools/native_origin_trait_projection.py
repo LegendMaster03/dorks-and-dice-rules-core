@@ -4,14 +4,14 @@ Authoritative native source records contain only trait IDs. This helper is for
 legacy Python reconciliation checks which inspect the former embedded view.
 It never changes rules, provenance, authorization, or native files.
 """
-from functools import lru_cache
 from pathlib import Path
 import copy
 import json
 
 
-@lru_cache(maxsize=8)
 def _definitions(native_root):
+    # This is a design-time reader, and callers can revise native files in the
+    # same process. Caching by directory path would project stale trait payloads.
     entries = {}
     for path in sorted((native_root / "traits").rglob("*.json")):
         records = json.loads(path.read_text(encoding="utf-8"))
