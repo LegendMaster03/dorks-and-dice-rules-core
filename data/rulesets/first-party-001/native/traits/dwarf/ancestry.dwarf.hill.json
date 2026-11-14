@@ -1,0 +1,11 @@
+[
+  {
+    "id": "trait.dwarf.hill.stability",
+    "name": "Stability",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "stability",
+      "description": "While on stable ground, gain advantage on checks and saving throws resisting forced pushing or being knocked Prone; does not cover pulling or confer immunity."
+    }
+  }
+]
