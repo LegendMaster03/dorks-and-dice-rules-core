@@ -33,6 +33,30 @@ public sealed class NativeCharacterSheetResolverTests
             characterId == "character.one" && !DeniedGrants.Contains(grant.Id);
     }
 
+    private sealed class StrictShapeAuthority : INativeCharacterSheetAuthority
+    {
+        public bool AuthorizesPrimary(string characterId, NativeCharacterRequest primary) => true;
+        public bool AuthorizesSheet(string characterId, NativePersistentCharacterSheet sheet) => true;
+        public bool AuthorizesProgression(string characterId, string ownerSheetId,
+            NativeSheetEarnedProgression progression)
+        {
+            Assert.NotNull(progression.SourceOccurrence);
+            return true;
+        }
+        public bool AuthorizesGrant(string characterId, string ownerSheetId,
+            NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant)
+        {
+            Assert.NotNull(grant.SourceOccurrence);
+            return true;
+        }
+        public bool AuthorizesApplicability(string characterId, string sheetId,
+            NativeSheetGrantApplicability decision)
+        {
+            Assert.NotEqual(NativeOriginAdjudication.Unresolved, decision.Basis.Adjudication);
+            return true;
+        }
+    }
+
     private static NativeOriginSourceReference Source(string id = "source.lycanthropy") =>
         new(NativeOriginSourceKind.Native, id, "synthetic-v1");
 
@@ -534,6 +558,43 @@ public sealed class NativeCharacterSheetResolverTests
         Assert.Null(result.EffectiveMechanics);
         Assert.Contains(result.Issues, issue => issue.Code is
             "invalid-character-state" or "sheet-state-limits");
+    }
+
+    [Fact]
+    public void MalformedGrantsAndDecisionsAreRejectedBeforeAuthorityCallbacks()
+    {
+        var werewolf = Werewolf();
+        var malformedProgression = werewolf.Progression![0] with
+        {
+            SourceOccurrence = null!
+        };
+        werewolf = werewolf with { Progression = [malformedProgression] };
+
+        var wolf = Wolf();
+        var original = wolf.Progression![0];
+        wolf = wolf with
+        {
+            Progression =
+            [
+                original with
+                {
+                    Grants = [original.Grants[0] with { SourceOccurrence = null! }]
+                }
+            ],
+            GrantApplicability =
+            [
+                new("grant.wolf", NativeOriginGrantApplicabilityState.Applicable,
+                    new(NativeOriginAdjudication.Unresolved))
+            ]
+        };
+
+        var result = NativeCharacterSheetResolver.Resolve(
+            State([werewolf, wolf, Hybrid()]), "wolf", new StrictShapeAuthority());
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, issue => issue.Code == "invalid-sheet-progression");
+        Assert.Contains(result.Issues, issue => issue.Code == "invalid-sheet-grant");
+        Assert.Contains(result.Issues, issue => issue.Code == "invalid-grant-applicability");
     }
 
 }
