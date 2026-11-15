@@ -486,6 +486,22 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         // Serialized resource-owner links are derived results, not trusted
         // assertions. An inherited Strike can spend an existing pool only if
         // both canonical native definitions and source evidence support it.
+        foreach (var dependent in baselineGrants.Values)
+        {
+            var definitionId = dependent.Identity.MechanicalDefinitionId;
+            if (definitionId is null ||
+                !catalog.TryGetById(definitionId, out var definition) ||
+                definition is null || definition.Category != "origin-trait" ||
+                !definition.Definition.TryGetProperty("trait", out var authored) ||
+                authored.ValueKind != JsonValueKind.Object ||
+                !authored.TryGetProperty("sharedUsesFromTrait", out _))
+                continue;
+            if (dependent.ResourceOwners is not { Count: > 0 })
+                Add("profile-resource-owner-required",
+                    "underlying.grants." + dependent.Id + ".resourceOwners",
+                    NativeOriginIssueSeverity.Invalid,
+                    "A trait that spends another trait's uses must retain its verified owner link.");
+        }
         foreach (var dependent in baselineGrants.Values.Where(g =>
             g.ResourceOwners is { Count: > 0 }))
         {
@@ -500,8 +516,13 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 !traitDefinition.Definition.TryGetProperty("trait", out var authoredDependent) ||
                 authoredDependent.ValueKind != JsonValueKind.Object ||
                 Text(authoredDependent, "sharedUsesFromTrait") is not { } requiredId ||
+                !authoredDependent.TryGetProperty("extraUsesGranted", out var authoredExtra) ||
+                authoredExtra.ValueKind != JsonValueKind.False ||
                 dependent.EffectiveValue is not { ValueKind: JsonValueKind.Object } dependentValue ||
                 Text(dependentValue, "sharedUsesFromTrait") != requiredId ||
+                Text(dependentValue, "id") != Text(authoredDependent, "id") ||
+                !dependentValue.TryGetProperty("extraUsesGranted", out var effectiveExtra) ||
+                effectiveExtra.ValueKind != JsonValueKind.False ||
                 dependentValue.TryGetProperty("uses", out _) ||
                 owner.EffectiveValue is not { ValueKind: JsonValueKind.Object } ownerValue ||
                 Text(ownerValue, "id") != requiredId ||
