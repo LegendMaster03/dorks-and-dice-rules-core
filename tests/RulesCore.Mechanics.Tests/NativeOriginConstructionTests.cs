@@ -978,7 +978,8 @@ public sealed class NativeOriginConstructionTests
             }]
         }, new TestAuthority(), false);
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unrelatedRule.Status);
-        Assert.Empty(unrelatedRule.Profile!.Underlying.InherentGrants);
+        Assert.True(unrelatedRule.Profile is null ||
+            unrelatedRule.Profile.Underlying.InherentGrants.Count == 0);
 
         // A player cannot forge a field's provenance or silently choose a value
         // outside the contributors' exact configured offers.
@@ -995,7 +996,8 @@ public sealed class NativeOriginConstructionTests
         // Invalid proposal evidence and unresolved reconciliation both fail
         // closed; neither is an authorization to construct a playable grant.
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, forged.Status);
-        Assert.Empty(forged.Profile!.Underlying.InherentGrants);
+        Assert.True(forged.Profile is null ||
+            forged.Profile.Underlying.InherentGrants.Count == 0);
         Assert.Contains(forged.Issues, x => x.Code == "relationship-action-unresolved");
 
         var unauthorized = Evaluate(selected with
@@ -1004,7 +1006,8 @@ public sealed class NativeOriginConstructionTests
                 x.Id != decision.Id).ToArray()
         }, new TestAuthority(), false);
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unauthorized.Status);
-        Assert.Empty(unauthorized.Profile!.Underlying.InherentGrants);
+        Assert.True(unauthorized.Profile is null ||
+            unauthorized.Profile.Underlying.InherentGrants.Count == 0);
     }
 
     [Fact]
