@@ -157,5 +157,23 @@ class PowerEvaluationTests(unittest.TestCase):
                 self.assertIn("unmodeled", result)
 
 
+@unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
+                     "Full native catalog is not available in isolated fixture tests")
+class NativeCatalogIntegrationTests(unittest.TestCase):
+    """Exercise actual canonical content when running inside the repository."""
+
+    def test_all_terminal_paths_at_all_breakpoints(self):
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        self.assertGreaterEqual(len(power.terminal_sources(catalog)), 9)
+        for source in power.terminal_sources(catalog, include_deferred=True):
+            with self.subTest(source=source):
+                profile = power.reconstruct_preset(catalog, source)
+                for level in power.LEVELS:
+                    result = power.evaluate(profile, catalog, level)
+                    self.assertEqual(source, result["sourceId"])
+                    self.assertIsInstance(result["unmodeled"], list)
+                    self.assertIsInstance(result["metrics"], dict)
+
+
 if __name__ == "__main__":
     unittest.main()
