@@ -44,7 +44,11 @@ public static class NativeMechanicsEndpoints
 
         // This transport can resolve verified primary inputs only. It refuses
         // persisted supernatural entitlements until a real authority provider exists.
-        if (!privateTunnel) group.MapVerifiedPrimaryState();
+        if (!privateTunnel)
+        {
+            group.MapVerifiedPrimaryState();
+            group.MapVerifiedManifestationPlans();
+        }
 
         // Origin preview inherits the same authenticated ingress as other mechanics.
         // No persisted state or table-authority claims are accepted by this route.
