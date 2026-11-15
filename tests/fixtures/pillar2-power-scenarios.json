@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v3",
-  "version": 3,
+  "id": "pillar2-diagnostic-sensitivity-v4",
+  "version": 4,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -420,7 +420,14 @@
             "areaShape": "cone",
             "enemyTargets": 2,
             "allyTargets": 1,
-            "failureProbability": 0.55
+            "failureProbability": 0.55,
+            "enemyActionSlots": 2,
+            "allyActionSlots": 1,
+            "enemyBonusActionSlots": 1,
+            "allyBonusActionSlots": 1,
+            "enemyReactionSlots": 2,
+            "enemyConcentratingTargets": 1,
+            "attackReplacementExpectedDamage": 5.2
           }
         ]
       }
@@ -437,7 +444,50 @@
             "areaShape": "cone",
             "enemyTargets": 3,
             "allyTargets": 0,
-            "failureProbability": 0.55
+            "failureProbability": 0.55,
+            "enemyNormalAttackRollsWhileProne": 3,
+            "baseHitChance": 0.65,
+            "attackReplacementExpectedDamage": 5.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-control-no-exposed-turns",
+      "purpose": "Same Enervating Breath targets and saves, but all have already acted; condition applications do not imply automatically denied actions.",
+      "scenario": {
+        "id": "metallic-control-no-exposed-turns",
+        "controlOpportunities": [
+          {
+            "id": "acted-targets",
+            "option": "enervating-breath",
+            "areaShape": "cone",
+            "enemyTargets": 2,
+            "allyTargets": 1,
+            "failureProbability": 0.55,
+            "enemyActionSlots": 0,
+            "allyActionSlots": 0,
+            "enemyReactionSlots": 0,
+            "allyReactionSlots": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-prone-no-followup-attacks",
+      "purpose": "Same Repulsion Breath, but prone targets have no attacks before standing; no attack-hit prevention is inferred.",
+      "scenario": {
+        "id": "metallic-prone-no-followup-attacks",
+        "controlOpportunities": [
+          {
+            "id": "recover-before-attacks",
+            "option": "repulsion-breath",
+            "areaShape": "cone",
+            "enemyTargets": 3,
+            "allyTargets": 0,
+            "failureProbability": 0.55,
+            "enemyNormalAttackRollsWhileProne": 0,
+            "baseHitChance": 0.65
           }
         ]
       }

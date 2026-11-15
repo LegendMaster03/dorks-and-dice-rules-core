@@ -319,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(16, len(suite["contexts"]))
+        self.assertEqual(18, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -361,7 +361,47 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(16, result["scenarioCount"])
+        self.assertEqual(18, result["scenarioCount"])
+
+    def test_sensitivity_does_not_convert_unmeasured_endpoints_to_zero(self):
+        profile = self.profile("ancestry.dragonborn.red")
+        self.catalog["conditions"]["condition.incapacitated"] = {
+            "id":"condition.incapacitated", "effects":[
+                {"type":"action-restriction", "cannotTake":["action"]}]}
+        profile["traits"]["metallic"] = {
+            "requiredCharacterLevel":5,
+            "activation":{"action":"attack", "replaces":"one-attack"},
+            "uses":{"value":1,"recharge":"long-rest"},
+            "area":{"shape":"cone", "affectsAllies":True},
+            "options":[{"id":"enervating-breath",
+                       "savingThrow":{"ability":"constitution", "dc":"test", "onSuccess":"no-effect"},
+                       "onFailure":{"applyCondition":"condition.incapacitated",
+                                    "endsAt":"start-of-your-next-turn"}}]}
+        self.catalog["sources"]["ancestry.dragonborn.red"]["traits"].append(
+            {"traitId":"trait.fixture.metallic"})
+        self.catalog["traits"]["trait.fixture.metallic"] = profile["traits"]["metallic"]
+        fixture = {"id":"measured-zero-sensitivity", "version":4,"contexts":[
+            {"id":"no-exposure", "purpose":"No action schedule",
+             "scenario":{"id":"no-exposure"}},
+            {"id":"zero-actions", "purpose":"All targets acted already",
+             "scenario":{"id":"zero-actions", "controlOpportunities":[{
+                 "id":"zero", "option":"enervating-breath", "areaShape":"cone",
+                 "enemyTargets":1, "allyTargets":0, "failureProbability":0.5,
+                 "enemyActionSlots":0}]}},
+            {"id":"one-action", "purpose":"One future action",
+             "scenario":{"id":"one-action", "controlOpportunities":[{
+                 "id":"one", "option":"enervating-breath", "areaShape":"cone",
+                 "enemyTargets":1, "allyTargets":0, "failureProbability":0.5,
+                 "enemyActionSlots":1}]}}
+        ]}
+        result = power.evaluate_scenario_suite(self.catalog, fixture,
+                                               ["ancestry.dragonborn.red"])
+        summary = result["sourceSensitivity"][0]["levels"][3]["rangesInNativeUnits"]
+        action = summary["control_expected_enemy_action_slots_denied"]
+        self.assertEqual(0, action["minimum"])
+        self.assertEqual(.5, action["maximum"])
+        self.assertEqual(2, action["evaluatedContextCount"])
+        self.assertEqual(["no-exposure"], action["notEvaluatedContexts"])
 
     def test_suite_paired_comparison_is_per_context_and_level(self):
         result = power.evaluate_scenario_suite(
@@ -391,7 +431,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 4
+        bad["version"] = 5
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -407,7 +447,7 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(16, result["scenarioCount"])
+        self.assertEqual(18, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
 
 
@@ -553,11 +593,11 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
         suite = self.scenario_suite()
-        self.assertEqual(3, suite["version"])
-        self.assertEqual(16, len(suite["contexts"]))
+        self.assertEqual(4, suite["version"])
+        self.assertEqual(18, len(suite["contexts"]))
         self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
         result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
-        self.assertEqual(16, result["scenarioCount"])
+        self.assertEqual(18, result["scenarioCount"])
         names = {x["id"]: x["profiles"][0]["levels"][0]
                  for x in result["contexts"]}
         self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
@@ -665,6 +705,105 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertAlmostEqual(1.65, repulsion["metrics"]["control_expected_enemy_prone_applications"])
         self.assertAlmostEqual(33.0, repulsion["metrics"]["control_expected_enemy_forced_movement_feet"])
 
+
+    def test_enervating_turn_windows_require_actual_condition_and_timing(self):
+        profile = self.profile("ancestry.dragonborn.red")
+        profile["traits"]["metallic"] = {
+            "requiredCharacterLevel": 5,
+            "activation": {"action": "attack", "replaces": "one-attack"},
+            "uses": {"value": 1, "recharge": "long-rest"},
+            "area": {"shape": "cone", "affectsAllies": True},
+            "options": [{"id": "enervating-breath",
+                         "savingThrow": {"ability": "constitution", "dc": "test",
+                                         "onSuccess": "no-effect"},
+                         "onFailure": {"applyCondition": "condition.incapacitated",
+                                       "endsAt": "start-of-your-next-turn"}}]}
+        self.catalog["conditions"]["condition.incapacitated"] = {
+            "id": "condition.incapacitated",
+            "effects": [{"type": "action-restriction",
+                         "cannotTake": ["action", "bonus-action", "reaction"]},
+                        {"type": "concentration", "operation": "end"}]}
+        event = {"id":"enemy-and-ally-before-next-turn", "option":"enervating-breath",
+                 "areaShape":"cone", "enemyTargets":2, "allyTargets":1,
+                 "failureProbability":0.55, "enemyActionSlots":2, "allyActionSlots":1,
+                 "enemyBonusActionSlots":1, "enemyReactionSlots":2,
+                 "enemyConcentratingTargets":1, "attackReplacementExpectedDamage":5.2}
+        result = power.evaluate(profile, self.catalog, 5,
+                                {"controlOpportunities":[event]})
+        metrics = result["metrics"]
+        self.assertAlmostEqual(1.10, metrics["control_expected_enemy_action_slots_denied"])
+        self.assertAlmostEqual(.55, metrics["control_expected_ally_action_slots_denied"])
+        self.assertAlmostEqual(.55, metrics["control_expected_enemy_bonus_action_slots_denied"])
+        self.assertAlmostEqual(1.10, metrics["control_expected_enemy_reaction_slots_denied"])
+        self.assertAlmostEqual(.55, metrics["control_expected_enemy_concentrations_ended"])
+        self.assertAlmostEqual(5.2, metrics["control_replaced_attack_expected_damage_forgone"])
+        self.assertTrue(result["controlEventTrace"][0]["conditionWindowKnown"])
+        event["enemyActionSlots"] = 0
+        later = power.evaluate(profile, self.catalog, 5, {"controlOpportunities":[event]})
+        self.assertEqual(0, later["metrics"]["control_expected_enemy_action_slots_denied"])
+        # The same condition application still occurs, but there is no action to deny.
+        self.assertAlmostEqual(1.10, later["metrics"]["control_expected_enemy_incapacitated_applications"])
+
+        self.catalog["conditions"]["condition.incapacitated"]["effects"] = []
+        missing_effect = power.evaluate(profile, self.catalog, 5,
+                                        {"controlOpportunities":[event]})
+        self.assertNotIn("control_expected_enemy_action_slots_denied", missing_effect["metrics"])
+        self.assertIn("enemyActionSlots", missing_effect["controlEventTrace"][0]["unresolvedWindowExposures"])
+
+    def test_repulsion_prone_rolls_are_conditional_not_lost_turns(self):
+        profile = self.profile("ancestry.dragonborn.red")
+        self.catalog["conditions"]["condition.prone"] = {
+            "id": "condition.prone", "effects": [
+                {"type": "roll-mode", "appliesTo": "attack-roll",
+                 "mode": "disadvantage", "subject": "attacks-by-affected-creature"}]}
+        profile["traits"]["metallic"] = {
+            "requiredCharacterLevel": 5,
+            "activation": {"action": "attack", "replaces": "one-attack"},
+            "uses": {"value": 1, "recharge": "long-rest"},
+            "area": {"shape": "cone", "affectsAllies": True},
+            "options": [{"id": "repulsion-breath",
+                         "savingThrow": {"ability": "strength", "dc": "test",
+                                         "onSuccess": "no-effect"},
+                         "onFailure": {"applyCondition": "condition.prone",
+                                       "pushFeet": 20}}]}
+        event = {"id":"unrecovered-prone-attacks", "option":"repulsion-breath",
+                 "areaShape":"cone", "enemyTargets":3,"allyTargets":0,
+                 "failureProbability":0.55,
+                 "enemyNormalAttackRollsWhileProne":3,"baseHitChance":0.65}
+        result = power.evaluate(profile, self.catalog, 5,
+                                {"controlOpportunities":[event]})
+        self.assertAlmostEqual(3*.55*.65*.35,
+             result["metrics"]["control_expected_enemy_normal_attack_hits_prevented_by_prone"])
+        self.assertNotIn("control_expected_enemy_action_slots_denied", result["metrics"])
+        event["enemyNormalAttackRollsWhileProne"] = 0
+        removed = power.evaluate(profile, self.catalog, 5, {"controlOpportunities":[event]})
+        self.assertEqual(0, removed["metrics"]["control_expected_enemy_normal_attack_hits_prevented_by_prone"])
+        self.assertAlmostEqual(1.65, removed["metrics"]["control_expected_enemy_prone_applications"])
+
+    def test_control_window_validation_rejects_untraceable_exposures(self):
+        normal = {"id":"q", "option":"enervating-breath", "areaShape":"cone",
+                  "enemyTargets":1,"allyTargets":0,"failureProbability":0.5}
+        for extra in [{"enemyActionSlots":2}, {"allyReactionSlots":1},
+                      {"enemyNormalAttackRollsWhileProne":1},
+                      {"enemyNormalAttackRollsWhileProne":1, "baseHitChance":1.5},
+                      {"enemyActionSlots":True}, {"enemyConcentratingTargets":1.2},
+                      {"enemyActionSlotz":1},
+                      {"attackReplacementExpectedDamage":-1}]:
+            with self.subTest(extra=extra), self.assertRaises(ValueError):
+                power.validate_scenario({"controlOpportunities":[{**normal, **extra}]})
+
+    def test_control_scenario_corpus_has_timing_contrasts(self):
+        fixture = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
+        suite = json.loads(fixture.read_text(encoding="utf-8"))
+        self.assertEqual(4, suite["version"])
+        self.assertEqual(18, len(suite["contexts"]))
+        contexts = {item["id"]: item["scenario"] for item in suite["contexts"]}
+        early = contexts["metallic-enervation-with-allies"]["controlOpportunities"][0]
+        late = contexts["metallic-control-no-exposed-turns"]["controlOpportunities"][0]
+        self.assertEqual(2, early["enemyActionSlots"])
+        self.assertEqual(0, late["enemyActionSlots"])
+        self.assertEqual(3, contexts["metallic-repulsion"]["controlOpportunities"][0]["enemyNormalAttackRollsWhileProne"])
+
     def test_spell_and_control_fixture_validation_rejects_ambiguous_fields(self):
         for bad in [
             {"spellDemands": [{"id": "x", "spell": "fire-bolt", "spells": 2}]},
@@ -709,7 +848,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(16, result["scenarioCount"])
+        self.assertEqual(18, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -789,6 +928,32 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         repulsion = contexts["metallic-repulsion"] ["ancestry.dragonborn.bronze"][3]
         self.assertAlmostEqual(1.65, repulsion["metrics"]["control_expected_enemy_prone_applications"])
         self.assertAlmostEqual(33.0, repulsion["metrics"]["control_expected_enemy_forced_movement_feet"])
+
+    def test_native_metallic_condition_windows_use_authored_effects(self):
+        """Real Incapacitated/Prone conditions and Metallic Breath timing."""
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        bronze = power.reconstruct_preset(catalog, "ancestry.dragonborn.bronze")
+        fixture_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
+        suite = json.loads(fixture_path.read_text(encoding="utf-8"))
+        contexts = {c["id"]:c["scenario"] for c in suite["contexts"]}
+        early = power.evaluate(bronze, catalog, 5,
+                               contexts["metallic-enervation-with-allies"])
+        self.assertAlmostEqual(1.10, early["metrics"]["control_expected_enemy_action_slots_denied"])
+        self.assertAlmostEqual(.55, early["metrics"]["control_expected_ally_action_slots_denied"])
+        self.assertAlmostEqual(.55, early["metrics"]["control_expected_enemy_concentrations_ended"])
+        late = power.evaluate(bronze, catalog, 5,
+                              contexts["metallic-control-no-exposed-turns"])
+        self.assertEqual(0, late["metrics"]["control_expected_enemy_action_slots_denied"])
+        self.assertAlmostEqual(early["metrics"]["control_expected_enemy_incapacitated_applications"],
+                               late["metrics"]["control_expected_enemy_incapacitated_applications"])
+        prone = power.evaluate(bronze, catalog, 5,
+                               contexts["metallic-repulsion"])
+        self.assertAlmostEqual(3*.55*.65*.35,
+          prone["metrics"]["control_expected_enemy_normal_attack_hits_prevented_by_prone"])
+        self.assertNotIn("control_expected_enemy_action_slots_denied", prone["metrics"])
+        before_unlock = power.evaluate(bronze, catalog, 4,
+                                       contexts["metallic-enervation-with-allies"])
+        self.assertEqual(0, before_unlock["metrics"]["control_attack_replacements"])
 
     def test_native_save_and_defensive_reaction_contrasts(self):
         """Match scenario outputs to authored Dwarf, Gnome, Stone and Cloud traits."""

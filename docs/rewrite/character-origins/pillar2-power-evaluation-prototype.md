@@ -156,7 +156,7 @@ into a universal Species power score.
 
 ## Innate spell access, Origin choices, and control applications (research increment)
 
-The diagnostic corpus is now **version 3 with sixteen named contexts**. It adds
+The diagnostic corpus is now **version 4 with eighteen named contexts**. It adds
 explicit `spellDemands` and `controlOpportunities` alongside the existing
 combat, exploration, saving-throw, and reaction fixtures. These are conditional,
 source-backed mechanics tests, **not** additional balancing weights.
@@ -215,13 +215,70 @@ control endpoints, and the evaluator does not equate their tactical value.
 
 The source option's save DC formula is preserved, while the fixture's supplied
 failure probability is used rather than guessing enemy statistics. A successful
-save has no effect under the authored option. Ally-safe positioning, actual
-initiative, action replacement, condition duration, immunities, forced-movement
-obstructions, and effects on subsequent actions remain **unvalued**. Unknown
+save has no effect under the authored option. Ally-safe positioning, actual player decisions, immunities, forced-movement
+obstructions, and effects on subsequent actions beyond the explicitly scheduled
+window remain **unvalued**. Unknown
 control-option shapes fail closed instead of being interpreted partially.
 
-Run the existing suite command to reproduce all sixteen contexts. Native
+Run the existing suite command to reproduce all eighteen contexts. Native
 integration tests check the real High Elf, Infernal Tiefling, Human, Bronze
 Dragonborn, and Red Dragonborn entries when a complete repository checkout is
 available. This increment neither modifies native rules nor establishes a
 Species power score or inheritance allocation cost.
+
+## Action-cost and condition-window measurements (research increment)
+
+The corpus is now **version 4 with eighteen named scenarios**. This increment
+adds explicit condition-window measurements to the existing Metallic Breath
+control fixture, and two timing contrasts. It **does not** convert an
+expected condition application into an unconditional lost turn.
+
+For any selected Metallic Breath, `control_replaced_attack_expected_damage_forgone`
+records the expected damage of the **one attack replaced**, using the event's
+`attackReplacementExpectedDamage` or the scenario's explicitly assumed attack
+alternative (default reference 5.2). This is an opportunity cost separate from
+control outcomes; it is not subtracted from expected denied actions or from
+expected condition applications. An actual caster without an available Attack
+action still requires its own legal-build fixture.
+
+An Enervating Breath event may explicitly declare, separately for enemy and ally
+recipients, `enemyActionSlots`, `enemyBonusActionSlots`, `enemyReactionSlots`,
+`enemyConcentratingTargets`, and corresponding `ally*` fields. These specify
+**distinct target opportunities within the effect's actual duration**, not
+how often those opportunities occur in typical campaigns. Each value is
+bounded by the corresponding target count. The evaluator reads the **native
+condition** and the authored `endsAt: start-of-your-next-turn` expiry; only
+recognized action restrictions and concentration ending qualify. For each
+specified slot class, expected slots denied = listed at-risk slots × supplied
+save-failure probability. The test assumes those targets would otherwise have
+used the declared slots. Missing fields mean **not measured**, not zero.
+
+For Repulsion Breath, `enemyNormalAttackRollsWhileProne` and
+`allyNormalAttackRollsWhileProne`, together with an explicit `baseHitChance`,
+count attacks assumed to take place **before a failed-save target stands**,
+without preexisting Advantage/Disadvantage or other roll modes. The native
+Prone condition supplies Disadvantage. For ordinary hit probability *p*,
+expected hits prevented = exposed rolls × failed-save probability ×
+*p(1−p)*. This does not account for Prone's different melee/ranged Armor Class
+adjustments, time spent standing, spatial obstruction, or downstream damage.
+The model never equates Prone with an automatic denied Action.
+
+**Illustrative level-5 Bronze Dragonborn case:** Two enemy targets and one ally
+are inside the cone with 0.55 save-failure probability. If two enemy Actions,
+one allied Action and one enemy concentration are explicitly at risk before
+the user's next turn, Enervating Breath prevents an expected 1.10 enemy Action
+slots, 0.55 allied Action slots, and ends an expected 0.55 enemy concentrations.
+With identical failed-save assumptions **but no exposed Actions**, both
+action-denial outputs are zero while expected Incapacitated applications remain
+1.10 enemy and 0.55 ally. For Repulsion, three exposed normal attack rolls
+at baseline 0.65 hit probability and 0.55 save-failure probability yield
+3 × 0.55 × 0.65 × 0.35 = **0.375375 expected hits prevented**, conditional
+on targets actually attacking while still Prone. None of these are observed
+player actions, guaranteed loss of enemy turns, or campaign average values.
+
+The sensitivity summary now preserves an endpoint's *not-evaluated contexts*
+separately from contexts with a measured zero, avoiding artificially low minima
+when a mechanic was not evaluated in a fixture. Existing numerical endpoints
+remain in their original units. The tool still cannot price unselected feats,
+execute spells without an authoritative spell-effect catalog, or estimate
+control effects in scenes whose initiative and target behavior are unknown.

@@ -76,6 +76,15 @@ DEFAULT_SCENARIO = {
 # fixture cannot quietly produce apparently reproducible numerical output.
 SCENARIO_FIELDS = frozenset(DEFAULT_SCENARIO)
 MOVEMENT_MODES = frozenset(("walk", "climb", "swim", "burrow", "fly"))
+# A scheduled, *potential* slot must occur before the effect expires. These
+# are not assumed to be guaranteed actions or uniform encounter frequencies.
+CONTROL_WINDOW_SLOTS = ("ActionSlots", "BonusActionSlots", "ReactionSlots",
+                        "ConcentratingTargets")
+CONTROL_WINDOW_PRONE = "NormalAttackRollsWhileProne"
+CONTROL_WINDOW_FIELDS = frozenset(
+    f"{side}{field}" for side in ("enemy", "ally")
+    for field in (*CONTROL_WINDOW_SLOTS, CONTROL_WINDOW_PRONE))
+
 
 
 def _number(value, path: str, minimum: float = 0.0) -> float:
@@ -219,8 +228,10 @@ def validate_scenario(scenario: dict) -> None:
                 if "eligible" in event and not isinstance(event["eligible"], bool):
                     raise ValueError(f"{location}.eligible must be boolean")
             elif field == "controlOpportunities":
-                extra = set(event) - {"id", "option", "areaShape", "enemyTargets",
-                                      "allyTargets", "failureProbability"}
+                extra = set(event) - ({"id", "option", "areaShape", "enemyTargets",
+                                       "allyTargets", "failureProbability",
+                                       "attackReplacementExpectedDamage", "baseHitChance"}
+                                      | CONTROL_WINDOW_FIELDS)
                 if extra:
                     raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
                 _nonempty(event.get("id"), f"{location}.id")
@@ -230,6 +241,28 @@ def validate_scenario(scenario: dict) -> None:
                 _count(event.get("allyTargets"), f"{location}.allyTargets")
                 _probability(event.get("failureProbability"),
                              f"{location}.failureProbability")
+                if "attackReplacementExpectedDamage" in event:
+                    _number(event["attackReplacementExpectedDamage"],
+                            f"{location}.attackReplacementExpectedDamage")
+                if "baseHitChance" in event:
+                    _probability(event["baseHitChance"], f"{location}.baseHitChance")
+                for side in ("enemy", "ally"):
+                    targets = event[f"{side}Targets"]
+                    for field in CONTROL_WINDOW_SLOTS:
+                        name = f"{side}{field}"
+                        if name in event:
+                            _count(event[name], f"{location}.{name}")
+                            if event[name] > targets:
+                                raise ValueError(f"{location}.{name} exceeds declared targets")
+                    name = f"{side}{CONTROL_WINDOW_PRONE}"
+                    if name in event:
+                        _count(event[name], f"{location}.{name}")
+                        if event[name] and not targets:
+                            raise ValueError(f"{location}.{name} has no targets")
+                if (any(f"{side}{CONTROL_WINDOW_PRONE}" in event
+                        for side in ("enemy", "ally")) and
+                        "baseHitChance" not in event):
+                    raise ValueError(f"{location}.baseHitChance required for Prone attacks")
             elif field == "tremorsenseContacts":
                 _number(event.get("distanceFeet"), f"{location}.distanceFeet")
                 for key in ("sensorTouches", "targetTouches"):
@@ -529,13 +562,86 @@ def spell_demand_outcomes(traits: dict, level: int, pb: int,
     return values, trace, issues, modeled, entitlements
 
 
+def _control_window_effects(failure: dict, catalog: dict, event: dict,
+                            metrics: dict, row: dict) -> None:
+    """Conditional action opportunities, never unconditional turns lost.
+
+    Exposures are counts of *different targets* with relevant opportunities
+    before the condition's end, except for declared normal attack rolls. One
+    target may separately lose an Action, Bonus Action and Reaction, but those
+    slots are not interchangeable. No spell effects or DM behavior are inferred.
+    """
+    condition = failure.get("applyCondition")
+    if not condition:
+        return
+    definition = catalog["conditions"].get(condition, {})
+    effects = definition.get("effects", [])
+    # A condition without a recognized authored effect cannot deny actions.
+    restrictions = set()
+    ends_concentration = False
+    for effect in effects:
+        if effect.get("type") == "action-restriction":
+            restrictions.update(effect.get("cannotTake", []))
+        if effect.get("type") == "concentration" and effect.get("operation") == "end":
+            ends_concentration = True
+    duration_verified = failure.get("endsAt") == "start-of-your-next-turn"
+    row["conditionWindowKnown"] = duration_verified
+    for side in ("enemy", "ally"):
+        for suffix, restriction, metric_suffix in (
+                ("ActionSlots", "action", "action_slots_denied"),
+                ("BonusActionSlots", "bonus-action", "bonus_action_slots_denied"),
+                ("ReactionSlots", "reaction", "reaction_slots_denied"),
+                ("ConcentratingTargets", "concentration", "concentrations_ended")):
+            field = f"{side}{suffix}"
+            if field not in event:
+                continue
+            authorized = (ends_concentration if restriction == "concentration"
+                          else restriction in restrictions)
+            if not duration_verified or not authorized:
+                row.setdefault("unresolvedWindowExposures", []).append(field)
+                continue
+            expected = event[field] * event["failureProbability"]
+            metric = f"control_expected_{side}_{metric_suffix}"
+            metrics[metric] = metrics.get(metric, 0) + expected
+            row.setdefault("expectedWindowEffects", {})[field] = expected
+
+    # Prone does not erase a turn. Only rolls explicitly assumed to occur
+    # before the target stands, and to have no other roll modes, are modeled.
+    has_attack_disadvantage = any(
+        effect.get("type") == "roll-mode" and
+        effect.get("appliesTo") == "attack-roll" and
+        effect.get("mode") == "disadvantage" and
+        effect.get("subject") == "attacks-by-affected-creature"
+        for effect in effects)
+    if condition != "condition.prone":
+        for side in ("enemy", "ally"):
+            field = f"{side}{CONTROL_WINDOW_PRONE}"
+            if field in event:
+                row.setdefault("unresolvedWindowExposures", []).append(field)
+        return
+    for side in ("enemy", "ally"):
+        field = f"{side}{CONTROL_WINDOW_PRONE}"
+        if field not in event:
+            continue
+        if not has_attack_disadvantage:
+            row.setdefault("unresolvedWindowExposures", []).append(field)
+            continue
+        p = event["baseHitChance"]
+        expected = event[field] * event["failureProbability"] * p * (1 - p)
+        metric = f"control_expected_{side}_normal_attack_hits_prevented_by_prone"
+        metrics[metric] = metrics.get(metric, 0) + expected
+        row.setdefault("expectedWindowEffects", {})[field] = expected
+
+
 def metallic_control_outcomes(traits: dict, catalog: dict, level: int,
                               scenario: dict) -> tuple[dict, list[dict], list[dict], set[str]]:
     """Measure expected *applications* for a narrowly authored control area.
 
     Event geometry, enemy/ally presence, and save failure are fixture inputs.
     Processing events in order is a declared first-eligible-use policy; the
-    result does not claim lost turns or equate Prone to Incapacitated.
+    scheduled windows only count potential action slots *if* a fixture
+    explicitly supplies their availability and the native condition supports
+    the claimed consequence. No actual player decisions are inferred.
     """
     metrics = {"control_attack_replacements": 0}
     trace = []
@@ -607,6 +713,15 @@ def metallic_control_outcomes(traits: dict, catalog: dict, level: int,
             row["expectedAllyFailedSaves"] = event["allyTargets"] * event["failureProbability"]
             failure = ability["options"][event["option"]]
             metrics["control_attack_replacements"] += 1
+            attack_alternative = event.get(
+                "attackReplacementExpectedDamage",
+                scenario.get("attackReplacementExpectedDamage",
+                             DEFAULT_SCENARIO["attackReplacementExpectedDamage"]))
+            row["replacementAttackExpectedDamageForgone"] = attack_alternative
+            metrics["control_replaced_attack_expected_damage_forgone"] = (
+                metrics.get("control_replaced_attack_expected_damage_forgone", 0)
+                + attack_alternative)
+            _control_window_effects(failure, catalog, event, metrics, row)
             if "applyCondition" in failure:
                 condition = failure["applyCondition"].split(".")[-1]
                 for name, count in (("enemy", row["expectedEnemyFailedSaves"]),
@@ -1215,8 +1330,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3):
-        raise ValueError("suite.version must be 1, 2 or 3")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4):
+        raise ValueError("suite.version must be 1, 2, 3 or 4")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")
@@ -1311,14 +1426,22 @@ def evaluate_scenario_suite(catalog: dict, suite: dict, identifiers: list[str],
             names = sorted(set().union(*(r["metrics"].keys() for _, r in observations)))
             ranges = {}
             for endpoint in names:
-                vals = [(context_id, result["metrics"].get(endpoint, 0))
-                        for context_id, result in observations]
+                # An omitted endpoint means *not evaluated*, not observed zero.
+                # A measured zero remains meaningful when an explicit fixture
+                # provides a qualifying opportunity but the ability has no effect.
+                vals = [(context_id, result["metrics"][endpoint])
+                        for context_id, result in observations
+                        if endpoint in result["metrics"]]
+                omitted = [context_id for context_id, result in observations
+                           if endpoint not in result["metrics"]]
                 low = min(value for _, value in vals)
                 high = max(value for _, value in vals)
                 ranges[endpoint] = {
                     "minimum": low, "maximum": high,
                     "minimumContexts": [name for name, val in vals if val == low],
-                    "maximumContexts": [name for name, val in vals if val == high]}
+                    "maximumContexts": [name for name, val in vals if val == high],
+                    "evaluatedContextCount": len(vals),
+                    "notEvaluatedContexts": omitted}
             summaries.append({"level": level, "rangesInNativeUnits": ranges,
                               "coverage": _suite_coverage([r for _, r in observations])})
         sensitivity.append({"sourceId": identifier, "levels": summaries})
