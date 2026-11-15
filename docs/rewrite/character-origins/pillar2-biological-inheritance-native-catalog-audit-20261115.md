@@ -67,6 +67,24 @@ The common Origin engine now invokes \`NativeOriginResourceDependencyBinder\` **
 
 **Scope boundary:** These changes validate how an **already authorized or DM-authorized selected** trait spends another authorized trait's pool. They **do not** opt Goliath's currently unmarked Strike abilities into automatic biological inheritance; do not implement a final resource-expenditure state machine, giant-ancestry ability modifier binding, new allocation policy or the complete set of generic characteristic dependencies. Those remain separate steps. The native Goliath definitions were not modified.
 
+## Source-bound Giant Ancestry Aptitude increment — 2026-11-15
+
+The existing canonical \`trait.goliath.giant-ancestry-aptitude\` already authors a **per-character Strength or Constitution decision**. Its \`abilityChoice.from\` options now produce a first-party, creation-time finite choice requirement on the *selected aptitude trait*; this does not change its mechanical definition, allow random selection, or make the aptitude automatically heritable.
+
+The universal \`NativeOriginDependentBinder\` now executes a second source-neutral binding operation: \`originBindings.<parameter>.lookup = "manifested-trait-choice"\`, identifying a canonical owning \`origin-trait\`, its authored finite choice requirement and its contributor scope. The derived \`giantAncestryAbility\` parameter is stored on the dependent **effective grant**, and \`ParameterSources\` identifies the matching owner's candidate. This is **not** an additional ability score, proficiency, feat, or resource pool. It is a durable choice required to evaluate the dependent feature's existing symbolic attack and saving-throw modifier.
+
+The six Goliath Ancestry trait files now author that binding for all **nine** capabilities containing \`chosen-giant-ancestry-ability-modifier\`: Cloud Strike; Fire's Searing Ignition; Frost's Chill and Frigid Retaliation; Hill's Tumble; Stone Strike and Stone Throw; Storm Strike and Maelstrom Aura. This includes modifiers nested inside alternate Strike modes; the whole canonical feature and progression remain intact.
+
+**Validation/authorization boundaries:**
+
+- Both **Strength and Constitution** are supported, deliberately selected, and checked against the canonical native menu. Missing or invalid choices suppress the affected dependent. An aptitude that was not explicitly selected never appears automatically just because an ancestry mentions its effects.
+- A selected aptitude from *another contributor* cannot silently supply the dependent trait's modifier. One consolidated aptitude grant may carry evidence from more than one contributor, but the dependent field must record evidence from the **matching contributor**, not a lexicographically arbitrary owner.
+- A stored profile's bound parameters and \`ParameterSources\` are rederived and compared against its original proposal to reject forged or stale modifier/provenance claims. An explicit direct Stone Goliath creation is also tested to ensure a conventional authored Ancestry remains a valid alternative to mixed construction.
+- The previously implemented Goliath shared-use pool bindings still apply *independently*. Cloud Strike, Stone Strike and Storm Strike require their actual selected pool owners in addition to the aptitude.
+- **No default biological transmission** is newly granted for Giant Ancestry Aptitude or the nine dependent abilities. Tests use direct native creation or exact verified DM eligibility, and no automatic allocation budget is implied.
+
+**Further work:** The \`giantAncestryAbility\` string is a selected *ability name*, not a calculated ability modifier. Character Sheet/combat consumers must resolve the character's current corresponding modifier and retain the original level scaling. Mixed descendants, cross-lineage aptitude composition and future recombination rules require a separate trusted current-profile and provenance policy. Other origination procedures remain unaffected.
+
 ## Required next gates before general first-party mixed construction
 
 1. **Native coverage:** Continue auditing and authoring opt-in only where inherent mechanics, acquisition scope, full future progression and associated restrictions are known. Do not mark learned features biological merely because they appear on a source Species. Unmarked traits remain eligible for a verified DM decision but not default inheritance.
