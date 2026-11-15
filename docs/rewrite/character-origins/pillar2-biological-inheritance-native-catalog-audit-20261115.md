@@ -54,6 +54,19 @@ This table records **future authoring or integration work**, not a judgment that
 - **Halfling:** Lightfoot adds Natural Agility with three Skill bonuses. This needs the same conflict/stacking treatment as other source-derived Skill bonuses.
 - **Tiefling:** Three playable Fiendish Ancestries inherit a nonselectable Tiefling base. Resistance types are separate from the three-stage innate spell courses. Preserve their individual spellcasting-ability selections, free-cast limits and full future progression. None of these abilities is currently automatically biologically transferable.
 
+## Executable source-neutral shared-resource dependency increment — 2026-11-15
+
+The common Origin engine now invokes \`NativeOriginResourceDependencyBinder\` **after** selected grants have been reconciled and authored intrinsic choices bound. It recognizes \`sharedUsesFromTrait\` on a canonical native \`origin-trait\`, not guessed capability names or Species-specific exception code.
+
+- Three existing Goliath Ancestry relationships are implemented without modifying their underlying mechanical definitions: Cloud Strike **spends Cloud's Jaunt**, Stone Strike **spends Stone's Endurance**, and Storm Strike **spends Storm's Thunder**.
+- A dependent Strike must have exactly one **actually selected** resource-owner trait from the **same contributing lineage** and exact native source. A different donor's equivalent ability is not permission to borrow its charges.
+- The binder verifies that the effective trait preserves the original \`sharedUsesFromTrait\` and \`extraUsesGranted: false\` declarations and that the target owner retains a canonical \`uses\` definition. A missing, ambiguous, altered or unverified owner suppresses the Strike and produces an incomplete/unresolved result. It **never** synthesizes a new resource or implicitly transmits an unselected owner.
+- A valid dependent has \`ResourceOwners: { "uses": "<actual-owner-grant-id>" }\` in its \`NativeOriginEffectiveGrant\`. This is a stable save/load relationship for downstream consumers; it is **not** an additional pool. \`NativeOriginContractValidator.ReviewProfile\` validates these persisted references and the canonical owner rules so fabricated owner IDs cannot become effective by serialization.
+- \`Cloudy Escape\` has \`independentUsesFrom: "clouds-jaunt"\` and its *own* \`uses\` object, so it remains an **independent** Proficiency Bonus/Long Rest pool. The resource binder does not mistake it for a shared-use dependent.
+- Regression tests exercise all three shared owner/Strike pairs with present and absent owner, two native contributors offering the same Ancestry but separate selections, forged saved owner IDs, the explicit independent Cloudy Escape pool, and preservation of evidence across JSON serialization.
+
+**Scope boundary:** These changes validate how an **already authorized or DM-authorized selected** trait spends another authorized trait's pool. They **do not** opt Goliath's currently unmarked Strike abilities into automatic biological inheritance; do not implement a final resource-expenditure state machine, giant-ancestry ability modifier binding, new allocation policy or the complete set of generic characteristic dependencies. Those remain separate steps. The native Goliath definitions were not modified.
+
 ## Required next gates before general first-party mixed construction
 
 1. **Native coverage:** Continue auditing and authoring opt-in only where inherent mechanics, acquisition scope, full future progression and associated restrictions are known. Do not mark learned features biological merely because they appear on a source Species. Unmarked traits remain eligible for a verified DM decision but not default inheritance.
