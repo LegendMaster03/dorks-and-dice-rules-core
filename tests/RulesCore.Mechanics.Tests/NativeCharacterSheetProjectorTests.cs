@@ -33,7 +33,7 @@ public sealed class NativeCharacterSheetProjectorTests
             Path.GetTempPath(), "rc-sheet-inheritance-" + Guid.NewGuid().ToString("N"));
         public NativeCatalogSnapshot Catalog { get; }
 
-        public Fixture()
+        public Fixture(bool classGrantsFeature = true)
         {
             var dir = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(dir, "native"));
@@ -48,6 +48,13 @@ public sealed class NativeCharacterSheetProjectorTests
                     {"level":3,"proficiencyBonus":2,"featureGrants":[]}
                 ]}}
                 """);
+            if (!classGrantsFeature)
+            {
+                var classFile = Path.Combine(dir, "native", "class.json");
+                File.WriteAllText(classFile, File.ReadAllText(classFile).Replace(
+                    "\"featureGrants\":[\"class-feature.demo.known\"]",
+                    "\"featureGrants\":[]", StringComparison.Ordinal));
+            }
             File.WriteAllText(Path.Combine(dir, "native", "feature.json"),
                 """{"id":"class-feature.demo.known","name":"Known","kind":"classFeature"}""");
             Catalog = NativeCatalogLoader.Load(
@@ -235,4 +242,37 @@ public sealed class NativeCharacterSheetProjectorTests
         Assert.Single(state.PrimaryMechanics.Advancements);
         Assert.Contains(view.Issues, issue => issue.Code == "sheet-level-reference-unresolved");
     }
+    [Fact]
+    public void AlternateSheetIsNeverReportedAsFullyManifestedEvenWithoutClassFeatures()
+    {
+        using var fixture = new Fixture(classGrantsFeature: false);
+        var state = State(fixture.Catalog);
+        var native = new NativeCharacterProjector(fixture.Catalog);
+        var ordinary = native.Project(state.PrimaryMechanics);
+        Assert.Empty(ordinary.FeatureIds);
+        Assert.Empty(ordinary.Resources);
+
+        var view = Project(state, fixture.Catalog, "hybrid");
+        Assert.Equal("partial", view.Status);
+        Assert.Equal("partial", view.BaseMechanics!.Status);
+        Assert.Empty(view.BaseMechanics.FeatureIds);
+        Assert.Empty(view.BaseMechanics.Resources);
+        Assert.Contains(view.Issues, issue =>
+            issue.Code == "sheet-manifestation-unverified");
+        Assert.DoesNotContain(view.Issues, issue =>
+            issue.Code == "sheet-class-applicability-unresolved");
+    }
+
+    [Fact]
+    public void PrimarySheetKeepsNativeClassGrantsWithoutAlternateManifestation()
+    {
+        using var fixture = new Fixture();
+        var state = State(fixture.Catalog);
+        var view = Project(state, fixture.Catalog, NativeCharacterSheetResolver.PrimarySheetId);
+        Assert.NotNull(view.BaseMechanics);
+        Assert.Contains("class-feature.demo.known", view.BaseMechanics!.FeatureIds);
+        Assert.DoesNotContain(view.Issues, issue =>
+            issue.Code == "sheet-manifestation-unverified");
+    }
+
 }
