@@ -483,6 +483,59 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 .GroupBy(m => m.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
+        // A serialized source-bound choice is not proof of a valid inherited
+        // modifier. Recompute only canonical trait-choice dependencies against
+        // the exact construction proposal and compare their selected values and
+        // contributing source evidence. An unrelated global ability score or a
+        // forged field provenance cannot replace the owning aptitude grant.
+        if (proposal is not null)
+        {
+            var boundChoices = baselineGrants.Values.Where(grant =>
+                grant.Identity.MechanicalDefinitionId is { } id &&
+                catalog.TryGetById(id, out var definition) &&
+                definition is not null && definition.Category == "origin-trait" &&
+                definition.Definition.TryGetProperty("trait", out var trait) &&
+                trait.ValueKind == JsonValueKind.Object &&
+                trait.TryGetProperty("originBindings", out var definitions) &&
+                definitions.ValueKind == JsonValueKind.Object &&
+                definitions.EnumerateObject().Any(binding =>
+                    Text(binding.Value, "lookup") == "manifested-trait-choice"))
+                .ToArray();
+            if (boundChoices.Length > 0)
+            {
+                var (rebuilt, _) = NativeOriginDependentBinder.Bind(
+                    catalog, proposal, baselineGrants.Values.ToArray());
+                var computed = rebuilt.ToDictionary(g => g.Id, StringComparer.Ordinal);
+                foreach (var dependent in boundChoices)
+                {
+                    var path = "underlying.grants." + dependent.Id;
+                    if (!computed.TryGetValue(dependent.Id, out var expected) ||
+                        expected.Parameters is null || expected.ParameterSources is null ||
+                        expected.Identity.MechanicalDefinitionId is not { } id ||
+                        !catalog.TryGetById(id, out var definition) ||
+                        definition is null ||
+                        !definition.Definition.TryGetProperty("trait", out var trait) ||
+                        !trait.TryGetProperty("originBindings", out var definitions) ||
+                        definitions.EnumerateObject().Where(binding =>
+                            Text(binding.Value, "lookup") == "manifested-trait-choice")
+                            .Any(binding =>
+                                dependent.Parameters?.TryGetValue(binding.Name,
+                                    out var actualValue) != true ||
+                                expected.Parameters.TryGetValue(binding.Name,
+                                    out var expectedValue) != true ||
+                                !JsonElement.DeepEquals(actualValue, expectedValue) ||
+                                dependent.ParameterSources?.TryGetValue(binding.Name,
+                                    out var actualSource) != true ||
+                                expected.ParameterSources.TryGetValue(binding.Name,
+                                    out var expectedSource) != true ||
+                                actualSource != expectedSource))
+                        Add("profile-trait-choice-binding-invalid", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Bound trait-choice parameters and contributor evidence must match the selected native aptitude.");
+                }
+            }
+        }
+
         // Serialized resource-owner links are derived results, not trusted
         // assertions. An inherited Strike can spend an existing pool only if
         // both canonical native definitions and source evidence support it.
