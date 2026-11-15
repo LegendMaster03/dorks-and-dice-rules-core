@@ -91,7 +91,8 @@ public static class NativeCharacterSheetOriginBaselineAdapter
     {
         if (state.PrimaryMechanics?.AbilityScores is null ||
             state.PrimaryMechanics.Advancements is null ||
-            state.AlternateSheets is null)
+            state.AlternateSheets is null ||
+            !NativeCharacterSheetResolver.WithinLimits(state))
             return false;
 
         static bool MapValid<T>(NativeSheetMapPatch<T>? map) =>
