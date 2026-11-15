@@ -1,3 +1,4 @@
+using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
 
@@ -554,6 +555,104 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal(5, resource.EffectiveMaximum);
         Assert.Equal(8, resource.Current);
         Assert.Equal(8, updated.Resources.Single(x => x.Id == "resource.primary").Current);
+    }
+
+    private sealed class NativeProjectionFixture : IDisposable
+    {
+        private readonly string _root = Path.Combine(Path.GetTempPath(),
+            "rc-manifestation-projector-" + Guid.NewGuid().ToString("N"));
+        public NativeCharacterProjector Projector { get; }
+        public string Fingerprint { get; }
+
+        public NativeProjectionFixture()
+        {
+            var directory = Path.Combine(_root, "first-party-001");
+            Directory.CreateDirectory(Path.Combine(directory, "native"));
+            File.WriteAllText(Path.Combine(directory, "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(directory, "native", "class.json"), """
+                {"id":"class.demo","name":"Demo","kind":"class","definition":{
+                "savingThrowProficiencies":["dexterity"],
+                "progression":[
+                    {"level":1,"proficiencyBonus":2,"featureGrants":["class-feature.demo.known"]},
+                    {"level":2,"proficiencyBonus":2,"featureGrants":[]}
+                ]}}
+                """);
+            File.WriteAllText(Path.Combine(directory, "native", "feature.json"),
+                """{"id":"class-feature.demo.known","name":"Known","kind":"classFeature"}""");
+            var catalog = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(_root, "first-party-001"));
+            Projector = new NativeCharacterProjector(catalog);
+            Fingerprint = catalog.Fingerprint;
+        }
+
+        public void Dispose() => Directory.Delete(_root, recursive: true);
+    }
+
+    private static NativeCharacterState WithCatalog(
+        NativeCharacterState state, NativeProjectionFixture fixture, int level = 1) =>
+        state with
+        {
+            PrimaryMechanics = state.PrimaryMechanics with
+            {
+                Fingerprint = fixture.Fingerprint,
+                Advancements = [new NativeAdvancement("class.demo", level, "level.1")]
+            }
+        };
+
+    [Fact]
+    public void NativeProjectionWithholdsUnverifiedFormFeaturesButPreservesNumbers()
+    {
+        using var fixture = new NativeProjectionFixture();
+        var state = WithCatalog(Character(), fixture);
+        var normal = NativeCharacterManifestationProjector.Project(
+            state, Ledger(), new Authority(), fixture.Projector);
+        var active = NativeCharacterManifestationProjector.Project(
+            state, ActivatedWolf(state), new Authority(), fixture.Projector);
+
+        Assert.NotNull(normal.BaseMechanics);
+        Assert.Contains("class-feature.demo.known", normal.BaseMechanics.FeatureIds);
+        Assert.NotNull(active.BaseMechanics);
+        Assert.Equal("partial", active.Status);
+        Assert.Equal("partial", active.BaseMechanics.Status);
+        Assert.Empty(active.BaseMechanics.FeatureIds);
+        Assert.Empty(active.BaseMechanics.Resources);
+        Assert.Equal(17, active.BaseMechanics.Values["ability.strength.score"].Value);
+        Assert.Contains(active.Issues, x => x.Code == "manifestation-native-features-withheld");
+        Assert.Equal("wolf", active.EffectiveCharacter.EffectiveSheetId);
+        Assert.Equal(new[] { "grant.shared", "grant.wolf" },
+            active.EffectiveCharacter.SheetGrants.Select(x => x.Entitlement.Id));
+    }
+
+    [Fact]
+    public void NativeProjectionKeepsUpdatedClassAndSourceDerivedValuesWithoutSnapshotRollback()
+    {
+        using var fixture = new NativeProjectionFixture();
+        var updated = WithCatalog(Character(speed: 45), fixture, level: 2);
+        var active = NativeCharacterManifestationProjector.Project(
+            updated, ActivatedWolf(updated), new Authority(), fixture.Projector);
+        var ended = Plan(updated, ActivatedWolf(updated), "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf")).Proposed!;
+        var reverted = NativeCharacterManifestationProjector.Project(
+            updated, ended, new Authority(), fixture.Projector);
+
+        Assert.Equal(2, active.BaseMechanics!.Values["advancement.total-level"].Value);
+        Assert.Equal(45, active.EffectiveCharacter.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(2, reverted.BaseMechanics!.Values["advancement.total-level"].Value);
+        Assert.Equal(45, reverted.EffectiveCharacter.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(10, reverted.BaseMechanics.Values["ability.strength.score"].Value);
+    }
+
+    [Fact]
+    public void NativeProjectionRejectsStaleNativeCatalogVersion()
+    {
+        using var fixture = new NativeProjectionFixture();
+        var state = Character();
+        var result = NativeCharacterManifestationProjector.Project(
+            state, Ledger(), new Authority(), fixture.Projector);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.BaseMechanics);
+        Assert.Contains(result.Issues, issue => issue.Code == "ruleset-version-mismatch");
     }
 
     [Fact]
