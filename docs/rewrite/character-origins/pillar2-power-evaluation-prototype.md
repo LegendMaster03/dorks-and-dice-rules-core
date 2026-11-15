@@ -153,3 +153,75 @@ shared pools and alternative attack effects remain pending.
 These measurements remain endpoint-specific diagnostics. A successful charm
 save, a damage-prevention reaction, and one extra damage die are not converted
 into a universal Species power score.
+
+## Innate spell access, Origin choices, and control applications (research increment)
+
+The diagnostic corpus is now **version 3 with sixteen named contexts**. It adds
+explicit `spellDemands` and `controlOpportunities` alongside the existing
+combat, exploration, saving-throw, and reaction fixtures. These are conditional,
+source-backed mechanics tests, **not** additional balancing weights.
+
+### Fixed innate spell access
+
+The evaluator reads native fixed-spell entries including their character-level
+unlock, at-will entitlement, free-use count, Long Rest recharge, slot-casting
+permission, and authored free-cast spell level. The `innateFixedSpellEntitlements`
+ledger retains source-trait identity and special spell-level information such
+as Infernal Tiefling's level-2 free Hellish Rebuke. Neither preparing a spell
+nor permission to spend a class slot generates new spell slots.
+
+For each explicitly eligible `spellDemands` entry (`id`, `spell`, optional
+`eligible`), it counts available at-will access or a remaining independent
+fixed-spell free use. The trace records an exhausted pool, ineligible task,
+unknown spell-list selection, or unresolved duplicate pool rather than asserting
+that the underlying objective was accomplished. In particular:
+
+- High Elf's Detect Magic and Misty Step produce one free use each after their
+  level-3 and level-5 unlocks. Its changeable Wizard cantrip cannot be valued
+  until a legal spell has been chosen.
+- Infernal Tiefling's Fire Bolt is at-will, while Hellish Rebuke and Darkness
+  have separately authored free uses. The spell's damage, reactions, duration,
+  spellcasting DC, concentration competition, and class-specific value remain
+  unmeasured.
+- Multiple independently sourced *limited uses of the same fixed spell*, such
+  as Drow and Infernal Darkness, are **unresolved** until a source-reconciliation
+  rule approves their interaction. Their potential capacities are enumerated,
+  but the evaluation does not automatically spend both pools.
+
+Human's extra Origin feat and skill proficiency are counted as distinct
+**choice entitlements**, not selected mechanical benefits. The current native
+catalog does not yet provide the complete, approved feat and spell-list choices
+necessary for power valuation, so both are recorded as unresolved. The evaluator
+does not infer a free feature or score unfamiliar effects as zero.
+
+### Conditional Metallic Breath control
+
+`controlOpportunities` provide a chosen option, cone geometry, explicitly
+counted enemy and ally targets, and a stipulated saving-throw failure
+probability. The evaluator recognizes the authored Metallic Breath options
+only after the level-5 unlock: **Enervating Breath** (expected Incapacitated
+applications) and **Repulsion Breath** (expected Prone applications and forced
+movement feet). It spends the family-level once-per-Long-Rest pool once, separate
+from ordinary damaging Breath Weapon uses. The declared policy spends the
+first eligible opportunity; it is not a globally optimal action policy.
+
+For two enemies and one ally in the Enervating cone with 0.55 save failure,
+the outputs are **1.10 expected enemy Incapacitated applications** and **0.55
+expected allied Incapacitated applications**, not 1.10 successful objective
+outcomes or lost turns. Three enemies facing Repulsion under the same failure
+rate yield **1.65 expected Prone applications** and **33 expected feet of total
+forced movement** before accounting for obstacles. These represent separate
+control endpoints, and the evaluator does not equate their tactical value.
+
+The source option's save DC formula is preserved, while the fixture's supplied
+failure probability is used rather than guessing enemy statistics. A successful
+save has no effect under the authored option. Ally-safe positioning, actual
+initiative, action replacement, condition duration, immunities, forced-movement
+obstructions, and effects on subsequent actions remain **unvalued**. Unknown
+control-option shapes fail closed instead of being interpreted partially.
+
+Run the existing suite command to reproduce all sixteen contexts. Native
+integration tests check the real High Elf, Infernal Tiefling, Human, Bronze
+Dragonborn, and Red Dragonborn entries when a complete repository checkout is
+available. This increment neither modifies native rules nor establishes a
+Species power score or inheritance allocation cost.

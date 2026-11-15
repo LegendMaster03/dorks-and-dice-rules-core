@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v2",
-  "version": 2,
+  "id": "pillar2-diagnostic-sensitivity-v3",
+  "version": 3,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -371,6 +371,73 @@
             "isAttackHit": false,
             "attackerVisible": false,
             "reactionAvailable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "innate-fixed-spell-demands",
+      "purpose": "Count explicitly eligible fixed-spell access and at-will repetition without valuing individual spell effects or unresolved cantrip lists.",
+      "scenario": {
+        "id": "innate-fixed-spell-demands",
+        "spellDemands": [
+          {
+            "id": "detect",
+            "spell": "detect-magic"
+          },
+          {
+            "id": "misty",
+            "spell": "misty-step"
+          },
+          {
+            "id": "rebuke",
+            "spell": "hellish-rebuke"
+          },
+          {
+            "id": "darkness",
+            "spell": "darkness"
+          },
+          {
+            "id": "bolt-1",
+            "spell": "fire-bolt"
+          },
+          {
+            "id": "bolt-2",
+            "spell": "fire-bolt"
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-enervation-with-allies",
+      "purpose": "Model one Metallic Breath use and explicitly count both enemy and ally Incapacitated applications under a stipulated saving-throw failure rate.",
+      "scenario": {
+        "id": "metallic-enervation-with-allies",
+        "controlOpportunities": [
+          {
+            "id": "cluster-with-ally",
+            "option": "enervating-breath",
+            "areaShape": "cone",
+            "enemyTargets": 2,
+            "allyTargets": 1,
+            "failureProbability": 0.55
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-repulsion",
+      "purpose": "Exercise the separate Repulsion choice: Prone and forced movement rather than Incapacitated, with distinct one-use resource accounting.",
+      "scenario": {
+        "id": "metallic-repulsion",
+        "controlOpportunities": [
+          {
+            "id": "enemies-in-cone",
+            "option": "repulsion-breath",
+            "areaShape": "cone",
+            "enemyTargets": 3,
+            "allyTargets": 0,
+            "failureProbability": 0.55
           }
         ]
       }

@@ -39,6 +39,8 @@ DEFAULT_SCENARIO = {
     "abilityModifiers": {"constitution": 3},
     "saveEvents": [],
     "reactionDamageEvents": [],
+    "spellDemands": [],
+    "controlOpportunities": [],
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -142,7 +144,8 @@ def validate_scenario(scenario: dict) -> None:
             else:
                 _number(value, f"{field}.{name}")
     for field in ("incomingDamage", "breathOpportunities", "saveEvents",
-                  "reactionDamageEvents", "tremorsenseContacts", "mobilityChallenges"):
+                  "reactionDamageEvents", "spellDemands", "controlOpportunities",
+                  "tremorsenseContacts", "mobilityChallenges"):
         events = scenario.get(field, [])
         if not isinstance(events, list):
             raise ValueError(f"{field} must be an array")
@@ -207,6 +210,26 @@ def validate_scenario(scenario: dict) -> None:
                 for flag in ("isAttackHit", "attackerVisible", "reactionAvailable"):
                     if flag not in event or not isinstance(event[flag], bool):
                         raise ValueError(f"{location}.{flag} must be boolean")
+            elif field == "spellDemands":
+                extra = set(event) - {"id", "spell", "eligible"}
+                if extra:
+                    raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
+                _nonempty(event.get("id"), f"{location}.id")
+                _nonempty(event.get("spell"), f"{location}.spell")
+                if "eligible" in event and not isinstance(event["eligible"], bool):
+                    raise ValueError(f"{location}.eligible must be boolean")
+            elif field == "controlOpportunities":
+                extra = set(event) - {"id", "option", "areaShape", "enemyTargets",
+                                      "allyTargets", "failureProbability"}
+                if extra:
+                    raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
+                _nonempty(event.get("id"), f"{location}.id")
+                _nonempty(event.get("option"), f"{location}.option")
+                _nonempty(event.get("areaShape"), f"{location}.areaShape")
+                _count(event.get("enemyTargets"), f"{location}.enemyTargets")
+                _count(event.get("allyTargets"), f"{location}.allyTargets")
+                _probability(event.get("failureProbability"),
+                             f"{location}.failureProbability")
             elif field == "tremorsenseContacts":
                 _number(event.get("distanceFeet"), f"{location}.distanceFeet")
                 for key in ("sensorTouches", "targetTouches"):
@@ -236,7 +259,8 @@ def validate_scenario(scenario: dict) -> None:
                         raise ValueError(f"{location}.{key} must be boolean")
                 if event["mode"] == "burrow" and "material" not in event:
                     raise ValueError(f"{location}.material required for burrow")
-            if field in ("saveEvents", "reactionDamageEvents"):
+            if field in ("saveEvents", "reactionDamageEvents", "spellDemands",
+                         "controlOpportunities"):
                 identifier = event["id"]
                 if identifier in seen_ids:
                     raise ValueError(f"Duplicate {field} event ID: {identifier}")
@@ -423,6 +447,180 @@ def saving_throw_outcomes(traits: dict, level: int, scenario: dict,
                       "expectedDamageAfterOrigin": actual_damage,
                       "conditionOnFailure": condition})
     return values, trace, issues
+
+
+
+def spell_demand_outcomes(traits: dict, level: int, pb: int,
+                          scenario: dict) -> tuple[dict, list[dict], list[dict], set[str]]:
+    """Match authored fixed-spell entitlements to explicitly eligible demands.
+
+    This does not execute a spell, infer its action, select a spell-list choice,
+    add class slots, or assign effectiveness to a successful cast. Distinct
+    sources of the *same* limited spell require a separate stacking decision.
+    """
+    values = {"innate_fixed_at_will_spell_entitlements": 0,
+              "innate_fixed_free_cast_capacity": 0,
+              "spell_free_cast_demands_matched": 0,
+              "spell_at_will_demands_matched": 0}
+    by_spell = defaultdict(list)
+    unresolved_lists = []
+    modeled = set()
+    issues = []
+    entitlements = []
+    for identifier, trait in traits.items():
+        if not unlocked(trait, level):
+            continue
+        if "spellList" in trait:
+            unresolved_lists.append(identifier)
+        spell = trait.get("spell")
+        if not isinstance(spell, str) or not spell.strip():
+            continue
+        at_will = trait.get("atWill") is True
+        uses = trait.get("freeUses")
+        charges = pb if uses == "proficiency-bonus" else uses
+        if at_will and uses is not None:
+            issues.append({"traitId": identifier, "reason": "both-at-will-and-limited-casts"})
+            continue
+        if not at_will and (isinstance(charges, bool) or
+                            not isinstance(charges, int) or charges < 0 or
+                            trait.get("recharge") != "long-rest"):
+            continue
+        entitlements.append({"traitId": identifier, "spell": spell,
+                             "atWill": at_will, "freeUsesPerLongRest": None if at_will else charges,
+                             "canUseSpellSlots": trait.get("slotCasting", False) is True,
+                             "freeCastSpellLevel": trait.get("freeCastSpellLevel")})
+        by_spell[spell].append({"traitId": identifier, "atWill": at_will,
+                                "remaining": None if at_will else charges})
+        modeled.add(identifier)
+        if at_will:
+            values["innate_fixed_at_will_spell_entitlements"] += 1
+        else:
+            values["innate_fixed_free_cast_capacity"] += charges
+    ambiguous = {name for name, entries in by_spell.items()
+                 if sum(not item["atWill"] for item in entries) > 1}
+    for spell in sorted(ambiguous):
+        issues.append({"spell": spell, "reason": "duplicate-fixed-spell-free-pools-unresolved",
+                       "traitIds": [item["traitId"] for item in by_spell[spell]]})
+    trace = []
+    for event in scenario.get("spellDemands", []):
+        row = {"id": event["id"], "spell": event["spell"], "sourceTraitId": None,
+               "status": "unresolved-no-authored-fixed-spell"}
+        candidates = by_spell.get(event["spell"], [])
+        if event.get("eligible", True) is False:
+            row["status"] = "fixture-ineligible"
+        elif event["spell"] in ambiguous:
+            row["status"] = "unresolved-duplicate-free-use-pools"
+        elif candidates:
+            at_will = next((v for v in candidates if v["atWill"]), None)
+            available = at_will or next((v for v in candidates if v["remaining"] > 0), None)
+            if available:
+                row["sourceTraitId"] = available["traitId"]
+                row["status"] = "at-will-access" if available["atWill"] else "free-cast-access"
+                if available["atWill"]:
+                    values["spell_at_will_demands_matched"] += 1
+                else:
+                    values["spell_free_cast_demands_matched"] += 1
+                    available["remaining"] -= 1
+            else:
+                row["status"] = "free-use-exhausted"
+        elif unresolved_lists:
+            row["status"] = "unresolved-spell-list-choice"
+        trace.append(row)
+    return values, trace, issues, modeled, entitlements
+
+
+def metallic_control_outcomes(traits: dict, catalog: dict, level: int,
+                              scenario: dict) -> tuple[dict, list[dict], list[dict], set[str]]:
+    """Measure expected *applications* for a narrowly authored control area.
+
+    Event geometry, enemy/ally presence, and save failure are fixture inputs.
+    Processing events in order is a declared first-eligible-use policy; the
+    result does not claim lost turns or equate Prone to Incapacitated.
+    """
+    metrics = {"control_attack_replacements": 0}
+    trace = []
+    issues = []
+    modeled = set()
+    abilities = []
+    for identifier, trait in traits.items():
+        if not unlocked(trait, level):
+            continue
+        act, pool, area = trait.get("activation"), trait.get("uses"), trait.get("area")
+        options = trait.get("options")
+        if not (isinstance(act, dict) and act.get("action") == "attack" and
+                act.get("replaces") == "one-attack" and isinstance(options, list) and
+                isinstance(pool, dict) and pool.get("recharge") == "long-rest" and
+                isinstance(area, dict) and area.get("shape") == "cone" and
+                area.get("affectsAllies") is True):
+            continue
+        if type(pool.get("value")) is not int or pool["value"] < 0:
+            issues.append({"traitId": identifier, "reason": "unresolved-control-use-pool"})
+            continue
+        recognized_options = {}
+        for opt in options:
+            if not isinstance(opt, dict) or not isinstance(opt.get("id"), str):
+                continue
+            save = opt.get("savingThrow")
+            failure = opt.get("onFailure")
+            if (not isinstance(save, dict) or
+                    save.get("onSuccess") != "no-effect" or
+                    not isinstance(failure, dict) or
+                    set(opt) - {"id", "name", "savingThrow", "onFailure"} or
+                    set(save) - {"ability", "dc", "onSuccess"} or
+                    set(failure) - {"applyCondition", "endsAt", "pushFeet",
+                                    "direction", "forcedMovement"} or
+                    not isinstance(save.get("ability"), str) or
+                    not isinstance(save.get("dc"), str)):
+                continue
+            condition = failure.get("applyCondition")
+            if condition is not None and condition not in catalog["conditions"]:
+                continue
+            if condition is None and "pushFeet" not in failure:
+                continue
+            if "pushFeet" in failure and (type(failure["pushFeet"]) is not int or
+                                          failure["pushFeet"] < 0):
+                continue
+            recognized_options[opt["id"]] = failure
+        if len(recognized_options) != len(options):
+            issues.append({"traitId": identifier, "reason": "partially-unresolved-control-options"})
+            continue
+        abilities.append({"traitId": identifier, "remaining": pool["value"],
+                          "shape": area["shape"], "options": recognized_options})
+        modeled.add(identifier)
+    for event in scenario.get("controlOpportunities", []):
+        row = {"id": event["id"], "option": event["option"],
+               "selectedTraitId": None, "status": "no-matching-authored-control"}
+        for ability in abilities:
+            if (ability["shape"] != event["areaShape"] or
+                    event["option"] not in ability["options"]):
+                continue
+            if not event["enemyTargets"] and not event["allyTargets"]:
+                row["status"] = "no-targets"
+                break
+            if ability["remaining"] <= 0:
+                row["status"] = "control-use-exhausted"
+                break
+            ability["remaining"] -= 1
+            row["status"] = "applied-to-fixture-targets"
+            row["selectedTraitId"] = ability["traitId"]
+            row["expectedEnemyFailedSaves"] = event["enemyTargets"] * event["failureProbability"]
+            row["expectedAllyFailedSaves"] = event["allyTargets"] * event["failureProbability"]
+            failure = ability["options"][event["option"]]
+            metrics["control_attack_replacements"] += 1
+            if "applyCondition" in failure:
+                condition = failure["applyCondition"].split(".")[-1]
+                for name, count in (("enemy", row["expectedEnemyFailedSaves"]),
+                                    ("ally", row["expectedAllyFailedSaves"])):
+                    metric = f"control_expected_{name}_{condition}_applications"
+                    metrics[metric] = metrics.get(metric, 0) + count
+            if "pushFeet" in failure:
+                for name, count in (("enemy", row["expectedEnemyFailedSaves"]),
+                                    ("ally", row["expectedAllyFailedSaves"])):
+                    metric = f"control_expected_{name}_forced_movement_feet"
+                    metrics[metric] = metrics.get(metric, 0) + count * failure["pushFeet"]
+            break
+        trace.append(row)
+    return metrics, trace, issues, modeled
 
 
 def _damage_reduction_expectation(dice: str, modifier: int, amount: float) -> float:
@@ -765,6 +963,13 @@ def evaluate(profile: dict, catalog: dict, level: int,
     conditions = []
     breath = []
     breath_events = []
+    spell_values, spell_trace, spell_issues, modeled_spells, spell_entitlements = spell_demand_outcomes(
+        traits, level, pb, scenario)
+    control_values, control_trace, control_issues, modeled_control = metallic_control_outcomes(
+        traits, catalog, level, scenario)
+    metrics.update(spell_values)
+    metrics.update(control_values)
+    unmodeled.extend(spell_issues + control_issues)
     modeled_movement = {opt["source"] for opt in _movement_options(profile, level, pb)}
     modeled_reactions = {d["traitId"] for d in _reaction_defenses(traits, level, pb)}
     shared_frontiers = native_shared_pool_frontiers(traits, level)
@@ -816,6 +1021,34 @@ def evaluate(profile: dict, catalog: dict, level: int,
         if identifier in modeled_shared_links:
             recognized = True
             interpreted.update(("sharedUsesFromTrait", "extraDamage"))
+        if identifier in modeled_spells:
+            recognized = True
+            interpreted.update(("spell", "atWill", "freeUses", "recharge",
+                                "slotCasting", "alwaysPrepared", "freeCastSpellLevel"))
+        if "spellList" in trait:
+            unmodeled.append({"traitId": identifier,
+                              "reason": "unresolved-spell-list-selection"})
+        if trait.get("grantType") == "feat-choice" and trait.get("featCategory") == "origin":
+            count = trait.get("choiceCount")
+            if type(count) is int and count >= 0:
+                metrics["origin_feat_choice_entitlements"] += count
+                recognized = True
+                interpreted.update(("grantType", "featCategory", "choiceCount", "when"))
+                unmodeled.append({"traitId": identifier,
+                                  "reason": "unresolved-origin-feat-effects"})
+        if trait.get("grantType") == "skill-proficiency" and trait.get("chooseFrom") == "any-native-skill":
+            count = trait.get("choiceCount")
+            if type(count) is int and count >= 0:
+                metrics["skill_proficiency_choice_entitlements"] += count
+                recognized = True
+                interpreted.update(("grantType", "chooseFrom", "choiceCount", "when"))
+                unmodeled.append({"traitId": identifier,
+                                  "reason": "unresolved-selected-skill"})
+        if identifier in modeled_control:
+            recognized = True
+            interpreted.update(("activation", "uses", "area", "choiceTiming", "options"))
+            unmodeled.append({"traitId": identifier,
+                              "reason": "control-action-cost-and-duration-unvalued"})
         if "condition" in trait and trait["condition"] in catalog["conditions"]:
             conditions.append(trait["condition"])
             recognized = True
@@ -915,6 +1148,9 @@ def evaluate(profile: dict, catalog: dict, level: int,
             "mobilityGateResults": mobility, "breathEventTrace": breath_events,
             "savingThrowEventTrace": save_trace,
             "reactionEventTrace": reaction_trace,
+            "innateSpellDemandTrace": spell_trace,
+            "innateFixedSpellEntitlements": spell_entitlements,
+            "controlEventTrace": control_trace,
             "sharedResourceFrontiers": shared_frontiers,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
@@ -979,8 +1215,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2):
-        raise ValueError("suite.version must be 1 or 2")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3):
+        raise ValueError("suite.version must be 1, 2 or 3")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")

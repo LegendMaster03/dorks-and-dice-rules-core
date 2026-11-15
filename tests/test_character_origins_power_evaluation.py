@@ -319,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(13, len(suite["contexts"]))
+        self.assertEqual(16, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -361,7 +361,7 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(13, result["scenarioCount"])
+        self.assertEqual(16, result["scenarioCount"])
 
     def test_suite_paired_comparison_is_per_context_and_level(self):
         result = power.evaluate_scenario_suite(
@@ -391,7 +391,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 3
+        bad["version"] = 4
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -407,7 +407,7 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(13, result["scenarioCount"])
+        self.assertEqual(16, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
 
 
@@ -553,15 +553,134 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
         suite = self.scenario_suite()
-        self.assertEqual(2, suite["version"])
-        self.assertEqual(13, len(suite["contexts"]))
+        self.assertEqual(3, suite["version"])
+        self.assertEqual(16, len(suite["contexts"]))
         self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
         result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
-        self.assertEqual(13, result["scenarioCount"])
+        self.assertEqual(16, result["scenarioCount"])
         names = {x["id"]: x["profiles"][0]["levels"][0]
                  for x in result["contexts"]}
         self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
         self.assertIn("reactionEventTrace", names["heavy-hit-reaction-windows"])
+
+
+    def test_fixed_innate_spell_progression_and_explicit_demands(self):
+        profile = self.profile("species.elf")
+        profile["traits"].update({
+            "high-cantrip": {"id": "arcane-cantrip", "spellList": "wizard",
+                             "level": 1, "replacement": "after-long-rest"},
+            "detect": {"spell": "detect-magic", "level": 3, "freeUses": 1,
+                       "recharge": "long-rest", "slotCasting": True},
+            "misty": {"spell": "misty-step", "level": 5, "freeUses": 1,
+                      "recharge": "long-rest", "slotCasting": True},
+        })
+        events = {"spellDemands": [
+            {"id": "detect", "spell": "detect-magic"},
+            {"id": "escape", "spell": "misty-step"},
+            {"id": "second-escape", "spell": "misty-step"},
+            {"id": "chosen-cantrip", "spell": "fire-bolt"}]}
+        at_one = power.evaluate(profile, self.catalog, 1, events)
+        at_three = power.evaluate(profile, self.catalog, 3, events)
+        at_five = power.evaluate(profile, self.catalog, 5, events)
+        self.assertEqual(0, at_one["metrics"]["innate_fixed_free_cast_capacity"])
+        self.assertEqual(1, at_three["metrics"]["spell_free_cast_demands_matched"])
+        self.assertEqual(2, at_five["metrics"]["spell_free_cast_demands_matched"])
+        self.assertEqual(2, len(at_five["innateFixedSpellEntitlements"]))
+        self.assertEqual(["free-cast-access", "free-cast-access", "free-use-exhausted",
+                          "unresolved-spell-list-choice"],
+                         [v["status"] for v in at_five["innateSpellDemandTrace"]])
+        self.assertTrue(any(v.get("reason") == "unresolved-spell-list-selection"
+                            for v in at_five["unmodeled"]))
+
+    def test_at_will_spells_and_duplicate_free_pools_do_not_stack_silently(self):
+        profile = self.profile("species.elf")
+        profile["traits"] = {
+            "at-will": {"spell": "fire-bolt", "level": 1, "atWill": True},
+            "drow": {"spell": "darkness", "level": 5, "freeUses": 1,
+                     "recharge": "long-rest"},
+            "infernal": {"spell": "darkness", "level": 5, "freeUses": 1,
+                        "recharge": "long-rest"},
+        }
+        scenario = {"spellDemands": [
+            {"id": "bolt-1", "spell": "fire-bolt"},
+            {"id": "bolt-2", "spell": "fire-bolt"},
+            {"id": "darkness", "spell": "darkness"},
+            {"id": "ineligible", "spell": "fire-bolt", "eligible": False}]}
+        r = power.evaluate(profile, self.catalog, 5, scenario)
+        self.assertEqual(2, r["metrics"]["spell_at_will_demands_matched"])
+        self.assertEqual(2, r["metrics"]["innate_fixed_free_cast_capacity"])
+        self.assertEqual(0, r["metrics"]["spell_free_cast_demands_matched"])
+        self.assertEqual("unresolved-duplicate-free-use-pools",
+                         r["innateSpellDemandTrace"][2]["status"])
+        self.assertTrue(any(x.get("reason") == "duplicate-fixed-spell-free-pools-unresolved"
+                            for x in r["unmodeled"]))
+
+    def test_human_origin_feat_and_skill_choice_remain_entitlements(self):
+        profile = self.profile("species.elf")
+        profile["traits"] = {
+            "versatile": {"grantType": "feat-choice", "featCategory": "origin",
+                          "choiceCount": 1, "when": "character-creation"},
+            "skillful": {"grantType": "skill-proficiency", "chooseFrom": "any-native-skill",
+                         "choiceCount": 1, "when": "character-creation"}}
+        r = power.evaluate(profile, self.catalog, 5, {})
+        self.assertEqual(1, r["metrics"]["origin_feat_choice_entitlements"])
+        self.assertEqual(1, r["metrics"]["skill_proficiency_choice_entitlements"])
+        self.assertIn("unresolved-origin-feat-effects", [x.get("reason") for x in r["unmodeled"]])
+        self.assertIn("unresolved-selected-skill", [x.get("reason") for x in r["unmodeled"]])
+
+    def test_metallic_breath_conditions_ally_exposure_and_one_pool(self):
+        profile = self.profile("ancestry.dragonborn.red")
+        self.catalog["conditions"].update({"condition.incapacitated": {"id": "condition.incapacitated"},
+                                            "condition.prone": {"id": "condition.prone"}})
+        profile["traits"]["metallic"] = {
+            "requiredCharacterLevel": 5,
+            "activation": {"action": "attack", "replaces": "one-attack"},
+            "uses": {"value": 1, "recharge": "long-rest", "resource": "metallic-breath-weapon"},
+            "area": {"shape": "cone", "lengthFeet": 15, "affectsAllies": True},
+            "choiceTiming": "on-use",
+            "options": [
+                {"id": "enervating-breath", "savingThrow": {"ability": "constitution",
+                                                          "dc": "8 + proficiency-bonus + constitution-modifier",
+                                                          "onSuccess": "no-effect"},
+                 "onFailure": {"applyCondition": "condition.incapacitated"}},
+                {"id": "repulsion-breath", "savingThrow": {"ability": "strength",
+                                                         "dc": "8 + proficiency-bonus + constitution-modifier",
+                                                         "onSuccess": "no-effect"},
+                 "onFailure": {"pushFeet": 20, "applyCondition": "condition.prone"}},
+            ]}
+        scenario = {"controlOpportunities": [
+            {"id": "first", "option": "enervating-breath", "areaShape": "cone",
+             "enemyTargets": 2, "allyTargets": 1, "failureProbability": 0.55},
+            {"id": "second", "option": "repulsion-breath", "areaShape": "cone",
+             "enemyTargets": 3, "allyTargets": 0, "failureProbability": 0.55}]}
+        before = power.evaluate(profile, self.catalog, 4, scenario)
+        after = power.evaluate(profile, self.catalog, 5, scenario)
+        self.assertEqual(0, before["metrics"]["control_attack_replacements"])
+        self.assertEqual(1, after["metrics"]["control_attack_replacements"])
+        self.assertAlmostEqual(1.10, after["metrics"]["control_expected_enemy_incapacitated_applications"])
+        self.assertAlmostEqual(0.55, after["metrics"]["control_expected_ally_incapacitated_applications"])
+        self.assertEqual("control-use-exhausted", after["controlEventTrace"][1]["status"])
+        scenario["controlOpportunities"] = [scenario["controlOpportunities"][1]]
+        repulsion = power.evaluate(profile, self.catalog, 5, scenario)
+        self.assertAlmostEqual(1.65, repulsion["metrics"]["control_expected_enemy_prone_applications"])
+        self.assertAlmostEqual(33.0, repulsion["metrics"]["control_expected_enemy_forced_movement_feet"])
+
+    def test_spell_and_control_fixture_validation_rejects_ambiguous_fields(self):
+        for bad in [
+            {"spellDemands": [{"id": "x", "spell": "fire-bolt", "spells": 2}]},
+            {"spellDemands": [{"id": "x", "spell": "fire-bolt"},
+                               {"id": "x", "spell": "darkness"}]},
+            {"spellDemands": [{"id": "x", "spell": "fire-bolt", "eligible": 1}]},
+            {"controlOpportunities": [{"id": "b", "option": "repulsion-breath",
+                                       "areaShape": "cone", "enemyTargets": 1,
+                                       "allyTargets": -1, "failureProbability": 0.5}]},
+            {"controlOpportunities": [{"id": "b", "option": "repulsion-breath",
+                                       "areaShape": "cone", "enemyTargets": 1,
+                                       "allyTargets": 0, "failureProbability": 1.2}]},
+        ]:
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                power.validate_scenario(bad)
+
 
 
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
@@ -590,7 +709,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(13, result["scenarioCount"])
+        self.assertEqual(16, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -637,6 +756,39 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         self.assertEqual(3, metric("travel-concentrated-gates", "ancestry.dragonborn.amethyst", 3,
                                    movement))
 
+
+    def test_native_spell_entitlements_feat_choices_and_metallic_control(self):
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        suite = json.loads((Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
+                           .read_text(encoding="utf-8"))
+        result = power.evaluate_scenario_suite(catalog, suite,
+            ["ancestry.elf.high", "ancestry.tiefling.infernal", "species.human",
+             "ancestry.dragonborn.bronze", "ancestry.dragonborn.red"])
+        contexts = {c["id"]: {p["id"]: p["levels"] for p in c["profiles"]}
+                    for c in result["contexts"]}
+        magic = contexts["innate-fixed-spell-demands"]
+        high = magic["ancestry.elf.high"]
+        self.assertEqual(0, high[0]["metrics"]["innate_fixed_free_cast_capacity"])
+        self.assertEqual(1, high[1]["metrics"]["innate_fixed_free_cast_capacity"])
+        self.assertEqual(2, high[3]["metrics"]["spell_free_cast_demands_matched"])
+        infernal = magic["ancestry.tiefling.infernal"][3]
+        self.assertEqual(2, infernal["metrics"]["spell_at_will_demands_matched"])
+        self.assertEqual(2, infernal["metrics"]["spell_free_cast_demands_matched"])
+        human = magic["species.human"][0]
+        self.assertEqual(1, human["metrics"]["origin_feat_choice_entitlements"])
+        self.assertTrue(any(x.get("reason") == "unresolved-origin-feat-effects"
+                            for x in human["unmodeled"]))
+        bronze = contexts["metallic-enervation-with-allies"]["ancestry.dragonborn.bronze"]
+        self.assertEqual(0, bronze[2]["metrics"]["control_attack_replacements"])
+        self.assertAlmostEqual(1.10, bronze[3]["metrics"][
+            "control_expected_enemy_incapacitated_applications"])
+        self.assertAlmostEqual(0.55, bronze[3]["metrics"][
+            "control_expected_ally_incapacitated_applications"])
+        self.assertEqual(0, contexts["metallic-enervation-with-allies"]["ancestry.dragonborn.red"][3]
+                         ["metrics"]["control_attack_replacements"])
+        repulsion = contexts["metallic-repulsion"] ["ancestry.dragonborn.bronze"][3]
+        self.assertAlmostEqual(1.65, repulsion["metrics"]["control_expected_enemy_prone_applications"])
+        self.assertAlmostEqual(33.0, repulsion["metrics"]["control_expected_enemy_forced_movement_feet"])
 
     def test_native_save_and_defensive_reaction_contrasts(self):
         """Match scenario outputs to authored Dwarf, Gnome, Stone and Cloud traits."""
