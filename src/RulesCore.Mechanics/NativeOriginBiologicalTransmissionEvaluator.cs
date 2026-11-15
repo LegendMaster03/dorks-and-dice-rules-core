@@ -37,7 +37,8 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
             Candidates = (proposal.Candidates ?? []).Select(candidate =>
             {
                 if (candidate is null || candidate.ContributorId is null ||
-                    candidate.SelectionBasis?.Eligibility != NativeOriginEligibility.Unreviewed)
+                    candidate.SelectionBasis?.Eligibility is not
+                        (NativeOriginEligibility.Unreviewed or NativeOriginEligibility.Restricted))
                     return candidate;
 
                 var contributor = proposal.Contributors?.FirstOrDefault(x =>
@@ -55,9 +56,18 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
                         x.GetString() == "biological") ||
                     candidate.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
                     !catalog.TryGetById(candidate.Identity.Occurrence.Source.Id, out var source) ||
-                    source is null || source.Category is not ("species" or "ancestry"))
+                    source is null || source.Category is not ("species" or "ancestry") ||
+                    source.Definition.TryGetProperty("acquisitionMethods", out var sourceAcquisition) &&
+                    sourceAcquisition.ValueKind == JsonValueKind.Array &&
+                    !sourceAcquisition.EnumerateArray().Any(x =>
+                        x.ValueKind == JsonValueKind.String &&
+                        x.GetString() == "biological"))
                     return candidate;
 
+                // A selectable leaf can legitimately inherit a nonselectable
+                // shared Species or Ancestry-family definition (Dragonborn's
+                // base Species is one example). The *donor* must be selectable,
+                // and any source-specific acquisition restriction still applies.
                 var eligible = candidate.Identity.Kind switch
                 {
                     NativeOriginCharacteristicKind.Intrinsic =>
