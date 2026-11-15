@@ -37,7 +37,11 @@ public sealed class NativeCharacterManifestationTests
             NativeInfluenceGrantApplicability decision) => true;
         public bool AuthorizesLedger(string id, NativeManifestationLedger ledger) => !DenyLedger;
         public bool AuthorizesInstance(string id, NativeManifestationInstance instance,
-            NativePersistentCharacterSheet sheet) => !DenyInstance && instance.SheetId == sheet.Id;
+            NativePersistentCharacterSheet sheet) =>
+            !DenyInstance && instance.SheetId == sheet.Id &&
+            instance.DefinitionOccurrence.Source == Source() &&
+            instance.DefinitionOccurrence.OccurrencePath == "forms." + sheet.Id &&
+            instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId;
         public bool AuthorizesResource(string id, NativeManifestationResourceState resource) => !DenyResource;
         public bool AuthorizesResourcePolicy(string id, NativeManifestationInstance instance,
             NativeManifestationResourcePolicy policy) => !DenyPolicy;
@@ -127,8 +131,7 @@ public sealed class NativeCharacterManifestationTests
         bool addWolfPool = false) =>
         new(NativeManifestationTransitionAction.Activate, id, Occurrence("actions.activate"),
             Rule(), "receipt.transition." + eventId,
-            Form(id, sheet, sheet == "wolf" ?
-            eventId : eventId,
+            Form(id, sheet, eventId,
                 sheet == "wolf" ? [
                     new("resource.primary", NativeManifestationResourceMode.AdjustMaximum, 3),
                     new("resource.shared", NativeManifestationResourceMode.CaptureMaximum,
@@ -500,6 +503,57 @@ public sealed class NativeCharacterManifestationTests
             Resources = [PrimaryPool(), SharedPool() with { OwnerId = "missing" }]
         };
         Assert.Equal("invalid", Resolve(Character(), noOwner).Status);
+    }
+
+    [Theory]
+    [InlineData("latent", 30)]
+    [InlineData("expressed", 55)]
+    public void ActiveWolfReevaluatesChangingInfluenceExpression(string phase, int speed)
+    {
+        var effect = new NativeCharacterInfluenceEffect(
+            "effect.phase", Occurrence("effects.phase"), "receipt.effect.phase", Rule(),
+            new Dictionary<string, string> { ["phase"] = "expressed" }, ["wolf"],
+            NativeInfluenceCharacteristic.BaseWalkSpeed, NativeInfluenceOperation.Replace,
+            NumericValue: 55);
+        var influence = new NativeCharacterPersistentInfluence(
+            "curse", "definition.curse", Source(), "receipt.curse",
+            "receipt.expression." + phase,
+            new Dictionary<string, string> { ["phase"] = phase }, [effect]);
+        Assert.Equal(speed, Resolve(Character([influence]), ActivatedWolf())
+            .EffectiveMechanics!.BaseWalkSpeed);
+    }
+
+    [Fact]
+    public void IncorrectNonemptyFormOccurrenceAndReceiptFailHostVerification()
+    {
+        var state = Character();
+        var ledger = ActivatedWolf();
+        var wrongSource = ledger with { Instances =
+            [ledger.Instances.Single() with { DefinitionOccurrence = Occurrence("forms.other") }] };
+        var wrongReceipt = ledger with { Instances =
+            [ledger.Instances.Single() with { ActivationEvidenceId = "invented" }] };
+        Assert.Equal("invalid", Resolve(state, wrongSource).Status);
+        Assert.Equal("invalid", Resolve(state, wrongReceipt).Status);
+    }
+
+    [Fact]
+    public void CapacityReductionDoesNotClampRecordedCurrentQuantity()
+    {
+        var ledger = ActivatedWolf();
+        var instance = ledger.Instances.Single();
+        var updated = ledger with { Instances = [
+            instance with { ResourcePolicies = [
+                new("resource.primary", NativeManifestationResourceMode.AdjustMaximum, -5),
+                new("resource.shared", NativeManifestationResourceMode.CaptureMaximum,
+                    CaptureKey: "captured"),
+                new("resource.wolf.manifest.wolf", NativeManifestationResourceMode.Separate)
+            ]}
+        ]};
+        var resource = Resolve(Character(), updated).Resources
+            .Single(x => x.Id == "resource.primary");
+        Assert.Equal(5, resource.EffectiveMaximum);
+        Assert.Equal(8, resource.Current);
+        Assert.Equal(8, updated.Resources.Single(x => x.Id == "resource.primary").Current);
     }
 
     [Fact]
