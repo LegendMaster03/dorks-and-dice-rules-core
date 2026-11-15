@@ -302,17 +302,21 @@ public static class NativeCharacterManifestationResolver
             foreach (var policy in selected.ResourcePolicies.OrderBy(x => x.ResourceId, StringComparer.Ordinal))
             {
                 var resource = byId[policy.ResourceId];
-                // A manifestation-scoped pool is owned by exactly one
-                // activation. A later activation can not rebrand an older
-                // activation's private balance as its own accessible pool.
-                // Cross-activation transfers need an authored transaction,
-                // not a read-only maximum or visibility policy.
-                if (resource.OwnerKind == NativeManifestationResourceOwner.Manifestation &&
-                    resource.OwnerId != selected.Id ||
+                // A manifestation-scoped pool belongs to one activation;
+                // ending that activation does not make its balance accessible
+                // to another. Future cross-activation transfers need an
+                // authored mutation, not a read-only visibility policy.
+                var foreignActivationPool =
+                    resource.OwnerKind == NativeManifestationResourceOwner.Manifestation &&
+                    resource.OwnerId != selected.Id;
+                var activationPoolDeclaredInherited =
                     policy.Mode == NativeManifestationResourceMode.Inherit &&
-                    resource.OwnerKind == NativeManifestationResourceOwner.Manifestation ||
+                    resource.OwnerKind == NativeManifestationResourceOwner.Manifestation;
+                var primaryPoolDeclaredSeparate =
                     policy.Mode == NativeManifestationResourceMode.Separate &&
-                    resource.OwnerKind == NativeManifestationResourceOwner.Primary)
+                    resource.OwnerKind == NativeManifestationResourceOwner.Primary;
+                if (foreignActivationPool || activationPoolDeclaredInherited ||
+                    primaryPoolDeclaredSeparate)
                 {
                     issues.Add(new("manifestation-resource-policy-unresolved", "resources." + resource.Id,
                         "The declared mode conflicts with the resource's owner."));
