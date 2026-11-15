@@ -77,6 +77,8 @@ public sealed record NativeManifestationLedger(
 /// Every operation has its own rule occurrence, authorization basis and evidence.
 /// Activate carries a new instance and optionally rule-verified instance-owned
 /// resource pools. End, Suppress and Restore reference an existing instance.
+/// An End step names its exact event/ending condition. An unlisted source
+/// event needs separate host verification before the form can end.
 /// A switch is an ordered list of steps committed under one event/revision.
 /// </summary>
 public sealed record NativeManifestationTransitionStep(
@@ -86,7 +88,8 @@ public sealed record NativeManifestationTransitionStep(
     NativeOriginDecisionBasis Basis,
     string AuthorizationEvidenceId,
     NativeManifestationInstance? NewInstance = null,
-    IReadOnlyList<NativeManifestationResourceState>? NewResources = null);
+    IReadOnlyList<NativeManifestationResourceState>? NewResources = null,
+    string? EndingConditionId = null);
 
 public sealed record NativeManifestationTransitionRequest(
     string CharacterId, long ExpectedRevision, string EventId,
@@ -95,7 +98,8 @@ public sealed record NativeManifestationTransitionRequest(
 
 public sealed record NativeManifestationTransitionPlan(
     string Status, long ExpectedRevision, NativeManifestationLedger? Proposed,
-    IReadOnlyList<NativeIssue> Issues);
+    IReadOnlyList<NativeIssue> Issues,
+    NativeManifestationEffectiveCharacter? ProposedEffective = null);
 
 /// <summary>A derived resource view with stable authoritative ownership.</summary>
 public sealed record NativeManifestationEffectiveResource(
@@ -136,4 +140,12 @@ public interface INativeCharacterManifestationAuthority : INativeCharacterInflue
     bool AuthorizesInteraction(string characterId, NativeManifestationInteractionDecision decision);
     bool AuthorizesTransition(string characterId, NativeManifestationLedger current,
         NativeManifestationTransitionRequest request, NativeManifestationTransitionStep step);
+    /// <summary>
+    /// Independently verifies an End event not enumerated by the activation's
+    /// original EndingConditions. It must prove an applicable later authored
+    /// rule or properly scoped DM override, not merely accept the event label.
+    /// A missing original ending condition never makes a form irreversible.
+    /// </summary>
+    bool AuthorizesUnlistedEnding(string characterId, NativeManifestationLedger current,
+        NativeManifestationInstance instance, NativeManifestationTransitionStep step);
 }
