@@ -22,7 +22,7 @@ python3 tools/character_origins_power_evaluation.py --source ancestry.dragonborn
 python3 -m unittest discover -s tests -p 'test_character_origins_power_evaluation.py' -v
 ```
 
-For a different assumption set, pass `--scenario path/to/fixture.json`. The file is a JSON object with the same conceptual keys as `DEFAULT_SCENARIO` in the tool: incoming typed damage packets, eligible skill checks, condition exposure frequency, area-target counts by shape, and Tremorsense contacts. A supplied scenario is a **complete replacement**, not a partial merge. `--include-deferred` includes nonselectable terminal Gem Dragonborn records for reference analysis; it does not make them playable. `--source` evaluates only the specified direct preset. `--compare-source` adds paired endpoint differences for another complete preset at the six report levels.
+For a different assumption set, pass `--scenario path/to/fixture.json`. The file is a JSON object with the same recognized keys as `DEFAULT_SCENARIO` in the tool: incoming typed damage packets, eligible skill checks, condition exposure frequency, area-target counts by shape, Tremorsense contacts, and explicit solo movement gates. A supplied scenario is a **complete replacement**, not a partial merge. The evaluator rejects unknown top-level scenario keys, negative damage, nonfinite/out-of-range probabilities, invalid counts, unsupported movement modes, missing burrow material, and duplicate movement challenge IDs instead of silently producing misleading output. `--include-deferred` includes nonselectable terminal Gem Dragonborn records for reference analysis; it does not make them playable. `--source` evaluates only the specified direct preset. `--compare-source` adds paired endpoint differences for another complete preset at the six report levels.
 
 ## Currently computed endpoints
 
@@ -36,10 +36,15 @@ For a different assumption set, pass `--scenario path/to/fixture.json`. The file
 | `breath_expected_net_damage_delta` | Area-targeted, proficiency-limited Attack-replacement breath attacks, with chosen opportunities | No geometry solver, rounding, friendly fire or full class action economy; damage multipliers are scenario assumptions |
 | `breath_uses_selected` | Chosen positive-margin opportunities within one long-rest pool | Assumes sufficient distinct legal attack opportunities; no unmodeled competing uses |
 | `tremorsense_contacts_detected` | Qualified passive and anticipated activated contacts under substrate/range restrictions | One contact per fixture, no full visibility targeting or duration overlap optimization |
+| `origin_mobility_gates_satisfied` | Count of *specified solo movement-mode gates* supplied by intrinsic movement or canonical trait, including limited flight and material-specific burrowing | Not adventure objective success or a generic mobility score; class abilities, equipment, assistance, hazards, and alternative routes are excluded |
 
-Each profile also records its complete intrinsic context, modeled trait IDs, future/unlocked traits, and an `unmodeled` list. Other effects, including feats, control, spellcasting, most activated defenses, target-type interactions, extra abilities inside compound traits, and novel homebrew, require future modules; they are **not silently priced as zero**. All comparisons must report their unmodeled portions.
+Each profile also records its complete intrinsic context, modeled trait IDs, future/unlocked traits, `unmodeledIntrinsicFields`, and an `unmodeled` list. For partially supported traits the list now identifies unmodeled **effect-field names**; a movement definition that cannot be interpreted remains explicitly unresolved. A breath-event trace reports all candidate attack replacements, including opportunities the optimizer correctly declines. `mobilityGateResults` explains the result and selected capability for each declared gate. Other effects, including feats, control, spellcasting, most activated defenses, target-type interactions, extra abilities inside compound traits, and novel homebrew, require future modules; they are **not silently priced as zero**. All comparisons must report their unmodeled portions.
 
-The exported default scenario adapts diagnostic examples from the WorkChat report. It is **not** a claimed representative campaign distribution. Use alternative fixtures and review failure modes before interpreting any apparent advantage.
+The exported default scenario adapts diagnostic examples from the WorkChat report. It now contains a single-move 35-foot walking gate, a 15-foot climb, loose-sand burrowing, and three flight crossings fifteen minutes apart. Each mobility event has an ID, movement mode (`walk`, `climb`, `swim`, `burrow`, `fly`), required single-move distance, optional `maxMoves`, start time in minutes, and duration (default 0.1 minute). A burrowing gate must specify `material`. Optional `requiresHover` and `requiresWholeParty` distinguish further constraints. A whole-party gate is **unresolved** because a single character's movement mode does not prove that the party can cross. A material-unspecified intrinsic burrowing capability is likewise **unresolved**, not falsely described as either permitted or prohibited for a specific substrate.
+
+Finite flight requires an authored duration and resource pool. One activation can cover multiple mobility events during its window; later separated events must spend new uses. The evaluator does not presently model action competition, concentration, rest boundaries within the movement trace, or carrying allies. A gate reports only what this Origin explicitly supplies in that fixture; a character may still solve the adventure problem by other means.
+
+The exported default scenario is **not** a claimed representative campaign distribution. Use alternative fixtures and review failure modes before interpreting any apparent advantage.
 
 ## Capability/resource frontiers and pairs
 
@@ -51,11 +56,11 @@ The selected **Dwarf–Rock Gnome Tremorsense** consolidation is a precise test 
 
 ## Limitations and next development increments
 
-1. Normalize scenario schemas and validate every comparator's assumptions before producing numerical balance guidance.
-2. Add exact source-bound spell and feat choice resolution through trusted native mechanisms, and evaluate their effect on representative class builds.
-3. Add event traces, damage packets with saving throws and reactions, initiative, action contention and short-rest boundaries. Expose unknown mechanics at **effect-field** level, not only trait level.
-4. Integrate generalized capability gates for flight, climbing, travel, creature type, and group objectives; evaluate hard access alongside expected outcomes.
-5. Expand the scenario corpus and replay against all selectable paths at levels 1, 3, 4, 5, 11, 17. Record sensitivity, scenario prevalence, and confidence before comparing complete Species.
-6. Use the resulting measurements to tune the **editable** native Species/Ancestries and only afterward investigate whether biological inheritance burden can be mapped to the measured power vector.
+1. Run the full native-catalog integration suite and audit every unsupported effect field; the isolated regression fixtures do not substitute for complete content coverage. The real native conditions catalog is stored under `conditions`, not `entries`; both shapes are supported and an empty catalog fails closed.
+2. Resolve exact source-bound spell and feat choices through trusted native mechanisms, then compare their effects on representative class builds.
+3. Add combat traces with saving throws, reactions, initiative, positioning, action contention, allied targets, short-rest boundaries, and end-of-day resources. Currently only the Breath Weapon's opportunity selections are traced.
+4. Extend movement access into controlled geometry, timed hazards, creature-type targeting, party assistance, and alternative solutions. The existing mobility gates explicitly measure *one Origin's movement capability*, not full task success.
+5. Expand the scenario corpus and replay all selectable paths at levels 1, 3, 4, 5, 11, 17. Report scenario sensitivity, prevalence, and uncertainty before comparing complete Species.
+6. Use the resulting measurements to tune **editable** native Species/Ancestries and only then investigate whether biological inheritance burden can be mapped to the measured power vector.
 
 No source of this prototype is a normative balance rule or authorization to modify native Species mechanics.
