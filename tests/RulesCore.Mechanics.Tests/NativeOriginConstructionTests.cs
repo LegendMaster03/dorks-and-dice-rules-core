@@ -1087,7 +1087,9 @@ public sealed class NativeOriginConstructionTests
             ]
         };
         var result = Evaluate(proposalWithChoices, defaults: false);
-        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
+            "Actual: " + result.Status + " issues: " + string.Join(" ; ",
+                result.Issues.Select(x => x.Code + ":" + x.Path + ":" + x.Detail)));
         Assert.Null(result.Profile!.Underlying.SpeciesId);
         Assert.Null(result.Profile.Underlying.AncestryId);
         Assert.Equal(NativeOriginAdjudication.Supported,
@@ -1214,7 +1216,9 @@ public sealed class NativeOriginConstructionTests
             Manifestations = chosen.Select((x, i) =>
                 new NativeOriginManifestation("choice-" + i, x.Id)).ToArray()
         }, defaults: false);
-        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
+            "Actual: " + result.Status + " issues: " + string.Join(" ; ",
+                result.Issues.Select(x => x.Code + ":" + x.Path + ":" + x.Detail)));
         Assert.Equal(4, result.Profile!.Current.InherentGrants.Count);
         var sight = Assert.Single(result.Profile.Current.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
