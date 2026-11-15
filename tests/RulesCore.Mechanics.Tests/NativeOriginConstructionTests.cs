@@ -1402,6 +1402,20 @@ public sealed class NativeOriginConstructionTests
         var review = new NativeOriginContractValidator(Catalog()).ReviewProfile(
             forgedProfile, complete.EvaluatedProposal);
         Assert.Contains(review.Issues, x => x.Code == "profile-resource-owner-invalid");
+
+        var omittedConfiguration = complete.Profile.Underlying with
+        {
+            InherentGrants = granted.Select(x => x.Id == dependent.Id
+                ? x with { ResourceOwners = null }
+                : x).ToArray()
+        };
+        var omitted = new NativeOriginContractValidator(Catalog()).ReviewProfile(
+            complete.Profile with
+            {
+                Underlying = omittedConfiguration,
+                Current = omittedConfiguration
+            }, complete.EvaluatedProposal);
+        Assert.Contains(omitted.Issues, x => x.Code == "profile-resource-owner-required");
     }
 
     [Fact]
