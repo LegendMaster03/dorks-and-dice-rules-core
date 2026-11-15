@@ -148,6 +148,160 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertEqual({"damage": 0, "hp": 2}, result)
         self.assertEqual({"damage": 3, "hp": 4}, power.endpoint_difference(vec(5, 6), vec(2, 2)))
 
+    def test_movement_gate_respects_direct_preset_speed(self):
+        wood = power.evaluate(self.profile("ancestry.elf.wood"), self.catalog, 1)
+        dwarf = power.evaluate(self.profile("species.dwarf"), self.catalog, 1)
+        self.assertEqual("origin-mode-satisfies-gate",
+                         wood["mobilityGateResults"][0]["status"])
+        self.assertEqual("not-supplied-by-origin",
+                         dwarf["mobilityGateResults"][0]["status"])
+        self.assertEqual(1, wood["metrics"]["origin_mobility_gates_satisfied"])
+
+    def test_flight_resource_replay_is_not_permanent_flight(self):
+        gem = self.profile("ancestry.dragonborn.red")
+        gem["traits"] = {"trait.test.gem-flight": {
+            "id": "gem-flight", "requiredCharacterLevel": 5,
+            "activation": {"action": "bonus-action"},
+            "flyingSpeed": {"equalTo": "current-walking-speed"},
+            "canHover": True, "duration": {"minutes": 1},
+            "uses": {"value": 1, "recharge": "long-rest"}}}
+        before = power.evaluate(gem, self.catalog, 4)
+        after = power.evaluate(gem, self.catalog, 5)
+        self.assertEqual(0, before["metrics"]["origin_mobility_gates_satisfied"])
+        self.assertEqual(1, after["metrics"]["origin_mobility_gates_satisfied"])
+        self.assertEqual(["origin-mode-satisfies-gate", "not-supplied-by-origin",
+                          "not-supplied-by-origin"],
+                         [r["status"] for r in after["mobilityGateResults"][3:6]])
+        permanent = self.profile("ancestry.dragonborn.red")
+        permanent["traits"] = {"trait.test.permanent-flight": {
+            "id": "permanent-flight", "flyingSpeed": {
+                "equalTo": "current-walking-speed"}, "canHover": True,
+            "atWill": True}}
+        unconditional = power.evaluate(permanent, self.catalog, 1)
+        self.assertEqual(3, unconditional["metrics"]["origin_mobility_gates_satisfied"])
+
+    def test_flight_can_reuse_window_but_not_extend_its_duration(self):
+        scene = {"mobilityChallenges": [
+            {"id": "a", "mode": "fly", "distanceFeet": 20,
+             "startMinute": 0, "durationMinutes": 0.1},
+            {"id": "b", "mode": "fly", "distanceFeet": 20,
+             "startMinute": 0.5, "durationMinutes": 0.1},
+            {"id": "c", "mode": "fly", "distanceFeet": 20,
+             "startMinute": 2, "durationMinutes": 0.1},
+            {"id": "d", "mode": "fly", "distanceFeet": 20,
+             "startMinute": 3, "durationMinutes": 10},
+        ]}
+        limited = self.profile("species.dwarf")
+        limited["intrinsics"]["walkingSpeedFeet"] = 30
+        limited["traits"] = {"limited-flight": {
+            "id": "limited-flight", "flyingSpeed": {
+                "equalTo": "current-walking-speed"}, "canHover": True,
+            "duration": {"minutes": 1}, "uses": {
+                "value": 1, "recharge": "long-rest"}}}
+        result = power.evaluate(limited, self.catalog, 5, scene)
+        self.assertEqual(2, result["metrics"]["origin_mobility_gates_satisfied"])
+        self.assertEqual([True, True, False, False],
+                         [r["status"] == "origin-mode-satisfies-gate"
+                          for r in result["mobilityGateResults"]])
+
+    def test_material_and_group_restrictions_are_not_inferred(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"] = {"burrow": {"id": "sand-burrower", "movementMode": "burrow",
+                                     "speedFeet": 15,
+                                     "allowedMaterials": ["loose-natural-sand"]}}
+        challenges = {"mobilityChallenges": [
+            {"id": "sand", "mode": "burrow", "distanceFeet": 15,
+             "material": "loose-natural-sand"},
+            {"id": "stone", "mode": "burrow", "distanceFeet": 15,
+             "material": "stone"},
+            {"id": "party", "mode": "walk", "distanceFeet": 5,
+             "requiresWholeParty": True},
+        ]}
+        result = power.evaluate(profile, self.catalog, 1, challenges)
+        self.assertEqual(["origin-mode-satisfies-gate", "not-supplied-by-origin",
+                          "unresolved-party-access"],
+                         [r["status"] for r in result["mobilityGateResults"]])
+        self.assertEqual(1, result["metrics"]["origin_mobility_gates_satisfied"])
+
+    def test_scenario_validation_rejects_silent_numerical_errors(self):
+        invalid_scenarios = (
+            {"saveFailure": 1.1},
+            {"baseCheckSuccess": -0.01},
+            {"saveFailure": float("nan")},
+            {"rolls": {"attack-roll": 1.5}},
+            {"incomingDamage": [{"type": "fire", "amount": -20}]},
+            {"breathOpportunities": [{"areaTargets": {"line": -1}}]},
+            {"mobilityChallenges": [{"id": "a", "mode": "fly",
+                                    "distanceFeet": 20},
+                                   {"id": "a", "mode": "fly",
+                                    "distanceFeet": 20}]},
+            {"mobilityChallenges": [{"id": "a", "mode": "burrow",
+                                    "distanceFeet": 20}]},
+            {"mobilityChallenges": [{"id": "a", "mode": "teleport",
+                                    "distanceFeet": 20}]},
+            {"breathOppurtunities": []},
+        )
+        for scene in invalid_scenarios:
+            with self.subTest(scene=scene), self.assertRaises(ValueError):
+                power.validate_scenario(scene)
+
+    def test_breath_trace_records_selected_and_unselected_opportunities(self):
+        result = power.evaluate(self.profile("ancestry.dragonborn.red"), self.catalog, 1)
+        events = result["breathEventTrace"][0]["events"]
+        self.assertEqual(2, len(events))
+        self.assertEqual([True, False], [e["selected"] for e in events])
+        self.assertAlmostEqual(7.5875, sum(e["netExpectedDamage"] for e in events if e["selected"]))
+        self.assertLess(events[1]["netExpectedDamage"], 0)
+        modified = {"breathOpportunities": [
+            {"areaTargets": {"line": 1}}, {"areaTargets": {"line": 2}}]}
+        alternative = power.evaluate(self.profile("ancestry.dragonborn.red"),
+                                     self.catalog, 1, modified)
+        self.assertEqual([False, True],
+                         [e["selected"] for e in alternative["breathEventTrace"][0]["events"]])
+
+    def test_actual_native_conditions_shape_and_missing_catalog_fail_closed(self):
+        path = self.native / "conditions.json"
+        content = json.loads(path.read_text(encoding="utf-8"))
+        path.write_text(json.dumps({"_meta": {"version": "test"},
+                                    "conditions": content["entries"]}), encoding="utf-8")
+        actual_shape = power.load_native(self.native)
+        self.assertIn("condition.dazzled", actual_shape["conditions"])
+        result = power.evaluate(power.reconstruct_preset(actual_shape, "ancestry.elf.drow"),
+                                actual_shape, 5)
+        self.assertAlmostEqual(-0.30, result["metrics"]["condition_expected_success_delta"])
+        path.write_text(json.dumps({"_meta": {}, "conditions": []}), encoding="utf-8")
+        with self.assertRaises(ValueError):
+            power.load_native(self.native)
+
+    def test_unknown_burrowing_substrate_does_not_become_false_no_access(self):
+        profile = self.profile("species.dwarf")
+        profile["intrinsics"]["burrowingSpeedFeet"] = 15
+        event = {"mobilityChallenges": [{"id": "sand", "mode": "burrow",
+                                         "distanceFeet": 15, "material": "loose-natural-sand"}]}
+        result = power.evaluate(profile, self.catalog, 1, event)
+        self.assertEqual("unresolved-substrate", result["mobilityGateResults"][0]["status"])
+
+    def test_unsupported_movement_definition_is_flagged(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"]["trait.test.unknown-flight"] = {
+            "id": "unknown-flight", "flyingSpeed": {"equalTo": "unknown-modifier"}}
+        outcome = power.evaluate(profile, self.catalog, 5)
+        self.assertIn({"traitId": "trait.test.unknown-flight",
+                       "reason": "unresolved-movement-definition"}, outcome["unmodeled"])
+        self.assertEqual(0, outcome["metrics"]["origin_mobility_gates_satisfied"])
+
+    def test_partially_supported_mechanics_expose_field_level_unknowns(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"]["trait.test.partial"] = {
+            "hitPointsPerCharacterLevel": 1,
+            "savingThrows": {"advantageAgainst": ["poison-effects"]},
+            "spell": "mystery-spell",
+        }
+        result = power.evaluate(profile, self.catalog, 1)
+        self.assertIn({"traitId": "trait.test.partial",
+                       "reason": "unmodeled-effect-fields",
+                       "fields": ["savingThrows", "spell"]}, result["unmodeled"])
+
     def test_all_fixture_presets_run_all_six_breakpoints(self):
         sources = power.terminal_sources(self.catalog)
         for source in sources:
