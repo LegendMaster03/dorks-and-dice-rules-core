@@ -257,18 +257,18 @@ public static class NativeCharacterSheetResolver
 
     private static NativeCharacterRequest Copy(NativeCharacterRequest source) => source with
     {
-        AbilityScores = new Dictionary<string, int>(source.AbilityScores, StringComparer.Ordinal),
+        AbilityScores = source.AbilityScores.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
         Advancements = source.Advancements.ToArray(),
         Skills = source.Skills is null ? null :
-            new Dictionary<string, NativeSkillTraining>(source.Skills, StringComparer.Ordinal),
+            source.Skills.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
         Competencies = source.Competencies is null ? null :
-            new Dictionary<string, NativeSkillTraining>(source.Competencies, StringComparer.Ordinal),
+            source.Competencies.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
         DefenseContributions = source.DefenseContributions is null ? null :
-            new Dictionary<string, int>(source.DefenseContributions, StringComparer.Ordinal),
+            source.DefenseContributions.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
         CurrentResources = source.CurrentResources is null ? null :
-            new Dictionary<string, int>(source.CurrentResources, StringComparer.Ordinal),
+            source.CurrentResources.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
         HitPointGains = source.HitPointGains is null ? null :
-            new Dictionary<string, int>(source.HitPointGains, StringComparer.Ordinal),
+            source.HitPointGains.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
         SelectedOptions = source.SelectedOptions?.ToArray(),
         ConditionIds = source.ConditionIds?.ToArray()
     };
@@ -298,7 +298,7 @@ public static class NativeCharacterSheetResolver
         if (patch is null) return parent;
         var result = patch.Replace || parent is null
             ? new Dictionary<string, T>(StringComparer.Ordinal)
-            : new Dictionary<string, T>(parent, StringComparer.Ordinal);
+            : parent.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
         foreach (var pair in patch.Entries)
             result[pair.Key] = pair.Value;
         return result;
@@ -311,7 +311,7 @@ public static class NativeCharacterSheetResolver
         if (patch is null) return parent;
         var result = patch.Replace || parent is null
             ? new Dictionary<string, NativeSkillTraining>(StringComparer.Ordinal)
-            : new Dictionary<string, NativeSkillTraining>(parent, StringComparer.Ordinal);
+            : parent.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
         foreach (var (key, change) in patch.Entries)
         {
             result.TryGetValue(key, out var previous);
