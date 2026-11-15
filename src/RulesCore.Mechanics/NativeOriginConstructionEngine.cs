@@ -473,7 +473,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         // Source-authored parameters that reference another selected characteristic
         // are resolved only after the intrinsic candidates have been reconciled.
         // Unresolved prerequisites cannot leave an active dependent trait behind.
-        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(resolved);
+        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(catalog, proposal, resolved);
         issues.AddRange(bindingIssues);
         // A selected trait that spends another trait's authored charges must
         // bind to the actual selected resource owner from the same contributor.

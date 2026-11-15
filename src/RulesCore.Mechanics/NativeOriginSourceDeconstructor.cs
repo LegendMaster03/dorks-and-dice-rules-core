@@ -280,6 +280,28 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                             count.GetValueOrDefault(1), count.GetValueOrDefault(1),
                             OptionCatalogId: menu)];
                     }
+                    // Native traits may carry an authored finite, per-character
+                    // ability choice. This is a persistent Origin selection, not
+                    // a free-standing inferred ability bonus or random roll.
+                    if (trait.TryGetProperty("abilityChoice", out var abilityChoice) &&
+                        abilityChoice.ValueKind == JsonValueKind.Object &&
+                        abilityChoice.TryGetProperty("from", out var options) &&
+                        options.ValueKind == JsonValueKind.Array)
+                    {
+                        var from = options.EnumerateArray()
+                            .Where(x => x.ValueKind == JsonValueKind.String)
+                            .Select(x => x.GetString()!).ToArray();
+                        var choiceTiming = abilityChoice.TryGetProperty("perCharacter",
+                            out var persistent) && persistent.ValueKind == JsonValueKind.True
+                            ? NativeOriginChoiceTiming.Creation
+                            : NativeOriginChoiceTiming.Unknown;
+                        choices = (choices ?? []).Concat(
+                        [
+                            new NativeOriginChoiceRequirement("abilityChoice",
+                                new(source, path), choiceTiming, 1, 1,
+                                FiniteOptions: from, ParameterKey: "abilityChoice")
+                        ]).ToArray();
+                    }
                     var unresolved = new List<string>();
                     // A description alone does not supply executable semantics.
                     if (!trait.EnumerateObject().Any(p =>
@@ -297,7 +319,8 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                                 lineage : [entity];
                             // An effective intrinsic choice is bound only after the
                             // selected grants survive reconciliation.
-                            if (lookup == "manifested-intrinsic") continue;
+                            if (lookup is "manifested-intrinsic" or
+                                "manifested-trait-choice") continue;
                             var sourceEntity = lookup switch
                             {
                                 "leaf" => targets.FirstOrDefault(),
