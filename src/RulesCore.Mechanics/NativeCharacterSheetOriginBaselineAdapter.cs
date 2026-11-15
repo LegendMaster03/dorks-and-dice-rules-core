@@ -39,6 +39,14 @@ public static class NativeCharacterSheetOriginBaselineAdapter
             new("unresolved", null,
                 [new NativeIssue(code, "underlying.inherentGrants.walkingSpeedFeet", detail)]);
 
+        // The caller supplies the character's verified state; reject malformed
+        // transport shapes before copying nested collections into the derived
+        // snapshot. The primary/sheet authority still needs to verify ownership
+        // and revision before this derived input can be used for mechanics.
+        if (!CanSnapshot(state))
+            return Issue("invalid-character-state",
+                "The primary character or alternate-sheet input is malformed.");
+
         if (string.IsNullOrWhiteSpace(state.CharacterId) ||
             state.PrimaryMechanics is null ||
             latest.Underlying?.InherentGrants is null ||
@@ -69,9 +77,41 @@ public static class NativeCharacterSheetOriginBaselineAdapter
             return Issue("origin-walk-speed-unverified",
                 "The authoritative walking-speed grant or its source is not verified.");
 
-        return new("resolved", state with
+        // Do not return aliases to mutable host-owned maps, progression lists
+        // or choices. A later mutation of the saved character must not rewrite
+        // an already generated read-only projection.
+        var snapshot = NativeCharacterSheetResolver.SnapshotState(state);
+        return new("resolved", snapshot with
         {
-            PrimaryMechanics = state.PrimaryMechanics with { BaseWalkSpeed = speed }
+            PrimaryMechanics = snapshot.PrimaryMechanics with { BaseWalkSpeed = speed }
         }, []);
+    }
+
+    private static bool CanSnapshot(NativeCharacterState state)
+    {
+        if (state.PrimaryMechanics?.AbilityScores is null ||
+            state.PrimaryMechanics.Advancements is null ||
+            state.AlternateSheets is null)
+            return false;
+
+        static bool MapValid<T>(NativeSheetMapPatch<T>? map) =>
+            map is null || map.Entries is not null;
+        static bool CollectionValid(NativeSheetCollectionPatch<string>? patch) =>
+            patch is null || patch.Added is not null;
+
+        foreach (var sheet in state.AlternateSheets)
+        {
+            if (sheet is null || sheet.Progression?.Any(progress =>
+                progress is null || progress.Grants is null) == true)
+                return false;
+            var patch = sheet.Overrides;
+            if (patch is not null &&
+                (!MapValid(patch.AbilityScores) || !MapValid(patch.Skills) ||
+                 !MapValid(patch.Competencies) || !MapValid(patch.DefenseContributions) ||
+                 !MapValid(patch.CurrentResources) || !MapValid(patch.HitPointGains) ||
+                 !CollectionValid(patch.SelectedOptions) || !CollectionValid(patch.ConditionIds)))
+                return false;
+        }
+        return true;
     }
 }
