@@ -230,13 +230,13 @@ public static class NativeCharacterSheetResolver
 
     private static bool ValidLevelReference(NativeSheetLevelReference? reference) =>
         reference is null ||
-        reference.Source switch
+        (reference.Source switch
         {
             NativeSheetLevelSource.TotalClassLevels => reference.ClassId is null,
             NativeSheetLevelSource.SpecificClassLevel =>
                 !string.IsNullOrWhiteSpace(reference.ClassId),
             _ => false
-        };
+        });
 
     private static NativeSheetEarnedProgression CopyProgression(NativeSheetEarnedProgression item) =>
         item with
