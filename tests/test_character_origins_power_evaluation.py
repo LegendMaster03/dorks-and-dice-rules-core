@@ -1,5 +1,6 @@
 """Regression fixtures for a read-only characteristic power evaluation prototype."""
 import json
+import copy
 from pathlib import Path
 import tempfile
 import unittest
@@ -311,6 +312,105 @@ class PowerEvaluationTests(unittest.TestCase):
                 self.assertIn("unmodeled", result)
 
 
+    def scenario_suite(self):
+        path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
+        return json.loads(path.read_text(encoding="utf-8"))
+
+    def test_scenario_corpus_has_named_diagnostic_contexts(self):
+        suite = self.scenario_suite()
+        power.validate_scenario_suite(suite)
+        self.assertEqual(10, len(suite["contexts"]))
+        self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
+
+    def test_suite_reverses_breath_geometry_without_exchanging_units(self):
+        result = power.evaluate_scenario_suite(
+            self.catalog, self.scenario_suite(), ["ancestry.dragonborn.red"])
+        contexts = {c["id"]: c for c in result["contexts"]}
+        corridor = contexts["corridor-area-opportunities"]["profiles"][0]["levels"][0]
+        cluster = contexts["cluster-area-opportunities"]["profiles"][0]["levels"][0]
+        self.assertAlmostEqual(15.175, corridor["metrics"]["breath_expected_net_damage_delta"])
+        self.assertEqual(0, cluster["metrics"]["breath_expected_net_damage_delta"])
+        self.assertNotIn("overallScore", result)
+        self.assertNotIn("rankings", result)
+
+    def test_suite_preserves_sunlight_tradeoff_and_stone_contact(self):
+        suite = self.scenario_suite()
+        rows = power.evaluate_scenario_suite(
+            self.catalog, suite, ["ancestry.elf.drow", "species.dwarf", "ancestry.gnome.rock"])
+        contexts = {c["id"]: {r["id"]: r["levels"][0] for r in c["profiles"]}
+                    for c in rows["contexts"]}
+        exposed = contexts["sunlight-unprotected"]["ancestry.elf.drow"]
+        protected = contexts["sunlight-protected"]["ancestry.elf.drow"]
+        self.assertAlmostEqual(-0.6, exposed["metrics"]["condition_expected_success_delta"])
+        self.assertEqual(0, protected["metrics"].get("condition_expected_success_delta", 0))
+        stone = contexts["stone-earth-contacts"]
+        self.assertEqual(2, stone["species.dwarf"]["metrics"]["tremorsense_contacts_detected"])
+        self.assertEqual(2, stone["ancestry.gnome.rock"]["metrics"]["tremorsense_contacts_detected"])
+        # Selected consolidation is one Stonebound ability, not both modes.
+        self.assertNotIn("trait.gnome.earthbound", self.profile("species.dwarf")["traits"])
+
+    def test_suite_reports_uncertainty_and_context_extremes(self):
+        result = power.evaluate_scenario_suite(
+            self.catalog, self.scenario_suite(), ["ancestry.elf.drow", "ancestry.dragonborn.red"])
+        drow = next(row for row in result["sourceSensitivity"]
+                    if row["sourceId"] == "ancestry.elf.drow")
+        values = drow["levels"][0]["rangesInNativeUnits"]["condition_expected_success_delta"]
+        self.assertAlmostEqual(-0.6, values["minimum"])
+        self.assertIn("sunlight-unprotected", values["minimumContexts"])
+        self.assertEqual(0.0, values["maximum"])
+        self.assertIn("sunlight-protected", values["maximumContexts"])
+        self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
+        self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
+        self.assertEqual(10, result["scenarioCount"])
+
+    def test_suite_paired_comparison_is_per_context_and_level(self):
+        result = power.evaluate_scenario_suite(
+            self.catalog, self.scenario_suite(), ["ancestry.elf.wood"], "species.dwarf")
+        context = next(row for row in result["contexts"]
+                       if row["id"] == "travel-separated-gates")
+        comparison = context["comparisons"][0]
+        self.assertEqual("species.dwarf", comparison["counterfactual"])
+        self.assertEqual(6, len(comparison["levels"]))
+        self.assertGreater(comparison["levels"][0]["pairedEndpointDifferences"]
+                           ["origin_mobility_gates_satisfied"], 0)
+        self.assertIn("counterfactualUnmodeled", comparison["levels"][0])
+
+    def test_suite_rejects_inconsistent_and_duplicate_contexts(self):
+        base = self.scenario_suite()
+        invalid = []
+        bad = copy.deepcopy(base)
+        bad["contexts"].append(copy.deepcopy(bad["contexts"][0]))
+        invalid.append(bad)
+        bad = copy.deepcopy(base)
+        bad["contexts"][0]["scenario"]["id"] = "unmatched"
+        invalid.append(bad)
+        bad = copy.deepcopy(base)
+        bad["contexts"][0]["scenario"]["damageTypeMultiplier"] = {"fire": -1}
+        invalid.append(bad)
+        bad = copy.deepcopy(base)
+        bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
+        invalid.append(bad)
+        bad = copy.deepcopy(base)
+        bad["version"] = 2
+        invalid.append(bad)
+        for item in invalid:
+            with self.subTest(error=item), self.assertRaises(ValueError):
+                power.validate_scenario_suite(item)
+        power.validate_scenario({"damageTypeMultiplier": {"fire": 0.5}})
+
+    def test_suite_cli_output_is_machine_readable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "suite.json"
+            fixture = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
+            self.assertEqual(0, power.main([
+                "--native", str(self.native), "--scenario-suite", str(fixture),
+                "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
+            result = json.loads(destination.read_text(encoding="utf-8"))
+        self.assertEqual(1, result["terminalProfileCount"])
+        self.assertEqual(10, result["scenarioCount"])
+        self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
+
+
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
                      "Full native catalog is not available in isolated fixture tests")
 class NativeCatalogIntegrationTests(unittest.TestCase):
@@ -327,6 +427,62 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
                     self.assertEqual(source, result["sourceId"])
                     self.assertIsInstance(result["unmodeled"], list)
                     self.assertIsInstance(result["metrics"], dict)
+
+
+    def test_full_native_scenario_corpus(self):
+        """Every native terminal source must tolerate all approved fixtures."""
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        sources = power.terminal_sources(catalog)
+        self.assertGreaterEqual(len(sources), 28)
+        suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
+        suite = json.loads(suite_path.read_text(encoding="utf-8"))
+        result = power.evaluate_scenario_suite(catalog, suite, sources)
+        self.assertEqual(10, result["scenarioCount"])
+        self.assertEqual(len(sources), result["terminalProfileCount"])
+        for context in result["contexts"]:
+            self.assertEqual(len(sources), len(context["profiles"]))
+            for entry in context["profiles"]:
+                self.assertEqual(list(power.LEVELS),
+                                 [row["level"] for row in entry["levels"]])
+                for evaluation in entry["levels"]:
+                    self.assertIsInstance(evaluation["unmodeled"], list)
+
+
+    def test_native_directional_signals_are_preserved(self):
+        """Check known native contrasts, not merely that the evaluator runs."""
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
+        suite = json.loads(suite_path.read_text(encoding="utf-8"))
+        sources = ["ancestry.dragonborn.red", "ancestry.dragonborn.bronze",
+                   "ancestry.elf.drow", "ancestry.dragonborn.amethyst",
+                   "ancestry.gnome.rock", "ancestry.dwarf.hill"]
+        # The nonselectable Amethyst reference is tested as authored data,
+        # never treated as permission for character creation.
+        result = power.evaluate_scenario_suite(catalog, suite, sources)
+        contexts = {c["id"]: {r["id"]: r["levels"] for r in c["profiles"]}
+                    for c in result["contexts"]}
+        def metric(context, source, level_index, key):
+            return contexts[context][source][level_index]["metrics"].get(key, 0)
+        damage = "breath_expected_net_damage_delta"
+        self.assertGreater(metric("corridor-area-opportunities", "ancestry.dragonborn.red", 0, damage),
+                           metric("corridor-area-opportunities", "ancestry.dragonborn.bronze", 0, damage))
+        self.assertGreater(metric("cluster-area-opportunities", "ancestry.dragonborn.bronze", 0, damage),
+                           metric("cluster-area-opportunities", "ancestry.dragonborn.red", 0, damage))
+        self.assertAlmostEqual(-0.6, metric("sunlight-unprotected", "ancestry.elf.drow", 0,
+                                            "condition_expected_success_delta"))
+        self.assertEqual(0, metric("sunlight-protected", "ancestry.elf.drow", 0,
+                                   "condition_expected_success_delta"))
+        self.assertEqual(2, metric("stone-earth-contacts", "ancestry.dwarf.hill", 0,
+                                   "tremorsense_contacts_detected"))
+        self.assertEqual(2, metric("stone-earth-contacts", "ancestry.gnome.rock", 0,
+                                   "tremorsense_contacts_detected"))
+        movement = "origin_mobility_gates_satisfied"
+        self.assertEqual(0, metric("travel-separated-gates", "ancestry.dragonborn.amethyst", 0,
+                                   movement))
+        self.assertEqual(1, metric("travel-separated-gates", "ancestry.dragonborn.amethyst", 3,
+                                   movement))
+        self.assertEqual(3, metric("travel-concentrated-gates", "ancestry.dragonborn.amethyst", 3,
+                                   movement))
 
 
 if __name__ == "__main__":

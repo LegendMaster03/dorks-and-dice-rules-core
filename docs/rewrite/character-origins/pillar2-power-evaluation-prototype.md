@@ -64,3 +64,53 @@ The selected **Dwarf–Rock Gnome Tremorsense** consolidation is a precise test 
 6. Use the resulting measurements to tune **editable** native Species/Ancestries and only then investigate whether biological inheritance burden can be mapped to the measured power vector.
 
 No source of this prototype is a normative balance rule or authorization to modify native Species mechanics.
+
+## Versioned multi-context sensitivity suite (research increment)
+
+The repository's checked-in `tests/fixtures/pillar2-power-scenarios.json` is a
+**ten-context diagnostic corpus**, not a statistically sampled campaign. It
+exercises line versus cone opportunities, Fire and Poison resistance exposure,
+unprotected versus protected Drow sunlight, connected stone/earth detection,
+separated versus concentrated flight windows, and eligible native skill checks.
+The scenario IDs, purposes, numerical assumptions, and event timelines are
+versioned so a change to an actual Species or a test fixture can be reviewed.
+
+From the repository root, run:
+
+```sh
+python3 tools/character_origins_power_evaluation.py \
+  --scenario-suite tests/fixtures/pillar2-power-scenarios.json \
+  --output /tmp/pillar2-species-context-comparison.json
+python3 tools/character_origins_power_evaluation.py \
+  --scenario-suite tests/fixtures/pillar2-power-scenarios.json \
+  --source ancestry.dragonborn.red --compare-source ancestry.dragonborn.bronze \
+  --output /tmp/pillar2-red-bronze-context-comparison.json
+python3 -m unittest discover -s tests -p 'test_character_origins_power_evaluation.py' -v
+```
+
+`--scenario-suite` is mutually exclusive with the one-off `--scenario` flag.
+The JSON output includes all selected conventional source chains at levels
+1, 3, 4, 5, 11, and 17 **for each context**, optionally the paired differences
+between two complete presets, and a `sourceSensitivity` section. For each
+mechanical endpoint, the sensitivity section records the minimum, maximum,
+and the named diagnostic contexts producing those values. It also records
+complete, partially supported, or unknown mechanics through a structured
+coverage record. `isCompleteForCurrentLevel` excludes known future unlocks
+but remains false where active mechanics or intrinsic characteristics have
+not been fully evaluated. Nothing in this output ranks Species, equates
+unrelated units, or extrapolates unobserved campaign frequencies.
+
+Notably, Red Dragonborn's line-dominant context and the cone-dominant context
+produce different expected benefits at the *same character level*; comparing
+one outcome without its context is unsound. Drow's expected sunlight penalty
+also differs when its protective equipment is assumed effective. These are
+intended sensitivity demonstrations, **not** findings that any conventional
+Species is balanced or unbalanced overall.
+
+**Known limitations for the next increment:** The corpus still does not
+supply randomized encounters or observed prevalence, a combat action-state
+simulator, spell/feat choice resolution, saving-throw advantage modeling,
+initiative and ally geometry, creature-type targeting, or a complete native
+mechanics interpreter. Unsupported effects are listed rather than silently
+priced at zero. The native integration suite tests every terminal preset
+against every context when the complete repository checkout is present.

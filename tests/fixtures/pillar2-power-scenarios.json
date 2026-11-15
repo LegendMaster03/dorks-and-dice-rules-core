@@ -1,0 +1,128 @@
+{
+  "id": "pillar2-diagnostic-sensitivity-v1",
+  "version": 1,
+  "contexts": [
+    {
+      "id": "corridor-area-opportunities",
+      "purpose": "Contrast 30-by-5-foot line against 15-foot cone without assuming this geometry is typical.",
+      "scenario": {
+        "id": "corridor-area-opportunities",
+        "saveFailure": 0.55,
+        "attackReplacementExpectedDamage": 5.2,
+        "breathOpportunities": [
+          {"areaTargets": {"line": 3, "cone": 1}},
+          {"areaTargets": {"line": 3, "cone": 1}},
+          {"areaTargets": {"line": 2, "cone": 1}},
+          {"areaTargets": {"line": 1, "cone": 1}}
+        ]
+      }
+    },
+    {
+      "id": "cluster-area-opportunities",
+      "purpose": "Reverse the line/cone geometry with identical damage and save assumptions.",
+      "scenario": {
+        "id": "cluster-area-opportunities",
+        "saveFailure": 0.55,
+        "attackReplacementExpectedDamage": 5.2,
+        "breathOpportunities": [
+          {"areaTargets": {"line": 1, "cone": 3}},
+          {"areaTargets": {"line": 1, "cone": 3}},
+          {"areaTargets": {"line": 1, "cone": 2}},
+          {"areaTargets": {"line": 1, "cone": 1}}
+        ]
+      }
+    },
+    {
+      "id": "fire-exposure-and-resistance",
+      "purpose": "Compare passive resistance to Fire with no spell, saving-throw, or temporary-immunity assumptions.",
+      "scenario": {
+        "id": "fire-exposure-and-resistance",
+        "incomingDamage": [
+          {"type": "fire", "amount": 20},
+          {"type": "fire", "amount": 20}
+        ]
+      }
+    },
+    {
+      "id": "poison-exposure-and-resistance",
+      "purpose": "Exercise Poison resistance separately from the as-yet-unmodeled advantage on Poison saving throws.",
+      "scenario": {
+        "id": "poison-exposure-and-resistance",
+        "incomingDamage": [
+          {"type": "poison", "amount": 20},
+          {"type": "poison", "amount": 20}
+        ]
+      }
+    },
+    {
+      "id": "sunlight-unprotected",
+      "purpose": "Expose Drow to direct sunlight on eight attacks and four qualifying checks.",
+      "scenario": {
+        "id": "sunlight-unprotected",
+        "baseCheckSuccess": 0.5,
+        "conditionFrequency": {"condition.dazzled": 1.0},
+        "rolls": {"attack-roll": 8, "skill.search": 2, "skill.spot": 2}
+      }
+    },
+    {
+      "id": "sunlight-protected",
+      "purpose": "Use the same Drow rolls with effective sun protection, isolating the drawback's avoidability.",
+      "scenario": {
+        "id": "sunlight-protected",
+        "baseCheckSuccess": 0.5,
+        "conditionFrequency": {"condition.dazzled": 0.0},
+        "rolls": {"attack-roll": 8, "skill.search": 2, "skill.spot": 2}
+      }
+    },
+    {
+      "id": "stone-earth-contacts",
+      "purpose": "Compare Stonebound and Earthbound Tremorsense with surprise, material, and range constraints.",
+      "scenario": {
+        "id": "stone-earth-contacts",
+        "tremorsenseContacts": [
+          {"distanceFeet": 10, "sensorTouches": "earth", "targetTouches": "earth", "connected": true, "anticipated": false},
+          {"distanceFeet": 40, "sensorTouches": "stone", "targetTouches": "stone", "connected": true, "anticipated": true},
+          {"distanceFeet": 10, "sensorTouches": "stone", "targetTouches": "stone", "connected": true, "anticipated": true},
+          {"distanceFeet": 10, "sensorTouches": "air", "targetTouches": "stone", "connected": false, "anticipated": true}
+        ]
+      }
+    },
+    {
+      "id": "travel-separated-gates",
+      "purpose": "Contrast passive movement, leaf locomotion, and spaced flight activations with no equipment or party assistance.",
+      "scenario": {
+        "id": "travel-separated-gates",
+        "mobilityChallenges": [
+          {"id": "walk-35", "mode": "walk", "distanceFeet": 35, "startMinute": 0},
+          {"id": "climb-15", "mode": "climb", "distanceFeet": 15, "startMinute": 1},
+          {"id": "sand-burrow", "mode": "burrow", "distanceFeet": 15, "material": "loose-natural-sand", "startMinute": 2},
+          {"id": "gap-one", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 3},
+          {"id": "gap-two", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 18},
+          {"id": "gap-three", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 33}
+        ]
+      }
+    },
+    {
+      "id": "travel-concentrated-gates",
+      "purpose": "Keep the flight gaps within one activation window; test duration instead of counting each movement scene as a new use.",
+      "scenario": {
+        "id": "travel-concentrated-gates",
+        "mobilityChallenges": [
+          {"id": "gap-one", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 0},
+          {"id": "gap-two", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 0.25},
+          {"id": "gap-three", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 0.5},
+          {"id": "sustained-gap", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 5, "durationMinutes": 10}
+        ]
+      }
+    },
+    {
+      "id": "skill-observations",
+      "purpose": "Measure eligible native skill bonuses; rank entitlement and feat choice remain separately unresolved.",
+      "scenario": {
+        "id": "skill-observations",
+        "baseCheckSuccess": 0.5,
+        "skillChecks": {"skill.listen": 8, "skill.spot": 8, "skill.climb": 8, "skill.jump": 8, "skill.move-silently": 8}
+      }
+    }
+  ]
+}

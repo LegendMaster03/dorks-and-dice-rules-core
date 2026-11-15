@@ -34,6 +34,7 @@ DEFAULT_SCENARIO = {
     "skillChecks": {"skill.listen": 2, "skill.spot": 2},
     "rolls": {"attack-roll": 8, "skill.search": 2, "skill.spot": 2},
     "conditionFrequency": {"condition.dazzled": 0.5},
+    "damageTypeMultiplier": {},
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -669,10 +670,148 @@ def shared_pool_frontier(base: dict, alternative: dict, level: int,
                                     "expectedSuccessfulPushes"))
 
 
+def validate_scenario_suite(suite: dict) -> None:
+    """Require explicitly identified, distinct diagnostic fixtures.
+
+    The suite has no sampling weights. No observed campaign prevalence or
+    cross-domain exchange rate is implied by running all its scenarios.
+    """
+    if not isinstance(suite, dict):
+        raise ValueError("Scenario suite must be an object")
+    unexpected = set(suite) - {"id", "version", "contexts"}
+    if unexpected:
+        raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
+    _nonempty(suite.get("id"), "suite.id")
+    if type(suite.get("version")) is not int or suite["version"] != 1:
+        raise ValueError("suite.version must be 1")
+    contexts = suite.get("contexts")
+    if not isinstance(contexts, list) or len(contexts) < 2:
+        raise ValueError("suite.contexts must include at least two scenarios")
+    seen = set()
+    for index, context in enumerate(contexts):
+        location = f"contexts[{index}]"
+        if not isinstance(context, dict):
+            raise ValueError(f"{location} must be an object")
+        extra = set(context) - {"id", "purpose", "scenario"}
+        if extra:
+            raise ValueError(f"Unexpected {location} fields: {sorted(extra)}")
+        identifier = _nonempty(context.get("id"), f"{location}.id")
+        if identifier in seen:
+            raise ValueError(f"Duplicate context ID: {identifier}")
+        seen.add(identifier)
+        _nonempty(context.get("purpose"), f"{location}.purpose")
+        scenario = context.get("scenario")
+        validate_scenario(scenario)
+        if scenario.get("id") != identifier:
+            raise ValueError(f"{location}.scenario.id must match context ID")
+
+
+def _suite_coverage(results: list[dict]) -> dict:
+    """Aggregate unresolved mechanics without treating them as zero-valued."""
+    incomplete = set()
+    fully_modeled = set()
+    intrinsic_unknown = set()
+    future = set()
+    for result in results:
+        fully_modeled.update(result["modeledTraits"])
+        future.update(result["committedFutureTraits"])
+        intrinsic_unknown.update(result["unmodeledIntrinsicFields"])
+        for issue in result["unmodeled"]:
+            if "traitId" in issue:
+                incomplete.add(issue["traitId"])
+            elif "conditionId" in issue:
+                incomplete.add(issue["conditionId"])
+            else:
+                incomplete.add("unattributed: " + str(issue.get("reason")))
+    return {"fullyModeledTraits": sorted(fully_modeled - incomplete),
+            "incompleteOrUnsupportedMechanics": sorted(incomplete),
+            "unmodeledIntrinsicFields": sorted(intrinsic_unknown),
+            "futureTraitIds": sorted(future),
+            "isCompleteForCurrentLevel": not incomplete and not intrinsic_unknown}
+
+
+def evaluate_scenario_suite(catalog: dict, suite: dict, identifiers: list[str],
+                            compare_source: str | None = None) -> dict:
+    """Replay all profiles and breakpoints against the same named contexts.
+
+    Each scenario's results and each within-endpoint sensitivity range retain
+    native units. Do not assign frequencies, sum endpoints, or rank Species.
+    """
+    validate_scenario_suite(suite)
+    profiles = {identifier: reconstruct_preset(catalog, identifier)
+                for identifier in identifiers}
+    counterfactual = (reconstruct_preset(catalog, compare_source)
+                      if compare_source else None)
+    outputs = []
+    all_outcomes: dict[str, dict[int, list[tuple[str, dict]]]] = {
+        identifier: {level: [] for level in LEVELS} for identifier in identifiers}
+    for context in suite["contexts"]:
+        scenario = context["scenario"]
+        comparison = []
+        profile_rows = []
+        for identifier, profile in profiles.items():
+            levels = [evaluate(profile, catalog, level, scenario) for level in LEVELS]
+            for result in levels:
+                all_outcomes[identifier][result["level"]].append((context["id"], result))
+            profile_rows.append({"id": identifier, "lineage": profile["lineage"],
+                                 "levels": levels})
+            if counterfactual:
+                baseline = [evaluate(counterfactual, catalog, level, scenario)
+                            for level in LEVELS]
+                comparison.append({
+                    "source": identifier, "counterfactual": compare_source,
+                    "levels": [
+                        {"level": level, "pairedEndpointDifferences": endpoint_difference(a, b),
+                         "sourceUnmodeled": a["unmodeled"],
+                         "counterfactualUnmodeled": b["unmodeled"]}
+                        for level, a, b in zip(LEVELS, levels, baseline)]})
+        row = {"id": context["id"], "purpose": context["purpose"],
+               "scenario": scenario, "profiles": profile_rows}
+        if comparison:
+            row["comparisons"] = comparison
+        outputs.append(row)
+
+    sensitivity = []
+    for identifier, levels in all_outcomes.items():
+        summaries = []
+        for level, observations in levels.items():
+            names = sorted(set().union(*(r["metrics"].keys() for _, r in observations)))
+            ranges = {}
+            for endpoint in names:
+                vals = [(context_id, result["metrics"].get(endpoint, 0))
+                        for context_id, result in observations]
+                low = min(value for _, value in vals)
+                high = max(value for _, value in vals)
+                ranges[endpoint] = {
+                    "minimum": low, "maximum": high,
+                    "minimumContexts": [name for name, val in vals if val == low],
+                    "maximumContexts": [name for name, val in vals if val == high]}
+            summaries.append({"level": level, "rangesInNativeUnits": ranges,
+                              "coverage": _suite_coverage([r for _, r in observations])})
+        sensitivity.append({"sourceId": identifier, "levels": summaries})
+    return {
+        "status": "research-prototype-not-gameplay-rule",
+        "suiteId": suite["id"],
+        "catalogTraitCount": len(catalog["traits"]),
+        "terminalProfileCount": len(identifiers),
+        "levelBreakpoints": LEVELS,
+        "scenarioCount": len(outputs),
+        "warnings": [
+            "Diagnostic scenes are not a sampled campaign distribution; no frequencies or weights are inferred.",
+            "Endpoint ranges are within-domain sensitivity across fixtures, not whole-Species rankings.",
+            "Unsupported mechanics and unresolved choices prevent complete comparative power judgments.",
+        ],
+        "contexts": outputs,
+        "sourceSensitivity": sensitivity,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--native", type=Path, default=DEFAULT_NATIVE)
-    parser.add_argument("--scenario", type=Path, help="Explicit JSON scenario overrides default")
+    scenarios = parser.add_mutually_exclusive_group()
+    scenarios.add_argument("--scenario", type=Path, help="Explicit JSON scenario overrides default")
+    scenarios.add_argument("--scenario-suite", type=Path, help="Replay a versioned suite of diagnostic scenarios")
     parser.add_argument("--include-deferred", action="store_true")
     parser.add_argument("--source", help="Evaluate one direct preset ID instead of all terminal paths")
     parser.add_argument("--compare-source", help="Paired comparison against another complete preset; requires --source")
@@ -681,6 +820,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.compare_source and not args.source:
         parser.error("--compare-source requires --source")
     catalog = load_native(args.native)
+    if args.scenario_suite:
+        suite = json.loads(args.scenario_suite.read_text(encoding="utf-8"))
+        identifiers = [args.source] if args.source else terminal_sources(catalog, args.include_deferred)
+        output = evaluate_scenario_suite(catalog, suite, identifiers, args.compare_source)
+        formatted = json.dumps(output, indent=2, sort_keys=True) + "\n"
+        if args.output:
+            args.output.write_text(formatted, encoding="utf-8")
+        else:
+            print(formatted, end="")
+        return 0
     scenario = (json.loads(args.scenario.read_text(encoding="utf-8"))
                 if args.scenario else DEFAULT_SCENARIO)
     validate_scenario(scenario)
