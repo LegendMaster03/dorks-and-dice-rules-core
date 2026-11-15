@@ -41,6 +41,7 @@ DEFAULT_SCENARIO = {
     "reactionDamageEvents": [],
     "spellDemands": [],
     "controlOpportunities": [],
+    "strikeOpportunities": [],
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -154,6 +155,7 @@ def validate_scenario(scenario: dict) -> None:
                 _number(value, f"{field}.{name}")
     for field in ("incomingDamage", "breathOpportunities", "saveEvents",
                   "reactionDamageEvents", "spellDemands", "controlOpportunities",
+                  "strikeOpportunities",
                   "tremorsenseContacts", "mobilityChallenges"):
         events = scenario.get(field, [])
         if not isinstance(events, list):
@@ -263,6 +265,43 @@ def validate_scenario(scenario: dict) -> None:
                         for side in ("enemy", "ally")) and
                         "baseHitChance" not in event):
                     raise ValueError(f"{location}.baseHitChance required for Prone attacks")
+            elif field == "strikeOpportunities":
+                extra = set(event) - {
+                    "id", "traitId", "turn", "delivery", "mode", "targetSize",
+                    "hit", "dealtDamage", "targetIsCreature", "failureProbability",
+                    "normalAttackRollsBeforeRecovery", "baseHitChance",
+                    "targetSpeedFeet"}
+                if extra:
+                    raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
+                _nonempty(event.get("id"), f"{location}.id")
+                _nonempty(event.get("traitId"), f"{location}.traitId")
+                _count(event.get("turn"), f"{location}.turn")
+                if event["turn"] < 1:
+                    raise ValueError(f"{location}.turn must be >= 1")
+                if event.get("delivery") not in (
+                        "melee-weapon", "thrown-weapon", "other-attack-roll"):
+                    raise ValueError(f"{location}.delivery is invalid")
+                if event.get("mode", "base") not in ("base", "alternate"):
+                    raise ValueError(f"{location}.mode is invalid")
+                if event.get("targetSize") not in (
+                        "tiny", "small", "medium", "large", "huge", "gargantuan"):
+                    raise ValueError(f"{location}.targetSize is invalid")
+                for flag in ("hit", "dealtDamage", "targetIsCreature"):
+                    if not isinstance(event.get(flag), bool):
+                        raise ValueError(f"{location}.{flag} must be boolean")
+                if event["dealtDamage"] and not event["hit"]:
+                    raise ValueError(f"{location}.dealtDamage requires a hit")
+                _probability(event.get("failureProbability"),
+                             f"{location}.failureProbability")
+                if "normalAttackRollsBeforeRecovery" in event:
+                    _count(event["normalAttackRollsBeforeRecovery"],
+                           f"{location}.normalAttackRollsBeforeRecovery")
+                    if "baseHitChance" not in event:
+                        raise ValueError(f"{location}.baseHitChance required for attack rolls")
+                if "baseHitChance" in event:
+                    _probability(event["baseHitChance"], f"{location}.baseHitChance")
+                if "targetSpeedFeet" in event:
+                    _number(event["targetSpeedFeet"], f"{location}.targetSpeedFeet")
             elif field == "tremorsenseContacts":
                 _number(event.get("distanceFeet"), f"{location}.distanceFeet")
                 for key in ("sensorTouches", "targetTouches"):
@@ -293,7 +332,7 @@ def validate_scenario(scenario: dict) -> None:
                 if event["mode"] == "burrow" and "material" not in event:
                     raise ValueError(f"{location}.material required for burrow")
             if field in ("saveEvents", "reactionDamageEvents", "spellDemands",
-                         "controlOpportunities"):
+                         "controlOpportunities", "strikeOpportunities"):
                 identifier = event["id"]
                 if identifier in seen_ids:
                     raise ValueError(f"Duplicate {field} event ID: {identifier}")
@@ -738,6 +777,248 @@ def metallic_control_outcomes(traits: dict, catalog: dict, level: int,
     return metrics, trace, issues, modeled
 
 
+def on_hit_control_outcomes(traits: dict, catalog: dict, level: int,
+                            scenario: dict) -> tuple[dict, list[dict], list[dict], set[str], dict]:
+    """Replay deliberate confirmed-hit activations without inventing hit rates.
+
+    An event names exactly one trait to activate; it is not an optimized attack
+    rotation or permission to inherit that trait. Resources are shared by the
+    authored ``sharedUsesFromTrait`` and canonical parent ``id``. Movement
+    reductions are nominal speed changes, never guaranteed lost movement.
+    """
+    metrics = {"strike_uses_selected": 0}
+    trace, issues, modeled = [], [], set()
+    pool_remaining = {}
+    spent = {}
+    used_turns = set()
+    size_rank = {size: n for n, size in enumerate(
+        ("tiny", "small", "medium", "large", "huge", "gargantuan"))}
+    # Short native IDs locate the resource owner, but duplicated IDs in a
+    # mixed construction are ambiguous; silently choosing the last one would
+    # hide a potential shared-pool or manifestation conflict.
+    owners_by_short_id = defaultdict(list)
+    for identifier, trait in traits.items():
+        if isinstance(trait.get("id"), str):
+            owners_by_short_id[trait["id"]].append(identifier)
+
+    for event in scenario.get("strikeOpportunities", []):
+        trait_id = event["traitId"]
+        row = {"id": event["id"], "traitId": trait_id,
+               "mode": event.get("mode", "base"), "status": "trait-not-expressed"}
+        trait = traits.get(trait_id)
+        if trait is None:
+            trace.append(row)
+            continue
+        if not unlocked(trait, level):
+            row["status"] = "trait-not-yet-unlocked"
+            trace.append(row)
+            continue
+        base = trait
+        if row["mode"] == "alternate":
+            base = trait.get("alternateStrikeMode")
+            if not isinstance(base, dict):
+                row["status"] = "no-authored-alternate-mode"
+                trace.append(row)
+                continue
+        trigger = base.get("trigger", trait.get("trigger"))
+        if trigger not in (
+                "when-you-hit-with-an-attack-roll-and-deal-damage",
+                "melee-weapon-or-thrown-weapon-attack-hit",
+                "melee-weapon-or-thrown-weapon-attack-hit-and-deal-damage"):
+            row["status"] = "unsupported-hit-trigger"
+            issues.append({"traitId": trait_id, "reason": "unsupported-hit-trigger"})
+            trace.append(row)
+            continue
+        row["status"] = "no-qualifying-hit"
+        if not event["hit"]:
+            trace.append(row)
+            continue
+        if trigger.endswith("and-deal-damage") and not event["dealtDamage"]:
+            row["status"] = "hit-without-required-damage"
+            trace.append(row)
+            continue
+        if trigger.startswith("melee-weapon-or-thrown-weapon") and event["delivery"] not in (
+                "melee-weapon", "thrown-weapon"):
+            row["status"] = "wrong-attack-delivery"
+            trace.append(row)
+            continue
+        limit = base.get("targetMaximumSize", trait.get("targetMaximumSize"))
+        if limit is not None and (
+                limit not in size_rank or size_rank[event["targetSize"]] > size_rank[limit]):
+            row["status"] = "target-too-large"
+            trace.append(row)
+            continue
+        if (base.get("applyCondition") or base.get("applyConditionOnFailedSave")) and (
+                not event["targetIsCreature"]):
+            row["status"] = "requires-creature-target"
+            trace.append(row)
+            continue
+        once = bool(base.get("oncePerTurn", trait.get("oncePerTurn", False)))
+        turn_key = (trait_id, event["turn"])
+        if once and turn_key in used_turns:
+            row["status"] = "once-per-turn-exhausted"
+            trace.append(row)
+            continue
+        pool_short_id = base.get("sharedUsesFromTrait", trait.get("sharedUsesFromTrait"))
+        owner_candidates = (owners_by_short_id.get(pool_short_id, []) if pool_short_id
+                            else [trait_id])
+        if len(owner_candidates) != 1:
+            row["status"] = "unresolved-shared-resource-owner"
+            issues.append({"traitId": trait_id,
+                           "reason": ("missing-shared-resource-owner" if not owner_candidates
+                                      else "ambiguous-shared-resource-owner")})
+            trace.append(row)
+            continue
+        owner = owner_candidates[0]
+        if owner not in pool_remaining:
+            uses = traits[owner].get("uses", {})
+            if not isinstance(uses, dict) or uses.get("recharge") != "long-rest":
+                row["status"] = "unsupported-resource"
+                issues.append({"traitId": trait_id, "reason": "unsupported-strike-resource"})
+                trace.append(row)
+                continue
+            count = uses.get("value")
+            count = proficiency_bonus(level) if count == "proficiency-bonus" else count
+            if type(count) is not int or count < 0:
+                row["status"] = "unsupported-resource"
+                issues.append({"traitId": trait_id, "reason": "unsupported-strike-resource"})
+                trace.append(row)
+                continue
+            pool_remaining[owner] = count
+        if pool_remaining[owner] <= 0:
+            row["status"] = "shared-resource-exhausted"
+            trace.append(row)
+            continue
+        # Recognize only the exact native field shapes being quantified.
+        extra_damage = base.get("extraDamage", trait.get("extraDamage"))
+        # Hill's Tumble's base mode applies Prone without a damage rider.
+        # Other supported modes may include damage, control, or both.
+        if extra_damage is not None and (
+                not isinstance(extra_damage, dict) or not re.fullmatch(
+                    r"\d+d\d+", str(extra_damage.get("dice", "")))):
+            row["status"] = "unresolved-strike-effect"
+            issues.append({"traitId": trait_id, "reason": "unresolved-strike-effect"})
+            trace.append(row)
+            continue
+        if extra_damage is None and not (
+                base.get("applyCondition") or base.get("applyConditionOnFailedSave") or
+                base.get("speedReduction") or base.get("onFailedSave")):
+            row["status"] = "unresolved-strike-effect"
+            issues.append({"traitId": trait_id, "reason": "unresolved-strike-effect"})
+            trace.append(row)
+            continue
+        failure_spec = base.get("onFailedSave", {})
+        if not isinstance(failure_spec, dict) or set(failure_spec) - {
+                "forcedMovementFeet", "direction", "speedSetFeet", "endsAt", "attackRollMode"}:
+            row["status"] = "unresolved-strike-effect"
+            issues.append({"traitId": trait_id, "reason": "unmodeled-on-failed-save-fields"})
+            trace.append(row)
+            continue
+        pool_remaining[owner] -= 1
+        spent[owner] = spent.get(owner, 0) + 1
+        if once:
+            used_turns.add(turn_key)
+        modeled.add(trait_id)
+        row.update(status="activated", poolOwnerTraitId=owner,
+                   poolUsesRemaining=pool_remaining[owner])
+        metrics["strike_uses_selected"] += 1
+        if extra_damage is not None:
+            mean_damage = dice_mean(extra_damage["dice"])
+            metrics["strike_gross_extra_damage_on_confirmed_hits"] = (
+                metrics.get("strike_gross_extra_damage_on_confirmed_hits", 0) + mean_damage)
+            row["grossExtraDamage"] = mean_damage
+            row["damageType"] = extra_damage.get("damageType", extra_damage.get("damageTypeFrom"))
+        # A hit on an object can activate an extra-damage strike, but its
+        # creature-only control rider must not apply to an inanimate object.
+        if not event["targetIsCreature"]:
+            trace.append(row)
+            continue
+        # An automatic Prone grant differs from the save-dependent alternative.
+        condition = base.get("applyCondition")
+        failure = base.get("onFailedSave", {})
+        if not isinstance(failure, dict):
+            failure = {}
+        if base.get("applyConditionOnFailedSave"):
+            condition = base["applyConditionOnFailedSave"]
+            p_effect = event["failureProbability"]
+        elif condition and base.get("additionalSavingThrow") is False:
+            p_effect = 1.0
+        elif isinstance(failure.get("savingThrow"), dict):
+            p_effect = event["failureProbability"]
+        else:
+            p_effect = event["failureProbability"]
+        if condition:
+            effects = catalog.get("conditions", {}).get(condition, {}).get("effects", [])
+            if condition not in catalog.get("conditions", {}):
+                issues.append({"traitId": trait_id, "reason": "condition-definition-not-available"})
+            else:
+                name = condition.removeprefix("condition.")
+                key = f"strike_expected_enemy_{name}_applications"
+                metrics[key] = metrics.get(key, 0) + p_effect
+                row["conditionApplicationProbability"] = p_effect
+                if "normalAttackRollsBeforeRecovery" in event:
+                    if any(e.get("type") == "roll-mode" and
+                           e.get("appliesTo") == "attack-roll" and
+                           e.get("mode") == "disadvantage" and
+                           e.get("subject") == "attacks-by-affected-creature"
+                           for e in effects):
+                        p = event["baseHitChance"]
+                        value = (p_effect * event["normalAttackRollsBeforeRecovery"] *
+                                 p * (1 - p))
+                        key = "strike_expected_enemy_attack_hits_prevented_by_prone"
+                        metrics[key] = metrics.get(key, 0) + value
+                        row["expectedEnemyAttackHitsPrevented"] = value
+                    else:
+                        issues.append({"traitId": trait_id,
+                                       "reason": "condition-attack-effect-not-modeled"})
+        forced = failure.get("forcedMovementFeet")
+        if forced is not None:
+            if type(forced) is int and forced >= 0:
+                value = forced * event["failureProbability"]
+                metrics["strike_expected_enemy_forced_movement_feet"] = (
+                    metrics.get("strike_expected_enemy_forced_movement_feet", 0) + value)
+                row["expectedForcedMovementFeet"] = value
+            else:
+                issues.append({"traitId": trait_id, "reason": "unknown-forced-movement"})
+        reduction = base.get("speedReduction")
+        if isinstance(reduction, dict) and "targetSpeedFeet" in event:
+            if reduction.get("endsAt") != "start-of-your-next-turn":
+                issues.append({"traitId": trait_id, "reason": "unknown-speed-reduction-duration"})
+                trace.append(row)
+                continue
+            feet = reduction.get("feet")
+            if type(feet) is int and feet >= 0:
+                value = min(feet, event["targetSpeedFeet"])
+                metrics["strike_expected_enemy_nominal_speed_reduction_feet"] = (
+                    metrics.get("strike_expected_enemy_nominal_speed_reduction_feet", 0) + value)
+                row["nominalSpeedReductionFeet"] = value
+        if "speedSetFeet" in failure and "targetSpeedFeet" in event:
+            if failure.get("endsAt") != "start-of-your-next-turn":
+                issues.append({"traitId": trait_id, "reason": "unknown-speed-zero-duration"})
+                trace.append(row)
+                continue
+            speed = failure["speedSetFeet"]
+            if type(speed) is int and speed >= 0:
+                value = max(0, event["targetSpeedFeet"] - speed) * event["failureProbability"]
+                metrics["strike_expected_enemy_nominal_speed_reduction_feet"] = (
+                    metrics.get("strike_expected_enemy_nominal_speed_reduction_feet", 0) + value)
+                row["nominalSpeedReductionFeet"] = value
+        if failure.get("attackRollMode") == "disadvantage" and (
+                "normalAttackRollsBeforeRecovery" in event):
+            if failure.get("endsAt") != "start-of-your-next-turn":
+                issues.append({"traitId": trait_id, "reason": "unknown-attack-disadvantage-duration"})
+                trace.append(row)
+                continue
+            p = event["baseHitChance"]
+            value = (event["normalAttackRollsBeforeRecovery"] *
+                     event["failureProbability"] * p * (1 - p))
+            metrics["strike_expected_enemy_attack_hits_prevented_by_disadvantage"] = (
+                metrics.get("strike_expected_enemy_attack_hits_prevented_by_disadvantage", 0) + value)
+            row["expectedEnemyAttackHitsPrevented"] = value
+        trace.append(row)
+    return dict(metrics), trace, issues, modeled, spent
+
+
 def _damage_reduction_expectation(dice: str, modifier: int, amount: float) -> float:
     """Exact expectation of capped single-die reduction, not min(mean, hit)."""
     match = re.fullmatch(r"1d(\d+)", dice)
@@ -1084,7 +1365,11 @@ def evaluate(profile: dict, catalog: dict, level: int,
         traits, catalog, level, scenario)
     metrics.update(spell_values)
     metrics.update(control_values)
-    unmodeled.extend(spell_issues + control_issues)
+    strike_values, strike_trace, strike_issues, modeled_strikes, strike_spent = (
+        on_hit_control_outcomes(traits, catalog, level, scenario))
+    if scenario.get("strikeOpportunities"):
+        metrics.update(strike_values)
+    unmodeled.extend(spell_issues + control_issues + strike_issues)
     modeled_movement = {opt["source"] for opt in _movement_options(profile, level, pb)}
     modeled_reactions = {d["traitId"] for d in _reaction_defenses(traits, level, pb)}
     shared_frontiers = native_shared_pool_frontiers(traits, level)
@@ -1159,6 +1444,13 @@ def evaluate(profile: dict, catalog: dict, level: int,
                 interpreted.update(("grantType", "chooseFrom", "choiceCount", "when"))
                 unmodeled.append({"traitId": identifier,
                                   "reason": "unresolved-selected-skill"})
+        if identifier in modeled_strikes:
+            recognized = True
+            interpreted.update(("trigger", "oncePerTurn", "uses", "sharedUsesFromTrait",
+                                "extraUsesGranted", "extraDamage", "onFailedSave",
+                                "applyCondition", "applyConditionOnFailedSave",
+                                "additionalSavingThrow", "targetMaximumSize",
+                                "alternateStrikeMode", "speedReduction", "savingThrow"))
         if identifier in modeled_control:
             recognized = True
             interpreted.update(("activation", "uses", "area", "choiceTiming", "options"))
@@ -1243,6 +1535,15 @@ def evaluate(profile: dict, catalog: dict, level: int,
         metrics["reaction_damage_prevented"] = reaction_prevented
         metrics["reaction_uses_selected"] = sum(
             entry["selectedDefense"] is not None for entry in reaction_trace)
+    # A shared offensive/defensive pool is not two independent budgets.
+    # The reaction model optimizes defensively; the confirmed-hit model
+    # replays attack choices. Do not present both as one realized plan.
+    if scenario.get("reactionDamageEvents") and strike_spent:
+        defenses_spent = {x["selectedDefense"] for x in reaction_trace
+                          if x["selectedDefense"] is not None}
+        for owner in sorted(set(strike_spent) & defenses_spent):
+            unmodeled.append({"traitId": owner,
+                              "reason": "joint-offense-defense-resource-plan-unresolved"})
     for identifier in uncertain_defenses:
         unmodeled.append({"traitId": identifier,
                           "reason": "resistance-and-reduction-order-unresolved"})
@@ -1266,6 +1567,7 @@ def evaluate(profile: dict, catalog: dict, level: int,
             "innateSpellDemandTrace": spell_trace,
             "innateFixedSpellEntitlements": spell_entitlements,
             "controlEventTrace": control_trace,
+            "strikeEventTrace": strike_trace,
             "sharedResourceFrontiers": shared_frontiers,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
@@ -1330,8 +1632,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4):
-        raise ValueError("suite.version must be 1, 2, 3 or 4")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5):
+        raise ValueError("suite.version must be 1, 2, 3, 4 or 5")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")

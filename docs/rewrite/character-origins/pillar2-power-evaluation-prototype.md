@@ -156,7 +156,7 @@ into a universal Species power score.
 
 ## Innate spell access, Origin choices, and control applications (research increment)
 
-The diagnostic corpus is now **version 4 with eighteen named contexts**. It adds
+The earlier diagnostic corpus was **version 4 with eighteen named contexts**. It adds
 explicit `spellDemands` and `controlOpportunities` alongside the existing
 combat, exploration, saving-throw, and reaction fixtures. These are conditional,
 source-backed mechanics tests, **not** additional balancing weights.
@@ -228,7 +228,7 @@ Species power score or inheritance allocation cost.
 
 ## Action-cost and condition-window measurements (research increment)
 
-The corpus is now **version 4 with eighteen named scenarios**. This increment
+In the prior increment, the corpus was **version 4 with eighteen named scenarios**. This increment
 adds explicit condition-window measurements to the existing Metallic Breath
 control fixture, and two timing contrasts. It **does not** convert an
 expected condition application into an unconditional lost turn.
@@ -282,3 +282,68 @@ when a mechanic was not evaluated in a fixture. Existing numerical endpoints
 remain in their original units. The tool still cannot price unselected feats,
 execute spells without an authoritative spell-effect catalog, or estimate
 control effects in scenes whose initiative and target behavior are unknown.
+
+## Confirmed-hit Goliath control diagnostics (version 5)
+
+The current **version-5 scenario corpus contains 23 named contexts**, five of
+which isolate conditional Goliath control. `strikeOpportunities` are deliberate
+single-feature activation trials, **not** simulated attack rotations or permission
+to inherit any feature. Each event identifies an **expressed canonical `traitId`**,
+character `turn`, delivery (`melee-weapon`, `thrown-weapon`, or
+`other-attack-roll`), target size, whether an attack hit, whether the hit dealt
+damage, whether the target is a creature, a stipulated save-failure probability,
+and optional timed exposure. Confirmed-hit and damage requirements are kept
+separate: Stone and Storm Strikes trigger on the appropriate hit even if the
+weapon dealt no damage; Hill's Tumble and the Frost alternatives require a hit
+**and** damage. The fixture does not independently determine attack accuracy.
+
+- **Hill Goliath:** Base Hill's Tumble automatically applies Prone to an eligible
+  Large-or-smaller creature after a qualifying hit, without granting an
+  additional damage die or inventing a saving throw. Its alternate Hill Strike
+  instead has 1d6 additional weapon-type damage, a save-dependent Prone effect,
+  and no Large-size limit. The two modes use the **same PB/Long Rest pool**.
+- **Frost Goliath:** Frost's Chill gives 1d6 additional Cold damage and an
+  unconditional 10-foot Speed reduction; the alternate uses the **same pool**
+  to replace the reduction with a save-dependent Speed 0 effect. When the
+  scenario specifies a target's current Speed, the endpoint counts **nominal
+  Speed reduction**, capped by that Speed. It does not claim lost travel
+  distance, lost turns, or the duration of an entire encounter.
+- **Stone Goliath:** Stone Strike deals 1d6 extra Force damage on an eligible
+  confirmed hit and can push a creature 10 feet on a failed Strength save. Its
+  uses come from **Stone's Endurance**, never a separate pool. An attack
+  against an object can still deal the extra damage without a creature-only
+  push. Obstacles and actual displacement remain unresolved.
+- **Storm Goliath:** Storm Strike deals 1d6 Lightning damage; if the enemy
+  fails its Constitution save, the character imposes attack Disadvantage until
+  the next-turn expiry. Expected hits prevented are calculated only when the
+  scenario explicitly supplies attacks **before the effect ends**, with no
+  other advantage/disadvantage sources. Storm Strike consumes Storm's Thunder
+  uses rather than adding a new resource pool.
+
+For Prone the model inspects the real native `condition.prone` definition. It
+only counts **explicitly scheduled** attacks while the target is still Prone;
+normal hit probability `p` becomes `p²` under Disadvantage, so conditional hits
+prevented per qualifying attack are `p(1−p)`. At 0.65 base hit probability,
+two such attacks can lose **0.455** expected hits after automatic Prone, or
+**0.25025** if the Prone application also depends on a 0.55 failed save. Prone
+still does **not** automatically deny an Action. Its effects on AC, mobility,
+and positioning are not yet valued. No other conditional ability is assumed to
+be equivalent to Prone merely because it impairs attacks.
+
+A level-1 Stone Goliath with three scheduled eligible confirmed hits has only
+two shared uses at PB 2. With 0.55 failed saves, those two Stone Strikes produce
+**7 gross expected extra Force damage** and **11 expected feet of forced
+movement before obstacles**, not a third use or a guaranteed 11-foot push to
+one creature. The nominal endpoints are conditional and separate. Spending
+those same charges on Stone's Endurance could instead prevent incoming damage.
+The previous defensive optimization and the new explicit offensive replay are
+**not treated as one simultaneous plan**: a mixed scenario reports
+`joint-offense-defense-resource-plan-unresolved` where their selected sources
+consume the same pool. Joint scheduling is a future research task.
+
+The evaluator rejects unknown event keys, unsupported deliveries, incorrect
+level/resource access, invalid probabilities, and malformed hit/damage claims.
+Where an effect's expiry is not authored in the expected structure, it leaves
+the timed consequence unresolved. Incomplete movement, opponent behavior,
+conditional spells, class-specific feat choices, and real session frequencies
+continue to block a definitive whole-Species balance judgment.

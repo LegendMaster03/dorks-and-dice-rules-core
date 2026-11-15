@@ -319,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(18, len(suite["contexts"]))
+        self.assertEqual(23, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -361,7 +361,7 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(18, result["scenarioCount"])
+        self.assertEqual(23, result["scenarioCount"])
 
     def test_sensitivity_does_not_convert_unmeasured_endpoints_to_zero(self):
         profile = self.profile("ancestry.dragonborn.red")
@@ -431,7 +431,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 5
+        bad["version"] = 6
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -447,7 +447,7 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(18, result["scenarioCount"])
+        self.assertEqual(23, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
 
 
@@ -593,11 +593,11 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
         suite = self.scenario_suite()
-        self.assertEqual(4, suite["version"])
-        self.assertEqual(18, len(suite["contexts"]))
+        self.assertEqual(5, suite["version"])
+        self.assertEqual(23, len(suite["contexts"]))
         self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
         result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
-        self.assertEqual(18, result["scenarioCount"])
+        self.assertEqual(23, result["scenarioCount"])
         names = {x["id"]: x["profiles"][0]["levels"][0]
                  for x in result["contexts"]}
         self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
@@ -795,8 +795,8 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_control_scenario_corpus_has_timing_contrasts(self):
         fixture = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(fixture.read_text(encoding="utf-8"))
-        self.assertEqual(4, suite["version"])
-        self.assertEqual(18, len(suite["contexts"]))
+        self.assertEqual(5, suite["version"])
+        self.assertEqual(23, len(suite["contexts"]))
         contexts = {item["id"]: item["scenario"] for item in suite["contexts"]}
         early = contexts["metallic-enervation-with-allies"]["controlOpportunities"][0]
         late = contexts["metallic-control-no-exposed-turns"]["controlOpportunities"][0]
@@ -821,6 +821,148 @@ class PowerEvaluationTests(unittest.TestCase):
                 power.validate_scenario(bad)
 
 
+
+    def synthetic_goliath(self, feature):
+        """Minimal faithful field shapes for a diagnostic, not authored data."""
+        profile = self.profile("species.dwarf")
+        profile["traits"] = {
+            "trait.goliath.hill.hills-tumble": {"id": "hills-tumble", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+                     "targetMaximumSize": "large", "applyCondition": "condition.prone",
+                     "additionalSavingThrow": False,
+                     "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+                     "alternateStrikeMode": {"id": "hill-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit-and-deal-damage",
+                         "oncePerTurn": True, "targetMaximumSize": None,
+                         "extraDamage": {"dice": "1d6", "damageTypeFrom": "triggering-weapon"},
+                         "savingThrow": {"ability": "strength"},
+                         "applyConditionOnFailedSave": "condition.prone",
+                         "sharedUsesFromTrait": "hills-tumble"}},
+            "trait.goliath.stone.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+                          "activation": {"action": "reaction", "trigger": "when-you-take-damage"},
+                          "damageReduction": {"dice": "1d12", "appliesTo": "triggering-damage"}},
+            "trait.goliath.stone.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+                      "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "force"},
+                      "onFailedSave": {"forcedMovementFeet": 10},
+                      "sharedUsesFromTrait": "stones-endurance"},
+            "trait.goliath.frost.frosts-chill": {"id": "frosts-chill", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+                      "extraDamage": {"dice": "1d6", "damageType": "cold"},
+                      "speedReduction": {"feet": 10, "endsAt":"start-of-your-next-turn"},
+                      "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+                      "alternateStrikeMode": {"id": "frost-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit-and-deal-damage",
+                          "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "cold"},
+                          "savingThrow": {"ability": "constitution"},
+                          "onFailedSave": {"speedSetFeet": 0, "endsAt":"start-of-your-next-turn"},
+                          "sharedUsesFromTrait": "frosts-chill"}},
+            "trait.goliath.storm.storms-thunder": {"id": "storms-thunder", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+                        "activation": {"action": "reaction", "trigger": "when-a-creature-within-range-deals-damage-to-you"}},
+            "trait.goliath.storm.storm-strike": {"id": "storm-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+                      "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "lightning"},
+                      "savingThrow": {"ability": "constitution"},
+                      "onFailedSave": {"attackRollMode": "disadvantage", "endsAt":"start-of-your-next-turn"},
+                      "sharedUsesFromTrait": "storms-thunder"},
+        }
+        self.catalog["conditions"]["condition.prone"] = {
+            "id": "condition.prone", "effects": [
+                {"type": "roll-mode", "appliesTo": "attack-roll", "mode": "disadvantage",
+                 "subject": "attacks-by-affected-creature"}]}
+        return profile
+
+    def test_hit_control_differentiates_hill_prone_modes_and_size(self):
+        profile = self.synthetic_goliath("hill")
+        events = self.scenario_suite()["contexts"]
+        by_id = {x["id"]: x["scenario"] for x in events}
+        auto = power.evaluate(profile, self.catalog, 1, by_id["goliath-hill-automatic-prone"])
+        self.assertEqual("activated", auto["strikeEventTrace"][0]["status"])
+        self.assertEqual(1, auto["metrics"]["strike_expected_enemy_prone_applications"])
+        self.assertAlmostEqual(2 * .65 * .35, auto["metrics"]["strike_expected_enemy_attack_hits_prevented_by_prone"])
+        self.assertNotIn("strike_gross_extra_damage_on_confirmed_hits", auto["metrics"])
+        alternate = power.evaluate(profile, self.catalog, 1,
+                                   by_id["goliath-hill-alternative-prone"])
+        self.assertAlmostEqual(.55, alternate["metrics"]["strike_expected_enemy_prone_applications"])
+        self.assertAlmostEqual(3.5, alternate["metrics"]["strike_gross_extra_damage_on_confirmed_hits"])
+        invalid = dict(by_id["goliath-hill-automatic-prone"])
+        invalid["strikeOpportunities"] = [dict(invalid["strikeOpportunities"][0], targetSize="huge")]
+        denied = power.evaluate(profile, self.catalog, 1, invalid)
+        self.assertEqual("target-too-large", denied["strikeEventTrace"][0]["status"])
+
+    def test_frost_speed_fails_no_movement_and_respects_shared_pool(self):
+        profile = self.synthetic_goliath("frost")
+        suite = {c["id"]: c["scenario"] for c in self.scenario_suite()["contexts"]}
+        outcome = power.evaluate(profile, self.catalog, 1, suite["goliath-frost-speed-modes"])
+        self.assertEqual(2, outcome["metrics"]["strike_uses_selected"])
+        self.assertAlmostEqual(10 + 30*.55, outcome["metrics"]["strike_expected_enemy_nominal_speed_reduction_feet"])
+        self.assertAlmostEqual(7, outcome["metrics"]["strike_gross_extra_damage_on_confirmed_hits"])
+        self.assertEqual(["activated", "activated"], [e["status"] for e in outcome["strikeEventTrace"]])
+
+    def test_stone_shared_uses_not_multiplied_and_once_per_turn(self):
+        profile = self.synthetic_goliath("stone")
+        suite = {c["id"]: c["scenario"] for c in self.scenario_suite()["contexts"]}
+        outcome = power.evaluate(profile, self.catalog, 1, suite["goliath-stone-shared-strikes"])
+        self.assertEqual(["activated", "activated", "shared-resource-exhausted"],
+                         [e["status"] for e in outcome["strikeEventTrace"]])
+        self.assertEqual(2, outcome["metrics"]["strike_uses_selected"])
+        self.assertAlmostEqual(11, outcome["metrics"]["strike_expected_enemy_forced_movement_feet"])
+        altered = copy.deepcopy(suite["goliath-stone-shared-strikes"])
+        altered["strikeOpportunities"][1]["turn"] = 1
+        rows = power.evaluate(profile, self.catalog, 1, altered)["strikeEventTrace"]
+        self.assertEqual("once-per-turn-exhausted", rows[1]["status"])
+
+    def test_storm_save_dependent_disadvantage_is_timing_conditional(self):
+        profile = self.synthetic_goliath("storm")
+        suite = {c["id"]: c["scenario"] for c in self.scenario_suite()["contexts"]}
+        baseline = power.evaluate(profile, self.catalog, 1,
+                                  suite["goliath-storm-disadvantage-window"])
+        self.assertAlmostEqual(2 * .55 * .65 * .35,
+                               baseline["metrics"]["strike_expected_enemy_attack_hits_prevented_by_disadvantage"])
+        no_attacks = copy.deepcopy(suite["goliath-storm-disadvantage-window"])
+        no_attacks["strikeOpportunities"][0]["normalAttackRollsBeforeRecovery"] = 0
+        result = power.evaluate(profile, self.catalog, 1, no_attacks)
+        self.assertEqual(0, result["metrics"]["strike_expected_enemy_attack_hits_prevented_by_disadvantage"])
+
+    def test_hit_without_damage_can_trigger_stone_not_hill(self):
+        profile = self.synthetic_goliath("stone")
+        e = copy.deepcopy(self.scenario_suite()["contexts"][-1]["scenario"])
+        # Replace Storm with Stone; a confirmed hit still qualifies even if
+        # the original weapon did no damage (e.g., was resisted).
+        e["strikeOpportunities"][0].update(
+            traitId="trait.goliath.stone.stone-strike", dealtDamage=False)
+        stone = power.evaluate(profile, self.catalog, 1, e)
+        self.assertEqual("activated", stone["strikeEventTrace"][0]["status"])
+        self.assertEqual(3.5, stone["metrics"]["strike_gross_extra_damage_on_confirmed_hits"])
+        e["strikeOpportunities"][0]["traitId"] = "trait.goliath.hill.hills-tumble"
+        hill = power.evaluate(profile, self.catalog, 1, e)
+        self.assertEqual("hit-without-required-damage", hill["strikeEventTrace"][0]["status"])
+
+    def test_confirmed_hit_damage_without_creature_control(self):
+        profile = self.synthetic_goliath("stone")
+        e = copy.deepcopy(self.scenario_suite()["contexts"][-1]["scenario"])
+        e["strikeOpportunities"][0].update(
+            traitId="trait.goliath.stone.stone-strike", targetIsCreature=False)
+        stone = power.evaluate(profile, self.catalog, 1, e)
+        self.assertEqual("activated", stone["strikeEventTrace"][0]["status"])
+        self.assertNotIn("strike_expected_enemy_forced_movement_feet", stone["metrics"])
+
+    def test_joint_defense_offense_pool_is_not_implicitly_double_counted(self):
+        profile = self.synthetic_goliath("stone")
+        scene = copy.deepcopy(self.scenario_suite()["contexts"][-1]["scenario"])
+        scene["strikeOpportunities"][0]["traitId"] = "trait.goliath.stone.stone-strike"
+        scene["reactionDamageEvents"] = [{
+            "id":"damage", "round":1, "amount":20, "damageType":"slashing",
+            "isAttackHit":True, "attackerVisible":True, "reactionAvailable":True}]
+        result = power.evaluate(profile, self.catalog, 1, scene)
+        self.assertIn({"traitId": "trait.goliath.stone.stones-endurance",
+                       "reason": "joint-offense-defense-resource-plan-unresolved"},
+                      result["unmodeled"])
+
+    def test_strike_events_validate_inputs_and_no_silent_unmodeled(self):
+        scene = self.scenario_suite()["contexts"][-1]["scenario"]
+        for override in ({"failureProbability": 1.2}, {"traitId": ""},
+                         {"hit": "true"}, {"normalAttackRollsBeforeRecovery": -1},
+                         {"turn": 0}, {"targetSize": "colossal"},
+                         {"nornalAttackRollsBeforeRecovery": 1}):
+            bad = copy.deepcopy(scene)
+            bad["strikeOpportunities"][0].update(override)
+            with self.subTest(bad=override), self.assertRaises(ValueError):
+                power.validate_scenario(bad)
 
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
                      "Full native catalog is not available in isolated fixture tests")
@@ -848,7 +990,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(18, result["scenarioCount"])
+        self.assertEqual(23, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -954,6 +1096,30 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         before_unlock = power.evaluate(bronze, catalog, 4,
                                        contexts["metallic-enervation-with-allies"])
         self.assertEqual(0, before_unlock["metrics"]["control_attack_replacements"])
+
+    def test_native_goliath_hit_control_and_shared_pool_traces(self):
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        contexts = {c["id"]: c["scenario"] for c in json.loads(
+            (Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
+            .read_text(encoding="utf-8"))["contexts"]}
+        expectations = [
+            ("ancestry.goliath.hill", "goliath-hill-automatic-prone",
+             "strike_expected_enemy_prone_applications", 1),
+            ("ancestry.goliath.hill", "goliath-hill-alternative-prone",
+             "strike_expected_enemy_prone_applications", .55),
+            ("ancestry.goliath.frost", "goliath-frost-speed-modes",
+             "strike_expected_enemy_nominal_speed_reduction_feet", 26.5),
+            ("ancestry.goliath.stone", "goliath-stone-shared-strikes",
+             "strike_expected_enemy_forced_movement_feet", 11),
+            ("ancestry.goliath.storm", "goliath-storm-disadvantage-window",
+             "strike_expected_enemy_attack_hits_prevented_by_disadvantage", 2*.55*.65*.35),
+        ]
+        for source, scene, metric, expected in expectations:
+            with self.subTest(source=source, scene=scene):
+                row = power.evaluate(power.reconstruct_preset(catalog, source), catalog,
+                                     1, contexts[scene])
+                self.assertAlmostEqual(expected, row["metrics"][metric])
+                self.assertTrue(any(t["status"] == "activated" for t in row["strikeEventTrace"]))
 
     def test_native_save_and_defensive_reaction_contrasts(self):
         """Match scenario outputs to authored Dwarf, Gnome, Stone and Cloud traits."""

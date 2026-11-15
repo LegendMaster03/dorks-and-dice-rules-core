@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v4",
-  "version": 4,
+  "id": "pillar2-diagnostic-sensitivity-v5",
+  "version": 5,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -488,6 +488,165 @@
             "failureProbability": 0.55,
             "enemyNormalAttackRollsWhileProne": 0,
             "baseHitChance": 0.65
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-hill-automatic-prone",
+      "purpose": "Hill Goliath applies Prone automatically to a Large or smaller creature on an eligible confirmed hit; no save or extra die is invented.",
+      "scenario": {
+        "id": "goliath-hill-automatic-prone",
+        "strikeOpportunities": [
+          {
+            "id": "tumble-large",
+            "traitId": "trait.goliath.hill.hills-tumble",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "large",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-hill-alternative-prone",
+      "purpose": "Hill Strike instead deals 1d6 on a qualifying weapon hit and permits a save against Prone, including against Huge creatures.",
+      "scenario": {
+        "id": "goliath-hill-alternative-prone",
+        "strikeOpportunities": [
+          {
+            "id": "strike-huge",
+            "traitId": "trait.goliath.hill.hills-tumble",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "alternate",
+            "targetSize": "huge",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-frost-speed-modes",
+      "purpose": "Frost Goliath compares unconditional ten-foot reduction with alternate save-dependent zero speed; nominal speed loss is not lost movement.",
+      "scenario": {
+        "id": "goliath-frost-speed-modes",
+        "strikeOpportunities": [
+          {
+            "id": "chill",
+            "traitId": "trait.goliath.frost.frosts-chill",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "targetSpeedFeet": 30,
+            "hit": true,
+            "dealtDamage": true
+          },
+          {
+            "id": "frost-strike",
+            "traitId": "trait.goliath.frost.frosts-chill",
+            "turn": 2,
+            "delivery": "melee-weapon",
+            "mode": "alternate",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "targetSpeedFeet": 30,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-stone-shared-strikes",
+      "purpose": "Stone Strike reuses Stone Endurance charges; two confirmed eligible hits with different turns spend PB uses and the third is exhausted at level 1.",
+      "scenario": {
+        "id": "goliath-stone-shared-strikes",
+        "strikeOpportunities": [
+          {
+            "id": "stone-one",
+            "traitId": "trait.goliath.stone.stone-strike",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          },
+          {
+            "id": "stone-two",
+            "traitId": "trait.goliath.stone.stone-strike",
+            "turn": 2,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          },
+          {
+            "id": "stone-three",
+            "traitId": "trait.goliath.stone.stone-strike",
+            "turn": 3,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-storm-disadvantage-window",
+      "purpose": "Storm Strike uses Storm Thunder charges; saving-throw-dependent attack disadvantage affects only explicitly scheduled attacks before expiry.",
+      "scenario": {
+        "id": "goliath-storm-disadvantage-window",
+        "strikeOpportunities": [
+          {
+            "id": "storm",
+            "traitId": "trait.goliath.storm.storm-strike",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
           }
         ]
       }
