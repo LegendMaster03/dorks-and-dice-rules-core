@@ -693,6 +693,48 @@ public sealed class NativeCharacterManifestationTests
 
 
     [Fact]
+    public void ActiveFormCanNotHideAnUnresolvedPrimaryInfluenceConflict()
+    {
+        static NativeCharacterPersistentInfluence PrimaryInfluence(string suffix, int speed)
+        {
+            var effect = new NativeCharacterInfluenceEffect(
+                "effect.primary." + suffix, Occurrence("effects.primary." + suffix),
+                "receipt.effect.primary." + suffix, Rule(),
+                new Dictionary<string, string>(),
+                [NativeCharacterSheetResolver.PrimarySheetId],
+                NativeInfluenceCharacteristic.BaseWalkSpeed,
+                NativeInfluenceOperation.Replace, NumericValue: speed);
+            return new NativeCharacterPersistentInfluence(
+                "influence.primary." + suffix, "definition.primary." + suffix,
+                Source(), "receipt.acquisition." + suffix, "receipt.expression." + suffix,
+                new Dictionary<string, string>(), [effect]);
+        }
+
+        var state = Character([
+            PrimaryInfluence("first", 40),
+            PrimaryInfluence("second", 45)
+        ]);
+        var activeWolf = ActivatedWolf();
+        // The two writers target the primary character, not the Wolf sheet.
+        // Resolving only the selected form would otherwise appear to succeed.
+        var resolved = Resolve(state, activeWolf);
+        Assert.Equal("unresolved", resolved.Status);
+        Assert.Null(resolved.EffectiveMechanics);
+        Assert.Contains(resolved.Issues,
+            x => x.Code == "influence-overlap-unresolved");
+
+        // The same unresolved primary inputs can not be bypassed by planning
+        // a new form activation from a valid, committed normal-form ledger.
+        var transition = Plan(state, Ledger(), "e1",
+            Activate("manifest.wolf", "wolf", "e1", true));
+        Assert.Equal("unresolved", transition.Status);
+        Assert.Null(transition.Proposed);
+        Assert.Null(transition.ProposedEffective);
+        Assert.Contains(transition.Issues,
+            x => x.Code == "influence-overlap-unresolved");
+    }
+
+    [Fact]
     public void TransitionPreviewEvaluatesTargetedInfluenceConflictBeforeOfferingCommit()
     {
         var effect = new NativeCharacterInfluenceEffect(
