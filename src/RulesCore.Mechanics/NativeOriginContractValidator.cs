@@ -483,6 +483,62 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 .GroupBy(m => m.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
+        // Serialized resource-owner links are derived results, not trusted
+        // assertions. An inherited Strike can spend an existing pool only if
+        // both canonical native definitions and source evidence support it.
+        foreach (var dependent in baselineGrants.Values.Where(g =>
+            g.ResourceOwners is { Count: > 0 }))
+        {
+            var path = "underlying.grants." + dependent.Id + ".resourceOwners";
+            if (dependent.ResourceOwners!.Count != 1 ||
+                !dependent.ResourceOwners.TryGetValue("uses", out var ownerId) ||
+                ownerId == dependent.Id ||
+                !baselineGrants.TryGetValue(ownerId, out var owner) ||
+                dependent.Identity.MechanicalDefinitionId is not { } dependentId ||
+                !catalog.TryGetById(dependentId, out var traitDefinition) ||
+                traitDefinition is null || traitDefinition.Category != "origin-trait" ||
+                !traitDefinition.Definition.TryGetProperty("trait", out var authoredDependent) ||
+                authoredDependent.ValueKind != JsonValueKind.Object ||
+                Text(authoredDependent, "sharedUsesFromTrait") is not { } requiredId ||
+                dependent.EffectiveValue is not { ValueKind: JsonValueKind.Object } dependentValue ||
+                Text(dependentValue, "sharedUsesFromTrait") != requiredId ||
+                dependentValue.TryGetProperty("uses", out _) ||
+                owner.EffectiveValue is not { ValueKind: JsonValueKind.Object } ownerValue ||
+                Text(ownerValue, "id") != requiredId ||
+                dependent.Identity.Occurrence.Source != owner.Identity.Occurrence.Source ||
+                owner.Identity.MechanicalDefinitionId is not { } ownerDefinitionId ||
+                !catalog.TryGetById(ownerDefinitionId, out var ownerDefinition) ||
+                ownerDefinition is null || ownerDefinition.Category != "origin-trait" ||
+                !ownerDefinition.Definition.TryGetProperty("trait", out var authoredOwner) ||
+                authoredOwner.ValueKind != JsonValueKind.Object ||
+                !authoredOwner.TryGetProperty("uses", out var canonicalPool) ||
+                !ownerValue.TryGetProperty("uses", out var currentPool) ||
+                !JsonElement.DeepEquals(canonicalPool, currentPool))
+            {
+                Add("profile-resource-owner-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Shared-use references must identify one selected canonical native resource owner.");
+                continue;
+            }
+
+            if (candidates is not null)
+            {
+                var dependentOffers = dependent.SourceCandidateIds.Where(candidates.ContainsKey)
+                    .Select(id => candidates[id]).ToArray();
+                var ownerOffers = owner.SourceCandidateIds.Where(candidates.ContainsKey)
+                    .Select(id => candidates[id]).ToArray();
+                if (dependentOffers.Length != dependent.SourceCandidateIds.Count ||
+                    ownerOffers.Length != owner.SourceCandidateIds.Count ||
+                    !dependentOffers.Any(d => ownerOffers.Any(o =>
+                        d.ContributorId is not null
+                            ? d.ContributorId == o.ContributorId
+                            : o.ContributorId is null &&
+                              d.Identity.Occurrence.Source == o.Identity.Occurrence.Source)))
+                    Add("profile-resource-contributor-mismatch", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Shared-use links must remain within one verified contributing lineage.");
+            }
+        }
         foreach (var grant in baselineGrants.Values)
         {
             var path = "underlying.grants." + grant.Id;
