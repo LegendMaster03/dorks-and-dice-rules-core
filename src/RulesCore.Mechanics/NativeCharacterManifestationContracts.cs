@@ -33,12 +33,14 @@ public sealed record NativeManifestationResourcePolicy(
 
 /// <summary>
 /// A single source-authorized activation, retained after it ends for history.
+/// CharacterId explicitly identifies its owning character and must agree with
+/// the authoritative state and enclosing character-scoped manifestation ledger.
 /// EndingConditions name authored triggers, not universal duration or reversion
 /// behavior. SourceInfluenceId, when present, binds the form to an acquired
 /// influence rather than to a similarly named monster or Species definition.
 /// </summary>
 public sealed record NativeManifestationInstance(
-    string Id, string SheetId, string DefinitionId,
+    string CharacterId, string Id, string SheetId, string DefinitionId,
     NativeOriginSourceOccurrence DefinitionOccurrence, string? SourceInfluenceId,
     string ActivationEventId, string ActivationEvidenceId,
     NativeOriginDecisionBasis ActivationBasis,
