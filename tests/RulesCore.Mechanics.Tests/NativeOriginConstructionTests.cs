@@ -935,6 +935,51 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(NativeOriginAdjudication.DmAuthorized, breath.Authorization!.Adjudication);
         Assert.Equal(decision.Id, breath.Authorization.TableDecisionId);
 
+        // The canonical Breath Weapon now authors both recombinable fields.
+        // Candidate inheritance eligibility still needs its own authority;
+        // the authored relationship only removes the redundant DM ruling
+        // about how the *already permitted* characteristic is composed.
+        const string canonical = "trait.dragonborn.breath-weapon";
+        var authored = selected with
+        {
+            TableDecisions = selected.TableDecisions!.Where(x =>
+                x.Id != decision.Id).ToArray(),
+            Relationships = [new("breath-compose",
+                NativeOriginRelationshipKind.Substitution, [red.Id, bronze.Id],
+                AuthoredRuleReference: canonical)],
+            Resolutions = [resolution with
+            {
+                Basis = new(NativeOriginAdjudication.Supported,
+                    NativeRuleReference: canonical)
+            }]
+        };
+        var authoredResult = Evaluate(authored, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, authoredResult.Status);
+        var composed = Assert.Single(authoredResult.Profile!.Underlying.InherentGrants);
+        Assert.Equal("fire", composed.Parameters!["damageType"].GetString());
+        Assert.Equal("cone", composed.Parameters["area"].GetProperty("shape").GetString());
+        Assert.Equal(NativeOriginAdjudication.Supported, composed.Authorization!.Adjudication);
+        Assert.Equal(canonical, composed.Authorization.NativeRuleReference);
+        Assert.Equal(2, composed.SourceCandidateIds.Count);
+        Assert.Equal(red.Id, composed.ParameterSources!["damageType"]);
+        Assert.Equal(bronze.Id, composed.ParameterSources["area"]);
+
+        // Authored recombination is tied to a real canonical trait rule,
+        // not a caller-supplied relationship label.
+        var unrelatedRule = Evaluate(authored with
+        {
+            Relationships = [new("breath-compose",
+                NativeOriginRelationshipKind.Substitution, [red.Id, bronze.Id],
+                AuthoredRuleReference: "trait.shared.low-light-vision")],
+            Resolutions = [resolution with
+            {
+                Basis = new(NativeOriginAdjudication.Supported,
+                    NativeRuleReference: "trait.shared.low-light-vision")
+            }]
+        }, new TestAuthority(), false);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unrelatedRule.Status);
+        Assert.Empty(unrelatedRule.Profile!.Underlying.InherentGrants);
+
         // A player cannot forge a field's provenance or silently choose a value
         // outside the contributors' exact configured offers.
         var forged = Evaluate(selected with

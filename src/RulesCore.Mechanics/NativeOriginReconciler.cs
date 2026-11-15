@@ -46,8 +46,11 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 JsonString(authenticated.EffectiveOutcome, "action") == ActionName(resolution.Action);
             var authored = resolution.Basis?.Adjudication == NativeOriginAdjudication.Supported &&
                 relation.AuthoredRuleReference == resolution.Basis.NativeRuleReference &&
-                NativeRelationshipAuthorizes(relation.Id, resolution.Action,
-                    relation.AuthoredRuleReference);
+                (resolution.Action == NativeOriginResolutionAction.Replace ?
+                    NativeTraitCompositionAuthorizes(relation.AuthoredRuleReference,
+                        involved, active, resolution) :
+                    NativeRelationshipAuthorizes(relation.Id, resolution.Action,
+                        relation.AuthoredRuleReference));
             if (!authorized && !authored)
             {
                 Issue("relationship-disposition-unauthorized", relation.Id,
@@ -84,9 +87,10 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                     // grammar, require an exact-scoped table decision for both the
                     // selected source and every final parameter/source binding.
                     // Do not infer recombination from similar trait names.
-                    if (!authorized || authenticated is null ||
-                        !TryComposeReplacement(involved, active, resolution,
-                            authenticated, out var replacement))
+                    if (!TryComposeReplacement(involved, active, resolution,
+                            authorized ? authenticated : null,
+                            authored ? relation.AuthoredRuleReference : null,
+                            out var replacement))
                         goto default;
                     var winner = resolution.ReplacementCandidateId!;
                     replacements[winner] = replacement;
@@ -187,23 +191,30 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
     private static bool TryComposeReplacement(
         IReadOnlyList<string> involved,
         IReadOnlyDictionary<string, NativeOriginSelectedGrant> active,
-        NativeOriginResolution resolution, NativeTableRuleDecision decision,
-        out NativeOriginEffectiveGrant result)
+        NativeOriginResolution resolution, NativeTableRuleDecision? decision,
+        string? authoredRule, out NativeOriginEffectiveGrant result)
     {
         result = null!;
         var winner = resolution.ReplacementCandidateId;
         var values = resolution.ReplacementParameters;
         var sources = resolution.ReplacementParameterSources;
-        var outcome = decision.EffectiveOutcome;
         if (winner is null || !involved.Contains(winner, StringComparer.Ordinal) ||
             values is null || sources is null || values.Count == 0 ||
-            JsonString(outcome, "resultCandidateId") != winner ||
-            outcome.ValueKind != JsonValueKind.Object ||
-            !outcome.TryGetProperty("parameters", out var authorizedValues) ||
-            authorizedValues.ValueKind != JsonValueKind.Object ||
-            !outcome.TryGetProperty("parameterSources", out var authorizedSources) ||
-            authorizedSources.ValueKind != JsonValueKind.Object)
+            (decision is null && authoredRule is null))
             return false;
+        var authorizedValues = default(JsonElement);
+        var authorizedSources = default(JsonElement);
+        if (decision is not null)
+        {
+            var outcome = decision.EffectiveOutcome;
+            if (outcome.ValueKind != JsonValueKind.Object ||
+                JsonString(outcome, "resultCandidateId") != winner ||
+                !outcome.TryGetProperty("parameters", out authorizedValues) ||
+                authorizedValues.ValueKind != JsonValueKind.Object ||
+                !outcome.TryGetProperty("parameterSources", out authorizedSources) ||
+                authorizedSources.ValueKind != JsonValueKind.Object)
+                return false;
+        }
 
         var root = active[winner];
         if (root.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
@@ -231,19 +242,26 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         if (keys is null || keys.Count == 0 ||
             entries.Any(x => !keys.SetEquals(x.Grant.Parameters!.Keys)) ||
             !keys.SetEquals(values.Keys) || !keys.SetEquals(sources.Keys) ||
-            authorizedValues.EnumerateObject().Count() != keys.Count ||
-            authorizedSources.EnumerateObject().Count() != keys.Count)
+            (decision is not null &&
+                (authorizedValues.EnumerateObject().Count() != keys.Count ||
+                 authorizedSources.EnumerateObject().Count() != keys.Count)))
             return false;
 
         foreach (var key in keys)
         {
             var from = sources[key];
             if (!involved.Contains(from, StringComparer.Ordinal) ||
-                !JsonElement.DeepEquals(values[key], active[from].Grant.Parameters![key]) ||
-                !authorizedValues.TryGetProperty(key, out var permitted) ||
-                !JsonElement.DeepEquals(values[key], permitted) ||
-                JsonString(authorizedSources, key) != from)
+                !JsonElement.DeepEquals(values[key], active[from].Grant.Parameters![key]))
                 return false;
+        }
+
+        if (decision is not null)
+        {
+            foreach (var key in keys)
+                if (!authorizedValues.TryGetProperty(key, out var permitted) ||
+                    !JsonElement.DeepEquals(values[key], permitted) ||
+                    JsonString(authorizedSources, key) != sources[key])
+                    return false;
         }
 
         result = root.Grant with
@@ -252,10 +270,45 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 StringComparer.Ordinal),
             ParameterSources = sources.ToDictionary(x => x.Key, x => x.Value,
                 StringComparer.Ordinal),
-            Authorization = new(NativeOriginAdjudication.DmAuthorized,
-                TableDecisionId: decision.Id)
+            Authorization = decision is null ?
+                new(NativeOriginAdjudication.Supported, NativeRuleReference: authoredRule) :
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: decision.Id)
         };
         return true;
+    }
+
+    /// <summary>
+    /// A native trait definition may explicitly permit particular parameters to
+    /// be independently chosen from otherwise identical configured offers. This
+    /// authoring is on the canonical mechanic, not on a named Species pairing.
+    /// All fields, including non-recombinable ones, are still provenance-checked
+    /// by TryComposeReplacement. Source eligibility is checked elsewhere.
+    /// </summary>
+    private bool NativeTraitCompositionAuthorizes(
+        string? definitionId, IReadOnlyList<string> involved,
+        IReadOnlyDictionary<string, NativeOriginSelectedGrant> active,
+        NativeOriginResolution resolution)
+    {
+        var winner = resolution.ReplacementCandidateId;
+        var sources = resolution.ReplacementParameterSources;
+        if (definitionId is null || winner is null || sources is null ||
+            !involved.Contains(winner, StringComparer.Ordinal) ||
+            !catalog.TryGetById(definitionId, out var entity) || entity is null ||
+            entity.Category != "origin-trait" ||
+            !entity.Definition.TryGetProperty("originComposition", out var composition) ||
+            composition.ValueKind != JsonValueKind.Object ||
+            !composition.TryGetProperty("recombinableParameters", out var parameters) ||
+            parameters.ValueKind != JsonValueKind.Array ||
+            involved.Any(id => active[id].Candidate.Identity.MechanicalDefinitionId != definitionId))
+            return false;
+        var allowed = parameters.EnumerateArray()
+            .Where(x => x.ValueKind == JsonValueKind.String)
+            .Select(x => x.GetString()!)
+            .ToHashSet(StringComparer.Ordinal);
+        // No unrelated field may be taken from a different contributor,
+        // even if both variants happen to have the same JSON value.
+        return allowed.Count != 0 && sources.All(x =>
+            x.Value == winner || allowed.Contains(x.Key));
     }
 
     private bool NativeRelationshipAuthorizes(string id, NativeOriginResolutionAction action,
