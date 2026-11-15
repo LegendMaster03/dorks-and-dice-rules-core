@@ -304,6 +304,8 @@ This is mechanically equivalent to the existing Dwarf Stonebound Tremorsense, no
 
 These questions are next-stage work. They do not block preserving the current candidate design.
 
+> **Research implementation update (2026-11-14):** An initial [read-only quantitative evaluation prototype](pillar2-power-evaluation-prototype.md) now reconstructs canonical native presets and calculates selected, scenario-dependent endpoints and resource frontiers. It is not a complete power metric, inheritance cost model, or normative Species revision. The [WorkChat research report](pillar2-species-power-evaluation.md) remains the comparison baseline. Full native-catalog CI is pending.
+
 ## 9. Recommended next experiment and acceptance criteria
 
 **Next objective:** build a reproducible *power-evaluation prototype* against all nine native Species and representative Ancestries, without approving a biological allocation cost from arbitrary values.
