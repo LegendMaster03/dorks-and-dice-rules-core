@@ -29,8 +29,13 @@ public static class NativeCharacterManifestationResolver
             return [new("invalid-manifestation-ledger", "manifestations",
                 "The character, revision, or bounded ledger shape is invalid.")];
 
-        var sheetIds = state.AlternateSheets.Where(x => x is not null)
-            .ToDictionary(x => x.Id, x => x, StringComparer.Ordinal);
+        var sheetIds = new Dictionary<string, NativePersistentCharacterSheet>(StringComparer.Ordinal);
+        foreach (var sheet in state.AlternateSheets)
+            if (sheet is null || string.IsNullOrWhiteSpace(sheet.Id) ||
+                !sheetIds.TryAdd(sheet.Id, sheet))
+                Issue("invalid-manifestation-sheet-reference", "alternateSheets",
+                    "Form references require unique, nonempty sheet identities.");
+        if (issues.Count != 0) return Sort(issues);
         var influenceIds = new HashSet<string>(
             (state.PersistentInfluences ?? []).Where(x => x is not null).Select(x => x.Id),
             StringComparer.Ordinal);
@@ -83,7 +88,8 @@ public static class NativeCharacterManifestationResolver
                     (policy.Mode == NativeManifestationResourceMode.CaptureMaximum) !=
                         (policy.CaptureKey is not null) ||
                     (policy.CaptureKey is not null &&
-                     !instance.ActivationCaptures.ContainsKey(policy.CaptureKey)))
+                     (instance.ActivationCaptures is null ||
+                     !instance.ActivationCaptures.Keys.Contains(policy.CaptureKey, StringComparer.Ordinal))))
                     Issue("invalid-manifestation-resource-policy", path + ".resourcePolicies",
                         "Resource policies require an explicit, distinct pool and valid mode fields.");
         }
@@ -282,7 +288,8 @@ public static class NativeCharacterManifestationResolver
                         NativeManifestationResourceMode.AdjustMaximum =>
                             checked(resource.Maximum + policy.MaximumAdjustment!.Value),
                         NativeManifestationResourceMode.CaptureMaximum =>
-                            selected.ActivationCaptures[policy.CaptureKey!],
+                            selected.ActivationCaptures.Single(x =>
+                            string.Equals(x.Key, policy.CaptureKey, StringComparison.Ordinal)).Value,
                         _ => resource.Maximum
                     };
                 }
