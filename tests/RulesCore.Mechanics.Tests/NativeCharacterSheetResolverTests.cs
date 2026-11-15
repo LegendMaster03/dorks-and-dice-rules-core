@@ -405,6 +405,13 @@ public sealed class NativeCharacterSheetResolverTests
     public void DetachedProjectionsNeverShareMutableNestedInputCollections()
     {
         var input = State();
+        var initialShared = input.AlternateSheets[0].Progression![0];
+        var mutableGrants = initialShared.Grants.ToList();
+        var shared = Werewolf() with
+        {
+            Progression = [initialShared with { Grants = mutableGrants }]
+        };
+        input = input with { AlternateSheets = [shared, Wolf(), Hybrid()] };
         var result = Resolve(input);
         Assert.Equal("resolved", result.Status);
         var before = JsonSerializer.Serialize(result);
@@ -412,8 +419,7 @@ public sealed class NativeCharacterSheetResolverTests
         originalChoices["selected"] = "changed-after-resolution";
         var originalScores = (Dictionary<string, int>)input.PrimaryMechanics.AbilityScores;
         originalScores["wisdom"] = 100;
-        var grants = (NativeSheetEarnedGrant[])input.AlternateSheets[0].Progression![0].Grants;
-        grants[0] = grants[0] with { DefinitionId = "trait.changed" };
+        mutableGrants[0] = mutableGrants[0] with { DefinitionId = "trait.changed" };
 
         Assert.Equal(before, JsonSerializer.Serialize(result));
         Assert.Equal("synthetic-choice", result.Progression[1].Record.Choices!["selected"]);
