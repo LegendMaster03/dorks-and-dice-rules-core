@@ -84,109 +84,6 @@ class PowerEvaluationTests(unittest.TestCase):
             {"type": "roll-modifier", "appliesTo": "attack-roll", "operation": "add", "value": -1},
             {"type": "roll-modifier", "appliesTo": "skill-check", "operation": "add",
              "value": -1, "skills": ["skill.search", "skill.spot"]}]}]})
-        # Selected fragments of actual class progression fields: Extra Attack
-        # and BAB iteratives must be alternative, not additive; spell slots
-        # determine capacity, not the power or legality of an unknown spell.
-        write("classes/base/barbarian/barbarian.json", {
-            "id": "class.barbarian", "kind": "class", "definition": {
-                "extraAttackAndIteratives": "alternative-procedures-not-cumulative",
-                "progression": [
-                    {"level": 1, "baseAttackBonus": 1, "iterativeBaseAttackBonuses": [1],
-                     "rageUses": 2, "battleRageDamage": 2,
-                     "featureGrants": ["class-feature.barbarian.rage-level-1"]},
-                    {"level": 4, "baseAttackBonus": 4, "iterativeBaseAttackBonuses": [4],
-                     "rageUses": 3, "battleRageDamage": 2, "featureGrants": []},
-                    {"level": 5, "baseAttackBonus": 5, "iterativeBaseAttackBonuses": [5],
-                     "rageUses": 3, "battleRageDamage": 2,
-                     "featureGrants": ["class-feature.barbarian.extra-attack-level-5"]},
-                    {"level": 11, "baseAttackBonus": 11, "rageUses": 4,
-                     "battleRageDamage": 3,
-                     "iterativeBaseAttackBonuses": [11, 6, 1], "featureGrants": []},
-                    {"level": 17, "baseAttackBonus": 17, "rageUses": 6,
-                     "battleRageDamage": 4,
-                     "iterativeBaseAttackBonuses": [17, 12, 7, 2], "featureGrants": []},
-                ]}})
-        write("classes/base/wizard/wizard.json", {
-            "id": "class.wizard", "kind": "class", "definition": {
-                "iterativeAttackPolicy": "shared-native-attack-procedures",
-                "progression": [
-                    {"level": 1, "baseAttackBonus": 0, "iterativeBaseAttackBonuses": [],
-                     "featureGrants": ["class-feature.wizard.spellcasting-level-1"],
-                     "spellSlotsBySpellLevel": [2, 0, 0]},
-                    {"level": 5, "baseAttackBonus": 2, "iterativeBaseAttackBonuses": [2],
-                     "featureGrants": [], "spellSlotsBySpellLevel": [4, 3, 2]},
-                    {"level": 11, "baseAttackBonus": 5, "iterativeBaseAttackBonuses": [5],
-                     "featureGrants": [], "spellSlotsBySpellLevel": [4, 3, 3]},
-                ]}})
-        write("classes/base/rogue/rogue.json", {
-            "id": "class.rogue", "kind": "class", "definition": {
-                "iterativeAttackPolicy": "shared-native-alternative-attack-procedures",
-                "progression": [
-                    {"level": 1, "baseAttackBonus": 0, "iterativeBaseAttackBonuses": [],
-                     "sneakAttackDice": "1d6",
-                     "featureGrants": ["class-feature.rogue.sneak-attack-level-1"]},
-                    {"level": 2, "baseAttackBonus": 1, "iterativeBaseAttackBonuses": [1],
-                     "sneakAttackDice": "1d6",
-                     "featureGrants": ["class-feature.rogue.cunning-action-level-2"]},
-                    {"level": 3, "baseAttackBonus": 2, "iterativeBaseAttackBonuses": [2],
-                     "sneakAttackDice": "2d6",
-                     "featureGrants": ["class-feature.rogue.steady-aim-level-3"]},
-                    {"level": 4, "baseAttackBonus": 3, "iterativeBaseAttackBonuses": [3],
-                     "sneakAttackDice": "2d6", "featureGrants": []},
-                    {"level": 5, "baseAttackBonus": 3, "iterativeBaseAttackBonuses": [3],
-                     "sneakAttackDice": "3d6",
-                     "featureGrants": ["class-feature.rogue.uncanny-dodge-level-5"]},
-                    {"level": 11, "baseAttackBonus": 8,
-                     "iterativeBaseAttackBonuses": [8, 3], "sneakAttackDice": "6d6",
-                     "featureGrants": []},
-                ]}})
-        write("features/classes/barbarian/extra-attack-level-5.json", {
-            "id": "class-feature.barbarian.extra-attack-level-5",
-            "kind": "classFeature", "parentClass": "class.barbarian", "classLevel": 5,
-            "definition": {"mechanics": {"kind": "attack-action",
-                                        "standardAttackCount": 2,
-                                        "babInteraction": "alternative-procedure-not-additive"}}})
-        write("features/classes/rogue/uncanny-dodge-level-5.json", {
-            "id": "class-feature.rogue.uncanny-dodge-level-5",
-            "kind": "classFeature", "parentClass": "class.rogue", "classLevel": 5,
-            "definition": {"mechanics": {"kind": "reaction-damage-halving",
-                                        "trigger": "visible-attacker-hits-you",
-                                        "cost": "reaction", "divideDamageBy": 2,
-                                        "roundDown": True}}})
-        write("features/classes/barbarian/rage-level-1.json", {
-            "id": "class-feature.barbarian.rage-level-1", "kind": "classFeature",
-            "parentClass": "class.barbarian", "classLevel": 1,
-            "definition": {"mechanics": {"kind": "rage-resource",
-                "activation": "bonus-action", "usesByClassLevel": [
-                    [1, 2], [3, 3], [6, 4], [12, 5], [17, 6], [20, "unlimited"]],
-                "shared": {"noHeavyArmor": True, "forbidSpellsAndConcentration": True},
-                "battle": {"strengthAttackDamageBonus": [[1, 2], [9, 3], [16, 4]],
-                           "durationUntil": "end-of-next-turn",
-                           "extendBy": ["attack-enemy", "force-enemy-saving-throw", "bonus-action"]}}}})
-        write("features/classes/rogue/sneak-attack-level-1.json", {
-            "id": "class-feature.rogue.sneak-attack-level-1", "kind": "classFeature",
-            "parentClass": "class.rogue", "classLevel": 1,
-            "definition": {"mechanics": {"kind": "sneak-attack",
-                "dice": "1d6 plus 1d6 each odd Rogue level, through 10d6",
-                "frequency": "each-independently-qualifying-successful-hit",
-                "eligibility": "undetected-or-unanticipated-attack-or-explicit-precision-vulnerability",
-                "advantageAloneInsufficient": True, "requiresWeaponProficiency": True,
-                "ordinaryRangeOnly": True, "creatureTypeNotBlanketImmunity": True,
-                "respectsActualImmunities": True, "noExtraAttacksGranted": True}}})
-        write("features/classes/rogue/cunning-action-level-2.json", {
-            "id": "class-feature.rogue.cunning-action-level-2", "kind": "classFeature",
-            "parentClass": "class.rogue", "classLevel": 2,
-            "definition": {"mechanics": {"kind": "bonus-action-choices",
-                                          "options": ["dash", "disengage", "hide"],
-                                          "cost": "bonus-action"}}})
-        write("features/classes/rogue/steady-aim-level-3.json", {
-            "id": "class-feature.rogue.steady-aim-level-3", "kind": "classFeature",
-            "parentClass": "class.rogue", "classLevel": 3,
-            "definition": {"mechanics": {"kind": "aim-for-accuracy",
-                "cost": "bonus-action", "advantageNextAttackCurrentTurn": True,
-                "doesNotCreateSneakAttackEligibility": True,
-                "requiresNotMovedThisTurn": True,
-                "speedZeroUntilTurnEnd": True}}})
         self.native = root
         self.catalog = power.load_native(root)
 
@@ -422,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(40, len(suite["contexts"]))
+        self.assertEqual(26, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -464,7 +361,7 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(40, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
 
     def test_sensitivity_does_not_convert_unmeasured_endpoints_to_zero(self):
         profile = self.profile("ancestry.dragonborn.red")
@@ -534,7 +431,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 10
+        bad["version"] = 7
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -550,7 +447,7 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(40, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
 
 
@@ -696,11 +593,11 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
         suite = self.scenario_suite()
-        self.assertEqual(9, suite["version"])
-        self.assertEqual(40, len(suite["contexts"]))
+        self.assertEqual(6, suite["version"])
+        self.assertEqual(26, len(suite["contexts"]))
         self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
         result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
-        self.assertEqual(40, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
         names = {x["id"]: x["profiles"][0]["levels"][0]
                  for x in result["contexts"]}
         self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
@@ -898,8 +795,8 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_control_scenario_corpus_has_timing_contrasts(self):
         fixture = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(fixture.read_text(encoding="utf-8"))
-        self.assertEqual(9, suite["version"])
-        self.assertEqual(40, len(suite["contexts"]))
+        self.assertEqual(6, suite["version"])
+        self.assertEqual(26, len(suite["contexts"]))
         contexts = {item["id"]: item["scenario"] for item in suite["contexts"]}
         early = contexts["metallic-enervation-with-allies"]["controlOpportunities"][0]
         late = contexts["metallic-control-no-exposed-turns"]["controlOpportunities"][0]
@@ -941,7 +838,7 @@ class PowerEvaluationTests(unittest.TestCase):
                          "sharedUsesFromTrait": "hills-tumble"}},
             "trait.goliath.stone.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
                           "activation": {"action": "reaction", "trigger": "when-you-take-damage"},
-                          "damageReduction": {"dice": "1d12", "addAbilityModifier": "constitution", "appliesTo": "triggering-damage"}},
+                          "damageReduction": {"dice": "1d12", "appliesTo": "triggering-damage"}},
             "trait.goliath.stone.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
                       "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "force"},
                       "onFailedSave": {"forcedMovementFeet": 10},
@@ -1253,536 +1150,6 @@ class PowerEvaluationTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 power.validate_scenario({"tacticalOpportunities": [row]})
 
-    @staticmethod
-    def joint_strike(round_number, name):
-        return {"type": "strike", "opportunity": {
-            "id": name, "traitId": "trait.goliath.stone.stone-strike",
-            "turn": round_number, "delivery": "melee-weapon",
-            "mode": "base", "targetSize": "medium", "hit": True,
-            "dealtDamage": True, "targetIsCreature": True,
-            "failureProbability": .55}}
-
-    @staticmethod
-    def joint_reaction(round_number, name):
-        return {"type": "reaction",
-                "traitId": "trait.goliath.stone.stones-endurance",
-                "reactionAlternativeExpectedDamage": 0,
-                "opportunity": {"id": name, "round": round_number,
-                                "amount": 20, "damageType": "force",
-                                "isAttackHit": True, "attackerVisible": True,
-                                "reactionAvailable": True}}
-
-    def test_joint_martial_offense_and_defense_use_one_stone_pool(self):
-        profile = self.synthetic_goliath("stone")
-        events = [self.joint_strike(1, "hit-1"),
-                  self.joint_reaction(1, "incoming-1"),
-                  self.joint_strike(2, "hit-2")]
-        scenario = {"abilityModifiers": {"constitution": 3},
-                    "jointCombatPlans": [{"id": "martial-stone", "archetype": "weapon-martial",
-                                          "events": events}]}
-        result = power.evaluate(profile, self.catalog, 4, scenario)
-        joint = result["jointCombatPlanResults"][0]
-        self.assertEqual(["activated", "activated", "shared-resource-exhausted"],
-                         [x["status"] for x in joint["events"]])
-        self.assertEqual(2, joint["resourcesSpent"]["trait.goliath.stone.stones-endurance"])
-        self.assertAlmostEqual(3.5, joint["metrics"]["joint_expected_net_damage_delta"])
-        self.assertAlmostEqual(9.5, joint["metrics"]["joint_reaction_damage_prevented"])
-        self.assertNotIn("joint_expected_net_damage_delta", result["metrics"])
-
-    def test_joint_skirmisher_bonus_action_competition_across_traits(self):
-        profile = self.tactical_profile()
-        first = self.tactical_event("stone-throw", 1)
-        second = self.tactical_event("maelstrom-aura", 1)
-        third = self.tactical_event("maelstrom-aura", 2)
-        for n, event in enumerate((first, second, third)):
-            event["id"] = f"joint-tactical-{n}"
-        plans = [{"type": "tactical", "opportunity": event}
-                 for event in (first, second, third)]
-        output = power.evaluate(profile, self.tactical_catalog(), 4,
-                                {"jointCombatPlans": [{"id": "skirmisher",
-                                                       "archetype": "bonus-action-skirmisher",
-                                                       "events": plans}]})
-        joint = output["jointCombatPlanResults"][0]
-        self.assertEqual(["activated", "action-already-spent-this-round", "activated"],
-                         [row["status"] for row in joint["events"]])
-        self.assertEqual(1, joint["resourcesSpent"]["trait.goliath.stone.stone-throw"])
-        self.assertEqual(1, joint["resourcesSpent"]["trait.goliath.storm.maelstrom-aura"])
-        self.assertAlmostEqual(.65*5.5-6, joint["metrics"]["joint_expected_net_damage_delta"])
-        self.assertAlmostEqual(.455, joint["metrics"][
-            "joint_tactical_expected_self_attack_hits_prevented"])
-
-    def test_joint_caster_spell_opportunity_cost_reverses_searing_damage(self):
-        event = self.tactical_event("searing-ignition", 1)
-        event["attackReplacementExpectedDamage"] = 12.0
-        result = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4,
-                                {"jointCombatPlans": [{"id": "prepared-caster",
-                                                       "archetype": "prepared-caster",
-                                                       "events": [{"type": "tactical",
-                                                                   "opportunity": event}]}]})
-        metrics = result["jointCombatPlanResults"][0]["metrics"]
-        self.assertAlmostEqual(2*(4.5+2)*(.5+.5*.55)-12,
-                               metrics["joint_expected_net_damage_delta"])
-        self.assertLess(metrics["joint_expected_net_damage_delta"], 0)
-        event["attackReplacementExpectedDamage"] = 5.2
-        martial = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4,
-                                 {"jointCombatPlans": [{"id": "martial",
-                                                        "archetype": "weapon-martial",
-                                                        "events": [{"type": "tactical",
-                                                                    "opportunity": event}]}]})
-        self.assertGreater(martial["jointCombatPlanResults"][0]["metrics"][
-            "joint_expected_net_damage_delta"], 0)
-
-    def test_joint_plan_reaction_slot_and_shared_owner_collision_fail_closed(self):
-        profile = self.synthetic_goliath("stone")
-        action = self.joint_reaction(1, "a")
-        later = self.joint_reaction(1, "b")
-        plan = {"id": "reaction-conflict", "archetype": "weapon-martial",
-                "events": [action, later]}
-        result = power.evaluate(profile, self.catalog, 4, {"jointCombatPlans": [plan]})
-        statuses = [e["status"] for e in result["jointCombatPlanResults"][0]["events"]]
-        self.assertEqual(["activated", "action-already-spent-this-round"], statuses)
-        profile["traits"]["trait.test.collision"] = {
-            "id": "stones-endurance", "uses": {"value": 2, "recharge": "long-rest"}}
-        strike = self.joint_strike(1, "first")
-        plan["events"] = [strike]
-        collision = power.evaluate(profile, self.catalog, 4, {"jointCombatPlans": [plan]})
-        self.assertEqual("unresolved-shared-resource-owner",
-                         collision["jointCombatPlanResults"][0]["events"][0]["status"])
-
-    def test_joint_reaction_has_explicit_competing_attack_cost(self):
-        profile = self.synthetic_goliath("stone")
-        reaction = self.joint_reaction(1, "costly-reaction")
-        reaction["reactionAlternativeExpectedDamage"] = 5
-        plan = {"id": "reaction-tradeoff", "archetype": "weapon-martial",
-                "events": [reaction]}
-        outcome = power.evaluate(profile, self.catalog, 4,
-                                 {"abilityModifiers": {"constitution": 3},
-                                  "jointCombatPlans": [plan]})["jointCombatPlanResults"][0]
-        self.assertEqual("activated", outcome["events"][0]["status"])
-        self.assertAlmostEqual(9.5, outcome["metrics"]["joint_reaction_damage_prevented"])
-        self.assertAlmostEqual(-5, outcome["metrics"]["joint_expected_net_damage_delta"])
-        # Damage prevented and damage forgone must remain separate domains.
-        self.assertNotIn("joint_utility_score", outcome["metrics"])
-
-    def test_joint_independent_stone_throw_pool_can_share_round_with_strike(self):
-        profile = self.synthetic_goliath("stone")
-        profile["traits"].update(self.tactical_profile()["traits"])
-        catalog = self.tactical_catalog()
-        throw = self.tactical_event("stone-throw", 1)
-        plan = {"id": "three-slots", "archetype": "weapon-martial", "events": [
-            self.joint_strike(1, "hit-one"),
-            {"type": "tactical", "opportunity": throw},
-            self.joint_reaction(1, "incoming-one")]}
-        r = power.evaluate(profile, catalog, 4,
-                           {"abilityModifiers": {"constitution": 3},
-                            "jointCombatPlans": [plan]})["jointCombatPlanResults"][0]
-        self.assertEqual(["activated", "activated", "activated"],
-                         [e["status"] for e in r["events"]])
-        self.assertEqual({"trait.goliath.stone.stone-throw": 1,
-                          "trait.goliath.stone.stones-endurance": 2},
-                         r["resourcesSpent"])
-        self.assertEqual({"trait.goliath.stone.stone-throw": 2,
-                          "trait.goliath.stone.stones-endurance": 2},
-                         r["resourcePoolCapacities"])
-        self.assertAlmostEqual(3.5 + (.65 * 5.5 - 3),
-                               r["metrics"]["joint_expected_net_damage_delta"])
-        self.assertAlmostEqual(9.5, r["metrics"]["joint_reaction_damage_prevented"])
-
-    def test_joint_attack_replacement_blocks_same_attack_slot_rider(self):
-        profile = self.synthetic_goliath("stone")
-        profile["traits"].update(self.tactical_profile()["traits"])
-        catalog = self.tactical_catalog()
-        ignition = self.tactical_event("searing-ignition", 1)
-        r = power.evaluate(profile, catalog, 4, {"jointCombatPlans": [{
-            "id": "one-attack", "archetype": "weapon-martial", "events": [
-                {"type": "tactical", "opportunity": ignition},
-                self.joint_strike(1, "same-attack")]}]})
-        trace = r["jointCombatPlanResults"][0]["events"]
-        self.assertEqual(["activated", "action-already-spent-this-round"],
-                         [x["status"] for x in trace])
-
-    def test_joint_plan_strict_validation(self):
-        strike = self.joint_strike(1, "a")
-        reaction = self.joint_reaction(2, "b")
-        good = {"id": "valid", "archetype": "weapon-martial",
-                "events": [strike, reaction]}
-        power.validate_scenario({"jointCombatPlans": [good]})
-        invalid = [
-            {**good, "archetype": "telepathic-caster"},
-            {**good, "events": [reaction, strike]},
-            {**good, "events": [strike, strike]},
-            {**good, "events": [strike, {**reaction, "reactionAlternativeExpectedDamage": -1}]},
-            {**good, "events": [strike, {**reaction, "opportunity": {
-                **reaction["opportunity"], "roudn": 2}}]},
-            {**good, "events": [strike, {"type": "tactical", "opportunity":
-                self.tactical_event("stone-throw", 2) |
-                {"bonusActionAlternativeExpectedDamage": 3} | {
-                    "actionAvailable": True}}]},
-        ]
-        invalid[-1]["events"][1]["opportunity"].pop("bonusActionAlternativeExpectedDamage")
-        for case in invalid:
-            with self.subTest(case=case), self.assertRaises(ValueError):
-                power.validate_scenario({"jointCombatPlans": [case]})
-
-    def test_joint_scenario_corpus_has_three_class_builds(self):
-        suite = self.scenario_suite()
-        self.assertEqual(40, len(suite["contexts"]))
-        plans = [p for context in suite["contexts"]
-                 for p in context["scenario"].get("jointCombatPlans", [])]
-        self.assertEqual({"weapon-martial", "bonus-action-skirmisher", "prepared-caster"},
-                         {p["archetype"] for p in plans})
-        power.validate_scenario_suite(suite)
-
-    @staticmethod
-    def class_plan(class_id, procedure="standard", events=None):
-        return {"id": "class-plan", "classId": class_id,
-                "attackProcedure": procedure, "baseHitChance": 0.65,
-                "weaponDamageOnHit": 8,
-                "events": events or [{"id": "attack-one", "round": 1, "kind": "attack"}]}
-
-    def test_standard_extra_attack_not_added_to_iterative_bab(self):
-        b = self.class_plan("class.barbarian")
-        profile = self.profile("ancestry.dragonborn.red")
-        for level, standard, iterative in ((1, 1, 1), (5, 2, 1), (11, 2, 3), (17, 2, 4)):
-            with self.subTest(level=level):
-                b["attackProcedure"] = "standard"
-                standard_result = power.evaluate(profile, self.catalog, level,
-                                                 {"nativeClassActionPlans": [b]})
-                b["attackProcedure"] = "iterative"
-                iterative_result = power.evaluate(profile, self.catalog, level,
-                                                  {"nativeClassActionPlans": [b]})
-                a = standard_result["nativeClassActionPlanResults"][0]["classProgression"]
-                other = iterative_result["nativeClassActionPlanResults"][0]["classProgression"]
-                self.assertEqual(standard, a["attackCount"])
-                self.assertEqual(iterative, other["attackCount"])
-                self.assertAlmostEqual(standard * 5.2, a["attackActionExpectedDamage"])
-        result = power.evaluate(profile, self.catalog, 11,
-                                {"nativeClassActionPlans": [b]})
-        attacks = result["nativeClassActionPlanResults"][0]["classProgression"]
-        self.assertEqual([11, 6, 1], attacks["evidence"]["baseAttackBonuses"])
-        self.assertAlmostEqual(8 * (.65 + .40 + .15), attacks["attackActionExpectedDamage"])
-
-    def test_attack_replacement_keeps_remaining_extra_attack(self):
-        b = self.class_plan("class.barbarian", events=[
-            {"id": "breath-on-second-attack", "round": 1, "kind": "breath",
-             "traitId": "trait.dragonborn.breath", "targets": 2,
-             "saveFailure": .55, "replacedAttackIndex": 1}])
-        row = power.evaluate(self.profile("ancestry.dragonborn.red"),
-                             self.catalog, 5, {"nativeClassActionPlans": [b]})
-        events = row["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual("used", events[0]["status"])
-        self.assertAlmostEqual(17.05, events[0]["grossExpectedDamage"])
-        self.assertAlmostEqual(5.2 + 17.05, events[0]["expectedDamage"])
-        self.assertAlmostEqual(11.85, events[0]["marginalVersusWeaponAttack"])
-        b["events"][0]["replacedAttackIndex"] = 2
-        row = power.evaluate(self.profile("ancestry.dragonborn.red"), self.catalog, 5,
-                             {"nativeClassActionPlans": [b]})
-        self.assertEqual("attack-index-not-available",
-                         row["nativeClassActionPlanResults"][0]["events"][0]["status"])
-
-    def test_searing_ignition_replaces_one_class_attack(self):
-        b = self.class_plan("class.barbarian", events=[
-            {"id": "searing-one", "round": 1, "kind": "searing-ignition",
-             "traitId": "trait.goliath.fire.searing-ignition", "targets": 2,
-             "saveFailure": .55, "replacedAttackIndex": 0}])
-        for level, expected in ((4, 10.075), (5, 16.825)):
-            with self.subTest(level=level):
-                result = power.evaluate(self.tactical_profile(),
-                                        self.tactical_catalog(), level,
-                                        {"nativeClassActionPlans": [b]})
-                event = result["nativeClassActionPlanResults"][0]["events"][0]
-                self.assertEqual("used", event["status"])
-                self.assertAlmostEqual(expected, event["expectedDamage"])
-
-    def test_wizard_spell_slots_and_casting_cost_are_separate(self):
-        events = [{"id": f"cast-{i}", "round": i, "kind": "spell",
-                   "slotLevel": 3, "spellId": "hypothetical-spell",
-                   "expectedDamage": 12} for i in range(1, 5)]
-        b = self.class_plan("class.wizard", events=events)
-        results = power.evaluate(self.profile("ancestry.dragonborn.red"),
-                                 self.catalog, 5, {"nativeClassActionPlans": [b]})
-        p = results["nativeClassActionPlanResults"][0]
-        self.assertEqual(["used-fixture-assumption", "used-fixture-assumption",
-                          "spell-slot-exhausted-or-locked", "spell-slot-exhausted-or-locked"],
-                         [e["status"] for e in p["events"]])
-        self.assertEqual(0, p["resourceExpenditure"]["remainingClassSpellSlotsByLevel"][3])
-        self.assertAlmostEqual(6.8, p["events"][0]["marginalVersusWeaponAttack"])
-        self.assertTrue(any(x["reason"] == "spell-identity-and-effect-fixture-assumed"
-                            for x in results["unmodeled"]))
-        early = power.evaluate(self.profile("ancestry.dragonborn.red"),
-                               self.catalog, 1, {"nativeClassActionPlans": [b]})
-        self.assertTrue(all(e["status"] == "spell-slot-exhausted-or-locked"
-                            for e in early["nativeClassActionPlanResults"][0]["events"]))
-
-    def test_spell_alternative_compares_full_action_not_one_weapon_attack(self):
-        b = self.class_plan("class.wizard", events=[
-            {"id": "breathe", "round": 1, "kind": "breath",
-             "traitId": "trait.dragonborn.breath", "targets": 2,
-             "saveFailure": .55, "replacedAttackIndex": 0,
-             "spellAlternative": {"slotLevel": 3, "expectedDamage": 12}}])
-        row = power.evaluate(self.profile("ancestry.dragonborn.red"), self.catalog, 5,
-                             {"nativeClassActionPlans": [b]})["nativeClassActionPlanResults"][0]["events"][0]
-        self.assertAlmostEqual(17.05, row["expectedDamage"])
-        self.assertAlmostEqual(5.05, row["marginalVersusSpellAction"])
-        self.assertAlmostEqual(11.85, row["marginalVersusWeaponAttack"])
-        # A Barbarian without a class slot cannot assume the hypothetical spell.
-        b["classId"] = "class.barbarian"
-        blocked = power.evaluate(self.profile("ancestry.dragonborn.red"), self.catalog, 5,
-                                 {"nativeClassActionPlans": [b]})
-        self.assertEqual("slot-not-available", blocked["nativeClassActionPlanResults"][0]
-                         ["events"][0]["spellAlternativeStatus"])
-
-    def test_rogue_unchanged_reaction_rule_requires_native_unlock(self):
-        event = {"id": "dodge-one", "round": 1, "kind": "class-reaction",
-                 "featureId": "class-feature.rogue.uncanny-dodge-level-5",
-                 "damageAmount": 21, "damageType": "force",
-                 "attackerVisible": True, "isAttackHit": True}
-        b = self.class_plan("class.rogue", events=[event, {**event, "id": "dodge-two"},
-                                                  {**event, "id": "dodge-three", "round": 2}])
-        at_five = power.evaluate(self.profile("species.dwarf"), self.catalog, 5,
-                                 {"nativeClassActionPlans": [b]})
-        rows = at_five["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual(["used", "same-round-slot-already-used", "used"],
-                         [x["status"] for x in rows])
-        self.assertEqual([11, 11], [x["expectedDamagePrevented"]
-                                    for x in rows if x["status"] == "used"])
-        at_four = power.evaluate(self.profile("species.dwarf"), self.catalog, 4,
-                                 {"nativeClassActionPlans": [b]})
-        self.assertEqual("class-reaction-not-granted-or-unverified",
-                         at_four["nativeClassActionPlanResults"][0]["events"][0]["status"])
-        b["events"][0]["attackerVisible"] = False
-        untriggered = power.evaluate(self.profile("species.dwarf"), self.catalog, 5,
-                                    {"nativeClassActionPlans": [b]})
-        self.assertEqual("reaction-trigger-not-met",
-                         untriggered["nativeClassActionPlanResults"][0]["events"][0]["status"])
-
-    def test_class_and_origin_reactions_compete_for_one_slot(self):
-        profile = self.synthetic_goliath("stone")
-        stone = {"id": "stone-prevention", "round": 1, "kind": "origin-reaction",
-                 "traitId": "trait.goliath.stone.stones-endurance",
-                 "damageAmount": 20, "damageType": "force",
-                 "attackerVisible": True, "isAttackHit": True}
-        rogue = {"id": "rogue-prevention", "round": 1, "kind": "class-reaction",
-                 "featureId": "class-feature.rogue.uncanny-dodge-level-5",
-                 "damageAmount": 20, "damageType": "force",
-                 "attackerVisible": True, "isAttackHit": True}
-        plan = self.class_plan("class.rogue", events=[stone, rogue,
-                                    {**rogue, "id": "next-round", "round": 2}])
-        result = power.evaluate(profile, self.catalog, 5,
-              {"abilityModifiers": {"constitution": 3},
-               "nativeClassActionPlans": [plan]})
-        outcome = result["nativeClassActionPlanResults"][0]
-        self.assertEqual(["used", "same-round-slot-already-used", "used"],
-                         [e["status"] for e in outcome["events"]])
-        self.assertAlmostEqual(9.5, outcome["events"][0]["expectedDamagePrevented"])
-        self.assertEqual(10, outcome["events"][2]["expectedDamagePrevented"])
-        self.assertEqual({"trait.goliath.stone.stones-endurance": 1},
-                         outcome["resourceExpenditure"]["originTraitUses"])
-        # When Constitution is unspecified, do not claim that +0 is its value;
-        # the class reaction remains available instead.
-        unresolved = power.evaluate(profile, self.catalog, 5,
-                                    {"nativeClassActionPlans": [plan]})
-        rows = unresolved["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual(["missing-ability-modifier", "used", "used"],
-                         [e["status"] for e in rows])
-
-    def test_native_class_action_plans_fail_closed(self):
-        b = self.class_plan("class.barbarian")
-        bad = [
-            {"attackProceduer": "standard"}, {"attackProcedure": "mix"},
-            {"baseHitChance": 1.5}, {"weaponDamageOnHit": -1},
-            {"events": [{"id": "a", "kind": "attack", "round": 0}]},
-            {"events": [{"id": "a", "kind": "attack", "round": 1},
-                        {"id": "a", "kind": "attack", "round": 2}]},
-            {"events": [{"id": "a", "kind": "spell", "round": 1,
-                        "slotLevel": 0, "spellId": "X", "expectedDamage": 2}]},
-            {"events": [{"id": "a", "kind": "spell", "round": 1,
-                        "slotLevel": 1, "spellId": "X", "expectedDamge": 2}]},
-        ]
-        for fields in bad:
-            with self.subTest(fields=fields), self.assertRaises(ValueError):
-                power.validate_scenario({"nativeClassActionPlans": [{**b, **fields}]})
-        broken = copy.deepcopy(self.catalog)
-        broken["classFeatures"]["class-feature.barbarian.extra-attack-level-5"][
-            "definition"]["mechanics"]["babInteraction"] = "additive"
-        m, issue = power._native_class_actions(broken, "class.barbarian", 5,
-                                              "standard", .65, 8)
-        self.assertIsNone(m)
-        self.assertEqual("unverified-native-extra-attack-feature", issue)
-
-    @staticmethod
-    def precision(index=0, **changes):
-        values = {"attackIndex": index, "basis": "unanticipated",
-                  "weaponProficient": True, "withinOrdinaryRange": True,
-                  "targetImmune": False}
-        return {**values, **changes}
-
-    def test_native_rogue_sneak_requires_explicit_eligible_hits(self):
-        profile = self.profile("species.dwarf")
-        plan = self.class_plan("class.rogue", events=[
-            {"id": "qualified", "kind": "attack", "round": 1,
-             "precisionHits": [self.precision()]},
-            {"id": "baseline", "kind": "attack", "round": 2},
-            {"id": "immune", "kind": "attack", "round": 3,
-             "precisionHits": [self.precision(targetImmune=True)]},
-        ])
-        out = power.evaluate(profile, self.catalog, 4, {"nativeClassActionPlans": [plan]})
-        events = out["nativeClassActionPlanResults"][0]["events"]
-        self.assertAlmostEqual(9.75, events[0]["expectedDamage"])
-        self.assertAlmostEqual(4.55, events[0]["sneakAttackExpectedExtraDamage"])
-        self.assertAlmostEqual(5.2, events[1]["expectedDamage"])
-        self.assertAlmostEqual(0, events[2]["sneakAttackExpectedExtraDamage"])
-
-    def test_rogue_steady_aim_improves_roll_but_not_sneak_eligibility(self):
-        profile = self.profile("species.dwarf")
-        feature = "class-feature.rogue.steady-aim-level-3"
-        plan = self.class_plan("class.rogue", events=[
-            {"id": "aim", "kind": "class-bonus-action", "round": 1,
-             "featureId": feature, "option": "steady-aim", "movedThisTurn": False},
-            {"id": "weapon", "kind": "attack", "round": 1},
-            {"id": "aim-moved", "kind": "class-bonus-action", "round": 2,
-             "featureId": feature, "option": "steady-aim", "movedThisTurn": True},
-            {"id": "weapon-2", "kind": "attack", "round": 2,
-             "precisionHits": [self.precision()]},
-        ])
-        out = power.evaluate(profile, self.catalog, 4, {"nativeClassActionPlans": [plan]})
-        events = out["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual("used", events[0]["status"])
-        self.assertAlmostEqual(7.02, events[1]["expectedDamage"])
-        self.assertNotIn("sneakAttackExpectedExtraDamage", events[1])
-        self.assertEqual("steady-aim-movement-restriction", events[2]["status"])
-        self.assertAlmostEqual(9.75, events[3]["expectedDamage"])
-        plan["events"][1]["precisionHits"] = [self.precision()]
-        out2 = power.evaluate(profile, self.catalog, 4, {"nativeClassActionPlans": [plan]})
-        self.assertAlmostEqual(7.02 + (.8775 * 7),
-                               out2["nativeClassActionPlanResults"][0]["events"][1]["expectedDamage"])
-
-    def test_battle_rage_bonus_attack_count_and_spell_prohibition(self):
-        profile = self.profile("species.dwarf")
-        feat = "class-feature.barbarian.rage-level-1"
-        def rage(round, ended=False, heavy=False):
-            return {"id": f"rage-{round}", "kind": "class-bonus-action", "round": round,
-                    "featureId": feat, "option": "battle-rage",
-                    "wearingHeavyArmor": heavy, "rageEndedBeforeActivation": ended}
-        plan = self.class_plan("class.barbarian", events=[
-            rage(1), {"id": "weapon", "kind": "attack", "round": 1,
-                      "strengthBasedAttacks": True},
-            {"id": "spell", "kind": "spell", "round": 1, "slotLevel": 1,
-             "spellId": "fixture-spell", "expectedDamage": 7},
-            rage(2, True), {"id": "weapon-2", "kind": "attack", "round": 2,
-                              "strengthBasedAttacks": True},
-            rage(3, True), rage(4, True),
-        ])
-        out = power.evaluate(profile, self.catalog, 5, {"nativeClassActionPlans": [plan]})
-        entries = out["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual("used", entries[0]["status"])
-        self.assertAlmostEqual(13.0, entries[1]["expectedDamage"])
-        self.assertAlmostEqual(2.6, entries[1]["battleRageExpectedBonusDamage"])
-        self.assertEqual("same-round-slot-already-used", entries[2]["status"])
-        self.assertEqual("used", entries[3]["status"])
-        self.assertEqual("used", entries[5]["status"])
-        self.assertEqual("rage-resource-exhausted", entries[6]["status"])
-        self.assertEqual(3, out["nativeClassActionPlanResults"][0]
-                         ["resourceExpenditure"]["nativeRageUsesSpent"])
-        separate = self.class_plan("class.barbarian", events=[
-            rage(1), {"id": "cast", "round": 1, "kind": "spell",
-                      "slotLevel": 1, "spellId": "fixture", "expectedDamage": 10}])
-        out = power.evaluate(profile, self.catalog, 5, {"nativeClassActionPlans": [separate]})
-        self.assertEqual("rage-forbids-spellcasting",
-                         out["nativeClassActionPlanResults"][0]["events"][1]["status"])
-
-    def test_rogue_cunning_and_origin_throw_compete_for_bonus_action(self):
-        profile = self.profile("species.dwarf")
-        ident = "trait.goliath.stone.stone-throw"
-        profile["traits"][ident] = {
-            "id": "stone-throw", "requiredCharacterLevel": 4,
-            "activation": {"action": "bonus-action"},
-            "requiresItem": "rock", "attack": {"type": "ranged-spell-attack", "rangeFeet": 60},
-            "damage": {"dice": "1d10", "damageType": "force"},
-            "savingThrow": {"ability": "strength", "onSuccess": "no-prone"},
-            "applyConditionOnFailedSave": "condition.prone",
-            "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
-        }
-        self.catalog["conditions"]["condition.prone"] = {"id": "condition.prone", "effects": []}
-        throw = {"id": "throw", "round": 1, "kind": "origin-bonus-action",
-                 "traitId": ident, "rockAvailable": True, "distanceFeet": 30,
-                 "hitChance": 0.65, "saveFailure": 0.55, "targetIsCreature": True}
-        hide = {"id": "hide", "round": 1, "kind": "class-bonus-action",
-                "featureId": "class-feature.rogue.cunning-action-level-2", "option": "hide"}
-        plan = self.class_plan("class.rogue", events=[hide, throw,
-            {**throw, "id": "throw-again", "round": 2}])
-        out = power.evaluate(profile, self.catalog, 4, {"nativeClassActionPlans": [plan]})
-        rows = out["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual(["used", "same-round-slot-already-used", "used"],
-                         [x["status"] for x in rows])
-        self.assertAlmostEqual(3.575, rows[2]["expectedGrossDamage"])
-        self.assertEqual({ident: 1}, out["nativeClassActionPlanResults"][0]
-                         ["resourceExpenditure"]["originTraitUses"])
-
-    def test_battle_rage_replacement_retains_only_unreplaced_strength_bonus(self):
-        profile = self.profile("ancestry.dragonborn.red")
-        plan = self.class_plan("class.barbarian", events=[
-            {"id": "rage", "round": 1, "kind": "class-bonus-action",
-             "featureId": "class-feature.barbarian.rage-level-1", "option": "battle-rage",
-             "wearingHeavyArmor": False, "rageEndedBeforeActivation": False},
-            {"id": "breath", "round": 1, "kind": "breath",
-             "traitId": "trait.dragonborn.breath", "targets": 2,
-             "saveFailure": 0.55, "replacedAttackIndex": 0,
-             "strengthBasedAttacks": True},
-        ])
-        results = power.evaluate(profile, self.catalog, 5, {"nativeClassActionPlans": [plan]})
-        row = results["nativeClassActionPlanResults"][0]["events"][1]
-        self.assertEqual("used", row["status"])
-        self.assertAlmostEqual(23.55, row["expectedDamage"])
-        self.assertAlmostEqual(1.3, row["battleRageExpectedBonusOnRetainedAttacks"])
-        plan["events"][1].pop("strengthBasedAttacks")
-        unresolved = power.evaluate(profile, self.catalog, 5, {"nativeClassActionPlans": [plan]})
-        self.assertEqual("rage-attack-basis-unspecified",
-                         unresolved["nativeClassActionPlanResults"][0]["events"][1]["status"])
-
-    def test_native_rogue_multiple_qualifying_hits_get_independent_precision(self):
-        profile = self.profile("species.dwarf")
-        plan = self.class_plan("class.rogue", "iterative", events=[
-            {"id": "two-hits", "round": 1, "kind": "attack",
-             "precisionHits": [self.precision(0), self.precision(1)]},
-            {"id": "bad-index", "round": 2, "kind": "attack",
-             "precisionHits": [self.precision(2)]},
-        ])
-        out = power.evaluate(profile, self.catalog, 11, {"nativeClassActionPlans": [plan]})
-        row = out["nativeClassActionPlanResults"][0]["events"][0]
-        self.assertAlmostEqual(22.05, row["sneakAttackExpectedExtraDamage"])
-        self.assertAlmostEqual(30.45, row["expectedDamage"])
-        self.assertIn("precision-attack-index-unavailable",
-                      [x["reason"] for x in out["nativeClassActionPlanResults"][0]["unresolved"]])
-        incompatible = copy.deepcopy(self.catalog)
-        incompatible["classFeatures"]["class-feature.rogue.sneak-attack-level-1"][
-            "definition"]["mechanics"]["advantageAloneInsufficient"] = False
-        out2 = power.evaluate(profile, incompatible, 11, {"nativeClassActionPlans": [plan]})
-        self.assertIn("native-sneak-attack-unverified-or-not-granted",
-                      [x["reason"] for x in out2["nativeClassActionPlanResults"][0]["unresolved"]])
-
-    def test_class_bonus_and_precision_contracts_fail_closed(self):
-        plan = self.class_plan("class.rogue")
-        wrong = [
-            {"kind": "class-bonus-action", "featureId": "x", "option": "hide",
-             "movedThisTurn": False},
-            {"kind": "class-bonus-action", "featureId": "x", "option": "steady-aim"},
-            {"kind": "class-bonus-action", "featureId": "x", "option": "battle-rage",
-             "wearingHeavyArmor": False},
-            {"kind": "attack", "precisionHits": [{"attackIndex": 0, "basis": "advantage",
-                 "weaponProficient": True, "withinOrdinaryRange": True,
-                 "targetImmune": False}]},
-            {"kind": "attack", "strengthBasedAttacks": 1},
-            {"kind": "origin-bonus-action", "traitId": "x", "rockAvailable": True,
-             "distanceFeet": 10, "hitChance": .65, "saveFailure": .55,
-             "targetIsCreature": "yes"},
-        ]
-        for i, action in enumerate(wrong):
-            broken = copy.deepcopy(plan)
-            broken["events"][0] = {"id": "invalid", "round": 1, **action}
-            with self.subTest(case=i), self.assertRaises(ValueError):
-                power.validate_scenario({"nativeClassActionPlans": [broken]})
-
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
                      "Full native catalog is not available in isolated fixture tests")
 class NativeCatalogIntegrationTests(unittest.TestCase):
@@ -1809,7 +1176,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(40, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -1819,25 +1186,6 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
                 for evaluation in entry["levels"]:
                     self.assertIsInstance(evaluation["unmodeled"], list)
 
-
-    def test_native_joint_action_and_resource_replay(self):
-        catalog = power.load_native(power.DEFAULT_NATIVE)
-        profiles = {
-            "stone": power.reconstruct_preset(catalog, "ancestry.goliath.stone"),
-            "fire": power.reconstruct_preset(catalog, "ancestry.goliath.fire")}
-        suite = json.loads((Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
-                           .read_text(encoding="utf-8"))
-        scenarios = {c["id"]: c["scenario"] for c in suite["contexts"]}
-        stone = power.evaluate(profiles["stone"], catalog, 4,
-                               scenarios["joint-weapon-martial-stone"])
-        plan = stone["jointCombatPlanResults"][0]
-        self.assertEqual(["activated", "activated", "shared-resource-exhausted"],
-                         [row["status"] for row in plan["events"]])
-        self.assertAlmostEqual(9.5, plan["metrics"]["joint_reaction_damage_prevented"])
-        fire = power.evaluate(profiles["fire"], catalog, 4,
-                              scenarios["joint-prepared-caster-searing"])
-        self.assertLess(fire["jointCombatPlanResults"][0]["metrics"][
-            "joint_expected_net_damage_delta"], 0)
 
     def test_native_directional_signals_are_preserved(self):
         """Check known native contrasts, not merely that the evaluator runs."""
@@ -2008,132 +1356,6 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         self.assertTrue(any("teleport" in row.get("fields", [])
                             for row in cloud[2]["unmodeled"]))
 
-
-    def test_native_fire_goliath_searing_uses_class_extra_attack(self):
-        catalog = power.load_native(power.DEFAULT_NATIVE)
-        profile = power.reconstruct_preset(catalog, "ancestry.goliath.fire")
-        suite = json.loads((Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
-                           .read_text(encoding="utf-8"))
-        scenario = next(ctx["scenario"] for ctx in suite["contexts"]
-                        if ctx["id"] == "native-barbarian-searing-ignition")
-        before = power.evaluate(profile, catalog, 4, scenario)
-        after = power.evaluate(profile, catalog, 5, scenario)
-        self.assertAlmostEqual(10.075, before["nativeClassActionPlanResults"][0]
-                               ["events"][0]["expectedDamage"])
-        self.assertAlmostEqual(16.825, after["nativeClassActionPlanResults"][0]
-                               ["events"][0]["expectedDamage"])
-
-    def test_native_goliath_rogue_reactions_share_reaction_slot(self):
-        catalog = power.load_native(power.DEFAULT_NATIVE)
-        profile = power.reconstruct_preset(catalog, "ancestry.goliath.stone")
-        scene = {"abilityModifiers": {"constitution": 3},
-                 "nativeClassActionPlans": [{
-            "id": "rogue-plus-stone", "classId": "class.rogue",
-            "attackProcedure": "standard", "baseHitChance": .65,
-            "weaponDamageOnHit": 8,
-            "events": [
-                {"id": "stone", "round": 1, "kind": "origin-reaction",
-                 "traitId": "trait.goliath.stone.stones-endurance",
-                 "damageAmount": 20, "damageType": "force",
-                 "attackerVisible": True, "isAttackHit": True},
-                {"id": "rogue", "round": 1, "kind": "class-reaction",
-                 "featureId": "class-feature.rogue.uncanny-dodge-level-5",
-                 "damageAmount": 20, "damageType": "force",
-                 "attackerVisible": True, "isAttackHit": True},
-            ]}]} 
-        out = power.evaluate(profile, catalog, 5, scene)
-        status = [e["status"] for e in out["nativeClassActionPlanResults"][0]["events"]]
-        self.assertEqual(["used", "same-round-slot-already-used"], status)
-
-    def test_native_class_progression_is_authoritative(self):
-        catalog = power.load_native(power.DEFAULT_NATIVE)
-        self.assertIn("class.barbarian", catalog["classes"])
-        self.assertIn("class.rogue", catalog["classes"])
-        self.assertIn("class.wizard", catalog["classes"])
-        for level, standard, iterative in ((1, 1, 1), (5, 2, 1),
-                                           (11, 2, 3), (17, 2, 4)):
-            for procedure, expected in (("standard", standard), ("iterative", iterative)):
-                with self.subTest(level=level, procedure=procedure):
-                    model, issue = power._native_class_actions(
-                        catalog, "class.barbarian", level, procedure, .65, 8)
-                    self.assertIsNone(issue)
-                    self.assertEqual(expected, model["attackCount"])
-        wizard, issue = power._native_class_actions(
-            catalog, "class.wizard", 5, "standard", .65, 8)
-        self.assertIsNone(issue)
-        self.assertEqual(2, wizard["nativeSpellSlotsByLevel"][3])
-        self.assertEqual(1, wizard["attackCount"])
-        rogue = power.reconstruct_preset(catalog, "species.orc")
-        scene = {"nativeClassActionPlans": [{
-            "id": "rogue-react", "classId": "class.rogue", "attackProcedure": "standard",
-            "baseHitChance": .65, "weaponDamageOnHit": 8,
-            "events": [{"id": "visible-hit", "kind": "class-reaction", "round": 1,
-                        "featureId": "class-feature.rogue.uncanny-dodge-level-5",
-                        "damageAmount": 21, "damageType": "force",
-                        "attackerVisible": True, "isAttackHit": True}]}]}
-        before = power.evaluate(rogue, catalog, 4, scene)
-        after = power.evaluate(rogue, catalog, 5, scene)
-        self.assertEqual("class-reaction-not-granted-or-unverified",
-                         before["nativeClassActionPlanResults"][0]["events"][0]["status"])
-        self.assertEqual(11, after["nativeClassActionPlanResults"][0]["events"][0]
-                         ["expectedDamagePrevented"])
-
-
-
-    def test_native_battle_rage_sneak_and_bonus_actions(self):
-        """Verify selected native authoring contracts in the real catalog."""
-        catalog = power.load_native(power.DEFAULT_NATIVE)
-        dwarf = power.reconstruct_preset(catalog, "species.dwarf")
-        barbarian = {"nativeClassActionPlans": [{
-            "id": "rage-native", "classId": "class.barbarian",
-            "attackProcedure": "standard", "baseHitChance": .65,
-            "weaponDamageOnHit": 8, "events": [
-                {"id": "rage", "round": 1, "kind": "class-bonus-action",
-                 "featureId": "class-feature.barbarian.rage-level-1", "option": "battle-rage",
-                 "wearingHeavyArmor": False, "rageEndedBeforeActivation": False},
-                {"id": "attack", "round": 1, "kind": "attack",
-                 "strengthBasedAttacks": True},
-            ]}]}
-        result = power.evaluate(dwarf, catalog, 5, barbarian)
-        events = result["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual("used", events[0]["status"])
-        self.assertAlmostEqual(13, events[1]["expectedDamage"])
-        self.assertEqual(1, result["nativeClassActionPlanResults"][0]["resourceExpenditure"]
-                         ["nativeRageUsesSpent"])
-        rogue = {"nativeClassActionPlans": [{
-            "id": "sneak-native", "classId": "class.rogue",
-            "attackProcedure": "iterative", "baseHitChance": .65,
-            "weaponDamageOnHit": 8, "events": [
-                {"id": "eligible", "round": 1, "kind": "attack",
-                 "precisionHits": [{"attackIndex": 0, "basis": "unanticipated",
-                                    "weaponProficient": True, "withinOrdinaryRange": True,
-                                    "targetImmune": False}]},
-                {"id": "aim", "round": 2, "kind": "class-bonus-action",
-                 "featureId": "class-feature.rogue.steady-aim-level-3", "option": "steady-aim",
-                 "movedThisTurn": False},
-                {"id": "aimed", "round": 2, "kind": "attack"},
-            ]}]}
-        r = power.evaluate(dwarf, catalog, 5, rogue)
-        events = r["nativeClassActionPlanResults"][0]["events"]
-        self.assertAlmostEqual(.65 * 10.5, events[0]["sneakAttackExpectedExtraDamage"])
-        self.assertEqual("used", events[1]["status"])
-        self.assertAlmostEqual(.8775 * 8, events[2]["expectedDamage"])
-        stone = power.reconstruct_preset(catalog, "ancestry.goliath.stone")
-        clash = {"nativeClassActionPlans": [{
-            "id": "stone-rogue", "classId": "class.rogue",
-            "attackProcedure": "standard", "baseHitChance": .65,
-            "weaponDamageOnHit": 8, "events": [
-                {"id": "hide", "round": 1, "kind": "class-bonus-action",
-                 "featureId": "class-feature.rogue.cunning-action-level-2", "option": "hide"},
-                {"id": "stone-throw", "round": 1, "kind": "origin-bonus-action",
-                 "traitId": "trait.goliath.stone.stone-throw", "rockAvailable": True,
-                 "distanceFeet": 40, "targetIsCreature": True,
-                 "hitChance": .65, "saveFailure": .55},
-            ]}]}
-        r = power.evaluate(stone, catalog, 5, clash)
-        rows = r["nativeClassActionPlanResults"][0]["events"]
-        self.assertEqual(["used", "same-round-slot-already-used"],
-                         [e["status"] for e in rows])
 
 if __name__ == "__main__":
     unittest.main()
