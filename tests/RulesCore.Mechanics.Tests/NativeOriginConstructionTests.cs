@@ -1588,6 +1588,53 @@ public sealed class NativeOriginConstructionTests
                 x => x.Identity.MechanicalDefinitionId == featureId);
             Assert.Equal(chosenAbility, durable.Parameters!["giantAncestryAbility"].GetString());
             Assert.Equal(aptitude.Id, durable.ParameterSources!["giantAncestryAbility"]);
+
+            var validator = new NativeOriginContractValidator(Catalog());
+            Assert.DoesNotContain(validator.ReviewProfile(completed.Profile,
+                completed.EvaluatedProposal).Issues,
+                x => x.Code == "profile-trait-choice-binding-invalid");
+
+            var forgedParameters = completed.Profile.Underlying with
+            {
+                InherentGrants = completed.Profile.Underlying.InherentGrants
+                    .Select(x => x.Id == bound.Id
+                        ? x with
+                        {
+                            Parameters = new Dictionary<string, JsonElement>(
+                                x.Parameters ?? new Dictionary<string, JsonElement>())
+                            {
+                                ["giantAncestryAbility"] =
+                                    JsonSerializer.SerializeToElement(
+                                        chosenAbility == "strength" ? "constitution" : "strength")
+                            }
+                        }
+                        : x).ToArray()
+            };
+            Assert.Contains(validator.ReviewProfile(completed.Profile with
+            {
+                Underlying = forgedParameters, Current = forgedParameters
+            }, completed.EvaluatedProposal).Issues,
+                x => x.Code == "profile-trait-choice-binding-invalid");
+
+            var forgedEvidence = completed.Profile.Underlying with
+            {
+                InherentGrants = completed.Profile.Underlying.InherentGrants
+                    .Select(x => x.Id == bound.Id
+                        ? x with
+                        {
+                            ParameterSources = new Dictionary<string, string>(
+                                x.ParameterSources ?? new Dictionary<string, string>())
+                            {
+                                ["giantAncestryAbility"] = "candidate:unrelated-parent"
+                            }
+                        }
+                        : x).ToArray()
+            };
+            Assert.Contains(validator.ReviewProfile(completed.Profile with
+            {
+                Underlying = forgedEvidence, Current = forgedEvidence
+            }, completed.EvaluatedProposal).Issues,
+                x => x.Code == "profile-trait-choice-binding-invalid");
         }
     }
 
@@ -1655,6 +1702,46 @@ public sealed class NativeOriginConstructionTests
             "dependent-choice-invalid");
         Assert.DoesNotContain(invalid.Profile?.Underlying.InherentGrants ?? [],
             x => x.Identity.MechanicalDefinitionId == feature.Identity.MechanicalDefinitionId);
+    }
+
+    [Fact]
+    public void DirectStoneGoliathUsesOnePlayerSelectedAptitudeAcrossItsAbilities()
+    {
+        var proposal = Proposal("direct-stone-goliath",
+            ancestry: "ancestry.goliath.stone");
+        var preview = Evaluate(proposal).EvaluatedProposal;
+        var aptitude = Assert.Single(preview.Candidates, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        Assert.Equal("species.goliath", aptitude.Identity.Occurrence.Source.Id);
+        Assert.Equal(NativeOriginEligibility.Eligible, aptitude.SelectionBasis.Eligibility);
+
+        var complete = Evaluate(proposal with
+        {
+            Manifestations =
+            [
+                new("native-aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["strength"])])
+            ]
+        });
+        Assert.True(complete.Status == NativeOriginConstructionStatus.Authorized,
+            "Actual: " + complete.Status + "; " +
+            string.Join(" | ", complete.Issues.Select(x => x.Code + ":" + x.Detail)));
+        var grants = complete.Profile!.Underlying.InherentGrants;
+        foreach (var name in new[] { "stone-strike", "stone-throw" })
+        {
+            var feature = Assert.Single(grants, x =>
+                x.EffectiveValue?.ValueKind == JsonValueKind.Object &&
+                x.EffectiveValue.Value.GetProperty("id").GetString() == name);
+            Assert.Equal("strength", feature.Parameters!["giantAncestryAbility"].GetString());
+            Assert.Equal(aptitude.Id, feature.ParameterSources!["giantAncestryAbility"]);
+        }
+        var strike = Assert.Single(grants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-strike");
+        Assert.Equal("grant:auto:direct:ancestry.goliath.stone:/traits/0",
+            strike.ResourceOwners!["uses"]);
+        Assert.DoesNotContain(new NativeOriginContractValidator(Catalog())
+            .ReviewProfile(complete.Profile, complete.EvaluatedProposal).Issues,
+            x => x.Code == "profile-trait-choice-binding-invalid");
     }
 
     [Fact]
