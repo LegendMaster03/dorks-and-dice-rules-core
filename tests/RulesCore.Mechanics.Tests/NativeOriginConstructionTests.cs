@@ -981,6 +981,37 @@ public sealed class NativeOriginConstructionTests
         Assert.True(unrelatedRule.Profile is null ||
             unrelatedRule.Profile.Underlying.InherentGrants.Count == 0);
 
+        // Additional biological contributors can offer the same mechanic
+        // without providing another use pool or altering the chosen fields.
+        var threeSources = authored with
+        {
+            Contributors = authored.Contributors.Concat(
+                [Contributor("extra-red", "ancestry.dragonborn.red")]).ToArray()
+        };
+        var third = Evaluate(threeSources).EvaluatedProposal.Candidates.Single(x =>
+            x.ContributorId == "extra-red" &&
+            x.Identity.Occurrence.Source.Id == "species.dragonborn" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/2");
+        var threeChosen = threeSources with
+        {
+            Manifestations = threeSources.Manifestations.Concat(
+                [new NativeOriginManifestation("extra-breath", third.Id)]).ToArray(),
+            TableDecisions = threeSources.TableDecisions!.Concat(
+                [Decision("allow-extra", "candidate", third.Id,
+                    new { eligibility = "eligible" })]).ToArray(),
+            Relationships = [new("breath-compose",
+                NativeOriginRelationshipKind.Substitution,
+                [red.Id, bronze.Id, third.Id], AuthoredRuleReference: canonical)]
+        };
+        var threeResult = Evaluate(threeChosen, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, threeResult.Status);
+        var threeBreath = Assert.Single(threeResult.Profile!.Underlying.InherentGrants);
+        Assert.Equal(3, threeBreath.SourceCandidateIds.Count);
+        Assert.Equal("fire", threeBreath.Parameters!["damageType"].GetString());
+        Assert.Equal("cone", threeBreath.Parameters["area"].GetProperty("shape").GetString());
+        Assert.Equal("proficiency-bonus", threeBreath.EffectiveValue!.Value
+            .GetProperty("uses").GetProperty("value").GetString());
+
         // A player cannot forge a field's provenance or silently choose a value
         // outside the contributors' exact configured offers.
         var forged = Evaluate(selected with
