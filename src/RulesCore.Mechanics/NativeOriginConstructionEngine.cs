@@ -442,7 +442,9 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 
             var attribution = modification ?? (decisionEligible ? permission : null);
             var basis = attribution is null
-                ? new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported, source.Id)
+                ? new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported,
+                    baseEligible && proposal.Intent == NativeOriginIntent.Mixed
+                        ? candidate.SelectionBasis.RuleReference : source.Id)
                 : new NativeOriginDecisionBasis(NativeOriginAdjudication.DmAuthorized,
                     TableDecisionId: attribution.Id);
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
