@@ -140,23 +140,33 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
         var catalog = Catalog();
         Assert.Equal(9, catalog.CountByCategory("species"));
 
-        foreach (var id in new[]
+        var approved = new[]
         {
-            "trait.shared.low-light-vision",
             "trait.dragonborn.breath-weapon",
-            "trait.shared.amphibious",
             "trait.elf.trance",
             "trait.goliath.altitude-acclimation",
-            "trait.orc.relentless-endurance"
-        })
+            "trait.orc.relentless-endurance",
+            "trait.shared.amphibious",
+            "trait.shared.low-light-vision"
+        };
+        var page = catalog.Search(category: "origin-trait", limit: 100);
+        Assert.Equal(catalog.CountByCategory("origin-trait"), page.Total);
+        // A newly annotated trait deliberately changes executable biological
+        // inheritance. Require an explicit eligibility review and test update;
+        // no unreviewed canonical trait silently joins the first-party set.
+        var inherited = page.Items.Where(definition =>
+                definition.Definition.TryGetProperty("inheritanceMethods",
+                    out var methods) &&
+                methods.ValueKind == JsonValueKind.Array &&
+                methods.EnumerateArray().Any(x =>
+                    x.ValueKind == JsonValueKind.String &&
+                    x.GetString() == "biological"))
+            .Select(x => x.Id).OrderBy(x => x, StringComparer.Ordinal).ToArray();
+        Assert.Equal(approved, inherited);
+        foreach (var id in approved)
         {
             Assert.True(catalog.TryGetById(id, out var definition), id);
             Assert.Equal("origin-trait", definition!.Category);
-            Assert.True(definition.Definition.TryGetProperty("inheritanceMethods",
-                out var methods), id);
-            Assert.Contains(methods.EnumerateArray(), x =>
-                x.ValueKind == JsonValueKind.String &&
-                x.GetString() == "biological");
         }
     }
 }
