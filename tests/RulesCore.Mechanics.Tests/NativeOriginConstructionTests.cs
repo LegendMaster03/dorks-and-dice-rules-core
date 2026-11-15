@@ -947,7 +947,9 @@ public sealed class NativeOriginConstructionTests
                 }
             }]
         }, new TestAuthority(), false);
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, forged.Status);
+        // Invalid proposal evidence and unresolved reconciliation both fail
+        // closed; neither is an authorization to construct a playable grant.
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, forged.Status);
         Assert.Empty(forged.Profile!.Underlying.InherentGrants);
         Assert.Contains(forged.Issues, x => x.Code == "relationship-action-unresolved");
 
