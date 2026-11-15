@@ -570,6 +570,256 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal(8, updated.Resources.Single(x => x.Id == "resource.primary").Current);
     }
 
+
+    [Fact]
+    public void TransitionPreviewEvaluatesTargetedInfluenceConflictBeforeOfferingCommit()
+    {
+        var effect = new NativeCharacterInfluenceEffect(
+            "effect.conflict", Occurrence("effects.conflict"), "receipt.conflict", Rule(),
+            new Dictionary<string, string>(), ["wolf"],
+            NativeInfluenceCharacteristic.AbilityScore, NativeInfluenceOperation.Replace,
+            Key: "strength", NumericValue: 20);
+        var influence = new NativeCharacterPersistentInfluence(
+            "curse", "definition.curse", Source(), "receipt.curse",
+            "receipt.expression", new Dictionary<string, string>(), [effect]);
+        var state = Character([influence]);
+        var original = Ledger();
+        var proposed = Plan(state, original, "e1",
+            Activate("manifest.wolf", "wolf", "e1", addWolfPool: true));
+
+        Assert.Equal("unresolved", proposed.Status);
+        Assert.Null(proposed.Proposed);
+        Assert.Null(proposed.ProposedEffective);
+        Assert.Contains(proposed.Issues,
+            x => x.Code == "influence-sheet-overlap-unresolved");
+        Assert.Empty(original.Instances);
+        Assert.Equal(7, original.Revision);
+    }
+
+    [Fact]
+    public void TransitionPreviewRejectsFormResourcePolicyConflict()
+    {
+        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
+        var altered = step.NewInstance! with {
+            ResourcePolicies = step.NewInstance.ResourcePolicies.Select(policy =>
+                policy.ResourceId == "resource.primary"
+                    ? policy with {
+                        Mode = NativeManifestationResourceMode.Separate,
+                        MaximumAdjustment = null
+                    }
+                    : policy).ToArray()
+        };
+        var attempt = Plan(Character(), Ledger(), "e1",
+            step with { NewInstance = altered });
+
+        Assert.Equal("unresolved", attempt.Status);
+        Assert.Null(attempt.Proposed);
+        Assert.Contains(attempt.Issues,
+            issue => issue.Code == "manifestation-resource-policy-unresolved");
+    }
+
+    [Fact]
+    public void ProposedEffectiveViewShowsNewFormButIsNotACommittedRevision()
+    {
+        var current = Ledger();
+        var plan = Plan(Character(), current, "e1",
+            Activate("manifest.wolf", "wolf", "e1", addWolfPool: true));
+
+        Assert.Equal("planned", plan.Status);
+        Assert.Equal("partial", plan.ProposedEffective!.Status);
+        Assert.Equal("wolf", plan.ProposedEffective.EffectiveSheetId);
+        Assert.Equal(17, plan.ProposedEffective.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(8, plan.ProposedEffective.Resources
+            .Single(x => x.Id == "resource.primary").Current);
+        Assert.Equal(8, plan.Proposed!.Revision);
+        Assert.Equal(7, current.Revision);
+        Assert.Empty(current.ProcessedEventIds);
+    }
+
+    [Fact]
+    public void EndRequiresNamedConditionOrIndependentlyVerifiedLaterEvent()
+    {
+        var current = ActivatedWolf();
+        var ordinary = Action(NativeManifestationTransitionAction.End, "manifest.wolf");
+        var valid = Plan(Character(), current, "e2", ordinary);
+        Assert.Equal("planned", valid.Status);
+
+        var unlisted = ordinary with {
+            EndingConditionId = "rule.test.external-displacement",
+            RuleOccurrence = Occurrence("actions.external-displacement")
+        };
+        var denied = Plan(Character(), current, "e2", unlisted);
+        Assert.Equal("invalid", denied.Status);
+        Assert.Contains(denied.Issues, x => x.Code == "manifestation-ending-unverified");
+        Assert.Null(denied.Proposed);
+
+        var verified = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current, new("character.1", current.Revision, "e2", [unlisted]),
+            new Authority { PermitIndependentEnding = true });
+        Assert.Equal("planned", verified.Status);
+        Assert.Equal(NativeManifestationLifecycle.Ended,
+            verified.Proposed!.Instances.Single().Lifecycle);
+        Assert.Equal("wolf", current.Instances.Single().SheetId);
+        Assert.Equal(NativeManifestationLifecycle.Active, current.Instances.Single().Lifecycle);
+
+        var wrongSource = unlisted with { RuleOccurrence = Occurrence("actions.unrelated") };
+        var rejected = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current, new("character.1", current.Revision, "e2", [wrongSource]),
+            new Authority { PermitIndependentEnding = true });
+        Assert.Equal("invalid", rejected.Status);
+        Assert.Null(rejected.Proposed);
+    }
+
+    [Fact]
+    public void EndWithoutAnEventIdentifierFailsStructuralValidation()
+    {
+        var current = ActivatedWolf();
+        var step = Action(NativeManifestationTransitionAction.End, "manifest.wolf")
+            with { EndingConditionId = null };
+        var authority = new Authority();
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current, new("character.1", current.Revision, "e2", [step]),
+            authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Equal(0, authority.TransitionCalls);
+    }
+
+    [Fact]
+    public void TerminateInteractionRequiresAnActualEndNotAnImplicitPrecedenceRule()
+    {
+        var state = Character();
+        var current = ActivatedWolf();
+        var termination = new NativeManifestationInteractionDecision(
+            "interaction.terminate", NativeManifestationInteractionKind.Terminate,
+            ["manifest.wolf", "manifest.hybrid"], "manifest.hybrid",
+            Occurrence("interactions.terminate"), Rule(), "receipt.terminate");
+        var activate = Activate("manifest.hybrid", "hybrid", "e2");
+        var noEnding = NativeCharacterManifestationTransitionPlanner.Plan(
+            state, current, new("character.1", current.Revision, "e2",
+                [activate], [termination]), new Authority());
+        Assert.Equal("invalid", noEnding.Status);
+        Assert.Null(noEnding.Proposed);
+        Assert.Contains(noEnding.Issues,
+            issue => issue.Code == "manifestation-termination-unexecuted");
+
+        var explicitEnding = NativeCharacterManifestationTransitionPlanner.Plan(
+            state, current, new("character.1", current.Revision, "e2", [
+                Action(NativeManifestationTransitionAction.End, "manifest.wolf"),
+                activate
+            ], [termination]), new Authority());
+        Assert.Equal("planned", explicitEnding.Status);
+        Assert.Equal("hybrid", explicitEnding.ProposedEffective!.EffectiveSheetId);
+        Assert.Equal(NativeManifestationLifecycle.Ended,
+            explicitEnding.Proposed!.Instances.Single(x => x.Id == "manifest.wolf").Lifecycle);
+    }
+
+    [Fact]
+    public void UnauthorizedInheritedProgressionAndGrantBlockTransitions()
+    {
+        var state = Character();
+        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
+        foreach (var authority in new[] {
+            new Authority { DenyProgression = true },
+            new Authority { DenyGrant = true }
+        })
+        {
+            var result = NativeCharacterManifestationTransitionPlanner.Plan(
+                state, Ledger(), new("character.1", 7, "e1", [step]), authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.Proposed);
+            Assert.Equal(0, authority.TransitionCalls);
+        }
+    }
+
+    [Fact]
+    public void DuplicateGrantOwnerAndUnrelatedOccurrenceFailClosedBeforeTransition()
+    {
+        var duplicate = Character(sheets: [
+            Werewolf(), Wolf() with { Progression = [Progress("other", "grant.shared")] },
+            Hybrid()
+        ]);
+        var wrongOccurrence = Character(sheets: [
+            Werewolf() with {
+                Progression = [Progress("shared", "grant.shared") with {
+                    SourceOccurrence = new(Source(), "")
+                }]
+            }, Wolf(), Hybrid()
+        ]);
+        Assert.Equal("invalid", Plan(duplicate, Ledger(), "e1",
+            Activate("manifest.wolf", "wolf", "e1", true)).Status);
+        Assert.Equal("invalid", Plan(wrongOccurrence, Ledger(), "e1",
+            Activate("manifest.wolf", "wolf", "e1", true)).Status);
+    }
+
+    private sealed class OriginAuthority : INativeCharacterOriginBaselineAuthority
+    {
+        public bool DenyReconstruction { get; set; }
+        public bool AuthorizesBaseline(string characterId, NativeOriginProfile profile) =>
+            !DenyReconstruction && characterId == "character.1" &&
+            profile.Id == "origin.reconstructed";
+        public bool AuthorizesGrant(string characterId, NativeOriginProfile profile,
+            NativeOriginEffectiveGrant grant) =>
+            !DenyReconstruction && characterId == "character.1" &&
+            grant.Identity.Occurrence.Source.Id == "source.verified-origin" &&
+            grant.Identity.Occurrence.OccurrencePath == "/walkingSpeedFeet";
+    }
+
+    private static NativeOriginEffectiveGrant OriginWalkSpeed(int speed) => new(
+        "grant.origin.walk." + speed, "manifest.origin.walk." + speed,
+        new NativeOriginCharacteristicIdentity(NativeOriginCharacteristicKind.Intrinsic,
+            new(new(NativeOriginSourceKind.Native, "source.verified-origin", "v1"),
+                "/walkingSpeedFeet"),
+            IntrinsicSlotId: "walkingSpeedFeet"),
+        ["source.origin.walk"], EffectiveValue: JsonSerializer.SerializeToElement(speed),
+        Authorization: new(NativeOriginAdjudication.Supported));
+
+    private static NativeOriginProfile ReconstructedOrigin(int currentUnderlying, int staleCurrent)
+    {
+        NativeOriginCurrentConfiguration Config(int speed) =>
+            new("species.synthetic", null, [OriginWalkSpeed(speed)],
+                "origin.configuration." + speed);
+        return new("origin.reconstructed", Config(currentUnderlying),
+            Config(staleCurrent), [], [], new(NativeOriginAdjudication.Supported),
+            ActiveTemporaryTransformation:
+                new("activation.wolf", "wolf",
+                    new(NativeOriginSourceKind.Native, "source.verified-origin", "v1"),
+                    "receipt.old-form"));
+    }
+
+    [Fact]
+    public void AuthorizedReconstructedUnderlyingPropagatesThroughActiveWolfAndReversion()
+    {
+        var state = Character(speed: 20);
+        var manifested = ActivatedWolf(state);
+        var initial = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
+            state, ReconstructedOrigin(30, 10), new OriginAuthority());
+        var reconstructed = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
+            state, ReconstructedOrigin(45, 10), new OriginAuthority());
+
+        Assert.Equal("resolved", initial.Status);
+        Assert.Equal("resolved", reconstructed.Status);
+        Assert.Equal(30, Resolve(initial.State!, manifested)
+            .EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(45, Resolve(reconstructed.State!, manifested)
+            .EffectiveMechanics!.BaseWalkSpeed);
+
+        var reverted = Plan(reconstructed.State!, manifested, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        Assert.Equal("planned", reverted.Status);
+        Assert.Equal(NativeCharacterSheetResolver.PrimarySheetId,
+            reverted.ProposedEffective!.EffectiveSheetId);
+        Assert.Equal(45, reverted.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(20, state.PrimaryMechanics.BaseWalkSpeed);
+        Assert.Equal(10, ReconstructedOrigin(45, 10).Current.InherentGrants
+            .Single().EffectiveValue.GetInt32());
+
+        var denied = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
+            state, ReconstructedOrigin(45, 10),
+            new OriginAuthority { DenyReconstruction = true });
+        Assert.Equal("unresolved", denied.Status);
+        Assert.Null(denied.State);
+    }
+
     private sealed class NativeProjectionFixture : IDisposable
     {
         private readonly string _root = Path.Combine(Path.GetTempPath(),
