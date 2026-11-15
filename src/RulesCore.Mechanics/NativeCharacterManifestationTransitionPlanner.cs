@@ -73,7 +73,12 @@ public static class NativeCharacterManifestationTransitionPlanner
                     (step.NewInstance is not null) ||
                 (step.Action != NativeManifestationTransitionAction.Activate &&
                     step.NewResources is { Count: > 0 }) ||
-                (step.NewResources?.Count ?? 0) > 256)
+                (step.NewResources?.Count ?? 0) > 256 ||
+                (step.Action == NativeManifestationTransitionAction.End &&
+                    (string.IsNullOrWhiteSpace(step.EndingConditionId) ||
+                     step.EndingConditionId.Length > 160)) ||
+                (step.Action != NativeManifestationTransitionAction.End &&
+                    step.EndingConditionId is not null))
                 Issue("invalid-manifestation-step", "transition.steps",
                     "Each operation needs a valid source, evidence and correctly shaped payload.");
         }
@@ -175,8 +180,39 @@ public static class NativeCharacterManifestationTransitionPlanner
             return Failed("invalid");
         }
 
+        // Interaction metadata is not itself a lifecycle transition. A
+        // Terminate decision must be backed by an explicit End in this event.
+        var explicitlyEnded = request.Steps
+            .Where(x => x.Action == NativeManifestationTransitionAction.End)
+            .Select(x => x.TargetInstanceId).ToHashSet(StringComparer.Ordinal);
+        foreach (var decision in request.ReplacementInteractions ?? [])
+        {
+            if (decision.Kind != NativeManifestationInteractionKind.Terminate)
+                continue;
+            if (!decision.InstanceIds.Any(explicitlyEnded.Contains))
+                Issue("manifestation-termination-unexecuted", "interactions." + decision.Id,
+                    "A termination interaction requires an explicit authorized End step.");
+            if (decision.SelectedInstanceId is not null &&
+                (!instances.TryGetValue(decision.SelectedInstanceId, out var survivor) ||
+                 survivor.Lifecycle != NativeManifestationLifecycle.Active))
+                Issue("manifestation-termination-selection-invalid", "interactions." + decision.Id,
+                    "A selected survivor must remain active after termination.");
+        }
+        if (issues.Count != 0) return Failed("invalid");
+
         foreach (var step in request.Steps)
         {
+            // Later source-defined ending events and scoped DM decisions are
+            // possible, but require separate authenticated host verification.
+            // An unlisted label alone can never terminate a manifestation.
+            if (step.Action == NativeManifestationTransitionAction.End)
+            {
+                var target = current.Instances.Single(x => x.Id == step.TargetInstanceId);
+                if (!target.EndingConditions.Contains(step.EndingConditionId!, StringComparer.Ordinal) &&
+                    !authority.AuthorizesUnlistedEnding(state.CharacterId, current, target, step))
+                    Issue("manifestation-ending-unverified", "transition.steps." + step.TargetInstanceId,
+                        "This ending event was not declared or independently authorized.");
+            }
             if (!authority.AuthorizesTransition(state.CharacterId, current, request, step))
                 Issue("unauthorized-manifestation-transition", "transition.steps." + step.TargetInstanceId,
                     "The host did not verify this event, trigger, rule or DM scope.");
@@ -201,14 +237,18 @@ public static class NativeCharacterManifestationTransitionPlanner
                         "The decision requires the exact source or authenticated DM scope.");
         if (issues.Count != 0) return Failed("invalid");
 
-        var selectionIssues = new List<NativeIssue>();
-        NativeCharacterManifestationResolver.Select(proposed, selectionIssues);
-        if (selectionIssues.Count != 0)
+        // Resolve against current parent/influences/resources before offering a
+        // commit candidate. Do not treat an uncommitted next revision as host-
+        // verified persistent state; all new records were authorized above.
+        var evaluation = NativeCharacterManifestationResolver.ResolveProposed(
+            state, proposed, authority);
+        if (evaluation.Status is "invalid" or "unresolved")
         {
-            issues.AddRange(selectionIssues);
-            return Failed("unresolved");
+            issues.AddRange(evaluation.Issues);
+            return Failed(evaluation.Status);
         }
         return new("planned", request.ExpectedRevision,
-            NativeCharacterManifestationResolver.Snapshot(proposed), []);
+            NativeCharacterManifestationResolver.Snapshot(proposed), [],
+            evaluation);
     }
 }
