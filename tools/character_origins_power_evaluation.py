@@ -10,6 +10,7 @@ import argparse
 from collections import defaultdict
 import copy
 import json
+import math
 from pathlib import Path
 import re
 
@@ -37,6 +38,20 @@ DEFAULT_SCENARIO = {
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
     ],
+    "mobilityChallenges": [
+        {"id": "walk-35", "mode": "walk", "distanceFeet": 35,
+         "startMinute": 0},
+        {"id": "climb-wall", "mode": "climb", "distanceFeet": 15,
+         "startMinute": 1},
+        {"id": "burrow-sand", "mode": "burrow", "distanceFeet": 15,
+         "material": "loose-natural-sand", "startMinute": 2},
+        {"id": "open-gap-1", "mode": "fly", "distanceFeet": 20,
+         "startMinute": 3},
+        {"id": "open-gap-2", "mode": "fly", "distanceFeet": 20,
+         "startMinute": 18},
+        {"id": "open-gap-3", "mode": "fly", "distanceFeet": 20,
+         "startMinute": 33},
+    ],
     "tremorsenseContacts": [
         {"distanceFeet": 10, "sensorTouches": "earth", "targetTouches": "earth",
          "connected": True, "anticipated": False},
@@ -48,6 +63,126 @@ DEFAULT_SCENARIO = {
          "connected": False, "anticipated": True},
     ],
 }
+
+
+# Only these fields have a defined interpretation. Reject others so a misspelled
+# fixture cannot quietly produce apparently reproducible numerical output.
+SCENARIO_FIELDS = frozenset(DEFAULT_SCENARIO)
+MOVEMENT_MODES = frozenset(("walk", "climb", "swim", "burrow", "fly"))
+
+
+def _number(value, path: str, minimum: float = 0.0) -> float:
+    if (isinstance(value, bool) or not isinstance(value, (float, int))
+            or not math.isfinite(value) or value < minimum):
+        raise ValueError(f"{path} must be finite and >= {minimum}")
+    return value
+
+
+def _count(value, path: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ValueError(f"{path} must be a nonnegative integer")
+    return value
+
+
+def _probability(value, path: str) -> float:
+    result = _number(value, path)
+    if result > 1:
+        raise ValueError(f"{path} must be <= 1")
+    return result
+
+
+def _nonempty(value, path: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{path} must be a nonempty string")
+    return value
+
+
+def validate_scenario(scenario: dict) -> None:
+    """Validate declared fixture assumptions rather than accepting silent zeros."""
+    if not isinstance(scenario, dict):
+        raise ValueError("Scenario must be a JSON object")
+    unexpected = sorted(set(scenario) - SCENARIO_FIELDS)
+    if unexpected:
+        raise ValueError(f"Unknown scenario fields: {unexpected}")
+    if "id" in scenario:
+        _nonempty(scenario["id"], "id")
+    for field in ("baseCheckSuccess", "saveFailure"):
+        if field in scenario:
+            _probability(scenario[field], field)
+    if "attackReplacementExpectedDamage" in scenario:
+        _number(scenario["attackReplacementExpectedDamage"],
+                "attackReplacementExpectedDamage")
+    for field in ("skillChecks", "rolls"):
+        obj = scenario.get(field, {})
+        if not isinstance(obj, dict):
+            raise ValueError(f"{field} must be an object")
+        for name, count in obj.items():
+            _nonempty(name, f"{field} key")
+            _count(count, f"{field}.{name}")
+    for field in ("conditionFrequency", "damageTypeMultiplier"):
+        obj = scenario.get(field, {})
+        if not isinstance(obj, dict):
+            raise ValueError(f"{field} must be an object")
+        for name, value in obj.items():
+            _nonempty(name, f"{field} key")
+            if field == "conditionFrequency":
+                _probability(value, f"{field}.{name}")
+            else:
+                _number(value, f"{field}.{name}")
+    for field in ("incomingDamage", "breathOpportunities",
+                  "tremorsenseContacts", "mobilityChallenges"):
+        events = scenario.get(field, [])
+        if not isinstance(events, list):
+            raise ValueError(f"{field} must be an array")
+        seen_ids = set()
+        for index, event in enumerate(events):
+            location = f"{field}[{index}]"
+            if not isinstance(event, dict):
+                raise ValueError(f"{location} must be an object")
+            if field == "incomingDamage":
+                _nonempty(event.get("type"), f"{location}.type")
+                _number(event.get("amount"), f"{location}.amount")
+            elif field == "breathOpportunities":
+                targets = event.get("areaTargets")
+                if not isinstance(targets, dict):
+                    raise ValueError(f"{location}.areaTargets must be an object")
+                for shape, count in targets.items():
+                    _nonempty(shape, f"{location}.areaTargets key")
+                    _count(count, f"{location}.areaTargets.{shape}")
+                if "saveFailure" in event:
+                    _probability(event["saveFailure"], f"{location}.saveFailure")
+                if "attackReplacementExpectedDamage" in event:
+                    _number(event["attackReplacementExpectedDamage"],
+                            f"{location}.attackReplacementExpectedDamage")
+            elif field == "tremorsenseContacts":
+                _number(event.get("distanceFeet"), f"{location}.distanceFeet")
+                for key in ("sensorTouches", "targetTouches"):
+                    if key in event:
+                        _nonempty(event[key], f"{location}.{key}")
+                for key in ("anticipated", "connected"):
+                    if key in event and not isinstance(event[key], bool):
+                        raise ValueError(f"{location}.{key} must be boolean")
+            elif field == "mobilityChallenges":
+                identifier = _nonempty(event.get("id"), f"{location}.id")
+                if identifier in seen_ids:
+                    raise ValueError(f"Duplicate mobility challenge ID: {identifier}")
+                seen_ids.add(identifier)
+                if event.get("mode") not in MOVEMENT_MODES:
+                    raise ValueError(f"{location}.mode is not supported")
+                _number(event.get("distanceFeet"), f"{location}.distanceFeet", 0.000001)
+                _number(event.get("startMinute", 0), f"{location}.startMinute")
+                _number(event.get("durationMinutes", 0.1),
+                        f"{location}.durationMinutes", 0.000001)
+                _count(event.get("maxMoves", 1), f"{location}.maxMoves")
+                if event.get("maxMoves", 1) == 0:
+                    raise ValueError(f"{location}.maxMoves must be >= 1")
+                if "material" in event:
+                    _nonempty(event["material"], f"{location}.material")
+                for key in ("requiresHover", "requiresWholeParty"):
+                    if key in event and not isinstance(event[key], bool):
+                        raise ValueError(f"{location}.{key} must be boolean")
+                if event["mode"] == "burrow" and "material" not in event:
+                    raise ValueError(f"{location}.material required for burrow")
 
 
 def load_native(native: Path) -> dict:
@@ -71,7 +206,12 @@ def load_native(native: Path) -> dict:
                 raise ValueError(f"Unexpected trait category: {identifier}")
             traits[identifier] = definition["trait"]
     conditions = json.loads((native / "conditions.json").read_text(encoding="utf-8"))
-    entries = conditions.get("entries", []) if isinstance(conditions, dict) else conditions
+    if isinstance(conditions, dict):
+        entries = conditions.get("conditions", conditions.get("entries", []))
+    else:
+        entries = conditions
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("Native conditions catalog is empty or has an unsupported shape")
     return {"sources": sources, "traits": traits,
             "conditions": {v["id"]: v for v in entries}}
 
@@ -157,27 +297,39 @@ def _resistance(trait: dict, intrinsics: dict) -> dict[str, float]:
 
 
 def _breath_damage(trait: dict, intrinsics: dict, level: int,
-                   scenario: dict, remaining: int) -> tuple[float, int]:
-    """Evaluate authored Attack-replacement area attacks, not every attack trait."""
+                   scenario: dict, remaining: int) -> tuple[float, int, list[dict]]:
+    """Evaluate attack replacement across declared, distinct area opportunities.
+
+    This is an optimistic selection of the best net-positive opportunities.
+    It does not assert that every opportunity is reachable in actual combat.
+    """
     progression = trait["damage"]["progression"]
     eligible = [step for step in progression if level >= step["characterLevel"]]
     if not eligible:
-        return 0.0, 0
+        return 0.0, 0, []
     dice = dice_mean(eligible[-1]["dice"])
     area = intrinsics.get("breathWeaponArea", {})
     shape = area.get("shape") if isinstance(area, dict) else None
     if not shape:
-        return 0.0, 0
+        return 0.0, 0, []
     multiplier = scenario.get("damageTypeMultiplier", {}).get(intrinsics.get("damageType"), 1)
-    values = []
-    for event in scenario.get("breathOpportunities", []):
+    events = []
+    for index, event in enumerate(scenario.get("breathOpportunities", [])):
         count = event.get("areaTargets", {}).get(shape, 0)
         fail = event.get("saveFailure", scenario.get("saveFailure", 0.55))
         replacement = event.get("attackReplacementExpectedDamage",
                                 scenario.get("attackReplacementExpectedDamage", 5.2))
-        values.append(max(0.0, count * dice * (0.5 + 0.5 * fail) * multiplier - replacement))
-    useful = sorted((v for v in values if v > 0), reverse=True)[:remaining]
-    return sum(useful), len(useful)
+        gross = count * dice * (0.5 + 0.5 * fail) * multiplier
+        events.append({"eventIndex": index, "areaShape": shape,
+                       "targets": count, "grossExpectedDamage": gross,
+                       "replacementExpectedDamage": replacement,
+                       "netExpectedDamage": gross - replacement,
+                       "selected": False})
+    picks = sorted((e for e in events if e["netExpectedDamage"] > 0),
+                   key=lambda e: (-e["netExpectedDamage"], e["eventIndex"]))[:remaining]
+    for event in picks:
+        event["selected"] = True
+    return sum(e["netExpectedDamage"] for e in picks), len(picks), events
 
 
 def _sense_contact_detected(trait: dict, contact: dict, active: bool) -> bool:
@@ -221,10 +373,130 @@ def _tremorsense_contacts(traits: dict, level: int, pb: int, scenario: dict) -> 
     return count
 
 
+def _movement_options(profile: dict, level: int, pb: int) -> list[dict]:
+    """List only explicit movement modes; never infer a fallback route or spell."""
+    intrinsic = profile["intrinsics"]
+    options = []
+    for mode, field in (("walk", "walkingSpeedFeet"),
+                        ("climb", "climbingSpeedFeet"),
+                        ("swim", "swimmingSpeedFeet"),
+                        ("burrow", "burrowingSpeedFeet")):
+        speed = intrinsic.get(field)
+        if isinstance(speed, (int, float)) and speed > 0:
+            # Intrinsic burrowing needs an explicit substrate eligibility rule.
+            options.append({"mode": mode, "speed": speed, "source": field,
+                            "maxUses": None, "duration": None,
+                            "materials": None, "hover": False})
+    for identifier, trait in profile["traits"].items():
+        if not unlocked(trait, level):
+            continue
+        mode = trait.get("movementMode")
+        if mode in MOVEMENT_MODES and isinstance(trait.get("speedFeet"), (int, float)):
+            speed = trait["speedFeet"]
+        elif "flyingSpeed" in trait:
+            mode = "fly"
+            spec = trait["flyingSpeed"]
+            speed = (intrinsic.get("walkingSpeedFeet")
+                     if isinstance(spec, dict) and spec.get("equalTo") == "current-walking-speed"
+                     else spec if isinstance(spec, (int, float)) else None)
+        else:
+            continue
+        if not isinstance(speed, (int, float)) or speed <= 0:
+            continue
+        use_spec = trait.get("uses")
+        if use_spec is None:
+            max_uses = None if trait.get("atWill", True) else 0
+        elif use_spec.get("recharge") == "long-rest":
+            units = use_spec.get("value")
+            max_uses = pb if units == "proficiency-bonus" else units
+            if not isinstance(max_uses, int) or max_uses < 0:
+                continue
+        else:
+            # The fixture has no short-rest timings for movement resources.
+            continue
+        duration_spec = trait.get("duration")
+        if isinstance(duration_spec, dict) and "minutes" in duration_spec:
+            duration = duration_spec["minutes"]
+        else:
+            duration = trait.get("durationMinutes")
+        if max_uses is not None and not isinstance(duration, (float, int)):
+            # Do not silently turn a limited capability into unlimited access.
+            continue
+        options.append({"mode": mode, "speed": speed, "source": identifier,
+                        "maxUses": max_uses, "duration": duration,
+                        "materials": trait.get("allowedMaterials"),
+                        "hover": trait.get("canHover", False)})
+    return options
+
+
+def mobility_access(profile: dict, level: int, pb: int,
+                    scenario: dict) -> list[dict]:
+    """Replay solo intrinsic movement gates with day-limited activation pools.
+
+    A satisfied gate means this Origin explicitly supplies the required *mode*;
+    it is not a claim that the full party completes the adventure objective.
+    """
+    options = _movement_options(profile, level, pb)
+    state = [{"remaining": option["maxUses"], "activeUntil": -1}
+             for option in options]
+    challenges = list(enumerate(scenario.get("mobilityChallenges", [])))
+    results = [None] * len(challenges)
+    for index, event in sorted(challenges,
+                               key=lambda pair: (pair[1].get("startMinute", 0), pair[0])):
+        mode = event["mode"]
+        started = event.get("startMinute", 0)
+        ended = started + event.get("durationMinutes", 0.1)
+        needed = event["distanceFeet"]
+        eligible = []
+        for n, option in enumerate(options):
+            if option["mode"] != mode or option["speed"] * event.get("maxMoves", 1) < needed:
+                continue
+            if event.get("requiresHover", False) and not option["hover"]:
+                continue
+            if mode == "burrow":
+                # A generic burrowing speed does not imply passage through stone.
+                if (not option["materials"] or
+                        event["material"] not in option["materials"]):
+                    continue
+            if option["duration"] is not None and option["duration"] < event.get("durationMinutes", 0.1):
+                continue
+            current = state[n]
+            active = (option["maxUses"] is not None and current["activeUntil"] >= ended)
+            available = (option["maxUses"] is None or active or current["remaining"] > 0)
+            if available:
+                eligible.append((0 if option["maxUses"] is None or active else 1, n))
+        if event.get("requiresWholeParty", False):
+            results[index] = {"id": event["id"], "mode": mode,
+                              "status": "unresolved-party-access",
+                              "reason": "one character's mode does not move the full party"}
+        elif not eligible:
+            uncertain_substrate = (mode == "burrow" and any(
+                option["mode"] == mode and option["materials"] is None
+                and option["speed"] * event.get("maxMoves", 1) >= needed
+                for option in options))
+            results[index] = {"id": event["id"], "mode": mode,
+                              "status": ("unresolved-substrate"
+                                         if uncertain_substrate else "not-supplied-by-origin"),
+                              "reason": ("an intrinsic burrowing speed has no explicit substrate rules"
+                                         if uncertain_substrate else
+                                         "no eligible native mode, range, substrate, duration, or available use")}
+        else:
+            _, n = min(eligible)
+            option, current = options[n], state[n]
+            if option["maxUses"] is not None and current["activeUntil"] < ended:
+                current["remaining"] -= 1
+                current["activeUntil"] = started + option["duration"]
+            results[index] = {"id": event["id"], "mode": mode,
+                              "status": "origin-mode-satisfies-gate",
+                              "source": option["source"], "speedFeet": option["speed"]}
+    return results
+
+
 def evaluate(profile: dict, catalog: dict, level: int,
              scenario: dict | None = None) -> dict:
     """A conservative subset of verified mechanics, never a total power price."""
     scenario = copy.deepcopy(DEFAULT_SCENARIO if scenario is None else scenario)
+    validate_scenario(scenario)
     intrinsics, traits = profile["intrinsics"], profile["traits"]
     pb = proficiency_bonus(level)
     metrics: dict[str, float] = defaultdict(float)
@@ -233,44 +505,67 @@ def evaluate(profile: dict, catalog: dict, level: int,
     skill_bonuses: dict[str, int] = defaultdict(int)
     conditions = []
     breath = []
+    breath_events = []
+    modeled_movement = {opt["source"] for opt in _movement_options(profile, level, pb)}
     for identifier, trait in traits.items():
         if not unlocked(trait, level):
             future.append(identifier)
             continue
         recognized = False
+        interpreted = {"requiredCharacterLevel", "level"}
         if "hitPointsPerCharacterLevel" in trait:
             metrics["maximum_hit_points_added"] += trait["hitPointsPerCharacterLevel"] * level
             recognized = True
+            interpreted.add("hitPointsPerCharacterLevel")
         if "additionalRanksAtCharacterLevel1" in trait:
             metrics["additional_skill_ranks_entitled"] += (
                 trait["additionalRanksAtCharacterLevel1"] +
                 (level - 1) * trait.get("additionalRanksPerSubsequentCharacterLevel", 0))
             recognized = True
+            interpreted.update(("additionalRanksAtCharacterLevel1", "additionalRanksPerSubsequentCharacterLevel"))
         if "skillBonuses" in trait:
             for skill, bonus in trait["skillBonuses"].items():
                 skill_bonuses[skill] += bonus
             recognized = True
+            interpreted.add("skillBonuses")
         if "damageResistance" in trait:
             values = _resistance(trait, intrinsics)
             for type_, factor in values.items():
                 resistances[type_] = max(resistances.get(type_, 0), factor)
             recognized = bool(values)
+            if values:
+                interpreted.add("damageResistance")
         if "condition" in trait and trait["condition"] in catalog["conditions"]:
             conditions.append(trait["condition"])
             recognized = True
+            interpreted.add("condition")
         if (isinstance(trait.get("damage"), dict) and
                 "progression" in trait["damage"] and "areaFrom" in trait and
                 trait.get("activation", {}).get("replaces") == "one-attack"):
             breath.append(trait)
             recognized = True
+            interpreted.update(("damage", "areaFrom", "uses"))
         if trait.get("sense") == "tremorsense":
             recognized = True
+            interpreted.update(("sense", "rangeFeet", "requiresContact",
+                                "requiresSharedContact", "activation", "uses"))
+        if "movementMode" in trait or "flyingSpeed" in trait:
+            if identifier in modeled_movement:
+                recognized = True
+                interpreted.update(("movementMode", "flyingSpeed", "speedFeet",
+                                    "duration", "durationMinutes", "allowedMaterials",
+                                    "canHover", "uses", "atWill"))
+            else:
+                unmodeled.append({"traitId": identifier,
+                                  "reason": "unresolved-movement-definition"})
+        unknown_fields = sorted(set(trait) - interpreted -
+                                {"id", "name", "description"})
         if recognized:
             modeled.append(identifier)
-            # Certain complex traits have additional unmodeled effects.
-            if any(k in trait for k in ("damageResistanceOverride", "savingThrows",
-                                         "freeUses", "spell", "sharedUsesFromTrait")):
-                unmodeled.append({"traitId": identifier, "reason": "partially-modeled"})
+            if unknown_fields:
+                unmodeled.append({"traitId": identifier,
+                                  "reason": "unmodeled-effect-fields",
+                                  "fields": unknown_fields})
         else:
             unmodeled.append({"traitId": identifier, "reason": "not-modeled"})
     for event in scenario.get("incomingDamage", []):
@@ -303,17 +598,26 @@ def evaluate(profile: dict, catalog: dict, level: int,
             unmodeled.append({"reason": "unresolved-breath-pool", "value": uses})
             continue
         budget = pb if uses == "proficiency-bonus" else uses
-        gain, charges = _breath_damage(trait, intrinsics, level, scenario, budget)
+        gain, charges, trace = _breath_damage(trait, intrinsics, level, scenario, budget)
+        breath_events.append({"traitId": next((k for k, v in traits.items() if v is trait), None),
+                              "events": trace})
         metrics["breath_expected_net_damage_delta"] += gain
         metrics["breath_uses_selected"] += charges
     metrics["tremorsense_contacts_detected"] = _tremorsense_contacts(
         traits, level, pb, scenario)
+    mobility = mobility_access(profile, level, pb, scenario)
+    metrics["origin_mobility_gates_satisfied"] = sum(
+        e["status"] == "origin-mode-satisfies-gate" for e in mobility)
     # Carry the intrinsic facts into the output instead of inventing a price for
     # movement, creature type, size, generic vision or other access gates.
     return {"sourceId": profile.get("selectedSourceId"), "level": level,
             "scenarioId": scenario.get("id"),
             "metrics": dict(sorted(metrics.items())),
             "intrinsicContext": intrinsics,
+            "unmodeledIntrinsicFields": sorted(set(intrinsics) - {
+                "walkingSpeedFeet", "climbingSpeedFeet", "swimmingSpeedFeet",
+                "burrowingSpeedFeet", "breathWeaponArea", "damageType"}),
+            "mobilityGateResults": mobility, "breathEventTrace": breath_events,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
 
@@ -379,6 +683,7 @@ def main(argv: list[str] | None = None) -> int:
     catalog = load_native(args.native)
     scenario = (json.loads(args.scenario.read_text(encoding="utf-8"))
                 if args.scenario else DEFAULT_SCENARIO)
+    validate_scenario(scenario)
     identifiers = [args.source] if args.source else terminal_sources(catalog, args.include_deferred)
     results = []
     for identifier in identifiers:
