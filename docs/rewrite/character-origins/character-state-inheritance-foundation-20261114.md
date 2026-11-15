@@ -53,26 +53,72 @@ The follow-up increment tightens the contract around *trusted sources* and
   the existing `NativeCharacterProjector`, then returns the resolved
   level *reference*, not a copied level owned by the alternate sheet and
   not an invented formula for a supernatural effect.
-- The new projector returns only **Applicable** sheet grants in
-  `UsableCapabilities`. It reports Suppressed/Unresolved grants separately
+- The new projector returns only **Applicable** sheet grants for
+  the *selected sheet* in `UsableCapabilities`; this does not establish
+  current manifestation. It reports Suppressed/Unresolved grants separately
   and withholds level-bound use if native advancement cannot be verified.
   Class feature IDs and resource pools from a numerical base projection
   remain **withheld in alternate forms** pending individual authored
   applicability rules. They are never treated as form-earned grants.
-  The numeric base projection remains a partial input, not a fully playable
-  effective-character result.
+  A form's otherwise calculated Hit Point maximum is likewise withheld
+  until its own HP interaction policy is established. The numeric base
+  projection remains partial, not a fully playable character result.
 - `NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed` provides an
   intentionally narrow, separately trusted Origin connection. The host must
   validate the complete current Origin baseline and exact walking-speed
   grant/provenance; this adapter reads the latest `Underlying` and never an
   older `Current` or `History.PreviousConfiguration`. It updates the
   *derived request*, not the authoritative Origin or alternate sheets.
-  Other intrinsic/trait domains and old-ID migration are not covered.
+  The derived state snapshots mutable inputs rather than exposing host
+  aliases. Other intrinsic/trait domains and old-ID migration are not covered.
 
 These additions are validated by synthetic tests for denied authorization,
 mutable input detachment, real native Class progression, level-bound
 invalidation, suppressed capability exclusion, withheld native Class features,
 and latest-Underlying walk speed after a synthetic reconstruction.
+
+## Self-review corrections (2026-11-15)
+
+The first implementation was reviewed against the approved architecture and
+tested with additional negative cases. The following corrections were made
+on the same feature branch:
+
+1. **Unmanifested alternate sheets are never playable projections.**
+   Selecting a persistent sheet for preview does not prove activation. The
+   outer result and embedded native result remain `partial` even when
+   the native Class has no features or resources to withhold. Issues explain
+   this condition in both results. Any Class feature IDs and resource pools
+   without authorized form-applicability rules are withheld, not revoked.
+2. **Form-specific Hit Point policy is not inferred.** The usual native
+   Class/Constitution formula may calculate a numeric Hit Point maximum,
+   but it does not define how a form exchanges, retains, or recalculates HP.
+   A resolved native HP maximum is therefore marked unsupported in the
+   alternate-form view until a source-authorized policy exists.
+3. **Detached derived state.** The Origin walk-speed adapter creates a
+   snapshot of primary mechanics, alternate sheets, nested overrides,
+   progression choices/grant lists, and applicability records. Subsequent
+   host-owned collection mutations cannot alter an already generated view.
+   The input still needs trusted host ownership and revision verification.
+4. **Validation before authorization callbacks.** Structurally invalid
+   sheets, progressions, grants, and applicability decisions are rejected
+   without calling their corresponding host authorization methods. Host
+   adapters can validate evidence without accommodating malformed records.
+5. **Bounded graph evaluation.** Before callbacks or ancestry traversal,
+   requests are limited to 512 alternate sheets, 4,096 total progression
+   records, 16,384 total grants, 16,384 applicability decisions, and bounded
+   per-map/collection/choice inputs. These are processing limits, not
+   mechanical advancement restrictions.
+6. **Comments and API semantics.** Comments distinguish validation
+   status from manifestation, ownership from applicability, dynamic Class
+   level references from grants, and collection read overrides from
+   authoritative writes. Nested `NativeSheetValue<T>` preserves explicit
+   null versus omission, and explicit collection replacement has dedicated
+   regression coverage.
+
+This review **does not** authorize content mechanics, activation transitions,
+grant creation, HP/resource writes, or adoption of the old Pillar 4 effect
+prototype schema. The resolver remains a source- and rule-verified read-only
+foundation, not the full Character State Resolution engine.
 
 ## Validation and synthetic acceptance
 
