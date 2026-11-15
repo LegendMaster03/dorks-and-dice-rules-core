@@ -193,7 +193,7 @@ public static class NativeCharacterSheetResolver
             currentId = sheet.ParentId;
         }
 
-        var mechanics = Copy(state.PrimaryMechanics);
+        var mechanics = CopyMechanics(state.PrimaryMechanics);
         var progressionView = new List<NativeSheetResolvedProgression>();
         var grantView = new List<NativeSheetResolvedGrant>();
         foreach (var sheet in chain)
@@ -287,7 +287,10 @@ public static class NativeCharacterSheetResolver
         }
     }
 
-    private static NativeCharacterRequest Copy(NativeCharacterRequest source) => source with
+    // Read-only views must not expose mutable host-owned collections. This
+    // helper is also used by the narrow Origin adapter when preparing a new
+    // derived input; it never persists or reauthorizes character state.
+    internal static NativeCharacterRequest CopyMechanics(NativeCharacterRequest source) => source with
     {
         AbilityScores = source.AbilityScores.ToFrozenDictionary(StringComparer.Ordinal),
         Advancements = Array.AsReadOnly(source.Advancements.ToArray()),
@@ -301,6 +304,58 @@ public static class NativeCharacterSheetResolver
         ConditionIds = source.ConditionIds is null
             ? null : Array.AsReadOnly(source.ConditionIds.ToArray())
     };
+
+    /// <summary>
+    /// Creates a detached read-only snapshot of a host-verified character.
+    /// The returned partial sheets share immutable record values and source
+    /// identities, but never mutable advancement/choice/override collections.
+    /// This is a snapshot for a single calculation, not a persistence command.
+    /// </summary>
+    internal static NativeCharacterState SnapshotState(NativeCharacterState state)
+    {
+        static NativeSheetMapPatch<T>? SnapshotMap<T>(NativeSheetMapPatch<T>? patch) =>
+            patch is null ? null : patch with
+            {
+                Entries = patch.Entries.ToFrozenDictionary(StringComparer.Ordinal)
+            };
+
+        static NativeSheetCollectionPatch<string>? SnapshotCollection(
+            NativeSheetCollectionPatch<string>? patch) =>
+            patch is null ? null : patch with
+            {
+                Added = Array.AsReadOnly(patch.Added.ToArray()),
+                Removed = patch.Removed is null ? null : Array.AsReadOnly(patch.Removed.ToArray())
+            };
+
+        static NativeCharacterSheetOverrides? SnapshotOverrides(NativeCharacterSheetOverrides? patch) =>
+            patch is null ? null : patch with
+            {
+                AbilityScores = SnapshotMap(patch.AbilityScores),
+                Skills = SnapshotMap(patch.Skills),
+                Competencies = SnapshotMap(patch.Competencies),
+                DefenseContributions = SnapshotMap(patch.DefenseContributions),
+                CurrentResources = SnapshotMap(patch.CurrentResources),
+                HitPointGains = SnapshotMap(patch.HitPointGains),
+                SelectedOptions = SnapshotCollection(patch.SelectedOptions),
+                ConditionIds = SnapshotCollection(patch.ConditionIds)
+            };
+
+        static NativePersistentCharacterSheet SnapshotSheet(NativePersistentCharacterSheet sheet) =>
+            sheet with
+            {
+                Overrides = SnapshotOverrides(sheet.Overrides),
+                Progression = sheet.Progression is null ? null :
+                    Array.AsReadOnly(sheet.Progression.Select(CopyProgression).ToArray()),
+                GrantApplicability = sheet.GrantApplicability is null ? null :
+                    Array.AsReadOnly(sheet.GrantApplicability.ToArray())
+            };
+
+        return state with
+        {
+            PrimaryMechanics = CopyMechanics(state.PrimaryMechanics),
+            AlternateSheets = Array.AsReadOnly(state.AlternateSheets.Select(SnapshotSheet).ToArray())
+        };
+    }
 
     private static NativeCharacterRequest Apply(NativeCharacterRequest parent,
         NativeCharacterSheetOverrides? patch)
