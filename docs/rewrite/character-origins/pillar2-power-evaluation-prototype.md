@@ -484,3 +484,93 @@ Non-damage opportunity costs, pending feat choices, full initiative sequencing,
 allied actions, end-of-day rest refresh, and optimized decisions remain
 unresolved. Do not use these scenarios to rank Species or set inheritance
 allocation costs without explicitly resolving those gaps.
+
+## Native class action benchmarks (version 8)
+
+The **version-8 corpus contains 36 diagnostic contexts**. Seven cases exercise
+`nativeClassActionPlans` (including class-versus-Origin Reaction competition)
+against each conventional Species/Ancestry profile at the same six breakpoints.
+These are **single-class** fixtures, not complete optimized class builds or
+multiclass simulations. This module is kept *separate* from the older
+`jointCombatPlans`, so results from the two cannot be added as though the
+same character performed both plans. All event sequences use explicit rounds,
+and each character has at most one Action and one Reaction per round; the
+module does not yet derive or spend Bonus Actions beyond the older evaluator.
+
+The evaluator reads class definitions from
+`data/rulesets/first-party-001/native/classes/base/` and authored class
+features from `data/rulesets/first-party-001/native/features/classes/`.
+It does **not** infer class effects from a class name or apply class features
+to the native Species data. In particular:
+
+- `attackProcedure: "standard"` starts with one ordinary Attack-action
+  attack and applies **only** an actual granted `attack-action` class feature
+  with a verified `standardAttackCount` and an explicit nonadditive BAB policy.
+  Native Barbarian Extra Attack grants two attacks starting at class level 5.
+- `attackProcedure: "iterative"` uses the current native class progression's
+  `iterativeBaseAttackBonuses` and *not* the standard Extra Attack count.
+  The first-attack hit probability is supplied by the fixture. Later
+  attacks use their authored BAB difference as a conditional d20 probability
+  adjustment. No additional BAB-to-hit bonus is applied to that first value.
+  BAB +0 still allows one basic attack. The two procedures remain **mutually
+  exclusive**, not additive.
+- The class's `spellSlotsBySpellLevel` table supplies level-specific slots
+  for a **single long-rest day**. Replayed casts consume them. An offered
+  `spellAlternative` is a counterfactual **whole Action** whose slot must
+  be available; it consumes nothing unless chosen. The scenario supplies a
+  hypothetical spell identity and damage expectation, **not** proof of spell
+  knowledge, legal acquisition, effectiveness, or casting permission.
+- An authored Origin `breath` or `searing-ignition` action **replaces one**
+  of the native Attack-action attacks. Other granted attacks remain in the
+  expectation, and the stated replacement index must actually exist. The
+  fixture supplies eligible targets and failed-save probability; geometry,
+  other saves, optional hit rules, control value, and action timing outside
+  the replay are not silently evaluated.
+- The `class-reaction` event recognizes only verified native Rogue **Uncanny
+  Dodge** after its level-5 grant. It requires a visible attacker, an attack
+  hit, an available Reaction, and a damage packet. Rounding down the halved
+  damage is exact for a stipulated integer packet. Unknown stacking with
+  passive resistance stays unresolved. A separately expressed `origin-reaction`
+  can consume the **same per-round Reaction slot** and its own canonical
+  resource charges. Stone's Endurance reduction uses explicit Constitution
+  modifier and an exact capped die expectation; missing modifiers or
+  unresolved defense ordering do not spend the Reaction.
+
+The resulting `nativeClassActionPlanResults` include a per-round status trace,
+class progression provenance, actual attack counts, per-attack conditional
+expected damage, slot levels and remaining charges, Origin resource uses,
+mechanical limitations, **unvalued class feature grants**, and other native
+progression fields that were not evaluated. These results are intentionally
+*not* included in the aggregate Species metric vector: they are conditional
+class/Origin comparisons and have no inferred campaign frequency.
+
+### Worked examples
+
+At a baseline 0.65 weapon hit chance and 8 damage on a hit:
+
+| Native class context | Conditional result |
+| --- | --- |
+| Barbarian, level 5, standard Attack | Two attacks; 10.4 expected weapon damage |
+| Barbarian, level 5, BAB iterative procedure | One attack; 5.2 expected weapon damage |
+| Barbarian, level 11, BAB iterative procedure | Three attacks at modeled hit probabilities 0.65, 0.40, 0.15; 9.6 expected damage, before class features |
+| Level-5 Red Dragonborn Barbarian, two breath targets | One of two attacks replaced: 22.25 expected damage, or +11.85 relative to that round's two-attack weapon baseline |
+| Level-5 Wizard | Two level-3 spell slots; the third and fourth same-level casts in the trace are unavailable |
+| Level-5 Red Dragonborn Wizard, two breath targets | 17.05 expected breath damage; +5.05 relative to a **hypothetical** 12-damage whole-Action spell (if one slot remains available) |
+| Level-5 Rogue Uncanny Dodge on a visible 21-damage hit | 11 damage prevented if its Reaction is available and no overlapping resistance complicates ordering |
+| Level-5 Rogue with Stone Goliath's Stone's Endurance | Both available defensive abilities compete for **one Reaction** in the same round; they cannot both activate |
+
+A Barbarian's Rage, Rogue's Sneak Attack, Wizard's spell effects, class feats,
+weapon masteries, subclasses, critical hits, class-specific Bonus Actions,
+concentration, reaction opportunity costs, rest refresh and multiclass builds
+**remain unmodeled**. The class fields and grant identities are retained as
+unvalued evidence rather than being priced at zero. The `nativeClassActionPlans`
+module does not establish class balance, Species balance, spell validity,
+inheritance transmission or a numerical allocation rule. Compare the same
+fixture across altered Origins before drawing any relative-power conclusion.
+
+To reproduce this increment from the repository root:
+
+```sh
+python3 -m unittest discover -s tests -p 'test_character_origins_power_evaluation.py' -v
+python3 tools/character_origins_power_evaluation.py --scenario-suite tests/fixtures/pillar2-power-scenarios.json --source ancestry.dragonborn.red --output /tmp/pillar2-red-class-actions.json
+```

@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v7",
-  "version": 7,
+  "id": "pillar2-diagnostic-sensitivity-v8",
+  "version": 8,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -910,6 +910,313 @@
                   "baseHitChance": 0.65,
                   "enemyNormalAttackRollsBeforeRecovery": 2
                 }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-barbarian-two-attack-procedures",
+      "purpose": "Compare native Barbarian standard Attack action and BAB iteratives without adding their attack counts together.",
+      "scenario": {
+        "id": "native-barbarian-two-attack-procedures",
+        "nativeClassActionPlans": [
+          {
+            "id": "barbarian-standard",
+            "classId": "class.barbarian",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "weapon-attack",
+                "kind": "attack",
+                "round": 1
+              }
+            ]
+          },
+          {
+            "id": "barbarian-iterative",
+            "classId": "class.barbarian",
+            "attackProcedure": "iterative",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "weapon-attack",
+                "kind": "attack",
+                "round": 1
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-barbarian-breath-attack-replacement",
+      "purpose": "Demonstrate Dragonborn Breath Weapon replacing one granted attack, retaining any other Barbarian Extra Attack attack.",
+      "scenario": {
+        "id": "native-barbarian-breath-attack-replacement",
+        "nativeClassActionPlans": [
+          {
+            "id": "barbarian-breath",
+            "classId": "class.barbarian",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "weapon-attack",
+                "kind": "attack",
+                "round": 1
+              },
+              {
+                "id": "breath-replaces-second",
+                "kind": "breath",
+                "round": 2,
+                "traitId": "trait.dragonborn.breath-weapon",
+                "targets": 2,
+                "saveFailure": 0.55,
+                "replacedAttackIndex": 1
+              },
+              {
+                "id": "breath-replaces-first",
+                "kind": "breath",
+                "round": 3,
+                "traitId": "trait.dragonborn.breath-weapon",
+                "targets": 2,
+                "saveFailure": 0.55,
+                "replacedAttackIndex": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-wizard-spell-slot-alternatives",
+      "purpose": "Track a native Wizard level-three slot pool over several rounds; damage and spell availability remain fixture assumptions.",
+      "scenario": {
+        "id": "native-wizard-spell-slot-alternatives",
+        "nativeClassActionPlans": [
+          {
+            "id": "wizard-spells",
+            "classId": "class.wizard",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "wizard-cast-1",
+                "round": 1,
+                "kind": "spell",
+                "slotLevel": 3,
+                "spellId": "fixture-unverified-third-level-spell",
+                "expectedDamage": 12
+              },
+              {
+                "id": "wizard-cast-2",
+                "round": 2,
+                "kind": "spell",
+                "slotLevel": 3,
+                "spellId": "fixture-unverified-third-level-spell",
+                "expectedDamage": 12
+              },
+              {
+                "id": "wizard-cast-3",
+                "round": 3,
+                "kind": "spell",
+                "slotLevel": 3,
+                "spellId": "fixture-unverified-third-level-spell",
+                "expectedDamage": 12
+              },
+              {
+                "id": "wizard-cast-4",
+                "round": 4,
+                "kind": "spell",
+                "slotLevel": 3,
+                "spellId": "fixture-unverified-third-level-spell",
+                "expectedDamage": 12
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-wizard-breath-versus-spell-action",
+      "purpose": "Compare an Attack-action breath with a whole Action spell alternative; preserve Wizard slot capacity separately.",
+      "scenario": {
+        "id": "native-wizard-breath-versus-spell-action",
+        "nativeClassActionPlans": [
+          {
+            "id": "wizard-breath",
+            "classId": "class.wizard",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "wizard-breath",
+                "round": 1,
+                "kind": "breath",
+                "traitId": "trait.dragonborn.breath-weapon",
+                "targets": 2,
+                "saveFailure": 0.55,
+                "replacedAttackIndex": 0,
+                "spellAlternative": {
+                  "slotLevel": 3,
+                  "expectedDamage": 12
+                }
+              },
+              {
+                "id": "wizard-spell",
+                "round": 2,
+                "kind": "spell",
+                "slotLevel": 3,
+                "spellId": "fixture-unverified-third-level-spell",
+                "expectedDamage": 12
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-rogue-visible-hit-reactions",
+      "purpose": "Rogue Uncanny Dodge requires its level-five native feature, visible attack hit, and a free Reaction this round.",
+      "scenario": {
+        "id": "native-rogue-visible-hit-reactions",
+        "nativeClassActionPlans": [
+          {
+            "id": "rogue-reaction",
+            "classId": "class.rogue",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "rogue-reaction-1",
+                "round": 1,
+                "kind": "class-reaction",
+                "featureId": "class-feature.rogue.uncanny-dodge-level-5",
+                "damageAmount": 21,
+                "damageType": "force",
+                "attackerVisible": true,
+                "isAttackHit": true
+              },
+              {
+                "id": "rogue-reaction-2",
+                "round": 1,
+                "kind": "class-reaction",
+                "featureId": "class-feature.rogue.uncanny-dodge-level-5",
+                "damageAmount": 20,
+                "damageType": "force",
+                "attackerVisible": true,
+                "isAttackHit": true
+              },
+              {
+                "id": "rogue-attack",
+                "round": 2,
+                "kind": "attack"
+              },
+              {
+                "id": "rogue-reaction-3",
+                "round": 2,
+                "kind": "class-reaction",
+                "featureId": "class-feature.rogue.uncanny-dodge-level-5",
+                "damageAmount": 20,
+                "damageType": "force",
+                "attackerVisible": true,
+                "isAttackHit": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-rogue-origin-reaction-competition",
+      "purpose": "Model one Reaction shared between native Rogue Uncanny Dodge and expressed Stone Goliath Stone Endurance, without duplicated reaction availability.",
+      "scenario": {
+        "id": "native-rogue-origin-reaction-competition",
+        "abilityModifiers": {
+          "constitution": 3
+        },
+        "nativeClassActionPlans": [
+          {
+            "id": "rogue-stone-reaction",
+            "classId": "class.rogue",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "stone-defend",
+                "round": 1,
+                "kind": "origin-reaction",
+                "traitId": "trait.goliath.stone.stones-endurance",
+                "damageAmount": 20,
+                "damageType": "force",
+                "attackerVisible": true,
+                "isAttackHit": true
+              },
+              {
+                "id": "rogue-defend-same-round",
+                "round": 1,
+                "kind": "class-reaction",
+                "featureId": "class-feature.rogue.uncanny-dodge-level-5",
+                "damageAmount": 20,
+                "damageType": "force",
+                "attackerVisible": true,
+                "isAttackHit": true
+              },
+              {
+                "id": "rogue-defend-next-round",
+                "round": 2,
+                "kind": "class-reaction",
+                "featureId": "class-feature.rogue.uncanny-dodge-level-5",
+                "damageAmount": 20,
+                "damageType": "force",
+                "attackerVisible": true,
+                "isAttackHit": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-barbarian-searing-ignition",
+      "purpose": "A level-4 Fire Goliath replaces a single Barbarian weapon attack with Searing Ignition; higher-level Extra Attack retains the second weapon attack, without assigning a value to Blinded.",
+      "scenario": {
+        "id": "native-barbarian-searing-ignition",
+        "nativeClassActionPlans": [
+          {
+            "id": "barbarian-searing",
+            "classId": "class.barbarian",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "searing-1",
+                "round": 1,
+                "kind": "searing-ignition",
+                "traitId": "trait.goliath.fire.searing-ignition",
+                "targets": 2,
+                "saveFailure": 0.55,
+                "replacedAttackIndex": 0
+              },
+              {
+                "id": "searing-2",
+                "round": 2,
+                "kind": "searing-ignition",
+                "traitId": "trait.goliath.fire.searing-ignition",
+                "targets": 2,
+                "saveFailure": 0.55,
+                "replacedAttackIndex": 0
               }
             ]
           }

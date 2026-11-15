@@ -44,6 +44,7 @@ DEFAULT_SCENARIO = {
     "strikeOpportunities": [],
     "tacticalOpportunities": [],
     "jointCombatPlans": [],
+    "nativeClassActionPlans": [],
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -158,7 +159,7 @@ def validate_scenario(scenario: dict) -> None:
     for field in ("incomingDamage", "breathOpportunities", "saveEvents",
                   "reactionDamageEvents", "spellDemands", "controlOpportunities",
                   "strikeOpportunities", "tacticalOpportunities",
-                  "jointCombatPlans",
+                  "jointCombatPlans", "nativeClassActionPlans",
                   "tremorsenseContacts", "mobilityChallenges"):
         events = scenario.get(field, [])
         if not isinstance(events, list):
@@ -305,6 +306,84 @@ def validate_scenario(scenario: dict) -> None:
                     _probability(event["baseHitChance"], f"{location}.baseHitChance")
                 if "targetSpeedFeet" in event:
                     _number(event["targetSpeedFeet"], f"{location}.targetSpeedFeet")
+            elif field == "nativeClassActionPlans":
+                # These are declared *pure-class* diagnostic builds. A fixture
+                # evaluated at each breakpoint uses that same class level, not
+                # a guessed multiclass distribution or feat/spell selection.
+                allowed = {"id", "classId", "attackProcedure", "baseHitChance",
+                           "weaponDamageOnHit", "events"}
+                if set(event) - allowed:
+                    raise ValueError(f"Unknown {location} fields: {sorted(set(event) - allowed)}")
+                for name in ("id", "classId"):
+                    _nonempty(event.get(name), f"{location}.{name}")
+                if event.get("attackProcedure") not in ("standard", "iterative"):
+                    raise ValueError(f"{location}.attackProcedure must be standard or iterative")
+                _probability(event.get("baseHitChance"), f"{location}.baseHitChance")
+                _number(event.get("weaponDamageOnHit"), f"{location}.weaponDamageOnHit")
+                if not isinstance(event.get("events"), list) or not event["events"]:
+                    raise ValueError(f"{location}.events must be nonempty array")
+                local_ids = set()
+                previous_round = 0
+                for ei, action in enumerate(event["events"]):
+                    epath = f"{location}.events[{ei}]"
+                    if not isinstance(action, dict):
+                        raise ValueError(f"{epath} must be an object")
+                    common = {"id", "round", "kind"}
+                    fields = {
+                        "attack": set(),
+                        "breath": {"traitId", "targets", "saveFailure", "replacedAttackIndex",
+                                   "spellAlternative"},
+                        "searing-ignition": {"traitId", "targets", "saveFailure",
+                                             "replacedAttackIndex", "spellAlternative"},
+                        "spell": {"slotLevel", "expectedDamage", "spellId"},
+                        "class-reaction": {"featureId", "damageAmount", "damageType",
+                                           "attackerVisible", "isAttackHit"},
+                        "origin-reaction": {"traitId", "damageAmount", "damageType",
+                                            "attackerVisible", "isAttackHit"},
+                    }
+                    kind = action.get("kind")
+                    if kind not in fields or set(action) - common - fields[kind]:
+                        raise ValueError(f"{epath}.kind or fields unsupported")
+                    name = _nonempty(action.get("id"), f"{epath}.id")
+                    if name in local_ids:
+                        raise ValueError(f"Duplicate {epath}.id {name}")
+                    local_ids.add(name)
+                    rnd = _count(action.get("round"), f"{epath}.round")
+                    if rnd < 1 or rnd < previous_round:
+                        raise ValueError(f"{epath}.round must be chronological and >= 1")
+                    previous_round = rnd
+                    if kind in ("breath", "searing-ignition"):
+                        _nonempty(action.get("traitId"), f"{epath}.traitId")
+                        _count(action.get("targets"), f"{epath}.targets")
+                        _probability(action.get("saveFailure"), f"{epath}.saveFailure")
+                        _count(action.get("replacedAttackIndex"),
+                               f"{epath}.replacedAttackIndex")
+                        if "spellAlternative" in action:
+                            alt = action["spellAlternative"]
+                            if not isinstance(alt, dict) or set(alt) != {"slotLevel", "expectedDamage"}:
+                                raise ValueError(f"{epath}.spellAlternative must specify slot level and damage")
+                            _count(alt.get("slotLevel"), f"{epath}.spellAlternative.slotLevel")
+                            if alt["slotLevel"] < 1:
+                                raise ValueError(f"{epath}.spellAlternative.slotLevel must be >= 1")
+                            _number(alt.get("expectedDamage"),
+                                    f"{epath}.spellAlternative.expectedDamage")
+                    elif kind == "spell":
+                        _count(action.get("slotLevel"), f"{epath}.slotLevel")
+                        if action["slotLevel"] < 1:
+                            raise ValueError(f"{epath}.slotLevel must be >= 1")
+                        _nonempty(action.get("spellId"), f"{epath}.spellId")
+                        _number(action.get("expectedDamage"), f"{epath}.expectedDamage")
+                    elif kind in ("class-reaction", "origin-reaction"):
+                        key = "featureId" if kind == "class-reaction" else "traitId"
+                        _nonempty(action.get(key), f"{epath}.{key}")
+                        _number(action.get("damageAmount"), f"{epath}.damageAmount")
+                        _nonempty(action.get("damageType"), f"{epath}.damageType")
+                        for flag in ("attackerVisible", "isAttackHit"):
+                            if type(action.get(flag)) is not bool:
+                                raise ValueError(f"{epath}.{flag} must be boolean")
+                if event["id"] in seen_ids:
+                    raise ValueError(f"Duplicate nativeClassActionPlans ID: {event['id']}")
+                seen_ids.add(event["id"])
             elif field == "jointCombatPlans":
                 allowed = {"id", "archetype", "events"}
                 if set(event) - allowed:
@@ -512,8 +591,27 @@ def load_native(native: Path) -> dict:
         entries = conditions
     if not isinstance(entries, list) or not entries:
         raise ValueError("Native conditions catalog is empty or has an unsupported shape")
+    classes, class_features = {}, {}
+    for path in sorted((native / "classes" / "base").rglob("*.json")):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if record.get("kind") != "class":
+            # Class variants or non-class files are outside this pure-class pass.
+            continue
+        identifier = record["id"]
+        if identifier in classes:
+            raise ValueError(f"Duplicate native class: {identifier}")
+        classes[identifier] = record
+    for path in sorted((native / "features" / "classes").rglob("*.json")):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if record.get("kind") != "classFeature":
+            continue
+        identifier = record["id"]
+        if identifier in class_features:
+            raise ValueError(f"Duplicate native class feature: {identifier}")
+        class_features[identifier] = record
     return {"sources": sources, "traits": traits,
-            "conditions": {v["id"]: v for v in entries}}
+            "conditions": {v["id"]: v for v in entries},
+            "classes": classes, "classFeatures": class_features}
 
 
 def terminal_sources(catalog: dict, include_deferred: bool = False) -> list[str]:
@@ -1642,6 +1740,328 @@ def joint_combat_plan_outcomes(profile: dict, catalog: dict, level: int,
     return output
 
 
+def _native_class_actions(catalog: dict, class_id: str, level: int,
+                          procedure: str, first_hit: float,
+                          damage_on_hit: float) -> tuple[dict | None, str | None]:
+    """Read the current pure-class progression and a single attack procedure.
+
+    Standard Extra Attack is granted by a concrete class-feature mechanic.
+    BAB iteratives are a separate procedure with lower later attack bonuses;
+    they must never be added to a standard Extra Attack grant. Every hit
+    probability depends on an explicitly supplied first-attack baseline.
+    """
+    record = catalog.get("classes", {}).get(class_id)
+    if not record or not isinstance(record.get("definition"), dict):
+        return None, "missing-native-class-definition"
+    definition = record["definition"]
+    entries = definition.get("progression")
+    if not isinstance(entries, list):
+        return None, "missing-native-class-progression"
+    current = next((entry for entry in entries if entry.get("level") == level), None)
+    if current is None:
+        return None, "missing-native-class-level"
+    if procedure == "iterative":
+        bonuses = current.get("iterativeBaseAttackBonuses")
+        if not isinstance(bonuses, list) or any(type(v) is not int for v in bonuses):
+            return None, "unsupported-native-iterative-attack-schedule"
+        # A BAB +0 character still has an ordinary weapon attack; [] means
+        # no positive-BAB attacks, not that the character cannot attack.
+        if not bonuses:
+            if current.get("baseAttackBonus") != 0:
+                return None, "ambiguous-empty-iterative-schedule"
+            bonuses = [0]
+        elif current.get("baseAttackBonus") != bonuses[0]:
+            return None, "inconsistent-native-bab-progression"
+        chances = [max(0.0, min(1.0, first_hit + (bonus - bonuses[0]) / 20))
+                   for bonus in bonuses]
+        evidence = {"procedure": "iterative-BAB", "baseAttackBonuses": bonuses,
+                    "progressionSource": class_id}
+    else:
+        if (definition.get("extraAttackAndIteratives") not in
+                (None, "alternative-procedures-not-cumulative") or
+                definition.get("iterativeAttackPolicy") not in
+                (None, "shared-native-alternative-attack-procedures",
+                 "shared-native-attack-procedures")):
+            return None, "unsupported-attack-procedure-policy"
+        # Explicit standard Attack action feature mechanics, not an inference
+        # from a class's name or any BAB count.
+        count = 1
+        grant_ids = set()
+        for entry in entries:
+            if entry.get("level", 0) <= level:
+                grant_ids.update(entry.get("featureGrants", []))
+        for grant in grant_ids:
+            if "extra-attack" not in grant:
+                continue
+            feature = catalog.get("classFeatures", {}).get(grant)
+            mechanics = feature.get("definition", {}).get("mechanics", {}) if feature else {}
+            if (not feature or feature.get("parentClass") != class_id or
+                    type(feature.get("classLevel")) is not int or
+                    feature["classLevel"] > level or
+                    mechanics.get("kind") != "attack-action" or
+                    mechanics.get("babInteraction") != "alternative-procedure-not-additive" or
+                    type(mechanics.get("standardAttackCount")) is not int or
+                    mechanics["standardAttackCount"] < 1):
+                return None, "unverified-native-extra-attack-feature"
+            count = max(count, mechanics["standardAttackCount"])
+        chances = [first_hit] * count
+        evidence = {"procedure": "standard-Attack-action", "grants": sorted(grant_ids),
+                    "extraAttackRule": "native-feature-only-not-added-to-BAB"}
+    unmodeled_progression_fields = sorted(set(current) - {
+        "level", "baseAttackBonus", "iterativeBaseAttackBonuses", "featureGrants",
+        "spellSlotsBySpellLevel"})
+    spell_slots = current.get("spellSlotsBySpellLevel", [])
+    if not isinstance(spell_slots, list) or any(type(n) is not int or n < 0 for n in spell_slots):
+        return None, "invalid-native-spell-slot-progression"
+    return {"classId": class_id, "classLevel": level,
+            "attackProcedure": procedure, "attackCount": len(chances),
+            "perAttackHitChances": chances,
+            "perAttackExpectedDamages": [p * damage_on_hit for p in chances],
+            "attackActionExpectedDamage": sum(p * damage_on_hit for p in chances),
+            "nativeSpellSlotsByLevel": {i+1: n for i, n in enumerate(spell_slots)},
+            "otherNativeProgressionFieldsNotEvaluated": unmodeled_progression_fields,
+            "evidence": evidence}, None
+
+
+def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
+                                 scenario: dict, resistances: dict) -> list[dict]:
+    """Replay one native pure-class action schedule with explicitly valued options.
+
+    Attack counts and spell slot charges come from native progression; damage
+    assumptions and candidate spell identities do NOT. A class-based Reaction
+    is legal only when its feature is actually granted at this class level.
+    Per-round Action and Reaction capacities remain independent.
+    """
+    output = []
+    traits = profile["traits"]
+    for plan in scenario.get("nativeClassActionPlans", []):
+        model, problem = _native_class_actions(
+            catalog, plan["classId"], level, plan["attackProcedure"],
+            plan["baseHitChance"], plan["weaponDamageOnHit"])
+        result = {"id": plan["id"], "classId": plan["classId"], "level": level,
+                  "events": [], "resourceExpenditure": {}, "unresolved": [],
+                  "interpretation": "native-single-class-progression-with-fixture-valued-actions"}
+        if model is None:
+            result["status"] = "unresolved-native-progression"
+            result["unresolved"].append({"reason": problem, "classId": plan["classId"]})
+            output.append(result)
+            continue
+        result["classProgression"] = model
+        result["status"] = "evaluated-conditional-options"
+        result["limitations"] = [
+            "Class traits beyond verified Attack counts, class spell slots and one defensive Reaction are not valued.",
+            "Hit probabilities, weapon damage, spell choice and spell effects are fixture assumptions.",
+            "No multiclass, class subclass, rest recharge, equipment, concentration, critical or feat optimization is inferred.",
+        ]
+        granted = set()
+        native_record = catalog["classes"][plan["classId"]]["definition"]
+        for row in native_record["progression"]:
+            if row.get("level", 0) <= level:
+                granted.update(row.get("featureGrants", []))
+        result["nativeClassFeatureGrantsNotPriced"] = sorted(granted)
+        slots = model["nativeSpellSlotsByLevel"].copy()
+        spent: dict[str, int] = defaultdict(int)
+        action_slots: set[int] = set()
+        reaction_slots: set[int] = set()
+        for event in plan["events"]:
+            rnd, choice = event["round"], event["kind"]
+            row = {"id": event["id"], "round": rnd, "kind": choice,
+                   "status": "unresolved"}
+            action_kind = choice not in ("class-reaction", "origin-reaction")
+            occupied = action_slots if action_kind else reaction_slots
+            if rnd in occupied:
+                row["status"] = "same-round-slot-already-used"
+                result["events"].append(row)
+                continue
+            baseline = model["attackActionExpectedDamage"]
+            if action_kind:
+                row["attackActionExpectedDamage"] = baseline
+            if choice == "attack":
+                row["status"] = "used"
+                row["expectedDamage"] = baseline
+            elif choice in ("breath", "searing-ignition"):
+                identifier = event["traitId"]
+                trait = traits.get(identifier)
+                if trait is None:
+                    row["status"] = "not-expressed"
+                    result["events"].append(row)
+                    continue
+                if not unlocked(trait, level):
+                    row["status"] = "level-locked"
+                    result["events"].append(row)
+                    continue
+                idx = event["replacedAttackIndex"]
+                if idx >= model["attackCount"]:
+                    row["status"] = "attack-index-not-available"
+                    result["events"].append(row)
+                    continue
+                if choice == "breath":
+                    activation = trait.get("activation", {})
+                    damage = trait.get("damage", {})
+                    progression = damage.get("progression", [])
+                    active = [step for step in progression if step["characterLevel"] <= level]
+                    intrinsics = profile["intrinsics"]
+                    if (activation.get("replaces") != "one-attack" or
+                            activation.get("action") != "attack" or not active or
+                            not isinstance(intrinsics.get("breathWeaponArea"), dict) or
+                            not intrinsics.get("damageType")):
+                        row["status"] = "unverified-breath-source-bindings"
+                        result["unresolved"].append({"reason": row["status"], "traitId": identifier})
+                        result["events"].append(row)
+                        continue
+                    damage_type = intrinsics["damageType"]
+                    gross = (event["targets"] * dice_mean(active[-1]["dice"]) *
+                             (0.5 + 0.5 * event["saveFailure"]) *
+                             scenario.get("damageTypeMultiplier", {}).get(damage_type, 1))
+                else:
+                    activation = trait.get("activation", {})
+                    dmg = trait.get("damage", {})
+                    if (trait.get("requiredCharacterLevel") != 4 or
+                            activation.get("action") != "attack" or
+                            activation.get("replaces") != "one-attack" or
+                            trait.get("applyConditionOnFailedSave", {}).get("condition") !=
+                            "condition.blinded" or dmg.get("dice") != "1d8" or
+                            dmg.get("add") != "proficiency-bonus"):
+                        row["status"] = "unverified-searing-ignition"
+                        result["unresolved"].append({"reason": row["status"], "traitId": identifier})
+                        result["events"].append(row)
+                        continue
+                    gross = (event["targets"] * (dice_mean("1d8")+proficiency_bonus(level)) *
+                             (0.5+0.5*event["saveFailure"]) *
+                             scenario.get("damageTypeMultiplier", {}).get("fire", 1))
+                uses = trait.get("uses", {})
+                if not isinstance(uses, dict) or uses.get("value") != "proficiency-bonus" or                         uses.get("recharge") not in ("long-rest", None):
+                    row["status"] = "unresolved-origin-resource"
+                    result["unresolved"].append({"reason": row["status"], "traitId": identifier})
+                    result["events"].append(row)
+                    continue
+                if spent[identifier] >= proficiency_bonus(level):
+                    row["status"] = "origin-resource-exhausted"
+                    result["events"].append(row)
+                    continue
+                spent[identifier] += 1
+                replaced = model["perAttackExpectedDamages"][idx]
+                row.update({"status": "used", "grossExpectedDamage": gross,
+                            "expectedDamage": baseline - replaced + gross,
+                            "marginalVersusWeaponAttack": gross - replaced,
+                            "attackReplacedIndex": idx})
+                if "spellAlternative" in event:
+                    spec = event["spellAlternative"]
+                    lvl = spec["slotLevel"]
+                    if slots.get(lvl, 0) > 0:
+                        # An alternative is *not* consumed in this trace.
+                        row["spellAlternativeExpectedDamage"] = spec["expectedDamage"]
+                        row["marginalVersusSpellAction"] = row["expectedDamage"] - spec["expectedDamage"]
+                        result["unresolved"].append({"reason": "spell-identity-and-effect-fixture-assumed",
+                                                     "eventId": event["id"]})
+                    else:
+                        row["spellAlternativeStatus"] = "slot-not-available"
+            elif choice == "spell":
+                lvl = event["slotLevel"]
+                if slots.get(lvl, 0) <= 0:
+                    row["status"] = "spell-slot-exhausted-or-locked"
+                    result["events"].append(row)
+                    continue
+                # Slot expenditure is grounded; permission to know, access and
+                # apply this spell is not proved by the class slot table.
+                slots[lvl] -= 1
+                row.update({"status": "used-fixture-assumption",
+                            "spellId": event["spellId"], "spellSlotLevel": lvl,
+                            "expectedDamage": event["expectedDamage"],
+                            "marginalVersusWeaponAttack": event["expectedDamage"] - baseline})
+                result["unresolved"].append({"eventId": event["id"],
+                                             "reason": "spell-identity-and-effect-fixture-assumed"})
+            elif choice == "origin-reaction":
+                identifier = event["traitId"]
+                trait = traits.get(identifier)
+                if not trait or not unlocked(trait, level):
+                    row["status"] = "origin-reaction-not-expressed-or-locked"
+                    result["events"].append(row)
+                    continue
+                defense = next((d for d in _reaction_defenses(traits, level,
+                                       proficiency_bonus(level))
+                                if d["traitId"] == identifier), None)
+                if not defense:
+                    row["status"] = "unsupported-origin-reaction"
+                    result["events"].append(row)
+                    continue
+                if (defense["kind"] == "attack-resistance" and
+                        (not event["attackerVisible"] or not event["isAttackHit"])):
+                    row["status"] = "reaction-trigger-not-met"
+                    result["events"].append(row)
+                    continue
+                if resistances.get(event["damageType"], 0):
+                    row["status"] = "resistance-order-unresolved"
+                    result["unresolved"].append({"eventId": event["id"],
+                                                 "reason": "origin-reaction-resistance-order-unresolved"})
+                    result["events"].append(row)
+                    continue
+                if spent[identifier] >= defense["charges"]:
+                    row["status"] = "origin-reaction-resource-exhausted"
+                    result["events"].append(row)
+                    continue
+                if defense["kind"] == "damage-reduction":
+                    ability = defense["ability"]
+                    if ability and ability not in scenario.get("abilityModifiers", {}):
+                        row["status"] = "missing-ability-modifier"
+                        result["unresolved"].append({"eventId": event["id"],
+                                                     "reason": "origin-reaction-modifier-unspecified"})
+                        result["events"].append(row)
+                        continue
+                    prevention = _damage_reduction_expectation(
+                        defense["dice"],
+                        scenario.get("abilityModifiers", {}).get(ability, 0),
+                        event["damageAmount"])
+                else:
+                    prevention = event["damageAmount"] * defense["fraction"]
+                spent[identifier] += 1
+                row.update({"status": "used", "expectedDamagePrevented": prevention,
+                            "resourceOwnerTraitId": identifier,
+                            "resourceUsesRemaining": defense["charges"]-spent[identifier]})
+            else:  # class-reaction, currently only verified Rogue Uncanny Dodge
+                feature_id = event["featureId"]
+                feature = catalog.get("classFeatures", {}).get(feature_id)
+                mechanics = feature.get("definition", {}).get("mechanics", {}) if feature else {}
+                if (feature_id not in granted or not feature or
+                        feature.get("parentClass") != plan["classId"] or
+                        mechanics.get("kind") != "reaction-damage-halving" or
+                        mechanics.get("trigger") != "visible-attacker-hits-you" or
+                        mechanics.get("cost") != "reaction" or
+                        mechanics.get("divideDamageBy") != 2 or
+                        mechanics.get("roundDown") is not True):
+                    row["status"] = "class-reaction-not-granted-or-unverified"
+                    result["events"].append(row)
+                    continue
+                if not event["attackerVisible"] or not event["isAttackHit"]:
+                    row["status"] = "reaction-trigger-not-met"
+                    result["events"].append(row)
+                    continue
+                if resistances.get(event["damageType"], 0):
+                    row["status"] = "resistance-order-unresolved"
+                    result["unresolved"].append({"eventId": event["id"],
+                                                 "reason": "class-reaction-resistance-order-unresolved"})
+                    result["events"].append(row)
+                    continue
+                # Exact after-damage floor for positive integer HP packets;
+                # fractional expected packets need a distribution first.
+                amount = event["damageAmount"]
+                if type(amount) is not int:
+                    row["status"] = "fractional-damage-rounding-unresolved"
+                    result["events"].append(row)
+                    continue
+                row.update({"status": "used", "expectedDamagePrevented":
+                            amount - amount // 2})
+            if row["status"] in ("used", "used-fixture-assumption"):
+                occupied.add(rnd)
+            result["events"].append(row)
+        result["resourceExpenditure"] = {
+            "originTraitUses": dict(sorted(spent.items())),
+            "remainingClassSpellSlotsByLevel": slots,
+        }
+        output.append(result)
+    return output
+
+
 def native_shared_pool_frontiers(traits: dict, level: int) -> list[dict]:
     """Expose only defense/strike links that match the conservative frontier."""
     frontiers = []
@@ -2088,6 +2508,9 @@ def evaluate(profile: dict, catalog: dict, level: int,
     joint_plans = joint_combat_plan_outcomes(profile, catalog, level, scenario, resistances)
     for plan in joint_plans:
         unmodeled.extend(plan["unresolved"])
+    class_plans = native_class_action_outcomes(profile, catalog, level, scenario, resistances)
+    for plan in class_plans:
+        unmodeled.extend(plan["unresolved"])
     # Carry the intrinsic facts into the output instead of inventing a price for
     # movement, creature type, size, generic vision or other access gates.
     return {"sourceId": profile.get("selectedSourceId"), "level": level,
@@ -2106,6 +2529,7 @@ def evaluate(profile: dict, catalog: dict, level: int,
             "strikeEventTrace": strike_trace,
             "tacticalEventTrace": tactical_trace,
             "jointCombatPlanResults": joint_plans,
+            "nativeClassActionPlanResults": class_plans,
             "sharedResourceFrontiers": shared_frontiers,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
@@ -2170,8 +2594,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6, 7):
-        raise ValueError("suite.version must be 1 through 7")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6, 7, 8):
+        raise ValueError("suite.version must be 1 through 8")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")
