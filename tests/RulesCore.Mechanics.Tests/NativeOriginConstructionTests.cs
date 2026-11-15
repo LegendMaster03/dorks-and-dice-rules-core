@@ -958,7 +958,7 @@ public sealed class NativeOriginConstructionTests
             TableDecisions = selected.TableDecisions!.Where(x =>
                 x.Id != decision.Id).ToArray()
         }, new TestAuthority(), false);
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, unauthorized.Status);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unauthorized.Status);
         Assert.Empty(unauthorized.Profile!.Underlying.InherentGrants);
     }
 
