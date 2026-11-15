@@ -150,7 +150,12 @@ public sealed record NativeOriginDecisionBasis(
 /// </summary>
 public sealed record NativeOriginResolution(
     string RelationshipId, NativeOriginResolutionAction Action,
-    NativeOriginDecisionBasis Basis);
+    NativeOriginDecisionBasis Basis,
+    // A player-selected replacement retains one actual source instance. These
+    // proposed parameter bindings are inert without a matching trusted rule.
+    string? ReplacementCandidateId = null,
+    IReadOnlyDictionary<string, JsonElement>? ReplacementParameters = null,
+    IReadOnlyDictionary<string, string>? ReplacementParameterSources = null);
 
 /// <summary>
 /// This identity is earned by the future evaluator, not by candidate discovery.
@@ -163,7 +168,10 @@ public sealed record NativeOriginEffectiveGrant(
     JsonElement? EffectiveValue = null,
     IReadOnlyDictionary<string, JsonElement>? Parameters = null,
     IReadOnlyList<NativeOriginChoiceSelection>? ResolvedChoices = null,
-    NativeOriginDecisionBasis? Authorization = null);
+    NativeOriginDecisionBasis? Authorization = null,
+    // For recombined parameters, identifies the contributor offer of each
+    // effective field. Grant-level SourceCandidateIds retains all evidence.
+    IReadOnlyDictionary<string, string>? ParameterSources = null);
 
 /// <summary>
 /// A separately earned grant remains part of the character's entitlements even

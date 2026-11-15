@@ -869,6 +869,98 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
+    public void PlayerDirectedRedBronzeRecombinationProducesOneSourceBackedBreathWeapon()
+    {
+        var original = Proposal("chosen-dragonborn", NativeOriginIntent.Mixed,
+            contributors: [Contributor("red", "ancestry.dragonborn.red"),
+                Contributor("bronze", "ancestry.dragonborn.bronze")]);
+        var offered = Evaluate(original).EvaluatedProposal.Candidates.Where(x =>
+            x.Identity.Occurrence.Source.Id == "species.dragonborn" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/2").ToArray();
+        var red = offered.Single(x =>
+            x.OfferedParameters!["damageType"].GetString() == "fire");
+        var bronze = offered.Single(x =>
+            x.OfferedParameters!["damageType"].GetString() == "lightning");
+        // Choose fire from Red and the complete cone geometry from Bronze.
+        // Neither the category nor its dimensions is split into free traits.
+        var parameters = new Dictionary<string, JsonElement>
+        {
+            ["damageType"] = red.OfferedParameters!["damageType"],
+            ["area"] = bronze.OfferedParameters!["area"]
+        };
+        var sourceMap = new Dictionary<string, string>
+        {
+            ["damageType"] = red.Id,
+            ["area"] = bronze.Id
+        };
+        var decision = Decision("authorize-composition", "relationship", "breath-compose",
+            new { action = "replace", resultCandidateId = red.Id,
+                parameters, parameterSources = sourceMap });
+        var resolution = new NativeOriginResolution("breath-compose",
+            NativeOriginResolutionAction.Replace,
+            new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: decision.Id),
+            red.Id, parameters, sourceMap);
+        var selected = original with
+        {
+            Manifestations =
+            [
+                new("red-breath", red.Id),
+                new("bronze-breath", bronze.Id)
+            ],
+            TableDecisions =
+            [
+                Decision("allow-red", "candidate", red.Id, new { eligibility = "eligible" }),
+                Decision("allow-bronze", "candidate", bronze.Id, new { eligibility = "eligible" }),
+                decision
+            ],
+            Relationships = [new("breath-compose",
+                NativeOriginRelationshipKind.Substitution, [red.Id, bronze.Id])],
+            Resolutions = [resolution]
+        };
+
+        var result = Evaluate(selected, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var breath = Assert.Single(result.Profile!.Underlying.InherentGrants);
+        Assert.Equal("breath-weapon", breath.EffectiveValue!.Value.GetProperty("id").GetString());
+        Assert.Equal("fire", breath.Parameters!["damageType"].GetString());
+        Assert.Equal("cone", breath.Parameters["area"].GetProperty("shape").GetString());
+        Assert.Equal(15, breath.Parameters["area"].GetProperty("lengthFeet").GetInt32());
+        Assert.Equal(2, breath.SourceCandidateIds.Count);
+        Assert.Equal(red.Id, breath.ParameterSources!["damageType"]);
+        Assert.Equal(bronze.Id, breath.ParameterSources["area"]);
+        Assert.Equal("proficiency-bonus",
+            breath.EffectiveValue.Value.GetProperty("uses").GetProperty("value").GetString());
+        Assert.Equal(4, breath.EffectiveValue.Value.GetProperty("damage")
+            .GetProperty("progression").GetArrayLength());
+        Assert.Equal(NativeOriginAdjudication.DmAuthorized, breath.Authorization!.Adjudication);
+        Assert.Equal(decision.Id, breath.Authorization.TableDecisionId);
+
+        // A player cannot forge a field's provenance or silently choose a value
+        // outside the contributors' exact configured offers.
+        var forged = Evaluate(selected with
+        {
+            Resolutions = [resolution with
+            {
+                ReplacementParameterSources = new Dictionary<string, string>(sourceMap)
+                {
+                    ["area"] = red.Id
+                }
+            }]
+        }, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, forged.Status);
+        Assert.Empty(forged.Profile!.Underlying.InherentGrants);
+        Assert.Contains(forged.Issues, x => x.Code == "relationship-action-unresolved");
+
+        var unauthorized = Evaluate(selected with
+        {
+            TableDecisions = selected.TableDecisions!.Where(x =>
+                x.Id != decision.Id).ToArray()
+        }, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, unauthorized.Status);
+        Assert.Empty(unauthorized.Profile!.Underlying.InherentGrants);
+    }
+
+    [Fact]
     public void NestedSpellTraitRetainsItsAlreadyManifestedParameterValue()
     {
         var source = Evaluate(Proposal("caster-parent", ancestry: "ancestry.elf.high"))

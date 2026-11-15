@@ -23,6 +23,7 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         var active = selected.ToDictionary(x => x.Candidate.Id, StringComparer.Ordinal);
         var ignored = new HashSet<string>(StringComparer.Ordinal);
         var merged = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        var replacements = new Dictionary<string, NativeOriginEffectiveGrant>(StringComparer.Ordinal);
         var usedDm = false;
 
         foreach (var relation in (proposal.Relationships ?? []).OrderBy(x => x.Id, StringComparer.Ordinal))
@@ -77,6 +78,25 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                     }
                     break;
                 case NativeOriginResolutionAction.RetainBoth:
+                    break;
+                case NativeOriginResolutionAction.Replace:
+                    // Until the native catalog defines an executable replacement
+                    // grammar, require an exact-scoped table decision for both the
+                    // selected source and every final parameter/source binding.
+                    // Do not infer recombination from similar trait names.
+                    if (!authorized || authenticated is null ||
+                        !TryComposeReplacement(involved, active, resolution,
+                            authenticated, out var replacement))
+                        goto default;
+                    var winner = resolution.ReplacementCandidateId!;
+                    replacements[winner] = replacement;
+                    if (!merged.TryGetValue(winner, out var sources))
+                        merged[winner] = sources = new(StringComparer.Ordinal);
+                    foreach (var id in involved.Where(id => id != winner))
+                    {
+                        ignored.Add(id);
+                        sources.Add(id);
+                    }
                     break;
                 default:
                     Issue("relationship-action-unresolved", relation.Id, NativeOriginIssueSeverity.Unresolved,
@@ -148,7 +168,9 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 var evidence = new SortedSet<string>(StringComparer.Ordinal) { x.Candidate.Id };
                 if (merged.TryGetValue(x.Candidate.Id, out var additional))
                     evidence.UnionWith(additional);
-                return x.Grant with { SourceCandidateIds = evidence.ToArray() };
+                var effective = replacements.TryGetValue(x.Candidate.Id, out var replaced) ?
+                    replaced : x.Grant;
+                return effective with { SourceCandidateIds = evidence.ToArray() };
             }).ToArray();
         return (grants, issues, usedDm);
 
@@ -156,9 +178,92 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             issues.Add(new(code, path, level, detail));
     }
 
+    /// <summary>
+    /// Recombine one complete native trait with parameter values actually offered by
+    /// selected contributors. The player nominates the source of each field; the
+    /// authenticated table outcome must match it exactly. This is not automatic
+    /// inheritance eligibility, an allocation decision or arbitrary trait merging.
+    /// </summary>
+    private static bool TryComposeReplacement(
+        IReadOnlyList<string> involved,
+        IReadOnlyDictionary<string, NativeOriginSelectedGrant> active,
+        NativeOriginResolution resolution, NativeTableRuleDecision decision,
+        out NativeOriginEffectiveGrant result)
+    {
+        result = null!;
+        var winner = resolution.ReplacementCandidateId;
+        var values = resolution.ReplacementParameters;
+        var sources = resolution.ReplacementParameterSources;
+        var outcome = decision.EffectiveOutcome;
+        if (winner is null || !involved.Contains(winner, StringComparer.Ordinal) ||
+            values is null || sources is null || values.Count == 0 ||
+            JsonString(outcome, "resultCandidateId") != winner ||
+            outcome.ValueKind != JsonValueKind.Object ||
+            !outcome.TryGetProperty("parameters", out var authorizedValues) ||
+            authorizedValues.ValueKind != JsonValueKind.Object ||
+            !outcome.TryGetProperty("parameterSources", out var authorizedSources) ||
+            authorizedSources.ValueKind != JsonValueKind.Object)
+            return false;
+
+        var root = active[winner];
+        if (root.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            root.Candidate.Identity.MechanicalDefinitionId is null ||
+            root.Grant.EffectiveValue is null)
+            return false;
+
+        // A replacement is one configured instance of the *same complete mechanic*.
+        // No cross-definition, cross-choice or intrinsic blending is authorized.
+        // Every simultaneously selected occurrence of that exact identity must
+        // participate, so no extra copy remains to double a resource pool.
+        if (active.Values.Any(x => x.Candidate.Identity == root.Candidate.Identity &&
+            !involved.Contains(x.Candidate.Id, StringComparer.Ordinal)))
+            return false;
+        var entries = involved.Select(id => active[id]).ToArray();
+        if (entries.Any(x =>
+            x.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            x.Candidate.Identity.MechanicalDefinitionId != root.Candidate.Identity.MechanicalDefinitionId ||
+            x.Grant.EffectiveValue is null ||
+            !JsonElement.DeepEquals(x.Grant.EffectiveValue.Value, root.Grant.EffectiveValue.Value) ||
+            (x.Grant.ResolvedChoices?.Count ?? 0) > 0 ||
+            x.Grant.Parameters is null))
+            return false;
+        var keys = root.Grant.Parameters?.Keys.ToHashSet(StringComparer.Ordinal);
+        if (keys is null || keys.Count == 0 ||
+            entries.Any(x => !keys.SetEquals(x.Grant.Parameters!.Keys)) ||
+            !keys.SetEquals(values.Keys) || !keys.SetEquals(sources.Keys) ||
+            authorizedValues.EnumerateObject().Count() != keys.Count ||
+            authorizedSources.EnumerateObject().Count() != keys.Count)
+            return false;
+
+        foreach (var key in keys)
+        {
+            var from = sources[key];
+            if (!involved.Contains(from, StringComparer.Ordinal) ||
+                !JsonElement.DeepEquals(values[key], active[from].Grant.Parameters![key]) ||
+                !authorizedValues.TryGetProperty(key, out var permitted) ||
+                !JsonElement.DeepEquals(values[key], permitted) ||
+                JsonString(authorizedSources, key) != from)
+                return false;
+        }
+
+        result = root.Grant with
+        {
+            Parameters = values.ToDictionary(x => x.Key, x => x.Value.Clone(),
+                StringComparer.Ordinal),
+            ParameterSources = sources.ToDictionary(x => x.Key, x => x.Value,
+                StringComparer.Ordinal),
+            Authorization = new(NativeOriginAdjudication.DmAuthorized,
+                TableDecisionId: decision.Id)
+        };
+        return true;
+    }
+
     private bool NativeRelationshipAuthorizes(string id, NativeOriginResolutionAction action,
         string? ruleId)
     {
+        // Catalog relationships currently name actions, not replacement values
+        // or parameter-source bindings. A bare `replace` label grants nothing.
+        if (action == NativeOriginResolutionAction.Replace) return false;
         if (ruleId is null || !catalog.TryGetById(ruleId, out var rule) || rule is null ||
             rule.Category != "rule" ||
             !rule.Definition.TryGetProperty("originRelationships", out var items) ||
