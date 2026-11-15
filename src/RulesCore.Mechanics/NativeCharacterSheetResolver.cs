@@ -1,3 +1,5 @@
+using System.Collections.Frozen;
+
 namespace RulesCore.Mechanics;
 
 /// <summary>
@@ -29,11 +31,16 @@ public static class NativeCharacterSheetResolver
             state.PrimaryMechanics.AbilityScores is null ||
             state.PrimaryMechanics.Advancements is null ||
             state.AlternateSheets is null ||
-            string.IsNullOrWhiteSpace(targetSheetId))
+            string.IsNullOrWhiteSpace(targetSheetId) ||
+            state.AlternateSheets.Count > 512)
         {
             Issue("invalid-character-state", "character", "A character, primary mechanics and target are required.");
             return Invalid();
         }
+
+        if (!authority.AuthorizesPrimary(state.CharacterId, state.PrimaryMechanics))
+            Issue("unauthorized-primary", "character.primaryMechanics",
+                "The host did not verify the current authoritative primary mechanics.");
 
         var byId = new Dictionary<string, NativePersistentCharacterSheet>(StringComparer.Ordinal);
         foreach (var sheet in state.AlternateSheets)
@@ -98,7 +105,8 @@ public static class NativeCharacterSheetResolver
                             Issue("duplicate-grant-id", grantPath, "A durable grant identity must have one authoritative owner.");
                         if (string.IsNullOrWhiteSpace(grant.DefinitionId) ||
                             string.IsNullOrWhiteSpace(grant.AcquisitionEvidenceId) ||
-                            !ValidOccurrence(grant.SourceOccurrence))
+                            !ValidOccurrence(grant.SourceOccurrence) ||
+                            !ValidLevelReference(grant.LevelReference))
                             Issue("invalid-sheet-grant", grantPath, "Grant definition, source and evidence are required.");
                         if (!authority.AuthorizesGrant(state.CharacterId, sheet.Id, progression, grant))
                             Issue("unauthorized-grant", grantPath, "The host did not verify the source-qualified entitlement.");
@@ -118,9 +126,13 @@ public static class NativeCharacterSheetResolver
                     if (!local.Add(decision.GrantId))
                         Issue("duplicate-grant-applicability", path + ".grantApplicability." + decision.GrantId,
                             "The same sheet can not decide one entitlement twice.");
-                    if (!ValidDecision(decision.Basis))
+                    if (!ValidDecision(decision.Basis) ||
+                        !Enum.IsDefined(decision.State))
                         Issue("invalid-grant-applicability", path + ".grantApplicability." + decision.GrantId,
-                            "Applicability needs verified rule or DM decision evidence.");
+                            "Applicability needs a valid state and supported rule/DM reference.");
+                    if (!authority.AuthorizesApplicability(state.CharacterId, sheet.Id, decision))
+                        Issue("unauthorized-applicability", path + ".grantApplicability." + decision.GrantId,
+                            "The host did not verify this exact applicability decision.");
                 }
             }
         }
@@ -189,9 +201,10 @@ public static class NativeCharacterSheetResolver
             mechanics = Apply(mechanics, sheet.Overrides);
             foreach (var progression in sheet.Progression ?? [])
             {
-                progressionView.Add(new(sheet.Id, progression));
-                foreach (var grant in progression.Grants)
-                    grantView.Add(new(sheet.Id, progression.Id, grant,
+                var detached = CopyProgression(progression);
+                progressionView.Add(new(sheet.Id, detached));
+                foreach (var grant in detached.Grants)
+                    grantView.Add(new(sheet.Id, detached.Id, grant,
                         NativeOriginGrantApplicabilityState.Unresolved, null));
             }
             foreach (var decision in sheet.GrantApplicability ?? [])
@@ -205,13 +218,32 @@ public static class NativeCharacterSheetResolver
                 };
             }
         }
-        return new("resolved", mechanics, progressionView.ToArray(), grantView.ToArray(), []);
+        return new("resolved", mechanics,
+            Array.AsReadOnly(progressionView.ToArray()),
+            Array.AsReadOnly(grantView.ToArray()), []);
     }
 
     private static bool ValidOccurrence(NativeOriginSourceOccurrence? occurrence) =>
         occurrence is not null && occurrence.Source is not null &&
         !string.IsNullOrWhiteSpace(occurrence.Source.Id) &&
         !string.IsNullOrWhiteSpace(occurrence.OccurrencePath);
+
+    private static bool ValidLevelReference(NativeSheetLevelReference? reference) =>
+        reference is null ||
+        reference.Source switch
+        {
+            NativeSheetLevelSource.TotalClassLevels => reference.ClassId is null,
+            NativeSheetLevelSource.SpecificClassLevel =>
+                !string.IsNullOrWhiteSpace(reference.ClassId),
+            _ => false
+        };
+
+    private static NativeSheetEarnedProgression CopyProgression(NativeSheetEarnedProgression item) =>
+        item with
+        {
+            Grants = Array.AsReadOnly(item.Grants.ToArray()),
+            Choices = item.Choices?.ToFrozenDictionary(StringComparer.Ordinal)
+        };
 
     private static bool ValidDecision(NativeOriginDecisionBasis? basis) =>
         basis is not null &&
@@ -257,20 +289,17 @@ public static class NativeCharacterSheetResolver
 
     private static NativeCharacterRequest Copy(NativeCharacterRequest source) => source with
     {
-        AbilityScores = source.AbilityScores.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
-        Advancements = source.Advancements.ToArray(),
-        Skills = source.Skills is null ? null :
-            source.Skills.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
-        Competencies = source.Competencies is null ? null :
-            source.Competencies.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
-        DefenseContributions = source.DefenseContributions is null ? null :
-            source.DefenseContributions.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
-        CurrentResources = source.CurrentResources is null ? null :
-            source.CurrentResources.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
-        HitPointGains = source.HitPointGains is null ? null :
-            source.HitPointGains.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal),
-        SelectedOptions = source.SelectedOptions?.ToArray(),
-        ConditionIds = source.ConditionIds?.ToArray()
+        AbilityScores = source.AbilityScores.ToFrozenDictionary(StringComparer.Ordinal),
+        Advancements = Array.AsReadOnly(source.Advancements.ToArray()),
+        Skills = source.Skills?.ToFrozenDictionary(StringComparer.Ordinal),
+        Competencies = source.Competencies?.ToFrozenDictionary(StringComparer.Ordinal),
+        DefenseContributions = source.DefenseContributions?.ToFrozenDictionary(StringComparer.Ordinal),
+        CurrentResources = source.CurrentResources?.ToFrozenDictionary(StringComparer.Ordinal),
+        HitPointGains = source.HitPointGains?.ToFrozenDictionary(StringComparer.Ordinal),
+        SelectedOptions = source.SelectedOptions is null
+            ? null : Array.AsReadOnly(source.SelectedOptions.ToArray()),
+        ConditionIds = source.ConditionIds is null
+            ? null : Array.AsReadOnly(source.ConditionIds.ToArray())
     };
 
     private static NativeCharacterRequest Apply(NativeCharacterRequest parent,
@@ -301,7 +330,7 @@ public static class NativeCharacterSheetResolver
             : parent.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
         foreach (var pair in patch.Entries)
             result[pair.Key] = pair.Value;
-        return result;
+        return result.ToFrozenDictionary(StringComparer.Ordinal);
     }
 
     private static IReadOnlyDictionary<string, NativeSkillTraining>? Training(
@@ -324,7 +353,7 @@ public static class NativeCharacterSheetResolver
                 Ability = change.Ability is null ? initial.Ability : change.Ability.Value
             };
         }
-        return result;
+        return result.ToFrozenDictionary(StringComparer.Ordinal);
     }
 
     private static IReadOnlyList<string>? Collection(
@@ -338,6 +367,6 @@ public static class NativeCharacterSheetResolver
         foreach (var entry in patch.Added)
             if (!result.Contains(entry, StringComparer.Ordinal))
                 result.Add(entry);
-        return result.ToArray();
+        return Array.AsReadOnly(result.ToArray());
     }
 }
