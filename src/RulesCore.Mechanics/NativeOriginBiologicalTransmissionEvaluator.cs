@@ -47,6 +47,7 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
                     contributor.Source.Kind != NativeOriginSourceKind.Native ||
                     !catalog.TryGetById(contributor.Source.Id, out var parent) ||
                     parent is null || parent.Category is not ("species" or "ancestry") ||
+                    !SupportsBiologicalOrigination(parent) ||
                     parent.Definition.TryGetProperty("selectable", out var selectable) &&
                     selectable.ValueKind == JsonValueKind.False ||
                     parent.Definition.TryGetProperty("acquisitionMethods", out var acquisition) &&
@@ -85,6 +86,49 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
                 } : candidate;
             }).ToArray()
         };
+    }
+
+    /// <summary>
+    /// Origination-method compatibility is checked against the actual selected
+    /// donor, not assumed from the offspring or the BiologicalParent role.
+    /// A specific Species/Ancestry method list overrides the inherited
+    /// creature-type default; an absent list inherits through the native
+    /// ancestry tree. This keeps future Construct assembly definitions outside
+    /// biological inheritance unless their own content expressly permits it.
+    /// </summary>
+    private bool SupportsBiologicalOrigination(NativeRuleEntity donor)
+    {
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        NativeRuleEntity? entity = donor;
+        while (entity is not null && visited.Add(entity.Id) && visited.Count <= 64)
+        {
+            if (entity.Definition.TryGetProperty("originationMethods", out var authored))
+                return authored.ValueKind == JsonValueKind.Array &&
+                    authored.EnumerateArray().Any(item =>
+                        item.ValueKind == JsonValueKind.String &&
+                        item.GetString() == "biological");
+
+            if (entity.Definition.TryGetProperty("creatureType", out var type) &&
+                type.ValueKind == JsonValueKind.String)
+            {
+                var id = type.GetString();
+                if (string.IsNullOrWhiteSpace(id)) return false;
+                if (!id.StartsWith("creature-type.", StringComparison.Ordinal))
+                    id = "creature-type." + id;
+                return new NativeOriginMethodAvailabilityEvaluator(catalog)
+                    .Resolve(id, new(RuleId, "biological")).Status ==
+                    NativeOriginMethodDefaultStatus.Available;
+            }
+
+            if (entity.Category != "ancestry" ||
+                !entity.Definition.TryGetProperty("parent", out var parent) ||
+                parent.ValueKind != JsonValueKind.String ||
+                !catalog.TryGetById(parent.GetString()!, out var next) ||
+                next is null || next.Category is not ("species" or "ancestry"))
+                return false;
+            entity = next;
+        }
+        return false;
     }
 
     private bool IsAuthoredBiologicalTrait(NativeOriginCandidate candidate)
