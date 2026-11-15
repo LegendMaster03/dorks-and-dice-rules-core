@@ -1378,6 +1378,30 @@ public sealed class NativeOriginConstructionTests
             x => x.Identity.MechanicalDefinitionId == strikeId);
         Assert.Equal(parent.Id, restoredDependent.ResourceOwners!["uses"]);
         Assert.Empty(complete.Issues);
+
+        // Saving a profile does not make an arbitrary resource-owner claim
+        // authoritative. Profile validation rechecks the canonical relationship.
+        var forgedConfiguration = complete.Profile.Underlying with
+        {
+            InherentGrants = granted.Select(x =>
+                x.Id == dependent.Id
+                    ? x with
+                    {
+                        ResourceOwners = new Dictionary<string, string>
+                        {
+                            ["uses"] = "grant:not-actually-selected"
+                        }
+                    }
+                    : x).ToArray()
+        };
+        var forgedProfile = complete.Profile with
+        {
+            Underlying = forgedConfiguration,
+            Current = forgedConfiguration
+        };
+        var review = new NativeOriginContractValidator(Catalog()).ReviewProfile(
+            forgedProfile, complete.EvaluatedProposal);
+        Assert.Contains(review.Issues, x => x.Code == "profile-resource-owner-invalid");
     }
 
     [Fact]
