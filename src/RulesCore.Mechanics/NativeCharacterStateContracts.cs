@@ -148,8 +148,10 @@ public interface INativeCharacterSheetAuthority
 }
 
 /// <summary>
-/// A complete mechanics projection input where possible, not a second persisted
-/// character or proof of Origin/Class authority. Invalid graphs fail closed.
+/// A derived mechanics input, not a second persisted character or proof of
+/// Origin/Class authority. Status "resolved" means the sheet graph and supplied
+/// authority checks completed, not that every earned capability is currently
+/// usable or that an alternate form is manifested. Invalid graphs fail closed.
 /// </summary>
 public sealed record NativeCharacterSheetResolution(
     string Status,
@@ -171,8 +173,9 @@ public sealed record NativeSheetUsableCapability(
 /// Read-only interpretation with provenance. BaseMechanics is an existing
 /// NativeCharacterProjector output and is not a substitute for verified
 /// form-specific Class-feature and Origin grant applicability. UsableCapabilities
-/// is the separately authorized sheet-grant view for the selected sheet, not a
-/// proof that the sheet is currently manifested or its whole mechanics are usable.
+/// is the separately authorized sheet-grant view for the selected sheet, not
+/// proof of current manifestation. The outer projection always remains partial
+/// for alternate sheets until form-specific policies have been verified.
 /// </summary>
 public sealed record NativeCharacterSheetProjection(
     string Status,
