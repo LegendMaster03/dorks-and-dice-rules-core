@@ -2105,7 +2105,9 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
             "attackProcedure": "iterative", "baseHitChance": .65,
             "weaponDamageOnHit": 8, "events": [
                 {"id": "eligible", "round": 1, "kind": "attack",
-                 "precisionHits": [self.precision()]},
+                 "precisionHits": [{"attackIndex": 0, "basis": "unanticipated",
+                                    "weaponProficient": True, "withinOrdinaryRange": True,
+                                    "targetImmune": False}]},
                 {"id": "aim", "round": 2, "kind": "class-bonus-action",
                  "featureId": "class-feature.rogue.steady-aim-level-3", "option": "steady-aim",
                  "movedThisTurn": False},
