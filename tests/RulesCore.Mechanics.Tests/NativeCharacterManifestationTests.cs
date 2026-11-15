@@ -43,7 +43,8 @@ public sealed class NativeCharacterManifestationTests
         public bool AuthorizesLedger(string id, NativeManifestationLedger ledger) => !DenyLedger;
         public bool AuthorizesInstance(string id, NativeManifestationInstance instance,
             NativePersistentCharacterSheet sheet) =>
-            !DenyInstance && instance.SheetId == sheet.Id &&
+            !DenyInstance && instance.CharacterId == id &&
+            instance.SheetId == sheet.Id &&
             instance.DefinitionOccurrence.Source == Source() &&
             instance.DefinitionOccurrence.OccurrencePath == "forms." + sheet.Id &&
             instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId;
@@ -132,7 +133,7 @@ public sealed class NativeCharacterManifestationTests
 
     private static NativeManifestationInstance Form(string id, string sheet, string eventId,
         IReadOnlyList<NativeManifestationResourcePolicy>? policies = null) =>
-        new(id, sheet, "transformation." + sheet, Occurrence("forms." + sheet),
+        new("character.1", id, sheet, "transformation." + sheet, Occurrence("forms." + sheet),
             null, eventId, "receipt.activate." + eventId, Rule(),
             NativeManifestationLifecycle.Active,
             NativeManifestationContribution.Contributing,
@@ -404,6 +405,41 @@ public sealed class NativeCharacterManifestationTests
         }
         Assert.Equal("invalid", Resolve(state, ActivatedWolf(),
             new Authority { DenyLedger = true }).Status);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("character.other")]
+    public void MissingOrForeignManifestationOwnerFailsBeforeHostTransition(string owner)
+    {
+        var state = Character();
+        var existing = ActivatedWolf(state);
+        Assert.Equal(state.CharacterId, existing.Instances.Single().CharacterId);
+
+        var forged = existing with
+        {
+            Instances = [existing.Instances.Single() with { CharacterId = owner }]
+        };
+        var resolved = Resolve(state, forged);
+        Assert.Equal("invalid", resolved.Status);
+        Assert.Contains(resolved.Issues,
+            issue => issue.Code == "invalid-manifestation-instance");
+
+        var activation = Activate("manifest.wolf", "wolf", "e1", true);
+        var unauthorized = activation with
+        {
+            NewInstance = activation.NewInstance! with { CharacterId = owner }
+        };
+        var authority = new Authority();
+        var proposed = NativeCharacterManifestationTransitionPlanner.Plan(
+            state, Ledger(), new(state.CharacterId, 7, "e1", [unauthorized]),
+            authority);
+        Assert.Equal("invalid", proposed.Status);
+        Assert.Null(proposed.Proposed);
+        Assert.Null(proposed.ProposedEffective);
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Contains(proposed.Issues,
+            issue => issue.Code == "invalid-manifestation-instance");
     }
 
     [Fact]
