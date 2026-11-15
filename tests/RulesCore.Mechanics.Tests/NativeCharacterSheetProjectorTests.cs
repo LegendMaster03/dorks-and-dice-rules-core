@@ -275,4 +275,32 @@ public sealed class NativeCharacterSheetProjectorTests
             issue.Code == "sheet-manifestation-unverified");
     }
 
+    [Fact]
+    public void FormDoesNotPublishResolvedClassHitPointsWithoutAnHpInteractionPolicy()
+    {
+        using var fixture = new Fixture();
+        var state = State(fixture.Catalog);
+        state = state with
+        {
+            PrimaryMechanics = state.PrimaryMechanics with
+            {
+                HitPointGains = new Dictionary<string, int> { ["level.1"] = 5 }
+            }
+        };
+        var primary = Project(state, fixture.Catalog,
+            NativeCharacterSheetResolver.PrimarySheetId);
+        Assert.Equal("resolved", primary.BaseMechanics!.Values["hit-points.maximum"].Status);
+        Assert.Equal(6, primary.BaseMechanics.Values["hit-points.maximum"].Value);
+
+        var wolf = Project(state, fixture.Catalog, "wolf");
+        Assert.Equal("partial", wolf.Status);
+        Assert.Equal("partial", wolf.BaseMechanics!.Status);
+        Assert.Equal("unsupported", wolf.BaseMechanics.Values["hit-points.maximum"].Status);
+        Assert.Null(wolf.BaseMechanics.Values["hit-points.maximum"].Value);
+        Assert.Contains(wolf.Issues, issue =>
+            issue.Code == "sheet-hit-points-policy-unresolved");
+        Assert.Contains(wolf.BaseMechanics.Issues, issue =>
+            issue.Code == "sheet-hit-points-policy-unresolved");
+    }
+
 }
