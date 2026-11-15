@@ -73,14 +73,22 @@ public static class NativeCharacterSheetResolver
             if (string.IsNullOrWhiteSpace(sheet.ParentId) ||
                 (sheet.ParentId != PrimarySheetId && !byId.ContainsKey(sheet.ParentId)))
                 Issue("invalid-sheet-parent", path + ".parentId", "The parent must be the primary sheet or an existing alternate sheet.");
+            // A malformed record must not reach an authorization adapter.
+            // The adapter can assume a structurally valid sheet, but only it
+            // can prove the acquisition and exact rule or DM authorization.
             if (string.IsNullOrWhiteSpace(sheet.DefinitionId) ||
                 sheet.DefinitionSource is null ||
                 string.IsNullOrWhiteSpace(sheet.DefinitionSource.Id) ||
+                !Enum.IsDefined(sheet.DefinitionSource.Kind) ||
                 string.IsNullOrWhiteSpace(sheet.AcquisitionEvidenceId))
+            {
                 Issue("invalid-sheet-source", path, "Definition and acquisition evidence are required.");
+                continue;
+            }
+            if (!ValidateOverrides(path + ".overrides", sheet.Overrides, Issue))
+                continue;
             if (!authority.AuthorizesSheet(state.CharacterId, sheet))
                 Issue("unauthorized-sheet", path, "The host did not verify this sheet and its overrides.");
-            ValidateOverrides(path + ".overrides", sheet.Overrides, Issue);
             if (sheet.Progression is not null)
             {
                 foreach (var progression in sheet.Progression)
@@ -99,10 +107,12 @@ public static class NativeCharacterSheetResolver
                         progression.Grants is null ||
                         progression.Choices?.Any(choice => string.IsNullOrWhiteSpace(choice.Key) ||
                             string.IsNullOrWhiteSpace(choice.Value)) == true)
+                    {
                         Issue("invalid-sheet-progression", progressPath, "Definition, source, choices and evidence must be valid.");
+                        continue;
+                    }
                     if (!authority.AuthorizesProgression(state.CharacterId, sheet.Id, progression))
                         Issue("unauthorized-progression", progressPath, "The host did not verify this earned advancement.");
-                    if (progression.Grants is null) continue;
                     foreach (var grant in progression.Grants)
                     {
                         if (grant is null || string.IsNullOrWhiteSpace(grant.Id))
@@ -117,7 +127,10 @@ public static class NativeCharacterSheetResolver
                             string.IsNullOrWhiteSpace(grant.AcquisitionEvidenceId) ||
                             !ValidOccurrence(grant.SourceOccurrence) ||
                             !ValidLevelReference(grant.LevelReference))
+                        {
                             Issue("invalid-sheet-grant", grantPath, "Grant definition, source and evidence are required.");
+                            continue;
+                        }
                         if (!authority.AuthorizesGrant(state.CharacterId, sheet.Id, progression, grant))
                             Issue("unauthorized-grant", grantPath, "The host did not verify the source-qualified entitlement.");
                     }
@@ -138,8 +151,11 @@ public static class NativeCharacterSheetResolver
                             "The same sheet can not decide one entitlement twice.");
                     if (!ValidDecision(decision.Basis) ||
                         !Enum.IsDefined(decision.State))
+                    {
                         Issue("invalid-grant-applicability", path + ".grantApplicability." + decision.GrantId,
                             "Applicability needs a valid state and supported rule/DM reference.");
+                        continue;
+                    }
                     if (!authority.AuthorizesApplicability(state.CharacterId, sheet.Id, decision))
                         Issue("unauthorized-applicability", path + ".grantApplicability." + decision.GrantId,
                             "The host did not verify this exact applicability decision.");
@@ -277,6 +293,7 @@ public static class NativeCharacterSheetResolver
     private static bool ValidOccurrence(NativeOriginSourceOccurrence? occurrence) =>
         occurrence is not null && occurrence.Source is not null &&
         !string.IsNullOrWhiteSpace(occurrence.Source.Id) &&
+        Enum.IsDefined(occurrence.Source.Kind) &&
         !string.IsNullOrWhiteSpace(occurrence.OccurrencePath);
 
     private static bool ValidLevelReference(NativeSheetLevelReference? reference) =>
@@ -302,16 +319,22 @@ public static class NativeCharacterSheetResolver
         (!string.IsNullOrWhiteSpace(basis.NativeRuleReference) ||
             !string.IsNullOrWhiteSpace(basis.TableDecisionId));
 
-    private static void ValidateOverrides(string path, NativeCharacterSheetOverrides? patch,
+    private static bool ValidateOverrides(string path, NativeCharacterSheetOverrides? patch,
         Action<string, string, string> issue)
     {
-        if (patch is null) return;
+        if (patch is null) return true;
+        var valid = true;
+        void Invalid(string code, string at, string detail)
+        {
+            valid = false;
+            issue(code, at, detail);
+        }
         void Map<T>(string name, NativeSheetMapPatch<T>? map)
         {
             if (map is null) return;
             if (map.Entries is null ||
                 map.Entries.Any(entry => string.IsNullOrWhiteSpace(entry.Key) || entry.Value is null))
-                issue("invalid-sheet-override", path + "." + name, "Map keys and values must be present.");
+                Invalid("invalid-sheet-override", path + "." + name, "Map keys and values must be present.");
         }
         Map("abilityScores", patch.AbilityScores);
         Map("skills", patch.Skills);
@@ -324,7 +347,7 @@ public static class NativeCharacterSheetResolver
             if (collection is null) return;
             if (collection.Added is null || collection.Added.Any(string.IsNullOrWhiteSpace) ||
                 collection.Removed?.Any(string.IsNullOrWhiteSpace) == true)
-                issue("invalid-sheet-override", path + "." + name, "Collection members must be present.");
+                Invalid("invalid-sheet-override", path + "." + name, "Collection members must be present.");
         }
         Collection("selectedOptions", patch.SelectedOptions);
         Collection("conditionIds", patch.ConditionIds);
@@ -333,9 +356,10 @@ public static class NativeCharacterSheetResolver
             if (map?.Entries is null) continue;
             foreach (var (key, item) in map.Entries)
                 if (item is not null && item.Replacement is { Value: null })
-                    issue("invalid-sheet-override", path + ".training." + key,
+                    Invalid("invalid-sheet-override", path + ".training." + key,
                         "A whole training object replacement may not be null.");
         }
+        return valid;
     }
 
     // Read-only views must not expose mutable host-owned collections. This
