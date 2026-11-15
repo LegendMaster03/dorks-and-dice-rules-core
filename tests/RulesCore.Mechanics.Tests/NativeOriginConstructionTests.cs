@@ -1231,6 +1231,83 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
+    public void PlayerCanChooseAnyAuthoredRedBronzeBreathCombinationWithoutDmRuling()
+    {
+        var baseProposal = Proposal("biological-dragonborn", NativeOriginIntent.Mixed,
+            contributors:
+            [
+                Contributor("red", "ancestry.dragonborn.red"),
+                Contributor("bronze", "ancestry.dragonborn.bronze")
+            ]);
+        var offers = Evaluate(baseProposal).EvaluatedProposal.Candidates;
+        var foundation = offers.Where(x => x.ContributorId == "red" &&
+            x.Identity.Occurrence.Source.Id == "species.dragonborn" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        Assert.Equal(3, foundation.Length);
+        var breaths = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon")
+            .ToArray();
+        Assert.Equal(2, breaths.Length);
+        var red = breaths.Single(x => x.ContributorId == "red");
+        var bronze = breaths.Single(x => x.ContributorId == "bronze");
+        Assert.All(breaths, x =>
+            Assert.Equal(NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility));
+        var fixedSelections = foundation.Select((x, i) =>
+            new NativeOriginManifestation("foundation-" + i, x.Id,
+                SelectedValue: x.OfferedValue)).ToArray();
+
+        foreach (var damageSource in breaths)
+        foreach (var areaSource in breaths)
+        {
+            var paramsSelected = new Dictionary<string, JsonElement>
+            {
+                ["damageType"] = damageSource.OfferedParameters!["damageType"],
+                ["area"] = areaSource.OfferedParameters!["area"]
+            };
+            var fieldSources = new Dictionary<string, string>
+            {
+                ["damageType"] = damageSource.Id,
+                ["area"] = areaSource.Id
+            };
+            var result = Evaluate(baseProposal with
+            {
+                Manifestations = fixedSelections.Concat(
+                [
+                    new("red-breath", red.Id),
+                    new("bronze-breath", bronze.Id)
+                ]).ToArray(),
+                Relationships = [new("one-breath",
+                    NativeOriginRelationshipKind.Substitution,
+                    [red.Id, bronze.Id],
+                    AuthoredRuleReference: "trait.dragonborn.breath-weapon")],
+                Resolutions = [new("one-breath", NativeOriginResolutionAction.Replace,
+                    new(NativeOriginAdjudication.Supported,
+                        NativeRuleReference: "trait.dragonborn.breath-weapon"),
+                    red.Id, paramsSelected, fieldSources)]
+            }, defaults: false);
+            Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
+                "Issues: " + string.Join("; ", result.Issues.Select(x => x.Code)));
+            Assert.Equal(4, result.Profile!.Current.InherentGrants.Count);
+            var breath = Assert.Single(result.Profile.Current.InherentGrants, x =>
+                x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon");
+            Assert.Equal(paramsSelected["damageType"].GetString(),
+                breath.Parameters!["damageType"].GetString());
+            Assert.Equal(paramsSelected["area"].GetRawText(),
+                breath.Parameters["area"].GetRawText());
+            Assert.Equal(2, breath.SourceCandidateIds.Count);
+            Assert.Equal(damageSource.Id, breath.ParameterSources!["damageType"]);
+            Assert.Equal(areaSource.Id, breath.ParameterSources["area"]);
+            Assert.Equal("proficiency-bonus",
+                breath.EffectiveValue!.Value.GetProperty("uses").GetProperty("value").GetString());
+            Assert.DoesNotContain(result.Profile.Current.InherentGrants, x =>
+                x.Identity.MechanicalDefinitionId == "trait.dragonborn.draconic-resistance");
+            Assert.Equal("resolved",
+                NativeOriginApprovedMixedIntrinsicProjector.Project(result).Status);
+        }
+    }
+
+    [Fact]
     public void NestedSpellTraitRetainsItsAlreadyManifestedParameterValue()
     {
         var source = Evaluate(Proposal("caster-parent", ancestry: "ancestry.elf.high"))
