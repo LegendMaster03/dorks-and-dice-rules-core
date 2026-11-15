@@ -1,4 +1,5 @@
 using System.Text.Json;
+using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
 
@@ -63,10 +64,13 @@ public sealed class NativeCharacterInfluenceResolverTests
         NativeInfluenceOperation operation = NativeInfluenceOperation.Replace,
         string? key = null, int? number = null, bool? boolean = null, string? text = null,
         IReadOnlyDictionary<string, string>? gate = null,
-        IReadOnlyList<string>? targets = null) =>
+        IReadOnlyList<string>? targets = null,
+        IReadOnlyList<NativeInfluenceExpressionCondition>? conditions = null,
+        IReadOnlyList<NativeInfluenceEarnedRequirement>? prerequisites = null) =>
         new(id, Occurrence("effects." + id), "receipt.effect." + id, Rule(),
             gate ?? Expression(), targets ?? [NativeCharacterSheetResolver.PrimarySheetId],
-            characteristic, operation, key, number, boolean, text);
+            characteristic, operation, key, number, boolean, text,
+            conditions, prerequisites);
 
     private static NativeSheetEarnedProgression Progression(
         string id = "progress.vampire", string grantId = "grant.vampire") =>
@@ -125,6 +129,44 @@ public sealed class NativeCharacterInfluenceResolverTests
     private static NativeCharacterInfluenceResolution Resolve(NativeCharacterState state,
         Authority? authority = null, string target = NativeCharacterSheetResolver.PrimarySheetId) =>
         NativeCharacterInfluenceResolver.Resolve(state, target, authority ?? new Authority());
+
+    private static NativeInfluenceEarnedRequirement RequireProgression(
+        string id) => new(NativeInfluenceEarnedKind.Progression,
+            "synthetic.progression.definition", Occurrence("progress." + id));
+
+    private static NativeInfluenceEarnedRequirement RequireGrant(
+        string id) => new(NativeInfluenceEarnedKind.Grant,
+            "synthetic.capability", Occurrence("grants." + id));
+
+    private sealed class ProjectionFixture : IDisposable
+    {
+        private readonly string _root = Path.Combine(
+            Path.GetTempPath(), "rc-progressive-influence-" + Guid.NewGuid().ToString("N"));
+        public NativeCharacterProjector Projector { get; }
+
+        public ProjectionFixture()
+        {
+            var dir = Path.Combine(_root, "first-party-001");
+            Directory.CreateDirectory(Path.Combine(dir, "native"));
+            File.WriteAllText(Path.Combine(dir, "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(dir, "native", "class.json"), """
+                {"id":"class.demo","name":"Demo","kind":"class","definition":{
+                "savingThrowProficiencies":["dexterity"],
+                "progression":[
+                    {"level":1,"proficiencyBonus":2,"featureGrants":[],"sorceryPointMaximum":2},
+                    {"level":2,"proficiencyBonus":2,"featureGrants":[],"sorceryPointMaximum":4}
+                ]}}
+                """);
+            var catalog = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(_root, "first-party-001"));
+            Projector = new NativeCharacterProjector(catalog);
+            Fingerprint = catalog.Fingerprint;
+        }
+
+        public string Fingerprint { get; }
+        public void Dispose() => Directory.Delete(_root, recursive: true);
+    }
 
     [Fact]
     public void AcquisitionAloneDoesNotGrantProgressionOrModifyPrimary()
@@ -530,5 +572,259 @@ public sealed class NativeCharacterInfluenceResolverTests
         var result = Resolve(state);
         Assert.Equal("invalid", result.Status);
         Assert.Contains(result.Issues, x => x.Code == "invalid-influence-grant");
+    }
+
+    [Fact]
+    public void VampireEffectsRequireSeparatelyEarnedAndSourceQualifiedMilestones()
+    {
+        var stageOne = Progression("progress.vampire", "grant.vampire");
+        var stageTwo = Progression("progress.second", "grant.second");
+        var effects = new[]
+        {
+            Effect("earned-strength", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13, gate: Expression(("phase", "manifest")),
+                prerequisites: [RequireProgression("progress.vampire")]),
+            Effect("earned-defense", NativeInfluenceCharacteristic.DefenseContribution,
+                NativeInfluenceOperation.Adjust, "natural", number: 2,
+                gate: Expression(("phase", "manifest")),
+                prerequisites: [RequireGrant("grant.second")])
+        };
+        NativeCharacterState State(string phase,
+            IReadOnlyList<NativeSheetEarnedProgression>? earned) =>
+            Character([Influence(expression: Expression(("phase", phase)),
+                effects: effects, progression: earned)]);
+
+        // Acquisition, even with the complete authored effect catalog, does
+        // not issue a progression record or immediately activate its effects.
+        var acquired = Resolve(State("manifest", null));
+        Assert.Equal("resolved", acquired.Status);
+        Assert.Empty(acquired.AppliedEffects);
+        Assert.Equal(10, acquired.EffectiveMechanics!.AbilityScores["strength"]);
+
+        var one = Resolve(State("manifest", [stageOne]));
+        Assert.Equal(13, one.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(1, one.EffectiveMechanics.DefenseContributions!["natural"]);
+        Assert.Single(one.AppliedEffects);
+
+        var two = Resolve(State("manifest", [stageOne, stageTwo]));
+        Assert.Equal(13, two.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(3, two.EffectiveMechanics.DefenseContributions!["natural"]);
+        Assert.Equal(2, two.AppliedEffects.Count);
+
+        // A reversible reduction suppresses the expression, not ownership.
+        var dormant = Resolve(State("dormant", [stageOne, stageTwo]));
+        Assert.Equal(10, dormant.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(1, dormant.EffectiveMechanics.DefenseContributions!["natural"]);
+        Assert.Equal(2, dormant.Progression.Count);
+        Assert.Equal(2, dormant.Grants.Count);
+        Assert.Equal(2, Resolve(State("manifest", [stageOne, stageTwo])).AppliedEffects.Count);
+
+        // Identical canonical definition names from an unrelated occurrence
+        // are not an alternative source of the required earned milestone.
+        var wrongOccurrence = stageOne with
+        {
+            SourceOccurrence = Occurrence("progress.some-other-occurrence")
+        };
+        var unmatched = Resolve(State("manifest", [wrongOccurrence]));
+        Assert.Empty(unmatched.AppliedEffects);
+        Assert.Equal(10, unmatched.EffectiveMechanics!.AbilityScores["strength"]);
+    }
+
+    [Fact]
+    public void MultidimensionalNumericExpressionRangesAreReversibleWithoutAnEngineScale()
+    {
+        var conditions = new[]
+        {
+            new NativeInfluenceExpressionCondition("intensity",
+                NativeInfluenceExpressionComparison.GreaterThanOrEqual, "1.25"),
+            new NativeInfluenceExpressionCondition("intensity",
+                NativeInfluenceExpressionComparison.LessThan, "3.5"),
+            new NativeInfluenceExpressionCondition("control",
+                NativeInfluenceExpressionComparison.Equals, "lost")
+        };
+        var effect = Effect("curse-range", NativeInfluenceCharacteristic.BaseWalkSpeed,
+            number: 20, conditions: conditions);
+        NativeCharacterState State(string intensity, string control) =>
+            Character([Influence("influence.curse",
+                expression: Expression(("intensity", intensity), ("control", control)),
+                effects: [effect])]);
+
+        Assert.Equal(30, Resolve(State("1.249", "lost")).EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(20, Resolve(State("1.25", "lost")).EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(20, Resolve(State("3.499", "lost")).EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(30, Resolve(State("3.5", "lost")).EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(30, Resolve(State("2.0", "regained")).EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(20, Resolve(State("2.0", "lost")).EffectiveMechanics!.BaseWalkSpeed);
+    }
+
+    [Fact]
+    public void InvalidNumericPredicatesAndValuesFailBeforeInfluenceCallbacks()
+    {
+        var badThreshold = Effect("invalid-threshold", NativeInfluenceCharacteristic.BaseWalkSpeed,
+            number: 20, conditions:
+            [
+                new("severity", NativeInfluenceExpressionComparison.GreaterThan, "not-a-number")
+            ]);
+        var badActual = Effect("invalid-actual", NativeInfluenceCharacteristic.BaseWalkSpeed,
+            number: 20, conditions:
+            [
+                new("severity", NativeInfluenceExpressionComparison.GreaterThan, "1.0")
+            ]);
+        foreach (var state in new[]
+        {
+            Character([Influence(expression: Expression(("severity", "2.0")),
+                effects: [badThreshold])]),
+            Character([Influence(expression: Expression(("severity", "not-a-number")),
+                effects: [badActual])])
+        })
+        {
+            var authority = new Authority();
+            var result = Resolve(state, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+            Assert.Equal(0, authority.InfluenceCallbacks);
+            Assert.Contains(result.Issues, x => x.Code == "invalid-influence-effect");
+        }
+    }
+
+    [Fact]
+    public void EarnedUseDecisionMayDependOnAnotherAcquiredProgression()
+    {
+        var first = Progression("progress.vampire", "grant.vampire");
+        var second = Progression("progress.second", "grant.second");
+        var use = Use("manifest", NativeOriginGrantApplicabilityState.Applicable) with
+        {
+            RequiredEarned = [RequireProgression("progress.second")]
+        };
+        NativeCharacterState State(IReadOnlyList<NativeSheetEarnedProgression> records) =>
+            Character([Influence(expression: Expression(("phase", "manifest")),
+                progression: records, applicability: [use])]);
+        var early = Resolve(State([first]));
+        var advanced = Resolve(State([first, second]));
+        Assert.Equal(NativeOriginGrantApplicabilityState.Unresolved,
+            early.Grants.Single(g => g.Entitlement.Id == "grant.vampire").Applicability);
+        Assert.Equal(NativeOriginGrantApplicabilityState.Applicable,
+            advanced.Grants.Single(g => g.Entitlement.Id == "grant.vampire").Applicability);
+        Assert.Equal(2, advanced.Progression.Count);
+    }
+
+    [Fact]
+    public void NumericMaximumChangesAreProjectedWithoutRefillingCurrentResources()
+    {
+        using var fixture = new ProjectionFixture();
+        var increase = Effect("earned-health", NativeInfluenceCharacteristic.HitPointGain,
+            NativeInfluenceOperation.Adjust, "level.1", number: 3);
+        var state = Character([Influence(effects: [increase])]) with
+        {
+            PrimaryMechanics = new NativeCharacterRequest(
+                "first-party-001", fixture.Fingerprint,
+                new Dictionary<string, int>
+                {
+                    ["strength"] = 10, ["dexterity"] = 12, ["constitution"] = 12,
+                    ["intelligence"] = 10, ["wisdom"] = 10, ["charisma"] = 10
+                },
+                [new NativeAdvancement("class.demo", 1, "level.1")],
+                HitPointGains: new Dictionary<string, int> { ["level.1"] = 5 },
+                CurrentResources: new Dictionary<string, int> { ["health"] = 4 })
+        };
+
+        var original = fixture.Projector.Project(state.PrimaryMechanics);
+        var influenced = Resolve(state);
+        Assert.Equal("resolved", influenced.Status);
+        var changed = fixture.Projector.Project(influenced.EffectiveMechanics!);
+        Assert.Equal("resolved", original.Values["hit-points.maximum"].Status);
+        Assert.Equal("resolved", changed.Values["hit-points.maximum"].Status);
+        Assert.Equal(6, original.Values["hit-points.maximum"].Value);
+        Assert.Equal(9, changed.Values["hit-points.maximum"].Value);
+        Assert.Equal(4, state.PrimaryMechanics.CurrentResources!["health"]);
+        Assert.Equal(4, influenced.EffectiveMechanics!.CurrentResources!["health"]);
+        Assert.Equal(5, state.PrimaryMechanics.HitPointGains!["level.1"]);
+    }
+
+    [Fact]
+    public void InvalidEarnedRequirementFailsClosedAndDetachedGatesRemainImmutable()
+    {
+        var mutableRequirements = new List<NativeInfluenceEarnedRequirement>
+        {
+            RequireProgression("progress.vampire")
+        };
+        var mutableConditions = new List<NativeInfluenceExpressionCondition>
+        {
+            new("phase", NativeInfluenceExpressionComparison.Equals, "manifest")
+        };
+        var effect = Effect("dependent", NativeInfluenceCharacteristic.AbilityScore,
+            key: "strength", number: 13, conditions: mutableConditions,
+            prerequisites: mutableRequirements);
+        var state = Character([Influence(expression: Expression(("phase", "manifest")),
+            progression: [Progression()], effects: [effect])]);
+        var first = Resolve(state);
+        Assert.Single(first.AppliedEffects);
+        mutableRequirements.Clear();
+        mutableConditions.Clear();
+        Assert.Single(first.AppliedEffects[0].Effect.RequiredEarned!);
+        Assert.Single(first.AppliedEffects[0].Effect.ExpressionConditions!);
+
+        var malformed = effect with
+        {
+            RequiredEarned =
+            [
+                new(NativeInfluenceEarnedKind.Progression, "",
+                    Occurrence("progress.progress.vampire"))
+            ]
+        };
+        var authority = new Authority();
+        var badResult = Resolve(Character([Influence(effects: [malformed])]), authority);
+        Assert.Equal("invalid", badResult.Status);
+        Assert.Equal(0, authority.InfluenceCallbacks);
+    }
+
+    [Fact]
+    public void PrimaryLevelChangesDerivedResourceMaximumWithoutRefillingCurrentQuantity()
+    {
+        using var fixture = new ProjectionFixture();
+        var influence = Influence(effects:
+        [
+            Effect("unrelated-senses", NativeInfluenceCharacteristic.AbilityScore,
+                key: "wisdom", number: 15)
+        ]);
+        var state = Character([influence]) with
+        {
+            PrimaryMechanics = new NativeCharacterRequest(
+                "first-party-001", fixture.Fingerprint,
+                new Dictionary<string, int>
+                {
+                    ["strength"] = 10, ["dexterity"] = 12, ["constitution"] = 12,
+                    ["intelligence"] = 10, ["wisdom"] = 10, ["charisma"] = 10
+                },
+                [new NativeAdvancement("class.demo", 1, "class.demo.1")],
+                CurrentResources: new Dictionary<string, int>
+                {
+                    ["resource.sorcery-points"] = 1
+                })
+        };
+        var advanced = state with
+        {
+            PrimaryMechanics = state.PrimaryMechanics with
+            {
+                Advancements = [new NativeAdvancement("class.demo", 2, "class.demo.2")]
+            }
+        };
+        var early = Resolve(state);
+        var later = Resolve(advanced);
+        Assert.Equal("resolved", early.Status);
+        Assert.Equal("resolved", later.Status);
+        Assert.Equal(15, early.EffectiveMechanics!.AbilityScores["wisdom"]);
+        Assert.Equal(15, later.EffectiveMechanics!.AbilityScores["wisdom"]);
+
+        var before = fixture.Projector.Project(early.EffectiveMechanics);
+        var after = fixture.Projector.Project(later.EffectiveMechanics);
+        var priorPool = Assert.Single(before.Resources, r => r.Id == "resource.sorcery-points");
+        var currentPool = Assert.Single(after.Resources, r => r.Id == "resource.sorcery-points");
+        Assert.Equal(2, priorPool.Maximum);
+        Assert.Equal(4, currentPool.Maximum);
+        Assert.Equal(1, priorPool.Current);
+        Assert.Equal(1, currentPool.Current);
+        Assert.Equal(1, state.PrimaryMechanics.CurrentResources!["resource.sorcery-points"]);
+        Assert.Equal(1, advanced.PrimaryMechanics.CurrentResources!["resource.sorcery-points"]);
     }
 }

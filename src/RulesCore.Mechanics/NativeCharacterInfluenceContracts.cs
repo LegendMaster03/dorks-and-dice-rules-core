@@ -38,6 +38,30 @@ public enum NativeInfluenceCharacteristic
 public enum NativeInfluenceOperation { Replace, Adjust, Add, Suppress }
 
 /// <summary>
+/// Comparisons are authored per expression dimension. Numeric comparisons
+/// use invariant decimal values rather than a universal severity percentage.
+/// </summary>
+public enum NativeInfluenceExpressionComparison
+{
+    Equals, NotEquals, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual
+}
+
+public sealed record NativeInfluenceExpressionCondition(
+    string Dimension, NativeInfluenceExpressionComparison Comparison, string Value);
+
+/// <summary>
+/// Source-qualified prerequisite for an effect or grant-use decision. A missing
+/// earned record makes the rule inactive; it does not invent the advancement.
+/// Names alone never prove that a prerequisite is met.
+/// </summary>
+public enum NativeInfluenceEarnedKind { Progression, Grant }
+
+public sealed record NativeInfluenceEarnedRequirement(
+    NativeInfluenceEarnedKind Kind,
+    string DefinitionId,
+    NativeOriginSourceOccurrence Occurrence);
+
+/// <summary>
 /// A source-authored atomic characteristic change. Every affected sheet must
 /// be named explicitly, including @primary. Omitting an alternate sheet never
 /// makes the effect globally applicable to it. RequiredExpression can use any
@@ -56,7 +80,9 @@ public sealed record NativeCharacterInfluenceEffect(
     string? Key = null,
     int? NumericValue = null,
     bool? BooleanValue = null,
-    string? TextValue = null);
+    string? TextValue = null,
+    IReadOnlyList<NativeInfluenceExpressionCondition>? ExpressionConditions = null,
+    IReadOnlyList<NativeInfluenceEarnedRequirement>? RequiredEarned = null);
 
 /// <summary>
 /// One source-qualified decision for an independently earned influence grant.
@@ -69,7 +95,9 @@ public sealed record NativeInfluenceGrantApplicability(
     NativeOriginGrantApplicabilityState State,
     NativeOriginDecisionBasis Basis,
     IReadOnlyDictionary<string, string> RequiredExpression,
-    string AuthorizationEvidenceId);
+    string AuthorizationEvidenceId,
+    IReadOnlyList<NativeInfluenceExpressionCondition>? ExpressionConditions = null,
+    IReadOnlyList<NativeInfluenceEarnedRequirement>? RequiredEarned = null);
 
 /// <summary>
 /// The existing sheet authority remains mandatory for the original primary and

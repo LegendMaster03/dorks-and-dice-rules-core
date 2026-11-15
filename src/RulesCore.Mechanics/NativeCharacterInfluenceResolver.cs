@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Globalization;
 
 namespace RulesCore.Mechanics;
 
@@ -94,9 +95,11 @@ public static class NativeCharacterInfluenceResolver
                         "Effect IDs must be stable and unique across this character.");
                     continue;
                 }
-                if (!ValidEffect(effect, sheetIds))
+                if (!ValidEffect(effect, sheetIds) ||
+                    (influence.Expression is not null &&
+                     !NumericExpressionValid(influence.Expression, effect.ExpressionConditions)))
                     Issue("invalid-influence-effect", path + ".effects." + effect.Id,
-                        "Effect shape, typed operation, source, decision, expression, or sheet target is invalid.");
+                        "Effect shape, typed operation, expression predicates, prerequisites, source, or sheet target is invalid.");
             }
 
             var localGrants = new HashSet<string>(StringComparer.Ordinal);
@@ -151,6 +154,10 @@ public static class NativeCharacterInfluenceResolver
                 if (decision is null || !localGrants.Contains(decision.GrantId) ||
                     !Enum.IsDefined(decision.State) || !ValidDecision(decision.Basis) ||
                     !ValidExpression(decision.RequiredExpression) ||
+                    !ValidConditions(decision.ExpressionConditions) ||
+                    !ValidEarned(decision.RequiredEarned) ||
+                    (influence.Expression is not null &&
+                     !NumericExpressionValid(influence.Expression, decision.ExpressionConditions)) ||
                     string.IsNullOrWhiteSpace(decision.AuthorizationEvidenceId))
                     Issue("invalid-influence-applicability", path + ".grantApplicability",
                         "A decision requires a locally owned grant, expression and verified source.");
@@ -190,10 +197,17 @@ public static class NativeCharacterInfluenceResolver
         }
         if (issues.Count != 0) return Failed("invalid");
 
+        // Build one verified, source-qualified earned index per influence.
+        // Repeated effect and applicability checks must not scan potentially
+        // thousands of progression and grant records for every prerequisite.
+        var earnedById = influences.ToDictionary(
+            x => x.Id, IndexEarned, StringComparer.Ordinal);
+
         var applied = influences
             .SelectMany(influence => influence.Effects
                 .Where(effect => effect.TargetSheetIds.Contains(targetSheetId, StringComparer.Ordinal) &&
-                    Matches(effect.RequiredExpression, influence.Expression))
+                    Active(effect.RequiredExpression, effect.ExpressionConditions,
+                        effect.RequiredEarned, influence, earnedById[influence.Id]))
                 .Select(effect => new NativeInfluenceResolvedEffect(influence.Id, effect)))
             .OrderBy(x => EffectPath(x.Effect), StringComparer.Ordinal)
             .ThenBy(x => x.InfluenceId, StringComparer.Ordinal)
@@ -267,7 +281,8 @@ public static class NativeCharacterInfluenceResolver
                 {
                     var matching = (influence.GrantApplicability ?? [])
                         .Where(x => x.GrantId == grant.Id &&
-                            Matches(x.RequiredExpression, influence.Expression))
+                            Active(x.RequiredExpression, x.ExpressionConditions,
+                                x.RequiredEarned, influence, earnedById[influence.Id]))
                         .ToArray();
                     if (matching.Length > 1)
                         Issue("influence-grant-applicability-unresolved",
@@ -288,7 +303,9 @@ public static class NativeCharacterInfluenceResolver
             Effect = x.Effect with
             {
                 RequiredExpression = x.Effect.RequiredExpression.ToFrozenDictionary(StringComparer.Ordinal),
-                TargetSheetIds = Array.AsReadOnly(x.Effect.TargetSheetIds.ToArray())
+                TargetSheetIds = Array.AsReadOnly(x.Effect.TargetSheetIds.ToArray()),
+                ExpressionConditions = Detach(x.Effect.ExpressionConditions),
+                RequiredEarned = Detach(x.Effect.RequiredEarned)
             }
         }).ToArray();
 
@@ -332,6 +349,120 @@ public static class NativeCharacterInfluenceResolver
         required.All(x => actual.TryGetValue(x.Key, out var value) &&
             string.Equals(value, x.Value, StringComparison.Ordinal));
 
+    private static bool Numeric(NativeInfluenceExpressionComparison comparison) =>
+        comparison is NativeInfluenceExpressionComparison.GreaterThan or
+            NativeInfluenceExpressionComparison.GreaterThanOrEqual or
+            NativeInfluenceExpressionComparison.LessThan or
+            NativeInfluenceExpressionComparison.LessThanOrEqual;
+
+    private static bool Decimal(string value, out decimal number) =>
+        decimal.TryParse(value,
+            NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint,
+            CultureInfo.InvariantCulture, out number);
+
+    private static bool ValidConditions(
+        IReadOnlyList<NativeInfluenceExpressionCondition>? conditions)
+    {
+        if (conditions is null) return true;
+        if (conditions.Count > 128) return false;
+        var seen = new HashSet<NativeInfluenceExpressionCondition>();
+        foreach (var condition in conditions)
+            if (condition is null || string.IsNullOrWhiteSpace(condition.Dimension) ||
+                string.IsNullOrWhiteSpace(condition.Value) ||
+                !Enum.IsDefined(condition.Comparison) || !seen.Add(condition) ||
+                (Numeric(condition.Comparison) && !Decimal(condition.Value, out _)))
+                return false;
+        return true;
+    }
+
+    private static bool NumericExpressionValid(
+        IReadOnlyDictionary<string, string> actual,
+        IReadOnlyList<NativeInfluenceExpressionCondition>? conditions) =>
+        conditions is null || conditions.All(condition =>
+            !Numeric(condition.Comparison) ||
+            !actual.TryGetValue(condition.Dimension, out var current) ||
+            Decimal(current, out _));
+
+    private static bool ValidEarned(
+        IReadOnlyList<NativeInfluenceEarnedRequirement>? required)
+    {
+        if (required is null) return true;
+        if (required.Count > 128) return false;
+        var seen = new HashSet<NativeInfluenceEarnedRequirement>();
+        return required.All(x => x is not null &&
+            Enum.IsDefined(x.Kind) &&
+            !string.IsNullOrWhiteSpace(x.DefinitionId) &&
+            ValidOccurrence(x.Occurrence) && seen.Add(x));
+    }
+
+    private static HashSet<NativeInfluenceEarnedRequirement> IndexEarned(
+        NativeCharacterPersistentInfluence influence)
+    {
+        var found = new HashSet<NativeInfluenceEarnedRequirement>();
+        foreach (var progression in influence.Progression ?? [])
+        {
+            found.Add(new(NativeInfluenceEarnedKind.Progression,
+                progression.DefinitionId, progression.SourceOccurrence));
+            foreach (var grant in progression.Grants)
+                found.Add(new(NativeInfluenceEarnedKind.Grant,
+                    grant.DefinitionId, grant.SourceOccurrence));
+        }
+        return found;
+    }
+
+    private static bool HasEarned(
+        IReadOnlySet<NativeInfluenceEarnedRequirement> earned,
+        IReadOnlyList<NativeInfluenceEarnedRequirement>? required) =>
+        required is null || required.All(earned.Contains);
+
+    private static bool ConditionsMatch(
+        IReadOnlyList<NativeInfluenceExpressionCondition>? conditions,
+        IReadOnlyDictionary<string, string> expression)
+    {
+        if (conditions is null) return true;
+        foreach (var condition in conditions)
+        {
+            if (!expression.TryGetValue(condition.Dimension, out var actual))
+                return false;
+            if (condition.Comparison == NativeInfluenceExpressionComparison.Equals)
+            {
+                if (!string.Equals(actual, condition.Value, StringComparison.Ordinal)) return false;
+                continue;
+            }
+            if (condition.Comparison == NativeInfluenceExpressionComparison.NotEquals)
+            {
+                if (string.Equals(actual, condition.Value, StringComparison.Ordinal)) return false;
+                continue;
+            }
+            if (!Decimal(actual, out var current) ||
+                !Decimal(condition.Value, out var threshold))
+                return false;
+            var matched = condition.Comparison switch
+            {
+                NativeInfluenceExpressionComparison.GreaterThan => current > threshold,
+                NativeInfluenceExpressionComparison.GreaterThanOrEqual => current >= threshold,
+                NativeInfluenceExpressionComparison.LessThan => current < threshold,
+                NativeInfluenceExpressionComparison.LessThanOrEqual => current <= threshold,
+                _ => false
+            };
+            if (!matched) return false;
+        }
+        return true;
+    }
+
+    private static bool Active(
+        IReadOnlyDictionary<string, string> exact,
+        IReadOnlyList<NativeInfluenceExpressionCondition>? conditions,
+        IReadOnlyList<NativeInfluenceEarnedRequirement>? required,
+        NativeCharacterPersistentInfluence influence,
+        IReadOnlySet<NativeInfluenceEarnedRequirement> earned) =>
+        Matches(exact, influence.Expression) &&
+        ConditionsMatch(conditions, influence.Expression) &&
+        HasEarned(earned, required);
+
+    private static IReadOnlyList<T>? Detach<T>(IReadOnlyList<T>? values) =>
+        values is null ? null : Array.AsReadOnly(values.ToArray());
+
     private static bool ValidEffect(NativeCharacterInfluenceEffect effect,
         HashSet<string> sheets)
     {
@@ -339,6 +470,8 @@ public static class NativeCharacterInfluenceResolver
             !ValidDecision(effect.Basis) ||
             string.IsNullOrWhiteSpace(effect.AuthorizationEvidenceId) ||
             !ValidExpression(effect.RequiredExpression) ||
+            !ValidConditions(effect.ExpressionConditions) ||
+            !ValidEarned(effect.RequiredEarned) ||
             effect.TargetSheetIds is null || effect.TargetSheetIds.Count == 0 ||
             effect.TargetSheetIds.Count > 513 ||
             effect.TargetSheetIds.Distinct(StringComparer.Ordinal).Count() != effect.TargetSheetIds.Count ||
