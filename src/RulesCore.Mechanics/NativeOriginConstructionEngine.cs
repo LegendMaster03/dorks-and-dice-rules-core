@@ -474,8 +474,14 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         // are resolved only after the intrinsic candidates have been reconciled.
         // Unresolved prerequisites cannot leave an active dependent trait behind.
         var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(resolved);
-        resolved = bound;
         issues.AddRange(bindingIssues);
+        // A selected trait that spends another trait's authored charges must
+        // bind to the actual selected resource owner from the same contributor.
+        // Missing or ambiguous ownership suppresses the dependent grant.
+        var (resourceBound, resourceIssues) =
+            NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+        resolved = resourceBound;
+        issues.AddRange(resourceIssues);
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot

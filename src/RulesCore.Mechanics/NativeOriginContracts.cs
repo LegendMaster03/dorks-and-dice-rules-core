@@ -171,7 +171,10 @@ public sealed record NativeOriginEffectiveGrant(
     NativeOriginDecisionBasis? Authorization = null,
     // For recombined parameters, identifies the contributor offer of each
     // effective field. Grant-level SourceCandidateIds retains all evidence.
-    IReadOnlyDictionary<string, string>? ParameterSources = null);
+    IReadOnlyDictionary<string, string>? ParameterSources = null,
+    // Maps a dependent resource use (for example, "uses") to the effective
+    // grant that actually owns the one shared pool. Optional for older profiles.
+    IReadOnlyDictionary<string, string>? ResourceOwners = null);
 
 /// <summary>
 /// A separately earned grant remains part of the character's entitlements even
