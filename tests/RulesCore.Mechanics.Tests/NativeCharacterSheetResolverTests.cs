@@ -12,10 +12,17 @@ public sealed class NativeCharacterSheetResolverTests
 {
     private sealed class SyntheticAuthority : INativeCharacterSheetAuthority
     {
+        public bool DenyPrimary { get; set; }
+        public HashSet<string> DeniedApplicability { get; } = new(StringComparer.Ordinal);
         public HashSet<string> DeniedSheets { get; } = new(StringComparer.Ordinal);
         public HashSet<string> DeniedProgression { get; } = new(StringComparer.Ordinal);
         public HashSet<string> DeniedGrants { get; } = new(StringComparer.Ordinal);
 
+        public bool AuthorizesPrimary(string characterId, NativeCharacterRequest primary) =>
+            characterId == "character.one" && !DenyPrimary;
+        public bool AuthorizesApplicability(string characterId, string sheetId,
+            NativeSheetGrantApplicability decision) =>
+            characterId == "character.one" && !DeniedApplicability.Contains(decision.GrantId);
         public bool AuthorizesSheet(string characterId, NativePersistentCharacterSheet sheet) =>
             characterId == "character.one" && !DeniedSheets.Contains(sheet.Id);
         public bool AuthorizesProgression(string characterId, string ownerSheetId,
@@ -373,4 +380,73 @@ public sealed class NativeCharacterSheetResolverTests
         Assert.Equal(NativeOriginGrantApplicabilityState.Unresolved,
             Assert.Single(result.Grants).Applicability);
     }
+    [Fact]
+    public void UnauthorizedPrimaryMechanicsAreRejectedBeforeAnyEffectiveProjection()
+    {
+        var authority = new SyntheticAuthority { DenyPrimary = true };
+        var result = Resolve(State(), "wolf", authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, i => i.Code == "unauthorized-primary");
+    }
+
+    [Fact]
+    public void ForgedApplicabilityEvidenceIsRejectedEvenWhenItNamesAnExistingRule()
+    {
+        var authority = new SyntheticAuthority();
+        authority.DeniedApplicability.Add("grant.shared");
+        var result = Resolve(State(), "wolf", authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, i => i.Code == "unauthorized-applicability");
+    }
+
+    [Fact]
+    public void DetachedProjectionsNeverShareMutableNestedInputCollections()
+    {
+        var input = State();
+        var result = Resolve(input);
+        Assert.Equal("resolved", result.Status);
+        var before = JsonSerializer.Serialize(result);
+        var originalChoices = (Dictionary<string, string>)input.AlternateSheets[1].Progression![0].Choices!;
+        originalChoices["selected"] = "changed-after-resolution";
+        var originalScores = (Dictionary<string, int>)input.PrimaryMechanics.AbilityScores;
+        originalScores["wisdom"] = 100;
+        var grants = (NativeSheetEarnedGrant[])input.AlternateSheets[0].Progression![0].Grants;
+        grants[0] = grants[0] with { DefinitionId = "trait.changed" };
+
+        Assert.Equal(before, JsonSerializer.Serialize(result));
+        Assert.Equal("synthetic-choice", result.Progression[1].Record.Choices!["selected"]);
+        Assert.Equal("trait.synthetic.sense", result.Grants[0].Entitlement.DefinitionId);
+        Assert.Equal(15, result.EffectiveMechanics!.AbilityScores["wisdom"]);
+        Assert.False(result.Progression is List<NativeSheetResolvedProgression>);
+        Assert.False(result.Progression is NativeSheetResolvedProgression[]);
+    }
+
+    [Theory]
+    [InlineData(NativeSheetLevelSource.TotalClassLevels, "class.synthetic")]
+    [InlineData(NativeSheetLevelSource.SpecificClassLevel, null)]
+    public void InvalidLevelReferenceScopesAreRejected(
+        NativeSheetLevelSource source, string? classId)
+    {
+        var wolf = Wolf();
+        var initial = wolf.Progression![0];
+        wolf = wolf with
+        {
+            Progression =
+            [
+                initial with
+                {
+                    Grants = [initial.Grants[0] with
+                    {
+                        LevelReference = new(source, classId)
+                    }]
+                }
+            ]
+        };
+        var result = Resolve(State([Werewolf(), wolf, Hybrid()]));
+        Assert.Equal("invalid", result.Status);
+        Assert.Contains(result.Issues, i => i.Code == "invalid-sheet-grant");
+    }
+
 }
