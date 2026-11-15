@@ -65,14 +65,47 @@ public static class NativeCharacterSheetResolver
                 Issue("duplicate-sheet-id", "alternateSheets." + sheet.Id, "An alternate sheet ID must be unique.");
         }
 
+        foreach (var sheet in byId.Values)
+        {
+            if (string.IsNullOrWhiteSpace(sheet.ParentId) ||
+                (sheet.ParentId != PrimarySheetId && !byId.ContainsKey(sheet.ParentId)))
+                Issue("invalid-sheet-parent", "alternateSheets." + sheet.Id + ".parentId",
+                    "The parent must be the primary sheet or an existing alternate sheet.");
+        }
+
+        // Validate every sheet, including currently unmanifested and unrelated
+        // sheets. The three DFS colors (unseen/visiting/complete) detect cycles
+        // without assuming parent order. A corrupt graph is never partially trusted.
+        var colors = new Dictionary<string, int>(StringComparer.Ordinal);
+        void Visit(string id)
+        {
+            if (colors.TryGetValue(id, out var color))
+            {
+                if (color == 1) Issue("sheet-inheritance-cycle", "alternateSheets." + id,
+                    "An alternate sheet may not be its own ancestor.");
+                return;
+            }
+            colors[id] = 1;
+            var parent = byId[id].ParentId;
+            if (parent != PrimarySheetId && byId.ContainsKey(parent))
+                Visit(parent);
+            colors[id] = 2;
+        }
+        foreach (var id in byId.Keys.OrderBy(id => id, StringComparer.Ordinal)) Visit(id);
+
+        if (targetSheetId != PrimarySheetId && !byId.ContainsKey(targetSheetId))
+            Issue("missing-target-sheet", "targetSheetId", "The requested alternate sheet does not exist.");
+
+        // Nothing about malformed parent graphs is passed to a trusted host
+        // callback. In particular, a host is not asked to recurse into a
+        // cycle while verifying sheet provenance.
+        if (issues.Count != 0) return Invalid();
+
         var seenProgression = new HashSet<string>(StringComparer.Ordinal);
         var seenGrants = new HashSet<string>(StringComparer.Ordinal);
         foreach (var sheet in byId.Values.OrderBy(item => item.Id, StringComparer.Ordinal))
         {
             var path = "alternateSheets." + sheet.Id;
-            if (string.IsNullOrWhiteSpace(sheet.ParentId) ||
-                (sheet.ParentId != PrimarySheetId && !byId.ContainsKey(sheet.ParentId)))
-                Issue("invalid-sheet-parent", path + ".parentId", "The parent must be the primary sheet or an existing alternate sheet.");
             // A malformed record must not reach an authorization adapter.
             // The adapter can assume a structurally valid sheet, but only it
             // can prove the acquisition and exact rule or DM authorization.
@@ -162,29 +195,6 @@ public static class NativeCharacterSheetResolver
                 }
             }
         }
-
-        // Validate every sheet, including currently unmanifested and unrelated
-        // sheets. The three DFS colors (unseen/visiting/complete) detect cycles
-        // without assuming parent order. A corrupt graph is never partially trusted.
-        var colors = new Dictionary<string, int>(StringComparer.Ordinal);
-        void Visit(string id)
-        {
-            if (colors.TryGetValue(id, out var color))
-            {
-                if (color == 1) Issue("sheet-inheritance-cycle", "alternateSheets." + id,
-                    "An alternate sheet may not be its own ancestor.");
-                return;
-            }
-            colors[id] = 1;
-            var parent = byId[id].ParentId;
-            if (parent != PrimarySheetId && byId.ContainsKey(parent))
-                Visit(parent);
-            colors[id] = 2;
-        }
-        foreach (var id in byId.Keys.OrderBy(id => id, StringComparer.Ordinal)) Visit(id);
-
-        if (targetSheetId != PrimarySheetId && !byId.ContainsKey(targetSheetId))
-            Issue("missing-target-sheet", "targetSheetId", "The requested alternate sheet does not exist.");
 
         // Applicability decisions must address a grant owned by this sheet or
         // one of its ancestors, never a sibling or an arbitrary client ID.
