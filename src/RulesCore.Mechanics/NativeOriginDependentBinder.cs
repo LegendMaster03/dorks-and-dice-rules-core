@@ -139,8 +139,7 @@ internal static class NativeOriginDependentBinder
                 parameters[binding.Name] = chosen;
                 // The choice originates in the selected owner's candidate, not
                 // an arbitrary global stat. Grant ownership stays separate.
-                var evidence = owner.SourceCandidateIds.OrderBy(x => x,
-                    StringComparer.Ordinal).FirstOrDefault();
+                var evidence = MatchingContributorEvidence(grant, owner, offered);
                 if (evidence is null)
                 {
                     Issue("origin-binding-source-missing", grant.Id + ":" + binding.Name,
@@ -197,6 +196,11 @@ internal static class NativeOriginDependentBinder
 
     private static bool SharesContributor(NativeOriginEffectiveGrant dependent,
         NativeOriginEffectiveGrant owner,
+        IReadOnlyDictionary<string, NativeOriginCandidate> offered) =>
+        MatchingContributorEvidence(dependent, owner, offered) is not null;
+
+    private static string? MatchingContributorEvidence(
+        NativeOriginEffectiveGrant dependent, NativeOriginEffectiveGrant owner,
         IReadOnlyDictionary<string, NativeOriginCandidate> offered)
     {
         var from = dependent.SourceCandidateIds.Where(offered.ContainsKey)
@@ -205,13 +209,19 @@ internal static class NativeOriginDependentBinder
             .Select(x => offered[x]).ToArray();
         if (from.Length != dependent.SourceCandidateIds.Count ||
             owners.Length != owner.SourceCandidateIds.Count)
-            return false;
-        return from.Any(d => owners.Any(o =>
-            d.ContributorId is not null
-                ? d.ContributorId == o.ContributorId
-                : o.ContributorId is null &&
-                  d.Identity.Occurrence.Source.Kind == NativeOriginSourceKind.Native &&
-                  o.Identity.Occurrence.Source.Kind == NativeOriginSourceKind.Native));
+            return null;
+
+        // A consolidated aptitude grant can have evidence from multiple
+        // contributors. Attribute the dependent's actual choice to the matching
+        // contributor, not the lexicographically first unrelated ancestor.
+        return owner.SourceCandidateIds.OrderBy(x => x, StringComparer.Ordinal)
+            .FirstOrDefault(id => offered.TryGetValue(id, out var ownerCandidate) &&
+                from.Any(d => d.ContributorId is not null
+                    ? d.ContributorId == ownerCandidate.ContributorId
+                    : ownerCandidate.ContributorId is null &&
+                      d.Identity.Occurrence.Source.Kind == NativeOriginSourceKind.Native &&
+                      ownerCandidate.Identity.Occurrence.Source.Kind ==
+                          NativeOriginSourceKind.Native));
     }
 
     private static string? Text(JsonElement obj, string key) =>
