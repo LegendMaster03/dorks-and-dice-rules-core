@@ -319,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(26, len(suite["contexts"]))
+        self.assertEqual(29, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -361,7 +361,7 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(26, result["scenarioCount"])
+        self.assertEqual(29, result["scenarioCount"])
 
     def test_sensitivity_does_not_convert_unmeasured_endpoints_to_zero(self):
         profile = self.profile("ancestry.dragonborn.red")
@@ -431,7 +431,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 7
+        bad["version"] = 8
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -447,7 +447,7 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(26, result["scenarioCount"])
+        self.assertEqual(29, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
 
 
@@ -593,11 +593,11 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
         suite = self.scenario_suite()
-        self.assertEqual(6, suite["version"])
-        self.assertEqual(26, len(suite["contexts"]))
+        self.assertEqual(7, suite["version"])
+        self.assertEqual(29, len(suite["contexts"]))
         self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
         result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
-        self.assertEqual(26, result["scenarioCount"])
+        self.assertEqual(29, result["scenarioCount"])
         names = {x["id"]: x["profiles"][0]["levels"][0]
                  for x in result["contexts"]}
         self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
@@ -795,8 +795,8 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_control_scenario_corpus_has_timing_contrasts(self):
         fixture = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(fixture.read_text(encoding="utf-8"))
-        self.assertEqual(6, suite["version"])
-        self.assertEqual(26, len(suite["contexts"]))
+        self.assertEqual(7, suite["version"])
+        self.assertEqual(29, len(suite["contexts"]))
         contexts = {item["id"]: item["scenario"] for item in suite["contexts"]}
         early = contexts["metallic-enervation-with-allies"]["controlOpportunities"][0]
         late = contexts["metallic-control-no-exposed-turns"]["controlOpportunities"][0]
@@ -838,7 +838,7 @@ class PowerEvaluationTests(unittest.TestCase):
                          "sharedUsesFromTrait": "hills-tumble"}},
             "trait.goliath.stone.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
                           "activation": {"action": "reaction", "trigger": "when-you-take-damage"},
-                          "damageReduction": {"dice": "1d12", "appliesTo": "triggering-damage"}},
+                          "damageReduction": {"dice": "1d12", "addAbilityModifier": "constitution", "appliesTo": "triggering-damage"}},
             "trait.goliath.stone.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
                       "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "force"},
                       "onFailedSave": {"forcedMovementFeet": 10},
@@ -1150,6 +1150,186 @@ class PowerEvaluationTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 power.validate_scenario({"tacticalOpportunities": [row]})
 
+    @staticmethod
+    def joint_strike(round_number, name):
+        return {"type": "strike", "opportunity": {
+            "id": name, "traitId": "trait.goliath.stone.stone-strike",
+            "turn": round_number, "delivery": "melee-weapon",
+            "mode": "base", "targetSize": "medium", "hit": True,
+            "dealtDamage": True, "targetIsCreature": True,
+            "failureProbability": .55}}
+
+    @staticmethod
+    def joint_reaction(round_number, name):
+        return {"type": "reaction",
+                "traitId": "trait.goliath.stone.stones-endurance",
+                "reactionAlternativeExpectedDamage": 0,
+                "opportunity": {"id": name, "round": round_number,
+                                "amount": 20, "damageType": "force",
+                                "isAttackHit": True, "attackerVisible": True,
+                                "reactionAvailable": True}}
+
+    def test_joint_martial_offense_and_defense_use_one_stone_pool(self):
+        profile = self.synthetic_goliath("stone")
+        events = [self.joint_strike(1, "hit-1"),
+                  self.joint_reaction(1, "incoming-1"),
+                  self.joint_strike(2, "hit-2")]
+        scenario = {"abilityModifiers": {"constitution": 3},
+                    "jointCombatPlans": [{"id": "martial-stone", "archetype": "weapon-martial",
+                                          "events": events}]}
+        result = power.evaluate(profile, self.catalog, 4, scenario)
+        joint = result["jointCombatPlanResults"][0]
+        self.assertEqual(["activated", "activated", "shared-resource-exhausted"],
+                         [x["status"] for x in joint["events"]])
+        self.assertEqual(2, joint["resourcesSpent"]["trait.goliath.stone.stones-endurance"])
+        self.assertAlmostEqual(3.5, joint["metrics"]["joint_expected_net_damage_delta"])
+        self.assertAlmostEqual(9.5, joint["metrics"]["joint_reaction_damage_prevented"])
+        self.assertNotIn("joint_expected_net_damage_delta", result["metrics"])
+
+    def test_joint_skirmisher_bonus_action_competition_across_traits(self):
+        profile = self.tactical_profile()
+        first = self.tactical_event("stone-throw", 1)
+        second = self.tactical_event("maelstrom-aura", 1)
+        third = self.tactical_event("maelstrom-aura", 2)
+        for n, event in enumerate((first, second, third)):
+            event["id"] = f"joint-tactical-{n}"
+        plans = [{"type": "tactical", "opportunity": event}
+                 for event in (first, second, third)]
+        output = power.evaluate(profile, self.tactical_catalog(), 4,
+                                {"jointCombatPlans": [{"id": "skirmisher",
+                                                       "archetype": "bonus-action-skirmisher",
+                                                       "events": plans}]})
+        joint = output["jointCombatPlanResults"][0]
+        self.assertEqual(["activated", "action-already-spent-this-round", "activated"],
+                         [row["status"] for row in joint["events"]])
+        self.assertEqual(1, joint["resourcesSpent"]["trait.goliath.stone.stone-throw"])
+        self.assertEqual(1, joint["resourcesSpent"]["trait.goliath.storm.maelstrom-aura"])
+        self.assertAlmostEqual(.65*5.5-6, joint["metrics"]["joint_expected_net_damage_delta"])
+        self.assertAlmostEqual(.455, joint["metrics"][
+            "joint_tactical_expected_self_attack_hits_prevented"])
+
+    def test_joint_caster_spell_opportunity_cost_reverses_searing_damage(self):
+        event = self.tactical_event("searing-ignition", 1)
+        event["attackReplacementExpectedDamage"] = 12.0
+        result = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4,
+                                {"jointCombatPlans": [{"id": "prepared-caster",
+                                                       "archetype": "prepared-caster",
+                                                       "events": [{"type": "tactical",
+                                                                   "opportunity": event}]}]})
+        metrics = result["jointCombatPlanResults"][0]["metrics"]
+        self.assertAlmostEqual(2*(4.5+2)*(.5+.5*.55)-12,
+                               metrics["joint_expected_net_damage_delta"])
+        self.assertLess(metrics["joint_expected_net_damage_delta"], 0)
+        event["attackReplacementExpectedDamage"] = 5.2
+        martial = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4,
+                                 {"jointCombatPlans": [{"id": "martial",
+                                                        "archetype": "weapon-martial",
+                                                        "events": [{"type": "tactical",
+                                                                    "opportunity": event}]}]})
+        self.assertGreater(martial["jointCombatPlanResults"][0]["metrics"][
+            "joint_expected_net_damage_delta"], 0)
+
+    def test_joint_plan_reaction_slot_and_shared_owner_collision_fail_closed(self):
+        profile = self.synthetic_goliath("stone")
+        action = self.joint_reaction(1, "a")
+        later = self.joint_reaction(1, "b")
+        plan = {"id": "reaction-conflict", "archetype": "weapon-martial",
+                "events": [action, later]}
+        result = power.evaluate(profile, self.catalog, 4, {"jointCombatPlans": [plan]})
+        statuses = [e["status"] for e in result["jointCombatPlanResults"][0]["events"]]
+        self.assertEqual(["activated", "action-already-spent-this-round"], statuses)
+        profile["traits"]["trait.test.collision"] = {
+            "id": "stones-endurance", "uses": {"value": 2, "recharge": "long-rest"}}
+        strike = self.joint_strike(1, "first")
+        plan["events"] = [strike]
+        collision = power.evaluate(profile, self.catalog, 4, {"jointCombatPlans": [plan]})
+        self.assertEqual("unresolved-shared-resource-owner",
+                         collision["jointCombatPlanResults"][0]["events"][0]["status"])
+
+    def test_joint_reaction_has_explicit_competing_attack_cost(self):
+        profile = self.synthetic_goliath("stone")
+        reaction = self.joint_reaction(1, "costly-reaction")
+        reaction["reactionAlternativeExpectedDamage"] = 5
+        plan = {"id": "reaction-tradeoff", "archetype": "weapon-martial",
+                "events": [reaction]}
+        outcome = power.evaluate(profile, self.catalog, 4,
+                                 {"abilityModifiers": {"constitution": 3},
+                                  "jointCombatPlans": [plan]})["jointCombatPlanResults"][0]
+        self.assertEqual("activated", outcome["events"][0]["status"])
+        self.assertAlmostEqual(9.5, outcome["metrics"]["joint_reaction_damage_prevented"])
+        self.assertAlmostEqual(-5, outcome["metrics"]["joint_expected_net_damage_delta"])
+        # Damage prevented and damage forgone must remain separate domains.
+        self.assertNotIn("joint_utility_score", outcome["metrics"])
+
+    def test_joint_independent_stone_throw_pool_can_share_round_with_strike(self):
+        profile = self.synthetic_goliath("stone")
+        profile["traits"].update(self.tactical_profile()["traits"])
+        catalog = self.tactical_catalog()
+        throw = self.tactical_event("stone-throw", 1)
+        plan = {"id": "three-slots", "archetype": "weapon-martial", "events": [
+            self.joint_strike(1, "hit-one"),
+            {"type": "tactical", "opportunity": throw},
+            self.joint_reaction(1, "incoming-one")]}
+        r = power.evaluate(profile, catalog, 4,
+                           {"abilityModifiers": {"constitution": 3},
+                            "jointCombatPlans": [plan]})["jointCombatPlanResults"][0]
+        self.assertEqual(["activated", "activated", "activated"],
+                         [e["status"] for e in r["events"]])
+        self.assertEqual({"trait.goliath.stone.stone-throw": 1,
+                          "trait.goliath.stone.stones-endurance": 2},
+                         r["resourcesSpent"])
+        self.assertEqual({"trait.goliath.stone.stone-throw": 2,
+                          "trait.goliath.stone.stones-endurance": 2},
+                         r["resourcePoolCapacities"])
+        self.assertAlmostEqual(3.5 + (.65 * 5.5 - 3),
+                               r["metrics"]["joint_expected_net_damage_delta"])
+        self.assertAlmostEqual(9.5, r["metrics"]["joint_reaction_damage_prevented"])
+
+    def test_joint_attack_replacement_blocks_same_attack_slot_rider(self):
+        profile = self.synthetic_goliath("stone")
+        profile["traits"].update(self.tactical_profile()["traits"])
+        catalog = self.tactical_catalog()
+        ignition = self.tactical_event("searing-ignition", 1)
+        r = power.evaluate(profile, catalog, 4, {"jointCombatPlans": [{
+            "id": "one-attack", "archetype": "weapon-martial", "events": [
+                {"type": "tactical", "opportunity": ignition},
+                self.joint_strike(1, "same-attack")]}]})
+        trace = r["jointCombatPlanResults"][0]["events"]
+        self.assertEqual(["activated", "action-already-spent-this-round"],
+                         [x["status"] for x in trace])
+
+    def test_joint_plan_strict_validation(self):
+        strike = self.joint_strike(1, "a")
+        reaction = self.joint_reaction(2, "b")
+        good = {"id": "valid", "archetype": "weapon-martial",
+                "events": [strike, reaction]}
+        power.validate_scenario({"jointCombatPlans": [good]})
+        invalid = [
+            {**good, "archetype": "telepathic-caster"},
+            {**good, "events": [reaction, strike]},
+            {**good, "events": [strike, strike]},
+            {**good, "events": [strike, {**reaction, "reactionAlternativeExpectedDamage": -1}]},
+            {**good, "events": [strike, {**reaction, "opportunity": {
+                **reaction["opportunity"], "roudn": 2}}]},
+            {**good, "events": [strike, {"type": "tactical", "opportunity":
+                self.tactical_event("stone-throw", 2) |
+                {"bonusActionAlternativeExpectedDamage": 3} | {
+                    "actionAvailable": True}}]},
+        ]
+        invalid[-1]["events"][1]["opportunity"].pop("bonusActionAlternativeExpectedDamage")
+        for case in invalid:
+            with self.subTest(case=case), self.assertRaises(ValueError):
+                power.validate_scenario({"jointCombatPlans": [case]})
+
+    def test_joint_scenario_corpus_has_three_class_builds(self):
+        suite = self.scenario_suite()
+        self.assertEqual(29, len(suite["contexts"]))
+        plans = [p for context in suite["contexts"]
+                 for p in context["scenario"].get("jointCombatPlans", [])]
+        self.assertEqual({"weapon-martial", "bonus-action-skirmisher", "prepared-caster"},
+                         {p["archetype"] for p in plans})
+        power.validate_scenario_suite(suite)
+
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
                      "Full native catalog is not available in isolated fixture tests")
 class NativeCatalogIntegrationTests(unittest.TestCase):
@@ -1176,7 +1356,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(26, result["scenarioCount"])
+        self.assertEqual(29, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -1186,6 +1366,25 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
                 for evaluation in entry["levels"]:
                     self.assertIsInstance(evaluation["unmodeled"], list)
 
+
+    def test_native_joint_action_and_resource_replay(self):
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        profiles = {
+            "stone": power.reconstruct_preset(catalog, "ancestry.goliath.stone"),
+            "fire": power.reconstruct_preset(catalog, "ancestry.goliath.fire")}
+        suite = json.loads((Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
+                           .read_text(encoding="utf-8"))
+        scenarios = {c["id"]: c["scenario"] for c in suite["contexts"]}
+        stone = power.evaluate(profiles["stone"], catalog, 4,
+                               scenarios["joint-weapon-martial-stone"])
+        plan = stone["jointCombatPlanResults"][0]
+        self.assertEqual(["activated", "activated", "shared-resource-exhausted"],
+                         [row["status"] for row in plan["events"]])
+        self.assertAlmostEqual(9.5, plan["metrics"]["joint_reaction_damage_prevented"])
+        fire = power.evaluate(profiles["fire"], catalog, 4,
+                              scenarios["joint-prepared-caster-searing"])
+        self.assertLess(fire["jointCombatPlanResults"][0]["metrics"][
+            "joint_expected_net_damage_delta"], 0)
 
     def test_native_directional_signals_are_preserved(self):
         """Check known native contrasts, not merely that the evaluator runs."""

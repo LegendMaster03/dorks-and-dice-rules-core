@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v6",
-  "version": 6,
+  "id": "pillar2-diagnostic-sensitivity-v7",
+  "version": 7,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -759,6 +759,159 @@
               }
             ],
             "bonusActionAlternativeExpectedDamage": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": "joint-weapon-martial-stone",
+      "purpose": "One Stone Goliath pool pays for a confirmed-hit strike and one damage-prevention reaction; a third attempted strike is unavailable at PB 2.",
+      "scenario": {
+        "id": "joint-weapon-martial-stone",
+        "abilityModifiers": {
+          "constitution": 3
+        },
+        "jointCombatPlans": [
+          {
+            "id": "martial-stone",
+            "archetype": "weapon-martial",
+            "events": [
+              {
+                "type": "strike",
+                "opportunity": {
+                  "id": "stone-hit-one",
+                  "traitId": "trait.goliath.stone.stone-strike",
+                  "turn": 1,
+                  "delivery": "melee-weapon",
+                  "targetSize": "medium",
+                  "hit": true,
+                  "dealtDamage": true,
+                  "targetIsCreature": true,
+                  "failureProbability": 0.55
+                }
+              },
+              {
+                "type": "reaction",
+                "traitId": "trait.goliath.stone.stones-endurance",
+                "reactionAlternativeExpectedDamage": 0,
+                "opportunity": {
+                  "id": "stone-incoming",
+                  "round": 1,
+                  "amount": 20,
+                  "damageType": "force",
+                  "isAttackHit": true,
+                  "attackerVisible": true,
+                  "reactionAvailable": true
+                }
+              },
+              {
+                "type": "strike",
+                "opportunity": {
+                  "id": "stone-hit-two",
+                  "traitId": "trait.goliath.stone.stone-strike",
+                  "turn": 2,
+                  "delivery": "melee-weapon",
+                  "targetSize": "medium",
+                  "hit": true,
+                  "dealtDamage": true,
+                  "targetIsCreature": true,
+                  "failureProbability": 0.55
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "joint-bonus-skirmisher-stone",
+      "purpose": "A Stone Goliath can use Stone Throw once per round, but it displaces a declared 3-damage bonus-action alternative and has its own PB resource pool.",
+      "scenario": {
+        "id": "joint-bonus-skirmisher-stone",
+        "jointCombatPlans": [
+          {
+            "id": "skirmisher-stone",
+            "archetype": "bonus-action-skirmisher",
+            "events": [
+              {
+                "type": "tactical",
+                "opportunity": {
+                  "id": "skirmish-throw-one",
+                  "traitId": "trait.goliath.stone.stone-throw",
+                  "kind": "stone-throw",
+                  "round": 1,
+                  "actionAvailable": true,
+                  "rockAvailable": true,
+                  "distanceFeet": 40,
+                  "hitChance": 0.65,
+                  "targetIsCreature": true,
+                  "failureProbability": 0.55,
+                  "bonusActionAlternativeExpectedDamage": 3
+                }
+              },
+              {
+                "type": "tactical",
+                "opportunity": {
+                  "id": "skirmish-throw-two",
+                  "traitId": "trait.goliath.stone.stone-throw",
+                  "kind": "stone-throw",
+                  "round": 1,
+                  "actionAvailable": true,
+                  "rockAvailable": true,
+                  "distanceFeet": 40,
+                  "hitChance": 0.65,
+                  "targetIsCreature": true,
+                  "failureProbability": 0.55,
+                  "bonusActionAlternativeExpectedDamage": 3
+                }
+              },
+              {
+                "type": "tactical",
+                "opportunity": {
+                  "id": "skirmish-throw-three",
+                  "traitId": "trait.goliath.stone.stone-throw",
+                  "kind": "stone-throw",
+                  "round": 2,
+                  "actionAvailable": true,
+                  "rockAvailable": true,
+                  "distanceFeet": 40,
+                  "hitChance": 0.65,
+                  "targetIsCreature": true,
+                  "failureProbability": 0.55,
+                  "bonusActionAlternativeExpectedDamage": 3
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "joint-prepared-caster-searing",
+      "purpose": "One Searing Ignition replaces a declared 12-damage prepared-caster action alternative: its expected gross damage need not beat the forgone spell.",
+      "scenario": {
+        "id": "joint-prepared-caster-searing",
+        "jointCombatPlans": [
+          {
+            "id": "caster-searing",
+            "archetype": "prepared-caster",
+            "events": [
+              {
+                "type": "tactical",
+                "opportunity": {
+                  "id": "caster-searing-1",
+                  "traitId": "trait.goliath.fire.searing-ignition",
+                  "kind": "searing-ignition",
+                  "round": 1,
+                  "actionAvailable": true,
+                  "enemyTargets": 2,
+                  "failureProbability": 0.55,
+                  "attackReplacementExpectedDamage": 12,
+                  "baseHitChance": 0.65,
+                  "enemyNormalAttackRollsBeforeRecovery": 2
+                }
+              }
+            ]
           }
         ]
       }

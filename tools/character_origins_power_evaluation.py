@@ -43,6 +43,7 @@ DEFAULT_SCENARIO = {
     "controlOpportunities": [],
     "strikeOpportunities": [],
     "tacticalOpportunities": [],
+    "jointCombatPlans": [],
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -157,6 +158,7 @@ def validate_scenario(scenario: dict) -> None:
     for field in ("incomingDamage", "breathOpportunities", "saveEvents",
                   "reactionDamageEvents", "spellDemands", "controlOpportunities",
                   "strikeOpportunities", "tacticalOpportunities",
+                  "jointCombatPlans",
                   "tremorsenseContacts", "mobilityChallenges"):
         events = scenario.get(field, [])
         if not isinstance(events, list):
@@ -303,6 +305,60 @@ def validate_scenario(scenario: dict) -> None:
                     _probability(event["baseHitChance"], f"{location}.baseHitChance")
                 if "targetSpeedFeet" in event:
                     _number(event["targetSpeedFeet"], f"{location}.targetSpeedFeet")
+            elif field == "jointCombatPlans":
+                allowed = {"id", "archetype", "events"}
+                if set(event) - allowed:
+                    raise ValueError(f"Unknown {location} fields: {sorted(set(event) - allowed)}")
+                _nonempty(event.get("id"), f"{location}.id")
+                if event.get("archetype") not in (
+                        "weapon-martial", "bonus-action-skirmisher", "prepared-caster"):
+                    raise ValueError(f"{location}.archetype is unsupported")
+                if not isinstance(event.get("events"), list):
+                    raise ValueError(f"{location}.events must be an array")
+                seen_plan_events = set()
+                last_round = 0
+                for position, planned in enumerate(event["events"]):
+                    epath = f"{location}.events[{position}]"
+                    if not isinstance(planned, dict) or set(planned) - {
+                            "type", "opportunity", "traitId",
+                            "reactionAlternativeExpectedDamage"}:
+                        raise ValueError(f"{epath} has unknown fields or is not an object")
+                    kind = planned.get("type")
+                    if kind not in ("strike", "tactical", "reaction"):
+                        raise ValueError(f"{epath}.type is unsupported")
+                    opportunity = planned.get("opportunity")
+                    if not isinstance(opportunity, dict):
+                        raise ValueError(f"{epath}.opportunity must be an object")
+                    if kind != "reaction" and ("traitId" in planned or
+                                               "reactionAlternativeExpectedDamage" in planned):
+                        raise ValueError(f"{epath} includes reaction-only fields")
+                    if kind == "reaction":
+                        _nonempty(planned.get("traitId"), f"{epath}.traitId")
+                        _number(planned.get("reactionAlternativeExpectedDamage"),
+                                f"{epath}.reactionAlternativeExpectedDamage")
+                    destination = {"strike": "strikeOpportunities",
+                                   "tactical": "tacticalOpportunities",
+                                   "reaction": "reactionDamageEvents"}[kind]
+                    # Reuse the authoritative fixture validator for each
+                    # opportunity. No special permissive joint-only path.
+                    validate_scenario({destination: [opportunity]})
+                    unique_id = opportunity["id"]
+                    if unique_id in seen_plan_events:
+                        raise ValueError(f"Duplicate joint plan event ID: {unique_id}")
+                    seen_plan_events.add(unique_id)
+                    when = opportunity["turn" if kind == "strike" else "round"]
+                    if when < last_round:
+                        raise ValueError(f"{epath} is not in chronological round order")
+                    last_round = when
+                    if kind == "tactical":
+                        if opportunity["kind"] == "searing-ignition":
+                            if "attackReplacementExpectedDamage" not in opportunity:
+                                raise ValueError(f"{epath} needs attack action opportunity cost")
+                        elif "bonusActionAlternativeExpectedDamage" not in opportunity:
+                            raise ValueError(f"{epath} needs bonus action opportunity cost")
+                if event["id"] in seen_ids:
+                    raise ValueError(f"Duplicate jointCombatPlans ID: {event['id']}")
+                seen_ids.add(event["id"])
             elif field == "tacticalOpportunities":
                 allowed = {"id", "traitId", "round", "kind", "actionAvailable",
                            "rockAvailable", "distanceFeet", "hitChance",
@@ -1412,6 +1468,180 @@ def reaction_damage_outcomes(traits: dict, level: int, pb: int,
     return total, trace, sorted(issues)
 
 
+
+def joint_combat_plan_outcomes(profile: dict, catalog: dict, level: int,
+                               scenario: dict, resistances: dict[str, float]) -> list[dict]:
+    """Replay nominated class-build action choices with a single resource ledger.
+
+    Only *one declared attack opportunity per round* is considered. Strike
+    riders occupy that opportunity, but do not consume a second Action. This
+    conservatively excludes a later separate attack in the same round until a
+    complete class attack schedule is supplied. Bonus Actions and Reactions
+    have distinct per-round slots. No unstated class feature is inferred from
+    the label, and no resource refresh occurs during this single Long Rest day.
+    """
+    traits = profile["traits"]
+    pb = proficiency_bonus(level)
+    output = []
+    owners_by_short_name = defaultdict(list)
+    for identifier, trait in traits.items():
+        if isinstance(trait.get("id"), str):
+            owners_by_short_name[trait["id"]].append(identifier)
+
+    for plan in scenario.get("jointCombatPlans", []):
+        spent: dict[str, int] = defaultdict(int)
+        capacities: dict[str, int] = {}
+        occupied: set[tuple[int, str]] = set()
+        trace: list[dict] = []
+        metrics: dict[str, float] = defaultdict(float)
+        unresolved = []
+        for planned in plan["events"]:
+            kind = planned["type"]
+            opportunity = planned["opportunity"]
+            identifier = (planned["traitId"] if kind == "reaction"
+                          else opportunity["traitId"])
+            round_number = opportunity.get("round", opportunity.get("turn"))
+            trace_row = {"id": opportunity["id"], "type": kind,
+                         "traitId": identifier, "round": round_number,
+                         "status": None}
+            trait = traits.get(identifier)
+            if trait is None:
+                trace_row["status"] = "not-offered"
+                trace.append(trace_row)
+                continue
+            if not unlocked(trait, level):
+                trace_row["status"] = "level-locked"
+                trace.append(trace_row)
+                continue
+
+            if kind == "strike":
+                pool_short = (trait.get("alternateStrikeMode", {}).get("sharedUsesFromTrait")
+                              if opportunity.get("mode") == "alternate" else None)
+                pool_short = pool_short or trait.get("sharedUsesFromTrait")
+                slot = "attack-opportunity"
+            elif kind == "tactical":
+                pool_short = None
+                slot = ("attack-opportunity" if opportunity["kind"] == "searing-ignition"
+                        else "bonus-action")
+            else:
+                pool_short = None
+                slot = "reaction"
+
+            if (round_number, slot) in occupied:
+                trace_row["status"] = "action-already-spent-this-round"
+                trace.append(trace_row)
+                continue
+            # Resolve source-bound short resource IDs conservatively. Mixed
+            # source collisions are not assigned an arbitrary pool owner.
+            if pool_short:
+                candidates = owners_by_short_name.get(pool_short, [])
+                if len(candidates) != 1:
+                    trace_row["status"] = "unresolved-shared-resource-owner"
+                    unresolved.append({"traitId": identifier,
+                                       "reason": "ambiguous-or-missing-shared-resource-owner",
+                                       "planId": plan["id"]})
+                    trace.append(trace_row)
+                    continue
+                owner = candidates[0]
+            else:
+                owner = identifier
+            uses = traits[owner].get("uses", {})
+            value = uses.get("value") if isinstance(uses, dict) else None
+            capacity = pb if value == "proficiency-bonus" else value
+            if (not isinstance(uses, dict) or uses.get("recharge") != "long-rest"
+                    or type(capacity) is not int or capacity < 0):
+                trace_row["status"] = "unresolved-resource-definition"
+                unresolved.append({"traitId": identifier, "reason": "unsupported-joint-pool",
+                                   "planId": plan["id"]})
+                trace.append(trace_row)
+                continue
+            capacities[owner] = capacity
+            if spent[owner] >= capacity:
+                trace_row["status"] = "shared-resource-exhausted"
+                trace_row["poolOwnerTraitId"] = owner
+                trace.append(trace_row)
+                continue
+
+            extra_metrics, helper_row, helper_issues = {}, {}, []
+            if kind == "strike":
+                v, rows, helper_issues, _, _ = on_hit_control_outcomes(
+                    traits, catalog, level, {"strikeOpportunities": [opportunity]})
+                helper_row = rows[0]
+                extra_metrics = {"joint_" + key: number for key, number in v.items()
+                                 if key != "strike_uses_selected"}
+            elif kind == "reaction":
+                v, rows, affected = reaction_damage_outcomes(
+                    {identifier: trait}, level, pb,
+                    {"reactionDamageEvents": [opportunity],
+                     "abilityModifiers": scenario.get("abilityModifiers", {})},
+                    resistances)
+                helper_row = rows[0]
+                helper_issues = [{"traitId": entry,
+                                  "reason": "reaction-resistance-reduction-order-unresolved"}
+                                 for entry in affected]
+                extra_metrics = {"joint_reaction_damage_prevented": v}
+            else:
+                v, rows, helper_issues, _ = tactical_action_outcomes(
+                    {identifier: trait}, catalog, level, pb,
+                    {"tacticalOpportunities": [opportunity],
+                     "damageTypeMultiplier": scenario.get("damageTypeMultiplier", {}),
+                     "attackReplacementExpectedDamage": scenario.get(
+                         "attackReplacementExpectedDamage", 5.2)}, resistances)
+                helper_row = rows[0]
+                extra_metrics = {"joint_" + key: number for key, number in v.items()}
+
+            # Only an actual legal activation occupies a slot or spends a pool.
+            if kind == "reaction":
+                valid = helper_row.get("selectedDefense") == identifier
+                status = ("activated" if valid else "unresolved-reaction-trigger"
+                          if helper_issues else "no-qualifying-reaction")
+            else:
+                status = helper_row["status"]
+                valid = status == "activated"
+            trace_row["status"] = status
+            trace_row["detail"] = helper_row
+            if not valid:
+                trace.extend((trace_row,))
+                if helper_issues:
+                    unresolved.extend({**issue, "planId": plan["id"]}
+                                      for issue in helper_issues)
+                continue
+            spent[owner] += 1
+            occupied.add((round_number, slot))
+            trace_row["poolOwnerTraitId"] = owner
+            trace_row["poolUsesRemaining"] = capacity - spent[owner]
+            for name, value in extra_metrics.items():
+                metrics[name] += value
+            if kind == "strike":
+                # A confirmed hit already occurred; this rider adds no
+                # second attack or extra Action, only a shared-use cost.
+                metrics["joint_expected_net_damage_delta"] += (
+                    extra_metrics.get("joint_strike_gross_extra_damage_on_confirmed_hits", 0))
+            elif kind == "tactical":
+                if opportunity["kind"] == "stone-throw":
+                    metrics["joint_expected_net_damage_delta"] += (
+                        helper_row["expectedGrossDamage"] -
+                        opportunity["bonusActionAlternativeExpectedDamage"])
+                elif opportunity["kind"] == "searing-ignition":
+                    metrics["joint_expected_net_damage_delta"] += helper_row["expectedNetDamage"]
+                else:
+                    metrics["joint_expected_net_damage_delta"] -= (
+                        opportunity["bonusActionAlternativeExpectedDamage"])
+            else:
+                metrics["joint_expected_net_damage_delta"] -= (
+                    planned["reactionAlternativeExpectedDamage"])
+            unresolved.extend({**issue, "planId": plan["id"]}
+                              for issue in helper_issues)
+            trace.append(trace_row)
+        output.append({"id": plan["id"], "archetype": plan["archetype"],
+                       "metrics": dict(sorted(metrics.items())),
+                       "events": trace, "resourcesSpent": dict(sorted(spent.items())),
+                       "resourcePoolCapacities": dict(sorted(capacities.items())),
+                       "unresolved": unresolved,
+                       "interpretation": "declared-chronological-plan-not-optimal-or-complete-build"})
+    return output
+
+
 def native_shared_pool_frontiers(traits: dict, level: int) -> list[dict]:
     """Expose only defense/strike links that match the conservative frontier."""
     frontiers = []
@@ -1855,6 +2085,9 @@ def evaluate(profile: dict, catalog: dict, level: int,
     mobility = mobility_access(profile, level, pb, scenario)
     metrics["origin_mobility_gates_satisfied"] = sum(
         e["status"] == "origin-mode-satisfies-gate" for e in mobility)
+    joint_plans = joint_combat_plan_outcomes(profile, catalog, level, scenario, resistances)
+    for plan in joint_plans:
+        unmodeled.extend(plan["unresolved"])
     # Carry the intrinsic facts into the output instead of inventing a price for
     # movement, creature type, size, generic vision or other access gates.
     return {"sourceId": profile.get("selectedSourceId"), "level": level,
@@ -1872,6 +2105,7 @@ def evaluate(profile: dict, catalog: dict, level: int,
             "controlEventTrace": control_trace,
             "strikeEventTrace": strike_trace,
             "tacticalEventTrace": tactical_trace,
+            "jointCombatPlanResults": joint_plans,
             "sharedResourceFrontiers": shared_frontiers,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
@@ -1936,8 +2170,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6):
-        raise ValueError("suite.version must be 1, 2, 3, 4, 5 or 6")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6, 7):
+        raise ValueError("suite.version must be 1 through 7")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")

@@ -416,3 +416,71 @@ Independent fixture endpoints must not be summed into a total Species score.
 The research report and inheritance design remain authoritative about what
 is *not* decided: effective power targets, mixed-contributor eligibility,
 hereditary burden and numerical allocation rules.
+
+## Joint class-archetype action and shared-resource plans (version 7)
+
+The **version-7 corpus has 29 contexts**. Three additional cases nominate
+chronologically ordered actions for a **weapon martial**, a **bonus-action
+skirmisher**, and a **prepared caster**. These are *hypothetical archetype
+fixtures*, not instantiated native character classes. Although the native
+catalog contains Barbarian, Rogue, and Wizard class records, the evaluator has
+not yet resolved their features, level progression, spell preparations, or
+class-appropriate attack rotations. All alternative-action values in these
+fixtures are **explicit assumptions**, never class-derived damage estimates.
+
+The optional `jointCombatPlans` scenario field is an array of plans. Each plan
+has a distinct `id`, an `archetype` label (`weapon-martial`,
+`bonus-action-skirmisher`, or `prepared-caster`), and an ordered `events` array.
+Each event has a `type` (`strike`, `tactical`, or `reaction`) and an
+`opportunity` in the *existing corresponding event schema*. A reaction also
+requires the exact owned `traitId` and a nonnegative
+`reactionAlternativeExpectedDamage` (explicitly zero if the fixture assumes no
+competing reaction). Tactical bonus actions must state the alternative bonus
+action's expected damage; attack replacements must state the forgone alternative
+attack/action's expected damage. These assumptions may be class-sensitive.
+
+`jointCombatPlanResults` provides each plan's **separate** event trace, action
+status, source-owned pool charges spent and their capacities, in-domain
+mechanical endpoints, and unresolved effects. It is **not added to** the
+independently computed `metrics` vector; doing so would double-count the same
+potential abilities. Each plan is a deterministic *nominated sequence*, not
+an optimizer or a mechanically legal build validator.
+
+For the scoped interpreter, one attack opportunity, one Bonus Action, and one
+Reaction are available **at most once per declared round**, with no Extra
+Attack scheduling or separate initiative-order handling yet. A confirmed-hit
+strike rider consumes the declared attack opportunity but does not create or
+charge a second Action. All source-specific limited-use pools persist across
+rounds in the same modeled day, including Stone Strike consuming the single
+Stone's Endurance pool. Unknown, unexpressed, or level-locked traits do not
+activate. Invalid action constraints and resources fail closed; no biological
+inheritance permissions are implied by tests with combined traits.
+
+**Reproducible examples at level 4 (PB 2):**
+
+- **Stone Goliath / weapon martial:** A confirmed Stone Strike spends one
+  shared charge and adds 3.5 expected Force damage *conditional on that hit*.
+  A later qualifying 20-damage reaction can spend the other charge to prevent
+  9.5 expected damage with Constitution +3. A third attempted Stone Strike
+  is exhausted. This is one joint plan, not two independently full pools.
+- **Stone Goliath / skirmisher:** Each qualifying Stone Throw has gross
+  expected damage 0.65 × 5.5 = 3.575 and costs a Bonus Action that could
+  have supplied 3 expected damage; marginal net is 0.575 for that
+  opportunity. A second attempt in the same round is blocked. The two
+  rounds of attacks together yield 1.15 net damage before valuing Prone.
+- **Fire Goliath / prepared caster:** With two eligible enemies, 0.55
+  failed-save probability, and 1d8+PB damage, Searing Ignition has 10.075
+  expected gross damage. Against an *assumed* forgone 12-damage caster
+  alternative, the net damage is **−1.925**. A different character with a
+  5.2-damage alternative reaches a different conclusion. Blinded remains
+  a separate, unpriced endpoint.
+
+**Important limitations:** The conservative one-attack-opportunity-per-round
+model rejects some potentially legal higher-level extra-attack combinations.
+A real character's Attack action can include multiple attacks, and spell
+casting can have different action, resource, target and concentration costs.
+Reactions can also become available at turn rather than round boundaries.
+Non-damage opportunity costs, pending feat choices, full initiative sequencing,
+allied actions, end-of-day rest refresh, and optimized decisions remain
+unresolved. Do not use these scenarios to rank Species or set inheritance
+allocation costs without explicitly resolving those gaps.
