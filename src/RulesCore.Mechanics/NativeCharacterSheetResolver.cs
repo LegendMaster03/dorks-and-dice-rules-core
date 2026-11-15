@@ -164,7 +164,8 @@ public static class NativeCharacterSheetResolver
         }
 
         // Validate every sheet, including currently unmanifested and unrelated
-        // sheets. A corrupt graph is not treated as partially authoritative.
+        // sheets. The three DFS colors (unseen/visiting/complete) detect cycles
+        // without assuming parent order. A corrupt graph is never partially trusted.
         var colors = new Dictionary<string, int>(StringComparer.Ordinal);
         void Visit(string id)
         {
@@ -210,6 +211,8 @@ public static class NativeCharacterSheetResolver
         }
         if (issues.Count != 0) return Invalid();
 
+        // Stack root-to-leaf rather than copying complete sheets into each
+        // descendant. The latest primary input is read afresh on every call.
         var chain = new Stack<NativePersistentCharacterSheet>();
         var currentId = targetSheetId;
         while (currentId != PrimarySheetId)
@@ -306,6 +309,8 @@ public static class NativeCharacterSheetResolver
             _ => false
         });
 
+    // Preserve durable ownership/definition identity while detaching nested
+    // collections so callers can not mutate saved receipts through a view.
     private static NativeSheetEarnedProgression CopyProgression(NativeSheetEarnedProgression item) =>
         item with
         {
@@ -474,6 +479,9 @@ public static class NativeCharacterSheetResolver
         foreach (var (key, change) in patch.Entries)
         {
             result.TryGetValue(key, out var previous);
+            // A replacement resets all siblings first. Without it, only the
+            // explicitly supplied properties change; an explicit null Ability
+            // is distinct from an omitted Ability wrapper.
             var initial = change.Replacement?.Value ?? previous ?? new NativeSkillTraining();
             result[key] = initial with
             {
@@ -490,6 +498,8 @@ public static class NativeCharacterSheetResolver
         IReadOnlyList<string>? parent, NativeSheetCollectionPatch<string>? patch)
     {
         if (patch is null) return parent;
+        // Collection removal affects this derived sheet only. It is not a
+        // revocation of a separately earned/source-owned entitlement.
         var result = patch.Replace || parent is null
             ? new List<string>() : new List<string>(parent);
         var removed = new HashSet<string>(patch.Removed ?? [], StringComparer.Ordinal);
