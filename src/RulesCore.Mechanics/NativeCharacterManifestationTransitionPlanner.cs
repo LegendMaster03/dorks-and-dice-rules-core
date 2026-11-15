@@ -31,14 +31,15 @@ public static class NativeCharacterManifestationTransitionPlanner
             issues.AddRange(ledgerIssues);
             return Failed("invalid");
         }
-        // This verifies the entire sheet graph, progression ownership and all
-        // persistent influences before any authorized form transition is planned.
+        // Resolve primary state before considering an alternate target.
+        // Source-authorized conflicts on the underlying character are not
+        // canceled by switching into a form that does not target that field.
         var underlying = NativeCharacterInfluenceResolver.Resolve(state,
             NativeCharacterSheetResolver.PrimarySheetId, authority);
-        if (underlying.Status == "invalid")
+        if (underlying.Status is "invalid" or "unresolved")
         {
             issues.AddRange(underlying.Issues);
-            return Failed("invalid");
+            return Failed(underlying.Status);
         }
 
         if (request.CharacterId != state.CharacterId ||
