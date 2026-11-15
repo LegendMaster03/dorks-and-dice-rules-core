@@ -555,6 +555,91 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal("invalid", Resolve(Character(), noOwner).Status);
     }
 
+    [Fact]
+    public void NewFormCanNotBorrowAnotherActivationPrivateResource()
+    {
+        var state = Character();
+        var first = ActivatedWolf(state);
+        var ended = Plan(state, first, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf")).Proposed!;
+
+        // The old activation and its resource are retained for provenance,
+        // but the resource is not a pool owned by the new Hybrid activation.
+        var hybrid = Activate("manifest.hybrid", "hybrid", "e3");
+        var crossOwned = hybrid with
+        {
+            NewInstance = hybrid.NewInstance! with
+            {
+                ResourcePolicies = [
+                    new("resource.wolf.manifest.wolf",
+                        NativeManifestationResourceMode.Separate)
+                ]
+            }
+        };
+        var attempted = Plan(state, ended, "e3", crossOwned);
+        Assert.Equal("unresolved", attempted.Status);
+        Assert.Null(attempted.Proposed);
+        Assert.Null(attempted.ProposedEffective);
+        Assert.Contains(attempted.Issues,
+            x => x.Code == "manifestation-resource-policy-unresolved");
+
+        // Even a deliberately forged persisted journal can not surface the
+        // foreign-owned quantity through read-only effective-state resolution.
+        var forged = ended with
+        {
+            Instances = ended.Instances.Append(crossOwned.NewInstance!).ToArray(),
+            ProcessedEventIds = ended.ProcessedEventIds.Append("e3").ToArray()
+        };
+        var evaluated = Resolve(state, forged);
+        Assert.Equal("unresolved", evaluated.Status);
+        Assert.Null(evaluated.EffectiveMechanics);
+        Assert.Empty(evaluated.Resources);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DuplicateOrOversizedEndingConditionIsRejectedBeforeAuthorization(
+        bool oversized)
+    {
+        var state = Character();
+        var activation = Activate("manifest.wolf", "wolf", "e1", true);
+        var invalid = activation with
+        {
+            NewInstance = activation.NewInstance! with
+            {
+                EndingConditions = oversized
+                    ? [new string('x', 161)]
+                    : ["rule.test.end-on-event", "rule.test.end-on-event"]
+            }
+        };
+        var authority = new Authority();
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            state, Ledger(), new(state.CharacterId, 7, "e1", [invalid]), authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.Proposed);
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Contains(result.Issues,
+            x => x.Code == "invalid-manifestation-instance");
+    }
+
+    [Fact]
+    public void NonActivationStepCanNotCarryEvenEmptyActivationResourcePayload()
+    {
+        var ledger = ActivatedWolf();
+        var end = Action(NativeManifestationTransitionAction.End, "manifest.wolf")
+            with { NewResources = [] };
+        var authority = new Authority();
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), ledger, new("character.1", ledger.Revision, "e2", [end]),
+            authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.Proposed);
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Contains(result.Issues,
+            x => x.Code == "invalid-manifestation-step");
+    }
+
     [Theory]
     [InlineData("latent", 30)]
     [InlineData("expressed", 55)]
