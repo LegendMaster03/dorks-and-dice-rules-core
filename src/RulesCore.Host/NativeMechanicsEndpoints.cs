@@ -48,6 +48,7 @@ public static class NativeMechanicsEndpoints
         {
             group.MapVerifiedPrimaryState();
             group.MapVerifiedManifestationPlans();
+            group.MapVerifiedManifestationReads();
         }
 
         // Origin preview inherits the same authenticated ingress as other mechanics.
