@@ -574,3 +574,102 @@ To reproduce this increment from the repository root:
 python3 -m unittest discover -s tests -p 'test_character_origins_power_evaluation.py' -v
 python3 tools/character_origins_power_evaluation.py --scenario-suite tests/fixtures/pillar2-power-scenarios.json --source ancestry.dragonborn.red --output /tmp/pillar2-red-class-actions.json
 ```
+
+## Native class features and Bonus Action competition (version 9)
+
+The **version-9 corpus contains 40 diagnostic contexts**, adding four
+`nativeClassActionPlans` fixture families to the version-8 progression pass:
+Battle Rage, qualifying Rogue Sneak Attacks, Rogue Steady Aim, and competition
+between Cunning Action and a separately expressed Stone Throw. The research
+evaluator still uses an explicit **single-class level** and a declared
+first-attack hit probability; it does not assemble or optimize a complete build.
+Every source effect is evaluated only when the corresponding class feature is
+actually granted and its expected native definition is present.
+
+### New event contracts and action ledger
+
+- `class-bonus-action` spends a *separate* Bonus Action slot from the Action and
+  Reaction slots. It accepts an exact `featureId` and one of `battle-rage`,
+  `dash`, `disengage`, `hide`, or `steady-aim`. It verifies the class, grant
+  level, action cost, and appropriate native feature mechanics. Battle Rage
+  requires explicit `wearingHeavyArmor` and `rageEndedBeforeActivation`
+  booleans; the latter is a fixture statement that the earlier activation
+  **has already ended**, not an invented automatic expiry. Steady Aim requires
+  `movedThisTurn`. Cunning Action's movement, disengagement, and concealment
+  benefits are not given invented damage values.
+- `origin-bonus-action` currently recognizes only the complete authored Stone
+  Throw mechanics. Its `traitId`, `rockAvailable`, `distanceFeet`,
+  `targetIsCreature`, `hitChance`, and `saveFailure` are explicit. It spends a
+  Bonus Action and an independent Origin use. An earlier successful Cunning
+  Action or Steady Aim in the **same round** blocks Stone Throw; the reverse
+  order blocks the class Bonus Action. This is a nominated chronological
+  sequence, not a priority or optimization rule.
+- `attack` can include `strengthBasedAttacks` and an optional `precisionHits`
+  array. Each precision event declares an `attackIndex`, one of the three
+  authored qualification bases (`undetected`, `unanticipated`, or
+  `precision-vulnerability`), and `weaponProficient`, `withinOrdinaryRange`,
+  and `targetImmune` flags. An advantage roll **alone is not Sneak Attack
+  eligibility**. The fixture asserts each qualification; the evaluator does
+  not determine whether stealth, target awareness, or positioning actually
+  establishes it. Unknown attack indices are reported unresolved.
+
+### Supported effects and unresolved parts
+
+**Battle Rage** consumes one native Rage resource use, which is shared with
+Primal Rage. This pass values only the Battle Rage Strength-attack damage
+modifier and its immediate Bonus Action cost; it does not value Primal Rage,
+Strength-check advantage, B/P/S resistance, fatigue, concentration end,
+short-rest restoration, persistent Rage, or armor/equipment side effects.
+The Rage resource cap and damage bonus are checked against **both** the
+canonical class feature and the native level progression. The attack bonus is
+applied only to explicitly Strength-based attacks **in the activation round**.
+Later turns are not silently assumed to remain Raging or to have ended Rage;
+the resulting upkeep, lifetime, and spellcasting compatibility remain
+unresolved unless an explicitly new activation is stipulated after confirmed
+expiry. An explicitly attempted spell in the activation round is blocked.
+
+For `breath` and `searing-ignition`, the evaluator can apply Battle Rage's
+bonus to **retained Strength-based weapon attacks** while still replacing
+exactly one attack. The replaced attack's Rage bonus does not migrate to the
+breath or ignition effect. If the Strength basis is unspecified or Steady Aim
+interacts with an attack replacement, the case is left unresolved rather than
+assuming a convenient hit or damage value.
+
+**Sneak Attack** uses the progression's authored dice and counts each
+independently qualifying successful hit, rather than once per turn. The
+current analysis does not infer that target type alone provides precision
+immunity. It requires explicit eligibility and immunity flags. The evaluator
+will not grant a Sneak Attack when its class feature is missing or its native
+mechanics have changed from the supported form. It does not model critical
+multipliers, multi-target precision, revealed position, or individual
+weapon proficiencies; the fixture supplies these facts.
+
+**Steady Aim** uses a Bonus Action, requires no earlier movement on the turn,
+sets remaining turn movement to zero, and increases the next eligible weapon
+attack's hit probability from `p` to `p + p(1-p)` under a declared independent
+d20 advantage assumption. It never grants Sneak Attack eligibility by itself.
+Interactions with area attack replacements and full movement histories are
+unresolved. Cunning Action's positioning benefits likewise remain unpriced.
+
+### Numeric reference checks
+
+Under a declared 0.65 ordinary hit chance and 8 damage on each weapon hit:
+
+| Class fixture | Modeled result |
+| --- | --- |
+| Level-5 Barbarian using standard Extra Attack | Two attacks, 10.4 expected damage before Rage |
+| Same Barbarian using Battle Rage with two Strength-based hits | +2.6 expected damage, 13.0 total; one of three Long-Rest Rage uses spent |
+| Same Barbarian replacing one of those attacks with a two-target Red Dragonborn Breath Weapon | 23.55 expected damage under the fixture; only the *retained* attack earns Rage's +2 |
+| Level-4 Rogue with one qualifying 2d6 Sneak Attack | +4.55 expected precision damage; 9.75 total for one weapon attack |
+| Level-11 Rogue, BAB iterative alternative, two independently qualifying hits | +22.05 expected 6d6 precision damage across the two attacks; 30.45 total weapon-plus-precision damage |
+| Rogue using Steady Aim on the first attack | Hit probability changes from 0.65 to 0.8775; weapon expected damage rises from 5.2 to 7.02, *without automatically adding Sneak Attack* |
+
+These outputs are conditional comparisons, **not** class, Species, or
+inheritance-power ratings. In particular, Wizard native slot availability is
+still real source evidence, but the final effects of spells and feats cannot
+be derived from an authoritative complete spell/feat catalog here. A number
+provided in `expectedDamage` for a hypothetical spell remains a fixture
+assumption. The next useful increment is class-specific spell effect
+validation or resource recovery after the corresponding mechanics are
+represented authoritatively; no values or heritage allocation policy are
+approved by these tests.

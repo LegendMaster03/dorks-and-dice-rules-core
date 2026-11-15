@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v8",
-  "version": 8,
+  "id": "pillar2-diagnostic-sensitivity-v9",
+  "version": 9,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -1217,6 +1217,205 @@
                 "targets": 2,
                 "saveFailure": 0.55,
                 "replacedAttackIndex": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-barbarian-battle-rage-action-cost",
+      "purpose": "Battle Rage consumes a class Bonus Action, grants sourced Strength-attack damage, and is not priced as permanent rage.",
+      "scenario": {
+        "id": "native-barbarian-battle-rage-action-cost",
+        "nativeClassActionPlans": [
+          {
+            "id": "barbarian-battle-rage",
+            "classId": "class.barbarian",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "battle-rage-r1",
+                "round": 1,
+                "kind": "class-bonus-action",
+                "featureId": "class-feature.barbarian.rage-level-1",
+                "option": "battle-rage",
+                "wearingHeavyArmor": false,
+                "rageEndedBeforeActivation": false
+              },
+              {
+                "id": "battle-rage-attacks",
+                "round": 1,
+                "kind": "attack",
+                "strengthBasedAttacks": true
+              },
+              {
+                "id": "renew-after-confirmed-expiry",
+                "round": 3,
+                "kind": "class-bonus-action",
+                "featureId": "class-feature.barbarian.rage-level-1",
+                "option": "battle-rage",
+                "wearingHeavyArmor": false,
+                "rageEndedBeforeActivation": true
+              },
+              {
+                "id": "other-attack",
+                "round": 3,
+                "kind": "attack",
+                "strengthBasedAttacks": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-rogue-qualifying-sneak-attacks",
+      "purpose": "Count Sneak Attack on each explicitly qualifying hit, preserving ordinary-range, proficiency and immunity checks.",
+      "scenario": {
+        "id": "native-rogue-qualifying-sneak-attacks",
+        "nativeClassActionPlans": [
+          {
+            "id": "rogue-precision",
+            "classId": "class.rogue",
+            "attackProcedure": "iterative",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "qualifying",
+                "round": 1,
+                "kind": "attack",
+                "precisionHits": [
+                  {
+                    "attackIndex": 0,
+                    "basis": "unanticipated",
+                    "weaponProficient": true,
+                    "withinOrdinaryRange": true,
+                    "targetImmune": false
+                  }
+                ]
+              },
+              {
+                "id": "immune",
+                "round": 2,
+                "kind": "attack",
+                "precisionHits": [
+                  {
+                    "attackIndex": 0,
+                    "basis": "unanticipated",
+                    "weaponProficient": true,
+                    "withinOrdinaryRange": true,
+                    "targetImmune": true
+                  }
+                ]
+              },
+              {
+                "id": "advantage-alone-is-not-qualification",
+                "round": 3,
+                "kind": "attack"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-rogue-steady-aim-is-not-precision",
+      "purpose": "Native Steady Aim improves the next authored weapon attack without automatically granting Sneak Attack eligibility.",
+      "scenario": {
+        "id": "native-rogue-steady-aim-is-not-precision",
+        "nativeClassActionPlans": [
+          {
+            "id": "rogue-aim",
+            "classId": "class.rogue",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "stand-still-aim",
+                "round": 1,
+                "kind": "class-bonus-action",
+                "featureId": "class-feature.rogue.steady-aim-level-3",
+                "option": "steady-aim",
+                "movedThisTurn": false
+              },
+              {
+                "id": "aimed-attack",
+                "round": 1,
+                "kind": "attack"
+              },
+              {
+                "id": "moved-aim",
+                "round": 2,
+                "kind": "class-bonus-action",
+                "featureId": "class-feature.rogue.steady-aim-level-3",
+                "option": "steady-aim",
+                "movedThisTurn": true
+              },
+              {
+                "id": "precision-qualified",
+                "round": 2,
+                "kind": "attack",
+                "precisionHits": [
+                  {
+                    "attackIndex": 0,
+                    "basis": "unanticipated",
+                    "weaponProficient": true,
+                    "withinOrdinaryRange": true,
+                    "targetImmune": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-rogue-cunning-action-stone-throw-choice",
+      "purpose": "Native Rogue Cunning Action and expressed Stone Goliath Stone Throw compete for one Bonus Action per round.",
+      "scenario": {
+        "id": "native-rogue-cunning-action-stone-throw-choice",
+        "nativeClassActionPlans": [
+          {
+            "id": "rogue-origin-bonus",
+            "classId": "class.rogue",
+            "attackProcedure": "standard",
+            "baseHitChance": 0.65,
+            "weaponDamageOnHit": 8,
+            "events": [
+              {
+                "id": "class-hide",
+                "round": 1,
+                "kind": "class-bonus-action",
+                "featureId": "class-feature.rogue.cunning-action-level-2",
+                "option": "hide"
+              },
+              {
+                "id": "blocked-origin-throw",
+                "round": 1,
+                "kind": "origin-bonus-action",
+                "traitId": "trait.goliath.stone.stone-throw",
+                "rockAvailable": true,
+                "distanceFeet": 30,
+                "targetIsCreature": true,
+                "hitChance": 0.65,
+                "saveFailure": 0.55
+              },
+              {
+                "id": "origin-throw",
+                "round": 2,
+                "kind": "origin-bonus-action",
+                "traitId": "trait.goliath.stone.stone-throw",
+                "rockAvailable": true,
+                "distanceFeet": 30,
+                "targetIsCreature": true,
+                "hitChance": 0.65,
+                "saveFailure": 0.55
               }
             ]
           }

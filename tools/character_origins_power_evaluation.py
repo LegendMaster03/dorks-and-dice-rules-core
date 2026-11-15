@@ -330,11 +330,16 @@ def validate_scenario(scenario: dict) -> None:
                         raise ValueError(f"{epath} must be an object")
                     common = {"id", "round", "kind"}
                     fields = {
-                        "attack": set(),
+                        "attack": {"precisionHits", "strengthBasedAttacks"},
+                        "class-bonus-action": {"featureId", "option", "movedThisTurn",
+                                               "wearingHeavyArmor", "rageEndedBeforeActivation"},
+                        "origin-bonus-action": {"traitId", "rockAvailable", "distanceFeet",
+                                                "targetIsCreature", "hitChance", "saveFailure"},
                         "breath": {"traitId", "targets", "saveFailure", "replacedAttackIndex",
-                                   "spellAlternative"},
+                                   "spellAlternative", "strengthBasedAttacks"},
                         "searing-ignition": {"traitId", "targets", "saveFailure",
-                                             "replacedAttackIndex", "spellAlternative"},
+                                             "replacedAttackIndex", "spellAlternative",
+                                             "strengthBasedAttacks"},
                         "spell": {"slotLevel", "expectedDamage", "spellId"},
                         "class-reaction": {"featureId", "damageAmount", "damageType",
                                            "attackerVisible", "isAttackHit"},
@@ -352,6 +357,57 @@ def validate_scenario(scenario: dict) -> None:
                     if rnd < 1 or rnd < previous_round:
                         raise ValueError(f"{epath}.round must be chronological and >= 1")
                     previous_round = rnd
+                    if kind in ("attack", "breath", "searing-ignition"):
+                        if "strengthBasedAttacks" in action and type(action["strengthBasedAttacks"]) is not bool:
+                            raise ValueError(f"{epath}.strengthBasedAttacks must be boolean")
+                    if kind == "attack":
+                        hits = action.get("precisionHits", [])
+                        if not isinstance(hits, list):
+                            raise ValueError(f"{epath}.precisionHits must be an array")
+                        seen_precision = set()
+                        for hi, hit in enumerate(hits):
+                            hpath = f"{epath}.precisionHits[{hi}]"
+                            if not isinstance(hit, dict) or set(hit) != {
+                                    "attackIndex", "basis", "weaponProficient",
+                                    "withinOrdinaryRange", "targetImmune"}:
+                                raise ValueError(f"{hpath} must declare all precision requirements")
+                            idx = _count(hit["attackIndex"], f"{hpath}.attackIndex")
+                            if idx in seen_precision:
+                                raise ValueError(f"{hpath}.attackIndex duplicated")
+                            seen_precision.add(idx)
+                            if hit["basis"] not in ("undetected", "unanticipated", "precision-vulnerability"):
+                                raise ValueError(f"{hpath}.basis is not an authored qualification")
+                            for flag in ("weaponProficient", "withinOrdinaryRange", "targetImmune"):
+                                if type(hit[flag]) is not bool:
+                                    raise ValueError(f"{hpath}.{flag} must be boolean")
+                    if kind == "class-bonus-action":
+                        _nonempty(action.get("featureId"), f"{epath}.featureId")
+                        if action.get("option") not in ("battle-rage", "dash", "disengage", "hide", "steady-aim"):
+                            raise ValueError(f"{epath}.option must be a supported class Bonus Action")
+                        required_flag = {"battle-rage": "wearingHeavyArmor",
+                                         "steady-aim": "movedThisTurn"}.get(action["option"])
+                        if required_flag:
+                            if type(action.get(required_flag)) is not bool:
+                                raise ValueError(f"{epath}.{required_flag} must be boolean")
+                            other = "movedThisTurn" if required_flag == "wearingHeavyArmor" else "wearingHeavyArmor"
+                            if other in action:
+                                raise ValueError(f"{epath}.{other} is irrelevant to option")
+                        elif "movedThisTurn" in action or "wearingHeavyArmor" in action:
+                            raise ValueError(f"{epath} has irrelevant class Bonus Action flag")
+                        if option := action.get("option"):
+                            if option == "battle-rage":
+                                if type(action.get("rageEndedBeforeActivation")) is not bool:
+                                    raise ValueError(f"{epath}.rageEndedBeforeActivation must be boolean")
+                            elif "rageEndedBeforeActivation" in action:
+                                raise ValueError(f"{epath}.rageEndedBeforeActivation is irrelevant")
+                    if kind == "origin-bonus-action":
+                        _nonempty(action.get("traitId"), f"{epath}.traitId")
+                        for flag in ("rockAvailable", "targetIsCreature"):
+                            if type(action.get(flag)) is not bool:
+                                raise ValueError(f"{epath}.{flag} must be boolean")
+                        _number(action.get("distanceFeet"), f"{epath}.distanceFeet")
+                        _probability(action.get("hitChance"), f"{epath}.hitChance")
+                        _probability(action.get("saveFailure"), f"{epath}.saveFailure")
                     if kind in ("breath", "searing-ignition"):
                         _nonempty(action.get("traitId"), f"{epath}.traitId")
                         _count(action.get("targets"), f"{epath}.targets")
@@ -1823,6 +1879,68 @@ def _native_class_actions(catalog: dict, class_id: str, level: int,
             "evidence": evidence}, None
 
 
+def _class_feature_mechanics(catalog: dict, class_id: str,
+                             granted: set[str], feature_id: str,
+                             level: int, expected_kind: str) -> dict | None:
+    """Use an authored, currently granted feature; never guess from its name."""
+    if feature_id not in granted:
+        return None
+    feature = catalog.get("classFeatures", {}).get(feature_id)
+    if (not feature or feature.get("parentClass") != class_id or
+            type(feature.get("classLevel")) is not int or
+            feature["classLevel"] > level):
+        return None
+    mechanic = feature.get("definition", {}).get("mechanics", {})
+    return mechanic if mechanic.get("kind") == expected_kind else None
+
+
+def _rage_battle_bonus(mechanic: dict, level: int,
+                       progression: dict) -> tuple[float, int] | None:
+    """Cross-check native Rage tables against class progression values."""
+    battle = mechanic.get("battle", {})
+    if (mechanic.get("activation") != "bonus-action" or
+            mechanic.get("kind") != "rage-resource" or
+            mechanic.get("shared", {}).get("noHeavyArmor") is not True or
+            mechanic.get("shared", {}).get("forbidSpellsAndConcentration") is not True or
+            battle.get("durationUntil") != "end-of-next-turn" or
+            battle.get("extendBy") != ["attack-enemy", "force-enemy-saving-throw", "bonus-action"]):
+        return None
+    try:
+        bonus = next(val for lvl, val in reversed(battle["strengthAttackDamageBonus"])
+                     if lvl <= level)
+        uses = next(val for lvl, val in reversed(mechanic["usesByClassLevel"])
+                    if lvl <= level)
+    except (KeyError, ValueError, TypeError):
+        return None
+    if (type(bonus) is not int or type(uses) is not int or
+            progression.get("battleRageDamage") != bonus or
+            progression.get("rageUses") != uses):
+        return None
+    return bonus, uses
+
+
+def _class_sneak_dice(catalog: dict, class_id: str, granted: set[str],
+                       level: int, progression: dict) -> float | None:
+    mechanic = _class_feature_mechanics(
+        catalog, class_id, granted,
+        "class-feature.rogue.sneak-attack-level-1", level, "sneak-attack")
+    if not mechanic or any((
+            mechanic.get("dice") != "1d6 plus 1d6 each odd Rogue level, through 10d6",
+            mechanic.get("frequency") != "each-independently-qualifying-successful-hit",
+            mechanic.get("eligibility") != "undetected-or-unanticipated-attack-or-explicit-precision-vulnerability",
+            mechanic.get("advantageAloneInsufficient") is not True,
+            mechanic.get("requiresWeaponProficiency") is not True,
+            mechanic.get("ordinaryRangeOnly") is not True,
+            mechanic.get("creatureTypeNotBlanketImmunity") is not True,
+            mechanic.get("respectsActualImmunities") is not True,
+            mechanic.get("noExtraAttacksGranted") is not True)):
+        return None
+    expected = f"{(level + 1) // 2}d6"
+    if progression.get("sneakAttackDice") != expected:
+        return None
+    return dice_mean(expected)
+
+
 def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
                                  scenario: dict, resistances: dict) -> list[dict]:
     """Replay one native pure-class action schedule with explicitly valued options.
@@ -1849,7 +1967,7 @@ def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
         result["classProgression"] = model
         result["status"] = "evaluated-conditional-options"
         result["limitations"] = [
-            "Class traits beyond verified Attack counts, class spell slots and one defensive Reaction are not valued.",
+            "Only verified Battle Rage, Sneak Attack, Cunning Action, Steady Aim and Uncanny Dodge are partly modeled; other class features remain unvalued.",
             "Hit probabilities, weapon damage, spell choice and spell effects are fixture assumptions.",
             "No multiclass, class subclass, rest recharge, equipment, concentration, critical or feat optimization is inferred.",
         ]
@@ -1858,28 +1976,183 @@ def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
         for row in native_record["progression"]:
             if row.get("level", 0) <= level:
                 granted.update(row.get("featureGrants", []))
-        result["nativeClassFeatureGrantsNotPriced"] = sorted(granted)
+        partially_modeled_grants = {
+            "class-feature.barbarian.rage-level-1",
+            "class-feature.barbarian.extra-attack-level-5",
+            "class-feature.rogue.sneak-attack-level-1",
+            "class-feature.rogue.cunning-action-level-2",
+            "class-feature.rogue.steady-aim-level-3",
+            "class-feature.rogue.uncanny-dodge-level-5",
+        }
+        result["nativeClassFeatureGrantsPartiallyModeled"] = sorted(granted & partially_modeled_grants)
+        result["nativeClassFeatureGrantsNotPriced"] = sorted(granted - partially_modeled_grants)
         slots = model["nativeSpellSlotsByLevel"].copy()
         spent: dict[str, int] = defaultdict(int)
         action_slots: set[int] = set()
         reaction_slots: set[int] = set()
+        bonus_slots: set[int] = set()
+        rage_activation_round: int | None = None
+        rage_damage_bonus: int | None = None
+        rage_uses_spent = 0
+        steady_aim_round: int | None = None
+        progression = next(row for row in native_record["progression"]
+                           if row.get("level") == level)
         for event in plan["events"]:
             rnd, choice = event["round"], event["kind"]
             row = {"id": event["id"], "round": rnd, "kind": choice,
                    "status": "unresolved"}
-            action_kind = choice not in ("class-reaction", "origin-reaction")
-            occupied = action_slots if action_kind else reaction_slots
+            if choice in ("class-reaction", "origin-reaction"):
+                occupied = reaction_slots
+            elif choice in ("class-bonus-action", "origin-bonus-action"):
+                occupied = bonus_slots
+            else:
+                occupied = action_slots
+            action_kind = occupied is action_slots
             if rnd in occupied:
                 row["status"] = "same-round-slot-already-used"
+                result["events"].append(row)
+                continue
+            # Battle Rage can persist across turns, but its exact duration and
+            # extension triggers require a turn-level model. Do not quietly
+            # score later Attack actions as though Rage had ended.
+            if (rage_activation_round is not None and rnd > rage_activation_round
+                    and choice in ("attack", "breath", "searing-ignition")):
+                row["status"] = "rage-upkeep-before-action-unresolved"
+                result["unresolved"].append({"eventId": event["id"], "reason": row["status"]})
                 result["events"].append(row)
                 continue
             baseline = model["attackActionExpectedDamage"]
             if action_kind:
                 row["attackActionExpectedDamage"] = baseline
             if choice == "attack":
+                chances = model["perAttackHitChances"].copy()
+                if steady_aim_round == rnd:
+                    chances[0] = chances[0] + chances[0] * (1 - chances[0])
+                    steady_aim_round = None
+                    row["steadyAimAdvantageAppliedToAttackIndex"] = 0
+                baseline = sum(p * plan["weaponDamageOnHit"] for p in chances)
+                row["attackActionExpectedDamage"] = baseline
+                if rage_activation_round == rnd and event.get("strengthBasedAttacks") is True:
+                    added = sum(chances) * rage_damage_bonus
+                    row["battleRageExpectedBonusDamage"] = added
+                    baseline += added
+                elif rage_activation_round == rnd and "strengthBasedAttacks" not in event:
+                    result["unresolved"].append({"eventId": event["id"],
+                                                 "reason": "rage-strength-attack-basis-unspecified"})
+                precision = event.get("precisionHits", [])
+                if precision:
+                    mean = _class_sneak_dice(catalog, plan["classId"], granted,
+                                             level, progression)
+                    if mean is None:
+                        result["unresolved"].append({"eventId": event["id"],
+                                                     "reason": "native-sneak-attack-unverified-or-not-granted"})
+                    else:
+                        bonus = 0.0
+                        for hit in precision:
+                            idx = hit["attackIndex"]
+                            if idx >= len(chances):
+                                result["unresolved"].append({"eventId": event["id"],
+                                                             "reason": "precision-attack-index-unavailable"})
+                                continue
+                            eligible = (hit["weaponProficient"] and
+                                        hit["withinOrdinaryRange"] and not hit["targetImmune"])
+                            if eligible:
+                                bonus += chances[idx] * mean
+                        row["sneakAttackExpectedExtraDamage"] = bonus
+                        baseline += bonus
                 row["status"] = "used"
                 row["expectedDamage"] = baseline
+            elif choice == "class-bonus-action":
+                feature_id = event["featureId"]
+                option = event["option"]
+                expected = {"battle-rage": ("class-feature.barbarian.rage-level-1", "rage-resource"),
+                            "steady-aim": ("class-feature.rogue.steady-aim-level-3", "aim-for-accuracy"),
+                            "dash": ("class-feature.rogue.cunning-action-level-2", "bonus-action-choices"),
+                            "disengage": ("class-feature.rogue.cunning-action-level-2", "bonus-action-choices"),
+                            "hide": ("class-feature.rogue.cunning-action-level-2", "bonus-action-choices")}[option]
+                mechanic = (_class_feature_mechanics(catalog, plan["classId"],
+                             granted, feature_id, level, expected[1])
+                            if feature_id == expected[0] else None)
+                if mechanic is None:
+                    row["status"] = "class-bonus-feature-not-granted-or-unverified"
+                elif option == "battle-rage":
+                    spec = _rage_battle_bonus(mechanic, level, progression)
+                    if spec is None:
+                        row["status"] = "battle-rage-native-progression-unresolved"
+                    elif event["wearingHeavyArmor"]:
+                        row["status"] = "heavy-armor-prohibits-rage"
+                    elif (rage_activation_round is not None and
+                          (not event["rageEndedBeforeActivation"] or
+                           rage_activation_round >= rnd)):
+                        row["status"] = "rage-ongoing-duration-unresolved"
+                    elif rage_uses_spent >= spec[1]:
+                        row["status"] = "rage-resource-exhausted"
+                    else:
+                        rage_damage_bonus = spec[0]
+                        rage_activation_round = rnd
+                        rage_uses_spent += 1
+                        row.update(status="used", rageUsesSpent=rage_uses_spent,
+                                   battleRageBonusPerQualifyingHit=rage_damage_bonus)
+                        result["unresolved"].append({"eventId": event["id"],
+                            "reason": "rage-duration-after-activation-round-and-resistance-not-modeled"})
+                elif option == "steady-aim":
+                    if (mechanic.get("cost") != "bonus-action" or
+                            mechanic.get("advantageNextAttackCurrentTurn") is not True or
+                            mechanic.get("doesNotCreateSneakAttackEligibility") is not True or
+                            mechanic.get("requiresNotMovedThisTurn") is not True or
+                            mechanic.get("speedZeroUntilTurnEnd") is not True):
+                        row["status"] = "unverified-steady-aim-rules"
+                    elif event["movedThisTurn"]:
+                        row["status"] = "steady-aim-movement-restriction"
+                    else:
+                        steady_aim_round = rnd
+                        row.update(status="used", movementSpeedUntilTurnEnd=0,
+                                   nextAttackRollAdvantage=True)
+                elif (mechanic.get("cost") == "bonus-action" and
+                        option in mechanic.get("options", []) and
+                        set(mechanic.get("options", [])) == {"dash", "disengage", "hide"}):
+                    row.update(status="used", selectedOption=option)
+                    result["unresolved"].append({"eventId": event["id"],
+                        "reason": "cunning-action-positioning-effect-unvalued"})
+                else:
+                    row["status"] = "unverified-cunning-action-rules"
+            elif choice == "origin-bonus-action":
+                identifier = event["traitId"]
+                trait = traits.get(identifier)
+                if not trait or not unlocked(trait, level):
+                    row["status"] = "origin-bonus-not-expressed-or-level-locked"
+                elif _tactical_kind(trait) != "stone-throw":
+                    row["status"] = "unverified-origin-bonus-mechanics"
+                elif not event["rockAvailable"]:
+                    row["status"] = "missing-rock"
+                elif event["distanceFeet"] > trait["attack"]["rangeFeet"]:
+                    row["status"] = "out-of-range"
+                elif spent[identifier] >= proficiency_bonus(level):
+                    row["status"] = "origin-bonus-resource-exhausted"
+                else:
+                    spent[identifier] += 1
+                    gross = event["hitChance"] * dice_mean("1d10")
+                    row.update(status="used", expectedGrossDamage=gross,
+                               resourceOwnerTraitId=identifier)
+                    if event["targetIsCreature"]:
+                        if "condition.prone" in catalog["conditions"]:
+                            row["expectedEnemyProneApplications"] = event["hitChance"] * event["saveFailure"]
+                        else:
+                            result["unresolved"].append({"eventId": event["id"],
+                                "reason": "stone-throw-prone-condition-not-cataloged"})
             elif choice in ("breath", "searing-ignition"):
+                if steady_aim_round == rnd:
+                    row["status"] = "steady-aim-and-attack-replacement-unresolved"
+                    result["unresolved"].append({"eventId": event["id"],
+                                                 "reason": row["status"]})
+                    result["events"].append(row)
+                    continue
+                if rage_activation_round == rnd and "strengthBasedAttacks" not in event:
+                    row["status"] = "rage-attack-basis-unspecified"
+                    result["unresolved"].append({"eventId": event["id"],
+                                                 "reason": row["status"]})
+                    result["events"].append(row)
+                    continue
                 identifier = event["traitId"]
                 trait = traits.get(identifier)
                 if trait is None:
@@ -1941,6 +2214,12 @@ def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
                     continue
                 spent[identifier] += 1
                 replaced = model["perAttackExpectedDamages"][idx]
+                if rage_activation_round == rnd and event["strengthBasedAttacks"]:
+                    rage_marginal = rage_damage_bonus * sum(model["perAttackHitChances"])
+                    baseline += rage_marginal
+                    replaced += model["perAttackHitChances"][idx] * rage_damage_bonus
+                    row["battleRageExpectedBonusOnRetainedAttacks"] = (
+                        rage_marginal - model["perAttackHitChances"][idx] * rage_damage_bonus)
                 row.update({"status": "used", "grossExpectedDamage": gross,
                             "expectedDamage": baseline - replaced + gross,
                             "marginalVersusWeaponAttack": gross - replaced,
@@ -1957,6 +2236,11 @@ def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
                     else:
                         row["spellAlternativeStatus"] = "slot-not-available"
             elif choice == "spell":
+                if rage_activation_round is not None:
+                    row["status"] = ("rage-forbids-spellcasting" if rage_activation_round == rnd
+                                     else "rage-upkeep-and-spellcasting-unresolved")
+                    result["events"].append(row)
+                    continue
                 lvl = event["slotLevel"]
                 if slots.get(lvl, 0) <= 0:
                     row["status"] = "spell-slot-exhausted-or-locked"
@@ -2057,6 +2341,7 @@ def native_class_action_outcomes(profile: dict, catalog: dict, level: int,
         result["resourceExpenditure"] = {
             "originTraitUses": dict(sorted(spent.items())),
             "remainingClassSpellSlotsByLevel": slots,
+            "nativeRageUsesSpent": rage_uses_spent,
         }
         output.append(result)
     return output
@@ -2594,8 +2879,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6, 7, 8):
-        raise ValueError("suite.version must be 1 through 8")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+        raise ValueError("suite.version must be 1 through 9")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")
