@@ -88,9 +88,18 @@ public sealed record NativeSheetEarnedProgression(
 /// A reference to an already earned, source-qualified entitlement. Resolving the
 /// same grant on multiple descendants never issues or duplicates that grant.
 /// </summary>
+/// <summary>
+/// A typed reference to verified primary Class progression. Resolution does not
+/// create new levels or calculate a supernatural effect from this level.
+/// </summary>
+public enum NativeSheetLevelSource { TotalClassLevels, SpecificClassLevel }
+
+public sealed record NativeSheetLevelReference(
+    NativeSheetLevelSource Source, string? ClassId = null);
+
 public sealed record NativeSheetEarnedGrant(
     string Id, string DefinitionId, NativeOriginSourceOccurrence SourceOccurrence,
-    string AcquisitionEvidenceId);
+    string AcquisitionEvidenceId, NativeSheetLevelReference? LevelReference = null);
 
 /// <summary>
 /// Applicability is separate from earned ownership. Missing applicability is
@@ -119,11 +128,19 @@ public sealed record NativeSheetResolvedGrant(
 /// </summary>
 public interface INativeCharacterSheetAuthority
 {
+    /// <summary>Verifies the character's trusted, revision-current primary mechanics.</summary>
+    bool AuthorizesPrimary(string characterId, NativeCharacterRequest primary);
     bool AuthorizesSheet(string characterId, NativePersistentCharacterSheet sheet);
     bool AuthorizesProgression(string characterId, string ownerSheetId,
         NativeSheetEarnedProgression progression);
     bool AuthorizesGrant(string characterId, string ownerSheetId,
         NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant);
+    /// <summary>
+    /// Verifies the decision and its actual rule/DM authority in the scope of
+    /// the affected character and declaring sheet, not just a claimed rule ID.
+    /// </summary>
+    bool AuthorizesApplicability(string characterId, string sheetId,
+        NativeSheetGrantApplicability decision);
 }
 
 /// <summary>
@@ -135,4 +152,26 @@ public sealed record NativeCharacterSheetResolution(
     NativeCharacterRequest? EffectiveMechanics,
     IReadOnlyList<NativeSheetResolvedProgression> Progression,
     IReadOnlyList<NativeSheetResolvedGrant> Grants,
+    IReadOnlyList<NativeIssue> Issues);
+
+/// <summary>
+/// Only independently verified, applicable acquired grants appear here.
+/// Numeric Class progression is projected by the existing character projector;
+/// this reference carries its resolved level without inventing an effect formula.
+/// </summary>
+public sealed record NativeSheetUsableCapability(
+    NativeSheetResolvedGrant Grant,
+    NativeNumeric? ReferencedClassLevel = null);
+
+/// <summary>
+/// Read-only interpretation with provenance. BaseMechanics is an existing
+/// NativeCharacterProjector output and is not a substitute for verified
+/// form-specific Class-feature and Origin grant applicability. UsableCapabilities
+/// is the separately authorized sheet-grant view.
+/// </summary>
+public sealed record NativeCharacterSheetProjection(
+    string Status,
+    NativeCharacterProjection? BaseMechanics,
+    IReadOnlyList<NativeSheetUsableCapability> UsableCapabilities,
+    IReadOnlyList<NativeSheetResolvedGrant> InapplicableCapabilities,
     IReadOnlyList<NativeIssue> Issues);
