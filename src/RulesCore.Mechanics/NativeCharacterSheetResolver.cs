@@ -38,6 +38,16 @@ public static class NativeCharacterSheetResolver
             return Invalid();
         }
 
+        // Enforce transport/work limits before invoking user-supplied host
+        // authority callbacks or traversing an arbitrarily deep/large graph.
+        // These are safety bounds, not rules for supernatural progression.
+        if (!WithinLimits(state))
+        {
+            Issue("sheet-state-limits", "alternateSheets",
+                "Sheet, progression, grant, or override count exceeds evaluator limits.");
+            return Invalid();
+        }
+
         if (!authority.AuthorizesPrimary(state.CharacterId, state.PrimaryMechanics))
             Issue("unauthorized-primary", "character.primaryMechanics",
                 "The host did not verify the current authoritative primary mechanics.");
@@ -221,6 +231,47 @@ public static class NativeCharacterSheetResolver
         return new("resolved", mechanics,
             Array.AsReadOnly(progressionView.ToArray()),
             Array.AsReadOnly(grantView.ToArray()), []);
+    }
+
+    /// <summary>
+    /// A character can have many forms but no one request may demand unbounded
+    /// host callbacks, grant validation, or whole-graph ancestry traversal.
+    /// These bounds do not restrict native authored advancement levels.
+    /// </summary>
+    internal static bool WithinLimits(NativeCharacterState state)
+    {
+        if (state.AlternateSheets is null || state.AlternateSheets.Count > 512)
+            return false;
+        long progressionCount = 0, grantCount = 0, decisionCount = 0;
+        static bool MapSize<T>(NativeSheetMapPatch<T>? patch) =>
+            patch is null || patch.Entries?.Count <= 1024;
+        static bool CollectionSize(NativeSheetCollectionPatch<string>? patch) =>
+            patch is null || patch.Added?.Count <= 1024 &&
+                (patch.Removed?.Count ?? 0) <= 1024;
+
+        foreach (var sheet in state.AlternateSheets)
+        {
+            if (sheet is null) continue; // Report malformed sheet IDs separately.
+            progressionCount += sheet.Progression?.Count ?? 0;
+            decisionCount += sheet.GrantApplicability?.Count ?? 0;
+            if (progressionCount > 4096 || decisionCount > 16384)
+                return false;
+            var patch = sheet.Overrides;
+            if (patch is not null &&
+                (!MapSize(patch.AbilityScores) || !MapSize(patch.Skills) ||
+                 !MapSize(patch.Competencies) || !MapSize(patch.DefenseContributions) ||
+                 !MapSize(patch.CurrentResources) || !MapSize(patch.HitPointGains) ||
+                 !CollectionSize(patch.SelectedOptions) || !CollectionSize(patch.ConditionIds)))
+                return false;
+            foreach (var progression in sheet.Progression ?? [])
+            {
+                if (progression is null) continue; // Structural validation reports it.
+                grantCount += progression.Grants?.Count ?? 0;
+                if (grantCount > 16384 || progression.Choices?.Count > 1024)
+                    return false;
+            }
+        }
+        return true;
     }
 
     private static bool ValidOccurrence(NativeOriginSourceOccurrence? occurrence) =>
