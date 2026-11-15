@@ -26,6 +26,8 @@ public sealed record NativeManifestationResourceState(
 /// An explicit policy for showing one existing resource in one form. A maximum
 /// change never changes Current. Captures are numbers stored on the instance
 /// at activation; normal inheritance always reads the latest owner state.
+/// A manifestation-owned pool is visible only to its owning activation; this
+/// read-only declaration is never permission to transfer another form's balance.
 /// </summary>
 public sealed record NativeManifestationResourcePolicy(
     string ResourceId, NativeManifestationResourceMode Mode,
@@ -81,6 +83,8 @@ public sealed record NativeManifestationLedger(
 /// resource pools. End, Suppress and Restore reference an existing instance.
 /// An End step names its exact event/ending condition. An unlisted source
 /// event needs separate host verification before the form can end.
+/// Only Activate may carry a NewInstance or NewResources payload; empty
+/// NewResources on other actions is still structurally invalid.
 /// A switch is an ordered list of steps committed under one event/revision.
 /// </summary>
 public sealed record NativeManifestationTransitionStep(
@@ -98,6 +102,11 @@ public sealed record NativeManifestationTransitionRequest(
     IReadOnlyList<NativeManifestationTransitionStep> Steps,
     IReadOnlyList<NativeManifestationInteractionDecision>? ReplacementInteractions = null);
 
+/// <summary>
+/// A proposed ledger and its effective preview are both read-only planning
+/// results. Neither is a committed event or proof of persisted next revision.
+/// Failed and unresolved plans have no proposed ledger or effective preview.
+/// </summary>
 public sealed record NativeManifestationTransitionPlan(
     string Status, long ExpectedRevision, NativeManifestationLedger? Proposed,
     IReadOnlyList<NativeIssue> Issues,
