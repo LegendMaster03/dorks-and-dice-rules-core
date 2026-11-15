@@ -455,4 +455,85 @@ public sealed class NativeCharacterSheetResolverTests
         Assert.Contains(result.Issues, i => i.Code == "invalid-sheet-grant");
     }
 
+    [Fact]
+    public void ExplicitNullScalarDoesNotInheritTheParentWalkSpeed()
+    {
+        var sheet = Wolf() with
+        {
+            Overrides = new(BaseWalkSpeed: new NativeSheetValue<int?>(null))
+        };
+        var state = State([Werewolf(), sheet, Hybrid()]);
+        var wolf = Resolve(state);
+        var hybrid = Resolve(state, "hybrid");
+
+        Assert.Equal("resolved", wolf.Status);
+        Assert.Null(wolf.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(30, hybrid.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(30, state.PrimaryMechanics.BaseWalkSpeed);
+    }
+
+    [Fact]
+    public void ExplicitCollectionReplacementDoesNotRetainInheritedOptions()
+    {
+        var sheet = Wolf() with
+        {
+            Overrides = new(SelectedOptions:
+                new NativeSheetCollectionPatch<string>(true, ["option.wolf"]))
+        };
+        var result = Resolve(State([Werewolf(), sheet, Hybrid()]));
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(["option.wolf"], result.EffectiveMechanics!.SelectedOptions);
+        Assert.Equal(["option.original"], Resolve(State(), "hybrid")
+            .EffectiveMechanics!.SelectedOptions);
+    }
+
+    [Theory]
+    [InlineData("sheet-count")]
+    [InlineData("map-size")]
+    [InlineData("choice-size")]
+    public void OversizedStateFailsBeforeTrustedAuthorityCallbacks(string caseName)
+    {
+        var state = State();
+        if (caseName == "sheet-count")
+        {
+            state = state with
+            {
+                AlternateSheets = Enumerable.Range(0, 513)
+                    .Select(n => Werewolf() with { Id = "sheet." + n })
+                    .ToArray()
+            };
+        }
+        else if (caseName == "map-size")
+        {
+            var sheet = Wolf() with
+            {
+                Overrides = new(AbilityScores: new(false,
+                    Enumerable.Range(0, 1025).ToDictionary(
+                        n => "ability." + n, n => n)))
+            };
+            state = State([Werewolf(), sheet, Hybrid()]);
+        }
+        else
+        {
+            var progression = Wolf().Progression![0];
+            var sheet = Wolf() with
+            {
+                Progression =
+                [
+                    progression with
+                    {
+                        Choices = Enumerable.Range(0, 1025).ToDictionary(
+                            n => "choice." + n, n => "selection." + n)
+                    }
+                ]
+            };
+            state = State([Werewolf(), sheet, Hybrid()]);
+        }
+        var result = Resolve(state);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, issue => issue.Code is
+            "invalid-character-state" or "sheet-state-limits");
+    }
+
 }
