@@ -48,10 +48,6 @@ public static class NativeCharacterSheetResolver
             return Invalid();
         }
 
-        if (!authority.AuthorizesPrimary(state.CharacterId, state.PrimaryMechanics))
-            Issue("unauthorized-primary", "character.primaryMechanics",
-                "The host did not verify the current authoritative primary mechanics.");
-
         var byId = new Dictionary<string, NativePersistentCharacterSheet>(StringComparer.Ordinal);
         foreach (var sheet in state.AlternateSheets)
         {
@@ -100,6 +96,10 @@ public static class NativeCharacterSheetResolver
         // callback. In particular, a host is not asked to recurse into a
         // cycle while verifying sheet provenance.
         if (issues.Count != 0) return Invalid();
+
+        if (!authority.AuthorizesPrimary(state.CharacterId, state.PrimaryMechanics))
+            Issue("unauthorized-primary", "character.primaryMechanics",
+                "The host did not verify the current authoritative primary mechanics.");
 
         var seenProgression = new HashSet<string>(StringComparer.Ordinal);
         var seenGrants = new HashSet<string>(StringComparer.Ordinal);
