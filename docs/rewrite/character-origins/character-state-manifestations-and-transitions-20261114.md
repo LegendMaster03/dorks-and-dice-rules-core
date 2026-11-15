@@ -33,6 +33,8 @@ These policies never refill, clamp or spend the current quantity. A capacity red
 
 ## Projection limitation
 
+The opt-in `NativeCharacterManifestationProjector.Project` runs an authenticated effective-character request through the existing `NativeCharacterProjector` numerical kernel. Its `NativeManifestationProjectedCharacter` reports the effective source/ownership view alongside a native numerical projection. Verified alternate forms use current inherited ability scores and Class levels, but **computed Class features and Class resource pools are withheld**, and a resolved normal-form Hit Point maximum is marked unsupported pending form-specific policy. A regular primary-sheet projection retains its normal native calculated features. Catalog version mismatches remain invalid.
+
 Alternate-form outputs are always `partial`: this implementation composes verified numeric sheet characteristics and applicable persistent influences but **withholds raw current-resource values from the projected character request**, and explicitly marks complete Class-feature, Class-resource, HP and underlying Origin grant applicability unresolved. The separately verified `Resources` view is resource policy information, not a substitute for complete combat rules or all Class resources. An unmanifested sheet is never implicitly selected. No monster/statblock name can authorize a form.
 
 The `Underlying` Origin remains authoritative and the `Current` Origin compatibility field is unchanged. Permanent reconstruction continues to use its existing independent engine. Wild Shape, Polymorph and full simultaneous mechanical combination are optional later consumers.
@@ -46,6 +48,7 @@ The `Underlying` Origin remains authoritative and the `Current` Origin compatibi
 3. Primary, sheet and activation-owned resources; stable activation captures; live maximum adjustment without refilling current quantities.
 4. Active/suppressed/ended lifecycles, lack of automatic reactivation, revision and replay checks, unauthorized transitions and ownership, invalid graph/source/resource inputs.
 5. Unresolved simultaneous forms, authenticated single-form suppression, unsupported coexistence and repeated non-mutating deterministic reads.
+6. Native numerical projection of normal and active forms, with form-specific Class feature/resource withholding, class-level propagation, stale catalog rejection and source/receipt denial.
 
 Validation commands (execute in a .NET 10 environment):
 
