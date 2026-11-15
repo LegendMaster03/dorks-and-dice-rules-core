@@ -964,6 +964,16 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(red.Id, composed.ParameterSources!["damageType"]);
         Assert.Equal(bronze.Id, composed.ParameterSources["area"]);
 
+        // Save/load retains the exact composed state and its field-level
+        // source evidence; a UI does not need to replay ancestral choices.
+        var persisted = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(authoredResult.Profile));
+        var restored = Assert.Single(persisted!.Underlying.InherentGrants);
+        Assert.Equal("fire", restored.Parameters!["damageType"].GetString());
+        Assert.Equal("cone", restored.Parameters["area"].GetProperty("shape").GetString());
+        Assert.Equal(red.Id, restored.ParameterSources!["damageType"]);
+        Assert.Equal(bronze.Id, restored.ParameterSources["area"]);
+
         // Authored recombination is tied to a real canonical trait rule,
         // not a caller-supplied relationship label.
         var unrelatedRule = Evaluate(authored with
