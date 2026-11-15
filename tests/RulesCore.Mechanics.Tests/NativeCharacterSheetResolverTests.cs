@@ -57,6 +57,23 @@ public sealed class NativeCharacterSheetResolverTests
         }
     }
 
+    private sealed class NoCallbacksAuthority : INativeCharacterSheetAuthority
+    {
+        public bool AuthorizesPrimary(string characterId, NativeCharacterRequest primary) =>
+            throw new InvalidOperationException("Malformed graph reached primary authorization");
+        public bool AuthorizesSheet(string characterId, NativePersistentCharacterSheet sheet) =>
+            throw new InvalidOperationException("Malformed graph reached sheet authorization");
+        public bool AuthorizesProgression(string characterId, string ownerSheetId,
+            NativeSheetEarnedProgression progression) =>
+            throw new InvalidOperationException("Malformed graph reached progression authorization");
+        public bool AuthorizesGrant(string characterId, string ownerSheetId,
+            NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant) =>
+            throw new InvalidOperationException("Malformed graph reached grant authorization");
+        public bool AuthorizesApplicability(string characterId, string sheetId,
+            NativeSheetGrantApplicability decision) =>
+            throw new InvalidOperationException("Malformed graph reached applicability authorization");
+    }
+
     private static NativeOriginSourceReference Source(string id = "source.lycanthropy") =>
         new(NativeOriginSourceKind.Native, id, "synthetic-v1");
 
@@ -595,6 +612,20 @@ public sealed class NativeCharacterSheetResolverTests
         Assert.Contains(result.Issues, issue => issue.Code == "invalid-sheet-progression");
         Assert.Contains(result.Issues, issue => issue.Code == "invalid-sheet-grant");
         Assert.Contains(result.Issues, issue => issue.Code == "invalid-grant-applicability");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void InvalidSheetGraphNeverReachesAuthorityCallbacks(bool cycle)
+    {
+        var wolf = Wolf() with { ParentId = cycle ? "wolf" : "missing-parent" };
+        var state = State([Werewolf(), wolf, Hybrid()]);
+        var result = NativeCharacterSheetResolver.Resolve(
+            state, "wolf", new NoCallbacksAuthority());
+        Assert.Equal("invalid", result.Status);
+        Assert.Contains(result.Issues, issue => issue.Code ==
+            (cycle ? "sheet-inheritance-cycle" : "invalid-sheet-parent"));
     }
 
 }
