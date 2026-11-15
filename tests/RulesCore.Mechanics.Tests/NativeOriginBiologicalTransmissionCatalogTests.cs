@@ -79,7 +79,7 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
         var actual = Assert.Single(outcome.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == traitId);
         Assert.Equal(inheritable.Identity, actual.Identity);
-        Assert.Equal([inheritable.Id], actual.SourceCandidateIds);
+        Assert.Equal(new[] { inheritable.Id }, actual.SourceCandidateIds);
         Assert.Equal(NativeOriginAdjudication.Supported,
             actual.Authorization!.Adjudication);
         Assert.Equal("rule.creature-origination",
@@ -138,8 +138,7 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
     public void BiologicalTraitAuthoringMustRemainExplicitAndSourceNeutral()
     {
         var catalog = Catalog();
-        var types = catalog.Items.Where(x => x.Category == "species").ToArray();
-        Assert.Equal(9, types.Length);
+        Assert.Equal(9, catalog.CountByCategory("species"));
 
         foreach (var id in new[]
         {
