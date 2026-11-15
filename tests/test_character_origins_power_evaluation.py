@@ -301,7 +301,7 @@ class PowerEvaluationTests(unittest.TestCase):
         result = power.evaluate(profile, self.catalog, 1)
         self.assertIn({"traitId": "trait.test.partial",
                        "reason": "unmodeled-effect-fields",
-                       "fields": ["savingThrows", "spell"]}, result["unmodeled"])
+                       "fields": ["spell"]}, result["unmodeled"])
 
     def test_all_fixture_presets_run_all_six_breakpoints(self):
         sources = power.terminal_sources(self.catalog)
@@ -319,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(10, len(suite["contexts"]))
+        self.assertEqual(13, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -361,7 +361,7 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(10, result["scenarioCount"])
+        self.assertEqual(13, result["scenarioCount"])
 
     def test_suite_paired_comparison_is_per_context_and_level(self):
         result = power.evaluate_scenario_suite(
@@ -391,7 +391,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 2
+        bad["version"] = 3
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -407,8 +407,161 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(10, result["scenarioCount"])
+        self.assertEqual(13, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
+
+
+    def test_poison_save_advantage_and_resistance_apply_to_one_packet(self):
+        traits = {"dwarf-resilience": {"savingThrows": {"advantageAgainst": ["poison-effects"]},
+                                      "damageResistance": {"poison": 50}}}
+        profile = self.profile("species.dwarf")
+        profile["traits"].update(traits)
+        event = {"saveEvents": [{"id": "poison", "ability": "constitution",
+                                 "tags": ["poison-effects"], "magical": True,
+                                 "baseSuccess": 0.5, "damageType": "poison",
+                                 "damageOnFailure": 20, "damageOnSuccess": 10}]}
+        result = power.evaluate(profile, self.catalog, 1, event)
+        self.assertAlmostEqual(0.25, result["metrics"]["saving_throw_success_delta"])
+        self.assertAlmostEqual(8.75, result["metrics"]["saving_throw_damage_prevented"])
+        self.assertAlmostEqual(6.25, result["savingThrowEventTrace"][0]["expectedDamageAfterOrigin"])
+        self.assertIn("dwarf-resilience", result["modeledTraits"])
+
+    def test_magic_only_mental_advantage_and_fey_charm_are_separate(self):
+        profile = self.profile("species.elf")
+        profile["traits"] = {
+            "cunning": {"savingThrows": {"advantageAbilities": ["intelligence", "wisdom", "charisma"],
+                                          "scope": "magic-only"}},
+            "fey": {"savingThrows": {"advantageAgainst": ["condition.charmed"]}},
+        }
+        event = {"saveEvents": [
+            {"id": "magic", "ability": "wisdom", "magical": True,
+             "tags": ["condition.charmed"], "baseSuccess": 0.5,
+             "conditionOnFailure": "condition.charmed"},
+            {"id": "mundane", "ability": "wisdom", "magical": False,
+             "tags": [], "baseSuccess": 0.5, "conditionOnFailure": "condition.frightened"},
+        ]}
+        result = power.evaluate(profile, self.catalog, 1, event)
+        self.assertAlmostEqual(0.25, result["metrics"]["saving_throw_conditions_avoided"])
+        self.assertEqual([0.75, 0.5], [x["effectiveSuccessChance"]
+                                         for x in result["savingThrowEventTrace"]])
+        self.assertEqual(2, len(result["savingThrowEventTrace"][0]["advantageSources"]))
+
+    def test_capped_reductions_and_one_reaction_per_round(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"] = {"stone": {"id": "stones-endurance",
+                                       "damageReduction": {"dice": "1d12",
+                                                           "addAbilityModifier": "constitution",
+                                                           "appliesTo": "triggering-damage"},
+                                       "activation": {"action": "reaction",
+                                                      "trigger": "when-you-take-damage"},
+                                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}}
+        event = {"abilityModifiers": {"constitution": 3}, "reactionDamageEvents": [
+            {"id": "small", "round": 1, "amount": 4, "damageType": "slashing",
+             "isAttackHit": True, "attackerVisible": True, "reactionAvailable": True},
+            {"id": "large", "round": 1, "amount": 20, "damageType": "slashing",
+             "isAttackHit": True, "attackerVisible": True, "reactionAvailable": True},
+            {"id": "next", "round": 2, "amount": 20, "damageType": "fire",
+             "isAttackHit": False, "attackerVisible": False, "reactionAvailable": True},
+        ]}
+        result = power.evaluate(profile, self.catalog, 1, event)
+        self.assertAlmostEqual(19, result["metrics"]["reaction_damage_prevented"])
+        self.assertEqual(2, result["metrics"]["reaction_uses_selected"])
+        self.assertEqual([None, "stone", "stone"],
+                         [x["selectedDefense"] for x in result["reactionEventTrace"]])
+        self.assertEqual(4, power._damage_reduction_expectation("1d12", 3, 4))
+
+    def test_cloudy_escape_responds_to_visible_attack_not_nonattack_damage(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"] = {"cloud": {
+            "id": "cloudy-escape", "activation": {"action": "reaction",
+            "trigger": "visible-creature-hits-you-with-an-attack-roll"},
+            "damageResistance": {"percent": 50, "scope": "triggering-attack",
+                                 "duration": "triggering-attack-only",
+                                 "stacking": "existing-resistance-rules"},
+            "teleport": {"maximumDistanceFeet": 30},
+            "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}}
+        event = {"reactionDamageEvents": [
+            {"id": "attack", "round": 1, "amount": 20, "damageType": "slashing",
+             "isAttackHit": True, "attackerVisible": True, "reactionAvailable": True},
+            {"id": "invisible", "round": 2, "amount": 20, "damageType": "slashing",
+             "isAttackHit": True, "attackerVisible": False, "reactionAvailable": True},
+            {"id": "spell", "round": 3, "amount": 20, "damageType": "fire",
+             "isAttackHit": False, "attackerVisible": True, "reactionAvailable": True}]}
+        result = power.evaluate(profile, self.catalog, 1, event)
+        self.assertEqual(10, result["metrics"]["reaction_damage_prevented"])
+        self.assertEqual("cloud", result["reactionEventTrace"][0]["selectedDefense"])
+        self.assertTrue(any(x.get("traitId") == "cloud" and "teleport" in x.get("fields", [])
+                            for x in result["unmodeled"]))
+
+    def test_native_shared_pool_frontier_does_not_duplicate_stone_charges(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"] = {
+            "stone": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus"},
+                      "damageReduction": {"dice": "1d12"}},
+            "strike": {"id": "stone-strike", "sharedUsesFromTrait": "stones-endurance",
+                       "extraDamage": {"dice": "1d6"}, "onFailedSave": {"pushFeet": 10}}}
+        result = power.evaluate(profile, self.catalog, 1, {})
+        self.assertEqual(1, len(result["sharedResourceFrontiers"]))
+        self.assertEqual([0, 1, 2], [x["defensiveUses"]
+                                         for x in result["sharedResourceFrontiers"][0]["frontier"]])
+        self.assertEqual("stone", result["sharedResourceFrontiers"][0]["baseTraitId"])
+
+    def test_invalid_save_and_reaction_event_contracts_are_rejected(self):
+        bad = [
+            {"saveEvents": [{"id": "s", "ability": "wisdom", "baseSuccess": 1.1,
+                             "conditionOnFailure": "condition.charmed"}]},
+            {"saveEvents": [{"id": "s", "ability": "wisdom", "baseSuccess": 0.5,
+                             "damageOnFailure": 20, "damageType": "fire"}]},
+            {"saveEvents": [{"id": "x", "ability": "wisdom", "baseSuccess": 0.5,
+                             "conditionOnFailure": "condition.charmed",
+                             "baseSucces": 0.9}]},
+            {"reactionDamageEvents": [{"id": "x", "round": 0, "amount": 20,
+                                       "damageType": "fire", "isAttackHit": True,
+                                       "attackerVisible": True, "reactionAvailable": True}]},
+            {"reactionDamageEvents": [{"id": "x", "round": 1, "amount": 20,
+                                       "damageType": "fire", "isAttackHit": True,
+                                       "attackerVisible": True}]},
+            {"reactionDamageEvents": [{"id": "x", "round": 1, "amount": 20,
+                                       "damageType": "fire", "isAttackHit": True,
+                                       "attackerVisible": True, "reactionAvailable": True},
+                                      {"id": "x", "round": 2, "amount": 20,
+                                       "damageType": "fire", "isAttackHit": True,
+                                       "attackerVisible": True, "reactionAvailable": True}]},
+        ]
+        for event in bad:
+            with self.subTest(event=event), self.assertRaises(ValueError):
+                power.validate_scenario(event)
+
+    def test_existing_passive_resistance_with_reduction_remains_unresolved(self):
+        profile = self.profile("species.dwarf")
+        profile["traits"] = {
+            "resistance": {"damageResistance": {"fire": 50}},
+            "stone": {"id": "stones-endurance",
+                      "damageReduction": {"dice": "1d12",
+                                          "addAbilityModifier": "constitution",
+                                          "appliesTo": "triggering-damage"},
+                      "activation": {"action": "reaction", "trigger": "when-you-take-damage"},
+                      "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}},
+        }
+        scene = {"reactionDamageEvents": [{"id": "fire", "round": 1, "amount": 20,
+                                            "damageType": "fire", "isAttackHit": True,
+                                            "attackerVisible": True, "reactionAvailable": True}]}
+        result = power.evaluate(profile, self.catalog, 1, scene)
+        self.assertEqual(0, result["metrics"]["reaction_damage_prevented"])
+        self.assertIn({"traitId": "stone", "reason": "resistance-and-reduction-order-unresolved"},
+                      result["unmodeled"])
+
+    def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
+        suite = self.scenario_suite()
+        self.assertEqual(2, suite["version"])
+        self.assertEqual(13, len(suite["contexts"]))
+        self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
+        result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
+        self.assertEqual(13, result["scenarioCount"])
+        names = {x["id"]: x["profiles"][0]["levels"][0]
+                 for x in result["contexts"]}
+        self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
+        self.assertIn("reactionEventTrace", names["heavy-hit-reaction-windows"])
 
 
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
@@ -437,7 +590,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(10, result["scenarioCount"])
+        self.assertEqual(13, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -483,6 +636,32 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
                                    movement))
         self.assertEqual(3, metric("travel-concentrated-gates", "ancestry.dragonborn.amethyst", 3,
                                    movement))
+
+
+    def test_native_save_and_defensive_reaction_contrasts(self):
+        """Match scenario outputs to authored Dwarf, Gnome, Stone and Cloud traits."""
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        suite = json.loads((Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
+                           .read_text(encoding="utf-8"))
+        sources = ["ancestry.dwarf.hill", "ancestry.gnome.forest",
+                   "ancestry.goliath.stone", "ancestry.goliath.cloud"]
+        outcomes = power.evaluate_scenario_suite(catalog, suite, sources)
+        lookup = {c["id"]: {p["id"]: p["levels"] for p in c["profiles"]}
+                  for c in outcomes["contexts"]}
+        poison = lookup["poison-saves-and-resistance"]["ancestry.dwarf.hill"][0]
+        self.assertAlmostEqual(0.25, poison["metrics"]["saving_throw_success_delta"])
+        self.assertAlmostEqual(8.75, poison["metrics"]["saving_throw_damage_prevented"])
+        magic = lookup["mental-magic-and-control"]["ancestry.gnome.forest"][0]
+        self.assertAlmostEqual(0.25, magic["metrics"]["saving_throw_success_delta"])
+        reactions = lookup["heavy-hit-reaction-windows"]
+        stone = reactions["ancestry.goliath.stone"][0]
+        self.assertAlmostEqual(19, stone["metrics"]["reaction_damage_prevented"])
+        self.assertEqual(3, len(stone["sharedResourceFrontiers"][0]["frontier"]))
+        cloud = reactions["ancestry.goliath.cloud"]
+        self.assertEqual(0, cloud[0]["metrics"]["reaction_damage_prevented"])
+        self.assertAlmostEqual(20, cloud[2]["metrics"]["reaction_damage_prevented"])
+        self.assertTrue(any("teleport" in row.get("fields", [])
+                            for row in cloud[2]["unmodeled"]))
 
 
 if __name__ == "__main__":

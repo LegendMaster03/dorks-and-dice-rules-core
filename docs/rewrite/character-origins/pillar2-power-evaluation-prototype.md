@@ -31,7 +31,7 @@ For a different assumption set, pass `--scenario path/to/fixture.json`. The file
 | `maximum_hit_points_added` | Per-character-level intrinsic toughness grants | No healing, death or survival simulation |
 | `additional_skill_ranks_entitled` | Level-1 and subsequent rank entitlements | Actual legal distribution, rank caps, and skill use not priced |
 | `additional_expected_skill_successes` | Skill bonuses on declared interior-threshold d20 checks | Not a complete competency system; no double-counting Perception composites |
-| `incoming_damage_prevented` | Nonstacking passive typed damage resistance on declared packets | Saving throw changes, temporary immunity, reactions, other defenses unmodeled |
+| `incoming_damage_prevented` | Nonstacking passive typed damage resistance on independent declared packets | Save-based damage and supported reaction defenses have separate endpoints; immunity, other defenses unresolved |
 | `condition_expected_success_delta` | Known structured additive roll penalties, with explicit exposure frequency | Only declared rolls and supported condition effects; context assumed |
 | `breath_expected_net_damage_delta` | Area-targeted, proficiency-limited Attack-replacement breath attacks, with chosen opportunities | No geometry solver, rounding, friendly fire or full class action economy; damage multipliers are scenario assumptions |
 | `breath_uses_selected` | Chosen positive-margin opportunities within one long-rest pool | Assumes sufficient distinct legal attack opportunities; no unmodeled competing uses |
@@ -58,7 +58,7 @@ The selected **Dwarf–Rock Gnome Tremorsense** consolidation is a precise test 
 
 1. Run the full native-catalog integration suite and audit every unsupported effect field; the isolated regression fixtures do not substitute for complete content coverage. The real native conditions catalog is stored under `conditions`, not `entries`; both shapes are supported and an empty catalog fails closed.
 2. Resolve exact source-bound spell and feat choices through trusted native mechanisms, then compare their effects on representative class builds.
-3. Add combat traces with saving throws, reactions, initiative, positioning, action contention, allied targets, short-rest boundaries, and end-of-day resources. Currently only the Breath Weapon's opportunity selections are traced.
+3. Expand the new save-event and defensive-reaction traces into combat with initiative, positioning, action contention, allied targets, short-rest boundaries, and end-of-day resources. Breath Weapon opportunity selection is still a separate optimistic model.
 4. Extend movement access into controlled geometry, timed hazards, creature-type targeting, party assistance, and alternative solutions. The existing mobility gates explicitly measure *one Origin's movement capability*, not full task success.
 5. Expand the scenario corpus and replay all selectable paths at levels 1, 3, 4, 5, 11, 17. Report scenario sensitivity, prevalence, and uncertainty before comparing complete Species.
 6. Use the resulting measurements to tune **editable** native Species/Ancestries and only then investigate whether biological inheritance burden can be mapped to the measured power vector.
@@ -68,7 +68,7 @@ No source of this prototype is a normative balance rule or authorization to modi
 ## Versioned multi-context sensitivity suite (research increment)
 
 The repository's checked-in `tests/fixtures/pillar2-power-scenarios.json` is a
-**ten-context diagnostic corpus**, not a statistically sampled campaign. It
+**thirteen-context diagnostic corpus (version 2)**, not a statistically sampled campaign. It
 exercises line versus cone opportunities, Fire and Poison resistance exposure,
 unprotected versus protected Drow sunlight, connected stone/earth detection,
 separated versus concentrated flight windows, and eligible native skill checks.
@@ -108,9 +108,48 @@ intended sensitivity demonstrations, **not** findings that any conventional
 Species is balanced or unbalanced overall.
 
 **Known limitations for the next increment:** The corpus still does not
-supply randomized encounters or observed prevalence, a combat action-state
-simulator, spell/feat choice resolution, saving-throw advantage modeling,
+supply randomized encounters or observed prevalence, a complete combat action-state
+simulator, spell/feat choice resolution,
 initiative and ally geometry, creature-type targeting, or a complete native
 mechanics interpreter. Unsupported effects are listed rather than silently
 priced at zero. The native integration suite tests every terminal preset
 against every context when the complete repository checkout is present.
+
+## Saving throws, defensive reactions, and shared pools (research increment)
+
+Version 2 of the diagnostic suite adds three contexts: a damage-bearing Poison
+save, magical mental/charm saves, and an incoming-hit reaction schedule.
+The new `saveEvents` objects require `id`, `ability`, and `baseSuccess`.
+Authored `savingThrows.advantageAgainst` tags and `advantageAbilities` with
+`scope: magic-only` modify a matching success probability using
+`1 - (1 - p)^2`, without counting multiple advantage sources twice. A save
+may have `conditionOnFailure`, or conditional `damageOnFailure`,
+`damageOnSuccess`, and `damageType`. Damage resistance on the same packet
+is applied only once after expected save damage. These save packets are
+**separate** from `incomingDamage`; they are not added twice. The reported
+endpoints are chance of success gained, expected damage prevented relative
+to the unmodified saving throw, and expected on-failure condition
+applications avoided. Conditions of different severity are not equivalent.
+
+`reactionDamageEvents` require a unique `id`, a `round`, `amount`,
+`damageType`, `isAttackHit`, `attackerVisible`, and `reactionAvailable`.
+The model currently supports the exact authored Stone's Endurance
+single-die damage reduction and Cloudy Escape's attack-specific 50% resistance,
+with Proficiency Bonus uses per Long Rest. It considers at most one reaction
+per round and selects the highest mitigation across all declared rounds
+using perfect knowledge. This is an optimistic **resource frontier**, not a
+player prediction. Stone's reduction is capped per hit using exact die
+enumeration; a small hit does not receive an imaginary 9.5 prevention.
+Cloudy's separate teleport effect remains unmodeled. Damage-reduction
+ordering with an already matching passive resistance is explicitly unresolved
+and excluded from the selected reaction value.
+
+`sharedResourceFrontiers` exposes verified Stone's Endurance / Stone Strike
+links as conditional, theoretical defensive-use versus on-hit offense options
+from **one pool**. It does not add the two full PB resource pools or count
+the offense and defense endpoints as simultaneously realizable. Other native
+shared pools and alternative attack effects remain pending.
+
+These measurements remain endpoint-specific diagnostics. A successful charm
+save, a damage-prevention reaction, and one extra damage die are not converted
+into a universal Species power score.

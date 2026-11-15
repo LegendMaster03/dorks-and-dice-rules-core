@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from collections import defaultdict
+from functools import lru_cache
 import copy
 import json
 import math
@@ -35,6 +36,9 @@ DEFAULT_SCENARIO = {
     "rolls": {"attack-roll": 8, "skill.search": 2, "skill.spot": 2},
     "conditionFrequency": {"condition.dazzled": 0.5},
     "damageTypeMultiplier": {},
+    "abilityModifiers": {"constitution": 3},
+    "saveEvents": [],
+    "reactionDamageEvents": [],
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -113,6 +117,13 @@ def validate_scenario(scenario: dict) -> None:
     if "attackReplacementExpectedDamage" in scenario:
         _number(scenario["attackReplacementExpectedDamage"],
                 "attackReplacementExpectedDamage")
+    ability_modifiers = scenario.get("abilityModifiers", {})
+    if not isinstance(ability_modifiers, dict):
+        raise ValueError("abilityModifiers must be an object")
+    for ability, modifier in ability_modifiers.items():
+        _nonempty(ability, "abilityModifiers key")
+        if isinstance(modifier, bool) or not isinstance(modifier, int) or abs(modifier) > 30:
+            raise ValueError(f"abilityModifiers.{ability} must be an integer from -30 to 30")
     for field in ("skillChecks", "rolls"):
         obj = scenario.get(field, {})
         if not isinstance(obj, dict):
@@ -130,8 +141,8 @@ def validate_scenario(scenario: dict) -> None:
                 _probability(value, f"{field}.{name}")
             else:
                 _number(value, f"{field}.{name}")
-    for field in ("incomingDamage", "breathOpportunities",
-                  "tremorsenseContacts", "mobilityChallenges"):
+    for field in ("incomingDamage", "breathOpportunities", "saveEvents",
+                  "reactionDamageEvents", "tremorsenseContacts", "mobilityChallenges"):
         events = scenario.get(field, [])
         if not isinstance(events, list):
             raise ValueError(f"{field} must be an array")
@@ -155,6 +166,47 @@ def validate_scenario(scenario: dict) -> None:
                 if "attackReplacementExpectedDamage" in event:
                     _number(event["attackReplacementExpectedDamage"],
                             f"{location}.attackReplacementExpectedDamage")
+            elif field == "saveEvents":
+                extra = set(event) - {
+                    "id", "ability", "tags", "magical", "baseSuccess",
+                    "conditionOnFailure", "damageOnFailure", "damageOnSuccess", "damageType"}
+                if extra:
+                    raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
+                _nonempty(event.get("id"), f"{location}.id")
+                _nonempty(event.get("ability"), f"{location}.ability")
+                _probability(event.get("baseSuccess"), f"{location}.baseSuccess")
+                tags = event.get("tags", [])
+                if not isinstance(tags, list) or any(
+                        not isinstance(t, str) or not t.strip() for t in tags):
+                    raise ValueError(f"{location}.tags must be an array of nonempty strings")
+                if "magical" in event and not isinstance(event["magical"], bool):
+                    raise ValueError(f"{location}.magical must be boolean")
+                if "conditionOnFailure" in event:
+                    _nonempty(event["conditionOnFailure"], f"{location}.conditionOnFailure")
+                damaged = "damageOnFailure" in event or "damageOnSuccess" in event
+                if damaged:
+                    _number(event.get("damageOnFailure"), f"{location}.damageOnFailure")
+                    _number(event.get("damageOnSuccess"), f"{location}.damageOnSuccess")
+                    _nonempty(event.get("damageType"), f"{location}.damageType")
+                if "damageType" in event and not damaged:
+                    raise ValueError(f"{location}.damageType requires damage amounts")
+                if not damaged and "conditionOnFailure" not in event:
+                    raise ValueError(f"{location} requires a damage or condition outcome")
+            elif field == "reactionDamageEvents":
+                extra = set(event) - {
+                    "id", "round", "amount", "damageType", "isAttackHit",
+                    "attackerVisible", "reactionAvailable"}
+                if extra:
+                    raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
+                _nonempty(event.get("id"), f"{location}.id")
+                _count(event.get("round"), f"{location}.round")
+                if event["round"] < 1:
+                    raise ValueError(f"{location}.round must be >= 1")
+                _number(event.get("amount"), f"{location}.amount")
+                _nonempty(event.get("damageType"), f"{location}.damageType")
+                for flag in ("isAttackHit", "attackerVisible", "reactionAvailable"):
+                    if flag not in event or not isinstance(event[flag], bool):
+                        raise ValueError(f"{location}.{flag} must be boolean")
             elif field == "tremorsenseContacts":
                 _number(event.get("distanceFeet"), f"{location}.distanceFeet")
                 for key in ("sensorTouches", "targetTouches"):
@@ -184,6 +236,11 @@ def validate_scenario(scenario: dict) -> None:
                         raise ValueError(f"{location}.{key} must be boolean")
                 if event["mode"] == "burrow" and "material" not in event:
                     raise ValueError(f"{location}.material required for burrow")
+            if field in ("saveEvents", "reactionDamageEvents"):
+                identifier = event["id"]
+                if identifier in seen_ids:
+                    raise ValueError(f"Duplicate {field} event ID: {identifier}")
+                seen_ids.add(identifier)
 
 
 def load_native(native: Path) -> dict:
@@ -295,6 +352,207 @@ def _resistance(trait: dict, intrinsics: dict) -> dict[str, float]:
         return {damage_type: resistance["percent"] / 100} if damage_type else {}
     return {type_: percent / 100 for type_, percent in resistance.items()
             if isinstance(percent, (float, int))}
+
+
+def _save_advantage_sources(traits: dict, event: dict, level: int) -> tuple[list[str], list[str]]:
+    """Match only authored saving-throw advantage categories and their scope.
+
+    Unknown savingThrows shapes are explicitly reported rather than considered
+    inapplicable. Advantage from multiple sources is not stacked.
+    """
+    matching, unsupported = [], []
+    for identifier, trait in traits.items():
+        if not unlocked(trait, level) or "savingThrows" not in trait:
+            continue
+        spec = trait["savingThrows"]
+        if not isinstance(spec, dict) or set(spec) - {
+                "advantageAgainst", "advantageAbilities", "scope"}:
+            unsupported.append(identifier)
+            continue
+        if not isinstance(spec.get("advantageAgainst", []), list) or not isinstance(
+                spec.get("advantageAbilities", []), list):
+            unsupported.append(identifier)
+            continue
+        if spec.get("scope") not in (None, "magic-only"):
+            unsupported.append(identifier)
+            continue
+        tags = set(event.get("tags", []))
+        against = bool(tags.intersection(spec.get("advantageAgainst", [])))
+        ability = (event["ability"] in spec.get("advantageAbilities", [])
+                   and (spec.get("scope") is None or event.get("magical", False)))
+        if against or ability:
+            matching.append(identifier)
+    return matching, unsupported
+
+
+def saving_throw_outcomes(traits: dict, level: int, scenario: dict,
+                          resistances: dict[str, float]) -> tuple[dict[str, float], list[dict], list[dict]]:
+    """Compare exactly the same event under baseline versus expressed grants.
+
+    damageOnSuccess and damageOnFailure are already the conditional amounts.
+    The damage-resistance calculation occurs once, after save expectations;
+    the independent incomingDamage packets are not reused here.
+    """
+    values = {"saving_throw_success_delta": 0.0,
+              "saving_throw_damage_prevented": 0.0,
+              "saving_throw_conditions_avoided": 0.0}
+    trace, issues = [], []
+    for event in scenario.get("saveEvents", []):
+        matches, unsupported = _save_advantage_sources(traits, event, level)
+        for identifier in unsupported:
+            issue = {"traitId": identifier, "reason": "unsupported-saving-throw-shape"}
+            if issue not in issues:
+                issues.append(issue)
+        p = event["baseSuccess"]
+        effective = 1 - (1 - p) ** 2 if matches else p
+        values["saving_throw_success_delta"] += effective - p
+        condition = event.get("conditionOnFailure")
+        if condition:
+            values["saving_throw_conditions_avoided"] += effective - p
+        base_damage = actual_damage = 0.0
+        if "damageOnFailure" in event:
+            base_damage = (p * event["damageOnSuccess"] +
+                           (1 - p) * event["damageOnFailure"])
+            retained = 1 - resistances.get(event["damageType"], 0)
+            actual_damage = (effective * event["damageOnSuccess"] +
+                             (1 - effective) * event["damageOnFailure"]) * retained
+            values["saving_throw_damage_prevented"] += base_damage - actual_damage
+        trace.append({"id": event["id"], "advantageSources": matches,
+                      "baselineSuccessChance": p, "effectiveSuccessChance": effective,
+                      "expectedBaselineDamage": base_damage,
+                      "expectedDamageAfterOrigin": actual_damage,
+                      "conditionOnFailure": condition})
+    return values, trace, issues
+
+
+def _damage_reduction_expectation(dice: str, modifier: int, amount: float) -> float:
+    """Exact expectation of capped single-die reduction, not min(mean, hit)."""
+    match = re.fullmatch(r"1d(\d+)", dice)
+    if not match or int(match[1]) <= 0:
+        raise ValueError("Unsupported reduction dice")
+    faces = int(match[1])
+    return sum(min(amount, max(0, face + modifier))
+               for face in range(1, faces + 1)) / faces
+
+
+def _reaction_defenses(traits: dict, level: int, pb: int) -> list[dict]:
+    """Recognize narrowly specified native defensive reactions only."""
+    results = []
+    for identifier, trait in sorted(traits.items()):
+        if not unlocked(trait, level):
+            continue
+        activation = trait.get("activation")
+        uses = trait.get("uses")
+        if not isinstance(activation, dict) or activation.get("action") != "reaction":
+            continue
+        if not isinstance(uses, dict) or uses.get("recharge") != "long-rest":
+            continue
+        value = uses.get("value")
+        charges = pb if value == "proficiency-bonus" else value
+        if isinstance(charges, bool) or not isinstance(charges, int) or charges < 0:
+            continue
+        reduction = trait.get("damageReduction")
+        resist = trait.get("damageResistance")
+        if (activation.get("trigger") == "when-you-take-damage" and
+                isinstance(reduction, dict) and reduction.get("appliesTo") == "triggering-damage" and
+                re.fullmatch(r"1d\d+", str(reduction.get("dice"))) and
+                reduction.get("addAbilityModifier") in (None, "constitution")):
+            results.append({"traitId": identifier, "kind": "damage-reduction",
+                            "charges": charges, "dice": reduction["dice"],
+                            "ability": reduction.get("addAbilityModifier")})
+        elif (activation.get("trigger") == "visible-creature-hits-you-with-an-attack-roll" and
+              isinstance(resist, dict) and resist.get("percent") == 50 and
+              resist.get("scope") == "triggering-attack" and
+              resist.get("stacking") == "existing-resistance-rules"):
+            results.append({"traitId": identifier, "kind": "attack-resistance",
+                            "charges": charges, "fraction": 0.5})
+    return results
+
+
+def reaction_damage_outcomes(traits: dict, level: int, pb: int,
+                             scenario: dict, resistances: dict[str, float]) -> tuple[float, list[dict], list[str]]:
+    """Optimistic best-informed allocation of reactions to actual packet sizes.
+
+    A character has at most one reaction per round. Multiple distinct pools
+    compete for that reaction; no number of source occurrences grants extra
+    charges. This is a best-informed frontier, not a player-decision forecast.
+    """
+    events = scenario.get("reactionDamageEvents", [])
+    defenses = _reaction_defenses(traits, level, pb)
+    # Retain the trace even when no reaction ability exists.
+    trace = [{"id": e["id"], "round": e["round"], "selectedDefense": None,
+              "expectedReactionPrevention": 0.0} for e in events]
+    if not events or not defenses:
+        return 0.0, trace, []
+    rounds = sorted({e["round"] for e in events})
+    by_round = [[i for i, e in enumerate(events) if e["round"] == r]
+                for r in rounds]
+    choices = []
+    issues = set()
+    for indices in by_round:
+        choices_here = [(None, None, 0.0)]
+        for index in indices:
+            event = events[index]
+            if not event["reactionAvailable"] or event["amount"] <= 0:
+                continue
+            for number, defense in enumerate(defenses):
+                if defense["kind"] == "damage-reduction":
+                    # Combined resistance plus a damage-reduction reaction
+                    # needs an explicitly defined ordering rule.
+                    if resistances.get(event["damageType"], 0):
+                        issues.add(defense["traitId"])
+                        continue
+                    mod = scenario.get("abilityModifiers", {}).get(defense["ability"], 0)
+                    value = _damage_reduction_expectation(defense["dice"], mod,
+                                                          event["amount"])
+                else:
+                    if not event["isAttackHit"] or not event["attackerVisible"]:
+                        continue
+                    base = resistances.get(event["damageType"], 0)
+                    value = event["amount"] * max(0, defense["fraction"] - base)
+                if value > 0:
+                    choices_here.append((index, number, value))
+        choices.append(choices_here)
+
+    @lru_cache(maxsize=None)
+    def solve(position: int, remaining: tuple[int, ...]) -> tuple[float, tuple[tuple[int, int, float], ...]]:
+        if position == len(choices):
+            return 0.0, ()
+        best_value, best_plan = solve(position + 1, remaining)
+        for index, number, value in choices[position][1:]:
+            if remaining[number] <= 0:
+                continue
+            reduced = list(remaining)
+            reduced[number] -= 1
+            downstream, plan = solve(position + 1, tuple(reduced))
+            if value + downstream > best_value + 1e-10:
+                best_value = value + downstream
+                best_plan = ((index, number, value),) + plan
+        return best_value, best_plan
+
+    total, plan = solve(0, tuple(d["charges"] for d in defenses))
+    for event_index, defense_index, prevented in plan:
+        trace[event_index]["selectedDefense"] = defenses[defense_index]["traitId"]
+        trace[event_index]["expectedReactionPrevention"] = prevented
+    return total, trace, sorted(issues)
+
+
+def native_shared_pool_frontiers(traits: dict, level: int) -> list[dict]:
+    """Expose only defense/strike links that match the conservative frontier."""
+    frontiers = []
+    for alternative_id, alternative in traits.items():
+        if not unlocked(alternative, level) or "sharedUsesFromTrait" not in alternative:
+            continue
+        for base_id, base in traits.items():
+            if (not unlocked(base, level) or
+                    alternative["sharedUsesFromTrait"] != base.get("id") or
+                    "damageReduction" not in base or "extraDamage" not in alternative):
+                continue
+            frontiers.append({"baseTraitId": base_id,
+                              "alternativeTraitId": alternative_id,
+                              "description": "optimistic fully eligible triggers; on-hit damage; one shared pool",
+                              "frontier": shared_pool_frontier(base, alternative, level)})
+    return frontiers
 
 
 def _breath_damage(trait: dict, intrinsics: dict, level: int,
@@ -508,6 +766,9 @@ def evaluate(profile: dict, catalog: dict, level: int,
     breath = []
     breath_events = []
     modeled_movement = {opt["source"] for opt in _movement_options(profile, level, pb)}
+    modeled_reactions = {d["traitId"] for d in _reaction_defenses(traits, level, pb)}
+    shared_frontiers = native_shared_pool_frontiers(traits, level)
+    modeled_shared_links = {f["alternativeTraitId"] for f in shared_frontiers}
     for identifier, trait in traits.items():
         if not unlocked(trait, level):
             future.append(identifier)
@@ -533,9 +794,28 @@ def evaluate(profile: dict, catalog: dict, level: int,
             values = _resistance(trait, intrinsics)
             for type_, factor in values.items():
                 resistances[type_] = max(resistances.get(type_, 0), factor)
-            recognized = bool(values)
             if values:
+                recognized = True
                 interpreted.add("damageResistance")
+        if "savingThrows" in trait:
+            spec = trait["savingThrows"]
+            if (isinstance(spec, dict) and
+                    not set(spec) - {"advantageAgainst", "advantageAbilities", "scope"} and
+                    isinstance(spec.get("advantageAgainst", []), list) and
+                    isinstance(spec.get("advantageAbilities", []), list) and
+                    spec.get("scope") in (None, "magic-only")):
+                recognized = True
+                interpreted.add("savingThrows")
+        if identifier in modeled_reactions:
+            recognized = True
+            interpreted.update(("activation", "uses"))
+            if "damageReduction" in trait:
+                interpreted.add("damageReduction")
+            elif "damageResistance" in trait:
+                interpreted.add("damageResistance")
+        if identifier in modeled_shared_links:
+            recognized = True
+            interpreted.update(("sharedUsesFromTrait", "extraDamage"))
         if "condition" in trait and trait["condition"] in catalog["conditions"]:
             conditions.append(trait["condition"])
             recognized = True
@@ -604,6 +884,20 @@ def evaluate(profile: dict, catalog: dict, level: int,
                               "events": trace})
         metrics["breath_expected_net_damage_delta"] += gain
         metrics["breath_uses_selected"] += charges
+    save_values, save_trace, save_issues = saving_throw_outcomes(
+        traits, level, scenario, resistances)
+    if scenario.get("saveEvents"):
+        metrics.update(save_values)
+    unmodeled.extend(issue for issue in save_issues if issue not in unmodeled)
+    reaction_prevented, reaction_trace, uncertain_defenses = reaction_damage_outcomes(
+        traits, level, pb, scenario, resistances)
+    if scenario.get("reactionDamageEvents"):
+        metrics["reaction_damage_prevented"] = reaction_prevented
+        metrics["reaction_uses_selected"] = sum(
+            entry["selectedDefense"] is not None for entry in reaction_trace)
+    for identifier in uncertain_defenses:
+        unmodeled.append({"traitId": identifier,
+                          "reason": "resistance-and-reduction-order-unresolved"})
     metrics["tremorsense_contacts_detected"] = _tremorsense_contacts(
         traits, level, pb, scenario)
     mobility = mobility_access(profile, level, pb, scenario)
@@ -619,6 +913,9 @@ def evaluate(profile: dict, catalog: dict, level: int,
                 "walkingSpeedFeet", "climbingSpeedFeet", "swimmingSpeedFeet",
                 "burrowingSpeedFeet", "breathWeaponArea", "damageType"}),
             "mobilityGateResults": mobility, "breathEventTrace": breath_events,
+            "savingThrowEventTrace": save_trace,
+            "reactionEventTrace": reaction_trace,
+            "sharedResourceFrontiers": shared_frontiers,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
 
@@ -682,8 +979,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] != 1:
-        raise ValueError("suite.version must be 1")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2):
+        raise ValueError("suite.version must be 1 or 2")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")

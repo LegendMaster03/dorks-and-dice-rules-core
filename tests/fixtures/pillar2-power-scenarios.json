@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v1",
-  "version": 1,
+  "id": "pillar2-diagnostic-sensitivity-v2",
+  "version": 2,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -10,10 +10,30 @@
         "saveFailure": 0.55,
         "attackReplacementExpectedDamage": 5.2,
         "breathOpportunities": [
-          {"areaTargets": {"line": 3, "cone": 1}},
-          {"areaTargets": {"line": 3, "cone": 1}},
-          {"areaTargets": {"line": 2, "cone": 1}},
-          {"areaTargets": {"line": 1, "cone": 1}}
+          {
+            "areaTargets": {
+              "line": 3,
+              "cone": 1
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 3,
+              "cone": 1
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 2,
+              "cone": 1
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 1
+            }
+          }
         ]
       }
     },
@@ -25,10 +45,30 @@
         "saveFailure": 0.55,
         "attackReplacementExpectedDamage": 5.2,
         "breathOpportunities": [
-          {"areaTargets": {"line": 1, "cone": 3}},
-          {"areaTargets": {"line": 1, "cone": 3}},
-          {"areaTargets": {"line": 1, "cone": 2}},
-          {"areaTargets": {"line": 1, "cone": 1}}
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 3
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 3
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 2
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 1
+            }
+          }
         ]
       }
     },
@@ -38,8 +78,14 @@
       "scenario": {
         "id": "fire-exposure-and-resistance",
         "incomingDamage": [
-          {"type": "fire", "amount": 20},
-          {"type": "fire", "amount": 20}
+          {
+            "type": "fire",
+            "amount": 20
+          },
+          {
+            "type": "fire",
+            "amount": 20
+          }
         ]
       }
     },
@@ -49,8 +95,14 @@
       "scenario": {
         "id": "poison-exposure-and-resistance",
         "incomingDamage": [
-          {"type": "poison", "amount": 20},
-          {"type": "poison", "amount": 20}
+          {
+            "type": "poison",
+            "amount": 20
+          },
+          {
+            "type": "poison",
+            "amount": 20
+          }
         ]
       }
     },
@@ -60,8 +112,14 @@
       "scenario": {
         "id": "sunlight-unprotected",
         "baseCheckSuccess": 0.5,
-        "conditionFrequency": {"condition.dazzled": 1.0},
-        "rolls": {"attack-roll": 8, "skill.search": 2, "skill.spot": 2}
+        "conditionFrequency": {
+          "condition.dazzled": 1.0
+        },
+        "rolls": {
+          "attack-roll": 8,
+          "skill.search": 2,
+          "skill.spot": 2
+        }
       }
     },
     {
@@ -70,8 +128,14 @@
       "scenario": {
         "id": "sunlight-protected",
         "baseCheckSuccess": 0.5,
-        "conditionFrequency": {"condition.dazzled": 0.0},
-        "rolls": {"attack-roll": 8, "skill.search": 2, "skill.spot": 2}
+        "conditionFrequency": {
+          "condition.dazzled": 0.0
+        },
+        "rolls": {
+          "attack-roll": 8,
+          "skill.search": 2,
+          "skill.spot": 2
+        }
       }
     },
     {
@@ -80,10 +144,34 @@
       "scenario": {
         "id": "stone-earth-contacts",
         "tremorsenseContacts": [
-          {"distanceFeet": 10, "sensorTouches": "earth", "targetTouches": "earth", "connected": true, "anticipated": false},
-          {"distanceFeet": 40, "sensorTouches": "stone", "targetTouches": "stone", "connected": true, "anticipated": true},
-          {"distanceFeet": 10, "sensorTouches": "stone", "targetTouches": "stone", "connected": true, "anticipated": true},
-          {"distanceFeet": 10, "sensorTouches": "air", "targetTouches": "stone", "connected": false, "anticipated": true}
+          {
+            "distanceFeet": 10,
+            "sensorTouches": "earth",
+            "targetTouches": "earth",
+            "connected": true,
+            "anticipated": false
+          },
+          {
+            "distanceFeet": 40,
+            "sensorTouches": "stone",
+            "targetTouches": "stone",
+            "connected": true,
+            "anticipated": true
+          },
+          {
+            "distanceFeet": 10,
+            "sensorTouches": "stone",
+            "targetTouches": "stone",
+            "connected": true,
+            "anticipated": true
+          },
+          {
+            "distanceFeet": 10,
+            "sensorTouches": "air",
+            "targetTouches": "stone",
+            "connected": false,
+            "anticipated": true
+          }
         ]
       }
     },
@@ -93,12 +181,46 @@
       "scenario": {
         "id": "travel-separated-gates",
         "mobilityChallenges": [
-          {"id": "walk-35", "mode": "walk", "distanceFeet": 35, "startMinute": 0},
-          {"id": "climb-15", "mode": "climb", "distanceFeet": 15, "startMinute": 1},
-          {"id": "sand-burrow", "mode": "burrow", "distanceFeet": 15, "material": "loose-natural-sand", "startMinute": 2},
-          {"id": "gap-one", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 3},
-          {"id": "gap-two", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 18},
-          {"id": "gap-three", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 33}
+          {
+            "id": "walk-35",
+            "mode": "walk",
+            "distanceFeet": 35,
+            "startMinute": 0
+          },
+          {
+            "id": "climb-15",
+            "mode": "climb",
+            "distanceFeet": 15,
+            "startMinute": 1
+          },
+          {
+            "id": "sand-burrow",
+            "mode": "burrow",
+            "distanceFeet": 15,
+            "material": "loose-natural-sand",
+            "startMinute": 2
+          },
+          {
+            "id": "gap-one",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 3
+          },
+          {
+            "id": "gap-two",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 18
+          },
+          {
+            "id": "gap-three",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 33
+          }
         ]
       }
     },
@@ -108,10 +230,35 @@
       "scenario": {
         "id": "travel-concentrated-gates",
         "mobilityChallenges": [
-          {"id": "gap-one", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 0},
-          {"id": "gap-two", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 0.25},
-          {"id": "gap-three", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 0.5},
-          {"id": "sustained-gap", "mode": "fly", "distanceFeet": 20, "requiresHover": true, "startMinute": 5, "durationMinutes": 10}
+          {
+            "id": "gap-one",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 0
+          },
+          {
+            "id": "gap-two",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 0.25
+          },
+          {
+            "id": "gap-three",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 0.5
+          },
+          {
+            "id": "sustained-gap",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 5,
+            "durationMinutes": 10
+          }
         ]
       }
     },
@@ -121,7 +268,111 @@
       "scenario": {
         "id": "skill-observations",
         "baseCheckSuccess": 0.5,
-        "skillChecks": {"skill.listen": 8, "skill.spot": 8, "skill.climb": 8, "skill.jump": 8, "skill.move-silently": 8}
+        "skillChecks": {
+          "skill.listen": 8,
+          "skill.spot": 8,
+          "skill.climb": 8,
+          "skill.jump": 8,
+          "skill.move-silently": 8
+        }
+      }
+    },
+    {
+      "id": "poison-saves-and-resistance",
+      "purpose": "Evaluate poison-save advantage with passive resistance on the same independently specified event, rather than double-counting damage.",
+      "scenario": {
+        "id": "poison-saves-and-resistance",
+        "saveEvents": [
+          {
+            "id": "poison-spell",
+            "ability": "constitution",
+            "tags": [
+              "poison-effects"
+            ],
+            "magical": true,
+            "baseSuccess": 0.5,
+            "damageType": "poison",
+            "damageOnFailure": 20,
+            "damageOnSuccess": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "mental-magic-and-control",
+      "purpose": "Compare conditional advantage on magical mental saves and a Fey charm save without converting avoided conditions into hit points.",
+      "scenario": {
+        "id": "mental-magic-and-control",
+        "saveEvents": [
+          {
+            "id": "arcane-wisdom",
+            "ability": "wisdom",
+            "magical": true,
+            "baseSuccess": 0.5,
+            "conditionOnFailure": "condition.charmed",
+            "tags": [
+              "condition.charmed"
+            ]
+          },
+          {
+            "id": "mundane-wisdom",
+            "ability": "wisdom",
+            "magical": false,
+            "baseSuccess": 0.5,
+            "conditionOnFailure": "condition.charmed",
+            "tags": [
+              "ordinary-deception"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "heavy-hit-reaction-windows",
+      "purpose": "Measure capped Stone Endurance reactions and attack-dependent Cloudy Escape uses, with one reaction per round.",
+      "scenario": {
+        "id": "heavy-hit-reaction-windows",
+        "abilityModifiers": {
+          "constitution": 3
+        },
+        "reactionDamageEvents": [
+          {
+            "id": "minor-hit",
+            "round": 1,
+            "damageType": "bludgeoning",
+            "amount": 4,
+            "isAttackHit": true,
+            "attackerVisible": true,
+            "reactionAvailable": true
+          },
+          {
+            "id": "large-hit-same-round",
+            "round": 1,
+            "damageType": "bludgeoning",
+            "amount": 20,
+            "isAttackHit": true,
+            "attackerVisible": true,
+            "reactionAvailable": true
+          },
+          {
+            "id": "large-hit-second-round",
+            "round": 2,
+            "damageType": "slashing",
+            "amount": 20,
+            "isAttackHit": true,
+            "attackerVisible": true,
+            "reactionAvailable": true
+          },
+          {
+            "id": "not-an-attack",
+            "round": 3,
+            "damageType": "fire",
+            "amount": 20,
+            "isAttackHit": false,
+            "attackerVisible": false,
+            "reactionAvailable": true
+          }
+        ]
       }
     }
   ]
