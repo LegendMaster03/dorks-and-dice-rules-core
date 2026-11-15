@@ -83,20 +83,26 @@ public static class NativeCharacterSheetProjector
         var baseView = native;
         if (targetSheetId != NativeCharacterSheetResolver.PrimarySheetId)
         {
-            issues.Add(new("sheet-manifestation-unverified", "targetSheetId",
-                "Selecting a persistent sheet does not prove that its form is active."));
+            var formIssues = new List<NativeIssue>
+            {
+                new("sheet-manifestation-unverified", "targetSheetId",
+                    "Selecting a persistent sheet does not prove that its form is active.")
+            };
             if (native.FeatureIds.Count > 0 || native.Resources.Count > 0)
-                issues.Add(new("sheet-class-applicability-unresolved", "baseMechanics",
+                formIssues.Add(new("sheet-class-applicability-unresolved", "baseMechanics",
                     "Class features and resource use require authored form applicability rules."));
+            issues.AddRange(formIssues);
 
-            // Numeric fields are individually derived, but the base projection
-            // is not a complete effective-form result. Do not expose Class
-            // feature IDs or resource pools as automatically available.
+            // Numeric fields remain individually derived, not proof of a
+            // playable effective form. Propagate the partial status and its
+            // reasons into the nested native projection as well; consumers
+            // must not interpret missing feature IDs as earned revocation.
             baseView = native with
             {
                 Status = "partial",
                 FeatureIds = Array.Empty<string>(),
-                Resources = Array.Empty<NativeResource>()
+                Resources = Array.Empty<NativeResource>(),
+                Issues = Array.AsReadOnly(native.Issues.Concat(formIssues).ToArray())
             };
         }
         var status = native.Status == "resolved" && issues.Count == 0
