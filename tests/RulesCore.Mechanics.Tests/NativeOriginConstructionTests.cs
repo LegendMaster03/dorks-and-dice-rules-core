@@ -1052,6 +1052,179 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
+    public void PlayerSelectedBiologicalNativeOffersConstructMixedOriginWithoutDmDecisions()
+    {
+        var proposal = Proposal("first-party-human-elf", NativeOriginIntent.Mixed,
+            contributors:
+            [
+                Contributor("human", "species.human"),
+                Contributor("elf", "species.elf")
+            ]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var type = offers.Single(x => x.ContributorId == "elf" &&
+            x.Identity.IntrinsicSlotId == "creatureType");
+        var speed = offers.Single(x => x.ContributorId == "elf" &&
+            x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var humanSize = offers.Single(x => x.ContributorId == "human" &&
+            x.Identity.Occurrence.OccurrencePath == "/sizeChoice");
+        var sight = offers.Single(x => x.ContributorId == "elf" &&
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        Assert.All([type, speed, humanSize, sight], x =>
+        {
+            Assert.Equal(NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility);
+            Assert.Equal("rule.creature-origination", x.SelectionBasis.RuleReference);
+        });
+
+        var proposalWithChoices = proposal with
+        {
+            Manifestations =
+            [
+                new("fey-type", type.Id),
+                new("elf-speed", speed.Id),
+                new("human-medium", humanSize.Id,
+                    Choices: [new("size", ["medium"])]),
+                new("elf-sight", sight.Id)
+            ]
+        };
+        var result = Evaluate(proposalWithChoices, defaults: false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Null(result.Profile!.Underlying.SpeciesId);
+        Assert.Null(result.Profile.Underlying.AncestryId);
+        Assert.Equal(NativeOriginAdjudication.Supported,
+            result.Profile.Adjudication.Adjudication);
+        Assert.Equal(4, result.Profile.Underlying.InherentGrants.Count);
+        Assert.All(result.Profile.Underlying.InherentGrants, grant =>
+        {
+            Assert.Equal(NativeOriginAdjudication.Supported,
+                grant.Authorization!.Adjudication);
+            Assert.Equal("rule.creature-origination",
+                grant.Authorization.NativeRuleReference);
+        });
+        var scalars = NativeOriginApprovedMixedIntrinsicProjector.Project(result);
+        Assert.Equal("resolved", scalars.Status);
+        Assert.Equal("fey", scalars.CreatureType!.Value);
+        Assert.Equal("medium", scalars.Size!.Value);
+        Assert.Equal(30, scalars.WalkingSpeedFeet!.Value);
+        Assert.Equal("species.human", scalars.Size.SourceId);
+        Assert.Equal("unresolved", NativeOriginIntrinsicProjector.Project(result).Status);
+
+        var vision = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal("resolved", vision.Status);
+        Assert.Equal("rule.low-light-vision", vision.LowLightVision!.RuleId);
+        Assert.Equal("species.elf", vision.LowLightVision.SourceId);
+
+        var saved = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(result.Profile));
+        Assert.Equal(4, saved!.Current.InherentGrants.Count);
+        Assert.Equal(NativeOriginEventStage.Completed,
+            Assert.Single(saved.History).Stage);
+        Assert.Empty(result.Issues);
+    }
+
+    [Fact]
+    public void BiologicalOffersAreNeverAutoManifestedAndRequireCompleteFoundation()
+    {
+        var proposal = Proposal("incomplete-biological", NativeOriginIntent.Mixed,
+            contributors: [Contributor("elf", "species.elf")]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var sight = offered.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        Assert.Equal(NativeOriginEligibility.Eligible, sight.SelectionBasis.Eligibility);
+        var blank = Evaluate(proposal);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, blank.Status);
+        Assert.Empty(blank.Profile!.Underlying.InherentGrants);
+
+        var incomplete = Evaluate(proposal with
+        {
+            Manifestations = [new("selected-sight", sight.Id)]
+        }, defaults: false);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, incomplete.Status);
+        Assert.Contains(incomplete.Issues, x =>
+            x.Code == "biological-foundation-incomplete");
+        Assert.Single(incomplete.Profile!.Underlying.InherentGrants);
+        Assert.Equal(NativeOriginEventStage.Pending,
+            Assert.Single(incomplete.Profile.History).Stage);
+    }
+
+    [Fact]
+    public void BiologicalPolicyLeavesUnmarkedTraitsAndNonparentInputsUnauthorized()
+    {
+        var proposal = Proposal("biological-boundary", NativeOriginIntent.Mixed,
+            contributors: [Contributor("elf", "species.elf")]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var unmarked = offered.Single(x =>
+            x.Identity.Occurrence.Source.Id == "species.elf" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/1");
+        Assert.Equal(NativeOriginEligibility.Unreviewed,
+            unmarked.SelectionBasis.Eligibility);
+        var rejected = Evaluate(proposal with
+        {
+            Manifestations = [new("unsupported-senses", unmarked.Id)]
+        }, defaults: false);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, rejected.Status);
+        Assert.DoesNotContain(rejected.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.Occurrence.OccurrencePath == "/traits/1");
+
+        var material = proposal with
+        {
+            Contributors = [new NativeOriginContributor("elf",
+                new(NativeOriginInputKind.Material),
+                new(NativeOriginSourceKind.Native, "species.elf"))]
+        };
+        var materialResult = Evaluate(material).EvaluatedProposal.Candidates;
+        Assert.DoesNotContain(materialResult, x =>
+            x.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible);
+
+        var construct = proposal with
+        {
+            Method = new("rule.creature-origination", "construct-assembly")
+        };
+        var constructResult = Evaluate(construct).EvaluatedProposal.Candidates;
+        Assert.DoesNotContain(constructResult, x =>
+            x.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible);
+
+        var restricted = Proposal("restricted-biological", NativeOriginIntent.Mixed,
+            contributors: [Contributor("parent", "species.dragonborn")]);
+        var restrictedOffers = Evaluate(restricted).EvaluatedProposal.Candidates;
+        Assert.DoesNotContain(restrictedOffers, x =>
+            x.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible);
+    }
+
+    [Fact]
+    public void SameBiologicalVisionFromThreeContributorsIsOneNativeGrant()
+    {
+        var proposal = Proposal("three-elves", NativeOriginIntent.Mixed, contributors:
+        [
+            Contributor("elf-1", "species.elf"),
+            Contributor("elf-2", "species.elf"),
+            Contributor("elf-3", "species.elf")
+        ]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var foundations = offers.Where(x => x.ContributorId == "elf-1" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var vision = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            .ToArray();
+        Assert.Equal(3, foundations.Length);
+        Assert.Equal(3, vision.Length);
+        var chosen = foundations.Concat(vision).ToArray();
+        var result = Evaluate(proposal with
+        {
+            Manifestations = chosen.Select((x, i) =>
+                new NativeOriginManifestation("choice-" + i, x.Id)).ToArray()
+        }, defaults: false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal(4, result.Profile!.Current.InherentGrants.Count);
+        var sight = Assert.Single(result.Profile.Current.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        Assert.Equal(3, sight.SourceCandidateIds.Count);
+        Assert.Equal(NativeOriginAdjudication.Supported, sight.Authorization!.Adjudication);
+        Assert.Equal("resolved",
+            NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result).Status);
+    }
+
+    [Fact]
     public void NestedSpellTraitRetainsItsAlreadyManifestedParameterValue()
     {
         var source = Evaluate(Proposal("caster-parent", ancestry: "ancestry.elf.high"))
