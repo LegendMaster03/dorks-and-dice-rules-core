@@ -75,12 +75,26 @@ public static class NativeCharacterSheetProjector
             usable.Add(new(grant, referencedLevel));
         }
 
-        // Class FeatureIds and resource maxima in the underlying calculation
-        // are not automatically effective in every alternate form. Expose
-        // them only as a base calculation, never merge sheet grants by ID.
+        // Do not leak native Class feature IDs or usable resource pools as
+        // currently available through an alternate form. No verified mapping
+        // from Class grants to form applicability exists in this increment.
+        // Keep derived numeric values explicitly partial until such policies
+        // are implemented. The authoritative records remain unchanged.
+        var baseView = native;
+        if (targetSheetId != NativeCharacterSheetResolver.PrimarySheetId &&
+            (native.FeatureIds.Count > 0 || native.Resources.Count > 0))
+        {
+            issues.Add(new("sheet-class-applicability-unresolved", "baseMechanics",
+                "Class features and resource use require authored form applicability rules."));
+            baseView = native with
+            {
+                FeatureIds = Array.Empty<string>(),
+                Resources = Array.Empty<NativeResource>()
+            };
+        }
         var status = native.Status == "resolved" && issues.Count == 0
             ? "resolved" : "partial";
-        return new(status, native,
+        return new(status, baseView,
             Array.AsReadOnly(usable.ToArray()),
             Array.AsReadOnly(inapplicable.ToArray()),
             Array.AsReadOnly(issues.Concat(native.Issues).ToArray()));
