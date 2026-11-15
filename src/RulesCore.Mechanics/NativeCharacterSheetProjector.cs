@@ -75,19 +75,26 @@ public static class NativeCharacterSheetProjector
             usable.Add(new(grant, referencedLevel));
         }
 
-        // Do not leak native Class feature IDs or usable resource pools as
-        // currently available through an alternate form. No verified mapping
-        // from Class grants to form applicability exists in this increment.
-        // Keep derived numeric values explicitly partial until such policies
-        // are implemented. The authoritative records remain unchanged.
+        // A persistent sheet can be resolved without being manifested. This
+        // first increment does not authenticate an activation or execute all
+        // form-specific Class/Origin/resource policies. Consequently, never
+        // publish an alternate sheet as a fully usable character, even when a
+        // particular Class grants no features or resources to withhold.
         var baseView = native;
-        if (targetSheetId != NativeCharacterSheetResolver.PrimarySheetId &&
-            (native.FeatureIds.Count > 0 || native.Resources.Count > 0))
+        if (targetSheetId != NativeCharacterSheetResolver.PrimarySheetId)
         {
-            issues.Add(new("sheet-class-applicability-unresolved", "baseMechanics",
-                "Class features and resource use require authored form applicability rules."));
+            issues.Add(new("sheet-manifestation-unverified", "targetSheetId",
+                "Selecting a persistent sheet does not prove that its form is active."));
+            if (native.FeatureIds.Count > 0 || native.Resources.Count > 0)
+                issues.Add(new("sheet-class-applicability-unresolved", "baseMechanics",
+                    "Class features and resource use require authored form applicability rules."));
+
+            // Numeric fields are individually derived, but the base projection
+            // is not a complete effective-form result. Do not expose Class
+            // feature IDs or resource pools as automatically available.
             baseView = native with
             {
+                Status = "partial",
                 FeatureIds = Array.Empty<string>(),
                 Resources = Array.Empty<NativeResource>()
             };
