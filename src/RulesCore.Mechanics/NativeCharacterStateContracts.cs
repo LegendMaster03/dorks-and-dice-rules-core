@@ -85,18 +85,22 @@ public sealed record NativeSheetEarnedProgression(
     IReadOnlyDictionary<string, string>? Choices = null);
 
 /// <summary>
-/// A reference to an already earned, source-qualified entitlement. Resolving the
-/// same grant on multiple descendants never issues or duplicates that grant.
-/// </summary>
-/// <summary>
-/// A typed reference to verified primary Class progression. Resolution does not
-/// create new levels or calculate a supernatural effect from this level.
+/// Selects a numerical level reference from verified primary Class progression.
+/// This does not create a Class level or specify a supernatural scaling formula.
 /// </summary>
 public enum NativeSheetLevelSource { TotalClassLevels, SpecificClassLevel }
 
+/// <summary>
+/// A level reference remains dynamic; it is resolved from the current primary
+/// character rather than captured as an alternate-sheet advancement.
+/// </summary>
 public sealed record NativeSheetLevelReference(
     NativeSheetLevelSource Source, string? ClassId = null);
 
+/// <summary>
+/// A durable, source-qualified entitlement owned by exactly one progression.
+/// Descendants may reference it but do not earn or clone another grant.
+/// </summary>
 public sealed record NativeSheetEarnedGrant(
     string Id, string DefinitionId, NativeOriginSourceOccurrence SourceOccurrence,
     string AcquisitionEvidenceId, NativeSheetLevelReference? LevelReference = null);
@@ -155,7 +159,7 @@ public sealed record NativeCharacterSheetResolution(
     IReadOnlyList<NativeIssue> Issues);
 
 /// <summary>
-/// Only independently verified, applicable acquired grants appear here.
+/// Only independently verified, sheet-applicable acquired grants appear here.
 /// Numeric Class progression is projected by the existing character projector;
 /// this reference carries its resolved level without inventing an effect formula.
 /// </summary>
@@ -167,7 +171,8 @@ public sealed record NativeSheetUsableCapability(
 /// Read-only interpretation with provenance. BaseMechanics is an existing
 /// NativeCharacterProjector output and is not a substitute for verified
 /// form-specific Class-feature and Origin grant applicability. UsableCapabilities
-/// is the separately authorized sheet-grant view.
+/// is the separately authorized sheet-grant view for the selected sheet, not a
+/// proof that the sheet is currently manifested or its whole mechanics are usable.
 /// </summary>
 public sealed record NativeCharacterSheetProjection(
     string Status,
