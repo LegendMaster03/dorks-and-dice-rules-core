@@ -267,12 +267,13 @@ public static class NativeCharacterManifestationResolver
         var ledgerIssues = Validate(state, ledger, authority,
             authenticate: verifyCommittedLedger);
         if (ledgerIssues.Length != 0) return Failed("invalid", ledgerIssues);
-        // Validate the complete owned sheet graph and influence receipts even
-        // when simultaneous manifestations have no resolved effective winner.
+        // Verify the primary state even while an alternate form is selected.
+        // A conflict affecting only primary-targeted influences must not be
+        // hidden by resolving a different sheet with no such active effects.
         var baseline = NativeCharacterInfluenceResolver.Resolve(state,
             NativeCharacterSheetResolver.PrimarySheetId, authority);
-        if (baseline.Status == "invalid")
-            return Failed("invalid", baseline.Issues);
+        if (baseline.Status is "invalid" or "unresolved")
+            return Failed(baseline.Status, baseline.Issues);
         var selectionIssues = new List<NativeIssue>();
         var selected = Select(ledger, selectionIssues);
         if (selectionIssues.Count != 0) return Failed("unresolved", selectionIssues);
