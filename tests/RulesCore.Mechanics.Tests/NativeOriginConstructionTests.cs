@@ -1307,6 +1307,157 @@ public sealed class NativeOriginConstructionTests
         }
     }
 
+    [Theory]
+    [InlineData("ancestry.goliath.cloud", "trait.goliath.cloud.clouds-jaunt",
+        "trait.goliath.cloud.cloud-strike")]
+    [InlineData("ancestry.goliath.stone", "trait.goliath.stone.stones-endurance",
+        "trait.goliath.stone.stone-strike")]
+    [InlineData("ancestry.goliath.storm", "trait.goliath.storm.storms-thunder",
+        "trait.goliath.storm.storm-strike")]
+    public void AuthoredSharedUseStrikeRequiresSelectedOwnerAndNeverGetsIndependentPool(
+        string ancestry, string ownerId, string strikeId)
+    {
+        var baseProposal = Proposal("shared-use-" + ancestry, NativeOriginIntent.Mixed,
+            contributors: [Contributor("source", ancestry)]);
+        var offers = Evaluate(baseProposal).EvaluatedProposal.Candidates;
+        var owner = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == ownerId);
+        var strike = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == strikeId);
+        var foundations = offers.Where(x => x.ContributorId == "source" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        Assert.Equal(3, foundations.Length);
+        var baseSelections = foundations.Select((x, i) =>
+            new NativeOriginManifestation("foundation-" + i, x.Id,
+                SelectedValue: x.OfferedValue)).ToArray();
+        var decisions = new[]
+        {
+            Decision("allow-owner", "candidate", owner.Id, new { eligibility = "eligible" }),
+            Decision("allow-strike", "candidate", strike.Id, new { eligibility = "eligible" })
+        };
+        var selectedStrike = new NativeOriginManifestation("strike", strike.Id);
+
+        var missing = Evaluate(baseProposal with
+        {
+            Manifestations = baseSelections.Append(selectedStrike).ToArray(),
+            TableDecisions = decisions
+        }, new TestAuthority(), false);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, missing.Status);
+        Assert.Contains(missing.Issues,
+            x => x.Code == "origin-shared-resource-owner-missing");
+        Assert.DoesNotContain(missing.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.MechanicalDefinitionId == strikeId);
+
+        var complete = Evaluate(baseProposal with
+        {
+            Manifestations = baseSelections.Append(selectedStrike)
+                .Append(new("resource-owner", owner.Id)).ToArray(),
+            TableDecisions = decisions
+        }, new TestAuthority(), false);
+        Assert.True(complete.Status == NativeOriginConstructionStatus.Authorized,
+            string.Join("; ", complete.Issues.Select(x => x.Code + ":" + x.Detail)));
+        var granted = complete.Profile!.Underlying.InherentGrants;
+        Assert.Equal(5, granted.Count);
+        var parent = Assert.Single(granted, x => x.Identity.MechanicalDefinitionId == ownerId);
+        var dependent = Assert.Single(granted, x => x.Identity.MechanicalDefinitionId == strikeId);
+        Assert.Equal(parent.Id, dependent.ResourceOwners!["uses"]);
+        Assert.Equal(1, dependent.ResourceOwners.Count);
+        Assert.True(parent.EffectiveValue!.Value.TryGetProperty("uses", out var ownerPool));
+        Assert.Equal("proficiency-bonus", ownerPool.GetProperty("value").GetString());
+        Assert.False(dependent.EffectiveValue!.Value.TryGetProperty("uses", out _));
+        Assert.Equal(false, dependent.EffectiveValue!.Value
+            .GetProperty("extraUsesGranted").GetBoolean());
+        Assert.Equal("rule.creature-origination", granted.Single(x =>
+            x.Identity.IntrinsicSlotId == "creatureType").Authorization?.NativeRuleReference);
+        var restored = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(complete.Profile));
+        var restoredDependent = Assert.Single(restored!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == strikeId);
+        Assert.Equal(parent.Id, restoredDependent.ResourceOwners!["uses"]);
+        Assert.Empty(complete.Issues);
+    }
+
+    [Fact]
+    public void SharedUseOwnerCannotBeBorrowedFromAnotherBiologicalContributor()
+    {
+        var baseProposal = Proposal("separate-resource-lineages", NativeOriginIntent.Mixed,
+            contributors:
+            [
+                Contributor("owner-source", "ancestry.goliath.cloud"),
+                Contributor("strike-source", "ancestry.goliath.cloud")
+            ]);
+        var offers = Evaluate(baseProposal).EvaluatedProposal.Candidates;
+        var owner = Assert.Single(offers, x =>
+            x.ContributorId == "owner-source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.clouds-jaunt");
+        var strike = Assert.Single(offers, x =>
+            x.ContributorId == "strike-source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloud-strike");
+        var foundations = offers.Where(x => x.ContributorId == "owner-source" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var result = Evaluate(baseProposal with
+        {
+            Manifestations = foundations.Select((x, i) =>
+                new NativeOriginManifestation("foundation-" + i, x.Id,
+                    SelectedValue: x.OfferedValue))
+                .Append(new("selected-owner", owner.Id))
+                .Append(new("selected-strike", strike.Id)).ToArray(),
+            TableDecisions =
+            [
+                Decision("owner-allow", "candidate", owner.Id,
+                    new { eligibility = "eligible" }),
+                Decision("strike-allow", "candidate", strike.Id,
+                    new { eligibility = "eligible" })
+            ]
+        }, new TestAuthority(), false);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Contains(result.Issues, x =>
+            x.Code == "origin-shared-resource-owner-missing");
+        Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.MechanicalDefinitionId == strike.Identity.MechanicalDefinitionId);
+        Assert.Contains(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == owner.Identity.MechanicalDefinitionId);
+    }
+
+    [Fact]
+    public void CloudyEscapeRetainsItsExplicitIndependentUsesRatherThanSharingJaunt()
+    {
+        var baseProposal = Proposal("independent-cloud-resource", NativeOriginIntent.Mixed,
+            contributors: [Contributor("source", "ancestry.goliath.cloud")]);
+        var offered = Evaluate(baseProposal).EvaluatedProposal.Candidates;
+        var independent = Assert.Single(offered, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloudy-escape");
+        var foundations = offered.Where(x =>
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var result = Evaluate(baseProposal with
+        {
+            Manifestations = foundations.Select((x, i) =>
+                new NativeOriginManifestation("foundation-" + i, x.Id,
+                    SelectedValue: x.OfferedValue))
+                .Append(new("independent", independent.Id)).ToArray(),
+            TableDecisions =
+            [
+                Decision("independent-allowed", "candidate", independent.Id,
+                    new { eligibility = "eligible" })
+            ]
+        }, new TestAuthority(), false);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var grant = Assert.Single(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId ==
+                "trait.goliath.cloud.cloudy-escape");
+        Assert.True(grant.ResourceOwners is null || grant.ResourceOwners.Count == 0);
+        Assert.Equal("clouds-jaunt",
+            grant.EffectiveValue!.Value.GetProperty("independentUsesFrom").GetString());
+        Assert.Equal("proficiency-bonus",
+            grant.EffectiveValue!.Value.GetProperty("uses")
+                .GetProperty("value").GetString());
+    }
+
     [Fact]
     public void NestedSpellTraitRetainsItsAlreadyManifestedParameterValue()
     {
