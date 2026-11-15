@@ -245,6 +245,79 @@ public sealed class NativeAuthenticatedApiTests
         Assert.Equal(HttpStatusCode.Forbidden, wrongCampaignResponse.StatusCode);
     }
 
+
+    [Fact]
+    public async Task DelegatedPrimaryStateEvaluationIsReadOnlyAndDeniesUnverifiedForms()
+    {
+        const string path = "/api/mechanics/v1/characters/effective-state-baseline";
+        var characterId = Guid.NewGuid().ToString("D");
+
+        await using var delegated = await Fixture.StartAsync(source: "character-sheet");
+        object Body(long ledgerRevision = 0, object[]? alternate = null,
+            object[]? events = null, string? fingerprint = null) => new
+        {
+            state = new
+            {
+                characterId,
+                primaryMechanics = new
+                {
+                    rulesetId = Ruleset,
+                    fingerprint = fingerprint ?? delegated.Store.Snapshot!.Fingerprint,
+                    abilityScores = new Dictionary<string, int>
+                    {
+                        ["strength"] = 12, ["dexterity"] = 12,
+                        ["constitution"] = 12, ["intelligence"] = 12,
+                        ["wisdom"] = 12, ["charisma"] = 12
+                    },
+                    advancements = Array.Empty<object>()
+                },
+                alternateSheets = alternate ?? Array.Empty<object>(),
+                persistentInfluences = Array.Empty<object>()
+            },
+            ledger = new
+            {
+                characterId, revision = ledgerRevision,
+                instances = Array.Empty<object>(),
+                resources = Array.Empty<object>(),
+                processedEventIds = events ?? Array.Empty<object>()
+            }
+        };
+
+        static async Task<HttpResponseMessage> Send(Fixture f, string path, object body)
+        {
+            using var request = f.Authorized(path);
+            request.Method = HttpMethod.Post;
+            request.Content = JsonContent.Create(body);
+            return await f.Client.SendAsync(request);
+        }
+
+        using var allowed = await Send(delegated, path, Body());
+        Assert.Equal(HttpStatusCode.OK, allowed.StatusCode);
+        var output = await allowed.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("primary-only", output.GetProperty("supportedScope").GetString());
+        Assert.False(output.GetProperty("effectiveMechanicsReady").GetBoolean());
+        Assert.Equal("partial", output.GetProperty("status").GetString());
+
+        // A delegated tool ticket does not attest to arbitrary supernatural
+        // acquisitions or a claimed processed transformation event.
+        using var claimedLedger = await Send(delegated, path,
+            Body(1, events: ["forged:wolf:activation"]));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, claimedLedger.StatusCode);
+        Assert.Contains("supernatural_authority_unavailable",
+            await claimedLedger.Content.ReadAsStringAsync());
+
+        using var staleCatalog = await Send(delegated, path,
+            Body(fingerprint: new string('0', 64)));
+        Assert.Equal(HttpStatusCode.Conflict, staleCatalog.StatusCode);
+
+        await using var notDelegated = await Fixture.StartAsync();
+        using var rejectedDirect = await Send(notDelegated, path, Body());
+        Assert.Equal(HttpStatusCode.Forbidden, rejectedDirect.StatusCode);
+
+        using var rejectedAnonymous = await delegated.Client.PostAsJsonAsync(path, Body());
+        Assert.Equal(HttpStatusCode.Unauthorized, rejectedAnonymous.StatusCode);
+    }
+
     [Fact]
     public async Task PrivateIngressHasNoBrowserConsumerCatalog()
     {
