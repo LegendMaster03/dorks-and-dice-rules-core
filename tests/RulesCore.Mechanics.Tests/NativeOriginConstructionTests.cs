@@ -101,6 +101,69 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
+    public void DuplicateVerifiedMixedSourcesProjectOneIntrinsicSetAndOneLowLightVision()
+    {
+        var proposal = Proposal("duplicate-elf", NativeOriginIntent.Mixed, contributors:
+            [Contributor("parent-a", "species.elf"), Contributor("parent-b", "species.elf")]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates
+            .Where(candidate =>
+                candidate.Identity.IntrinsicSlotId is
+                    "creatureType" or "size" or "walkingSpeedFeet" ||
+                candidate.Identity.Occurrence.Source.Id == "species.elf" &&
+                candidate.Identity.Occurrence.OccurrencePath == "/traits/0")
+            .OrderBy(candidate => candidate.Id, StringComparer.Ordinal)
+            .ToArray();
+        Assert.Equal(8, offered.Length);
+
+        var decisions = offered.Select((candidate, i) =>
+            Decision("allow-" + i, "candidate", candidate.Id,
+                new { eligibility = "eligible" })).ToArray();
+        var selections = offered.Select((candidate, i) =>
+            new NativeOriginManifestation("select-" + i, candidate.Id,
+                candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                    ? candidate.OfferedValue : null)).ToArray();
+        var result = Evaluate(proposal with
+        {
+            TableDecisions = decisions,
+            Manifestations = selections
+        }, new TestAuthority(), false);
+
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal(4, result.Profile!.Current.InherentGrants.Count);
+        Assert.All(result.Profile.Current.InherentGrants,
+            grant => Assert.Equal(2, grant.SourceCandidateIds.Count));
+        var intrinsics = NativeOriginApprovedMixedIntrinsicProjector.Project(result);
+        Assert.Equal("resolved", intrinsics.Status);
+        Assert.Equal("fey", intrinsics.CreatureType?.Value);
+        Assert.Equal("medium", intrinsics.Size?.Value);
+        Assert.Equal(30, intrinsics.WalkingSpeedFeet?.Value);
+        var vision = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal("resolved", vision.Status);
+        Assert.Equal("rule.low-light-vision", vision.LowLightVision?.RuleId);
+
+        // A result cannot masquerade as legitimate consolidation by attaching
+        // an unselected source ID to an otherwise authorized grant.
+        var speed = result.Profile.Current.InherentGrants.Single(grant =>
+            grant.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var forged = result.Profile.Underlying with
+        {
+            InherentGrants = result.Profile.Current.InherentGrants
+                .Select(grant => grant.Id == speed.Id
+                    ? grant with { SourceCandidateIds = [..grant.SourceCandidateIds,
+                        "unselected-candidate"] }
+                    : grant).ToArray()
+        };
+        var tampered = result with
+        {
+            Profile = result.Profile with { Underlying = forged, Current = forged }
+        };
+        Assert.Equal("unresolved",
+            NativeOriginApprovedMixedIntrinsicProjector.Project(tampered).Status);
+        Assert.Equal("unresolved",
+            NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), tampered).Status);
+    }
+
+    [Fact]
     public void SameAuthoredOccurrenceThroughTwoContributorsIsNotGrantedTwice()
     {
         var baseProposal = Proposal("shared", NativeOriginIntent.Mixed, contributors:

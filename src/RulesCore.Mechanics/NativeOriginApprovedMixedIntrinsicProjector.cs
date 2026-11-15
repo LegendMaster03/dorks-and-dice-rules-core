@@ -39,18 +39,7 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
             var slot = grant.Identity.IntrinsicSlotId!;
             var source = grant.Identity.Occurrence.Source;
             if (source.Kind != NativeOriginSourceKind.Native ||
-                grant.SourceCandidateIds.Count != 1 ||
-                grant.Authorization?.Adjudication != NativeOriginAdjudication.DmAuthorized ||
-                string.IsNullOrWhiteSpace(grant.Authorization.TableDecisionId) ||
-                !result.EvaluatedProposal.Candidates.Any(candidate =>
-                    candidate.Id == grant.SourceCandidateIds[0] &&
-                    candidate.ContributorId is not null &&
-                    candidate.Identity == grant.Identity &&
-                    candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized &&
-                    candidate.SelectionBasis.TableDecisionId == grant.Authorization.TableDecisionId &&
-                    candidate.OfferedValue is { } offered &&
-                    grant.EffectiveValue is { } effective &&
-                    JsonElement.DeepEquals(offered, effective)) ||
+                !HasVerifiedContributingEvidence(result, grant) ||
                 !permitted.TryAdd(slot, grant))
                 issues.Add("mixed-intrinsic-unverified:" + slot);
         }
@@ -93,6 +82,42 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
                 grant.Identity.Occurrence.Source.Id,
                 grant.Identity.Occurrence.OccurrencePath);
         }
+    }
+
+    /// <summary>
+    /// The constructor may consolidate the same native occurrence offered by several
+    /// parents. Every evidence path must correspond to an actually manifested and
+    /// individually authorized candidate; consolidation is not permission to invent
+    /// an extra grant, use pool or otherwise unselected contributor.
+    /// </summary>
+    internal static bool HasVerifiedContributingEvidence(
+        NativeOriginConstructionResult result, NativeOriginEffectiveGrant grant)
+    {
+        var authorization = grant.Authorization;
+        var ids = grant.SourceCandidateIds;
+        if (grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
+            authorization?.Adjudication != NativeOriginAdjudication.DmAuthorized ||
+            string.IsNullOrWhiteSpace(authorization.TableDecisionId) ||
+            ids.Count == 0 ||
+            ids.Distinct(StringComparer.Ordinal).Count() != ids.Count ||
+            ids.Any(id => result.EvaluatedProposal.Manifestations.Count(manifest =>
+                manifest.CandidateId == id) != 1))
+            return false;
+
+        var candidates = result.EvaluatedProposal.Candidates
+            .Where(candidate => ids.Contains(candidate.Id, StringComparer.Ordinal))
+            .ToArray();
+        return candidates.Length == ids.Count &&
+            candidates.Any(candidate =>
+                candidate.SelectionBasis.TableDecisionId == authorization.TableDecisionId) &&
+            candidates.All(candidate =>
+                candidate.ContributorId is not null &&
+                candidate.Identity == grant.Identity &&
+                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized &&
+                !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId) &&
+                candidate.OfferedValue is { } offered &&
+                grant.EffectiveValue is { } effective &&
+                JsonElement.DeepEquals(offered, effective));
     }
 
     private static NativeOriginIntrinsicProjector.View Unresolved(string why) =>
