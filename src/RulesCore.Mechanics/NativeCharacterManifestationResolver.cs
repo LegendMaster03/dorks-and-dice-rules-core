@@ -58,7 +58,10 @@ public static class NativeCharacterManifestationResolver
                 continue;
             }
             var path = "instances." + instance.Id;
-            if (string.IsNullOrWhiteSpace(instance.SheetId) ||
+            if (string.IsNullOrWhiteSpace(instance.CharacterId) ||
+                !string.Equals(instance.CharacterId, ledger.CharacterId,
+                    StringComparison.Ordinal) ||
+                string.IsNullOrWhiteSpace(instance.SheetId) ||
                 !sheetIds.ContainsKey(instance.SheetId) ||
                 string.IsNullOrWhiteSpace(instance.DefinitionId) ||
                 !ValidOccurrence(instance.DefinitionOccurrence) ||
@@ -79,7 +82,7 @@ public static class NativeCharacterManifestationResolver
                 !events.Contains(instance.ActivationEventId) ||
                 !events.Contains(instance.LastEventId))
                 Issue("invalid-manifestation-instance", path,
-                    "The verified form, activation, capture or event evidence is incomplete.");
+                    "The character owner, verified form, activation, capture or event evidence is invalid or incomplete.");
             var policyIds = new HashSet<string>(StringComparer.Ordinal);
             foreach (var policy in instance.ResourcePolicies ?? [])
                 if (policy is null || string.IsNullOrWhiteSpace(policy.ResourceId) ||
