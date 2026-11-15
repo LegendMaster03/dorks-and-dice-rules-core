@@ -142,6 +142,14 @@ public sealed class NativeCharacterSheetProjectorTests
             Assert.Equal(2, grant.ReferencedClassLevel!.Value));
         Assert.Equal(new[] { "grant.shared", "grant.wolf" },
             after.UsableCapabilities.Select(item => item.Grant.Entitlement.Id));
+        // The native Class projector knows these features, but a form can
+        // not claim they are currently usable until its policy is authorized.
+        Assert.Contains("class-feature.demo.known",
+            new NativeCharacterProjector(fixture.Catalog)
+                .Project(advanced.PrimaryMechanics).FeatureIds);
+        Assert.DoesNotContain("class-feature.demo.known", after.BaseMechanics.FeatureIds);
+        Assert.Contains(after.Issues, issue =>
+            issue.Code == "sheet-class-applicability-unresolved");
         Assert.Equal("werewolf", after.UsableCapabilities[0].Grant.OwnerSheetId);
         Assert.Equal("wolf", after.UsableCapabilities[1].Grant.OwnerSheetId);
         Assert.Single(Project(first, fixture.Catalog, "hybrid").UsableCapabilities);
