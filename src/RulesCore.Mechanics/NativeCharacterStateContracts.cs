@@ -9,7 +9,8 @@ namespace RulesCore.Mechanics;
 public sealed record NativeCharacterState(
     string CharacterId,
     NativeCharacterRequest PrimaryMechanics,
-    IReadOnlyList<NativePersistentCharacterSheet> AlternateSheets);
+    IReadOnlyList<NativePersistentCharacterSheet> AlternateSheets,
+    IReadOnlyList<NativeCharacterPersistentInfluence>? PersistentInfluences = null);
 
 /// <summary>
 /// A stable, persistent partial sheet. The parent is the primary sheet or another
