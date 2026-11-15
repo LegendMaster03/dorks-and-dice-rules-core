@@ -76,7 +76,10 @@ public static class NativeCharacterManifestationResolver
                 instance.ActivationCaptures.Any(x => string.IsNullOrWhiteSpace(x.Key) ||
                     x.Key.Length > 160 || x.Value is < 0 or > 1000000) ||
                 instance.EndingConditions is null || instance.EndingConditions.Count > 128 ||
-                instance.EndingConditions.Any(string.IsNullOrWhiteSpace) ||
+                instance.EndingConditions.Any(x =>
+                    string.IsNullOrWhiteSpace(x) || x.Length > 160) ||
+                instance.EndingConditions.Distinct(StringComparer.Ordinal).Count() !=
+                    instance.EndingConditions.Count ||
                 instance.ResourcePolicies is null || instance.ResourcePolicies.Count > 256 ||
                 string.IsNullOrWhiteSpace(instance.LastEventId) ||
                 !events.Contains(instance.ActivationEventId) ||
@@ -299,7 +302,14 @@ public static class NativeCharacterManifestationResolver
             foreach (var policy in selected.ResourcePolicies.OrderBy(x => x.ResourceId, StringComparer.Ordinal))
             {
                 var resource = byId[policy.ResourceId];
-                if (policy.Mode == NativeManifestationResourceMode.Inherit &&
+                // A manifestation-scoped pool is owned by exactly one
+                // activation. A later activation can not rebrand an older
+                // activation's private balance as its own accessible pool.
+                // Cross-activation transfers need an authored transaction,
+                // not a read-only maximum or visibility policy.
+                if (resource.OwnerKind == NativeManifestationResourceOwner.Manifestation &&
+                    resource.OwnerId != selected.Id ||
+                    policy.Mode == NativeManifestationResourceMode.Inherit &&
                     resource.OwnerKind == NativeManifestationResourceOwner.Manifestation ||
                     policy.Mode == NativeManifestationResourceMode.Separate &&
                     resource.OwnerKind == NativeManifestationResourceOwner.Primary)
