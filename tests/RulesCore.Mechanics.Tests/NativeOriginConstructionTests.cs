@@ -1326,6 +1326,9 @@ public sealed class NativeOriginConstructionTests
         var strike = Assert.Single(offers, x =>
             x.ContributorId == "source" &&
             x.Identity.MechanicalDefinitionId == strikeId);
+        var aptitude = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
         var foundations = offers.Where(x => x.ContributorId == "source" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -1336,13 +1339,17 @@ public sealed class NativeOriginConstructionTests
         var decisions = new[]
         {
             Decision("allow-owner", "candidate", owner.Id, new { eligibility = "eligible" }),
-            Decision("allow-strike", "candidate", strike.Id, new { eligibility = "eligible" })
+            Decision("allow-strike", "candidate", strike.Id, new { eligibility = "eligible" }),
+            Decision("allow-aptitude", "candidate", aptitude.Id, new { eligibility = "eligible" })
         };
         var selectedStrike = new NativeOriginManifestation("strike", strike.Id);
+        var aptitudeChoice = new NativeOriginManifestation("aptitude", aptitude.Id,
+            Choices: [new("abilityChoice", ["constitution"])]);
 
         var missing = Evaluate(baseProposal with
         {
-            Manifestations = baseSelections.Append(selectedStrike).ToArray(),
+            Manifestations = baseSelections.Append(aptitudeChoice)
+                .Append(selectedStrike).ToArray(),
             TableDecisions = decisions
         }, new TestAuthority(), false);
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, missing.Status);
@@ -1353,17 +1360,22 @@ public sealed class NativeOriginConstructionTests
 
         var complete = Evaluate(baseProposal with
         {
-            Manifestations = baseSelections.Append(selectedStrike)
+            Manifestations = baseSelections.Append(aptitudeChoice).Append(selectedStrike)
                 .Append(new("resource-owner", owner.Id)).ToArray(),
             TableDecisions = decisions
         }, new TestAuthority(), false);
         Assert.True(complete.Status == NativeOriginConstructionStatus.Authorized,
             string.Join("; ", complete.Issues.Select(x => x.Code + ":" + x.Detail)));
         var granted = complete.Profile!.Underlying.InherentGrants;
-        Assert.Equal(5, granted.Count);
+        Assert.Equal(6, granted.Count);
         var parent = Assert.Single(granted, x => x.Identity.MechanicalDefinitionId == ownerId);
+        Assert.Equal("constitution", Assert.Single(granted, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude")
+            .ResolvedChoices!.Single().SelectedOptionIds.Single());
         var dependent = Assert.Single(granted, x => x.Identity.MechanicalDefinitionId == strikeId);
         Assert.Equal(parent.Id, dependent.ResourceOwners!["uses"]);
+        Assert.Equal("constitution",
+            dependent.Parameters!["giantAncestryAbility"].GetString());
         Assert.Equal(1, dependent.ResourceOwners.Count);
         Assert.True(parent.EffectiveValue!.Value.TryGetProperty("uses", out var ownerPool));
         Assert.Equal("proficiency-bonus", ownerPool.GetProperty("value").GetString());
@@ -1434,6 +1446,9 @@ public sealed class NativeOriginConstructionTests
         var strike = Assert.Single(offers, x =>
             x.ContributorId == "strike-source" &&
             x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloud-strike");
+        var aptitude = Assert.Single(offers, x =>
+            x.ContributorId == "strike-source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
         var foundations = offers.Where(x => x.ContributorId == "owner-source" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -1443,10 +1458,14 @@ public sealed class NativeOriginConstructionTests
                 new NativeOriginManifestation("foundation-" + i, x.Id,
                     SelectedValue: x.OfferedValue))
                 .Append(new("selected-owner", owner.Id))
+                .Append(new("source-aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["strength"])]))
                 .Append(new("selected-strike", strike.Id)).ToArray(),
             TableDecisions =
             [
                 Decision("owner-allow", "candidate", owner.Id,
+                    new { eligibility = "eligible" }),
+                Decision("aptitude-allow", "candidate", aptitude.Id,
                     new { eligibility = "eligible" }),
                 Decision("strike-allow", "candidate", strike.Id,
                     new { eligibility = "eligible" })
@@ -1494,6 +1513,148 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal("proficiency-bonus",
             grant.EffectiveValue!.Value.GetProperty("uses")
                 .GetProperty("value").GetString());
+    }
+
+    [Theory]
+    [InlineData("ancestry.goliath.cloud", "trait.goliath.cloud.cloud-strike",
+        "trait.goliath.cloud.clouds-jaunt")]
+    [InlineData("ancestry.goliath.fire", "trait.goliath.fire.searing-ignition", null)]
+    [InlineData("ancestry.goliath.frost", "trait.goliath.frost.frosts-chill", null)]
+    [InlineData("ancestry.goliath.frost", "trait.goliath.frost.frigid-retaliation", null)]
+    [InlineData("ancestry.goliath.hill", "trait.goliath.hill.hills-tumble", null)]
+    [InlineData("ancestry.goliath.stone", "trait.goliath.stone.stone-strike",
+        "trait.goliath.stone.stones-endurance")]
+    [InlineData("ancestry.goliath.stone", "trait.goliath.stone.stone-throw", null)]
+    [InlineData("ancestry.goliath.storm", "trait.goliath.storm.storm-strike",
+        "trait.goliath.storm.storms-thunder")]
+    [InlineData("ancestry.goliath.storm", "trait.goliath.storm.maelstrom-aura", null)]
+    public void GiantAbilityChoiceBindsIntoEveryAuthoredDependentFeature(
+        string ancestry, string featureId, string? usesOwnerId)
+    {
+        var proposal = Proposal("giant-choice-" + featureId, NativeOriginIntent.Mixed,
+            contributors: [Contributor("parent", ancestry)]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var aptitude = Assert.Single(offered, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        var requirement = Assert.Single(aptitude.RequiredChoices!);
+        Assert.Equal("abilityChoice", requirement.Id);
+        Assert.Equal(NativeOriginChoiceTiming.Creation, requirement.Timing);
+        Assert.Equal(new[] { "strength", "constitution" }, requirement.FiniteOptions);
+        var feature = Assert.Single(offered, x => x.Identity.MechanicalDefinitionId == featureId);
+        var owner = usesOwnerId is null ? null : Assert.Single(offered,
+            x => x.Identity.MechanicalDefinitionId == usesOwnerId);
+        var physical = offered.Where(x =>
+            x.ContributorId == "parent" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        Assert.Equal(3, physical.Length);
+
+        foreach (var chosenAbility in new[] { "strength", "constitution" })
+        {
+            var selected = physical.Select((x, i) =>
+                new NativeOriginManifestation("physical-" + i, x.Id,
+                    SelectedValue: x.OfferedValue)).ToList();
+            selected.Add(new("aptitude", aptitude.Id,
+                Choices: [new("abilityChoice", [chosenAbility])]));
+            selected.Add(new("feature", feature.Id));
+            if (owner is not null) selected.Add(new("shared-uses-owner", owner.Id));
+
+            var decisions = new List<NativeTableRuleDecision>
+            {
+                Decision("aptitude-allowed", "candidate", aptitude.Id,
+                    new { eligibility = "eligible" }),
+                Decision("feature-allowed", "candidate", feature.Id,
+                    new { eligibility = "eligible" })
+            };
+            if (owner is not null)
+                decisions.Add(Decision("owner-allowed", "candidate", owner.Id,
+                    new { eligibility = "eligible" }));
+            var completed = Evaluate(proposal with
+            {
+                Manifestations = selected, TableDecisions = decisions
+            }, new TestAuthority(), false);
+            Assert.True(completed.Status == NativeOriginConstructionStatus.Authorized,
+                "Actual: " + completed.Status + "; issues: " +
+                string.Join(" | ", completed.Issues.Select(x => x.Code + ":" + x.Detail)));
+            var bound = Assert.Single(completed.Profile!.Underlying.InherentGrants,
+                x => x.Identity.MechanicalDefinitionId == featureId);
+            Assert.Equal(chosenAbility, bound.Parameters!["giantAncestryAbility"].GetString());
+            Assert.Equal(aptitude.Id, bound.ParameterSources!["giantAncestryAbility"]);
+            if (owner is not null)
+                Assert.Equal("grant:shared-uses-owner", bound.ResourceOwners!["uses"]);
+            var restored = JsonSerializer.Deserialize<NativeOriginProfile>(
+                JsonSerializer.Serialize(completed.Profile));
+            var durable = Assert.Single(restored!.Underlying.InherentGrants,
+                x => x.Identity.MechanicalDefinitionId == featureId);
+            Assert.Equal(chosenAbility, durable.Parameters!["giantAncestryAbility"].GetString());
+            Assert.Equal(aptitude.Id, durable.ParameterSources!["giantAncestryAbility"]);
+        }
+    }
+
+    [Fact]
+    public void GiantDependentFeatureRequiresAnExplicitValidContributorAptitude()
+    {
+        var proposal = Proposal("giant-aptitude-required", NativeOriginIntent.Mixed,
+            contributors:
+            [
+                Contributor("aptitude-source", "ancestry.goliath.stone"),
+                Contributor("feature-source", "ancestry.goliath.fire")
+            ]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var aptitude = Assert.Single(offered, x =>
+            x.ContributorId == "aptitude-source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        var feature = Assert.Single(offered, x =>
+            x.ContributorId == "feature-source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.fire.searing-ignition");
+        var physical = offered.Where(x =>
+            x.ContributorId == "feature-source" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var physicalChoices = physical.Select((x, i) =>
+            new NativeOriginManifestation("physical-" + i, x.Id,
+                SelectedValue: x.OfferedValue)).ToArray();
+        var decisions = new[]
+        {
+            Decision("aptitude-allowed", "candidate", aptitude.Id,
+                new { eligibility = "eligible" }),
+            Decision("feature-allowed", "candidate", feature.Id,
+                new { eligibility = "eligible" })
+        };
+
+        var missing = Evaluate(proposal with
+        {
+            Manifestations = physicalChoices.Append(new("feature", feature.Id)).ToArray(),
+            TableDecisions = decisions
+        }, new TestAuthority(), false);
+        Assert.Contains(missing.Issues, x => x.Code == "origin-binding-choice-missing");
+        Assert.DoesNotContain(missing.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.MechanicalDefinitionId == feature.Identity.MechanicalDefinitionId);
+
+        var otherContributor = Evaluate(proposal with
+        {
+            Manifestations = physicalChoices
+                .Append(new("aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["strength"])]))
+                .Append(new("feature", feature.Id)).ToArray(),
+            TableDecisions = decisions
+        }, new TestAuthority(), false);
+        Assert.Contains(otherContributor.Issues, x =>
+            x.Code == "origin-binding-choice-missing");
+        Assert.DoesNotContain(otherContributor.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.MechanicalDefinitionId == feature.Identity.MechanicalDefinitionId);
+
+        var invalid = Evaluate(proposal with
+        {
+            Manifestations = physicalChoices.Append(new("aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["wisdom"])]))
+                .Append(new("feature", feature.Id)).ToArray(),
+            TableDecisions = decisions
+        }, new TestAuthority(), false);
+        Assert.Contains(invalid.Issues, x => x.Code is "choice-selection-invalid" or
+            "dependent-choice-invalid");
+        Assert.DoesNotContain(invalid.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.MechanicalDefinitionId == feature.Identity.MechanicalDefinitionId);
     }
 
     [Fact]
