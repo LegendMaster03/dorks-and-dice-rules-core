@@ -93,7 +93,7 @@ public sealed class NativeCharacterSheetOriginBaselineAdapterTests
         Assert.Equal(30, initial.State!.PrimaryMechanics.BaseWalkSpeed);
         Assert.Equal(45, reconstructed.State!.PrimaryMechanics.BaseWalkSpeed);
         Assert.Equal(20, state.PrimaryMechanics.BaseWalkSpeed);
-        Assert.Same(state.AlternateSheets, reconstructed.State.AlternateSheets);
+        Assert.NotSame(state.AlternateSheets, reconstructed.State.AlternateSheets);
         Assert.Single(reconstructed.State.PrimaryMechanics.Advancements);
         var projected = NativeCharacterSheetResolver.Resolve(
             reconstructed.State, "wolf", new SheetTrust());
@@ -134,4 +134,66 @@ public sealed class NativeCharacterSheetOriginBaselineAdapterTests
         Assert.Null(NativeCharacterSheetOriginBaselineAdapter
             .ApplyWalkSpeed(state, none, new Trust()).State);
     }
+    [Fact]
+    public void DerivedStateDoesNotAliasHostOwnedProgressionChoicesOrOverrides()
+    {
+        var original = State();
+        var scores = original.PrimaryMechanics.AbilityScores.ToDictionary(
+            pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        var choices = new Dictionary<string, string> { ["path"] = "original" };
+        var grantList = new List<NativeSheetEarnedGrant>
+        {
+            new("grant.wolf", "trait.wolf", new(Source(), "/trait"),
+                "receipt.trait")
+        };
+        var progression = new NativeSheetEarnedProgression(
+            "progression.wolf", "advancement.wolf", new(Source(), "/progression"),
+            "receipt.progression", grantList, choices);
+        var overrideScores = new Dictionary<string, int> { ["strength"] = 18 };
+        var sheet = original.AlternateSheets[0] with
+        {
+            Progression = new List<NativeSheetEarnedProgression> { progression },
+            Overrides = new(AbilityScores: new(false, overrideScores))
+        };
+        var sheets = new List<NativePersistentCharacterSheet> { sheet };
+        var input = original with
+        {
+            PrimaryMechanics = original.PrimaryMechanics with { AbilityScores = scores },
+            AlternateSheets = sheets
+        };
+        var derived = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
+            input, Profile(40), new Trust());
+        Assert.Equal("resolved", derived.Status);
+        var before = JsonSerializer.Serialize(derived.State);
+
+        // These mutations simulate a host update after the read projection.
+        scores["wisdom"] = 100;
+        overrideScores["strength"] = 2;
+        choices["path"] = "later";
+        grantList[0] = grantList[0] with { DefinitionId = "trait.modified" };
+        sheets.Clear();
+
+        Assert.Equal(before, JsonSerializer.Serialize(derived.State));
+        Assert.Equal(40, derived.State!.PrimaryMechanics.BaseWalkSpeed);
+        Assert.Single(derived.State.AlternateSheets);
+        Assert.Equal("original", derived.State.AlternateSheets[0].Progression![0].Choices!["path"]);
+    }
+
+    [Fact]
+    public void MalformedSheetDoesNotCauseOriginAdapterToThrow()
+    {
+        var original = State();
+        var broken = original.AlternateSheets[0] with
+        {
+            Progression = [new("bad", "advancement.bad", new(Source(), "/bad"),
+                "receipt.bad", null!)]
+        };
+        var state = original with { AlternateSheets = [broken] };
+        var result = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
+            state, Profile(40), new Trust());
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.State);
+        Assert.Contains(result.Issues, issue => issue.Code == "invalid-character-state");
+    }
+
 }
