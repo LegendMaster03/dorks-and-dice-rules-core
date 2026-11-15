@@ -1,3 +1,5 @@
+using System.Collections.Frozen;
+
 namespace RulesCore.Mechanics;
 
 /// <summary>
@@ -91,15 +93,28 @@ public static class NativeCharacterSheetProjector
             if (native.FeatureIds.Count > 0 || native.Resources.Count > 0)
                 formIssues.Add(new("sheet-class-applicability-unresolved", "baseMechanics",
                     "Class features and resource use require authored form applicability rules."));
+            // The standard Class HP formula is not a form-specific current/
+            // maximum HP interaction policy. Do not publish a resolved HP
+            // maximum if the selected sheet may have its own HP behavior.
+            var values = native.Values.ToDictionary(
+                pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+            if (values.TryGetValue("hit-points.maximum", out var hp) &&
+                hp.Status == "resolved")
+            {
+                formIssues.Add(new("sheet-hit-points-policy-unresolved", "hit-points",
+                    "An alternate form requires an authored current/maximum HP interaction policy."));
+                values["hit-points.maximum"] = new("unsupported", null,
+                    "Form-specific Hit Point policy is not implemented.");
+            }
             issues.AddRange(formIssues);
 
-            // Numeric fields remain individually derived, not proof of a
-            // playable effective form. Propagate the partial status and its
-            // reasons into the nested native projection as well; consumers
-            // must not interpret missing feature IDs as earned revocation.
+            // Other numeric fields remain individually derived, not proof of
+            // a playable effective form. Propagate all unresolved reasons
+            // into the nested projection as well as the outer sheet result.
             baseView = native with
             {
                 Status = "partial",
+                Values = values.ToFrozenDictionary(StringComparer.Ordinal),
                 FeatureIds = Array.Empty<string>(),
                 Resources = Array.Empty<NativeResource>(),
                 Issues = Array.AsReadOnly(native.Issues.Concat(formIssues).ToArray())
