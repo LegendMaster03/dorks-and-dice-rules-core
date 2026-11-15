@@ -1,3 +1,4 @@
+using System.Text.Json;
 using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
@@ -19,13 +20,16 @@ public sealed class NativeCharacterManifestationTests
         public bool DenyInteraction { get; set; }
         public bool DenyTransition { get; set; }
         public bool DenyInfluence { get; set; }
+        public bool DenyProgression { get; set; }
+        public bool DenyGrant { get; set; }
+        public bool PermitIndependentEnding { get; set; }
         public int TransitionCalls { get; private set; }
 
         public bool AuthorizesPrimary(string id, NativeCharacterRequest primary) => id == "character.1";
         public bool AuthorizesSheet(string id, NativePersistentCharacterSheet sheet) => id == "character.1";
-        public bool AuthorizesProgression(string id, string owner, NativeSheetEarnedProgression progression) => true;
+        public bool AuthorizesProgression(string id, string owner, NativeSheetEarnedProgression progression) => !DenyProgression;
         public bool AuthorizesGrant(string id, string owner, NativeSheetEarnedProgression progression,
-            NativeSheetEarnedGrant grant) => true;
+            NativeSheetEarnedGrant grant) => !DenyGrant;
         public bool AuthorizesApplicability(string id, string sheet, NativeSheetGrantApplicability decision) => true;
         public bool AuthorizesInfluence(string id, NativeCharacterPersistentInfluence influence) => !DenyInfluence;
         public bool AuthorizesExpression(string id, NativeCharacterPersistentInfluence influence) => true;
@@ -55,6 +59,13 @@ public sealed class NativeCharacterManifestationTests
             return !DenyTransition && request.ExpectedRevision == ledger.Revision &&
                 request.CharacterId == id;
         }
+        public bool AuthorizesUnlistedEnding(string id, NativeManifestationLedger ledger,
+            NativeManifestationInstance instance, NativeManifestationTransitionStep step) =>
+            PermitIndependentEnding && id == ledger.CharacterId &&
+            instance.Id == step.TargetInstanceId &&
+            step.EndingConditionId == "rule.test.external-displacement" &&
+            step.RuleOccurrence == Occurrence("actions.external-displacement") &&
+            step.Basis == Rule();
     }
 
     private static NativeOriginSourceReference Source() =>
@@ -143,7 +154,9 @@ public sealed class NativeCharacterManifestationTests
 
     private static NativeManifestationTransitionStep Action(
         NativeManifestationTransitionAction action, string id) =>
-        new(action, id, Occurrence("actions." + action), Rule(), "receipt.transition." + id);
+        new(action, id, Occurrence("actions." + action), Rule(), "receipt.transition." + id,
+            EndingConditionId: action == NativeManifestationTransitionAction.End
+                ? "rule.test.end-on-event" : null);
 
     private static NativeManifestationTransitionPlan Plan(
         NativeCharacterState state, NativeManifestationLedger ledger, string eventId,
