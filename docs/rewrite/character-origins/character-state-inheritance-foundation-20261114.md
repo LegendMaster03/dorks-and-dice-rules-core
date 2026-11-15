@@ -34,9 +34,49 @@ The mandatory `INativeCharacterSheetAuthority` is a second trust boundary for th
 
 A Class level gained while all forms are inactive updates the next effective projection through `@primary`. An ability owned by `werewolf` appears under that owner in both descendants. Wolf-only progression is not inherited sideways into hybrid. Choosing to manifest either form, or applying activation-scoped resource semantics, remains a separate operation.
 
+## Verified projection, safe applicability, and latest-Origin bridge
+
+The follow-up increment tightens the contract around *trusted sources* and
+*usable mechanics*, without defining a new transformation gameplay grammar:
+
+- `INativeCharacterSheetAuthority.AuthorizesPrimary` now explicitly verifies
+  current primary mechanics. `AuthorizesApplicability` must verify the
+  **exact source-/campaign-scoped decision** before it can mark a grant
+  applicable or suppressed. A supported-looking rule ID is not proof.
+- `Resolve` detaches its ability/training/resource/selection input collections,
+  progression choices and grant lists. Downstream consumers can not mutate
+  the saved authoritative records through the result, nor can post-resolution
+  changes to those inputs change an already resolved projection.
+- `NativeSheetLevelReference` optionally points a verified earned grant to
+  **total Class levels** or a **specific primary Class level**. The
+  `NativeCharacterSheetProjector` validates the primary progression using
+  the existing `NativeCharacterProjector`, then returns the resolved
+  level *reference*, not a copied level owned by the alternate sheet and
+  not an invented formula for a supernatural effect.
+- The new projector returns only **Applicable** sheet grants in
+  `UsableCapabilities`. It reports Suppressed/Unresolved grants separately
+  and withholds level-bound use if native advancement cannot be verified.
+  Class feature IDs and resource pools from a numerical base projection
+  remain **withheld in alternate forms** pending individual authored
+  applicability rules. They are never treated as form-earned grants.
+  The numeric base projection remains a partial input, not a fully playable
+  effective-character result.
+- `NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed` provides an
+  intentionally narrow, separately trusted Origin connection. The host must
+  validate the complete current Origin baseline and exact walking-speed
+  grant/provenance; this adapter reads the latest `Underlying` and never an
+  older `Current` or `History.PreviousConfiguration`. It updates the
+  *derived request*, not the authoritative Origin or alternate sheets.
+  Other intrinsic/trait domains and old-ID migration are not covered.
+
+These additions are validated by synthetic tests for denied authorization,
+mutable input detachment, real native Class progression, level-bound
+invalidation, suppressed capability exclusion, withheld native Class features,
+and latest-Underlying walk speed after a synthetic reconstruction.
+
 ## Validation and synthetic acceptance
 
-`tests/RulesCore.Mechanics.Tests/NativeCharacterSheetResolverTests.cs` covers persistent inactive sheets, shared and local ownership, changed Class/baseline fields, individual nested properties, whole-object/map replacement, sibling isolation, resource override isolation, suppression without revocation, missing parents, graph cycles, duplicate IDs, unknown applicability references, unauthorized acquisition/grants, canonical definition vs occurrence identity, and repeatable non-mutating reads.
+`tests/RulesCore.Mechanics.Tests/NativeCharacterSheetResolverTests.cs`, `NativeCharacterSheetProjectorTests.cs`, and `NativeCharacterSheetOriginBaselineAdapterTests.cs` cover persistent inactive sheets, shared and local ownership, changed Class/baseline fields, individual nested properties, whole-object/map replacement, sibling isolation, resource override isolation, suppression without revocation, missing parents, graph cycles, duplicate IDs, unknown applicability references, unauthorized acquisition/grants, canonical definition vs occurrence identity, and repeatable non-mutating reads.
 
 Run:
 
