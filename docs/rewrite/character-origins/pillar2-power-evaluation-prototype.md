@@ -285,7 +285,7 @@ control effects in scenes whose initiative and target behavior are unknown.
 
 ## Confirmed-hit Goliath control diagnostics (version 5)
 
-The current **version-5 scenario corpus contains 23 named contexts**, five of
+The earlier **version-5 scenario corpus contained 23 named contexts**, five of
 which isolate conditional Goliath control. `strikeOpportunities` are deliberate
 single-feature activation trials, **not** simulated attack rotations or permission
 to inherit any feature. Each event identifies an **expressed canonical `traitId`**,
@@ -347,3 +347,72 @@ Where an effect's expiry is not authored in the expected structure, it leaves
 the timed consequence unresolved. Incomplete movement, opponent behavior,
 conditional spells, class-specific feat choices, and real session frequencies
 continue to block a definitive whole-Species balance judgment.
+
+## Bonus-action and area/aura diagnostics (version 6)
+
+The **version-6 corpus contains 26 diagnostic contexts**. The three added
+fixtures use `tacticalOpportunities`, each with a referenced, expressed
+canonical `traitId`, a round number, explicit action availability and
+eligible targets. The evaluator recognizes **only the verified authored forms**
+of Stone Throw, Searing Ignition, and Maelstrom Aura; altered or unfamiliar
+mechanical definitions are not silently treated as equivalent.
+
+Events replay **in fixture order**, with at most one Bonus Action and one
+attack replacement per round *within this tactical submodel*. This is a
+conditional sequence, **not** an optimizer choosing between actions, and does
+not combine action accounting automatically with other evaluation modules.
+Each supported ability uses its own PB/Long Rest pool, including independently
+owned Stone Throw charges. The older Stone Strike shares **Stone's Endurance**
+charges instead; Stone Throw does not draw from either of those pools. No
+additional pool is granted by receiving multiple source occurrences.
+
+- **Stone Throw:** A rock must be available and the declared target must be
+  within its authored 60-foot range. Gross expected Force damage is
+  hit probability × 1d10 mean, adjusted only by an explicit damage-type
+  multiplier. A qualifying creature makes a Strength save; expected Prone
+  applications equal hit probability × failed-save probability. Attack hits
+  prevented are measured **only** when attacks are declared before the target
+  stands and native `condition.prone` includes the matching Disadvantage.
+  A separate *net Bonus Action damage* endpoint is available only when the
+  fixture states the alternative action's expected damage. The calculation
+  does not claim that forcing Prone is worth a fixed amount of damage.
+- **Searing Ignition:** Requires an available Attack action with one attack
+  to replace. The evaluator takes the fixture's number of enemies **chosen
+  by the user and within the 15-foot radius**; no friendly-fire or positioning
+  solution is inferred. Gross expected Fire damage uses the authored 1d8+PB
+  and full/half on failed/successful saves. Net attack-replacement damage
+  subtracts the specified alternative attack. Blinded applications and
+  attack-hit prevention are separate endpoints, with the latter requiring
+  declared enemy attacks before the author's next-turn expiry. Additional
+  Blinded effects, such as sight loss, Speed, and AC, remain unmodeled.
+- **Maelstrom Aura:** An uninterrupted Bonus Action window lasts until the
+  beginning of the user's next turn. The fixture declares how many attacks
+  target the user in that window, how many other creatures begin their turns
+  within the unobstructed 10-foot area, and their current Speed. The output
+  reports expected attack hits prevented by Disadvantage and nominal
+  Speed reduction after a failed Strength save; these are *not* lost turns
+  or completed travel reductions. Separately identified **nonattack**
+  Lightning/Thunder packets allow marginal 50% resistance to be measured
+  without double-counting attack-hit prevention. Existing resistance to the
+  same type reduces or eliminates the aura's incremental prevention.
+  If interruption by Incapacitated is stipulated, the event stays unresolved
+  rather than projecting a full-duration benefit.
+
+**Reproduction examples at level 4** (PB 2, baseline hit chance 0.65,
+failed-save probability 0.55): two eligible Stone Throws yield 7.15 gross
+expected Force damage, 0.715 expected Prone applications, and 1.15 expected
+net Bonus Action damage against an explicit 3-damage alternative each time.
+One two-enemy Searing Ignition yields 10.075 gross expected Fire damage and
+1.1 expected Blinded applications, at a cost of one replaced attack.
+One Maelstrom Aura facing two eligible attacks and separate nonattack packets
+of 20 Lightning and 10 Thunder damage prevents 0.455 expected attack hits
+and 15 expected incoming damage, while two 30-foot-Speed enemies starting
+their turns inside the aura lose 16.5 expected **nominal** Speed feet.
+
+All examples use modeled means without integer half-damage rounding, overkill,
+actual geometry search, reaction competition, class-specific opportunity costs,
+condition immunities, encounter prevalence or concentration tradeoffs.
+Independent fixture endpoints must not be summed into a total Species score.
+The research report and inheritance design remain authoritative about what
+is *not* decided: effective power targets, mixed-contributor eligibility,
+hereditary burden and numerical allocation rules.

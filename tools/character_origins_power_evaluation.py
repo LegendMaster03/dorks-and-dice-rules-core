@@ -42,6 +42,7 @@ DEFAULT_SCENARIO = {
     "spellDemands": [],
     "controlOpportunities": [],
     "strikeOpportunities": [],
+    "tacticalOpportunities": [],
     "breathOpportunities": [
         {"areaTargets": {"line": 3, "cone": 1}},
         {"areaTargets": {"line": 1, "cone": 3}},
@@ -155,7 +156,7 @@ def validate_scenario(scenario: dict) -> None:
                 _number(value, f"{field}.{name}")
     for field in ("incomingDamage", "breathOpportunities", "saveEvents",
                   "reactionDamageEvents", "spellDemands", "controlOpportunities",
-                  "strikeOpportunities",
+                  "strikeOpportunities", "tacticalOpportunities",
                   "tremorsenseContacts", "mobilityChallenges"):
         events = scenario.get(field, [])
         if not isinstance(events, list):
@@ -302,6 +303,95 @@ def validate_scenario(scenario: dict) -> None:
                     _probability(event["baseHitChance"], f"{location}.baseHitChance")
                 if "targetSpeedFeet" in event:
                     _number(event["targetSpeedFeet"], f"{location}.targetSpeedFeet")
+            elif field == "tacticalOpportunities":
+                allowed = {"id", "traitId", "round", "kind", "actionAvailable",
+                           "rockAvailable", "distanceFeet", "hitChance",
+                           "targetIsCreature", "failureProbability",
+                           "normalAttackRollsBeforeRecovery", "baseHitChance",
+                           "bonusActionAlternativeExpectedDamage", "enemyTargets",
+                           "enemyNormalAttackRollsBeforeRecovery",
+                           "attackReplacementExpectedDamage", "enemyStartsWithinAura",
+                           "attacksTargetingYouBeforeExpiry", "targetSpeedFeet",
+                           "incomingNonattackPackets", "auraUninterrupted"}
+                extra = set(event) - allowed
+                if extra:
+                    raise ValueError(f"Unknown {location} fields: {sorted(extra)}")
+                for name in ("id", "traitId", "kind"):
+                    _nonempty(event.get(name), f"{location}.{name}")
+                kind = event["kind"]
+                if kind not in ("stone-throw", "searing-ignition", "maelstrom-aura"):
+                    raise ValueError(f"{location}.kind is unsupported")
+                _count(event.get("round"), f"{location}.round")
+                if event["round"] < 1:
+                    raise ValueError(f"{location}.round must be >= 1")
+                if type(event.get("actionAvailable")) is not bool:
+                    raise ValueError(f"{location}.actionAvailable must be boolean")
+                common = {"id", "traitId", "round", "kind", "actionAvailable"}
+                kind_fields = {
+                    "stone-throw": {"rockAvailable", "distanceFeet", "hitChance",
+                                    "targetIsCreature", "failureProbability",
+                                    "normalAttackRollsBeforeRecovery", "baseHitChance",
+                                    "bonusActionAlternativeExpectedDamage"},
+                    "searing-ignition": {"enemyTargets", "failureProbability",
+                                         "enemyNormalAttackRollsBeforeRecovery", "baseHitChance",
+                                         "attackReplacementExpectedDamage"},
+                    "maelstrom-aura": {"enemyStartsWithinAura", "failureProbability",
+                                       "attacksTargetingYouBeforeExpiry", "baseHitChance",
+                                       "targetSpeedFeet", "incomingNonattackPackets",
+                                       "auraUninterrupted", "bonusActionAlternativeExpectedDamage"},
+                }[kind]
+                if set(event) - common - kind_fields:
+                    raise ValueError(f"{location}: fields do not match {kind}")
+                if kind == "stone-throw":
+                    for flag in ("rockAvailable", "targetIsCreature"):
+                        if type(event.get(flag)) is not bool:
+                            raise ValueError(f"{location}.{flag} must be boolean")
+                    _number(event.get("distanceFeet"), f"{location}.distanceFeet")
+                    _probability(event.get("hitChance"), f"{location}.hitChance")
+                    _probability(event.get("failureProbability"), f"{location}.failureProbability")
+                    if "normalAttackRollsBeforeRecovery" in event:
+                        _count(event["normalAttackRollsBeforeRecovery"],
+                               f"{location}.normalAttackRollsBeforeRecovery")
+                        if "baseHitChance" not in event:
+                            raise ValueError(f"{location}.baseHitChance required for Prone attacks")
+                        if not event["targetIsCreature"] and event["normalAttackRollsBeforeRecovery"]:
+                            raise ValueError(f"{location}: noncreature target can not attack while Prone")
+                elif kind == "searing-ignition":
+                    _count(event.get("enemyTargets"), f"{location}.enemyTargets")
+                    _probability(event.get("failureProbability"), f"{location}.failureProbability")
+                    if "enemyNormalAttackRollsBeforeRecovery" in event:
+                        _count(event["enemyNormalAttackRollsBeforeRecovery"],
+                               f"{location}.enemyNormalAttackRollsBeforeRecovery")
+                        if "baseHitChance" not in event:
+                            raise ValueError(f"{location}.baseHitChance required for Blinded attacks")
+                        if event["enemyTargets"] == 0 and event["enemyNormalAttackRollsBeforeRecovery"]:
+                            raise ValueError(f"{location}: no enemy targets for Blinded attacks")
+                else:
+                    _count(event.get("enemyStartsWithinAura"),
+                           f"{location}.enemyStartsWithinAura")
+                    _count(event.get("attacksTargetingYouBeforeExpiry"),
+                           f"{location}.attacksTargetingYouBeforeExpiry")
+                    _probability(event.get("failureProbability"), f"{location}.failureProbability")
+                    _number(event.get("targetSpeedFeet"), f"{location}.targetSpeedFeet")
+                    if event["attacksTargetingYouBeforeExpiry"] and "baseHitChance" not in event:
+                        raise ValueError(f"{location}.baseHitChance required for attack rolls")
+                    if type(event.get("auraUninterrupted")) is not bool:
+                        raise ValueError(f"{location}.auraUninterrupted must be boolean")
+                    packets = event.get("incomingNonattackPackets")
+                    if not isinstance(packets, list):
+                        raise ValueError(f"{location}.incomingNonattackPackets must be an array")
+                    for n, packet in enumerate(packets):
+                        if not isinstance(packet, dict) or set(packet) != {"type", "amount"}:
+                            raise ValueError(f"{location}.incomingNonattackPackets[{n}] malformed")
+                        _nonempty(packet["type"], f"{location}.packet[{n}].type")
+                        _number(packet["amount"], f"{location}.packet[{n}].amount")
+                for numeric in ("baseHitChance",):
+                    if numeric in event:
+                        _probability(event[numeric], f"{location}.{numeric}")
+                for numeric in ("attackReplacementExpectedDamage",
+                                "bonusActionAlternativeExpectedDamage"):
+                    if numeric in event:
+                        _number(event[numeric], f"{location}.{numeric}")
             elif field == "tremorsenseContacts":
                 _number(event.get("distanceFeet"), f"{location}.distanceFeet")
                 for key in ("sensorTouches", "targetTouches"):
@@ -332,7 +422,7 @@ def validate_scenario(scenario: dict) -> None:
                 if event["mode"] == "burrow" and "material" not in event:
                     raise ValueError(f"{location}.material required for burrow")
             if field in ("saveEvents", "reactionDamageEvents", "spellDemands",
-                         "controlOpportunities", "strikeOpportunities"):
+                         "controlOpportunities", "strikeOpportunities", "tacticalOpportunities"):
                 identifier = event["id"]
                 if identifier in seen_ids:
                     raise ValueError(f"Duplicate {field} event ID: {identifier}")
@@ -1019,6 +1109,197 @@ def on_hit_control_outcomes(traits: dict, catalog: dict, level: int,
     return dict(metrics), trace, issues, modeled, spent
 
 
+def _tactical_kind(trait: dict) -> str | None:
+    """Recognize exact authored forms, not a generic rule for similarly named abilities."""
+    ident = trait.get("id")
+    act = trait.get("activation", {})
+    uses = trait.get("uses", {})
+    if not isinstance(act, dict) or not isinstance(uses, dict):
+        return None
+    if uses.get("value") != "proficiency-bonus" or uses.get("recharge") != "long-rest":
+        return None
+    if ident == "stone-throw":
+        attack = trait.get("attack", {})
+        return (ident if act.get("action") == "bonus-action" and
+                trait.get("requiresItem") == "rock" and
+                attack.get("type") == "ranged-spell-attack" and
+                attack.get("rangeFeet") == 60 and
+                trait.get("damage", {}).get("dice") == "1d10" and
+                trait.get("savingThrow", {}).get("ability") == "strength" and
+                trait.get("savingThrow", {}).get("onSuccess") == "no-prone" and
+                trait.get("applyConditionOnFailedSave") == "condition.prone"
+                else None)
+    if ident == "searing-ignition":
+        area = trait.get("area", {})
+        status = trait.get("applyConditionOnFailedSave", {})
+        return (ident if act.get("action") == "attack" and
+                act.get("replaces") == "one-attack" and
+                trait.get("oncePerTurn") is True and
+                area.get("shape") == "sphere" and area.get("radiusFeet") == 15 and
+                area.get("targets") == "creatures-of-your-choice" and
+                trait.get("damage", {}).get("dice") == "1d8" and
+                trait.get("damage", {}).get("add") == "proficiency-bonus" and
+                trait.get("damage", {}).get("damageType") == "fire" and
+                trait.get("savingThrow", {}).get("ability") == "dexterity" and
+                trait.get("savingThrow", {}).get("onSuccess") == "half-damage-only" and
+                trait.get("savingThrow", {}).get("onFailure") == "full-damage-and-condition" and
+                status.get("condition") == "condition.blinded" and
+                status.get("endsAt") == "start-of-your-next-turn" else None)
+    if ident == "maelstrom-aura":
+        area, duration = trait.get("area", {}), trait.get("duration", {})
+        active = trait.get("whileActive", {})
+        beginning = trait.get("startsTurnInside", {})
+        resist = active.get("damageResistance", [])
+        return (ident if act.get("action") == "bonus-action" and
+                area.get("shape") == "aura" and area.get("radiusFeet") == 10 and
+                area.get("blockedBy") == "total-cover" and
+                duration.get("endsAt") == "start-of-your-next-turn" and
+                duration.get("alsoEndsWhen") == "condition.incapacitated" and
+                active.get("attackRollsTargetingYou") == "disadvantage" and
+                isinstance(resist, list) and
+                {(x.get("damageType"), x.get("percent")) for x in resist} ==
+                {("lightning", 50), ("thunder", 50)} and
+                beginning.get("target") == "other-creature" and
+                beginning.get("onFailedSave", {}).get("speedMultiplier") == 0.5 and
+                beginning.get("onFailedSave", {}).get("endsAt") == "start-of-targets-next-turn" and
+                beginning.get("savingThrow", {}).get("ability") == "strength" and
+                beginning.get("savingThrow", {}).get("onSuccess") == "no-speed-change" else None)
+    return None
+
+
+def _native_attack_disadvantage(catalog: dict, condition: str) -> bool:
+    """Only claim attack consequences when the authored condition defines them."""
+    return any(effect.get("type") == "roll-mode" and
+               effect.get("appliesTo") == "attack-roll" and
+               effect.get("mode") == "disadvantage" and
+               effect.get("subject") == "attacks-by-affected-creature"
+               for effect in catalog.get("conditions", {}).get(condition, {}).get("effects", []))
+
+
+def tactical_action_outcomes(traits: dict, catalog: dict, level: int, pb: int,
+                             scenario: dict, resistances: dict[str, float]):
+    """Sequential fixture replay. One bonus action and attack replacement/round.
+
+    Deliberately not an optimal rotation or a total utility measure. Control,
+    movement, damage and opportunity costs are separate endpoints. Each event
+    specifies *eligible* targets and windows; it does not infer positioning.
+    """
+    metrics = defaultdict(float)
+    trace, issues, modeled = [], [], set()
+    uses = defaultdict(int)
+    occupied = set()
+    for event in scenario.get("tacticalOpportunities", []):
+        row = {"id": event["id"], "traitId": event["traitId"],
+               "round": event["round"], "status": None}
+        identifier = event["traitId"]
+        trait = traits.get(identifier)
+        if trait is None:
+            row["status"] = "not-offered"
+            trace.append(row)
+            continue
+        if not unlocked(trait, level):
+            row["status"] = "level-locked"
+            trace.append(row)
+            continue
+        kind = _tactical_kind(trait)
+        if kind != event["kind"]:
+            row["status"] = "unrecognized-authored-mechanics"
+            issues.append({"traitId": identifier,
+                           "reason": "tactical-definition-does-not-match-fixture"})
+            trace.append(row)
+            continue
+        modeled.add(identifier)
+        act = "bonus-action" if kind != "searing-ignition" else "attack-replacement"
+        if not event["actionAvailable"]:
+            row["status"] = "action-unavailable"
+        elif (event["round"], act) in occupied:
+            row["status"] = "action-already-spent-this-round"
+        elif uses[identifier] >= pb:
+            row["status"] = "resource-exhausted"
+        elif kind == "stone-throw" and not event["rockAvailable"]:
+            row["status"] = "missing-rock"
+        elif kind == "stone-throw" and event["distanceFeet"] > trait["attack"]["rangeFeet"]:
+            row["status"] = "out-of-range"
+        elif kind == "maelstrom-aura" and not event["auraUninterrupted"]:
+            row["status"] = "aura-interruption-unresolved"
+            issues.append({"traitId": identifier, "reason": "aura-interruption-timing-unresolved"})
+        else:
+            row["status"] = "activated"
+            uses[identifier] += 1
+            occupied.add((event["round"], act))
+            metrics["tactical_activated_uses"] += 1
+            metrics["tactical_bonus_actions_used" if act == "bonus-action"
+                    else "tactical_attack_replacements"] += 1
+            if kind == "stone-throw":
+                hit = event["hitChance"]
+                gross = (hit * dice_mean(trait["damage"]["dice"]) *
+                         scenario.get("damageTypeMultiplier", {}).get("force", 1))
+                metrics["tactical_expected_gross_damage"] += gross
+                row["expectedGrossDamage"] = gross
+                if event["targetIsCreature"]:
+                    if "condition.prone" in catalog["conditions"]:
+                        application = hit * event["failureProbability"]
+                        metrics["tactical_expected_enemy_prone_applications"] += application
+                        row["expectedProneApplications"] = application
+                        if ("normalAttackRollsBeforeRecovery" in event and
+                                _native_attack_disadvantage(catalog, "condition.prone")):
+                            p = event["baseHitChance"]
+                            delta = application * event["normalAttackRollsBeforeRecovery"] * p*(1-p)
+                            metrics["tactical_expected_enemy_attack_hits_prevented"] += delta
+                    else:
+                        issues.append({"traitId": identifier, "reason": "prone-condition-not-in-catalog"})
+            elif kind == "searing-ignition":
+                f, n = event["failureProbability"], event["enemyTargets"]
+                gross = (n * (dice_mean(trait["damage"]["dice"]) + pb) *
+                         (0.5 + 0.5*f) * scenario.get("damageTypeMultiplier", {}).get("fire", 1))
+                net = gross - event.get("attackReplacementExpectedDamage",
+                                         scenario.get("attackReplacementExpectedDamage", 5.2))
+                metrics["tactical_expected_gross_damage"] += gross
+                metrics["tactical_expected_net_attack_replacement_damage"] += net
+                row.update(expectedGrossDamage=gross, expectedNetDamage=net)
+                if "condition.blinded" in catalog["conditions"]:
+                    metrics["tactical_expected_enemy_blinded_applications"] += n * f
+                    if ("enemyNormalAttackRollsBeforeRecovery" in event and
+                            _native_attack_disadvantage(catalog, "condition.blinded")):
+                        p = event["baseHitChance"]
+                        delta = f * event["enemyNormalAttackRollsBeforeRecovery"] * p*(1-p)
+                        metrics["tactical_expected_enemy_attack_hits_prevented"] += delta
+                else:
+                    issues.append({"traitId": identifier, "reason": "blinded-condition-not-in-catalog"})
+                issues.append({"traitId": identifier, "reason": "blinded-other-effects-unmodeled"})
+            else:
+                f = event["failureProbability"]
+                p = event.get("baseHitChance")
+                if p is not None:
+                    hits = event["attacksTargetingYouBeforeExpiry"] * p*(1-p)
+                    metrics["tactical_expected_self_attack_hits_prevented"] += hits
+                else:
+                    issues.append({"traitId": identifier, "reason": "aura-base-hit-chance-not-specified"})
+                speed = event["targetSpeedFeet"]
+                metrics["tactical_expected_enemy_nominal_speed_reduction_feet"] += (
+                    event["enemyStartsWithinAura"] * f * speed * .5)
+                saved = 0.0
+                for packet in event["incomingNonattackPackets"]:
+                    if packet["type"] in ("lightning", "thunder"):
+                        saved += packet["amount"] * max(0, .5 - resistances.get(packet["type"], 0))
+                metrics["tactical_expected_nonattack_damage_prevented"] += saved
+                row["expectedNonattackDamagePrevented"] = saved
+                issues.append({"traitId": identifier, "reason": "aura-movement-and-positioning-unmodeled"})
+            if act == "bonus-action":
+                if "bonusActionAlternativeExpectedDamage" in event:
+                    # For Auras this is merely a competing action cost, not a
+                    # logically subtractable damage from prevented hits.
+                    row["alternativeBonusActionExpectedDamage"] = event["bonusActionAlternativeExpectedDamage"]
+                    if kind == "stone-throw":
+                        metrics["tactical_expected_net_bonus_action_damage"] += (
+                            row["expectedGrossDamage"] - event["bonusActionAlternativeExpectedDamage"])
+                else:
+                    issues.append({"traitId": identifier,
+                                   "reason": "bonus-action-opportunity-cost-unresolved"})
+        trace.append(row)
+    return dict(metrics), trace, issues, modeled
+
+
 def _damage_reduction_expectation(dice: str, modifier: int, amount: float) -> float:
     """Exact expectation of capped single-die reduction, not min(mean, hit)."""
     match = re.fullmatch(r"1d(\d+)", dice)
@@ -1372,6 +1653,10 @@ def evaluate(profile: dict, catalog: dict, level: int,
     unmodeled.extend(spell_issues + control_issues + strike_issues)
     modeled_movement = {opt["source"] for opt in _movement_options(profile, level, pb)}
     modeled_reactions = {d["traitId"] for d in _reaction_defenses(traits, level, pb)}
+    modeled_tactical = {identifier for identifier, trait in traits.items()
+                        if unlocked(trait, level) and _tactical_kind(trait) is not None
+                        and any(e["traitId"] == identifier
+                                for e in scenario.get("tacticalOpportunities", []))}
     shared_frontiers = native_shared_pool_frontiers(traits, level)
     modeled_shared_links = {f["alternativeTraitId"] for f in shared_frontiers}
     for identifier, trait in traits.items():
@@ -1444,6 +1729,11 @@ def evaluate(profile: dict, catalog: dict, level: int,
                 interpreted.update(("grantType", "chooseFrom", "choiceCount", "when"))
                 unmodeled.append({"traitId": identifier,
                                   "reason": "unresolved-selected-skill"})
+        if identifier in modeled_tactical:
+            recognized = True
+            interpreted.update(("activation", "uses", "oncePerTurn", "requiresItem",
+                                "attack", "damage", "savingThrow", "applyConditionOnFailedSave",
+                                "area", "whileActive", "startsTurnInside", "duration"))
         if identifier in modeled_strikes:
             recognized = True
             interpreted.update(("trigger", "oncePerTurn", "uses", "sharedUsesFromTrait",
@@ -1489,6 +1779,19 @@ def evaluate(profile: dict, catalog: dict, level: int,
                                   "fields": unknown_fields})
         else:
             unmodeled.append({"traitId": identifier, "reason": "not-modeled"})
+    tactical_values, tactical_trace, tactical_issues, _ = (
+        tactical_action_outcomes(traits, catalog, level, pb, scenario, resistances))
+    if scenario.get("tacticalOpportunities"):
+        metrics.update(tactical_values)
+    unmodeled.extend(tactical_issues)
+    for identifier, trait in traits.items():
+        if not unlocked(trait, level) or trait.get("id") not in (
+                "stone-throw", "searing-ignition", "maelstrom-aura"):
+            continue
+        if identifier not in modeled_tactical and not any(
+                issue.get("traitId") == identifier for issue in tactical_issues):
+            unmodeled.append({"traitId": identifier,
+                              "reason": "tactical-ability-not-evaluated-in-this-scenario"})
     for event in scenario.get("incomingDamage", []):
         fraction = resistances.get(event["type"], 0)
         metrics["incoming_damage_prevented"] += event["amount"] * fraction
@@ -1568,6 +1871,7 @@ def evaluate(profile: dict, catalog: dict, level: int,
             "innateFixedSpellEntitlements": spell_entitlements,
             "controlEventTrace": control_trace,
             "strikeEventTrace": strike_trace,
+            "tacticalEventTrace": tactical_trace,
             "sharedResourceFrontiers": shared_frontiers,
             "modeledTraits": sorted(modeled), "unmodeled": unmodeled,
             "committedFutureTraits": sorted(future)}
@@ -1632,8 +1936,8 @@ def validate_scenario_suite(suite: dict) -> None:
     if unexpected:
         raise ValueError(f"Unknown scenario-suite fields: {sorted(unexpected)}")
     _nonempty(suite.get("id"), "suite.id")
-    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5):
-        raise ValueError("suite.version must be 1, 2, 3, 4 or 5")
+    if type(suite.get("version")) is not int or suite["version"] not in (1, 2, 3, 4, 5, 6):
+        raise ValueError("suite.version must be 1, 2, 3, 4, 5 or 6")
     contexts = suite.get("contexts")
     if not isinstance(contexts, list) or len(contexts) < 2:
         raise ValueError("suite.contexts must include at least two scenarios")

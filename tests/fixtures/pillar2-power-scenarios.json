@@ -1,6 +1,6 @@
 {
-  "id": "pillar2-diagnostic-sensitivity-v5",
-  "version": 5,
+  "id": "pillar2-diagnostic-sensitivity-v6",
+  "version": 6,
   "contexts": [
     {
       "id": "corridor-area-opportunities",
@@ -647,6 +647,118 @@
             "baseHitChance": 0.65,
             "hit": true,
             "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-stone-throw-bonus-action",
+      "purpose": "Stone Throw uses a real rock, a bonus action and PB long-rest charges, with ranged spell-attack hit probability and save-dependent Prone.",
+      "scenario": {
+        "id": "goliath-stone-throw-bonus-action",
+        "tacticalOpportunities": [
+          {
+            "id": "stone-1",
+            "traitId": "trait.goliath.stone.stone-throw",
+            "kind": "stone-throw",
+            "round": 1,
+            "actionAvailable": true,
+            "rockAvailable": true,
+            "distanceFeet": 40,
+            "hitChance": 0.65,
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "bonusActionAlternativeExpectedDamage": 3
+          },
+          {
+            "id": "stone-2",
+            "traitId": "trait.goliath.stone.stone-throw",
+            "kind": "stone-throw",
+            "round": 2,
+            "actionAvailable": true,
+            "rockAvailable": true,
+            "distanceFeet": 40,
+            "hitChance": 0.65,
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "bonusActionAlternativeExpectedDamage": 3
+          },
+          {
+            "id": "stone-3",
+            "traitId": "trait.goliath.stone.stone-throw",
+            "kind": "stone-throw",
+            "round": 3,
+            "actionAvailable": true,
+            "rockAvailable": true,
+            "distanceFeet": 40,
+            "hitChance": 0.65,
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "bonusActionAlternativeExpectedDamage": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-fire-selective-ignition",
+      "purpose": "Searing Ignition replaces an attack with a selective fire burst and conditionally Blinds enemies until the next turn.",
+      "scenario": {
+        "id": "goliath-fire-selective-ignition",
+        "tacticalOpportunities": [
+          {
+            "id": "ignition",
+            "traitId": "trait.goliath.fire.searing-ignition",
+            "kind": "searing-ignition",
+            "round": 1,
+            "actionAvailable": true,
+            "enemyTargets": 2,
+            "failureProbability": 0.55,
+            "enemyNormalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "attackReplacementExpectedDamage": 5.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-storm-defensive-aura",
+      "purpose": "One uninterrupted round of Maelstrom Aura: attacks at disadvantage, independent lightning/thunder nonattack packets, and enemy movement starts inside unobstructed aura.",
+      "scenario": {
+        "id": "goliath-storm-defensive-aura",
+        "tacticalOpportunities": [
+          {
+            "id": "aura",
+            "traitId": "trait.goliath.storm.maelstrom-aura",
+            "kind": "maelstrom-aura",
+            "round": 1,
+            "actionAvailable": true,
+            "enemyStartsWithinAura": 2,
+            "failureProbability": 0.55,
+            "attacksTargetingYouBeforeExpiry": 2,
+            "baseHitChance": 0.65,
+            "targetSpeedFeet": 30,
+            "auraUninterrupted": true,
+            "incomingNonattackPackets": [
+              {
+                "type": "lightning",
+                "amount": 20
+              },
+              {
+                "type": "thunder",
+                "amount": 10
+              },
+              {
+                "type": "fire",
+                "amount": 10
+              }
+            ],
+            "bonusActionAlternativeExpectedDamage": 3
           }
         ]
       }

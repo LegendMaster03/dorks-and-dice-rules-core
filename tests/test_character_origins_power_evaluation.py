@@ -319,7 +319,7 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_scenario_corpus_has_named_diagnostic_contexts(self):
         suite = self.scenario_suite()
         power.validate_scenario_suite(suite)
-        self.assertEqual(23, len(suite["contexts"]))
+        self.assertEqual(26, len(suite["contexts"]))
         self.assertEqual(len(suite["contexts"]), len({c["id"] for c in suite["contexts"]}))
 
     def test_suite_reverses_breath_geometry_without_exchanging_units(self):
@@ -361,7 +361,7 @@ class PowerEvaluationTests(unittest.TestCase):
         self.assertIn("sunlight-protected", values["maximumContexts"])
         self.assertFalse(drow["levels"][0]["coverage"]["isCompleteForCurrentLevel"])
         self.assertIsInstance(drow["levels"][0]["coverage"]["incompleteOrUnsupportedMechanics"], list)
-        self.assertEqual(23, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
 
     def test_sensitivity_does_not_convert_unmeasured_endpoints_to_zero(self):
         profile = self.profile("ancestry.dragonborn.red")
@@ -431,7 +431,7 @@ class PowerEvaluationTests(unittest.TestCase):
         bad["contexts"][0]["scenario"]["breathOppurtunities"] = []
         invalid.append(bad)
         bad = copy.deepcopy(base)
-        bad["version"] = 6
+        bad["version"] = 7
         invalid.append(bad)
         for item in invalid:
             with self.subTest(error=item), self.assertRaises(ValueError):
@@ -447,7 +447,7 @@ class PowerEvaluationTests(unittest.TestCase):
                 "--source", "ancestry.dragonborn.red", "--output", str(destination)]))
             result = json.loads(destination.read_text(encoding="utf-8"))
         self.assertEqual(1, result["terminalProfileCount"])
-        self.assertEqual(23, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
         self.assertEqual(6, len(result["contexts"][0]["profiles"][0]["levels"]))
 
 
@@ -593,11 +593,11 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_new_suite_exercises_saves_and_reaction_diagnostics(self):
         suite = self.scenario_suite()
-        self.assertEqual(5, suite["version"])
-        self.assertEqual(23, len(suite["contexts"]))
+        self.assertEqual(6, suite["version"])
+        self.assertEqual(26, len(suite["contexts"]))
         self.assertIn("poison-saves-and-resistance", [x["id"] for x in suite["contexts"]])
         result = power.evaluate_scenario_suite(self.catalog, suite, ["species.dwarf"])
-        self.assertEqual(23, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
         names = {x["id"]: x["profiles"][0]["levels"][0]
                  for x in result["contexts"]}
         self.assertIn("savingThrowEventTrace", names["poison-saves-and-resistance"])
@@ -795,8 +795,8 @@ class PowerEvaluationTests(unittest.TestCase):
     def test_control_scenario_corpus_has_timing_contrasts(self):
         fixture = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(fixture.read_text(encoding="utf-8"))
-        self.assertEqual(5, suite["version"])
-        self.assertEqual(23, len(suite["contexts"]))
+        self.assertEqual(6, suite["version"])
+        self.assertEqual(26, len(suite["contexts"]))
         contexts = {item["id"]: item["scenario"] for item in suite["contexts"]}
         early = contexts["metallic-enervation-with-allies"]["controlOpportunities"][0]
         late = contexts["metallic-control-no-exposed-turns"]["controlOpportunities"][0]
@@ -920,7 +920,8 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_hit_without_damage_can_trigger_stone_not_hill(self):
         profile = self.synthetic_goliath("stone")
-        e = copy.deepcopy(self.scenario_suite()["contexts"][-1]["scenario"])
+        e = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
+                     if x["id"] == "goliath-storm-disadvantage-window"))
         # Replace Storm with Stone; a confirmed hit still qualifies even if
         # the original weapon did no damage (e.g., was resisted).
         e["strikeOpportunities"][0].update(
@@ -934,7 +935,8 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_confirmed_hit_damage_without_creature_control(self):
         profile = self.synthetic_goliath("stone")
-        e = copy.deepcopy(self.scenario_suite()["contexts"][-1]["scenario"])
+        e = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
+                     if x["id"] == "goliath-storm-disadvantage-window"))
         e["strikeOpportunities"][0].update(
             traitId="trait.goliath.stone.stone-strike", targetIsCreature=False)
         stone = power.evaluate(profile, self.catalog, 1, e)
@@ -943,7 +945,8 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_joint_defense_offense_pool_is_not_implicitly_double_counted(self):
         profile = self.synthetic_goliath("stone")
-        scene = copy.deepcopy(self.scenario_suite()["contexts"][-1]["scenario"])
+        scene = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
+                     if x["id"] == "goliath-storm-disadvantage-window"))
         scene["strikeOpportunities"][0]["traitId"] = "trait.goliath.stone.stone-strike"
         scene["reactionDamageEvents"] = [{
             "id":"damage", "round":1, "amount":20, "damageType":"slashing",
@@ -954,7 +957,8 @@ class PowerEvaluationTests(unittest.TestCase):
                       result["unmodeled"])
 
     def test_strike_events_validate_inputs_and_no_silent_unmodeled(self):
-        scene = self.scenario_suite()["contexts"][-1]["scenario"]
+        scene = next(x["scenario"] for x in self.scenario_suite()["contexts"]
+                     if x["id"] == "goliath-storm-disadvantage-window")
         for override in ({"failureProbability": 1.2}, {"traitId": ""},
                          {"hit": "true"}, {"normalAttackRollsBeforeRecovery": -1},
                          {"turn": 0}, {"targetSize": "colossal"},
@@ -963,6 +967,188 @@ class PowerEvaluationTests(unittest.TestCase):
             bad["strikeOpportunities"][0].update(override)
             with self.subTest(bad=override), self.assertRaises(ValueError):
                 power.validate_scenario(bad)
+
+    @staticmethod
+    def tactical_profile():
+        """Three exact native mechanical structures, without a mock power price."""
+        return {"intrinsics": {"walkingSpeedFeet": 35}, "traits": {
+            "trait.goliath.stone.stone-throw": {
+                "id": "stone-throw", "requiredCharacterLevel": 4,
+                "activation": {"action": "bonus-action"}, "requiresItem": "rock",
+                "attack": {"type": "ranged-spell-attack", "rangeFeet": 60},
+                "damage": {"dice": "1d10", "damageType": "force"},
+                "savingThrow": {"ability": "strength", "onSuccess": "no-prone"},
+                "applyConditionOnFailedSave": "condition.prone",
+                "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}},
+            "trait.goliath.fire.searing-ignition": {
+                "id": "searing-ignition", "requiredCharacterLevel": 4,
+                "activation": {"action": "attack", "replaces": "one-attack"},
+                "oncePerTurn": True, "area": {"shape": "sphere", "radiusFeet": 15,
+                                               "targets": "creatures-of-your-choice"},
+                "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage-only",
+                                "onFailure": "full-damage-and-condition"},
+                "damage": {"dice": "1d8", "add": "proficiency-bonus", "damageType": "fire"},
+                "applyConditionOnFailedSave": {"condition": "condition.blinded",
+                                               "endsAt": "start-of-your-next-turn"},
+                "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}},
+            "trait.goliath.storm.maelstrom-aura": {
+                "id": "maelstrom-aura", "requiredCharacterLevel": 4,
+                "activation": {"action": "bonus-action"},
+                "area": {"shape": "aura", "radiusFeet": 10, "blockedBy": "total-cover"},
+                "duration": {"endsAt": "start-of-your-next-turn",
+                             "alsoEndsWhen": "condition.incapacitated"},
+                "whileActive": {"attackRollsTargetingYou": "disadvantage",
+                                "damageResistance": [
+                                    {"damageType": "lightning", "percent": 50},
+                                    {"damageType": "thunder", "percent": 50}]},
+                "startsTurnInside": {"target": "other-creature",
+                                     "savingThrow": {"ability": "strength",
+                                                     "onSuccess": "no-speed-change"},
+                                     "onFailedSave": {"speedMultiplier": .5,
+                                                       "endsAt": "start-of-targets-next-turn"}},
+                "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}},
+        }}
+
+    @staticmethod
+    def tactical_event(kind, round_number=1):
+        common = {"id": f"{kind}-{round_number}", "traitId": {
+            "stone-throw": "trait.goliath.stone.stone-throw",
+            "searing-ignition": "trait.goliath.fire.searing-ignition",
+            "maelstrom-aura": "trait.goliath.storm.maelstrom-aura"}[kind],
+            "kind": kind, "round": round_number, "actionAvailable": True}
+        extras = {
+            "stone-throw": {"rockAvailable": True, "distanceFeet": 40,
+                            "hitChance": .65, "targetIsCreature": True,
+                            "failureProbability": .55,
+                            "normalAttackRollsBeforeRecovery": 2,
+                            "baseHitChance": .65,
+                            "bonusActionAlternativeExpectedDamage": 3},
+            "searing-ignition": {"enemyTargets": 2,
+                                 "failureProbability": .55,
+                                 "enemyNormalAttackRollsBeforeRecovery": 2,
+                                 "baseHitChance": .65,
+                                 "attackReplacementExpectedDamage": 5.2},
+            "maelstrom-aura": {"enemyStartsWithinAura": 2,
+                               "failureProbability": .55,
+                               "attacksTargetingYouBeforeExpiry": 2,
+                               "baseHitChance": .65, "targetSpeedFeet": 30,
+                               "auraUninterrupted": True,
+                               "incomingNonattackPackets": [
+                                   {"type": "lightning", "amount": 20},
+                                   {"type": "thunder", "amount": 10},
+                                   {"type": "fire", "amount": 10}],
+                               "bonusActionAlternativeExpectedDamage": 3},
+        }[kind]
+        return {**common, **extras}
+
+    def tactical_catalog(self):
+        catalog = copy.deepcopy(self.catalog)
+        catalog["conditions"].update({
+            "condition.prone": {"effects": [{"type": "roll-mode", "appliesTo": "attack-roll",
+                                               "mode": "disadvantage",
+                                               "subject": "attacks-by-affected-creature"}]},
+            "condition.blinded": {"effects": [{"type": "roll-mode", "appliesTo": "attack-roll",
+                                                 "mode": "disadvantage",
+                                                 "subject": "attacks-by-affected-creature"}]},
+        })
+        return catalog
+
+    def test_stone_throw_expected_damage_prone_and_bonus_action_limits(self):
+        events = [self.tactical_event("stone-throw", round_number=r)
+                  for r in (1, 1, 2, 3, 4, 5)]
+        for i, event in enumerate(events):
+            event["id"] = f"stone-{i}"
+        events[2]["distanceFeet"] = 70  # No remote rock targeting.
+        events[3]["rockAvailable"] = False
+        scenario = {"tacticalOpportunities": events}
+        profile = self.tactical_profile()
+        catalog = self.tactical_catalog()
+        before = power.evaluate(profile, catalog, 3, scenario)
+        self.assertEqual(0, before["metrics"].get("tactical_activated_uses", 0))
+        output = power.evaluate(profile, catalog, 4, scenario)
+        self.assertEqual(["activated", "action-already-spent-this-round",
+                          "out-of-range", "missing-rock", "activated",
+                          "resource-exhausted"],
+                         [e["status"] for e in output["tacticalEventTrace"]])
+        self.assertAlmostEqual(7.15, output["metrics"]["tactical_expected_gross_damage"])
+        self.assertAlmostEqual(.715,
+                               output["metrics"]["tactical_expected_enemy_prone_applications"])
+        self.assertAlmostEqual(1.15,
+                               output["metrics"]["tactical_expected_net_bonus_action_damage"])
+        self.assertEqual(0, output["metrics"].get("tactical_attack_replacements", 0))
+        at_five = power.evaluate(profile, catalog, 5, scenario)
+        self.assertEqual(3, at_five["metrics"]["tactical_activated_uses"])
+
+    def test_searing_ignition_preserves_damage_and_blind_timing(self):
+        scene = {"tacticalOpportunities": [self.tactical_event("searing-ignition")]}
+        output = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4, scene)
+        m = output["metrics"]
+        self.assertAlmostEqual(10.075, m["tactical_expected_gross_damage"])
+        self.assertAlmostEqual(4.875, m["tactical_expected_net_attack_replacement_damage"])
+        self.assertAlmostEqual(1.1, m["tactical_expected_enemy_blinded_applications"])
+        self.assertAlmostEqual(2 * .55 * .65 * .35,
+                               m["tactical_expected_enemy_attack_hits_prevented"])
+        self.assertEqual(1, m["tactical_attack_replacements"])
+        # Enemy rolls after the next-turn expiry do not count as lost attacks.
+        scene["tacticalOpportunities"][0]["enemyNormalAttackRollsBeforeRecovery"] = 0
+        later = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4, scene)
+        self.assertEqual(0, later["metrics"].get(
+            "tactical_expected_enemy_attack_hits_prevented", 0))
+
+    def test_maelstrom_aura_short_duration_and_passive_resistance_overlap(self):
+        events = [self.tactical_event("maelstrom-aura", r) for r in (1, 1, 2, 3, 4)]
+        for i, event in enumerate(events):
+            event["id"] = f"storm-{i}"
+        events[2]["auraUninterrupted"] = False
+        scenario = {"tacticalOpportunities": events}
+        baseline = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4, scenario)
+        statuses = [e["status"] for e in baseline["tacticalEventTrace"]]
+        self.assertEqual(["activated", "action-already-spent-this-round",
+                          "aura-interruption-unresolved", "activated",
+                          "resource-exhausted"], statuses)
+        self.assertAlmostEqual(.91, baseline["metrics"][
+            "tactical_expected_self_attack_hits_prevented"])
+        self.assertAlmostEqual(33, baseline["metrics"][
+            "tactical_expected_enemy_nominal_speed_reduction_feet"])
+        self.assertAlmostEqual(30, baseline["metrics"][
+            "tactical_expected_nonattack_damage_prevented"])
+        profile = self.tactical_profile()
+        profile["traits"]["trait.custom.lightning-resistance"] = {
+            "id": "resistance", "damageResistance": {"percent": 50,
+                                                      "damageType": "lightning"}}
+        overlap = power.evaluate(profile, self.tactical_catalog(), 4, scenario)
+        self.assertAlmostEqual(10, overlap["metrics"][
+            "tactical_expected_nonattack_damage_prevented"])
+
+    def test_mixed_tactical_traits_share_bonus_action_not_uses(self):
+        first = self.tactical_event("stone-throw", 1)
+        second = self.tactical_event("maelstrom-aura", 1)
+        events = [first, second]
+        result = power.evaluate(self.tactical_profile(), self.tactical_catalog(), 4,
+                                {"tacticalOpportunities": events})
+        self.assertEqual(["activated", "action-already-spent-this-round"],
+                         [e["status"] for e in result["tacticalEventTrace"]])
+        self.assertEqual(1, result["metrics"]["tactical_bonus_actions_used"])
+        self.assertNotIn("tactical_expected_self_attack_hits_prevented", result["metrics"])
+
+    def test_tactical_definition_changes_fail_closed(self):
+        profile = self.tactical_profile()
+        profile["traits"]["trait.goliath.stone.stone-throw"]["attack"]["rangeFeet"] = 80
+        r = power.evaluate(profile, self.tactical_catalog(), 4, {
+            "tacticalOpportunities": [self.tactical_event("stone-throw")]})
+        self.assertEqual("unrecognized-authored-mechanics", r["tacticalEventTrace"][0]["status"])
+        self.assertTrue(any(x.get("reason") == "tactical-definition-does-not-match-fixture"
+                            for x in r["unmodeled"]))
+
+    def test_tactical_event_validation_rejects_bad_inputs(self):
+        event = self.tactical_event("stone-throw")
+        cases = ({"hitChance": 1.1}, {"rockAvailable": "yes"},
+                 {"distanceFeet": -1}, {"normalAttackRollsBeforeRecovery": -1},
+                 {"rockAvaiable": False}, {"kind": "breathe"}, {"round": 0})
+        for bad in cases:
+            row = {**event, **bad}
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                power.validate_scenario({"tacticalOpportunities": [row]})
 
 @unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
                      "Full native catalog is not available in isolated fixture tests")
@@ -990,7 +1176,7 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
         suite_path = Path(__file__).parent / "fixtures/pillar2-power-scenarios.json"
         suite = json.loads(suite_path.read_text(encoding="utf-8"))
         result = power.evaluate_scenario_suite(catalog, suite, sources)
-        self.assertEqual(23, result["scenarioCount"])
+        self.assertEqual(26, result["scenarioCount"])
         self.assertEqual(len(sources), result["terminalProfileCount"])
         for context in result["contexts"]:
             self.assertEqual(len(sources), len(context["profiles"]))
@@ -1120,6 +1306,30 @@ class NativeCatalogIntegrationTests(unittest.TestCase):
                                      1, contexts[scene])
                 self.assertAlmostEqual(expected, row["metrics"][metric])
                 self.assertTrue(any(t["status"] == "activated" for t in row["strikeEventTrace"]))
+
+    def test_native_goliath_activated_actions_are_authored_and_modeled(self):
+        catalog = power.load_native(power.DEFAULT_NATIVE)
+        contexts = {c["id"]: c["scenario"] for c in json.loads(
+            (Path(__file__).parent / "fixtures/pillar2-power-scenarios.json")
+            .read_text(encoding="utf-8"))["contexts"]}
+        examples = (
+            ("ancestry.goliath.stone", "goliath-stone-throw-bonus-action",
+             "tactical_expected_gross_damage", 7.15),
+            ("ancestry.goliath.fire", "goliath-fire-selective-ignition",
+             "tactical_expected_enemy_blinded_applications", 1.1),
+            ("ancestry.goliath.storm", "goliath-storm-defensive-aura",
+             "tactical_expected_nonattack_damage_prevented", 15),
+        )
+        for source, scenario_id, metric, expected in examples:
+            with self.subTest(source=source, scenario=scenario_id):
+                result = power.evaluate(power.reconstruct_preset(catalog, source),
+                                        catalog, 4, contexts[scenario_id])
+                self.assertAlmostEqual(expected, result["metrics"][metric])
+                self.assertTrue(any(x["status"] == "activated"
+                                    for x in result["tacticalEventTrace"]))
+                self.assertFalse(any(x.get("reason") ==
+                                     "tactical-definition-does-not-match-fixture"
+                                     for x in result["unmodeled"]))
 
     def test_native_save_and_defensive_reaction_contrasts(self):
         """Match scenario outputs to authored Dwarf, Gnome, Stone and Cloud traits."""
