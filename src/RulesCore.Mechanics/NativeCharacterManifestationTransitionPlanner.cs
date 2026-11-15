@@ -71,8 +71,10 @@ public static class NativeCharacterManifestationTransitionPlanner
                 string.IsNullOrWhiteSpace(step.AuthorizationEvidenceId) ||
                 (step.Action == NativeManifestationTransitionAction.Activate) !=
                     (step.NewInstance is not null) ||
+                // Even an empty activation payload is invalid for a
+                // non-activation step; the event shape must have one meaning.
                 (step.Action != NativeManifestationTransitionAction.Activate &&
-                    step.NewResources is { Count: > 0 }) ||
+                    step.NewResources is not null) ||
                 (step.NewResources?.Count ?? 0) > 256 ||
                 (step.Action == NativeManifestationTransitionAction.End &&
                     (string.IsNullOrWhiteSpace(step.EndingConditionId) ||
