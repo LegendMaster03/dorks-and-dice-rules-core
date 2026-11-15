@@ -44,6 +44,7 @@ Relevant source documents:
 - [Heritage manifestation scope](pillar2-heritage-manifestation-scope-20261111.md)
 - [Biological construction vertical slice](pillar2-phase3-biological-vertical-slice-20261112.md)
 - [Origin trait normalization](origin-trait-normalization-20261114.md)
+- [Quantitative Species and Ancestry evaluation, pinned to this branch's original revision](pillar2-species-power-evaluation.md)
 
 ## 2. How the combined idea emerged
 
@@ -266,6 +267,25 @@ Consequently an eight-point rule fitted six of nine representative profiles, nin
 - Automatically preserving all unselected characteristics as suppressed heredity creates unbounded latent inheritance.
 - Assigning a high burden to flight can recreate the problem where flight consumes an entire inheritance budget; lower burdens require evidence.
 - Conventional preset scores are both **targets of study and objects of revision**, not ground truth.
+
+### Recorded Dwarf–Rock Gnome Tremorsense decision — 2026-11-14
+
+**Owner-selected resolution for this mixed-inheritance test case:** Consolidate the two offered Tremorsense capabilities into **one effective Stonebound Tremorsense** using the Dwarf's complete authored constraints:
+
+| Property | Selected effective behavior |
+| --- | --- |
+| Range | 60 feet |
+| Activation | Bonus Action |
+| Duration | 10 minutes per activation |
+| Uses | Proficiency Bonus per Long Rest |
+| Environment | Character must remain in contact with **stone** |
+| Rock Gnome 15-foot passive mode | **Not retained** as a simultaneous or separately usable capability |
+
+This is mechanically equivalent to the existing Dwarf Stonebound Tremorsense, not a newly enhanced hybrid. It intentionally sacrifices the Rock Gnome's passive Earthbound Tremorsense and its earth-or-stone substrate coverage. Therefore, a quantitative comparison should count **one** effective activated Stonebound capability, not a 60-foot active sense **plus** a 15-foot passive sense. In scenarios with unexpected nearby contacts on earth alone, this mixed resolution may perform *worse* than standalone Rock Gnome. Its power is not simply the maximum of both parents.
+
+**Scope:** This records a specific selected test-case consolidation to use in evaluation and subsequent rule design. It does **not** approve a general "take the larger range and stricter activation" rule, rewrite the native Dwarf or Rock Gnome presets, authorize unrelated biological transmissions, determine numerical inheritance burden, or request a production implementation. Apply the shared Origin model's explicit authorization and source provenance rules to any eventual live manifestation.
+
+**Research evidence:** [WorkChat quantitative Species/Ancestry evaluation](pillar2-species-power-evaluation.md) modeled the *unresolved* original Dwarf/Rock Gnome union with both passive and activated modes. Its mixed-character frontier results should not be mistaken for the **later owner-selected consolidated result**. Preserve the original research rather than retroactively changing its assumptions.
 
 ## 8. Open questions — explicitly unapproved
 
