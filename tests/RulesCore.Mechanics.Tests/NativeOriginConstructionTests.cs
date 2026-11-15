@@ -1079,8 +1079,8 @@ public sealed class NativeOriginConstructionTests
         {
             Manifestations =
             [
-                new("fey-type", type.Id),
-                new("elf-speed", speed.Id),
+                new("fey-type", type.Id, SelectedValue: type.OfferedValue),
+                new("elf-speed", speed.Id, SelectedValue: speed.OfferedValue),
                 new("human-medium", humanSize.Id,
                     Choices: [new("size", ["medium"])]),
                 new("elf-sight", sight.Id)
@@ -1214,7 +1214,9 @@ public sealed class NativeOriginConstructionTests
         var result = Evaluate(proposal with
         {
             Manifestations = chosen.Select((x, i) =>
-                new NativeOriginManifestation("choice-" + i, x.Id)).ToArray()
+                new NativeOriginManifestation("choice-" + i, x.Id,
+                    SelectedValue: x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                        ? x.OfferedValue : null)).ToArray()
         }, defaults: false);
         Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
             "Actual: " + result.Status + " issues: " + string.Join(" ; ",
