@@ -125,9 +125,41 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
                       !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId)
                     : candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
                       candidate.SelectionBasis.RuleReference == "rule.creature-origination") &&
-                candidate.OfferedValue is { } offered &&
-                grant.EffectiveValue is { } effective &&
-                JsonElement.DeepEquals(offered, effective));
+                MatchesSelectedIntrinsicValue(result, candidate, grant));
+    }
+
+    /// <summary>
+    /// Some actual native intrinsics are selectable finite options (Human size
+    /// is Small or Medium), not a preexisting literal OfferedValue. Only an
+    /// explicitly selected, authored finite option can project as that value.
+    /// </summary>
+    private static bool MatchesSelectedIntrinsicValue(
+        NativeOriginConstructionResult result, NativeOriginCandidate candidate,
+        NativeOriginEffectiveGrant grant)
+    {
+        if (grant.EffectiveValue is not { } actual) return false;
+        if (candidate.OfferedValue is { } offered)
+            return JsonElement.DeepEquals(offered, actual);
+        if (actual.ValueKind != JsonValueKind.String ||
+            candidate.Identity.Kind != NativeOriginCharacteristicKind.Intrinsic ||
+            candidate.RequiredChoices is not { Count: 1 } requirements ||
+            requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
+            requirements[0].ParameterKey != candidate.Identity.IntrinsicSlotId ||
+            requirements[0].FiniteOptions is null ||
+            !requirements[0].FiniteOptions.Contains(actual.GetString()!, StringComparer.Ordinal))
+            return false;
+        var selection = result.EvaluatedProposal.Manifestations
+            .SingleOrDefault(x => x.CandidateId == candidate.Id);
+        if (selection?.Choices is not { Count: 1 } choices ||
+            grant.ResolvedChoices is not { Count: 1 } accepted)
+            return false;
+        var expected = actual.GetString();
+        return choices[0].RequirementId == requirements[0].Id &&
+            choices[0].SelectedOptionIds.Count == 1 &&
+            choices[0].SelectedOptionIds[0] == expected &&
+            accepted[0].RequirementId == requirements[0].Id &&
+            accepted[0].SelectedOptionIds.Count == 1 &&
+            accepted[0].SelectedOptionIds[0] == expected;
     }
 
     private static NativeOriginIntrinsicProjector.View Unresolved(string why) =>
