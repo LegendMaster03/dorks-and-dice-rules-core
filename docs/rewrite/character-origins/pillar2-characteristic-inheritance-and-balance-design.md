@@ -5,7 +5,9 @@
 **Scope:** Dorks & Dice Rules Core Character Origins, especially Pillar 2 (Origination, Heritage & Traits).  
 **Design provenance:** Collaborative comparison and experiments drawing on *An Elf and an Orc Had a Little Baby*, *Daggerheart*, and *RimWorld: Biotech*, applied to the existing Dorks & Dice characteristic model.
 
-> **Handoff summary:** Retain one universal Origin construction/reconstruction engine. Treat conventional Species/Ancestries as editable characteristic presets, not immutable power benchmarks. Biological reproduction is the first procedure being designed, not the universal model of origination. Combine reusable characteristic definitions and related selection groups with transmission, expression/suppression, and **quantitative evaluation of complete character power**. More than two contributors and previously mixed contributors must work. No fixed two-parent/two-feature rule, point limit, valuation formula, latent-gene policy, or new Species balance change has been approved. The experimental seven/eight-point budgets and nine-Species indices below are **unvalidated probes only**. The next task is power-measurement calibration and mechanical refinement, not redoing the architectural investigation.
+**Owner clarification — 2026-11-15:** The *current* milestone is a **consistent, scalable and functional mixed-Species/Ancestry construction system**, not precisely balanced power values while combat and other TTRPG subsystems remain unfinished. The prior requirement to calibrate a complete quantitative evaluator before developing inheritance/allocation mechanics is **superseded**. Retain numerical evaluation as a future-facing design objective and as a targeted diagnostic for obvious outliers, not as a hard gate. See [the revised independent review and working-system criteria](pillar2-mixed-construction-independent-review-20261115.md#5-revised-completion-priorities-and-unresolved-approvals).
+
+> **Handoff summary:** Retain one universal Origin construction/reconstruction engine. Treat conventional Species/Ancestries as editable characteristic presets, not immutable power benchmarks. Biological reproduction is the first procedure being designed, not the universal model of origination. Combine reusable characteristic definitions and related selection groups with transmission, expression/suppression, and **quantitative evaluation of complete character power**. More than two contributors and previously mixed contributors must work. No fixed two-parent/two-feature rule, point limit, valuation formula, latent-gene policy, or new Species balance change has been approved. The experimental seven/eight-point budgets and nine-Species indices below are **unvalidated probes only**. The next task is executable, tested inheritance/manifestation/reconciliation and a provisional, editable allocation constraint—not another open-ended evaluator expansion.
 
 ## 1. Purpose and design status
 
@@ -306,32 +308,35 @@ These questions are next-stage work. They do not block preserving the current ca
 
 > **Research implementation update (2026-11-14):** An initial [read-only quantitative evaluation prototype](pillar2-power-evaluation-prototype.md) now reconstructs canonical native presets and calculates selected, scenario-dependent endpoints and resource frontiers. It is not a complete power metric, inheritance cost model, or normative Species revision. The [WorkChat research report](pillar2-species-power-evaluation.md) remains the comparison baseline. Full native-catalog CI is pending.
 
-## 9. Recommended next experiment and acceptance criteria
+## 9. Current working-system objective and acceptance criteria (2026-11-15 update)
 
-**Next objective:** build a reproducible *power-evaluation prototype* against all nine native Species and representative Ancestries, without approving a biological allocation cost from arbitrary values.
+**Current objective:** complete and test the rules that turn contributor offers into one coherent manifested Origin. The *An Elf and an Orc Had a Little Baby* influence supplies reusable characteristics and approximate allocation; *Daggerheart* supplies comprehensible, coherent group decisions; *RimWorld: Biotech* supplies transmitted/expressed state and authored conflicts or linked adaptations. None imposes a hard two-parent, two-feature, primary-Species, genetic-metabolism or random-generation requirement.
 
-Suggested sequence:
+The quantitative Species evaluator and its scenario research already exist. Their gaps do not justify indefinitely postponing functional construction. The first playable candidate needs only an **editable provisional allowance**, broad enough for meaningful mixes and restrictive enough to avoid default full-package unions. It may use coarse authored relative-cost tiers and explicit DM adjudication for unpriced/unknown content. Precise values, campaign-context weights and a global ranking of Species are not required. **Mechanical uncertainty is a separate problem:** missing rule semantics, ineligible candidates, unresolved dependency/resource ownership and invalid intrinsic configurations still block automatic grants.
 
-1. Inventory all canonical trait definitions, complete operational behavior, explicit relations, intrinsic characteristics, and future unlocks. Detect unmodeled semantic gaps rather than treating them as zero-value.
-2. Define declared playtest contexts and a comparative measurement rubric. Include advancement, defense, mobility, utility, resource usage, and class synergies.
-3. Measure complete conventional configurations and quantify uncertainty; investigate outliers rather than presuming existing balance.
-4. Measure selected mixed compositions with overlapping, independent and synergistic traits; compare marginal to standalone value.
-5. Revise the proposed rubric **and, when justified, existing Species/Ancestry mechanics**. Repeat until a reasonable conventional/mixed comparison is possible.
-6. Only then test one or more biological allocation policies against the same measurements, including flight and multigenerational inheritance. Keep biology-specific tradeoffs separate from universal power measurement.
-7. Run the same semantic evaluator against synthetic homebrew and a nonbiological construct example to detect hidden Species-specific assumptions.
+Prioritized development sequence:
 
-Acceptance criteria for the *design*:
+1. **Eligibility/transmission:** establish biological contributor-role rules, actual manifested heritable offers and deterministic selection of transmitted characteristics. No automatic historic/grandparent grants. Test two, three and nested mixed contributors.
+2. **Manifestation:** distinguish offered, transmitted, suppressed or not transmitted, effective and currently unlocked states. Preserve full features and their future progression. Recommend *no latent carry-forward* as the initial candidate unless explicitly authored and bounded.
+3. **Reconciliation:** resolve core intrinsic slots, parameter recombination, complete/partial overlap, linked adaptations, source-bound choices, prerequisites and resource ownership in the same shared Origin pipeline. Preserve source identity and table authority.
+4. **Allocation:** use one provisional method-authored allowance and coarse source-neutral costs for effective characteristic bundles, including foundational characteristics. Multiple contributors do not raise capacity; a choice-group UI does not dictate cost. Preserve conventional Species as direct presets even during tuning.
+5. **Execution tests:** run full conventional and mixed construction/reconstruction and assert actual grant/parameter/resource/progression outcomes. Include Red/Bronze Breath, High/Wood Elf courses, Drow adaptation, Stonebound-only Tremorsense, Orc/Goliath Powerful Build, flight, unknown homebrew and intentionally incompatible sources.
+6. **Limited balance smoke tests:** use existing diagnostics to catch accidental stacking, clearly disproportionate unions and unmodeled effects. Calibrate more thoroughly when combat, spell, feat and other mechanics become sufficiently stable. Do not implement classes or class features as part of Pillar 2.
 
-- Every standard preset can be reconstructed without losses through the shared Origin characteristic machinery; unresolved source semantics remain visible.
-- A conventional Species is available as a valid intentional selection without requiring the player to manually decompose it.
-- Red/Bronze Breath Weapon semantics, Elven source-bound choices, actual resource sharing, intrinsic effects, and progression survive.
-- Multiple contributors and mixed descendants work without a two-parent/two-package limitation and without genealogy automatically granting historical abilities.
-- Same capability, parameter variant, marginal upgrade, linked drawback, and independent pool are not conflated.
-- At levels 1/3/4/5/11/17, evaluations distinguish current effects from committed future progression.
-- Homebrew unknowns are flagged, not assumed to be free or mechanically equivalent.
-- The system produces explainable comparative results for standard and mixed configurations, supports meaningful iteration on the **Species themselves**, and does not claim perfect balance from a scalar score alone.
-- Nonbiological origination can adopt the universal evaluation without pretending its construction capacity is biological metabolism.
-- No experiment or authoring proposal silently changes approved first-party rules or Table/DM authority boundaries.
+Acceptance criteria for this milestone:
+
+- Direct native Species/Ancestry selection still produces a coherent, validated configuration through the shared characteristic model without requiring manual decomposition.
+- Mixed profiles are not separate bespoke Species implementations: one universal pipeline handles eligible contributor count, already mixed donors and custom sources.
+- Every manifested Origin has complete and explicitly chosen type, size, movement, senses and relevant physical characteristics; no unselected source package is silently inherited.
+- A small number of player-facing selection groups can configure several related characteristic fields while preserving more granular authored recombination where permitted.
+- Source occurrences, parameter provenance, whole traits, source-bound choices, restrictions, level progression, links, pools, overlapping effects and dependent grants remain accurate.
+- Allocation is coherent, adjustable, source-neutral and resistant to obvious duplication and full-parent stacking; final power parity is **not** claimed or required.
+- Identical construction inputs and policy revision reconstruct identically regardless of donor order. Invalid, incomplete, conflicting and unresolved outcomes remain distinguishable from mechanically authorized profiles.
+- The C# construction and projection tests demonstrate behavior rather than merely asserting design claims. Diagnostic tools never create grants.
+- Future origination procedures can reuse the same characteristic engine without inheriting the biological transmission algorithm. This milestone does not implement those other procedures.
+- No experiment or provisional cost becomes an approved first-party default, changes native Species, or bypasses table authority without explicit approval.
+
+The comprehensive quantitative methodology remains documented in §6–§8 for later balancing work. Its existence is not an implementation dependency for the current milestone.
 
 ## 10. Documentation and implementation boundary
 
