@@ -318,6 +318,116 @@ public sealed class NativeAuthenticatedApiTests
         Assert.Equal(HttpStatusCode.Unauthorized, rejectedAnonymous.StatusCode);
     }
 
+
+    [Fact]
+    public async Task ManifestationPlanRequiresIndependentAuthorityNotJustDelegationOrEvidenceLabels()
+    {
+        const string path = "/api/mechanics/v1/characters/manifestations/plan";
+        var id = Guid.NewGuid().ToString("D");
+        await using var delegated = await Fixture.StartAsync(source: "character-sheet");
+        var fingerprint = delegated.Store.Snapshot!.Fingerprint;
+        object Body(string? catalog = null, long expectedRevision = 0,
+            string? characterId = null) => new
+        {
+            state = new
+            {
+                characterId = id,
+                primaryMechanics = new
+                {
+                    rulesetId = Ruleset, fingerprint = catalog ?? fingerprint,
+                    abilityScores = new Dictionary<string, int>(),
+                    advancements = Array.Empty<object>()
+                },
+                alternateSheets = new[]
+                {
+                    new
+                    {
+                        id = "wolf", parentId = "@primary",
+                        definitionId = "forged.wolf",
+                        definitionSource = new { kind = 0, id = "test.source", version = "v1" },
+                        acquisitionEvidenceId = "receipt:asserted-by-caller"
+                    }
+                },
+                persistentInfluences = Array.Empty<object>()
+            },
+            ledger = new
+            {
+                characterId = id, revision = 0,
+                instances = Array.Empty<object>(),
+                resources = Array.Empty<object>(),
+                processedEventIds = Array.Empty<string>()
+            },
+            transition = new
+            {
+                characterId = characterId ?? id, expectedRevision,
+                eventId = "activate:wolf",
+                steps = new[]
+                {
+                    new
+                    {
+                        action = 0, targetInstanceId = "manifest.wolf",
+                        ruleOccurrence = new
+                        {
+                            source = new { kind = 0, id = "test.source", version = "v1" },
+                            occurrencePath = "forms.wolf"
+                        },
+                        basis = new { adjudication = 0, nativeRuleReference = "test.rule" },
+                        authorizationEvidenceId = "receipt:claimed",
+                        newInstance = new
+                        {
+                            characterId = id, id = "manifest.wolf", sheetId = "wolf",
+                            definitionId = "test.wolf",
+                            definitionOccurrence = new
+                            {
+                                source = new { kind = 0, id = "test.source", version = "v1" },
+                                occurrencePath = "forms.wolf"
+                            },
+                            sourceInfluenceId = (string?)null,
+                            activationEventId = "activate:wolf",
+                            activationEvidenceId = "receipt:claimed",
+                            activationBasis = new { adjudication = 0, nativeRuleReference = "test.rule" },
+                            lifecycle = 0, contribution = 0,
+                            activationCaptures = new Dictionary<string, int>(),
+                            endingConditions = Array.Empty<string>(),
+                            resourcePolicies = Array.Empty<object>(),
+                            lastEventId = "activate:wolf"
+                        }
+                    }
+                }
+            }
+        };
+
+        static async Task<HttpResponseMessage> Send(Fixture f, string path, object body)
+        {
+            using var message = f.Authorized(path);
+            message.Method = HttpMethod.Post;
+            message.Content = JsonContent.Create(body);
+            return await f.Client.SendAsync(message);
+        }
+
+        using var missingSourceAuthority = await Send(delegated, path, Body());
+        Assert.Equal(HttpStatusCode.UnprocessableEntity,
+            missingSourceAuthority.StatusCode);
+        Assert.Contains("supernatural_authority_unavailable",
+            await missingSourceAuthority.Content.ReadAsStringAsync());
+
+        using var staleContent = await Send(delegated, path,
+            Body(catalog: new string('a', 64)));
+        Assert.Equal(HttpStatusCode.Conflict, staleContent.StatusCode);
+
+        using var staleRevision = await Send(delegated, path,
+            Body(expectedRevision: 1));
+        Assert.Equal(HttpStatusCode.Conflict, staleRevision.StatusCode);
+
+        using var foreignCharacter = await Send(delegated, path,
+            Body(characterId: Guid.NewGuid().ToString("D")));
+        Assert.Equal(HttpStatusCode.BadRequest, foreignCharacter.StatusCode);
+
+        await using var direct = await Fixture.StartAsync();
+        using var notDelegated = await Send(direct, path, Body());
+        Assert.Equal(HttpStatusCode.Forbidden, notDelegated.StatusCode);
+    }
+
     [Fact]
     public async Task PrivateIngressHasNoBrowserConsumerCatalog()
     {
