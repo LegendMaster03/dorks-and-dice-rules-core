@@ -58,7 +58,8 @@ public static class NativeCharacterManifestationResolver
                 continue;
             }
             var path = "instances." + instance.Id;
-            if (!sheetIds.ContainsKey(instance.SheetId) ||
+            if (string.IsNullOrWhiteSpace(instance.SheetId) ||
+                !sheetIds.ContainsKey(instance.SheetId) ||
                 string.IsNullOrWhiteSpace(instance.DefinitionId) ||
                 !ValidOccurrence(instance.DefinitionOccurrence) ||
                 (instance.SourceInfluenceId is not null &&
@@ -131,7 +132,8 @@ public static class NativeCharacterManifestationResolver
                 string.IsNullOrWhiteSpace(decision.AuthorizationEvidenceId) ||
                 decision.InstanceIds is null || decision.InstanceIds.Count is < 2 or > 512 ||
                 decision.InstanceIds.Distinct(StringComparer.Ordinal).Count() != decision.InstanceIds.Count ||
-                decision.InstanceIds.Any(id => !instances.ContainsKey(id)) ||
+                decision.InstanceIds.Any(id =>
+                    string.IsNullOrWhiteSpace(id) || !instances.ContainsKey(id)) ||
                 (decision.SelectedInstanceId is not null &&
                  !decision.InstanceIds.Contains(decision.SelectedInstanceId, StringComparer.Ordinal)) ||
                 (decision.Kind is NativeManifestationInteractionKind.Suppress or
@@ -242,6 +244,12 @@ public static class NativeCharacterManifestationResolver
 
         var ledgerIssues = Validate(state, ledger, authority);
         if (ledgerIssues.Length != 0) return Failed("invalid", ledgerIssues);
+        // Validate the complete owned sheet graph and influence receipts even
+        // when simultaneous manifestations have no resolved effective winner.
+        var baseline = NativeCharacterInfluenceResolver.Resolve(state,
+            NativeCharacterSheetResolver.PrimarySheetId, authority);
+        if (baseline.Status == "invalid")
+            return Failed("invalid", baseline.Issues);
         var selectionIssues = new List<NativeIssue>();
         var selected = Select(ledger, selectionIssues);
         if (selectionIssues.Count != 0) return Failed("unresolved", selectionIssues);
