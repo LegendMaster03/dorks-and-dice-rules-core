@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// A separate, deliberately restricted interpreter for a completed, DM-authorized
-/// mixed initial construction. The ordinary first-party intrinsic projector must
+/// A restricted interpreter for completed, first-party-authorized or DM-authorized
+/// mixed initial construction. The ordinary direct intrinsic projector must
 /// continue to reject mixed proposals; neither interpreter grants authority or
 /// decides which contributing characteristics a new character inherits.
 /// </summary>
@@ -18,7 +18,8 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
         if (result.Status != NativeOriginConstructionStatus.Authorized ||
             profile is null ||
             result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed ||
-            profile.Adjudication.Adjudication != NativeOriginAdjudication.DmAuthorized ||
+            profile.Adjudication.Adjudication is not
+                (NativeOriginAdjudication.DmAuthorized or NativeOriginAdjudication.Supported) ||
             !ReferenceEquals(profile.Current, profile.Underlying) ||
             profile.IndependentGrants.Count != 0 ||
             (profile.PersistentInfluences?.Count ?? 0) != 0 ||
@@ -96,8 +97,13 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
         var authorization = grant.Authorization;
         var ids = grant.SourceCandidateIds;
         if (grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
-            authorization?.Adjudication != NativeOriginAdjudication.DmAuthorized ||
-            string.IsNullOrWhiteSpace(authorization.TableDecisionId) ||
+            authorization is null ||
+            authorization.Adjudication is not
+                (NativeOriginAdjudication.DmAuthorized or NativeOriginAdjudication.Supported) ||
+            (authorization.Adjudication == NativeOriginAdjudication.DmAuthorized &&
+                string.IsNullOrWhiteSpace(authorization.TableDecisionId)) ||
+            (authorization.Adjudication == NativeOriginAdjudication.Supported &&
+                authorization.NativeRuleReference != "rule.creature-origination") ||
             ids.Count == 0 ||
             ids.Distinct(StringComparer.Ordinal).Count() != ids.Count ||
             ids.Any(id => result.EvaluatedProposal.Manifestations.Count(manifest =>
@@ -107,14 +113,18 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
         var candidates = result.EvaluatedProposal.Candidates
             .Where(candidate => ids.Contains(candidate.Id, StringComparer.Ordinal))
             .ToArray();
+        var dm = authorization.Adjudication == NativeOriginAdjudication.DmAuthorized;
         return candidates.Length == ids.Count &&
-            candidates.Any(candidate =>
-                candidate.SelectionBasis.TableDecisionId == authorization.TableDecisionId) &&
+            (!dm || candidates.Any(candidate =>
+                candidate.SelectionBasis.TableDecisionId == authorization.TableDecisionId)) &&
             candidates.All(candidate =>
                 candidate.ContributorId is not null &&
                 candidate.Identity == grant.Identity &&
-                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized &&
-                !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId) &&
+                (dm
+                    ? candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized &&
+                      !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId)
+                    : candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                      candidate.SelectionBasis.RuleReference == "rule.creature-origination") &&
                 candidate.OfferedValue is { } offered &&
                 grant.EffectiveValue is { } effective &&
                 JsonElement.DeepEquals(offered, effective));

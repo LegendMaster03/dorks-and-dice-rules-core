@@ -69,7 +69,7 @@ public static class NativeOriginVisionProjector
         var trait = candidates[0];
         var occurrence = trait.Identity.Occurrence;
         var expectedAdjudication = approvedMixed
-            ? NativeOriginAdjudication.DmAuthorized
+            ? trait.Authorization?.Adjudication
             : NativeOriginAdjudication.Supported;
         // Distinct donors of one *identical* authored occurrence can carry
         // separate verified permissions. The mixed projector validates all of
@@ -89,7 +89,8 @@ public static class NativeOriginVisionProjector
         if (occurrence.Source.Kind != NativeOriginSourceKind.Native ||
             !catalog.TryGetById(occurrence.Source.Id, out var species) ||
             species is null || species.Category is not ("species" or "ancestry") ||
-            trait.Authorization?.Adjudication != expectedAdjudication ||
+            trait.Authorization is null ||
+            trait.Authorization.Adjudication != expectedAdjudication ||
             !evidenceVerified ||
             trait.EffectiveValue is not { ValueKind: JsonValueKind.Object } value ||
             !IsLowLightRule(value) ||

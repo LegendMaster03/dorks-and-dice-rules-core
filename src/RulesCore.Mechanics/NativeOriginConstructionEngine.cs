@@ -11,6 +11,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 {
     private readonly NativeOriginContractValidator _validator = new(catalog);
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
+    private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
 
@@ -31,7 +32,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Proposal);
-        var (discovered, discoveryIssues) = _deconstructor.Deconstruct(request.Proposal);
+        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(request.Proposal);
+        // Biology is one origination procedure, not a property of every
+        // characteristic or the universal Origin engine. The method's authored
+        // rule promotes only permitted offers; the player still selects them.
+        var discovered = _biological.Evaluate(sourceOffers);
         var issues = new List<NativeOriginContractIssue>(discoveryIssues);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
@@ -282,9 +287,14 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 catalog.TryGetById(source.Id, out var native) && native is not null;
             // Deconstruction already checked the selected Species/Ancestry chain,
             // including any intermediate native Ancestry family.
-            var baseEligible = nativeSource && proposal.Intent == NativeOriginIntent.Direct &&
-                candidate.ContributorId is null &&
-                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible;
+            var baseEligible = nativeSource &&
+                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                (proposal.Intent == NativeOriginIntent.Direct &&
+                    candidate.ContributorId is null ||
+                 proposal.Intent == NativeOriginIntent.Mixed &&
+                    proposal.Method.MethodId == "biological" &&
+                    candidate.ContributorId is not null &&
+                    candidate.SelectionBasis.RuleReference == "rule.creature-origination");
             var permission = Verified("candidate", candidate.Id) ?? Verified("source", source.Id);
             var decisionEligible = permission is not null &&
                 JsonString(permission.EffectiveOutcome, "eligibility") == "eligible";
@@ -464,6 +474,19 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(resolved);
         resolved = bound;
         issues.AddRange(bindingIssues);
+        // A partial set of inherited biological traits is a useful design
+        // preview, but it is not a complete playable character. Require one
+        // selected, reconciled value in each universal physical foundation slot
+        // when the native biological policy issued any first-party selections.
+        if (proposal.Intent == NativeOriginIntent.Mixed &&
+            accepted.Any(x => x.Candidate.SelectionBasis.Eligibility ==
+                NativeOriginEligibility.Eligible &&
+                x.Candidate.SelectionBasis.RuleReference == "rule.creature-origination"))
+            foreach (var slot in new[] { "creatureType", "size", "walkingSpeedFeet" })
+                if (resolved.Count(x => x.Identity.IntrinsicSlotId == slot) != 1)
+                    Add("biological-foundation-incomplete", "intrinsics." + slot,
+                        NativeOriginIssueSeverity.Incomplete,
+                        "A complete player-selected biological Origin needs one effective value for this intrinsic slot.");
         if (reconciliationDm)
             foreach (var resolution in proposal.Resolutions ?? [])
             {
