@@ -232,7 +232,23 @@ public static class NativeCharacterManifestationResolver
 
     public static NativeManifestationEffectiveCharacter Resolve(
         NativeCharacterState state, NativeManifestationLedger ledger,
-        INativeCharacterManifestationAuthority authority)
+        INativeCharacterManifestationAuthority authority) =>
+        ResolveCore(state, ledger, authority, verifyCommittedLedger: true);
+
+    /// <summary>
+    /// Internal preview for the transition planner, after it has verified the
+    /// committed current ledger and independently authorized every new record
+    /// and transition. The proposed revision must NOT be authenticated as an
+    /// already committed host snapshot. This method is not an authority grant.
+    /// </summary>
+    internal static NativeManifestationEffectiveCharacter ResolveProposed(
+        NativeCharacterState state, NativeManifestationLedger proposed,
+        INativeCharacterManifestationAuthority authority) =>
+        ResolveCore(state, proposed, authority, verifyCommittedLedger: false);
+
+    private static NativeManifestationEffectiveCharacter ResolveCore(
+        NativeCharacterState state, NativeManifestationLedger ledger,
+        INativeCharacterManifestationAuthority authority, bool verifyCommittedLedger)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(ledger);
@@ -242,7 +258,8 @@ public static class NativeCharacterManifestationResolver
                 NativeCharacterSheetResolver.PrimarySheetId, null, null,
                 [], [], [], [], [], [], Sort(issues));
 
-        var ledgerIssues = Validate(state, ledger, authority);
+        var ledgerIssues = Validate(state, ledger, authority,
+            authenticate: verifyCommittedLedger);
         if (ledgerIssues.Length != 0) return Failed("invalid", ledgerIssues);
         // Validate the complete owned sheet graph and influence receipts even
         // when simultaneous manifestations have no resolved effective winner.
@@ -326,6 +343,14 @@ public static class NativeCharacterManifestationResolver
             issues.Add(new("manifestation-origin-policy-unresolved", "origin",
                 "The form's complete underlying Origin grant applicability remains unverified."));
         }
+        // A disputed owner/policy or invalid capacity is not the ordinary
+        // partial state for unimplemented form-specific Class/HP mechanics.
+        // Withhold effective character data instead of publishing a resource
+        // collection missing one of its required authorized pools.
+        if (issues.Any(x => x.Code is "manifestation-resource-policy-unresolved" or
+            "manifestation-resource-capacity-unresolved"))
+            return Failed("unresolved", issues);
+
         var mechanics = NativeCharacterSheetResolver.CopyMechanics(influence.EffectiveMechanics);
         if (selected is not null)
             mechanics = mechanics with { CurrentResources = null };
