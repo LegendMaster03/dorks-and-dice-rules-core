@@ -38,8 +38,10 @@ public enum NativeInfluenceCharacteristic
 public enum NativeInfluenceOperation { Replace, Adjust, Add, Suppress }
 
 /// <summary>
-/// Comparisons are authored per expression dimension. Numeric comparisons
-/// use invariant decimal values rather than a universal severity percentage.
+/// Comparisons are authored per expression dimension. Dimension names have
+/// exact ordinal identity even when the host supplies a differently configured
+/// dictionary. Numeric comparisons use invariant decimal values rather than
+/// a universal severity percentage.
 /// </summary>
 public enum NativeInfluenceExpressionComparison
 {
@@ -50,9 +52,11 @@ public sealed record NativeInfluenceExpressionCondition(
     string Dimension, NativeInfluenceExpressionComparison Comparison, string Value);
 
 /// <summary>
-/// Source-qualified prerequisite for an effect or grant-use decision. A missing
-/// earned record makes the rule inactive; it does not invent the advancement.
-/// Names alone never prove that a prerequisite is met.
+/// Source-qualified prerequisite for an effect or grant-use decision. The
+/// resolver requires the definition AND the exact occurrence among records
+/// independently acquired for this same influence. A missing record makes the
+/// rule inactive; it does not invent an advancement. The trusted host must
+/// separately verify acquisition and the repeatability of a source award.
 /// </summary>
 public enum NativeInfluenceEarnedKind { Progression, Grant }
 
@@ -64,9 +68,11 @@ public sealed record NativeInfluenceEarnedRequirement(
 /// <summary>
 /// A source-authored atomic characteristic change. Every affected sheet must
 /// be named explicitly, including @primary. Omitting an alternate sheet never
-/// makes the effect globally applicable to it. RequiredExpression can use any
-/// number of exact, independent dimensions; it is not a severity schedule.
-/// The host verifies the exact occurrence, rule, evidence and target scope.
+/// makes the effect globally applicable to it. Exact RequiredExpression,
+/// typed ExpressionConditions and source-qualified RequiredEarned are
+/// conjunctive activation gates. None is a universal severity schedule or
+/// authority to award an unearned capability. The host verifies the exact
+/// occurrence, rule, evidence and target scope.
 /// </summary>
 public sealed record NativeCharacterInfluenceEffect(
     string Id,
@@ -88,7 +94,8 @@ public sealed record NativeCharacterInfluenceEffect(
 /// One source-qualified decision for an independently earned influence grant.
 /// Multiple decisions for different expressions are permitted, but two matching
 /// decisions for one grant are unresolved rather than input-order precedence.
-/// An absent matching decision leaves current usability unresolved.
+/// An absent matching decision leaves current usability unresolved; neither
+/// absence nor Suppressed removes the independently acquired grant.
 /// </summary>
 public sealed record NativeInfluenceGrantApplicability(
     string GrantId,

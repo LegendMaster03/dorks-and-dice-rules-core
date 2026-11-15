@@ -10,6 +10,12 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeCharacterInfluenceResolver
 {
+    // Transport/work limits, not supernatural mechanics: expression strings
+    // are inspected before the trusted host authorizes an influence. Bound
+    // their size before performing any decimal predicate parsing.
+    private const int MaxExpressionDimensions = 128;
+    private const int MaxExpressionNameLength = 160;
+    private const int MaxExpressionValueLength = 1024;
     public static NativeCharacterInfluenceResolution Resolve(
         NativeCharacterState state, string targetSheetId,
         INativeCharacterInfluenceAuthority authority)
@@ -44,6 +50,11 @@ public static class NativeCharacterInfluenceResolver
         var sheetIds = new HashSet<string>(state.AlternateSheets.Select(x => x.Id),
             StringComparer.Ordinal) { NativeCharacterSheetResolver.PrimarySheetId };
         var influenceIds = new HashSet<string>(StringComparer.Ordinal);
+        // Caller-owned IReadOnlyDictionary implementations can use a
+        // case-insensitive comparer. Preserve the stored key spellings while
+        // evaluating source-authored expression dimensions ordinally.
+        var expressionsById = new Dictionary<string, IReadOnlyDictionary<string, string>>(
+            StringComparer.Ordinal);
         var effectIds = new HashSet<string>(StringComparer.Ordinal);
         var progressionIds = new HashSet<string>(StringComparer.Ordinal);
         var grantIds = new HashSet<string>(StringComparer.Ordinal);
@@ -68,11 +79,15 @@ public static class NativeCharacterInfluenceResolver
                 continue;
             }
             var path = "persistentInfluences." + influence.Id;
+            var validExpression = ValidExpression(influence.Expression);
+            if (validExpression)
+                expressionsById.Add(influence.Id,
+                    influence.Expression.ToFrozenDictionary(StringComparer.Ordinal));
             if (string.IsNullOrWhiteSpace(influence.DefinitionId) ||
                 !ValidSource(influence.DefinitionSource, requireVersion: true) ||
                 string.IsNullOrWhiteSpace(influence.AcquisitionEvidenceId) ||
                 string.IsNullOrWhiteSpace(influence.ExpressionEvidenceId) ||
-                !ValidExpression(influence.Expression) || influence.Effects is null)
+                !validExpression || influence.Effects is null)
                 Issue("invalid-influence", path,
                     "Definition, version, acquisition, verified expression and effect list are required.");
 
@@ -96,8 +111,8 @@ public static class NativeCharacterInfluenceResolver
                     continue;
                 }
                 if (!ValidEffect(effect, sheetIds) ||
-                    (influence.Expression is not null &&
-                     !NumericExpressionValid(influence.Expression, effect.ExpressionConditions)))
+                    (validExpression &&
+                     !NumericExpressionValid(expressionsById[influence.Id], effect.ExpressionConditions)))
                     Issue("invalid-influence-effect", path + ".effects." + effect.Id,
                         "Effect shape, typed operation, expression predicates, prerequisites, source, or sheet target is invalid.");
             }
@@ -156,8 +171,8 @@ public static class NativeCharacterInfluenceResolver
                     !ValidExpression(decision.RequiredExpression) ||
                     !ValidConditions(decision.ExpressionConditions) ||
                     !ValidEarned(decision.RequiredEarned) ||
-                    (influence.Expression is not null &&
-                     !NumericExpressionValid(influence.Expression, decision.ExpressionConditions)) ||
+                    (validExpression &&
+                     !NumericExpressionValid(expressionsById[influence.Id], decision.ExpressionConditions)) ||
                     string.IsNullOrWhiteSpace(decision.AuthorizationEvidenceId))
                     Issue("invalid-influence-applicability", path + ".grantApplicability",
                         "A decision requires a locally owned grant, expression and verified source.");
@@ -207,7 +222,8 @@ public static class NativeCharacterInfluenceResolver
             .SelectMany(influence => influence.Effects
                 .Where(effect => effect.TargetSheetIds.Contains(targetSheetId, StringComparer.Ordinal) &&
                     Active(effect.RequiredExpression, effect.ExpressionConditions,
-                        effect.RequiredEarned, influence, earnedById[influence.Id]))
+                        effect.RequiredEarned, expressionsById[influence.Id],
+                        earnedById[influence.Id]))
                 .Select(effect => new NativeInfluenceResolvedEffect(influence.Id, effect)))
             .OrderBy(x => EffectPath(x.Effect), StringComparer.Ordinal)
             .ThenBy(x => x.InfluenceId, StringComparer.Ordinal)
@@ -257,6 +273,11 @@ public static class NativeCharacterInfluenceResolver
                 Issue("influence-value-unresolved", EffectPath(item.Effect),
                     "The authorized numerical change exceeds supported integer limits.");
             }
+            catch (ArgumentOutOfRangeException)
+            {
+                Issue("influence-value-unresolved", EffectPath(item.Effect),
+                    "The resulting value is outside the native character input bounds.");
+            }
             catch (InvalidOperationException)
             {
                 Issue("influence-value-unresolved", EffectPath(item.Effect),
@@ -269,6 +290,11 @@ public static class NativeCharacterInfluenceResolver
         var grantView = new List<NativeInfluenceResolvedGrant>();
         foreach (var influence in influences.OrderBy(x => x.Id, StringComparer.Ordinal))
         {
+            // Index only decisions belonging to this verified influence. The
+            // naive per-grant scan would be quadratic at the allowed 16K-grant
+            // and 16K-decision limits, even for unrelated grant identities.
+            var decisions = (influence.GrantApplicability ?? [])
+                .ToLookup(x => x.GrantId, StringComparer.Ordinal);
             foreach (var record in influence.Progression ?? [])
             {
                 var detached = record with
@@ -279,11 +305,13 @@ public static class NativeCharacterInfluenceResolver
                 progressionView.Add(new(influence.Id, detached));
                 foreach (var grant in detached.Grants)
                 {
-                    var matching = (influence.GrantApplicability ?? [])
-                        .Where(x => x.GrantId == grant.Id &&
-                            Active(x.RequiredExpression, x.ExpressionConditions,
-                                x.RequiredEarned, influence, earnedById[influence.Id]))
-                        .ToArray();
+                    // Only zero, one, or multiple matches matter. Do not
+                    // materialize arbitrarily many overlapping decisions.
+                    var matching = decisions[grant.Id]
+                        .Where(x => Active(x.RequiredExpression, x.ExpressionConditions,
+                            x.RequiredEarned, expressionsById[influence.Id],
+                            earnedById[influence.Id]))
+                        .Take(2).ToArray();
                     if (matching.Length > 1)
                         Issue("influence-grant-applicability-unresolved",
                             "persistentInfluences." + influence.Id + ".grants." + grant.Id,
@@ -340,9 +368,11 @@ public static class NativeCharacterInfluenceResolver
             !string.IsNullOrWhiteSpace(decision.TableDecisionId));
 
     private static bool ValidExpression(IReadOnlyDictionary<string, string>? expression) =>
-        expression is not null && expression.Count <= 128 &&
+        expression is not null && expression.Count <= MaxExpressionDimensions &&
         expression.All(x => !string.IsNullOrWhiteSpace(x.Key) &&
-            !string.IsNullOrWhiteSpace(x.Value));
+            x.Key.Length <= MaxExpressionNameLength &&
+            !string.IsNullOrWhiteSpace(x.Value) &&
+            x.Value.Length <= MaxExpressionValueLength);
 
     private static bool Matches(IReadOnlyDictionary<string, string> required,
         IReadOnlyDictionary<string, string> actual) =>
@@ -364,11 +394,13 @@ public static class NativeCharacterInfluenceResolver
         IReadOnlyList<NativeInfluenceExpressionCondition>? conditions)
     {
         if (conditions is null) return true;
-        if (conditions.Count > 128) return false;
+        if (conditions.Count > MaxExpressionDimensions) return false;
         var seen = new HashSet<NativeInfluenceExpressionCondition>();
         foreach (var condition in conditions)
             if (condition is null || string.IsNullOrWhiteSpace(condition.Dimension) ||
+                condition.Dimension.Length > MaxExpressionNameLength ||
                 string.IsNullOrWhiteSpace(condition.Value) ||
+                condition.Value.Length > MaxExpressionValueLength ||
                 !Enum.IsDefined(condition.Comparison) || !seen.Add(condition) ||
                 (Numeric(condition.Comparison) && !Decimal(condition.Value, out _)))
                 return false;
@@ -454,10 +486,10 @@ public static class NativeCharacterInfluenceResolver
         IReadOnlyDictionary<string, string> exact,
         IReadOnlyList<NativeInfluenceExpressionCondition>? conditions,
         IReadOnlyList<NativeInfluenceEarnedRequirement>? required,
-        NativeCharacterPersistentInfluence influence,
+        IReadOnlyDictionary<string, string> expression,
         IReadOnlySet<NativeInfluenceEarnedRequirement> earned) =>
-        Matches(exact, influence.Expression) &&
-        ConditionsMatch(conditions, influence.Expression) &&
+        Matches(exact, expression) &&
+        ConditionsMatch(conditions, expression) &&
         HasEarned(earned, required);
 
     private static IReadOnlyList<T>? Detach<T>(IReadOnlyList<T>? values) =>
@@ -584,14 +616,46 @@ public static class NativeCharacterInfluenceResolver
     private static int? Lookup(IReadOnlyDictionary<string, int>? values, string key) =>
         values is not null && values.TryGetValue(key, out var value) ? value : null;
 
+    // These are the *native character projector's input bounds*, not new
+    // supernatural balance rules. A syntactically authorized effect must not
+    // produce a "resolved" input that the next projector immediately rejects.
+    // Validate the final value, not just the delta, because a lawful delta can
+    // push an inherited value out of range.
+    private static int WithinNativeInputBounds(NativeInfluenceCharacteristic characteristic,
+        int value)
+    {
+        const int maxMagnitude = 1_000_000;
+        var valid = characteristic switch
+        {
+            NativeInfluenceCharacteristic.AbilityScore => value is >= 0 and <= 1000,
+            NativeInfluenceCharacteristic.SkillRanks or
+                NativeInfluenceCharacteristic.CompetencyRanks or
+                NativeInfluenceCharacteristic.HitPointGain or
+                NativeInfluenceCharacteristic.BaseWalkSpeed => value is >= 0 and <= maxMagnitude,
+            NativeInfluenceCharacteristic.SkillMiscModifier or
+                NativeInfluenceCharacteristic.CompetencyMiscModifier or
+                NativeInfluenceCharacteristic.DefenseContribution =>
+                value is >= -maxMagnitude and <= maxMagnitude,
+            _ => true
+        };
+        if (!valid)
+            throw new ArgumentOutOfRangeException(nameof(value),
+                "Derived input violates the native character projector's numeric limits.");
+        return value;
+    }
+
     private static NativeCharacterSheetOverrides BuildPatch(
         NativeCharacterRequest current, NativeCharacterInfluenceEffect effect)
     {
         var c = effect.Characteristic;
         var key = effect.Key!;
-        int Number(int? old) => effect.Operation == NativeInfluenceOperation.Adjust
-            ? checked((old ?? throw new InvalidOperationException()) + effect.NumericValue!.Value)
-            : effect.NumericValue!.Value;
+        int Number(int? old)
+        {
+            var result = effect.Operation == NativeInfluenceOperation.Adjust
+                ? checked((old ?? throw new InvalidOperationException()) + effect.NumericValue!.Value)
+                : effect.NumericValue!.Value;
+            return WithinNativeInputBounds(c, result);
+        }
 
         if (c == NativeInfluenceCharacteristic.AbilityScore)
             return new(AbilityScores: new(false,

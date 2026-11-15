@@ -827,4 +827,175 @@ public sealed class NativeCharacterInfluenceResolverTests
         Assert.Equal(1, state.PrimaryMechanics.CurrentResources!["resource.sorcery-points"]);
         Assert.Equal(1, advanced.PrimaryMechanics.CurrentResources!["resource.sorcery-points"]);
     }
+
+    [Fact]
+    public void OutOfRangeDerivedValuesAreUnresolvedBeforeNativeProjection()
+    {
+        // Each incoming edit is individually well-formed and authorized. The
+        // resulting value, however, would violate NativeCharacterProjector
+        // input limits. Replacements and adjustments must be treated equally.
+        var invalid = new[]
+        {
+            Effect("ability-too-high", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 1001),
+            Effect("ability-negative", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: -1),
+            Effect("skill-ranks-negative", NativeInfluenceCharacteristic.SkillRanks,
+                NativeInfluenceOperation.Adjust, "skill.listen", number: -3),
+            Effect("skill-modifier-large", NativeInfluenceCharacteristic.SkillMiscModifier,
+                NativeInfluenceOperation.Adjust, "skill.listen", number: 1_000_000),
+            Effect("competency-ranks-negative", NativeInfluenceCharacteristic.CompetencyRanks,
+                key: "competency.unknown", number: -1),
+            Effect("defense-too-high", NativeInfluenceCharacteristic.DefenseContribution,
+                NativeInfluenceOperation.Adjust, "natural", number: 1_000_000),
+            Effect("hit-point-gain-negative", NativeInfluenceCharacteristic.HitPointGain,
+                NativeInfluenceOperation.Adjust, "class.test", number: -5),
+            Effect("walking-speed-negative", NativeInfluenceCharacteristic.BaseWalkSpeed,
+                number: -1),
+            Effect("walking-speed-too-high", NativeInfluenceCharacteristic.BaseWalkSpeed,
+                NativeInfluenceOperation.Adjust, number: 1_000_000)
+        };
+        foreach (var effect in invalid)
+        {
+            var state = Character([Influence(effects: [effect])]);
+            var before = JsonSerializer.Serialize(state);
+            var result = Resolve(state);
+            Assert.Equal("unresolved", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+            Assert.Contains(result.Issues,
+                x => x.Code == "influence-value-unresolved");
+            Assert.Equal(before, JsonSerializer.Serialize(state));
+        }
+        // Inclusive transport boundaries remain legal; their balance and
+        // gameplay authorization are independent concerns.
+        var boundary = Resolve(Character([Influence(effects:
+        [
+            Effect("legal-ability", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 1000),
+            Effect("legal-speed", NativeInfluenceCharacteristic.BaseWalkSpeed,
+                number: 1_000_000)
+        ])]));
+        Assert.Equal("resolved", boundary.Status);
+        Assert.Equal(1000, boundary.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(1_000_000, boundary.EffectiveMechanics.BaseWalkSpeed);
+    }
+
+    [Fact]
+    public void NumerousIndependentGrantUseDecisionsRemainScopedAndStable()
+    {
+        // Many simultaneously present earned grants must not require scanning
+        // every unrelated decision for each grant or leak applicability.
+        const int count = 1024;
+        var grants = Enumerable.Range(0, count)
+            .Select(i => new NativeSheetEarnedGrant("grant." + i,
+                "synthetic.capability." + i, Occurrence("grant." + i),
+                "receipt.grant." + i)).ToArray();
+        var progression = new NativeSheetEarnedProgression("progress.many",
+            "synthetic.progression.many", Occurrence("progress.many"),
+            "receipt.progress.many", grants);
+        var decisions = Enumerable.Range(0, count)
+            .Select(i => new NativeInfluenceGrantApplicability(
+                "grant." + i,
+                i % 2 == 0 ? NativeOriginGrantApplicabilityState.Applicable :
+                    NativeOriginGrantApplicabilityState.Suppressed,
+                Rule(), Expression(("phase", "manifest")),
+                "receipt.applicability." + i)).ToArray();
+
+        var state = Character([Influence(expression: Expression(("phase", "manifest")),
+            progression: [progression], applicability: decisions)]);
+        var result = Resolve(state);
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(count, result.Grants.Count);
+        Assert.All(result.Grants, x =>
+        {
+            var index = int.Parse(x.Entitlement.Id["grant.".Length..]);
+            Assert.Equal(index % 2 == 0 ?
+                    NativeOriginGrantApplicabilityState.Applicable :
+                    NativeOriginGrantApplicabilityState.Suppressed,
+                x.Applicability);
+        });
+        Assert.Single(result.Progression);
+        Assert.Empty(result.AppliedEffects);
+    }
+
+    [Fact]
+    public void OversizedExpressionInputsFailBeforeInfluenceAuthorization()
+    {
+        // A large claimed numeric value must not reach decimal parsing before
+        // the input has passed the bounded shape check, nor reach host callbacks.
+        var large = new string('9', 1025);
+        var longName = new string('x', 161);
+        var numeric = Effect("numeric", NativeInfluenceCharacteristic.BaseWalkSpeed,
+            number: 20, conditions:
+            [
+                new("intensity", NativeInfluenceExpressionComparison.GreaterThan, "1")
+            ]);
+        var states = new[]
+        {
+            Character([Influence(expression: Expression(("intensity", large)),
+                effects: [numeric])]),
+            Character([Influence(expression: Expression((longName, "active")),
+                effects: [numeric])]),
+            Character([Influence(expression: Expression(("intensity", "2")),
+                effects:
+                [
+                    Effect("large-threshold", NativeInfluenceCharacteristic.BaseWalkSpeed,
+                        number: 20, conditions:
+                        [
+                            new("intensity", NativeInfluenceExpressionComparison.GreaterThan, large)
+                        ])
+                ])]),
+            Character([Influence(effects:
+            [
+                Effect("large-dimension", NativeInfluenceCharacteristic.BaseWalkSpeed,
+                    number: 20, conditions:
+                    [
+                        new(longName, NativeInfluenceExpressionComparison.Equals, "active")
+                    ])
+            ])])
+        };
+        foreach (var state in states)
+        {
+            var authority = new Authority();
+            var result = Resolve(state, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+            Assert.Equal(0, authority.InfluenceCallbacks);
+            Assert.Contains(result.Issues, issue =>
+                issue.Code is "invalid-influence" or "invalid-influence-effect");
+        }
+    }
+
+    [Fact]
+    public void ExpressionDimensionNamesAreOrdinalEvenForCaseInsensitiveHostDictionaries()
+    {
+        // Caller-owned dictionaries may have a case-insensitive comparer.
+        // Source-authored dimension IDs, however, are exact identifiers.
+        var expression = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["phase"] = "manifest",
+            ["intensity"] = "2"
+        };
+        var effects = new[]
+        {
+            Effect("wrong-case-phase", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 18,
+                gate: Expression(("Phase", "manifest"))),
+            Effect("wrong-case-intensity", NativeInfluenceCharacteristic.DefenseContribution,
+                key: "natural", number: 5,
+                conditions:
+                [
+                    new("Intensity", NativeInfluenceExpressionComparison.GreaterThan, "1")
+                ]),
+            Effect("exact-phase", NativeInfluenceCharacteristic.BaseWalkSpeed,
+                number: 40, gate: Expression(("phase", "manifest")))
+        };
+        var result = Resolve(Character([Influence(expression: expression, effects: effects)]));
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(10, result.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(1, result.EffectiveMechanics.DefenseContributions!["natural"]);
+        Assert.Equal(40, result.EffectiveMechanics.BaseWalkSpeed);
+        Assert.Single(result.AppliedEffects);
+        Assert.Equal("exact-phase", result.AppliedEffects[0].Effect.Id);
+    }
 }
