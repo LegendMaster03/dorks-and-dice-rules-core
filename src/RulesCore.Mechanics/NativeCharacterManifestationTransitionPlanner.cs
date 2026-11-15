@@ -95,7 +95,10 @@ public static class NativeCharacterManifestationTransitionPlanner
             if (step.Action == NativeManifestationTransitionAction.Activate)
             {
                 var item = step.NewInstance!;
-                if (instances.ContainsKey(item.Id) || item.Id != step.TargetInstanceId ||
+                if (string.IsNullOrWhiteSpace(item.Id) ||
+                    string.IsNullOrWhiteSpace(item.SheetId) ||
+                    item.ResourcePolicies is null ||
+                    instances.ContainsKey(item.Id) || item.Id != step.TargetInstanceId ||
                     item.ActivationEventId != request.EventId ||
                     item.LastEventId != request.EventId ||
                     item.Lifecycle != NativeManifestationLifecycle.Active ||
