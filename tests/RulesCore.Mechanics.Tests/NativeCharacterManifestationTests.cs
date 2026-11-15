@@ -811,7 +811,7 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal(45, reverted.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
         Assert.Equal(20, state.PrimaryMechanics.BaseWalkSpeed);
         Assert.Equal(10, ReconstructedOrigin(45, 10).Current.InherentGrants
-            .Single().EffectiveValue.GetInt32());
+            .Single().EffectiveValue!.Value.GetInt32());
 
         var denied = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
             state, ReconstructedOrigin(45, 10),
