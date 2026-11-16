@@ -19,6 +19,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "chill-touch",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "name": "Chill Touch",
       "description": "At character level 1, know Chill Touch and cast it at will.",
       "spell": "chill-touch",
@@ -32,6 +39,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "false-life",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "name": "False Life",
       "description": "At character level 3, always have False Life available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
       "spell": "false-life",
@@ -48,6 +62,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "ray-of-enfeeblement",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "name": "Ray Of Enfeeblement",
       "description": "At character level 5, always have Ray Of Enfeeblement available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
       "spell": "ray-of-enfeeblement",
