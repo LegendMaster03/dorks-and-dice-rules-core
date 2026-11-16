@@ -742,7 +742,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     /// a non-form persistent condition may grant independent benefits without
     /// changing the inherent Species/Ancestry configuration.
     /// </summary>
-    private static bool SameConfiguration(
+    internal static bool SameConfiguration(
         NativeOriginCurrentConfiguration underlying,
         NativeOriginCurrentConfiguration effective)
     {

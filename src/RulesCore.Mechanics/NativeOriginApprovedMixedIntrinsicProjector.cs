@@ -20,7 +20,11 @@ public static class NativeOriginApprovedMixedIntrinsicProjector
             result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed ||
             profile.Adjudication.Adjudication is not
                 (NativeOriginAdjudication.DmAuthorized or NativeOriginAdjudication.Supported) ||
-            !ReferenceEquals(profile.Current, profile.Underlying) ||
+            // Reference identity does not survive a valid profile JSON round trip.
+            // Compare the complete normalized inherent configurations instead;
+            // this remains a read-only projection after construction authorization.
+            !NativeOriginContractValidator.SameConfiguration(
+                profile.Current, profile.Underlying) ||
             profile.IndependentGrants.Count != 0 ||
             (profile.PersistentInfluences?.Count ?? 0) != 0 ||
             profile.ActiveTemporaryTransformation is not null ||

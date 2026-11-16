@@ -412,4 +412,66 @@ public sealed class NativeOriginAuthenticatedDescendantTests
                 issue.Code == "inherited-lineage-invalid");
         }
     }
+
+    private sealed class LocalSheetWalkAuthority(NativeOriginProfile expected)
+        : INativeCharacterOriginBaselineAuthority
+    {
+        public bool AuthorizesBaseline(string characterId, NativeOriginProfile profile) =>
+            characterId == "descendant-character" && profile.Id == expected.Id;
+        public bool AuthorizesGrant(string characterId, NativeOriginProfile profile,
+            NativeOriginEffectiveGrant grant) =>
+            characterId == "descendant-character" && profile.Id == expected.Id &&
+            expected.Underlying.InherentGrants.Any(x => x.Id == grant.Id &&
+                x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+    }
+
+    [Fact]
+    public void SavedMixedDescendantProjectsVisionAndWalkSpeedWithoutSiteChanges()
+    {
+        var parent = MixedParent().Profile!;
+        var fixture = new LocalSelfOverride(parent);
+        var proposal = Child(parent);
+        var offers = Evaluate(proposal, fixture).EvaluatedProposal.Candidates;
+        var result = Evaluate(proposal with
+        {
+            Manifestations = offers.Select(Select).ToArray()
+        }, fixture);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+
+        var saved = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(result.Profile))!;
+        Assert.NotSame(saved.Current, saved.Underlying);
+        var restored = result with { Profile = saved };
+
+        var intrinsic = NativeOriginApprovedMixedIntrinsicProjector.Project(restored);
+        Assert.Equal("resolved", intrinsic.Status);
+        Assert.Equal("fey", intrinsic.CreatureType!.Value);
+        Assert.Equal("medium", intrinsic.Size!.Value);
+        Assert.Equal(30, intrinsic.WalkingSpeedFeet!.Value);
+        Assert.Equal("unresolved", NativeOriginIntrinsicProjector.Project(restored).Status);
+
+        var vision = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), restored);
+        Assert.Equal("resolved", vision.Status);
+        Assert.Equal("rule.low-light-vision", vision.LowLightVision!.RuleId);
+        Assert.Equal("bright",
+            NativeOriginVisionProjector.Perceive(vision, "dim").PerceivedLightLevel);
+
+        // The existing sheet kernel receives only the verified underlying walk
+        // speed through an in-process authority. No browser or form transition
+        // is involved; unrelated Origin mechanics remain unimplemented there.
+        var state = new NativeCharacterState("descendant-character",
+            new NativeCharacterRequest("first-party-001", "descendant",
+                new Dictionary<string, int>
+                {
+                    ["strength"] = 10, ["dexterity"] = 12, ["constitution"] = 14,
+                    ["intelligence"] = 8, ["wisdom"] = 15, ["charisma"] = 11
+                }, [new("class.synthetic", 1, "class.level.1")], BaseWalkSpeed: 20),
+            []);
+        var updated = NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed(
+            state, saved, new LocalSheetWalkAuthority(saved));
+        Assert.Equal("resolved", updated.Status);
+        Assert.Equal(30, updated.State!.PrimaryMechanics.BaseWalkSpeed);
+        Assert.Equal(20, state.PrimaryMechanics.BaseWalkSpeed);
+        Assert.Empty(updated.Issues);
+    }
 }
