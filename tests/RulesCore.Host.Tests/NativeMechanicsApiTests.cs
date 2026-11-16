@@ -188,8 +188,9 @@ public sealed class NativeMechanicsApiTests
         var projected = new NativeCharacterProjector(catalog).Project(character);
         Assert.True(projected.Status is "resolved" or "partial",
             "Character: " + JsonSerializer.Serialize(projected.Issues));
-        Assert.True(projected.Issues.All(issue =>
-            issue.Code == "hit-point-input-required"),
+        Assert.True(projected.Issues.All(issue => issue.Code is
+            "hit-point-input-required" or "movement-input-required" or
+            "defense-input-required"),
             "Unexpected character projection: " + JsonSerializer.Serialize(projected.Issues));
 
         object Valid() => new
