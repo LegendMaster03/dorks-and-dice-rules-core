@@ -4,79 +4,178 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// Projects the exact native, intrinsic Darkvision range from a completed,
-/// verified initial Origin. No vision-through-magical-darkness, light-level
-/// transformation, extended range or free trait inheritance is inferred.
+/// Projects only selected, verified native Darkvision characteristics. A
+/// separately selected canonical upgrade can increase the range at its authored
+/// character level. This is a read-only view, not a construction eligibility
+/// rule, automatic inheritance or permission to see magical darkness.
 /// </summary>
 public static class NativeOriginDarkvisionProjector
 {
+    public sealed record NativeDarkvisionExtension(
+        int AddedRangeFeet, int RequiredCharacterLevel,
+        string GrantId, string SourceId, string OccurrencePath);
+
     public sealed record GrantedDarkvision(
-        int RangeFeet, string GrantId, string SourceId, string OccurrencePath);
+        int RangeFeet, string GrantId, string SourceId, string OccurrencePath,
+        int? BaseRangeFeet = null,
+        IReadOnlyList<NativeDarkvisionExtension>? Extensions = null);
 
     public sealed record View(
         string Status, GrantedDarkvision? Darkvision,
         IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true);
 
     public static View Project(NativeCatalogSnapshot catalog,
-        NativeOriginConstructionResult result) => ProjectCore(catalog, result, false);
+        NativeOriginConstructionResult result, int? characterLevel = null) =>
+        ProjectCore(catalog, result, false, characterLevel);
 
     public static View ProjectApprovedMixed(NativeCatalogSnapshot catalog,
-        NativeOriginConstructionResult result) => ProjectCore(catalog, result, true);
+        NativeOriginConstructionResult result, int? characterLevel = null) =>
+        ProjectCore(catalog, result, true, characterLevel);
 
     private static View ProjectCore(NativeCatalogSnapshot catalog,
-        NativeOriginConstructionResult result, bool mixed)
+        NativeOriginConstructionResult result, bool mixed, int? characterLevel)
     {
         ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(result);
+        if (characterLevel is <= 0)
+            return Unresolved("invalid-character-level");
 
         var foundation = mixed ?
             NativeOriginApprovedMixedIntrinsicProjector.Project(result) :
             NativeOriginIntrinsicProjector.Project(result);
         if (foundation.Status != "resolved" ||
             result.Profile is not { } profile)
-            return new("unresolved", null,
-                [mixed ? "mixed-intrinsics-not-verified" :
-                    "direct-intrinsics-not-verified"]);
+            return Unresolved(mixed ? "mixed-intrinsics-not-verified" :
+                "direct-intrinsics-not-verified");
 
-        var grants = profile.Current.InherentGrants.Where(x =>
+        var baseline = profile.Current.InherentGrants.Where(x =>
             x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
             x.Identity.IntrinsicSlotId == "darkvisionFeet").ToArray();
-        if (grants.Length == 0)
+        if (baseline.Length > 1)
+            return Unresolved("duplicate-darkvision");
+
+        NativeOriginEffectiveGrant? baseGrant = null;
+        int initialRange = 0;
+        if (baseline.Length == 1)
+        {
+            var grant = baseline[0];
+            var source = grant.Identity.Occurrence.Source;
+            if (source.Kind != NativeOriginSourceKind.Native ||
+                !catalog.TryGetById(source.Id, out var native) ||
+                native is null || native.Category is not ("species" or "ancestry") ||
+                !native.Definition.TryGetProperty("darkvisionFeet", out var authored) ||
+                authored.ValueKind != JsonValueKind.Number ||
+                !authored.TryGetInt32(out var authoredRange) ||
+                authoredRange is <= 0 or > 1_000_000 ||
+                grant.EffectiveValue is not { ValueKind: JsonValueKind.Number } effective ||
+                !effective.TryGetInt32(out var range) ||
+                range != authoredRange || !VerifiedGrant(grant))
+                return Unresolved("darkvision-not-verified");
+            baseGrant = grant;
+            initialRange = range;
+        }
+
+        // Keep canonical sense traits separate from numeric intrinsics; a
+        // Stone Goliath can manifest this capability at level 4 without
+        // inheriting any other ancestry's Darkvision.
+        var nativeSenseGrants = profile.Current.InherentGrants.Where(x =>
+            x.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
+            x.Identity.MechanicalDefinitionId is { } id &&
+            catalog.TryGetById(id, out var entity) &&
+            entity is not null && entity.Category == "origin-trait" &&
+            entity.Definition.TryGetProperty("trait", out var trait) &&
+            trait.ValueKind == JsonValueKind.Object &&
+            trait.TryGetProperty("sense", out var sense) &&
+            sense.ValueKind == JsonValueKind.String &&
+            sense.GetString() == "darkvision").ToArray();
+
+        var extensions = new List<NativeDarkvisionExtension>();
+        foreach (var grant in nativeSenseGrants)
+        {
+            if (grant.Identity.MechanicalDefinitionId is not { } id ||
+                !catalog.TryGetById(id, out var definition) ||
+                definition is null || definition.Category != "origin-trait" ||
+                !definition.Definition.TryGetProperty("trait", out var canonical) ||
+                canonical.ValueKind != JsonValueKind.Object ||
+                grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } effective ||
+                !JsonElement.DeepEquals(canonical, effective) ||
+                !canonical.TryGetProperty("rangeFeet", out var span) ||
+                !span.TryGetInt32(out var sourceRange) || sourceRange is <= 0 or > 1_000_000 ||
+                !canonical.TryGetProperty("addToExistingDarkvisionFeet", out var add) ||
+                !add.TryGetInt32(out var added) || added is <= 0 or > 1_000_000 ||
+                !canonical.TryGetProperty("requiredCharacterLevel", out var threshold) ||
+                !threshold.TryGetInt32(out var unlock) || unlock <= 0 ||
+                !canonical.TryGetProperty("stacking", out var stacking) ||
+                stacking.GetString() != "once-per-feature" ||
+                !VerifiedGrant(grant))
+                return Unresolved("darkvision-extension-not-verified");
+
+            if (characterLevel is null)
+                return Unresolved("darkvision-extension-requires-character-level");
+            if (characterLevel.Value < unlock)
+                continue;
+            extensions.Add(new(added, unlock, grant.Id,
+                grant.Identity.Occurrence.Source.Id,
+                grant.Identity.Occurrence.OccurrencePath));
+        }
+
+        // The native catalog currently has one authored Darkvision-upgrade
+        // grammar. Different upgrade traits need their own compatibility and
+        // stacking review; two instances cannot become two free range boosts.
+        if (extensions.Count > 1)
+            return Unresolved("multiple-darkvision-extensions-require-reconciliation");
+
+        if (initialRange == 0 && extensions.Count == 0)
             return new("none", null, []);
-        if (grants.Length != 1)
-            return new("unresolved", null, ["duplicate-darkvision"]);
+        var extension = extensions.SingleOrDefault();
+        var total = baseGrant is not null
+            ? initialRange + (extension?.AddedRangeFeet ?? 0)
+            : (extension is null ? 0 : SourceRange(extension));
+        if (total <= 0 || total > 1_000_000)
+            return Unresolved("darkvision-range-overflow");
 
-        var grant = grants[0];
-        var source = grant.Identity.Occurrence.Source;
-        var evidence = mixed ?
-            NativeOriginApprovedMixedIntrinsicProjector.HasVerifiedContributingEvidence(
-                result, grant) :
-            grant.SourceCandidateIds.Count == 1 &&
-            result.EvaluatedProposal.Candidates.Any(candidate =>
-                candidate.Id == grant.SourceCandidateIds[0] &&
-                candidate.ContributorId is null &&
-                candidate.Identity == grant.Identity &&
-                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
-                candidate.OfferedValue is { } offered &&
-                grant.EffectiveValue is { } effective &&
-                JsonElement.DeepEquals(offered, effective));
+        var primary = baseGrant ?? profile.Current.InherentGrants
+            .Single(x => x.Id == extension!.GrantId);
+        return new("resolved", new(total, primary.Id,
+            primary.Identity.Occurrence.Source.Id,
+            primary.Identity.Occurrence.OccurrencePath,
+            BaseRangeFeet: initialRange,
+            Extensions: extensions), []);
 
-        if (source.Kind != NativeOriginSourceKind.Native ||
-            !catalog.TryGetById(source.Id, out var native) ||
-            native is null || native.Category is not ("species" or "ancestry") ||
-            !native.Definition.TryGetProperty("darkvisionFeet", out var original) ||
-            original.ValueKind != JsonValueKind.Number ||
-            !original.TryGetInt32(out var authoredRange) ||
-            authoredRange is <= 0 or > 1_000_000 ||
-            grant.EffectiveValue is not { ValueKind: JsonValueKind.Number } value ||
-            !value.TryGetInt32(out var actualRange) ||
-            actualRange != authoredRange ||
-            grant.Authorization?.Adjudication is not
-                (NativeOriginAdjudication.DmAuthorized or NativeOriginAdjudication.Supported) ||
-            !evidence)
-            return new("unresolved", null, ["darkvision-not-verified"]);
+        int SourceRange(NativeDarkvisionExtension x)
+        {
+            var chosen = profile.Current.InherentGrants.Single(y => y.Id == x.GrantId);
+            // Native canonical range is the stand-alone range. The additive
+            // amount is used only if a Darkvision base already exists.
+            catalog.TryGetById(chosen.Identity.MechanicalDefinitionId!, out var definition);
+            return definition!.Definition.GetProperty("trait")
+                .GetProperty("rangeFeet").GetInt32();
+        }
 
-        return new("resolved", new(actualRange, grant.Id,
-            source.Id, grant.Identity.Occurrence.OccurrencePath), []);
+        bool VerifiedGrant(NativeOriginEffectiveGrant grant)
+        {
+            if (grant.Authorization?.Adjudication is not
+                    (NativeOriginAdjudication.DmAuthorized or NativeOriginAdjudication.Supported) ||
+                grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
+                !catalog.TryGetById(grant.Identity.Occurrence.Source.Id, out var source) ||
+                source is null || source.Category is not ("species" or "ancestry"))
+                return false;
+            if (mixed)
+                return NativeOriginApprovedMixedIntrinsicProjector
+                    .HasVerifiedContributingEvidence(result, grant);
+            return grant.Authorization.Adjudication == NativeOriginAdjudication.Supported &&
+                grant.SourceCandidateIds.Count == 1 &&
+                result.EvaluatedProposal.Candidates.Any(candidate =>
+                    candidate.Id == grant.SourceCandidateIds[0] &&
+                    candidate.ContributorId is null &&
+                    candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                    candidate.Identity == grant.Identity &&
+                    candidate.OfferedValue is { } offered &&
+                    grant.EffectiveValue is { } effective &&
+                    JsonElement.DeepEquals(offered, effective));
+        }
     }
+
+    private static View Unresolved(string reason) =>
+        new("unresolved", null, [reason]);
 }
