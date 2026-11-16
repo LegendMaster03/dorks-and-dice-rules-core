@@ -216,6 +216,12 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         var dancing = Assert.Single(offered, x =>
             x.ContributorId == "a" &&
             x.Identity.MechanicalDefinitionId == "trait.elf.drow.dancing-lights");
+        // Dancing Lights now has the previously missing native Drow ancestry
+        // spellcasting-ability dependency. Select it from the same contributor
+        // so this test isolates the intended Darkvision/drawback relationship.
+        var spellAbility = Assert.Single(offered, x =>
+            x.ContributorId == "a" &&
+            x.Identity.IntrinsicSlotId == "spellcastingAbility");
         var drop = Decision("drop-sensitivity", "relationship", "replace-sensitivity",
             new { action = "retain-second" });
         var extra = Decision("permit-dancing", "candidate", dancing.Id,
@@ -223,9 +229,13 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         var selections = proposal.Manifestations.Concat(
         [
             new NativeOriginManifestation("drawback", sensitivity.Id),
-            new NativeOriginManifestation("dancing-lights", dancing.Id)
+            new NativeOriginManifestation("dancing-lights", dancing.Id),
+            new NativeOriginManifestation("drow-spell-ability", spellAbility.Id,
+                Choices: [new(spellAbility.RequiredChoices!.Single().Id, ["wisdom"])])
         ]).ToArray();
-        var candidatePermissions = permits.Concat([extra, drop]).ToArray();
+        var allowAbility = Decision("permit-drow-spell-ability", "candidate",
+            spellAbility.Id, new { eligibility = "eligible" });
+        var candidatePermissions = permits.Concat([extra, allowAbility, drop]).ToArray();
         var original = proposal with
         {
             Manifestations = selections, TableDecisions = candidatePermissions,
