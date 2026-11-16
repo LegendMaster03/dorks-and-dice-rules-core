@@ -204,3 +204,10 @@ The next independent characteristic increment adds **read-only native maximum-HP
 - Real native catalog regression tests verify expected Dwarf HP calculations, incomplete native HP history, selection/deduplication, serialized profiles, forgery, Elf/Tiefling unresolved overlap, two scoped selected outcomes, single-source behavior and rejection of fabricated native rule disposition.
 
 **No new first-party biological traits were enabled, and no site, Class combat, hit-dice policy, current-HP mutation, arbitrary capacity or numerical trait-price schedule was changed.** See [increment details](pillar2-hp-progression-and-passive-rule-overlap-20261115.md).
+
+
+## Human Adaptable Learning entitlement projection — 2026-11-15
+
+The canonical Human `trait.human.adaptable-learning` now has a **read-only** source-neutral interpretation of its complete earned entitlement schedule: four extra Skill ranks at character level 1, plus one at each later level (`L+3` ranks through level `L`). `NativeOriginSkillRankEntitlementProjector` verifies an already authorized selected native trait, the actual native definition, source/provenance, compatible persisted baseline and a resolved character level. It rejects forged or stripped progressions and duplicate independently counted same-trait donors. It makes **no** statement that any ranks have been allocated within normal limits: no approved rank ledger/caps or automatic Skill changes exist.
+
+Real-catalog tests cover conventional Human (only with an **in-process test-only** synthetic Origin Feat eligibility override), scoped DM-authorized mixed Elf/Human, two Human donors consolidating one schedule, ordinary Elf absence, serialization, invalid levels and altered payloads. The first-party Origin Feat catalog is **not** complete, so the unoverridden conventional Human remains incomplete. No additional trait is first-party opted in for biological inheritance, and Skillful/Versatile benefits remain separate from rank entitlements. See [details](pillar2-human-skill-rank-entitlement-projection-20261115.md).
