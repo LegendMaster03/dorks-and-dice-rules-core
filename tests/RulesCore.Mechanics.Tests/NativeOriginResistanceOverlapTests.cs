@@ -73,8 +73,11 @@ public sealed class NativeOriginResistanceOverlapTests
             .ToArray();
         Assert.Equal(3, physical.Length);
         var selected = physical.Select((x, i) =>
-            new NativeOriginManifestation("physical-" + i, x.Id,
-                SelectedValue: x.OfferedValue)).Concat(
+            x.Identity.IntrinsicSlotId == "size" && x.OfferedValue is null
+                ? new NativeOriginManifestation("physical-" + i, x.Id,
+                    Choices: [new NativeOriginChoiceSelection("size", ["medium"])])
+                : new NativeOriginManifestation("physical-" + i, x.Id,
+                    SelectedValue: x.OfferedValue)).Concat(
             [
                 new("first-resistance", a.Id),
                 new("second-resistance", b.Id)
