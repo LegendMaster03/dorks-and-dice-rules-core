@@ -47,7 +47,14 @@ public static class NativeMechanicsEndpoints
         group.MapNativeOriginPreview();
         // Separate trusted DM-reviewed evaluation. The caller must still
         // commit any authorized result through Character Sheet's store.
-        if (!privateTunnel) group.MapNativeOriginApprovedMixedEvaluation();
+        if (!privateTunnel)
+        {
+            group.MapNativeOriginApprovedMixedEvaluation();
+            // Only the authenticated Character Sheet-delegated public ingress.
+            // This calculates a source-matched bootstrap candidate, never
+            // persists a spell pool or authenticates the stored character.
+            group.MapNativeDirectInnateSpellLedgerBootstrap();
+        }
 
         group.MapGet("/ruleset", (NativeCatalogStore store) =>
         {
@@ -63,6 +70,7 @@ public static class NativeMechanicsEndpoints
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     originPreview = "stateless-first-party",
                     originPersistence = false, originDmAdjudication = false,
+                    innateSpellLedgerBootstrap = privateTunnel ? "unavailable" : "source-matched-preview",
                     startingEquipmentResolution = "authored-grants-only",
                     equipmentQualifications = "authored-scopes-only",
                      equipmentTraining = "proficiency-and-mastery-flags",
