@@ -195,13 +195,15 @@ public static class NativeOriginApiEndpoints
 
             var character = new NativeCharacterProjector(catalog)
                 .Project(request.Character, context.RequestAborted);
-            // Missing per-level HP dice are unrelated to the verified
-            // advancement level or proficiency used by innate free casts.
-            // A partial class kernel with *only* that issue is safe for this
-            // projection; invalid selections, unresolved class levels or
-            // other mechanics issues must continue to fail closed.
+            // Absent independent equipment AC, native base movement and
+            // rolled HP inputs do not change this projection's verified total
+            // level or native proficiency. These exact informational gaps
+            // may coexist with a safe read-only innate-spell course. No
+            // progression, feature, option or condition issue is exempted.
             if (character.Status is not ("resolved" or "partial") ||
-                character.Issues.Any(issue => issue.Code != "hit-point-input-required") ||
+                character.Issues.Any(issue => issue.Code is not (
+                    "hit-point-input-required" or "movement-input-required" or
+                    "defense-input-required")) ||
                 !character.Values.TryGetValue("advancement.total-level", out var total) ||
                 total.Status != "resolved" || total.Value is not > 0 ||
                 !character.Values.TryGetValue("proficiency.bonus", out var proficiency) ||
