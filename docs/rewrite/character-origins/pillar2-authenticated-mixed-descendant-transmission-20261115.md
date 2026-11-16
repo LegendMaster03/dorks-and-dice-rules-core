@@ -59,3 +59,15 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 Also require both workflows: `Validate Rules Core Rewrite Structure` and `Rules Core Phase 3B Public Native API CI`. Their successful results prove the tested native subsystem, not completed game balance or an integrated production website. Consult draft PR #157 and its current head for final test status.
 
 This record exists to permit incremental development to resume without reconstructing the decisions from PR discussion. Preserve the test-only self-override until site integration work is separately authorized.
+
+
+## Follow-up: serialized projection and Goliath dependency regression
+
+**Implementation commits:** `5e8e350138d2f40dec8fac8f3800f338373a79ae` and `9e59f0dac72cf9eae55bccb5c34ec17fce099e91`.
+
+- Replaced a reference-identity check in `NativeOriginApprovedMixedIntrinsicProjector` with the existing normalized `NativeOriginContractValidator.SameConfiguration` comparison. JSON-deserialized `Current` and `Underlying` objects can now project when they are mechanically identical and the result already carries verified construction authorization. This does not authenticate arbitrary deserialized results.
+- Added round-trip tests verifying creature type, size, walking speed and Low-Light Vision, plus consumption of the verified underlying walking speed by `NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed` with a local test-only authority. Only this supported adapter is exercised; no site endpoint or Class engine behavior is claimed.
+- Added an actual Stone Goliath parent → descendant dependency test for the selected Constitution `Giant Ancestry Aptitude`, Stone's Endurance resource owner, and Stone Strike dependent. Source-bound choices remain configured. The descendant recomputes its own resource links instead of retaining the previous generation's grant IDs. Non-opted-in Goliath traits are granted **only** by explicit scoped in-process DM test decisions. No new first-party inheritance permission is declared.
+- Both required GitHub workflows passed for the implementation heads above. The full workflow includes release build, C# test suite, Pillar 1/3 contracts, Python suite, native split checks and Docker/HTTP checks.
+
+**Independent validation scope:** The authenticated nested-source, lineage, and read-only projection increments are suitable for a targeted independent code review. The whole Pillar 2 biological release remains **draft**, because full native characteristic handling, production state authentication, allocation admission policy, and downstream Character Sheet consumption have not been completed. In particular, the owner has not approved specific allocation price tiers or an admission allowance.

@@ -180,3 +180,13 @@ The construction engine now accepts an optional `INativeOriginManifestedContribu
 - Real-catalog C# tests cover self-override trust, stale revisions/wrong scope/profile, temporary form exclusion, configured Red/Bronze Breath Weapon inheritance, two verified mixed parents with a consolidated trait, further-generation transmission, nonbiological underlying types, lineage tampering, and JSON preservation.
 
 **Release boundary:** This is a bounded source-neutral mixed-descendant transmission increment, not final allocation approval, universal inheritance authoring, site integration, or complete downstream execution. No merge, deployment, or policy approval follows from passing this test suite.
+
+
+### Serialized mixed projection and inherited resource binding — 2026-11-15
+
+- A verified completed mixed descendant's physical foundation and Low-Light Vision can be projected **after a JSON profile round trip**, not just while the constructor retains reference-identical `Current` and `Underlying` objects. `NativeOriginApprovedMixedIntrinsicProjector` now uses the same normalized configuration equivalence as the source contract validator. This does not authorize independently loaded client profiles; construction status and source evidence remain required.
+- `NativeCharacterSheetOriginBaselineAdapter.ApplyWalkSpeed` can consume the verified descendant's underlying walking-speed grant with an injected test authority. This is narrowly limited to one scalar baseline capability and leaves the Character Sheet site and other mechanics unchanged.
+- A native Stone Goliath parent test verifies that its chosen Constitution aptitude, one shared Stone's Endurance pool and Stone Strike are retained as a **complete configured dependency** through a descendant's explicitly DM-authorized selection. The descendant's Strike references the **descendant's** pool grant ID, while the parent's old resource-owner ID remains historical provenance only. Goliath Strike and Aptitude remain unreviewed for first-party biological transmission.
+- All existing C# and Python tests, native structure validation, and Docker/HTTP workflow checks passed at implementation heads `5e8e350138d2f40dec8fac8f3800f338373a79ae` and `9e59f0dac72cf9eae55bccb5c34ec17fce099e91`.
+
+No numerical allocation admission, universal inherited spellcasting, transient-form runtime, production parent resolver or website integration was introduced.
