@@ -167,3 +167,16 @@ See [the detailed provisional allocation preview contract](pillar2-provisional-a
 6. **End-to-end acceptance:** Test ordinary selectable Species, mixed combinations, multiple contributors and multigenerational constructions at actual future unlocks. Conventional presets remain valid direct selections.
 
 **No biological RNG, complete combat model, Construct procedure implementation, universal numerical power equality, or new directory architecture is required by this milestone.**
+
+
+## Authenticated mixed-descendant biological transmission — 2026-11-15
+
+The construction engine now accepts an optional `INativeOriginManifestedContributorAuthority`. An authenticated application service can resolve a previously constructed parent's **current authoritative underlying inherent configuration** and revision under a trusted scope. A C# `LocalSelfOverride` test fixture supplies this authority in-process, avoiding Character Sheet or site implementation during testing. No user-provided nested profile becomes native inheritance authority on its own. [Implementation progress and threat boundary](pillar2-authenticated-mixed-descendant-transmission-20261115.md).
+
+- Each verified parent supplies only its **manifested underlying** grants. Historical Species alternatives, unselected traits, acquired independent grants, and effective temporary forms are excluded. The biological evaluator still requires an available biological method for the verified parent's effective underlying creature type and the native first-party trait opt-in for the particular grant; no unrestricted ancestry cache is created.
+- The descendant selects explicit offers and reuses the normal reconciliation, constraint, binding, resource and validation stages. Configured parameters, resolved choices and full native trait definitions remain intact. Parent resource-owner IDs are historical only: selected descendant resources are rebound to their own effective grants.
+- The current grant has one local source-offer record per contributor. Its optional `InheritedFrom` array records the verified parent's profile ID and revision, original grant ID, prior source candidates, field sources and resource-owner links. Reconciliation retains every immediate contributing parent through consolidation or authorized replacement without granting multiple resources. Earlier generations remain references to verified stored profile revisions, not automatically selectable sources.
+- Serialized lineage validation rejects empty, malformed, contradictory or duplicated immediate source records. It validates internal shape and attribution but is **not** an application-ownership check or proof that a caller-supplied parent snapshot is authoritative.
+- Real-catalog C# tests cover self-override trust, stale revisions/wrong scope/profile, temporary form exclusion, configured Red/Bronze Breath Weapon inheritance, two verified mixed parents with a consolidated trait, further-generation transmission, nonbiological underlying types, lineage tampering, and JSON preservation.
+
+**Release boundary:** This is a bounded source-neutral mixed-descendant transmission increment, not final allocation approval, universal inheritance authoring, site integration, or complete downstream execution. No merge, deployment, or policy approval follows from passing this test suite.
