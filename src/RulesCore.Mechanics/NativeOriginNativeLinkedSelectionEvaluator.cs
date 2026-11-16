@@ -66,10 +66,24 @@ internal sealed class NativeOriginNativeLinkedSelectionEvaluator(
         var existing = proposal.Constraints ?? [];
         var ids = generated.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
         foreach (var supplied in existing.Where(x => ids.Contains(x.Id)))
-            if (!generated.Contains(supplied))
+        {
+            var expected = generated.Single(x => x.Id == supplied.Id);
+            // The same native link may legitimately be loaded from JSON.
+            // Compare values, not IReadOnlyList object references.
+            if (supplied.Kind != expected.Kind ||
+                supplied.NativeRuleReference != expected.NativeRuleReference ||
+                supplied.Minimum != expected.Minimum ||
+                supplied.Maximum != expected.Maximum ||
+                supplied.TableDecisionId != expected.TableDecisionId ||
+                supplied.LinkedParameterPaths is not null ||
+                supplied.Subjects is not { Count: 1 } ||
+                supplied.Conditions is not { Count: 1 } ||
+                supplied.Subjects[0] != expected.Subjects[0] ||
+                supplied.Conditions[0] != expected.Conditions[0])
                 issues.Add(new("native-linked-constraint-tampered", supplied.Id,
                     NativeOriginIssueSeverity.Invalid,
                     "A proposal cannot rewrite the native source's linked selection."));
+        }
         return (proposal with
         {
             Constraints = existing.Where(x => !ids.Contains(x.Id))
