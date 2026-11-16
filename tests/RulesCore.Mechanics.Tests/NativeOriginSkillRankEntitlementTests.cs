@@ -155,7 +155,11 @@ public sealed class NativeOriginSkillRankEntitlementTests
             string.Join("; ", result.Issues.Select(x => x.Code + ":" + x.Detail)));
         var preview = NativeOriginSkillRankEntitlementProjector.ForCharacter(
             catalog, result, Character(catalog, level));
-        Assert.Equal("resolved", preview.Status);
+        Assert.True(preview.Status == "resolved",
+            string.Join("; ", preview.UnresolvedReasons) +
+            " / total-level=" + Character(catalog, level)
+                .Values["advancement.total-level"].Status +
+            " / origin-grants=" + result.Profile!.Underlying.InherentGrants.Count);
         Assert.Equal(level, preview.CharacterLevel);
         Assert.Equal(4, preview.AdditionalRanksAtLevelOne);
         Assert.Equal(1, preview.AdditionalRanksPerLaterLevel);
