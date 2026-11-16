@@ -200,6 +200,80 @@ public sealed class NativeOriginDrowLinkedSelectionTests
     }
 
     [Fact]
+    public void LinkedDrowProposalRoundTripsAndReconstructsDeterministically()
+    {
+        var (proposal, _, drawback, _, _) = SelectedDrow();
+        var selected = proposal with
+        {
+            Manifestations = proposal.Manifestations.Concat(
+                [new NativeOriginManifestation("selected-sensitivity", drawback.Id)]).ToArray()
+        };
+        var original = Evaluate(selected, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, original.Status);
+
+        var persisted = JsonSerializer.Deserialize<NativeOriginProposal>(
+            JsonSerializer.Serialize(original.EvaluatedProposal));
+        var replay = Evaluate(persisted!, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, replay.Status);
+        Assert.DoesNotContain(replay.Issues,
+            x => x.Code == "native-linked-constraint-tampered");
+        Assert.Equal(original.Profile!.Underlying.InherentGrants.Select(x => x.Id),
+            replay.Profile!.Underlying.InherentGrants.Select(x => x.Id));
+        Assert.Equal(Assert.Single(original.EvaluatedProposal.Constraints!).Id,
+            Assert.Single(replay.EvaluatedProposal.Constraints!).Id);
+
+        var altered = persisted! with
+        {
+            Manifestations = persisted.Manifestations.Where(x =>
+                x.CandidateId != drawback.Id).ToArray()
+        };
+        var denied = Evaluate(altered, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, denied.Status);
+        Assert.Contains(denied.Issues, x =>
+            x.Code == "required-mechanic-missing");
+        Assert.DoesNotContain(denied.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.IntrinsicSlotId == "darkvisionFeet");
+    }
+
+    [Fact]
+    public void ConventionalDrowSelectionIncludesItsCompleteSensoryAdaptation()
+    {
+        var selected = new NativeOriginProposal("direct-drow",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedAncestryId: "ancestry.elf.drow");
+        var preview = Evaluate(selected, auto: true).EvaluatedProposal;
+        var spellcasting = Assert.Single(preview.Candidates, x =>
+            x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        var candidate = Assert.Single(preview.Candidates, x =>
+            x.Identity.IntrinsicSlotId == "darkvisionFeet");
+        var sunlight = Assert.Single(preview.Candidates, x =>
+            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+        Assert.Null(candidate.ContributorId);
+        Assert.Single(preview.Constraints!, x =>
+            x.Subjects.Single().CandidateId == candidate.Id &&
+            x.Conditions.Single().CandidateId == sunlight.Id);
+
+        var full = Evaluate(selected with
+        {
+            Manifestations =
+            [
+                new("drow-casting", spellcasting.Id,
+                    Choices: [new("spellcastingAbility", ["intelligence"])])
+            ]
+        }, auto: true);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, full.Status);
+        Assert.Equal(120, Assert.Single(full.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "darkvisionFeet")
+            .EffectiveValue!.Value.GetInt32());
+        Assert.Contains(full.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId ==
+                "trait.elf.drow.sunlight-sensitivity");
+        Assert.DoesNotContain(full.Issues, x =>
+            x.Code is "required-mechanic-missing" or "native-linked-constraint-tampered");
+    }
+
+    [Fact]
     public void CallerCannotRewriteNativeLinkEndpoints()
     {
         var (proposal, _, drawback, link, _) = SelectedDrow();
