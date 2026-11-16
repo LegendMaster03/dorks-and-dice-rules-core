@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -58,7 +59,7 @@ public static class NativeOriginInnateSpellResourceLedger
             catalog.RulesetId, catalog.Fingerprint, origin.Profile!.Id,
             origin.EvaluatedProposal.Id, projection.CharacterLevel!.Value,
             Fingerprint(projection), 0,
-            available.ToDictionary(x => x.Key, x => x.Value,
+            available.ToFrozenDictionary(x => x.Key, x => x.Value,
                 StringComparer.Ordinal));
         return new("resolved", state);
     }
@@ -130,7 +131,7 @@ public static class NativeOriginInnateSpellResourceLedger
             return new("resolved", state with
             {
                 Revision = state.Revision + 1,
-                RemainingFreeCasts = next
+                RemainingFreeCasts = next.ToFrozenDictionary(StringComparer.Ordinal)
             });
         }
 
@@ -174,7 +175,7 @@ public static class NativeOriginInnateSpellResourceLedger
                 return new("resolved", state with
                 {
                     Revision = state.Revision + 1,
-                    RemainingFreeCasts = next
+                    RemainingFreeCasts = next.ToFrozenDictionary(StringComparer.Ordinal)
                 }, GrantId: spell.GrantId, Remaining: change.Current, Maximum: max);
             }
             default:
