@@ -190,3 +190,17 @@ The construction engine now accepts an optional `INativeOriginManifestedContribu
 - All existing C# and Python tests, native structure validation, and Docker/HTTP workflow checks passed at implementation heads `5e8e350138d2f40dec8fac8f3800f338373a79ae` and `9e59f0dac72cf9eae55bccb5c34ec17fce099e91`.
 
 No numerical allocation admission, universal inherited spellcasting, transient-form runtime, production parent resolver or website integration was introduced.
+
+
+## Dwarven Toughness HP projection and canonical passive-rule overlap — 2026-11-15
+
+The next independent characteristic increment adds **read-only native maximum-HP progression** and a **source-neutral passive rule overlap guard**. It does not create a new biological cost or inheritance policy.
+
+- `NativeOriginHitPointProgressionProjector` reads an already-selected and authorized canonical `origin-trait` with `hitPointsPerCharacterLevel`. For Dwarf Toughness, the authored value is `1` extra maximum HP per **total character level**. A single effective grant applies once even if duplicate donor manifestations consolidate; two distinct HP progressions remain unresolved rather than silently stacked. Forged or altered trait payloads and unresolved character levels fail closed.
+- `Combine` uses the actual native character projector's resolved `advancement.total-level` and `hit-points.maximum`, adding the Origin bonus **once** without rewriting Hit Die gains, Constitution math, Class progression, current HP or authoritative saved state. It is a preview, not a new server grant. Direct Dwarf projection works at levels 1, 3, 5 and 17; mixed Dwarf testing requires scoped DM eligibility since Dwarven Toughness is **not yet opted into** first-party biological transmission.
+- The conventional `NativeOriginIntrinsicProjector` now compares normalized `Underlying` and `Current` configurations instead of requiring in-memory reference identity. A valid JSON round-trip no longer erases otherwise verified direct physical foundation projection.
+- Distinct selected canonical traits that reference the **same native passive rule** and carry no other mechanical fields must be explicitly reconciled, even when authored with different trait IDs. Elf `trait.shared.low-light-vision` and Tiefling `trait.tiefling.low-light-vision` both reference `rule.low-light-vision`. The common reconciler reports `same-passive-native-rule-reconciliation-required` instead of silently granting two effects. A verified scoped RetainFirst/RetainSecond keeps one **complete** source definition. RetainBoth requires explicit authority and still cannot be projected as one supported passive-vision effect. No automatic equivalence winner or canonical-ID merger was introduced.
+- The Tiefling base Species remains nonselectable/restricted; its existing family offer is **Restricted**, not a default biologically heritable trait. Native source restrictions and real candidate eligibility remain independent of the overlap detector.
+- Real native catalog regression tests verify expected Dwarf HP calculations, incomplete native HP history, selection/deduplication, serialized profiles, forgery, Elf/Tiefling unresolved overlap, two scoped selected outcomes, single-source behavior and rejection of fabricated native rule disposition.
+
+**No new first-party biological traits were enabled, and no site, Class combat, hit-dice policy, current-HP mutation, arbitrary capacity or numerical trait-price schedule was changed.** See [increment details](pillar2-hp-progression-and-passive-rule-overlap-20261115.md).
