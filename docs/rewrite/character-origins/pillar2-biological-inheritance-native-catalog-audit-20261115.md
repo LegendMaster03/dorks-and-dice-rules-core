@@ -96,7 +96,21 @@ The common `NativeOriginReconciler` now detects **selected, distinct canonical `
 - The implementation does **not** automatically transmit either Tremorsense trait. They remain unreviewed for first-party biological eligibility until their own inheritance, overlap, activation and allocation decisions are ready; the execution tests supply individually scoped verified DM eligibility and relationship decisions.
 - Regression tests cover unresolved overlap, each retained-only mode, authorized coexistence, denied unauthenticated coexistence, unrelated vision plus Tremorsense, full Stonebound resource/activation constraints, and JSON round-trip of the selected effective grant.
 
-**Pending:** Typed `damageResistance` overlap is a distinct category and needs explicit type/percentage semantics; non-trait senses and intrinsic Darkvision choices still need projection, upgrade and condition rules; the conventional preset should remain unaffected. This increment is a conservative reconciliation gate, **not** a universal sense upgrade, overlap cap, balancing result or random inheritance system.
+**Pending:** Non-trait senses and intrinsic Darkvision choices still need projection, upgrade and condition rules; the conventional preset should remain unaffected. Typed resistance overlap is now conservatively detected as described below, but its eventual general stacking/percentage policy is not approved. This increment is a conservative reconciliation gate, **not** a universal sense upgrade, overlap cap, balancing result or random inheritance system.
+
+## Native durable damage-resistance overlap — 2026-11-15
+
+The same reconciliation stage now detects **selected, distinct canonical origin traits that provide unconditional resistance to the same damage type**. The evidence is read from the native typed `damageResistance` payload, rather than a description or broad keyword.
+
+- Native percentage records such as Infernal Fire 50%, Goliath Born of Flame Fire 50%, Abyssal Poison 50%, Chthonic Necrotic 50% and Frost resistance are compared by **damage type**, not by an arbitrary constant score.
+- The Dwarf's legacy `damageResistance: { "poison": 50 }` shape is recognized alongside the percentage shape. Dwarven Resilience remains a **complete trait** containing both poison resistance and advantage against poison-effect saving throws. A `RetainFirst` decision does not silently split its benefits.
+- A Dragonborn's `damageTypeFrom: "selected-dragonborn-leaf"` is resolved using the **actual, already authorized manifested `damageType` parameter** from its authored leaf binding; a Red Dragonborn Fire resistance and Infernal Fire resistance therefore overlap even though the original JSON schemas are not identical.
+- Two selected, distinct static resistance traits for the same type require an explicit reconciliation. Unresolved candidates are suppressed and report `same-damage-resistance-reconciliation-required`; the engine does **not** add percentages, treat resistance as a new use pool, or select the strongest ancestor.
+- Different damage types (such as Fire and Necrotic) remain independent. A temporary, event-scoped reaction defense such as Cloudy Escape is **excluded** from permanent resistance collisions. Authored activation, duration and scope matter.
+- A scoped and verified `RetainFirst`, `RetainSecond`, or `RetainBoth` decision uses the existing universal relationship engine. A table can expressly permit coexistence without any invented percentage-stacking formula, but downstream damage calculations must use their own approved resistance-combination rules.
+- Regression tests use real Dwarf, Abyssal/Infernal/Chthonic Tiefling, Fire Goliath, Red Dragonborn and Cloud Goliath definitions. Eligibility of the individual features remains separately DM-authorized where no first-party native biological transmission rule has been approved.
+
+**Boundary:** This is a typed-overlap *recognition and reconciliation gate*, not a general defense merger, revised damage formula, new inherited resistance eligibility, forced adoption of drawbacks, or a full character-allocation safeguard. Other resource/defense interactions and full consumer integration remain outstanding.
 
 ## Required next gates before general first-party mixed construction
 
