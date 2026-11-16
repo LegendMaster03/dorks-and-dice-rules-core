@@ -112,6 +112,8 @@ public sealed class NativeOriginDrowLinkedSelectionTests
             x.Identity.IntrinsicSlotId == "darkvisionFeet");
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == drawback.Identity.MechanicalDefinitionId);
+        Assert.Equal("unresolved",
+            NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result).Status);
         Assert.Contains(result.EvaluatedProposal.Candidates, x => x.Id == vision.Id);
     }
 
@@ -131,6 +133,10 @@ public sealed class NativeOriginDrowLinkedSelectionTests
             x.Identity.IntrinsicSlotId == "darkvisionFeet");
         Assert.Equal(120, sense.EffectiveValue!.Value.GetInt32());
         Assert.Equal(vision.Id, Assert.Single(sense.SourceCandidateIds));
+        var projected = NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal("resolved", projected.Status);
+        Assert.Equal(120, projected.Darkvision!.RangeFeet);
+        Assert.Equal("ancestry.elf.drow", projected.Darkvision.SourceId);
         var sensitivity = Assert.Single(grants, x =>
             x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
         Assert.Equal("direct-unprotected-sunlight",
@@ -191,6 +197,9 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == drawback.Identity.MechanicalDefinitionId);
         Assert.DoesNotContain(result.Issues, x => x.Code == "required-mechanic-missing");
+        Assert.Equal(120,
+            NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result)
+                .Darkvision!.RangeFeet);
         Assert.Contains(result.EvaluatedProposal.Candidates, x => x.Id == vision.Id);
 
         var unverified = Evaluate(result.EvaluatedProposal);
@@ -271,6 +280,13 @@ public sealed class NativeOriginDrowLinkedSelectionTests
                 "trait.elf.drow.sunlight-sensitivity");
         Assert.DoesNotContain(full.Issues, x =>
             x.Code is "required-mechanic-missing" or "native-linked-constraint-tampered");
+        var projected = NativeOriginDarkvisionProjector.Project(Catalog(), full);
+        Assert.Equal("resolved", projected.Status);
+        Assert.Equal(120, projected.Darkvision!.RangeFeet);
+        Assert.Equal("ancestry.elf.drow", projected.Darkvision.SourceId);
+        Assert.Equal("/darkvisionFeet", projected.Darkvision.OccurrencePath);
+        Assert.Equal("unresolved",
+            NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), full).Status);
     }
 
     [Fact]
