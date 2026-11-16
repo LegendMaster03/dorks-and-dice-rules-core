@@ -91,6 +91,58 @@ internal sealed class NativeOriginNativeLinkedSelectionEvaluator(
         }, issues);
     }
 
+    /// <summary>
+    /// Perform the final link closure over *effective* selected grants after
+    /// reconciliation and dependent-resource binding. A counterpart selected
+    /// initially but suppressed by another disposition no longer satisfies a
+    /// source-authored requirement. The same verified, scoped DM waiver used
+    /// by the pre-reconciliation constraint engine remains in force.
+    /// </summary>
+    public (IReadOnlyList<NativeOriginEffectiveGrant> Grants,
+        IReadOnlyList<NativeOriginContractIssue> Issues) VerifyEffectiveLinks(
+        NativeOriginProposal proposal,
+        IReadOnlyList<NativeOriginEffectiveGrant> effective,
+        Func<string, string, NativeTableRuleDecision?> verified)
+    {
+        var blocked = new HashSet<string>(StringComparer.Ordinal);
+        var issues = new List<NativeOriginContractIssue>();
+        foreach (var link in proposal.Constraints ?? [])
+        {
+            if (link?.NativeRuleReference is not { } source ||
+                link.Kind != NativeOriginRelationshipKind.Requires ||
+                !link.Id.StartsWith("native-link:", StringComparison.Ordinal) ||
+                !catalog.TryGetById(source, out var entity) ||
+                entity is null || entity.Category is not ("species" or "ancestry") ||
+                !entity.Definition.TryGetProperty("originLinkedSelections", out _))
+                continue;
+            var decision = verified("constraint", link.Id);
+            if (decision is not null &&
+                decision.EffectiveOutcome.ValueKind == JsonValueKind.Object &&
+                decision.EffectiveOutcome.TryGetProperty("allow", out var allow) &&
+                allow.ValueKind == JsonValueKind.True)
+                continue;
+
+            var subject = link.Subjects?.SingleOrDefault()?.CandidateId;
+            var required = link.Conditions?.SingleOrDefault()?.CandidateId;
+            if (subject is null || required is null) continue;
+            var beneficiaries = effective.Where(g =>
+                g.SourceCandidateIds.Contains(subject, StringComparer.Ordinal)).ToArray();
+            if (beneficiaries.Length == 0 ||
+                effective.Any(g => g.SourceCandidateIds.Contains(required,
+                    StringComparer.Ordinal))) continue;
+            foreach (var grant in beneficiaries)
+            {
+                blocked.Add(grant.Id);
+                issues.Add(new("native-linked-effective-requirement-missing",
+                    "constraints." + link.Id, NativeOriginIssueSeverity.Incomplete,
+                    "A linked characteristic was selected initially but its required " +
+                    "native counterpart is missing from the final effective Origin."));
+            }
+        }
+
+        return (effective.Where(g => !blocked.Contains(g.Id)).ToArray(), issues);
+    }
+
     private static string? Text(JsonElement json, string property) =>
         json.ValueKind == JsonValueKind.Object &&
         json.TryGetProperty(property, out var item) &&
