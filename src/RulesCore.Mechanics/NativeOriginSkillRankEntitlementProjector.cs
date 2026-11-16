@@ -45,11 +45,26 @@ public static class NativeOriginSkillRankEntitlementProjector
         // Only actual selected inherent grants count. Unmanifested parental
         // offers and historical inherited evidence are never extra allowances.
         var grants = profile.Underlying.InherentGrants.Where(grant =>
-            grant.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
-            grant.EffectiveValue is { ValueKind: JsonValueKind.Object } value &&
-            (value.TryGetProperty("additionalRanksAtCharacterLevel1", out _) ||
-             value.TryGetProperty("additionalRanksPerSubsequentCharacterLevel", out _)))
-            .ToArray();
+        {
+            if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait)
+                return false;
+            if (grant.EffectiveValue is { ValueKind: JsonValueKind.Object } value &&
+                (value.TryGetProperty("additionalRanksAtCharacterLevel1", out _) ||
+                 value.TryGetProperty("additionalRanksPerSubsequentCharacterLevel", out _)))
+                return true;
+            // The catalog is authoritative about whether a *selected* grant
+            // carries this entitlement. A saved profile that strips its
+            // executable fields must be rejected, never reported as "none".
+            return grant.Identity.MechanicalDefinitionId is { } candidateId &&
+                catalog.TryGetById(candidateId, out var candidateDefinition) &&
+                candidateDefinition is not null &&
+                candidateDefinition.Category == "origin-trait" &&
+                candidateDefinition.Definition.TryGetProperty("trait", out var trait) &&
+                trait.ValueKind == JsonValueKind.Object &&
+                (trait.TryGetProperty("additionalRanksAtCharacterLevel1", out _) ||
+                 trait.TryGetProperty("additionalRanksPerSubsequentCharacterLevel",
+                    out _));
+        }).ToArray();
         if (grants.Length == 0)
             return characterLevel is > 0 and <= 1000
                 ? new("none", characterLevel, 0, 0, 0, 0, null, [])
