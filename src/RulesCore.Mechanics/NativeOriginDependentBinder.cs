@@ -47,7 +47,8 @@ internal static class NativeOriginDependentBinder
                 {
                     var slot = Text(binding.Value, "intrinsicSlot");
                     var scope = Text(binding.Value, "scope");
-                    if (slot is null || scope != "source")
+                    if (slot is null || scope is not ("source" or "descendant") ||
+                        !CanonicalBindingMatches(catalog, grant, binding.Name, binding.Value))
                     {
                         Issue("origin-binding-unsupported", grant.Id,
                             NativeOriginIssueSeverity.Unresolved,
@@ -58,10 +59,17 @@ internal static class NativeOriginDependentBinder
                     var matching = reconciled.Where(other =>
                         other.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
                         other.Identity.IntrinsicSlotId == slot &&
-                        other.Identity.Occurrence.Source == grant.Identity.Occurrence.Source &&
-                        // Two distinct parents may reference the same canonical
-                        // ancestry. Native source identity is not contributor
-                        // ownership; require matching selected candidate evidence.
+                        // "source" is an exact native occurrence, whereas
+                        // "descendant" follows a *verified* selected Ancestry
+                        // parent chain to the trait's base Species/family.
+                        (scope == "source"
+                            ? other.Identity.Occurrence.Source ==
+                                grant.Identity.Occurrence.Source
+                            : IsAuthoredDescendant(catalog,
+                                grant.Identity.Occurrence.Source,
+                                other.Identity.Occurrence.Source)) &&
+                        // Different parents with the same native Ancestry ID
+                        // must not borrow each other's casting-ability choice.
                         SharesContributor(grant, other, offered))
                         .ToArray();
                     // Previously manifested contributors already carry a bound
@@ -170,6 +178,42 @@ internal static class NativeOriginDependentBinder
         }
 
         return (grants, issues);
+    }
+
+    /// <summary>
+    /// An intrinsic selected on a playable leaf can bind a trait inherited
+    /// from its actual native parent Species (or intermediate family).
+    /// Canonical parent links are checked on every hop. Neither a shared name
+    /// nor a claimed ancestry in caller-provided state establishes the path.
+    /// Contributor ownership is checked separately by SharesContributor.
+    /// </summary>
+    private static bool IsAuthoredDescendant(
+        NativeCatalogSnapshot catalog,
+        NativeOriginSourceReference ancestor,
+        NativeOriginSourceReference descendant)
+    {
+        if (ancestor.Kind != NativeOriginSourceKind.Native ||
+            descendant.Kind != NativeOriginSourceKind.Native ||
+            ancestor.Id == descendant.Id)
+            return false;
+
+        var visited = new HashSet<string>(StringComparer.Ordinal);
+        var cursor = descendant.Id;
+        while (visited.Add(cursor) && visited.Count <= 64)
+        {
+            if (!catalog.TryGetById(cursor, out var source) ||
+                source is null || source.Category != "ancestry" ||
+                !source.Definition.TryGetProperty("parent", out var parent) ||
+                parent.ValueKind != JsonValueKind.String ||
+                string.IsNullOrWhiteSpace(parent.GetString()))
+                return false;
+            cursor = parent.GetString()!;
+            if (cursor == ancestor.Id)
+                return catalog.TryGetById(cursor, out var parentEntity) &&
+                    parentEntity is not null &&
+                    parentEntity.Category is "species" or "ancestry";
+        }
+        return false;
     }
 
     private static bool CanonicalBindingMatches(NativeCatalogSnapshot catalog,
