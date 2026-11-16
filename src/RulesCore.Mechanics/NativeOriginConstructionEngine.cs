@@ -486,6 +486,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
         resolved = resourceBound;
         issues.AddRange(resourceIssues);
+        // A prerequisite can be selected before reconciliation, then removed
+        // by a separate relationship disposition. Recheck native source links
+        // against the final, effective grants, never the original offers.
+        var (linkedGrants, linkedIssues) =
+            _nativeLinks.VerifyEffectiveLinks(proposal, resolved, Verified);
+        resolved = linkedGrants;
+        issues.AddRange(linkedIssues);
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot

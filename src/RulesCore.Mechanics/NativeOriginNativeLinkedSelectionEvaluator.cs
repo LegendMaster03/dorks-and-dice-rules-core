@@ -122,8 +122,10 @@ internal sealed class NativeOriginNativeLinkedSelectionEvaluator(
                 allow.ValueKind == JsonValueKind.True)
                 continue;
 
-            var subject = link.Subjects?.SingleOrDefault()?.CandidateId;
-            var required = link.Conditions?.SingleOrDefault()?.CandidateId;
+            var subject = link.Subjects is { Count: 1 } ?
+                link.Subjects[0].CandidateId : null;
+            var required = link.Conditions is { Count: 1 } ?
+                link.Conditions[0].CandidateId : null;
             if (subject is null || required is null) continue;
             var beneficiaries = effective.Where(g =>
                 g.SourceCandidateIds.Contains(subject, StringComparer.Ordinal)).ToArray();
