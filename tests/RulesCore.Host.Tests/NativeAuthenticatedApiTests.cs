@@ -411,6 +411,32 @@ public sealed class NativeAuthenticatedApiTests
         Assert.Contains("supernatural_authority_unavailable",
             await missingSourceAuthority.Content.ReadAsStringAsync());
 
+        // Structural failures must be rejected before any authority is called,
+        // even if the sender holds an authenticated Character Sheet ticket.
+        var missingSheets = JsonSerializer.SerializeToNode(Body())!;
+        missingSheets["state"]!["alternateSheets"] = null;
+        using var incompleteState = await Send(delegated, path, missingSheets);
+        Assert.Equal(HttpStatusCode.BadRequest, incompleteState.StatusCode);
+        Assert.Contains("invalid_character_scope",
+            await incompleteState.Content.ReadAsStringAsync());
+
+        var missingJournal = JsonSerializer.SerializeToNode(Body())!;
+        missingJournal["ledger"]!["processedEventIds"] = null;
+        using var incompleteLedger = await Send(delegated, path, missingJournal);
+        Assert.Equal(HttpStatusCode.BadRequest, incompleteLedger.StatusCode);
+
+        var missingSteps = JsonSerializer.SerializeToNode(Body())!;
+        missingSteps["transition"]!["steps"] = new System.Text.Json.Nodes.JsonArray();
+        using var incompleteTransition = await Send(delegated, path, missingSteps);
+        Assert.Equal(HttpStatusCode.BadRequest, incompleteTransition.StatusCode);
+
+        var noncanonicalId = JsonSerializer.SerializeToNode(Body())!;
+        noncanonicalId["state"]!["characterId"] = id.ToUpperInvariant();
+        noncanonicalId["ledger"]!["characterId"] = id.ToUpperInvariant();
+        noncanonicalId["transition"]!["characterId"] = id.ToUpperInvariant();
+        using var ambiguousScope = await Send(delegated, path, noncanonicalId);
+        Assert.Equal(HttpStatusCode.BadRequest, ambiguousScope.StatusCode);
+
         using var staleContent = await Send(delegated, path,
             Body(catalog: new string('a', 64)));
         Assert.Equal(HttpStatusCode.Conflict, staleContent.StatusCode);

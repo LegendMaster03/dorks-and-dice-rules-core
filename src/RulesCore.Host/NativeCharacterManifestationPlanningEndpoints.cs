@@ -48,11 +48,23 @@ public static class NativeCharacterManifestationPlanningEndpoints
                 return Results.Json(new { error = "native_catalog_unavailable" },
                     statusCode: StatusCodes.Status503ServiceUnavailable);
 
+            // Reject incomplete/ambiguous request graphs before consulting an
+            // external source provider. A delegated tool identity does not
+            // make deserialized client input structurally trustworthy.
             if (request?.State?.PrimaryMechanics is null ||
+                request.State.AlternateSheets is null ||
+                request.State.PersistentInfluences is null ||
                 request.Ledger is null || request.Transition is null ||
+                request.Ledger.Instances is null ||
+                request.Ledger.Resources is null ||
+                request.Ledger.ProcessedEventIds is null ||
+                request.Transition.Steps is null ||
+                request.Transition.Steps.Count is < 1 or > 512 ||
+                string.IsNullOrWhiteSpace(request.Transition.EventId) ||
                 string.IsNullOrWhiteSpace(request.State.CharacterId) ||
                 !Guid.TryParse(request.State.CharacterId, out var characterId) ||
                 characterId == Guid.Empty ||
+                request.State.CharacterId != characterId.ToString("D") ||
                 !string.Equals(request.State.CharacterId, request.Ledger.CharacterId,
                     StringComparison.Ordinal) ||
                 !string.Equals(request.State.CharacterId, request.Transition.CharacterId,
