@@ -370,4 +370,46 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         Assert.DoesNotContain(result.EvaluatedProposal.Candidates,
             x => x.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible);
     }
+
+    [Fact]
+    public void SerializedLineageForgeriesAreRejectedWithoutTrustingCallerMetadata()
+    {
+        var parent = MixedParent().Profile!;
+        var proposal = Child(parent);
+        var fixture = new LocalSelfOverride(parent);
+        var offers = Evaluate(proposal, fixture).EvaluatedProposal.Candidates;
+        var constructed = Evaluate(proposal with
+        {
+            Manifestations = offers.Select(Select).ToArray()
+        }, fixture);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, constructed.Status);
+        var original = constructed.Profile!;
+        var grant = Assert.Single(original.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        var prior = Assert.Single(grant.InheritedFrom!);
+        var forgedCases = new[]
+        {
+            prior with { ContributorId = "fake-contributor" },
+            prior with { ContributorProfileRevision = "" },
+            prior with { SourceGrantId = "grant:missing" },
+            prior with { PriorSourceCandidateIds = [] }
+        };
+
+        foreach (var fake in forgedCases)
+        {
+            var changed = grant with { InheritedFrom = [fake] };
+            var grants = original.Underlying.InherentGrants.Select(g =>
+                g.Id == grant.Id ? changed : g).ToArray();
+            var configuration = original.Underlying with { InherentGrants = grants };
+            var tampered = original with
+            {
+                Underlying = configuration,
+                Current = configuration
+            };
+            var review = new NativeOriginContractValidator(Catalog())
+                .ReviewProfile(tampered, constructed.EvaluatedProposal);
+            Assert.Contains(review.Issues, issue =>
+                issue.Code == "inherited-lineage-invalid");
+        }
+    }
 }

@@ -386,12 +386,58 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                         "Repeated intrinsic slots need explicit whole-profile reconciliation.");
 
             foreach (var grant in grants.Values)
+            {
                 if (Blank(grant.ManifestationId) ||
                     grant.SourceCandidateIds is null || grant.SourceCandidateIds.Count == 0 ||
                     grant.Identity?.Occurrence?.Source is null)
                     Add("grant-provenance-required", path + ".grants." + grant.Id,
                         NativeOriginIssueSeverity.Invalid,
                         "Each inherent grant needs manifestation, candidate and source provenance.");
+
+                // Serialized lineage is traceability, not inheritance authority.
+                // Reject contradictory claims even when a profile is read back
+                // without the original construction proposal. The exact stored
+                // parent revision must still be authenticated by its provider.
+                if (grant.InheritedFrom is not { } lineage) continue;
+                var priorOffers = new HashSet<string>(StringComparer.Ordinal);
+                if (lineage.Count == 0)
+                    Add("inherited-lineage-invalid", path + ".grants." + grant.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "An inherited-lineage record may not be empty.");
+                foreach (var entry in lineage)
+                {
+                    var currentId = entry is null ? null :
+                        "nested:" + entry.ContributorId + ":" + entry.SourceGrantId;
+                    if (entry is null ||
+                        Blank(entry.ContributorId) ||
+                        Blank(entry.ContributorProfileId) ||
+                        Blank(entry.ContributorProfileRevision) ||
+                        Blank(entry.SourceGrantId) ||
+                        entry.PriorSourceCandidateIds is null ||
+                        entry.PriorSourceCandidateIds.Count == 0 ||
+                        entry.PriorSourceCandidateIds.Any(Blank) ||
+                        entry.PriorSourceCandidateIds.Distinct(StringComparer.Ordinal).Count() !=
+                            entry.PriorSourceCandidateIds.Count ||
+                        entry.PriorParameterSources?.Any(x =>
+                            Blank(x.Key) || Blank(x.Value)) == true ||
+                        entry.PriorResourceOwners?.Any(x =>
+                            Blank(x.Key) || Blank(x.Value)) == true ||
+                        currentId is null || !priorOffers.Add(currentId) ||
+                        grant.SourceCandidateIds?.Contains(currentId,
+                            StringComparer.Ordinal) != true)
+                        Add("inherited-lineage-invalid", path + ".grants." + grant.Id,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Each inherited record must identify one selected nested offer, " +
+                            "its source profile revision, and well-formed prior grant evidence.");
+                }
+                if (grant.SourceCandidateIds is not null &&
+                    grant.SourceCandidateIds.Any(id =>
+                        id.StartsWith("nested:", StringComparison.Ordinal) &&
+                        !priorOffers.Contains(id)))
+                    Add("inherited-lineage-incomplete", path + ".grants." + grant.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Every selected nested grant must retain its immediate lineage.");
+            }
         }
 
         var persistent = Index(profile.PersistentInfluences ?? [],
