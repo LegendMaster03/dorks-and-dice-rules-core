@@ -91,6 +91,13 @@ public static class NativeOriginAllocationPreview
         // explicitly incomplete regardless of the hypothetical cost result.
         if (result.Status != NativeOriginConstructionStatus.Authorized)
             issues.Add("origin-not-authorized-for-allocation");
+        // Explicit cost data does not turn a custom or unrecognized payload
+        // into a reviewed mechanic. The native definition and future unlock
+        // must be resolvable before any complete-configuration assessment.
+        foreach (var component in components.Where(x =>
+            x.UnlockLevel is null || x.Key.StartsWith("unknown:", StringComparison.Ordinal)))
+            issues.Add("allocation-definition-unresolved:" + component.Key + ":" +
+                component.GrantId);
 
         var candidates = result.EvaluatedProposal.Candidates
             .GroupBy(x => x.Id, StringComparer.Ordinal)
