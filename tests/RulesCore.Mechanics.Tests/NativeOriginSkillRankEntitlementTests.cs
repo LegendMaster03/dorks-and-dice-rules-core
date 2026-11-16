@@ -244,6 +244,26 @@ public sealed class NativeOriginSkillRankEntitlementTests
         Assert.Contains("skill-rank-schedule-not-verified",
             withheld.UnresolvedReasons);
 
+        var stripped = selected.Profile.Underlying with
+        {
+            InherentGrants = selected.Profile.Underlying.InherentGrants
+                .Select(x => x.Id == grant.Id
+                    ? x with { EffectiveValue = JsonSerializer.SerializeToElement(
+                        new { id = "adaptable-learning", description = "omitted" }) }
+                    : x).ToArray()
+        };
+        var removed = NativeOriginSkillRankEntitlementProjector.Project(
+            catalog, selected with
+            {
+                Profile = selected.Profile with
+                {
+                    Underlying = stripped, Current = stripped
+                }
+            }, 5);
+        Assert.Equal("unresolved", removed.Status);
+        Assert.Contains("skill-rank-schedule-not-verified",
+            removed.UnresolvedReasons);
+
         Assert.Equal("unresolved",
             NativeOriginSkillRankEntitlementProjector.Project(
                 catalog, selected, null).Status);
