@@ -16,6 +16,7 @@ public sealed class NativeCharacterManifestationTests
         public bool DenyLedger { get; set; }
         public bool DenyInstance { get; set; }
         public bool DenyResource { get; set; }
+        public bool RequireExactResourceProvenance { get; set; }
         public bool DenyPolicy { get; set; }
         public bool DenyInteraction { get; set; }
         public bool DenyTransition { get; set; }
@@ -48,7 +49,26 @@ public sealed class NativeCharacterManifestationTests
             instance.DefinitionOccurrence.Source == Source() &&
             instance.DefinitionOccurrence.OccurrencePath == "forms." + sheet.Id &&
             instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId;
-        public bool AuthorizesResource(string id, NativeManifestationResourceState resource) => !DenyResource;
+        public bool AuthorizesResource(string id, NativeManifestationResourceState resource)
+        {
+            if (DenyResource) return false;
+            if (!RequireExactResourceProvenance) return true;
+            // Independent synthetic evidence: never infer matching source
+            // provenance merely because a saved ledger carries these labels.
+            var expected = resource.Id switch
+            {
+                "resource.primary" => PrimaryPool(),
+                "resource.shared" => SharedPool(),
+                "resource.wolf.manifest.wolf" => WolfPool("manifest.wolf"),
+                _ => null
+            };
+            return expected is not null &&
+                resource.DefinitionId == expected.DefinitionId &&
+                resource.SourceOccurrence == expected.SourceOccurrence &&
+                resource.EvidenceId == expected.EvidenceId &&
+                resource.OwnerKind == expected.OwnerKind &&
+                resource.OwnerId == expected.OwnerId;
+        }
         public bool AuthorizesResourcePolicy(string id, NativeManifestationInstance instance,
             NativeManifestationResourcePolicy policy) => !DenyPolicy;
         public bool AuthorizesInteraction(string id, NativeManifestationInteractionDecision decision) =>
@@ -553,6 +573,39 @@ public sealed class NativeCharacterManifestationTests
             Resources = [PrimaryPool(), SharedPool() with { OwnerId = "missing" }]
         };
         Assert.Equal("invalid", Resolve(Character(), noOwner).Status);
+    }
+
+    [Fact]
+    public void IndependentlyVerifiedResourceProvenanceRejectsTamperedLedger()
+    {
+        var state = Character();
+        var original = ActivatedWolf(state);
+        var authority = new Authority { RequireExactResourceProvenance = true };
+        Assert.NotEqual("invalid", Resolve(state, original, authority).Status);
+
+        var primary = original.Resources.Single(x => x.Id == "resource.primary");
+        var forged = new[]
+        {
+            primary with { DefinitionId = "resource.definition.forged" },
+            primary with { SourceOccurrence = Occurrence("resources.forged") },
+            primary with { EvidenceId = "receipt.resource.forged" },
+            primary with { OwnerKind = NativeManifestationResourceOwner.Sheet },
+            primary with { OwnerId = "wolf" }
+        };
+        foreach (var change in forged)
+        {
+            var altered = original with
+            {
+                Resources = original.Resources.Select(x =>
+                    x.Id == primary.Id ? change : x).ToArray()
+            };
+            var result = Resolve(state, altered, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+        }
+
+        Assert.Equal(primary, original.Resources.Single(x => x.Id == primary.Id));
+        Assert.Equal(7, Ledger().Revision);
     }
 
     [Fact]
