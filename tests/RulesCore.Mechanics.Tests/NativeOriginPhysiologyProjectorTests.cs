@@ -145,6 +145,27 @@ public sealed class NativeOriginPhysiologyProjectorTests
     }
 
     [Fact]
+    public void ConventionalBronzeDragonbornProjectsItsExistingAmphibiousGrant()
+    {
+        var catalog = Catalog();
+        var result = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(new NativeOriginProposal("direct-bronze-physiology",
+                NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"),
+                [], [], [], SelectedAncestryId: "ancestry.dragonborn.bronze"),
+                AutoManifestDirectDefaults: true));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var view = NativeOriginPhysiologyProjector.Project(catalog, result);
+        Assert.Equal("resolved", view.Status);
+        Assert.Equal("ancestry.dragonborn.bronze", view.Amphibious!.SourceId);
+        Assert.Equal(new[] { "air", "water" }, view.Amphibious.CanBreathe);
+        Assert.False(view.Amphibious.GrantsSwimSpeed);
+        Assert.Null(view.AltitudeAcclimation);
+        Assert.Equal("unresolved",
+            NativeOriginPhysiologyProjector.ProjectApprovedMixed(catalog, result).Status);
+    }
+
+    [Fact]
     public void DirectSpeciesWithoutSelectedAdaptationsRemainsValid()
     {
         var catalog = Catalog();
