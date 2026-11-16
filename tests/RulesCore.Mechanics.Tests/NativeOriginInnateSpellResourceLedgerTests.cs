@@ -248,6 +248,167 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
     }
 
     [Fact]
+    public void AdvancementUnlocksNewPoolWithoutRefillingAlreadySpentSpell()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.tiefling.infernal");
+        var previous = Character(catalog, 3);
+        var advanced = Character(catalog, 5);
+        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        var darkness = Grant(origin, "trait.tiefling.infernal.darkness");
+        var initialized = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, previous).State!;
+        var spent = Step(catalog, origin, previous, initialized,
+            NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, hellish).State!;
+        Assert.Equal(0, spent.RemainingFreeCasts[hellish]);
+        Assert.DoesNotContain(darkness, spent.RemainingFreeCasts.Keys);
+
+        var migration = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, spent, spent.Revision);
+        Assert.Equal("resolved", migration.Status);
+        var next = migration.State!;
+        Assert.Equal(5, next.CharacterLevel);
+        Assert.Equal(spent.Revision + 1, next.Revision);
+        Assert.Equal(0, next.RemainingFreeCasts[hellish]);
+        Assert.Equal(1, next.RemainingFreeCasts[darkness]);
+        Assert.Equal(0, spent.RemainingFreeCasts[hellish]);
+        Assert.DoesNotContain(darkness, spent.RemainingFreeCasts.Keys);
+        Assert.NotEqual(spent.ProjectionFingerprint, next.ProjectionFingerprint);
+
+        // The old level cannot be used with the migrated state; the
+        // newly unlocked spell may be spent independently of the old pool.
+        Assert.Equal("spell-ledger-snapshot-mismatch",
+            Step(catalog, origin, previous, next,
+                NativeOriginInnateSpellLedgerActionKind.LongRest).Reason);
+        var darknessSpend = Step(catalog, origin, advanced, next,
+            NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, darkness);
+        Assert.Equal("resolved", darknessSpend.Status);
+        Assert.Equal(0, darknessSpend.State!.RemainingFreeCasts[darkness]);
+        Assert.Equal(0, darknessSpend.State.RemainingFreeCasts[hellish]);
+        Assert.Equal("insufficient-free-casts",
+            Step(catalog, origin, advanced, darknessSpend.State,
+                NativeOriginInnateSpellLedgerActionKind.SpendFreeCast,
+                hellish).Status);
+        var afterRest = Step(catalog, origin, advanced, darknessSpend.State,
+            NativeOriginInnateSpellLedgerActionKind.LongRest);
+        Assert.Equal("resolved", afterRest.Status);
+        Assert.Equal(1, afterRest.State!.RemainingFreeCasts[hellish]);
+        Assert.Equal(1, afterRest.State.RemainingFreeCasts[darkness]);
+    }
+
+    [Fact]
+    public void AdvancementFromLevelOneCreatesFirstUnlockedPoolExactlyOnce()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.tiefling.infernal");
+        var first = Character(catalog, 1);
+        var third = Character(catalog, 3);
+        var initial = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, first).State!;
+        Assert.Empty(initial.RemainingFreeCasts);
+        var migration = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, first, third, initial, expectedRevision: 0);
+        Assert.Equal("resolved", migration.Status);
+        Assert.Equal(1, migration.State!.Revision);
+        Assert.Single(migration.State.RemainingFreeCasts);
+        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        Assert.Equal(1, migration.State.RemainingFreeCasts[hellish]);
+        var replay = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, first, third, migration.State, expectedRevision: 0);
+        Assert.Equal("unresolved", replay.Status);
+        Assert.Equal("spell-ledger-snapshot-mismatch", replay.Reason);
+        Assert.Null(replay.State);
+    }
+
+    [Fact]
+    public void CharacterAdvancementRejectsStaleRevisionRollbackAndUnrelatedOrigin()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.tiefling.infernal");
+        var previous = Character(catalog, 3);
+        var advanced = Character(catalog, 5);
+        var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, previous).State!;
+        var stale = NativeOriginInnateSpellResourceLedger.Advance(catalog, origin,
+            previous, advanced, ledger, expectedRevision: 1);
+        Assert.Equal("spell-ledger-revision-mismatch", stale.Reason);
+        Assert.Null(stale.State);
+
+        var unchanged = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            origin, previous, previous, ledger, expectedRevision: 0);
+        Assert.Equal("spell-ledger-level-not-advanced", unchanged.Reason);
+        Assert.Null(unchanged.State);
+        var rollback = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            origin, previous, Character(catalog, 2), ledger, 0);
+        Assert.Equal("spell-ledger-level-not-advanced", rollback.Reason);
+        Assert.Null(rollback.State);
+
+        var unrelated = Direct(catalog, "ancestry.tiefling.chthonic");
+        var wrongSource = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            unrelated, previous, advanced, ledger, 0);
+        Assert.Equal("spell-ledger-snapshot-mismatch", wrongSource.Reason);
+        Assert.Null(wrongSource.State);
+
+        var wrongRuleSet = previous with { Fingerprint = "unverified" };
+        var unverified = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            origin, wrongRuleSet, advanced, ledger, 0);
+        Assert.Equal("unresolved", unverified.Status);
+        Assert.Null(unverified.State);
+    }
+
+    [Fact]
+    public void ProficiencyBasedMaximumChangeRequiresAnExplicitGameplayPolicy()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.gnome.forest");
+        var fourth = Character(catalog, 4);
+        var fifth = Character(catalog, 5);
+        var oldMaximum = fourth.Values["proficiency.bonus"].Value;
+        var newMaximum = fifth.Values["proficiency.bonus"].Value;
+        Assert.NotNull(oldMaximum);
+        Assert.NotNull(newMaximum);
+        Assert.True(newMaximum > oldMaximum);
+
+        var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, fourth).State!;
+        var animal = Grant(origin, "trait.gnome.forest.animal-speech");
+        var spent = Step(catalog, origin, fourth, ledger,
+            NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, animal).State!;
+        var migrated = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            origin, fourth, fifth, spent, spent.Revision);
+        Assert.Equal("unresolved", migrated.Status);
+        Assert.Equal("spell-ledger-capacity-change-requires-policy",
+            migrated.Reason);
+        Assert.Null(migrated.State);
+        Assert.Equal(oldMaximum - 1, spent.RemainingFreeCasts[animal]);
+    }
+
+    [Fact]
+    public void AdvancementWithoutNewUnlockPreservesSpentCountAndFrozenIdentity()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.tiefling.infernal");
+        var fifth = Character(catalog, 5);
+        var sixth = Character(catalog, 6);
+        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        var darkness = Grant(origin, "trait.tiefling.infernal.darkness");
+        var initial = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, fifth).State!;
+        var spent = Step(catalog, origin, fifth, initial,
+            NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, darkness).State!;
+        var migration = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            origin, fifth, sixth, spent, spent.Revision);
+        Assert.Equal("resolved", migration.Status);
+        Assert.Equal(1, migration.State!.RemainingFreeCasts[hellish]);
+        Assert.Equal(0, migration.State.RemainingFreeCasts[darkness]);
+        Assert.Equal(6, migration.State.CharacterLevel);
+        var roundTrip = JsonSerializer.Deserialize<NativeOriginInnateSpellLedgerState>(
+            JsonSerializer.Serialize(migration.State))!;
+        Assert.Equal("resolved", Step(catalog, origin, sixth, roundTrip,
+            NativeOriginInnateSpellLedgerActionKind.ShortRest).Status);
+    }
+
+    [Fact]
     public void ForestGnomeFreeUseAmountIsBasedOnResolvedProficiencyBonus()
     {
         var catalog = Catalog();
