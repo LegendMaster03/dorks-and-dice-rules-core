@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Content;
 using RulesCore.Host;
+using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -54,6 +55,23 @@ public sealed class NativeAuthenticatedApiTests
         }
     }
 
+    private sealed class OriginVerifier(
+        Guid characterId, bool authorize = true)
+        : INativeOriginHostUnderlyingAuthorityProvider
+    {
+        public int Calls { get; private set; }
+
+        public Task<bool> VerifyAsync(Guid actorId, Guid id, long revision,
+            NativeOriginProfile profile, CancellationToken cancellationToken)
+        {
+            Calls++;
+            return Task.FromResult(authorize &&
+                actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f") &&
+                id == characterId && revision == 2 &&
+                profile.Id == "origin:verified");
+        }
+    }
+
     private sealed class Fixture : IAsyncDisposable
     {
         public WebApplication App { get; }
@@ -70,7 +88,8 @@ public sealed class NativeAuthenticatedApiTests
 
         public static async Task<Fixture> StartAsync(
             string surface = "PublicOnly", string? source = null, string mode = "dorks-and-dice",
-            bool dm = false)
+            bool dm = false,
+            INativeOriginHostUnderlyingAuthorityProvider? originVerifier = null)
         {
             var root = Path.Combine(Path.GetTempPath(), "native-consumer-" + Guid.NewGuid().ToString("N"));
             var package = Path.Combine(root, Ruleset);
@@ -93,6 +112,8 @@ public sealed class NativeAuthenticatedApiTests
             {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
                     .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, mode, dm));
+                if (originVerifier is not null)
+                    services.AddSingleton(originVerifier);
             });
             await app.StartAsync();
             var server = app.Services.GetRequiredService<IServer>();
@@ -115,6 +136,88 @@ public sealed class NativeAuthenticatedApiTests
             await App.DisposeAsync();
             Directory.Delete(Root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task VerifiedOriginUnderlyingRequiresIndependentSourceAndKeepsCurrentDistinct()
+    {
+        var id = Guid.NewGuid();
+        var verified = new OriginVerifier(id);
+        await using var fixture = await Fixture.StartAsync(
+            source: "character-sheet", originVerifier: verified);
+        var catalog = fixture.Store.Snapshot!;
+        var underlying = new NativeOriginCurrentConfiguration(
+            "species.human", null, []);
+        var current = new NativeOriginCurrentConfiguration(
+            "species.elf", null, []);
+        var profile = new NativeOriginProfile(
+            "origin:verified", underlying, current, [], [],
+            new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported),
+            EffectiveConfigurationBasis: new NativeOriginDecisionBasis(
+                NativeOriginAdjudication.Supported,
+                NativeRuleReference: "rule.creature-origination"));
+
+        async Task<(HttpStatusCode Status, JsonElement Body)> SendAsync(
+            NativeOriginProfile submitted, long revision, string fingerprint)
+        {
+            using var request = fixture.Authorized(
+                "/api/mechanics/v1/origins/underlying/verify");
+            request.Method = HttpMethod.Post;
+            request.Content = JsonContent.Create(new
+            {
+                characterId = id, originRevision = revision,
+                rulesetId = Ruleset, fingerprint, profile = submitted
+            });
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode,
+                await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        var mismatch = await SendAsync(profile, 2, "obsolete");
+        Assert.Equal(HttpStatusCode.Conflict, mismatch.Status);
+        Assert.Equal(0, verified.Calls);
+
+        var altered = await SendAsync(profile with { Id = "origin:forged" },
+            2, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, altered.Status);
+        Assert.Equal("origin_authority_unverified",
+            altered.Body.GetProperty("error").GetString());
+
+        var accepted = await SendAsync(profile, 2, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, accepted.Status);
+        Assert.Equal("partial", accepted.Body.GetProperty("status").GetString());
+        Assert.False(accepted.Body.GetProperty("effectiveMechanicsReady").GetBoolean());
+        Assert.Equal("species.human",
+            accepted.Body.GetProperty("underlying").GetProperty("speciesId").GetString());
+        Assert.Equal("species.elf",
+            accepted.Body.GetProperty("current").GetProperty("speciesId").GetString());
+        Assert.Equal(2, verified.Calls);
+    }
+
+    [Fact]
+    public async Task VerifiedOriginUnderlyingRejectsDelegationWithoutHostAuthority()
+    {
+        await using var fixture = await Fixture.StartAsync(source: "character-sheet");
+        using var request = fixture.Authorized(
+            "/api/mechanics/v1/origins/underlying/verify");
+        request.Method = HttpMethod.Post;
+        request.Content = JsonContent.Create(new
+        {
+            characterId = Guid.NewGuid(), originRevision = 1,
+            rulesetId = Ruleset,
+            fingerprint = fixture.Store.Snapshot!.Fingerprint,
+            profile = new NativeOriginProfile(
+                "origin:unverified",
+                new NativeOriginCurrentConfiguration("species.human", null, []),
+                new NativeOriginCurrentConfiguration("species.human", null, []),
+                [], [], new NativeOriginDecisionBasis(
+                    NativeOriginAdjudication.Supported))
+        });
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("origin_authority_unavailable",
+            body.GetProperty("error").GetString());
     }
 
     [Fact]
