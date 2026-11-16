@@ -232,6 +232,70 @@ public sealed class NativeOriginPhysiologyProjectorTests
                 catalog, duplicated).Status);
     }
 
+    private sealed class TestParentAuthority(NativeOriginProfile parent) :
+        INativeOriginManifestedContributorAuthority
+    {
+        public NativeOriginVerifiedManifestedContributor? ResolveCurrent(
+            NativeOriginSourceReference source, NativeTableDecisionScope trustedScope) =>
+            source.Id == parent.Id &&
+            trustedScope.Kind == "campaign" &&
+            trustedScope.Id == "physiology-test"
+                ? new(parent, "test-revision-1")
+                : null;
+    }
+
+    [Fact]
+    public void VerifiedMixedParentTransmitsOnlyItsManifestedPhysiology()
+    {
+        var catalog = Catalog();
+        var parent = Mixed(catalog, "trait.shared.amphibious",
+            "trait.goliath.altitude-acclimation");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
+        var profile = parent.Profile!;
+        var proposal = new NativeOriginProposal("physiology-descendant",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [
+                new("parent", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.ManifestedProfile,
+                        profile.Id, "test-revision-1"))
+            ], [], []);
+        var engine = new NativeOriginConstructionEngine(catalog);
+        var authority = new TestParentAuthority(profile);
+        var scope = new NativeTableDecisionScope("campaign", "physiology-test");
+        var offers = engine.Evaluate(new(proposal, TrustedScope: scope),
+            manifestedContributorAuthority: authority).EvaluatedProposal.Candidates;
+        Assert.Equal(profile.Underlying.InherentGrants.Count, offers.Count);
+        Assert.All(offers, x =>
+            Assert.Equal(NativeOriginEligibility.Eligible,
+                x.SelectionBasis.Eligibility));
+
+        var selected = offers.Select((x, i) => new NativeOriginManifestation(
+            "child-" + i, x.Id, SelectedValue:
+                x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                    ? x.OfferedValue : null)).ToArray();
+        var descendant = engine.Evaluate(new(proposal with
+        {
+            Manifestations = selected
+        }, TrustedScope: scope), manifestedContributorAuthority: authority);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, descendant.Status);
+        var physiology = NativeOriginPhysiologyProjector.ProjectApprovedMixed(
+            catalog, descendant);
+        Assert.Equal("resolved", physiology.Status);
+        Assert.Equal("ancestry.dragonborn.bronze", physiology.Amphibious!.SourceId);
+        Assert.Equal("species.goliath",
+            physiology.AltitudeAcclimation!.SourceId);
+        foreach (var grant in descendant.Profile!.Underlying.InherentGrants.Where(x =>
+            x.Identity.MechanicalDefinitionId is
+                "trait.shared.amphibious" or "trait.goliath.altitude-acclimation"))
+        {
+            var inherited = Assert.Single(grant.InheritedFrom!);
+            Assert.Equal(profile.Id, inherited.ContributorProfileId);
+            Assert.Equal("test-revision-1", inherited.ContributorProfileRevision);
+            Assert.Equal("parent", inherited.ContributorId);
+        }
+    }
+
     [Fact]
     public void InvalidOrIncompleteMixedConstructionHasNoExecutableAdaptation()
     {
