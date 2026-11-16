@@ -267,6 +267,56 @@ public sealed class NativeOriginAllocationPreviewTests
     }
 
     [Fact]
+    public void UnknownNativeDefinitionDoesNotBecomePricedByAClaimedLedgerEntry()
+    {
+        var original = ElfProfile();
+        var known = Assert.Single(original.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        var altered = original.Profile.Underlying with
+        {
+            InherentGrants = original.Profile.Underlying.InherentGrants.Select(x =>
+                x.Id == known.Id
+                    ? x with { Identity = x.Identity with
+                        { MechanicalDefinitionId = "trait.unsupported.user-authored" } }
+                    : x).ToArray()
+        };
+        var forged = original with
+        {
+            Profile = original.Profile with
+            {
+                Underlying = altered, Current = altered
+            }
+        };
+        var ledger = Hypothetical(10,
+            new NativeOriginAllocationPrice("untrusted", 2,
+                ["trait:trait.unsupported.user-authored"]));
+        var assessed = NativeOriginAllocationPreview.Assess(Catalog(), forged, ledger);
+        Assert.Equal("unresolved", assessed.Status);
+        Assert.Null(assessed.CommittedLoad);
+        Assert.Contains(assessed.Issues, x =>
+            x.StartsWith("allocation-definition-unresolved:",
+                StringComparison.Ordinal));
+        Assert.True(assessed.PreviewOnly);
+    }
+
+    [Fact]
+    public void IncompleteOriginCannotPassAllocationWithNoEffectiveGrants()
+    {
+        var proposal = new NativeOriginProposal("no-manifestations",
+            NativeOriginIntent.Mixed, new("rule.creature-origination", "biological"),
+            [Parent("elf", "species.elf")], [], []);
+        var unfinished = Evaluate(proposal);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unfinished.Status);
+        var assessed = NativeOriginAllocationPreview.Assess(Catalog(), unfinished,
+            Hypothetical(100));
+        Assert.Equal("unresolved", assessed.Status);
+        Assert.Null(assessed.CommittedLoad);
+        Assert.Contains("origin-not-authorized-for-allocation",
+            assessed.Issues);
+        Assert.Empty(assessed.Charges);
+    }
+
+    [Fact]
     public void AllocationAssessmentNeverAppliesBiologicalBudgetToOtherMethods()
     {
         var selected = new NativeOriginProposal("direct-elf",
