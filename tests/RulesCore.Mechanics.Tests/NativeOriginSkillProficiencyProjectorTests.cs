@@ -157,9 +157,14 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
 
         var restored = JsonSerializer.Deserialize<NativeOriginProfile>(
             JsonSerializer.Serialize(human.Profile));
-        Assert.Equal(view.Proficiencies,
-            NativeOriginSkillProficiencyProjector.Project(catalog,
-                human with { Profile = restored }).Proficiencies);
+        var afterRoundTrip = NativeOriginSkillProficiencyProjector.Project(
+            catalog, human with { Profile = restored });
+        Assert.Equal("resolved", afterRoundTrip.Status);
+        var restoredSkill = Assert.Single(afterRoundTrip.Proficiencies);
+        Assert.Equal(selected.SkillId, restoredSkill.SkillId);
+        Assert.Equal(selected.DefinitionId, restoredSkill.DefinitionId);
+        Assert.Equal(selected.SourceId, restoredSkill.SourceId);
+        Assert.Equal(selected.SourceCandidateIds, restoredSkill.SourceCandidateIds);
     }
 
     [Fact]
