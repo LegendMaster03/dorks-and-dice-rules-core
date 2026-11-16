@@ -257,14 +257,19 @@ public static class NativeOriginInnateSpellResourceLedger
 
             foreach (var grantId in changedCapacities)
             {
+                // A capacity adjustment may only modify a real, already
+                // unlocked pool. Creating or removing pools is a different
+                // policy and must never index absent saved resource keys.
+                if (!oldPools.TryGetValue(grantId, out var oldMax) ||
+                    !newPools.TryGetValue(grantId, out var newMax))
+                    return Fail("spell-ledger-course-changed");
                 var decision = decisions.Single(d => d.Target.Id == grantId);
-                if (decision.Scope is null ||
+                if (decision.Scope is null || decision.Authority is null ||
+                    string.IsNullOrWhiteSpace(decision.Id) ||
                     decision.Scope != trustedScope ||
                     !authority!.Authorizes(decision, trustedScope!) ||
                     !TryCapacityAdjustment(decision.EffectiveOutcome,
-                        state, oldView, newView, grantId,
-                        oldPools.TryGetValue(grantId, out var oldMax) ? oldMax : 0,
-                        newPools.TryGetValue(grantId, out var newMax) ? newMax : 0,
+                        state, oldView, newView, grantId, oldMax, newMax,
                         out var newRemaining))
                     return Fail("spell-ledger-capacity-decision-unverified");
                 adjusted.Add(grantId, newRemaining);
