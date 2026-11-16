@@ -214,7 +214,10 @@ public static class NativeOriginAllocationPreview
             .Select(id => candidates[id].ContributorId)
             .Where(id => id is not null)
             .ToHashSet(StringComparer.Ordinal)).ToArray();
-        return contributors.All(x => x.Count > 0) &&
-            contributors.Skip(1).All(x => x.Overlaps(contributors[0]));
+        if (contributors.Any(x => x.Count == 0)) return false;
+        var common = contributors[0];
+        foreach (var donorSet in contributors.Skip(1))
+            common.IntersectWith(donorSet);
+        return common.Count > 0;
     }
 }
