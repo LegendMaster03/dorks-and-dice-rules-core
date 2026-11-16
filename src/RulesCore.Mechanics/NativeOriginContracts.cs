@@ -158,6 +158,19 @@ public sealed record NativeOriginResolution(
     IReadOnlyDictionary<string, string>? ReplacementParameterSources = null);
 
 /// <summary>
+/// Prior-generation evidence for a single authenticated manifested grant. These
+/// historical candidate and parameter references explain the previous composition;
+/// they do not become new donor offers, permissions or active resource links.
+/// The descendant's own SourceCandidateIds and ParameterSources remain local.
+/// </summary>
+public sealed record NativeOriginInheritedGrantEvidence(
+    string ContributorProfileId,
+    string SourceGrantId,
+    IReadOnlyList<string> PriorSourceCandidateIds,
+    IReadOnlyDictionary<string, string>? PriorParameterSources = null,
+    IReadOnlyDictionary<string, string>? PriorResourceOwners = null);
+
+/// <summary>
 /// This identity is earned by the future evaluator, not by candidate discovery.
 /// Candidate IDs provide offer provenance; manifestation and grant IDs identify
 /// separate stages of the same acquired characteristic.
@@ -174,7 +187,9 @@ public sealed record NativeOriginEffectiveGrant(
     IReadOnlyDictionary<string, string>? ParameterSources = null,
     // Maps a dependent resource use (for example, "uses") to the effective
     // grant that actually owns the one shared pool. Optional for older profiles.
-    IReadOnlyDictionary<string, string>? ResourceOwners = null);
+    IReadOnlyDictionary<string, string>? ResourceOwners = null,
+    // Historical provenance, never independent authorization or extra charges.
+    NativeOriginInheritedGrantEvidence? InheritedFrom = null);
 
 /// <summary>
 /// A separately earned grant remains part of the character's entitlements even
