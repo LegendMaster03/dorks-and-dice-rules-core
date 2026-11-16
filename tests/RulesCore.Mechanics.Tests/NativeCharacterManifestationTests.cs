@@ -782,6 +782,31 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void ActivationRejectsNullResourcePolicyBeforeAuthorityVerification()
+    {
+        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
+        var malformed = step.NewInstance! with
+        {
+            ResourcePolicies = [null!, .. step.NewInstance.ResourcePolicies]
+        };
+        var authority = new Authority();
+        var current = Ledger();
+
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current,
+            new("character.1", current.Revision, "e1",
+                [step with { NewInstance = malformed }]), authority);
+
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.Proposed);
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "invalid-manifestation-activation");
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Equal(7, current.Revision);
+        Assert.Empty(current.Instances);
+    }
+
+    [Fact]
     public void ProposedEffectiveViewShowsNewFormButIsNotACommittedRevision()
     {
         var current = Ledger();
