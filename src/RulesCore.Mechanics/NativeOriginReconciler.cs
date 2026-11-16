@@ -227,6 +227,39 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 "Retain a complete source mechanic or explicitly authorize coexistence.");
         }
 
+        // Two distinct canonical, passive traits can reference the SAME
+        // executable native rule (Elf and Tiefling Low-Light Vision currently do).
+        // Their different definitions do not represent two independently
+        // stackable benefits. They may be retained by a scoped explicit
+        // disposition, but no dominant source or automatic union is inferred.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .Select(x => (Entry: x, Rule: NativePassiveRule(x.Candidate)))
+            .Where(x => x.Rule is not null)
+            .GroupBy(x => x.Rule!, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId == b.Identity.MechanicalDefinitionId ||
+                    authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-passive-native-rule-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct traits reference the same passive native effect. " +
+                "Explicitly retain a complete authored trait or authorize coexistence.");
+        }
+
         // Different occurrences offering the same intrinsic slot have no general
         // first-party winner, even where values happen to coincide.
         foreach (var group in active.Values.Where(x => !ignored.Contains(x.Candidate.Id) &&
@@ -398,6 +431,28 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         // even if both variants happen to have the same JSON value.
         return allowed.Count != 0 && sources.All(x =>
             x.Value == winner || allowed.Contains(x.Key));
+    }
+
+    /// <summary>
+    /// A bare native rule pointer is only sufficient for passive traits whose
+    /// other authored fields are presentation. Do not infer equivalence across
+    /// arbitrary spell, resource, resistance or conditional trait definitions.
+    /// </summary>
+    private string? NativePassiveRule(NativeOriginCandidate candidate)
+    {
+        if (candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var canonical) ||
+            canonical is null || canonical.Category != "origin-trait" ||
+            !canonical.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object ||
+            !trait.EnumerateObject().All(x =>
+                x.Name is "id" or "name" or "description" or "rule") ||
+            JsonString(trait, "rule") is not { } ruleId ||
+            !catalog.TryGetById(ruleId, out var rule) ||
+            rule is null || rule.Category != "rule")
+            return null;
+        return ruleId;
     }
 
     /// <summary>
