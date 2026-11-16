@@ -132,6 +132,19 @@ Real-catalog tests cover default Drow linkage, missing linked selection, same/di
 
 The linkage establishes *which mechanics the initial biological Origin actually owns*. Runtime exposure detection, protective eyewear rules, Dazzled condition application, combined passive vision, all other ancestry-specific trait couplings, previously mixed descendants and a provisional allocation budget remain separate work. Do not assume that exposing the range in the projector makes all Darkvision or sunlight mechanics operational in Character Sheet/combat.
 
+## Level-gated native Darkvision extension — 2026-11-15
+
+The Drow-only intrinsic Darkvision projector has been extended to read **separately selected native Darkvision traits** with explicit level-gated upgrade semantics. The initial implementation uses Stone Goliath's canonical **Cavernous Sight**, which grants a 60-foot Darkvision sense at character level 4 and, where another authorized Darkvision source already exists, increases that range by 60 feet.
+
+- `NativeOriginDarkvisionProjector.Project(..., characterLevel)` and `ProjectApprovedMixed(..., characterLevel)` now distinguish inherent fixed native ranges from separately manifested, canonically defined sense improvements. Direct Stone Goliath receives 60 feet only at level 4 or higher. A mixed Drow/Stone Origin with individually verified 120-foot Drow Darkvision, its linked Sunlight Sensitivity and Stone Cavernous Sight projects 120 feet before level 4, then **180 feet at level 4**.
+- The projector checks **both** the original native trait definition and the actual effective grant, including authored `sense`, `rangeFeet`, `addToExistingDarkvisionFeet`, `requiredCharacterLevel`, `stacking: "once-per-feature"` and the fully authorized original candidate. It does not grant unselected Cavernous Sight or alter its default biological eligibility; mixed offspring still need separate trait authorization.
+- If the character's level is **unknown** and a level-gated Darkvision feature is present, the projector reports `unresolved` instead of silently applying the upgrade or treating it as unavailable. Below the unlock level, its other verified Darkvision sources remain usable. The standalone Stone feature is absent before level 4. Invalid level and unverified sources fail closed.
+- `GrantedDarkvision` keeps its original source/grant identity, adds an explicit `BaseRangeFeet`, and records one `NativeDarkvisionExtension` with separate grant, native source, occurrence and level provenance. The projected combined range is **not** misrepresented as a single unmodified original trait.
+- Different simultaneous Darkvision-extension definitions and speculative multipliers are **not** automatically stacked. Source-specific exclusions, other senses, Low-Light Vision, Sunlight Sensitivity's Dazzled trigger, magical-darkness interpretation, and actual creature-level synchronization remain distinct runtime work.
+- Full-catalog tests cover direct Stone Goliath and its unchanged aptitude requirement, pre/post-unlock range, a verified mixed Drow/Stone combination, Drow-only no-extension behavior, rejection of unreviewed Cavernous inheritance, separate contributor evidence and save/load preservation.
+
+**Scope boundary:** The projection is still a **read-only, level-qualified preview** of what an authorized character owns. It is not a new eligibility policy, an automatic mix-of-senses rule, a permanent size/form transformation, a finalized combat/visibility implementation, or a quantitative power result.
+
 ## Required next gates before general first-party mixed construction
 
 1. **Native coverage:** Continue auditing and authoring opt-in only where inherent mechanics, acquisition scope, full future progression and associated restrictions are known. Do not mark learned features biological merely because they appear on a source Species. Unmarked traits remain eligible for a verified DM decision but not default inheritance.
