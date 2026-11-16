@@ -174,7 +174,8 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             for (var i = 0; i < entries.Length; i++)
             for (var j = i + 1; j < entries.Length; j++)
             {
-                var a = entries[i].Candidate, b = entries[j].Candidate;
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
                 if (a.Identity.MechanicalDefinitionId ==
                     b.Identity.MechanicalDefinitionId) continue;
                 if (authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
