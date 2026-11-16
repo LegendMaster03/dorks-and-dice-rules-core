@@ -427,7 +427,7 @@ public sealed class NativeAuthenticatedApiTests
 
         var malformedPolicies = JsonSerializer.SerializeToNode(Body())!;
         malformedPolicies["transition"]!["steps"]![0]!["newInstance"]!
-            ["resourcePolicies"] = new System.Text.Json.Nodes.JsonArray((JsonNode?)null);
+            ["resourcePolicies"] = new System.Text.Json.Nodes.JsonArray((System.Text.Json.Nodes.JsonNode?)null);
         using var invalidPolicy = await Send(delegated, path, malformedPolicies);
         Assert.Equal(HttpStatusCode.BadRequest, invalidPolicy.StatusCode);
         Assert.Contains("invalid_character_scope",
