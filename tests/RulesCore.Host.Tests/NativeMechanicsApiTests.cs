@@ -232,6 +232,33 @@ public sealed class NativeMechanicsApiTests
             })));
         Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.StatusCode);
 
+        // An otherwise valid Origin must not mask unresolved class levels
+        // or injected native option selections in the character kernel.
+        using var wrongLevel = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal, committedProfile = origin.Profile,
+                character = character with
+                {
+                    Advancements = [new NativeAdvancement(
+                        "class.demo", 2, "class:demo")]
+                }
+            })));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongLevel.StatusCode);
+
+        using var wrongOption = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal, committedProfile = origin.Profile,
+                character = character with
+                {
+                    SelectedOptions = ["option.unverified"]
+                }
+            })));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongOption.StatusCode);
+
         using var dmClaim = await fixture.Client.SendAsync(fixture.Authenticated(
             HttpMethod.Post, endpoint, JsonContent.Create(new
             {
