@@ -582,6 +582,56 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             }
         }
 
+        // Native spellcasting and other intrinsic-derived parameters are
+        // selected source-bound effects, not arbitrary saved character fields.
+        // Rebuild against the exact proposal to reject a changed or missing
+        // parameter when its manifested owner is present. Historical nested
+        // grants without a current owner remain subject to authenticated
+        // parent-profile revision validation at the trust boundary.
+        if (proposal is not null)
+        {
+            var boundIntrinsics = baselineGrants.Values.Where(grant =>
+                grant.Identity.MechanicalDefinitionId is { } id &&
+                catalog.TryGetById(id, out var definition) &&
+                definition is not null && definition.Category == "origin-trait" &&
+                definition.Definition.TryGetProperty("trait", out var trait) &&
+                trait.ValueKind == JsonValueKind.Object &&
+                trait.TryGetProperty("originBindings", out var bindings) &&
+                bindings.ValueKind == JsonValueKind.Object &&
+                bindings.EnumerateObject().Any(binding =>
+                    Text(binding.Value, "lookup") == "manifested-intrinsic"))
+                .ToArray();
+            if (boundIntrinsics.Length > 0)
+            {
+                var (rebuilt, _) = NativeOriginDependentBinder.Bind(
+                    catalog, proposal, baselineGrants.Values.ToArray());
+                var computed = rebuilt.ToDictionary(g => g.Id, StringComparer.Ordinal);
+                foreach (var dependent in boundIntrinsics)
+                {
+                    var path = "underlying.grants." + dependent.Id;
+                    if (!computed.TryGetValue(dependent.Id, out var expected) ||
+                        expected.Parameters is null ||
+                        dependent.Identity.MechanicalDefinitionId is not { } id ||
+                        !catalog.TryGetById(id, out var definition) ||
+                        definition is null ||
+                        !definition.Definition.TryGetProperty("trait", out var trait) ||
+                        !trait.TryGetProperty("originBindings", out var bindings) ||
+                        bindings.EnumerateObject()
+                            .Where(binding => Text(binding.Value, "lookup") ==
+                                "manifested-intrinsic")
+                            .Any(binding =>
+                                dependent.Parameters?.TryGetValue(binding.Name,
+                                    out var actualValue) != true ||
+                                expected.Parameters.TryGetValue(binding.Name,
+                                    out var expectedValue) != true ||
+                                !JsonElement.DeepEquals(actualValue, expectedValue)))
+                        Add("profile-intrinsic-binding-invalid", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Bound intrinsic parameters must match the original selected native source choice.");
+                }
+            }
+        }
+
         // Serialized resource-owner links are derived results, not trusted
         // assertions. An inherited Strike can spend an existing pool only if
         // both canonical native definitions and source evidence support it.
