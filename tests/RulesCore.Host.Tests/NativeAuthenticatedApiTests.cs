@@ -425,6 +425,14 @@ public sealed class NativeAuthenticatedApiTests
         using var incompleteLedger = await Send(delegated, path, missingJournal);
         Assert.Equal(HttpStatusCode.BadRequest, incompleteLedger.StatusCode);
 
+        var malformedPolicies = JsonSerializer.SerializeToNode(Body())!;
+        malformedPolicies["transition"]!["steps"]![0]!["newInstance"]!
+            ["resourcePolicies"] = new System.Text.Json.Nodes.JsonArray((JsonNode?)null);
+        using var invalidPolicy = await Send(delegated, path, malformedPolicies);
+        Assert.Equal(HttpStatusCode.BadRequest, invalidPolicy.StatusCode);
+        Assert.Contains("invalid_character_scope",
+            await invalidPolicy.Content.ReadAsStringAsync());
+
         var missingSteps = JsonSerializer.SerializeToNode(Body())!;
         missingSteps["transition"]!["steps"] = new System.Text.Json.Nodes.JsonArray();
         using var incompleteTransition = await Send(delegated, path, missingSteps);
