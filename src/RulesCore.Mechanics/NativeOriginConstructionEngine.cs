@@ -17,30 +17,53 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
 
     public NativeOriginConstructionResult Evaluate(NativeOriginConstructionRequest request,
-        INativeOriginAuthority? authority = null) =>
-        EvaluateCore(request, authority, reconstructionTarget: false);
+        INativeOriginAuthority? authority = null,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
+        EvaluateCore(request, authority, manifestedContributorAuthority,
+            reconstructionTarget: false);
 
     // Only the trusted, result-oriented reconstruction service may construct
     // a target under a post-origination method without claiming a new birth.
     internal NativeOriginConstructionResult EvaluateReconstructionTarget(
         NativeOriginConstructionRequest request,
-        INativeOriginAuthority? authority = null) =>
-        EvaluateCore(request, authority, reconstructionTarget: true);
+        INativeOriginAuthority? authority = null,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
+        EvaluateCore(request, authority, manifestedContributorAuthority,
+            reconstructionTarget: true);
 
     private NativeOriginConstructionResult EvaluateCore(
         NativeOriginConstructionRequest request, INativeOriginAuthority? authority,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority,
         bool reconstructionTarget)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Proposal);
-        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(request.Proposal);
+        var (trustedProposal, verifiedManifested, verificationIssues) =
+            NativeOriginManifestedContributorVerifier.Resolve(request.Proposal,
+                request.TrustedScope, manifestedContributorAuthority);
+        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(trustedProposal);
         // Biology is one origination procedure, not a property of every
         // characteristic or the universal Origin engine. The method's authored
         // rule promotes only permitted offers; the player still selects them.
         var (withNativeLinks, nativeLinkIssues) =
-            _nativeLinks.Expand(_biological.Evaluate(sourceOffers));
+            _nativeLinks.Expand(_biological.Evaluate(sourceOffers, verifiedManifested));
         var discovered = withNativeLinks;
         var issues = new List<NativeOriginContractIssue>(discoveryIssues);
+        issues.AddRange(verificationIssues);
+        // Once a parent's authoritative underlying state has been resolved,
+        // keep its previous composition as audit evidence. Historical candidates
+        // are never imported as new selectable traits or extra resource pools.
+        var inheritedOffers = trustedProposal.Contributors
+            .Where(x => x is not null && verifiedManifested.Contains(x.Id) &&
+                x.ManifestedProfile?.InherentGrants is not null)
+            .SelectMany(x => x.ManifestedProfile!.InherentGrants.Select(grant => new
+            {
+                CandidateId = "nested:" + x.Id + ":" + grant.Id,
+                ProfileId = x.Source.Id,
+                Grant = grant
+            }))
+            .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
+            .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         issues.AddRange(nativeLinkIssues);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
@@ -454,6 +477,22 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
                 candidate.Identity, [candidate.Id], value,
                 manifest.SelectedParameters ?? candidate.OfferedParameters, choices, basis);
+            if (inheritedOffers.TryGetValue(candidate.Id, out var prior))
+            {
+                // The original choices and configured mechanics are inherited as
+                // a complete manifestation. A descendant does not reopen the
+                // ancestor's unchosen option menu or keep the ancestor's active
+                // resource-owner IDs as live links.
+                grant = grant with
+                {
+                    ResolvedChoices = prior.Grant.ResolvedChoices,
+                    ParameterSources = prior.Grant.Parameters?.Keys.ToDictionary(
+                        key => key, _ => candidate.Id, StringComparer.Ordinal),
+                    InheritedFrom = new(prior.ProfileId, prior.Grant.Id,
+                        prior.Grant.SourceCandidateIds,
+                        prior.Grant.ParameterSources, prior.Grant.ResourceOwners)
+                };
+            }
             accepted.Add(new(candidate, manifest, grant));
         }
 
