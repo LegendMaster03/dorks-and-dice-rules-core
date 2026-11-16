@@ -247,7 +247,7 @@ public static class NativeOriginInnateSpellProgressionProjector
             return projected;
         if (!character.Values.TryGetValue("proficiency.bonus", out var proficiency) ||
             proficiency.Status != "resolved" ||
-            proficiency.Value is not > 0 and <= 1000000)
+            proficiency.Value is null or <= 0 or > 1000000)
             return projected with { Status = "unresolved",
                 UnresolvedReasons = ["character-proficiency-unresolved"] };
         return projected with
