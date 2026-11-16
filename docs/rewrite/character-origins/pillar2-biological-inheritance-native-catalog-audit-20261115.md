@@ -85,6 +85,19 @@ The six Goliath Ancestry trait files now author that binding for all **nine** ca
 
 **Further work:** The \`giantAncestryAbility\` string is a selected *ability name*, not a calculated ability modifier. Character Sheet/combat consumers must resolve the character's current corresponding modifier and retain the original level scaling. Mixed descendants, cross-lineage aptitude composition and future recombination rules require a separate trusted current-profile and provenance policy. Other origination procedures remain unaffected.
 
+## Native typed-sense overlap and selected Dwarf/Rock disposition — 2026-11-15
+
+The common \`NativeOriginReconciler\` now detects **selected, distinct canonical \`origin-trait\` definitions that author the same \`trait.sense\` type**. This is evidence of possible overlap, **not** proof that their full mechanics are equivalent, stack, or must be collapsed. It applies after contributor eligibility and explicit player manifestation, so unselected parental senses are not conflicts. It does not confuse general Low-Light Vision with Tremorsense, or infer sense identity from descriptive prose.
+
+- If two different selected definitions both author \`sense: "tremorsense"\`, the engine requires a trusted disposition. An unresolved pair is suppressed and reported as \`same-sense-reconciliation-required\` rather than yielding both complete benefits.
+- The recorded **Dwarf Stonebound-only** choice is represented as an explicit, scoped \`RetainFirst\` disposition: 60-foot stone-contact, Bonus Action, 10-minute duration, Proficiency Bonus uses per Long Rest. The Gnome's 15-foot continuous Earthbound mode is **not** also granted. That selected example does **not** establish a global rule that the longer-range sense wins.
+- A separately authorized \`RetainSecond\` can preserve **only** passive Earthbound, with its earth/stone shared-contact requirement; neither activation nor Stonebound charges are imported.
+- A verified, scoped \`RetainBoth\` is supported for a table that intentionally permits both modes. It maintains *two separate unchanged mechanics*, not an inferred 60-foot passive hybrid. Every pair of simultaneously retained distinct sense definitions must have authorized coexistence; caller-supplied relationship claims and unverified decisions grant no permission.
+- The implementation does **not** automatically transmit either Tremorsense trait. They remain unreviewed for first-party biological eligibility until their own inheritance, overlap, activation and allocation decisions are ready; the execution tests supply individually scoped verified DM eligibility and relationship decisions.
+- Regression tests cover unresolved overlap, each retained-only mode, authorized coexistence, denied unauthenticated coexistence, unrelated vision plus Tremorsense, full Stonebound resource/activation constraints, and JSON round-trip of the selected effective grant.
+
+**Pending:** Typed \`damageResistance\` overlap is a distinct category and needs explicit type/percentage semantics; non-trait senses and intrinsic Darkvision choices still need projection, upgrade and condition rules; the conventional preset should remain unaffected. This increment is a conservative reconciliation gate, **not** a universal sense upgrade, overlap cap, balancing result or random inheritance system.
+
 ## Required next gates before general first-party mixed construction
 
 1. **Native coverage:** Continue auditing and authoring opt-in only where inherent mechanics, acquisition scope, full future progression and associated restrictions are known. Do not mark learned features biological merely because they appear on a source Species. Unmarked traits remain eligible for a verified DM decision but not default inheritance.
