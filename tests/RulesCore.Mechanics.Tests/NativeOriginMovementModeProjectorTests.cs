@@ -131,7 +131,6 @@ public sealed class NativeOriginMovementModeProjectorTests
         Assert.Equal(ancestry, chosen.SourceId);
         Assert.Equal(expectedMode, chosen.Mode);
         Assert.Equal(15, chosen.SpeedFeet);
-        Assert.Equal("movementMode", "movementMode");
         Assert.Equal(expectedMode, chosen.CompleteEffect
             .GetProperty("movementMode").GetString());
         Assert.Equal(15, chosen.CompleteEffect.GetProperty("speedFeet").GetInt32());
