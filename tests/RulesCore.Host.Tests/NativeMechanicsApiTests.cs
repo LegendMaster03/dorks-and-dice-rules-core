@@ -195,7 +195,8 @@ public sealed class NativeMechanicsApiTests
 
         using var valid = await fixture.Client.SendAsync(fixture.Authenticated(
             HttpMethod.Post, endpoint, JsonContent.Create(Valid())));
-        Assert.Equal(HttpStatusCode.OK, valid.StatusCode);
+        Assert.True(valid.StatusCode == HttpStatusCode.OK,
+            "Bootstrap failed: " + await valid.Content.ReadAsStringAsync());
         var answer = await valid.Content.ReadFromJsonAsync<JsonElement>();
         Assert.True(answer.GetProperty("previewOnly").GetBoolean());
         Assert.True(answer.GetProperty("committedOriginMatched").GetBoolean());
