@@ -101,6 +101,7 @@ public static class NativeOriginPhysiologyProjector
                 if (!canonical.TryGetProperty("naturallyAcclimated", out var natural) ||
                     natural.ValueKind != JsonValueKind.True ||
                     !canonical.TryGetProperty("includesElevationAboveFeet", out var above) ||
+                    above.ValueKind != JsonValueKind.Number ||
                     !above.TryGetInt32(out var elevation) || elevation <= 0 ||
                     !canonical.TryGetProperty("altitudeLimitFeet", out var limit) ||
                     limit.ValueKind != JsonValueKind.Null ||
