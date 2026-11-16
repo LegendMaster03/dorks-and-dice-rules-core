@@ -227,6 +227,42 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 "Retain a complete source mechanic or explicitly authorize coexistence.");
         }
 
+        // Native movement modes can appear in separate canonical traits with
+        // different terrain limits, speeds, or other conditions. Identical
+        // mode names do not authorize stacking or selecting the fastest speed.
+        // Preserve complete authored traits and require a verified disposition
+        // for any selected, distinct definitions of the same movement mode.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .Select(x => (Entry: x, Mode: NativeMovementMode(x.Candidate)))
+            .Where(x => x.Mode is not null)
+            .GroupBy(x => x.Mode!, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            if (entries.Length < 2) continue;
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId ==
+                    b.Identity.MechanicalDefinitionId ||
+                    authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-movement-mode-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct native movement traits provide the same mode. " +
+                "Retain a complete authored trait or explicitly authorize coexistence; " +
+                "do not infer speed or terrain combinations.");
+        }
+
         // Two distinct canonical, passive traits can reference the SAME
         // executable native rule (Elf and Tiefling Low-Light Vision currently do).
         // Their different definitions do not represent two independently
@@ -472,6 +508,30 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             sense.ValueKind != JsonValueKind.String)
             return null;
         return sense.GetString();
+    }
+
+    /// <summary>
+    /// Native movement-mode overlap uses only canonical authoring, never a
+    /// submitted trait label, candidate description, or selected speed.
+    /// Different modes stay independent; a same-mode collision is not a
+    /// movement-speed stacking policy or a first-party inheritance grant.
+    /// </summary>
+    private string? NativeMovementMode(NativeOriginCandidate candidate)
+    {
+        if (candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var definition) ||
+            definition is null || definition.Category != "origin-trait" ||
+            !definition.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object ||
+            !trait.TryGetProperty("movementMode", out var mode) ||
+            mode.ValueKind != JsonValueKind.String ||
+            string.IsNullOrWhiteSpace(mode.GetString()) ||
+            !trait.TryGetProperty("speedFeet", out var speed) ||
+            speed.ValueKind != JsonValueKind.Number ||
+            !speed.TryGetInt32(out var feet) || feet <= 0)
+            return null;
+        return mode.GetString();
     }
 
     /// <summary>
