@@ -195,7 +195,17 @@ public static class NativeOriginApiEndpoints
 
             var character = new NativeCharacterProjector(catalog)
                 .Project(request.Character, context.RequestAborted);
-            if (character.Status != "resolved" || character.Issues.Count != 0)
+            // Missing per-level HP dice are unrelated to the verified
+            // advancement level or proficiency used by innate free casts.
+            // A partial class kernel with *only* that issue is safe for this
+            // projection; invalid selections, unresolved class levels or
+            // other mechanics issues must continue to fail closed.
+            if (character.Status is not ("resolved" or "partial") ||
+                character.Issues.Any(issue => issue.Code != "hit-point-input-required") ||
+                !character.Values.TryGetValue("advancement.total-level", out var total) ||
+                total.Status != "resolved" || total.Value is not > 0 ||
+                !character.Values.TryGetValue("proficiency.bonus", out var proficiency) ||
+                proficiency.Status != "resolved" || proficiency.Value is not > 0)
                 return Error(422, "native_character_projection_unresolved");
 
             var result = NativeOriginInnateSpellResourceLedger.Initialize(
