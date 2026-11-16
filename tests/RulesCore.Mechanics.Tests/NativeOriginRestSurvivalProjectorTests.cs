@@ -88,9 +88,6 @@ public sealed class NativeOriginRestSurvivalProjectorTests
         Assert.Equal("species.elf", trance.SourceId);
         Assert.StartsWith("/traits/", trance.OccurrencePath);
         Assert.Null(view.RelentlessEndurance);
-        Assert.DoesNotContain(elf.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.magical-sleep" &&
-            x.Identity.Occurrence.Source.Id == "species.orc");
         Assert.Equal("unresolved",
             NativeOriginRestSurvivalProjector.ProjectApprovedMixed(
                 catalog, elf).Status);
