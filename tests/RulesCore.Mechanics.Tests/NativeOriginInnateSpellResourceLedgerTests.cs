@@ -383,6 +383,192 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         Assert.Equal(oldMaximum - 1, spent.RemainingFreeCasts[animal]);
     }
 
+    /// <summary>
+    /// In-process test authority verifies exact campaign scope and identity.
+    /// Production authority must authenticate the actor and evidence.
+    /// </summary>
+    private sealed class CapacityTestAuthority : INativeOriginAuthority
+    {
+        public bool Authorizes(NativeTableRuleDecision decision,
+            NativeTableDecisionScope scope) =>
+            scope.Kind == "campaign" && scope.Id == "innate-ledger-tests" &&
+            decision.Authority?.ActorId == "dm" &&
+            decision.Authority.AuthorizationEvidenceId == "verified-capacity-test";
+
+        public bool AuthorizesCatalogChoice(string catalogId,
+            string optionId, string evidenceId) => false;
+    }
+
+    private static NativeTableDecisionScope CapacityScope() =>
+        new("campaign", "innate-ledger-tests");
+
+    private static NativeTableRuleDecision CapacityDecision(
+        NativeOriginInnateSpellLedgerState previous,
+        NativeOriginInnateSpellLedgerState advanced,
+        string grantId, int oldMaximum, int newMaximum,
+        int newRemaining, string? decisionGrantId = null,
+        NativeTableDecisionScope? scope = null,
+        long? claimedRevision = null) =>
+        new("approved-capacity:" + grantId,
+            new("dm", "verified-capacity-test"),
+            scope ?? CapacityScope(),
+            new("origin-innate-spell-capacity", decisionGrantId ?? grantId),
+            JsonSerializer.SerializeToElement(new
+            {
+                grantId,
+                previousProjectionFingerprint = previous.ProjectionFingerprint,
+                advancedProjectionFingerprint = advanced.ProjectionFingerprint,
+                previousCharacterLevel = previous.CharacterLevel,
+                advancedCharacterLevel = advanced.CharacterLevel,
+                previousMaximum = oldMaximum,
+                advancedMaximum = newMaximum,
+                previousRemaining = previous.RemainingFreeCasts[grantId],
+                previousRevision = claimedRevision ?? previous.Revision,
+                remainingAfter = newRemaining
+            }));
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(3)]
+    public void VerifiedTableDecisionMayExplicitlyResolveExistingCapacityChange(
+        int remainingAfter)
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.gnome.forest");
+        var previousCharacter = Character(catalog, 4);
+        var advancedCharacter = Character(catalog, 5);
+        var before = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, previousCharacter).State!;
+        var grant = Grant(origin, "trait.gnome.forest.animal-speech");
+        var oldMaximum = previousCharacter.Values["proficiency.bonus"].Value!.Value;
+        var newMaximum = advancedCharacter.Values["proficiency.bonus"].Value!.Value;
+        Assert.True(newMaximum > oldMaximum);
+        var spent = Step(catalog, origin, previousCharacter, before,
+            NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, grant).State!;
+        var newPreview = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, advancedCharacter).State!;
+        var decision = CapacityDecision(spent, newPreview, grant,
+            oldMaximum, newMaximum, remainingAfter);
+        var updated = NativeOriginInnateSpellResourceLedger.Advance(catalog,
+            origin, previousCharacter, advancedCharacter,
+            spent, spent.Revision, [decision], CapacityScope(),
+            new CapacityTestAuthority());
+
+        Assert.Equal("resolved", updated.Status);
+        var migrated = updated.State!;
+        Assert.Equal(newMaximum, migrated.CharacterLevel == 5
+            ? advancedCharacter.Values["proficiency.bonus"].Value!.Value : -1);
+        Assert.Equal(remainingAfter, migrated.RemainingFreeCasts[grant]);
+        Assert.Equal(spent.Revision + 1, migrated.Revision);
+        Assert.Equal(new[] { decision.Id }, updated.AppliedCapacityDecisionIds);
+        Assert.Equal(oldMaximum - 1, spent.RemainingFreeCasts[grant]);
+        // The selected table outcome must actually be the new resource state,
+        // not just documentation or a newly bootstrapped unspent ledger.
+        var used = Step(catalog, origin, advancedCharacter, migrated,
+            NativeOriginInnateSpellLedgerActionKind.LongRest);
+        Assert.Equal("resolved", used.Status);
+        Assert.Equal(newMaximum, used.State!.RemainingFreeCasts[grant]);
+    }
+
+    [Fact]
+    public void CapacityDecisionRequiresExactAuthorityScopeAndPriorRevision()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.gnome.forest");
+        var previous = Character(catalog, 4);
+        var advanced = Character(catalog, 5);
+        var state = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, previous).State!;
+        var next = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, advanced).State!;
+        var grantId = Grant(origin, "trait.gnome.forest.animal-speech");
+        var oldMax = previous.Values["proficiency.bonus"].Value!.Value;
+        var newMax = advanced.Values["proficiency.bonus"].Value!.Value;
+        var decision = CapacityDecision(state, next, grantId,
+            oldMax, newMax, oldMax);
+        var authority = new CapacityTestAuthority();
+        var trusted = CapacityScope();
+
+        var noAuthority = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [decision], trusted);
+        Assert.Equal("spell-ledger-capacity-change-requires-policy",
+            noAuthority.Reason);
+        var noScope = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [decision], authority: authority);
+        Assert.Equal("spell-ledger-capacity-change-requires-policy",
+            noScope.Reason);
+        var wrongTrusted = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [decision],
+            new("campaign", "another-campaign"), authority);
+        Assert.Equal("spell-ledger-capacity-decision-unverified",
+            wrongTrusted.Reason);
+        var wrongDeclared = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [CapacityDecision(state, next, grantId,
+                oldMax, newMax, oldMax,
+                scope: new("campaign", "another-campaign"))], trusted, authority);
+        Assert.Equal("spell-ledger-capacity-decision-unverified",
+            wrongDeclared.Reason);
+        var wrongRevision = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [CapacityDecision(state, next, grantId,
+                oldMax, newMax, oldMax, claimedRevision: 77)], trusted, authority);
+        Assert.Equal("spell-ledger-capacity-decision-unverified",
+            wrongRevision.Reason);
+        var outOfRange = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [CapacityDecision(state, next, grantId,
+                oldMax, newMax, newMax + 1)], trusted, authority);
+        Assert.Equal("spell-ledger-capacity-decision-unverified",
+            outOfRange.Reason);
+        var wrongGrant = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [CapacityDecision(state, next, grantId,
+                oldMax, newMax, oldMax, decisionGrantId: "unselected")],
+            trusted, authority);
+        Assert.Equal("spell-ledger-capacity-decision-target-invalid",
+            wrongGrant.Reason);
+        var duplicated = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [decision, decision], trusted, authority);
+        Assert.Equal("spell-ledger-capacity-decision-target-invalid",
+            duplicated.Reason);
+
+        // Changed values without a verified table decision stay unresolved.
+        var unchanged = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state, state.Revision);
+        Assert.Equal("spell-ledger-capacity-change-requires-policy",
+            unchanged.Reason);
+        Assert.Null(unchanged.State);
+        Assert.Equal(oldMax, state.RemainingFreeCasts[grantId]);
+    }
+
+    [Fact]
+    public void CapacityDecisionCannotBeAppliedWhenNoCapChangeExists()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.tiefling.infernal");
+        var previous = Character(catalog, 5);
+        var advanced = Character(catalog, 6);
+        var state = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, previous).State!;
+        var grant = Grant(origin, "trait.tiefling.infernal.darkness");
+        var newPreview = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, origin, advanced).State!;
+        var decision = CapacityDecision(state, newPreview, grant, 1, 1, 1);
+        var attempt = NativeOriginInnateSpellResourceLedger.Advance(
+            catalog, origin, previous, advanced, state,
+            state.Revision, [decision], CapacityScope(),
+            new CapacityTestAuthority());
+        Assert.Equal("spell-ledger-unexpected-capacity-decision", attempt.Reason);
+        Assert.Null(attempt.State);
+        Assert.Equal(0, state.Revision);
+    }
+
     [Fact]
     public void AdvancementWithoutNewUnlockPreservesSpentCountAndFrozenIdentity()
     {
