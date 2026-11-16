@@ -209,6 +209,65 @@ public sealed class NativeOriginDrowLinkedSelectionTests
     }
 
     [Fact]
+    public void LinkedDrawbackMustSurviveFinalReconciliationUnlessExplicitlyWaived()
+    {
+        var (proposal, vision, sensitivity, link, permits) = SelectedDrow();
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var dancing = Assert.Single(offered, x =>
+            x.ContributorId == "a" &&
+            x.Identity.MechanicalDefinitionId == "trait.elf.drow.dancing-lights");
+        var drop = Decision("drop-sensitivity", "relationship", "replace-sensitivity",
+            new { action = "retain-second" });
+        var extra = Decision("permit-dancing", "candidate", dancing.Id,
+            new { eligibility = "eligible" });
+        var selections = proposal.Manifestations.Concat(
+        [
+            new NativeOriginManifestation("drawback", sensitivity.Id),
+            new NativeOriginManifestation("dancing-lights", dancing.Id)
+        ]).ToArray();
+        var candidatePermissions = permits.Concat([extra, drop]).ToArray();
+        var original = proposal with
+        {
+            Manifestations = selections, TableDecisions = candidatePermissions,
+            Relationships =
+            [
+                new("replace-sensitivity", NativeOriginRelationshipKind.Substitution,
+                    [sensitivity.Id, dancing.Id])
+            ],
+            Resolutions =
+            [
+                new("replace-sensitivity", NativeOriginResolutionAction.RetainSecond,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: drop.Id))
+            ]
+        };
+        var rejected = Evaluate(original, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, rejected.Status);
+        Assert.Contains(rejected.Issues, x =>
+            x.Code == "native-linked-effective-requirement-missing" &&
+            x.Path == "constraints." + link.Id);
+        Assert.DoesNotContain(rejected.Profile!.Underlying.InherentGrants, x =>
+            x.SourceCandidateIds.Contains(vision.Id));
+        Assert.DoesNotContain(rejected.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == sensitivity.Identity.MechanicalDefinitionId);
+        Assert.Contains(rejected.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == dancing.Identity.MechanicalDefinitionId);
+
+        var overrideDecision = Decision("linked-replacement-waiver",
+            "constraint", link.Id, new { allow = true });
+        var waived = Evaluate(original with
+        {
+            TableDecisions = candidatePermissions.Append(overrideDecision).ToArray()
+        }, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, waived.Status);
+        Assert.Equal(120, Assert.Single(waived.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.IntrinsicSlotId == "darkvisionFeet")
+            .EffectiveValue!.Value.GetInt32());
+        Assert.DoesNotContain(waived.Issues, x =>
+            x.Code == "native-linked-effective-requirement-missing");
+    }
+
+    [Fact]
     public void LinkedDrowProposalRoundTripsAndReconstructsDeterministically()
     {
         var (proposal, _, drawback, _, _) = SelectedDrow();
