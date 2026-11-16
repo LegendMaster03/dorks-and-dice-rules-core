@@ -289,6 +289,75 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task OriginPreviewIncludesReadOnlyEffectViewsWithoutCreatingGrants()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+
+        async Task<JsonElement> Preview(NativeOriginProposal proposal)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var payload = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.True(payload.GetProperty("previewOnly").GetBoolean());
+            Assert.Equal(1, payload.GetProperty("contractVersion").GetInt32());
+            return payload;
+        }
+
+        var plain = await Preview(new("plain-no-effects",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.plain"));
+        Assert.Equal("resolved", plain.GetProperty("intrinsics")
+            .GetProperty("status").GetString());
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            plain.GetProperty("result").GetProperty("status").GetInt32());
+
+        foreach (var key in new[]
+            { "physiology", "movementModes", "skillProficiencies", "restSurvival" })
+        {
+            var effect = plain.GetProperty(key);
+            Assert.True(effect.GetProperty("previewOnly").GetBoolean());
+            Assert.Equal("none", effect.GetProperty("status").GetString());
+            Assert.Empty(effect.GetProperty("unresolvedReasons").EnumerateArray());
+        }
+        Assert.Empty(plain.GetProperty("movementModes")
+            .GetProperty("modes").EnumerateArray());
+        Assert.Empty(plain.GetProperty("skillProficiencies")
+            .GetProperty("proficiencies").EnumerateArray());
+        Assert.Equal(JsonValueKind.Null,
+            plain.GetProperty("restSurvival").GetProperty("trance").ValueKind);
+        Assert.Equal(JsonValueKind.Null,
+            plain.GetProperty("restSurvival")
+                .GetProperty("relentlessEndurance").ValueKind);
+
+        // The Human has an unbound native size choice. An incomplete
+        // construction may show offered traits, but it publishes no active
+        // physiological, skill, movement, or survival result.
+        var unfinished = await Preview(new("human-unfinished",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.human"));
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            unfinished.GetProperty("result").GetProperty("status").GetInt32());
+        foreach (var key in new[]
+            { "physiology", "movementModes", "skillProficiencies", "restSurvival" })
+        {
+            var view = unfinished.GetProperty(key);
+            Assert.Equal("unresolved", view.GetProperty("status").GetString());
+            Assert.True(view.GetProperty("previewOnly").GetBoolean());
+            Assert.NotEmpty(view.GetProperty("unresolvedReasons").EnumerateArray());
+        }
+    }
+
+    [Fact]
     public async Task OriginPreviewRejectsUntrustedBaselineAndDoesNotRequireFixedFingerprint()
     {
         await using var fixture = new Fixture();
