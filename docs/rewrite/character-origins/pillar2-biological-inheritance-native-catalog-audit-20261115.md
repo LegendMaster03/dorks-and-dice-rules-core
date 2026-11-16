@@ -145,6 +145,18 @@ The Drow-only intrinsic Darkvision projector has been extended to read **separat
 
 **Scope boundary:** The projection is still a **read-only, level-qualified preview** of what an authorized character owns. It is not a new eligibility policy, an automatic mix-of-senses rule, a permanent size/form transformation, a finalized combat/visibility implementation, or a quantitative power result.
 
+## Provisional allocation preview and whole-progression commitment — 2026-11-15
+
+The native Origin engine now has a **separate, read-only allocation assessment** in `NativeOriginAllocationPreview`. It accepts the *actual effective grant set* from a constructed Origin and an **explicit hypothetical** `NativeOriginAllocationPolicy`. No allowance, point weights or characteristic cost schedule has been added to the first-party native catalog. The preview does not participate in grant authorization; an `Authorized` construction result must **not** be described as having passed biological allocation admission until a real method-specific policy has been approved and wired into the trusted engine.
+
+- Each complete effective intrinsic or canonical trait is mapped to a source-neutral component key. Duplicate parent offers already consolidated by reconciliation cost **once**; different effective grants cost separately. The number of contributors is not an allowance multiplier.
+- A versioned candidate price may group explicitly linked components, such as Drow Darkvision and Sunlight Sensitivity, into **one bundle**. Grouped members must each be effective and share at least one actual contributor. Partially present, ambiguously duplicated or unrelated-source bundles stay unresolved; negatives are not automatically transferable credits.
+- Each whole canonical trait consumes its hypothetical full-progression cost at construction time. The ledger records the authored earliest unlock level (for example, Stone Goliath's level-4 Cavernous Sight), but does **not** defer its cost until that level. The experimental allocation is deliberately **not** a numerical measure of combat or utility power.
+- The preview reports `not-configured`, `invalid-policy`, `unresolved`, `within-allowance`, `over-allowance` and `not-applicable`; missing costs, undefined native mechanics, incomplete Origins and malformed pricing do not silently become zero.
+- Regression tests cover actual first-party Elf characteristics, linked Drow adaptation, future Cavernous Sight, direct preset exemption, three same-source donors, unpriced characteristics, over-budget scenarios, malformed policies and forged unknown definitions.
+
+See [the detailed provisional allocation preview contract](pillar2-provisional-allocation-preview-20261115.md). **Next decision gate:** approve an editable native biological allowance and priced complete-characteristic bundles, include explicit alternatives/DM dispositions and rule revision on completed Origin records, then integrate admission with the construction engine. This preview alone does **not** satisfy that gate.
+
 ## Required next gates before general first-party mixed construction
 
 1. **Native coverage:** Continue auditing and authoring opt-in only where inherent mechanics, acquisition scope, full future progression and associated restrictions are known. Do not mark learned features biological merely because they appear on a source Species. Unmarked traits remain eligible for a verified DM decision but not default inheritance.
