@@ -58,7 +58,11 @@ internal static class NativeOriginDependentBinder
                     var matching = reconciled.Where(other =>
                         other.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
                         other.Identity.IntrinsicSlotId == slot &&
-                        other.Identity.Occurrence.Source == grant.Identity.Occurrence.Source)
+                        other.Identity.Occurrence.Source == grant.Identity.Occurrence.Source &&
+                        // Two distinct parents may reference the same canonical
+                        // ancestry. Native source identity is not contributor
+                        // ownership; require matching selected candidate evidence.
+                        SharesContributor(grant, other, offered))
                         .ToArray();
                     // Previously manifested contributors already carry a bound
                     // spell parameter. It must not silently change in descendants.
