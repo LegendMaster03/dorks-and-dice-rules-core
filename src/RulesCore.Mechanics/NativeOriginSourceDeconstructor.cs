@@ -223,7 +223,10 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             foreach (var (property, slot) in new[]
             {
                 ("creatureType", "creatureType"), ("size", "size"),
-                ("walkingSpeedFeet", "walkingSpeedFeet")
+                ("walkingSpeedFeet", "walkingSpeedFeet"),
+                // Native sensory traits remain separate from foundation slots.
+                // A donor's Darkvision is an offer, not automatically heritable.
+                ("darkvisionFeet", "darkvisionFeet")
             })
                 if (entity.Definition.TryGetProperty(property, out var value) &&
                     value.ValueKind is not (JsonValueKind.Null or JsonValueKind.Undefined))

@@ -37,7 +37,7 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                 ReadBool(decision.EffectiveOutcome, "allow") == true;
             var dmEnforce = decision is not null &&
                 ReadBool(decision.EffectiveOutcome, "enforce") == true;
-            var authored = NativeConstraintAuthorizes(constraint);
+            var authored = NativeConstraintAuthorizes(proposal, constraint);
             if (decision is not null && (dmAllow || dmEnforce)) usedDm = true;
             if (dmAllow) continue;
             if (!dmEnforce && !authored)
@@ -116,16 +116,56 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
             issues, usedDm);
     }
 
-    private bool NativeConstraintAuthorizes(NativeOriginConstraint constraint)
+    private bool NativeConstraintAuthorizes(
+        NativeOriginProposal proposal, NativeOriginConstraint constraint)
     {
         if (constraint.NativeRuleReference is null ||
             !catalog.TryGetById(constraint.NativeRuleReference, out var rule) ||
-            rule?.Category != "rule" ||
-            !rule.Definition.TryGetProperty("originConstraints", out var definitions) ||
-            definitions.ValueKind != JsonValueKind.Array) return false;
-        return definitions.EnumerateArray().Any(item =>
-            Text(item, "id") == constraint.Id &&
-            Text(item, "kind") == constraint.Kind.ToString());
+            rule is null) return false;
+        if (rule.Category == "rule" &&
+            rule.Definition.TryGetProperty("originConstraints", out var definitions) &&
+            definitions.ValueKind == JsonValueKind.Array &&
+            definitions.EnumerateArray().Any(item =>
+                Text(item, "id") == constraint.Id &&
+                Text(item, "kind") == constraint.Kind.ToString()))
+            return true;
+        // Source-owned linked selections must match exactly the native
+        // contributor-local candidates. A caller-authored Requires assertion
+        // is not authority to bind another parent's trait or waive a drawback.
+        if (rule.Category is not ("species" or "ancestry") ||
+            constraint.Kind != NativeOriginRelationshipKind.Requires ||
+            constraint.Minimum != 1 ||
+            constraint.Subjects.Count != 1 || constraint.Conditions.Count != 1 ||
+            constraint.NativeRuleReference != rule.Id ||
+            !rule.Definition.TryGetProperty("originLinkedSelections", out var links) ||
+            links.ValueKind != JsonValueKind.Array) return false;
+
+        var subjectId = constraint.Subjects[0].CandidateId;
+        var conditionId = constraint.Conditions[0].CandidateId;
+        var subject = proposal.Candidates.FirstOrDefault(x => x.Id == subjectId);
+        var condition = proposal.Candidates.FirstOrDefault(x => x.Id == conditionId);
+        if (subject is null || condition is null ||
+            subject.Id == condition.Id ||
+            subject.Identity.Kind != NativeOriginCharacteristicKind.Intrinsic ||
+            condition.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            subject.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
+            condition.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
+            subject.Identity.Occurrence.Source.Id != rule.Id ||
+            condition.Identity.Occurrence.Source.Id != rule.Id ||
+            subject.ContributorId != condition.ContributorId)
+            return false;
+
+        return links.EnumerateArray().Any(link =>
+            Text(link, "scope") == "same-contributor" &&
+            Text(link, "kind") == nameof(NativeOriginRelationshipKind.Requires) &&
+            Text(link, "triggerIntrinsicSlot") == subject.Identity.IntrinsicSlotId &&
+            Text(link, "requiresTraitDefinitionId") == condition.Identity.MechanicalDefinitionId &&
+            constraint.Id == NativeOriginNativeLinkedSelectionEvaluator.ConstraintId(
+                subject.Id, Text(link, "id")!) &&
+            constraint.Subjects[0] == new NativeOriginCharacteristicSelector(
+                CandidateId: subject.Id) &&
+            constraint.Conditions[0] == new NativeOriginCharacteristicSelector(
+                CandidateId: condition.Id));
     }
 
     private static bool Matches(NativeOriginCharacteristicSelector selector,

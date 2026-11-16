@@ -11,6 +11,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 {
     private readonly NativeOriginContractValidator _validator = new(catalog);
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
+    private readonly NativeOriginNativeLinkedSelectionEvaluator _nativeLinks = new(catalog);
     private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
@@ -36,8 +37,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         // Biology is one origination procedure, not a property of every
         // characteristic or the universal Origin engine. The method's authored
         // rule promotes only permitted offers; the player still selects them.
-        var discovered = _biological.Evaluate(sourceOffers);
+        var (withNativeLinks, nativeLinkIssues) =
+            _nativeLinks.Expand(_biological.Evaluate(sourceOffers));
+        var discovered = withNativeLinks;
         var issues = new List<NativeOriginContractIssue>(discoveryIssues);
+        issues.AddRange(nativeLinkIssues);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
         var selected = new HashSet<string>(manifests.Select(x => x.CandidateId),
