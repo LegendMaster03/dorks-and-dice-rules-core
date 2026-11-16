@@ -51,3 +51,12 @@ The tests use the existing `NativeOriginConstructionEngine` and standard `Native
 - Production authentication of parents and Character Sheet spellcasting/ability integration remains outstanding. Temporary-form application is separate from underlying inheritance, and no site files were changed.
 
 This increment does not approve a new spellcasting rule, new feat eligibility, allocation budgets, or production biological access.
+
+
+## Regression discovered during implementation
+
+The first cross-contributor Drow test exposed a source-neutral binder defect: `manifested-intrinsic` originally matched only the canonical source reference. Two separate Drow contributors using `ancestry.elf.drow` could therefore share one contributor's selected spellcasting ability without that contributor actually owning the spell. `NativeOriginDependentBinder` now additionally requires matching selected **contributor evidence** through the existing `SharesContributor` helper. Same-native-source identity is no longer mistaken for same-donor ownership.
+
+The preexisting Drow Darkvision/Sunlight Sensitivity relationship test also selected Dancing Lights without any spellcasting ability. It now explicitly selects the same Drow contributor's Wisdom intrinsic and supplies its scoped DM eligibility. This preserves the original test's coverage of the Darkvision drawback rather than weakening the new spell dependency.
+
+These are fixes to an existing binding authorization gap and its dependent fixture, not new permissions for cross-lineage trait substitution or biological transmission.
