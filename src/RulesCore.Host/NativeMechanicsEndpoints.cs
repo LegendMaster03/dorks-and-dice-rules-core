@@ -49,6 +49,9 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedPrimaryState();
             group.MapVerifiedManifestationPlans();
             group.MapVerifiedManifestationReads();
+            // Verified Origin baseline review is separate from both the
+            // stateless construction preview and supernatural entitlement.
+            group.MapNativeOriginVerifiedUnderlying();
         }
 
         // Origin preview inherits the same authenticated ingress as other mechanics.
