@@ -359,6 +359,61 @@ public sealed class NativeOriginTieflingSpellBindingTests
     }
 
     [Fact]
+    public void ScopedMixedAtWillSpellsCreateNoFreeCastPools()
+    {
+        var catalog = Catalog();
+        var result = SelectedMixed("ancestry.tiefling.chthonic", "a");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var character = new NativeCharacterProjector(catalog).Project(
+            new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+                new Dictionary<string, int>
+                {
+                    ["strength"] = 10, ["dexterity"] = 12,
+                    ["constitution"] = 14, ["intelligence"] = 8,
+                    ["wisdom"] = 15, ["charisma"] = 11
+                }, [new("class.warlock", 1, "warlock")]));
+
+        var fresh = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, result, character);
+        Assert.Equal("resolved", fresh.Status);
+        var state = fresh.State!;
+        Assert.Empty(state.RemainingFreeCasts);
+        var shared = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId ==
+                "trait.tiefling.otherworldly-presence");
+        var cantrip = NativeOriginInnateSpellResourceLedger.Apply(
+            catalog, result, character, state,
+            new(NativeOriginInnateSpellLedgerActionKind.CheckAtWill,
+                0, shared.Id));
+        Assert.Equal("permitted", cantrip.Status);
+        Assert.Same(state, cantrip.State);
+        Assert.Equal("unresolved", NativeOriginInnateSpellResourceLedger.Apply(
+            catalog, result, character, state,
+            new(NativeOriginInnateSpellLedgerActionKind.SpendFreeCast,
+                0, shared.Id)).Status);
+    }
+
+    [Fact]
+    public void UnresolvedMixedSpellBindingCannotInitializeResourceLedger()
+    {
+        var catalog = Catalog();
+        var result = SelectedMixed("ancestry.tiefling.chthonic", "b");
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, result.Status);
+        var character = new NativeCharacterProjector(catalog).Project(
+            new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+                new Dictionary<string, int>
+                {
+                    ["strength"] = 10, ["dexterity"] = 12,
+                    ["constitution"] = 14, ["intelligence"] = 8,
+                    ["wisdom"] = 15, ["charisma"] = 11
+                }, [new("class.warlock", 1, "warlock")]));
+        var state = NativeOriginInnateSpellResourceLedger.Initialize(
+            catalog, result, character);
+        Assert.Equal("unresolved", state.Status);
+        Assert.Null(state.State);
+    }
+
+    [Fact]
     public void VerifiedAncestryChoiceBindsItsOwnParentAndLeafSpellsInMixedConstruction()
     {
         var result = SelectedMixed("ancestry.tiefling.chthonic", "a");
