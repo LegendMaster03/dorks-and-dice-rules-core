@@ -254,6 +254,59 @@ public sealed class NativeOriginTieflingSpellBindingTests
         }, auto: false, authority: new TestAuthority());
     }
 
+    [Fact]
+    public void PersistedParentAndLeafSpellParametersCanNotBeRewrittenOrOmitted()
+    {
+        var catalog = Catalog();
+        var result = SelectedDirect("ancestry.tiefling.infernal", "wisdom");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var validator = new NativeOriginContractValidator(catalog);
+        var saved = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(result.Profile))!;
+        Assert.DoesNotContain(validator.ReviewProfile(saved,
+            result.EvaluatedProposal).Issues, issue =>
+            issue.Code == "profile-intrinsic-binding-invalid");
+
+        foreach (var id in new[]
+        {
+            "trait.tiefling.otherworldly-presence",
+            "trait.tiefling.infernal.hellish-rebuke"
+        })
+        {
+            var original = Assert.Single(saved.Underlying.InherentGrants, x =>
+                x.Identity.MechanicalDefinitionId == id);
+            var modified = original.Parameters!.ToDictionary(
+                x => x.Key, x => x.Value, StringComparer.Ordinal);
+            modified["spellcastingAbility"] =
+                JsonSerializer.SerializeToElement("charisma");
+            var corrupted = saved.Underlying with
+            {
+                InherentGrants = saved.Underlying.InherentGrants.Select(g =>
+                    g.Id == original.Id ? g with { Parameters = modified } : g)
+                    .ToArray()
+            };
+            var review = validator.ReviewProfile(
+                saved with { Underlying = corrupted, Current = corrupted },
+                result.EvaluatedProposal);
+            Assert.Contains(review.Issues, x =>
+                x.Code == "profile-intrinsic-binding-invalid" &&
+                x.Path == "underlying.grants." + original.Id);
+
+            var missing = saved.Underlying with
+            {
+                InherentGrants = saved.Underlying.InherentGrants.Select(g =>
+                    g.Id == original.Id ? g with { Parameters = null } : g)
+                    .ToArray()
+            };
+            var noParameter = validator.ReviewProfile(
+                saved with { Underlying = missing, Current = missing },
+                result.EvaluatedProposal);
+            Assert.Contains(noParameter.Issues, x =>
+                x.Code == "profile-intrinsic-binding-invalid" &&
+                x.Path == "underlying.grants." + original.Id);
+        }
+    }
+
     [Theory]
     [InlineData("ancestry.tiefling.chthonic")]
     [InlineData("ancestry.tiefling.infernal")]
