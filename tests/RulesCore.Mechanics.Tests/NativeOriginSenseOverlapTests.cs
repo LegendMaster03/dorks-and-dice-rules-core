@@ -163,7 +163,7 @@ public sealed class NativeOriginSenseOverlapTests
             .GetProperty("value").GetString());
         Assert.Equal("long-rest", value.GetProperty("uses")
             .GetProperty("recharge").GetString());
-        Assert.Equal([stone.Id], selected.SourceCandidateIds);
+        Assert.Equal(new[] { stone.Id }, selected.SourceCandidateIds);
         Assert.Empty(result.Issues);
 
         var saved = JsonSerializer.Deserialize<NativeOriginProfile>(
