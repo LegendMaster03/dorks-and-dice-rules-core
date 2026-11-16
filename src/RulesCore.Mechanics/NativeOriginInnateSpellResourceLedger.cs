@@ -248,7 +248,9 @@ public static class NativeOriginInnateSpellResourceLedger
         if (changedCapacities.Count > 0)
         {
             if (decisions.Count != changedCapacities.Count ||
-                decisions.Any(d => d is null || !changedCapacities.Contains(d.Target?.Id ?? "") ||
+                decisions.Any(d => d is null || d.Target is null ||
+                    string.IsNullOrWhiteSpace(d.Id) ||
+                    !changedCapacities.Contains(d.Target.Id) ||
                     d.Target.Kind != "origin-innate-spell-capacity" ||
                     !usedDecisionIds.Add(d.Id)) ||
                 decisions.Select(d => d.Target.Id).Distinct(StringComparer.Ordinal).Count() !=
@@ -265,7 +267,8 @@ public static class NativeOriginInnateSpellResourceLedger
                     return Fail("spell-ledger-course-changed");
                 var decision = decisions.Single(d => d.Target.Id == grantId);
                 if (decision.Scope is null || decision.Authority is null ||
-                    string.IsNullOrWhiteSpace(decision.Id) ||
+                    string.IsNullOrWhiteSpace(decision.Authority.ActorId) ||
+                    string.IsNullOrWhiteSpace(decision.Authority.AuthorizationEvidenceId) ||
                     decision.Scope != trustedScope ||
                     !authority!.Authorizes(decision, trustedScope!) ||
                     !TryCapacityAdjustment(decision.EffectiveOutcome,
