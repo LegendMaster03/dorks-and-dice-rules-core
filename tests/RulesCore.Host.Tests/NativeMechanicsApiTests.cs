@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Host;
+using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
 
@@ -110,6 +111,9 @@ public sealed class NativeMechanicsApiTests
                    "selectable":true,"creatureType":"humanoid",
                    "sizeChoice":{"from":["small","medium"],"when":"character-creation"},
                    "walkingSpeedFeet":30},
+                  {"id":"species.plain","name":"Plain","kind":"species",
+                   "selectable":true,"creatureType":"humanoid",
+                   "size":"medium","walkingSpeedFeet":30},
                   {"id":"species.elf","name":"Elf","kind":"species",
                    "selectable":true,"creatureType":"fey","size":"medium",
                    "walkingSpeedFeet":30},
@@ -156,6 +160,96 @@ public sealed class NativeMechanicsApiTests
             if (App is not null) await App.DisposeAsync();
             if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task DirectInnateSpellLedgerBootstrapOnlyAcceptsMatchingNativeOriginAndDelegation()
+    {
+        const string endpoint = "/api/mechanics/v1/origins/innate-spells/ledger/initialize-preview";
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var proposal = new NativeOriginProposal(
+            "direct-plain", NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: "species.plain");
+        var origin = new NativeOriginFirstPartyChoiceEvaluator(catalog)
+            .Evaluate(proposal);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, origin.Status);
+        Assert.NotNull(origin.Profile);
+        var character = new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+            new Dictionary<string, int>
+            {
+                ["strength"] = 10, ["dexterity"] = 10,
+                ["constitution"] = 10, ["intelligence"] = 10,
+                ["wisdom"] = 10, ["charisma"] = 10
+            }, [new("class.demo", 1, "class:demo")]);
+
+        object Valid() => new
+        {
+            rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+            proposal, committedProfile = origin.Profile, character
+        };
+        using var anon = await fixture.Client.PostAsJsonAsync(endpoint, Valid());
+        Assert.Equal(HttpStatusCode.Unauthorized, anon.StatusCode);
+
+        using var valid = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(Valid())));
+        Assert.Equal(HttpStatusCode.OK, valid.StatusCode);
+        var answer = await valid.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(answer.GetProperty("previewOnly").GetBoolean());
+        Assert.True(answer.GetProperty("committedOriginMatched").GetBoolean());
+        Assert.Equal("resolved", answer.GetProperty("result")
+            .GetProperty("status").GetString());
+        Assert.Equal(0, answer.GetProperty("result")
+            .GetProperty("state").GetProperty("revision").GetInt32());
+        Assert.Empty(answer.GetProperty("result")
+            .GetProperty("state").GetProperty("remainingFreeCasts").EnumerateObject());
+
+        using var stale = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = "outdated",
+                proposal, committedProfile = origin.Profile, character
+            })));
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+
+        using var forged = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal, committedProfile = origin.Profile! with { Id = "origin:unrelated" },
+                character
+            })));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.StatusCode);
+
+        using var dmClaim = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal = proposal with
+                {
+                    TableDecisions = [new NativeTableRuleDecision(
+                        "spoofed", new("self", "self"), new("campaign", "other"),
+                        new("source", "species.plain"),
+                        JsonSerializer.SerializeToElement(new { eligibility = "eligible" }))]
+                },
+                committedProfile = origin.Profile, character
+            })));
+        Assert.Equal(HttpStatusCode.BadRequest, dmClaim.StatusCode);
+
+        await using var wrongSource = new Fixture();
+        await wrongSource.StartAsync("PublicOnly", "wiki", ordinary: true);
+        using var denied = await wrongSource.Client.SendAsync(wrongSource.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(Valid())));
+        Assert.Equal(HttpStatusCode.Forbidden, denied.StatusCode);
+
+        await using var privateOnly = new Fixture();
+        await privateOnly.StartAsync("PrivateOnly", "character-sheet");
+        using var absent = await privateOnly.Client.SendAsync(privateOnly.Authenticated(
+            HttpMethod.Post, "/api/private/mechanics/v1/origins/innate-spells/ledger/initialize-preview",
+            JsonContent.Create(Valid())));
+        Assert.Equal(HttpStatusCode.NotFound, absent.StatusCode);
     }
 
     [Fact]
