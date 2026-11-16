@@ -60,6 +60,13 @@ public static class NativeCharacterManifestationPlanningEndpoints
                 request.Ledger.ProcessedEventIds is null ||
                 request.Transition.Steps is null ||
                 request.Transition.Steps.Count is < 1 or > 512 ||
+                // A source authority must never see malformed nested
+                // transition records supplied by the delegated caller.
+                request.Transition.Steps.Any(step =>
+                    step is null ||
+                    step.NewInstance?.ResourcePolicies is { } policies &&
+                        policies.Any(policy => policy is null) ||
+                    step.NewResources?.Any(resource => resource is null) == true) ||
                 string.IsNullOrWhiteSpace(request.Transition.EventId) ||
                 string.IsNullOrWhiteSpace(request.State.CharacterId) ||
                 !Guid.TryParse(request.State.CharacterId, out var characterId) ||
