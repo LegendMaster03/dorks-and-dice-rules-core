@@ -133,7 +133,7 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal(3, Assert.Single(repeated.Profile.Underlying.InherentGrants,
             x => x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
             .SourceCandidateIds.Count);
-        var policy = Hypothetical(6, new("vision", 3,
+        var policy = Hypothetical(6, new NativeOriginAllocationPrice("vision", 3,
             ["trait:trait.shared.low-light-vision"]));
         var one = NativeOriginAllocationPreview.Assess(Catalog(), single, policy);
         var many = NativeOriginAllocationPreview.Assess(Catalog(), repeated, policy);
@@ -192,7 +192,7 @@ public sealed class NativeOriginAllocationPreviewTests
             ]
         }, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
-        var policy = Hypothetical(7, new("drow-adaptation", 4,
+        var policy = Hypothetical(7, new NativeOriginAllocationPrice("drow-adaptation", 4,
         [
             "intrinsic:darkvisionFeet",
             "trait:trait.elf.drow.sunlight-sensitivity"
@@ -233,7 +233,7 @@ public sealed class NativeOriginAllocationPreviewTests
             ]
         }, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
-        var policy = Hypothetical(8, new("cavernous", 6,
+        var policy = Hypothetical(8, new NativeOriginAllocationPrice("cavernous", 6,
             ["trait:trait.goliath.stone.cavernous-sight"]));
         var preview = NativeOriginAllocationPreview.Assess(Catalog(), completed, policy);
         Assert.Equal("over-allowance", preview.Status);
