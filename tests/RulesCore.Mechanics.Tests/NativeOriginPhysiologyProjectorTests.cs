@@ -99,7 +99,13 @@ public sealed class NativeOriginPhysiologyProjectorTests
         var altitude = Assert.IsType<
             NativeOriginPhysiologyProjector.AltitudeAcclimationEffect>(
                 view.AltitudeAcclimation);
-        Assert.Equal("ancestry.goliath.fire", altitude.SourceId);
+        // The donor is the Fire Goliath leaf, but the actual canonical trait
+        // comes from its shared Species source. Retain that provenance.
+        Assert.Equal("species.goliath", altitude.SourceId);
+        Assert.Contains(result.EvaluatedProposal.Candidates, candidate =>
+            candidate.ContributorId == "fire" &&
+            candidate.Identity.MechanicalDefinitionId ==
+                "trait.goliath.altitude-acclimation");
         Assert.Equal(20000, altitude.IncludesElevationAboveFeet);
         Assert.Null(altitude.AltitudeLimitFeet);
         Assert.True(altitude.MaintainsAcclimationAtLowerElevations);
@@ -121,7 +127,7 @@ public sealed class NativeOriginPhysiologyProjectorTests
             catalog, result with { Profile = saved });
         Assert.Equal("resolved", roundTrip.Status);
         Assert.Equal("ancestry.dragonborn.bronze", roundTrip.Amphibious!.SourceId);
-        Assert.Equal("ancestry.goliath.fire",
+        Assert.Equal("species.goliath",
             roundTrip.AltitudeAcclimation!.SourceId);
         Assert.Empty(roundTrip.UnresolvedReasons);
     }
