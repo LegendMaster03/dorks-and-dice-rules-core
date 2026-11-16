@@ -110,7 +110,6 @@ public sealed class NativeOriginInnateSpellProgressionTests
 
     [Theory]
     [InlineData("ancestry.elf.drow", "dancing-lights", "faerie-fire", "darkness")]
-    [InlineData("ancestry.elf.wood", "druidcraft", "longstrider", "pass-without-trace")]
     [InlineData("ancestry.tiefling.chthonic", "chill-touch", "false-life", "ray-of-enfeeblement")]
     [InlineData("ancestry.tiefling.abyssal", "poison-spray", "ray-of-sickness", "hold-person")]
     public void OtherNativeCoursesKeepTheirLevelGatesAndIndependentSourceGrantIds(
@@ -137,6 +136,23 @@ public sealed class NativeOriginInnateSpellProgressionTests
             not "thaumaturgy"));
         Assert.Equal(bySpell.Values.Count,
             bySpell.Values.Select(x => x.GrantId).Distinct(StringComparer.Ordinal).Count());
+    }
+
+    [Fact]
+    public void WoodElfSpeedOverlapMustBeReconciledBeforeAnySpellProjection()
+    {
+        var catalog = Catalog();
+        var origin = Direct(catalog, "ancestry.elf.wood");
+        // Species Elf has 30-foot walking speed and Wood Elf has 35 feet.
+        // A spell projector may not adjudicate that unresolved foundation
+        // conflict or silently select the faster Ancestry speed.
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, origin.Status);
+        var projected = NativeOriginInnateSpellProgressionProjector.Project(
+            catalog, origin, 5);
+        Assert.Equal("unresolved", projected.Status);
+        Assert.Empty(projected.Spells);
+        Assert.Contains("origin-not-authorized-current-baseline",
+            projected.UnresolvedReasons);
     }
 
     [Fact]
