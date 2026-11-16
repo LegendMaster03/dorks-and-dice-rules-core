@@ -1639,6 +1639,87 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
+    public void ConsolidatedGiantAptitudeAttributesBoundModifierToActualContributor()
+    {
+        var original = Proposal("consolidated-giant-aptitude", NativeOriginIntent.Mixed,
+            contributors:
+            [
+                Contributor("a-fire", "ancestry.goliath.fire"),
+                Contributor("b-stone", "ancestry.goliath.stone")
+            ]);
+        var offers = Evaluate(original).EvaluatedProposal.Candidates;
+        var fireApt = Assert.Single(offers, x =>
+            x.ContributorId == "a-fire" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        var stoneApt = Assert.Single(offers, x =>
+            x.ContributorId == "b-stone" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        var stoneThrow = Assert.Single(offers, x =>
+            x.ContributorId == "b-stone" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-throw");
+        var foundations = offers.Where(x => x.ContributorId == "a-fire" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .Select((x, i) => new NativeOriginManifestation("foundation-" + i,
+                x.Id, SelectedValue: x.OfferedValue)).ToArray();
+        var permits = new[]
+        {
+            Decision("fire-aptitude-permit", "candidate", fireApt.Id,
+                new { eligibility = "eligible" }),
+            Decision("stone-aptitude-permit", "candidate", stoneApt.Id,
+                new { eligibility = "eligible" }),
+            Decision("stone-throw-permit", "candidate", stoneThrow.Id,
+                new { eligibility = "eligible" })
+        };
+        var result = Evaluate(original with
+        {
+            Manifestations = foundations.Concat(
+            [
+                new("fire-aptitude", fireApt.Id,
+                    Choices: [new("abilityChoice", ["strength"])]),
+                new("stone-aptitude", stoneApt.Id,
+                    Choices: [new("abilityChoice", ["strength"])]),
+                new("stone-throw", stoneThrow.Id)
+            ]).ToArray(),
+            TableDecisions = permits
+        }, new TestAuthority(), false);
+
+        Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
+            string.Join("; ", result.Issues.Select(x => x.Code + ":" + x.Detail)));
+        var aptitude = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        Assert.Equal(2, aptitude.SourceCandidateIds.Count);
+        Assert.Contains(fireApt.Id, aptitude.SourceCandidateIds);
+        Assert.Contains(stoneApt.Id, aptitude.SourceCandidateIds);
+        var thrown = Assert.Single(result.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-throw");
+        Assert.Equal("strength", thrown.Parameters!["giantAncestryAbility"].GetString());
+        Assert.Equal(stoneApt.Id, thrown.ParameterSources!["giantAncestryAbility"]);
+        Assert.DoesNotContain(new NativeOriginContractValidator(Catalog())
+            .ReviewProfile(result.Profile, result.EvaluatedProposal).Issues,
+            x => x.Code == "profile-trait-choice-binding-invalid");
+
+        // Different chosen aptitudes for one consolidated source mechanic do
+        // not silently pick a winner or become two global ability selections.
+        var conflict = Evaluate(original with
+        {
+            Manifestations = foundations.Concat(
+            [
+                new("fire-aptitude", fireApt.Id,
+                    Choices: [new("abilityChoice", ["constitution"])]),
+                new("stone-aptitude", stoneApt.Id,
+                    Choices: [new("abilityChoice", ["strength"])]),
+                new("stone-throw", stoneThrow.Id)
+            ]).ToArray(),
+            TableDecisions = permits
+        }, new TestAuthority(), false);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, conflict.Status);
+        Assert.Contains(conflict.Issues, x =>
+            x.Code == "same-definition-different-manifestations");
+        Assert.DoesNotContain(conflict.Profile?.Underlying.InherentGrants ?? [], x =>
+            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-throw");
+    }
+
+    [Fact]
     public void GiantDependentFeatureRequiresAnExplicitValidContributorAptitude()
     {
         var proposal = Proposal("giant-aptitude-required", NativeOriginIntent.Mixed,
