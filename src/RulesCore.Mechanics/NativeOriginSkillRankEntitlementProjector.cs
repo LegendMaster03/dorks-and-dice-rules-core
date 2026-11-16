@@ -134,8 +134,12 @@ public static class NativeOriginSkillRankEntitlementProjector
         if (mixed)
             return NativeOriginApprovedMixedIntrinsicProjector
                 .HasVerifiedContributingEvidence(origin, grant);
+        // Direct native construction records the concrete Species/Ancestry
+        // source as the authorization reference. The biological method's rule
+        // ID is instead used for eligible mixed contributor offers.
         if (grant.Authorization?.Adjudication != NativeOriginAdjudication.Supported ||
-            grant.Authorization.NativeRuleReference != "rule.creature-origination" ||
+            grant.Authorization.NativeRuleReference !=
+                grant.Identity.Occurrence.Source.Id ||
             grant.SourceCandidateIds is not { Count: 1 })
             return false;
         var candidateId = grant.SourceCandidateIds[0];
