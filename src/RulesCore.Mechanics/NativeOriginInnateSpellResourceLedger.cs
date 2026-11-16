@@ -29,7 +29,8 @@ public sealed record NativeOriginInnateSpellLedgerCommand(
 public sealed record NativeOriginInnateSpellLedgerResult(
     string Status, NativeOriginInnateSpellLedgerState? State,
     string? Reason = null, string? GrantId = null, int? Remaining = null,
-    int? Maximum = null, bool PreviewOnly = true);
+    int? Maximum = null, bool PreviewOnly = true,
+    IReadOnlyList<string>? AppliedCapacityDecisionIds = null);
 
 /// <summary>
 /// Validates and computes one state change against the real native, authorized
@@ -177,7 +178,10 @@ public static class NativeOriginInnateSpellResourceLedger
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult origin,
         NativeCharacterProjection previousCharacter,
         NativeCharacterProjection advancedCharacter,
-        NativeOriginInnateSpellLedgerState state, long expectedRevision)
+        NativeOriginInnateSpellLedgerState state, long expectedRevision,
+        IReadOnlyList<NativeTableRuleDecision>? capacityDecisions = null,
+        NativeTableDecisionScope? trustedScope = null,
+        INativeOriginAuthority? authority = null)
     {
         ArgumentNullException.ThrowIfNull(state);
         var previous = Resolve(catalog, origin, previousCharacter);
@@ -210,6 +214,7 @@ public static class NativeOriginInnateSpellResourceLedger
         if (oldSpells.Count != newSpells.Count ||
             oldSpells.Keys.Any(x => !newSpells.ContainsKey(x)))
             return Fail("spell-ledger-course-changed");
+        var changedCapacities = new SortedSet<string>(StringComparer.Ordinal);
         foreach (var (id, oldSpell) in oldSpells)
         {
             var next = newSpells[id];
@@ -221,21 +226,58 @@ public static class NativeOriginInnateSpellResourceLedger
                 (oldSpell.Availability == "available" &&
                  next.Availability != "available"))
                 return Fail("spell-ledger-course-changed");
-            // When a proficiency-based maximum increases, the proper treatment
-            // of remaining/earned charges is a gameplay policy choice.
-            // Do not silently refill, subtract, or mint the delta.
+            // No global growth, partial-refill or reset policy is approved.
+            // Existing pools with changed maximum require an exact and
+            // independently authorized table-effective resource decision.
             if (oldSpell.Availability == "available" &&
                 oldSpell.FreeUsesPerRecharge != next.FreeUsesPerRecharge)
-                return Fail("spell-ledger-capacity-change-requires-policy");
+                changedCapacities.Add(id);
         }
         if (oldPools.Keys.Any(x => !newPools.ContainsKey(x)))
             return Fail("spell-ledger-course-changed");
 
+        var decisions = capacityDecisions ?? [];
+        if (changedCapacities.Count == 0 && decisions.Count != 0)
+            return Fail("spell-ledger-unexpected-capacity-decision");
+        if (changedCapacities.Count > 0 &&
+            (authority is null || trustedScope is null || decisions.Count == 0))
+            return Fail("spell-ledger-capacity-change-requires-policy");
+
+        var adjusted = new Dictionary<string, int>(StringComparer.Ordinal);
+        var usedDecisionIds = new SortedSet<string>(StringComparer.Ordinal);
+        if (changedCapacities.Count > 0)
+        {
+            if (decisions.Count != changedCapacities.Count ||
+                decisions.Any(d => d is null || !changedCapacities.Contains(d.Target?.Id ?? "") ||
+                    d.Target.Kind != "origin-innate-spell-capacity" ||
+                    !usedDecisionIds.Add(d.Id)) ||
+                decisions.Select(d => d.Target.Id).Distinct(StringComparer.Ordinal).Count() !=
+                    changedCapacities.Count)
+                return Fail("spell-ledger-capacity-decision-target-invalid");
+
+            foreach (var grantId in changedCapacities)
+            {
+                var decision = decisions.Single(d => d.Target.Id == grantId);
+                if (decision.Scope is null ||
+                    decision.Scope != trustedScope ||
+                    !authority!.Authorizes(decision, trustedScope!) ||
+                    !TryCapacityAdjustment(decision.EffectiveOutcome,
+                        state, oldView, newView, grantId,
+                        oldPools.TryGetValue(grantId, out var oldMax) ? oldMax : 0,
+                        newPools.TryGetValue(grantId, out var newMax) ? newMax : 0,
+                        out var newRemaining))
+                    return Fail("spell-ledger-capacity-decision-unverified");
+                adjusted.Add(grantId, newRemaining);
+            }
+        }
+
         var migrated = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var (id, maximum) in newPools)
-            migrated[id] = oldPools.ContainsKey(id)
-                ? state.RemainingFreeCasts[id]
-                : maximum;
+            migrated[id] = adjusted.TryGetValue(id, out var decided)
+                ? decided
+                : oldPools.ContainsKey(id)
+                    ? state.RemainingFreeCasts[id]
+                    : maximum;
 
         return new("resolved", state with
         {
@@ -243,7 +285,53 @@ public static class NativeOriginInnateSpellResourceLedger
             ProjectionFingerprint = Fingerprint(newView),
             Revision = state.Revision + 1,
             RemainingFreeCasts = migrated.ToFrozenDictionary(StringComparer.Ordinal)
-        });
+        }, AppliedCapacityDecisionIds: usedDecisionIds.ToArray());
+    }
+
+    /// <summary>
+    /// Verify an exact table decision outcome against both native projections.
+    /// The table chooses the final remaining count, not a hidden algorithm.
+    /// Its native maximum is still authoritative, and the decision must
+    /// explicitly identify the previously persisted count and revision.
+    /// </summary>
+    private static bool TryCapacityAdjustment(
+        JsonElement outcome, NativeOriginInnateSpellLedgerState state,
+        NativeOriginInnateSpellProgressionProjector.View previous,
+        NativeOriginInnateSpellProgressionProjector.View advanced,
+        string grantId, int oldMaximum, int newMaximum,
+        out int remaining)
+    {
+        remaining = 0;
+        if (outcome.ValueKind != JsonValueKind.Object ||
+            outcome.EnumerateObject().Count() != 10 ||
+            !TextMatches("grantId", grantId) ||
+            !TextMatches("previousProjectionFingerprint", state.ProjectionFingerprint) ||
+            !TextMatches("advancedProjectionFingerprint", Fingerprint(advanced)) ||
+            !NumberMatches("previousCharacterLevel", previous.CharacterLevel!.Value) ||
+            !NumberMatches("advancedCharacterLevel", advanced.CharacterLevel!.Value) ||
+            !NumberMatches("previousMaximum", oldMaximum) ||
+            !NumberMatches("advancedMaximum", newMaximum) ||
+            !NumberMatches("previousRemaining", state.RemainingFreeCasts[grantId]) ||
+            !NumberMatchesLong("previousRevision", state.Revision) ||
+            !outcome.TryGetProperty("remainingAfter", out var after) ||
+            after.ValueKind != JsonValueKind.Number ||
+            !after.TryGetInt32(out remaining) ||
+            remaining < 0 || remaining > newMaximum)
+            return false;
+        return true;
+
+        bool TextMatches(string key, string value) =>
+            outcome.TryGetProperty(key, out var property) &&
+            property.ValueKind == JsonValueKind.String &&
+            property.GetString() == value;
+        bool NumberMatches(string key, int value) =>
+            outcome.TryGetProperty(key, out var property) &&
+            property.ValueKind == JsonValueKind.Number &&
+            property.TryGetInt32(out var number) && number == value;
+        bool NumberMatchesLong(string key, long value) =>
+            outcome.TryGetProperty(key, out var property) &&
+            property.ValueKind == JsonValueKind.Number &&
+            property.TryGetInt64(out var number) && number == value;
     }
 
     /// <summary>
