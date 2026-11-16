@@ -325,6 +325,40 @@ public sealed class NativeOriginTieflingSpellBindingTests
     }
 
     [Fact]
+    public void ScopedMixedSpellsProjectOnlyActuallySelectedSourceGrants()
+    {
+        var result = SelectedMixed("ancestry.tiefling.chthonic", "a");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var atOne = NativeOriginInnateSpellProgressionProjector.Project(
+            Catalog(), result, 1);
+        Assert.Equal("resolved", atOne.Status);
+        Assert.Equal(2, atOne.Spells.Count);
+        Assert.All(atOne.Spells, x =>
+        {
+            Assert.Equal("available", x.Availability);
+            Assert.Equal("wisdom", x.SpellcastingAbility);
+            Assert.True(x.AtWill);
+        });
+        Assert.Contains(atOne.Spells, x => x.SpellId == "thaumaturgy" &&
+            x.SourceId == "species.tiefling");
+        Assert.Contains(atOne.Spells, x => x.SpellId == "fire-bolt" &&
+            x.SourceId == "ancestry.tiefling.infernal");
+        Assert.DoesNotContain(atOne.Spells, x =>
+            x.SpellId is "hellish-rebuke" or "darkness");
+    }
+
+    [Fact]
+    public void UnresolvedOtherDonorBindingDoesNotExposeAnySpellEntitlement()
+    {
+        var result = SelectedMixed("ancestry.tiefling.chthonic", "b");
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, result.Status);
+        var projected = NativeOriginInnateSpellProgressionProjector.Project(
+            Catalog(), result, 5);
+        Assert.Equal("unresolved", projected.Status);
+        Assert.Empty(projected.Spells);
+    }
+
+    [Fact]
     public void VerifiedAncestryChoiceBindsItsOwnParentAndLeafSpellsInMixedConstruction()
     {
         var result = SelectedMixed("ancestry.tiefling.chthonic", "a");
