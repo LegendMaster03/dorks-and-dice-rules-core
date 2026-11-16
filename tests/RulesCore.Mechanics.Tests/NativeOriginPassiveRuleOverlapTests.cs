@@ -176,4 +176,47 @@ public sealed class NativeOriginPassiveRuleOverlapTests
         Assert.Equal("resolved", NativeOriginVisionProjector
             .ProjectApprovedMixed(Catalog(), result).Status);
     }
+
+    [Fact]
+    public void CallerDeclaredNativeDispositionDoesNotAuthorizeSuppression()
+    {
+        var (proposal, elf, tiefling, _) = Prepared();
+        var fabricated = proposal with
+        {
+            Relationships = [new("claimed-rule", NativeOriginRelationshipKind.Equivalent,
+                [elf.Id, tiefling.Id], AuthoredRuleReference: "rule.low-light-vision")],
+            Resolutions = [new("claimed-rule", NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.Supported,
+                    NativeRuleReference: "rule.low-light-vision"))]
+        };
+        var result = Evaluate(fabricated, new TestAuthority());
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Contains(result.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized");
+    }
+
+    [Fact]
+    public void ScopedCoexistenceDoesNotImplyThatTwoEqualPassiveEffectsCanBeProjected()
+    {
+        var (proposal, elf, tiefling, _) = Prepared();
+        var decision = Permission("retain-both", "relationship", "same-vision",
+            new { action = "retain-both" });
+        var selected = proposal with
+        {
+            TableDecisions = proposal.TableDecisions!.Append(decision).ToArray(),
+            Relationships = [new("same-vision",
+                NativeOriginRelationshipKind.Equivalent, [elf.Id, tiefling.Id])],
+            Resolutions = [new("same-vision", NativeOriginResolutionAction.RetainBoth,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: decision.Id))]
+        };
+        var result = Evaluate(selected, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal(2, result.Profile!.Underlying.InherentGrants.Count(x =>
+            x.Identity.MechanicalDefinitionId is
+                "trait.shared.low-light-vision" or "trait.tiefling.low-light-vision"));
+        var view = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Contains("duplicate-low-light-vision", view.UnresolvedReasons);
+    }
 }
