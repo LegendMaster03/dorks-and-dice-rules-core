@@ -185,6 +185,13 @@ public sealed class NativeMechanicsApiTests
                 ["wisdom"] = 10, ["charisma"] = 10
             }, [new("class.demo", 1, "class:demo")]);
 
+        var projected = new NativeCharacterProjector(catalog).Project(character);
+        Assert.True(projected.Status is "resolved" or "partial",
+            "Character: " + JsonSerializer.Serialize(projected.Issues));
+        Assert.True(projected.Issues.All(issue =>
+            issue.Code == "hit-point-input-required"),
+            "Unexpected character projection: " + JsonSerializer.Serialize(projected.Issues));
+
         object Valid() => new
         {
             rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
