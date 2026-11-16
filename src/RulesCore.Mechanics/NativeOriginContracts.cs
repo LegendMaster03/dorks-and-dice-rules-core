@@ -162,9 +162,13 @@ public sealed record NativeOriginResolution(
 /// historical candidate and parameter references explain the previous composition;
 /// they do not become new donor offers, permissions or active resource links.
 /// The descendant's own SourceCandidateIds and ParameterSources remain local.
+/// Profile identity and revision point to the source snapshot for deeper audit;
+/// no unbounded transitive family tree is embedded in each descendant grant.
 /// </summary>
 public sealed record NativeOriginInheritedGrantEvidence(
+    string ContributorId,
     string ContributorProfileId,
+    string ContributorProfileRevision,
     string SourceGrantId,
     IReadOnlyList<string> PriorSourceCandidateIds,
     IReadOnlyDictionary<string, string>? PriorParameterSources = null,
@@ -189,7 +193,7 @@ public sealed record NativeOriginEffectiveGrant(
     // grant that actually owns the one shared pool. Optional for older profiles.
     IReadOnlyDictionary<string, string>? ResourceOwners = null,
     // Historical provenance, never independent authorization or extra charges.
-    NativeOriginInheritedGrantEvidence? InheritedFrom = null);
+    IReadOnlyList<NativeOriginInheritedGrantEvidence>? InheritedFrom = null);
 
 /// <summary>
 /// A separately earned grant remains part of the character's entitlements even

@@ -75,7 +75,8 @@ internal static class NativeOriginManifestedContributorVerifier
             verified.Add(contributor.Id);
             contributors.Add(contributor with
             {
-                ManifestedProfile = record.Profile.Underlying
+                ManifestedProfile = record.Profile.Underlying,
+                Source = source with { Version = record.Revision }
             });
         }
         return (proposal with { Contributors = contributors }, verified, issues);

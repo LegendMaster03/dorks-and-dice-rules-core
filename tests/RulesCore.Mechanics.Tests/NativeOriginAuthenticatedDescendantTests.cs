@@ -149,8 +149,11 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             child.Profile!.Underlying.InherentGrants.Count);
         Assert.All(child.Profile.Underlying.InherentGrants, grant =>
         {
-            Assert.Equal(parent.Id, grant.InheritedFrom!.ContributorProfileId);
-            Assert.StartsWith("grant:", grant.InheritedFrom.SourceGrantId);
+            var source = Assert.Single(grant.InheritedFrom!);
+            Assert.Equal(parent.Id, source.ContributorProfileId);
+            Assert.Equal("test-revision-1", source.ContributorProfileRevision);
+            Assert.Equal("inherited-parent", source.ContributorId);
+            Assert.StartsWith("grant:", source.SourceGrantId);
             Assert.Single(grant.SourceCandidateIds);
             Assert.StartsWith("nested:inherited-parent:",
                 grant.SourceCandidateIds.Single());
@@ -159,7 +162,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         var reloaded = JsonSerializer.Deserialize<NativeOriginProfile>(
             JsonSerializer.Serialize(child.Profile));
         Assert.All(reloaded!.Underlying.InherentGrants, x =>
-            Assert.Equal(parent.Id, x.InheritedFrom!.ContributorProfileId));
+            Assert.Equal(parent.Id, Assert.Single(x.InheritedFrom!).ContributorProfileId));
     }
 
     [Fact]
@@ -264,13 +267,107 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         Assert.Single(breath.SourceCandidateIds);
         Assert.All(breath.ParameterSources!, x =>
             Assert.Equal(breath.SourceCandidateIds.Single(), x.Value));
-        Assert.Equal(red.Id, breath.InheritedFrom!.PriorParameterSources!["damageType"]);
-        Assert.Equal(bronze.Id, breath.InheritedFrom.PriorParameterSources["area"]);
+        var lineage = Assert.Single(breath.InheritedFrom!);
+        Assert.Equal(red.Id, lineage.PriorParameterSources!["damageType"]);
+        Assert.Equal(bronze.Id, lineage.PriorParameterSources["area"]);
         Assert.Equal("proficiency-bonus",
             breath.EffectiveValue!.Value.GetProperty("uses")
                 .GetProperty("value").GetString());
         Assert.DoesNotContain(child.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
                 "trait.dragonborn.draconic-resistance");
+    }
+
+
+    [Fact]
+    public void TwoVerifiedMixedParentsConsolidateOneTraitWithoutLosingEitherLineage()
+    {
+        var parent = MixedParent().Profile!;
+        var first = new NativeOriginContributor("parent-a",
+            new(NativeOriginInputKind.BiologicalParent),
+            new(NativeOriginSourceKind.ManifestedProfile, parent.Id));
+        var second = new NativeOriginContributor("parent-b",
+            new(NativeOriginInputKind.BiologicalParent),
+            new(NativeOriginSourceKind.ManifestedProfile, parent.Id));
+        var proposal = Proposal("two-mixed-parents", [first, second]);
+        var fixture = new LocalSelfOverride(parent);
+        var offers = Evaluate(proposal, fixture).EvaluatedProposal.Candidates;
+        var foundation = offers.Where(x => x.ContributorId == "parent-a" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var visions = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision").ToArray();
+        Assert.Equal(2, visions.Length);
+        var result = Evaluate(proposal with
+        {
+            Manifestations = foundation.Concat(visions).Select(Select).ToArray()
+        }, fixture);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var vision = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        Assert.Equal(2, vision.SourceCandidateIds.Count);
+        Assert.Equal(2, vision.InheritedFrom!.Count);
+        Assert.Equal(new[] { "parent-a", "parent-b" },
+            vision.InheritedFrom.Select(x => x.ContributorId).ToArray());
+        Assert.All(vision.InheritedFrom, x =>
+        {
+            Assert.Equal(parent.Id, x.ContributorProfileId);
+            Assert.Equal("test-revision-1", x.ContributorProfileRevision);
+        });
+        Assert.Empty(result.Issues);
+    }
+
+    [Fact]
+    public void ASecondGenerationUsesOnlyItsVerifiedParentsCompletedCharacteristics()
+    {
+        var first = MixedParent().Profile!;
+        var firstFixture = new LocalSelfOverride(first);
+        var childProposal = Child(first);
+        var firstOffers = Evaluate(childProposal, firstFixture).EvaluatedProposal.Candidates;
+        var child = Evaluate(childProposal with
+        {
+            Manifestations = firstOffers.Select(Select).ToArray()
+        }, firstFixture);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, child.Status);
+        var grandchildProposal = Child(child.Profile!, revision: "test-revision-2");
+        var grandchildFixture = new LocalSelfOverride(child.Profile!, "test-revision-2");
+        var secondOffers = Evaluate(grandchildProposal,
+            grandchildFixture).EvaluatedProposal.Candidates;
+        Assert.Equal(first.Underlying.InherentGrants.Count, secondOffers.Count);
+        var grandchild = Evaluate(grandchildProposal with
+        {
+            Manifestations = secondOffers.Select(Select).ToArray()
+        }, grandchildFixture);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, grandchild.Status);
+        Assert.All(grandchild.Profile!.Underlying.InherentGrants, x =>
+        {
+            var source = Assert.Single(x.InheritedFrom!);
+            Assert.Equal(child.Profile.Id, source.ContributorProfileId);
+            Assert.Equal("test-revision-2", source.ContributorProfileRevision);
+            Assert.StartsWith("nested:", Assert.Single(source.PriorSourceCandidateIds));
+        });
+        Assert.Empty(grandchild.Issues);
+    }
+
+    [Fact]
+    public void NonbiologicalCurrentUnderlyingTypeDoesNotGrantBiologicalTransmission()
+    {
+        var parent = MixedParent().Profile!;
+        var altered = parent.Underlying with
+        {
+            InherentGrants = parent.Underlying.InherentGrants.Select(g =>
+                g.Identity.IntrinsicSlotId == "creatureType"
+                    ? g with
+                    {
+                        EffectiveValue =
+                            JsonSerializer.SerializeToElement("construct")
+                    }
+                    : g).ToArray()
+        };
+        var configuration = parent with { Underlying = altered, Current = altered };
+        var proposal = Child(parent);
+        var result = Evaluate(proposal, new LocalSelfOverride(configuration));
+        Assert.DoesNotContain(result.EvaluatedProposal.Candidates,
+            x => x.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible);
     }
 }

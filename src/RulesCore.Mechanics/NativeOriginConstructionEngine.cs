@@ -60,6 +60,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             {
                 CandidateId = "nested:" + x.Id + ":" + grant.Id,
                 ProfileId = x.Source.Id,
+                ProfileRevision = x.Source.Version!,
+                ContributorId = x.Id,
                 Grant = grant
             }))
             .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
@@ -488,9 +490,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     ResolvedChoices = prior.Grant.ResolvedChoices,
                     ParameterSources = prior.Grant.Parameters?.Keys.ToDictionary(
                         key => key, _ => candidate.Id, StringComparer.Ordinal),
-                    InheritedFrom = new(prior.ProfileId, prior.Grant.Id,
-                        prior.Grant.SourceCandidateIds,
-                        prior.Grant.ParameterSources, prior.Grant.ResourceOwners)
+                    InheritedFrom =
+                    [
+                        new(prior.ContributorId, prior.ProfileId,
+                            prior.ProfileRevision, prior.Grant.Id,
+                            prior.Grant.SourceCandidateIds,
+                            prior.Grant.ParameterSources, prior.Grant.ResourceOwners)
+                    ]
                 };
             }
             accepted.Add(new(candidate, manifest, grant));

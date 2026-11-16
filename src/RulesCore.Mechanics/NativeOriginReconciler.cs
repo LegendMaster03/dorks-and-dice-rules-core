@@ -251,7 +251,19 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                     evidence.UnionWith(additional);
                 var effective = replacements.TryGetValue(x.Candidate.Id, out var replaced) ?
                     replaced : x.Grant;
-                return effective with { SourceCandidateIds = evidence.ToArray() };
+                // A consolidated grant can have multiple verified mixed parents.
+                // The losing grants do not create mechanical duplicates, but
+                // every winning contributor's immediate lineage is retained.
+                var lineage = evidence.SelectMany(id =>
+                        active[id].Grant.InheritedFrom ?? [])
+                    .OrderBy(x => x.ContributorId, StringComparer.Ordinal)
+                    .ThenBy(x => x.ContributorProfileId, StringComparer.Ordinal)
+                    .ThenBy(x => x.SourceGrantId, StringComparer.Ordinal).ToArray();
+                return effective with
+                {
+                    SourceCandidateIds = evidence.ToArray(),
+                    InheritedFrom = lineage.Length == 0 ? null : lineage
+                };
             }).ToArray();
         return (grants, issues, usedDm);
 
