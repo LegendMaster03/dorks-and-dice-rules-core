@@ -144,6 +144,9 @@ public sealed class NativeOriginHitPointProgressionTests
 
         var saved = JsonSerializer.Deserialize<NativeOriginProfile>(
             JsonSerializer.Serialize(direct.Profile))!;
+        Assert.NotSame(saved.Current, saved.Underlying);
+        Assert.Equal("resolved", NativeOriginIntrinsicProjector
+            .Project(direct with { Profile = saved }).Status);
         var afterLoad = NativeOriginHitPointProgressionProjector.Combine(catalog,
             direct with { Profile = saved }, character);
         Assert.Equal(result.CombinedMaximumHitPoints,
