@@ -112,6 +112,26 @@ The same reconciliation stage now detects **selected, distinct canonical origin 
 
 **Boundary:** This is a typed-overlap *recognition and reconciliation gate*, not a general defense merger, revised damage formula, new inherited resistance eligibility, forced adoption of drawbacks, or a full character-allocation safeguard. Other resource/defense interactions and full consumer integration remain outstanding.
 
+## Drow source-linked Darkvision and Sunlight Sensitivity — 2026-11-15
+
+The first-party Drow Ancestry source now declares a **source-local, one-way linked-selection requirement** under `originLinkedSelections`. The exact `darkvisionFeet` intrinsic (120 feet) requires the *same contributor's* `trait.elf.drow.sunlight-sensitivity` when that Drow Darkvision characteristic is deliberately manifested. The linked trait retains its existing `condition.dazzled` trigger on **direct unprotected sunlight** and its written end conditions (ending exposure or effective protection). The mere presence of ordinary light or magical light is not equivalent to the specified trigger. Sunlight Sensitivity may be selected independently without implicitly granting Darkvision.
+
+This is a **provisional native gameplay default on the draft implementation branch**, not a universal rule that all Darkvision includes Sunlight Sensitivity, a general inherited-gene pairing law, or a conclusion that alternative narrative combinations are prohibited. A **verified scoped DM/table decision** can explicitly waive this Drow link while leaving both native characteristic definitions unchanged. The player continues to select and authorize each individual characteristic.
+
+### Generic enforcement and exact source attribution
+
+- `NativeOriginSourceDeconstructor` now offers authored `darkvisionFeet` as a typed intrinsic. This does **not** add it to the first-party biological transmission allowlist; mixed Drow Darkvision and Sunlight Sensitivity remain table-authorized until their eligibility is reviewed.
+- `NativeOriginNativeLinkedSelectionEvaluator` expands native source metadata into an actual `Requires` constraint, pointing to one specific Darkvision offer and its corresponding same-contributor Sunlight Sensitivity offer. It does not construct a free drawback, choose traits automatically or accept another contributor's superficially identical source.
+- The universal `NativeOriginConstraintEvaluator` executes the authoring after actual characteristic selection, before reconciliation. If a required selection is missing, the Darkvision grant is suppressed and construction remains incomplete. A verified `constraint` table decision with `allow: true` can override the link for the selected creation.
+- Both native-link participant selectors are derived from the exact catalog. Proposals that try to replace the native link's source or target fail closed. Saving and replaying a legitimate native link is idempotent and does not require untrusted caller assertions.
+- `NativeOriginDarkvisionProjector` provides a **read-only verified native range** for a completed direct Drow Origin or an authorized mixed Origin. It checks exact native source range and contributor/grant evidence; it does not infer range increases, magical-darkness penetration, Low-Light Vision substitution, or general sensory stacking.
+
+### Acceptance coverage and remaining scope
+
+Real-catalog tests cover default Drow linkage, missing linked selection, same/different contributors, authorized waiver and unauthorized replay, fabricated constraints, serialization/reconstruction, full conventional Direct Drow construction, and verified direct/mixed Darkvision projections.
+
+The linkage establishes *which mechanics the initial biological Origin actually owns*. Runtime exposure detection, protective eyewear rules, Dazzled condition application, combined passive vision, all other ancestry-specific trait couplings, previously mixed descendants and a provisional allocation budget remain separate work. Do not assume that exposing the range in the projector makes all Darkvision or sunlight mechanics operational in Character Sheet/combat.
+
 ## Required next gates before general first-party mixed construction
 
 1. **Native coverage:** Continue auditing and authoring opt-in only where inherent mechanics, acquisition scope, full future progression and associated restrictions are known. Do not mark learned features biological merely because they appear on a source Species. Unmarked traits remain eligible for a verified DM decision but not default inheritance.
