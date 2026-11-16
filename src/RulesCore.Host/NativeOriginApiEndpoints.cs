@@ -118,6 +118,13 @@ public static class NativeOriginApiEndpoints
                 // A separate mixed interpreter verifies the exact approved
                 // native vision occurrence; direct-only rules remain closed.
                 vision = NativeOriginVisionProjector.ProjectApprovedMixed(catalog, result),
+                // Additive, read-only interpretations of completely selected
+                // native characteristics. They do not grant eligibility or
+                // authorize a stored Character Sheet, resource use or rest.
+                physiology = NativeOriginPhysiologyProjector.ProjectApprovedMixed(catalog, result),
+                movementModes = NativeOriginMovementModeProjector.ProjectApprovedMixed(catalog, result),
+                skillProficiencies = NativeOriginSkillProficiencyProjector.ProjectApprovedMixed(catalog, result),
+                restSurvival = NativeOriginRestSurvivalProjector.ProjectApprovedMixed(catalog, result),
                 result
             });
         });
@@ -332,6 +339,10 @@ public static class NativeOriginApiEndpoints
                 // As with intrinsics, this remains preview-only until the
                 // Character Sheet independently verifies committed state.
                 vision = NativeOriginVisionProjector.Project(catalog, result),
+                physiology = NativeOriginPhysiologyProjector.Project(catalog, result),
+                movementModes = NativeOriginMovementModeProjector.Project(catalog, result),
+                skillProficiencies = NativeOriginSkillProficiencyProjector.Project(catalog, result),
+                restSurvival = NativeOriginRestSurvivalProjector.Project(catalog, result),
                 result
             });
         });
