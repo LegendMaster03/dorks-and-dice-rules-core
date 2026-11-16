@@ -15,7 +15,8 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
 {
     private const string RuleId = "rule.creature-origination";
 
-    public NativeOriginProposal Evaluate(NativeOriginProposal proposal)
+    public NativeOriginProposal Evaluate(NativeOriginProposal proposal,
+        IReadOnlySet<string>? verifiedManifestedContributors = null)
     {
         if (proposal.Intent != NativeOriginIntent.Mixed ||
             proposal.Method.RuleId != RuleId ||
@@ -43,18 +44,26 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
 
                 var contributor = proposal.Contributors?.FirstOrDefault(x =>
                     x.Id == candidate.ContributorId);
+                var nativeDonor = contributor?.Source.Kind == NativeOriginSourceKind.Native &&
+                    catalog.TryGetById(contributor.Source.Id, out var parent) &&
+                    parent is not null && parent.Category is ("species" or "ancestry") &&
+                    SupportsBiologicalOrigination(parent) &&
+                    (!parent.Definition.TryGetProperty("selectable", out var selectable) ||
+                     selectable.ValueKind != JsonValueKind.False) &&
+                    (!parent.Definition.TryGetProperty("acquisitionMethods", out var acquisition) ||
+                     acquisition.ValueKind != JsonValueKind.Array ||
+                     acquisition.EnumerateArray().Any(x =>
+                         x.ValueKind == JsonValueKind.String &&
+                         x.GetString() == "biological"));
+                // A verified mixed contributor offers only its current underlying
+                // manifested grants, not its unmanifested ancestral possibilities.
+                // Biological compatibility comes from its effective inherent type.
+                var authenticatedDescendant = contributor?.Source.Kind ==
+                        NativeOriginSourceKind.ManifestedProfile &&
+                    verifiedManifestedContributors?.Contains(contributor.Id) == true &&
+                    SupportsManifestedBiologicalOrigination(contributor.ManifestedProfile);
                 if (contributor?.Role.Kind != NativeOriginInputKind.BiologicalParent ||
-                    contributor.Source.Kind != NativeOriginSourceKind.Native ||
-                    !catalog.TryGetById(contributor.Source.Id, out var parent) ||
-                    parent is null || parent.Category is not ("species" or "ancestry") ||
-                    !SupportsBiologicalOrigination(parent) ||
-                    parent.Definition.TryGetProperty("selectable", out var selectable) &&
-                    selectable.ValueKind == JsonValueKind.False ||
-                    parent.Definition.TryGetProperty("acquisitionMethods", out var acquisition) &&
-                    acquisition.ValueKind == JsonValueKind.Array &&
-                    !acquisition.EnumerateArray().Any(x =>
-                        x.ValueKind == JsonValueKind.String &&
-                        x.GetString() == "biological") ||
+                    !(nativeDonor || authenticatedDescendant) ||
                     candidate.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
                     !catalog.TryGetById(candidate.Identity.Occurrence.Source.Id, out var source) ||
                     source is null || source.Category is not ("species" or "ancestry") ||
@@ -129,6 +138,26 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
             entity = next;
         }
         return false;
+    }
+
+    /// <summary>
+    /// A mixed individual's current underlying type, not a remembered ancestor's
+    /// Species label or an active transformation, supplies method compatibility.
+    /// Unknown or conflicting type values do not grant first-party inheritance.
+    /// </summary>
+    private bool SupportsManifestedBiologicalOrigination(
+        NativeOriginCurrentConfiguration? configuration)
+    {
+        if (configuration?.InherentGrants is null) return false;
+        var types = configuration.InherentGrants.Where(grant =>
+            grant.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
+            grant.Identity.IntrinsicSlotId == "creatureType" &&
+            grant.EffectiveValue is { ValueKind: JsonValueKind.String }).ToArray();
+        return types.Length == 1 &&
+            new NativeOriginMethodAvailabilityEvaluator(catalog)
+                .Resolve(types[0].EffectiveValue!.Value.GetString()!,
+                    new(RuleId, "biological")).Status ==
+                NativeOriginMethodDefaultStatus.Available;
     }
 
     private bool IsAuthoredBiologicalTrait(NativeOriginCandidate candidate)
