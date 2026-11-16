@@ -24,6 +24,9 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         var ignored = new HashSet<string>(StringComparer.Ordinal);
         var merged = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         var replacements = new Dictionary<string, NativeOriginEffectiveGrant>(StringComparer.Ordinal);
+        // Explicit, authorized coexistence is tracked per selected pair. It is
+        // never inferred from a shared sense name or from donor ordering.
+        var authorizedCoexistence = new HashSet<(string, string)>();
         var usedDm = false;
 
         foreach (var relation in (proposal.Relationships ?? []).OrderBy(x => x.Id, StringComparer.Ordinal))
@@ -81,6 +84,9 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                     }
                     break;
                 case NativeOriginResolutionAction.RetainBoth:
+                    for (var i = 0; i < involved.Length; i++)
+                    for (var j = i + 1; j < involved.Length; j++)
+                        authorizedCoexistence.Add(OrderedPair(involved[i], involved[j]));
                     break;
                 case NativeOriginResolutionAction.Replace:
                     // Until the native catalog defines an executable replacement
@@ -148,6 +154,40 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             Issue("shared-definition-reconciliation-required", group.Key,
                 NativeOriginIssueSeverity.Unresolved,
                 "Shared canonical mechanics from distinct occurrences require an authored disposition.");
+        }
+
+        // Two distinct complete traits can offer the same typed sense with
+        // different activation, range, terrain or resource rules. Do not grant
+        // both simply because their canonical definition IDs differ, and do
+        // not construct an unapproved hybrid from their shared display name.
+        // A scoped resolution may retain either one or explicitly retain both.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .Select(x => (Entry: x, Sense: NativeSense(x.Candidate)))
+            .Where(x => x.Sense is not null)
+            .GroupBy(x => x.Sense!, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            if (entries.Length < 2) continue;
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate, b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId ==
+                    b.Identity.MechanicalDefinitionId) continue;
+                if (authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-sense-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct canonical senses overlap. Explicitly retain one " +
+                "complete mechanic or authorize the coexistence of their different modes.");
         }
 
         // Different occurrences offering the same intrinsic slot have no general
@@ -310,6 +350,28 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         return allowed.Count != 0 && sources.All(x =>
             x.Value == winner || allowed.Contains(x.Key));
     }
+
+    /// <summary>
+    /// A native typed sense is overlap evidence, not a stacking or superiority
+    /// policy. These checks read canonical trait definitions, not proposal
+    /// annotations, localized labels or untrusted candidate names.
+    /// </summary>
+    private string? NativeSense(NativeOriginCandidate candidate)
+    {
+        if (candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var definition) ||
+            definition is null || definition.Category != "origin-trait" ||
+            !definition.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object ||
+            !trait.TryGetProperty("sense", out var sense) ||
+            sense.ValueKind != JsonValueKind.String)
+            return null;
+        return sense.GetString();
+    }
+
+    private static (string, string) OrderedPair(string a, string b) =>
+        string.CompareOrdinal(a, b) <= 0 ? (a, b) : (b, a);
 
     private bool NativeRelationshipAuthorizes(string id, NativeOriginResolutionAction action,
         string? ruleId)
