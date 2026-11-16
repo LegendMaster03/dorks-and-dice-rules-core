@@ -191,6 +191,42 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 "complete mechanic or authorize the coexistence of their different modes.");
         }
 
+        // Permanent resistance expressed by distinct complete traits is
+        // similarly source-specific. Compare the *typed damage key*, not the
+        // word "resistance"; do not infer percentage stacking or silently
+        // separate a Dwarf's linked poison-saving-throw benefit.
+        // Event-scoped/activated defense is deliberately not a permanent
+        // resistance contender.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .SelectMany(x => NativeResistanceKeys(x).Select(damageType =>
+                (Entry: x, DamageType: damageType)))
+            .GroupBy(x => x.DamageType, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            if (entries.Length < 2) continue;
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId ==
+                    b.Identity.MechanicalDefinitionId) continue;
+                if (authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-damage-resistance-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct inherent resistances overlap for this damage type. " +
+                "Retain a complete source mechanic or explicitly authorize coexistence.");
+        }
+
         // Different occurrences offering the same intrinsic slot have no general
         // first-party winner, even where values happen to coincide.
         foreach (var group in active.Values.Where(x => !ignored.Contains(x.Candidate.Id) &&
@@ -369,6 +405,68 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             sense.ValueKind != JsonValueKind.String)
             return null;
         return sense.GetString();
+    }
+
+    /// <summary>
+    /// Identify durable type-specific resistance by its executable canonical
+    /// shape. Keep event-scoped defenses out of this overlap classification:
+    /// Cloudy Escape's reaction resistance is not an inherited permanent pool.
+    /// Direct "poison": 50 legacy maps and authored percent/damageType records
+    /// are both recognized. Source-bound Dragonborn type is read only from an
+    /// already authorized, actually manifested parameter.
+    /// </summary>
+    private IReadOnlyList<string> NativeResistanceKeys(NativeOriginSelectedGrant selected)
+    {
+        if (selected.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            selected.Candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var entity) ||
+            entity is null || entity.Category != "origin-trait" ||
+            !entity.Definition.TryGetProperty("trait", out var authored) ||
+            authored.ValueKind != JsonValueKind.Object ||
+            authored.TryGetProperty("activation", out _) ||
+            authored.TryGetProperty("duration", out _) ||
+            !authored.TryGetProperty("damageResistance", out var resistance) ||
+            resistance.ValueKind != JsonValueKind.Object ||
+            resistance.TryGetProperty("scope", out _) ||
+            resistance.TryGetProperty("duration", out _) ||
+            selected.Grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } effective ||
+            !effective.TryGetProperty("damageResistance", out var effectiveResistance) ||
+            !JsonElement.DeepEquals(resistance, effectiveResistance))
+            return [];
+
+        if (resistance.TryGetProperty("percent", out var percent))
+        {
+            if (percent.ValueKind != JsonValueKind.Number ||
+                !percent.TryGetInt32(out var amount) || amount is <= 0 or > 100)
+                return [];
+            if (resistance.TryGetProperty("damageType", out var damageType) &&
+                damageType.ValueKind == JsonValueKind.String &&
+                !string.IsNullOrWhiteSpace(damageType.GetString()))
+                return [damageType.GetString()!];
+            if (resistance.TryGetProperty("damageTypeFrom", out var sourceField) &&
+                sourceField.ValueKind == JsonValueKind.String &&
+                selected.Grant.Parameters?.TryGetValue("damageType", out var bound) == true &&
+                bound.ValueKind == JsonValueKind.String &&
+                !string.IsNullOrWhiteSpace(bound.GetString()) &&
+                authored.TryGetProperty("originBindings", out var bindings) &&
+                bindings.ValueKind == JsonValueKind.Object &&
+                bindings.TryGetProperty("damageType", out var binding) &&
+                binding.ValueKind == JsonValueKind.Object &&
+                JsonString(binding, "lookup") == "leaf" &&
+                JsonString(binding, "sourceField") == "damageType")
+                return [bound.GetString()!];
+            return [];
+        }
+
+        // This older native record shape is a typed damage map, not an
+        // percentage object. Ignore partially specified or mixed value maps.
+        var entries = resistance.EnumerateObject().ToArray();
+        if (entries.Length == 0 || entries.Any(p =>
+            string.IsNullOrWhiteSpace(p.Name) ||
+            p.Value.ValueKind != JsonValueKind.Number ||
+            !p.Value.TryGetInt32(out var amount) || amount is <= 0 or > 100))
+            return [];
+        return entries.Select(p => p.Name).ToArray();
     }
 
     private static (string, string) OrderedPair(string a, string b) =>
