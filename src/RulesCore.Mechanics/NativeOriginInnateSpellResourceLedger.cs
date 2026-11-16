@@ -86,27 +86,10 @@ public static class NativeOriginInnateSpellResourceLedger
         if (allowed is null)
             return Fail("spell-free-use-pools-invalid");
 
-        if (state.RulesetId != catalog.RulesetId ||
-            state.CatalogFingerprint != catalog.Fingerprint ||
-            state.OriginProfileId != origin.Profile!.Id ||
-            state.ProposalId != origin.EvaluatedProposal.Id ||
-            state.CharacterLevel != projection.CharacterLevel ||
-            state.ProjectionFingerprint != Fingerprint(projection))
-            return Fail("spell-ledger-snapshot-mismatch");
-
-        if (state.Revision < 0 || state.Revision == long.MaxValue ||
-            command.ExpectedRevision != state.Revision)
-            return Fail("spell-ledger-revision-mismatch");
-
-        // A caller-provided state is never evidence of extra entitlement.
-        // Unknown, missing, negative or over-capacity entries fail as a whole.
-        if (state.RemainingFreeCasts is null ||
-            state.RemainingFreeCasts.Count != allowed.Count ||
-            state.RemainingFreeCasts.Any(x =>
-                !allowed.TryGetValue(x.Key, out var max) ||
-                x.Value < 0 || x.Value > max) ||
-            allowed.Keys.Any(x => !state.RemainingFreeCasts.ContainsKey(x)))
-            return Fail("spell-ledger-state-invalid");
+        var validation = ValidateSnapshot(catalog, origin, projection,
+            state, command.ExpectedRevision, allowed);
+        if (validation is not null)
+            return Fail(validation);
 
         if (command.Kind is NativeOriginInnateSpellLedgerActionKind.ShortRest or
             NativeOriginInnateSpellLedgerActionKind.LongRest)
@@ -181,6 +164,121 @@ public static class NativeOriginInnateSpellResourceLedger
             default:
                 return Fail("spell-ledger-action-unsupported");
         }
+    }
+
+    /// <summary>
+    /// Calculate a character-advancement migration for one authenticated Origin
+    /// baseline. Previously unlocked pools retain their exact remaining count;
+    /// newly unlocked spell grants receive their authored maximum exactly once.
+    /// No inferred Long Rest accompanies level advancement. The host must
+    /// atomically commit the candidate against its stored expected revision.
+    /// </summary>
+    public static NativeOriginInnateSpellLedgerResult Advance(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult origin,
+        NativeCharacterProjection previousCharacter,
+        NativeCharacterProjection advancedCharacter,
+        NativeOriginInnateSpellLedgerState state, long expectedRevision)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        var previous = Resolve(catalog, origin, previousCharacter);
+        if (previous.Reason is not null)
+            return Fail(previous.Reason);
+        var advanced = Resolve(catalog, origin, advancedCharacter);
+        if (advanced.Reason is not null)
+            return Fail(advanced.Reason);
+
+        var oldView = previous.Projection!;
+        var newView = advanced.Projection!;
+        var oldPools = Pools(oldView);
+        var newPools = Pools(newView);
+        if (oldPools is null || newPools is null)
+            return Fail("spell-free-use-pools-invalid");
+        var oldStateIssue = ValidateSnapshot(catalog, origin, oldView, state,
+            expectedRevision, oldPools);
+        if (oldStateIssue is not null)
+            return Fail(oldStateIssue);
+        if (newView.CharacterLevel <= oldView.CharacterLevel)
+            return Fail("spell-ledger-level-not-advanced");
+
+        // The same authorized Origin course must survive advancement.
+        // Replacing a Species/Ancestry, modifying a grant, or changing source
+        // ownership requires a separate, trusted reconciliation/migration.
+        var oldSpells = oldView.Spells.ToDictionary(x => x.GrantId,
+            StringComparer.Ordinal);
+        var newSpells = newView.Spells.ToDictionary(x => x.GrantId,
+            StringComparer.Ordinal);
+        if (oldSpells.Count != newSpells.Count ||
+            oldSpells.Keys.Any(x => !newSpells.ContainsKey(x)))
+            return Fail("spell-ledger-course-changed");
+        foreach (var (id, oldSpell) in oldSpells)
+        {
+            var next = newSpells[id];
+            if (oldSpell with
+                {
+                    Availability = next.Availability,
+                    FreeUsesPerRecharge = next.FreeUsesPerRecharge
+                } != next ||
+                (oldSpell.Availability == "available" &&
+                 next.Availability != "available"))
+                return Fail("spell-ledger-course-changed");
+            // When a proficiency-based maximum increases, the proper treatment
+            // of remaining/earned charges is a gameplay policy choice.
+            // Do not silently refill, subtract, or mint the delta.
+            if (oldSpell.Availability == "available" &&
+                oldSpell.FreeUsesPerRecharge != next.FreeUsesPerRecharge)
+                return Fail("spell-ledger-capacity-change-requires-policy");
+        }
+        if (oldPools.Keys.Any(x => !newPools.ContainsKey(x)))
+            return Fail("spell-ledger-course-changed");
+
+        var migrated = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var (id, maximum) in newPools)
+            migrated[id] = oldPools.ContainsKey(id)
+                ? state.RemainingFreeCasts[id]
+                : maximum;
+
+        return new("resolved", state with
+        {
+            CharacterLevel = newView.CharacterLevel!.Value,
+            ProjectionFingerprint = Fingerprint(newView),
+            Revision = state.Revision + 1,
+            RemainingFreeCasts = migrated.ToFrozenDictionary(StringComparer.Ordinal)
+        });
+    }
+
+    /// <summary>
+    /// Shared exact-state and revision validation for actions and advancement.
+    /// A computed fingerprint only detects internal consistency. The host must
+    /// retrieve the actual ledger from authenticated storage and enforce CAS.
+    /// </summary>
+    private static string? ValidateSnapshot(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult origin,
+        NativeOriginInnateSpellProgressionProjector.View projection,
+        NativeOriginInnateSpellLedgerState state, long expectedRevision,
+        IReadOnlyDictionary<string, int> allowed)
+    {
+        if (state.RulesetId != catalog.RulesetId ||
+            state.CatalogFingerprint != catalog.Fingerprint ||
+            state.OriginProfileId != origin.Profile!.Id ||
+            state.ProposalId != origin.EvaluatedProposal.Id ||
+            state.CharacterLevel != projection.CharacterLevel ||
+            state.ProjectionFingerprint != Fingerprint(projection))
+            return "spell-ledger-snapshot-mismatch";
+
+        if (state.Revision < 0 || state.Revision == long.MaxValue ||
+            expectedRevision != state.Revision)
+            return "spell-ledger-revision-mismatch";
+
+        // A saved state must have *exactly* the resource IDs currently present
+        // in the authorized native course and only legal per-grant counts.
+        if (state.RemainingFreeCasts is null ||
+            state.RemainingFreeCasts.Count != allowed.Count ||
+            state.RemainingFreeCasts.Any(x =>
+                !allowed.TryGetValue(x.Key, out var max) ||
+                x.Value < 0 || x.Value > max) ||
+            allowed.Keys.Any(x => !state.RemainingFreeCasts.ContainsKey(x)))
+            return "spell-ledger-state-invalid";
+        return null;
     }
 
     private static (NativeOriginInnateSpellProgressionProjector.View? Projection,
