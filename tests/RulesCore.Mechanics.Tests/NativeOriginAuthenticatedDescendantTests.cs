@@ -474,4 +474,104 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         Assert.Equal(20, state.PrimaryMechanics.BaseWalkSpeed);
         Assert.Empty(updated.Issues);
     }
+
+    private sealed class LocalDmOverride : INativeOriginAuthority
+    {
+        public bool Authorizes(NativeTableRuleDecision decision,
+            NativeTableDecisionScope scope) =>
+            scope.Kind == "campaign" && scope.Id == "local-test" &&
+            decision.Authority.ActorId == "dm" &&
+            decision.Authority.AuthorizationEvidenceId == "local-test-proof";
+
+        public bool AuthorizesCatalogChoice(string catalogId, string optionId,
+            string evidenceId) => false;
+    }
+
+    [Fact]
+    public void DescendantRebindsGoliathStrikeToOwnSingleSelectedResourcePool()
+    {
+        var method = new NativeOriginMethodReference("rule.creature-origination",
+            "biological");
+        var direct = new NativeOriginProposal("stone-parent",
+            NativeOriginIntent.Direct, method, [], [], [],
+            SelectedAncestryId: "ancestry.goliath.stone");
+        var engine = new NativeOriginConstructionEngine(Catalog());
+        var discovered = engine.Evaluate(new(direct)).EvaluatedProposal.Candidates;
+        var aptitude = Assert.Single(discovered, x =>
+            x.Identity.MechanicalDefinitionId ==
+                "trait.goliath.giant-ancestry-aptitude");
+        var parent = engine.Evaluate(new(direct with
+        {
+            Manifestations =
+            [
+                new("parent-aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["constitution"])])
+            ]
+        }));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
+        var ownerId = "trait.goliath.stone.stones-endurance";
+        var strikeId = "trait.goliath.stone.stone-strike";
+        var originalOwner = Assert.Single(parent.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == ownerId);
+        var originalStrike = Assert.Single(parent.Profile.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == strikeId);
+        Assert.Equal(originalOwner.Id, originalStrike.ResourceOwners!["uses"]);
+
+        var childProposal = Child(parent.Profile);
+        var fixture = new LocalSelfOverride(parent.Profile);
+        var offers = Evaluate(childProposal, fixture).EvaluatedProposal.Candidates;
+        var foundation = offers.Where(x => x.Identity.IntrinsicSlotId is
+            "creatureType" or "size" or "walkingSpeedFeet").ToArray();
+        var ability = Assert.Single(offers, x =>
+            x.Identity.MechanicalDefinitionId ==
+                "trait.goliath.giant-ancestry-aptitude");
+        var owner = Assert.Single(offers, x =>
+            x.Identity.MechanicalDefinitionId == ownerId);
+        var strike = Assert.Single(offers, x =>
+            x.Identity.MechanicalDefinitionId == strikeId);
+        Assert.All([ability, owner, strike], x =>
+            Assert.Equal(NativeOriginEligibility.Unreviewed,
+                x.SelectionBasis.Eligibility));
+
+        var selected = foundation.Append(ability).Append(owner).Append(strike)
+            .ToArray();
+        var decisions = new[] { ability, owner, strike }.Select(x =>
+            new NativeTableRuleDecision("allow:" + x.Id,
+                new("dm", "local-test-proof"),
+                new("campaign", "local-test"),
+                new("candidate", x.Id),
+                JsonSerializer.SerializeToElement(new { eligibility = "eligible" })))
+            .ToArray();
+        var result = engine.Evaluate(new(childProposal with
+        {
+            Manifestations = selected.Select(Select).ToArray(),
+            TableDecisions = decisions
+        }, TrustedScope: new("campaign", "local-test"),
+            AutoManifestDirectDefaults: false),
+            new LocalDmOverride(), fixture);
+
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var grants = result.Profile!.Underlying.InherentGrants;
+        var childOwner = Assert.Single(grants, x =>
+            x.Identity.MechanicalDefinitionId == ownerId);
+        var childStrike = Assert.Single(grants, x =>
+            x.Identity.MechanicalDefinitionId == strikeId);
+        var childAptitude = Assert.Single(grants, x =>
+            x.Identity.MechanicalDefinitionId ==
+                "trait.goliath.giant-ancestry-aptitude");
+        Assert.Equal("constitution", Assert.Single(childAptitude.ResolvedChoices!)
+            .SelectedOptionIds.Single());
+        Assert.Equal("constitution",
+            childStrike.Parameters!["giantAncestryAbility"].GetString());
+        Assert.Equal(childOwner.Id, childStrike.ResourceOwners!["uses"]);
+        Assert.NotEqual(originalOwner.Id, childStrike.ResourceOwners["uses"]);
+        Assert.Equal(originalOwner.Id,
+            Assert.Single(childStrike.InheritedFrom!).PriorResourceOwners!["uses"]);
+        Assert.Single(childStrike.ResourceOwners);
+        Assert.False(childStrike.EffectiveValue!.Value.TryGetProperty("uses", out _));
+        Assert.Equal("proficiency-bonus",
+            childOwner.EffectiveValue!.Value.GetProperty("uses")
+                .GetProperty("value").GetString());
+        Assert.Empty(result.Issues);
+    }
 }
