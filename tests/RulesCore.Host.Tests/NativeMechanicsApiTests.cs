@@ -289,6 +289,55 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task OriginPreviewRejectsNullKeysAndContributorRoleBeforeNativeEvaluation()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var direct = new NativeOriginProposal("null-nested-inputs",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: "species.fixture");
+
+        // JsonContent actually writes these nulls to the authenticated HTTP
+        // request. Nonnullable C# annotations do not enforce JSON presence.
+        var nullCandidateId = direct with
+        {
+            Manifestations = [new("missing-candidate-id", null!,
+                Choices: [])]
+        };
+        var nullRequirementId = direct with
+        {
+            Manifestations = [new("missing-choice-key",
+                "direct:species.fixture:/traits/0",
+                Choices: [new(null!, ["skill.intimidation"])] )]
+        };
+        var nullContributorRole = new NativeOriginProposal(
+            "missing-parent-role", NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("parent", null!,
+                new(NativeOriginSourceKind.Native, "species.elf"))],
+            [], []);
+
+        foreach (var invalid in new[]
+            { nullCandidateId, nullRequirementId, nullContributorRole })
+        {
+            using var message = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    rulesetId = "first-party-001", proposal = invalid
+                }));
+            using var response = await fixture.Client.SendAsync(message);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var payload = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("invalid_origin_preview_request",
+                payload.GetProperty("error").GetString());
+            Assert.False(payload.TryGetProperty("result", out _));
+            Assert.False(payload.TryGetProperty("intrinsics", out _));
+        }
+    }
+
+    [Fact]
     public async Task OriginPreviewIncludesReadOnlyEffectViewsWithoutCreatingGrants()
     {
         await using var fixture = new Fixture();
