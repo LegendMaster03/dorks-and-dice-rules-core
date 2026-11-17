@@ -29,7 +29,9 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         var authorizedCoexistence = new HashSet<(string, string)>();
         var usedDm = false;
 
-        foreach (var relation in (proposal.Relationships ?? []).OrderBy(x => x.Id, StringComparer.Ordinal))
+        foreach (var relation in (proposal.Relationships ?? [])
+            .Where(relation => relation is not null)
+            .OrderBy(relation => relation.Id, StringComparer.Ordinal))
         {
             if (relation?.CandidateIds is null) continue;
             var involved = relation.CandidateIds.Where(active.ContainsKey)
