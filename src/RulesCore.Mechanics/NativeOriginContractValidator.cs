@@ -151,9 +151,12 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             }
             if (manifest.TableDecisionId is not null)
                 RequireDecision(manifest.TableDecisionId, path, decisions, Add);
-            var requirements = (candidate.RequiredChoices ?? [])
-                .Where(x => x is not null && !Blank(x.Id))
-                .ToDictionary(x => x.Id, StringComparer.Ordinal);
+            // Required-choice IDs were already checked above. Reuse the
+            // duplicate-safe Index helper here rather than ToDictionary:
+            // malformed custom choices must remain Invalid, not raise an
+            // exception before validation can report the duplicate.
+            var requirements = Index(candidate.RequiredChoices ?? [],
+                choice => choice?.Id, path + ".requiredChoices", Add);
             var selected = Index(manifest.Choices ?? [], c => c?.RequirementId,
                 path + ".choices", Add);
             foreach (var (choiceId, choice) in selected)
