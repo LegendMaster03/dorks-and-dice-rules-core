@@ -1320,6 +1320,35 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void CompositeNativeProjectionWithholdsUnverifiedClassUseButKeepsVerifiedSlots()
+    {
+        using var fixture = new NativeProjectionFixture();
+        var state = WithCatalog(Character(speed: 45), fixture);
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+
+        var composed = NativeCharacterManifestationProjector.Project(
+            state, ledger, new Authority(), fixture.Projector);
+
+        Assert.Equal("partial", composed.Status);
+        Assert.Equal("@composite", composed.EffectiveCharacter.EffectiveSheetId);
+        Assert.Equal(new[] { "manifest.hybrid", "manifest.wolf" },
+            composed.EffectiveCharacter.ContributingManifestationInstanceIds);
+        Assert.Equal(45, composed.EffectiveCharacter.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.NotNull(composed.BaseMechanics);
+        Assert.Equal("partial", composed.BaseMechanics.Status);
+        Assert.Equal(17, composed.BaseMechanics.Values["ability.strength.score"].Value);
+        Assert.Equal(16, composed.BaseMechanics.Values["ability.dexterity.score"].Value);
+        Assert.Empty(composed.BaseMechanics.FeatureIds);
+        Assert.Empty(composed.BaseMechanics.Resources);
+        Assert.Contains(composed.Issues,
+            issue => issue.Code == "manifestation-native-features-withheld");
+        Assert.Contains(composed.Issues,
+            issue => issue.Code == "manifestation-composite-partial");
+    }
+
+    [Fact]
     public void NativeProjectionKeepsUpdatedClassAndSourceDerivedValuesWithoutSnapshotRollback()
     {
         using var fixture = new NativeProjectionFixture();
