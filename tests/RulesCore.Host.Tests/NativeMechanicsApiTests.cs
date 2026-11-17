@@ -240,6 +240,34 @@ public sealed class NativeMechanicsApiTests
         Assert.Empty(answer.GetProperty("result")
             .GetProperty("state").GetProperty("remainingFreeCasts").EnumerateObject());
 
+        // The direct bootstrap handler must reject malformed keys before
+        // first-party choice normalization just like the ordinary preview.
+        // Even a valid committed profile cannot justify malformed transport.
+        foreach (var malformed in new[]
+        {
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("bad-candidate", null!, Choices: [])] },
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("bad-choice", "unverified-candidate",
+                    Choices: [new NativeOriginChoiceSelection(null!,
+                        ["skill.intimidation"])])] }
+        })
+        {
+            using var malformedRequest = fixture.Authenticated(
+                HttpMethod.Post, endpoint, JsonContent.Create(new
+                {
+                    rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint,
+                    proposal = malformed, committedProfile = origin.Profile, character
+                }));
+            using var malformedResponse = await fixture.Client.SendAsync(malformedRequest);
+            Assert.Equal(HttpStatusCode.BadRequest, malformedResponse.StatusCode);
+            var rejected = await malformedResponse.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("trusted_direct_origin_required",
+                rejected.GetProperty("error").GetString());
+            Assert.False(rejected.TryGetProperty("result", out _));
+        }
+
         using var stale = await fixture.Client.SendAsync(fixture.Authenticated(
             HttpMethod.Post, endpoint, JsonContent.Create(new
             {
@@ -463,6 +491,74 @@ public sealed class NativeMechanicsApiTests
             body.GetProperty("intrinsics").GetProperty("status").GetString());
         Assert.NotEqual(JsonValueKind.Null,
             body.GetProperty("result").GetProperty("profile").ValueKind);
+    }
+
+    [Fact]
+    public async Task ApprovedMixedHttpRejectsMalformedNestedInputsBeforeNativeEvaluation()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>()
+            .Snapshot!;
+        const string actor = "d66a7a7b-bc0f-4677-829d-0ccf40470d2f";
+        const string campaign = "99d41ce8-36fc-43df-b8cd-bb1829b20982";
+        const string approval = "approved:malformed-origin-denied";
+        var proposal = new NativeOriginProposal("malformed-scoped-mixed",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [
+                new("elf", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.elf")),
+                new("orc", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.orc"))
+            ], [], [],
+            TableDecisions: [
+                new NativeTableRuleDecision("dm-approve", new(actor, approval),
+                    new("campaign", campaign), new("source", "species.orc"),
+                    JsonSerializer.SerializeToElement(new { eligibility = "eligible" }))
+            ]);
+
+        var malformed = new NativeOriginProposal[]
+        {
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("null-candidate", null!, Choices: [])] },
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("null-requirement", "offered",
+                    Choices: [new NativeOriginChoiceSelection(null!,
+                        ["skill.intimidation"])])] },
+            proposal with { Contributors = [
+                proposal.Contributors[0] with { Role = null! },
+                proposal.Contributors[1]
+            ] },
+            proposal with { Contributors = [
+                proposal.Contributors[0],
+                proposal.Contributors[1] with {
+                    Source = new(NativeOriginSourceKind.Native, null!)
+                }
+            ] }
+        };
+        foreach (var invalid in malformed)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post,
+                "/api/mechanics/v1/origins/evaluate-approved-mixed",
+                JsonContent.Create(new
+                {
+                    rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint,
+                    characterId = "44eb66e6-3b5c-44e2-aa71-4986d4b346c0",
+                    campaignId = campaign,
+                    approvalEvidenceId = approval,
+                    proposal = invalid
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("invalid_approved_mixed_proposal",
+                body.GetProperty("error").GetString());
+            Assert.False(body.TryGetProperty("result", out _));
+            Assert.False(body.TryGetProperty("restSurvival", out _));
+        }
     }
 
     [Fact]
