@@ -63,3 +63,28 @@ The current-pair workflow remains pinned to the **code SHA** `1a753073e14e04d299
 **Remaining blocked:** No **real Site-issued ticket** has passed through a live Site + Sheet + Core integrated staging path for this corrected pair; no Site/Sheet browser creation, activation, reload and revoked/archived test has run; and WorkChat has **not independently retested these revised code heads**. The earlier independent `NOT READY` verdict remains the most recent independent verdict. The above passing CI results qualify component and paired-source behavior, **not** owner hands-on acceptance.
 
 Keep the two feature PRs **draft and unmerged**; do not deploy to production or relax any Site authorization. Feats (including Human Versatile), general production mixed-parent permissions and other explicitly deferred mechanics are not part of this remediation.
+
+
+## Follow-up: independent November 17 retest and F05/F06 corrections
+
+The second [independent acceptance report](https://github.com/LegendMaster03/dorks-and-dice-rules-core/blob/docs/pillar2-independent-retest-20261117/docs/rewrite/character-origins/pillar2-independent-retest-and-acceptance-20261117.md) independently verified **F01–F04 RESOLVED** for the inspected code pair, including a real **Site → Character Sheet → Rules Core → PostgreSQL** path with Site password login, one-time ticket/delegation, scoped Human/Elf mixed approval, owner reload, non-owner denial, role revocation between requests, and archived-character rejection. This supersedes the earlier description of genuine Site authorization as entirely untested. The reviewer did **not** complete browser acceptance or a revocation **during** an already-running write.
+
+That review discovered two **new authenticated malformed HTTP failure paths**, with actual HTTP 500 and stack traces:
+
+- **F05:** `relationships: [null]` reached `NativeOriginReconciler` ordering before the null check. The API now rejects null relationship records early (HTTP 400); reconciliation also defensively omits null elements before sorting. No new relationship policy is granted.
+- **F06:** Duplicate IDs in a custom candidate's `requiredChoices` collection were recorded as Invalid by the validator's first index but raised `ToDictionary` while building the later manifest-choice lookup. The lookup now uses `TryAdd`, retaining the first entry only for diagnostics; the earlier duplicate issue continues to force an **Invalid**, never Authorized, result.
+
+The second reviewer provided a reusable 14-scenario authenticated malformed-Origin Host test patch. That exact set of scenarios is now committed as `IndependentMalformedOriginReview` in `tests/RulesCore.Host.Tests/NativeMechanicsApiTests.cs`, with stricter F05 HTTP 400 and F06 duplicate-ID/Invalid assertions. The Native API runtime modifications affect only the ingress validation, reconciliation sorting and duplicate-safe validator lookup. No native content, Species, Feats, inherited permissions or existing effect behavior changed.
+
+**Verified corrected code pair:**
+
+| Validation | Exact source and evidence | Result |
+| --- | --- | --- |
+| Rules Core corrected **code HEAD** | `23919c3ce00825f2da6204f218786957e9f1f1c2`, [CI 44158926032](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44158926032) | **PASS**: 140 Host (including the new 14), 527 Mechanics, zero failed, plus Python, content and Docker checks |
+| Rules Core structural validation | [CI 44158925989](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44158925989) | **PASS** |
+| Character Sheet pinned against corrected Core | Sheet `f1cd8d61fe2f4bc23a38860bde4b91a03ed13769` + Core `23919c3ce00825f2da6204f218786957e9f1f1c2`, [CI 44159232427](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/44159232427) | **PASS**: 14/14 real Core HTTP + PostgreSQL cases; both exact checkout SHAs printed and checked |
+| Sheet historical Phase 5 / Core main compatibility | [Phase 5 CI 44159232396](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/44159232396), [main smoke CI 44159232689](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/44159232689) | **PASS**; tests unrelated source combinations, not substitutes for the pinned pair |
+
+**Outstanding acceptance boundaries remain unchanged:** Chromium aborted before navigation in the independent review environment because of sandbox-denied Unix sockets. Browser creation, selection, DM approval, presentation and refresh still need a suitable isolated runtime. **S04 is BLOCKED:** requests after a DM revocation were denied, but there was no suspended/in-flight commit test nor proof of atomic authorization through persistence. A one-time preflight check is not a commit-time authorization guarantee. Do not state that the race is resolved without independent proof or an expressly reviewed policy/transaction design.
+
+**Updated assessment:** F05/F06 are fixed and CI-tested for their exact reproductions and the full supplied 14-case matrix; F01–F04 were independently resolved in the second WorkChat report. **Not ready for general owner hands-on acceptance signoff** until browser and S04 requirements are completed or explicitly scoped by the owner. Keep Rules Core PR #157 and Character Sheet PR #68 **draft and unmerged**. No main changes or production deployment.
