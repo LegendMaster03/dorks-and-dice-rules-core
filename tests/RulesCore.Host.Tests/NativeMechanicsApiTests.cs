@@ -187,6 +187,92 @@ public sealed class NativeMechanicsApiTests
         }
     }
 
+    [Theory]
+    [InlineData("null-contributor")]
+    [InlineData("null-candidate")]
+    [InlineData("null-manifestation")]
+    [InlineData("null-choice")]
+    [InlineData("blank-source-id")]
+    [InlineData("null-candidate-occurrence")]
+    [InlineData("null-candidate-source")]
+    [InlineData("null-required-choice")]
+    [InlineData("duplicate-required-choice")]
+    [InlineData("duplicate-selected-choice")]
+    [InlineData("null-selected-option")]
+    [InlineData("null-relationship")]
+    [InlineData("null-input-role")]
+    [InlineData("null-constraint-subject")]
+    public async Task IndependentMalformedOriginReview(string scenario)
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true);
+        var proposal = System.Text.Json.Nodes.JsonNode.Parse("""
+          {"id":"independent-review","intent":0,
+           "method":{"ruleId":"rule.creature-origination","methodId":"biological"},
+           "contributors":[],"candidates":[],"manifestations":[],
+           "selectedSpeciesId":"species.orc"}
+          """)!;
+        var custom = System.Text.Json.Nodes.JsonNode.Parse("""
+          {"id":"review-custom","identity":{"kind":1,
+           "occurrence":{"source":{"kind":2,"id":"review"},"occurrencePath":"/traits/0"},
+           "mechanicalDefinitionId":"review-trait"},"selectionBasis":{"eligibility":0},
+           "requiredChoices":[{"id":"duplicate","timing":0,"minimum":0,"maximum":1,
+           "occurrence":{"source":{"kind":2,"id":"review"},"occurrencePath":"/choice"},
+           "finiteOptions":["a"]}]}
+          """)!;
+        switch (scenario)
+        {
+            case "null-contributor": proposal["contributors"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "null-candidate": proposal["candidates"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "null-manifestation": proposal["manifestations"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "blank-source-id": proposal["contributors"]!.AsArray().Add(System.Text.Json.Nodes.JsonNode.Parse("""{"id":"p","role":{"kind":0},"source":{"kind":0,"id":" "}}""")); break;
+            case "null-candidate-occurrence": custom["identity"]!["occurrence"] = null; goto default;
+            case "null-candidate-source": custom["identity"]!["occurrence"]!["source"] = null; goto default;
+            case "null-required-choice": custom["requiredChoices"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); goto default;
+            case "duplicate-required-choice": custom["requiredChoices"]!.AsArray().Add(custom["requiredChoices"]![0]!.DeepClone()); goto default;
+            case "null-relationship": proposal["relationships"] = new System.Text.Json.Nodes.JsonArray((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "null-input-role": proposal["inputRequirements"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"r","role":null,"minimumCount":0}]"""); break;
+            case "null-constraint-subject": proposal["constraints"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"c","kind":5,"subjects":[null],"conditions":[]}]"""); break;
+            case "null-choice": proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"direct:species.orc:/traits/0","choices":[null]}]"""); break;
+            case "duplicate-selected-choice": proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"review-custom","choices":[{"requirementId":"duplicate","selectedOptionIds":["a"]},{"requirementId":"duplicate","selectedOptionIds":["a"]}]}]"""); goto default;
+            case "null-selected-option": proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"review-custom","choices":[{"requirementId":"duplicate","selectedOptionIds":[null]}]}]"""); goto default;
+            default:
+                proposal["candidates"]!.AsArray().Add(custom);
+                if (proposal["manifestations"]!.AsArray().Count == 0)
+                    proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"review-custom","choices":[]}]""");
+                break;
+        }
+        var wire = new { rulesetId = "first-party-001", proposal };
+        using var request = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/origins/preview", JsonContent.Create(wire));
+        using var response = await fixture.Client.SendAsync(request);
+        var text = await response.Content.ReadAsStringAsync();
+        Assert.True((int)response.StatusCode < 500,
+            scenario + ": HTTP " + (int)response.StatusCode + " " + text);
+        if (scenario == "null-relationship")
+        {
+            // The transport boundary must refuse a null authored relationship
+            // rather than reaching reconciliation sorting or returning a grant.
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            using var rejected = JsonDocument.Parse(text);
+            Assert.Equal("invalid_origin_preview_request",
+                rejected.RootElement.GetProperty("error").GetString());
+            Assert.False(rejected.RootElement.TryGetProperty("result", out _));
+        }
+        else if (response.IsSuccessStatusCode)
+        {
+            using var doc = JsonDocument.Parse(text);
+            var result = doc.RootElement.GetProperty("result");
+            Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+                result.GetProperty("status").GetInt32());
+            if (scenario == "duplicate-required-choice")
+                Assert.Contains(result.GetProperty("issues").EnumerateArray(),
+                    issue => issue.GetProperty("code").GetString() ==
+                        "duplicate-or-missing-id");
+        }
+    }
+
     [Fact]
     public async Task DirectInnateSpellLedgerBootstrapOnlyAcceptsMatchingNativeOriginAndDelegation()
     {
