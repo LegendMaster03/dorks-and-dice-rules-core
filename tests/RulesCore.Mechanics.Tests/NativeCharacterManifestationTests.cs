@@ -297,6 +297,46 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void CoexistRejectsUnwrittenNestedTrainingMember()
+    {
+        var wolf = Wolf() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Ranks: new(4))
+                }))
+        };
+        var hybrid = Hybrid() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Proficient: new(true))
+                }))
+        };
+        var character = Character(sheets: [Werewolf(), wolf, hybrid]);
+        character = character with
+        {
+            PrimaryMechanics = character.PrimaryMechanics with
+            {
+                Skills = new Dictionary<string, NativeSkillTraining>
+                {
+                    ["survival"] = new(1, false, 2, "wisdom")
+                }
+            }
+        };
+        // A Ranks-only patch does not itself define MiscModifier, even
+        // though the inherited training view has a numeric modifier.
+        var result = Resolve(character, Coexisting(
+            [new(NativeInfluenceCharacteristic.SkillMiscModifier, "survival")],
+            [new(NativeInfluenceCharacteristic.SkillProficient, "survival")]));
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, x => x.Code == "manifestation-slot-unbound");
+    }
+
+    [Fact]
     public void CoexistFailsClosedWhenTwoFormsWriteSameSlot()
     {
         var result = Resolve(Character(), Coexisting(

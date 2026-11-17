@@ -216,12 +216,41 @@ internal static class NativeCharacterManifestationSlotComposer
                 NativeInfluenceCharacteristic.SkillProficient or
                 NativeInfluenceCharacteristic.SkillMiscModifier or
                 NativeInfluenceCharacteristic.SkillAbility =>
-                patch.Skills?.Entries.ContainsKey(key) == true,
+                HasTrainingProperty(patch.Skills, key, slot.Characteristic),
             NativeInfluenceCharacteristic.CompetencyRanks or
                 NativeInfluenceCharacteristic.CompetencyProficient or
                 NativeInfluenceCharacteristic.CompetencyMiscModifier or
                 NativeInfluenceCharacteristic.CompetencyAbility =>
-                patch.Competencies?.Entries.ContainsKey(key) == true,
+                HasTrainingProperty(patch.Competencies, key, slot.Characteristic),
+            _ => false
+        };
+    }
+
+    /// <summary>
+    /// A sheet override of one training member does not authorize a different
+    /// member merely because both appear under the same skill/competency key.
+    /// A verified whole-training replacement supplies every nested member.
+    /// </summary>
+    private static bool HasTrainingProperty(
+        NativeSheetMapPatch<NativeSheetTrainingPatch>? map, string key,
+        NativeInfluenceCharacteristic characteristic)
+    {
+        if (map?.Entries.TryGetValue(key, out var item) != true || item is null)
+            return false;
+        if (item.Replacement is not null) return true;
+        return characteristic switch
+        {
+            NativeInfluenceCharacteristic.SkillRanks or
+                NativeInfluenceCharacteristic.CompetencyRanks => item.Ranks is not null,
+            NativeInfluenceCharacteristic.SkillProficient or
+                NativeInfluenceCharacteristic.CompetencyProficient =>
+                item.Proficient is not null,
+            NativeInfluenceCharacteristic.SkillMiscModifier or
+                NativeInfluenceCharacteristic.CompetencyMiscModifier =>
+                item.MiscModifier is not null,
+            NativeInfluenceCharacteristic.SkillAbility or
+                NativeInfluenceCharacteristic.CompetencyAbility =>
+                item.Ability is not null,
             _ => false
         };
     }
