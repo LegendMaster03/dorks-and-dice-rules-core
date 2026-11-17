@@ -8,6 +8,8 @@ namespace RulesCore.Mechanics;
 /// </summary>
 internal static class NativeCharacterManifestationSlotComposer
 {
+    internal const string CompositeSheetId = "@composite";
+
     internal static bool ValidSlot(NativeManifestationCharacteristicSlot? slot)
     {
         if (slot is null || !Enum.IsDefined(slot.Characteristic))
@@ -151,7 +153,7 @@ internal static class NativeCharacterManifestationSlotComposer
         // become implicitly authorized by disjoint numeric slots.
         issues.Add(new("manifestation-composite-partial", "manifestations",
             "Multiple explicit form slots are combined; Class, Hit Point and Origin interaction policies remain partial."));
-        return new("partial", NativeCharacterSheetResolver.PrimarySheetId,
+        return new("partial", CompositeSheetId,
             null, NativeCharacterSheetResolver.CopyMechanics(mechanics with
             {
                 CurrentResources = null
