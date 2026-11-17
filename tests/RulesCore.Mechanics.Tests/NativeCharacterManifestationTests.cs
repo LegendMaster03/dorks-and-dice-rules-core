@@ -197,6 +197,142 @@ public sealed class NativeCharacterManifestationTests
         NativeManifestationLedger ledger, Authority? authority = null) =>
         NativeCharacterManifestationResolver.Resolve(state, ledger, authority ?? new Authority());
 
+    private static NativeManifestationLedger Coexisting(
+        IReadOnlyList<NativeManifestationCharacteristicSlot> wolfSlots,
+        IReadOnlyList<NativeManifestationCharacteristicSlot> hybridSlots,
+        IReadOnlyList<NativeManifestationResourceState>? resources = null)
+    {
+        var wolf = Form("manifest.wolf", "wolf", "coexist-event") with
+        {
+            ContributionSlots = wolfSlots
+        };
+        var hybrid = Form("manifest.hybrid", "hybrid", "coexist-event") with
+        {
+            ContributionSlots = hybridSlots
+        };
+        return new("character.1", 7, [wolf, hybrid],
+            resources ?? [PrimaryPool()], ["coexist-event"],
+            [new("decision.coexist", NativeManifestationInteractionKind.Coexist,
+                [wolf.Id, hybrid.Id], null, Occurrence("interactions.coexist"),
+                Rule(), "receipt.interaction.coexist")]);
+    }
+
+    [Fact]
+    public void CoexistingPartialTransformationsCombineDisjointSlotsOnLatestBase()
+    {
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        var updated = Character(level: 5, speed: 45);
+        var resolved = Resolve(updated, ledger);
+        Assert.Equal("partial", resolved.Status);
+        Assert.Equal(17, resolved.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(16, resolved.EffectiveMechanics.AbilityScores["dexterity"]);
+        Assert.Equal(45, resolved.EffectiveMechanics.BaseWalkSpeed);
+        Assert.Equal(5, resolved.EffectiveMechanics.Advancements.Single().Level);
+        Assert.Null(resolved.EffectiveMechanics.CurrentResources);
+        Assert.Equal(new[] { "manifest.hybrid", "manifest.wolf" },
+            resolved.ContributingManifestationInstanceIds);
+        Assert.Equal(new[] { "grant.shared", "grant.wolf" },
+            resolved.SheetGrants.Select(item => item.Entitlement.Id).OrderBy(x => x));
+        Assert.Contains(resolved.Issues, issue =>
+            issue.Code == "manifestation-composite-partial");
+
+        // No permanent write or activation-time copy is used for reversion.
+        var normal = Resolve(updated, ledger with
+        {
+            Instances = ledger.Instances.Select(item => item with
+            {
+                Lifecycle = NativeManifestationLifecycle.Ended
+            }).ToArray()
+        });
+        Assert.Equal("resolved", normal.Status);
+        Assert.Equal(10, normal.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(12, normal.EffectiveMechanics.AbilityScores["dexterity"]);
+        Assert.Equal(45, normal.EffectiveMechanics.BaseWalkSpeed);
+        Assert.Equal(5, normal.EffectiveMechanics.Advancements.Single().Level);
+    }
+
+    [Fact]
+    public void CoexistingPartialTransformationsCanContributeSeparateTrainingProperties()
+    {
+        var wolf = Wolf() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Ranks: new(4))
+                }))
+        };
+        var hybrid = Hybrid() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Proficient: new(true))
+                }))
+        };
+        var character = Character(sheets: [Werewolf(), wolf, hybrid]);
+        character = character with
+        {
+            PrimaryMechanics = character.PrimaryMechanics with
+            {
+                Skills = new Dictionary<string, NativeSkillTraining>
+                {
+                    ["survival"] = new(1, false, 2, "wisdom")
+                }
+            }
+        };
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.SkillRanks, "survival")],
+            [new(NativeInfluenceCharacteristic.SkillProficient, "survival")]);
+        var result = Resolve(character, ledger);
+        Assert.Equal("partial", result.Status);
+        var training = result.EffectiveMechanics!.Skills!["survival"];
+        Assert.Equal(4, training.Ranks);
+        Assert.True(training.Proficient);
+        Assert.Equal(2, training.MiscModifier);
+        Assert.Equal("wisdom", training.Ability);
+    }
+
+    [Fact]
+    public void CoexistFailsClosedWhenTwoFormsWriteSameSlot()
+    {
+        var result = Resolve(Character(), Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")]));
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, x => x.Code == "manifestation-slot-overlap");
+    }
+
+    [Fact]
+    public void CoexistFailsClosedOnMissingOrUnboundContributionSlots()
+    {
+        var missing = Resolve(Character(), Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")], []));
+        Assert.Equal("unresolved", missing.Status);
+        Assert.Contains(missing.Issues, x => x.Code == "manifestation-slots-required");
+
+        var unbound = Resolve(Character(), Coexisting(
+            [new(NativeInfluenceCharacteristic.BaseWalkSpeed)],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]));
+        Assert.Equal("unresolved", unbound.Status);
+        Assert.Contains(unbound.Issues, x => x.Code == "manifestation-slot-unbound");
+    }
+
+    [Fact]
+    public void CoexistRejectsMalformedSlotsBeforeHostInstanceChecks()
+    {
+        var malformed = Coexisting(
+            [new(NativeInfluenceCharacteristic.BaseWalkSpeed, "unexpected")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        var authority = new Authority();
+        var result = Resolve(Character(), malformed, authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "invalid-manifestation-instance");
+    }
+
     [Fact]
     public void PersistentSheetsDoNotRequireOrImplyAnyManifestation()
     {
