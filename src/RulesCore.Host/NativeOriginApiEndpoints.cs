@@ -87,6 +87,9 @@ public static class NativeOriginApiEndpoints
                     decision.Scope.Id != campaignId))
                 return Error(400, "invalid_approved_mixed_proposal");
 
+            if (HasMalformedOriginNestedInputs(proposal))
+                return Error(400, "invalid_approved_mixed_proposal");
+
             // Character Sheet owns target-character authorization and persistence.
             // This delegated computation checks the DM actor and campaign role
             // independently; it never claims that the given character is owned,
@@ -271,6 +274,8 @@ public static class NativeOriginApiEndpoints
                     c.Identity is null || c.SelectionBasis is null) ||
                 request.Proposal.Manifestations.Any(m => m is null))
                 return Error(400, "invalid_origin_preview_request");
+            if (HasMalformedOriginNestedInputs(request.Proposal))
+                return Error(400, "invalid_origin_preview_request");
             if (ExceedsUntrustedOriginLimits(request.Proposal))
                 return Error(400, "origin_request_limits_exceeded");
 
@@ -347,6 +352,30 @@ public static class NativeOriginApiEndpoints
             });
         });
     }
+
+    /// <summary>
+    /// Validate keys and record members used by discovery and first-party
+    /// choice normalization *before* those operations run. Nullable JSON can
+    /// violate nonnullable C# record annotations, and dictionary lookups with
+    /// a null key would otherwise raise an exception rather than reject input.
+    /// The full contract validator still governs gameplay eligibility.
+    /// </summary>
+    private static bool HasMalformedOriginNestedInputs(NativeOriginProposal proposal) =>
+        (proposal.Contributors?.Any(contributor =>
+            contributor is null || contributor.Role is null ||
+            contributor.Source is null ||
+            string.IsNullOrWhiteSpace(contributor.Id) ||
+            string.IsNullOrWhiteSpace(contributor.Source.Id)) ?? false) ||
+        (proposal.Candidates?.Any(candidate =>
+            candidate is null || candidate.Identity is null ||
+            candidate.SelectionBasis is null ||
+            string.IsNullOrWhiteSpace(candidate.Id)) ?? false) ||
+        (proposal.Manifestations?.Any(manifest =>
+            manifest is null || string.IsNullOrWhiteSpace(manifest.Id) ||
+            string.IsNullOrWhiteSpace(manifest.CandidateId) ||
+            (manifest.Choices?.Any(choice =>
+                choice is null || string.IsNullOrWhiteSpace(choice.RequirementId)) ??
+                false)) ?? false);
 
     /// <summary>
     /// Bound the fanout of browser-controlled collections before native
