@@ -148,7 +148,9 @@ public static class NativeCharacterManifestationResolver
                  !decision.InstanceIds.Contains(decision.SelectedInstanceId, StringComparer.Ordinal)) ||
                 (decision.Kind is NativeManifestationInteractionKind.Suppress or
                     NativeManifestationInteractionKind.Replace &&
-                 decision.SelectedInstanceId is null))
+                 decision.SelectedInstanceId is null) ||
+                (decision.Kind == NativeManifestationInteractionKind.Coexist &&
+                 decision.SelectedInstanceId is not null))
                 Issue("invalid-manifestation-interaction", "interactions",
                     "Interaction evidence, participants or selection is invalid.");
         }

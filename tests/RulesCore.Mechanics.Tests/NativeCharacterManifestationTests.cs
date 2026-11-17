@@ -308,6 +308,24 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void CoexistDoesNotAcceptAContradictorySelectedInstance()
+    {
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        ledger = ledger with
+        {
+            Interactions = ledger.Interactions!.Select(interaction =>
+                interaction with { SelectedInstanceId = "manifest.wolf" }).ToArray()
+        };
+        var result = Resolve(Character(), ledger);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "invalid-manifestation-interaction");
+    }
+
+    [Fact]
     public void CoexistFailsClosedOnMissingOrUnboundContributionSlots()
     {
         var missing = Resolve(Character(), Coexisting(
