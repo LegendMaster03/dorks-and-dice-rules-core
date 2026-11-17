@@ -169,6 +169,7 @@ public static class NativeOriginApiEndpoints
             // path is eligible. No historical/manifested parents, DM rulings,
             // independent grants, transformations or revised source evidence.
             if (ExceedsUntrustedOriginLimits(proposal) ||
+                HasMalformedOriginNestedInputs(proposal) ||
                 proposal.Intent != NativeOriginIntent.Direct ||
                 string.IsNullOrWhiteSpace(proposal.Id) ||
                 proposal.Id.Length > 200 ||
