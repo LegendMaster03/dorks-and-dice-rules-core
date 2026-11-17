@@ -362,6 +362,9 @@ public static class NativeOriginApiEndpoints
     /// The full contract validator still governs gameplay eligibility.
     /// </summary>
     private static bool HasMalformedOriginNestedInputs(NativeOriginProposal proposal) =>
+        // A missing relationship record is never an authored disposition.
+        // Reject it before normalization and reconciliation can inspect it.
+        (proposal.Relationships?.Any(relation => relation is null) ?? false) ||
         (proposal.Contributors?.Any(contributor =>
             contributor is null || contributor.Role is null ||
             contributor.Source is null ||
