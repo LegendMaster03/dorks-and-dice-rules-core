@@ -1,0 +1,26 @@
+name: Pillar 4 Transformation Mechanics CI
+
+on:
+  push:
+    branches:
+      - 'feature/pillar4-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  transformation-mechanics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore native mechanics tests
+        run: dotnet restore tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj
+      - name: Build native mechanics tests
+        run: dotnet build tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --no-restore
+      - name: Execute full native mechanics test suite
+        run: dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --no-build --logger 'console;verbosity=normal'
