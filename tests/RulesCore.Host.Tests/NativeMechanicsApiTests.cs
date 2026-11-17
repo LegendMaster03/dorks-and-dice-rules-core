@@ -35,7 +35,8 @@ public sealed class NativeMechanicsApiTests
         private readonly string _root = Path.Combine(Path.GetTempPath(), "rc-mechanics-http-" + Guid.NewGuid().ToString("N"));
         public WebApplication App { get; private set; } = null!;
         public HttpClient Client { get; private set; } = null!;
-        public async Task StartAsync(string surface, string source, bool ordinary = false)
+        public async Task StartAsync(string surface, string source, bool ordinary = false,
+            bool realNativeContent = false)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -133,7 +134,7 @@ public sealed class NativeMechanicsApiTests
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
                 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?> {
                     ["RulesCore:ApiSurface"] = surface,
-                    ["Rulesets:ContentRoot"] = _root,
+                    ["Rulesets:ContentRoot"] = realNativeContent ? NativeContentRoot() : _root,
                     ["Rulesets:DefaultRuleset"] = "first-party-001",
                     ["ToolHost:BaseUrl"] = "https://site.test"
                 });
@@ -146,6 +147,23 @@ public sealed class NativeMechanicsApiTests
             Client = new HttpClient { BaseAddress = new Uri(
                 server.Features.Get<IServerAddressesFeature>()!.Addresses.Single()) };
         }
+        // Real-native HTTP tests use the repository's immutable first-party
+        // catalog, never an invented miniature Species or trait fixture.
+        private static string NativeContentRoot()
+        {
+            var folder = new DirectoryInfo(AppContext.BaseDirectory);
+            while (folder is not null)
+            {
+                var root = Path.Combine(folder.FullName, "data", "rulesets");
+                if (File.Exists(Path.Combine(root, "first-party-001",
+                    "native", "rules", "creature-origination.json")))
+                    return root;
+                folder = folder.Parent;
+            }
+            throw new InvalidOperationException(
+                "Real first-party native ruleset root unavailable.");
+        }
+
         public HttpRequestMessage Authenticated(HttpMethod method, string path, HttpContent? body = null)
         {
             var request = new HttpRequestMessage(method, path) { Content = body };
@@ -286,6 +304,71 @@ public sealed class NativeMechanicsApiTests
             HttpMethod.Post, "/api/private/mechanics/v1/origins/innate-spells/ledger/initialize-preview",
             JsonContent.Create(Valid())));
         Assert.Equal(HttpStatusCode.NotFound, absent.StatusCode);
+    }
+
+    [Theory]
+    [InlineData("species.elf", "trance", 4)]
+    [InlineData("species.orc", "relentlessEndurance", 1)]
+    public async Task RealNativeDirectHttpPreviewReturnsSourceVerifiedSurvivalEffect(
+        string speciesId, string effectKey, int expectedValue)
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>()
+            .Snapshot!;
+        var proposal = new NativeOriginProposal("http-native-" + speciesId,
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: speciesId);
+        var construction = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(proposal, AutoManifestDirectDefaults: true));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized,
+            construction.Status);
+        Assert.NotNull(construction.Profile);
+
+        // Send the actual selected native manifestations through authenticated
+        // HTTP, not a manufactured projected response.
+        using var request = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/origins/preview", JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint,
+                proposal = proposal with
+                {
+                    Manifestations = construction.EvaluatedProposal.Manifestations
+                }
+            }));
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            body.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.True(body.GetProperty("previewOnly").GetBoolean());
+        var view = body.GetProperty("restSurvival");
+        Assert.Equal("resolved", view.GetProperty("status").GetString());
+        Assert.True(view.GetProperty("previewOnly").GetBoolean());
+        var effect = view.GetProperty(effectKey);
+        Assert.Equal(speciesId, effect.GetProperty("sourceId").GetString());
+        Assert.NotEmpty(effect.GetProperty("grantId").GetString()!);
+        Assert.StartsWith("/traits/", effect.GetProperty("occurrencePath")
+            .GetString());
+        if (effectKey == "trance")
+        {
+            Assert.Equal(expectedValue,
+                effect.GetProperty("longRestHours").GetInt32());
+            Assert.False(effect.GetProperty("sleepRequired").GetBoolean());
+            Assert.Equal(JsonValueKind.Null,
+                view.GetProperty("relentlessEndurance").ValueKind);
+        }
+        else
+        {
+            Assert.Equal(expectedValue, effect.GetProperty("uses").GetInt32());
+            Assert.Equal(1, effect.GetProperty("hitPointsInstead").GetInt32());
+            Assert.Equal("long-rest", effect.GetProperty("recharge").GetString());
+            Assert.Equal(JsonValueKind.Null,
+                view.GetProperty("trance").ValueKind);
+        }
     }
 
     [Fact]
