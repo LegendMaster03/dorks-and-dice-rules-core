@@ -40,6 +40,20 @@ internal static class NativeCharacterManifestationSlotComposer
                 "Simultaneous partial transformations exceed supported composition bounds.");
 
         var claimed = new HashSet<NativeManifestationCharacteristicSlot>();
+        // Check all declarations before resolving the first contributing
+        // form. Collision diagnostics must not depend on instance order or
+        // whether one colliding form also has incomplete source material.
+        foreach (var instance in contributing)
+        {
+            if (instance.ContributionSlots is not { Count: > 0 })
+                return Fail("manifestation-slots-required",
+                    "Every simultaneous form requires exact, source-authored contribution slots.");
+            foreach (var slot in instance.ContributionSlots)
+                if (!claimed.Add(slot))
+                    return Fail("manifestation-slot-overlap",
+                        "Two simultaneous forms write the same characteristic slot.");
+        }
+
         var sheetById = state.AlternateSheets.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var mechanics = NativeCharacterSheetResolver.CopyMechanics(baseline.EffectiveMechanics);
         var sheetProgression = new Dictionary<string, NativeSheetResolvedProgression>(
@@ -58,10 +72,6 @@ internal static class NativeCharacterManifestationSlotComposer
 
         foreach (var instance in contributing)
         {
-            if (instance.ContributionSlots is not { Count: > 0 })
-                return Fail("manifestation-slots-required",
-                    "Every simultaneous form requires exact, source-authored contribution slots.");
-
             var form = NativeCharacterManifestationResolver.ResolveSelected(
                 state, ledger, authority, instance, verifyCommittedLedger);
             if (form.EffectiveMechanics is null ||
@@ -79,10 +89,6 @@ internal static class NativeCharacterManifestationSlotComposer
 
             foreach (var slot in instance.ContributionSlots)
             {
-                if (!claimed.Add(slot))
-                    return Fail("manifestation-slot-overlap",
-                        "Two simultaneous forms write the same characteristic slot.");
-
                 if (baseline.AppliedEffects.Any(item =>
                         item.Effect.Characteristic == slot.Characteristic &&
                         string.Equals(item.Effect.Key, slot.Key, StringComparison.Ordinal)))
