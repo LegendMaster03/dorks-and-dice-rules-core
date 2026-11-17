@@ -32,3 +32,34 @@ The next run initialized a correctly empty level-one ledger because the test inc
 4. **Deferred mechanics are still deferred:** Human Origin Feat authoring, skill-rank spending, general production mixed-parent use permission/full provenance replay, final numeric balance allocation, new biological trait permissions, and unsupported mutation routes must not be fabricated or bypassed.
 
 **Current verdict:** paired Core/Sheet test failures and known malformed input scenarios repaired; **not yet ready for owner-requested hands-on acceptance signoff** because genuine Site DM/owner and browser testing, and WorkChat's retest at the new heads, remain outstanding. Keep both PRs **draft and unmerged**, no production deployment.
+
+
+## Follow-up: authenticated transport and Site ticket consumer validation (2026-11-16)
+
+The previous subsection records the **earlier** remediated pair. Work continued without changing the established gameplay or DM permissions.
+
+**Exact later tested code revisions:**
+- Rules Core: `1a753073e14e04d299b348974dbddf049ca93d20` on `feature/pillar2-power-evaluation-prototype-20261114`.
+- Character Sheet: `ec43be9bb8f29771c437d7007a885ea73f9557e1` on `feature/innate-spell-ledger-persistence-20261116`.
+- Site: **unchanged**; independent WorkChat review identified `feature/pillar2-origin-dm-campaign-authority-20261112`, previously exercised separately. Neither Site main nor the deployed Site was inspected in this follow-up.
+
+**New changes:** The same fail-closed nested-JSON guard now runs on **all three** authenticated native HTTP Origin paths: ordinary direct preview, DM-approved mixed evaluation, and source-matched direct innate-spell bootstrap. New real HTTP regressions cover null manifestation candidate IDs, null choice requirement IDs, malformed native contributor roles/sources, and no constructed effective result in rejected responses. Successful tests do not prove every conceivable malformed nested field is safe; additional fuzzing and Site permission races remain separate.
+
+On Character Sheet, `ToolHostOriginDmTicketContractTests` uses the **actual** `DorksAndDiceToolHostAuthenticationClient`, `HostedToolAuthenticationMiddleware`, and `ToolHostOriginDmAccessGateway` against the contract-v1 **wire shape** published by the Site feature. It accepts only the exact current campaign DM/active character pair, fails closed when the `dmCharacterScopes` field is absent, denies empty or unrelated scopes, rejects a demoted DM, and verifies fresh introspection rather than recycling an earlier authorization. **The Site JSON in this test is authored test input**, not a response from a running Site or a three-service test.
+
+**Verified latest CI:**
+
+| Source/test pair | Run | Result |
+| --- | --- | --- |
+| Core `1a753...` rewrite structure | [43988865790](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43988865790) | PASS |
+| Core `1a753...` native API + complete C#/content/Python/Docker | [43988865808](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/43988865808) | PASS, **126 Host + 527 Mechanics**, 0 failed |
+| Sheet `ec43be...` + pinned Core `1a753...` | [43989241816](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/43989241816) | PASS, **14 current-pair HTTP/PostgreSQL integration**, 0 failed; checked-out SHA lines verified |
+| Sheet `ec43be...` + historical Phase 5 Core | [43989241827](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/43989241827) | PASS (legacy compatibility, not substitute for current pair) |
+| Sheet `ec43be...` + Core main consumer probe | [43989241818](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/43989241818) | PASS (main compatibility) |
+| Sheet `ec43be...` full release/frontend/DB/container | [43989241738](https://github.com/LegendMaster03/dorks-and-dice-character-sheet/actions/runs/43989241738) | PASS, **147 Unit + 183 Integration**, 0 failed; PostgreSQL/container smoke completed |
+
+The current-pair workflow remains pinned to the **code SHA** `1a753073e14e04d299b348974dbddf049ca93d20`. Subsequent **documentation-only** changes to the Rules Core branch do not silently change what was tested. Any later Core **code** commit must update the explicit Sheet pin and rerun the combined workflow before a new acceptance claim.
+
+**Remaining blocked:** No **real Site-issued ticket** has passed through a live Site + Sheet + Core integrated staging path for this corrected pair; no Site/Sheet browser creation, activation, reload and revoked/archived test has run; and WorkChat has **not independently retested these revised code heads**. The earlier independent `NOT READY` verdict remains the most recent independent verdict. The above passing CI results qualify component and paired-source behavior, **not** owner hands-on acceptance.
+
+Keep the two feature PRs **draft and unmerged**; do not deploy to production or relax any Site authorization. Feats (including Human Versatile), general production mixed-parent permissions and other explicitly deferred mechanics are not part of this remediation.
