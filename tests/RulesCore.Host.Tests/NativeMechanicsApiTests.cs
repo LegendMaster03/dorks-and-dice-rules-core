@@ -17,15 +17,22 @@ namespace RulesCore.Host.Tests;
 
 public sealed class NativeMechanicsApiTests
 {
-    private sealed class SiteHandler(string source, bool ordinary = false) : HttpMessageHandler
+    private sealed class SiteHandler(string source, bool ordinary = false,
+        bool dm = false) : HttpMessageHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken ct) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) {
                 Content = new StringContent(JsonSerializer.Serialize(new {
                     contractVersion = 1, toolKey = "rules-core", siteMode = "dorks-and-dice",
-                    user = new { id = "unit-test" },
+                    user = new { id = dm
+                        ? "d66a7a7b-bc0f-4677-829d-0ccf40470d2f"
+                        : "unit-test" },
                     privateTunnelSourceToolKey = ordinary ? null : source,
-                    delegatedFromToolKey = ordinary ? source : null
+                    delegatedFromToolKey = ordinary ? source : null,
+                    campaigns = dm ? new object[] {
+                        new { id = "99d41ce8-36fc-43df-b8cd-bb1829b20982",
+                            role = "DM" }
+                    } : Array.Empty<object>()
                 }), Encoding.UTF8, "application/json")
             });
     }
@@ -36,7 +43,7 @@ public sealed class NativeMechanicsApiTests
         public WebApplication App { get; private set; } = null!;
         public HttpClient Client { get; private set; } = null!;
         public async Task StartAsync(string surface, string source, bool ordinary = false,
-            bool realNativeContent = false)
+            bool realNativeContent = false, bool dm = false)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -140,7 +147,7 @@ public sealed class NativeMechanicsApiTests
                 });
             }, services => {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
-                    .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, ordinary));
+                    .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, ordinary, dm));
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -369,6 +376,93 @@ public sealed class NativeMechanicsApiTests
             Assert.Equal(JsonValueKind.Null,
                 view.GetProperty("trance").ValueKind);
         }
+    }
+
+    [Fact]
+    public async Task RealNativeScopedDmHttpPreviewPreservesSelectedElfOrcEffects()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>()
+            .Snapshot!;
+        const string actor = "d66a7a7b-bc0f-4677-829d-0ccf40470d2f";
+        const string campaign = "99d41ce8-36fc-43df-b8cd-bb1829b20982";
+        const string approval = "approved:real-native-selected-effects";
+
+        var proposal = new NativeOriginProposal("http-native-scoped-mixed",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [
+                new("elf", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.elf")),
+                new("orc", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.orc"))
+            ], [], []);
+        var offers = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(proposal)).EvaluatedProposal.Candidates;
+        var physical = offers.Where(x => x.ContributorId == "elf" &&
+            x.Identity.IntrinsicSlotId is
+                "creatureType" or "size" or "walkingSpeedFeet").ToArray();
+        Assert.Equal(3, physical.Length);
+        var trance = Assert.Single(offers,
+            x => x.Identity.MechanicalDefinitionId == "trait.elf.trance");
+        var endurance = Assert.Single(offers,
+            x => x.Identity.MechanicalDefinitionId ==
+                "trait.orc.relentless-endurance");
+        Assert.Equal(NativeOriginEligibility.Eligible,
+            trance.SelectionBasis.Eligibility);
+        Assert.Equal(NativeOriginEligibility.Eligible,
+            endurance.SelectionBasis.Eligibility);
+        var manifested = physical.Select((x, i) => new NativeOriginManifestation(
+                "physical-" + i, x.Id, SelectedValue: x.OfferedValue))
+            .Concat([
+                new("chosen-trance", trance.Id),
+                new("chosen-endurance", endurance.Id)
+            ]).ToArray();
+
+        // The actual Site-introspected actor is the only acceptable source
+        // of DM authority. This decision selects the exact Orc source and
+        // does not alter the native Endurance payload or mint a new pool.
+        var decision = new NativeTableRuleDecision("dm-orc-source",
+            new(actor, approval), new("campaign", campaign),
+            new("source", "species.orc"),
+            JsonSerializer.SerializeToElement(new { eligibility = "eligible" }));
+        var submitted = proposal with
+        {
+            Manifestations = manifested,
+            TableDecisions = [decision]
+        };
+        using var request = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/origins/evaluate-approved-mixed",
+            JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint,
+                characterId = "44eb66e6-3b5c-44e2-aa71-4986d4b346c0",
+                campaignId = campaign,
+                approvalEvidenceId = approval,
+                proposal = submitted
+            }));
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            body.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.True(body.GetProperty("previewOnly").GetBoolean());
+        var survival = body.GetProperty("restSurvival");
+        Assert.Equal("resolved", survival.GetProperty("status").GetString());
+        var elf = survival.GetProperty("trance");
+        Assert.Equal("species.elf", elf.GetProperty("sourceId").GetString());
+        Assert.Equal(4, elf.GetProperty("longRestHours").GetInt32());
+        var orc = survival.GetProperty("relentlessEndurance");
+        Assert.Equal("species.orc", orc.GetProperty("sourceId").GetString());
+        Assert.Equal(1, orc.GetProperty("uses").GetInt32());
+        Assert.Equal("long-rest", orc.GetProperty("recharge").GetString());
+        Assert.Equal("resolved",
+            body.GetProperty("intrinsics").GetProperty("status").GetString());
+        Assert.NotEqual(JsonValueKind.Null,
+            body.GetProperty("result").GetProperty("profile").ValueKind);
     }
 
     [Fact]
