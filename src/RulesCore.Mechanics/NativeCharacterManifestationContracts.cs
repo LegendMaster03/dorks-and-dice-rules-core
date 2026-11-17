@@ -34,6 +34,16 @@ public sealed record NativeManifestationResourcePolicy(
     int? MaximumAdjustment = null, string? CaptureKey = null);
 
 /// <summary>
+/// A source-authored characteristic selected from an active partial form.
+/// Only these explicitly named properties contribute during verified Coexist
+/// composition. An omitted slot always inherits the latest primary mechanics
+/// (including persistent influences), never an activation-time snapshot.
+/// Current resource quantities and Class/Origin entitlements are not slots.
+/// </summary>
+public sealed record NativeManifestationCharacteristicSlot(
+    NativeInfluenceCharacteristic Characteristic, string? Key = null);
+
+/// <summary>
 /// A single source-authorized activation, retained after it ends for history.
 /// CharacterId explicitly identifies its owning character and must agree with
 /// the authoritative state and enclosing character-scoped manifestation ledger.
@@ -51,7 +61,10 @@ public sealed record NativeManifestationInstance(
     IReadOnlyDictionary<string, int> ActivationCaptures,
     IReadOnlyList<string> EndingConditions,
     IReadOnlyList<NativeManifestationResourcePolicy> ResourcePolicies,
-    string LastEventId);
+    string LastEventId,
+    // Used only for explicitly authored, source-verified Coexist composition.
+    // Null preserves the previous whole-form selection behavior.
+    IReadOnlyList<NativeManifestationCharacteristicSlot>? ContributionSlots = null);
 
 /// <summary>
 /// A source-authored, host-authenticated decision about precisely the listed
@@ -132,7 +145,10 @@ public sealed record NativeManifestationEffectiveCharacter(
     IReadOnlyList<NativeInfluenceResolvedGrant> InfluenceGrants,
     IReadOnlyList<NativeInfluenceResolvedEffect> AppliedEffects,
     IReadOnlyList<NativeManifestationEffectiveResource> Resources,
-    IReadOnlyList<NativeIssue> Issues);
+    IReadOnlyList<NativeIssue> Issues,
+    // Explicit identities for a composite partial form. Single-form callers
+    // continue using ManifestationInstanceId and EffectiveSheetId unchanged.
+    IReadOnlyList<string>? ContributingManifestationInstanceIds = null);
 
 /// <summary>
 /// A real authenticated host must implement every callback. This interface
