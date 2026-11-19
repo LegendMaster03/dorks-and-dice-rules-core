@@ -528,6 +528,69 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void ReconciledDuplicateContributorOccurrencesDoNotFillTwoInputSlots()
+    {
+        const string doubleWing = """
+            [{"id":"double-wing","resultTraitId":"trait.fixture.guardian",
+              "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":2}]}]
+            """;
+        using var fixture = new Fixture(doubleWing);
+        var proposal = new NativeOriginProposal("two-parents", NativeOriginIntent.Mixed,
+            new("rule.fixture", "biological"),
+            [
+                new("parent-one", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.fixture")),
+                new("parent-two", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.fixture"))
+            ], [], []);
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var discovered = engine.Evaluate(new(proposal, AutoManifestDirectDefaults: false));
+        var wings = discovered.EvaluatedProposal.Candidates.Where(x =>
+            x.Identity.Occurrence.OccurrencePath == "/traits/2").ToArray();
+        Assert.Equal(2, wings.Length);
+        var decisions = wings.Select((candidate, i) => new NativeTableRuleDecision(
+            "permit-wings-" + i, new("dm", "verified"), new("campaign", "example"),
+            new("candidate", candidate.Id),
+            JsonSerializer.SerializeToElement(new { eligibility = "eligible" }))).ToArray();
+        var manifests = wings.Select((candidate, i) =>
+            new NativeOriginManifestation("selected-wings-" + i, candidate.Id)).ToArray();
+        var result = engine.Evaluate(new(proposal with
+        {
+            Manifestations = manifests,
+            TableDecisions = decisions
+        }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+
+        Assert.NotNull(result.Profile);
+        var effectiveWings = result.Profile.Underlying.InherentGrants.Where(x =>
+            x.Identity.MechanicalDefinitionId == "species.fixture#trait:wings").ToArray();
+        Assert.Single(effectiveWings);
+        Assert.Equal(2, effectiveWings[0].SourceCandidateIds.Count);
+        Assert.False(Has(result, "trait.fixture.guardian"));
+    }
+
+    [Fact]
+    public void InputManifestationOrderDoesNotChangeSynergyProof()
+    {
+        using var fixture = new Fixture();
+        var proposal = Selected(fixture, "/traits/0", "/traits/1", "/traits/2");
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var first = engine.Evaluate(new(proposal, AutoManifestDirectDefaults: false));
+        var reversed = engine.Evaluate(new(proposal with
+        {
+            Manifestations = proposal.Manifestations.Reverse().ToArray()
+        }, AutoManifestDirectDefaults: false));
+        Assert.Equal(first.Status, reversed.Status);
+        var left = first.Profile!.Underlying.InherentGrants.Where(x => x.Synergy is not null)
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        var right = reversed.Profile!.Underlying.InherentGrants.Where(x => x.Synergy is not null)
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(JsonSerializer.Serialize(left), JsonSerializer.Serialize(right));
+        Assert.Contains(left, x => x.Identity.MechanicalDefinitionId ==
+            "trait.fixture.aerial-stability");
+    }
+
+    [Fact]
     public void ChoiceAndResourceDependentResultsAreNotMintedImplicitly()
     {
         const string unsafeResults = """
