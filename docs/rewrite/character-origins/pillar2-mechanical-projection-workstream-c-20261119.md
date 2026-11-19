@@ -116,8 +116,8 @@ reported:
 
 Build: succeeded, zero compilation errors, 10 compiler warnings. Counts for
 overlapping suites must not be added as though they are distinct tests.
-Later branch commits harden detection of trait-to-intrinsic substitution and
-document the audit; those commits must also complete CI before final acceptance.
+The exact latest branch HEAD and its dedicated CI evidence are recorded in
+the final handoff; the branch-only workflow reruns all suites on every push.
 
 The first CI attempt exposed an invalid *test assumption*: the existing
 direct Halfling constructor is unresolved on four prose-only native traits.
@@ -190,6 +190,113 @@ remains:** Workstream C relies on A's final candidate/manifestation IDs,
 consolidated source evidence, profile configuration equality and eligibility
 gating. Run the full focused tests and relevant suites on the combined
 integration commit before any merge approval.
+
+## Final independent follow-up: outside-scope evidence and A compatibility
+
+**Confirmed and corrected provenance bypass:** formerly, a native trait with no
+`savingThrows` or `skillBonuses` properties was appended to
+`OutsideScopeTraits` after catalog/occurrence matching but **before** verifying
+its selected candidate, manifestation and authorization. Thus an Orc
+`trait.orc.adrenaline-rush` with fabricated candidate IDs or a missing
+manifestation could have appeared in the outside-scope collection even though
+it was not a legitimate manifested grant.
+
+Now the common verification applies before either output path:
+
+- The native catalog resolves the exact trait definition and the
+  `species/ancestry + /traits/N` occurrence; canonical payload and kind
+  match, and grant IDs are not repeated.
+- Direct grants require supported source-specific adjudication and a matching
+  eligible candidate. Mixed grants additionally use
+  `NativeOriginApprovedMixedIntrinsicProjector.HasVerifiedContributingEvidence`
+  for every candidate, DM evidence, and per-contributor eligibility.
+- Candidate IDs must be unique and resolve to exactly the same characteristic
+  identity and offered canonical value. Every contributing candidate must be
+  manifested exactly once. The effective grant's own
+  `ManifestationId` must identify exactly one of those selected manifestations.
+  Unsupported or unreviewed candidate evidence fails closed.
+- On any failure the projector returns `unresolved`, with **empty**
+  `Traits` and `OutsideScopeTraits`, rather than partially exposing a forged
+  trait. Output is sorted by stable IDs without trait-definition deduplication.
+- Opaque output now exposes `ManifestationId` and sorted
+  `SourceCandidateIds` as provenance, alongside the unchanged full canonical
+  `CompleteEffect`. The output **does not** project or authorize its
+  unresolved parameters, selected choices, resource owners, dependencies,
+  conditions, level-based progression, or actions. Such effects remain opaque.
+
+### Status contract
+
+| Status | Precise interpretation | Outside-scope output |
+| --- | --- | --- |
+| `resolved` | At least one verified, typed fixed passive has been projected | May also contain other verified native trait definitions |
+| `none` | Zero typed fixed saving-throw or skill-bonus entitlements were recognized | **May be nonempty**. It does **not** mean that an Origin has no characteristics |
+| `unresolved` | Foundation, provenance, selection, or supported-passive evidence failed validation | Always empty; both collections are empty, with a diagnostic in `UnresolvedReasons` |
+
+`PreviewOnly=true` for all statuses. An authenticated source grant is not
+equivalent to an executable runtime mechanic. Intrinsic characteristics are
+handled by other projectors, not `OutsideScopeTraits`, so `none` cannot
+describe the whole Origin. Typed paths additionally reject parameterized
+choices, resource owners and unverified level gates instead of projecting an
+unconditional benefit. A valid opaque definition can retain such canonical
+fields without enabling them.
+
+### Workstream A integration: current independent HEAD
+
+A's verified HEAD for this review is
+`3ff1ef89b3e3900d4d2f6c42098afd0724d6b580`.
+A changes `NativeOriginReconciler.cs`,
+`NativeOriginConstraintEvaluator.cs`,
+`NativeOriginConstructionEngine.cs`, construction tests, and its own notes;
+C changes none of those files. Direct merge conflicts are not expected, but
+combined runtime behavior **has not been tested in C's isolated branch**.
+
+The C projector enumerates individual **surviving effective** grants without
+grouping by canonical definition. A's authenticated `RetainBoth` for two
+separately sourced occurrences of `trait.shared.low-light-vision` should
+therefore retain two distinct opaque items (with distinct grant/manifestation
+and source identities); it does **not** stack their perception benefits.
+A's `ConsolidateEvidence` for multiple selected candidates remains one grant
+with each contributing candidate retained. A's effective prerequisite closure
+removes disallowed dependents before C sees the effective profile. If
+construction remains incomplete or unresolved, foundation validation prevents
+both typed and opaque output. C must not reconstruct a removed grant from
+unselected offers or resolve a suppressed prerequisite itself.
+
+**Combined tests owned by Workstream D (do not merge A into C here):**
+
+1. Build an A-authorized mixed Origin with all required foundation slots and
+   explicit authenticated `RetainBoth` for shared low-light vision from Elf
+   and Orc; expect two separately attributed opaque entries, not a combined
+   effective sense or stacked benefit. Do not reuse A's *foundationless*
+   reconciliation-only test fixture unchanged: C needs the completed initial
+   foundation to project.
+2. Mutate only one retained occurrence's candidate, manifestation, identity
+   or scope of authorization; expect `unresolved` and no partial entries.
+3. Confirm an authenticated `ConsolidateEvidence` case exposes one grant with
+   all authorized source candidate IDs, and duplicate/missing contributor
+   evidence fails closed.
+4. Run A's prerequisite-closure scenarios including a dependent whose
+   required intrinsic characteristic was suppressed; confirm removed grants
+   never appear in C, even where an offer and original manifestation remain.
+5. JSON-round-trip the authorized profile and compare stable output, then
+   change the result to incomplete/unresolved and confirm no projection.
+6. Repeat all C focused tests plus full Mechanics, solution and Python
+   regression suites against the **combined** integration revision.
+
+### Distinguishing preserved definitions from operational coverage
+
+The `CompleteEffect` JSON preserves the full authored trait definition,
+including composite saving-throw + resistance, source-bound parameters,
+conditional restrictions, dependencies, resource descriptors, and
+level-dependent fields **when present in the canonical definition**.
+It is not the complete effective runtime state: bound parameter values,
+resolved choices, resource owner identities and spent uses are separate
+construction/character state, and are not promised as executable via
+`OutsideScopeTraits`. The typed output remains intentionally limited to
+fixed saving-throw advantage and skill-bonus grammar; other projectors own
+several specialized categories. Generalized typed projection of damage
+resistance, nonspell level unlocks, bound/conditional effects, and full
+runtime execution remain outstanding separate work.
 
 ## Deferred dependencies for integration review
 
