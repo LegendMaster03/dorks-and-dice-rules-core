@@ -318,7 +318,7 @@ public sealed class NativeOriginCharacteristicRoundTripTests
                  "walkingSpeedFeet":30,
                  "traits":[{"id":"opaque","name":"Opaque",
                    "engineData":{"nested":[1,{"unknown":true}]},
-                   "choiceCount":"2","chooseFrom":"skill:test",
+                   "choiceCount":"2",
                    "originBindings":[{"sourceField":"x"}]}]}
                 """);
             File.WriteAllText(Path.Combine(native, "family.json"),
