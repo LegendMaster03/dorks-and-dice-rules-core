@@ -46,7 +46,7 @@ public sealed class NativeConstructAssemblyTests
                 ]
                 """);
             File.WriteAllText(Path.Combine(native, "materials.json"), """
-                [{"id":"construct-material.steel","kind":"construct-material","name":"Steel"}]
+                [{"id":"construct-material.steel","kind":"construct-material","name":"Steel","constructionCost":1}]
                 """);
             Catalog = NativeCatalogLoader.Load(
                 NativeRulesetLayout.Resolve(_root, "first-party-001"));
@@ -89,7 +89,7 @@ public sealed class NativeConstructAssemblyTests
         using var fixture = new Fixture();
         var overloaded = Evaluate(fixture, Parts());
         Assert.Equal(NativeOriginConstructionStatus.Incomplete, overloaded.Status);
-        Assert.Equal(13, overloaded.KnownConstructionCost);
+        Assert.Equal(14, overloaded.KnownConstructionCost);
         Assert.Equal(5, overloaded.Components.Count);
         Assert.Contains(overloaded.Issues, x => x.Code == "construct-power-overallocated");
         Assert.All(overloaded.Components, x => Assert.True(x.Installed));
@@ -127,7 +127,7 @@ public sealed class NativeConstructAssemblyTests
         var upgraded = Evaluate(fixture, Parts(weaponEnabled: false),
             allowance: 10, initial: false);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, upgraded.Status);
-        Assert.Equal(13, upgraded.KnownConstructionCost);
+        Assert.Equal(14, upgraded.KnownConstructionCost);
     }
 
     [Fact]
@@ -135,12 +135,12 @@ public sealed class NativeConstructAssemblyTests
     {
         using var fixture = new Fixture();
         var frameOnly = Evaluate(fixture,
-            [Part("root", "frame", frame: true)], allowance: 2);
+            [Part("root", "frame", frame: true)], allowance: 3);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, frameOnly.Status);
         var multiple = Evaluate(fixture,
             [Part("a", "frame", frame: true),
              Part("b", "frame", frame: true),
-             Part("c", "frame", frame: true)], allowance: 6);
+             Part("c", "frame", frame: true)], allowance: 9);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, multiple.Status);
     }
 

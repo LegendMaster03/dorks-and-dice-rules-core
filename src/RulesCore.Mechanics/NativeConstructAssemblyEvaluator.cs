@@ -29,6 +29,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 "The current bounded evaluator supports at most 256 instances; this is a software limit, not an anatomical limit.");
 
         var parts = new Dictionary<string, Part>(StringComparer.Ordinal);
+        long knownMaterialCost = 0;
         foreach (var instance in request.Components)
         {
             if (instance is null || string.IsNullOrWhiteSpace(instance.InstanceId) ||
@@ -69,9 +70,20 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 }
                 if (!catalog.TryGetById(materialId, out var material) ||
                     material?.Category != "construct-material")
+                {
                     Issue("construct-material-unknown", path + ".materials." + slot,
                         NativeOriginIssueSeverity.Invalid,
                         "Material assignments must reference native construct materials.");
+                    continue;
+                }
+                var materialCost = Number(material.Definition, "constructionCost",
+                    path + ".materials." + slot, Issue);
+                if (materialCost is int authoredCost)
+                    knownMaterialCost += authoredCost;
+                else if (request.InitialConstruction)
+                    Issue("construct-material-cost-unresolved",
+                        path + ".materials." + slot, NativeOriginIssueSeverity.Unresolved,
+                        "The selected material has no authorized construction cost.");
             }
             foreach (var extra in instance.Materials?.Keys ?? [])
                 if (!slots.Contains(extra, StringComparer.Ordinal))
@@ -171,7 +183,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 "Requested simultaneous demand exceeds output in this connected power network.");
         }
 
-        long knownCost = 0;
+        long knownCost = knownMaterialCost;
         foreach (var part in parts.Values)
         {
             if (part.ConstructionCost is int cost) knownCost += cost;
