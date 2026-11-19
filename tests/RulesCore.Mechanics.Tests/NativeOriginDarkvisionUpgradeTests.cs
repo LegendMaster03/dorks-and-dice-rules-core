@@ -242,20 +242,22 @@ public sealed class NativeOriginDarkvisionUpgradeTests
     public void ForgedDarkvisionOnUnrelatedSelectedTraitCannotReturnNone()
     {
         var catalog = Catalog();
-        var directDwarf = new NativeOriginConstructionEngine(catalog).Evaluate(
-            new(new NativeOriginProposal("dwarf-with-forged-vision",
+        // Conventional Orc has Low-Light Vision but no numeric Darkvision:
+        // an unrelated selected native trait cannot forge that new sense.
+        var directOrc = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(new NativeOriginProposal("orc-with-forged-vision",
                 NativeOriginIntent.Direct,
                 new("rule.creature-origination", "biological"),
-                [], [], [], SelectedSpeciesId: "species.dwarf"),
+                [], [], [], SelectedSpeciesId: "species.orc"),
                 AutoManifestDirectDefaults: true));
-        Assert.Equal(NativeOriginConstructionStatus.Authorized, directDwarf.Status);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, directOrc.Status);
         Assert.Equal("none",
-            NativeOriginDarkvisionProjector.Project(catalog, directDwarf, 4).Status);
-        var forged = AlterSenseGrant(directDwarf,
-            "trait.dwarf.dwarven-toughness",
+            NativeOriginDarkvisionProjector.Project(catalog, directOrc, 4).Status);
+        var forged = AlterSenseGrant(directOrc,
+            "trait.orc.relentless-endurance",
             JsonSerializer.SerializeToElement(new
             {
-                id = "dwarven-toughness",
+                id = "relentless-endurance",
                 sense = "darkvision",
                 rangeFeet = 600,
                 addToExistingDarkvisionFeet = 600,
