@@ -58,21 +58,44 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         var available = effective.OrderBy(grant => grant.Id, StringComparer.Ordinal).ToList();
         var derived = new List<NativeOriginEffectiveGrant>();
         var generated = new HashSet<string>(StringComparer.Ordinal);
+        var reportedAmbiguities = new HashSet<string>(StringComparer.Ordinal);
 
-        // Acyclic graphs need no more successful rounds than authored rules.
-        // Always restart from a sorted source set; input ordering cannot select
-        // an arbitrary grant or create multiple instances of one interaction.
+        // Compute eligible outputs against the same immutable pass snapshot.
+        // Two independently authored rules yielding the same canonical trait
+        // do not establish a priority or stacking policy merely because their
+        // identifiers sort in a particular order. Block both and report the
+        // unresolved policy instead of silently choosing the first.
+        // Acyclic transitive rules need at most one successful pass per rule.
         for (var pass = 0; pass < rules.Count; pass++)
         {
-            var changed = false;
+            var eligible = new List<(Rule Rule,
+                IReadOnlyList<NativeOriginEffectiveGrant> Inputs)>();
             foreach (var rule in rules)
             {
                 var key = Key(rule);
                 if (generated.Contains(key) || cyclic.Contains(key)) continue;
                 if (available.Any(x => x.Identity.MechanicalDefinitionId == rule.ResultTraitId))
                     continue;
-                if (!TrySelectInputs(rule, available, offers, out var inputs)) continue;
+                if (TrySelectInputs(rule, available, offers, out var inputs))
+                    eligible.Add((rule, inputs));
+            }
 
+            var contested = eligible.GroupBy(x => x.Rule.ResultTraitId, StringComparer.Ordinal)
+                .Where(x => x.Count() > 1)
+                .Select(x => x.Key)
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var resultTraitId in contested.OrderBy(x => x, StringComparer.Ordinal))
+                if (reportedAmbiguities.Add(resultTraitId))
+                    issues.Add(new("synergy-result-ambiguous",
+                        "originSynergies." + resultTraitId,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "Multiple applicable interactions grant the same canonical trait; an explicit authored alternative or precedence rule is required."));
+
+            var changed = false;
+            foreach (var (rule, inputs) in eligible)
+            {
+                if (contested.Contains(rule.ResultTraitId)) continue;
+                var key = Key(rule);
                 var provenance = inputs.OrderBy(x => x.Id, StringComparer.Ordinal)
                     .Select(x => new NativeOriginSynergyInputEvidence(
                         x.Id, x.ManifestationId, x.Identity,
@@ -327,7 +350,12 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
             IdentityMatches(candidate.Identity));
     }
 
-    private static string Key(Rule rule) => rule.OwnerId + ":" + rule.Id;
+    // Length-prefix the owner; concatenation with a colon can collide when
+    // independently authored IDs themselves contain colons (including table
+    // decision IDs), causing graph construction to throw on duplicate keys.
+    private static string Key(Rule rule) =>
+        rule.OwnerId.Length.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+        ":" + rule.OwnerId + rule.Id;
 
     private static bool String(JsonElement value, string name, out string result)
     {
