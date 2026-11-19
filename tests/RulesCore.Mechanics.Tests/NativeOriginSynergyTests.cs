@@ -663,6 +663,30 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void NewlineDelimitersCannotAliasStableDerivedGrantIdentities()
+    {
+        using var fixture = new Fixture("[]");
+        var proposal = Selected(fixture, "/traits/2", "/traits/3") with
+        {
+            // The unhashed tuple pairs would otherwise both become
+            // "table-decision:a\nb\nc" after naive newline joining.
+            TableDecisions =
+            [
+                TableSynergy("a", "b\nc", "b\nc", "trait.fixture.guardian"),
+                TableSynergy("a\nb", "c", "c", "trait.fixture.response")
+            ]
+        };
+        var result = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(proposal, new("campaign", "example"),
+                AutoManifestDirectDefaults: false), new SyntheticAuthority());
+
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "synergy-authoring-invalid");
+        Assert.False(Has(result, "trait.fixture.guardian"));
+        Assert.False(Has(result, "trait.fixture.response"));
+    }
+
+    [Fact]
     public void CallerManifestationCannotImpersonateDerivedSynergyIdentity()
     {
         using var fixture = new Fixture();
