@@ -1,0 +1,37 @@
+name: Pillar 2 Workstream C isolated validation
+
+# This worker-only workflow never deploys, modifies the repository or runs
+# against the shared Pillar 2 target / main branches.
+on:
+  push:
+    branches:
+      - feature/pillar2-mechanical-projection-coverage-20261119
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mechanics-and-origin-regressions:
+    name: .NET 10 and Python complete regression suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore and compile
+        run: |
+          dotnet restore RulesCore.slnx
+          dotnet build RulesCore.slnx -c Release --no-restore
+      - name: Focused passive entitlement projector tests
+        run: dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --no-build --filter FullyQualifiedName~NativeOriginPassiveEntitlementProjectorTests
+      - name: Full Mechanics tests
+        run: dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --no-build
+      - name: Full Rules Core solution
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Character Origins Python regressions
+        run: python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v
+      - name: Full Python suite
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
