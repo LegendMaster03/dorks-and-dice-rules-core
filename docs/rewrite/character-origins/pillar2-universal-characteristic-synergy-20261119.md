@@ -57,7 +57,7 @@ A synergy requires at least two total inputs. The currently supported bound is 1
 6. Detected authored interaction cycles fail closed with `synergy-cycle-unresolved` when relevant inputs are present. The evaluator never recursively mints unlimited outputs.
 7. Profile review replays native authored synergies from direct effective grants and compares each expected derived grant with its complete serialized record. For verified table decisions, the trusted construction engine passes its authenticated subset to the same replay; an unauthenticated structural review never independently trusts table-supplied definitions. Forged or omitted derived grants are invalid.
 
-The resulting grant is stored alongside other effective inherent grants in `NativeOriginProfile.Underlying`. It is not an independent entitlement, procedural power budget, second mechanical grant class, or directly selectable candidate. This deliberately avoids fake manifestation records.
+The resulting grant is stored alongside other effective inherent grants in `NativeOriginProfile.Underlying`. It is not an independent entitlement, procedural power budget, second mechanical grant class, or directly selectable candidate. This deliberately avoids fake manifestation records. To protect that identity boundary, caller-supplied manifestation IDs beginning with `synergy:` are invalid. Native rule and table interaction IDs may contain ordinary separators such as colons but may not contain CR/LF delimiters, which would make the stable hashed identity ambiguous.
 
 ## Boundaries
 
@@ -73,7 +73,7 @@ Consumers that expose canonical Origin grants can read these results through the
 
 ## Acceptance verification
 
-The synthetic xUnit fixture in `NativeOriginSynergyTests.cs` tests: two-input construct-style stability, wings plus musculature, offered-but-unmanifested traits, three-input composition, explicitly authored alternative actuators, transitive effects, effective input removal, duplicate input prevention, cycle fail-closure, forged native candidates, forged derived provenance, deterministic reconstruction, JSON round-trip, verified table-authored rules, mismatched and forged table claims, conflicting table rule targets, rejection of choice- or resource-dependent outputs, fail-closed unknown rule and selector fields, two distinct offers reconciled into one effective input, order-independent proof replay, ambiguous duplicate outputs, and collision-safe table interaction IDs.
+The synthetic xUnit fixture in `NativeOriginSynergyTests.cs` tests: two-input construct-style stability, wings plus musculature, offered-but-unmanifested traits, three-input composition, explicitly authored alternative actuators, transitive effects, effective input removal, duplicate input prevention, cycle fail-closure, forged native candidates, forged derived provenance, deterministic reconstruction, JSON round-trip, verified table-authored rules, mismatched and forged table claims, conflicting table rule targets, rejection of choice- or resource-dependent outputs, fail-closed unknown rule and selector fields, two distinct offers reconciled into one effective input, order-independent proof replay, ambiguous duplicate outputs, collision-safe table interaction IDs, reserved generated manifestation IDs, and rejection of newline-delimited hash collisions.
 
 Relevant commands:
 
