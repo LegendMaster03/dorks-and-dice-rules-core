@@ -158,7 +158,9 @@ public static class NativeOriginPassiveEntitlementProjector
     {
         var source = grant.Identity.Occurrence.Source;
         var path = grant.Identity.Occurrence.OccurrencePath;
-        if (source.Kind != NativeOriginSourceKind.Native ||
+        if (grant.Identity.IntrinsicSlotId is not null ||
+            grant.Identity.TraitConceptId is not null ||
+            source.Kind != NativeOriginSourceKind.Native ||
             source.Version is not null ||
             !catalog.TryGetById(source.Id, out var owner) ||
             owner is null || owner.Category is not ("species" or "ancestry") ||
@@ -279,8 +281,13 @@ public static class NativeOriginPassiveEntitlementProjector
         var selected = result.EvaluatedProposal.Candidates
             .Where(x => grant.SourceCandidateIds.Contains(x.Id, StringComparer.Ordinal))
             .ToArray();
-        return selected.Length == grant.SourceCandidateIds.Count &&
-            selected.All(candidate =>
+        if (selected.Length != grant.SourceCandidateIds.Count ||
+            !result.EvaluatedProposal.Manifestations.Any(m =>
+                m.Id == grant.ManifestationId &&
+                grant.SourceCandidateIds.Contains(m.CandidateId, StringComparer.Ordinal)))
+            return false;
+
+        return selected.All(candidate =>
                 candidate.Identity == grant.Identity &&
                 (!mixed && candidate.ContributorId is null ||
                     mixed && candidate.ContributorId is not null) &&
