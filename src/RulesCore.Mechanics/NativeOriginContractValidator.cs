@@ -349,7 +349,15 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     /// and granting these mechanics through a trusted construction pipeline.
     /// </summary>
     public NativeOriginContractReview ReviewProfile(NativeOriginProfile profile,
-        NativeOriginProposal? proposal = null)
+        NativeOriginProposal? proposal = null) =>
+        ReviewProfileVerified(profile, proposal, []);
+
+    // An ordinary structural review has no trusted authorization context.
+    // Only the construction engine can replay table-authored interactions
+    // using decisions already authenticated against the current trusted scope.
+    internal NativeOriginContractReview ReviewProfileVerified(
+        NativeOriginProfile profile, NativeOriginProposal? proposal,
+        IReadOnlyList<NativeTableRuleDecision> verifiedTableSynergies)
     {
         ArgumentNullException.ThrowIfNull(profile);
         var issues = new List<NativeOriginContractIssue>();
@@ -545,7 +553,8 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         if (proposal is not null)
         {
             var (recomputed, _) = new NativeOriginSynergyEvaluator(catalog).Evaluate(
-                proposal, baselineGrants.Values.Where(x => x.Synergy is null).ToArray());
+                proposal, baselineGrants.Values.Where(x => x.Synergy is null).ToArray(),
+                verifiedTableSynergies);
             expectedSynergies = recomputed.ToDictionary(x => x.Id, StringComparer.Ordinal);
             foreach (var derived in recomputed)
                 if (!baselineGrants.ContainsKey(derived.Id))
