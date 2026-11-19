@@ -159,7 +159,12 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
 
         foreach (var (ownerId, targetedId, item, tableDecisionId) in authored)
         {
+            // Reject unimplemented semantic fields. Ignoring a claimed
+            // operating condition or negation could accidentally grant power.
             if (item.ValueKind != JsonValueKind.Object ||
+                item.EnumerateObject().Any(p => p.Name is not (
+                    "id" or "resultTraitId" or "inputs" or "name" or
+                    "description" or "reviewNotes")) ||
                 !String(item, "id", out var id) ||
                 targetedId is not null && targetedId != id ||
                 !String(item, "resultTraitId", out var resultTraitId) ||
@@ -188,6 +193,7 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
             foreach (var group in inputsJson.EnumerateArray())
             {
                 if (group.ValueKind != JsonValueKind.Object ||
+                    group.EnumerateObject().Any(p => p.Name is not ("anyOf" or "count")) ||
                     !group.TryGetProperty("anyOf", out var alternativesJson) ||
                     alternativesJson.ValueKind != JsonValueKind.Array ||
                     alternativesJson.GetArrayLength() is < 1 or > 16 ||
@@ -202,6 +208,14 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 var alternatives = new List<NativeOriginCharacteristicSelector>();
                 foreach (var choice in alternativesJson.EnumerateArray())
                 {
+                    if (choice.ValueKind != JsonValueKind.Object ||
+                        choice.EnumerateObject().Any(p => p.Name is not (
+                            "candidateId" or "mechanicalDefinitionId" or "intrinsicSlotId" or
+                            "sourceId" or "parameterKey" or "expectedValue")))
+                    {
+                        valid = false;
+                        break;
+                    }
                     NativeOriginCharacteristicSelector? selector;
                     try
                     {
