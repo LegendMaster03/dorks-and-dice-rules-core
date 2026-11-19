@@ -106,6 +106,9 @@ public static class NativeCharacterManifestationTransitionPlanner
                 if (string.IsNullOrWhiteSpace(item.Id) ||
                     string.IsNullOrWhiteSpace(item.SheetId) ||
                     item.ResourcePolicies is null ||
+                    // Validate nested elements before matching newly minted pools
+                    // or invoking any host authority callback.
+                    item.ResourcePolicies.Any(policy => policy is null) ||
                     instances.ContainsKey(item.Id) || item.Id != step.TargetInstanceId ||
                     item.ActivationEventId != request.EventId ||
                     item.LastEventId != request.EventId ||

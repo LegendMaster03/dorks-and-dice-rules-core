@@ -42,6 +42,16 @@ public static class NativeMechanicsEndpoints
         // The ordinary delegated surface serves calculations, not unrestricted content.
         if (privateTunnel) group.MapNativeCharacterCatalog();
 
+        // Partial character state and supernatural planning require an independently
+        // verifying host-side authority provider; delegation alone is not proof.
+        if (!privateTunnel)
+        {
+            group.MapVerifiedPrimaryState();
+            group.MapVerifiedManifestationPlans();
+            group.MapVerifiedManifestationReads();
+            group.MapNativeOriginVerifiedUnderlying();
+        }
+
         // Origin preview inherits the same authenticated ingress as other mechanics.
         // No persisted state or table-authority claims are accepted by this route.
         group.MapNativeOriginPreview();
