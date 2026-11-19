@@ -132,6 +132,7 @@ public sealed class NativeOriginTremorsenseProjectorTests
         Assert.Equal(10, sense.DurationMinutes);
         Assert.Equal("proficiency-bonus", sense.UsesFormula);
         Assert.Equal("long-rest", sense.Recharge);
+        Assert.Equal(sense.GrantId, sense.ResourcePoolOwnerGrantId);
         var grant = Assert.Single(completed.Profile!.Underlying.InherentGrants,
             x => x.Id == sense.GrantId);
         Assert.Equal(grant.SourceCandidateIds, sense.SourceCandidateIds);
@@ -166,6 +167,8 @@ public sealed class NativeOriginTremorsenseProjectorTests
         Assert.Null(earth.DurationMinutes);
         Assert.Null(earth.UsesFormula);
         Assert.Null(earth.Recharge);
+        Assert.Null(earth.ResourcePoolOwnerGrantId);
+        Assert.Equal(stone.GrantId, stone.ResourcePoolOwnerGrantId);
         Assert.Equal("proficiency-bonus", stone.UsesFormula);
         Assert.Empty(view.UnresolvedReasons);
         Assert.Equal("unresolved",
@@ -242,6 +245,26 @@ public sealed class NativeOriginTremorsenseProjectorTests
                 }
             }));
         Assert.Equal("unresolved", authority.Status);
+        // The authored modes have no linked-resource or configurable
+        // parameter grammar; such claims must not become usable charges.
+        var fabricatedPool = NativeOriginTremorsenseProjector.Project(catalog,
+            Tampered(grant with
+            {
+                ResourceOwners = new Dictionary<string, string>
+                {
+                    ["uses"] = "invented-resource-owner"
+                }
+            }));
+        Assert.Equal("unresolved", fabricatedPool.Status);
+        var fabricatedParameter = NativeOriginTremorsenseProjector.Project(catalog,
+            Tampered(grant with
+            {
+                Parameters = new Dictionary<string, JsonElement>
+                {
+                    ["rangeFeet"] = JsonSerializer.SerializeToElement(500)
+                }
+            }));
+        Assert.Equal("unresolved", fabricatedParameter.Status);
         Assert.Equal("unresolved", NativeOriginTremorsenseProjector.Project(
             catalog, completed with
             {
