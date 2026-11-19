@@ -143,6 +143,13 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         foreach (var (id, manifest) in manifests)
         {
             var path = "manifestations." + id;
+            // The construction engine derives grant IDs from manifestation IDs.
+            // Reserve the synthetic namespace so an untrusted manifestation
+            // cannot collide with a catalog-issued synergy grant identity.
+            if (id.StartsWith("synergy:", StringComparison.Ordinal))
+                Add("reserved-synergy-manifestation-id", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Manifestation IDs starting with synergy: are reserved for evaluated interactions.");
             if (!candidates.TryGetValue(manifest.CandidateId ?? "", out var candidate))
             {
                 Add("manifestation-candidate-missing", path, NativeOriginIssueSeverity.Invalid,
