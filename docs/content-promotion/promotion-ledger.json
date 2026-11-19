@@ -435,8 +435,9 @@
   "sourceDivergences": {
     "class.druid": {
       "reconciliationDocument": "docs/rewrite/druid-band-1-reconciliation.md",
-      "reason": "Owner-approved exclusive companion path on 2026-10-23 supersedes the earlier simultaneous grants in the preserved working class.",
+      "reason": "Owner-approved exclusive companion path supersedes the earlier simultaneous grants; canonical class equipment qualification grants are recorded in the shared equipment audit.",
       "changedPaths": [
+        "/definition/equipmentProficiencyGrants",
         "/definition/choiceOnlyFeatureIds",
         "/definition/temporaryWildCompanionCanCoexist",
         "/definition/progression/0/featureGrants",
@@ -530,6 +531,323 @@
         "/status",
         "/suggestedCharacteristics",
         "/suggestedSpecialties"
+      ]
+    },
+    "class.barbarian": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Selected native class uses canonical equipment qualification grants, while its retained working source predates the typed equipment grant contract.",
+      "changedPaths": [
+        "/definition/equipmentProficiencyGrants"
+      ]
+    },
+    "class.bard": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Selected native class uses canonical equipment qualification grants, while its retained working source predates the typed equipment grant contract.",
+      "changedPaths": [
+        "/definition/equipmentProficiencyGrants",
+        "/definition/legacySingleMartialWeaponChoice/implementedByEquipmentGrant"
+      ]
+    },
+    "class.cleric": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Selected native class uses canonical equipment qualification grants, while its retained working source predates the typed equipment grant contract.",
+      "changedPaths": [
+        "/definition/equipmentProficiencyGrants"
+      ]
+    },
+    "class.rogue": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Selected native class uses canonical equipment qualification grants, while its retained working source predates the typed equipment grant contract.",
+      "changedPaths": [
+        "/definition/equipmentProficiencyGrants"
+      ]
+    },
+    "class.sorcerer": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Selected native class uses canonical equipment qualification grants, while its retained working source predates the typed equipment grant contract.",
+      "changedPaths": [
+        "/definition/equipmentProficiencyGrants"
+      ]
+    },
+    "class.wizard": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Selected native class uses canonical equipment qualification grants, while its retained working source predates the typed equipment grant contract.",
+      "changedPaths": [
+        "/definition/equipmentProficiencyGrants"
+      ]
+    },
+    "competency.alchemy": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.basketweaving": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.bookbinding": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.brewing": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.calligraphy": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.carpentry": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.cartography": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.cobbling": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.cooking": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.gemcutting": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.glassblowing": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.herbalism": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.leatherworking": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.locksmithing": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.navigation": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.painting": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.poisoning": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.pottery": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.sculpting": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.smithing": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.stonemasonry": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.tinkering": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.weaving": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "competency.woodcarving": {
+      "reconciliationDocument": "docs/rewrite/native-seed-skills-and-competencies.md",
+      "sourceWorkingStatus": "provisional",
+      "reason": "The selected native Competency is one learned capability with proficiency and level; the preserved provisional working record retains superseded Craft/tool facet modeling.",
+      "changedPaths": [
+        "/associatedTools",
+        "/facets",
+        "/profile",
+        "/trainingIdentity"
+      ]
+    },
+    "class-feature.barbarian.weapon-mastery-level-1": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Native Weapon Mastery is a separate, proficiency-dependent source entitlement; the preserved working class-feature record predates the typed Mastery grant.",
+      "changedPaths": [
+        "/definition/weaponMasteryGrants"
+      ]
+    },
+    "class-feature.rogue.weapon-mastery-level-1": {
+      "reconciliationDocument": "docs/rewrite/character-origins/pillars-1-and-3-weapon-proficiency-mastery-audit-20261110.md",
+      "reason": "Native Weapon Mastery is a separate, proficiency-dependent source entitlement; the preserved working class-feature record predates the typed Mastery grant.",
+      "changedPaths": [
+        "/definition/weaponMasteryGrants"
       ]
     }
   },

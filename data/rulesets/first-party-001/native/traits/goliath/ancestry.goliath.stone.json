@@ -1,0 +1,119 @@
+[
+  {
+    "id": "trait.goliath.stone.stones-endurance",
+    "name": "Stone's Endurance",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "stones-endurance",
+      "name": "Stone's Endurance",
+      "description": "When you take damage, you can use your Reaction to reduce that damage by 1d12 plus your Constitution modifier. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+      "activation": {
+        "action": "reaction",
+        "trigger": "when-you-take-damage"
+      },
+      "damageReduction": {
+        "dice": "1d12",
+        "addAbilityModifier": "constitution",
+        "appliesTo": "triggering-damage"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      }
+    }
+  },
+  {
+    "id": "trait.goliath.stone.stone-strike",
+    "name": "Stone Strike",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "stone-strike",
+      "name": "Stone Strike",
+      "requiredCharacterLevel": 1,
+      "description": "Once per turn, when you hit with a melee or thrown-weapon attack, you can spend one use of Stone's Endurance to deal 1d6 additional Force damage. If the target is a creature, it makes a Strength saving throw or is pushed 10 feet directly away from you. This is a different activation of the existing ancestry use pool.",
+      "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+      "oncePerTurn": true,
+      "extraDamage": {
+        "dice": "1d6",
+        "damageType": "force",
+        "target": "same-target"
+      },
+      "savingThrow": {
+        "ability": "strength",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-push"
+      },
+      "onFailedSave": {
+        "forcedMovementFeet": 10,
+        "direction": "directly-away-from-you"
+      },
+      "sharedUsesFromTrait": "stones-endurance",
+      "extraUsesGranted": false,
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
+      }
+    }
+  },
+  {
+    "id": "trait.goliath.stone.cavernous-sight",
+    "name": "Cavernous Sight",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "cavernous-sight",
+      "name": "Cavernous Sight",
+      "requiredCharacterLevel": 4,
+      "description": "You gain Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 60 feet.",
+      "sense": "darkvision",
+      "rangeFeet": 60,
+      "addToExistingDarkvisionFeet": 60,
+      "stacking": "once-per-feature"
+    }
+  },
+  {
+    "id": "trait.goliath.stone.stone-throw",
+    "name": "Stone Throw",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "stone-throw",
+      "name": "Stone Throw",
+      "requiredCharacterLevel": 4,
+      "description": "As a Bonus Action, you magically hurl a rock at a target within 60 feet using a ranged spell attack based on your chosen Goliath ancestry ability. On a hit, the rock deals 1d10 Force damage, and the target makes a Strength saving throw or becomes Prone. You can use this ability Proficiency Bonus times per Long Rest.",
+      "activation": {
+        "action": "bonus-action"
+      },
+      "requiresItem": "rock",
+      "attack": {
+        "type": "ranged-spell-attack",
+        "rangeFeet": 60,
+        "attackBonus": "proficiency-bonus + chosen-giant-ancestry-ability-modifier"
+      },
+      "damage": {
+        "dice": "1d10",
+        "damageType": "force"
+      },
+      "savingThrow": {
+        "ability": "strength",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-prone"
+      },
+      "applyConditionOnFailedSave": "condition.prone",
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "long-rest"
+      },
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
+      }
+    }
+  }
+]

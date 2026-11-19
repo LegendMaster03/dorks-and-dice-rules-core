@@ -23,6 +23,6 @@ The selected common Dragonborn Species mechanics are authoritative in `native/sp
 - Compare the selected Chromatic and Metallic family mechanics and ten leaf adaptations in playtests.
 - Reconcile learned Dragonborn Upbringings independently; no Species/Subspecies default selections have been made.
 
-**Deferred:** Gem Dragonborn; Platinum/Ruby/composite exceptional forms; transformation rites; Dragon Shaman feat; Dragonfire Adept feat/prestige-class; other dragon categories.
+**Ordinary Gem now native:** Gem adds the 15-foot cone and inherited Psionic Mind/Gem Flight without changing the base Breath Weapon or resistance. **Deferred:** implementation of exceptional Platinum and design of exceptional Ruby/Fivefold Chromatic; transformation rites; Dragon Shaman feat; Dragonfire Adept feat/prestige-class; further categories.
 
 Historical candidates are not selectable rules. Approved coherent mechanics are promoted to `native/`; unresolved research stays in `working/`.

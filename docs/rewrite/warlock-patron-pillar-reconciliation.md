@@ -229,3 +229,29 @@ Patron spell access begins at Warlock level 1; default automatic grants begin at
 ## Fiend level-10 resistance — final owner disposition (2026-10-25)
 
 **APPROVED A:** Retire both 2014 and 2024 Fiend Patron **selected-type damage-resistance** variants from the **native Fiend progression** with **no replacement** and **no compensating Patron entitlement**. Keep the original feature part and the two source-era preset milestones as **historical comparison only**, without a native grant. This does not change the universal 3.5e-derived Warlock **Energy Resistance** at class level 10 (two selected energy types, flat mitigation 5, improving to 10 at level 20), or Fiend Infernal Retaliation at 8/13/18. The approved design rulings are complete; native executable content and detailed effect event timing still require work. The decision in [the consolidated Fiend record](warlock-fiend-patron-consolidated-decision.md) supersedes older unreconciled suggestions above.
+
+## Future Patron concept — Draconic (idea only, 2026-11-11)
+
+**Status: prospective idea, not an approved or implemented Patron, Pact, Invocation, feature, or rules package.** Keep this item in the future Patron idea backlog; do not add it to active native class content or treat it as a committed design.
+
+A **Draconic Patron** could enter into individually negotiated agreements with Warlocks. One *possible*, and potentially common, agreement term would be **Draconic Rebirth**, a specialization of the general Rite of Rebirth under Character Origins Pillar 2. This is **not** inherent in the Patron choice, and neither rebirth nor a Warlock class level is generally required to use the ritual. The agreement's terms, rather than a universal pact template, determine whether rebirth is offered, when it occurs, and what continuing conditions or possible reversal clauses (if any) apply. Any such reversal would require its own defined mechanics rather than assumed restoration of the original configuration.
+
+Draconic Rebirth's existing conceptual rule **completely replaces current Species, Ancestry and Species/Ancestry-derived creature type**, while preserving historical parentage, Background and Upbringing. For **exceptional category-leader Dragonborn**, any pact-linked rebirth would still require the **direct personal participation of the corresponding leader**; entering a pact with that leader would not automatically grant the exceptional form.
+
+### Vassal of Bahamut — potential Draconic Patron reference, not approved mechanics
+
+Owner direction (2026-11-11): The 3.5 *Vassal of Bahamut* class has promising abilities for a **future Draconic Patron**, rather than automatically adding those features to exceptional Platinum Dragonborn. These are **research candidates only**:
+
+| Historical ability | Candidate placement and rationale |
+| --- | --- |
+| **Imperious Aura** | Patron-associated command/presence feature, if meaningful across individual dragon sources |
+| **Platinum Armor** | Optional patron gift, reward, equipment benefit or qualifying invocation, not innate ancestry armor |
+| **Shared Trove** | Negotiated material aid or resource, not a universal cash grant to all Draconic Warlocks |
+| **Bonus feats** | Patron-directed training/advancement candidate, with potential overlap with universal feats and class progression to resolve |
+| **Divine spells** | Patron spell-access/source-specific magic inspiration, not proof of automatic new spells |
+| **Dragonwrack** | Strong Patron or specialized service/combat progression candidate; anti-dragon retaliation is not automatically intrinsic to Platinum Dragonborn |
+| **Dragon Senses** | Most plausible **Platinum Mind ancestry** candidate because enhanced perception can be inherent after rebirth; also requires review before any Patron version |
+
+The future Draconic Patron is still only a **conceptual category**; its dragon category, color/material, particular individual source, and negotiated terms may influence features, without pre-committing to fixed class paths. Distinguish inherent transformed traits from external gifts, and do not automatically grant **all** historical Vassal features in a single package. No mechanical grants, costs, eligibility, or levels are selected. See [Platinum Dragonborn design](character-origins/pillar2-platinum-heart-mind-wings-concept-20261111.md).
+
+Reference: [Character Origins — Rites of Rebirth and exceptional Dragonborn](character-origins/pillar2-rites-of-rebirth-20261111.md). Future Patron features, class progression, agreement modeling, and interaction with the Warlock's existing separate Patron/Pact/Invocation pillars remain entirely unapproved and out of scope for the current Character Origins work.

@@ -1,0 +1,25 @@
+{
+  "status": "synthetic-design-evidence-only",
+  "traits": [
+    {
+      "sourceTraitId": "species.orc#trait:powerful-build",
+      "conceptId": "study.concept.powerful-build",
+      "definitionId": "study.definition.orc-powerful-build"
+    },
+    {
+      "sourceTraitId": "species.goliath#trait:powerful-build",
+      "conceptId": "study.concept.powerful-build",
+      "definitionId": "study.definition.goliath-powerful-build"
+    },
+    {
+      "sourceTraitId": "species.orc#trait:low-light-vision",
+      "conceptId": "study.concept.low-light-vision",
+      "definitionId": "study.definition.low-light-vision"
+    },
+    {
+      "sourceTraitId": "species.elf#trait:low-light-vision",
+      "conceptId": "study.concept.low-light-vision",
+      "definitionId": "study.definition.low-light-vision"
+    }
+  ]
+}

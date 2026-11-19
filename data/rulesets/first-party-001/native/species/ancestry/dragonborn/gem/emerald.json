@@ -1,0 +1,17 @@
+{
+  "id": "ancestry.dragonborn.emerald",
+  "name": "Emerald Dragonborn",
+  "kind": "ancestry",
+  "status": "selected-native",
+  "selectable": false,
+  "parent": "ancestry.dragonborn.gem",
+  "damageType": "psychic",
+  "traits": [],
+  "reviewNotes": [
+    "This ordinary Gem leaf provides psychic affinity for the base Dragonborn Breath Weapon and 50% resistance.",
+    "Shared 15-foot cone, Psionic Mind and level-5 Gem Flight are inherited once from the nonselectable Gem family; base Breath Weapon action, dice progression, saves and resources remain unchanged.",
+    "No additional adaptation is invented solely to match Chromatic or Metallic leaves; category and skin material are expressed in its parent and authored ancestry identity.",
+    "No learned culture, language, alignment or Upbringing is automatically granted; Ruby is not a selectable ordinary Gem leaf.",
+    "Temporarily nonselectable pending a later psionics pass. Retain selected-native definitions as reference content; this leaf is unavailable for ordinary character creation and ordinary mixed-Heritage contributor selection while deferred."
+  ]
+}

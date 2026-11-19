@@ -7,13 +7,7 @@
   "parent": "species.halfling",
   "traits": [
     {
-      "id": "natural-agility",
-      "description": "Gain +2 Climb, +2 Jump and +2 Move Silently.",
-      "skillBonuses": {
-        "skill.climb": 2,
-        "skill.jump": 2,
-        "skill.move-silently": 2
-      }
+      "traitId": "trait.halfling.lightfoot.natural-agility"
     }
   ],
   "reviewNotes": [

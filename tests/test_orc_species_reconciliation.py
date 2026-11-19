@@ -1,4 +1,5 @@
 """Approved Orc native Species and shared vision regression checks."""
+from tools.native_origin_trait_projection import expand_species_traits
 import json
 from pathlib import Path
 import unittest
@@ -11,7 +12,7 @@ MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
 
 def read(path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return expand_species_traits(json.loads(path.read_text(encoding="utf-8")), path)
 
 
 class OrcSpeciesReconciliationTests(unittest.TestCase):

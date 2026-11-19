@@ -1,0 +1,61 @@
+{
+  "status": "design-evidence-only",
+  "description": "Explicit translation contracts for existing symbolic references. These are not active rules; the resolver is source-agnostic and requires authored contracts rather than inferring grants from a Species name.",
+  "contracts": [
+    {
+      "sourceOccurrenceId": "species.dragonborn#trait:draconic-resistance",
+      "bindings": [
+        {
+          "path": "damageResistance.damageTypeFrom",
+          "authoredReference": "selected-dragonborn-leaf",
+          "lookup": {
+            "scope": "selected-lineage",
+            "field": "damageType",
+            "order": "nearest-to-selected",
+            "expectedType": "string"
+          }
+        }
+      ]
+    },
+    {
+      "sourceOccurrenceId": "species.dragonborn#trait:breath-weapon",
+      "bindings": [
+        {
+          "path": "damage.typeFrom",
+          "authoredReference": "selected-dragonborn-leaf",
+          "lookup": {
+            "scope": "selected-lineage",
+            "field": "damageType",
+            "order": "nearest-to-selected",
+            "expectedType": "string"
+          }
+        },
+        {
+          "path": "areaFrom",
+          "authoredReference": "selected-dragonborn-family-or-leaf",
+          "lookup": {
+            "scope": "selected-lineage",
+            "field": "breathWeaponArea",
+            "order": "nearest-to-selected",
+            "expectedType": "object"
+          }
+        }
+      ]
+    },
+    {
+      "sourceOccurrenceId": "ancestry.dragonborn.chromatic#trait:chromatic-warding",
+      "bindings": [
+        {
+          "path": "damageResistanceOverride.damageTypeFrom",
+          "authoredReference": "selected-dragonborn-leaf",
+          "lookup": {
+            "scope": "selected-lineage",
+            "field": "damageType",
+            "order": "nearest-to-selected",
+            "expectedType": "string"
+          }
+        }
+      ]
+    }
+  ]
+}

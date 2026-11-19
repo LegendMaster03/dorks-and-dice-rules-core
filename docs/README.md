@@ -14,6 +14,10 @@ Rules Core's current implementation is the native, ruleset-first service on `mai
 
 The authoritative gameplay definitions are in `data/rulesets/first-party-001/native/`; documentation describes those rules but does not activate them. `working/` and `reference/` are not runtime fallbacks.
 
+## Governing table authority
+
+**Across the entire Dorks & Dice tabletop system**, first-party rules provide coherent defaults that a table may customize. DM rulings, homebrew, and campaign choices should remain distinguishable from first-party rules, but departures from the defaults are not intrinsically invalid. This principle is recorded in the [living native rules design specification](rewrite/native-rules-design-specification.md#governing-design-principle--the-rules-are-a-framework-not-a-constraint-on-the-table), which applies beyond any individual subsystem.
+
 ## Living game design and integration
 
 - [Native rules design specification](rewrite/native-rules-design-specification.md) — approved choices, proposals, and unresolved decisions; proposals are not automatically operative rules.

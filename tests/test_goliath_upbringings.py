@@ -1,4 +1,5 @@
 """Goliath Clan and Giant Foundling Upbringings: independent culture and inheritance."""
+from tools.native_origin_trait_projection import expand_species_traits
 import json
 import unittest
 from pathlib import Path
@@ -11,7 +12,7 @@ ANCESTRIES = ("cloud", "fire", "frost", "hill", "stone", "storm")
 
 
 def read(path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return expand_species_traits(json.loads(path.read_text(encoding="utf-8")), path)
 
 
 class GoliathUpbringingTests(unittest.TestCase):

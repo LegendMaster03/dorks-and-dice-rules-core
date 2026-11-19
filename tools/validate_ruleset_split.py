@@ -275,10 +275,15 @@ def matches_preserved_working_evidence(native_record, working_record, working_pa
     if source_status == "pending-native-reconciliation" and (
             divergence.get("sourceBaselineStatus") != source_status):
         return False
-    if source_status is None and (
-            not working_record.get("status") or
-            divergence.get("sourceWorkingStatus") != working_record.get("status")):
-        return False
+    if source_status is None:
+        working_status = working_record.get("status")
+        # The provisional Competency source predates per-record status fields.
+        # Accept only the exact historical file's declared status, together
+        # with a record-specific ledger entry and exact changedPaths below.
+        if not working_status and working_path == WORKING / "competencies.json":
+            working_status = read_json(working_path).get("_meta", {}).get("status")
+        if not working_status or divergence.get("sourceWorkingStatus") != working_status:
+            return False
     if not (REPO / divergence["reconciliationDocument"]).is_file():
         return False
 

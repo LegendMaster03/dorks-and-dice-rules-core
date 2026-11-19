@@ -22,7 +22,8 @@
         "damageModifiers": {},
         "conditionImmunities": [],
         "naturalWeaponCompetency": false,
-        "description": "Universal creature mechanics. No arbitrary ability score, speed, Hit Die count, or fixed Hit Die size."
+        "description": "Universal creature mechanics. No arbitrary ability score, speed, Hit Die count, or fixed Hit Die size.",
+        "originationMethods": []
       },
       "inheritance": {
         "model": "Type hierarchy defines classification and stat-block-default inheritance. Species/Ancestry grant character traits independently; playable Species may use any creature type.",
@@ -39,14 +40,12 @@
         "creature-type.fiend",
         "creature-type.elemental",
         "creature-type.fey",
-        "creature-type.true-elemental",
         "creature-type.beast",
         "creature-type.magical-beast",
         "creature-type.vermin",
         "creature-type.humanoid",
         "creature-type.giant",
         "creature-type.monstrosity",
-        "creature-type.monstrous-humanoid",
         "creature-type.aberration",
         "creature-type.construct",
         "creature-type.dragon",
@@ -86,7 +85,8 @@
           "speciesAndCharacterGrants": "Explicit Species, Ancestry, Class, and other applicable player-character rules determine traits, Hit Dice, biological needs, senses, competencies, resistances and immunities.",
           "existingMonsterStatblocksUnchanged": true
         }
-      }
+      },
+      "originationMethodRuleId": "rule.creature-origination"
     },
     {
       "id": "creature-type.outsider",
@@ -112,7 +112,8 @@
       },
       "description": "Planar or otherworldly foundation; breathing follows generic Creature default.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": []
     },
     {
       "id": "creature-type.celestial",
@@ -128,7 +129,11 @@
       "parent": "creature-type.outsider",
       "description": "Further shared fiend traits belong to more specialized descendants.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological",
+        "spawning"
+      ]
     },
     {
       "id": "creature-type.elemental",
@@ -138,9 +143,12 @@
         "strong": [],
         "note": "Elemental strong-save defaults are supplied by specific elemental descendants, where appropriate."
       },
-      "description": "Elemental nature; elemental-body physiology is not universal to genies and other Elementals.",
+      "description": "Elemental nature, including genies and elemental-bodied creatures. Physical requirements and abilities depend on the specific creature, not a second True Elemental classification.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "elemental-manifestation"
+      ]
     },
     {
       "id": "creature-type.fey",
@@ -159,18 +167,10 @@
       },
       "description": "Overrides Outsider biological requirements; other Fey-specific characteristics are inherited further down.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
-    },
-    {
-      "id": "creature-type.true-elemental",
-      "name": "True Elemental",
-      "parent": "creature-type.elemental",
-      "needs": {
-        "breathing": false
-      },
-      "description": "Additional elemental-body properties are assigned here or to a more specific descendant after trait review.",
-      "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.beast",
@@ -191,7 +191,10 @@
       },
       "description": "Ordinary biological needs; no universal intelligence, language, alignment, or equipment prohibitions.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.magical-beast",
@@ -244,7 +247,10 @@
       ],
       "description": "Ordinary physiology, equipment compatibility; no universal language, armor, speed, alignment, or ability scores.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.giant",
@@ -276,31 +282,10 @@
       "naturalWeaponCompetency": true,
       "description": "Broad monstrous physiology; no blanket senses, immunities, or magical abilities.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
-    },
-    {
-      "id": "creature-type.monstrous-humanoid",
-      "name": "Monstrous Humanoid",
-      "parent": "creature-type.monstrosity",
-      "hitDie": 8,
-      "senses": [
-        {
-          "kind": "darkvision",
-          "rangeFeet": 60
-        }
-      ],
-      "weaponCompetencies": [
-        "simple"
-      ],
-      "savingThrowDefaults": {
-        "strong": [
-          "reflex",
-          "will"
-        ]
-      },
-      "description": "Monstrous creature with humanoid-like anatomy; does not automatically acquire Humanoid targeting eligibility.",
-      "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.aberration",
@@ -321,7 +306,10 @@
       },
       "description": "Unusual anatomy; no automatic psionics, telepathy, or magical resistance.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.construct",
@@ -354,7 +342,10 @@
       "naturalWeaponCompetency": true,
       "description": "Constitution scores and native healing remain possible; additional historical construct immunities are not automatically operative.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "construct-assembly"
+      ]
     },
     {
       "id": "creature-type.dragon",
@@ -380,7 +371,10 @@
       },
       "description": "Breath weapons, flight, frightful presence, and elemental immunity belong to descendants where appropriate.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.ooze",
@@ -404,7 +398,10 @@
       "naturalWeaponCompetency": true,
       "description": "Amorphous foundation; no universal Mindless, critical-hit immunity, or mandatory single blindsight range.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "division"
+      ]
     },
     {
       "id": "creature-type.plant",
@@ -427,7 +424,10 @@
       },
       "description": "Game classification includes fungal creatures; no assertion that fungi are botanically plants.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "plant-reproduction"
+      ]
     },
     {
       "id": "creature-type.undead",
@@ -460,7 +460,11 @@
       },
       "description": "Retains Constitution scores; does not universally import 3.x critical-hit, mental-effect, or energy-drain rules.",
       "kind": "creatureType",
-      "rulesStatus": "selected-native-type; inheritance-resolver-under-development"
+      "rulesStatus": "selected-native-type; inheritance-resolver-under-development",
+      "originationMethods": [
+        "reanimation",
+        "transformation"
+      ]
     }
   ]
 }

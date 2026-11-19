@@ -1,7 +1,7 @@
 {
   "_meta": {
     "status": "approved-native-type-catalog; runtime-inheritance-resolver-pending",
-    "note": "Approved creature-type hierarchy and inherited defaults from 3.x/5.x reconciliation. These are native new-creature defaults, not an instruction to recalculate or rewrite existing 5.x creature statistics. Save proficiency/scaling math and outstanding historical traits remain subject to their own rules passes."
+    "note": "Approved creature-type hierarchy and inherited defaults from 3.x/5.x reconciliation. These are native new-creature defaults, not an instruction to recalculate or rewrite existing 5.x creature statistics. Save proficiency/scaling math and outstanding historical traits remain subject to their own rules passes. Origination method defaults are authoritative only in the corresponding native rules; working content is retained as source evidence."
   },
   "id": "rule.creature-types",
   "kind": "rule-catalog",
@@ -18,7 +18,8 @@
     "damageModifiers": {},
     "conditionImmunities": [],
     "naturalWeaponCompetency": false,
-    "description": "Universal creature mechanics. No arbitrary ability score, speed, Hit Die count, or fixed Hit Die size."
+    "description": "Universal creature mechanics. No arbitrary ability score, speed, Hit Die count, or fixed Hit Die size.",
+    "originationMethods": []
   },
   "inheritance": {
     "model": "Generic Creature parent; typed descendants may inherit and override properties. Creature families and individual definitions can be further descendants.",
@@ -52,7 +53,8 @@
           "will"
         ]
       },
-      "description": "Planar or otherworldly foundation; breathing follows generic Creature default."
+      "description": "Planar or otherworldly foundation; breathing follows generic Creature default.",
+      "originationMethods": []
     },
     {
       "id": "creature-type.celestial",
@@ -64,7 +66,11 @@
       "id": "creature-type.fiend",
       "name": "Fiend",
       "parent": "creature-type.outsider",
-      "description": "Further shared fiend traits belong to more specialized descendants."
+      "description": "Further shared fiend traits belong to more specialized descendants.",
+      "originationMethods": [
+        "biological",
+        "spawning"
+      ]
     },
     {
       "id": "creature-type.elemental",
@@ -74,7 +80,10 @@
         "strong": [],
         "note": "Elemental strong-save defaults are supplied by specific elemental descendants, where appropriate."
       },
-      "description": "Elemental nature; elemental-body physiology is not universal to genies and other Elementals."
+      "description": "Elemental nature, including genies and elemental-bodied creatures. Physical requirements and abilities depend on the specific creature, not a second True Elemental classification.",
+      "originationMethods": [
+        "elemental-manifestation"
+      ]
     },
     {
       "id": "creature-type.fey",
@@ -91,16 +100,10 @@
           "will"
         ]
       },
-      "description": "Overrides Outsider biological requirements; other Fey-specific characteristics are inherited further down."
-    },
-    {
-      "id": "creature-type.true-elemental",
-      "name": "True Elemental",
-      "parent": "creature-type.elemental",
-      "needs": {
-        "breathing": false
-      },
-      "description": "Additional elemental-body properties are assigned here or to a more specific descendant after trait review."
+      "description": "Overrides Outsider biological requirements; other Fey-specific characteristics are inherited further down.",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.beast",
@@ -119,7 +122,10 @@
           "reflex"
         ]
       },
-      "description": "Ordinary biological needs; no universal intelligence, language, alignment, or equipment prohibitions."
+      "description": "Ordinary biological needs; no universal intelligence, language, alignment, or equipment prohibitions.",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.magical-beast",
@@ -166,7 +172,10 @@
       "weaponCompetencies": [
         "simple"
       ],
-      "description": "Ordinary physiology, equipment compatibility; no universal language, armor, speed, alignment, or ability scores."
+      "description": "Ordinary physiology, equipment compatibility; no universal language, armor, speed, alignment, or ability scores.",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.giant",
@@ -194,29 +203,10 @@
       "parent": "creature",
       "hitDie": 10,
       "naturalWeaponCompetency": true,
-      "description": "Broad monstrous physiology; no blanket senses, immunities, or magical abilities."
-    },
-    {
-      "id": "creature-type.monstrous-humanoid",
-      "name": "Monstrous Humanoid",
-      "parent": "creature-type.monstrosity",
-      "hitDie": 8,
-      "senses": [
-        {
-          "kind": "darkvision",
-          "rangeFeet": 60
-        }
-      ],
-      "weaponCompetencies": [
-        "simple"
-      ],
-      "savingThrowDefaults": {
-        "strong": [
-          "reflex",
-          "will"
-        ]
-      },
-      "description": "Monstrous creature with humanoid-like anatomy; does not automatically acquire Humanoid targeting eligibility."
+      "description": "Broad monstrous physiology; no blanket senses, immunities, or magical abilities.",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.aberration",
@@ -235,7 +225,10 @@
           "will"
         ]
       },
-      "description": "Unusual anatomy; no automatic psionics, telepathy, or magical resistance."
+      "description": "Unusual anatomy; no automatic psionics, telepathy, or magical resistance.",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.construct",
@@ -266,7 +259,10 @@
         "petrified"
       ],
       "naturalWeaponCompetency": true,
-      "description": "Constitution scores and native healing remain possible; additional historical construct immunities are not automatically operative."
+      "description": "Constitution scores and native healing remain possible; additional historical construct immunities are not automatically operative.",
+      "originationMethods": [
+        "construct-assembly"
+      ]
     },
     {
       "id": "creature-type.dragon",
@@ -290,7 +286,10 @@
           "will"
         ]
       },
-      "description": "Breath weapons, flight, frightful presence, and elemental immunity belong to descendants where appropriate."
+      "description": "Breath weapons, flight, frightful presence, and elemental immunity belong to descendants where appropriate.",
+      "originationMethods": [
+        "biological"
+      ]
     },
     {
       "id": "creature-type.ooze",
@@ -312,7 +311,10 @@
         "poisoned"
       ],
       "naturalWeaponCompetency": true,
-      "description": "Amorphous foundation; no universal Mindless, critical-hit immunity, or mandatory single blindsight range."
+      "description": "Amorphous foundation; no universal Mindless, critical-hit immunity, or mandatory single blindsight range.",
+      "originationMethods": [
+        "division"
+      ]
     },
     {
       "id": "creature-type.plant",
@@ -333,7 +335,10 @@
           "fortitude"
         ]
       },
-      "description": "Game classification includes fungal creatures; no assertion that fungi are botanically plants."
+      "description": "Game classification includes fungal creatures; no assertion that fungi are botanically plants.",
+      "originationMethods": [
+        "plant-reproduction"
+      ]
     },
     {
       "id": "creature-type.undead",
@@ -364,7 +369,11 @@
           "will"
         ]
       },
-      "description": "Retains Constitution scores; does not universally import 3.x critical-hit, mental-effect, or energy-drain rules."
+      "description": "Retains Constitution scores; does not universally import 3.x critical-hit, mental-effect, or energy-drain rules.",
+      "originationMethods": [
+        "reanimation",
+        "transformation"
+      ]
     }
   ],
   "candidateSpecializations": [
@@ -487,5 +496,6 @@
     "Overlapping-type targeting semantics",
     "Additional historical immunities that depend on unreconciled combat rules",
     "Runtime inheritance resolver"
-  ]
+  ],
+  "originationMethodRuleId": "rule.creature-origination"
 }

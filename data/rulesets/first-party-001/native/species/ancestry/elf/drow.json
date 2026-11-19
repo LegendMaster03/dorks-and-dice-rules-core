@@ -7,36 +7,16 @@
   "parent": "species.elf",
   "traits": [
     {
-      "id": "dancing-lights",
-      "description": "Gain Dancing Lights at level 1.",
-      "spell": "dancing-lights",
-      "level": 1,
-      "atWill": true
+      "traitId": "trait.elf.drow.dancing-lights"
     },
     {
-      "id": "faerie-fire",
-      "description": "At level 3, know Faerie Fire; once per Long Rest free, and also with spell slots.",
-      "spell": "faerie-fire",
-      "level": 3,
-      "freeUses": 1,
-      "recharge": "long-rest",
-      "slotCasting": true
+      "traitId": "trait.elf.drow.faerie-fire"
     },
     {
-      "id": "darkness",
-      "description": "At level 5, know Darkness; once per Long Rest free, and also with spell slots. Does not automatically grant vision through magical Darkness.",
-      "spell": "darkness",
-      "level": 5,
-      "freeUses": 1,
-      "recharge": "long-rest",
-      "slotCasting": true
+      "traitId": "trait.elf.drow.darkness"
     },
     {
-      "id": "sunlight-sensitivity",
-      "description": "Direct unprotected sunlight applies Dazzled. Shade, effective tinted eyewear or other effective protection can prevent or end the exposure. Ordinary magical light is not automatically sunlight.",
-      "condition": "condition.dazzled",
-      "trigger": "direct-unprotected-sunlight",
-      "end": "remove-exposure-or-use-effective-protection"
+      "traitId": "trait.elf.drow.sunlight-sensitivity"
     }
   ],
   "darkvisionFeet": 120,
@@ -45,5 +25,15 @@
     "wisdom",
     "charisma"
   ],
-  "defaultUpbringing": "upbringing.elf.drow"
+  "defaultUpbringing": "upbringing.elf.drow",
+  "originLinkedSelections": [
+    {
+      "id": "drow-darkvision-sunlight",
+      "triggerIntrinsicSlot": "darkvisionFeet",
+      "requiresTraitDefinitionId": "trait.elf.drow.sunlight-sensitivity",
+      "scope": "same-contributor",
+      "kind": "Requires",
+      "description": "Manifesting this Drow source's 120-foot Darkvision requires its native Sunlight Sensitivity unless an authorized table decision waives or replaces that link. Ordinary light protection still prevents the authored exposure trigger. The link does not automatically confer either trait."
+    }
+  ]
 }

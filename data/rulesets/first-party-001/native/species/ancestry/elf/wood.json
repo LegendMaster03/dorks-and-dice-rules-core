@@ -7,29 +7,13 @@
   "parent": "species.elf",
   "traits": [
     {
-      "id": "druidcraft",
-      "description": "Gain Druidcraft at level 1.",
-      "spell": "druidcraft",
-      "level": 1,
-      "atWill": true
+      "traitId": "trait.elf.wood.druidcraft"
     },
     {
-      "id": "longstrider",
-      "description": "At level 3, know Longstrider; once per Long Rest free, and also with spell slots.",
-      "spell": "longstrider",
-      "level": 3,
-      "freeUses": 1,
-      "recharge": "long-rest",
-      "slotCasting": true
+      "traitId": "trait.elf.wood.longstrider"
     },
     {
-      "id": "pass-without-trace",
-      "description": "At level 5, know Pass without Trace; once per Long Rest free, and also with spell slots.",
-      "spell": "pass-without-trace",
-      "level": 5,
-      "freeUses": 1,
-      "recharge": "long-rest",
-      "slotCasting": true
+      "traitId": "trait.elf.wood.pass-without-trace"
     }
   ],
   "walkingSpeedFeet": 35,

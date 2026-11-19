@@ -1,4 +1,5 @@
 """Approved nine-species vision review: shared base vision versus specialized ancestry."""
+from tools.native_origin_trait_projection import expand_species_traits
 import json
 from pathlib import Path
 import unittest
@@ -8,7 +9,7 @@ NATIVE = ROOT / "data/rulesets/first-party-001/native"
 
 
 def read(path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return expand_species_traits(json.loads(path.read_text(encoding="utf-8")), path)
 
 
 def base(slug):

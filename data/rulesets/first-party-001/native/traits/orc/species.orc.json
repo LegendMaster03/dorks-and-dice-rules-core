@@ -1,0 +1,96 @@
+[
+  {
+    "id": "trait.orc.adrenaline-rush",
+    "name": "Adrenaline Rush",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "adrenaline-rush",
+      "name": "Adrenaline Rush",
+      "description": "As a Bonus Action, take the Dash action and gain Temporary Hit Points equal to your Proficiency Bonus. You can use this trait a number of times equal to your Proficiency Bonus, regaining all expended uses after a Short Rest or Long Rest.",
+      "activation": {
+        "action": "bonus-action",
+        "grantsAction": "dash"
+      },
+      "temporaryHitPoints": {
+        "value": "proficiency-bonus"
+      },
+      "uses": {
+        "value": "proficiency-bonus",
+        "recharge": "short-or-long-rest"
+      }
+    }
+  },
+  {
+    "id": "trait.orc.relentless-endurance",
+    "name": "Relentless Endurance",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "relentless-endurance",
+      "name": "Relentless Endurance",
+      "description": "When you would be reduced to 0 Hit Points but are not killed outright, you can remain at 1 Hit Point instead. After using this trait, you must finish a Long Rest before using it again.",
+      "trigger": "reduced-to-zero-hit-points-but-not-killed-outright",
+      "hitPointsInstead": 1,
+      "uses": {
+        "value": 1,
+        "recharge": "long-rest"
+      }
+    },
+    "inheritanceMethods": [
+      "biological"
+    ]
+  },
+  {
+    "id": "trait.orc.powerful-build",
+    "name": "Powerful Build",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "powerful-build",
+      "name": "Powerful Build",
+      "description": "Count as one size larger when determining carrying capacity and how much weight you can push, drag, or lift. This does not change your actual size, occupied space, reach, weapon permissions, or grapple modifiers, and does not grant the Goliath's advantage on checks to end Grappled.",
+      "effectiveSizeCategoriesHigherForCarryingCapacity": 1,
+      "effectiveSizeCategoriesHigherForPushingDraggingLifting": 1,
+      "doesNotChange": [
+        "actual-size",
+        "occupied-space",
+        "attack-reach",
+        "weapon-permissions",
+        "grapple-size-modifiers"
+      ],
+      "doesNotGrant": [
+        "advantage-on-checks-to-end-grappled"
+      ]
+    }
+  },
+  {
+    "id": "trait.orc.savage-attacks",
+    "name": "Savage Attacks",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "savage-attacks",
+      "name": "Savage Attacks",
+      "description": "When you score a critical hit with a melee weapon attack, roll one additional die of the weapon's damage and add it to the critical hit's damage. The interaction with optional critical escalation and damage maximization is subject to the shared critical-rules review.",
+      "trigger": "critical-hit-with-melee-weapon-attack",
+      "bonusDamageDice": {
+        "count": 1,
+        "dieFrom": "weapon-damage-die"
+      },
+      "requiresCriticalHit": true
+    }
+  },
+  {
+    "id": "trait.orc.menacing-presence",
+    "name": "Menacing Presence",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "menacing-presence",
+      "name": "Menacing Presence",
+      "description": "Gain Advantage on Intimidation checks when you use your physical presence, appearance, or stature to intimidate a creature that can perceive it. This does not grant Intimidation proficiency or apply to unrelated social intimidation.",
+      "skillCheckAdvantage": {
+        "skill": "skill.intimidation",
+        "when": "physical-appearance-stature-or-presence-used-to-intimidate",
+        "requiresTargetCanPerceivePresence": true
+      },
+      "grantsSkillProficiency": false
+    }
+  }
+]

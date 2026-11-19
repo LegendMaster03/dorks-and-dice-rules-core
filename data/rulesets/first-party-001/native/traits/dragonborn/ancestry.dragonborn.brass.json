@@ -1,0 +1,26 @@
+[
+  {
+    "id": "trait.dragonborn.brass.sand-burrower",
+    "name": "Sand Burrower",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "sand-burrower",
+      "name": "Sand Burrower",
+      "description": "You have a Burrow Speed of 15 feet through loose natural sand only. You can not burrow through stone, compact soil, built structures or water with this trait, and you leave no permanent traversable tunnel. The trait does not independently negate suffocation, visibility or other terrain restrictions.",
+      "movementMode": "burrow",
+      "speedFeet": 15,
+      "allowedMaterials": [
+        "loose-natural-sand"
+      ],
+      "disallowedMaterials": [
+        "stone",
+        "compact-soil",
+        "built-structures",
+        "water"
+      ],
+      "leavesPermanentTraversableTunnel": false,
+      "negatesSuffocation": false,
+      "negatesVisibilityRestrictions": false
+    }
+  }
+]

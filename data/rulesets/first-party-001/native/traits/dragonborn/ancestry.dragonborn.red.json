@@ -1,0 +1,19 @@
+[
+  {
+    "id": "trait.dragonborn.red.natural-climber",
+    "name": "Natural Climber",
+    "kind": "origin-trait",
+    "trait": {
+      "id": "natural-climber",
+      "name": "Natural Climber",
+      "description": "You have a Climb Speed of 15 feet. This does not grant Spider Climb, the ability to move on ceilings, or automatic success on exceptionally difficult climbing surfaces.",
+      "movementMode": "climb",
+      "speedFeet": 15,
+      "doesNotGrant": [
+        "spider-climb",
+        "ceiling-traversal",
+        "automatic-success-on-exceptionally-difficult-surfaces"
+      ]
+    }
+  }
+]
