@@ -79,3 +79,18 @@ the first-party catalog, powered-characteristic runtime projection, per-mode
 behavior, intrinsic-supply authoring for a fully custom Construct body, design
 and enhancement composition, quantities/size scaling, or progression and
 installation cost policies. This bridge is not a complete playable procedure.
+
+## Allowance authorization boundary
+
+The passive Origin adapter requires an exact selected-native `initialConstructionAllowance`
+on the `construct-assembly` method. An allowance provided by the client is
+not trusted without that authored equality check. The real first-party method
+has not received an approved allowance, so the current reference catalog
+continues to fail closed until balancing is authorized. Synthetic tests use
+fixture-only numbers.
+
+The evaluator still supports `InitialConstruction: false` for gameplay
+modification **preview**, but the Origin adapter refuses to turn that preview
+into a permanent grant until an authorized acquisition and installation
+procedure exists. Ordinary operating-state changes must not reconstruct the
+permanent Origin.

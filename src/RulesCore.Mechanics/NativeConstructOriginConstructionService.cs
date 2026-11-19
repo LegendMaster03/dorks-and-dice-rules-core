@@ -32,6 +32,36 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
                     NativeOriginIssueSeverity.Invalid,
                     "Construct assembly may only issue offers under the authored Construct Assembly method.")]);
 
+        // Gameplay modifications may be previewed without a starting budget,
+        // but require separately authenticated acquisition/installation rules
+        // before they can permanently change an existing Origin profile.
+        if (!request.Assembly.InitialConstruction)
+            return Stop(assembly.Status == NativeOriginConstructionStatus.Invalid
+                    ? NativeOriginConstructionStatus.Invalid
+                    : NativeOriginConstructionStatus.Incomplete,
+                assembly, proposal, assembly.Issues.Concat(
+                [new NativeOriginContractIssue("construct-modification-authorization-deferred",
+                    "assembly.initialConstruction", NativeOriginIssueSeverity.Incomplete,
+                    "A gameplay modification preview cannot issue first-party Origin grants.")])
+                    .ToArray());
+
+        // Never treat a client-provided allowance as proof of playable starting
+        // capacity. The exact budget must be native authored for this method.
+        var method = new NativeOriginContractValidator(catalog).FindMethod(proposal.Method);
+        if (method?.AuthoredDefinition.TryGetProperty("initialConstructionAllowance",
+                out var allowance) != true ||
+            allowance.ValueKind != JsonValueKind.Number ||
+            !allowance.TryGetInt32(out var permitted) || permitted < 0)
+            return Stop(NativeOriginConstructionStatus.Unresolved, assembly, proposal,
+                [new("construct-starting-allowance-unresolved", "method",
+                    NativeOriginIssueSeverity.Unresolved,
+                    "No native first-party initial construction allowance has been authored.")]);
+        if (request.Assembly.InitialAllowance != permitted)
+            return Stop(NativeOriginConstructionStatus.Invalid, assembly, proposal,
+                [new("construct-starting-allowance-unverified", "assembly.initialAllowance",
+                    NativeOriginIssueSeverity.Invalid,
+                    "The proposed starting allowance does not match the authorized native rule.")]);
+
         // Only a coherent and fully costed assembly may promote its native
         // component references into candidate Origin characteristics. A partial
         // draft remains useful to the assembly UI but is not authorization.

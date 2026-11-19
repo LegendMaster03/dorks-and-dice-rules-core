@@ -29,7 +29,8 @@ public sealed class NativeConstructOriginProjectionTests
                 """);
             File.WriteAllText(Path.Combine(native, "rule.json"), """
                 {"id":"rule.creature-origination","kind":"rule","name":"Origination",
-                 "methodDefinitions":[{"id":"construct-assembly","name":"Construct Assembly"}]}
+                 "methodDefinitions":[{"id":"construct-assembly","name":"Construct Assembly",
+                                       "initialConstructionAllowance":20}]}
                 """);
             File.WriteAllText(Path.Combine(native, "type.json"), """
                 {"id":"creature-type.construct","kind":"creatureType","name":"Construct",
@@ -243,6 +244,26 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(NativeOriginEventStage.Pending,
             attempted.Origin.Profile!.History.Single(x =>
                 x.Id == "construction:construct-origin-test").Stage);
+    }
+
+
+    [Fact]
+    public void ForgedStartingAllowanceAndGameplayModificationPreviewCannotIssueGrants()
+    {
+        using var fixture = new Fixture();
+        var inflated = Evaluate(fixture, assembly:
+            new([Part("plate", "plate")], InitialAllowance: int.MaxValue));
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, inflated.Origin.Status);
+        Assert.Contains(inflated.Origin.Issues, x =>
+            x.Code == "construct-starting-allowance-unverified");
+        Assert.Null(inflated.Origin.Profile);
+
+        var later = Evaluate(fixture, assembly:
+            new([Part("plate", "plate")], InitialConstruction: false));
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, later.Origin.Status);
+        Assert.Contains(later.Origin.Issues, x =>
+            x.Code == "construct-modification-authorization-deferred");
+        Assert.Null(later.Origin.Profile);
     }
 
     [Fact]
