@@ -72,6 +72,8 @@ public static class NativeOriginPassiveEntitlementProjector
             if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait)
             {
                 if (grant.Identity.Kind != NativeOriginCharacteristicKind.Intrinsic ||
+                    grant.Identity.Occurrence.OccurrencePath?
+                        .StartsWith("/traits/", StringComparison.Ordinal) == true ||
                     definitionId is not null &&
                     catalog.TryGetById(definitionId, out var masquerading) &&
                     masquerading is not null && masquerading.Category == "origin-trait")
