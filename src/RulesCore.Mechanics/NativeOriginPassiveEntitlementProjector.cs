@@ -23,9 +23,21 @@ public static class NativeOriginPassiveEntitlementProjector
         SavingThrowAdvantage? SavingThrows, IReadOnlyList<SkillBonus> SkillBonuses,
         JsonElement CompleteEffect);
 
+    public sealed record OutsideScopeTrait(
+        string GrantId, string DefinitionId, string SourceId,
+        string OccurrencePath, JsonElement CompleteEffect);
+
     public sealed record View(
         string Status, IReadOnlyList<GrantedTrait> Traits,
-        IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true);
+        IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true)
+    {
+        /// <summary>
+        /// Other verified native traits, not an assertion that their effects
+        /// are absent or unsupported by a separate specialized projector.
+        /// Callers must not treat Status="none" as no Origin entitlements.
+        /// </summary>
+        public IReadOnlyList<OutsideScopeTrait> OutsideScopeTraits { get; init; } = [];
+    }
 
     public static View Project(NativeCatalogSnapshot catalog,
         NativeOriginConstructionResult result) =>
@@ -50,39 +62,49 @@ public static class NativeOriginPassiveEntitlementProjector
                 : "direct-origin-foundation-unverified");
 
         var projected = new List<GrantedTrait>();
+        var outsideScope = new List<OutsideScopeTrait>();
         var seenGrants = new HashSet<string>(StringComparer.Ordinal);
         foreach (var grant in profile.Underlying.InherentGrants)
         {
-            if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait)
-                continue;
-
             var definitionId = grant.Identity.MechanicalDefinitionId;
-            NativeRuleEntity? definition = null;
-            if (definitionId is not null)
-                catalog.TryGetById(definitionId, out definition);
-            var hasCanonical = definition is not null &&
-                definition.Category == "origin-trait" &&
-                definition.Definition.TryGetProperty("trait", out var authored) &&
-                authored.ValueKind == JsonValueKind.Object;
-            var canonical = hasCanonical
-                ? definition!.Definition.GetProperty("trait") : default;
-            var canonicalClaims = hasCanonical && ClaimsSupportedShape(canonical);
-            var effectiveClaims = grant.EffectiveValue is
-                { ValueKind: JsonValueKind.Object } effect &&
-                ClaimsSupportedShape(effect);
-            if (!canonicalClaims && !effectiveClaims)
+            // A mutated Kind must not disguise a real native trait as an
+            // unrelated characteristic. Intrinsics are handled separately.
+            if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait)
+            {
+                if (grant.Identity.Kind != NativeOriginCharacteristicKind.Intrinsic ||
+                    definitionId is not null &&
+                    catalog.TryGetById(definitionId, out var masquerading) &&
+                    masquerading is not null && masquerading.Category == "origin-trait")
+                    return Unresolved("native-characteristic-kind-unverified:" + grant.Id);
                 continue;
+            }
+
+            if (string.IsNullOrWhiteSpace(definitionId) ||
+                !catalog.TryGetById(definitionId, out var definition) ||
+                definition is null || definition.Category != "origin-trait" ||
+                !definition.Definition.TryGetProperty("trait", out var canonical) ||
+                canonical.ValueKind != JsonValueKind.Object ||
+                grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } effect ||
+                !JsonElement.DeepEquals(canonical, effect) ||
+                !seenGrants.Add(grant.Id) ||
+                !ValidSourceOccurrence(catalog, grant, definitionId))
+                return Unresolved("native-trait-definition-or-occurrence-unverified:" +
+                    (definitionId ?? grant.Id));
+
+            var canonicalClaims = ClaimsSupportedShape(canonical);
+            var effectiveClaims = ClaimsSupportedShape(effect);
+            if (!canonicalClaims && !effectiveClaims)
+            {
+                outsideScope.Add(new(grant.Id, definitionId,
+                    grant.Identity.Occurrence.Source.Id,
+                    grant.Identity.Occurrence.OccurrencePath, canonical.Clone()));
+                continue;
+            }
 
             // Inspect both authored and serialized shapes. Otherwise a forged
             // payload could add an entitlement to an unrelated definition, or
             // remove an authored entitlement to evade provenance validation.
-            if (!canonicalClaims || !effectiveClaims || definitionId is null ||
-                !seenGrants.Add(grant.Id) ||
-                grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } actual ||
-                !JsonElement.DeepEquals(canonical, actual) ||
-                grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
-                !catalog.TryGetById(grant.Identity.Occurrence.Source.Id, out var source) ||
-                source is null || source.Category is not ("species" or "ancestry") ||
+            if (!canonicalClaims || !effectiveClaims ||
                 grant.Parameters is { Count: > 0 } ||
                 grant.ParameterSources is { Count: > 0 } ||
                 grant.ResourceOwners is { Count: > 0 } ||
@@ -116,7 +138,44 @@ public static class NativeOriginPassiveEntitlementProjector
         return new(projected.Count == 0 ? "none" : "resolved",
             projected.OrderBy(x => x.DefinitionId, StringComparer.Ordinal)
                 .ThenBy(x => x.SourceId, StringComparer.Ordinal)
-                .ThenBy(x => x.GrantId, StringComparer.Ordinal).ToArray(), []);
+                .ThenBy(x => x.GrantId, StringComparer.Ordinal).ToArray(), [])
+        {
+            OutsideScopeTraits = outsideScope
+                .OrderBy(x => x.DefinitionId, StringComparer.Ordinal)
+                .ThenBy(x => x.SourceId, StringComparer.Ordinal)
+                .ThenBy(x => x.OccurrencePath, StringComparer.Ordinal)
+                .ThenBy(x => x.GrantId, StringComparer.Ordinal).ToArray()
+        };
+    }
+
+    /// <summary>
+    /// The catalog's source-position-to-definition index is derived from the
+    /// original native trait reference. Merely having a valid source ID and
+    /// a valid definition ID does not prove they belong to the same occurrence.
+    /// </summary>
+    private static bool ValidSourceOccurrence(NativeCatalogSnapshot catalog,
+        NativeOriginEffectiveGrant grant, string definitionId)
+    {
+        var source = grant.Identity.Occurrence.Source;
+        var path = grant.Identity.Occurrence.OccurrencePath;
+        if (source.Kind != NativeOriginSourceKind.Native ||
+            source.Version is not null ||
+            !catalog.TryGetById(source.Id, out var owner) ||
+            owner is null || owner.Category is not ("species" or "ancestry") ||
+            path is null || !path.StartsWith("/traits/", StringComparison.Ordinal) ||
+            !int.TryParse(path.AsSpan("/traits/".Length),
+                System.Globalization.NumberStyles.None,
+                System.Globalization.CultureInfo.InvariantCulture, out var index) ||
+            index < 0 || path != "/traits/" + index.ToString(
+                System.Globalization.CultureInfo.InvariantCulture) ||
+            !owner.Definition.TryGetProperty("traits", out var traits) ||
+            traits.ValueKind != JsonValueKind.Array ||
+            index >= traits.GetArrayLength())
+            return false;
+
+        var reference = traits[index];
+        return reference.ValueKind == JsonValueKind.Object &&
+            catalog.OriginTraitDefinitionId(source.Id, index) == definitionId;
     }
 
     private static bool ClaimsSupportedShape(JsonElement value) =>
