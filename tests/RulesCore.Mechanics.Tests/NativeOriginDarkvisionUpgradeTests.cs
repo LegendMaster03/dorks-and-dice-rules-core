@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
@@ -49,6 +50,217 @@ public sealed class NativeOriginDarkvisionUpgradeTests
 
         public bool AuthorizesCatalogChoice(string catalogId, string optionId,
             string evidenceId) => false;
+    }
+
+    // In-memory rule mutations are intentionally loaded through the normal
+    // native-catalog loader, rather than changing the checked-in catalog.
+    // The construction result remains from the real, unmodified catalog.
+    private sealed class AlteredCatalog : IDisposable
+    {
+        private readonly string _root = Path.Combine(Path.GetTempPath(),
+            "rc-darkvision-projection-" + Guid.NewGuid().ToString("N"));
+
+        public NativeCatalogSnapshot Snapshot { get; }
+
+        public AlteredCatalog(JsonNode? trait)
+        {
+            var package = Path.Combine(_root, "first-party-001");
+            var native = Path.Combine(package, "native");
+            Directory.CreateDirectory(native);
+            File.WriteAllText(Path.Combine(package, "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            var definitions = new JsonArray
+            {
+                JsonNode.Parse(
+                    """{"id":"ancestry.goliath.stone","kind":"ancestry","name":"Stone Goliath"}""")
+            };
+            if (trait is not null)
+                definitions.Add(new JsonObject
+                {
+                    ["id"] = "trait.goliath.stone.cavernous-sight",
+                    ["kind"] = "origin-trait",
+                    ["name"] = "Cavernous Sight",
+                    ["trait"] = trait.DeepClone()
+                });
+            File.WriteAllText(Path.Combine(native, "fixture.json"),
+                definitions.ToJsonString());
+            Snapshot = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(_root, "first-party-001"));
+        }
+
+        public void Dispose()
+        {
+            if (Directory.Exists(_root))
+                Directory.Delete(_root, recursive: true);
+        }
+    }
+
+    private static JsonObject CanonicalCavernousSight()
+    {
+        Assert.True(Catalog().TryGetById(
+            "trait.goliath.stone.cavernous-sight", out var definition));
+        return JsonNode.Parse(definition!.Definition.GetProperty("trait")
+            .GetRawText())!.AsObject();
+    }
+
+    private static NativeOriginConstructionResult DirectStone()
+    {
+        var proposal = new NativeOriginProposal("direct-stone-negative-tests",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedAncestryId: "ancestry.goliath.stone");
+        var aptitude = Assert.Single(Evaluate(proposal, defaults: true)
+            .EvaluatedProposal.Candidates, x =>
+                x.Identity.MechanicalDefinitionId ==
+                    "trait.goliath.giant-ancestry-aptitude");
+        var result = Evaluate(proposal with
+        {
+            Manifestations =
+            [
+                new("aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["strength"])])
+            ]
+        }, defaults: true);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        return result;
+    }
+
+    private static NativeOriginConstructionResult AlterSenseGrant(
+        NativeOriginConstructionResult origin, string definitionId,
+        JsonElement alteredEffect)
+    {
+        var profile = origin.Profile!;
+        var selected = Assert.Single(profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == definitionId);
+        var configuration = profile.Underlying with
+        {
+            InherentGrants = profile.Underlying.InherentGrants
+                .Select(grant => grant.Id == selected.Id
+                    ? grant with { EffectiveValue = alteredEffect }
+                    : grant).ToArray()
+        };
+        return origin with
+        {
+            Profile = profile with
+            {
+                Underlying = configuration,
+                Current = configuration
+            }
+        };
+    }
+
+    [Theory]
+    [InlineData("rangeFeet", "\"60\"")]
+    [InlineData("rangeFeet", "1.5")]
+    [InlineData("addToExistingDarkvisionFeet", "\"60\"")]
+    [InlineData("requiredCharacterLevel", "\"4\"")]
+    [InlineData("stacking", "10")]
+    [InlineData("sense", "false")]
+    public void MalformedAuthoredExtensionTypesFailClosed(
+        string field, string replacementJson)
+    {
+        var canonical = CanonicalCavernousSight();
+        canonical[field] = JsonNode.Parse(replacementJson);
+        using var catalog = new AlteredCatalog(canonical);
+        // Match both stored and authored effect to reach the actual grammar
+        // check, rather than passing solely because the values disagree.
+        var origin = AlterSenseGrant(DirectStone(),
+            "trait.goliath.stone.cavernous-sight",
+            JsonSerializer.SerializeToElement(canonical));
+        var view = NativeOriginDarkvisionProjector.Project(catalog.Snapshot,
+            origin, 4);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Contains("darkvision-extension-not-verified", view.UnresolvedReasons);
+        Assert.Null(view.Darkvision);
+        Assert.Empty(view.PendingExtensions);
+    }
+
+    [Theory]
+    [InlineData("sense")]
+    [InlineData("rangeFeet")]
+    [InlineData("addToExistingDarkvisionFeet")]
+    [InlineData("requiredCharacterLevel")]
+    [InlineData("stacking")]
+    public void MissingAuthoredExtensionFieldsFailClosed(string field)
+    {
+        var canonical = CanonicalCavernousSight();
+        Assert.True(canonical.Remove(field));
+        using var catalog = new AlteredCatalog(canonical);
+        var origin = AlterSenseGrant(DirectStone(),
+            "trait.goliath.stone.cavernous-sight",
+            JsonSerializer.SerializeToElement(canonical));
+        var view = NativeOriginDarkvisionProjector.Project(catalog.Snapshot,
+            origin, 4);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Contains("darkvision-extension-not-verified", view.UnresolvedReasons);
+    }
+
+    [Fact]
+    public void MissingCanonicalDefinitionDoesNotHideEffectiveDarkvision()
+    {
+        using var catalog = new AlteredCatalog(trait: null);
+        var view = NativeOriginDarkvisionProjector.Project(
+            catalog.Snapshot, DirectStone(), 3);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Contains("darkvision-extension-not-verified", view.UnresolvedReasons);
+        Assert.Null(view.Darkvision);
+        Assert.Empty(view.PendingExtensions);
+    }
+
+    [Fact]
+    public void CanonicalAndEffectiveDarkvisionClaimsMustAgree()
+    {
+        var canonical = CanonicalCavernousSight();
+        canonical["sense"] = "tremorsense";
+        canonical.Remove("addToExistingDarkvisionFeet");
+        using var catalog = new AlteredCatalog(canonical);
+        // The effective grant still claims Darkvision, while its canonical
+        // record claims an unrelated sense: it must not be treated as absent.
+        var view = NativeOriginDarkvisionProjector.Project(
+            catalog.Snapshot, DirectStone(), 3);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Contains("darkvision-extension-not-verified", view.UnresolvedReasons);
+
+        var originallySelected = DirectStone();
+        var alteredEffect = JsonSerializer.SerializeToElement(new
+        {
+            id = "cavernous-sight", sense = "tremorsense"
+        });
+        var forged = AlterSenseGrant(originallySelected,
+            "trait.goliath.stone.cavernous-sight", alteredEffect);
+        var reverse = NativeOriginDarkvisionProjector.Project(Catalog(), forged, 4);
+        Assert.Equal("unresolved", reverse.Status);
+        Assert.Contains("darkvision-extension-not-verified", reverse.UnresolvedReasons);
+    }
+
+    [Fact]
+    public void ForgedDarkvisionOnUnrelatedSelectedTraitCannotReturnNone()
+    {
+        var catalog = Catalog();
+        var directDwarf = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(new NativeOriginProposal("dwarf-with-forged-vision",
+                NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"),
+                [], [], [], SelectedSpeciesId: "species.dwarf"),
+                AutoManifestDirectDefaults: true));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, directDwarf.Status);
+        Assert.Equal("none",
+            NativeOriginDarkvisionProjector.Project(catalog, directDwarf, 4).Status);
+        var forged = AlterSenseGrant(directDwarf,
+            "trait.dwarf.dwarven-toughness",
+            JsonSerializer.SerializeToElement(new
+            {
+                id = "dwarven-toughness",
+                sense = "darkvision",
+                rangeFeet = 600,
+                addToExistingDarkvisionFeet = 600,
+                requiredCharacterLevel = 1,
+                stacking = "once-per-feature"
+            }));
+        var view = NativeOriginDarkvisionProjector.Project(catalog, forged, 4);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Contains("darkvision-extension-not-verified", view.UnresolvedReasons);
+        Assert.Null(view.Darkvision);
     }
 
     [Fact]
