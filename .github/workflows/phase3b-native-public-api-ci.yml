@@ -16,7 +16,11 @@ jobs:
   public-native-api:
     runs-on: ubuntu-latest
     steps:
+      # Validation-only: test the exact approved A+B feature-branch commit,
+      # never GitHub's synthetic pull-request merge with main.
       - uses: actions/checkout@v4
+        with:
+          ref: eae42fa69ee62798b274e0137a82ef8a3b86b845
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
