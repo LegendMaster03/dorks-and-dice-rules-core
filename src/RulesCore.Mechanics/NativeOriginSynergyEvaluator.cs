@@ -160,6 +160,7 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                             alternativesJson.ValueKind != JsonValueKind.Array ||
                             alternativesJson.GetArrayLength() is < 1 or > 16 ||
                             !group.TryGetProperty("count", out var countJson) ||
+                            countJson.ValueKind != JsonValueKind.Number ||
                             !countJson.TryGetInt32(out var count) || count is < 1 or > 16)
                         {
                             valid = false;
