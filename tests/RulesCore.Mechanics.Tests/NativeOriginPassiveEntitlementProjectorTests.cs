@@ -387,6 +387,11 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
                 { IntrinsicSlotId = "darkvisionFeet" } },
             keen with { Identity = keen.Identity with
                 { Kind = NativeOriginCharacteristicKind.Other } },
+            keen with { Identity = keen.Identity with
+                {
+                    Kind = NativeOriginCharacteristicKind.Intrinsic,
+                    MechanicalDefinitionId = "trait.unknown.reclassified"
+                } },
             keen with { ManifestationId = "fabricated-manifestation" },
         })
         {
