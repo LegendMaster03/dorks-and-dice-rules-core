@@ -60,3 +60,15 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
 Hosted GitHub Actions is required for executed .NET tests when the development environment has no .NET SDK. Record final run results separately from this design document.
+
+## Executed hosted verification — 2026-11-19 UTC
+
+**Verified source/test head:** `63c6c65bf39e5920e7d1deb4e4385027d907acbd`.
+
+- [Structure validation run 44467124049](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44467124049): **passed**.
+- [Full native API, .NET, Python/catalog, Docker CI run 44467124015](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44467124015): **passed**.
+- .NET Release restore/build: **zero errors**, 10 warnings in existing, out-of-scope code or pre-existing assertions; none introduced by this increment.
+- Host: **140/140** tests passed. Mechanics: **578/578** tests passed, including the seven new positive/negative/adversarial cases.
+- Complete Python suite: **808/808** tests passed. Pillar 1/3 adjacent regressions and source-split/catalog validation passed.
+- Native-only Docker build, layered content build, and public/private/readiness smoke checks passed.
+- The feature branch remains unmerged; temporary PR #165 is for hosted CI only. This report addendum changes documentation, not the verified source or tests.
