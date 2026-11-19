@@ -1998,4 +1998,68 @@ public sealed class NativeOriginConstructionTests
             grant => grant.Identity.IntrinsicSlotId == "size");
     }
 
+
+    [Fact]
+    public void RemovingARequiredResourceOwnerAlsoRemovesItsBoundDependent()
+    {
+        var proposal = Proposal("resource-owner-closure", NativeOriginIntent.Mixed,
+            contributors: [Contributor("source", "ancestry.goliath.cloud")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var owner = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.clouds-jaunt");
+        var strike = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloud-strike");
+        var aptitude = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        var foundations = offers.Where(x => x.ContributorId == "source" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var size = Assert.Single(foundations, x => x.Identity.IntrinsicSlotId == "size");
+        var creature = Assert.Single(foundations, x =>
+            x.Identity.IntrinsicSlotId == "creatureType");
+        var requirement = new NativeOriginConstraint("owner-needs-size",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: owner.Id)], [new(CandidateId: size.Id)], Minimum: 1);
+        var relation = new NativeOriginRelationship("choose-type-not-size",
+            NativeOriginRelationshipKind.Substitution, [creature.Id, size.Id]);
+        var manifests = foundations.Select((x, i) =>
+            new NativeOriginManifestation("foundation-" + i, x.Id, x.OfferedValue))
+            .Concat(
+            [
+                new NativeOriginManifestation("aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["constitution"])]),
+                new NativeOriginManifestation("strike", strike.Id),
+                new NativeOriginManifestation("owner", owner.Id)
+            ]).ToArray();
+        var result = Evaluate(proposal with
+        {
+            Manifestations = manifests,
+            Constraints = [requirement],
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "drop-size"))],
+            TableDecisions =
+            [
+                Decision("allow-owner", "candidate", owner.Id, new { eligibility = "eligible" }),
+                Decision("allow-strike", "candidate", strike.Id, new { eligibility = "eligible" }),
+                Decision("allow-aptitude", "candidate", aptitude.Id, new { eligibility = "eligible" }),
+                Decision("required-owner", "constraint", requirement.Id, new { enforce = true }),
+                Decision("drop-size", "relationship", relation.Id, new { action = "retain-first" })
+            ]
+        }, new TestAuthority(), false);
+
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "effective-required-mechanic-missing" &&
+            issue.Path == "constraints." + requirement.Id);
+        Assert.Contains(result.Issues, issue => issue.Code == "origin-shared-resource-owner-missing");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId is
+                "trait.goliath.cloud.clouds-jaunt" or "trait.goliath.cloud.cloud-strike");
+        Assert.DoesNotContain(result.Issues,
+            issue => issue.Code == "profile-resource-owner-invalid");
+    }
+
 }

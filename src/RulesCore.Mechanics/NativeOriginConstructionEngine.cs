@@ -519,32 +519,32 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
-        // Source-authored parameters that reference another selected characteristic
-        // are resolved only after the intrinsic candidates have been reconciled.
-        // Unresolved prerequisites cannot leave an active dependent trait behind.
-        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(catalog, proposal, resolved);
-        issues.AddRange(bindingIssues);
-        // A selected trait that spends another trait's authored charges must
-        // bind to the actual selected resource owner from the same contributor.
-        // Missing or ambiguous ownership suppresses the dependent grant.
-        var (resourceBound, resourceIssues) =
-            NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
-        resolved = resourceBound;
-        issues.AddRange(resourceIssues);
-        // A prerequisite can be selected before reconciliation, then removed
-        // by a separate relationship disposition. Recheck native source links
-        // against the final, effective grants, never the original offers.
-        var (linkedGrants, linkedIssues) =
-            _nativeLinks.VerifyEffectiveLinks(proposal, resolved, Verified);
-        resolved = linkedGrants;
-        issues.AddRange(linkedIssues);
-        // Prerequisites are also whole-profile constraints. Repeat over actual
-        // effective grants so a suppressed companion cannot leave a dependent
-        // active, including through a multi-step dependency chain.
-        var (closedGrants, closureIssues) =
-            _constraints.VerifyEffectiveRequirements(proposal, resolved, Verified);
-        resolved = closedGrants;
-        issues.AddRange(closureIssues);
+        // Every binder is monotonic: it can suppress an unsupported dependent,
+        // but never create a new grant. A general requirement may remove an
+        // otherwise valid resource/choice owner after its dependent was bound.
+        // Rerun the canonical binders to a fixed point so a dependent cannot
+        // retain a stale owner ID or source choice in the final profile.
+        IReadOnlyList<NativeOriginEffectiveGrant> effective = resolved;
+        while (true)
+        {
+            var previousCount = effective.Count;
+            var (bound, bindingIssues) =
+                NativeOriginDependentBinder.Bind(catalog, proposal, effective);
+            issues.AddRange(bindingIssues);
+            var (resourceBound, resourceIssues) =
+                NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+            issues.AddRange(resourceIssues);
+            var (linkedGrants, linkedIssues) =
+                _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
+            issues.AddRange(linkedIssues);
+            var (closedGrants, closureIssues) =
+                _constraints.VerifyEffectiveRequirements(proposal, linkedGrants, Verified);
+            issues.AddRange(closureIssues);
+            effective = closedGrants;
+            if (effective.Count == previousCount)
+                break;
+        }
+        resolved = effective;
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
