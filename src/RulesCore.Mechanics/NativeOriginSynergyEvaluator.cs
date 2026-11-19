@@ -16,14 +16,15 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
     private sealed record Input(IReadOnlyList<NativeOriginCharacteristicSelector> Alternatives,
         int Count);
     private sealed record Rule(string OwnerId, string Id, string ResultTraitId,
-        IReadOnlyList<Input> Inputs, JsonElement Effect);
+        IReadOnlyList<Input> Inputs, JsonElement Effect, string? TableDecisionId = null);
 
     public (IReadOnlyList<NativeOriginEffectiveGrant> Grants,
         IReadOnlyList<NativeOriginContractIssue> Issues) Evaluate(
-        NativeOriginProposal proposal, IReadOnlyList<NativeOriginEffectiveGrant> effective)
+        NativeOriginProposal proposal, IReadOnlyList<NativeOriginEffectiveGrant> effective,
+        IReadOnlyList<NativeTableRuleDecision>? verifiedTableSynergies = null)
     {
         var issues = new List<NativeOriginContractIssue>();
-        var rules = ReadRules(issues);
+        var rules = ReadRules(issues, verifiedTableSynergies);
         if (rules.Count == 0) return ([], issues);
 
         // An authored interaction graph may be cyclic even if a particular
@@ -82,7 +83,9 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 var manifestationId = "synergy:" + token;
                 var identity = new NativeOriginCharacteristicIdentity(
                     NativeOriginCharacteristicKind.Trait,
-                    new(new(NativeOriginSourceKind.Native, rule.OwnerId),
+                    new(new(rule.TableDecisionId is null
+                            ? NativeOriginSourceKind.Native : NativeOriginSourceKind.Custom,
+                            rule.OwnerId),
                         "/originSynergies/" + Uri.EscapeDataString(rule.Id)),
                     MechanicalDefinitionId: rule.ResultTraitId);
                 var grant = new NativeOriginEffectiveGrant("grant:" + manifestationId,
@@ -91,7 +94,11 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                         .Distinct(StringComparer.Ordinal)
                         .OrderBy(id => id, StringComparer.Ordinal).ToArray(),
                     EffectiveValue: rule.Effect.Clone(),
-                    Authorization: new(NativeOriginAdjudication.Supported, rule.OwnerId))
+                    Authorization: rule.TableDecisionId is null
+                        ? new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported,
+                            rule.OwnerId)
+                        : new NativeOriginDecisionBasis(NativeOriginAdjudication.DmAuthorized,
+                            TableDecisionId: rule.TableDecisionId))
                 {
                     Synergy = new(rule.OwnerId, rule.Id, provenance)
                 };
@@ -116,10 +123,16 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         return (derived.OrderBy(x => x.Id, StringComparer.Ordinal).ToArray(), issues);
     }
 
-    private IReadOnlyList<Rule> ReadRules(List<NativeOriginContractIssue> issues)
+    private IReadOnlyList<Rule> ReadRules(List<NativeOriginContractIssue> issues,
+        IReadOnlyList<NativeTableRuleDecision>? verifiedTableSynergies)
     {
         var results = new List<Rule>();
         var keys = new HashSet<string>(StringComparer.Ordinal);
+        // Table decisions are supplied only by the construction engine after
+        // verifying actor authority and the exact trusted scope. Never iterate
+        // unverified serialized proposal decisions here.
+        var authored = new List<(string OwnerId, string? TargetId,
+            JsonElement Definition, string? TableDecisionId)>();
         for (var offset = 0; ; offset += 100)
         {
             var page = catalog.Search(category: "rule", offset: offset, limit: 100);
@@ -133,77 +146,92 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                     continue;
                 }
                 foreach (var item in definitions.EnumerateArray())
-                {
-                    if (item.ValueKind != JsonValueKind.Object ||
-                        !String(item, "id", out var id) ||
-                        !String(item, "resultTraitId", out var resultTraitId) ||
-                        !item.TryGetProperty("inputs", out var inputsJson) ||
-                        inputsJson.ValueKind != JsonValueKind.Array ||
-                        inputsJson.GetArrayLength() is < 1 or > 16 ||
-                        !catalog.TryGetById(resultTraitId, out var result) ||
-                        result is null || result.Category != "origin-trait" ||
-                        !result.Definition.TryGetProperty("trait", out var effect) ||
-                        effect.ValueKind != JsonValueKind.Object ||
-                        effect.TryGetProperty("originBindings", out _) ||
-                        effect.TryGetProperty("requiredCharacterLevel", out _))
-                    {
-                        Invalid(owner.Id, "Interaction must identify a canonical, fixed native Origin trait and bounded inputs.");
-                        continue;
-                    }
-                    var groups = new List<Input>();
-                    var valid = true;
-                    var total = 0;
-                    foreach (var group in inputsJson.EnumerateArray())
-                    {
-                        if (group.ValueKind != JsonValueKind.Object ||
-                            !group.TryGetProperty("anyOf", out var alternativesJson) ||
-                            alternativesJson.ValueKind != JsonValueKind.Array ||
-                            alternativesJson.GetArrayLength() is < 1 or > 16 ||
-                            !group.TryGetProperty("count", out var countJson) ||
-                            countJson.ValueKind != JsonValueKind.Number ||
-                            !countJson.TryGetInt32(out var count) || count is < 1 or > 16)
-                        {
-                            valid = false;
-                            break;
-                        }
-                        total += count;
-                        var alternatives = new List<NativeOriginCharacteristicSelector>();
-                        foreach (var choice in alternativesJson.EnumerateArray())
-                        {
-                            NativeOriginCharacteristicSelector? selector;
-                            try
-                            {
-                                selector = JsonSerializer.Deserialize<NativeOriginCharacteristicSelector>(
-                                    choice.GetRawText(),
-                                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
-                            }
-                            catch (JsonException)
-                            {
-                                valid = false;
-                                break;
-                            }
-                            if (selector is null || selector.CandidateId is not null ||
-                                selector.MechanicalDefinitionId is null &&
-                                selector.IntrinsicSlotId is null && selector.SourceId is null ||
-                                selector.ParameterKey is null && selector.ExpectedValue is not null)
-                            {
-                                valid = false;
-                                break;
-                            }
-                            alternatives.Add(selector);
-                        }
-                        if (!valid) break;
-                        groups.Add(new(alternatives, count));
-                    }
-                    if (!valid || total is < 2 or > 16 || !keys.Add(owner.Id + "\n" + id))
-                    {
-                        Invalid(owner.Id, "Interaction has invalid or duplicate selector, count, or ID data.");
-                        continue;
-                    }
-                    results.Add(new(owner.Id, id, resultTraitId, groups, effect.Clone()));
-                }
+                    authored.Add((owner.Id, null, item, null));
             }
             if (offset + page.Items.Length >= page.Total) break;
+        }
+        foreach (var decision in verifiedTableSynergies ?? [])
+        {
+            if (decision.Target?.Kind != "origin-synergy") continue;
+            authored.Add(("table-decision:" + decision.Id, decision.Target.Id,
+                decision.EffectiveOutcome, decision.Id));
+        }
+
+        foreach (var (ownerId, targetedId, item, tableDecisionId) in authored)
+        {
+            if (item.ValueKind != JsonValueKind.Object ||
+                !String(item, "id", out var id) ||
+                targetedId is not null && targetedId != id ||
+                !String(item, "resultTraitId", out var resultTraitId) ||
+                !item.TryGetProperty("inputs", out var inputsJson) ||
+                inputsJson.ValueKind != JsonValueKind.Array ||
+                inputsJson.GetArrayLength() is < 1 or > 16 ||
+                !catalog.TryGetById(resultTraitId, out var result) ||
+                result is null || result.Category != "origin-trait" ||
+                !result.Definition.TryGetProperty("trait", out var effect) ||
+                effect.ValueKind != JsonValueKind.Object ||
+                // A fixed canonical result may not depend on an unbound creation
+                // choice, level, resource owner or externally supplied parameter.
+                // Those must be explicitly implemented before being executable.
+                new[] { "originBindings", "requiredCharacterLevel", "choices",
+                    "choice", "choiceOptions", "uses", "sharedUsesFromTrait",
+                    "resourcePool" }.Any(key => effect.TryGetProperty(key, out _)))
+            {
+                Invalid(ownerId, "Interaction must identify an authorized, canonical, fixed Origin trait with a matching target.");
+                continue;
+            }
+            var groups = new List<Input>();
+            var valid = true;
+            var total = 0;
+            foreach (var group in inputsJson.EnumerateArray())
+            {
+                if (group.ValueKind != JsonValueKind.Object ||
+                    !group.TryGetProperty("anyOf", out var alternativesJson) ||
+                    alternativesJson.ValueKind != JsonValueKind.Array ||
+                    alternativesJson.GetArrayLength() is < 1 or > 16 ||
+                    !group.TryGetProperty("count", out var countJson) ||
+                    countJson.ValueKind != JsonValueKind.Number ||
+                    !countJson.TryGetInt32(out var count) || count is < 1 or > 16)
+                {
+                    valid = false;
+                    break;
+                }
+                total += count;
+                var alternatives = new List<NativeOriginCharacteristicSelector>();
+                foreach (var choice in alternativesJson.EnumerateArray())
+                {
+                    NativeOriginCharacteristicSelector? selector;
+                    try
+                    {
+                        selector = JsonSerializer.Deserialize<NativeOriginCharacteristicSelector>(
+                            choice.GetRawText(),
+                            new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                    }
+                    catch (JsonException)
+                    {
+                        valid = false;
+                        break;
+                    }
+                    if (selector is null || selector.CandidateId is not null ||
+                        selector.MechanicalDefinitionId is null &&
+                        selector.IntrinsicSlotId is null && selector.SourceId is null ||
+                        selector.ParameterKey is null && selector.ExpectedValue is not null)
+                    {
+                        valid = false;
+                        break;
+                    }
+                    alternatives.Add(selector);
+                }
+                if (!valid) break;
+                groups.Add(new(alternatives, count));
+            }
+            if (!valid || total is < 2 or > 16 || !keys.Add(ownerId + "\n" + id))
+            {
+                Invalid(ownerId, "Interaction has invalid or duplicate selector, count, or ID data.");
+                continue;
+            }
+            results.Add(new(ownerId, id, resultTraitId, groups, effect.Clone(),
+                tableDecisionId));
         }
         return results.OrderBy(Key, StringComparer.Ordinal).ToArray();
 
