@@ -382,7 +382,8 @@ public sealed class NativeCharacterInfluenceResolverTests
     private static NativeInfluenceOverlapSelection Choose(
         string id, string winner, params string[] effectIds) =>
         new(id, effectIds, winner, Occurrence("interactions." + id),
-            Rule(), "receipt.interaction." + id);
+            Rule(), "receipt.interaction." + id,
+            NativeCharacterSheetResolver.PrimarySheetId);
 
     [Fact]
     public void ExactAuthorizedOverlapSelectsOneWriterRegardlessOfInputOrder()
@@ -491,7 +492,8 @@ public sealed class NativeCharacterInfluenceResolverTests
             valid with { SelectedEffectId = "strength-forged" },
             valid with { EffectIds = ["strength-a", "foreign"] },
             valid with { EffectIds = ["strength-a", "strength-a"] },
-            valid with { EffectIds = ["strength-a", "strength-b", "foreign"] }
+            valid with { EffectIds = ["strength-a", "strength-b", "foreign"] },
+            valid with { TargetSheetId = "sheet.nonexistent" }
         };
         foreach (var decision in malformed)
         {

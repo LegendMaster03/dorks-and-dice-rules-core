@@ -126,8 +126,9 @@ public interface INativeCharacterInfluenceAuthority : INativeCharacterSheetAutho
 }
 
 /// <summary>
-/// A verified rule may choose exactly one already-authorized writer when a
-/// collision contains precisely these active effect instance IDs. The writer
+/// A verified rule may choose exactly one already-authorized writer for one
+/// explicit sheet/form when a collision contains precisely these effect instance
+/// IDs. A choice for one form can not authorize a different form. The writer
 /// IDs refer to exact independently acquired effect occurrences, not names or
 /// definition IDs. This is neither permission to acquire a grant nor an
 /// automatic arithmetic stacking or first/last-wins rule.
@@ -138,7 +139,8 @@ public sealed record NativeInfluenceOverlapSelection(
     string SelectedEffectId,
     NativeOriginSourceOccurrence RuleOccurrence,
     NativeOriginDecisionBasis Basis,
-    string AuthorizationEvidenceId);
+    string AuthorizationEvidenceId,
+    string TargetSheetId);
 
 /// <summary>
 /// Optional shared authority extension. Existing influence consumers can omit

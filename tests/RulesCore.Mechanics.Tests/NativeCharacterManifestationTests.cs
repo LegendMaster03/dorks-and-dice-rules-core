@@ -1162,7 +1162,8 @@ public sealed class NativeCharacterManifestationTests
                 new NativeInfluenceOverlapSelection("primary-selection",
                     ["effect.a", "effect.b"], "effect.b",
                     Occurrence("interactions.primary"), Rule(),
-                    "receipt.interaction.primary")
+                    "receipt.interaction.primary",
+                    NativeCharacterSheetResolver.PrimarySheetId)
             ]
         };
         var active = ActivatedWolf();

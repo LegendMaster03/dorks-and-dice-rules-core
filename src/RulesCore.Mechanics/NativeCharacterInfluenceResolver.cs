@@ -220,7 +220,12 @@ public static class NativeCharacterInfluenceResolver
                 !ValidOccurrence(selection.RuleOccurrence) ||
                 !ValidDecision(selection.Basis) ||
                 string.IsNullOrWhiteSpace(selection.AuthorizationEvidenceId) ||
+                string.IsNullOrWhiteSpace(selection.TargetSheetId) ||
+                !sheetIds.Contains(selection.TargetSheetId) ||
                 selection.EffectIds.Any(id => !effectDefinitions.ContainsKey(id)) ||
+                selection.EffectIds.Any(id =>
+                    !effectDefinitions[id].TargetSheetIds.Contains(
+                        selection.TargetSheetId, StringComparer.Ordinal)) ||
                 selection.EffectIds.Select(id => effectDefinitions.TryGetValue(id, out var definition)
                         ? EffectPath(definition) : null)
                     .Distinct(StringComparer.Ordinal).Count() != 1)
@@ -305,6 +310,7 @@ public static class NativeCharacterInfluenceResolver
             var ids = writers.Select(x => x.Effect.Id).OrderBy(x => x,
                 StringComparer.Ordinal).ToArray();
             var matches = overlapSelections.Where(x =>
+                x.TargetSheetId == targetSheetId &&
                 x.EffectIds.Count == ids.Length &&
                 x.EffectIds.OrderBy(id => id, StringComparer.Ordinal).SequenceEqual(ids,
                     StringComparer.Ordinal)).Take(2).ToArray();
