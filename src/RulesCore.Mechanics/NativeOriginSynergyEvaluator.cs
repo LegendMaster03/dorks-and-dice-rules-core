@@ -233,6 +233,11 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 result is null || result.Category != "origin-trait" ||
                 !result.Definition.TryGetProperty("trait", out var effect) ||
                 effect.ValueKind != JsonValueKind.Object ||
+                // A display-only entry is not a mechanical entitlement. Apply
+                // the same minimum normalized-mechanic check used for source
+                // traits during native candidate deconstruction.
+                !effect.EnumerateObject().Any(p => p.Name is not (
+                    "id" or "name" or "description" or "reviewNotes")) ||
                 // A fixed canonical result may not depend on an unbound creation
                 // choice, level, resource owner or externally supplied parameter.
                 // Those must be explicitly implemented before being executable.
