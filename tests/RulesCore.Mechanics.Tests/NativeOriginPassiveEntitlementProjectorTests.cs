@@ -257,6 +257,28 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         });
         Assert.Equal("unresolved",
             NativeOriginPassiveEntitlementProjector.Project(catalog, fakeDefinition).Status);
+
+        var missingSelection = completed with
+        {
+            EvaluatedProposal = completed.EvaluatedProposal with
+            {
+                Manifestations = completed.EvaluatedProposal.Manifestations
+                    .Where(x => !keen.SourceCandidateIds.Contains(
+                        x.CandidateId, StringComparer.Ordinal)).ToArray()
+            }
+        };
+        Assert.Equal("unresolved",
+            NativeOriginPassiveEntitlementProjector.Project(catalog, missingSelection).Status);
+
+        var fey = Assert.Single(completed.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.elf.fey-ancestry");
+        var forgedScope = JsonNode.Parse(fey.EffectiveValue!.Value.GetRawText())!;
+        forgedScope["savingThrows"]!["scope"] = "all-threats";
+        Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector.Project(
+            catalog, WithGrant(completed, fey with
+            {
+                EffectiveValue = JsonSerializer.SerializeToElement(forgedScope)
+            })).Status);
     }
 
     [Fact]
@@ -286,6 +308,16 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         });
         Assert.Equal("unresolved",
             NativeOriginPassiveEntitlementProjector.Project(catalog, pool).Status);
+
+        var parameterSource = WithGrant(completed, keen with
+        {
+            ParameterSources = new Dictionary<string, string>
+            {
+                ["skill"] = "invented-contributor"
+            }
+        });
+        Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector
+            .Project(catalog, parameterSource).Status);
 
         var incomplete = completed with
         {
