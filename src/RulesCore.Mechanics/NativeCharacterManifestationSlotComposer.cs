@@ -67,10 +67,11 @@ internal static class NativeCharacterManifestationSlotComposer
             StringComparer.Ordinal);
         var resources = new Dictionary<string, NativeManifestationEffectiveResource>(
             StringComparer.Ordinal);
+        // Influence resolution validates effect IDs as unique across the character.
         var applied = new Dictionary<string, NativeInfluenceResolvedEffect>(StringComparer.Ordinal);
         var issues = new List<NativeIssue>(baseline.Issues);
         foreach (var item in baseline.AppliedEffects)
-            applied[item.InfluenceId + ":" + item.Effect.Id] = item;
+            applied[item.Effect.Id] = item;
 
         foreach (var instance in contributing)
         {
@@ -146,7 +147,7 @@ internal static class NativeCharacterManifestationSlotComposer
                 resources.TryAdd(resource.Id, resource);
             }
             foreach (var effect in form.AppliedEffects)
-                applied.TryAdd(effect.InfluenceId + ":" + effect.Effect.Id, effect);
+                applied.TryAdd(effect.Effect.Id, effect);
         }
 
         // The composite is intentionally partial. The displayed primary

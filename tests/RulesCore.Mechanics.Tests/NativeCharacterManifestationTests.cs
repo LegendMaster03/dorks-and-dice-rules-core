@@ -238,6 +238,39 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void CoexistingPartialTransformationsPreserveDistinctEffectProvenance()
+    {
+        var primaryEffect = new NativeCharacterInfluenceEffect(
+            "b:c", Occurrence("effects.primary-speed"), "receipt.primary-speed", Rule(),
+            new Dictionary<string, string>(), [NativeCharacterSheetResolver.PrimarySheetId],
+            NativeInfluenceCharacteristic.BaseWalkSpeed, NativeInfluenceOperation.Replace,
+            NumericValue: 45);
+        var formEffect = new NativeCharacterInfluenceEffect(
+            "c", Occurrence("effects.hybrid-dexterity"), "receipt.hybrid-dexterity", Rule(),
+            new Dictionary<string, string>(), ["hybrid"],
+            NativeInfluenceCharacteristic.AbilityScore, NativeInfluenceOperation.Replace,
+            Key: "dexterity", NumericValue: 16);
+        var primary = new NativeCharacterPersistentInfluence(
+            "a", "definition.primary", Source(), "receipt.acquire.primary",
+            "receipt.expression.primary", new Dictionary<string, string>(), [primaryEffect]);
+        var form = new NativeCharacterPersistentInfluence(
+            "a:b", "definition.hybrid", Source(), "receipt.acquire.hybrid",
+            "receipt.expression.hybrid", new Dictionary<string, string>(), [formEffect]);
+        var state = Character([primary, form], [Werewolf(), Wolf(), Hybrid() with { Overrides = null }]);
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+
+        var result = Resolve(state, ledger);
+
+        Assert.Equal("partial", result.Status);
+        Assert.Equal(45, result.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(16, result.EffectiveMechanics.AbilityScores["dexterity"]);
+        Assert.Equal(new[] { ("a", "b:c"), ("a:b", "c") },
+            result.AppliedEffects.Select(item => (item.InfluenceId, item.Effect.Id)));
+    }
+
+    [Fact]
     public void CoexistingPartialTransformationsCanContributeSeparateTrainingProperties()
     {
         var wolf = Wolf() with
