@@ -135,7 +135,9 @@ class DeploymentBoundaryTests(unittest.TestCase):
         self.assertNotIn("      release_sha:", workflow)
         self.assertNotIn("      review_reference:", workflow)
         self.assertIn("RELEASE_SHA: ${{ github.sha }}", workflow)
-        self.assertIn("Matching main CI succeeded for reviewed SHA", workflow)
+        self.assertIn("python3 tools/check_main_ci.py", workflow)
+        self.assertEqual(2, workflow.count(
+            'test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$RELEASE_SHA"'))
         self.assertIn("RULES_CORE_EXPECTED_FINGERPRINT=", workflow)
         self.assertIn("org.opencontainers.image.revision=$RELEASE_SHA", workflow)
         self.assertIn("Dockerfile.content-update", workflow)
