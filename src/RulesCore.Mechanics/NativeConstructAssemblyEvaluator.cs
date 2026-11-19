@@ -33,10 +33,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         foreach (var instance in request.Components)
         {
             if (instance is null || string.IsNullOrWhiteSpace(instance.InstanceId) ||
-                string.IsNullOrWhiteSpace(instance.DefinitionId))
+                string.IsNullOrWhiteSpace(instance.DefinitionId) ||
+                instance.InstanceId.Length > 96 ||
+                instance.InstanceId.Any(c => !(char.IsAsciiLetterOrDigit(c) ||
+                    c is '-' or '_' or '.')))
             {
                 Issue("construct-instance-invalid", "components", NativeOriginIssueSeverity.Invalid,
-                    "Component instances need stable identities and native definitions.");
+                    "Component instances need path-safe stable identities and native definitions.");
                 continue;
             }
             var path = "components." + instance.InstanceId;
