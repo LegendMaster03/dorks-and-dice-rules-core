@@ -55,6 +55,10 @@ public sealed class NativeOriginSynergyTests
             Directory.CreateDirectory(Path.Combine(native, "traits"));
             File.WriteAllText(Path.Combine(_root, "first-party-001", "manifest.json"),
                 """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(native, "creature-types.json"), """
+                {"id":"creature-type.humanoid","kind":"creatureType","name":"Humanoid",
+                 "parent":"creature","originationMethods":["biological"]}
+                """);
             File.WriteAllText(Path.Combine(native, "species.json"), """
                 {"id":"species.fixture","kind":"species","name":"Fixture","selectable":true,
                  "creatureType":"humanoid","size":"medium","walkingSpeedFeet":30,
@@ -122,7 +126,9 @@ public sealed class NativeOriginSynergyTests
     public void ConstructComponentsProduceOneStableDerivedGrantAndRetractWithMissingInput()
     {
         using var fixture = new Fixture();
-        var full = Evaluate(fixture, "/traits/0", "/traits/1");
+        var full = Evaluate(fixture, "/creatureType", "/size",
+            "/walkingSpeedFeet", "/traits/0", "/traits/1");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, full.Status);
         Assert.True(Has(full, "trait.fixture.stability"));
         var grant = full.Profile!.Underlying.InherentGrants.Single(x =>
             x.Identity.MechanicalDefinitionId == "trait.fixture.stability");
@@ -132,11 +138,15 @@ public sealed class NativeOriginSynergyTests
         Assert.All(grant.Synergy.Inputs, evidence =>
             Assert.Equal("species.fixture", evidence.Identity.Occurrence.Source.Id));
 
-        var repeated = Evaluate(fixture, "/traits/1", "/traits/0");
+        var repeated = Evaluate(fixture, "/traits/1", "/walkingSpeedFeet",
+            "/traits/0", "/creatureType", "/size");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, repeated.Status);
         Assert.Equal(JsonSerializer.Serialize(full.Profile.Underlying.InherentGrants),
             JsonSerializer.Serialize(repeated.Profile!.Underlying.InherentGrants));
 
-        var missing = Evaluate(fixture, "/traits/0");
+        var missing = Evaluate(fixture, "/creatureType", "/size",
+            "/walkingSpeedFeet", "/traits/0");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, missing.Status);
         Assert.False(Has(missing, "trait.fixture.stability"));
         Assert.True(Has(missing, "species.fixture#trait:locomotion"));
         Assert.DoesNotContain(full.Issues, issue => issue.Code == "synergy-provenance-invalid");
