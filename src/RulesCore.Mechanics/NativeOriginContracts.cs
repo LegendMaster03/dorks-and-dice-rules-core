@@ -175,6 +175,18 @@ public sealed record NativeOriginInheritedGrantEvidence(
     IReadOnlyDictionary<string, string>? PriorResourceOwners = null);
 
 /// <summary>
+/// The exact effective inputs of a catalog-authored interaction, retained for
+/// deterministic replay, provenance audits and cascading invalidation.
+/// </summary>
+public sealed record NativeOriginSynergyInputEvidence(
+    string GrantId, string ManifestationId, NativeOriginCharacteristicIdentity Identity,
+    IReadOnlyList<string> SourceCandidateIds);
+
+public sealed record NativeOriginSynergyEvidence(
+    string RuleId, string InteractionId,
+    IReadOnlyList<NativeOriginSynergyInputEvidence> Inputs);
+
+/// <summary>
 /// This identity is earned by the future evaluator, not by candidate discovery.
 /// Candidate IDs provide offer provenance; manifestation and grant IDs identify
 /// separate stages of the same acquired characteristic.
@@ -193,7 +205,12 @@ public sealed record NativeOriginEffectiveGrant(
     // grant that actually owns the one shared pool. Optional for older profiles.
     IReadOnlyDictionary<string, string>? ResourceOwners = null,
     // Historical provenance, never independent authorization or extra charges.
-    IReadOnlyList<NativeOriginInheritedGrantEvidence>? InheritedFrom = null);
+    IReadOnlyList<NativeOriginInheritedGrantEvidence>? InheritedFrom = null)
+{
+    // Derived characteristics use the same grant model. A native rule, not
+    // serialized proposal evidence, authorizes this exact input composition.
+    public NativeOriginSynergyEvidence? Synergy { get; init; }
+}
 
 /// <summary>
 /// A separately earned grant remains part of the character's entitlements even
