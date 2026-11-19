@@ -99,7 +99,8 @@ public static class NativeOriginPassiveEntitlementProjector
             {
                 outsideScope.Add(new(grant.Id, definitionId,
                     grant.Identity.Occurrence.Source.Id,
-                    grant.Identity.Occurrence.OccurrencePath, canonical.Clone()));
+                    // ValidSourceOccurrence has already rejected null or malformed paths.
+                    grant.Identity.Occurrence.OccurrencePath!, canonical.Clone()));
                 continue;
             }
 
@@ -132,7 +133,7 @@ public static class NativeOriginPassiveEntitlementProjector
             // character-state mutation is implied by this collection.
             projected.Add(new(grant.Id, definitionId,
                 grant.Identity.Occurrence.Source.Id,
-                grant.Identity.Occurrence.OccurrencePath,
+                grant.Identity.Occurrence.OccurrencePath!,
                 grant.SourceCandidateIds.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
                 savingThrows, skillBonuses, canonical.Clone()));
         }
