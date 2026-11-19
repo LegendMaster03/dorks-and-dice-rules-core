@@ -591,6 +591,29 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void UnimplementedAuthoringConditionsCannotBeSilentlyIgnored()
+    {
+        const string unsupported = """
+            [
+              {"id":"unsafe-condition","resultTraitId":"trait.fixture.guardian",
+               "requiresPoweredMode":true,
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]},
+              {"id":"unsafe-selector","resultTraitId":"trait.fixture.response",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings",
+                                    "unlessSuppressed":true}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]}
+            ]
+            """;
+        using var fixture = new Fixture(unsupported);
+        var result = Evaluate(fixture, "/traits/2", "/traits/3");
+        Assert.Contains(result.Issues,
+            x => x.Code == "synergy-authoring-invalid");
+        Assert.False(Has(result, "trait.fixture.guardian"));
+        Assert.False(Has(result, "trait.fixture.response"));
+    }
+
+    [Fact]
     public void ChoiceAndResourceDependentResultsAreNotMintedImplicitly()
     {
         const string unsafeResults = """
