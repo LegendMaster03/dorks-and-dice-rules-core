@@ -174,8 +174,10 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 // choice, level, resource owner or externally supplied parameter.
                 // Those must be explicitly implemented before being executable.
                 new[] { "originBindings", "requiredCharacterLevel", "choices",
-                    "choice", "choiceOptions", "uses", "sharedUsesFromTrait",
-                    "resourcePool" }.Any(key => effect.TryGetProperty(key, out _)))
+                    "choice", "choiceOptions", "chooseFrom", "choiceCount",
+                    "abilityChoice", "featCategory", "spellList", "when",
+                    "uses", "sharedUsesFromTrait", "resourcePool" }
+                    .Any(key => effect.TryGetProperty(key, out _)))
             {
                 Invalid(ownerId, "Interaction must identify an authorized, canonical, fixed Origin trait with a matching target.");
                 continue;
