@@ -71,6 +71,8 @@ public static class NativeOriginPassiveEntitlementProjector
         var projected = new List<GrantedTrait>();
         var outsideScope = new List<OutsideScopeTrait>();
         var seenGrants = new HashSet<string>(StringComparer.Ordinal);
+        var seenManifestations = new HashSet<string>(StringComparer.Ordinal);
+        var seenSourceCandidates = new HashSet<string>(StringComparer.Ordinal);
         foreach (var grant in profile.Underlying.InherentGrants)
         {
             var definitionId = grant.Identity.MechanicalDefinitionId;
@@ -107,6 +109,15 @@ public static class NativeOriginPassiveEntitlementProjector
             // and do not execute its choices, dependencies or resource pools.
             if (!VerifiedSelectedGrant(result, grant, approvedMixed))
                 return Unresolved("native-trait-selection-unverified:" + definitionId);
+
+            // A selected candidate/manifestation can produce only one surviving
+            // effective grant. A distinct forged grant ID must not allow the
+            // same selected occurrence to be reported twice. This does not
+            // collapse distinct authorized RetainBoth occurrences or multiple
+            // contributors that belong to ONE consolidated grant.
+            if (!seenManifestations.Add(grant.ManifestationId) ||
+                grant.SourceCandidateIds.Any(id => !seenSourceCandidates.Add(id)))
+                return Unresolved("native-trait-selection-reused:" + definitionId);
 
             var canonicalClaims = ClaimsSupportedShape(canonical);
             var effectiveClaims = ClaimsSupportedShape(effect);
