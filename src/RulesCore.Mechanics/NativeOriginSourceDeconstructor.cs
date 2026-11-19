@@ -27,8 +27,16 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
         {
             var next = selectedAncestry;
             var visited = new HashSet<string>(StringComparer.Ordinal);
-            while (next is not null && visited.Add(next) && visited.Count <= 64)
+            var cycle = false;
+            while (next is not null)
             {
+                // Visiting a missing or invalid parent is not evidence of a cycle.
+                // Only a repeated ID or an overlong chain proves bad parentage.
+                if (!visited.Add(next) || visited.Count > 64)
+                {
+                    cycle = true;
+                    break;
+                }
                 if (!catalog.TryGetById(next, out var entity) || entity is null)
                 {
                     Issue("ancestry-parent-unavailable", next, NativeOriginIssueSeverity.Unresolved,
@@ -52,8 +60,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                     Issue("ancestry-parent-unresolved", entity.Id, NativeOriginIssueSeverity.Unresolved,
                         "This ancestry has no authored root Species relationship.");
             }
-            if (parentSpecies is null && next is not null &&
-                (visited.Count > 64 || visited.Contains(next) && ancestors.Count > 0))
+            if (cycle)
                 Issue("ancestry-parent-cycle", selectedAncestry, NativeOriginIssueSeverity.Invalid,
                     "Ancestry parent chains must terminate in the native catalog.");
             if (parentSpecies is not null)
@@ -92,10 +99,15 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                 // authored occurrences, not a second full grant package.
                 var lineage = new List<NativeRuleEntity>();
                 var visitedLineage = new HashSet<string>(StringComparer.Ordinal);
+                var lineageCycle = false;
                 string? next = contributor.Source.Id;
-                while (next is not null && visitedLineage.Add(next) &&
-                    visitedLineage.Count <= 64)
+                while (next is not null)
                 {
+                    if (!visitedLineage.Add(next) || visitedLineage.Count > 64)
+                    {
+                        lineageCycle = true;
+                        break;
+                    }
                     if (!catalog.TryGetById(next, out var entity) || entity is null ||
                         entity.Category is not ("species" or "ancestry"))
                     {
@@ -112,9 +124,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                             NativeOriginIssueSeverity.Unresolved,
                             "The contributor Ancestry has no authored parent.");
                 }
-                if (next is not null && visitedLineage.Count > 64 ||
-                    next is not null && visitedLineage.Contains(next) &&
-                    lineage.Count > 0 && lineage[^1].Id != next)
+                if (lineageCycle)
                     Issue("contributor-lineage-cycle", contributor.Id,
                         NativeOriginIssueSeverity.Invalid,
                         "A contributor's Ancestry chain contains a cycle.");
@@ -306,13 +316,20 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                         ]).ToArray();
                     }
                     var unresolved = new List<string>();
+                    // A malformed authored count must not become an implicit choice of one.
+                    if (trait.TryGetProperty("choiceCount", out var rawCount) &&
+                        (rawCount.ValueKind != JsonValueKind.Number ||
+                         !rawCount.TryGetInt32(out var authoredCount) || authoredCount < 0))
+                        unresolved.Add("Authored choiceCount is not a nonnegative integer.");
                     // A description alone does not supply executable semantics.
                     if (!trait.EnumerateObject().Any(p =>
                         p.Name is not ("id" or "name" or "description" or "reviewNotes")))
                         unresolved.Add("Source trait has descriptive text but no normalized mechanics.");
                     var parameters = new Dictionary<string, JsonElement>(StringComparer.Ordinal);
                     if (trait.TryGetProperty("originBindings", out var bindingDefinitions) &&
-                        bindingDefinitions.ValueKind == JsonValueKind.Object)
+                        bindingDefinitions.ValueKind != JsonValueKind.Object)
+                        unresolved.Add("Authored originBindings must be an object.");
+                    if (bindingDefinitions.ValueKind == JsonValueKind.Object)
                     {
                         foreach (var binding in bindingDefinitions.EnumerateObject())
                         {
