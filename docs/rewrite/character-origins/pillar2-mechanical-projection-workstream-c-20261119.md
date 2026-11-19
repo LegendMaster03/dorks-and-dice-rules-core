@@ -96,26 +96,71 @@ python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-## Verification status at handoff
+## Independent-review follow-up: exact coverage and boundaries
 
-- First-party source definitions were independently re-read from the base
-  commit. All five expected saving-throw/skill-bonus shapes match the
-  intentionally bounded grammar; the native `skill.listen` and `skill.spot`
-  identifiers exist in `skills.json`.
-- Self-review found and tightened the rejection of fabricated
-  `ParameterSources`, `SelectedParameters`, `Choices` and mismatched
-  manifestation values. Additional focused adversarial tests were committed.
-- A lexical delimiter check of the authored C# projector and focused test
-  source found no unbalanced brackets or unterminated string/comment regions.
-  This **is not compilation or an executed unit test**.
-- **C# focused tests, full Mechanics suite, full solution suite and Python
-  suites have not been executed**: the available environment lacks `dotnet`,
-  can not clone the repository over the network, and the existing GitHub
-  Actions C# workflow runs on `main` pushes and pull requests rather than
-  this isolated worker branch. No CI status is reported for the branch head.
-- This increment must not be merged until a .NET 10 runner compiles it and
-  executes the focused and full relevant suites, with any failures addressed.
-  The test commands above are the exact intended commands.
+The combined infrastructure **does not** fully project or execute every
+characteristic. This workstream adds an intentionally bounded consumer for two
+already-authored passive effect families. Other Traits may be fully present in
+the Origin's canonical data without a typed mechanical consumer. Do not read
+`Status="none"` as no Origin entitlements: the passive projector now preserves
+canonical nonmatching native Traits in `OutsideScopeTraits` with source,
+occurrence and the complete definition. They remain nonexecuted.
+
+| Mechanical domain | Existing interpreter and definition fidelity | Remaining work / classification |
+| --- | --- | --- |
+| Creature type, size, walking speed | Direct and approved-mixed intrinsic projectors; authored source/occurrence retained | Only baseline, not arbitrary transformed state. Future integration infrastructure |
+| Low-light vision and Darkvision | Vision/Darkvision projectors read authored passive and extension effects, level gate and provenance | Actual environment/target adjudication is runtime-dependent; no new vision rule |
+| Tremorsense | Specialized projector retains canonical effect with range, contact, activation, time, uses and owning grant | Sensing targets, activation and spent uses need authenticated gameplay runtime |
+| Movement modes | Movement projector returns full individual canonical trait, speed, material limitations and provenance | Does not select combined effective speed or move a creature; overlap requires explicit disposition |
+| Amphibious, altitude and rest | Physiology and RestSurvival projectors retain their supported restrictions | Other physiological adaptations not generalized; HP/rest events need runtime |
+| Max-HP progression | HitPointProgression projector handles per-level authored trait, provenance and level; read-only character combine | Not an HP mutation; other hit point recovery/triggers lack generic runtime |
+| Skill proficiency and ranks | Existing specialized projectors retain native Human choices and advancement entitlements | Actual rank allocations, feat prerequisite and rank policy not complete |
+| Innate spell progression | InnateSpellProgression and ResourceLedger handle authored unlocks, ability bindings and source-specific allowances | Unsupported open spell lists and general spell execution are not approved |
+| Shared resource ownership | ResourceDependencyBinder and Origin ledger preserve source-owner links for recognized cases | No generic action/charge consumption; independent pool invention prohibited |
+| Fixed saving throw advantage | **Added here**: source-neutral typed canonical advantage against named effects or magic-only ability saves | No saving throw execution; no automatic overlap/stack policy |
+| Fixed skill bonuses | **Added here**: exact catalog skill IDs and numeric bonuses with complete source definitions | No composite skill total, stacking, or skill check execution |
+| Damage resistance | Authored in Dwarf, Tiefling, Goliath and Dragonborn traits; reconciliation detects overlapping damage type | **Reusable read-only projection missing** for type/percent/parameter-source; implementable without new balance policy only if no stacking is inferred. Runtime damage application needs separate contract |
+| Parameterized abilities | Deconstructor, selected parameters, source binder and contract validator retain some authorized binding evidence | **Generic typed projection missing** for breath damage type/area, selected aptitude and other source-bound fields. Structural projection feasible; new inheritance/eligibility rules not |
+| Level-gated nonspell abilities | Specialized Darkvision and innate spell readers cover their authored paths | **Generic capability progression missing** for Goliath Large Form and other staged actions; read-only locked/available view possible with verified level but activation requires runtime |
+| Conditional checks, defenses, triggers | Canonical payload retained by construction and now explicitly enumerated outside this passive reader | **Typed conditional projection missing** for Orc Menacing Presence, Powerful Build check advantage, reactions, critical triggers, Halfling Luck; some traits are prose-only and require native data authoring rather than inferred behavior |
+| Active/rest/combat use pools | Specialized Tremorsense, innate spell and rest readers preserve certain entitlement formulas | General trigger gating, spending, recovery and state changes require authenticated execution; no standalone pools |
+| Composition/overlaps | Existing Reconciler and ConstraintEvaluator (Workstream A owns subsequent changes) | Unresolved relationships must stay unresolved. Read-only separate entries do not establish stacking or precedence |
+| Origin source admission | Native construction, contributor evidence and first-party choice evaluators | **Unchanged**. Four Halfling descriptive traits still cause unresolved direct-source evidence; no implied approval |
+
+### Confirmed follow-up corrections
+
+1. All saved native trait grants must resolve a valid `origin-trait`
+   definition, even when the effect is outside this projector's narrow grammar.
+   An unknown definition can no longer disappear into `Status="none"`.
+2. The source/occurrence/`MechanicalDefinitionId` triple is checked against
+   the native catalog's original `OriginTraitDefinitionId(sourceId, index)`
+   mapping, including a canonical `/traits/N` path. A legitimate source ID
+   alone is insufficient evidence of possession.
+3. An attempt to reclassify a canonical native trait as `Intrinsic` or
+   `Other`, substitute a manifestation ID, or invent a concept/slot marker
+   fails closed. Mixed evidence still uses the existing
+   `HasVerifiedContributingEvidence` contract, including multiple candidates
+   consolidated into one actually selected effective grant.
+4. Other verified native traits are returned as `OutsideScopeTraits` with
+   their full canonical payload and provenance. The separate typed projections
+   do not add overlapping numeric bonuses, aggregate save advantage or
+   create an actionable resource pool.
+5. Direct Halfling is **already unresolved** in the first-party Origin
+   constructor due to prose-only traits. The earlier assumed-authorized
+   fixture was corrected: direct admission remains unresolved, while
+   explicitly authorized mixed Keen Hearing can be inspected without
+   changing admission policy.
+
+### Integration ownership and conflicts
+
+Workstream A currently changes `NativeOriginConstraintEvaluator.cs`,
+`NativeOriginConstructionEngine.cs` and its construction tests, but none of
+Workstream C's implementation, test, documentation or branch-only workflow
+files. There is no known direct path conflict. **Behavioral integration risk
+remains:** Workstream C relies on A's final candidate/manifestation IDs,
+consolidated source evidence, profile configuration equality and eligibility
+gating. Run the full focused tests and relevant suites on the combined
+integration commit before any merge approval.
 
 ## Deferred dependencies for integration review
 
