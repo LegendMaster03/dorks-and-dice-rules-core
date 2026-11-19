@@ -324,11 +324,17 @@ public static class NativeSupernaturalProgressionPlanner
                 ? influences.Append(proposedInfluence).ToArray()
                 : influences.Select(x => x.Id == request.InfluenceId ? proposedInfluence : x).ToArray()
         };
-        // Never return collections backed by caller-mutable dictionaries or lists.
-        proposed = proposed with
+        // IDs belong to the whole character: one acquired instance must never
+        // collide with an alternate sheet or another source's earned history.
+        if (!ValidProposedOwnership(proposed))
         {
-            PersistentInfluences = proposed.PersistentInfluences!.Select(CopyInfluence).ToArray()
-        };
+            Issue("duplicate-supernatural-ownership", "proposedState",
+                "Influence, effect, progression and grant IDs must remain unique across the character.");
+            return Fail("invalid");
+        }
+        // Reuse the existing deep character snapshot, including primary, sheets,
+        // influence expression, effects, choices and earned entitlements.
+        proposed = NativeCharacterSheetResolver.SnapshotState(proposed);
         var proposedJournal = new NativeSupernaturalTransitionJournal(
             journal.CharacterId, checked(journal.Revision + 1),
             journal.ProcessedEventIds.Append(request.EventId).ToArray(),
@@ -447,30 +453,43 @@ public static class NativeSupernaturalProgressionPlanner
             RequiredEarned = x.RequiredEarned?.ToArray()
         }).ToArray();
 
-    private static NativeCharacterPersistentInfluence CopyInfluence(
-        NativeCharacterPersistentInfluence item) => item with
+    private static bool ValidProposedOwnership(NativeCharacterState state)
     {
-        Expression = new Dictionary<string, string>(item.Expression, StringComparer.Ordinal),
-        Effects = item.Effects.Select(x => x with
+        var influenceIds = state.AlternateSheets.Select(x => x.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        influenceIds.Add(NativeCharacterSheetResolver.PrimarySheetId);
+        var effectIds = new HashSet<string>(StringComparer.Ordinal);
+        var progressionIds = new HashSet<string>(StringComparer.Ordinal);
+        var grantIds = new HashSet<string>(StringComparer.Ordinal);
+        var countEffects = 0;
+        var countProgressions = 0;
+        var countGrants = 0;
+        var countDecisions = 0;
+        foreach (var sheet in state.AlternateSheets)
+            foreach (var record in sheet.Progression ?? [])
+            {
+                if (!progressionIds.Add(record.Id)) return false;
+                foreach (var grant in record.Grants)
+                    if (!grantIds.Add(grant.Id)) return false;
+            }
+        if ((state.PersistentInfluences?.Count ?? 0) > 512) return false;
+        foreach (var influence in state.PersistentInfluences ?? [])
         {
-            RequiredExpression = new Dictionary<string, string>(x.RequiredExpression,
-                StringComparer.Ordinal),
-            TargetSheetIds = x.TargetSheetIds.ToArray(),
-            ExpressionConditions = x.ExpressionConditions?.ToArray(),
-            RequiredEarned = x.RequiredEarned?.ToArray()
-        }).ToArray(),
-        Progression = item.Progression?.Select(p => p with
-        {
-            Grants = p.Grants.ToArray(),
-            Choices = p.Choices is null ? null
-                : new Dictionary<string, string>(p.Choices, StringComparer.Ordinal)
-        }).ToArray(),
-        GrantApplicability = item.GrantApplicability?.Select(x => x with
-        {
-            RequiredExpression = new Dictionary<string, string>(
-                x.RequiredExpression, StringComparer.Ordinal),
-            ExpressionConditions = x.ExpressionConditions?.ToArray(),
-            RequiredEarned = x.RequiredEarned?.ToArray()
-        }).ToArray()
-    };
+            if (!influenceIds.Add(influence.Id)) return false;
+            countEffects += influence.Effects.Count;
+            countProgressions += influence.Progression?.Count ?? 0;
+            countDecisions += influence.GrantApplicability?.Count ?? 0;
+            foreach (var effect in influence.Effects)
+                if (!effectIds.Add(effect.Id)) return false;
+            foreach (var record in influence.Progression ?? [])
+            {
+                if (!progressionIds.Add(record.Id)) return false;
+                countGrants += record.Grants.Count;
+                foreach (var grant in record.Grants)
+                    if (!grantIds.Add(grant.Id)) return false;
+            }
+        }
+        return countEffects <= 16384 && countProgressions <= 4096 &&
+            countGrants <= 16384 && countDecisions <= 16384;
+    }
 }
