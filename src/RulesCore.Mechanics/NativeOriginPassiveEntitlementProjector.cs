@@ -25,16 +25,23 @@ public static class NativeOriginPassiveEntitlementProjector
 
     public sealed record OutsideScopeTrait(
         string GrantId, string DefinitionId, string SourceId,
-        string OccurrencePath, JsonElement CompleteEffect);
+        string OccurrencePath, JsonElement CompleteEffect)
+    {
+        // These fields describe verified selection evidence, not executable
+        // semantics, parameter authorizations, or gameplay state.
+        public string ManifestationId { get; init; } = "";
+        public IReadOnlyList<string> SourceCandidateIds { get; init; } = [];
+    }
 
     public sealed record View(
         string Status, IReadOnlyList<GrantedTrait> Traits,
         IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true)
     {
         /// <summary>
-        /// Other verified native traits, not an assertion that their effects
-        /// are absent or unsupported by a separate specialized projector.
-        /// Callers must not treat Status="none" as no Origin entitlements.
+        /// Authenticated selections of other native traits whose complete
+        /// canonical definitions remain opaque to this bounded interpreter.
+        /// Status="none" means NO TYPED PASSIVE ENTRIES, not no Origin traits.
+        /// These definitions are not executable mechanical entitlements.
         /// </summary>
         public IReadOnlyList<OutsideScopeTrait> OutsideScopeTraits { get; init; } = [];
     }
@@ -93,6 +100,14 @@ public static class NativeOriginPassiveEntitlementProjector
                 return Unresolved("native-trait-definition-or-occurrence-unverified:" +
                     (definitionId ?? grant.Id));
 
+            // A canonical source definition and its occurrence are not proof
+            // that the character actually selected it. This must precede BOTH
+            // the typed-passive path and the opaque outside-scope path.
+            // Do not require every opaque mechanic to fit the passive grammar,
+            // and do not execute its choices, dependencies or resource pools.
+            if (!VerifiedSelectedGrant(result, grant, approvedMixed))
+                return Unresolved("native-trait-selection-unverified:" + definitionId);
+
             var canonicalClaims = ClaimsSupportedShape(canonical);
             var effectiveClaims = ClaimsSupportedShape(effect);
             if (!canonicalClaims && !effectiveClaims)
@@ -100,7 +115,12 @@ public static class NativeOriginPassiveEntitlementProjector
                 outsideScope.Add(new(grant.Id, definitionId,
                     grant.Identity.Occurrence.Source.Id,
                     // ValidSourceOccurrence has already rejected null or malformed paths.
-                    grant.Identity.Occurrence.OccurrencePath!, canonical.Clone()));
+                    grant.Identity.Occurrence.OccurrencePath!, canonical.Clone())
+                {
+                    ManifestationId = grant.ManifestationId,
+                    SourceCandidateIds = grant.SourceCandidateIds
+                        .OrderBy(x => x, StringComparer.Ordinal).ToArray()
+                });
                 continue;
             }
 
@@ -115,7 +135,7 @@ public static class NativeOriginPassiveEntitlementProjector
                 // This increment supports only unconditional creation-time
                 // passives. A future level gate must not activate by default.
                 canonical.TryGetProperty("requiredCharacterLevel", out _) ||
-                !VerifiedSelectedGrant(result, grant, approvedMixed))
+                !HasFixedPassiveSelection(result, grant))
                 return Unresolved("passive-entitlement-grant-not-verified:" +
                     (definitionId ?? grant.Id));
 
@@ -261,6 +281,11 @@ public static class NativeOriginPassiveEntitlementProjector
         return true;
     }
 
+    /// <summary>
+    /// Validates source authorization and exact selected manifestation evidence
+    /// for ANY native trait, including opaque definitions. Does not adjudicate
+    /// the trait's separate parameters, choices, resources or runtime effects.
+    /// </summary>
     private static bool VerifiedSelectedGrant(NativeOriginConstructionResult result,
         NativeOriginEffectiveGrant grant, bool mixed)
     {
@@ -285,6 +310,10 @@ public static class NativeOriginPassiveEntitlementProjector
             .Where(x => grant.SourceCandidateIds.Contains(x.Id, StringComparer.Ordinal))
             .ToArray();
         if (selected.Length != grant.SourceCandidateIds.Count ||
+            // A candidate's selected manifestation must be this grant's
+            // actual origin, not an unrelated selection sharing an effect.
+            result.EvaluatedProposal.Manifestations.Count(m =>
+                m.Id == grant.ManifestationId) != 1 ||
             !result.EvaluatedProposal.Manifestations.Any(m =>
                 m.Id == grant.ManifestationId &&
                 grant.SourceCandidateIds.Contains(m.CandidateId, StringComparer.Ordinal)))
@@ -301,19 +330,34 @@ public static class NativeOriginPassiveEntitlementProjector
                 candidate.OfferedValue is { } offered &&
                 grant.EffectiveValue is { } actual &&
                 JsonElement.DeepEquals(offered, actual) &&
-                candidate.OfferedParameters is not { Count: > 0 } &&
-                candidate.RequiredChoices is not { Count: > 0 } &&
                 candidate.UnresolvedEvidence is not { Count: > 0 } &&
                 result.EvaluatedProposal.Manifestations.Count(x =>
                     x.CandidateId == candidate.Id) == 1 &&
                 result.EvaluatedProposal.Manifestations
                     .Where(x => x.CandidateId == candidate.Id)
-                    .All(x => x.SelectedParameters is not { Count: > 0 } &&
-                        x.Choices is not { Count: > 0 } &&
-                        (x.SelectedValue is null ||
+                    .All(x => (x.SelectedValue is null ||
                          grant.EffectiveValue is { } selectedValue &&
                          JsonElement.DeepEquals(x.SelectedValue.Value, selectedValue))));
     }
+
+    /// <summary>
+    /// A recognized fixed passive is safe to type only if it has no unresolved
+    /// configuration, on-use choices, per-source parameters or resource owners.
+    /// Opaque traits are retained as definitions, NOT typed as unconditional.
+    /// </summary>
+    private static bool HasFixedPassiveSelection(NativeOriginConstructionResult result,
+        NativeOriginEffectiveGrant grant) =>
+        grant.SourceCandidateIds.All(id =>
+            result.EvaluatedProposal.Candidates
+                .Where(candidate => candidate.Id == id)
+                .All(candidate =>
+                    candidate.OfferedParameters is not { Count: > 0 } &&
+                    candidate.RequiredChoices is not { Count: > 0 }) &&
+            result.EvaluatedProposal.Manifestations
+                .Where(manifest => manifest.CandidateId == id)
+                .All(manifest =>
+                    manifest.SelectedParameters is not { Count: > 0 } &&
+                    manifest.Choices is not { Count: > 0 }));
 
     private static View Unresolved(string reason) =>
         new("unresolved", [], [reason]);
