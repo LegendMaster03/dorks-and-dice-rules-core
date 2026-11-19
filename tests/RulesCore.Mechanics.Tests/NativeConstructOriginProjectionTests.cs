@@ -207,7 +207,7 @@ public sealed class NativeConstructOriginProjectionTests
             x.Code == "construct-power-overallocated");
 
         var unbalanced = Evaluate(fixture, assembly:
-            new([Part("bad", "unknown")], InitialAllowance: 10));
+            new([Part("bad", "unknown")], InitialAllowance: 20));
         Assert.Equal(NativeOriginConstructionStatus.Invalid, unbalanced.Origin.Status);
         Assert.Null(unbalanced.Origin.Profile);
         Assert.Contains(unbalanced.Origin.Issues, x =>
@@ -219,7 +219,7 @@ public sealed class NativeConstructOriginProjectionTests
     {
         using var fixture = new Fixture();
         var result = Evaluate(fixture, assembly:
-            new([Part("choice", "choice")], InitialAllowance: 10));
+            new([Part("choice", "choice")], InitialAllowance: 20));
         Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Origin.Status);
         Assert.Null(result.Origin.Profile);
         Assert.Contains(result.Origin.Issues, x =>
@@ -274,7 +274,7 @@ public sealed class NativeConstructOriginProjectionTests
         [
             Part("plate-a", "plate"),
             Part("plate-b", "plate")
-        ], InitialAllowance: 10);
+        ], InitialAllowance: 20);
         var result = Evaluate(fixture, assembly: assembly);
         // Two physical instances are valid. A duplicate canonical gameplay
         // effect still requires an authored reconciliation/stacking decision.
