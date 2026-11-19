@@ -331,6 +331,46 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void ReconciledSuppressionPreventsOtherwiseQualifiedSynergy()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var proposal = Proposal("suppressed");
+        var offers = engine.Evaluate(new(proposal, AutoManifestDirectDefaults: false))
+            .EvaluatedProposal.Candidates;
+        var wings = offers.Single(x => x.Identity.Occurrence.OccurrencePath == "/traits/2");
+        var muscle = offers.Single(x => x.Identity.Occurrence.OccurrencePath == "/traits/3");
+        var manifests = new[]
+        {
+            new NativeOriginManifestation("wings", wings.Id),
+            new NativeOriginManifestation("muscle", muscle.Id)
+        };
+        var original = engine.Evaluate(new(proposal with { Manifestations = manifests },
+            AutoManifestDirectDefaults: false));
+        Assert.True(Has(original, "trait.fixture.flight"));
+
+        var constraint = new NativeOriginConstraint("requires-movement",
+            NativeOriginRelationshipKind.Requires,
+            [new(MechanicalDefinitionId: muscle.Identity.MechanicalDefinitionId)],
+            [new(IntrinsicSlotId: "walkingSpeedFeet")],
+            Minimum: 1, TableDecisionId: "enforce-movement");
+        var decision = new NativeTableRuleDecision("enforce-movement",
+            new("dm", "verified"), new("campaign", "example"),
+            new("constraint", constraint.Id),
+            JsonSerializer.SerializeToElement(new { enforce = true }));
+        var suppressed = engine.Evaluate(new(proposal with
+        {
+            Manifestations = manifests,
+            Constraints = [constraint],
+            TableDecisions = [decision]
+        }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.DoesNotContain(suppressed.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == muscle.Identity.MechanicalDefinitionId);
+        Assert.False(Has(suppressed, "trait.fixture.flight"));
+    }
+
+    [Fact]
     public void SerializationRoundTripPreservesDerivedIdentityAndProof()
     {
         using var fixture = new Fixture();
