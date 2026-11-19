@@ -2291,7 +2291,7 @@ public sealed class NativeOriginConstructionTests
             NativeOriginRelationshipKind.Equivalent,
             selected.Select(x => x.Id).ToArray());
         var disposition = Decision("explicit-coexistence", "relationship", relation.Id,
-            new { action = "retain-both" });
+            new { action = "retain-both", candidateIds = relation.CandidateIds });
         var approved = Evaluate(original with
         {
             Relationships = [relation],
@@ -2328,7 +2328,7 @@ public sealed class NativeOriginConstructionTests
             NativeOriginRelationshipKind.Equivalent,
             visions.Select(x => x.Id).ToArray());
         var actual = Decision("valid-coexistence", "relationship", relation.Id,
-            new { action = "retain-both" });
+            new { action = "retain-both", candidateIds = relation.CandidateIds });
         var unrelated = Decision("wrong-coexistence", "candidate", visions[0].Id,
             new { eligibility = "eligible" });
         var permissions = visions.Select((x, i) =>
@@ -2393,7 +2393,7 @@ public sealed class NativeOriginConstructionTests
             NativeOriginRelationshipKind.Equivalent,
             paired.Select(x => x.Id).ToArray());
         var ruling = Decision("allow-exact-pair", "relationship", relation.Id,
-            new { action = "retain-both" });
+            new { action = "retain-both", candidateIds = relation.CandidateIds });
         var permits = visions.Select((x, i) =>
             Decision("permit-source-" + i, "candidate", x.Id,
                 new { eligibility = "eligible" })).Append(ruling).ToArray();
@@ -2431,6 +2431,30 @@ public sealed class NativeOriginConstructionTests
                 .Select(x => x.Path).ToArray(),
             reversed.Issues.Where(x => x.Code == "shared-definition-reconciliation-required")
                 .Select(x => x.Path).ToArray());
+
+        // Reusing the same authenticated ruling and relationship ID with a
+        // larger caller-supplied participant list must not turn one approved
+        // pair into permission for a third overlap.
+        var altered = proposal with
+        {
+            Manifestations = manifestations,
+            Relationships =
+            [
+                relation with { CandidateIds = visions.Select(x => x.Id).ToArray() }
+            ],
+            Resolutions =
+            [
+                new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: ruling.Id))
+            ],
+            TableDecisions = permits
+        };
+        var forgedExpansion = Evaluate(altered, new TestAuthority(), false);
+        Assert.Contains(forgedExpansion.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized" && x.Path == relation.Id);
+        Assert.DoesNotContain(forgedExpansion.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
     }
 
 }

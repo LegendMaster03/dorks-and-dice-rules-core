@@ -52,14 +52,19 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             // RetainBoth must not borrow authorization from another ruling.
             var authorized = authenticated is not null &&
                 authenticated.Id == resolution.Basis?.TableDecisionId &&
-                JsonString(authenticated.EffectiveOutcome, "action") == ActionName(resolution.Action);
+                JsonString(authenticated.EffectiveOutcome, "action") == ActionName(resolution.Action) &&
+                // RetainBoth can create overlapping complete grants. The
+                // authenticated decision must bind the exact participant set,
+                // not merely a caller-editable relationship ID and action.
+                (resolution.Action != NativeOriginResolutionAction.RetainBoth ||
+                 ExactParticipants(authenticated.EffectiveOutcome, relation.CandidateIds));
             var authored = resolution.Basis?.Adjudication == NativeOriginAdjudication.Supported &&
                 relation.AuthoredRuleReference == resolution.Basis.NativeRuleReference &&
                 (resolution.Action == NativeOriginResolutionAction.Replace ?
                     NativeTraitCompositionAuthorizes(relation.AuthoredRuleReference,
                         involved, active, resolution) :
                     NativeRelationshipAuthorizes(relation.Id, resolution.Action,
-                        relation.AuthoredRuleReference));
+                        relation.AuthoredRuleReference, relation.CandidateIds));
             if (!authorized && !authored)
             {
                 Issue("relationship-disposition-unauthorized", relation.Id,
@@ -617,7 +622,7 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         string.CompareOrdinal(a, b) <= 0 ? (a, b) : (b, a);
 
     private bool NativeRelationshipAuthorizes(string id, NativeOriginResolutionAction action,
-        string? ruleId)
+        string? ruleId, IReadOnlyList<string> participants)
     {
         // Catalog relationships currently name actions, not replacement values
         // or parameter-source bindings. A bare `replace` label grants nothing.
@@ -628,7 +633,27 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             items.ValueKind != JsonValueKind.Array) return false;
         return items.EnumerateArray().Any(item =>
             JsonString(item, "id") == id &&
-            JsonString(item, "action") == ActionName(action));
+            JsonString(item, "action") == ActionName(action) &&
+            (action != NativeOriginResolutionAction.RetainBoth ||
+             ExactParticipants(item, participants)));
+    }
+
+    private static bool ExactParticipants(JsonElement evidence, IReadOnlyList<string> expected)
+    {
+        if (evidence.ValueKind != JsonValueKind.Object ||
+            !evidence.TryGetProperty("candidateIds", out var listed) ||
+            listed.ValueKind != JsonValueKind.Array ||
+            expected.Count < 2 || expected.Distinct(StringComparer.Ordinal).Count() != expected.Count ||
+            listed.GetArrayLength() != expected.Count)
+            return false;
+
+        var actual = listed.EnumerateArray().ToArray();
+        return actual.All(x => x.ValueKind == JsonValueKind.String &&
+                 !string.IsNullOrWhiteSpace(x.GetString())) &&
+            actual.Select(x => x.GetString()!)
+                .OrderBy(x => x, StringComparer.Ordinal)
+                .SequenceEqual(expected.OrderBy(x => x, StringComparer.Ordinal),
+                    StringComparer.Ordinal);
     }
 
     private static bool SameMechanic(NativeOriginSelectedGrant a, NativeOriginSelectedGrant b)

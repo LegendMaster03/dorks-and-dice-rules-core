@@ -113,3 +113,9 @@ The final review found one actionable boundary defect: the reconciler accepted a
 Additional production-engine regressions check (1) mismatched versus exact ID on the same selected Elf/Orc pair and (2) three distinct shared-definition occurrences (Elf, Orc, Dragonborn) with only Elf–Orc coexistence authorized. The third occurrence does not become implicitly authorized; reversed contributor ordering yields the same documented unresolved overlap. The existing same-occurrence consolidation and cyclic-prerequisite tests remain in force.
 
 This follow-up is limited to a verified authorization-boundary defect and its adversarial regression. It does not approve group stacking, biological inheritance, or a default winner. The exact CI status for the corrected commit is separately verifiable from GitHub Actions.
+
+### Exact participant binding for coexistence
+
+A further adversarial check found that `RetainBoth` trusted only relationship target ID and action. A caller could enlarge `NativeOriginRelationship.CandidateIds` while reusing an already authenticated decision. The reconciler now accepts a RetainBoth decision **only when the authenticated outcome (or exact native relationship authoring) also names the entire distinct participant set via `candidateIds`**. The order of IDs is irrelevant; duplication, omission, or injection fails closed. This is authorization evidence, not a stacking or inheritance policy.
+
+The focused native three-source regression now additionally rewrites the same relationship from an approved Elf–Orc pair to an Elf–Orc–Dragonborn triple while reusing the original decision. It must produce `relationship-disposition-unauthorized` without granting any contested source. Existing accepted RetainBoth tests supply the exact signed participant set.
