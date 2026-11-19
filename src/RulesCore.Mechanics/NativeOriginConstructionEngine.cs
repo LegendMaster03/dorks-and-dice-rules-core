@@ -576,7 +576,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     "Table-authored interactions require distinct, nonempty targets.");
                 continue;
             }
-            if (authority is null || request.TrustedScope is null ||
+            // Structural validation is advisory and may already have
+            // reported a malformed record. Check the untrusted authority
+            // shape before calling host policy, which may dereference it.
+            if (decision.Authority is null ||
+                string.IsNullOrWhiteSpace(decision.Authority.ActorId) ||
+                string.IsNullOrWhiteSpace(decision.Authority.AuthorizationEvidenceId) ||
+                authority is null || request.TrustedScope is null ||
                 !ScopeMatches(decision.Scope, request.TrustedScope, proposal.Id) ||
                 !authority.Authorizes(decision, request.TrustedScope))
             {
