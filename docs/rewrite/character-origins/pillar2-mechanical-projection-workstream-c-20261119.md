@@ -96,6 +96,35 @@ python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
+## Executed .NET and Python verification
+
+The branch-only, nondeploying
+`.github/workflows/pillar2-workstream-c-validation.yml` executes all five
+requested commands using .NET SDK 10 on GitHub-hosted Ubuntu. It does not
+dispatch or touch `main`, the target branch or any deployment pipeline.
+
+[Successful executed test run at `fbe3671bc04263d8b848ed5f40118eeabe347bab`](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44468790636)
+reported:
+
+| Executed check | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: |
+| Focused Workstream C tests | 12 | 0 | 0 |
+| Full Mechanics | 583 | 0 | 0 |
+| Full .NET solution (583 Mechanics + 140 Host) | 723 | 0 | 0 |
+| Character Origins Python regressions | 455 | 0 | 0 |
+| Entire Python suite | 808 | 0 | 0 |
+
+Build: succeeded, zero compilation errors, 10 compiler warnings. Counts for
+overlapping suites must not be added as though they are distinct tests.
+Later branch commits harden detection of trait-to-intrinsic substitution and
+document the audit; those commits must also complete CI before final acceptance.
+
+The first CI attempt exposed an invalid *test assumption*: the existing
+direct Halfling constructor is unresolved on four prose-only native traits.
+The test was repaired to assert that admission remains unchanged and to
+exercise Keen Hearing via a separately authorized mixed fixture. No biological
+policy was changed.
+
 ## Independent-review follow-up: exact coverage and boundaries
 
 The combined infrastructure **does not** fully project or execute every
