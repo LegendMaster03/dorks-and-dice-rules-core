@@ -638,6 +638,37 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void LateCompetingResultRetractsEarlierGrantAndTransitiveDependents()
+    {
+        const string rules = """
+            [
+              {"id":"a-initial-stability","resultTraitId":"trait.fixture.stability",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:locomotion"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:stabilizer"}],"count":1}]},
+              {"id":"b-late-stability","resultTraitId":"trait.fixture.stability",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"trait.fixture.response"}],"count":1}]},
+              {"id":"m-dependent","resultTraitId":"trait.fixture.aerial-stability",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"trait.fixture.stability"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1}]},
+              {"id":"z-enable-late","resultTraitId":"trait.fixture.response",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]}
+            ]
+            """;
+        using var fixture = new Fixture(rules);
+        var result = Evaluate(fixture,
+            "/traits/0", "/traits/1", "/traits/2", "/traits/3");
+
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "synergy-result-ambiguous");
+        Assert.False(Has(result, "trait.fixture.stability"));
+        Assert.False(Has(result, "trait.fixture.aerial-stability"));
+        // The independent synergy does not rely on the disputed outcome.
+        Assert.True(Has(result, "trait.fixture.response"));
+    }
+
+    [Fact]
     public void RuleKeysRemainDistinctWhenTableAndInteractionIdsContainColons()
     {
         using var fixture = new Fixture("[]");
