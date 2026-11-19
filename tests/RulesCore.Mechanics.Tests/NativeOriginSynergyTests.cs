@@ -86,7 +86,8 @@ public sealed class NativeOriginSynergyTests
                   {"id":"trait.fixture.choice","kind":"origin-trait","name":"Choice","trait":{"id":"choice","choices":[{"id":"mode","options":["a","b"]}]}},
                   {"id":"trait.fixture.resource","kind":"origin-trait","name":"Resource","trait":{"id":"resource","uses":3}},
                   {"id":"trait.fixture.select","kind":"origin-trait","name":"Select","trait":{"id":"select","chooseFrom":"feat:all","choiceCount":1}},
-                  {"id":"trait.fixture.feat","kind":"origin-trait","name":"Feat","trait":{"id":"feat","grantType":"feat-choice"}}
+                  {"id":"trait.fixture.feat","kind":"origin-trait","name":"Feat","trait":{"id":"feat","grantType":"feat-choice"}},
+                  {"id":"trait.fixture.text-only","kind":"origin-trait","name":"Text Only","trait":{"id":"text-only","name":"Flavor Only","description":"No normalized mechanics."}}
                 ]
                 """);
             Catalog = NativeCatalogLoader.Load(
@@ -710,6 +711,20 @@ public sealed class NativeOriginSynergyTests
         Assert.True(Has(result, "trait.fixture.response"));
         Assert.Equal(2, result.Profile!.Underlying.InherentGrants.Count(x =>
             x.Synergy is not null));
+    }
+
+    [Fact]
+    public void DescriptionOnlyCanonicalEntryCannotMintAHiddenMechanic()
+    {
+        const string descriptive = """
+            [{"id":"text-only","resultTraitId":"trait.fixture.text-only",
+              "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                        {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]}]
+            """;
+        using var fixture = new Fixture(descriptive);
+        var result = Evaluate(fixture, "/traits/2", "/traits/3");
+        Assert.Contains(result.Issues, x => x.Code == "synergy-authoring-invalid");
+        Assert.False(Has(result, "trait.fixture.text-only"));
     }
 
     [Fact]
