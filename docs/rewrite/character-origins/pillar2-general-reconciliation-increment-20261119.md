@@ -81,6 +81,27 @@ The source-neutral `originConstraints` check previously trusted matching catalog
 
 Additional native regressions exercise an intrinsic-dependent High Elf spell after its ability source is removed, cyclic prerequisites with reordered constraints, and canonical rule-pointer forgery. The constraint evaluator also skips null constraint entries already marked invalid by earlier structural validation.
 
-These are infrastructure/integrity corrections, not new policy decisions. The original complete CI results remain evidence for their original commit only. The corrected source/test HEAD requires fresh hosted CI evidence.
+These are infrastructure/integrity corrections, not new policy decisions. The original complete CI results remain evidence for their original commit only. The corrected source/test HEAD was revalidated through hosted CI as recorded below.
 
 An additional reconciliation review found that `RetainBoth` was recorded for a selected pair but the shared-definition pass still suppressed both complete grants unconditionally. The shared-definition overlap check now tests every distinct source-occurrence pair against its exact authorized coexistence evidence. Unadjudicated pairs remain unresolved, and no balancing or universal stacking policy is inferred. A native Orc/Elf Low-Light Vision regression verifies default unresolved status, followed by exactly two separately sourced grants only when a trusted decision explicitly authorizes `RetainBoth`. The result is an auditable exception, not a new first-party default.
+
+## Final adversarial review CI evidence (2026-11-19 UTC)
+
+**Verified corrected source/test commit:** `cca6c6be75619958c6daeeb20e45df878a2df1c6`.
+
+- [Structure validation 44469407104](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44469407104): **passed**.
+- [Full .NET/native catalog/Python/Docker run 44469407087](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44469407087): **passed**.
+- .NET: **140/140 Host**, **582/582 Mechanics**, no failed or skipped tests.
+- Python: **808/808**. Source split, native Docker build, content layering and API smoke checks passed.
+- Four further production-engine xUnit cases were added beyond the original seven; the native generic-rule case also exercises two forged contract variants. All use the actual engine rather than mocked reconciliation.
+- **The following commit only records the already completed code/test CI evidence.** No merging or production deployment is authorized by these checks.
+
+### Review scope and incomplete infrastructure
+
+Verified: exact occurrence and contributor evidence, duplicate same-occurrence consolidation, source-authored trait prerequisites, explicitly authorized pairwise dispositions, native dependent binding and pool ownership, conventional source round trips, nested and three-contributor test paths.
+
+Still not universally resolved: complete cross-definition effect overlap semantics, independent grant resource merging or replacement, automatic resolution of competing intrinsic slots, generalized level-gated interaction authoring, and balance/eligibility policies. This increment neither supplies these rules nor proves arbitrary mixed Origin viability.
+
+### Workstream C integration
+
+C's `NativeOriginPassiveEntitlementProjector` reads the already constructed `Underlying.InherentGrants`. A can remove traits and physical foundation grants, and can preserve two separately sourced grants when a verified `RetainBoth` relationship exists. C must therefore be tested with the **combined** A/C build for suppressed passive-trait absence, retained source/occurrence identity, separately authorized coexistence without benefit aggregation, invalid mixed-foundation fail-closed behavior, and serialization round-trip of surviving grants. These are cross-branch integration tests, not evidence of a compiler conflict. No combined executable CI is claimed in this review.
