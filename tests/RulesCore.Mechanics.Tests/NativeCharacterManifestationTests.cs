@@ -1402,36 +1402,7 @@ public sealed class NativeCharacterManifestationTests
         Assert.Null(denied.State);
     }
 
-    private sealed class NativeProjectionFixture : IDisposable
-    {
-        private readonly string _root = Path.Combine(Path.GetTempPath(),
-            "rc-manifestation-projector-" + Guid.NewGuid().ToString("N"));
-        public NativeCharacterProjector Projector { get; }
-        public string Fingerprint { get; }
-
-        public NativeProjectionFixture()
-        {
-            var directory = Path.Combine(_root, "first-party-001");
-            Directory.CreateDirectory(Path.Combine(directory, "native"));
-            File.WriteAllText(Path.Combine(directory, "manifest.json"),
-                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
-            File.WriteAllText(Path.Combine(directory, "native", "class.json"), """
-                {"id":"class.demo","name":"Demo","kind":"class","definition":{
-                "savingThrowProficiencies":["dexterity"],
-                "progression":[
-                    {"level":1,"proficiencyBonus":2,"featureGrants":["class-feature.demo.known"]},
-                    {"level":2,"proficiencyBonus":2,"featureGrants":[]}
-                ]}}
-                """);
-            File.WriteAllText(Path.Combine(directory, "native", "feature.json"),
-                """{"id":"class-feature.demo.known","name":"Known","kind":"classFeature"}""");
-            var catalog = NativeCatalogLoader.Load(
-                NativeRulesetLayout.Resolve(_root, "first-party-001"));
-            Projector = new NativeCharacterProjector(catalog);
-            Fingerprint = catalog.Fingerprint;
-        }
-
-        [Fact]
+    [Fact]
     public void IndependentlyVerifiedResourceProvenanceRejectsTamperedLedger()
     {
         var state = Character();
@@ -1489,7 +1460,37 @@ public sealed class NativeCharacterManifestationTests
         Assert.Empty(current.Instances);
     }
 
-    public void Dispose() => Directory.Delete(_root, recursive: true);
+
+    private sealed class NativeProjectionFixture : IDisposable
+    {
+        private readonly string _root = Path.Combine(Path.GetTempPath(),
+            "rc-manifestation-projector-" + Guid.NewGuid().ToString("N"));
+        public NativeCharacterProjector Projector { get; }
+        public string Fingerprint { get; }
+
+        public NativeProjectionFixture()
+        {
+            var directory = Path.Combine(_root, "first-party-001");
+            Directory.CreateDirectory(Path.Combine(directory, "native"));
+            File.WriteAllText(Path.Combine(directory, "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(directory, "native", "class.json"), """
+                {"id":"class.demo","name":"Demo","kind":"class","definition":{
+                "savingThrowProficiencies":["dexterity"],
+                "progression":[
+                    {"level":1,"proficiencyBonus":2,"featureGrants":["class-feature.demo.known"]},
+                    {"level":2,"proficiencyBonus":2,"featureGrants":[]}
+                ]}}
+                """);
+            File.WriteAllText(Path.Combine(directory, "native", "feature.json"),
+                """{"id":"class-feature.demo.known","name":"Known","kind":"classFeature"}""");
+            var catalog = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(_root, "first-party-001"));
+            Projector = new NativeCharacterProjector(catalog);
+            Fingerprint = catalog.Fingerprint;
+        }
+
+        public void Dispose() => Directory.Delete(_root, recursive: true);
     }
 
     private static NativeCharacterState WithCatalog(
