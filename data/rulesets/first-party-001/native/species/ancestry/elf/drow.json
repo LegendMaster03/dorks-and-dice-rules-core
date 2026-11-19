@@ -25,5 +25,15 @@
     "wisdom",
     "charisma"
   ],
-  "defaultUpbringing": "upbringing.elf.drow"
+  "defaultUpbringing": "upbringing.elf.drow",
+  "originLinkedSelections": [
+    {
+      "id": "drow-darkvision-sunlight",
+      "triggerIntrinsicSlot": "darkvisionFeet",
+      "requiresTraitDefinitionId": "trait.elf.drow.sunlight-sensitivity",
+      "scope": "same-contributor",
+      "kind": "Requires",
+      "description": "Manifesting this Drow source's 120-foot Darkvision requires its native Sunlight Sensitivity unless an authorized table decision waives or replaces that link. Ordinary light protection still prevents the authored exposure trigger. The link does not automatically confer either trait."
+    }
+  ]
 }

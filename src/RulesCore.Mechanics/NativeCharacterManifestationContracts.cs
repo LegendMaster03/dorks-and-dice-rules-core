@@ -35,8 +35,9 @@ public sealed record NativeManifestationResourcePolicy(
 
 /// <summary>
 /// A source-authored characteristic selected from an active partial form.
-/// Only these explicitly named properties contribute during verified Coexist
-/// composition. An omitted slot always inherits the latest primary mechanics
+/// Only these explicitly named properties contribute from the partial form,
+/// whether selected alone or contributing through verified Coexist.
+/// An omitted slot always inherits the latest primary mechanics
 /// (including persistent influences), never an activation-time snapshot.
 /// Current resource quantities and Class/Origin entitlements are not slots.
 /// </summary>
@@ -62,8 +63,8 @@ public sealed record NativeManifestationInstance(
     IReadOnlyList<string> EndingConditions,
     IReadOnlyList<NativeManifestationResourcePolicy> ResourcePolicies,
     string LastEventId,
-    // Used only for explicitly authored, source-verified Coexist composition.
-    // Null preserves the previous whole-form selection behavior.
+    // A declaration limits the activation to its slots for its entire lifetime.
+    // Null selects whole-form behavior when an interaction permits it.
     IReadOnlyList<NativeManifestationCharacteristicSlot>? ContributionSlots = null);
 
 /// <summary>
@@ -159,6 +160,12 @@ public sealed record NativeManifestationEffectiveCharacter(
 public interface INativeCharacterManifestationAuthority : INativeCharacterInfluenceAuthority
 {
     bool AuthorizesLedger(string characterId, NativeManifestationLedger ledger);
+    /// <summary>
+    /// Verifies the instance against independent activation evidence, including
+    /// the exact allowed contribution slots. Removing a partial declaration or
+    /// adding or substituting a slot requires different authorization, even when
+    /// the sheet defines a value for that property.
+    /// </summary>
     bool AuthorizesInstance(string characterId, NativeManifestationInstance instance,
         NativePersistentCharacterSheet sheet);
     bool AuthorizesResource(string characterId, NativeManifestationResourceState resource);

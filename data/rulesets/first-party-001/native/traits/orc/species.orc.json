@@ -34,7 +34,10 @@
         "value": 1,
         "recharge": "long-rest"
       }
-    }
+    },
+    "inheritanceMethods": [
+      "biological"
+    ]
   },
   {
     "id": "trait.orc.powerful-build",

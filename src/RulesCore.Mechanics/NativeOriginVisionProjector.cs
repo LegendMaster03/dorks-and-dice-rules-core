@@ -69,28 +69,29 @@ public static class NativeOriginVisionProjector
         var trait = candidates[0];
         var occurrence = trait.Identity.Occurrence;
         var expectedAdjudication = approvedMixed
-            ? NativeOriginAdjudication.DmAuthorized
+            ? trait.Authorization?.Adjudication
             : NativeOriginAdjudication.Supported;
-        var expectedEligibility = approvedMixed
-            ? NativeOriginEligibility.DmAuthorized
-            : NativeOriginEligibility.Eligible;
+        // Distinct donors of one *identical* authored occurrence can carry
+        // separate verified permissions. The mixed projector validates all of
+        // those permissions instead of demanding exactly one donor.
+        var evidenceVerified = approvedMixed
+            ? NativeOriginApprovedMixedIntrinsicProjector.HasVerifiedContributingEvidence(
+                result, trait)
+            : trait.SourceCandidateIds.Count == 1 &&
+                result.EvaluatedProposal.Candidates.Any(offered =>
+                    offered.Id == trait.SourceCandidateIds[0] &&
+                    offered.ContributorId is null &&
+                    offered.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                    offered.Identity == trait.Identity &&
+                    offered.OfferedValue is { } offeredValue &&
+                    trait.EffectiveValue is { } grantedValue &&
+                    JsonElement.DeepEquals(offeredValue, grantedValue));
         if (occurrence.Source.Kind != NativeOriginSourceKind.Native ||
             !catalog.TryGetById(occurrence.Source.Id, out var species) ||
             species is null || species.Category is not ("species" or "ancestry") ||
-            trait.Authorization?.Adjudication != expectedAdjudication ||
-            trait.SourceCandidateIds.Count != 1 ||
-            !result.EvaluatedProposal.Candidates.Any(offered =>
-                offered.Id == trait.SourceCandidateIds[0] &&
-                (approvedMixed ? offered.ContributorId is not null :
-                    offered.ContributorId is null) &&
-                offered.SelectionBasis.Eligibility == expectedEligibility &&
-                (!approvedMixed ||
-                    offered.SelectionBasis.TableDecisionId ==
-                        trait.Authorization.TableDecisionId) &&
-                offered.Identity == trait.Identity &&
-                offered.OfferedValue is { } offeredValue &&
-                trait.EffectiveValue is { } grantedValue &&
-                JsonElement.DeepEquals(offeredValue, grantedValue)) ||
+            trait.Authorization is null ||
+            trait.Authorization.Adjudication != expectedAdjudication ||
+            !evidenceVerified ||
             trait.EffectiveValue is not { ValueKind: JsonValueKind.Object } value ||
             !IsLowLightRule(value) ||
             !OnlyTraitPresentationAndRuleFields(value) ||

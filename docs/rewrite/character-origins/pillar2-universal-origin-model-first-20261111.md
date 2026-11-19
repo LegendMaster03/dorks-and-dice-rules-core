@@ -3,6 +3,8 @@
 **Date:** 2026-11-11  
 **Status:** Architectural sequencing decision and proposed general contract. Not approval of a final rules schema, individual inheritance policies, an automated character-creation permission, or gameplay implementation.
 
+> **Related investigation (2026-11-14):** The [characteristic inheritance, expression, and quantitative balance candidate](pillar2-characteristic-inheritance-and-balance-design.md) preserves the combined *An Elf and an Orc Had a Little Baby* / *Daggerheart* / *RimWorld* research and its tests. It is a **design candidate**, not approval of a universal allocation budget, inherited latent-trait policy, or Species mechanics changes.
+
 ## Priority established by the owner
 
 **Finish the general Character Origins inheritance and manifestation system before designing or tuning combinations within any particular Species.** The formulaic nature of Dragonborn makes eventual same-Species mixed-Ancestry support tractable, but it must **test** a reusable framework, not define that framework.

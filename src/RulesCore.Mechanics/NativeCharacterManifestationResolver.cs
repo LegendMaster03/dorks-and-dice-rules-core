@@ -315,6 +315,11 @@ public static class NativeCharacterManifestationResolver
         var selectionIssues = new List<NativeIssue>();
         var selected = explicitlySelected ?? Select(ledger, selectionIssues);
         if (selectionIssues.Count != 0) return Failed("unresolved", selectionIssues);
+        // A partial activation keeps its declared scope when it is the only
+        // contributor, including after another contributor ends.
+        if (explicitlySelected is null && selected?.ContributionSlots is not null)
+            return NativeCharacterManifestationSlotComposer.Compose(
+                state, ledger, authority, [selected], baseline, verifyCommittedLedger);
         var target = selected?.SheetId ?? NativeCharacterSheetResolver.PrimarySheetId;
         var sheet = NativeCharacterSheetResolver.Resolve(state, target, authority);
         var influence = NativeCharacterInfluenceResolver.Resolve(state, target, authority);

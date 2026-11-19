@@ -24,6 +24,7 @@ public sealed class NativeCharacterManifestationTests
         public bool DenyProgression { get; set; }
         public bool DenyGrant { get; set; }
         public bool PermitIndependentEnding { get; set; }
+        public IReadOnlyList<NativeManifestationCharacteristicSlot>? ExpectedSlots { get; init; }
         public int TransitionCalls { get; private set; }
 
         public bool AuthorizesPrimary(string id, NativeCharacterRequest primary) => id == "character.1";
@@ -48,7 +49,9 @@ public sealed class NativeCharacterManifestationTests
             instance.SheetId == sheet.Id &&
             instance.DefinitionOccurrence.Source == Source() &&
             instance.DefinitionOccurrence.OccurrencePath == "forms." + sheet.Id &&
-            instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId;
+            instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId &&
+            (ExpectedSlots is null || instance.ContributionSlots is { } slots &&
+                ExpectedSlots.SequenceEqual(slots));
         public bool AuthorizesResource(string id, NativeManifestationResourceState resource)
         {
             if (DenyResource) return false;
@@ -255,6 +258,39 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void CoexistingPartialTransformationsPreserveDistinctEffectProvenance()
+    {
+        var primaryEffect = new NativeCharacterInfluenceEffect(
+            "b:c", Occurrence("effects.primary-speed"), "receipt.primary-speed", Rule(),
+            new Dictionary<string, string>(), [NativeCharacterSheetResolver.PrimarySheetId],
+            NativeInfluenceCharacteristic.BaseWalkSpeed, NativeInfluenceOperation.Replace,
+            NumericValue: 45);
+        var formEffect = new NativeCharacterInfluenceEffect(
+            "c", Occurrence("effects.hybrid-dexterity"), "receipt.hybrid-dexterity", Rule(),
+            new Dictionary<string, string>(), ["hybrid"],
+            NativeInfluenceCharacteristic.AbilityScore, NativeInfluenceOperation.Replace,
+            Key: "dexterity", NumericValue: 16);
+        var primary = new NativeCharacterPersistentInfluence(
+            "a", "definition.primary", Source(), "receipt.acquire.primary",
+            "receipt.expression.primary", new Dictionary<string, string>(), [primaryEffect]);
+        var form = new NativeCharacterPersistentInfluence(
+            "a:b", "definition.hybrid", Source(), "receipt.acquire.hybrid",
+            "receipt.expression.hybrid", new Dictionary<string, string>(), [formEffect]);
+        var state = Character([primary, form], [Werewolf(), Wolf(), Hybrid() with { Overrides = null }]);
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+
+        var result = Resolve(state, ledger);
+
+        Assert.Equal("partial", result.Status);
+        Assert.Equal(45, result.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(16, result.EffectiveMechanics.AbilityScores["dexterity"]);
+        Assert.Equal(new[] { ("a", "b:c"), ("a:b", "c") },
+            result.AppliedEffects.Select(item => (item.InfluenceId, item.Effect.Id)));
+    }
+
+    [Fact]
     public void CoexistingPartialTransformationsCanContributeSeparateTrainingProperties()
     {
         var wolf = Wolf() with
@@ -432,6 +468,120 @@ public sealed class NativeCharacterManifestationTests
         Assert.Empty(reversion.ProposedEffective.ContributingManifestationInstanceIds ?? []);
         Assert.All(reversion.Proposed.Instances,
             item => Assert.Equal(NativeManifestationLifecycle.Ended, item.Lifecycle));
+    }
+
+    [Fact]
+    public void PartialFormKeepsItsScopeWhenAloneAndWhenAnotherFormEnds()
+    {
+        var hybrid = Hybrid() with
+        {
+            Overrides = Hybrid().Overrides! with { BaseWalkSpeed = new(65) }
+        };
+        var state = Character(sheets: [Werewolf(), Wolf(), hybrid], speed: 45);
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        var singleActivation = new NativeManifestationTransitionStep(
+            NativeManifestationTransitionAction.Activate, "manifest.hybrid",
+            Occurrence("actions.activate"), Rule(), "receipt.transition.single",
+            Form("manifest.hybrid", "hybrid", "single") with
+            {
+                ContributionSlots = [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]
+            });
+
+        var activated = Plan(state, Ledger(), "single", singleActivation);
+        AssertPartialHybrid(activated, 45);
+
+        var endedWolf = Plan(state, ledger, "end-wolf",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        AssertPartialHybrid(endedWolf, 45);
+        var updated = Character(sheets: state.AlternateSheets, speed: 50);
+        var reverted = Plan(updated, endedWolf.Proposed!, "end-hybrid",
+            Action(NativeManifestationTransitionAction.End, "manifest.hybrid"));
+        Assert.Equal("planned", reverted.Status);
+        Assert.Equal(NativeCharacterSheetResolver.PrimarySheetId, reverted.ProposedEffective!.EffectiveSheetId);
+        Assert.Equal(50, reverted.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(12, reverted.ProposedEffective.EffectiveMechanics.AbilityScores["dexterity"]);
+
+        static void AssertPartialHybrid(NativeManifestationTransitionPlan plan, int speed)
+        {
+            Assert.Equal("planned", plan.Status);
+            var effective = plan.ProposedEffective!;
+            Assert.Equal("partial", effective.Status);
+            Assert.Equal("hybrid", effective.EffectiveSheetId);
+            Assert.Equal("manifest.hybrid", effective.ManifestationInstanceId);
+            Assert.Equal(speed, effective.EffectiveMechanics!.BaseWalkSpeed);
+            Assert.Equal(10, effective.EffectiveMechanics.AbilityScores["strength"]);
+            Assert.Equal(16, effective.EffectiveMechanics.AbilityScores["dexterity"]);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PartialTrainingSlotRequiresAnExistingPrimaryRecord(bool competency)
+    {
+        var training = new NativeSheetMapPatch<NativeSheetTrainingPatch>(false,
+            new Dictionary<string, NativeSheetTrainingPatch>
+            {
+                ["training"] = new(Replacement: new(new NativeSkillTraining(4, true, 7, "wisdom")))
+            });
+        var wolf = Wolf() with
+        {
+            Overrides = competency ? new(Competencies: training) : new(Skills: training)
+        };
+        var state = Character(sheets: [Werewolf(), wolf, Hybrid()]);
+        var ledger = Coexisting(
+            [new(competency ? NativeInfluenceCharacteristic.CompetencyRanks :
+                NativeInfluenceCharacteristic.SkillRanks, "training")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+
+        var result = Resolve(state, ledger);
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, issue => issue.Code == "manifestation-slot-value-unresolved");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ActivationEvidenceRejectsSubstitutedOrRemovedSlots(bool removeSlots)
+    {
+        var hybrid = Hybrid() with
+        {
+            Overrides = Hybrid().Overrides! with { BaseWalkSpeed = new(65) }
+        };
+        var state = Character(sheets: [Werewolf(), Wolf(), hybrid]);
+        var start = Ledger();
+        var authority = new Authority
+        {
+            ExpectedSlots = [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]
+        };
+        var activation = new NativeManifestationTransitionStep(
+            NativeManifestationTransitionAction.Activate, "manifest.hybrid",
+            Occurrence("actions.activate"), Rule(), "receipt.transition.single",
+            Form("manifest.hybrid", "hybrid", "single") with
+            {
+                ContributionSlots = [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]
+            });
+        var request = new NativeManifestationTransitionRequest(
+            state.CharacterId, start.Revision, "single", [activation]);
+        var authorized = NativeCharacterManifestationTransitionPlanner.Plan(state, start, request, authority);
+        Assert.Equal("planned", authorized.Status);
+        Assert.Equal("partial", Resolve(state, authorized.Proposed!, authority).Status);
+
+        var changed = authorized.Proposed!.Instances.Single() with
+        {
+            ContributionSlots = removeSlots ? null : [new(NativeInfluenceCharacteristic.BaseWalkSpeed)]
+        };
+        var rejected = NativeCharacterManifestationTransitionPlanner.Plan(state, start,
+            request with { Steps = [activation with { NewInstance = changed }] }, authority);
+        Assert.Equal("invalid", rejected.Status);
+        Assert.Null(rejected.Proposed);
+        Assert.Contains(rejected.Issues, issue => issue.Code == "unauthorized-manifestation-activation");
+        var forged = Resolve(state, authorized.Proposed with { Instances = [changed] }, authority);
+        Assert.Equal("invalid", forged.Status);
+        Assert.Contains(forged.Issues, issue => issue.Code == "unauthorized-manifestation-instance");
     }
 
     [Fact]
@@ -825,39 +975,6 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
-    public void IndependentlyVerifiedResourceProvenanceRejectsTamperedLedger()
-    {
-        var state = Character();
-        var original = ActivatedWolf(state);
-        var authority = new Authority { RequireExactResourceProvenance = true };
-        Assert.NotEqual("invalid", Resolve(state, original, authority).Status);
-
-        var primary = original.Resources.Single(x => x.Id == "resource.primary");
-        var forged = new[]
-        {
-            primary with { DefinitionId = "resource.definition.forged" },
-            primary with { SourceOccurrence = Occurrence("resources.forged") },
-            primary with { EvidenceId = "receipt.resource.forged" },
-            primary with { OwnerKind = NativeManifestationResourceOwner.Sheet },
-            primary with { OwnerId = "wolf" }
-        };
-        foreach (var change in forged)
-        {
-            var altered = original with
-            {
-                Resources = original.Resources.Select(x =>
-                    x.Id == primary.Id ? change : x).ToArray()
-            };
-            var result = Resolve(state, altered, authority);
-            Assert.Equal("invalid", result.Status);
-            Assert.Null(result.EffectiveMechanics);
-        }
-
-        Assert.Equal(primary, original.Resources.Single(x => x.Id == primary.Id));
-        Assert.Equal(7, Ledger().Revision);
-    }
-
-    [Fact]
     public void NewFormCanNotBorrowAnotherActivationPrivateResource()
     {
         var state = Character();
@@ -1081,31 +1198,6 @@ public sealed class NativeCharacterManifestationTests
         Assert.Null(attempt.Proposed);
         Assert.Contains(attempt.Issues,
             issue => issue.Code == "manifestation-resource-policy-unresolved");
-    }
-
-    [Fact]
-    public void ActivationRejectsNullResourcePolicyBeforeAuthorityVerification()
-    {
-        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
-        var malformed = step.NewInstance! with
-        {
-            ResourcePolicies = [null!, .. step.NewInstance.ResourcePolicies]
-        };
-        var authority = new Authority();
-        var current = Ledger();
-
-        var result = NativeCharacterManifestationTransitionPlanner.Plan(
-            Character(), current,
-            new("character.1", current.Revision, "e1",
-                [step with { NewInstance = malformed }]), authority);
-
-        Assert.Equal("invalid", result.Status);
-        Assert.Null(result.Proposed);
-        Assert.Contains(result.Issues,
-            issue => issue.Code == "invalid-manifestation-activation");
-        Assert.Equal(0, authority.TransitionCalls);
-        Assert.Equal(7, current.Revision);
-        Assert.Empty(current.Instances);
     }
 
     [Fact]
@@ -1339,7 +1431,65 @@ public sealed class NativeCharacterManifestationTests
             Fingerprint = catalog.Fingerprint;
         }
 
-        public void Dispose() => Directory.Delete(_root, recursive: true);
+        [Fact]
+    public void IndependentlyVerifiedResourceProvenanceRejectsTamperedLedger()
+    {
+        var state = Character();
+        var original = ActivatedWolf(state);
+        var authority = new Authority { RequireExactResourceProvenance = true };
+        Assert.NotEqual("invalid", Resolve(state, original, authority).Status);
+
+        var primary = original.Resources.Single(x => x.Id == "resource.primary");
+        var forged = new[]
+        {
+            primary with { DefinitionId = "resource.definition.forged" },
+            primary with { SourceOccurrence = Occurrence("resources.forged") },
+            primary with { EvidenceId = "receipt.resource.forged" },
+            primary with { OwnerKind = NativeManifestationResourceOwner.Sheet },
+            primary with { OwnerId = "wolf" }
+        };
+        foreach (var change in forged)
+        {
+            var altered = original with
+            {
+                Resources = original.Resources.Select(x =>
+                    x.Id == primary.Id ? change : x).ToArray()
+            };
+            var result = Resolve(state, altered, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+        }
+
+        Assert.Equal(primary, original.Resources.Single(x => x.Id == primary.Id));
+        Assert.Equal(7, Ledger().Revision);
+    }
+
+    [Fact]
+    public void ActivationRejectsNullResourcePolicyBeforeAuthorityVerification()
+    {
+        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
+        var malformed = step.NewInstance! with
+        {
+            ResourcePolicies = [null!, .. step.NewInstance.ResourcePolicies]
+        };
+        var authority = new Authority();
+        var current = Ledger();
+
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current,
+            new("character.1", current.Revision, "e1",
+                [step with { NewInstance = malformed }]), authority);
+
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.Proposed);
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "invalid-manifestation-activation");
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Equal(7, current.Revision);
+        Assert.Empty(current.Instances);
+    }
+
+    public void Dispose() => Directory.Delete(_root, recursive: true);
     }
 
     private static NativeCharacterState WithCatalog(

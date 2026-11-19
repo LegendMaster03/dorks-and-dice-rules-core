@@ -49,7 +49,15 @@
         "endsAt": "start-of-your-next-turn"
       },
       "sharedUsesFromTrait": "storms-thunder",
-      "extraUsesGranted": false
+      "extraUsesGranted": false,
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
+      }
     }
   },
   {
@@ -102,6 +110,14 @@
       "uses": {
         "value": "proficiency-bonus",
         "recharge": "long-rest"
+      },
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
       }
     }
   }

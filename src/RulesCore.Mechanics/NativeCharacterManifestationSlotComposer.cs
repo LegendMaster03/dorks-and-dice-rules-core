@@ -2,7 +2,7 @@ namespace RulesCore.Mechanics;
 
 /// <summary>
 /// Combines only explicitly selected, disjoint characteristic slots from
-/// multiple already verified transformations. The latest primary character
+/// one or more already verified transformations. The latest primary character
 /// remains the fallback for every unspecified property. This is not a
 /// general-purpose grant, Class, Hit Point, or resource transfer rule.
 /// </summary>
@@ -36,7 +36,7 @@ internal static class NativeCharacterManifestationSlotComposer
         // This limit bounds repeated full native form resolution; it is not a
         // gameplay limit. Large composite views need a different evaluation
         // strategy rather than hidden ordering or a long callback loop.
-        if (contributing.Count is < 2 or > 16 ||
+        if (contributing.Count is < 1 or > 16 ||
             baseline.EffectiveMechanics is null)
             return Fail("manifestation-composition-unresolved",
                 "Simultaneous partial transformations exceed supported composition bounds.");
@@ -49,7 +49,7 @@ internal static class NativeCharacterManifestationSlotComposer
         {
             if (instance.ContributionSlots is not { Count: > 0 })
                 return Fail("manifestation-slots-required",
-                    "Every simultaneous form requires exact, source-authored contribution slots.");
+                    "Every partial contributor requires exact, source-authored contribution slots.");
             foreach (var slot in instance.ContributionSlots)
                 if (!claimed.Add(slot))
                     return Fail("manifestation-slot-overlap",
@@ -67,10 +67,11 @@ internal static class NativeCharacterManifestationSlotComposer
             StringComparer.Ordinal);
         var resources = new Dictionary<string, NativeManifestationEffectiveResource>(
             StringComparer.Ordinal);
+        // Influence resolution validates effect IDs as unique across the character.
         var applied = new Dictionary<string, NativeInfluenceResolvedEffect>(StringComparer.Ordinal);
         var issues = new List<NativeIssue>(baseline.Issues);
         foreach (var item in baseline.AppliedEffects)
-            applied[item.InfluenceId + ":" + item.Effect.Id] = item;
+            applied[item.Effect.Id] = item;
 
         foreach (var instance in contributing)
         {
@@ -81,7 +82,9 @@ internal static class NativeCharacterManifestationSlotComposer
                 return new("unresolved", NativeCharacterSheetResolver.PrimarySheetId,
                     null, null, [], [], [], [], [], [], form.Issues);
 
-            var localSlots = instance.ContributionSlots.ToHashSet();
+            // All contributors were checked for a nonempty declaration above.
+            var slots = instance.ContributionSlots!;
+            var localSlots = slots.ToHashSet();
             foreach (var effect in form.AppliedEffects)
                 if (!localSlots.Contains(
                     new NativeManifestationCharacteristicSlot(effect.Effect.Characteristic,
@@ -89,7 +92,7 @@ internal static class NativeCharacterManifestationSlotComposer
                     return Fail("manifestation-unrepresented-effect",
                         "An active form influence writes a characteristic outside its declared slots.");
 
-            foreach (var slot in instance.ContributionSlots)
+            foreach (var slot in slots)
             {
                 if (baseline.AppliedEffects.Any(item =>
                         item.Effect.Characteristic == slot.Characteristic &&
@@ -97,14 +100,14 @@ internal static class NativeCharacterManifestationSlotComposer
                     return Fail("manifestation-primary-effect-overlap",
                         "A primary influence and a partial form both write this slot without a composition rule.");
 
-                if (!HasAuthoredWriter(state, sheetById, instance.SheetId, slot, form.AppliedEffects))
+                if (!HasAuthoredWriter(sheetById, instance.SheetId, slot, form.AppliedEffects))
                     return Fail("manifestation-slot-unbound",
                         "A declared slot has no matching inherited form definition or active form effect.");
 
-                var patch = SelectSlot(form.EffectiveMechanics, slot);
+                var patch = SelectSlot(baseline.EffectiveMechanics, form.EffectiveMechanics, slot);
                 if (patch is null)
                     return Fail("manifestation-slot-value-unresolved",
-                        "The selected form does not provide a resolvable value for its declared slot.");
+                        "The declared slot has no resolvable value or primary training record.");
                 mechanics = NativeCharacterSheetResolver.Apply(mechanics, patch);
             }
 
@@ -144,17 +147,19 @@ internal static class NativeCharacterManifestationSlotComposer
                 resources.TryAdd(resource.Id, resource);
             }
             foreach (var effect in form.AppliedEffects)
-                applied.TryAdd(effect.InfluenceId + ":" + effect.Effect.Id, effect);
+                applied.TryAdd(effect.Effect.Id, effect);
         }
 
         // The composite is intentionally partial. The displayed primary
         // Class advancements remain current, but the effects of combining
         // active forms on Class features, HP and Origin entitlements do not
         // become implicitly authorized by disjoint numeric slots.
-        issues.Add(new("manifestation-composite-partial", "manifestations",
-            "Multiple explicit form slots are combined; Class, Hit Point and Origin interaction policies remain partial."));
-        return new("partial", CompositeSheetId,
-            null, NativeCharacterSheetResolver.CopyMechanics(mechanics with
+        var single = contributing.Count == 1 ? contributing[0] : null;
+        if (single is null)
+            issues.Add(new("manifestation-composite-partial", "manifestations",
+                "Explicit form slots are combined while Class, Hit Point and Origin interaction policies remain partial."));
+        return new("partial", single?.SheetId ?? CompositeSheetId,
+            single?.Id, NativeCharacterSheetResolver.CopyMechanics(mechanics with
             {
                 CurrentResources = null
             }),
@@ -171,11 +176,10 @@ internal static class NativeCharacterManifestationSlotComposer
             resources.Values.OrderBy(x => x.Id, StringComparer.Ordinal).ToArray(),
             issues.Distinct().OrderBy(x => x.Path, StringComparer.Ordinal)
                 .ThenBy(x => x.Code, StringComparer.Ordinal).ToArray(),
-            contributing.Select(x => x.Id).ToArray());
+            single is null ? contributing.Select(x => x.Id).ToArray() : null);
     }
 
     private static bool HasAuthoredWriter(
-        NativeCharacterState state,
         IReadOnlyDictionary<string, NativePersistentCharacterSheet> sheets,
         string sheetId, NativeManifestationCharacteristicSlot slot,
         IReadOnlyList<NativeInfluenceResolvedEffect> effects)
@@ -256,7 +260,8 @@ internal static class NativeCharacterManifestationSlotComposer
     }
 
     private static NativeCharacterSheetOverrides? SelectSlot(
-        NativeCharacterRequest form, NativeManifestationCharacteristicSlot slot)
+        NativeCharacterRequest baseline, NativeCharacterRequest form,
+        NativeManifestationCharacteristicSlot slot)
     {
         var key = slot.Key!;
         switch (slot.Characteristic)
@@ -287,7 +292,12 @@ internal static class NativeCharacterManifestationSlotComposer
                     NativeInfluenceCharacteristic.SkillMiscModifier or
                     NativeInfluenceCharacteristic.SkillAbility;
                 var map = skill ? form.Skills : form.Competencies;
-                if (map?.TryGetValue(key, out var training) != true || training is null)
+                var primary = skill ? baseline.Skills : baseline.Competencies;
+                // Apply would otherwise supply defaults for every unselected
+                // member of a training record absent from the primary state.
+                if (primary?.TryGetValue(key, out var primaryTraining) != true ||
+                    primaryTraining is null ||
+                    map?.TryGetValue(key, out var training) != true || training is null)
                     return null;
                 var change = slot.Characteristic switch
                 {
