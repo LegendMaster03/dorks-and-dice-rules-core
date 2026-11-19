@@ -1,0 +1,33 @@
+name: Pillar 4 Workstream B effective-character validation
+
+on:
+  push:
+    branches:
+      - feature/pillar4-effective-character-mechanics-20261119
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mechanics-and-structural:
+    name: .NET 10, source-qualified regression tests, and structural validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore and build solution
+        run: |
+          dotnet restore RulesCore.slnx
+          dotnet build RulesCore.slnx -c Release --no-restore
+      - name: Full Rules Core solution tests
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Full Python structural and catalog tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Native catalog structural audit
+        run: python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict
+      - name: Ruleset split structural validation
+        run: python3 tools/validate_ruleset_split.py
