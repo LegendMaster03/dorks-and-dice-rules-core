@@ -125,6 +125,31 @@ public interface INativeCharacterInfluenceAuthority : INativeCharacterSheetAutho
         NativeInfluenceGrantApplicability decision);
 }
 
+/// <summary>
+/// A verified rule may choose exactly one already-authorized writer when a
+/// collision contains precisely these active effect instance IDs. The writer
+/// IDs refer to exact independently acquired effect occurrences, not names or
+/// definition IDs. This is neither permission to acquire a grant nor an
+/// automatic arithmetic stacking or first/last-wins rule.
+/// </summary>
+public sealed record NativeInfluenceOverlapSelection(
+    string Id,
+    IReadOnlyList<string> EffectIds,
+    string SelectedEffectId,
+    NativeOriginSourceOccurrence RuleOccurrence,
+    NativeOriginDecisionBasis Basis,
+    string AuthorizationEvidenceId);
+
+/// <summary>
+/// Optional shared authority extension. Existing influence consumers can omit
+/// this interface; any supplied overlap selection then fails closed. Workstream
+/// A acquisition authorization is not replaced or weakened by this callback.
+/// </summary>
+public interface INativeCharacterInfluenceOverlapAuthority
+{
+    bool AuthorizesOverlapSelection(string characterId, NativeInfluenceOverlapSelection selection);
+}
+
 public sealed record NativeInfluenceResolvedEffect(
     string InfluenceId, NativeCharacterInfluenceEffect Effect);
 

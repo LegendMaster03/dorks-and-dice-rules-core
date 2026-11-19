@@ -56,6 +56,15 @@ public static class NativeCharacterInfluenceResolver
         var expressionsById = new Dictionary<string, IReadOnlyDictionary<string, string>>(
             StringComparer.Ordinal);
         var effectIds = new HashSet<string>(StringComparer.Ordinal);
+        var effectDefinitions = new Dictionary<string, NativeCharacterInfluenceEffect>(
+            StringComparer.Ordinal);
+        var overlapSelections = state.InfluenceOverlapSelections ?? [];
+        if (overlapSelections.Count > 1024)
+        {
+            Issue("influence-overlap-limits", "influenceOverlapSelections",
+                "The number of source-authored overlap decisions exceeds processing limits.");
+            return Failed("invalid");
+        }
         var progressionIds = new HashSet<string>(StringComparer.Ordinal);
         var grantIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var alternate in state.AlternateSheets)
@@ -115,6 +124,8 @@ public static class NativeCharacterInfluenceResolver
                      !NumericExpressionValid(expressionsById[influence.Id], effect.ExpressionConditions)))
                     Issue("invalid-influence-effect", path + ".effects." + effect.Id,
                         "Effect shape, typed operation, expression predicates, prerequisites, source, or sheet target is invalid.");
+                else
+                    effectDefinitions.Add(effect.Id, effect);
             }
 
             var localGrants = new HashSet<string>(StringComparer.Ordinal);
@@ -178,6 +189,29 @@ public static class NativeCharacterInfluenceResolver
                         "A decision requires a locally owned grant, expression and verified source.");
             }
         }
+        // Decisions are checked even while dormant. A claimed rule cannot
+        // silently reference a foreign or nonexistent effect, target a
+        // different logical property, or choose a writer outside its set.
+        var selectionIds = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var selection in overlapSelections)
+        {
+            if (selection is null || string.IsNullOrWhiteSpace(selection.Id) ||
+                !selectionIds.Add(selection.Id) ||
+                selection.EffectIds is not { Count: >= 2 and <= 64 } ||
+                selection.EffectIds.Any(string.IsNullOrWhiteSpace) ||
+                selection.EffectIds.Distinct(StringComparer.Ordinal).Count() !=
+                    selection.EffectIds.Count ||
+                !selection.EffectIds.Contains(selection.SelectedEffectId, StringComparer.Ordinal) ||
+                !ValidOccurrence(selection.RuleOccurrence) ||
+                !ValidDecision(selection.Basis) ||
+                string.IsNullOrWhiteSpace(selection.AuthorizationEvidenceId) ||
+                selection.EffectIds.Any(id => !effectDefinitions.ContainsKey(id)) ||
+                selection.EffectIds.Select(id => effectDefinitions.TryGetValue(id, out var definition)
+                        ? EffectPath(definition) : null)
+                    .Distinct(StringComparer.Ordinal).Count() != 1)
+                Issue("invalid-influence-overlap-selection", "influenceOverlapSelections",
+                    "An overlap decision requires a unique ID, exact existing writer IDs for one property, a selected member, source occurrence and evidence.");
+        }
         if (issues.Count != 0) return Failed("invalid");
 
         // All records are now structurally valid. These checks must consult
@@ -210,6 +244,18 @@ public static class NativeCharacterInfluenceResolver
                     Issue("unauthorized-influence-applicability", path + ".applicability." + decision.GrantId,
                         "The source-qualified current-use decision was not verified.");
         }
+        if (overlapSelections.Count > 0)
+        {
+            if (authority is not INativeCharacterInfluenceOverlapAuthority overlapAuthority)
+                Issue("influence-overlap-authority-required", "influenceOverlapSelections",
+                    "Source-authored overlap decisions require an independent host verifier.");
+            else
+                foreach (var selection in overlapSelections.OrderBy(x => x.Id, StringComparer.Ordinal))
+                    if (!overlapAuthority.AuthorizesOverlapSelection(state.CharacterId, selection))
+                        Issue("unauthorized-influence-overlap-selection",
+                            "influenceOverlapSelections." + selection.Id,
+                            "The host did not verify the exact writer set, selected effect, rule and scope.");
+        }
         if (issues.Count != 0) return Failed("invalid");
 
         // Build one verified, source-qualified earned index per influence.
@@ -218,7 +264,7 @@ public static class NativeCharacterInfluenceResolver
         var earnedById = influences.ToDictionary(
             x => x.Id, IndexEarned, StringComparer.Ordinal);
 
-        var applied = influences
+        var candidates = influences
             .SelectMany(influence => influence.Effects
                 .Where(effect => effect.TargetSheetIds.Contains(targetSheetId, StringComparer.Ordinal) &&
                     Active(effect.RequiredExpression, effect.ExpressionConditions,
@@ -230,13 +276,34 @@ public static class NativeCharacterInfluenceResolver
             .ThenBy(x => x.Effect.Id, StringComparer.Ordinal)
             .ToArray();
 
-        // Do not infer additive stacking or precedence, even where both
-        // definitions are individually authorized. One logical property has
-        // at most one active influence writer in this increment.
-        foreach (var group in applied.GroupBy(x => EffectPath(x.Effect), StringComparer.Ordinal))
-            if (group.Count() > 1)
+        // With an exact source-verified decision, one active writer can replace
+        // the other writers in that collision. No decision, a partial writer
+        // set, or multiple matching decisions is unresolved, regardless of
+        // caller order. Dormant decisions have no mechanical side effects.
+        var displaced = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var group in candidates.GroupBy(x => EffectPath(x.Effect), StringComparer.Ordinal))
+        {
+            var writers = group.ToArray();
+            if (writers.Length < 2) continue;
+            var ids = writers.Select(x => x.Effect.Id).OrderBy(x => x,
+                StringComparer.Ordinal).ToArray();
+            var matches = overlapSelections.Where(x =>
+                x.EffectIds.Count == ids.Length &&
+                x.EffectIds.OrderBy(id => id, StringComparer.Ordinal).SequenceEqual(ids,
+                    StringComparer.Ordinal)).Take(2).ToArray();
+            if (matches.Length != 1)
+            {
                 Issue("influence-overlap-unresolved", group.Key,
-                    "Multiple active effects target this property without a verified interaction rule.");
+                    "Multiple active effects require one verified decision covering the exact collision.");
+                continue;
+            }
+            foreach (var writer in writers)
+                if (writer.Effect.Id != matches[0].SelectedEffectId)
+                    displaced.Add(writer.Effect.Id);
+        }
+        if (issues.Count != 0) return Failed("unresolved");
+        var applied = candidates.Where(x => !displaced.Contains(x.Effect.Id)).ToArray();
+
         // An explicitly targeted alternate sheet may have its own local
         // overrides. A supernatural writer overlapping one of those local
         // overrides needs a separately authored interaction decision: never
