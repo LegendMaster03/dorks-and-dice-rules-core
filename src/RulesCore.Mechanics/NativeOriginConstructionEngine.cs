@@ -15,6 +15,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
+    private readonly NativeOriginSynergyEvaluator _synergies = new(catalog);
 
     public NativeOriginConstructionResult Evaluate(NativeOriginConstructionRequest request,
         INativeOriginAuthority? authority = null,
@@ -554,6 +555,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 break;
         }
         resolved = effective;
+        // Derive only from the final, already reconciled and dependency-closed
+        // effective set. Derived results are rebuilt, not copied from old state.
+        var (derived, synergyIssues) = _synergies.Evaluate(proposal, resolved);
+        issues.AddRange(synergyIssues);
+        resolved = resolved.Concat(derived).ToArray();
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
