@@ -16,9 +16,24 @@ public static class NativeCharacterInfluenceResolver
     private const int MaxExpressionDimensions = 128;
     private const int MaxExpressionNameLength = 160;
     private const int MaxExpressionValueLength = 1024;
+    /// <summary>
+    /// Verify persisted sheet and influence structure and every source-specific
+    /// authority callback without requiring unrelated effective effects to compose.
+    /// Mechanical collisions remain unresolved for the normal Resolve path.
+    /// </summary>
+    public static NativeCharacterInfluenceResolution ValidateState(
+        NativeCharacterState state, string targetSheetId,
+        INativeCharacterInfluenceAuthority authority) =>
+        ResolveInternal(state, targetSheetId, authority, applyMechanics: false);
+
     public static NativeCharacterInfluenceResolution Resolve(
         NativeCharacterState state, string targetSheetId,
-        INativeCharacterInfluenceAuthority authority)
+        INativeCharacterInfluenceAuthority authority) =>
+        ResolveInternal(state, targetSheetId, authority, applyMechanics: true);
+
+    private static NativeCharacterInfluenceResolution ResolveInternal(
+        NativeCharacterState state, string targetSheetId,
+        INativeCharacterInfluenceAuthority authority, bool applyMechanics)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(authority);
@@ -257,6 +272,8 @@ public static class NativeCharacterInfluenceResolver
                             "The host did not verify the exact writer set, selected effect, rule and scope.");
         }
         if (issues.Count != 0) return Failed("invalid");
+        if (!applyMechanics)
+            return new("resolved", null, [], [], [], []);
 
         // Build one verified, source-qualified earned index per influence.
         // Repeated effect and applicability checks must not scan potentially
@@ -562,7 +579,11 @@ public static class NativeCharacterInfluenceResolver
     private static IReadOnlyList<T>? Detach<T>(IReadOnlyList<T>? values) =>
         values is null ? null : Array.AsReadOnly(values.ToArray());
 
-    private static bool ValidEffect(NativeCharacterInfluenceEffect effect,
+    /// <summary>
+    /// Shared effect-shape checks for persisted influences and source-authored
+    /// progression proposals; neither caller invents a second validation policy.
+    /// </summary>
+    internal static bool ValidEffect(NativeCharacterInfluenceEffect effect,
         HashSet<string> sheets)
     {
         if (!ValidOccurrence(effect.DefinitionOccurrence) ||
@@ -607,6 +628,14 @@ public static class NativeCharacterInfluenceResolver
         return (effect.Operation is NativeInfluenceOperation.Replace or NativeInfluenceOperation.Adjust) &&
             effect.NumericValue is not null && effect.BooleanValue is null && effect.TextValue is null;
     }
+
+    internal static bool ValidAuthoredEffect(
+        NativeCharacterInfluenceEffect effect,
+        IReadOnlyDictionary<string, string> expression,
+        HashSet<string> sheets) =>
+        ValidEffect(effect with { AuthorizationEvidenceId = "planner.structural-validation" },
+            sheets) &&
+        NumericExpressionValid(expression, effect.ExpressionConditions);
 
     private static string EffectPath(NativeCharacterInfluenceEffect effect)
     {

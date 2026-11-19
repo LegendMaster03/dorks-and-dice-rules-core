@@ -54,7 +54,16 @@ public static class NativeSupernaturalProgressionPlanner
             Issue("replayed-transition-event", "request.eventId", "The event has already been consumed.");
             return Fail("invalid");
         }
-        if (!ValidDefinition(definition))
+        if (state.AlternateSheets is null || state.AlternateSheets.Any(x => x is null))
+        {
+            Issue("invalid-supernatural-state", "state.alternateSheets",
+                "The authoritative state must contain a valid sheet collection.");
+            return Fail("invalid");
+        }
+        var sheetIds = state.AlternateSheets.Select(x => x.Id)
+            .Append(NativeCharacterSheetResolver.PrimarySheetId)
+            .ToHashSet(StringComparer.Ordinal);
+        if (!ValidDefinition(definition, sheetIds))
         {
             Issue("invalid-supernatural-definition", "definition",
                 "A version-pinned source and coherent, bounded source-authored nodes are required.");
@@ -80,7 +89,7 @@ public static class NativeSupernaturalProgressionPlanner
         // Current state verification is not a substitute for authenticating the
         // journal. It also catches duplicate progression/grant IDs across
         // alternate sheets and all already-acquired influences.
-        var verified = NativeCharacterInfluenceResolver.Resolve(state,
+        var verified = NativeCharacterInfluenceResolver.ValidateState(state,
             NativeCharacterSheetResolver.PrimarySheetId, authority);
         if (verified.Status != "resolved")
         {
@@ -324,6 +333,17 @@ public static class NativeSupernaturalProgressionPlanner
                 ? influences.Append(proposedInfluence).ToArray()
                 : influences.Select(x => x.Id == request.InfluenceId ? proposedInfluence : x).ToArray()
         };
+        // A valid plan must remain structurally evaluable by the same effect
+        // resolver after acquisition or an expression transition. A conflict
+        // between independently verified writers is not a structural defect.
+        if (proposedInfluence.Effects.Any(effect =>
+                !NativeCharacterInfluenceResolver.ValidAuthoredEffect(
+                    effect, proposedInfluence.Expression, sheetIds)))
+        {
+            Issue("invalid-proposed-supernatural-effect", "proposedState",
+                "Proposed effects are not structurally valid for current sheets and expression.");
+            return Fail("invalid");
+        }
         // IDs belong to the whole character: one acquired instance must never
         // collide with an alternate sheet or another source's earned history.
         if (!ValidProposedOwnership(proposed))
@@ -356,7 +376,8 @@ public static class NativeSupernaturalProgressionPlanner
         authored.Count == requested.Count &&
         authored.Keys.All(k => requested.Keys.Contains(k, StringComparer.Ordinal));
 
-    private static bool ValidDefinition(NativeSupernaturalDefinition source)
+    private static bool ValidDefinition(NativeSupernaturalDefinition source,
+        HashSet<string> sheetIds)
     {
         if (!Id(source.Id) || source.Source is null ||
             !Enum.IsDefined(source.Source.Kind) || !Id(source.Source.Id) ||
@@ -365,7 +386,8 @@ public static class NativeSupernaturalProgressionPlanner
             source.InitialExpression.Count > 128 ||
             source.InitialExpression.Any(x => !Id(x.Key) || !Id(x.Value, 1024)) ||
             (source.AcquisitionEffects?.Count ?? 0) > 512 ||
-            !ValidEffects(source.AcquisitionEffects, source.Source))
+            !ValidEffects(source.AcquisitionEffects, source.Source,
+                source.InitialExpression, sheetIds))
             return false;
         var ids = new HashSet<string>(StringComparer.Ordinal);
         foreach (var node in source.Nodes)
@@ -381,7 +403,8 @@ public static class NativeSupernaturalProgressionPlanner
                 (node.Grants?.Count ?? 0) > 256 ||
                 (node.Effects?.Count ?? 0) > 512 ||
                 (node.ExclusiveGroup is not null && !Id(node.ExclusiveGroup)) ||
-                !ValidEffects(node.Effects, source.Source))
+                !ValidEffects(node.Effects, source.Source,
+                    source.InitialExpression, sheetIds))
                 return false;
             var choices = new HashSet<string>(StringComparer.Ordinal);
             foreach (var choice in node.Choices ?? [])
@@ -430,14 +453,13 @@ public static class NativeSupernaturalProgressionPlanner
         Id(occurrence.OccurrencePath, 1024);
 
     private static bool ValidEffects(IReadOnlyList<NativeCharacterInfluenceEffect>? effects,
-        NativeOriginSourceReference source) =>
+        NativeOriginSourceReference source, IReadOnlyDictionary<string, string> expression,
+        HashSet<string> sheetIds) =>
         effects is null || effects.All(x => x is not null && Id(x.Id, 80) &&
-            Occurrence(x.DefinitionOccurrence, source) && ValidBasis(x.Basis) &&
-            x.TargetSheetIds is not null && x.TargetSheetIds.Count is > 0 and <= 128 &&
-            x.RequiredExpression is not null && x.RequiredExpression.Count <= 128 &&
-            x.RequiredExpression.All(p => Id(p.Key) && Id(p.Value, 1024)) &&
+            Occurrence(x.DefinitionOccurrence, source) &&
             x.RequiredEarned?.All(p => p is not null &&
-                Occurrence(p.Occurrence, source)) != false);
+                Occurrence(p.Occurrence, source)) != false &&
+            NativeCharacterInfluenceResolver.ValidAuthoredEffect(x, expression, sheetIds));
 
     private static NativeCharacterInfluenceEffect[] CopyEffects(
         IReadOnlyList<NativeCharacterInfluenceEffect>? effects, string owner,
