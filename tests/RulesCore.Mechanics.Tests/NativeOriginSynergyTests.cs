@@ -258,6 +258,68 @@ public sealed class NativeOriginSynergyTests
             .Any(x => x.Identity.MechanicalDefinitionId == "trait.fixture.flight"));
     }
 
+    private sealed class SyntheticAuthority : INativeOriginAuthority
+    {
+        public bool Authorizes(NativeTableRuleDecision decision, NativeTableDecisionScope scope) =>
+            decision.Authority.ActorId == "dm" &&
+            decision.Authority.AuthorizationEvidenceId == "verified" &&
+            scope == new NativeTableDecisionScope("campaign", "example") &&
+            decision.Scope == scope;
+
+        public bool AuthorizesCatalogChoice(string catalogId, string optionId, string evidenceId) =>
+            false;
+    }
+
+    [Fact]
+    public void BiologicalContributorOffersRequireActualAuthorizedManifestations()
+    {
+        using var fixture = new Fixture();
+        var proposal = new NativeOriginProposal("mixed-fixture", NativeOriginIntent.Mixed,
+            new("rule.fixture", "biological"),
+            [new("parent", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.fixture"))],
+            [], []);
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var discovered = engine.Evaluate(new(proposal, AutoManifestDirectDefaults: false));
+        var wings = discovered.EvaluatedProposal.Candidates.Single(x =>
+            x.ContributorId == "parent" && x.Identity.Occurrence.OccurrencePath == "/traits/2");
+        var muscle = discovered.EvaluatedProposal.Candidates.Single(x =>
+            x.ContributorId == "parent" && x.Identity.Occurrence.OccurrencePath == "/traits/3");
+        Assert.True(discovered.Profile is null || !discovered.Profile.Underlying.InherentGrants
+            .Any(x => x.Identity.MechanicalDefinitionId == "trait.fixture.flight"));
+
+        var permissions = new[] { wings, muscle }.Select((candidate, i) =>
+            new NativeTableRuleDecision("permit-" + i,
+                new("dm", "verified"), new("campaign", "example"),
+                new("candidate", candidate.Id),
+                JsonSerializer.SerializeToElement(new { eligibility = "eligible" }))).ToArray();
+        var manifests = new[]
+        {
+            new NativeOriginManifestation("selected-wings", wings.Id),
+            new NativeOriginManifestation("selected-muscle", muscle.Id)
+        };
+        var selected = proposal with { Manifestations = manifests, TableDecisions = permissions };
+        var allowed = engine.Evaluate(new(selected, new("campaign", "example"),
+            AutoManifestDirectDefaults: false), new SyntheticAuthority());
+        Assert.True(Has(allowed, "trait.fixture.flight"));
+        Assert.All(allowed.Profile!.Underlying.InherentGrants.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.flight"),
+            x => Assert.Equal(2, x.Synergy!.Inputs.Count));
+
+        var withoutMuscle = engine.Evaluate(new(selected with
+        {
+            Manifestations = [manifests[0]]
+        }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.False(Has(withoutMuscle, "trait.fixture.flight"));
+
+        var unauthorized = engine.Evaluate(new(selected, new("campaign", "different"),
+            AutoManifestDirectDefaults: false), new SyntheticAuthority());
+        Assert.True(unauthorized.Profile is null ||
+            !unauthorized.Profile.Underlying.InherentGrants.Any(x =>
+                x.Identity.MechanicalDefinitionId == "trait.fixture.flight"));
+    }
+
     [Fact]
     public void SerializationRoundTripPreservesDerivedIdentityAndProof()
     {
