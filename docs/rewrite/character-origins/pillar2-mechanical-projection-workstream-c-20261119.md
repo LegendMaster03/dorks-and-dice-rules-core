@@ -242,8 +242,14 @@ fields without enabling them.
 
 ### Workstream A integration: current independent HEAD
 
-A's verified HEAD for this review is
-`3ff1ef89b3e3900d4d2f6c42098afd0724d6b580`.
+A's HEAD supplied at review start was
+`3ff1ef89b3e3900d4d2f6c42098afd0724d6b580`; its **later verified
+branch HEAD** is `623f47af2d02f36cfb17107cbea37547424af9ea`.
+The latest two commits additionally tighten `RetainBoth`: the authenticated
+relationship decision must identify the exact participant `candidateIds`
+set, with no missing or injected contributor. C trusts A's completed
+construction status and surviving effective grants; C does not reauthorize
+the relationship or infer that retained effects stack.
 A changes `NativeOriginReconciler.cs`,
 `NativeOriginConstraintEvaluator.cs`,
 `NativeOriginConstructionEngine.cs`, construction tests, and its own notes;
@@ -266,7 +272,8 @@ unselected offers or resolve a suppressed prerequisite itself.
 
 1. Build an A-authorized mixed Origin with all required foundation slots and
    explicit authenticated `RetainBoth` for shared low-light vision from Elf
-   and Orc; expect two separately attributed opaque entries, not a combined
+   and Orc, using a decision with the exact participant `candidateIds` pair;
+   expect two separately attributed opaque entries, not a combined
    effective sense or stacked benefit. Do not reuse A's *foundationless*
    reconciliation-only test fixture unchanged: C needs the completed initial
    foundation to project.
