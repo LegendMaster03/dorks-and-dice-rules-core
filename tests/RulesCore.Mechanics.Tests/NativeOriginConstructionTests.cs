@@ -2094,4 +2094,168 @@ public sealed class NativeOriginConstructionTests
             x => x.Identity.IntrinsicSlotId == "size");
     }
 
+
+    [Fact]
+    public void RemovingAnIntrinsicChoiceAfterBindingDropsTheNewlyBoundDependent()
+    {
+        var proposal = Proposal("high-elf-binding-closure", ancestry: "ancestry.elf.high");
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var spellAbility = Assert.Single(offered,
+            x => x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        var cantrip = Assert.Single(offered, x =>
+            x.Identity.Occurrence.Source.Id == "ancestry.elf.high" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/0");
+        var speed = Assert.Single(offered,
+            x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var relation = new NativeOriginRelationship("suppress-spell-ability",
+            NativeOriginRelationshipKind.Substitution, [speed.Id, spellAbility.Id]);
+        var selected = proposal with
+        {
+            Manifestations =
+            [
+                new("ability", spellAbility.Id,
+                    Choices: [new("spellcastingAbility", ["intelligence"])]),
+                new("cantrip", cantrip.Id,
+                    Choices: [new("selection", ["spell.fire-bolt"],
+                        "verified-catalog-proof")])
+            ],
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "drop-spell-ability"))],
+            TableDecisions =
+            [
+                Decision("drop-spell-ability", "relationship", relation.Id,
+                    new { action = "retain-first" })
+            ]
+        };
+
+        var result = Evaluate(selected, new TestAuthority());
+        Assert.Contains(result.Issues, x => x.Code == "origin-binding-choice-missing");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == cantrip.Identity.MechanicalDefinitionId);
+        Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
+            x.Identity.IntrinsicSlotId == "spellcastingAbility");
+    }
+
+    [Fact]
+    public void CyclicPrerequisitesCloseDeterministicallyWithReorderedConstraints()
+    {
+        var proposal = Proposal("cyclic-closure-order", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var creature = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "creatureType");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var constraints = new[]
+        {
+            new NativeOriginConstraint("a-size-needs-creature",
+                NativeOriginRelationshipKind.Requires,
+                [new(CandidateId: size.Id)], [new(CandidateId: creature.Id)],
+                Minimum: 1, TableDecisionId: "allow-a"),
+            new NativeOriginConstraint("b-creature-needs-size",
+                NativeOriginRelationshipKind.Requires,
+                [new(CandidateId: creature.Id)], [new(CandidateId: size.Id)],
+                Minimum: 1, TableDecisionId: "allow-b"),
+            new NativeOriginConstraint("c-creature-needs-speed",
+                NativeOriginRelationshipKind.Requires,
+                [new(CandidateId: creature.Id)], [new(CandidateId: speed.Id)],
+                Minimum: 1, TableDecisionId: "allow-c")
+        };
+        var relation = new NativeOriginRelationship("remove-speed",
+            NativeOriginRelationshipKind.Substitution, [size.Id, speed.Id]);
+        var resolutions = new[]
+        {
+            new NativeOriginResolution(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "remove-speed"))
+        };
+        var decisions = constraints.Select((c, i) =>
+            Decision("allow-" + (char)('a' + i), "constraint", c.Id,
+                new { enforce = true }))
+            .Append(Decision("remove-speed", "relationship", relation.Id,
+                new { action = "retain-first" })).ToArray();
+
+        NativeOriginConstructionResult Run(IReadOnlyList<NativeOriginConstraint> order) =>
+            Evaluate(proposal with
+            {
+                Constraints = order, Relationships = [relation],
+                Resolutions = resolutions, TableDecisions = decisions
+            }, new TestAuthority());
+
+        var forward = Run(constraints);
+        var reversed = Run(constraints.Reverse().ToArray());
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, forward.Status);
+        Assert.Equal(forward.Status, reversed.Status);
+        Assert.Equal(JsonSerializer.Serialize(forward.Issues),
+            JsonSerializer.Serialize(reversed.Issues));
+        Assert.Equal(JsonSerializer.Serialize(forward.Profile!.Underlying.InherentGrants),
+            JsonSerializer.Serialize(reversed.Profile!.Underlying.InherentGrants));
+        Assert.DoesNotContain(forward.Profile.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId is "size" or "creatureType" or "walkingSpeedFeet");
+    }
+
+    [Fact]
+    public void GenericNativeRulePointerMustMatchCompleteAuthoredSelectorsAndCounts()
+    {
+        var root = Path.Combine(Path.GetTempPath(),
+            "rules-core-constraint-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            var native = Path.Combine(root, "first-party-001", "native");
+            Directory.CreateDirectory(native);
+            File.WriteAllText(Path.Combine(root, "first-party-001", "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(native, "species.json"),
+                """{"id":"species.fixture","kind":"species","name":"Fixture","selectable":true,"creatureType":"humanoid","size":"medium","walkingSpeedFeet":30,"traits":[]}""");
+            File.WriteAllText(Path.Combine(native, "rules.json"),
+                """
+                {"id":"rule.fixture","kind":"rule","name":"Fixture Rule",
+                 "methodDefinitions":[{"id":"biological","name":"Biological"}],
+                 "originConstraints":[
+                   {"id":"fixture-requires","kind":"Requires",
+                    "subjects":[{"intrinsicSlotId":"size"}],
+                    "conditions":[{"intrinsicSlotId":"walkingSpeedFeet"}],
+                    "minimum":1}]}
+                """);
+            var catalog = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(root, "first-party-001"));
+            var engine = new NativeOriginConstructionEngine(catalog);
+            var proposal = new NativeOriginProposal("fixture", NativeOriginIntent.Direct,
+                new("rule.fixture", "biological"), [], [], [],
+                SelectedSpeciesId: "species.fixture");
+            var source = engine.Evaluate(new(proposal)).EvaluatedProposal.Candidates;
+            Assert.Contains(source, x => x.Identity.IntrinsicSlotId == "size");
+            var valid = new NativeOriginConstraint("fixture-requires",
+                NativeOriginRelationshipKind.Requires,
+                [new(IntrinsicSlotId: "size")],
+                [new(IntrinsicSlotId: "walkingSpeedFeet")],
+                Minimum: 1, NativeRuleReference: "rule.fixture");
+
+            var verified = engine.Evaluate(new(proposal with { Constraints = [valid] }));
+            Assert.DoesNotContain(verified.Issues,
+                x => x.Code == "constraint-policy-unresolved");
+
+            var forgedCount = engine.Evaluate(new(proposal with
+            {
+                Constraints = [valid with { Minimum = 2 }]
+            }));
+            Assert.Contains(forgedCount.Issues,
+                x => x.Code == "constraint-policy-unresolved");
+            Assert.DoesNotContain(forgedCount.Profile!.Underlying.InherentGrants,
+                x => x.Identity.IntrinsicSlotId == "size");
+
+            var forgedSelector = engine.Evaluate(new(proposal with
+            {
+                Constraints = [valid with
+                {
+                    Conditions = [new(IntrinsicSlotId: "creatureType")]
+                }]
+            }));
+            Assert.Contains(forgedSelector.Issues,
+                x => x.Code == "constraint-policy-unresolved");
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
+    }
+
 }

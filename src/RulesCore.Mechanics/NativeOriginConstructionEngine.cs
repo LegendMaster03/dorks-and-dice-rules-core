@@ -511,6 +511,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             {
                 var decision = Verified("constraint", constraint.Id);
                 if (decision is not null &&
+                    (constraint.TableDecisionId is null ||
+                     decision.Id == constraint.TableDecisionId) &&
                     (ReadBool(decision.EffectiveOutcome, "allow") == true ||
                      ReadBool(decision.EffectiveOutcome, "enforce") == true))
                     verifiedDmDecisionIds.Add(decision.Id);
@@ -527,9 +529,16 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         IReadOnlyList<NativeOriginEffectiveGrant> effective = resolved;
         while (true)
         {
-            var previousCount = effective.Count;
+            // Rebind from immutable reconciled input, not the previous pass's
+            // derived Parameters. Otherwise an auto-bound intrinsic parameter
+            // can appear inherited when its actual owner was just suppressed.
+            // Only grant IDs surviving the last pass may be reconsidered.
+            var survivingIds = effective.Select(x => x.Id)
+                .ToHashSet(StringComparer.Ordinal);
+            var inputs = resolved.Where(x => survivingIds.Contains(x.Id)).ToArray();
+            var previousCount = inputs.Length;
             var (bound, bindingIssues) =
-                NativeOriginDependentBinder.Bind(catalog, proposal, effective);
+                NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
             issues.AddRange(bindingIssues);
             var (resourceBound, resourceIssues) =
                 NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);

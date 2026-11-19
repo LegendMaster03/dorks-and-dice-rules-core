@@ -19,6 +19,7 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
         var blocked = new HashSet<string>(StringComparer.Ordinal);
         var usedDm = false;
         foreach (var constraint in (proposal.Constraints ?? [])
+            .Where(x => x is not null)
             .OrderBy(x => x.Id, StringComparer.Ordinal))
         {
             if (constraint is null || constraint.Subjects is null ||
@@ -228,8 +229,7 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
             rule.Definition.TryGetProperty("originConstraints", out var definitions) &&
             definitions.ValueKind == JsonValueKind.Array &&
             definitions.EnumerateArray().Any(item =>
-                Text(item, "id") == constraint.Id &&
-                Text(item, "kind") == constraint.Kind.ToString()))
+                NativeRuleConstraintMatches(item, constraint)))
             return true;
         // Source-owned linked selections must match exactly the native
         // contributor-local candidates. A caller-authored Requires assertion
@@ -268,6 +268,53 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                 CandidateId: subject.Id) &&
             constraint.Conditions[0] == new NativeOriginCharacteristicSelector(
                 CandidateId: condition.Id));
+    }
+
+
+    /// <summary>
+    /// An authored rule ID and relationship kind alone are not a complete
+    /// executable constraint: accepting them would let a caller substitute
+    /// arbitrary participants, minimums or parameter links. Only the exact
+    /// selected native contract can exercise the generic rule path. Missing
+    /// fields stay unresolved until the native rule authors them.
+    /// </summary>
+    private static bool NativeRuleConstraintMatches(
+        JsonElement authored, NativeOriginConstraint constraint)
+    {
+        if (authored.ValueKind != JsonValueKind.Object ||
+            Text(authored, "id") != constraint.Id ||
+            Text(authored, "kind") != constraint.Kind.ToString() ||
+            !authored.TryGetProperty("subjects", out var subjects) ||
+            !authored.TryGetProperty("conditions", out var conditions))
+            return false;
+
+        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web)
+        {
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+        };
+        if (!JsonElement.DeepEquals(subjects,
+                JsonSerializer.SerializeToElement(constraint.Subjects, options)) ||
+            !JsonElement.DeepEquals(conditions,
+                JsonSerializer.SerializeToElement(constraint.Conditions, options)))
+            return false;
+
+        return SameNumber("minimum", constraint.Minimum) &&
+            SameNumber("maximum", constraint.Maximum) &&
+            SameLinks();
+
+        bool SameNumber(string name, int? actual) =>
+            authored.TryGetProperty(name, out var expected) ?
+                actual is { } number &&
+                expected.ValueKind == JsonValueKind.Number &&
+                expected.TryGetInt32(out var native) && number == native :
+                actual is null;
+
+        bool SameLinks() =>
+            authored.TryGetProperty("linkedParameterPaths", out var links) ?
+                constraint.LinkedParameterPaths is not null &&
+                JsonElement.DeepEquals(links,
+                    JsonSerializer.SerializeToElement(constraint.LinkedParameterPaths, options)) :
+                constraint.LinkedParameterPaths is null;
     }
 
     private static bool Matches(NativeOriginCharacteristicSelector selector,

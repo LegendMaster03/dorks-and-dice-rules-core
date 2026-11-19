@@ -72,3 +72,13 @@ Hosted GitHub Actions is required for executed .NET tests when the development e
 - Complete Python suite: **808/808** tests passed. Pillar 1/3 adjacent regressions and source-split/catalog validation passed.
 - Native-only Docker build, layered content build, and public/private/readiness smoke checks passed.
 - The feature branch remains unmerged; temporary PR #165 is for hosted CI only. This report addendum changes documentation, not the verified source or tests.
+
+## Adversarial follow-up correction
+
+A second-pass binder originally received parameters derived in the previous pass. If an unconfigured native spell trait was automatically bound to a selected intrinsic and that intrinsic was later suppressed, the binder could mistake the newly bound parameter for preserved nested-contributor evidence. The fixed-point loop now **rebuilds each surviving grant from the original reconciled grants** before binding again. Legitimate previously manifested parameters remain intact because their preexisting inherited evidence is part of the original grant, not introduced by the preceding pass.
+
+The source-neutral `originConstraints` check previously trusted matching catalog `id` and `kind` alone, allowing proposal-supplied selectors or minimum counts to alter an authored relationship. It now requires exact authored subject/condition selectors, minimum/maximum counts and linked parameter paths. Unrecognized or incomplete authoring stays unresolved; no new native rule is published. A test-only native ruleset exercises both valid and forged configurations through the production engine.
+
+Additional native regressions exercise an intrinsic-dependent High Elf spell after its ability source is removed, cyclic prerequisites with reordered constraints, and canonical rule-pointer forgery. The constraint evaluator also skips null constraint entries already marked invalid by earlier structural validation.
+
+These are infrastructure/integrity corrections, not new policy decisions. The original complete CI results remain evidence for their original commit only. The corrected source/test HEAD requires fresh hosted CI evidence.
