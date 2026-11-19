@@ -84,7 +84,8 @@ public sealed class NativeOriginSynergyTests
                   {"id":"trait.fixture.loop-a","kind":"origin-trait","name":"Loop A","trait":{"id":"loop-a","name":"Loop A","systemTag":"loop-a"}},
                   {"id":"trait.fixture.loop-b","kind":"origin-trait","name":"Loop B","trait":{"id":"loop-b","name":"Loop B","systemTag":"loop-b"}},
                   {"id":"trait.fixture.choice","kind":"origin-trait","name":"Choice","trait":{"id":"choice","choices":[{"id":"mode","options":["a","b"]}]}},
-                  {"id":"trait.fixture.resource","kind":"origin-trait","name":"Resource","trait":{"id":"resource","uses":3}}
+                  {"id":"trait.fixture.resource","kind":"origin-trait","name":"Resource","trait":{"id":"resource","uses":3}},
+                  {"id":"trait.fixture.select","kind":"origin-trait","name":"Select","trait":{"id":"select","chooseFrom":"feat:all","choiceCount":1}}
                 ]
                 """);
             Catalog = NativeCatalogLoader.Load(
@@ -536,6 +537,9 @@ public sealed class NativeOriginSynergyTests
                          {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]},
               {"id":"unsafe-resource","resultTraitId":"trait.fixture.resource",
                "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]},
+              {"id":"unsafe-select","resultTraitId":"trait.fixture.select",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
                          {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]}
             ]
             """;
@@ -545,6 +549,7 @@ public sealed class NativeOriginSynergyTests
             x => x.Code == "synergy-authoring-invalid");
         Assert.False(Has(result, "trait.fixture.choice"));
         Assert.False(Has(result, "trait.fixture.resource"));
+        Assert.False(Has(result, "trait.fixture.select"));
     }
 
     [Fact]
