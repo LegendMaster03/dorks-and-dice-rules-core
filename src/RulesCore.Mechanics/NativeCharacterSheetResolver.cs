@@ -440,14 +440,42 @@ public static class NativeCharacterSheetResolver
                     Array.AsReadOnly(sheet.GrantApplicability.ToArray())
             };
 
+        static NativeCharacterPersistentInfluence SnapshotInfluence(
+            NativeCharacterPersistentInfluence influence) => influence with
+        {
+            Expression = influence.Expression.ToFrozenDictionary(StringComparer.Ordinal),
+            Effects = Array.AsReadOnly(influence.Effects.Select(effect => effect with
+            {
+                RequiredExpression = effect.RequiredExpression.ToFrozenDictionary(StringComparer.Ordinal),
+                TargetSheetIds = Array.AsReadOnly(effect.TargetSheetIds.ToArray()),
+                ExpressionConditions = effect.ExpressionConditions is null ? null :
+                    Array.AsReadOnly(effect.ExpressionConditions.ToArray()),
+                RequiredEarned = effect.RequiredEarned is null ? null :
+                    Array.AsReadOnly(effect.RequiredEarned.ToArray())
+            }).ToArray()),
+            Progression = influence.Progression is null ? null :
+                Array.AsReadOnly(influence.Progression.Select(CopyProgression).ToArray()),
+            GrantApplicability = influence.GrantApplicability is null ? null :
+                Array.AsReadOnly(influence.GrantApplicability.Select(decision => decision with
+                {
+                    RequiredExpression = decision.RequiredExpression.ToFrozenDictionary(StringComparer.Ordinal),
+                    ExpressionConditions = decision.ExpressionConditions is null ? null :
+                        Array.AsReadOnly(decision.ExpressionConditions.ToArray()),
+                    RequiredEarned = decision.RequiredEarned is null ? null :
+                        Array.AsReadOnly(decision.RequiredEarned.ToArray())
+                }).ToArray())
+        };
+
         return state with
         {
             PrimaryMechanics = CopyMechanics(state.PrimaryMechanics),
-            AlternateSheets = Array.AsReadOnly(state.AlternateSheets.Select(SnapshotSheet).ToArray())
+            AlternateSheets = Array.AsReadOnly(state.AlternateSheets.Select(SnapshotSheet).ToArray()),
+            PersistentInfluences = state.PersistentInfluences is null ? null :
+                Array.AsReadOnly(state.PersistentInfluences.Select(SnapshotInfluence).ToArray())
         };
     }
 
-    private static NativeCharacterRequest Apply(NativeCharacterRequest parent,
+    internal static NativeCharacterRequest Apply(NativeCharacterRequest parent,
         NativeCharacterSheetOverrides? patch)
     {
         if (patch is null) return parent;
