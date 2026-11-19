@@ -305,6 +305,54 @@ several specialized categories. Generalized typed projection of damage
 resistance, nonspell level unlocks, bound/conditional effects, and full
 runtime execution remain outstanding separate work.
 
+## Final acceptance follow-up: distinct grant evidence and exact-value boundary
+
+**Additional confirmed defect and correction.** A syntactically distinct saved
+grant with a new `GrantId` could reuse the same legitimate
+`ManifestationId` and `SourceCandidateIds`. The prior per-grant verification
+accepted each record separately and emitted two opaque or typed entries from
+one selected occurrence. The new production projector also enforces
+**cross-grant uniqueness** of selected manifestation IDs and all contributing
+candidate IDs. A second use returns `unresolved` with both output collections
+empty. The new real first-party Orc/Elf regression constructs authorized
+profiles, appends duplicate records only to the saved effective configuration,
+and verifies that duplicate opaque and typed outputs fail closed.
+
+The red regression run before the correction is
+[44473957740](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44473957740):
+the focused suite ran 15 cases, 14 passed and the new case failed because a
+forged duplicate Orc still returned `none`. This is **defect confirmation**,
+not acceptance evidence. A successful follow-up run is required at the
+updated branch HEAD.
+
+**Conservative exact-offer boundary.** `VerifiedSelectedGrant` checks the
+effective canonical JSON against *each* contributing candidate's exact
+`OfferedValue`. This deliberately excludes any otherwise authorized
+replacement or recombinant configuration whose effective JSON differs from
+the original offer. Some authenticated per-source parameter composition
+also requires decision evidence beyond the intrinsic evidence helper's
+supported selection pattern. Such valid reconstructed variants may return
+`unresolved` even though the construction engine authorized them. Do **not**
+weaken provenance checks or recast these variants as fixed unconditional
+passives. Workstream D should record their exact shape as a future
+source-neutral projection/evidence contract requirement, separate from
+biological policy and runtime execution. An authored canonical JSON
+`CompleteEffect` does not carry a parameter's selected runtime value,
+spending state, or authorization by itself.
+
+The last verified Workstream A HEAD for this final acceptance review is
+`7470953a7160aa34c3288f5b410083a65765a757`.
+Its last follow-up after the participant-ID authorization fix only changes
+five regression test files. A and C have no shared changed-file paths.
+Cross-branch code integration tests remain the responsibility of Workstream D.
+
+**Additional combined A/C regression:** after an authorized, complete
+mixed `RetainBoth` case, each surviving grant must retain a different
+manifestation and source candidate ID despite equal canonical definitions;
+reusing either selection record must return `unresolved` without adding a
+third benefit. A consolidated grant with two legitimate candidate IDs remains
+**one** grant; do not count those two candidates as two benefits.
+
 ## Deferred dependencies for integration review
 
 1. A generic passive-damage-resistance and scoped defense projection requires
