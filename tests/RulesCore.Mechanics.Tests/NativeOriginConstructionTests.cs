@@ -1881,7 +1881,8 @@ public sealed class NativeOriginConstructionTests
         var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
         var required = new NativeOriginConstraint("size-needs-speed",
             NativeOriginRelationshipKind.Requires,
-            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)], Minimum: 1);
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)],
+            Minimum: 1, TableDecisionId: "verify-requires");
         var result = Evaluate(proposal with
         {
             Constraints = [required],
@@ -1907,10 +1908,12 @@ public sealed class NativeOriginConstructionTests
         var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
         var first = new NativeOriginConstraint("a-size-needs-type",
             NativeOriginRelationshipKind.Requires,
-            [new(CandidateId: size.Id)], [new(CandidateId: creature.Id)], Minimum: 1);
+            [new(CandidateId: size.Id)], [new(CandidateId: creature.Id)],
+            Minimum: 1, TableDecisionId: "first-requirement");
         var second = new NativeOriginConstraint("b-type-needs-speed",
             NativeOriginRelationshipKind.Requires,
-            [new(CandidateId: creature.Id)], [new(CandidateId: speed.Id)], Minimum: 1);
+            [new(CandidateId: creature.Id)], [new(CandidateId: speed.Id)],
+            Minimum: 1, TableDecisionId: "second-requirement");
         var relation = new NativeOriginRelationship("suppress-speed",
             NativeOriginRelationshipKind.Substitution, [size.Id, speed.Id]);
 
@@ -1960,7 +1963,7 @@ public sealed class NativeOriginConstructionTests
             NativeOriginRelationshipKind.Requires,
             [new(CandidateId: size.Id)],
             [new(CandidateId: speed1.Id), new(CandidateId: speed2.Id)],
-            Minimum: requiredCount);
+            Minimum: requiredCount, TableDecisionId: "verified-count");
         var result = Evaluate(proposal with
         {
             Manifestations = new[] { size, creature, speed1, speed2 }
@@ -2022,7 +2025,8 @@ public sealed class NativeOriginConstructionTests
             x.Identity.IntrinsicSlotId == "creatureType");
         var requirement = new NativeOriginConstraint("owner-needs-size",
             NativeOriginRelationshipKind.Requires,
-            [new(CandidateId: owner.Id)], [new(CandidateId: size.Id)], Minimum: 1);
+            [new(CandidateId: owner.Id)], [new(CandidateId: size.Id)],
+            Minimum: 1, TableDecisionId: "required-owner");
         var relation = new NativeOriginRelationship("choose-type-not-size",
             NativeOriginRelationshipKind.Substitution, [creature.Id, size.Id]);
         var manifests = foundations.Select((x, i) =>
@@ -2060,6 +2064,34 @@ public sealed class NativeOriginConstructionTests
                 "trait.goliath.cloud.clouds-jaunt" or "trait.goliath.cloud.cloud-strike");
         Assert.DoesNotContain(result.Issues,
             issue => issue.Code == "profile-resource-owner-invalid");
+    }
+
+
+    [Fact]
+    public void AnAuthenticatedButDifferentConstraintDecisionCannotProveAClaimedId()
+    {
+        var proposal = Proposal("mismatched-constraint-decision", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var forged = new NativeOriginConstraint("declared-requirement",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)],
+            Minimum: 1, TableDecisionId: "different-target");
+        var result = Evaluate(proposal with
+        {
+            Constraints = [forged],
+            TableDecisions =
+            [
+                Decision("different-target", "candidate", size.Id,
+                    new { eligibility = "eligible" }),
+                Decision("other-decision", "constraint", forged.Id, new { enforce = true })
+            ]
+        }, new TestAuthority());
+
+        Assert.Contains(result.Issues, x => x.Code == "constraint-policy-unresolved");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "size");
     }
 
 }

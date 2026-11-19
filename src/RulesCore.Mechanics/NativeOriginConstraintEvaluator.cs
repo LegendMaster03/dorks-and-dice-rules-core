@@ -33,6 +33,11 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                 continue;
 
             var decision = verified("constraint", constraint.Id);
+            // A verified outcome for the same target is not interchangeable
+            // with a different decision explicitly named by this constraint.
+            if (constraint.TableDecisionId is not null &&
+                decision?.Id != constraint.TableDecisionId)
+                decision = null;
             var dmAllow = decision is not null &&
                 ReadBool(decision.EffectiveOutcome, "allow") == true;
             var dmEnforce = decision is not null &&
@@ -152,6 +157,9 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                 // The initial evaluator has already marked unsupported claims
                 // unresolved; this pass must not turn them into executable rules.
                 var decision = verified("constraint", requirement.Id);
+                if (requirement.TableDecisionId is not null &&
+                    decision?.Id != requirement.TableDecisionId)
+                    decision = null;
                 if (ReadBool(decision?.EffectiveOutcome ?? default, "allow") == true)
                     continue;
                 if (ReadBool(decision?.EffectiveOutcome ?? default, "enforce") != true &&
