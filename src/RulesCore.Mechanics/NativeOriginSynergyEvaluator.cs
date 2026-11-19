@@ -275,6 +275,8 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         return grant.SourceCandidateIds.Any(id =>
             offers.TryGetValue(id, out var candidate) &&
             candidate.Identity.Kind == grant.Identity.Kind &&
+            candidate.Identity.MechanicalDefinitionId == grant.Identity.MechanicalDefinitionId &&
+            candidate.Identity.IntrinsicSlotId == grant.Identity.IntrinsicSlotId &&
             IdentityMatches(candidate.Identity));
     }
 
