@@ -491,6 +491,160 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     }
 
     [Fact]
+    public void OrcOutsideScopeTraitRequiresExactSelectionAndManifestation()
+    {
+        var catalog = Catalog();
+        var orc = Direct(catalog, "species.orc");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, orc.Status);
+        var rush = Assert.Single(orc.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+        var baseline = NativeOriginPassiveEntitlementProjector.Project(catalog, orc);
+        Assert.Equal("none", baseline.Status);
+        Assert.Empty(baseline.Traits);
+        var opaque = Assert.Single(baseline.OutsideScopeTraits, x =>
+            x.DefinitionId == "trait.orc.adrenaline-rush");
+        Assert.Equal(rush.Id, opaque.GrantId);
+        Assert.Equal(rush.ManifestationId, opaque.ManifestationId);
+        Assert.Equal(rush.SourceCandidateIds, opaque.SourceCandidateIds);
+        Assert.Equal("species.orc", opaque.SourceId);
+        Assert.True(JsonElement.DeepEquals(rush.EffectiveValue!.Value,
+            opaque.CompleteEffect));
+
+        var other = Assert.Single(orc.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.orc.savage-attacks");
+        var forged = new[]
+        {
+            rush with { SourceCandidateIds = ["fabricated-candidate"] },
+            rush with { SourceCandidateIds = [] },
+            rush with { SourceCandidateIds =
+                [rush.SourceCandidateIds[0], rush.SourceCandidateIds[0]] },
+            rush with { SourceCandidateIds = [other.SourceCandidateIds[0]] },
+            rush with { SourceCandidateIds =
+                [rush.SourceCandidateIds[0], other.SourceCandidateIds[0]] },
+            rush with { ManifestationId = "fabricated-manifestation" },
+            rush with { Authorization = new NativeOriginDecisionBasis(
+                NativeOriginAdjudication.Supported, "species.elf") },
+            rush with { Authorization = null }
+        };
+
+        foreach (var modified in forged)
+        {
+            var view = NativeOriginPassiveEntitlementProjector.Project(
+                catalog, WithGrant(orc, modified));
+            Assert.Equal("unresolved", view.Status);
+            Assert.Empty(view.Traits);
+            Assert.Empty(view.OutsideScopeTraits);
+        }
+
+        var removedManifestation = orc with
+        {
+            EvaluatedProposal = orc.EvaluatedProposal with
+            {
+                Manifestations = orc.EvaluatedProposal.Manifestations
+                    .Where(x => x.Id != rush.ManifestationId).ToArray()
+            }
+        };
+        Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector
+            .Project(catalog, removedManifestation).Status);
+
+        var forgedManifestationIdentity = orc with
+        {
+            EvaluatedProposal = orc.EvaluatedProposal with
+            {
+                Manifestations = orc.EvaluatedProposal.Manifestations
+                    .Select(x => x.Id == rush.ManifestationId
+                        ? x with { CandidateId = other.SourceCandidateIds[0] }
+                        : x).ToArray()
+            }
+        };
+        Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector
+            .Project(catalog, forgedManifestationIdentity).Status);
+
+        var changedCandidateIdentity = orc with
+        {
+            EvaluatedProposal = orc.EvaluatedProposal with
+            {
+                Candidates = orc.EvaluatedProposal.Candidates
+                    .Select(x => x.Id == rush.SourceCandidateIds[0]
+                        ? x with { Identity = other.Identity }
+                        : x).ToArray()
+            }
+        };
+        Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector
+            .Project(catalog, changedCandidateIdentity).Status);
+    }
+
+    [Fact]
+    public void MixedOrcOutsideScopeTraitRequiresContributorAuthorization()
+    {
+        var catalog = Catalog();
+        var mixed = MixedWithSources(catalog, "species.elf", "species.orc",
+            "trait.orc.adrenaline-rush", "trait.elf.keen-senses");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, mixed.Status);
+        var baseline = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
+            catalog, mixed);
+        Assert.Equal("resolved", baseline.Status);
+        Assert.Single(baseline.Traits);
+        var rush = Assert.Single(mixed.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+        var opaque = Assert.Single(baseline.OutsideScopeTraits, x =>
+            x.DefinitionId == "trait.orc.adrenaline-rush");
+        Assert.Equal(rush.ManifestationId, opaque.ManifestationId);
+        Assert.Equal(rush.SourceCandidateIds, opaque.SourceCandidateIds);
+
+        var elf = Assert.Single(mixed.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+        foreach (var forged in new[]
+        {
+            rush with { SourceCandidateIds = ["invented-parent"] },
+            rush with { SourceCandidateIds =
+                [rush.SourceCandidateIds[0], rush.SourceCandidateIds[0]] },
+            rush with { SourceCandidateIds =
+                [rush.SourceCandidateIds[0], elf.SourceCandidateIds[0]] },
+            rush with { Authorization = new NativeOriginDecisionBasis(
+                NativeOriginAdjudication.Supported, "species.orc") },
+            rush with { ManifestationId = elf.ManifestationId }
+        })
+        {
+            var result = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
+                catalog, WithGrant(mixed, forged));
+            Assert.Equal("unresolved", result.Status);
+            Assert.Empty(result.Traits);
+            Assert.Empty(result.OutsideScopeTraits);
+        }
+
+        var altered = mixed with
+        {
+            EvaluatedProposal = mixed.EvaluatedProposal with
+            {
+                Manifestations = mixed.EvaluatedProposal.Manifestations
+                    .Where(x => x.Id != rush.ManifestationId).ToArray()
+            }
+        };
+        Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector
+            .ProjectApprovedMixed(catalog, altered).Status);
+        var roundTrip = mixed with
+        {
+            Profile = JsonSerializer.Deserialize<NativeOriginProfile>(
+                JsonSerializer.Serialize(mixed.Profile))
+        };
+        var replay = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
+            catalog, roundTrip);
+        Assert.Equal(JsonSerializer.Serialize(baseline),
+            JsonSerializer.Serialize(replay));
+
+        var unresolved = mixed with
+        {
+            Status = NativeOriginConstructionStatus.Incomplete
+        };
+        var denied = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
+            catalog, unresolved);
+        Assert.Equal("unresolved", denied.Status);
+        Assert.Empty(denied.Traits);
+        Assert.Empty(denied.OutsideScopeTraits);
+    }
+
+    [Fact]
     public void UnrelatedSpeciesAndNoSelectableNativePassivesRemainAbsent()
     {
         var catalog = Catalog();
