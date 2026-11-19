@@ -34,3 +34,17 @@ python3 -m unittest discover -s tests -p 'test_character_origins_pillar2_*.py' -
 ```
 
 Record execution results separately from static/source inspection. The GitHub workflows as currently authored run on pushes to `main`, pull requests targeting `main`, or explicit manual dispatch, rather than ordinary pushes to this feature branch.
+
+## Final executed verification (2026-11-19 UTC)
+
+**Verified code/test head:** `f48760151671d9d3d5f8d0104b6b6b8995deafcc`.
+
+- [Structure validation run 44455629468](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44455629468): **passed**.
+- [Full native API/C#/Python/catalog/Docker run 44455629473](https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/44455629473): **passed**.
+- .NET Release build succeeded. **140/140 Host tests, 533/533 Mechanics tests**, zero failures or skips. The Mechanics total includes the six new round-trip regressions.
+- The comprehensive Python suite passed **808/808 tests**; the Origin-specific and adjacent Python stages also succeeded.
+- Authoritative/working ruleset split validation, native-only Docker build, content-layer Docker validation, and public/private/readiness Docker smoke tests all succeeded.
+- The final build reported **10 warnings**, none from Workstream A files. The first verification build reported two additional xUnit analyzer warnings from the new test file; both were repaired in the verified code head. The remaining warnings arise from preexisting, out-of-scope files.
+- No local .NET SDK was available. Hosted GitHub Actions is the source of these executed test results.
+
+The temporary CI-only [draft pull request #160](https://github.com/LegendMaster03/dorks-and-dice-rules-core/pull/160) was **closed without merging** once the final code-head checks passed. This results addendum is documentation-only; no further code changes follow the verified head.
