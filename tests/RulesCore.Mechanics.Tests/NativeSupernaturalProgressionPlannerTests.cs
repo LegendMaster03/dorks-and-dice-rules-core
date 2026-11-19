@@ -215,6 +215,8 @@ public sealed class NativeSupernaturalProgressionPlannerTests
         Assert.Equal("invalid", Plan(state, ledger, definition, bad).Status);
         var left = Request(NativeSupernaturalTransitionKind.Advance, "left", ledger.Revision,
             nodeId: "left", choices: new Dictionary<string, string> { ["aspect"] = "red" });
+        Assert.Equal("unresolved", Plan(state, ledger, definition, left,
+            new Authority { DenyAdvance = true }).Status);
         var (progressed, next) = Committed(Plan(state, ledger, definition, left));
         Assert.Equal("red", progressed.PersistentInfluences![0].Progression![0].Choices!["aspect"]);
         Assert.Equal("ineligible", Plan(progressed, next, definition,
@@ -330,6 +332,32 @@ public sealed class NativeSupernaturalProgressionPlannerTests
         Assert.Equal("capability.feature",
             advanced.PersistentInfluences![0].Progression![0].Grants[0].DefinitionId);
         Assert.Equal(2, state.PrimaryMechanics.Advancements[0].Level);
+    }
+
+    [Fact]
+    public void DirectProgressionDoesNotRequireUnspecifiedIntermediateNodes()
+    {
+        var definition = Definition([
+            Node("early", grants: [Grant("early")]),
+            Node("late", grants: [Grant("late")])
+        ]);
+        var (state, journal) = Committed(Plan(Character(), Journal(), definition,
+            Request(NativeSupernaturalTransitionKind.Acquire, "acquire")));
+        var (advanced, _) = Committed(Plan(state, journal, definition,
+            Request(NativeSupernaturalTransitionKind.Advance, "late",
+                journal.Revision, nodeId: "late")));
+        Assert.Single(advanced.PersistentInfluences![0].Progression!);
+        Assert.Equal("late", advanced.PersistentInfluences![0].Progression![0].DefinitionId);
+    }
+
+    [Fact]
+    public void AnInfluenceCannotUseTheReservedPrimarySheetIdentity()
+    {
+        var result = Plan(Character(), Journal(), Definition(),
+            Request(NativeSupernaturalTransitionKind.Acquire,
+                "acquire-reserved", instance: "@primary"));
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.ProposedState);
     }
 
     [Fact]
