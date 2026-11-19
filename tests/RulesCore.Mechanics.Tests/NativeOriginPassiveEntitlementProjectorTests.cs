@@ -49,16 +49,21 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     }
 
     private static NativeOriginConstructionResult Mixed(
-        NativeCatalogSnapshot catalog, params string[] selectedTraits)
+        NativeCatalogSnapshot catalog, params string[] selectedTraits) =>
+        MixedWithSources(catalog, "species.elf", "species.dwarf", selectedTraits);
+
+    private static NativeOriginConstructionResult MixedWithSources(
+        NativeCatalogSnapshot catalog, string firstSource, string secondSource,
+        params string[] selectedTraits)
     {
         var proposal = new NativeOriginProposal("mixed-passive",
             NativeOriginIntent.Mixed,
             new("rule.creature-origination", "biological"),
             [
                 new("elf", new(NativeOriginInputKind.BiologicalParent),
-                    new(NativeOriginSourceKind.Native, "species.elf")),
-                new("dwarf", new(NativeOriginInputKind.BiologicalParent),
-                    new(NativeOriginSourceKind.Native, "species.dwarf"))
+                    new(NativeOriginSourceKind.Native, firstSource)),
+                new("second", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, secondSource))
             ], [], []);
         var engine = new NativeOriginConstructionEngine(catalog);
         var offers = engine.Evaluate(new(proposal)).EvaluatedProposal.Candidates;
@@ -164,11 +169,10 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     {
         var catalog = Catalog();
         var gnome = Direct(catalog, "species.gnome");
-        var halfling = Direct(catalog, "species.halfling");
+        var halfling = MixedWithSources(catalog, "species.elf",
+            "species.halfling", "trait.halfling.keen-hearing");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, gnome.Status);
-        Assert.True(halfling.Status == NativeOriginConstructionStatus.Authorized,
-            "Halfling: " + string.Join("; ", halfling.Issues.Select(x =>
-                x.Code + ":" + x.Path)));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, halfling.Status);
 
         var cunning = Assert.Single(
             NativeOriginPassiveEntitlementProjector.Project(catalog, gnome).Traits);
@@ -177,12 +181,26 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         Assert.Equal("magic-only", cunning.SavingThrows.Scope);
         Assert.Empty(cunning.SavingThrows.Against);
 
-        var hearing = Assert.Single(
-            NativeOriginPassiveEntitlementProjector.Project(catalog, halfling).Traits);
+        var hearing = Assert.Single(NativeOriginPassiveEntitlementProjector
+            .ProjectApprovedMixed(catalog, halfling).Traits);
         Assert.Equal("trait.halfling.keen-hearing", hearing.DefinitionId);
         var bonus = Assert.Single(hearing.SkillBonuses);
         Assert.Equal("skill.listen", bonus.SkillId);
         Assert.Equal(2, bonus.Amount);
+    }
+
+    [Fact]
+    public void ConventionalHalflingAdmissionRemainsUnresolvedWithoutNewPolicy()
+    {
+        var catalog = Catalog();
+        var halfling = Direct(catalog, "species.halfling");
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, halfling.Status);
+        Assert.Contains(halfling.Issues, x =>
+            x.Code == "unresolved-source-evidence");
+        var view = NativeOriginPassiveEntitlementProjector.Project(catalog, halfling);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Empty(view.Traits);
+        Assert.Empty(view.OutsideScopeTraits);
     }
 
     [Fact]
