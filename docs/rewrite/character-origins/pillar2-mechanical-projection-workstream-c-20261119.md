@@ -96,6 +96,27 @@ python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
+## Verification status at handoff
+
+- First-party source definitions were independently re-read from the base
+  commit. All five expected saving-throw/skill-bonus shapes match the
+  intentionally bounded grammar; the native `skill.listen` and `skill.spot`
+  identifiers exist in `skills.json`.
+- Self-review found and tightened the rejection of fabricated
+  `ParameterSources`, `SelectedParameters`, `Choices` and mismatched
+  manifestation values. Additional focused adversarial tests were committed.
+- A lexical delimiter check of the authored C# projector and focused test
+  source found no unbalanced brackets or unterminated string/comment regions.
+  This **is not compilation or an executed unit test**.
+- **C# focused tests, full Mechanics suite, full solution suite and Python
+  suites have not been executed**: the available environment lacks `dotnet`,
+  can not clone the repository over the network, and the existing GitHub
+  Actions C# workflow runs on `main` pushes and pull requests rather than
+  this isolated worker branch. No CI status is reported for the branch head.
+- This increment must not be merged until a .NET 10 runner compiles it and
+  executes the focused and full relevant suites, with any failures addressed.
+  The test commands above are the exact intended commands.
+
 ## Deferred dependencies for integration review
 
 1. A generic passive-damage-resistance and scoped defense projection requires
