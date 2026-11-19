@@ -61,7 +61,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             var slots = Texts(raw, "materialSlots", path, Issue);
             foreach (var slot in slots)
             {
-                if (instance.Materials?.TryGetValue(slot, out var materialId) != true)
+                if (instance.Materials is null || !instance.Materials.TryGetValue(slot, out var materialId))
                 {
                     Issue("construct-material-missing", path + ".materials." + slot,
                         NativeOriginIssueSeverity.Incomplete, "A required material assignment is missing.");
@@ -155,7 +155,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     NativeOriginIssueSeverity.Incomplete,
                     "The requested operating configuration lacks a connected, operational provider.");
 
-        long totalDemand = 0, totalOutput = 0;
+
         var overloaded = new HashSet<string>(StringComparer.Ordinal);
         foreach (var network in networks)
         {
@@ -163,8 +163,6 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 .Sum(id => (long)(parts[id].PowerDemand ?? 0));
             var output = network.Where(online.Contains)
                 .Sum(id => (long)parts[id].PowerOutput);
-            totalDemand += demand;
-            totalOutput += output;
             if (demand <= output) continue;
             foreach (var id in network) overloaded.Add(id);
             Issue("construct-power-overallocated",
@@ -204,7 +202,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             .Select(part =>
             {
                 var id = part.Instance.InstanceId;
-                var active = online.Contains(id) && !overloaded.Contains(id);
+                var active = online.Contains(id) &&
+                    (!overloaded.Contains(id) || part.PowerDemand == 0 &&
+                        part.Requirements.Length == 0);
                 if (!active && part.ShutdownConsequence is string consequence)
                     failures.Add(new(id, consequence));
                 return new NativeConstructComponentState(id, part.Instance.DefinitionId,
