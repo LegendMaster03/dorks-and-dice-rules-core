@@ -2311,4 +2311,126 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, approved.Status);
     }
 
+
+    [Fact]
+    public void RetainBothCannotBorrowDifferentAuthenticatedDecisionId()
+    {
+        var proposal = Proposal("exact-coexistence-decision", NativeOriginIntent.Mixed,
+            contributors: [Contributor("elf", "species.elf"),
+                Contributor("orc", "species.orc")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var visions = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(2, visions.Length);
+
+        var relation = new NativeOriginRelationship("coexist-visions",
+            NativeOriginRelationshipKind.Equivalent,
+            visions.Select(x => x.Id).ToArray());
+        var actual = Decision("valid-coexistence", "relationship", relation.Id,
+            new { action = "retain-both" });
+        var unrelated = Decision("wrong-coexistence", "candidate", visions[0].Id,
+            new { eligibility = "eligible" });
+        var permissions = visions.Select((x, i) =>
+            Decision("permit-vision-" + i, "candidate", x.Id,
+                new { eligibility = "eligible" })).ToArray();
+        var chosen = proposal with
+        {
+            Manifestations = visions.Select((x, i) =>
+                new NativeOriginManifestation("pick-vision-" + i, x.Id)).ToArray(),
+            Relationships = [relation],
+            Resolutions =
+            [
+                new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: unrelated.Id))
+            ],
+            TableDecisions = permissions.Concat([unrelated, actual]).ToArray()
+        };
+        var rejected = Evaluate(chosen, new TestAuthority(), false);
+        Assert.Contains(rejected.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized" &&
+            x.Path == relation.Id);
+        Assert.DoesNotContain(rejected.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+
+        var accepted = Evaluate(chosen with
+        {
+            Resolutions =
+            [
+                new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: actual.Id))
+            ]
+        }, new TestAuthority(), false);
+        Assert.DoesNotContain(accepted.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized");
+        Assert.Equal(2, accepted.Profile!.Underlying.InherentGrants.Count(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision"));
+    }
+
+    [Fact]
+    public void PartialCoexistenceCannotAuthorizeAnUnreviewedThirdOccurrence()
+    {
+        var contributors = new[]
+        {
+            Contributor("elf", "species.elf"),
+            Contributor("orc", "species.orc"),
+            Contributor("dragonborn", "species.dragonborn")
+        };
+        var proposal = Proposal("partial-coexistence", NativeOriginIntent.Mixed,
+            contributors: contributors);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var visions = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(3, visions.Length);
+        Assert.Equal(3, visions.Select(x => x.Identity.Occurrence.Source.Id)
+            .Distinct(StringComparer.Ordinal).Count());
+        var paired = visions.Where(x => x.ContributorId is "elf" or "orc").ToArray();
+        Assert.Equal(2, paired.Length);
+        var relation = new NativeOriginRelationship("only-elf-and-orc",
+            NativeOriginRelationshipKind.Equivalent,
+            paired.Select(x => x.Id).ToArray());
+        var ruling = Decision("allow-exact-pair", "relationship", relation.Id,
+            new { action = "retain-both" });
+        var permits = visions.Select((x, i) =>
+            Decision("permit-source-" + i, "candidate", x.Id,
+                new { eligibility = "eligible" })).Append(ruling).ToArray();
+        var manifestations = visions.Select((x, i) =>
+            new NativeOriginManifestation("picked-source-" + i, x.Id)).ToArray();
+
+        NativeOriginConstructionResult Run(
+            IReadOnlyList<NativeOriginContributor> orderedContributors) =>
+            Evaluate(proposal with
+            {
+                Contributors = orderedContributors,
+                Manifestations = manifestations,
+                Relationships = [relation],
+                Resolutions =
+                [
+                    new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                        new(NativeOriginAdjudication.DmAuthorized,
+                            TableDecisionId: ruling.Id))
+                ],
+                TableDecisions = permits
+            }, new TestAuthority(), false);
+
+        var original = Run(contributors);
+        var reversed = Run(contributors.Reverse().ToArray());
+        foreach (var result in new[] { original, reversed })
+        {
+            Assert.Contains(result.Issues, x =>
+                x.Code == "shared-definition-reconciliation-required" &&
+                x.Path == "trait.shared.low-light-vision");
+            Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
+                x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        }
+        Assert.Equal(
+            original.Issues.Where(x => x.Code == "shared-definition-reconciliation-required")
+                .Select(x => x.Path).ToArray(),
+            reversed.Issues.Where(x => x.Code == "shared-definition-reconciliation-required")
+                .Select(x => x.Path).ToArray());
+    }
+
 }

@@ -47,7 +47,11 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             }
             var authenticated = resolution.Basis?.Adjudication == NativeOriginAdjudication.DmAuthorized ?
                 verified("relationship", relation.Id) : null;
+            // A verified decision for this relationship is not evidence for a
+            // different decision ID claimed by the resolution. In particular,
+            // RetainBoth must not borrow authorization from another ruling.
             var authorized = authenticated is not null &&
+                authenticated.Id == resolution.Basis?.TableDecisionId &&
                 JsonString(authenticated.EffectiveOutcome, "action") == ActionName(resolution.Action);
             var authored = resolution.Basis?.Adjudication == NativeOriginAdjudication.Supported &&
                 relation.AuthoredRuleReference == resolution.Basis.NativeRuleReference &&

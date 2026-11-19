@@ -105,3 +105,11 @@ Still not universally resolved: complete cross-definition effect overlap semanti
 ### Workstream C integration
 
 C's `NativeOriginPassiveEntitlementProjector` reads the already constructed `Underlying.InherentGrants`. A can remove traits and physical foundation grants, and can preserve two separately sourced grants when a verified `RetainBoth` relationship exists. C must therefore be tested with the **combined** A/C build for suppressed passive-trait absence, retained source/occurrence identity, separately authorized coexistence without benefit aggregation, invalid mixed-foundation fail-closed behavior, and serialization round-trip of surviving grants. These are cross-branch integration tests, not evidence of a compiler conflict. No combined executable CI is claimed in this review.
+
+## Final bounded follow-up — exact coexistence authorization
+
+The final review found one actionable boundary defect: the reconciler accepted a verified decision with the same relationship target and requested action even if the resolution identified a *different* `Basis.TableDecisionId`. It now requires exact authenticated decision-ID equality. Neither a decision scoped to another target nor an unrelated valid evidence ID can authorize `RetainBoth`.
+
+Additional production-engine regressions check (1) mismatched versus exact ID on the same selected Elf/Orc pair and (2) three distinct shared-definition occurrences (Elf, Orc, Dragonborn) with only Elf–Orc coexistence authorized. The third occurrence does not become implicitly authorized; reversed contributor ordering yields the same documented unresolved overlap. The existing same-occurrence consolidation and cyclic-prerequisite tests remain in force.
+
+This follow-up is limited to a verified authorization-boundary defect and its adversarial regression. It does not approve group stacking, biological inheritance, or a default winner. The exact CI status for the corrected commit is separately verifiable from GitHub Actions.
