@@ -88,7 +88,7 @@ public sealed class NativeOriginMovementModeProjectorTests
         {
             Assert.Equal(2, traits.Length);
             var keep = Decision("dual-climb", "relationship", "two-climbs",
-                new { action = "retain-both" });
+                new { action = "retain-both", candidateIds = traits.Select(x => x.Id).ToArray() });
             decisions.Add(keep);
             relations =
             [

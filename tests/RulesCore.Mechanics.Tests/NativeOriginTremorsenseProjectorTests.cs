@@ -78,7 +78,7 @@ public sealed class NativeOriginTremorsenseProjectorTests
         Assert.Equal(3, foundation.Length);
 
         var coexistence = Permit("retain-both", "relationship", "dual-sense",
-            new { action = "retain-both" });
+            new { action = "retain-both", candidateIds = new[] { stone.Id, earth.Id } });
         var completedProposal = original with
         {
             Manifestations = foundation.Select((x, i) =>

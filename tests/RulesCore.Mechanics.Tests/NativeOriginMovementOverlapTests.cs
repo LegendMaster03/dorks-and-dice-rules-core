@@ -174,7 +174,7 @@ public sealed class NativeOriginMovementOverlapTests
     {
         var (proposal, red, copper) = TwoClimbs();
         var decision = Decision("two-independent-climbs", "relationship",
-            "two-climb-modes", new { action = "retain-both" });
+            "two-climb-modes", new { action = "retain-both", candidateIds = new[] { red.Id, copper.Id } });
         var eligible = proposal with
         {
             Relationships =
