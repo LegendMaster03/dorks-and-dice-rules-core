@@ -166,7 +166,9 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var gnome = Direct(catalog, "species.gnome");
         var halfling = Direct(catalog, "species.halfling");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, gnome.Status);
-        Assert.Equal(NativeOriginConstructionStatus.Authorized, halfling.Status);
+        Assert.True(halfling.Status == NativeOriginConstructionStatus.Authorized,
+            "Halfling: " + string.Join("; ", halfling.Issues.Select(x =>
+                x.Code + ":" + x.Path)));
 
         var cunning = Assert.Single(
             NativeOriginPassiveEntitlementProjector.Project(catalog, gnome).Traits);
