@@ -1,0 +1,767 @@
+{
+  "id": "pillar2-diagnostic-sensitivity-v6",
+  "version": 6,
+  "contexts": [
+    {
+      "id": "corridor-area-opportunities",
+      "purpose": "Contrast 30-by-5-foot line against 15-foot cone without assuming this geometry is typical.",
+      "scenario": {
+        "id": "corridor-area-opportunities",
+        "saveFailure": 0.55,
+        "attackReplacementExpectedDamage": 5.2,
+        "breathOpportunities": [
+          {
+            "areaTargets": {
+              "line": 3,
+              "cone": 1
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 3,
+              "cone": 1
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 2,
+              "cone": 1
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cluster-area-opportunities",
+      "purpose": "Reverse the line/cone geometry with identical damage and save assumptions.",
+      "scenario": {
+        "id": "cluster-area-opportunities",
+        "saveFailure": 0.55,
+        "attackReplacementExpectedDamage": 5.2,
+        "breathOpportunities": [
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 3
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 3
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 2
+            }
+          },
+          {
+            "areaTargets": {
+              "line": 1,
+              "cone": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fire-exposure-and-resistance",
+      "purpose": "Compare passive resistance to Fire with no spell, saving-throw, or temporary-immunity assumptions.",
+      "scenario": {
+        "id": "fire-exposure-and-resistance",
+        "incomingDamage": [
+          {
+            "type": "fire",
+            "amount": 20
+          },
+          {
+            "type": "fire",
+            "amount": 20
+          }
+        ]
+      }
+    },
+    {
+      "id": "poison-exposure-and-resistance",
+      "purpose": "Exercise Poison resistance separately from the as-yet-unmodeled advantage on Poison saving throws.",
+      "scenario": {
+        "id": "poison-exposure-and-resistance",
+        "incomingDamage": [
+          {
+            "type": "poison",
+            "amount": 20
+          },
+          {
+            "type": "poison",
+            "amount": 20
+          }
+        ]
+      }
+    },
+    {
+      "id": "sunlight-unprotected",
+      "purpose": "Expose Drow to direct sunlight on eight attacks and four qualifying checks.",
+      "scenario": {
+        "id": "sunlight-unprotected",
+        "baseCheckSuccess": 0.5,
+        "conditionFrequency": {
+          "condition.dazzled": 1.0
+        },
+        "rolls": {
+          "attack-roll": 8,
+          "skill.search": 2,
+          "skill.spot": 2
+        }
+      }
+    },
+    {
+      "id": "sunlight-protected",
+      "purpose": "Use the same Drow rolls with effective sun protection, isolating the drawback's avoidability.",
+      "scenario": {
+        "id": "sunlight-protected",
+        "baseCheckSuccess": 0.5,
+        "conditionFrequency": {
+          "condition.dazzled": 0.0
+        },
+        "rolls": {
+          "attack-roll": 8,
+          "skill.search": 2,
+          "skill.spot": 2
+        }
+      }
+    },
+    {
+      "id": "stone-earth-contacts",
+      "purpose": "Compare Stonebound and Earthbound Tremorsense with surprise, material, and range constraints.",
+      "scenario": {
+        "id": "stone-earth-contacts",
+        "tremorsenseContacts": [
+          {
+            "distanceFeet": 10,
+            "sensorTouches": "earth",
+            "targetTouches": "earth",
+            "connected": true,
+            "anticipated": false
+          },
+          {
+            "distanceFeet": 40,
+            "sensorTouches": "stone",
+            "targetTouches": "stone",
+            "connected": true,
+            "anticipated": true
+          },
+          {
+            "distanceFeet": 10,
+            "sensorTouches": "stone",
+            "targetTouches": "stone",
+            "connected": true,
+            "anticipated": true
+          },
+          {
+            "distanceFeet": 10,
+            "sensorTouches": "air",
+            "targetTouches": "stone",
+            "connected": false,
+            "anticipated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "travel-separated-gates",
+      "purpose": "Contrast passive movement, leaf locomotion, and spaced flight activations with no equipment or party assistance.",
+      "scenario": {
+        "id": "travel-separated-gates",
+        "mobilityChallenges": [
+          {
+            "id": "walk-35",
+            "mode": "walk",
+            "distanceFeet": 35,
+            "startMinute": 0
+          },
+          {
+            "id": "climb-15",
+            "mode": "climb",
+            "distanceFeet": 15,
+            "startMinute": 1
+          },
+          {
+            "id": "sand-burrow",
+            "mode": "burrow",
+            "distanceFeet": 15,
+            "material": "loose-natural-sand",
+            "startMinute": 2
+          },
+          {
+            "id": "gap-one",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 3
+          },
+          {
+            "id": "gap-two",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 18
+          },
+          {
+            "id": "gap-three",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 33
+          }
+        ]
+      }
+    },
+    {
+      "id": "travel-concentrated-gates",
+      "purpose": "Keep the flight gaps within one activation window; test duration instead of counting each movement scene as a new use.",
+      "scenario": {
+        "id": "travel-concentrated-gates",
+        "mobilityChallenges": [
+          {
+            "id": "gap-one",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 0
+          },
+          {
+            "id": "gap-two",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 0.25
+          },
+          {
+            "id": "gap-three",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 0.5
+          },
+          {
+            "id": "sustained-gap",
+            "mode": "fly",
+            "distanceFeet": 20,
+            "requiresHover": true,
+            "startMinute": 5,
+            "durationMinutes": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "skill-observations",
+      "purpose": "Measure eligible native skill bonuses; rank entitlement and feat choice remain separately unresolved.",
+      "scenario": {
+        "id": "skill-observations",
+        "baseCheckSuccess": 0.5,
+        "skillChecks": {
+          "skill.listen": 8,
+          "skill.spot": 8,
+          "skill.climb": 8,
+          "skill.jump": 8,
+          "skill.move-silently": 8
+        }
+      }
+    },
+    {
+      "id": "poison-saves-and-resistance",
+      "purpose": "Evaluate poison-save advantage with passive resistance on the same independently specified event, rather than double-counting damage.",
+      "scenario": {
+        "id": "poison-saves-and-resistance",
+        "saveEvents": [
+          {
+            "id": "poison-spell",
+            "ability": "constitution",
+            "tags": [
+              "poison-effects"
+            ],
+            "magical": true,
+            "baseSuccess": 0.5,
+            "damageType": "poison",
+            "damageOnFailure": 20,
+            "damageOnSuccess": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "mental-magic-and-control",
+      "purpose": "Compare conditional advantage on magical mental saves and a Fey charm save without converting avoided conditions into hit points.",
+      "scenario": {
+        "id": "mental-magic-and-control",
+        "saveEvents": [
+          {
+            "id": "arcane-wisdom",
+            "ability": "wisdom",
+            "magical": true,
+            "baseSuccess": 0.5,
+            "conditionOnFailure": "condition.charmed",
+            "tags": [
+              "condition.charmed"
+            ]
+          },
+          {
+            "id": "mundane-wisdom",
+            "ability": "wisdom",
+            "magical": false,
+            "baseSuccess": 0.5,
+            "conditionOnFailure": "condition.charmed",
+            "tags": [
+              "ordinary-deception"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "heavy-hit-reaction-windows",
+      "purpose": "Measure capped Stone Endurance reactions and attack-dependent Cloudy Escape uses, with one reaction per round.",
+      "scenario": {
+        "id": "heavy-hit-reaction-windows",
+        "abilityModifiers": {
+          "constitution": 3
+        },
+        "reactionDamageEvents": [
+          {
+            "id": "minor-hit",
+            "round": 1,
+            "damageType": "bludgeoning",
+            "amount": 4,
+            "isAttackHit": true,
+            "attackerVisible": true,
+            "reactionAvailable": true
+          },
+          {
+            "id": "large-hit-same-round",
+            "round": 1,
+            "damageType": "bludgeoning",
+            "amount": 20,
+            "isAttackHit": true,
+            "attackerVisible": true,
+            "reactionAvailable": true
+          },
+          {
+            "id": "large-hit-second-round",
+            "round": 2,
+            "damageType": "slashing",
+            "amount": 20,
+            "isAttackHit": true,
+            "attackerVisible": true,
+            "reactionAvailable": true
+          },
+          {
+            "id": "not-an-attack",
+            "round": 3,
+            "damageType": "fire",
+            "amount": 20,
+            "isAttackHit": false,
+            "attackerVisible": false,
+            "reactionAvailable": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "innate-fixed-spell-demands",
+      "purpose": "Count explicitly eligible fixed-spell access and at-will repetition without valuing individual spell effects or unresolved cantrip lists.",
+      "scenario": {
+        "id": "innate-fixed-spell-demands",
+        "spellDemands": [
+          {
+            "id": "detect",
+            "spell": "detect-magic"
+          },
+          {
+            "id": "misty",
+            "spell": "misty-step"
+          },
+          {
+            "id": "rebuke",
+            "spell": "hellish-rebuke"
+          },
+          {
+            "id": "darkness",
+            "spell": "darkness"
+          },
+          {
+            "id": "bolt-1",
+            "spell": "fire-bolt"
+          },
+          {
+            "id": "bolt-2",
+            "spell": "fire-bolt"
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-enervation-with-allies",
+      "purpose": "Model one Metallic Breath use and explicitly count both enemy and ally Incapacitated applications under a stipulated saving-throw failure rate.",
+      "scenario": {
+        "id": "metallic-enervation-with-allies",
+        "controlOpportunities": [
+          {
+            "id": "cluster-with-ally",
+            "option": "enervating-breath",
+            "areaShape": "cone",
+            "enemyTargets": 2,
+            "allyTargets": 1,
+            "failureProbability": 0.55,
+            "enemyActionSlots": 2,
+            "allyActionSlots": 1,
+            "enemyBonusActionSlots": 1,
+            "allyBonusActionSlots": 1,
+            "enemyReactionSlots": 2,
+            "enemyConcentratingTargets": 1,
+            "attackReplacementExpectedDamage": 5.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-repulsion",
+      "purpose": "Exercise the separate Repulsion choice: Prone and forced movement rather than Incapacitated, with distinct one-use resource accounting.",
+      "scenario": {
+        "id": "metallic-repulsion",
+        "controlOpportunities": [
+          {
+            "id": "enemies-in-cone",
+            "option": "repulsion-breath",
+            "areaShape": "cone",
+            "enemyTargets": 3,
+            "allyTargets": 0,
+            "failureProbability": 0.55,
+            "enemyNormalAttackRollsWhileProne": 3,
+            "baseHitChance": 0.65,
+            "attackReplacementExpectedDamage": 5.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-control-no-exposed-turns",
+      "purpose": "Same Enervating Breath targets and saves, but all have already acted; condition applications do not imply automatically denied actions.",
+      "scenario": {
+        "id": "metallic-control-no-exposed-turns",
+        "controlOpportunities": [
+          {
+            "id": "acted-targets",
+            "option": "enervating-breath",
+            "areaShape": "cone",
+            "enemyTargets": 2,
+            "allyTargets": 1,
+            "failureProbability": 0.55,
+            "enemyActionSlots": 0,
+            "allyActionSlots": 0,
+            "enemyReactionSlots": 0,
+            "allyReactionSlots": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "metallic-prone-no-followup-attacks",
+      "purpose": "Same Repulsion Breath, but prone targets have no attacks before standing; no attack-hit prevention is inferred.",
+      "scenario": {
+        "id": "metallic-prone-no-followup-attacks",
+        "controlOpportunities": [
+          {
+            "id": "recover-before-attacks",
+            "option": "repulsion-breath",
+            "areaShape": "cone",
+            "enemyTargets": 3,
+            "allyTargets": 0,
+            "failureProbability": 0.55,
+            "enemyNormalAttackRollsWhileProne": 0,
+            "baseHitChance": 0.65
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-hill-automatic-prone",
+      "purpose": "Hill Goliath applies Prone automatically to a Large or smaller creature on an eligible confirmed hit; no save or extra die is invented.",
+      "scenario": {
+        "id": "goliath-hill-automatic-prone",
+        "strikeOpportunities": [
+          {
+            "id": "tumble-large",
+            "traitId": "trait.goliath.hill.hills-tumble",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "large",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-hill-alternative-prone",
+      "purpose": "Hill Strike instead deals 1d6 on a qualifying weapon hit and permits a save against Prone, including against Huge creatures.",
+      "scenario": {
+        "id": "goliath-hill-alternative-prone",
+        "strikeOpportunities": [
+          {
+            "id": "strike-huge",
+            "traitId": "trait.goliath.hill.hills-tumble",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "alternate",
+            "targetSize": "huge",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-frost-speed-modes",
+      "purpose": "Frost Goliath compares unconditional ten-foot reduction with alternate save-dependent zero speed; nominal speed loss is not lost movement.",
+      "scenario": {
+        "id": "goliath-frost-speed-modes",
+        "strikeOpportunities": [
+          {
+            "id": "chill",
+            "traitId": "trait.goliath.frost.frosts-chill",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "targetSpeedFeet": 30,
+            "hit": true,
+            "dealtDamage": true
+          },
+          {
+            "id": "frost-strike",
+            "traitId": "trait.goliath.frost.frosts-chill",
+            "turn": 2,
+            "delivery": "melee-weapon",
+            "mode": "alternate",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "targetSpeedFeet": 30,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-stone-shared-strikes",
+      "purpose": "Stone Strike reuses Stone Endurance charges; two confirmed eligible hits with different turns spend PB uses and the third is exhausted at level 1.",
+      "scenario": {
+        "id": "goliath-stone-shared-strikes",
+        "strikeOpportunities": [
+          {
+            "id": "stone-one",
+            "traitId": "trait.goliath.stone.stone-strike",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          },
+          {
+            "id": "stone-two",
+            "traitId": "trait.goliath.stone.stone-strike",
+            "turn": 2,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          },
+          {
+            "id": "stone-three",
+            "traitId": "trait.goliath.stone.stone-strike",
+            "turn": 3,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 0,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-storm-disadvantage-window",
+      "purpose": "Storm Strike uses Storm Thunder charges; saving-throw-dependent attack disadvantage affects only explicitly scheduled attacks before expiry.",
+      "scenario": {
+        "id": "goliath-storm-disadvantage-window",
+        "strikeOpportunities": [
+          {
+            "id": "storm",
+            "traitId": "trait.goliath.storm.storm-strike",
+            "turn": 1,
+            "delivery": "melee-weapon",
+            "mode": "base",
+            "targetSize": "medium",
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "hit": true,
+            "dealtDamage": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-stone-throw-bonus-action",
+      "purpose": "Stone Throw uses a real rock, a bonus action and PB long-rest charges, with ranged spell-attack hit probability and save-dependent Prone.",
+      "scenario": {
+        "id": "goliath-stone-throw-bonus-action",
+        "tacticalOpportunities": [
+          {
+            "id": "stone-1",
+            "traitId": "trait.goliath.stone.stone-throw",
+            "kind": "stone-throw",
+            "round": 1,
+            "actionAvailable": true,
+            "rockAvailable": true,
+            "distanceFeet": 40,
+            "hitChance": 0.65,
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "bonusActionAlternativeExpectedDamage": 3
+          },
+          {
+            "id": "stone-2",
+            "traitId": "trait.goliath.stone.stone-throw",
+            "kind": "stone-throw",
+            "round": 2,
+            "actionAvailable": true,
+            "rockAvailable": true,
+            "distanceFeet": 40,
+            "hitChance": 0.65,
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "bonusActionAlternativeExpectedDamage": 3
+          },
+          {
+            "id": "stone-3",
+            "traitId": "trait.goliath.stone.stone-throw",
+            "kind": "stone-throw",
+            "round": 3,
+            "actionAvailable": true,
+            "rockAvailable": true,
+            "distanceFeet": 40,
+            "hitChance": 0.65,
+            "targetIsCreature": true,
+            "failureProbability": 0.55,
+            "normalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "bonusActionAlternativeExpectedDamage": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-fire-selective-ignition",
+      "purpose": "Searing Ignition replaces an attack with a selective fire burst and conditionally Blinds enemies until the next turn.",
+      "scenario": {
+        "id": "goliath-fire-selective-ignition",
+        "tacticalOpportunities": [
+          {
+            "id": "ignition",
+            "traitId": "trait.goliath.fire.searing-ignition",
+            "kind": "searing-ignition",
+            "round": 1,
+            "actionAvailable": true,
+            "enemyTargets": 2,
+            "failureProbability": 0.55,
+            "enemyNormalAttackRollsBeforeRecovery": 2,
+            "baseHitChance": 0.65,
+            "attackReplacementExpectedDamage": 5.2
+          }
+        ]
+      }
+    },
+    {
+      "id": "goliath-storm-defensive-aura",
+      "purpose": "One uninterrupted round of Maelstrom Aura: attacks at disadvantage, independent lightning/thunder nonattack packets, and enemy movement starts inside unobstructed aura.",
+      "scenario": {
+        "id": "goliath-storm-defensive-aura",
+        "tacticalOpportunities": [
+          {
+            "id": "aura",
+            "traitId": "trait.goliath.storm.maelstrom-aura",
+            "kind": "maelstrom-aura",
+            "round": 1,
+            "actionAvailable": true,
+            "enemyStartsWithinAura": 2,
+            "failureProbability": 0.55,
+            "attacksTargetingYouBeforeExpiry": 2,
+            "baseHitChance": 0.65,
+            "targetSpeedFeet": 30,
+            "auraUninterrupted": true,
+            "incomingNonattackPackets": [
+              {
+                "type": "lightning",
+                "amount": 20
+              },
+              {
+                "type": "thunder",
+                "amount": 10
+              },
+              {
+                "type": "fire",
+                "amount": 10
+              }
+            ],
+            "bonusActionAlternativeExpectedDamage": 3
+          }
+        ]
+      }
+    }
+  ]
+}

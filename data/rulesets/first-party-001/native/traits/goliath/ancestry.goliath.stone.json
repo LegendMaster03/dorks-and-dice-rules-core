@@ -48,7 +48,15 @@
         "direction": "directly-away-from-you"
       },
       "sharedUsesFromTrait": "stones-endurance",
-      "extraUsesGranted": false
+      "extraUsesGranted": false,
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
+      }
     }
   },
   {
@@ -97,6 +105,14 @@
       "uses": {
         "value": "proficiency-bonus",
         "recharge": "long-rest"
+      },
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
       }
     }
   }

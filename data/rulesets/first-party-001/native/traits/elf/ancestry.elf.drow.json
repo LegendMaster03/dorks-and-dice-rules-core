@@ -5,6 +5,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "dancing-lights",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "description": "Gain Dancing Lights at level 1.",
       "spell": "dancing-lights",
       "level": 1,
@@ -17,6 +24,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "faerie-fire",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "description": "At level 3, know Faerie Fire; once per Long Rest free, and also with spell slots.",
       "spell": "faerie-fire",
       "level": 3,
@@ -31,6 +45,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "darkness",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "description": "At level 5, know Darkness; once per Long Rest free, and also with spell slots. Does not automatically grant vision through magical Darkness.",
       "spell": "darkness",
       "level": 5,

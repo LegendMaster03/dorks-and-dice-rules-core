@@ -158,5 +158,17 @@
       "softwareAuthorization": "Game-rule overrides do not bypass application authentication, ownership permissions, access controls, or data validation for safely representing the decision.",
       "runtimeStatus": "Declarative policy only; a trusted override authoring, storage, precedence, and grant-evaluation executor is not implemented in this content change."
     }
+  },
+  "biologicalTransmission": {
+    "heritableIntrinsicSlots": [
+      "creatureType",
+      "size",
+      "walkingSpeedFeet"
+    ],
+    "traitEligibilityField": "inheritanceMethods",
+    "selection": "player-directed",
+    "absentTraitEligibility": "unresolved-without-authored-or-verified-table-permission",
+    "scope": "Only the biological mixed-Origin method and selectable native biological contributors. Each offered characteristic is an option; it is never automatically manifested. A canonical origin-trait explicitly listing biological in inheritanceMethods may be selected. Other traits, nested/temporary profiles and other origination methods are not authorized by this rule.",
+    "note": "This intentionally small first-party vertical slice does not define characteristic capacity, latent transmission, generic trait equivalence, biological realism, or complete Species/Ancestry package inheritance. DM overrides and future method-specific policies remain separate."
   }
 }

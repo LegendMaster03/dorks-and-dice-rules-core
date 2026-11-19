@@ -23,9 +23,15 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
         var active = selected.ToDictionary(x => x.Candidate.Id, StringComparer.Ordinal);
         var ignored = new HashSet<string>(StringComparer.Ordinal);
         var merged = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        var replacements = new Dictionary<string, NativeOriginEffectiveGrant>(StringComparer.Ordinal);
+        // Explicit, authorized coexistence is tracked per selected pair. It is
+        // never inferred from a shared sense name or from donor ordering.
+        var authorizedCoexistence = new HashSet<(string, string)>();
         var usedDm = false;
 
-        foreach (var relation in (proposal.Relationships ?? []).OrderBy(x => x.Id, StringComparer.Ordinal))
+        foreach (var relation in (proposal.Relationships ?? [])
+            .Where(relation => relation is not null)
+            .OrderBy(relation => relation.Id, StringComparer.Ordinal))
         {
             if (relation?.CandidateIds is null) continue;
             var involved = relation.CandidateIds.Where(active.ContainsKey)
@@ -41,12 +47,24 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             }
             var authenticated = resolution.Basis?.Adjudication == NativeOriginAdjudication.DmAuthorized ?
                 verified("relationship", relation.Id) : null;
+            // A verified decision for this relationship is not evidence for a
+            // different decision ID claimed by the resolution. In particular,
+            // RetainBoth must not borrow authorization from another ruling.
             var authorized = authenticated is not null &&
-                JsonString(authenticated.EffectiveOutcome, "action") == ActionName(resolution.Action);
+                authenticated.Id == resolution.Basis?.TableDecisionId &&
+                JsonString(authenticated.EffectiveOutcome, "action") == ActionName(resolution.Action) &&
+                // RetainBoth can create overlapping complete grants. The
+                // authenticated decision must bind the exact participant set,
+                // not merely a caller-editable relationship ID and action.
+                (resolution.Action != NativeOriginResolutionAction.RetainBoth ||
+                 ExactParticipants(authenticated.EffectiveOutcome, relation.CandidateIds));
             var authored = resolution.Basis?.Adjudication == NativeOriginAdjudication.Supported &&
                 relation.AuthoredRuleReference == resolution.Basis.NativeRuleReference &&
-                NativeRelationshipAuthorizes(relation.Id, resolution.Action,
-                    relation.AuthoredRuleReference);
+                (resolution.Action == NativeOriginResolutionAction.Replace ?
+                    NativeTraitCompositionAuthorizes(relation.AuthoredRuleReference,
+                        involved, active, resolution) :
+                    NativeRelationshipAuthorizes(relation.Id, resolution.Action,
+                        relation.AuthoredRuleReference, relation.CandidateIds));
             if (!authorized && !authored)
             {
                 Issue("relationship-disposition-unauthorized", relation.Id,
@@ -77,6 +95,29 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                     }
                     break;
                 case NativeOriginResolutionAction.RetainBoth:
+                    for (var i = 0; i < involved.Length; i++)
+                    for (var j = i + 1; j < involved.Length; j++)
+                        authorizedCoexistence.Add(OrderedPair(involved[i], involved[j]));
+                    break;
+                case NativeOriginResolutionAction.Replace:
+                    // Until the native catalog defines an executable replacement
+                    // grammar, require an exact-scoped table decision for both the
+                    // selected source and every final parameter/source binding.
+                    // Do not infer recombination from similar trait names.
+                    if (!TryComposeReplacement(involved, active, resolution,
+                            authorized ? authenticated : null,
+                            authored ? relation.AuthoredRuleReference : null,
+                            out var replacement))
+                        goto default;
+                    var winner = resolution.ReplacementCandidateId!;
+                    replacements[winner] = replacement;
+                    if (!merged.TryGetValue(winner, out var sources))
+                        merged[winner] = sources = new(StringComparer.Ordinal);
+                    foreach (var id in involved.Where(id => id != winner))
+                    {
+                        ignored.Add(id);
+                        sources.Add(id);
+                    }
                     break;
                 default:
                     Issue("relationship-action-unresolved", relation.Id, NativeOriginIssueSeverity.Unresolved,
@@ -117,13 +158,164 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             x.Candidate.Identity.MechanicalDefinitionId is not null)
             .GroupBy(x => x.Candidate.Identity.MechanicalDefinitionId!, StringComparer.Ordinal))
         {
-            var entries = group.ToArray();
-            if (entries.Select(x => x.Candidate.Identity.Occurrence)
-                .Distinct().Count() < 2) continue;
-            foreach (var x in entries) ignored.Add(x.Candidate.Id);
+            var entries = group.OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var first = entries[i].Candidate;
+                var second = entries[j].Candidate;
+                if (first.Identity.Occurrence == second.Identity.Occurrence ||
+                    authorizedCoexistence.Contains(OrderedPair(first.Id, second.Id)))
+                    continue;
+                conflicting.Add(first.Id);
+                conflicting.Add(second.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
             Issue("shared-definition-reconciliation-required", group.Key,
                 NativeOriginIssueSeverity.Unresolved,
                 "Shared canonical mechanics from distinct occurrences require an authored disposition.");
+        }
+
+        // Two distinct complete traits can offer the same typed sense with
+        // different activation, range, terrain or resource rules. Do not grant
+        // both simply because their canonical definition IDs differ, and do
+        // not construct an unapproved hybrid from their shared display name.
+        // A scoped resolution may retain either one or explicitly retain both.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .Select(x => (Entry: x, Sense: NativeSense(x.Candidate)))
+            .Where(x => x.Sense is not null)
+            .GroupBy(x => x.Sense!, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            if (entries.Length < 2) continue;
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId ==
+                    b.Identity.MechanicalDefinitionId) continue;
+                if (authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-sense-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct canonical senses overlap. Explicitly retain one " +
+                "complete mechanic or authorize the coexistence of their different modes.");
+        }
+
+        // Permanent resistance expressed by distinct complete traits is
+        // similarly source-specific. Compare the *typed damage key*, not the
+        // word "resistance"; do not infer percentage stacking or silently
+        // separate a Dwarf's linked poison-saving-throw benefit.
+        // Event-scoped/activated defense is deliberately not a permanent
+        // resistance contender.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .SelectMany(x => NativeResistanceKeys(x).Select(damageType =>
+                (Entry: x, DamageType: damageType)))
+            .GroupBy(x => x.DamageType, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            if (entries.Length < 2) continue;
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId ==
+                    b.Identity.MechanicalDefinitionId) continue;
+                if (authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-damage-resistance-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct inherent resistances overlap for this damage type. " +
+                "Retain a complete source mechanic or explicitly authorize coexistence.");
+        }
+
+        // Native movement modes can appear in separate canonical traits with
+        // different terrain limits, speeds, or other conditions. Identical
+        // mode names do not authorize stacking or selecting the fastest speed.
+        // Preserve complete authored traits and require a verified disposition
+        // for any selected, distinct definitions of the same movement mode.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .Select(x => (Entry: x, Mode: NativeMovementMode(x.Candidate)))
+            .Where(x => x.Mode is not null)
+            .GroupBy(x => x.Mode!, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            if (entries.Length < 2) continue;
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId ==
+                    b.Identity.MechanicalDefinitionId ||
+                    authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-movement-mode-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct native movement traits provide the same mode. " +
+                "Retain a complete authored trait or explicitly authorize coexistence; " +
+                "do not infer speed or terrain combinations.");
+        }
+
+        // Two distinct canonical, passive traits can reference the SAME
+        // executable native rule (Elf and Tiefling Low-Light Vision currently do).
+        // Their different definitions do not represent two independently
+        // stackable benefits. They may be retained by a scoped explicit
+        // disposition, but no dominant source or automatic union is inferred.
+        foreach (var group in active.Values
+            .Where(x => !ignored.Contains(x.Candidate.Id))
+            .Select(x => (Entry: x, Rule: NativePassiveRule(x.Candidate)))
+            .Where(x => x.Rule is not null)
+            .GroupBy(x => x.Rule!, StringComparer.Ordinal))
+        {
+            var entries = group.Select(x => x.Entry)
+                .OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var a = entries[i].Candidate;
+                var b = entries[j].Candidate;
+                if (a.Identity.MechanicalDefinitionId == b.Identity.MechanicalDefinitionId ||
+                    authorizedCoexistence.Contains(OrderedPair(a.Id, b.Id)))
+                    continue;
+                conflicting.Add(a.Id);
+                conflicting.Add(b.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
+            Issue("same-passive-native-rule-reconciliation-required", group.Key,
+                NativeOriginIssueSeverity.Unresolved,
+                "Selected distinct traits reference the same passive native effect. " +
+                "Explicitly retain a complete authored trait or authorize coexistence.");
         }
 
         // Different occurrences offering the same intrinsic slot have no general
@@ -148,7 +340,21 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 var evidence = new SortedSet<string>(StringComparer.Ordinal) { x.Candidate.Id };
                 if (merged.TryGetValue(x.Candidate.Id, out var additional))
                     evidence.UnionWith(additional);
-                return x.Grant with { SourceCandidateIds = evidence.ToArray() };
+                var effective = replacements.TryGetValue(x.Candidate.Id, out var replaced) ?
+                    replaced : x.Grant;
+                // A consolidated grant can have multiple verified mixed parents.
+                // The losing grants do not create mechanical duplicates, but
+                // every winning contributor's immediate lineage is retained.
+                var lineage = evidence.SelectMany(id =>
+                        active[id].Grant.InheritedFrom ?? [])
+                    .OrderBy(x => x.ContributorId, StringComparer.Ordinal)
+                    .ThenBy(x => x.ContributorProfileId, StringComparer.Ordinal)
+                    .ThenBy(x => x.SourceGrantId, StringComparer.Ordinal).ToArray();
+                return effective with
+                {
+                    SourceCandidateIds = evidence.ToArray(),
+                    InheritedFrom = lineage.Length == 0 ? null : lineage
+                };
             }).ToArray();
         return (grants, issues, usedDm);
 
@@ -156,16 +362,298 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             issues.Add(new(code, path, level, detail));
     }
 
-    private bool NativeRelationshipAuthorizes(string id, NativeOriginResolutionAction action,
-        string? ruleId)
+    /// <summary>
+    /// Recombine one complete native trait with parameter values actually offered by
+    /// selected contributors. The player nominates the source of each field; the
+    /// authenticated table outcome must match it exactly. This is not automatic
+    /// inheritance eligibility, an allocation decision or arbitrary trait merging.
+    /// </summary>
+    private static bool TryComposeReplacement(
+        IReadOnlyList<string> involved,
+        IReadOnlyDictionary<string, NativeOriginSelectedGrant> active,
+        NativeOriginResolution resolution, NativeTableRuleDecision? decision,
+        string? authoredRule, out NativeOriginEffectiveGrant result)
     {
+        result = null!;
+        var winner = resolution.ReplacementCandidateId;
+        var values = resolution.ReplacementParameters;
+        var sources = resolution.ReplacementParameterSources;
+        if (winner is null || !involved.Contains(winner, StringComparer.Ordinal) ||
+            values is null || sources is null || values.Count == 0 ||
+            (decision is null && authoredRule is null))
+            return false;
+        var authorizedValues = default(JsonElement);
+        var authorizedSources = default(JsonElement);
+        if (decision is not null)
+        {
+            var outcome = decision.EffectiveOutcome;
+            if (outcome.ValueKind != JsonValueKind.Object ||
+                JsonString(outcome, "resultCandidateId") != winner ||
+                !outcome.TryGetProperty("parameters", out authorizedValues) ||
+                authorizedValues.ValueKind != JsonValueKind.Object ||
+                !outcome.TryGetProperty("parameterSources", out authorizedSources) ||
+                authorizedSources.ValueKind != JsonValueKind.Object)
+                return false;
+        }
+
+        var root = active[winner];
+        if (root.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            root.Candidate.Identity.MechanicalDefinitionId is null ||
+            root.Grant.EffectiveValue is null)
+            return false;
+
+        // A replacement is one configured instance of the *same complete mechanic*.
+        // No cross-definition, cross-choice or intrinsic blending is authorized.
+        // Every simultaneously selected occurrence of that exact identity must
+        // participate, so no extra copy remains to double a resource pool.
+        if (active.Values.Any(x => x.Candidate.Identity == root.Candidate.Identity &&
+            !involved.Contains(x.Candidate.Id, StringComparer.Ordinal)))
+            return false;
+        var entries = involved.Select(id => active[id]).ToArray();
+        if (entries.Any(x =>
+            x.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            x.Candidate.Identity.MechanicalDefinitionId != root.Candidate.Identity.MechanicalDefinitionId ||
+            x.Grant.EffectiveValue is null ||
+            !JsonElement.DeepEquals(x.Grant.EffectiveValue.Value, root.Grant.EffectiveValue.Value) ||
+            (x.Grant.ResolvedChoices?.Count ?? 0) > 0 ||
+            x.Grant.Parameters is null))
+            return false;
+        var keys = root.Grant.Parameters?.Keys.ToHashSet(StringComparer.Ordinal);
+        if (keys is null || keys.Count == 0 ||
+            entries.Any(x => !keys.SetEquals(x.Grant.Parameters!.Keys)) ||
+            !keys.SetEquals(values.Keys) || !keys.SetEquals(sources.Keys) ||
+            (decision is not null &&
+                (authorizedValues.EnumerateObject().Count() != keys.Count ||
+                 authorizedSources.EnumerateObject().Count() != keys.Count)))
+            return false;
+
+        foreach (var key in keys)
+        {
+            var from = sources[key];
+            if (!involved.Contains(from, StringComparer.Ordinal) ||
+                !JsonElement.DeepEquals(values[key], active[from].Grant.Parameters![key]))
+                return false;
+        }
+
+        if (decision is not null)
+        {
+            foreach (var key in keys)
+                if (!authorizedValues.TryGetProperty(key, out var permitted) ||
+                    !JsonElement.DeepEquals(values[key], permitted) ||
+                    JsonString(authorizedSources, key) != sources[key])
+                    return false;
+        }
+
+        result = root.Grant with
+        {
+            Parameters = values.ToDictionary(x => x.Key, x => x.Value.Clone(),
+                StringComparer.Ordinal),
+            ParameterSources = sources.ToDictionary(x => x.Key, x => x.Value,
+                StringComparer.Ordinal),
+            Authorization = decision is null ?
+                new(NativeOriginAdjudication.Supported, NativeRuleReference: authoredRule) :
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: decision.Id)
+        };
+        return true;
+    }
+
+    /// <summary>
+    /// A native trait definition may explicitly permit particular parameters to
+    /// be independently chosen from otherwise identical configured offers. This
+    /// authoring is on the canonical mechanic, not on a named Species pairing.
+    /// All fields, including non-recombinable ones, are still provenance-checked
+    /// by TryComposeReplacement. Source eligibility is checked elsewhere.
+    /// </summary>
+    private bool NativeTraitCompositionAuthorizes(
+        string? definitionId, IReadOnlyList<string> involved,
+        IReadOnlyDictionary<string, NativeOriginSelectedGrant> active,
+        NativeOriginResolution resolution)
+    {
+        var winner = resolution.ReplacementCandidateId;
+        var sources = resolution.ReplacementParameterSources;
+        if (definitionId is null || winner is null || sources is null ||
+            !involved.Contains(winner, StringComparer.Ordinal) ||
+            !catalog.TryGetById(definitionId, out var entity) || entity is null ||
+            entity.Category != "origin-trait" ||
+            !entity.Definition.TryGetProperty("originComposition", out var composition) ||
+            composition.ValueKind != JsonValueKind.Object ||
+            !composition.TryGetProperty("recombinableParameters", out var parameters) ||
+            parameters.ValueKind != JsonValueKind.Array ||
+            involved.Any(id => active[id].Candidate.Identity.MechanicalDefinitionId != definitionId))
+            return false;
+        var allowed = parameters.EnumerateArray()
+            .Where(x => x.ValueKind == JsonValueKind.String)
+            .Select(x => x.GetString()!)
+            .ToHashSet(StringComparer.Ordinal);
+        // No unrelated field may be taken from a different contributor,
+        // even if both variants happen to have the same JSON value.
+        return allowed.Count != 0 && sources.All(x =>
+            x.Value == winner || allowed.Contains(x.Key));
+    }
+
+    /// <summary>
+    /// A bare native rule pointer is only sufficient for passive traits whose
+    /// other authored fields are presentation. Do not infer equivalence across
+    /// arbitrary spell, resource, resistance or conditional trait definitions.
+    /// </summary>
+    private string? NativePassiveRule(NativeOriginCandidate candidate)
+    {
+        if (candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var canonical) ||
+            canonical is null || canonical.Category != "origin-trait" ||
+            !canonical.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object ||
+            !trait.EnumerateObject().All(x =>
+                x.Name is "id" or "name" or "description" or "rule") ||
+            JsonString(trait, "rule") is not { } ruleId ||
+            !catalog.TryGetById(ruleId, out var rule) ||
+            rule is null || rule.Category != "rule")
+            return null;
+        return ruleId;
+    }
+
+    /// <summary>
+    /// A native typed sense is overlap evidence, not a stacking or superiority
+    /// policy. These checks read canonical trait definitions, not proposal
+    /// annotations, localized labels or untrusted candidate names.
+    /// </summary>
+    private string? NativeSense(NativeOriginCandidate candidate)
+    {
+        if (candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var definition) ||
+            definition is null || definition.Category != "origin-trait" ||
+            !definition.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object ||
+            !trait.TryGetProperty("sense", out var sense) ||
+            sense.ValueKind != JsonValueKind.String)
+            return null;
+        return sense.GetString();
+    }
+
+    /// <summary>
+    /// Native movement-mode overlap uses only canonical authoring, never a
+    /// submitted trait label, candidate description, or selected speed.
+    /// Different modes stay independent; a same-mode collision is not a
+    /// movement-speed stacking policy or a first-party inheritance grant.
+    /// </summary>
+    private string? NativeMovementMode(NativeOriginCandidate candidate)
+    {
+        if (candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var definition) ||
+            definition is null || definition.Category != "origin-trait" ||
+            !definition.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object ||
+            !trait.TryGetProperty("movementMode", out var mode) ||
+            mode.ValueKind != JsonValueKind.String ||
+            string.IsNullOrWhiteSpace(mode.GetString()) ||
+            !trait.TryGetProperty("speedFeet", out var speed) ||
+            speed.ValueKind != JsonValueKind.Number ||
+            !speed.TryGetInt32(out var feet) || feet <= 0)
+            return null;
+        return mode.GetString();
+    }
+
+    /// <summary>
+    /// Identify durable type-specific resistance by its executable canonical
+    /// shape. Keep event-scoped defenses out of this overlap classification:
+    /// Cloudy Escape's reaction resistance is not an inherited permanent pool.
+    /// Direct "poison": 50 legacy maps and authored percent/damageType records
+    /// are both recognized. Source-bound Dragonborn type is read only from an
+    /// already authorized, actually manifested parameter.
+    /// </summary>
+    private IReadOnlyList<string> NativeResistanceKeys(NativeOriginSelectedGrant selected)
+    {
+        if (selected.Candidate.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+            selected.Candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !catalog.TryGetById(id, out var entity) ||
+            entity is null || entity.Category != "origin-trait" ||
+            !entity.Definition.TryGetProperty("trait", out var authored) ||
+            authored.ValueKind != JsonValueKind.Object ||
+            authored.TryGetProperty("activation", out _) ||
+            authored.TryGetProperty("duration", out _) ||
+            !authored.TryGetProperty("damageResistance", out var resistance) ||
+            resistance.ValueKind != JsonValueKind.Object ||
+            resistance.TryGetProperty("scope", out _) ||
+            resistance.TryGetProperty("duration", out _) ||
+            selected.Grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } effective ||
+            !effective.TryGetProperty("damageResistance", out var effectiveResistance) ||
+            !JsonElement.DeepEquals(resistance, effectiveResistance))
+            return [];
+
+        if (resistance.TryGetProperty("percent", out var percent))
+        {
+            if (percent.ValueKind != JsonValueKind.Number ||
+                !percent.TryGetInt32(out var amount) || amount is <= 0 or > 100)
+                return [];
+            if (resistance.TryGetProperty("damageType", out var damageType) &&
+                damageType.ValueKind == JsonValueKind.String &&
+                !string.IsNullOrWhiteSpace(damageType.GetString()))
+                return [damageType.GetString()!];
+            if (resistance.TryGetProperty("damageTypeFrom", out var sourceField) &&
+                sourceField.ValueKind == JsonValueKind.String &&
+                selected.Grant.Parameters?.TryGetValue("damageType", out var bound) == true &&
+                bound.ValueKind == JsonValueKind.String &&
+                !string.IsNullOrWhiteSpace(bound.GetString()) &&
+                authored.TryGetProperty("originBindings", out var bindings) &&
+                bindings.ValueKind == JsonValueKind.Object &&
+                bindings.TryGetProperty("damageType", out var binding) &&
+                binding.ValueKind == JsonValueKind.Object &&
+                JsonString(binding, "lookup") == "leaf" &&
+                JsonString(binding, "sourceField") == "damageType")
+                return [bound.GetString()!];
+            return [];
+        }
+
+        // This older native record shape is a typed damage map, not an
+        // percentage object. Ignore partially specified or mixed value maps.
+        var entries = resistance.EnumerateObject().ToArray();
+        if (entries.Length == 0 || entries.Any(p =>
+            string.IsNullOrWhiteSpace(p.Name) ||
+            p.Value.ValueKind != JsonValueKind.Number ||
+            !p.Value.TryGetInt32(out var amount) || amount is <= 0 or > 100))
+            return [];
+        return entries.Select(p => p.Name).ToArray();
+    }
+
+    private static (string, string) OrderedPair(string a, string b) =>
+        string.CompareOrdinal(a, b) <= 0 ? (a, b) : (b, a);
+
+    private bool NativeRelationshipAuthorizes(string id, NativeOriginResolutionAction action,
+        string? ruleId, IReadOnlyList<string> participants)
+    {
+        // Catalog relationships currently name actions, not replacement values
+        // or parameter-source bindings. A bare `replace` label grants nothing.
+        if (action == NativeOriginResolutionAction.Replace) return false;
         if (ruleId is null || !catalog.TryGetById(ruleId, out var rule) || rule is null ||
             rule.Category != "rule" ||
             !rule.Definition.TryGetProperty("originRelationships", out var items) ||
             items.ValueKind != JsonValueKind.Array) return false;
         return items.EnumerateArray().Any(item =>
             JsonString(item, "id") == id &&
-            JsonString(item, "action") == ActionName(action));
+            JsonString(item, "action") == ActionName(action) &&
+            (action != NativeOriginResolutionAction.RetainBoth ||
+             ExactParticipants(item, participants)));
+    }
+
+    private static bool ExactParticipants(JsonElement evidence, IReadOnlyList<string> expected)
+    {
+        if (evidence.ValueKind != JsonValueKind.Object ||
+            !evidence.TryGetProperty("candidateIds", out var listed) ||
+            listed.ValueKind != JsonValueKind.Array ||
+            expected.Count < 2 || expected.Distinct(StringComparer.Ordinal).Count() != expected.Count ||
+            listed.GetArrayLength() != expected.Count)
+            return false;
+
+        var actual = listed.EnumerateArray().ToArray();
+        return actual.All(x => x.ValueKind == JsonValueKind.String &&
+                 !string.IsNullOrWhiteSpace(x.GetString())) &&
+            actual.Select(x => x.GetString()!)
+                .OrderBy(x => x, StringComparer.Ordinal)
+                .SequenceEqual(expected.OrderBy(x => x, StringComparer.Ordinal),
+                    StringComparer.Ordinal);
     }
 
     private static bool SameMechanic(NativeOriginSelectedGrant a, NativeOriginSelectedGrant b)

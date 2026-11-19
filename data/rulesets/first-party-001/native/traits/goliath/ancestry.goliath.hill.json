@@ -35,6 +35,14 @@
         "targetMaximumSize": null,
         "sharedUsesFromTrait": "hills-tumble",
         "extraUsesGranted": false
+      },
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
       }
     }
   },

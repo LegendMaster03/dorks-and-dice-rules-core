@@ -19,6 +19,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "poison-spray",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "name": "Poison Spray",
       "description": "At character level 1, know Poison Spray and cast it at will.",
       "spell": "poison-spray",
@@ -32,6 +39,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "ray-of-sickness",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "name": "Ray Of Sickness",
       "description": "At character level 3, always have Ray Of Sickness available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
       "spell": "ray-of-sickness",
@@ -48,6 +62,13 @@
     "kind": "origin-trait",
     "trait": {
       "id": "hold-person",
+      "originBindings": {
+        "spellcastingAbility": {
+          "lookup": "manifested-intrinsic",
+          "intrinsicSlot": "spellcastingAbility",
+          "scope": "source"
+        }
+      },
       "name": "Hold Person",
       "description": "At character level 5, always have Hold Person available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
       "spell": "hold-person",

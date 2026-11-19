@@ -33,7 +33,8 @@ public static class NativeCharacterManifestationProjector
         if (native.Status == "invalid")
             return new("invalid", effective, null, Array.AsReadOnly(issues.ToArray()));
 
-        if (effective.ManifestationInstanceId is not null)
+        if (effective.ManifestationInstanceId is not null ||
+            effective.ContributingManifestationInstanceIds?.Count > 0)
         {
             var formIssues = new List<NativeIssue>();
             if (native.FeatureIds.Count > 0)

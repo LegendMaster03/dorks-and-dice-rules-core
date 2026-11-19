@@ -1,3 +1,4 @@
+using System.Text.Json;
 using RulesCore.Content;
 using RulesCore.Mechanics;
 
@@ -86,6 +87,9 @@ public static class NativeOriginApiEndpoints
                     decision.Scope.Id != campaignId))
                 return Error(400, "invalid_approved_mixed_proposal");
 
+            if (HasMalformedOriginNestedInputs(proposal))
+                return Error(400, "invalid_approved_mixed_proposal");
+
             // Character Sheet owns target-character authorization and persistence.
             // This delegated computation checks the DM actor and campaign role
             // independently; it never claims that the given character is owned,
@@ -117,6 +121,118 @@ public static class NativeOriginApiEndpoints
                 // A separate mixed interpreter verifies the exact approved
                 // native vision occurrence; direct-only rules remain closed.
                 vision = NativeOriginVisionProjector.ProjectApprovedMixed(catalog, result),
+                // Additive, read-only interpretations of completely selected
+                // native characteristics. They do not grant eligibility or
+                // authorize a stored Character Sheet, resource use or rest.
+                physiology = NativeOriginPhysiologyProjector.ProjectApprovedMixed(catalog, result),
+                movementModes = NativeOriginMovementModeProjector.ProjectApprovedMixed(catalog, result),
+                skillProficiencies = NativeOriginSkillProficiencyProjector.ProjectApprovedMixed(catalog, result),
+                restSurvival = NativeOriginRestSurvivalProjector.ProjectApprovedMixed(catalog, result),
+                result
+            });
+        });
+    }
+
+    /// <summary>
+    /// Stateless, delegated direct-Origin ledger bootstrap calculation. The
+    /// committed profile is matched against a fresh first-party reconstruction;
+    /// a caller-supplied saved profile or character progression is never itself
+    /// proof of entitlement. Character Sheet must independently source these
+    /// inputs from its committed Origin and character-owned progression.
+    /// The response is preview-only and never initializes server-side storage.
+    /// </summary>
+    public sealed record DirectInnateSpellLedgerBootstrapRequest(
+        string RulesetId, string Fingerprint, NativeOriginProposal Proposal,
+        NativeOriginProfile CommittedProfile, NativeCharacterRequest Character);
+
+    public static void MapNativeDirectInnateSpellLedgerBootstrap(this RouteGroupBuilder group)
+    {
+        group.MapPost("/origins/innate-spells/ledger/initialize-preview", (
+            DirectInnateSpellLedgerBootstrapRequest request,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            context.Response.Headers.CacheControl = "no-store";
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null || request.Proposal is null ||
+                request.CommittedProfile is null || request.Character is null ||
+                request.Proposal.Method is null ||
+                request.RulesetId != catalog.RulesetId ||
+                request.Character.RulesetId != catalog.RulesetId)
+                return Error(400, "invalid_innate_spell_bootstrap_request");
+            if (request.Fingerprint != catalog.Fingerprint ||
+                request.Character.Fingerprint != catalog.Fingerprint)
+                return Error(409, "ruleset_version_mismatch");
+
+            var proposal = request.Proposal;
+            // Only the existing initial, direct first-party construction
+            // path is eligible. No historical/manifested parents, DM rulings,
+            // independent grants, transformations or revised source evidence.
+            if (ExceedsUntrustedOriginLimits(proposal) ||
+                HasMalformedOriginNestedInputs(proposal) ||
+                proposal.Intent != NativeOriginIntent.Direct ||
+                string.IsNullOrWhiteSpace(proposal.Id) ||
+                proposal.Id.Length > 200 ||
+                proposal.Contributors is not { Count: 0 } ||
+                proposal.Candidates is not { Count: 0 } ||
+                proposal.Manifestations is null ||
+                (proposal.TableDecisions?.Count ?? 0) != 0 ||
+                (proposal.History?.Count ?? 0) != 0 ||
+                (proposal.Relationships?.Count ?? 0) != 0 ||
+                (proposal.Resolutions?.Count ?? 0) != 0 ||
+                (proposal.Constraints?.Count ?? 0) != 0 ||
+                (proposal.InputRequirements?.Count ?? 0) != 0 ||
+                proposal.ProcessCreatureTypeId is not null ||
+                proposal.ExistingConfiguration is not null ||
+                proposal.ExistingEffectiveConfiguration is not null ||
+                proposal.ExistingEffectiveConfigurationBasis is not null ||
+                proposal.ActiveTemporaryTransformation is not null ||
+                (proposal.OtherActiveTemporaryTransformations?.Count ?? 0) != 0 ||
+                proposal.TemporaryTransformationPrecedence is not null ||
+                proposal.Manifestations.Any(x => x is null ||
+                    x.TableDecisionId is not null ||
+                    (x.Choices?.Any(c => c is null ||
+                        c.CatalogEligibilityEvidenceId is not null) ?? false)))
+                return Error(400, "trusted_direct_origin_required");
+
+            var rebuilt = new NativeOriginFirstPartyChoiceEvaluator(catalog)
+                .Evaluate(proposal);
+            if (rebuilt.Status != NativeOriginConstructionStatus.Authorized ||
+                rebuilt.Profile is null || rebuilt.Issues.Count != 0 ||
+                !JsonElement.DeepEquals(
+                    JsonSerializer.SerializeToElement(rebuilt.Profile),
+                    JsonSerializer.SerializeToElement(request.CommittedProfile)))
+                return Error(422, "committed_origin_source_mismatch");
+
+            var character = new NativeCharacterProjector(catalog)
+                .Project(request.Character, context.RequestAborted);
+            // Absent independent equipment AC, native base movement and
+            // rolled HP inputs do not change this projection's verified total
+            // level or native proficiency. These exact informational gaps
+            // may coexist with a safe read-only innate-spell course. No
+            // progression, feature, option or condition issue is exempted.
+            if (character.Status is not ("resolved" or "partial") ||
+                character.Issues.Any(issue => issue.Code is not (
+                    "hit-point-input-required" or "movement-input-required" or
+                    "defense-input-required")) ||
+                !character.Values.TryGetValue("advancement.total-level", out var total) ||
+                total.Status != "resolved" || total.Value is not > 0 ||
+                !character.Values.TryGetValue("proficiency.bonus", out var proficiency) ||
+                proficiency.Status != "resolved" || proficiency.Value is not > 0)
+                return Error(422, "native_character_projection_unresolved");
+
+            var result = NativeOriginInnateSpellResourceLedger.Initialize(
+                catalog, rebuilt, character);
+            if (result.Status != "resolved" || result.State is null)
+                return Error(422, "native_innate_spell_bootstrap_unresolved");
+
+            return Results.Ok(new
+            {
+                contractVersion = 1,
+                rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint,
+                previewOnly = true,
+                committedOriginMatched = true,
                 result
             });
         });
@@ -158,6 +274,8 @@ public static class NativeOriginApiEndpoints
                 request.Proposal.Candidates.Any(c => c is null ||
                     c.Identity is null || c.SelectionBasis is null) ||
                 request.Proposal.Manifestations.Any(m => m is null))
+                return Error(400, "invalid_origin_preview_request");
+            if (HasMalformedOriginNestedInputs(request.Proposal))
                 return Error(400, "invalid_origin_preview_request");
             if (ExceedsUntrustedOriginLimits(request.Proposal))
                 return Error(400, "origin_request_limits_exceeded");
@@ -227,10 +345,41 @@ public static class NativeOriginApiEndpoints
                 // As with intrinsics, this remains preview-only until the
                 // Character Sheet independently verifies committed state.
                 vision = NativeOriginVisionProjector.Project(catalog, result),
+                physiology = NativeOriginPhysiologyProjector.Project(catalog, result),
+                movementModes = NativeOriginMovementModeProjector.Project(catalog, result),
+                skillProficiencies = NativeOriginSkillProficiencyProjector.Project(catalog, result),
+                restSurvival = NativeOriginRestSurvivalProjector.Project(catalog, result),
                 result
             });
         });
     }
+
+    /// <summary>
+    /// Validate keys and record members used by discovery and first-party
+    /// choice normalization *before* those operations run. Nullable JSON can
+    /// violate nonnullable C# record annotations, and dictionary lookups with
+    /// a null key would otherwise raise an exception rather than reject input.
+    /// The full contract validator still governs gameplay eligibility.
+    /// </summary>
+    private static bool HasMalformedOriginNestedInputs(NativeOriginProposal proposal) =>
+        // A missing relationship record is never an authored disposition.
+        // Reject it before normalization and reconciliation can inspect it.
+        (proposal.Relationships?.Any(relation => relation is null) ?? false) ||
+        (proposal.Contributors?.Any(contributor =>
+            contributor is null || contributor.Role is null ||
+            contributor.Source is null ||
+            string.IsNullOrWhiteSpace(contributor.Id) ||
+            string.IsNullOrWhiteSpace(contributor.Source.Id)) ?? false) ||
+        (proposal.Candidates?.Any(candidate =>
+            candidate is null || candidate.Identity is null ||
+            candidate.SelectionBasis is null ||
+            string.IsNullOrWhiteSpace(candidate.Id)) ?? false) ||
+        (proposal.Manifestations?.Any(manifest =>
+            manifest is null || string.IsNullOrWhiteSpace(manifest.Id) ||
+            string.IsNullOrWhiteSpace(manifest.CandidateId) ||
+            (manifest.Choices?.Any(choice =>
+                choice is null || string.IsNullOrWhiteSpace(choice.RequirementId)) ??
+                false)) ?? false);
 
     /// <summary>
     /// Bound the fanout of browser-controlled collections before native

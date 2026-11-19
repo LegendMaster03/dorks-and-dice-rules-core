@@ -150,7 +150,29 @@ public sealed record NativeOriginDecisionBasis(
 /// </summary>
 public sealed record NativeOriginResolution(
     string RelationshipId, NativeOriginResolutionAction Action,
-    NativeOriginDecisionBasis Basis);
+    NativeOriginDecisionBasis Basis,
+    // A player-selected replacement retains one actual source instance. These
+    // proposed parameter bindings are inert without a matching trusted rule.
+    string? ReplacementCandidateId = null,
+    IReadOnlyDictionary<string, JsonElement>? ReplacementParameters = null,
+    IReadOnlyDictionary<string, string>? ReplacementParameterSources = null);
+
+/// <summary>
+/// Prior-generation evidence for a single authenticated manifested grant. These
+/// historical candidate and parameter references explain the previous composition;
+/// they do not become new donor offers, permissions or active resource links.
+/// The descendant's own SourceCandidateIds and ParameterSources remain local.
+/// Profile identity and revision point to the source snapshot for deeper audit;
+/// no unbounded transitive family tree is embedded in each descendant grant.
+/// </summary>
+public sealed record NativeOriginInheritedGrantEvidence(
+    string ContributorId,
+    string ContributorProfileId,
+    string ContributorProfileRevision,
+    string SourceGrantId,
+    IReadOnlyList<string> PriorSourceCandidateIds,
+    IReadOnlyDictionary<string, string>? PriorParameterSources = null,
+    IReadOnlyDictionary<string, string>? PriorResourceOwners = null);
 
 /// <summary>
 /// This identity is earned by the future evaluator, not by candidate discovery.
@@ -163,7 +185,15 @@ public sealed record NativeOriginEffectiveGrant(
     JsonElement? EffectiveValue = null,
     IReadOnlyDictionary<string, JsonElement>? Parameters = null,
     IReadOnlyList<NativeOriginChoiceSelection>? ResolvedChoices = null,
-    NativeOriginDecisionBasis? Authorization = null);
+    NativeOriginDecisionBasis? Authorization = null,
+    // For recombined parameters, identifies the contributor offer of each
+    // effective field. Grant-level SourceCandidateIds retains all evidence.
+    IReadOnlyDictionary<string, string>? ParameterSources = null,
+    // Maps a dependent resource use (for example, "uses") to the effective
+    // grant that actually owns the one shared pool. Optional for older profiles.
+    IReadOnlyDictionary<string, string>? ResourceOwners = null,
+    // Historical provenance, never independent authorization or extra charges.
+    IReadOnlyList<NativeOriginInheritedGrantEvidence>? InheritedFrom = null);
 
 /// <summary>
 /// A separately earned grant remains part of the character's entitlements even

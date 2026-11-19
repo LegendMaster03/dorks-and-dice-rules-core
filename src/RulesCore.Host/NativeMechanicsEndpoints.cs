@@ -42,15 +42,13 @@ public static class NativeMechanicsEndpoints
         // The ordinary delegated surface serves calculations, not unrestricted content.
         if (privateTunnel) group.MapNativeCharacterCatalog();
 
-        // This transport can resolve verified primary inputs only. It refuses
-        // persisted supernatural entitlements until a real authority provider exists.
+        // Partial character state and supernatural planning require an independently
+        // verifying host-side authority provider; delegation alone is not proof.
         if (!privateTunnel)
         {
             group.MapVerifiedPrimaryState();
             group.MapVerifiedManifestationPlans();
             group.MapVerifiedManifestationReads();
-            // Verified Origin baseline review is separate from both the
-            // stateless construction preview and supernatural entitlement.
             group.MapNativeOriginVerifiedUnderlying();
         }
 
@@ -59,7 +57,14 @@ public static class NativeMechanicsEndpoints
         group.MapNativeOriginPreview();
         // Separate trusted DM-reviewed evaluation. The caller must still
         // commit any authorized result through Character Sheet's store.
-        if (!privateTunnel) group.MapNativeOriginApprovedMixedEvaluation();
+        if (!privateTunnel)
+        {
+            group.MapNativeOriginApprovedMixedEvaluation();
+            // Only the authenticated Character Sheet-delegated public ingress.
+            // This calculates a source-matched bootstrap candidate, never
+            // persists a spell pool or authenticates the stored character.
+            group.MapNativeDirectInnateSpellLedgerBootstrap();
+        }
 
         group.MapGet("/ruleset", (NativeCatalogStore store) =>
         {
@@ -75,6 +80,7 @@ public static class NativeMechanicsEndpoints
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     originPreview = "stateless-first-party",
                     originPersistence = false, originDmAdjudication = false,
+                    innateSpellLedgerBootstrap = privateTunnel ? "unavailable" : "source-matched-preview",
                     startingEquipmentResolution = "authored-grants-only",
                     equipmentQualifications = "authored-scopes-only",
                      equipmentTraining = "proficiency-and-mastery-flags",

@@ -52,7 +52,15 @@
         "notGlobalCondition": true
       },
       "sharedUsesFromTrait": "clouds-jaunt",
-      "extraUsesGranted": false
+      "extraUsesGranted": false,
+      "originBindings": {
+        "giantAncestryAbility": {
+          "lookup": "manifested-trait-choice",
+          "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+          "choiceRequirementId": "abilityChoice",
+          "scope": "contributor"
+        }
+      }
     }
   },
   {

@@ -31,7 +31,11 @@ public static class NativeOriginIntrinsicProjector
             profile.Adjudication.Adjudication != NativeOriginAdjudication.Supported ||
             profile.ActiveTemporaryTransformation is not null ||
             (profile.OtherActiveTemporaryTransformations?.Count ?? 0) > 0 ||
-            !ReferenceEquals(profile.Current, profile.Underlying) ||
+            // A saved, round-tripped direct baseline can have value-identical
+            // configurations without reference identity. The source and grants
+            // are still checked individually before projecting any intrinsic.
+            !NativeOriginContractValidator.SameConfiguration(
+                profile.Current, profile.Underlying) ||
             profile.IndependentGrants.Count != 0 ||
             (profile.PersistentInfluences?.Count ?? 0) != 0 ||
             result.Issues.Count != 0)

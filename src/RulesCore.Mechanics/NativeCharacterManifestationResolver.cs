@@ -80,6 +80,10 @@ public static class NativeCharacterManifestationResolver
                     string.IsNullOrWhiteSpace(x) || x.Length > 160) ||
                 instance.EndingConditions.Distinct(StringComparer.Ordinal).Count() !=
                     instance.EndingConditions.Count ||
+                instance.ContributionSlots?.Count > 128 ||
+                (instance.ContributionSlots is not null &&
+                 (instance.ContributionSlots.Any(slot => !NativeCharacterManifestationSlotComposer.ValidSlot(slot)) ||
+                  instance.ContributionSlots.Distinct().Count() != instance.ContributionSlots.Count)) ||
                 instance.ResourcePolicies is null || instance.ResourcePolicies.Count > 256 ||
                 string.IsNullOrWhiteSpace(instance.LastEventId) ||
                 !events.Contains(instance.ActivationEventId) ||
@@ -144,7 +148,9 @@ public static class NativeCharacterManifestationResolver
                  !decision.InstanceIds.Contains(decision.SelectedInstanceId, StringComparer.Ordinal)) ||
                 (decision.Kind is NativeManifestationInteractionKind.Suppress or
                     NativeManifestationInteractionKind.Replace &&
-                 decision.SelectedInstanceId is null))
+                 decision.SelectedInstanceId is null) ||
+                (decision.Kind == NativeManifestationInteractionKind.Coexist &&
+                 decision.SelectedInstanceId is not null))
                 Issue("invalid-manifestation-interaction", "interactions",
                     "Interaction evidence, participants or selection is invalid.");
         }
@@ -199,7 +205,9 @@ public static class NativeCharacterManifestationResolver
             {
                 ActivationCaptures = instance.ActivationCaptures.ToFrozenDictionary(StringComparer.Ordinal),
                 EndingConditions = Array.AsReadOnly(instance.EndingConditions.ToArray()),
-                ResourcePolicies = Array.AsReadOnly(instance.ResourcePolicies.ToArray())
+                ResourcePolicies = Array.AsReadOnly(instance.ResourcePolicies.ToArray()),
+                ContributionSlots = instance.ContributionSlots is null ? null :
+                    Array.AsReadOnly(instance.ContributionSlots.ToArray())
             }).ToArray()),
             Resources = Array.AsReadOnly(ledger.Resources.ToArray()),
             ProcessedEventIds = Array.AsReadOnly(ledger.ProcessedEventIds.ToArray()),
@@ -252,9 +260,16 @@ public static class NativeCharacterManifestationResolver
         INativeCharacterManifestationAuthority authority) =>
         ResolveCore(state, proposed, authority, verifyCommittedLedger: false);
 
+    internal static NativeManifestationEffectiveCharacter ResolveSelected(
+        NativeCharacterState state, NativeManifestationLedger ledger,
+        INativeCharacterManifestationAuthority authority,
+        NativeManifestationInstance selected, bool verifyCommittedLedger) =>
+        ResolveCore(state, ledger, authority, verifyCommittedLedger, selected);
+
     private static NativeManifestationEffectiveCharacter ResolveCore(
         NativeCharacterState state, NativeManifestationLedger ledger,
-        INativeCharacterManifestationAuthority authority, bool verifyCommittedLedger)
+        INativeCharacterManifestationAuthority authority, bool verifyCommittedLedger,
+        NativeManifestationInstance? explicitlySelected = null)
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(ledger);
@@ -274,9 +289,37 @@ public static class NativeCharacterManifestationResolver
             NativeCharacterSheetResolver.PrimarySheetId, authority);
         if (baseline.Status is "invalid" or "unresolved")
             return Failed(baseline.Status, baseline.Issues);
+        // Coexist is mechanically resolvable only where all activated forms
+        // explicitly declare disjoint characteristic slots. A shared formula
+        // or an unqualified full-body replacement still needs an authored
+        // interaction rule; never select the first listed form implicitly.
+        if (explicitlySelected is null)
+        {
+            var contributing = ledger.Instances.Where(x =>
+                x.Lifecycle == NativeManifestationLifecycle.Active &&
+                x.Contribution == NativeManifestationContribution.Contributing)
+                .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+            if (contributing.Length > 1)
+            {
+                var ids = contributing.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+                var exact = (ledger.Interactions ?? [])
+                    .Where(x => x.InstanceIds.Count == ids.Count &&
+                        x.InstanceIds.All(ids.Contains)).Take(2).ToArray();
+                if (exact.Length == 1 &&
+                    exact[0].Kind == NativeManifestationInteractionKind.Coexist)
+                    return NativeCharacterManifestationSlotComposer.Compose(
+                        state, ledger, authority, contributing, baseline,
+                        verifyCommittedLedger);
+            }
+        }
         var selectionIssues = new List<NativeIssue>();
-        var selected = Select(ledger, selectionIssues);
+        var selected = explicitlySelected ?? Select(ledger, selectionIssues);
         if (selectionIssues.Count != 0) return Failed("unresolved", selectionIssues);
+        // A partial activation keeps its declared scope when it is the only
+        // contributor, including after another contributor ends.
+        if (explicitlySelected is null && selected?.ContributionSlots is not null)
+            return NativeCharacterManifestationSlotComposer.Compose(
+                state, ledger, authority, [selected], baseline, verifyCommittedLedger);
         var target = selected?.SheetId ?? NativeCharacterSheetResolver.PrimarySheetId;
         var sheet = NativeCharacterSheetResolver.Resolve(state, target, authority);
         var influence = NativeCharacterInfluenceResolver.Resolve(state, target, authority);
