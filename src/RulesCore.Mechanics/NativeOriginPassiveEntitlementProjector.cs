@@ -84,6 +84,7 @@ public static class NativeOriginPassiveEntitlementProjector
                 !catalog.TryGetById(grant.Identity.Occurrence.Source.Id, out var source) ||
                 source is null || source.Category is not ("species" or "ancestry") ||
                 grant.Parameters is { Count: > 0 } ||
+                grant.ParameterSources is { Count: > 0 } ||
                 grant.ResourceOwners is { Count: > 0 } ||
                 grant.ResolvedChoices is { Count: > 0 } ||
                 // This increment supports only unconditional creation-time
@@ -235,7 +236,14 @@ public static class NativeOriginPassiveEntitlementProjector
                 candidate.RequiredChoices is not { Count: > 0 } &&
                 candidate.UnresolvedEvidence is not { Count: > 0 } &&
                 result.EvaluatedProposal.Manifestations.Count(x =>
-                    x.CandidateId == candidate.Id) == 1);
+                    x.CandidateId == candidate.Id) == 1 &&
+                result.EvaluatedProposal.Manifestations
+                    .Where(x => x.CandidateId == candidate.Id)
+                    .All(x => x.SelectedParameters is not { Count: > 0 } &&
+                        x.Choices is not { Count: > 0 } &&
+                        (x.SelectedValue is null ||
+                         grant.EffectiveValue is { } selectedValue &&
+                         JsonElement.DeepEquals(x.SelectedValue.Value, selectedValue))));
     }
 
     private static View Unresolved(string reason) =>
