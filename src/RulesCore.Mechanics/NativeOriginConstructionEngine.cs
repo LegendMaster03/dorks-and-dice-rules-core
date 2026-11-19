@@ -11,28 +11,62 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 {
     private readonly NativeOriginContractValidator _validator = new(catalog);
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
+    private readonly NativeOriginNativeLinkedSelectionEvaluator _nativeLinks = new(catalog);
+    private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
 
     public NativeOriginConstructionResult Evaluate(NativeOriginConstructionRequest request,
-        INativeOriginAuthority? authority = null) =>
-        EvaluateCore(request, authority, reconstructionTarget: false);
+        INativeOriginAuthority? authority = null,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
+        EvaluateCore(request, authority, manifestedContributorAuthority,
+            reconstructionTarget: false);
 
     // Only the trusted, result-oriented reconstruction service may construct
     // a target under a post-origination method without claiming a new birth.
     internal NativeOriginConstructionResult EvaluateReconstructionTarget(
         NativeOriginConstructionRequest request,
-        INativeOriginAuthority? authority = null) =>
-        EvaluateCore(request, authority, reconstructionTarget: true);
+        INativeOriginAuthority? authority = null,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
+        EvaluateCore(request, authority, manifestedContributorAuthority,
+            reconstructionTarget: true);
 
     private NativeOriginConstructionResult EvaluateCore(
         NativeOriginConstructionRequest request, INativeOriginAuthority? authority,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority,
         bool reconstructionTarget)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Proposal);
-        var (discovered, discoveryIssues) = _deconstructor.Deconstruct(request.Proposal);
+        var (trustedProposal, verifiedManifested, verificationIssues) =
+            NativeOriginManifestedContributorVerifier.Resolve(request.Proposal,
+                request.TrustedScope, manifestedContributorAuthority);
+        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(trustedProposal);
+        // Biology is one origination procedure, not a property of every
+        // characteristic or the universal Origin engine. The method's authored
+        // rule promotes only permitted offers; the player still selects them.
+        var (withNativeLinks, nativeLinkIssues) =
+            _nativeLinks.Expand(_biological.Evaluate(sourceOffers, verifiedManifested));
+        var discovered = withNativeLinks;
         var issues = new List<NativeOriginContractIssue>(discoveryIssues);
+        issues.AddRange(verificationIssues);
+        // Once a parent's authoritative underlying state has been resolved,
+        // keep its previous composition as audit evidence. Historical candidates
+        // are never imported as new selectable traits or extra resource pools.
+        var inheritedOffers = trustedProposal.Contributors
+            .Where(x => x is not null && verifiedManifested.Contains(x.Id) &&
+                x.ManifestedProfile?.InherentGrants is not null)
+            .SelectMany(x => x.ManifestedProfile!.InherentGrants.Select(grant => new
+            {
+                CandidateId = "nested:" + x.Id + ":" + grant.Id,
+                ProfileId = x.Source.Id,
+                ProfileRevision = x.Source.Version!,
+                ContributorId = x.Id,
+                Grant = grant
+            }))
+            .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
+            .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
+        issues.AddRange(nativeLinkIssues);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
         var selected = new HashSet<string>(manifests.Select(x => x.CandidateId),
@@ -282,9 +316,14 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 catalog.TryGetById(source.Id, out var native) && native is not null;
             // Deconstruction already checked the selected Species/Ancestry chain,
             // including any intermediate native Ancestry family.
-            var baseEligible = nativeSource && proposal.Intent == NativeOriginIntent.Direct &&
-                candidate.ContributorId is null &&
-                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible;
+            var baseEligible = nativeSource &&
+                candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                (proposal.Intent == NativeOriginIntent.Direct &&
+                    candidate.ContributorId is null ||
+                 proposal.Intent == NativeOriginIntent.Mixed &&
+                    proposal.Method.MethodId == "biological" &&
+                    candidate.ContributorId is not null &&
+                    candidate.SelectionBasis.RuleReference == "rule.creature-origination");
             var permission = Verified("candidate", candidate.Id) ?? Verified("source", source.Id);
             var decisionEligible = permission is not null &&
                 JsonString(permission.EffectiveOutcome, "eligibility") == "eligible";
@@ -432,12 +471,34 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 
             var attribution = modification ?? (decisionEligible ? permission : null);
             var basis = attribution is null
-                ? new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported, source.Id)
+                ? new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported,
+                    baseEligible && proposal.Intent == NativeOriginIntent.Mixed
+                        ? candidate.SelectionBasis.RuleReference : source.Id)
                 : new NativeOriginDecisionBasis(NativeOriginAdjudication.DmAuthorized,
                     TableDecisionId: attribution.Id);
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
                 candidate.Identity, [candidate.Id], value,
                 manifest.SelectedParameters ?? candidate.OfferedParameters, choices, basis);
+            if (inheritedOffers.TryGetValue(candidate.Id, out var prior))
+            {
+                // The original choices and configured mechanics are inherited as
+                // a complete manifestation. A descendant does not reopen the
+                // ancestor's unchosen option menu or keep the ancestor's active
+                // resource-owner IDs as live links.
+                grant = grant with
+                {
+                    ResolvedChoices = prior.Grant.ResolvedChoices,
+                    ParameterSources = prior.Grant.Parameters?.Keys.ToDictionary(
+                        key => key, _ => candidate.Id, StringComparer.Ordinal),
+                    InheritedFrom =
+                    [
+                        new(prior.ContributorId, prior.ProfileId,
+                            prior.ProfileRevision, prior.Grant.Id,
+                            prior.Grant.SourceCandidateIds,
+                            prior.Grant.ParameterSources, prior.Grant.ResourceOwners)
+                    ]
+                };
+            }
             accepted.Add(new(candidate, manifest, grant));
         }
 
@@ -450,6 +511,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             {
                 var decision = Verified("constraint", constraint.Id);
                 if (decision is not null &&
+                    (constraint.TableDecisionId is null ||
+                     decision.Id == constraint.TableDecisionId) &&
                     (ReadBool(decision.EffectiveOutcome, "allow") == true ||
                      ReadBool(decision.EffectiveOutcome, "enforce") == true))
                     verifiedDmDecisionIds.Add(decision.Id);
@@ -458,12 +521,52 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
-        // Source-authored parameters that reference another selected characteristic
-        // are resolved only after the intrinsic candidates have been reconciled.
-        // Unresolved prerequisites cannot leave an active dependent trait behind.
-        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(resolved);
-        resolved = bound;
-        issues.AddRange(bindingIssues);
+        // Every binder is monotonic: it can suppress an unsupported dependent,
+        // but never create a new grant. A general requirement may remove an
+        // otherwise valid resource/choice owner after its dependent was bound.
+        // Rerun the canonical binders to a fixed point so a dependent cannot
+        // retain a stale owner ID or source choice in the final profile.
+        IReadOnlyList<NativeOriginEffectiveGrant> effective = resolved;
+        while (true)
+        {
+            // Rebind from immutable reconciled input, not the previous pass's
+            // derived Parameters. Otherwise an auto-bound intrinsic parameter
+            // can appear inherited when its actual owner was just suppressed.
+            // Only grant IDs surviving the last pass may be reconsidered.
+            var survivingIds = effective.Select(x => x.Id)
+                .ToHashSet(StringComparer.Ordinal);
+            var inputs = resolved.Where(x => survivingIds.Contains(x.Id)).ToArray();
+            var previousCount = inputs.Length;
+            var (bound, bindingIssues) =
+                NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
+            issues.AddRange(bindingIssues);
+            var (resourceBound, resourceIssues) =
+                NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+            issues.AddRange(resourceIssues);
+            var (linkedGrants, linkedIssues) =
+                _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
+            issues.AddRange(linkedIssues);
+            var (closedGrants, closureIssues) =
+                _constraints.VerifyEffectiveRequirements(proposal, linkedGrants, Verified);
+            issues.AddRange(closureIssues);
+            effective = closedGrants;
+            if (effective.Count == previousCount)
+                break;
+        }
+        resolved = effective;
+        // A partial set of inherited biological traits is a useful design
+        // preview, but it is not a complete playable character. Require one
+        // selected, reconciled value in each universal physical foundation slot
+        // when the native biological policy issued any first-party selections.
+        if (proposal.Intent == NativeOriginIntent.Mixed &&
+            accepted.Any(x => x.Candidate.SelectionBasis.Eligibility ==
+                NativeOriginEligibility.Eligible &&
+                x.Candidate.SelectionBasis.RuleReference == "rule.creature-origination"))
+            foreach (var slot in new[] { "creatureType", "size", "walkingSpeedFeet" })
+                if (resolved.Count(x => x.Identity.IntrinsicSlotId == slot) != 1)
+                    Add("biological-foundation-incomplete", "intrinsics." + slot,
+                        NativeOriginIssueSeverity.Incomplete,
+                        "A complete player-selected biological Origin needs one effective value for this intrinsic slot.");
         if (reconciliationDm)
             foreach (var resolution in proposal.Resolutions ?? [])
             {

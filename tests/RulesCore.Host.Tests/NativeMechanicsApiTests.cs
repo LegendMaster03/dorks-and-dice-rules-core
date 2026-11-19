@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Host;
+using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
 
@@ -16,15 +17,22 @@ namespace RulesCore.Host.Tests;
 
 public sealed class NativeMechanicsApiTests
 {
-    private sealed class SiteHandler(string source, bool ordinary = false) : HttpMessageHandler
+    private sealed class SiteHandler(string source, bool ordinary = false,
+        bool dm = false) : HttpMessageHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken ct) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) {
                 Content = new StringContent(JsonSerializer.Serialize(new {
                     contractVersion = 1, toolKey = "rules-core", siteMode = "dorks-and-dice",
-                    user = new { id = "unit-test" },
+                    user = new { id = dm
+                        ? "d66a7a7b-bc0f-4677-829d-0ccf40470d2f"
+                        : "unit-test" },
                     privateTunnelSourceToolKey = ordinary ? null : source,
-                    delegatedFromToolKey = ordinary ? source : null
+                    delegatedFromToolKey = ordinary ? source : null,
+                    campaigns = dm ? new object[] {
+                        new { id = "99d41ce8-36fc-43df-b8cd-bb1829b20982",
+                            role = "DM" }
+                    } : Array.Empty<object>()
                 }), Encoding.UTF8, "application/json")
             });
     }
@@ -34,7 +42,8 @@ public sealed class NativeMechanicsApiTests
         private readonly string _root = Path.Combine(Path.GetTempPath(), "rc-mechanics-http-" + Guid.NewGuid().ToString("N"));
         public WebApplication App { get; private set; } = null!;
         public HttpClient Client { get; private set; } = null!;
-        public async Task StartAsync(string surface, string source, bool ordinary = false)
+        public async Task StartAsync(string surface, string source, bool ordinary = false,
+            bool realNativeContent = false, bool dm = false)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -110,6 +119,9 @@ public sealed class NativeMechanicsApiTests
                    "selectable":true,"creatureType":"humanoid",
                    "sizeChoice":{"from":["small","medium"],"when":"character-creation"},
                    "walkingSpeedFeet":30},
+                  {"id":"species.plain","name":"Plain","kind":"species",
+                   "selectable":true,"creatureType":"humanoid",
+                   "size":"medium","walkingSpeedFeet":30},
                   {"id":"species.elf","name":"Elf","kind":"species",
                    "selectable":true,"creatureType":"fey","size":"medium",
                    "walkingSpeedFeet":30},
@@ -129,19 +141,36 @@ public sealed class NativeMechanicsApiTests
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
                 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?> {
                     ["RulesCore:ApiSurface"] = surface,
-                    ["Rulesets:ContentRoot"] = _root,
+                    ["Rulesets:ContentRoot"] = realNativeContent ? NativeContentRoot() : _root,
                     ["Rulesets:DefaultRuleset"] = "first-party-001",
                     ["ToolHost:BaseUrl"] = "https://site.test"
                 });
             }, services => {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
-                    .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, ordinary));
+                    .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, ordinary, dm));
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
             Client = new HttpClient { BaseAddress = new Uri(
                 server.Features.Get<IServerAddressesFeature>()!.Addresses.Single()) };
         }
+        // Real-native HTTP tests use the repository's immutable first-party
+        // catalog, never an invented miniature Species or trait fixture.
+        private static string NativeContentRoot()
+        {
+            var folder = new DirectoryInfo(AppContext.BaseDirectory);
+            while (folder is not null)
+            {
+                var root = Path.Combine(folder.FullName, "data", "rulesets");
+                if (File.Exists(Path.Combine(root, "first-party-001",
+                    "native", "rules", "creature-origination.json")))
+                    return root;
+                folder = folder.Parent;
+            }
+            throw new InvalidOperationException(
+                "Real first-party native ruleset root unavailable.");
+        }
+
         public HttpRequestMessage Authenticated(HttpMethod method, string path, HttpContent? body = null)
         {
             var request = new HttpRequestMessage(method, path) { Content = body };
@@ -155,6 +184,584 @@ public sealed class NativeMechanicsApiTests
             Client?.Dispose();
             if (App is not null) await App.DisposeAsync();
             if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);
+        }
+    }
+
+    [Theory]
+    [InlineData("null-contributor")]
+    [InlineData("null-candidate")]
+    [InlineData("null-manifestation")]
+    [InlineData("null-choice")]
+    [InlineData("blank-source-id")]
+    [InlineData("null-candidate-occurrence")]
+    [InlineData("null-candidate-source")]
+    [InlineData("null-required-choice")]
+    [InlineData("duplicate-required-choice")]
+    [InlineData("duplicate-selected-choice")]
+    [InlineData("null-selected-option")]
+    [InlineData("null-relationship")]
+    [InlineData("null-input-role")]
+    [InlineData("null-constraint-subject")]
+    public async Task IndependentMalformedOriginReview(string scenario)
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true);
+        var proposal = System.Text.Json.Nodes.JsonNode.Parse("""
+          {"id":"independent-review","intent":0,
+           "method":{"ruleId":"rule.creature-origination","methodId":"biological"},
+           "contributors":[],"candidates":[],"manifestations":[],
+           "selectedSpeciesId":"species.orc"}
+          """)!;
+        var custom = System.Text.Json.Nodes.JsonNode.Parse("""
+          {"id":"review-custom","identity":{"kind":1,
+           "occurrence":{"source":{"kind":2,"id":"review"},"occurrencePath":"/traits/0"},
+           "mechanicalDefinitionId":"review-trait"},"selectionBasis":{"eligibility":0},
+           "requiredChoices":[{"id":"duplicate","timing":0,"minimum":0,"maximum":1,
+           "occurrence":{"source":{"kind":2,"id":"review"},"occurrencePath":"/choice"},
+           "finiteOptions":["a"]}]}
+          """)!;
+        switch (scenario)
+        {
+            case "null-contributor": proposal["contributors"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "null-candidate": proposal["candidates"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "null-manifestation": proposal["manifestations"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "blank-source-id": proposal["contributors"]!.AsArray().Add(System.Text.Json.Nodes.JsonNode.Parse("""{"id":"p","role":{"kind":0},"source":{"kind":0,"id":" "}}""")); break;
+            case "null-candidate-occurrence": custom["identity"]!["occurrence"] = null; goto default;
+            case "null-candidate-source": custom["identity"]!["occurrence"]!["source"] = null; goto default;
+            case "null-required-choice": custom["requiredChoices"]!.AsArray().Add((System.Text.Json.Nodes.JsonNode?)null); goto default;
+            case "duplicate-required-choice": custom["requiredChoices"]!.AsArray().Add(custom["requiredChoices"]![0]!.DeepClone()); goto default;
+            case "null-relationship": proposal["relationships"] = new System.Text.Json.Nodes.JsonArray((System.Text.Json.Nodes.JsonNode?)null); break;
+            case "null-input-role": proposal["inputRequirements"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"r","role":null,"minimumCount":0}]"""); break;
+            case "null-constraint-subject": proposal["constraints"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"c","kind":5,"subjects":[null],"conditions":[]}]"""); break;
+            case "null-choice": proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"direct:species.orc:/traits/0","choices":[null]}]"""); break;
+            case "duplicate-selected-choice": proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"review-custom","choices":[{"requirementId":"duplicate","selectedOptionIds":["a"]},{"requirementId":"duplicate","selectedOptionIds":["a"]}]}]"""); goto default;
+            case "null-selected-option": proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"review-custom","choices":[{"requirementId":"duplicate","selectedOptionIds":[null]}]}]"""); goto default;
+            default:
+                proposal["candidates"]!.AsArray().Add(custom);
+                if (proposal["manifestations"]!.AsArray().Count == 0)
+                    proposal["manifestations"] = System.Text.Json.Nodes.JsonNode.Parse("""[{"id":"m","candidateId":"review-custom","choices":[]}]""");
+                break;
+        }
+        var wire = new { rulesetId = "first-party-001", proposal };
+        using var request = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/origins/preview", JsonContent.Create(wire));
+        using var response = await fixture.Client.SendAsync(request);
+        var text = await response.Content.ReadAsStringAsync();
+        Assert.True((int)response.StatusCode < 500,
+            scenario + ": HTTP " + (int)response.StatusCode + " " + text);
+        if (scenario == "null-relationship")
+        {
+            // The transport boundary must refuse a null authored relationship
+            // rather than reaching reconciliation sorting or returning a grant.
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            using var rejected = JsonDocument.Parse(text);
+            Assert.Equal("invalid_origin_preview_request",
+                rejected.RootElement.GetProperty("error").GetString());
+            Assert.False(rejected.RootElement.TryGetProperty("result", out _));
+        }
+        else if (response.IsSuccessStatusCode)
+        {
+            using var doc = JsonDocument.Parse(text);
+            var result = doc.RootElement.GetProperty("result");
+            Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+                result.GetProperty("status").GetInt32());
+            if (scenario == "duplicate-required-choice")
+                Assert.Contains(result.GetProperty("issues").EnumerateArray(),
+                    issue => issue.GetProperty("code").GetString() ==
+                        "duplicate-or-missing-id");
+        }
+    }
+
+    [Fact]
+    public async Task DirectInnateSpellLedgerBootstrapOnlyAcceptsMatchingNativeOriginAndDelegation()
+    {
+        const string endpoint = "/api/mechanics/v1/origins/innate-spells/ledger/initialize-preview";
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var proposal = new NativeOriginProposal(
+            "direct-plain", NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: "species.plain");
+        var origin = new NativeOriginFirstPartyChoiceEvaluator(catalog)
+            .Evaluate(proposal);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, origin.Status);
+        Assert.NotNull(origin.Profile);
+        var character = new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+            new Dictionary<string, int>
+            {
+                ["strength"] = 10, ["dexterity"] = 10,
+                ["constitution"] = 10, ["intelligence"] = 10,
+                ["wisdom"] = 10, ["charisma"] = 10
+            }, [new("class.demo", 1, "class:demo")]);
+
+        var projected = new NativeCharacterProjector(catalog).Project(character);
+        Assert.True(projected.Status is "resolved" or "partial",
+            "Character: " + JsonSerializer.Serialize(projected.Issues));
+        Assert.True(projected.Issues.All(issue => issue.Code is
+            "hit-point-input-required" or "movement-input-required" or
+            "defense-input-required"),
+            "Unexpected character projection: " + JsonSerializer.Serialize(projected.Issues));
+
+        object Valid() => new
+        {
+            rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+            proposal, committedProfile = origin.Profile, character
+        };
+        using var anon = await fixture.Client.PostAsJsonAsync(endpoint, Valid());
+        Assert.Equal(HttpStatusCode.Unauthorized, anon.StatusCode);
+
+        using var valid = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(Valid())));
+        Assert.True(valid.StatusCode == HttpStatusCode.OK,
+            "Bootstrap failed: " + await valid.Content.ReadAsStringAsync());
+        var answer = await valid.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(answer.GetProperty("previewOnly").GetBoolean());
+        Assert.True(answer.GetProperty("committedOriginMatched").GetBoolean());
+        Assert.Equal("resolved", answer.GetProperty("result")
+            .GetProperty("status").GetString());
+        Assert.Equal(0, answer.GetProperty("result")
+            .GetProperty("state").GetProperty("revision").GetInt32());
+        Assert.Empty(answer.GetProperty("result")
+            .GetProperty("state").GetProperty("remainingFreeCasts").EnumerateObject());
+
+        // The direct bootstrap handler must reject malformed keys before
+        // first-party choice normalization just like the ordinary preview.
+        // Even a valid committed profile cannot justify malformed transport.
+        foreach (var malformed in new[]
+        {
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("bad-candidate", null!, Choices: [])] },
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("bad-choice", "unverified-candidate",
+                    Choices: [new NativeOriginChoiceSelection(null!,
+                        ["skill.intimidation"])])] }
+        })
+        {
+            using var malformedRequest = fixture.Authenticated(
+                HttpMethod.Post, endpoint, JsonContent.Create(new
+                {
+                    rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint,
+                    proposal = malformed, committedProfile = origin.Profile, character
+                }));
+            using var malformedResponse = await fixture.Client.SendAsync(malformedRequest);
+            Assert.Equal(HttpStatusCode.BadRequest, malformedResponse.StatusCode);
+            var rejected = await malformedResponse.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("trusted_direct_origin_required",
+                rejected.GetProperty("error").GetString());
+            Assert.False(rejected.TryGetProperty("result", out _));
+        }
+
+        using var stale = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = "outdated",
+                proposal, committedProfile = origin.Profile, character
+            })));
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+
+        using var forged = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal, committedProfile = origin.Profile! with { Id = "origin:unrelated" },
+                character
+            })));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.StatusCode);
+
+        // An otherwise valid Origin must not mask unresolved class levels
+        // or injected native option selections in the character kernel.
+        using var wrongLevel = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal, committedProfile = origin.Profile,
+                character = character with
+                {
+                    Advancements = [new NativeAdvancement(
+                        "class.demo", 2, "class:demo")]
+                }
+            })));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongLevel.StatusCode);
+
+        using var wrongOption = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal, committedProfile = origin.Profile,
+                character = character with
+                {
+                    SelectedOptions = ["option.unverified"]
+                }
+            })));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongOption.StatusCode);
+
+        using var dmClaim = await fixture.Client.SendAsync(fixture.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                proposal = proposal with
+                {
+                    TableDecisions = [new NativeTableRuleDecision(
+                        "spoofed", new("self", "self"), new("campaign", "other"),
+                        new("source", "species.plain"),
+                        JsonSerializer.SerializeToElement(new { eligibility = "eligible" }))]
+                },
+                committedProfile = origin.Profile, character
+            })));
+        Assert.Equal(HttpStatusCode.BadRequest, dmClaim.StatusCode);
+
+        await using var wrongSource = new Fixture();
+        await wrongSource.StartAsync("PublicOnly", "wiki", ordinary: true);
+        using var denied = await wrongSource.Client.SendAsync(wrongSource.Authenticated(
+            HttpMethod.Post, endpoint, JsonContent.Create(Valid())));
+        Assert.Equal(HttpStatusCode.Forbidden, denied.StatusCode);
+
+        await using var privateOnly = new Fixture();
+        await privateOnly.StartAsync("PrivateOnly", "character-sheet");
+        using var absent = await privateOnly.Client.SendAsync(privateOnly.Authenticated(
+            HttpMethod.Post, "/api/private/mechanics/v1/origins/innate-spells/ledger/initialize-preview",
+            JsonContent.Create(Valid())));
+        Assert.Equal(HttpStatusCode.NotFound, absent.StatusCode);
+    }
+
+    [Theory]
+    [InlineData("species.elf", "trance", 4)]
+    [InlineData("species.orc", "relentlessEndurance", 1)]
+    public async Task RealNativeDirectHttpPreviewReturnsSourceVerifiedSurvivalEffect(
+        string speciesId, string effectKey, int expectedValue)
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>()
+            .Snapshot!;
+        var proposal = new NativeOriginProposal("http-native-" + speciesId,
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: speciesId);
+        var construction = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(proposal, AutoManifestDirectDefaults: true));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized,
+            construction.Status);
+        Assert.NotNull(construction.Profile);
+
+        // Send the actual selected native manifestations through authenticated
+        // HTTP, not a manufactured projected response.
+        using var request = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/origins/preview", JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint,
+                proposal = proposal with
+                {
+                    Manifestations = construction.EvaluatedProposal.Manifestations
+                }
+            }));
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            body.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.True(body.GetProperty("previewOnly").GetBoolean());
+        var view = body.GetProperty("restSurvival");
+        Assert.Equal("resolved", view.GetProperty("status").GetString());
+        Assert.True(view.GetProperty("previewOnly").GetBoolean());
+        var effect = view.GetProperty(effectKey);
+        Assert.Equal(speciesId, effect.GetProperty("sourceId").GetString());
+        Assert.NotEmpty(effect.GetProperty("grantId").GetString()!);
+        Assert.StartsWith("/traits/", effect.GetProperty("occurrencePath")
+            .GetString());
+        if (effectKey == "trance")
+        {
+            Assert.Equal(expectedValue,
+                effect.GetProperty("longRestHours").GetInt32());
+            Assert.False(effect.GetProperty("sleepRequired").GetBoolean());
+            Assert.Equal(JsonValueKind.Null,
+                view.GetProperty("relentlessEndurance").ValueKind);
+        }
+        else
+        {
+            Assert.Equal(expectedValue, effect.GetProperty("uses").GetInt32());
+            Assert.Equal(1, effect.GetProperty("hitPointsInstead").GetInt32());
+            Assert.Equal("long-rest", effect.GetProperty("recharge").GetString());
+            Assert.Equal(JsonValueKind.Null,
+                view.GetProperty("trance").ValueKind);
+        }
+    }
+
+    [Fact]
+    public async Task RealNativeScopedDmHttpPreviewPreservesSelectedElfOrcEffects()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>()
+            .Snapshot!;
+        const string actor = "d66a7a7b-bc0f-4677-829d-0ccf40470d2f";
+        const string campaign = "99d41ce8-36fc-43df-b8cd-bb1829b20982";
+        const string approval = "approved:real-native-selected-effects";
+
+        var proposal = new NativeOriginProposal("http-native-scoped-mixed",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [
+                new("elf", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.elf")),
+                new("orc", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.orc"))
+            ], [], []);
+        var offers = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(proposal)).EvaluatedProposal.Candidates;
+        var physical = offers.Where(x => x.ContributorId == "elf" &&
+            x.Identity.IntrinsicSlotId is
+                "creatureType" or "size" or "walkingSpeedFeet").ToArray();
+        Assert.Equal(3, physical.Length);
+        var trance = Assert.Single(offers,
+            x => x.Identity.MechanicalDefinitionId == "trait.elf.trance");
+        var endurance = Assert.Single(offers,
+            x => x.Identity.MechanicalDefinitionId ==
+                "trait.orc.relentless-endurance");
+        Assert.Equal(NativeOriginEligibility.Eligible,
+            trance.SelectionBasis.Eligibility);
+        Assert.Equal(NativeOriginEligibility.Eligible,
+            endurance.SelectionBasis.Eligibility);
+        var manifested = physical.Select((x, i) => new NativeOriginManifestation(
+                "physical-" + i, x.Id, SelectedValue: x.OfferedValue))
+            .Concat([
+                new("chosen-trance", trance.Id),
+                new("chosen-endurance", endurance.Id)
+            ]).ToArray();
+
+        // The actual Site-introspected actor is the only acceptable source
+        // of DM authority. This decision selects the exact Orc source and
+        // does not alter the native Endurance payload or mint a new pool.
+        var decision = new NativeTableRuleDecision("dm-orc-source",
+            new(actor, approval), new("campaign", campaign),
+            new("source", "species.orc"),
+            JsonSerializer.SerializeToElement(new { eligibility = "eligible" }));
+        var submitted = proposal with
+        {
+            Manifestations = manifested,
+            TableDecisions = [decision]
+        };
+        using var request = fixture.Authenticated(HttpMethod.Post,
+            "/api/mechanics/v1/origins/evaluate-approved-mixed",
+            JsonContent.Create(new
+            {
+                rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint,
+                characterId = "44eb66e6-3b5c-44e2-aa71-4986d4b346c0",
+                campaignId = campaign,
+                approvalEvidenceId = approval,
+                proposal = submitted
+            }));
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            body.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.True(body.GetProperty("previewOnly").GetBoolean());
+        var survival = body.GetProperty("restSurvival");
+        Assert.Equal("resolved", survival.GetProperty("status").GetString());
+        var elf = survival.GetProperty("trance");
+        Assert.Equal("species.elf", elf.GetProperty("sourceId").GetString());
+        Assert.Equal(4, elf.GetProperty("longRestHours").GetInt32());
+        var orc = survival.GetProperty("relentlessEndurance");
+        Assert.Equal("species.orc", orc.GetProperty("sourceId").GetString());
+        Assert.Equal(1, orc.GetProperty("uses").GetInt32());
+        Assert.Equal("long-rest", orc.GetProperty("recharge").GetString());
+        Assert.Equal("resolved",
+            body.GetProperty("intrinsics").GetProperty("status").GetString());
+        Assert.NotEqual(JsonValueKind.Null,
+            body.GetProperty("result").GetProperty("profile").ValueKind);
+    }
+
+    [Fact]
+    public async Task ApprovedMixedHttpRejectsMalformedNestedInputsBeforeNativeEvaluation()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>()
+            .Snapshot!;
+        const string actor = "d66a7a7b-bc0f-4677-829d-0ccf40470d2f";
+        const string campaign = "99d41ce8-36fc-43df-b8cd-bb1829b20982";
+        const string approval = "approved:malformed-origin-denied";
+        var proposal = new NativeOriginProposal("malformed-scoped-mixed",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [
+                new("elf", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.elf")),
+                new("orc", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.orc"))
+            ], [], [],
+            TableDecisions: [
+                new NativeTableRuleDecision("dm-approve", new(actor, approval),
+                    new("campaign", campaign), new("source", "species.orc"),
+                    JsonSerializer.SerializeToElement(new { eligibility = "eligible" }))
+            ]);
+
+        var malformed = new NativeOriginProposal[]
+        {
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("null-candidate", null!, Choices: [])] },
+            proposal with { Manifestations = [
+                new NativeOriginManifestation("null-requirement", "offered",
+                    Choices: [new NativeOriginChoiceSelection(null!,
+                        ["skill.intimidation"])])] },
+            proposal with { Contributors = [
+                proposal.Contributors[0] with { Role = null! },
+                proposal.Contributors[1]
+            ] },
+            proposal with { Contributors = [
+                proposal.Contributors[0],
+                proposal.Contributors[1] with {
+                    Source = new(NativeOriginSourceKind.Native, null!)
+                }
+            ] }
+        };
+        foreach (var invalid in malformed)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post,
+                "/api/mechanics/v1/origins/evaluate-approved-mixed",
+                JsonContent.Create(new
+                {
+                    rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint,
+                    characterId = "44eb66e6-3b5c-44e2-aa71-4986d4b346c0",
+                    campaignId = campaign,
+                    approvalEvidenceId = approval,
+                    proposal = invalid
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("invalid_approved_mixed_proposal",
+                body.GetProperty("error").GetString());
+            Assert.False(body.TryGetProperty("result", out _));
+            Assert.False(body.TryGetProperty("restSurvival", out _));
+        }
+    }
+
+    [Fact]
+    public async Task OriginPreviewRejectsNullKeysAndContributorRoleBeforeNativeEvaluation()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+        var direct = new NativeOriginProposal("null-nested-inputs",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: "species.fixture");
+
+        // JsonContent actually writes these nulls to the authenticated HTTP
+        // request. Nonnullable C# annotations do not enforce JSON presence.
+        var nullCandidateId = direct with
+        {
+            Manifestations = [new("missing-candidate-id", null!,
+                Choices: [])]
+        };
+        var nullRequirementId = direct with
+        {
+            Manifestations = [new("missing-choice-key",
+                "direct:species.fixture:/traits/0",
+                Choices: [new(null!, ["skill.intimidation"])] )]
+        };
+        var nullContributorRole = new NativeOriginProposal(
+            "missing-parent-role", NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("parent", null!,
+                new(NativeOriginSourceKind.Native, "species.elf"))],
+            [], []);
+
+        foreach (var invalid in new[]
+            { nullCandidateId, nullRequirementId, nullContributorRole })
+        {
+            using var message = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    rulesetId = "first-party-001", proposal = invalid
+                }));
+            using var response = await fixture.Client.SendAsync(message);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var payload = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("invalid_origin_preview_request",
+                payload.GetProperty("error").GetString());
+            Assert.False(payload.TryGetProperty("result", out _));
+            Assert.False(payload.TryGetProperty("intrinsics", out _));
+        }
+    }
+
+    [Fact]
+    public async Task OriginPreviewIncludesReadOnlyEffectViewsWithoutCreatingGrants()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        const string endpoint = "/api/mechanics/v1/origins/preview";
+
+        async Task<JsonElement> Preview(NativeOriginProposal proposal)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    rulesetId = "first-party-001", fingerprint = "outdated",
+                    proposal
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var payload = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.True(payload.GetProperty("previewOnly").GetBoolean());
+            Assert.Equal(1, payload.GetProperty("contractVersion").GetInt32());
+            return payload;
+        }
+
+        var plain = await Preview(new("plain-no-effects",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.plain"));
+        Assert.Equal("resolved", plain.GetProperty("intrinsics")
+            .GetProperty("status").GetString());
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            plain.GetProperty("result").GetProperty("status").GetInt32());
+
+        foreach (var key in new[]
+            { "physiology", "movementModes", "skillProficiencies", "restSurvival" })
+        {
+            var effect = plain.GetProperty(key);
+            Assert.True(effect.GetProperty("previewOnly").GetBoolean());
+            Assert.Equal("none", effect.GetProperty("status").GetString());
+            Assert.Empty(effect.GetProperty("unresolvedReasons").EnumerateArray());
+        }
+        Assert.Empty(plain.GetProperty("movementModes")
+            .GetProperty("modes").EnumerateArray());
+        Assert.Empty(plain.GetProperty("skillProficiencies")
+            .GetProperty("proficiencies").EnumerateArray());
+        Assert.Equal(JsonValueKind.Null,
+            plain.GetProperty("restSurvival").GetProperty("trance").ValueKind);
+        Assert.Equal(JsonValueKind.Null,
+            plain.GetProperty("restSurvival")
+                .GetProperty("relentlessEndurance").ValueKind);
+
+        // The Human has an unbound native size choice. An incomplete
+        // construction may show offered traits, but it publishes no active
+        // physiological, skill, movement, or survival result.
+        var unfinished = await Preview(new("human-unfinished",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.human"));
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            unfinished.GetProperty("result").GetProperty("status").GetInt32());
+        foreach (var key in new[]
+            { "physiology", "movementModes", "skillProficiencies", "restSurvival" })
+        {
+            var view = unfinished.GetProperty(key);
+            Assert.Equal("unresolved", view.GetProperty("status").GetString());
+            Assert.True(view.GetProperty("previewOnly").GetBoolean());
+            Assert.NotEmpty(view.GetProperty("unresolvedReasons").EnumerateArray());
         }
     }
 

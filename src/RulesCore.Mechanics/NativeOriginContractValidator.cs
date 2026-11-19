@@ -151,9 +151,16 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             }
             if (manifest.TableDecisionId is not null)
                 RequireDecision(manifest.TableDecisionId, path, decisions, Add);
-            var requirements = (candidate.RequiredChoices ?? [])
-                .Where(x => x is not null && !Blank(x.Id))
-                .ToDictionary(x => x.Id, StringComparer.Ordinal);
+            // The candidate-level Index above already reports duplicate or
+            // missing authored requirement IDs as Invalid. Rebuild only the
+            // first occurrence for further diagnostics: ToDictionary would
+            // throw on a malformed duplicate before the Invalid result could
+            // be returned. This does not authorize either duplicate choice.
+            var requirements = new Dictionary<string, NativeOriginChoiceRequirement>(
+                StringComparer.Ordinal);
+            foreach (var requirement in candidate.RequiredChoices ?? [])
+                if (requirement is not null && !Blank(requirement.Id))
+                    requirements.TryAdd(requirement.Id, requirement);
             var selected = Index(manifest.Choices ?? [], c => c?.RequirementId,
                 path + ".choices", Add);
             foreach (var (choiceId, choice) in selected)
@@ -386,12 +393,58 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                         "Repeated intrinsic slots need explicit whole-profile reconciliation.");
 
             foreach (var grant in grants.Values)
+            {
                 if (Blank(grant.ManifestationId) ||
                     grant.SourceCandidateIds is null || grant.SourceCandidateIds.Count == 0 ||
                     grant.Identity?.Occurrence?.Source is null)
                     Add("grant-provenance-required", path + ".grants." + grant.Id,
                         NativeOriginIssueSeverity.Invalid,
                         "Each inherent grant needs manifestation, candidate and source provenance.");
+
+                // Serialized lineage is traceability, not inheritance authority.
+                // Reject contradictory claims even when a profile is read back
+                // without the original construction proposal. The exact stored
+                // parent revision must still be authenticated by its provider.
+                if (grant.InheritedFrom is not { } lineage) continue;
+                var priorOffers = new HashSet<string>(StringComparer.Ordinal);
+                if (lineage.Count == 0)
+                    Add("inherited-lineage-invalid", path + ".grants." + grant.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "An inherited-lineage record may not be empty.");
+                foreach (var entry in lineage)
+                {
+                    var currentId = entry is null ? null :
+                        "nested:" + entry.ContributorId + ":" + entry.SourceGrantId;
+                    if (entry is null ||
+                        Blank(entry.ContributorId) ||
+                        Blank(entry.ContributorProfileId) ||
+                        Blank(entry.ContributorProfileRevision) ||
+                        Blank(entry.SourceGrantId) ||
+                        entry.PriorSourceCandidateIds is null ||
+                        entry.PriorSourceCandidateIds.Count == 0 ||
+                        entry.PriorSourceCandidateIds.Any(Blank) ||
+                        entry.PriorSourceCandidateIds.Distinct(StringComparer.Ordinal).Count() !=
+                            entry.PriorSourceCandidateIds.Count ||
+                        entry.PriorParameterSources?.Any(x =>
+                            Blank(x.Key) || Blank(x.Value)) == true ||
+                        entry.PriorResourceOwners?.Any(x =>
+                            Blank(x.Key) || Blank(x.Value)) == true ||
+                        currentId is null || !priorOffers.Add(currentId) ||
+                        grant.SourceCandidateIds?.Contains(currentId,
+                            StringComparer.Ordinal) != true)
+                        Add("inherited-lineage-invalid", path + ".grants." + grant.Id,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Each inherited record must identify one selected nested offer, " +
+                            "its source profile revision, and well-formed prior grant evidence.");
+                }
+                if (grant.SourceCandidateIds is not null &&
+                    grant.SourceCandidateIds.Any(id =>
+                        id.StartsWith("nested:", StringComparison.Ordinal) &&
+                        !priorOffers.Contains(id)))
+                    Add("inherited-lineage-incomplete", path + ".grants." + grant.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Every selected nested grant must retain its immediate lineage.");
+            }
         }
 
         var persistent = Index(profile.PersistentInfluences ?? [],
@@ -483,6 +536,186 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 .GroupBy(m => m.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
+        // A serialized source-bound choice is not proof of a valid inherited
+        // modifier. Recompute only canonical trait-choice dependencies against
+        // the exact construction proposal and compare their selected values and
+        // contributing source evidence. An unrelated global ability score or a
+        // forged field provenance cannot replace the owning aptitude grant.
+        if (proposal is not null)
+        {
+            var boundChoices = baselineGrants.Values.Where(grant =>
+                grant.Identity.MechanicalDefinitionId is { } id &&
+                catalog.TryGetById(id, out var definition) &&
+                definition is not null && definition.Category == "origin-trait" &&
+                definition.Definition.TryGetProperty("trait", out var trait) &&
+                trait.ValueKind == JsonValueKind.Object &&
+                trait.TryGetProperty("originBindings", out var definitions) &&
+                definitions.ValueKind == JsonValueKind.Object &&
+                definitions.EnumerateObject().Any(binding =>
+                    Text(binding.Value, "lookup") == "manifested-trait-choice"))
+                .ToArray();
+            if (boundChoices.Length > 0)
+            {
+                var (rebuilt, _) = NativeOriginDependentBinder.Bind(
+                    catalog, proposal, baselineGrants.Values.ToArray());
+                var computed = rebuilt.ToDictionary(g => g.Id, StringComparer.Ordinal);
+                foreach (var dependent in boundChoices)
+                {
+                    var path = "underlying.grants." + dependent.Id;
+                    if (!computed.TryGetValue(dependent.Id, out var expected) ||
+                        expected.Parameters is null || expected.ParameterSources is null ||
+                        expected.Identity.MechanicalDefinitionId is not { } id ||
+                        !catalog.TryGetById(id, out var definition) ||
+                        definition is null ||
+                        !definition.Definition.TryGetProperty("trait", out var trait) ||
+                        !trait.TryGetProperty("originBindings", out var definitions) ||
+                        definitions.EnumerateObject().Where(binding =>
+                            Text(binding.Value, "lookup") == "manifested-trait-choice")
+                            .Any(binding =>
+                                dependent.Parameters?.TryGetValue(binding.Name,
+                                    out var actualValue) != true ||
+                                expected.Parameters.TryGetValue(binding.Name,
+                                    out var expectedValue) != true ||
+                                !JsonElement.DeepEquals(actualValue, expectedValue) ||
+                                dependent.ParameterSources?.TryGetValue(binding.Name,
+                                    out var actualSource) != true ||
+                                expected.ParameterSources.TryGetValue(binding.Name,
+                                    out var expectedSource) != true ||
+                                actualSource != expectedSource))
+                        Add("profile-trait-choice-binding-invalid", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Bound trait-choice parameters and contributor evidence must match the selected native aptitude.");
+                }
+            }
+        }
+
+        // Native spellcasting and other intrinsic-derived parameters are
+        // selected source-bound effects, not arbitrary saved character fields.
+        // Rebuild against the exact proposal to reject a changed or missing
+        // parameter when its manifested owner is present. Historical nested
+        // grants without a current owner remain subject to authenticated
+        // parent-profile revision validation at the trust boundary.
+        if (proposal is not null)
+        {
+            var boundIntrinsics = baselineGrants.Values.Where(grant =>
+                grant.Identity.MechanicalDefinitionId is { } id &&
+                catalog.TryGetById(id, out var definition) &&
+                definition is not null && definition.Category == "origin-trait" &&
+                definition.Definition.TryGetProperty("trait", out var trait) &&
+                trait.ValueKind == JsonValueKind.Object &&
+                trait.TryGetProperty("originBindings", out var bindings) &&
+                bindings.ValueKind == JsonValueKind.Object &&
+                bindings.EnumerateObject().Any(binding =>
+                    Text(binding.Value, "lookup") == "manifested-intrinsic"))
+                .ToArray();
+            if (boundIntrinsics.Length > 0)
+            {
+                var (rebuilt, _) = NativeOriginDependentBinder.Bind(
+                    catalog, proposal, baselineGrants.Values.ToArray());
+                var computed = rebuilt.ToDictionary(g => g.Id, StringComparer.Ordinal);
+                foreach (var dependent in boundIntrinsics)
+                {
+                    var path = "underlying.grants." + dependent.Id;
+                    if (!computed.TryGetValue(dependent.Id, out var expected) ||
+                        expected.Parameters is null ||
+                        dependent.Identity.MechanicalDefinitionId is not { } id ||
+                        !catalog.TryGetById(id, out var definition) ||
+                        definition is null ||
+                        !definition.Definition.TryGetProperty("trait", out var trait) ||
+                        !trait.TryGetProperty("originBindings", out var bindings) ||
+                        bindings.EnumerateObject()
+                            .Where(binding => Text(binding.Value, "lookup") ==
+                                "manifested-intrinsic")
+                            .Any(binding =>
+                                dependent.Parameters?.TryGetValue(binding.Name,
+                                    out var actualValue) != true ||
+                                expected.Parameters.TryGetValue(binding.Name,
+                                    out var expectedValue) != true ||
+                                !JsonElement.DeepEquals(actualValue, expectedValue)))
+                        Add("profile-intrinsic-binding-invalid", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Bound intrinsic parameters must match the original selected native source choice.");
+                }
+            }
+        }
+
+        // Serialized resource-owner links are derived results, not trusted
+        // assertions. An inherited Strike can spend an existing pool only if
+        // both canonical native definitions and source evidence support it.
+        foreach (var dependent in baselineGrants.Values)
+        {
+            var definitionId = dependent.Identity.MechanicalDefinitionId;
+            if (definitionId is null ||
+                !catalog.TryGetById(definitionId, out var definition) ||
+                definition is null || definition.Category != "origin-trait" ||
+                !definition.Definition.TryGetProperty("trait", out var authored) ||
+                authored.ValueKind != JsonValueKind.Object ||
+                !authored.TryGetProperty("sharedUsesFromTrait", out _))
+                continue;
+            if (dependent.ResourceOwners is not { Count: > 0 })
+                Add("profile-resource-owner-required",
+                    "underlying.grants." + dependent.Id + ".resourceOwners",
+                    NativeOriginIssueSeverity.Invalid,
+                    "A trait that spends another trait's uses must retain its verified owner link.");
+        }
+        foreach (var dependent in baselineGrants.Values.Where(g =>
+            g.ResourceOwners is { Count: > 0 }))
+        {
+            var path = "underlying.grants." + dependent.Id + ".resourceOwners";
+            if (dependent.ResourceOwners!.Count != 1 ||
+                !dependent.ResourceOwners.TryGetValue("uses", out var ownerId) ||
+                ownerId == dependent.Id ||
+                !baselineGrants.TryGetValue(ownerId, out var owner) ||
+                dependent.Identity.MechanicalDefinitionId is not { } dependentId ||
+                !catalog.TryGetById(dependentId, out var traitDefinition) ||
+                traitDefinition is null || traitDefinition.Category != "origin-trait" ||
+                !traitDefinition.Definition.TryGetProperty("trait", out var authoredDependent) ||
+                authoredDependent.ValueKind != JsonValueKind.Object ||
+                Text(authoredDependent, "sharedUsesFromTrait") is not { } requiredId ||
+                !authoredDependent.TryGetProperty("extraUsesGranted", out var authoredExtra) ||
+                authoredExtra.ValueKind != JsonValueKind.False ||
+                dependent.EffectiveValue is not { ValueKind: JsonValueKind.Object } dependentValue ||
+                Text(dependentValue, "sharedUsesFromTrait") != requiredId ||
+                Text(dependentValue, "id") != Text(authoredDependent, "id") ||
+                !dependentValue.TryGetProperty("extraUsesGranted", out var effectiveExtra) ||
+                effectiveExtra.ValueKind != JsonValueKind.False ||
+                dependentValue.TryGetProperty("uses", out _) ||
+                owner.EffectiveValue is not { ValueKind: JsonValueKind.Object } ownerValue ||
+                Text(ownerValue, "id") != requiredId ||
+                dependent.Identity.Occurrence.Source != owner.Identity.Occurrence.Source ||
+                owner.Identity.MechanicalDefinitionId is not { } ownerDefinitionId ||
+                !catalog.TryGetById(ownerDefinitionId, out var ownerDefinition) ||
+                ownerDefinition is null || ownerDefinition.Category != "origin-trait" ||
+                !ownerDefinition.Definition.TryGetProperty("trait", out var authoredOwner) ||
+                authoredOwner.ValueKind != JsonValueKind.Object ||
+                !authoredOwner.TryGetProperty("uses", out var canonicalPool) ||
+                !ownerValue.TryGetProperty("uses", out var currentPool) ||
+                !JsonElement.DeepEquals(canonicalPool, currentPool))
+            {
+                Add("profile-resource-owner-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Shared-use references must identify one selected canonical native resource owner.");
+                continue;
+            }
+
+            if (candidates is not null)
+            {
+                var dependentOffers = dependent.SourceCandidateIds.Where(candidates.ContainsKey)
+                    .Select(id => candidates[id]).ToArray();
+                var ownerOffers = owner.SourceCandidateIds.Where(candidates.ContainsKey)
+                    .Select(id => candidates[id]).ToArray();
+                if (dependentOffers.Length != dependent.SourceCandidateIds.Count ||
+                    ownerOffers.Length != owner.SourceCandidateIds.Count ||
+                    !dependentOffers.Any(d => ownerOffers.Any(o =>
+                        d.ContributorId is not null
+                            ? d.ContributorId == o.ContributorId
+                            : o.ContributorId is null &&
+                              d.Identity.Occurrence.Source == o.Identity.Occurrence.Source)))
+                    Add("profile-resource-contributor-mismatch", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Shared-use links must remain within one verified contributing lineage.");
+            }
+        }
         foreach (var grant in baselineGrants.Values)
         {
             var path = "underlying.grants." + grant.Id;
@@ -566,7 +799,7 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     /// a non-form persistent condition may grant independent benefits without
     /// changing the inherent Species/Ancestry configuration.
     /// </summary>
-    private static bool SameConfiguration(
+    internal static bool SameConfiguration(
         NativeOriginCurrentConfiguration underlying,
         NativeOriginCurrentConfiguration effective)
     {
