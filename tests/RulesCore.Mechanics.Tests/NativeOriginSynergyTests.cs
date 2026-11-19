@@ -663,6 +663,31 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void CallerManifestationCannotImpersonateDerivedSynergyIdentity()
+    {
+        using var fixture = new Fixture();
+        var legitimate = Evaluate(fixture, "/traits/0", "/traits/1");
+        var syntheticId = legitimate.Profile!.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.stability")
+            .ManifestationId;
+        Assert.StartsWith("synergy:", syntheticId);
+
+        var proposal = Selected(fixture, "/traits/0", "/traits/1");
+        var forged = proposal with
+        {
+            Manifestations = proposal.Manifestations.Select((item, index) =>
+                index == 0 ? item with { Id = syntheticId } : item).ToArray()
+        };
+        var result = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(forged, AutoManifestDirectDefaults: false));
+
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, result.Status);
+        Assert.Null(result.Profile);
+        Assert.Contains(result.Issues, x =>
+            x.Code == "reserved-synergy-manifestation-id");
+    }
+
+    [Fact]
     public void ChoiceAndResourceDependentResultsAreNotMintedImplicitly()
     {
         const string unsafeResults = """
