@@ -1871,4 +1871,131 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal("ancestry.elf.high", effective.Identity.Occurrence.Source.Id);
     }
 
+
+    [Fact]
+    public void VerifiedPrerequisitesRemainSatisfiedWhenTheirGrantsSurvive()
+    {
+        var proposal = Proposal("requires-survives", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var required = new NativeOriginConstraint("size-needs-speed",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)], Minimum: 1);
+        var result = Evaluate(proposal with
+        {
+            Constraints = [required],
+            TableDecisions = [Decision("verify-requires", "constraint", required.Id,
+                new { enforce = true })]
+        }, new TestAuthority());
+
+        Assert.DoesNotContain(result.Issues,
+            issue => issue.Code == "effective-required-mechanic-missing");
+        Assert.Contains(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "size");
+        Assert.Contains(result.Profile.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+    }
+
+    [Fact]
+    public void EffectivePrerequisitesCloseTransitivelyAfterAnAuthorizedSuppression()
+    {
+        var proposal = Proposal("requires-transitively", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var creature = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "creatureType");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var first = new NativeOriginConstraint("a-size-needs-type",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: creature.Id)], Minimum: 1);
+        var second = new NativeOriginConstraint("b-type-needs-speed",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: creature.Id)], [new(CandidateId: speed.Id)], Minimum: 1);
+        var relation = new NativeOriginRelationship("suppress-speed",
+            NativeOriginRelationshipKind.Substitution, [size.Id, speed.Id]);
+
+        var result = Evaluate(proposal with
+        {
+            Constraints = [first, second],
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: "verified-suppression"))],
+            TableDecisions =
+            [
+                Decision("verified-suppression", "relationship", relation.Id,
+                    new { action = "retain-first" }),
+                Decision("first-requirement", "constraint", first.Id, new { enforce = true }),
+                Decision("second-requirement", "constraint", second.Id, new { enforce = true })
+            ]
+        }, new TestAuthority());
+
+        Assert.Contains(result.Issues, x => x.Code == "effective-required-mechanic-missing" &&
+            x.Path == "constraints." + second.Id);
+        Assert.Contains(result.Issues, x => x.Code == "effective-required-mechanic-missing" &&
+            x.Path == "constraints." + first.Id);
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId is "size" or "creatureType" or "walkingSpeedFeet");
+    }
+
+    [Theory]
+    [InlineData(1, false)]
+    [InlineData(2, true)]
+    public void RequiredCountUsesEffectiveGrantsNotDuplicateContributorOffers(
+        int requiredCount, bool shouldBlock)
+    {
+        var proposal = Proposal("requires-two-donors-" + requiredCount,
+            NativeOriginIntent.Mixed,
+            contributors: [Contributor("first", "species.orc"),
+                Contributor("second", "species.orc")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        NativeOriginCandidate Get(string donor, string slot) =>
+            Assert.Single(offers, x => x.ContributorId == donor &&
+                x.Identity.IntrinsicSlotId == slot);
+        var size = Get("first", "size");
+        var creature = Get("first", "creatureType");
+        var speed1 = Get("first", "walkingSpeedFeet");
+        var speed2 = Get("second", "walkingSpeedFeet");
+        var requirement = new NativeOriginConstraint("donor-speed-requirement",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)],
+            [new(CandidateId: speed1.Id), new(CandidateId: speed2.Id)],
+            Minimum: requiredCount);
+        var result = Evaluate(proposal with
+        {
+            Manifestations = new[] { size, creature, speed1, speed2 }
+                .Select((candidate, i) => new NativeOriginManifestation(
+                    "picked-" + i, candidate.Id, candidate.OfferedValue)).ToArray(),
+            Constraints = [requirement],
+            TableDecisions = [Decision("verified-count", "constraint", requirement.Id,
+                new { enforce = true })]
+        }, new TestAuthority(), false);
+        var grants = result.Profile!.Underlying.InherentGrants;
+        var speed = Assert.Single(grants, g =>
+            g.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        Assert.Contains(speed1.Id, speed.SourceCandidateIds);
+        Assert.Contains(speed2.Id, speed.SourceCandidateIds);
+        Assert.Equal(shouldBlock, result.Issues.Any(x =>
+            x.Code == "effective-required-mechanic-missing"));
+        Assert.Equal(!shouldBlock, grants.Any(g => g.Identity.IntrinsicSlotId == "size"));
+    }
+
+    [Fact]
+    public void UnverifiedPrerequisiteClaimDoesNotBecomeExecutableAfterReconciliation()
+    {
+        var proposal = Proposal("unverified-requires", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var forged = new NativeOriginConstraint("not-native",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)],
+            NativeRuleReference: "rule.creature-origination");
+        var result = Evaluate(proposal with { Constraints = [forged] });
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "constraint-policy-unresolved");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "size");
+    }
+
 }

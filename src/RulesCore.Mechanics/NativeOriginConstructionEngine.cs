@@ -538,6 +538,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _nativeLinks.VerifyEffectiveLinks(proposal, resolved, Verified);
         resolved = linkedGrants;
         issues.AddRange(linkedIssues);
+        // Prerequisites are also whole-profile constraints. Repeat over actual
+        // effective grants so a suppressed companion cannot leave a dependent
+        // active, including through a multi-step dependency chain.
+        var (closedGrants, closureIssues) =
+            _constraints.VerifyEffectiveRequirements(proposal, resolved, Verified);
+        resolved = closedGrants;
+        issues.AddRange(closureIssues);
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
