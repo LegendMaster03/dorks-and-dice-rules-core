@@ -34,6 +34,17 @@ public sealed record NativeManifestationResourcePolicy(
     int? MaximumAdjustment = null, string? CaptureKey = null);
 
 /// <summary>
+/// A source-authored characteristic selected from an active partial form.
+/// Only these explicitly named properties contribute from the partial form,
+/// whether selected alone or contributing through verified Coexist.
+/// An omitted slot always inherits the latest primary mechanics
+/// (including persistent influences), never an activation-time snapshot.
+/// Current resource quantities and Class/Origin entitlements are not slots.
+/// </summary>
+public sealed record NativeManifestationCharacteristicSlot(
+    NativeInfluenceCharacteristic Characteristic, string? Key = null);
+
+/// <summary>
 /// A single source-authorized activation, retained after it ends for history.
 /// CharacterId explicitly identifies its owning character and must agree with
 /// the authoritative state and enclosing character-scoped manifestation ledger.
@@ -51,7 +62,10 @@ public sealed record NativeManifestationInstance(
     IReadOnlyDictionary<string, int> ActivationCaptures,
     IReadOnlyList<string> EndingConditions,
     IReadOnlyList<NativeManifestationResourcePolicy> ResourcePolicies,
-    string LastEventId);
+    string LastEventId,
+    // A declaration limits the activation to its slots for its entire lifetime.
+    // Null selects whole-form behavior when an interaction permits it.
+    IReadOnlyList<NativeManifestationCharacteristicSlot>? ContributionSlots = null);
 
 /// <summary>
 /// A source-authored, host-authenticated decision about precisely the listed
@@ -132,7 +146,10 @@ public sealed record NativeManifestationEffectiveCharacter(
     IReadOnlyList<NativeInfluenceResolvedGrant> InfluenceGrants,
     IReadOnlyList<NativeInfluenceResolvedEffect> AppliedEffects,
     IReadOnlyList<NativeManifestationEffectiveResource> Resources,
-    IReadOnlyList<NativeIssue> Issues);
+    IReadOnlyList<NativeIssue> Issues,
+    // Explicit identities for a composite partial form. Single-form callers
+    // continue using ManifestationInstanceId and EffectiveSheetId unchanged.
+    IReadOnlyList<string>? ContributingManifestationInstanceIds = null);
 
 /// <summary>
 /// A real authenticated host must implement every callback. This interface
@@ -143,6 +160,12 @@ public sealed record NativeManifestationEffectiveCharacter(
 public interface INativeCharacterManifestationAuthority : INativeCharacterInfluenceAuthority
 {
     bool AuthorizesLedger(string characterId, NativeManifestationLedger ledger);
+    /// <summary>
+    /// Verifies the instance against independent activation evidence, including
+    /// the exact allowed contribution slots. Removing a partial declaration or
+    /// adding or substituting a slot requires different authorization, even when
+    /// the sheet defines a value for that property.
+    /// </summary>
     bool AuthorizesInstance(string characterId, NativeManifestationInstance instance,
         NativePersistentCharacterSheet sheet);
     bool AuthorizesResource(string characterId, NativeManifestationResourceState resource);
