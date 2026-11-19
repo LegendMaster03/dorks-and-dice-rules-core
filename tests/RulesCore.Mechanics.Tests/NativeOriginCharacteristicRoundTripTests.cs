@@ -182,8 +182,8 @@ public sealed class NativeOriginCharacteristicRoundTripTests
                 Assert.NotEmpty(grant.SourceCandidateIds);
                 foreach (var id in grant.SourceCandidateIds)
                 {
-                    var source = Assert.Single(first.EvaluatedProposal.Candidates
-                        .Where(candidate => candidate.Id == id));
+                    var source = Assert.Single(first.EvaluatedProposal.Candidates,
+                        candidate => candidate.Id == id);
                     Assert.Equal(NativeOriginSourceKind.Native,
                         source.Identity.Occurrence.Source.Kind);
                 }
@@ -249,8 +249,8 @@ public sealed class NativeOriginCharacteristicRoundTripTests
         var (proposal, issues) = deconstructor.Deconstruct(
             Direct(fixture.Entity("species.fixture")));
         Assert.Empty(issues);
-        var candidate = Assert.Single(proposal.Candidates.Where(x =>
-            x.Identity.Occurrence.OccurrencePath == "/traits/0"));
+        var candidate = Assert.Single(proposal.Candidates, x =>
+            x.Identity.Occurrence.OccurrencePath == "/traits/0");
         var raw = fixture.Entity("species.fixture").Definition.GetProperty("traits")[0];
         Assert.True(JsonElement.DeepEquals(raw, candidate.OfferedValue!.Value));
         Assert.True(JsonElement.DeepEquals(raw.GetProperty("engineData"),
