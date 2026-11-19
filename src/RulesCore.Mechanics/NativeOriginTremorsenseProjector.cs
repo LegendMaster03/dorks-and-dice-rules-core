@@ -16,7 +16,7 @@ public static class NativeOriginTremorsenseProjector
         IReadOnlyList<string> SourceCandidateIds, int RangeFeet, string Activation,
         string? RequiresContact, IReadOnlyList<string> RequiresSharedContact,
         int? DurationMinutes, string? UsesFormula, string? Recharge,
-        JsonElement CompleteEffect);
+        string? ResourcePoolOwnerGrantId, JsonElement CompleteEffect);
 
     public sealed record View(
         string Status, IReadOnlyList<GrantedSense> Senses,
@@ -78,6 +78,12 @@ public static class NativeOriginTremorsenseProjector
                 return Unresolved("tremorsense-grant-not-verified:" + (id ?? grant.Id));
 
             var canonical = definition!.Definition.GetProperty("trait");
+            // Neither authored Tremorsense mode has configurable bindings or
+            // shared-use dependencies. A saved extra parameter/owner needs a
+            // separate native rule review, not a silently presumed pool.
+            if (grant.Parameters is { Count: > 0 } ||
+                grant.ResourceOwners is { Count: > 0 })
+                return Unresolved("tremorsense-parameter-or-resource-owner-unrecognized:" + id);
             if (!canonical.TryGetProperty("rangeFeet", out var distance) ||
                 distance.ValueKind != JsonValueKind.Number ||
                 !distance.TryGetInt32(out var feet) || feet is <= 0 or > 1_000_000 ||
@@ -138,7 +144,7 @@ public static class NativeOriginTremorsenseProjector
             senses.Add(new(grant.Id, id, occurrence.Source.Id,
                 occurrence.OccurrencePath, grant.SourceCandidateIds.ToArray(),
                 feet, mode!, contact, shared, duration, usesFormula, recharge,
-                canonical.Clone()));
+                usesFormula is null ? null : grant.Id, canonical.Clone()));
         }
 
         // Distinct native definitions can coexist only when construction has
