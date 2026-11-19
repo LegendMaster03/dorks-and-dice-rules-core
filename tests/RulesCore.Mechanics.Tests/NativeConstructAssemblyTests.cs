@@ -1,3 +1,4 @@
+using Xunit;
 using RulesCore.Content;
 using RulesCore.Mechanics;
 
