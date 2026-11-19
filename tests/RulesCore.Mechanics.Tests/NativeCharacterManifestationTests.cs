@@ -23,6 +23,7 @@ public sealed class NativeCharacterManifestationTests
         public bool DenyProgression { get; set; }
         public bool DenyGrant { get; set; }
         public bool PermitIndependentEnding { get; set; }
+        public IReadOnlyList<NativeManifestationCharacteristicSlot>? ExpectedSlots { get; init; }
         public int TransitionCalls { get; private set; }
 
         public bool AuthorizesPrimary(string id, NativeCharacterRequest primary) => id == "character.1";
@@ -47,7 +48,9 @@ public sealed class NativeCharacterManifestationTests
             instance.SheetId == sheet.Id &&
             instance.DefinitionOccurrence.Source == Source() &&
             instance.DefinitionOccurrence.OccurrencePath == "forms." + sheet.Id &&
-            instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId;
+            instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId &&
+            (ExpectedSlots is null || instance.ContributionSlots is { } slots &&
+                ExpectedSlots.SequenceEqual(slots));
         public bool AuthorizesResource(string id, NativeManifestationResourceState resource) => !DenyResource;
         public bool AuthorizesResourcePolicy(string id, NativeManifestationInstance instance,
             NativeManifestationResourcePolicy policy) => !DenyPolicy;
@@ -176,6 +179,369 @@ public sealed class NativeCharacterManifestationTests
     private static NativeManifestationEffectiveCharacter Resolve(NativeCharacterState state,
         NativeManifestationLedger ledger, Authority? authority = null) =>
         NativeCharacterManifestationResolver.Resolve(state, ledger, authority ?? new Authority());
+
+    private static NativeManifestationLedger Coexisting(
+        IReadOnlyList<NativeManifestationCharacteristicSlot> wolfSlots,
+        IReadOnlyList<NativeManifestationCharacteristicSlot> hybridSlots,
+        IReadOnlyList<NativeManifestationResourceState>? resources = null)
+    {
+        var wolf = Form("manifest.wolf", "wolf", "coexist-event") with
+        {
+            ContributionSlots = wolfSlots
+        };
+        var hybrid = Form("manifest.hybrid", "hybrid", "coexist-event") with
+        {
+            ContributionSlots = hybridSlots
+        };
+        return new("character.1", 7, [wolf, hybrid],
+            resources ?? [PrimaryPool()], ["coexist-event"],
+            [new("decision.coexist", NativeManifestationInteractionKind.Coexist,
+                [wolf.Id, hybrid.Id], null, Occurrence("interactions.coexist"),
+                Rule(), "receipt.interaction.coexist")]);
+    }
+
+    [Fact]
+    public void CoexistingPartialTransformationsCombineDisjointSlotsOnLatestBase()
+    {
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        var updated = Character(level: 5, speed: 45);
+        var resolved = Resolve(updated, ledger);
+        Assert.Equal("partial", resolved.Status);
+        Assert.Equal("@composite", resolved.EffectiveSheetId);
+        Assert.Equal(17, resolved.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(16, resolved.EffectiveMechanics.AbilityScores["dexterity"]);
+        Assert.Equal(45, resolved.EffectiveMechanics.BaseWalkSpeed);
+        Assert.Equal(5, resolved.EffectiveMechanics.Advancements.Single().Level);
+        Assert.Null(resolved.EffectiveMechanics.CurrentResources);
+        Assert.Equal(new[] { "manifest.hybrid", "manifest.wolf" },
+            resolved.ContributingManifestationInstanceIds);
+        Assert.Equal(new[] { "grant.shared", "grant.wolf" },
+            resolved.SheetGrants.Select(item => item.Entitlement.Id).OrderBy(x => x));
+        Assert.Contains(resolved.Issues, issue =>
+            issue.Code == "manifestation-composite-partial");
+
+        // No permanent write or activation-time copy is used for reversion.
+        var normal = Resolve(updated, ledger with
+        {
+            Instances = ledger.Instances.Select(item => item with
+            {
+                Lifecycle = NativeManifestationLifecycle.Ended
+            }).ToArray()
+        });
+        Assert.Equal("resolved", normal.Status);
+        Assert.Equal(10, normal.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(12, normal.EffectiveMechanics.AbilityScores["dexterity"]);
+        Assert.Equal(45, normal.EffectiveMechanics.BaseWalkSpeed);
+        Assert.Equal(5, normal.EffectiveMechanics.Advancements.Single().Level);
+    }
+
+    [Fact]
+    public void CoexistingPartialTransformationsCanContributeSeparateTrainingProperties()
+    {
+        var wolf = Wolf() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Ranks: new(4))
+                }))
+        };
+        var hybrid = Hybrid() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Proficient: new(true))
+                }))
+        };
+        var character = Character(sheets: [Werewolf(), wolf, hybrid]);
+        character = character with
+        {
+            PrimaryMechanics = character.PrimaryMechanics with
+            {
+                Skills = new Dictionary<string, NativeSkillTraining>
+                {
+                    ["survival"] = new(1, false, 2, "wisdom")
+                }
+            }
+        };
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.SkillRanks, "survival")],
+            [new(NativeInfluenceCharacteristic.SkillProficient, "survival")]);
+        var result = Resolve(character, ledger);
+        Assert.Equal("partial", result.Status);
+        var training = result.EffectiveMechanics!.Skills!["survival"];
+        Assert.Equal(4, training.Ranks);
+        Assert.True(training.Proficient);
+        Assert.Equal(2, training.MiscModifier);
+        Assert.Equal("wisdom", training.Ability);
+    }
+
+    [Fact]
+    public void CoexistRejectsUnwrittenNestedTrainingMember()
+    {
+        var wolf = Wolf() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Ranks: new(4))
+                }))
+        };
+        var hybrid = Hybrid() with
+        {
+            Overrides = new(Skills: new(false,
+                new Dictionary<string, NativeSheetTrainingPatch>
+                {
+                    ["survival"] = new(Proficient: new(true))
+                }))
+        };
+        var character = Character(sheets: [Werewolf(), wolf, hybrid]);
+        character = character with
+        {
+            PrimaryMechanics = character.PrimaryMechanics with
+            {
+                Skills = new Dictionary<string, NativeSkillTraining>
+                {
+                    ["survival"] = new(1, false, 2, "wisdom")
+                }
+            }
+        };
+        // A Ranks-only patch does not itself define MiscModifier, even
+        // though the inherited training view has a numeric modifier.
+        var result = Resolve(character, Coexisting(
+            [new(NativeInfluenceCharacteristic.SkillMiscModifier, "survival")],
+            [new(NativeInfluenceCharacteristic.SkillProficient, "survival")]));
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, x => x.Code == "manifestation-slot-unbound");
+    }
+
+    [Fact]
+    public void CoexistFailsClosedWhenTwoFormsWriteSameSlot()
+    {
+        var result = Resolve(Character(), Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")]));
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, x => x.Code == "manifestation-slot-overlap");
+    }
+
+    [Fact]
+    public void CoexistDoesNotAcceptAContradictorySelectedInstance()
+    {
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        ledger = ledger with
+        {
+            Interactions = ledger.Interactions!.Select(interaction =>
+                interaction with { SelectedInstanceId = "manifest.wolf" }).ToArray()
+        };
+        var result = Resolve(Character(), ledger);
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "invalid-manifestation-interaction");
+    }
+
+    [Fact]
+    public void CoexistFailsClosedOnMissingOrUnboundContributionSlots()
+    {
+        var missing = Resolve(Character(), Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")], []));
+        Assert.Equal("unresolved", missing.Status);
+        Assert.Contains(missing.Issues, x => x.Code == "manifestation-slots-required");
+
+        var unbound = Resolve(Character(), Coexisting(
+            [new(NativeInfluenceCharacteristic.BaseWalkSpeed)],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]));
+        Assert.Equal("unresolved", unbound.Status);
+        Assert.Contains(unbound.Issues, x => x.Code == "manifestation-slot-unbound");
+    }
+
+    [Fact]
+    public void AtomicCoexistActivationAndReversionUseOneTransitionEventEach()
+    {
+        var character = Character();
+        var start = Ledger();
+        var eventId = "coexist-activation";
+
+        NativeManifestationTransitionStep Enter(string id, string sheet,
+            NativeInfluenceCharacteristic field, string key) =>
+            new(NativeManifestationTransitionAction.Activate, id,
+                Occurrence("actions.activate"), Rule(),
+                "receipt.transition." + eventId,
+                Form(id, sheet, eventId) with
+                {
+                    ContributionSlots = [new(field, key)]
+                });
+        var coexist = new NativeManifestationInteractionDecision(
+            "interaction.coexist", NativeManifestationInteractionKind.Coexist,
+            ["manifest.wolf", "manifest.hybrid"], null,
+            Occurrence("interactions.coexist"), Rule(),
+            "receipt.interaction.coexist");
+        var proposed = NativeCharacterManifestationTransitionPlanner.Plan(
+            character, start, new(character.CharacterId, start.Revision,
+                eventId,
+                [
+                    Enter("manifest.wolf", "wolf",
+                        NativeInfluenceCharacteristic.AbilityScore, "strength"),
+                    Enter("manifest.hybrid", "hybrid",
+                        NativeInfluenceCharacteristic.AbilityScore, "dexterity")
+                ], [coexist]), new Authority());
+        Assert.Equal("planned", proposed.Status);
+        Assert.Equal(8, proposed.Proposed!.Revision);
+        Assert.Equal("@composite", proposed.ProposedEffective!.EffectiveSheetId);
+        Assert.Equal(17, proposed.ProposedEffective.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(16, proposed.ProposedEffective.EffectiveMechanics.AbilityScores["dexterity"]);
+
+        var reversion = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(speed: 45), proposed.Proposed,
+            new(character.CharacterId, proposed.Proposed.Revision, "coexist-end",
+                [
+                    Action(NativeManifestationTransitionAction.End, "manifest.wolf"),
+                    Action(NativeManifestationTransitionAction.End, "manifest.hybrid")
+                ]),
+            new Authority());
+        Assert.Equal("planned", reversion.Status);
+        Assert.Equal(9, reversion.Proposed!.Revision);
+        Assert.Equal(NativeCharacterSheetResolver.PrimarySheetId,
+            reversion.ProposedEffective!.EffectiveSheetId);
+        Assert.Equal(45, reversion.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Empty(reversion.ProposedEffective.ContributingManifestationInstanceIds ?? []);
+        Assert.All(reversion.Proposed.Instances,
+            item => Assert.Equal(NativeManifestationLifecycle.Ended, item.Lifecycle));
+    }
+
+    [Fact]
+    public void PartialFormKeepsItsScopeWhenAloneAndWhenAnotherFormEnds()
+    {
+        var hybrid = Hybrid() with
+        {
+            Overrides = Hybrid().Overrides! with { BaseWalkSpeed = new(65) }
+        };
+        var state = Character(sheets: [Werewolf(), Wolf(), hybrid], speed: 45);
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        var singleActivation = new NativeManifestationTransitionStep(
+            NativeManifestationTransitionAction.Activate, "manifest.hybrid",
+            Occurrence("actions.activate"), Rule(), "receipt.transition.single",
+            Form("manifest.hybrid", "hybrid", "single") with
+            {
+                ContributionSlots = [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]
+            });
+
+        var activated = Plan(state, Ledger(), "single", singleActivation);
+        AssertPartialHybrid(activated, 45);
+
+        var endedWolf = Plan(state, ledger, "end-wolf",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        AssertPartialHybrid(endedWolf, 45);
+        var updated = Character(sheets: state.AlternateSheets, speed: 50);
+        var reverted = Plan(updated, endedWolf.Proposed!, "end-hybrid",
+            Action(NativeManifestationTransitionAction.End, "manifest.hybrid"));
+        Assert.Equal("planned", reverted.Status);
+        Assert.Equal(NativeCharacterSheetResolver.PrimarySheetId, reverted.ProposedEffective!.EffectiveSheetId);
+        Assert.Equal(50, reverted.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal(12, reverted.ProposedEffective.EffectiveMechanics.AbilityScores["dexterity"]);
+
+        static void AssertPartialHybrid(NativeManifestationTransitionPlan plan, int speed)
+        {
+            Assert.Equal("planned", plan.Status);
+            var effective = plan.ProposedEffective!;
+            Assert.Equal("partial", effective.Status);
+            Assert.Equal("hybrid", effective.EffectiveSheetId);
+            Assert.Equal("manifest.hybrid", effective.ManifestationInstanceId);
+            Assert.Equal(speed, effective.EffectiveMechanics!.BaseWalkSpeed);
+            Assert.Equal(10, effective.EffectiveMechanics.AbilityScores["strength"]);
+            Assert.Equal(16, effective.EffectiveMechanics.AbilityScores["dexterity"]);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PartialTrainingSlotRequiresAnExistingPrimaryRecord(bool competency)
+    {
+        var training = new NativeSheetMapPatch<NativeSheetTrainingPatch>(false,
+            new Dictionary<string, NativeSheetTrainingPatch>
+            {
+                ["training"] = new(Replacement: new(new NativeSkillTraining(4, true, 7, "wisdom")))
+            });
+        var wolf = Wolf() with
+        {
+            Overrides = competency ? new(Competencies: training) : new(Skills: training)
+        };
+        var state = Character(sheets: [Werewolf(), wolf, Hybrid()]);
+        var ledger = Coexisting(
+            [new(competency ? NativeInfluenceCharacteristic.CompetencyRanks :
+                NativeInfluenceCharacteristic.SkillRanks, "training")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+
+        var result = Resolve(state, ledger);
+        Assert.Equal("unresolved", result.Status);
+        Assert.Null(result.EffectiveMechanics);
+        Assert.Contains(result.Issues, issue => issue.Code == "manifestation-slot-value-unresolved");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ActivationEvidenceRejectsSubstitutedOrRemovedSlots(bool removeSlots)
+    {
+        var hybrid = Hybrid() with
+        {
+            Overrides = Hybrid().Overrides! with { BaseWalkSpeed = new(65) }
+        };
+        var state = Character(sheets: [Werewolf(), Wolf(), hybrid]);
+        var start = Ledger();
+        var authority = new Authority
+        {
+            ExpectedSlots = [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]
+        };
+        var activation = new NativeManifestationTransitionStep(
+            NativeManifestationTransitionAction.Activate, "manifest.hybrid",
+            Occurrence("actions.activate"), Rule(), "receipt.transition.single",
+            Form("manifest.hybrid", "hybrid", "single") with
+            {
+                ContributionSlots = [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]
+            });
+        var request = new NativeManifestationTransitionRequest(
+            state.CharacterId, start.Revision, "single", [activation]);
+        var authorized = NativeCharacterManifestationTransitionPlanner.Plan(state, start, request, authority);
+        Assert.Equal("planned", authorized.Status);
+        Assert.Equal("partial", Resolve(state, authorized.Proposed!, authority).Status);
+
+        var changed = authorized.Proposed!.Instances.Single() with
+        {
+            ContributionSlots = removeSlots ? null : [new(NativeInfluenceCharacteristic.BaseWalkSpeed)]
+        };
+        var rejected = NativeCharacterManifestationTransitionPlanner.Plan(state, start,
+            request with { Steps = [activation with { NewInstance = changed }] }, authority);
+        Assert.Equal("invalid", rejected.Status);
+        Assert.Null(rejected.Proposed);
+        Assert.Contains(rejected.Issues, issue => issue.Code == "unauthorized-manifestation-activation");
+        var forged = Resolve(state, authorized.Proposed with { Instances = [changed] }, authority);
+        Assert.Equal("invalid", forged.Status);
+        Assert.Contains(forged.Issues, issue => issue.Code == "unauthorized-manifestation-instance");
+    }
+
+    [Fact]
+    public void CoexistRejectsMalformedSlotsBeforeHostInstanceChecks()
+    {
+        var malformed = Coexisting(
+            [new(NativeInfluenceCharacteristic.BaseWalkSpeed, "unexpected")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+        var authority = new Authority();
+        var result = Resolve(Character(), malformed, authority);
+        Assert.Equal("invalid", result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "invalid-manifestation-instance");
+    }
 
     [Fact]
     public void PersistentSheetsDoNotRequireOrImplyAnyManifestation()
@@ -1048,6 +1414,35 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal("wolf", active.EffectiveCharacter.EffectiveSheetId);
         Assert.Equal(new[] { "grant.shared", "grant.wolf" },
             active.EffectiveCharacter.SheetGrants.Select(x => x.Entitlement.Id));
+    }
+
+    [Fact]
+    public void CompositeNativeProjectionWithholdsUnverifiedClassUseButKeepsVerifiedSlots()
+    {
+        using var fixture = new NativeProjectionFixture();
+        var state = WithCatalog(Character(speed: 45), fixture);
+        var ledger = Coexisting(
+            [new(NativeInfluenceCharacteristic.AbilityScore, "strength")],
+            [new(NativeInfluenceCharacteristic.AbilityScore, "dexterity")]);
+
+        var composed = NativeCharacterManifestationProjector.Project(
+            state, ledger, new Authority(), fixture.Projector);
+
+        Assert.Equal("partial", composed.Status);
+        Assert.Equal("@composite", composed.EffectiveCharacter.EffectiveSheetId);
+        Assert.Equal(new[] { "manifest.hybrid", "manifest.wolf" },
+            composed.EffectiveCharacter.ContributingManifestationInstanceIds);
+        Assert.Equal(45, composed.EffectiveCharacter.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.NotNull(composed.BaseMechanics);
+        Assert.Equal("partial", composed.BaseMechanics.Status);
+        Assert.Equal(17, composed.BaseMechanics.Values["ability.strength.score"].Value);
+        Assert.Equal(16, composed.BaseMechanics.Values["ability.dexterity.score"].Value);
+        Assert.Empty(composed.BaseMechanics.FeatureIds);
+        Assert.Empty(composed.BaseMechanics.Resources);
+        Assert.Contains(composed.Issues,
+            issue => issue.Code == "manifestation-native-features-withheld");
+        Assert.Contains(composed.Issues,
+            issue => issue.Code == "manifestation-composite-partial");
     }
 
     [Fact]
