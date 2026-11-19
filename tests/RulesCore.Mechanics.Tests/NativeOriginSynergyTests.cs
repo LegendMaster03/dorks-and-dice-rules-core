@@ -493,6 +493,25 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void MalformedAuthorityIsRejectedBeforeCallingHostPolicy()
+    {
+        using var fixture = new Fixture();
+        var proposal = Selected(fixture, "/traits/2", "/traits/3") with
+        {
+            TableDecisions = [TableSynergy() with { Authority = null! }]
+        };
+        // SyntheticAuthority intentionally dereferences Authority; malformed
+        // serialized input must not reach that trusted callback.
+        var result = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(proposal, new("campaign", "example"),
+                AutoManifestDirectDefaults: false), new SyntheticAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, result.Status);
+        Assert.Null(result.Profile);
+        Assert.Contains(result.Issues, x =>
+            x.Code == "synergy-table-decision-unverified");
+    }
+
+    [Fact]
     public void MalformedTableAuthoringAndDuplicateTargetsFailClosed()
     {
         using var fixture = new Fixture();
