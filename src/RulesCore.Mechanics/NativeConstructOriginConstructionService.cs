@@ -40,9 +40,6 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
 
         var issues = new List<NativeOriginContractIssue>();
         var offers = new List<NativeOriginCandidate>();
-        var operational = assembly.Components.ToDictionary(x => x.InstanceId,
-            StringComparer.Ordinal);
-
         foreach (var instance in request.Assembly.Components
             .OrderBy(x => x.InstanceId, StringComparer.Ordinal))
         {

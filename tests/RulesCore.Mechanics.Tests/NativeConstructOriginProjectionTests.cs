@@ -131,7 +131,7 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(NativeOriginSourceKind.Native, grant.Identity.Occurrence.Source.Kind);
         Assert.Equal("/installedOriginTraitIds/0/instance/plate",
             grant.Identity.Occurrence.OccurrencePath);
-        Assert.Equal(NativeOriginAdjudication.Supported, grant.Authorization.Adjudication);
+        Assert.Equal(NativeOriginAdjudication.Supported, grant.Authorization!.Adjudication);
         Assert.NotEmpty(grant.SourceCandidateIds);
         Assert.Equal(NativeOriginEventStage.Completed,
             outcome.Origin.Profile!.History.Single(x =>
@@ -255,7 +255,9 @@ public sealed class NativeConstructOriginProjectionTests
             Part("plate-b", "plate")
         ], InitialAllowance: 10);
         var result = Evaluate(fixture, assembly: assembly);
-        Assert.True(result.IsMechanicallyAuthorized);
+        // Two physical instances are valid. A duplicate canonical gameplay
+        // effect still requires an authored reconciliation/stacking decision.
+        Assert.True(result.Assembly.IsAuthorized);
         Assert.Equal(2, result.Origin.EvaluatedProposal.Candidates.Count(x =>
             x.Identity.MechanicalDefinitionId == "trait.fixture.passive-plate"));
         Assert.Equal(2, result.Origin.EvaluatedProposal.Candidates

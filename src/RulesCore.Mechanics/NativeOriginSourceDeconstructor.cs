@@ -10,8 +10,18 @@ namespace RulesCore.Mechanics;
 public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalog)
 {
     public (NativeOriginProposal Proposal, IReadOnlyList<NativeOriginContractIssue> Issues)
+        Deconstruct(NativeOriginProposal proposal) => DeconstructCore(proposal, null);
+
+    // Trusted offers are created by a native procedure evaluator, not by an
+    // arbitrary caller of the public source-inspection API.
+    internal (NativeOriginProposal Proposal, IReadOnlyList<NativeOriginContractIssue> Issues)
         Deconstruct(NativeOriginProposal proposal,
-            IReadOnlyList<NativeOriginCandidate>? trustedNativeOffers = null)
+            IReadOnlyList<NativeOriginCandidate> trustedNativeOffers) =>
+        DeconstructCore(proposal, trustedNativeOffers);
+
+    private (NativeOriginProposal Proposal, IReadOnlyList<NativeOriginContractIssue> Issues)
+        DeconstructCore(NativeOriginProposal proposal,
+            IReadOnlyList<NativeOriginCandidate>? trustedNativeOffers)
     {
         ArgumentNullException.ThrowIfNull(proposal);
         var issues = new List<NativeOriginContractIssue>();

@@ -37,3 +37,45 @@ The initial evaluator and its test fixtures are intended to verify:
 ## Integration boundary
 
 The next implementation increment must map selected operational modules into **catalog-authorized Origin candidates and manifestations** using the merged common engine; it must not bypass that engine with independent grants or untrusted custom proposals. This preview alone is not a complete or playable Origination procedure. 
+
+## Follow-up: trusted passive-trait projection
+
+The procedure-specific `NativeConstructOriginConstructionService` now provides
+a narrow bridge from costed and validated native component instances to the
+existing universal `NativeOriginConstructionEngine`:
+
+1. A Construct Assembly request must use the selected-native `construct-assembly` method.
+2. The configuration evaluator validates component identity, material slots,
+   dependencies, cost and simultaneous power. An incomplete, invalid or
+   overallocated assembly is **never** promoted into trusted Origin offers.
+3. Only an explicit `installedOriginTraitIds` array authored on a native
+   `construct-component` is projected. Each reference must resolve to a
+   canonical `origin-trait` with executable mechanical fields. The catalog
+   currently leaves this field empty until first-party Construct traits are
+   individually approved and balanced.
+4. The procedure adapter creates exact instance-qualified native candidates,
+   which the common engine reconciles and manifests. The ordinary public Origin
+   entrypoint still rejects fabricated native component candidates.
+5. Client-supplied canonical candidate values cannot replace verified source
+   values. The internal trusted-offer pathway is not exposed through the
+   public source deconstruction API.
+6. The initial mapping intentionally covers **permanent, passive** traits only.
+   Powered or mode-dependent benefits require a separate runtime applicability
+   layer; toggling operational power must not rewrite underlying Origin grants.
+7. Separate instances retain distinct offer identities even if they reference
+   the same canonical trait. A duplicate mechanical outcome is not silently
+   stacked; the existing reconciliation rules determine whether additional
+   authoring or table adjudication is required.
+8. An incomplete custom Origin may preview authorized installed characteristics,
+   but does not become playable without an effective creature type and game-size
+   grant. No conventional Species or humanoid anatomy is made mandatory.
+
+The included synthetic tests exercise positive authorization, forgery
+rejection, overload failure, powered-state independence, repeated source
+occurrences, choice-binding deferral, and custom foundation incompleteness.
+
+**Not yet implemented:** authorized installed-component trait definitions in
+the first-party catalog, powered-characteristic runtime projection, per-mode
+behavior, intrinsic-supply authoring for a fully custom Construct body, design
+and enhancement composition, quantities/size scaling, or progression and
+installation cost policies. This bridge is not a complete playable procedure.
