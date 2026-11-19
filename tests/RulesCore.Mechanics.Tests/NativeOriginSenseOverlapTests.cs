@@ -214,7 +214,7 @@ public sealed class NativeOriginSenseOverlapTests
     {
         var (proposal, stone, earth, decisions) = BothSenses();
         var disposition = Permit("allow-two-modes", "relationship", "dual-mode",
-            new { action = "retain-both" });
+            new { action = "retain-both", candidateIds = new[] { stone.Id, earth.Id } });
         var result = Evaluate(proposal with
         {
             TableDecisions = decisions.Append(disposition).ToArray(),

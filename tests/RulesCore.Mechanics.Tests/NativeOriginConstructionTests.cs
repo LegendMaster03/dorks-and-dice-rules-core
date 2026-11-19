@@ -1871,4 +1871,590 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal("ancestry.elf.high", effective.Identity.Occurrence.Source.Id);
     }
 
+
+    [Fact]
+    public void VerifiedPrerequisitesRemainSatisfiedWhenTheirGrantsSurvive()
+    {
+        var proposal = Proposal("requires-survives", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var required = new NativeOriginConstraint("size-needs-speed",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)],
+            Minimum: 1, TableDecisionId: "verify-requires");
+        var result = Evaluate(proposal with
+        {
+            Constraints = [required],
+            TableDecisions = [Decision("verify-requires", "constraint", required.Id,
+                new { enforce = true })]
+        }, new TestAuthority());
+
+        Assert.DoesNotContain(result.Issues,
+            issue => issue.Code == "effective-required-mechanic-missing");
+        Assert.Contains(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "size");
+        Assert.Contains(result.Profile.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+    }
+
+    [Fact]
+    public void EffectivePrerequisitesCloseTransitivelyAfterAnAuthorizedSuppression()
+    {
+        var proposal = Proposal("requires-transitively", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var creature = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "creatureType");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var first = new NativeOriginConstraint("a-size-needs-type",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: creature.Id)],
+            Minimum: 1, TableDecisionId: "first-requirement");
+        var second = new NativeOriginConstraint("b-type-needs-speed",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: creature.Id)], [new(CandidateId: speed.Id)],
+            Minimum: 1, TableDecisionId: "second-requirement");
+        var relation = new NativeOriginRelationship("suppress-speed",
+            NativeOriginRelationshipKind.Substitution, [size.Id, speed.Id]);
+
+        var result = Evaluate(proposal with
+        {
+            Constraints = [first, second],
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: "verified-suppression"))],
+            TableDecisions =
+            [
+                Decision("verified-suppression", "relationship", relation.Id,
+                    new { action = "retain-first" }),
+                Decision("first-requirement", "constraint", first.Id, new { enforce = true }),
+                Decision("second-requirement", "constraint", second.Id, new { enforce = true })
+            ]
+        }, new TestAuthority());
+
+        Assert.Contains(result.Issues, x => x.Code == "effective-required-mechanic-missing" &&
+            x.Path == "constraints." + second.Id);
+        Assert.Contains(result.Issues, x => x.Code == "effective-required-mechanic-missing" &&
+            x.Path == "constraints." + first.Id);
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId is "size" or "creatureType" or "walkingSpeedFeet");
+    }
+
+    [Theory]
+    [InlineData(1, false)]
+    [InlineData(2, true)]
+    public void RequiredCountUsesEffectiveGrantsNotDuplicateContributorOffers(
+        int requiredCount, bool shouldBlock)
+    {
+        var proposal = Proposal("requires-two-donors-" + requiredCount,
+            NativeOriginIntent.Mixed,
+            contributors: [Contributor("first", "species.orc"),
+                Contributor("second", "species.orc")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        NativeOriginCandidate Get(string donor, string slot) =>
+            Assert.Single(offers, x => x.ContributorId == donor &&
+                x.Identity.IntrinsicSlotId == slot);
+        var size = Get("first", "size");
+        var creature = Get("first", "creatureType");
+        var speed1 = Get("first", "walkingSpeedFeet");
+        var speed2 = Get("second", "walkingSpeedFeet");
+        var requirement = new NativeOriginConstraint("donor-speed-requirement",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)],
+            [new(CandidateId: speed1.Id), new(CandidateId: speed2.Id)],
+            Minimum: requiredCount, TableDecisionId: "verified-count");
+        var result = Evaluate(proposal with
+        {
+            Manifestations = new[] { size, creature, speed1, speed2 }
+                .Select((candidate, i) => new NativeOriginManifestation(
+                    "picked-" + i, candidate.Id, candidate.OfferedValue)).ToArray(),
+            Constraints = [requirement],
+            TableDecisions = [Decision("verified-count", "constraint", requirement.Id,
+                new { enforce = true })]
+        }, new TestAuthority(), false);
+        var grants = result.Profile!.Underlying.InherentGrants;
+        var speed = Assert.Single(grants, g =>
+            g.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        Assert.Contains(speed1.Id, speed.SourceCandidateIds);
+        Assert.Contains(speed2.Id, speed.SourceCandidateIds);
+        Assert.Equal(shouldBlock, result.Issues.Any(x =>
+            x.Code == "effective-required-mechanic-missing"));
+        Assert.Equal(!shouldBlock, grants.Any(g => g.Identity.IntrinsicSlotId == "size"));
+    }
+
+    [Fact]
+    public void UnverifiedPrerequisiteClaimDoesNotBecomeExecutableAfterReconciliation()
+    {
+        var proposal = Proposal("unverified-requires", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var forged = new NativeOriginConstraint("not-native",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)],
+            NativeRuleReference: "rule.creature-origination");
+        var result = Evaluate(proposal with { Constraints = [forged] });
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "constraint-policy-unresolved");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "size");
+    }
+
+
+    [Fact]
+    public void RemovingARequiredResourceOwnerAlsoRemovesItsBoundDependent()
+    {
+        var proposal = Proposal("resource-owner-closure", NativeOriginIntent.Mixed,
+            contributors: [Contributor("source", "ancestry.goliath.cloud")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var owner = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.clouds-jaunt");
+        var strike = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloud-strike");
+        var aptitude = Assert.Single(offers, x =>
+            x.ContributorId == "source" &&
+            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+        var foundations = offers.Where(x => x.ContributorId == "source" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var size = Assert.Single(foundations, x => x.Identity.IntrinsicSlotId == "size");
+        var creature = Assert.Single(foundations, x =>
+            x.Identity.IntrinsicSlotId == "creatureType");
+        var requirement = new NativeOriginConstraint("owner-needs-size",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: owner.Id)], [new(CandidateId: size.Id)],
+            Minimum: 1, TableDecisionId: "required-owner");
+        var relation = new NativeOriginRelationship("choose-type-not-size",
+            NativeOriginRelationshipKind.Substitution, [creature.Id, size.Id]);
+        var manifests = foundations.Select((x, i) =>
+            new NativeOriginManifestation("foundation-" + i, x.Id, x.OfferedValue))
+            .Concat(
+            [
+                new NativeOriginManifestation("aptitude", aptitude.Id,
+                    Choices: [new("abilityChoice", ["constitution"])]),
+                new NativeOriginManifestation("strike", strike.Id),
+                new NativeOriginManifestation("owner", owner.Id)
+            ]).ToArray();
+        var result = Evaluate(proposal with
+        {
+            Manifestations = manifests,
+            Constraints = [requirement],
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "drop-size"))],
+            TableDecisions =
+            [
+                Decision("allow-owner", "candidate", owner.Id, new { eligibility = "eligible" }),
+                Decision("allow-strike", "candidate", strike.Id, new { eligibility = "eligible" }),
+                Decision("allow-aptitude", "candidate", aptitude.Id, new { eligibility = "eligible" }),
+                Decision("required-owner", "constraint", requirement.Id, new { enforce = true }),
+                Decision("drop-size", "relationship", relation.Id, new { action = "retain-first" })
+            ]
+        }, new TestAuthority(), false);
+
+        Assert.Contains(result.Issues, issue =>
+            issue.Code == "effective-required-mechanic-missing" &&
+            issue.Path == "constraints." + requirement.Id);
+        Assert.Contains(result.Issues, issue => issue.Code == "origin-shared-resource-owner-missing");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId is
+                "trait.goliath.cloud.clouds-jaunt" or "trait.goliath.cloud.cloud-strike");
+        Assert.DoesNotContain(result.Issues,
+            issue => issue.Code == "profile-resource-owner-invalid");
+    }
+
+
+    [Fact]
+    public void AnAuthenticatedButDifferentConstraintDecisionCannotProveAClaimedId()
+    {
+        var proposal = Proposal("mismatched-constraint-decision", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var forged = new NativeOriginConstraint("declared-requirement",
+            NativeOriginRelationshipKind.Requires,
+            [new(CandidateId: size.Id)], [new(CandidateId: speed.Id)],
+            Minimum: 1, TableDecisionId: "different-target");
+        var result = Evaluate(proposal with
+        {
+            Constraints = [forged],
+            TableDecisions =
+            [
+                Decision("different-target", "candidate", size.Id,
+                    new { eligibility = "eligible" }),
+                Decision("other-decision", "constraint", forged.Id, new { enforce = true })
+            ]
+        }, new TestAuthority());
+
+        Assert.Contains(result.Issues, x => x.Code == "constraint-policy-unresolved");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "size");
+    }
+
+
+    [Fact]
+    public void RemovingAnIntrinsicChoiceAfterBindingDropsTheNewlyBoundDependent()
+    {
+        var proposal = Proposal("high-elf-binding-closure", ancestry: "ancestry.elf.high");
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var spellAbility = Assert.Single(offered,
+            x => x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        var cantrip = Assert.Single(offered, x =>
+            x.Identity.Occurrence.Source.Id == "ancestry.elf.high" &&
+            x.Identity.Occurrence.OccurrencePath == "/traits/0");
+        var speed = Assert.Single(offered,
+            x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var relation = new NativeOriginRelationship("suppress-spell-ability",
+            NativeOriginRelationshipKind.Substitution, [speed.Id, spellAbility.Id]);
+        var selected = proposal with
+        {
+            Manifestations =
+            [
+                new("ability", spellAbility.Id,
+                    Choices: [new("spellcastingAbility", ["intelligence"])]),
+                new("cantrip", cantrip.Id,
+                    Choices: [new("selection", ["spell.fire-bolt"],
+                        "verified-catalog-proof")])
+            ],
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "drop-spell-ability"))],
+            TableDecisions =
+            [
+                Decision("drop-spell-ability", "relationship", relation.Id,
+                    new { action = "retain-first" })
+            ]
+        };
+
+        var result = Evaluate(selected, new TestAuthority());
+        Assert.Contains(result.Issues, x => x.Code == "origin-binding-choice-missing");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == cantrip.Identity.MechanicalDefinitionId);
+        Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
+            x.Identity.IntrinsicSlotId == "spellcastingAbility");
+    }
+
+    [Fact]
+    public void CyclicPrerequisitesCloseDeterministicallyWithReorderedConstraints()
+    {
+        var proposal = Proposal("cyclic-closure-order", species: "species.orc");
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var size = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "size");
+        var creature = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "creatureType");
+        var speed = Assert.Single(offers, x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        var constraints = new[]
+        {
+            new NativeOriginConstraint("a-size-needs-creature",
+                NativeOriginRelationshipKind.Requires,
+                [new(CandidateId: size.Id)], [new(CandidateId: creature.Id)],
+                Minimum: 1, TableDecisionId: "allow-a"),
+            new NativeOriginConstraint("b-creature-needs-size",
+                NativeOriginRelationshipKind.Requires,
+                [new(CandidateId: creature.Id)], [new(CandidateId: size.Id)],
+                Minimum: 1, TableDecisionId: "allow-b"),
+            new NativeOriginConstraint("c-creature-needs-speed",
+                NativeOriginRelationshipKind.Requires,
+                [new(CandidateId: creature.Id)], [new(CandidateId: speed.Id)],
+                Minimum: 1, TableDecisionId: "allow-c")
+        };
+        var relation = new NativeOriginRelationship("remove-speed",
+            NativeOriginRelationshipKind.Substitution, [size.Id, speed.Id]);
+        var resolutions = new[]
+        {
+            new NativeOriginResolution(relation.Id, NativeOriginResolutionAction.RetainFirst,
+                new(NativeOriginAdjudication.DmAuthorized, TableDecisionId: "remove-speed"))
+        };
+        var decisions = constraints.Select((c, i) =>
+            Decision("allow-" + (char)('a' + i), "constraint", c.Id,
+                new { enforce = true }))
+            .Append(Decision("remove-speed", "relationship", relation.Id,
+                new { action = "retain-first" })).ToArray();
+
+        NativeOriginConstructionResult Run(IReadOnlyList<NativeOriginConstraint> order) =>
+            Evaluate(proposal with
+            {
+                Constraints = order, Relationships = [relation],
+                Resolutions = resolutions, TableDecisions = decisions
+            }, new TestAuthority());
+
+        var forward = Run(constraints);
+        var reversed = Run(constraints.Reverse().ToArray());
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, forward.Status);
+        Assert.Equal(forward.Status, reversed.Status);
+        Assert.Equal(JsonSerializer.Serialize(forward.Issues),
+            JsonSerializer.Serialize(reversed.Issues));
+        Assert.Equal(JsonSerializer.Serialize(forward.Profile!.Underlying.InherentGrants),
+            JsonSerializer.Serialize(reversed.Profile!.Underlying.InherentGrants));
+        Assert.DoesNotContain(forward.Profile.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId is "size" or "creatureType" or "walkingSpeedFeet");
+    }
+
+    [Fact]
+    public void GenericNativeRulePointerMustMatchCompleteAuthoredSelectorsAndCounts()
+    {
+        var root = Path.Combine(Path.GetTempPath(),
+            "rules-core-constraint-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            var native = Path.Combine(root, "first-party-001", "native");
+            Directory.CreateDirectory(native);
+            File.WriteAllText(Path.Combine(root, "first-party-001", "manifest.json"),
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","runtimeContentRoot":"native/","workingRoot":"working/"}""");
+            File.WriteAllText(Path.Combine(native, "species.json"),
+                """{"id":"species.fixture","kind":"species","name":"Fixture","selectable":true,"creatureType":"humanoid","size":"medium","walkingSpeedFeet":30,"traits":[]}""");
+            File.WriteAllText(Path.Combine(native, "rules.json"),
+                """
+                {"id":"rule.fixture","kind":"rule","name":"Fixture Rule",
+                 "methodDefinitions":[{"id":"biological","name":"Biological"}],
+                 "originConstraints":[
+                   {"id":"fixture-requires","kind":"Requires",
+                    "subjects":[{"intrinsicSlotId":"size"}],
+                    "conditions":[{"intrinsicSlotId":"walkingSpeedFeet"}],
+                    "minimum":1}]}
+                """);
+            var catalog = NativeCatalogLoader.Load(
+                NativeRulesetLayout.Resolve(root, "first-party-001"));
+            var engine = new NativeOriginConstructionEngine(catalog);
+            var proposal = new NativeOriginProposal("fixture", NativeOriginIntent.Direct,
+                new("rule.fixture", "biological"), [], [], [],
+                SelectedSpeciesId: "species.fixture");
+            var source = engine.Evaluate(new(proposal)).EvaluatedProposal.Candidates;
+            Assert.Contains(source, x => x.Identity.IntrinsicSlotId == "size");
+            var valid = new NativeOriginConstraint("fixture-requires",
+                NativeOriginRelationshipKind.Requires,
+                [new(IntrinsicSlotId: "size")],
+                [new(IntrinsicSlotId: "walkingSpeedFeet")],
+                Minimum: 1, NativeRuleReference: "rule.fixture");
+
+            var verified = engine.Evaluate(new(proposal with { Constraints = [valid] }));
+            Assert.DoesNotContain(verified.Issues,
+                x => x.Code == "constraint-policy-unresolved");
+
+            var forgedCount = engine.Evaluate(new(proposal with
+            {
+                Constraints = [valid with { Minimum = 2 }]
+            }));
+            Assert.Contains(forgedCount.Issues,
+                x => x.Code == "constraint-policy-unresolved");
+            Assert.DoesNotContain(forgedCount.Profile!.Underlying.InherentGrants,
+                x => x.Identity.IntrinsicSlotId == "size");
+
+            var forgedSelector = engine.Evaluate(new(proposal with
+            {
+                Constraints = [valid with
+                {
+                    Conditions = [new(IntrinsicSlotId: "creatureType")]
+                }]
+            }));
+            Assert.Contains(forgedSelector.Issues,
+                x => x.Code == "constraint-policy-unresolved");
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
+    }
+
+
+    [Fact]
+    public void DistinctSourceOccurrencesOfOneDefinitionRequireExactCoexistenceDecision()
+    {
+        var proposal = Proposal("two-vision-sources", NativeOriginIntent.Mixed,
+            contributors: [Contributor("elf", "species.elf"),
+                Contributor("orc", "species.orc")]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var selected = offered.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision" &&
+            x.ContributorId is "elf" or "orc").ToArray();
+        Assert.Equal(2, selected.Length);
+        Assert.Equal(2, selected.Select(x => x.Identity.Occurrence.Source.Id)
+            .Distinct(StringComparer.Ordinal).Count());
+        var manifestations = selected.Select((x, i) =>
+            new NativeOriginManifestation("vision-" + i, x.Id)).ToArray();
+        var permissions = selected.Select((x, i) =>
+            Decision("permit-vision-" + i, "candidate", x.Id,
+                new { eligibility = "eligible" })).ToArray();
+        var original = proposal with
+        {
+            Manifestations = manifestations, TableDecisions = permissions
+        };
+        var unresolved = Evaluate(original, new TestAuthority(), false);
+        Assert.Contains(unresolved.Issues, x =>
+            x.Code == "shared-definition-reconciliation-required");
+        Assert.DoesNotContain(unresolved.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+
+        var relation = new NativeOriginRelationship("keep-separate-visions",
+            NativeOriginRelationshipKind.Equivalent,
+            selected.Select(x => x.Id).ToArray());
+        var disposition = Decision("explicit-coexistence", "relationship", relation.Id,
+            new { action = "retain-both", candidateIds = relation.CandidateIds });
+        var approved = Evaluate(original with
+        {
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: disposition.Id))],
+            TableDecisions = permissions.Append(disposition).ToArray()
+        }, new TestAuthority(), false);
+        Assert.DoesNotContain(approved.Issues, x =>
+            x.Code == "shared-definition-reconciliation-required");
+        var actual = approved.Profile!.Underlying.InherentGrants.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision").ToArray();
+        Assert.Equal(2, actual.Length);
+        Assert.All(actual, x => Assert.Single(x.SourceCandidateIds));
+        Assert.Equal(2, actual.Select(x => x.Identity.Occurrence.Source.Id)
+            .Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, approved.Status);
+    }
+
+
+    [Fact]
+    public void RetainBothCannotBorrowDifferentAuthenticatedDecisionId()
+    {
+        var proposal = Proposal("exact-coexistence-decision", NativeOriginIntent.Mixed,
+            contributors: [Contributor("elf", "species.elf"),
+                Contributor("orc", "species.orc")]);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var visions = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(2, visions.Length);
+
+        var relation = new NativeOriginRelationship("coexist-visions",
+            NativeOriginRelationshipKind.Equivalent,
+            visions.Select(x => x.Id).ToArray());
+        var actual = Decision("valid-coexistence", "relationship", relation.Id,
+            new { action = "retain-both", candidateIds = relation.CandidateIds });
+        var unrelated = Decision("wrong-coexistence", "candidate", visions[0].Id,
+            new { eligibility = "eligible" });
+        var permissions = visions.Select((x, i) =>
+            Decision("permit-vision-" + i, "candidate", x.Id,
+                new { eligibility = "eligible" })).ToArray();
+        var chosen = proposal with
+        {
+            Manifestations = visions.Select((x, i) =>
+                new NativeOriginManifestation("pick-vision-" + i, x.Id)).ToArray(),
+            Relationships = [relation],
+            Resolutions =
+            [
+                new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: unrelated.Id))
+            ],
+            TableDecisions = permissions.Concat([unrelated, actual]).ToArray()
+        };
+        var rejected = Evaluate(chosen, new TestAuthority(), false);
+        Assert.Contains(rejected.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized" &&
+            x.Path == relation.Id);
+        Assert.DoesNotContain(rejected.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+
+        var accepted = Evaluate(chosen with
+        {
+            Resolutions =
+            [
+                new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: actual.Id))
+            ]
+        }, new TestAuthority(), false);
+        Assert.DoesNotContain(accepted.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized");
+        Assert.Equal(2, accepted.Profile!.Underlying.InherentGrants.Count(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision"));
+    }
+
+    [Fact]
+    public void PartialCoexistenceCannotAuthorizeAnUnreviewedThirdOccurrence()
+    {
+        var contributors = new[]
+        {
+            Contributor("elf", "species.elf"),
+            Contributor("orc", "species.orc"),
+            Contributor("dragonborn", "species.dragonborn")
+        };
+        var proposal = Proposal("partial-coexistence", NativeOriginIntent.Mixed,
+            contributors: contributors);
+        var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var visions = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        Assert.Equal(3, visions.Length);
+        Assert.Equal(3, visions.Select(x => x.Identity.Occurrence.Source.Id)
+            .Distinct(StringComparer.Ordinal).Count());
+        var paired = visions.Where(x => x.ContributorId is "elf" or "orc").ToArray();
+        Assert.Equal(2, paired.Length);
+        var relation = new NativeOriginRelationship("only-elf-and-orc",
+            NativeOriginRelationshipKind.Equivalent,
+            paired.Select(x => x.Id).ToArray());
+        var ruling = Decision("allow-exact-pair", "relationship", relation.Id,
+            new { action = "retain-both", candidateIds = relation.CandidateIds });
+        var permits = visions.Select((x, i) =>
+            Decision("permit-source-" + i, "candidate", x.Id,
+                new { eligibility = "eligible" })).Append(ruling).ToArray();
+        var manifestations = visions.Select((x, i) =>
+            new NativeOriginManifestation("picked-source-" + i, x.Id)).ToArray();
+
+        NativeOriginConstructionResult Run(
+            IReadOnlyList<NativeOriginContributor> orderedContributors) =>
+            Evaluate(proposal with
+            {
+                Contributors = orderedContributors,
+                Manifestations = manifestations,
+                Relationships = [relation],
+                Resolutions =
+                [
+                    new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                        new(NativeOriginAdjudication.DmAuthorized,
+                            TableDecisionId: ruling.Id))
+                ],
+                TableDecisions = permits
+            }, new TestAuthority(), false);
+
+        var original = Run(contributors);
+        var reversed = Run(contributors.Reverse().ToArray());
+        foreach (var result in new[] { original, reversed })
+        {
+            Assert.Contains(result.Issues, x =>
+                x.Code == "shared-definition-reconciliation-required" &&
+                x.Path == "trait.shared.low-light-vision");
+            Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
+                x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+        }
+        Assert.Equal(
+            original.Issues.Where(x => x.Code == "shared-definition-reconciliation-required")
+                .Select(x => x.Path).ToArray(),
+            reversed.Issues.Where(x => x.Code == "shared-definition-reconciliation-required")
+                .Select(x => x.Path).ToArray());
+
+        // Reusing the same authenticated ruling and relationship ID with a
+        // larger caller-supplied participant list must not turn one approved
+        // pair into permission for a third overlap.
+        var altered = proposal with
+        {
+            Manifestations = manifestations,
+            Relationships =
+            [
+                relation with { CandidateIds = visions.Select(x => x.Id).ToArray() }
+            ],
+            Resolutions =
+            [
+                new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                    new(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: ruling.Id))
+            ],
+            TableDecisions = permits
+        };
+        var forgedExpansion = Evaluate(altered, new TestAuthority(), false);
+        Assert.Contains(forgedExpansion.Issues, x =>
+            x.Code == "relationship-disposition-unauthorized" && x.Path == relation.Id);
+        Assert.DoesNotContain(forgedExpansion.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+    }
+
 }

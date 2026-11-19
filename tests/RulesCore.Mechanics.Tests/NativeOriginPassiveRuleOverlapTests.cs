@@ -200,7 +200,7 @@ public sealed class NativeOriginPassiveRuleOverlapTests
     {
         var (proposal, elf, tiefling, _) = Prepared();
         var decision = Permission("retain-both", "relationship", "same-vision",
-            new { action = "retain-both" });
+            new { action = "retain-both", candidateIds = new[] { elf.Id, tiefling.Id } });
         var selected = proposal with
         {
             TableDecisions = proposal.TableDecisions!.Append(decision).ToArray(),

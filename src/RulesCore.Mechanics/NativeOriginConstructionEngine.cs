@@ -511,6 +511,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             {
                 var decision = Verified("constraint", constraint.Id);
                 if (decision is not null &&
+                    (constraint.TableDecisionId is null ||
+                     decision.Id == constraint.TableDecisionId) &&
                     (ReadBool(decision.EffectiveOutcome, "allow") == true ||
                      ReadBool(decision.EffectiveOutcome, "enforce") == true))
                     verifiedDmDecisionIds.Add(decision.Id);
@@ -519,25 +521,39 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
-        // Source-authored parameters that reference another selected characteristic
-        // are resolved only after the intrinsic candidates have been reconciled.
-        // Unresolved prerequisites cannot leave an active dependent trait behind.
-        var (bound, bindingIssues) = NativeOriginDependentBinder.Bind(catalog, proposal, resolved);
-        issues.AddRange(bindingIssues);
-        // A selected trait that spends another trait's authored charges must
-        // bind to the actual selected resource owner from the same contributor.
-        // Missing or ambiguous ownership suppresses the dependent grant.
-        var (resourceBound, resourceIssues) =
-            NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
-        resolved = resourceBound;
-        issues.AddRange(resourceIssues);
-        // A prerequisite can be selected before reconciliation, then removed
-        // by a separate relationship disposition. Recheck native source links
-        // against the final, effective grants, never the original offers.
-        var (linkedGrants, linkedIssues) =
-            _nativeLinks.VerifyEffectiveLinks(proposal, resolved, Verified);
-        resolved = linkedGrants;
-        issues.AddRange(linkedIssues);
+        // Every binder is monotonic: it can suppress an unsupported dependent,
+        // but never create a new grant. A general requirement may remove an
+        // otherwise valid resource/choice owner after its dependent was bound.
+        // Rerun the canonical binders to a fixed point so a dependent cannot
+        // retain a stale owner ID or source choice in the final profile.
+        IReadOnlyList<NativeOriginEffectiveGrant> effective = resolved;
+        while (true)
+        {
+            // Rebind from immutable reconciled input, not the previous pass's
+            // derived Parameters. Otherwise an auto-bound intrinsic parameter
+            // can appear inherited when its actual owner was just suppressed.
+            // Only grant IDs surviving the last pass may be reconsidered.
+            var survivingIds = effective.Select(x => x.Id)
+                .ToHashSet(StringComparer.Ordinal);
+            var inputs = resolved.Where(x => survivingIds.Contains(x.Id)).ToArray();
+            var previousCount = inputs.Length;
+            var (bound, bindingIssues) =
+                NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
+            issues.AddRange(bindingIssues);
+            var (resourceBound, resourceIssues) =
+                NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+            issues.AddRange(resourceIssues);
+            var (linkedGrants, linkedIssues) =
+                _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
+            issues.AddRange(linkedIssues);
+            var (closedGrants, closureIssues) =
+                _constraints.VerifyEffectiveRequirements(proposal, linkedGrants, Verified);
+            issues.AddRange(closureIssues);
+            effective = closedGrants;
+            if (effective.Count == previousCount)
+                break;
+        }
+        resolved = effective;
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
