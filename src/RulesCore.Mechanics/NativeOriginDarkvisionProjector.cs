@@ -13,7 +13,13 @@ public static class NativeOriginDarkvisionProjector
 {
     public sealed record NativeDarkvisionExtension(
         int AddedRangeFeet, int RequiredCharacterLevel,
-        string GrantId, string SourceId, string OccurrencePath);
+        string GrantId, string SourceId, string OccurrencePath)
+    {
+        // Preserve both the stand-alone range and the original authored
+        // limitations for future (not yet active) unlocks as well.
+        public int StandaloneRangeFeet { get; init; }
+        public JsonElement CompleteEffect { get; init; }
+    }
 
     public sealed record GrantedDarkvision(
         int RangeFeet, string GrantId, string SourceId, string OccurrencePath,
@@ -22,7 +28,15 @@ public static class NativeOriginDarkvisionProjector
 
     public sealed record View(
         string Status, GrantedDarkvision? Darkvision,
-        IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true);
+        IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true)
+    {
+        /// <summary>
+        /// Verified selected extensions not yet unlocked. These are not part
+        /// of Darkvision.RangeFeet or the active Extensions collection.
+        /// </summary>
+        public IReadOnlyList<NativeDarkvisionExtension> PendingExtensions
+        { get; init; } = [];
+    }
 
     public static View Project(NativeCatalogSnapshot catalog,
         NativeOriginConstructionResult result, int? characterLevel = null) =>
@@ -90,6 +104,7 @@ public static class NativeOriginDarkvisionProjector
             sense.GetString() == "darkvision").ToArray();
 
         var extensions = new List<NativeDarkvisionExtension>();
+        var pendingExtensions = new List<NativeDarkvisionExtension>();
         foreach (var grant in nativeSenseGrants)
         {
             if (grant.Identity.MechanicalDefinitionId is not { } id ||
@@ -112,25 +127,34 @@ public static class NativeOriginDarkvisionProjector
 
             if (characterLevel is null)
                 return Unresolved("darkvision-extension-requires-character-level");
-            if (characterLevel.Value < unlock)
-                continue;
-            extensions.Add(new(added, unlock, grant.Id,
+            var extension = new NativeDarkvisionExtension(added, unlock, grant.Id,
                 grant.Identity.Occurrence.Source.Id,
-                grant.Identity.Occurrence.OccurrencePath));
+                grant.Identity.Occurrence.OccurrencePath)
+            {
+                StandaloneRangeFeet = sourceRange,
+                CompleteEffect = canonical.Clone()
+            };
+            if (characterLevel.Value < unlock)
+                pendingExtensions.Add(extension);
+            else
+                extensions.Add(extension);
         }
 
         // The native catalog currently has one authored Darkvision-upgrade
         // grammar. Different upgrade traits need their own compatibility and
         // stacking review; two instances cannot become two free range boosts.
-        if (extensions.Count > 1)
+        if (extensions.Count + pendingExtensions.Count > 1)
             return Unresolved("multiple-darkvision-extensions-require-reconciliation");
 
         if (initialRange == 0 && extensions.Count == 0)
-            return new("none", null, []);
+            return new("none", null, [])
+            {
+                PendingExtensions = pendingExtensions
+            };
         var extension = extensions.SingleOrDefault();
         var total = baseGrant is not null
             ? initialRange + (extension?.AddedRangeFeet ?? 0)
-            : (extension is null ? 0 : SourceRange(extension));
+            : (extension is null ? 0 : extension.StandaloneRangeFeet);
         if (total <= 0 || total > 1_000_000)
             return Unresolved("darkvision-range-overflow");
 
@@ -140,17 +164,10 @@ public static class NativeOriginDarkvisionProjector
             primary.Identity.Occurrence.Source.Id,
             primary.Identity.Occurrence.OccurrencePath,
             BaseRangeFeet: initialRange,
-            Extensions: extensions), []);
-
-        int SourceRange(NativeDarkvisionExtension x)
+            Extensions: extensions), [])
         {
-            var chosen = profile.Current.InherentGrants.Single(y => y.Id == x.GrantId);
-            // Native canonical range is the stand-alone range. The additive
-            // amount is used only if a Darkvision base already exists.
-            catalog.TryGetById(chosen.Identity.MechanicalDefinitionId!, out var definition);
-            return definition!.Definition.GetProperty("trait")
-                .GetProperty("rangeFeet").GetInt32();
-        }
+            PendingExtensions = pendingExtensions
+        };
 
         bool VerifiedGrant(NativeOriginEffectiveGrant grant)
         {
