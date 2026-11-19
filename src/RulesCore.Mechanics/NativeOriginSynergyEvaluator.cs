@@ -182,7 +182,10 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                     "choice", "choiceOptions", "chooseFrom", "choiceCount",
                     "abilityChoice", "featCategory", "spellList", "when",
                     "uses", "sharedUsesFromTrait", "resourcePool" }
-                    .Any(key => effect.TryGetProperty(key, out _)))
+                    .Any(key => effect.TryGetProperty(key, out _)) ||
+                effect.TryGetProperty("grantType", out var grantType) &&
+                grantType.ValueKind == JsonValueKind.String &&
+                grantType.GetString() == "feat-choice")
             {
                 Invalid(ownerId, "Interaction must identify an authorized, canonical, fixed Origin trait with a matching target.");
                 continue;
