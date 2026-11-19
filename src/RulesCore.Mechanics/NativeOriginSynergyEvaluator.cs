@@ -184,7 +184,11 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         {
             // Reject unimplemented semantic fields. Ignoring a claimed
             // operating condition or negation could accidentally grant power.
-            if (item.ValueKind != JsonValueKind.Object ||
+            // A newline separates the authoring source and interaction ID in
+            // the stable grant hash. Reject delimiter injection rather than
+            // letting two distinct rule pairs resolve to one synthetic ID.
+            if (ownerId.IndexOfAny(['\r', '\n']) >= 0 ||
+                item.ValueKind != JsonValueKind.Object ||
                 item.EnumerateObject().Any(p => p.Name is not (
                     "id" or "resultTraitId" or "inputs" or "name" or
                     "description" or "reviewNotes")) ||
@@ -362,7 +366,8 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         result = "";
         if (!value.TryGetProperty(name, out var field) ||
             field.ValueKind != JsonValueKind.String ||
-            string.IsNullOrWhiteSpace(field.GetString()))
+            string.IsNullOrWhiteSpace(field.GetString()) ||
+            field.GetString()!.IndexOfAny(['\r', '\n']) >= 0)
             return false;
         result = field.GetString()!;
         return true;
