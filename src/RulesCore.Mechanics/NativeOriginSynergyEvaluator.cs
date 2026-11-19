@@ -6,8 +6,8 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// Evaluates catalog-authored combinations of effective Origin characteristics.
-/// Candidate offers and proposal-supplied rule references never create synergies.
+/// Evaluates native or verified table-authored combinations of effective Origin characteristics.
+/// Candidate offers and unverified proposal-supplied rules never create synergies.
 /// Each rule issues at most one stable result; separate acquisition/balance policies
 /// remain the responsibility of the origination procedure.
 /// </summary>
