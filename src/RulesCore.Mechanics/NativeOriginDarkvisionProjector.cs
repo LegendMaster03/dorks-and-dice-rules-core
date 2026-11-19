@@ -127,7 +127,7 @@ public static class NativeOriginDarkvisionProjector
 
             if (characterLevel is null)
                 return Unresolved("darkvision-extension-requires-character-level");
-            var extension = new NativeDarkvisionExtension(added, unlock, grant.Id,
+            var grantedExtension = new NativeDarkvisionExtension(added, unlock, grant.Id,
                 grant.Identity.Occurrence.Source.Id,
                 grant.Identity.Occurrence.OccurrencePath)
             {
@@ -135,9 +135,9 @@ public static class NativeOriginDarkvisionProjector
                 CompleteEffect = canonical.Clone()
             };
             if (characterLevel.Value < unlock)
-                pendingExtensions.Add(extension);
+                pendingExtensions.Add(grantedExtension);
             else
-                extensions.Add(extension);
+                extensions.Add(grantedExtension);
         }
 
         // The native catalog currently has one authored Darkvision-upgrade
