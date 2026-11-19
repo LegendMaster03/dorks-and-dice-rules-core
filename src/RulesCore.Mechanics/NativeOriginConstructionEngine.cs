@@ -557,8 +557,46 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         resolved = effective;
         // Derive only from the final, already reconciled and dependency-closed
         // effective set. Derived results are rebuilt, not copied from old state.
-        var (derived, synergyIssues) = _synergies.Evaluate(proposal, resolved);
+        // Table-authored definitions use the same grammar as native rules, but
+        // can only enter evaluation after the existing authenticated policy
+        // verifies their complete decision against the trusted scope. A serialized
+        // table claim never authorizes itself. Ambiguous duplicate targets fail
+        // closed rather than minting alternate results from competing rulings.
+        var verifiedTableSynergies = new List<NativeTableRuleDecision>();
+        var tableTargets = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var decision in proposal.TableDecisions ?? [])
+        {
+            if (decision?.Target?.Kind != "origin-synergy") continue;
+            if (string.IsNullOrWhiteSpace(decision.Id) ||
+                string.IsNullOrWhiteSpace(decision.Target.Id) ||
+                !tableTargets.Add(decision.Target.Id))
+            {
+                Add("synergy-table-decision-conflict", "tableDecisions",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Table-authored interactions require distinct, nonempty targets.");
+                continue;
+            }
+            if (authority is null || request.TrustedScope is null ||
+                !ScopeMatches(decision.Scope, request.TrustedScope, proposal.Id) ||
+                !authority.Authorizes(decision, request.TrustedScope))
+            {
+                Add("synergy-table-decision-unverified", "tableDecisions." + decision.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "A table-authored interaction requires a verified, scoped ruling.");
+                continue;
+            }
+            verifiedTableSynergies.Add(decision);
+        }
+        var (derived, synergyIssues) = _synergies.Evaluate(proposal, resolved,
+            verifiedTableSynergies);
         issues.AddRange(synergyIssues);
+        foreach (var grant in derived.Where(x =>
+            x.Authorization?.Adjudication == NativeOriginAdjudication.DmAuthorized &&
+            x.Authorization.TableDecisionId is not null))
+        {
+            usedDm = true;
+            verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
+        }
         resolved = resolved.Concat(derived).ToArray();
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
@@ -659,8 +697,9 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
 
         // Previously acquired baseline grants belong to an earlier construction proposal.
         // Do not demand that their original manifestations appear in this proposal.
-        var profileReview = _validator.ReviewProfile(profile,
-            proposal.ExistingConfiguration is null ? proposal : null);
+        var profileReview = _validator.ReviewProfileVerified(profile,
+            proposal.ExistingConfiguration is null ? proposal : null,
+            verifiedTableSynergies);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
         var status = Status();
