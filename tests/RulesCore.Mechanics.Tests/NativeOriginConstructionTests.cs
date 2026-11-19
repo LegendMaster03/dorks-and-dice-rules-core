@@ -2258,4 +2258,57 @@ public sealed class NativeOriginConstructionTests
         }
     }
 
+
+    [Fact]
+    public void DistinctSourceOccurrencesOfOneDefinitionRequireExactCoexistenceDecision()
+    {
+        var proposal = Proposal("two-vision-sources", NativeOriginIntent.Mixed,
+            contributors: [Contributor("elf", "species.elf"),
+                Contributor("orc", "species.orc")]);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var selected = offered.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision" &&
+            x.ContributorId is "elf" or "orc").ToArray();
+        Assert.Equal(2, selected.Length);
+        Assert.Equal(2, selected.Select(x => x.Identity.Occurrence.Source.Id)
+            .Distinct(StringComparer.Ordinal).Count());
+        var manifestations = selected.Select((x, i) =>
+            new NativeOriginManifestation("vision-" + i, x.Id)).ToArray();
+        var permissions = selected.Select((x, i) =>
+            Decision("permit-vision-" + i, "candidate", x.Id,
+                new { eligibility = "eligible" })).ToArray();
+        var original = proposal with
+        {
+            Manifestations = manifestations, TableDecisions = permissions
+        };
+        var unresolved = Evaluate(original, new TestAuthority(), false);
+        Assert.Contains(unresolved.Issues, x =>
+            x.Code == "shared-definition-reconciliation-required");
+        Assert.DoesNotContain(unresolved.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+
+        var relation = new NativeOriginRelationship("keep-separate-visions",
+            NativeOriginRelationshipKind.Equivalent,
+            selected.Select(x => x.Id).ToArray());
+        var disposition = Decision("explicit-coexistence", "relationship", relation.Id,
+            new { action = "retain-both" });
+        var approved = Evaluate(original with
+        {
+            Relationships = [relation],
+            Resolutions = [new(relation.Id, NativeOriginResolutionAction.RetainBoth,
+                new(NativeOriginAdjudication.DmAuthorized,
+                    TableDecisionId: disposition.Id))],
+            TableDecisions = permissions.Append(disposition).ToArray()
+        }, new TestAuthority(), false);
+        Assert.DoesNotContain(approved.Issues, x =>
+            x.Code == "shared-definition-reconciliation-required");
+        var actual = approved.Profile!.Underlying.InherentGrants.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision").ToArray();
+        Assert.Equal(2, actual.Length);
+        Assert.All(actual, x => Assert.Single(x.SourceCandidateIds));
+        Assert.Equal(2, actual.Select(x => x.Identity.Occurrence.Source.Id)
+            .Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, approved.Status);
+    }
+
 }

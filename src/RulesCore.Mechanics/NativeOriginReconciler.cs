@@ -149,10 +149,21 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
             x.Candidate.Identity.MechanicalDefinitionId is not null)
             .GroupBy(x => x.Candidate.Identity.MechanicalDefinitionId!, StringComparer.Ordinal))
         {
-            var entries = group.ToArray();
-            if (entries.Select(x => x.Candidate.Identity.Occurrence)
-                .Distinct().Count() < 2) continue;
-            foreach (var x in entries) ignored.Add(x.Candidate.Id);
+            var entries = group.OrderBy(x => x.Candidate.Id, StringComparer.Ordinal).ToArray();
+            var conflicting = new HashSet<string>(StringComparer.Ordinal);
+            for (var i = 0; i < entries.Length; i++)
+            for (var j = i + 1; j < entries.Length; j++)
+            {
+                var first = entries[i].Candidate;
+                var second = entries[j].Candidate;
+                if (first.Identity.Occurrence == second.Identity.Occurrence ||
+                    authorizedCoexistence.Contains(OrderedPair(first.Id, second.Id)))
+                    continue;
+                conflicting.Add(first.Id);
+                conflicting.Add(second.Id);
+            }
+            if (conflicting.Count == 0) continue;
+            foreach (var id in conflicting) ignored.Add(id);
             Issue("shared-definition-reconciliation-required", group.Key,
                 NativeOriginIssueSeverity.Unresolved,
                 "Shared canonical mechanics from distinct occurrences require an authored disposition.");

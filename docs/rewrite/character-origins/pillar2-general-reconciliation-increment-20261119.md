@@ -10,7 +10,7 @@
 | Interaction | Before | After |
 | --- | --- | --- |
 | Identical authorized occurrence from multiple contributors | Already consolidates and preserves source candidate/lineage evidence | Unchanged; effective prerequisite selectors can recognize every consolidated source offer |
-| Shared definition across different occurrences | Unresolved without authored disposition | Unchanged |
+| Shared definition across different occurrences | Unresolved without authored disposition; explicit verified coexistence was not honored | Fixed: a verified pair-specific RetainBoth preserves distinct grants; unadjudicated pairs stay unresolved |
 | Conflicting intrinsic slots | Unresolved unless scoped disposition | Unchanged |
 | Same typed sense, permanent resistance, movement mode, or executable passive rule from distinct traits | Already detected; requires explicit complete-trait disposition | Unchanged |
 | Partial semantic overlap without executable authored evidence | Not inferred from labels or common fields | Unchanged; requires gameplay authoring |
@@ -82,3 +82,5 @@ The source-neutral `originConstraints` check previously trusted matching catalog
 Additional native regressions exercise an intrinsic-dependent High Elf spell after its ability source is removed, cyclic prerequisites with reordered constraints, and canonical rule-pointer forgery. The constraint evaluator also skips null constraint entries already marked invalid by earlier structural validation.
 
 These are infrastructure/integrity corrections, not new policy decisions. The original complete CI results remain evidence for their original commit only. The corrected source/test HEAD requires fresh hosted CI evidence.
+
+An additional reconciliation review found that `RetainBoth` was recorded for a selected pair but the shared-definition pass still suppressed both complete grants unconditionally. The shared-definition overlap check now tests every distinct source-occurrence pair against its exact authorized coexistence evidence. Unadjudicated pairs remain unresolved, and no balancing or universal stacking policy is inferred. A native Orc/Elf Low-Light Vision regression verifies default unresolved status, followed by exactly two separately sourced grants only when a trusted decision explicitly authorizes `RetainBoth`. The result is an auditable exception, not a new first-party default.
