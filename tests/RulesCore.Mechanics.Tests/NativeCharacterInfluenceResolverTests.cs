@@ -1149,4 +1149,38 @@ public sealed class NativeCharacterInfluenceResolverTests
         Assert.Single(result.AppliedEffects);
         Assert.Equal("exact-phase", result.AppliedEffects[0].Effect.Id);
     }
+
+    [Fact]
+    public void WriterSelectionsAreIndependentForPrimaryAndAlternateSheet()
+    {
+        var targets = new[] { NativeCharacterSheetResolver.PrimarySheetId, "sheet.wolf" };
+        var first = Influence("influence.a", effects: [
+            Effect("scope-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13, targets: targets)]);
+        var second = Influence("influence.b", effects: [
+            Effect("scope-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 15, targets: targets)]);
+        var primaryDecision = Choose("primary", "scope-a", "scope-a", "scope-b");
+        var formDecision = Choose("alternate", "scope-b", "scope-a", "scope-b") with
+        {
+            TargetSheetId = "sheet.wolf"
+        };
+        var state = Character([first, second], [Alternate()]) with
+        {
+            InfluenceOverlapSelections = [primaryDecision, formDecision]
+        };
+        var primary = Resolve(state);
+        Assert.Equal("resolved", primary.Status);
+        Assert.Equal(13, primary.EffectiveMechanics!.AbilityScores["strength"]);
+        var alternate = Resolve(state, target: "sheet.wolf");
+        Assert.Equal("resolved", alternate.Status);
+        Assert.Equal(15, alternate.EffectiveMechanics!.AbilityScores["strength"]);
+
+        var primaryOnly = state with { InfluenceOverlapSelections = [primaryDecision] };
+        Assert.Equal("resolved", Resolve(primaryOnly).Status);
+        Assert.Equal("unresolved", Resolve(primaryOnly, target: "sheet.wolf").Status);
+        Assert.Equal("resolved", NativeCharacterInfluenceResolver.ValidateState(
+            primaryOnly, "sheet.wolf", new Authority()).Status);
+    }
+
 }

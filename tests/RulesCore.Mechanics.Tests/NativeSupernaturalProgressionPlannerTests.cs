@@ -374,4 +374,62 @@ public sealed class NativeSupernaturalProgressionPlannerTests
         Assert.Equal("ineligible", Plan(state, ledger, definition, request,
             new Authority { Eligibility = NativeSupernaturalEligibilityVerdict.Failed }).Status);
     }
+
+    [Fact]
+    public void PlannerRejectsMalformedAuthoredEffectsBeforeAcceptance()
+    {
+        var valid = Effect("test");
+        var invalid = new[]
+        {
+            valid with { Operation = NativeInfluenceOperation.Add },
+            valid with { TargetSheetIds = ["sheet.nonexistent"] },
+            valid with { NumericValue = null },
+            valid with { BooleanValue = true },
+            valid with { DefinitionOccurrence = Occ("effects.test", "synthetic.other") },
+            valid with { ExpressionConditions =
+                [new("phase", NativeInfluenceExpressionComparison.GreaterThan, "not-a-number")] }
+        };
+        foreach (var effect in invalid)
+        {
+            var plan = Plan(Character(), Journal(), Definition(effects: [effect]),
+                Request(NativeSupernaturalTransitionKind.Acquire, "acquire"));
+            Assert.Equal("invalid", plan.Status);
+            Assert.Null(plan.ProposedState);
+            Assert.Contains(plan.Issues, x => x.Code == "invalid-supernatural-definition");
+        }
+    }
+
+    [Fact]
+    public void AuthenticatedStateCanProgressDespiteAnUnresolvedUnrelatedCollision()
+    {
+        var definition = Definition([Node("later", grants: [Grant("later")])],
+            [Effect("shared") with { RequiredExpression = Expression("dormant") }]);
+        var (first, firstJournal) = Committed(Plan(Character(), Journal(), definition,
+            Request(NativeSupernaturalTransitionKind.Acquire, "acquire-one")));
+        var (second, secondJournal) = Committed(Plan(first, firstJournal, definition,
+            Request(NativeSupernaturalTransitionKind.Acquire, "acquire-two",
+                firstJournal.Revision, instance: "influence.two")));
+        var authority = new Authority();
+        Assert.Equal("resolved", NativeCharacterInfluenceResolver.ValidateState(
+            second, "@primary", authority).Status);
+        Assert.Equal("unresolved", NativeCharacterInfluenceResolver.Resolve(
+            second, "@primary", authority).Status);
+
+        var unrelated = Plan(second, secondJournal, definition,
+            Request(NativeSupernaturalTransitionKind.Advance, "advance-two",
+                secondJournal.Revision, instance: "influence.two", nodeId: "later"));
+        var (advanced, _) = Committed(unrelated);
+        Assert.Single(advanced.PersistentInfluences![1].Progression!);
+        Assert.Equal("unresolved", NativeCharacterInfluenceResolver.Resolve(
+            advanced, "@primary", authority).Status);
+
+        var corrected = Plan(second, secondJournal, definition,
+            Request(NativeSupernaturalTransitionKind.ChangeExpression, "correct-one",
+                secondJournal.Revision, expression: Expression("active")));
+        var (correctedState, _) = Committed(corrected);
+        Assert.Equal("resolved", NativeCharacterInfluenceResolver.Resolve(
+            correctedState, "@primary", authority).Status);
+        Assert.Equal("dormant", second.PersistentInfluences![0].Expression["phase"]);
+    }
+
 }
