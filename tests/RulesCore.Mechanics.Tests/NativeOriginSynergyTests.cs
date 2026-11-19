@@ -253,7 +253,9 @@ public sealed class NativeOriginSynergyTests
         var evaluated = new NativeOriginConstructionEngine(fixture.Catalog)
             .Evaluate(new(injected, AutoManifestDirectDefaults: false));
         Assert.Contains(evaluated.Issues, x => x.Code == "candidate-not-offered");
-        Assert.False(Has(evaluated, "trait.fixture.flight"));
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, evaluated.Status);
+        Assert.True(evaluated.Profile is null || !evaluated.Profile.Underlying.InherentGrants
+            .Any(x => x.Identity.MechanicalDefinitionId == "trait.fixture.flight"));
     }
 
     [Fact]
