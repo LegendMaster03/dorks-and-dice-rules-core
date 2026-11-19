@@ -45,6 +45,15 @@ public static class NativeMechanicsEndpoints
         // Origin preview inherits the same authenticated ingress as other mechanics.
         // No persisted state or table-authority claims are accepted by this route.
         group.MapNativeOriginPreview();
+        // Character-owned supernatural routes have independent host-side
+        // verifiers; delegation is not proof of source entitlement.
+        if (!privateTunnel)
+        {
+            group.MapVerifiedPrimaryState();
+            group.MapVerifiedManifestationPlans();
+            group.MapVerifiedManifestationReads();
+            group.MapNativeOriginVerifiedUnderlying();
+        }
         // Separate trusted DM-reviewed evaluation. The caller must still
         // commit any authorized result through Character Sheet's store.
         if (!privateTunnel)
