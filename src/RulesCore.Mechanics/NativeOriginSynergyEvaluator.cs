@@ -55,47 +55,76 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
             .Where(candidate => candidate is not null)
             .GroupBy(candidate => candidate.Id, StringComparer.Ordinal)
             .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
-        var available = effective.OrderBy(grant => grant.Id, StringComparer.Ordinal).ToList();
+        var starting = effective.OrderBy(grant => grant.Id, StringComparer.Ordinal).ToArray();
+        var available = starting.ToList();
         var derived = new List<NativeOriginEffectiveGrant>();
         var generated = new HashSet<string>(StringComparer.Ordinal);
-        var reportedAmbiguities = new HashSet<string>(StringComparer.Ordinal);
+        var rejectedResults = new HashSet<string>(StringComparer.Ordinal);
 
-        // Compute eligible outputs against the same immutable pass snapshot.
-        // Two independently authored rules yielding the same canonical trait
-        // do not establish a priority or stacking policy merely because their
-        // identifiers sort in a particular order. Block both and report the
-        // unresolved policy instead of silently choosing the first.
-        // Acyclic transitive rules need at most one successful pass per rule.
-        for (var pass = 0; pass < rules.Count; pass++)
+        // Conflicts can emerge in later passes: a newly derived prerequisite
+        // may activate a second rule for a trait already issued by the first.
+        // When that happens, discard the entire temporary closure and rebuild
+        // without the disputed result. This also retracts any transitive
+        // benefits already issued from the ambiguous trait. Each restart
+        // excludes at least one additional result, so the bound is finite.
+        for (var restart = 0; restart <= rules.Count; restart++)
         {
-            var eligible = new List<(Rule Rule,
-                IReadOnlyList<NativeOriginEffectiveGrant> Inputs)>();
-            foreach (var rule in rules)
-            {
-                var key = Key(rule);
-                if (generated.Contains(key) || cyclic.Contains(key)) continue;
-                if (available.Any(x => x.Identity.MechanicalDefinitionId == rule.ResultTraitId))
-                    continue;
-                if (TrySelectInputs(rule, available, offers, out var inputs))
-                    eligible.Add((rule, inputs));
-            }
+            available = starting.ToList();
+            derived.Clear();
+            generated.Clear();
+            var rebuild = false;
 
-            var contested = eligible.GroupBy(x => x.Rule.ResultTraitId, StringComparer.Ordinal)
-                .Where(x => x.Count() > 1)
-                .Select(x => x.Key)
-                .ToHashSet(StringComparer.Ordinal);
-            foreach (var resultTraitId in contested.OrderBy(x => x, StringComparer.Ordinal))
-                if (reportedAmbiguities.Add(resultTraitId))
-                    issues.Add(new("synergy-result-ambiguous",
-                        "originSynergies." + resultTraitId,
-                        NativeOriginIssueSeverity.Unresolved,
-                        "Multiple applicable interactions grant the same canonical trait; an explicit authored alternative or precedence rule is required."));
-
-            var changed = false;
-            foreach (var (rule, inputs) in eligible)
+            // Compute all eligibility from a common snapshot per pass; do not
+            // let rule ID sort order decide between simultaneous outcomes.
+            for (var pass = 0; pass < rules.Count; pass++)
             {
-                if (contested.Contains(rule.ResultTraitId)) continue;
-                var key = Key(rule);
+                var eligible = new List<(Rule Rule,
+                    IReadOnlyList<NativeOriginEffectiveGrant> Inputs)>();
+                foreach (var rule in rules)
+                {
+                    var key = Key(rule);
+                    if (generated.Contains(key) || cyclic.Contains(key) ||
+                        rejectedResults.Contains(rule.ResultTraitId)) continue;
+                    // A directly acquired trait is already effective; only
+                    // previously generated synergy grants can create a new
+                    // competition for the same canonical result.
+                    if (starting.Any(x =>
+                        x.Identity.MechanicalDefinitionId == rule.ResultTraitId))
+                        continue;
+                    if (TrySelectInputs(rule, available, offers, out var inputs))
+                        eligible.Add((rule, inputs));
+                }
+
+                var contested = eligible.GroupBy(x => x.Rule.ResultTraitId,
+                        StringComparer.Ordinal)
+                    .Where(x => x.Count() > 1)
+                    .Select(x => x.Key)
+                    .ToHashSet(StringComparer.Ordinal);
+                foreach (var candidate in eligible)
+                    if (derived.Any(grant =>
+                        grant.Identity.MechanicalDefinitionId ==
+                            candidate.Rule.ResultTraitId))
+                        contested.Add(candidate.Rule.ResultTraitId);
+
+                if (contested.Count > 0)
+                {
+                    foreach (var resultTraitId in contested.OrderBy(x => x,
+                        StringComparer.Ordinal))
+                    {
+                        rejectedResults.Add(resultTraitId);
+                        issues.Add(new("synergy-result-ambiguous",
+                            "originSynergies." + resultTraitId,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "Multiple applicable interactions grant the same canonical trait; an explicit authored alternative or precedence rule is required."));
+                    }
+                    rebuild = true;
+                    break;
+                }
+
+                var changed = false;
+                foreach (var (rule, inputs) in eligible)
+                {
+                    var key = Key(rule);
                 var provenance = inputs.OrderBy(x => x.Id, StringComparer.Ordinal)
                     .Select(x => new NativeOriginSynergyInputEvidence(
                         x.Id, x.ManifestationId, x.Identity,
@@ -129,9 +158,11 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 available.Add(grant);
                 available.Sort((a, b) => StringComparer.Ordinal.Compare(a.Id, b.Id));
                 generated.Add(key);
-                changed = true;
+                    changed = true;
+                }
+                if (!changed) break;
             }
-            if (!changed) break;
+            if (!rebuild) break;
         }
 
         // Only report a cycle when one of its prerequisites is actually present.
