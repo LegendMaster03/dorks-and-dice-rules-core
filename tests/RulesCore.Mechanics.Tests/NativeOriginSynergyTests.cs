@@ -82,7 +82,9 @@ public sealed class NativeOriginSynergyTests
                   {"id":"trait.fixture.aerial-stability","kind":"origin-trait","name":"Aerial Stability","trait":{"id":"aerial-stability","name":"Aerial Stability","systemTag":"aerial"}},
                   {"id":"trait.fixture.duplicate","kind":"origin-trait","name":"Duplicate","trait":{"id":"duplicate","name":"Duplicate","systemTag":"duplicate"}},
                   {"id":"trait.fixture.loop-a","kind":"origin-trait","name":"Loop A","trait":{"id":"loop-a","name":"Loop A","systemTag":"loop-a"}},
-                  {"id":"trait.fixture.loop-b","kind":"origin-trait","name":"Loop B","trait":{"id":"loop-b","name":"Loop B","systemTag":"loop-b"}}
+                  {"id":"trait.fixture.loop-b","kind":"origin-trait","name":"Loop B","trait":{"id":"loop-b","name":"Loop B","systemTag":"loop-b"}},
+                  {"id":"trait.fixture.choice","kind":"origin-trait","name":"Choice","trait":{"id":"choice","choices":[{"id":"mode","options":["a","b"]}]}},
+                  {"id":"trait.fixture.resource","kind":"origin-trait","name":"Resource","trait":{"id":"resource","uses":3}}
                 ]
                 """);
             Catalog = NativeCatalogLoader.Load(
@@ -368,6 +370,181 @@ public sealed class NativeOriginSynergyTests
         Assert.DoesNotContain(suppressed.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == muscle.Identity.MechanicalDefinitionId);
         Assert.False(Has(suppressed, "trait.fixture.flight"));
+    }
+
+    private static NativeOriginProposal Selected(Fixture fixture,
+        params string[] occurrences)
+    {
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var proposal = Proposal();
+        var offers = engine.Evaluate(new(proposal, AutoManifestDirectDefaults: false))
+            .EvaluatedProposal.Candidates;
+        var manifests = offers
+            .Where(x => occurrences.Contains(x.Identity.Occurrence.OccurrencePath,
+                StringComparer.Ordinal))
+            .OrderBy(x => x.Id, StringComparer.Ordinal)
+            .Select((x, i) => new NativeOriginManifestation("selection-" + i, x.Id,
+                x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                    ? x.OfferedValue : null))
+            .ToArray();
+        return proposal with { Manifestations = manifests };
+    }
+
+    private static NativeTableRuleDecision TableSynergy(
+        string decisionId = "dm-table-flight", string targetId = "table-flight",
+        string authoredId = "table-flight", string resultId = "trait.fixture.guardian")
+    {
+        var rule = JsonSerializer.SerializeToElement(new
+        {
+            id = authoredId,
+            resultTraitId = resultId,
+            inputs = new[]
+            {
+                new { anyOf = new[] { new { mechanicalDefinitionId =
+                    "species.fixture#trait:wings" } }, count = 1 },
+                new { anyOf = new[] { new { mechanicalDefinitionId =
+                    "species.fixture#trait:muscle" } }, count = 1 }
+            }
+        });
+        return new NativeTableRuleDecision(decisionId,
+            new("dm", "verified"), new("campaign", "example"),
+            new("origin-synergy", targetId), rule);
+    }
+
+    [Fact]
+    public void AuthenticatedTableSynergyUsesCanonicalTraitAndExactProvenance()
+    {
+        using var fixture = new Fixture();
+        var decision = TableSynergy();
+        var proposal = Selected(fixture, "/traits/2", "/traits/3") with
+        {
+            TableDecisions = [decision]
+        };
+        var result = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(proposal, new("campaign", "example"),
+                AutoManifestDirectDefaults: false), new SyntheticAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var grant = result.Profile!.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.guardian");
+        Assert.Equal(NativeOriginSourceKind.Custom, grant.Identity.Occurrence.Source.Kind);
+        Assert.Equal("table-decision:dm-table-flight", grant.Synergy!.RuleId);
+        Assert.Equal("table-flight", grant.Synergy.InteractionId);
+        Assert.Equal(NativeOriginAdjudication.DmAuthorized,
+            grant.Authorization!.Adjudication);
+        Assert.Equal(decision.Id, grant.Authorization.TableDecisionId);
+        Assert.Equal(2, grant.Synergy.Inputs.Count);
+        Assert.Equal(2, grant.SourceCandidateIds.Count);
+        Assert.All(grant.Synergy.Inputs, input => Assert.StartsWith(
+            "species.fixture#trait:", input.Identity.MechanicalDefinitionId));
+
+        // A structural review without an authenticated policy context may
+        // inspect the claim, but must never confer table-created benefits.
+        var untrustedReview = new NativeOriginContractValidator(fixture.Catalog)
+            .ReviewProfile(result.Profile, result.EvaluatedProposal);
+        Assert.Contains(untrustedReview.Issues,
+            x => x.Code == "synergy-provenance-invalid");
+
+        var noInput = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(proposal with { Manifestations = [proposal.Manifestations[0]] },
+                new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.False(Has(noInput, "trait.fixture.guardian"));
+    }
+
+    [Fact]
+    public void UntrustedOrMisScopedTableRulesCannotCreateDerivedBenefits()
+    {
+        using var fixture = new Fixture();
+        var decision = TableSynergy();
+        var proposal = Selected(fixture, "/traits/2", "/traits/3") with
+        {
+            TableDecisions = [decision]
+        };
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var untrusted = engine.Evaluate(
+            new(proposal, new("campaign", "example"),
+                AutoManifestDirectDefaults: false));
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, untrusted.Status);
+        Assert.Contains(untrusted.Issues,
+            x => x.Code == "synergy-table-decision-unverified");
+        Assert.False(Has(untrusted, "trait.fixture.guardian"));
+
+        var misScoped = engine.Evaluate(
+            new(proposal, new("campaign", "other"),
+                AutoManifestDirectDefaults: false), new SyntheticAuthority());
+        Assert.Contains(misScoped.Issues,
+            x => x.Code == "synergy-table-decision-unverified");
+        Assert.False(Has(misScoped, "trait.fixture.guardian"));
+
+        var forgedEvidence = engine.Evaluate(
+            new(proposal with
+            {
+                TableDecisions = [decision with
+                {
+                    Authority = new("dm", "forged")
+                }]
+            }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.False(Has(forgedEvidence, "trait.fixture.guardian"));
+        Assert.Contains(forgedEvidence.Issues,
+            x => x.Code == "synergy-table-decision-unverified");
+    }
+
+    [Fact]
+    public void MalformedTableAuthoringAndDuplicateTargetsFailClosed()
+    {
+        using var fixture = new Fixture();
+        var engine = new NativeOriginConstructionEngine(fixture.Catalog);
+        var proposal = Selected(fixture, "/traits/2", "/traits/3");
+        var mismatched = engine.Evaluate(new(proposal with
+        {
+            TableDecisions = [TableSynergy(authoredId: "not-table-flight")]
+        }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.Contains(mismatched.Issues,
+            x => x.Code == "synergy-authoring-invalid");
+        Assert.False(Has(mismatched, "trait.fixture.guardian"));
+
+        var fabricated = engine.Evaluate(new(proposal with
+        {
+            TableDecisions = [TableSynergy(resultId: "trait.unknown")]
+        }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.Contains(fabricated.Issues,
+            x => x.Code == "synergy-authoring-invalid");
+        Assert.False(Has(fabricated, "trait.fixture.guardian"));
+
+        var duplicate = engine.Evaluate(new(proposal with
+        {
+            TableDecisions = [TableSynergy(),
+                TableSynergy(decisionId: "different-decision")]
+        }, new("campaign", "example"), AutoManifestDirectDefaults: false),
+            new SyntheticAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, duplicate.Status);
+        Assert.Null(duplicate.Profile);
+        Assert.Contains(duplicate.Issues,
+            x => x.Code == "synergy-table-decision-conflict");
+    }
+
+    [Fact]
+    public void ChoiceAndResourceDependentResultsAreNotMintedImplicitly()
+    {
+        const string unsafeResults = """
+            [
+              {"id":"unsafe-choice","resultTraitId":"trait.fixture.choice",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]},
+              {"id":"unsafe-resource","resultTraitId":"trait.fixture.resource",
+               "inputs":[{"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:wings"}],"count":1},
+                         {"anyOf":[{"mechanicalDefinitionId":"species.fixture#trait:muscle"}],"count":1}]}
+            ]
+            """;
+        using var fixture = new Fixture(unsafeResults);
+        var result = Evaluate(fixture, "/traits/2", "/traits/3");
+        Assert.Contains(result.Issues,
+            x => x.Code == "synergy-authoring-invalid");
+        Assert.False(Has(result, "trait.fixture.choice"));
+        Assert.False(Has(result, "trait.fixture.resource"));
     }
 
     [Fact]
