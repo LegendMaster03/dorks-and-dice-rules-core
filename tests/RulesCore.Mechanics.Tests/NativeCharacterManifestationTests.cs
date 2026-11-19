@@ -11,7 +11,8 @@ namespace RulesCore.Mechanics.Tests;
 /// </summary>
 public sealed class NativeCharacterManifestationTests
 {
-    private sealed class Authority : INativeCharacterManifestationAuthority
+    private sealed class Authority : INativeCharacterManifestationAuthority,
+        INativeCharacterInfluenceOverlapAuthority
     {
         public bool DenyLedger { get; set; }
         public bool DenyInstance { get; set; }
@@ -20,6 +21,7 @@ public sealed class NativeCharacterManifestationTests
         public bool DenyInteraction { get; set; }
         public bool DenyTransition { get; set; }
         public bool DenyInfluence { get; set; }
+        public bool DenyOverlap { get; set; }
         public bool DenyProgression { get; set; }
         public bool DenyGrant { get; set; }
         public bool PermitIndependentEnding { get; set; }
@@ -41,6 +43,12 @@ public sealed class NativeCharacterManifestationTests
             NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant) => true;
         public bool AuthorizesInfluenceApplicability(string id, string influence,
             NativeInfluenceGrantApplicability decision) => true;
+        public bool AuthorizesOverlapSelection(string id,
+            NativeInfluenceOverlapSelection selection) =>
+            !DenyOverlap && id == "character.1" &&
+            selection.RuleOccurrence == Occurrence("interactions.primary") &&
+            selection.AuthorizationEvidenceId == "receipt.interaction.primary" &&
+            selection.Basis == Rule();
         public bool AuthorizesLedger(string id, NativeManifestationLedger ledger) => !DenyLedger;
         public bool AuthorizesInstance(string id, NativeManifestationInstance instance,
             NativePersistentCharacterSheet sheet) =>
@@ -1131,6 +1139,51 @@ public sealed class NativeCharacterManifestationTests
         Assert.Null(transition.ProposedEffective);
         Assert.Contains(transition.Issues,
             x => x.Code == "influence-overlap-unresolved");
+    }
+
+    [Fact]
+    public void VerifiedPrimaryWriterDecisionSurvivesFormEntryAndReversion()
+    {
+        static NativeCharacterPersistentInfluence Primary(string suffix, int speed) =>
+            new("influence." + suffix, "definition." + suffix, Source(),
+                "receipt.acquire." + suffix, "receipt.expression." + suffix,
+                new Dictionary<string, string>(),
+                [new NativeCharacterInfluenceEffect("effect." + suffix,
+                    Occurrence("effects." + suffix), "receipt.effect." + suffix,
+                    Rule(), new Dictionary<string, string>(),
+                    [NativeCharacterSheetResolver.PrimarySheetId],
+                    NativeInfluenceCharacteristic.BaseWalkSpeed,
+                    NativeInfluenceOperation.Replace, NumericValue: speed)]);
+
+        var state = Character([Primary("a", 40), Primary("b", 45)]) with
+        {
+            InfluenceOverlapSelections =
+            [
+                new NativeInfluenceOverlapSelection("primary-selection",
+                    ["effect.a", "effect.b"], "effect.b",
+                    Occurrence("interactions.primary"), Rule(),
+                    "receipt.interaction.primary")
+            ]
+        };
+        var active = ActivatedWolf();
+        var transformed = Resolve(state, active);
+        Assert.Equal("partial", transformed.Status);
+        Assert.Equal("wolf", transformed.EffectiveSheetId);
+
+        var ended = Plan(state, active, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        Assert.Equal("planned", ended.Status);
+        Assert.Equal("resolved", ended.ProposedEffective!.Status);
+        Assert.Equal(45, ended.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal("effect.b", Assert.Single(ended.ProposedEffective.AppliedEffects).Effect.Id);
+        Assert.Equal(NativeManifestationLifecycle.Ended,
+            ended.Proposed!.Instances.Single().Lifecycle);
+
+        var denied = Resolve(state, active, new Authority { DenyOverlap = true });
+        Assert.Equal("invalid", denied.Status);
+        Assert.Null(denied.EffectiveMechanics);
+        Assert.Contains(denied.Issues, x =>
+            x.Code == "unauthorized-influence-overlap-selection");
     }
 
     [Fact]
