@@ -645,6 +645,64 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     }
 
     [Fact]
+    public void ReusedManifestationDoesNotManufactureSecondOpaqueOrTypedTrait()
+    {
+        var catalog = Catalog();
+
+        // The two profiles below are constructed legitimately first. Alter
+        // only the serialized effective grant list, retaining a valid source,
+        // candidate, occurrence and manifestation in each individual entry.
+        // Per-grant validation alone must not count one selected grant twice.
+        var orc = Direct(catalog, "species.orc");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, orc.Status);
+        var rush = Assert.Single(orc.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+        var duplicateOpaque = rush with { Id = "grant:replayed-orc-rush" };
+        var appendedOrc = orc.Profile.Underlying with
+        {
+            InherentGrants = orc.Profile.Underlying.InherentGrants
+                .Append(duplicateOpaque).ToArray()
+        };
+        var forgedOrc = orc with
+        {
+            Profile = orc.Profile with
+            {
+                Underlying = appendedOrc,
+                Current = appendedOrc
+            }
+        };
+        var opaqueProjection = NativeOriginPassiveEntitlementProjector
+            .Project(catalog, forgedOrc);
+        Assert.Equal("unresolved", opaqueProjection.Status);
+        Assert.Empty(opaqueProjection.Traits);
+        Assert.Empty(opaqueProjection.OutsideScopeTraits);
+
+        var elf = Direct(catalog, "species.elf");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, elf.Status);
+        var keen = Assert.Single(elf.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+        var duplicateTyped = keen with { Id = "grant:replayed-elf-keen-senses" };
+        var appendedElf = elf.Profile.Underlying with
+        {
+            InherentGrants = elf.Profile.Underlying.InherentGrants
+                .Append(duplicateTyped).ToArray()
+        };
+        var forgedElf = elf with
+        {
+            Profile = elf.Profile with
+            {
+                Underlying = appendedElf,
+                Current = appendedElf
+            }
+        };
+        var typedProjection = NativeOriginPassiveEntitlementProjector
+            .Project(catalog, forgedElf);
+        Assert.Equal("unresolved", typedProjection.Status);
+        Assert.Empty(typedProjection.Traits);
+        Assert.Empty(typedProjection.OutsideScopeTraits);
+    }
+
+    [Fact]
     public void UnrelatedSpeciesAndNoSelectableNativePassivesRemainAbsent()
     {
         var catalog = Catalog();
