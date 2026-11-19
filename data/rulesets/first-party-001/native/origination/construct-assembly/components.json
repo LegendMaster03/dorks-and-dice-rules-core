@@ -1,0 +1,123 @@
+[
+  {
+    "id": "construct-component.structural-frame",
+    "kind": "construct-component",
+    "name": "Structural frame",
+    "rulesStatus": "initial-assembly-reference; cost-unbalanced",
+    "description": "A load-bearing framework. No humanoid topology, body size, or minimum quantity is implied.",
+    "provides": [
+      "structural-support"
+    ],
+    "materialSlots": [
+      "frame"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.articulated-joint",
+    "kind": "construct-component",
+    "name": "Articulated joint",
+    "rulesStatus": "initial-assembly-reference; cost-unbalanced",
+    "description": "Connects structural elements with permitted articulation.",
+    "provides": [
+      "articulation"
+    ],
+    "materialSlots": [
+      "joint"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.alchemical-actuator",
+    "kind": "construct-component",
+    "name": "Alchemical actuator",
+    "rulesStatus": "initial-assembly-reference; cost-and-demand-unbalanced",
+    "description": "An actuating mechanism requiring compatible circulation.",
+    "provides": [
+      "actuation"
+    ],
+    "requiresAnyOf": [
+      [
+        "circulation"
+      ]
+    ],
+    "materialSlots": [
+      "actuator"
+    ]
+  },
+  {
+    "id": "construct-component.alchemical-circulation",
+    "kind": "construct-component",
+    "name": "Alchemical circulation assembly",
+    "rulesStatus": "initial-assembly-reference; cost-and-demand-unbalanced",
+    "description": "Distributes the working medium needed by compatible alchemical actuators.",
+    "provides": [
+      "circulation"
+    ],
+    "materialSlots": [
+      "conduit"
+    ]
+  },
+  {
+    "id": "construct-component.external-casing",
+    "kind": "construct-component",
+    "name": "External casing",
+    "rulesStatus": "initial-assembly-reference; cost-unbalanced",
+    "description": "An outer covering whose mechanical protection depends on material and later authored design rules.",
+    "provides": [
+      "enclosure"
+    ],
+    "materialSlots": [
+      "casing"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.manipulator",
+    "kind": "construct-component",
+    "name": "Manipulator",
+    "rulesStatus": "initial-assembly-reference; cost-and-demand-unbalanced",
+    "description": "Provides a manipulatory interface once sufficient movement and control are available.",
+    "provides": [
+      "manipulation"
+    ],
+    "requiresAnyOf": [
+      [
+        "actuation"
+      ],
+      [
+        "control"
+      ]
+    ],
+    "materialSlots": [
+      "grip"
+    ]
+  },
+  {
+    "id": "construct-component.weapon-mount",
+    "kind": "construct-component",
+    "name": "Integrated equipment mount",
+    "rulesStatus": "initial-assembly-reference; cost-unbalanced",
+    "description": "A mounting interface for integrated equipment. No attacks or equipment proficiency are granted by this definition.",
+    "provides": [
+      "equipment-mount"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.tether-reel",
+    "kind": "construct-component",
+    "name": "Tether reel",
+    "rulesStatus": "initial-assembly-reference; cost-and-demand-unbalanced",
+    "description": "An optional mechanism for deploying and retracting a tether; integration and operating-state rules remain subject to authoring.",
+    "provides": [
+      "tether-handling"
+    ],
+    "materialSlots": [
+      "line"
+    ]
+  }
+]
