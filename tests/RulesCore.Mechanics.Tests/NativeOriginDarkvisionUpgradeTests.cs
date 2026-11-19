@@ -152,9 +152,14 @@ public sealed class NativeOriginDarkvisionUpgradeTests
     [Theory]
     [InlineData("rangeFeet", "\"60\"")]
     [InlineData("rangeFeet", "1.5")]
+    [InlineData("rangeFeet", "null")]
+    [InlineData("rangeFeet", "[]")]
     [InlineData("addToExistingDarkvisionFeet", "\"60\"")]
+    [InlineData("addToExistingDarkvisionFeet", "true")]
     [InlineData("requiredCharacterLevel", "\"4\"")]
+    [InlineData("requiredCharacterLevel", "[]")]
     [InlineData("stacking", "10")]
+    [InlineData("stacking", "null")]
     [InlineData("sense", "false")]
     public void MalformedAuthoredExtensionTypesFailClosed(
         string field, string replacementJson)
