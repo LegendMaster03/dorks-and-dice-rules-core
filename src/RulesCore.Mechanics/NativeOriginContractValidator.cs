@@ -536,6 +536,24 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 .GroupBy(m => m.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
+        // A derived grant is not a new player manifestation. Recompute every
+        // native interaction from the proposal's already effective direct grants;
+        // the full result, including ordered inputs and source identities, must
+        // agree with its serialized proof. This is an audit, not an authorization
+        // shortcut for a caller-supplied Origin profile.
+        Dictionary<string, NativeOriginEffectiveGrant>? expectedSynergies = null;
+        if (proposal is not null)
+        {
+            var (recomputed, _) = new NativeOriginSynergyEvaluator(catalog).Evaluate(
+                proposal, baselineGrants.Values.Where(x => x.Synergy is null).ToArray());
+            expectedSynergies = recomputed.ToDictionary(x => x.Id, StringComparer.Ordinal);
+            foreach (var derived in recomputed)
+                if (!baselineGrants.ContainsKey(derived.Id))
+                    Add("synergy-grant-missing", "underlying.grants." + derived.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "An effective catalog-authored interaction was omitted.");
+        }
+
         // A serialized source-bound choice is not proof of a valid inherited
         // modifier. Recompute only canonical trait-choice dependencies against
         // the exact construction proposal and compare their selected values and
@@ -720,6 +738,21 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
         {
             var path = "underlying.grants." + grant.Id;
             CheckTableAuthorization(grant.Authorization, proposal?.TableDecisions, path, Add);
+
+            if (grant.Synergy is not null)
+            {
+                if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
+                    grant.Synergy.Inputs is null || grant.Synergy.Inputs.Count < 2 ||
+                    expectedSynergies is not null &&
+                    (!expectedSynergies.TryGetValue(grant.Id, out var expected) ||
+                     JsonSerializer.Serialize(expected) != JsonSerializer.Serialize(grant)))
+                    Add("synergy-provenance-invalid", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A derived grant must exactly match catalog-authored effective inputs.");
+                // Authored synergies do not fabricate proposal manifestations.
+                // Do not interpret their source candidate IDs as new selections.
+                continue;
+            }
 
             if (manifestations is not null)
             {
