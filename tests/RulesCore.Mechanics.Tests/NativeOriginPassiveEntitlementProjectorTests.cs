@@ -348,6 +348,144 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     }
 
     [Fact]
+    public void MissingCanonicalDefinitionAndAlteredOccurrenceCanNotDisappear()
+    {
+        var catalog = Catalog();
+        var completed = Direct(catalog, "species.elf");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
+        var keen = Assert.Single(completed.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+
+        // A payload without savingThrows/skillBonuses is still a native trait,
+        // not evidence that there are no projected entitlements.
+        var unknown = WithGrant(completed, keen with
+        {
+            Identity = keen.Identity with
+            {
+                MechanicalDefinitionId = "trait.missing.unrecognized"
+            },
+            EffectiveValue = JsonSerializer.SerializeToElement(new
+            {
+                id = "unknown-native", description = "not a recognized passive"
+            })
+        });
+        Assert.Equal("unresolved",
+            NativeOriginPassiveEntitlementProjector.Project(catalog, unknown).Status);
+
+        foreach (var altered in new[]
+        {
+            keen with { Identity = keen.Identity with
+                { Occurrence = keen.Identity.Occurrence with
+                    { OccurrencePath = "/traits/2" } } },
+            keen with { Identity = keen.Identity with
+                { Occurrence = keen.Identity.Occurrence with
+                    { OccurrencePath = "/traits/01" } } },
+            keen with { Identity = keen.Identity with
+                { Occurrence = keen.Identity.Occurrence with
+                    { Source = new(NativeOriginSourceKind.Native, "species.gnome") } } },
+            keen with { Identity = keen.Identity with
+                { IntrinsicSlotId = "darkvisionFeet" } },
+            keen with { Identity = keen.Identity with
+                { Kind = NativeOriginCharacteristicKind.Other } },
+            keen with { ManifestationId = "fabricated-manifestation" },
+        })
+        {
+            var result = NativeOriginPassiveEntitlementProjector.Project(
+                catalog, WithGrant(completed, altered));
+            Assert.Equal("unresolved", result.Status);
+            Assert.Empty(result.Traits);
+        }
+    }
+
+    [Fact]
+    public void MissingCanonicalDefinitionOfAnUnrelatedTraitIsNotAnAllClear()
+    {
+        var catalog = Catalog();
+        var orc = Direct(catalog, "species.orc");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, orc.Status);
+        var baseline = NativeOriginPassiveEntitlementProjector.Project(catalog, orc);
+        Assert.Equal("none", baseline.Status);
+        Assert.Contains(baseline.OutsideScopeTraits, x =>
+            x.DefinitionId == "trait.orc.adrenaline-rush");
+        Assert.Empty(baseline.Traits);
+
+        var rush = Assert.Single(orc.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+        var edited = WithGrant(orc, rush with
+        {
+            Identity = rush.Identity with
+            {
+                MechanicalDefinitionId = "trait.unknown.action"
+            }
+        });
+        var view = NativeOriginPassiveEntitlementProjector.Project(catalog, edited);
+        Assert.Equal("unresolved", view.Status);
+        Assert.Empty(view.Traits);
+        Assert.Empty(view.OutsideScopeTraits);
+    }
+
+    [Fact]
+    public void MultipleNativeParentsRetainOneTraitWithEveryContributingCandidate()
+    {
+        var catalog = Catalog();
+        var proposal = new NativeOriginProposal("twin-keen-senses",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [
+                new("first", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.elf")),
+                new("second", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.elf"))
+            ], [], []);
+        var engine = new NativeOriginConstructionEngine(catalog);
+        var offers = engine.Evaluate(new(proposal)).EvaluatedProposal.Candidates;
+        var keen = offers.Where(x =>
+            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses")
+            .ToArray();
+        Assert.Equal(2, keen.Length);
+        var foundation = offers.Where(x => x.ContributorId == "first" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        Assert.Equal(3, foundation.Length);
+        var permits = keen.Where(x =>
+            x.SelectionBasis.Eligibility != NativeOriginEligibility.Eligible)
+            .Select((x, i) => new NativeTableRuleDecision("permit-keen-" + i,
+                new("dm", "passive-test-only"), new("campaign", "passive-projection"),
+                new("candidate", x.Id),
+                JsonSerializer.SerializeToElement(new { eligibility = "eligible" })))
+            .ToArray();
+        var manifests = foundation.Select((x, i) =>
+            new NativeOriginManifestation("foundation-" + i, x.Id,
+                SelectedValue: x.OfferedValue))
+            .Concat(keen.Select((x, i) =>
+                new NativeOriginManifestation("keen-" + i, x.Id))).ToArray();
+        var result = engine.Evaluate(new(proposal with
+        {
+            Manifestations = manifests, TableDecisions = permits
+        }, TrustedScope: new("campaign", "passive-projection")),
+            new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var projected = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
+            catalog, result);
+        Assert.Equal("resolved", projected.Status);
+        var trait = Assert.Single(projected.Traits);
+        Assert.Equal("trait.elf.keen-senses", trait.DefinitionId);
+        Assert.Equal(2, trait.SourceCandidateIds.Count);
+        Assert.Equal(keen.Select(x => x.Id).OrderBy(x => x, StringComparer.Ordinal),
+            trait.SourceCandidateIds);
+
+        var restored = result with
+        {
+            Profile = JsonSerializer.Deserialize<NativeOriginProfile>(
+                JsonSerializer.Serialize(result.Profile))
+        };
+        var another = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
+            catalog, restored);
+        Assert.Equal(JsonSerializer.Serialize(projected),
+            JsonSerializer.Serialize(another));
+    }
+
+    [Fact]
     public void UnrelatedSpeciesAndNoSelectableNativePassivesRemainAbsent()
     {
         var catalog = Catalog();
