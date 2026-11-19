@@ -615,6 +615,54 @@ public sealed class NativeOriginSynergyTests
     }
 
     [Fact]
+    public void ConcurrentRulesForTheSameCanonicalTraitRequireAnExplicitPolicy()
+    {
+        using var fixture = new Fixture();
+        // The native stability interaction and an authenticated table
+        // interaction both qualify. Sorting rule IDs is not adjudication.
+        var proposal = Selected(fixture, "/traits/0", "/traits/1",
+            "/traits/2", "/traits/3") with
+        {
+            TableDecisions = [TableSynergy(resultId: "trait.fixture.stability")]
+        };
+        var result = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(proposal, new("campaign", "example"),
+                AutoManifestDirectDefaults: false), new SyntheticAuthority());
+
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "synergy-result-ambiguous");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.stability" &&
+            x.Synergy is not null);
+        Assert.False(Has(result, "trait.fixture.aerial-stability"));
+    }
+
+    [Fact]
+    public void RuleKeysRemainDistinctWhenTableAndInteractionIdsContainColons()
+    {
+        using var fixture = new Fixture("[]");
+        var proposal = Selected(fixture, "/traits/2", "/traits/3") with
+        {
+            // The old OwnerId + ":" + Id encoding mapped both pairs to
+            // "table-decision:a:b:c" and threw while building graph edges.
+            TableDecisions =
+            [
+                TableSynergy("a", "b:c", "b:c", "trait.fixture.guardian"),
+                TableSynergy("a:b", "c", "c", "trait.fixture.response")
+            ]
+        };
+        var result = new NativeOriginConstructionEngine(fixture.Catalog).Evaluate(
+            new(proposal, new("campaign", "example"),
+                AutoManifestDirectDefaults: false), new SyntheticAuthority());
+
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.True(Has(result, "trait.fixture.guardian"));
+        Assert.True(Has(result, "trait.fixture.response"));
+        Assert.Equal(2, result.Profile!.Underlying.InherentGrants.Count(x =>
+            x.Synergy is not null));
+    }
+
+    [Fact]
     public void ChoiceAndResourceDependentResultsAreNotMintedImplicitly()
     {
         const string unsafeResults = """
