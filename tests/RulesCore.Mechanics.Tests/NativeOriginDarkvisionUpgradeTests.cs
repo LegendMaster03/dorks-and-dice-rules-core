@@ -81,7 +81,17 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         var level3 = NativeOriginDarkvisionProjector.Project(Catalog(), completed, 3);
         Assert.Equal("none", level3.Status);
         Assert.Null(level3.Darkvision);
+        // An already-selected level-four trait is still part of the Origin,
+        // but it does not grant active Darkvision before its authored unlock.
+        var pending = Assert.Single(level3.PendingExtensions);
+        Assert.Equal(4, pending.RequiredCharacterLevel);
+        Assert.Equal(60, pending.AddedRangeFeet);
+        Assert.Equal(60, pending.StandaloneRangeFeet);
+        Assert.Equal("ancestry.goliath.stone", pending.SourceId);
+        Assert.Equal("once-per-feature",
+            pending.CompleteEffect.GetProperty("stacking").GetString());
         var level4 = NativeOriginDarkvisionProjector.Project(Catalog(), completed, 4);
+        Assert.Empty(level4.PendingExtensions);
         Assert.Equal("resolved", level4.Status);
         Assert.Equal(60, level4.Darkvision!.RangeFeet);
         Assert.Equal(0, level4.Darkvision.BaseRangeFeet);
@@ -148,8 +158,13 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.Equal("resolved", at3.Status);
         Assert.Equal(120, at3.Darkvision!.RangeFeet);
         Assert.Empty(at3.Darkvision.Extensions!);
+        var locked = Assert.Single(at3.PendingExtensions);
+        Assert.Equal("grant:selected-cavernous", locked.GrantId);
+        Assert.Equal(4, locked.RequiredCharacterLevel);
+        Assert.Equal(60, locked.StandaloneRangeFeet);
 
         var at4 = NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), completed, 4);
+        Assert.Empty(at4.PendingExtensions);
         Assert.Equal("resolved", at4.Status);
         Assert.Equal(180, at4.Darkvision!.RangeFeet);
         Assert.Equal(120, at4.Darkvision.BaseRangeFeet);
@@ -170,6 +185,14 @@ public sealed class NativeOriginDarkvisionUpgradeTests
             x.Identity.MechanicalDefinitionId == upgrade.Identity.MechanicalDefinitionId);
         Assert.Contains(saved.Underlying.InherentGrants, x =>
             x.Identity.IntrinsicSlotId == "darkvisionFeet");
+        var reloadedAt3 = NativeOriginDarkvisionProjector.ProjectApprovedMixed(
+            Catalog(), completed with { Profile = saved }, 3);
+        Assert.Equal("resolved", reloadedAt3.Status);
+        Assert.Equal(120, reloadedAt3.Darkvision!.RangeFeet);
+        var reloadedLocked = Assert.Single(reloadedAt3.PendingExtensions);
+        Assert.Equal(locked.GrantId, reloadedLocked.GrantId);
+        Assert.True(JsonElement.DeepEquals(locked.CompleteEffect,
+            reloadedLocked.CompleteEffect));
     }
 
     [Fact]
