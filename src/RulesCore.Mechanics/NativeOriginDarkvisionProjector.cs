@@ -92,35 +92,49 @@ public static class NativeOriginDarkvisionProjector
         // Keep canonical sense traits separate from numeric intrinsics; a
         // Stone Goliath can manifest this capability at level 4 without
         // inheriting any other ancestry's Darkvision.
-        var nativeSenseGrants = profile.Current.InherentGrants.Where(x =>
-            x.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
-            x.Identity.MechanicalDefinitionId is { } id &&
-            catalog.TryGetById(id, out var entity) &&
-            entity is not null && entity.Category == "origin-trait" &&
-            entity.Definition.TryGetProperty("trait", out var trait) &&
-            trait.ValueKind == JsonValueKind.Object &&
-            trait.TryGetProperty("sense", out var sense) &&
-            sense.ValueKind == JsonValueKind.String &&
-            sense.GetString() == "darkvision").ToArray();
-
         var extensions = new List<NativeDarkvisionExtension>();
         var pendingExtensions = new List<NativeDarkvisionExtension>();
-        foreach (var grant in nativeSenseGrants)
+        foreach (var grant in profile.Current.InherentGrants)
         {
-            if (grant.Identity.MechanicalDefinitionId is not { } id ||
-                !catalog.TryGetById(id, out var definition) ||
-                definition is null || definition.Category != "origin-trait" ||
-                !definition.Definition.TryGetProperty("trait", out var canonical) ||
-                canonical.ValueKind != JsonValueKind.Object ||
-                grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } effective ||
-                !JsonElement.DeepEquals(canonical, effective) ||
+            if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait)
+                continue;
+
+            var id = grant.Identity.MechanicalDefinitionId;
+            NativeRuleEntity? definition = null;
+            if (id is not null)
+                catalog.TryGetById(id, out definition);
+            var hasCanonicalDefinition = definition is not null &&
+                definition.Category == "origin-trait" &&
+                definition.Definition.ValueKind == JsonValueKind.Object &&
+                definition.Definition.TryGetProperty("trait", out var trait) &&
+                trait.ValueKind == JsonValueKind.Object;
+            var canonical = hasCanonicalDefinition
+                ? definition!.Definition.GetProperty("trait") : default;
+            var effective = grant.EffectiveValue;
+            // Inspect both sides: an effective claim with a removed/changed
+            // definition must not disappear, and a stripped effective claim
+            // must not hide a canonical Darkvision grant. The characteristic
+            // upgrade fields also identify a malformed sense discriminator.
+            var canonicalClaim = ClaimsDarkvision(canonical);
+            var effectiveClaim = ClaimsDarkvision(effective);
+            if (!canonicalClaim && !effectiveClaim)
+                continue;
+
+            if (!hasCanonicalDefinition || !canonicalClaim || !effectiveClaim ||
+                effective is not { ValueKind: JsonValueKind.Object } actual ||
+                !JsonElement.DeepEquals(canonical, actual) ||
+                !HasDarkvisionSense(canonical) ||
                 !canonical.TryGetProperty("rangeFeet", out var span) ||
+                span.ValueKind != JsonValueKind.Number ||
                 !span.TryGetInt32(out var sourceRange) || sourceRange is <= 0 or > 1_000_000 ||
                 !canonical.TryGetProperty("addToExistingDarkvisionFeet", out var add) ||
+                add.ValueKind != JsonValueKind.Number ||
                 !add.TryGetInt32(out var added) || added is <= 0 or > 1_000_000 ||
                 !canonical.TryGetProperty("requiredCharacterLevel", out var threshold) ||
+                threshold.ValueKind != JsonValueKind.Number ||
                 !threshold.TryGetInt32(out var unlock) || unlock <= 0 ||
                 !canonical.TryGetProperty("stacking", out var stacking) ||
+                stacking.ValueKind != JsonValueKind.String ||
                 stacking.GetString() != "once-per-feature" ||
                 !VerifiedGrant(grant))
                 return Unresolved("darkvision-extension-not-verified");
@@ -192,6 +206,20 @@ public static class NativeOriginDarkvisionProjector
                     JsonElement.DeepEquals(offered, effective));
         }
     }
+
+    // The extension marker is distinctive to the reviewed Darkvision upgrade
+    // grammar. It catches malformed sense fields without treating unrelated
+    // sense types or general range properties as Darkvision.
+    private static bool ClaimsDarkvision(JsonElement? value) =>
+        value is { ValueKind: JsonValueKind.Object } trait &&
+        (HasDarkvisionSense(trait) ||
+         trait.TryGetProperty("addToExistingDarkvisionFeet", out _));
+
+    private static bool HasDarkvisionSense(JsonElement value) =>
+        value.ValueKind == JsonValueKind.Object &&
+        value.TryGetProperty("sense", out var sense) &&
+        sense.ValueKind == JsonValueKind.String &&
+        sense.GetString() == "darkvision";
 
     private static View Unresolved(string reason) =>
         new("unresolved", null, [reason]);
