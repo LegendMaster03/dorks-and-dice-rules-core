@@ -368,3 +368,34 @@ Synthetic tests cover a powered network with headroom, an overloaded
 network with shutdown effects, isolated power networks, and unknown
 catalog-authored source output. Existing manual allocation and runtime
 session boundaries are unchanged.
+
+## Continuous-power metadata and advisory priority load shedding
+
+Native components may author a boolean `requiresContinuousPower`; malformed
+flags are invalid. The flag is visible in evaluated component states and
+identifies an installation that should not be shed by an automatic plan.
+It does not make interruption physically impossible, grant limitless energy,
+or specify a universal consequence. Existing native `shutdownConsequence`
+identifiers apply to both requested and unexpected shutdowns.
+
+`NativeConstructOperatingSession.PreviewPriorityShedding` accepts an ordered
+list of optional component instances to shed (lowest preferred first) and
+optional requested enabled states and operating modes. The simulation
+only considers candidates in overloaded circuits. Each accepted shutdown
+must reduce a *known* deficit and avoid taking a currently operating
+continuous-power component offline, even through other dependencies.
+Unknown, repeated, or protected shutdown candidates are rejected.
+Unresolved native power quantities and invalid mode selections prevent
+successful planning, rather than becoming hypothetical free energy.
+
+The result contains the regular trusted operating-session evaluation,
+suggested shutdown IDs, unpowered continuous-load IDs and planning issues.
+It is **advisory only**: it does not mutate installation, execute a switch,
+persist a policy, issue permanent traits, alter provenance, or imply that
+a physical control system exists. Players retain the manual ability to
+disable a critical system and face its authored consequences. Applying
+any preview requires separately authorized runtime action and timing.
+No first-party balance figures, storage/fuel, automatic controller devices,
+or global Construct shutdown policy are introduced. Synthetic tests cover
+load ranking, continuity protection, manual failure, insufficiency, forged
+inputs, authored modes, synergy applicability and immutable Origin state.

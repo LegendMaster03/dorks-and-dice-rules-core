@@ -18,6 +18,7 @@ public sealed class NativeConstructOperatingSession
     private readonly IReadOnlyDictionary<string, OperationalInput[]> _operationalInputs;
     private readonly IReadOnlyDictionary<string, string[]> _synergyInputs;
     private readonly HashSet<string> _instanceIds;
+    private readonly HashSet<string> _protectedIds;
 
     internal NativeConstructOperatingSession(NativeCatalogSnapshot catalog,
         NativeConstructAssemblyRequest approvedAssembly, NativeOriginProfile approvedProfile)
@@ -36,6 +37,11 @@ public sealed class NativeConstructOperatingSession
             PowerConnections: approvedAssembly.PowerConnections?.ToArray());
 
         _instanceIds = _baseline.Components.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        // Only the trusted native evaluator can identify protected loads.
+        _protectedIds = _assembly.Evaluate(_baseline).Components
+            .Where(x => x.RequiresContinuousPower)
+            .Select(x => x.InstanceId)
             .ToHashSet(StringComparer.Ordinal);
         var grants = approvedProfile.Current.InherentGrants.ToArray();
         _originGrantIds = grants.Select(g => g.Id)
@@ -168,6 +174,99 @@ public sealed class NativeConstructOperatingSession
             _originGrantIds.Where(id => !active.Contains(id)).ToArray(),
             state.Issues);
     }
+    /// <summary>
+    /// Preview ranked optional shedding without changing the approved Origin.
+    /// Shutdown candidates are explicitly ordered, least desired first.
+    /// A preview never applies real power changes or grants new capabilities.
+    /// </summary>
+    public NativeConstructPriorityPreview PreviewPriorityShedding(
+        IReadOnlyList<string> shutdownOrder,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(shutdownOrder);
+        var issues = new List<NativeOriginContractIssue>();
+        var enabled = requestedEnabled is null
+            ? new Dictionary<string, bool>(StringComparer.Ordinal)
+            : new Dictionary<string, bool>(requestedEnabled, StringComparer.Ordinal);
+        var initial = EvaluateConfiguration(enabled, requestedModes);
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        if (shutdownOrder.Count > _instanceIds.Count)
+            issues.Add(new("construct-priority-selection-invalid", "shutdownOrder",
+                NativeOriginIssueSeverity.Invalid, "The shutdown list exceeds the installed instance count."));
+        foreach (var id in shutdownOrder.Take(_instanceIds.Count + 1))
+        {
+            if (string.IsNullOrWhiteSpace(id) || !_instanceIds.Contains(id) || !seen.Add(id))
+                issues.Add(new("construct-priority-selection-invalid", "shutdownOrder",
+                    NativeOriginIssueSeverity.Invalid, "The shutdown order contains an unknown or duplicate instance."));
+            else if (_protectedIds.Contains(id))
+                issues.Add(new("construct-priority-protected", "shutdownOrder",
+                    NativeOriginIssueSeverity.Invalid, "Continuous-power components cannot be automatically shed."));
+        }
+
+        NativeConstructPriorityPreview Finish(
+            NativeConstructOperatingStateResult evaluation, IReadOnlyList<string> shed)
+        {
+            var unavailable = evaluation.Assembly.Components
+                .Where(x => x.RequiresContinuousPower && !x.Operational)
+                .Select(x => x.InstanceId).OrderBy(x => x, StringComparer.Ordinal).ToArray();
+            if (unavailable.Length > 0)
+                issues.Add(new("construct-continuous-power-unavailable", "operatingConfiguration",
+                    NativeOriginIssueSeverity.Incomplete, "A continuous-power component is offline; inspect its authored consequences."));
+            return new(evaluation, shed, unavailable, issues.ToArray());
+        }
+
+        if (issues.Count > 0 || initial.Issues.Any(x => x.Severity is
+            NativeOriginIssueSeverity.Invalid or NativeOriginIssueSeverity.Unresolved
+            or NativeOriginIssueSeverity.Conflict))
+            return Finish(initial, []);
+
+        var current = initial;
+        var shedIds = new List<string>();
+        foreach (var id in shutdownOrder)
+        {
+            var circuits = current.Assembly.PowerNetworks ?? [];
+            if (!circuits.Any(x => x.IsOverallocated == true) ||
+                circuits.Any(x => x.IsOverallocated is null)) break;
+            if (!circuits.Any(x => x.IsOverallocated == true &&
+                    x.ComponentInstanceIds.Contains(id, StringComparer.Ordinal))) continue;
+            var oldOverride = enabled.TryGetValue(id, out var wasEnabled);
+            if (!(oldOverride ? wasEnabled :
+                    _baseline.Components.Single(x => x.InstanceId == id).Enabled)) continue;
+            var before = circuits.Where(x => x.RequestedHeadroom < 0)
+                .Sum(x => -x.RequestedHeadroom!.Value);
+            enabled[id] = false;
+            var trial = EvaluateConfiguration(enabled, requestedModes);
+            var afterCircuits = trial.Assembly.PowerNetworks ?? [];
+            var after = afterCircuits.Where(x => x.RequestedHeadroom < 0)
+                .Sum(x => -x.RequestedHeadroom!.Value);
+            var criticalLost = current.Assembly.Components.Any(part =>
+                part.RequiresContinuousPower && part.Operational &&
+                !trial.Assembly.Components.Any(next =>
+                    next.InstanceId == part.InstanceId && next.Operational));
+            if (criticalLost || after >= before ||
+                afterCircuits.Any(x => x.IsOverallocated is null) ||
+                trial.Issues.Any(x => x.Severity is
+                    NativeOriginIssueSeverity.Invalid or NativeOriginIssueSeverity.Unresolved
+                    or NativeOriginIssueSeverity.Conflict))
+            {
+                if (oldOverride) enabled[id] = wasEnabled;
+                else enabled.Remove(id);
+                issues.Add(new("construct-priority-shutdown-rejected", "shutdownOrder",
+                    NativeOriginIssueSeverity.Incomplete,
+                    "The shutdown fails to reduce known overload or interrupts an operating continuous-power component."));
+                continue;
+            }
+            current = trial;
+            shedIds.Add(id);
+        }
+        if ((current.Assembly.PowerNetworks ?? []).Any(x => x.IsOverallocated == true))
+            issues.Add(new("construct-priority-capacity-insufficient", "shutdownOrder",
+                NativeOriginIssueSeverity.Incomplete,
+                "The supplied optional shutdown order cannot resolve all power overloads."));
+        return Finish(current, shedIds.ToArray());
+    }
+
 }
 
 /// <summary>
@@ -182,4 +281,18 @@ public sealed record NativeConstructOperatingStateResult(
 {
     public bool IsOperatingConfigurationValid =>
         Assembly.IsAuthorized && Issues.Count == 0;
+}
+
+/// <summary>
+/// A simulation result, not a persisted control system or Origin grant.
+/// </summary>
+public sealed record NativeConstructPriorityPreview(
+    NativeConstructOperatingStateResult Evaluation,
+    IReadOnlyList<string> ProposedShedInstanceIds,
+    IReadOnlyList<string> InoperativeContinuousPowerInstanceIds,
+    IReadOnlyList<NativeOriginContractIssue> PlanningIssues)
+{
+    public bool IsSatisfied => Evaluation.IsOperatingConfigurationValid &&
+        InoperativeContinuousPowerInstanceIds.Count == 0 &&
+        PlanningIssues.Count == 0;
 }

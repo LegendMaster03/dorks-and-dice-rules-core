@@ -56,7 +56,8 @@ public sealed class NativeConstructOriginProjectionTests
                 [
                  {"id":"construct-component.power","kind":"construct-component",
                   "name":"Power","constructionCost":3,"powerDemand":0,"powerOutput":4,
-                  "provides":["power"]},
+                  "provides":["power"],"requiresContinuousPower":true,
+                  "shutdownConsequence":"core-unpowered"},
                  {"id":"construct-component.plate","kind":"construct-component",
                   "name":"Plate","constructionCost":2,"powerDemand":0,
                   "materialSlots":["surface"],"provides":["protection"],
@@ -554,4 +555,121 @@ public sealed class NativeConstructOriginProjectionTests
             .Select(x => x.Identity.Occurrence.OccurrencePath)
             .Distinct(StringComparer.Ordinal).Count());
     }
+
+    [Fact]
+    public void PriorityPreviewShedsOnlyOptionalLoadsWithoutChangingOriginEntitlements()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: Assembly(scannerEnabled: false));
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var profile = constructed.Origin.Profile!;
+        var original = JsonSerializer.Serialize(profile);
+        var scan = profile.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.extended-senses");
+        var synergy = profile.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.sensor-guard");
+
+        var preview = constructed.OperatingSession!.PreviewPriorityShedding(
+            ["overload"],
+            requestedEnabled: new Dictionary<string, bool>
+                { ["scanner"] = true, ["overload"] = true });
+        Assert.True(preview.IsSatisfied,
+            string.Join("; ", preview.PlanningIssues.Select(x => x.Code)));
+        Assert.Equal(new[] { "overload" }, preview.ProposedShedInstanceIds);
+        Assert.Empty(preview.InoperativeContinuousPowerInstanceIds);
+        Assert.True(preview.Evaluation.Assembly.Components.Single(x =>
+            x.InstanceId == "scanner").Operational);
+        Assert.False(preview.Evaluation.Assembly.Components.Single(x =>
+            x.InstanceId == "overload").Operational);
+        Assert.Contains(scan.Id, preview.Evaluation.ApplicableOriginGrantIds);
+        Assert.Contains(synergy.Id, preview.Evaluation.ApplicableOriginGrantIds);
+        Assert.Equal(original, JsonSerializer.Serialize(profile));
+
+        var later = constructed.OperatingSession.EvaluateConfiguration();
+        Assert.True(later.IsOperatingConfigurationValid);
+        Assert.False(later.Assembly.Components.Single(x =>
+            x.InstanceId == "scanner").RequestedEnabled);
+    }
+
+    [Fact]
+    public void PriorityPreviewRejectsProtectedDuplicateAndUnknownShutdowns()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture);
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var session = constructed.OperatingSession!;
+
+        var protectedLoad = session.PreviewPriorityShedding(["power"]);
+        Assert.False(protectedLoad.IsSatisfied);
+        Assert.Empty(protectedLoad.ProposedShedInstanceIds);
+        Assert.Contains(protectedLoad.PlanningIssues, x => x.Code == "construct-priority-protected");
+
+        var unknown = session.PreviewPriorityShedding(["forged"]);
+        Assert.False(unknown.IsSatisfied);
+        Assert.Contains(unknown.PlanningIssues, x => x.Code == "construct-priority-selection-invalid");
+
+        var duplicate = session.PreviewPriorityShedding(["scanner", "scanner"]);
+        Assert.False(duplicate.IsSatisfied);
+        Assert.Contains(duplicate.PlanningIssues, x => x.Code == "construct-priority-selection-invalid");
+
+        // Operators may still deliberately turn off critical components.
+        var manual = session.EvaluateAllocation(
+            new Dictionary<string, bool> { ["power"] = false });
+        Assert.Contains(manual.Assembly.ShutdownConsequences, x =>
+            x.InstanceId == "power" && x.ConsequenceId == "core-unpowered");
+        Assert.True(manual.Assembly.Components.Single(x =>
+            x.InstanceId == "power").RequiresContinuousPower);
+    }
+
+    [Fact]
+    public void PriorityPreviewReportsInsufficientCapacityAndContinuousLoadFailure()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture);
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var session = constructed.OperatingSession!;
+
+        var insufficient = session.PreviewPriorityShedding([],
+            requestedEnabled: new Dictionary<string, bool>
+                { ["scanner"] = true, ["overload"] = true });
+        Assert.False(insufficient.IsSatisfied);
+        Assert.Empty(insufficient.ProposedShedInstanceIds);
+        Assert.Contains(insufficient.PlanningIssues, x =>
+            x.Code == "construct-priority-capacity-insufficient");
+
+        var manualOff = session.PreviewPriorityShedding([],
+            requestedEnabled: new Dictionary<string, bool>
+                { ["power"] = false, ["scanner"] = false });
+        Assert.False(manualOff.IsSatisfied);
+        Assert.Equal(new[] { "power" }, manualOff.InoperativeContinuousPowerInstanceIds);
+        Assert.Contains(manualOff.PlanningIssues, x =>
+            x.Code == "construct-continuous-power-unavailable");
+    }
+
+    [Fact]
+    public void PriorityPreviewRespectsModeChangesAndDoesNotAcceptFabricatedModes()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: ModularToolAssembly());
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var tether = constructed.Origin.Profile!.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.tether");
+        var planned = constructed.OperatingSession!.PreviewPriorityShedding(
+            ["scanner"], requestedEnabled:
+                new Dictionary<string, bool> { ["scanner"] = true },
+            requestedModes: new Dictionary<string, string> { ["tool"] = "tether" });
+        Assert.True(planned.IsSatisfied);
+        Assert.Equal(new[] { "scanner" }, planned.ProposedShedInstanceIds);
+        Assert.Equal("tether", planned.Evaluation.Assembly.Components.Single(x =>
+            x.InstanceId == "tool").ModeId);
+        Assert.Contains(tether.Id, planned.Evaluation.ApplicableOriginGrantIds);
+
+        var forged = constructed.OperatingSession.PreviewPriorityShedding(
+            ["scanner"], requestedModes:
+                new Dictionary<string, string> { ["tool"] = "forged" });
+        Assert.False(forged.IsSatisfied);
+        Assert.Empty(forged.ProposedShedInstanceIds);
+        Assert.Contains(forged.Evaluation.Issues, x => x.Code == "construct-mode-unknown");
+    }
+
 }

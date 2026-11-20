@@ -73,6 +73,17 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             var needs = selectedMode?.Requirements ?? baseNeeds;
             var modeTraits = selectedMode?.OperationalOriginTraitIds ?? allowedTraits;
             var slots = Texts(raw, "materialSlots", path, Issue);
+            // Continuity is native-authored, not a caller-controlled priority.
+            var continuous = false;
+            if (raw.TryGetProperty("requiresContinuousPower", out var continuity))
+            {
+                if (continuity.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+                    Issue("construct-continuity-invalid", path + ".requiresContinuousPower",
+                        NativeOriginIssueSeverity.Invalid,
+                        "The authored continuous-power flag must be boolean.");
+                else
+                    continuous = continuity.ValueKind == JsonValueKind.True;
+            }
             // Structural interfaces are installation properties, independent of
             // powered capability tags and per-instance operating modes.
             var mountInterfaces = Texts(raw, "mountInterfaces", path, Issue);
@@ -262,7 +273,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
             parts.Add(instance.InstanceId, new(instance, cost, demand, output,
                 provides, needs, Text(raw, "shutdownConsequence"), modeTraits,
-                mountInterfaces, acceptsMountInterfaces, outputKnown));
+                mountInterfaces, acceptsMountInterfaces, outputKnown, continuous));
         }
 
         var links = parts.Keys.ToDictionary(x => x,
@@ -555,7 +566,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 return new NativeConstructComponentState(id, part.Instance.DefinitionId,
                     true, active, active ? part.Provides : [], part.Instance.Enabled,
                     part.Instance.ModeId,
-                    active ? part.OperationalOriginTraitIds : []);
+                    active ? part.OperationalOriginTraitIds : [], part.RequiresContinuousPower);
             }).ToArray();
 
         // Keep requested power separate from the subset that actually
@@ -601,7 +612,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         int? PowerDemand, int PowerOutput, string[] Provides, string[][] Requirements,
         string? ShutdownConsequence, string[] OperationalOriginTraitIds,
         string[] MountInterfaces, string[] AcceptsMountInterfaces,
-        bool OutputKnown);
+        bool OutputKnown, bool RequiresContinuousPower);
 
     private sealed record OperatingMode(string Id, int? PowerDemand, int? PowerOutput,
         string[]? Provides, string[][]? Requirements, string[] OperationalOriginTraitIds);
@@ -762,7 +773,8 @@ public sealed record NativeConstructAssemblyRequest(
 public sealed record NativeConstructComponentState(
     string InstanceId, string DefinitionId, bool Installed, bool Operational,
     IReadOnlyList<string> ActiveCapabilities, bool RequestedEnabled,
-    string? ModeId = null, IReadOnlyList<string>? ActiveOperationalOriginTraitIds = null);
+    string? ModeId = null, IReadOnlyList<string>? ActiveOperationalOriginTraitIds = null,
+    bool RequiresContinuousPower = false);
 
 public sealed record NativeConstructFailure(string InstanceId, string ConsequenceId);
 
