@@ -1474,7 +1474,7 @@ public sealed class NativeConstructOriginProjectionTests
             ("trait.fixture.material-trait", "construct-material.steel"),
             ("trait.fixture.design-trait", "construct-design.reinforced"),
             ("trait.fixture.enhancement-active", "construct-enhancement.active-plate"),
-            ("trait.fixture.source-passive", "construct-power-source.finite")
+            ("trait.fixture.source-passive", "construct-power-source.trait-generator")
         })
             Assert.Equal(sourceId, profile.Underlying.InherentGrants.Single(x =>
                 x.Identity.MechanicalDefinitionId == definition)
