@@ -7,32 +7,62 @@ namespace RulesCore.Mechanics.Tests;
 public sealed class NativeCraftingQualificationTests
 {
     [Theory]
-    [InlineData("Common", NativeCompetencyMasteryTier.Apprentice)]
-    [InlineData("UNCOMMON", NativeCompetencyMasteryTier.Journeyman)]
-    [InlineData("Rare", NativeCompetencyMasteryTier.Expert)]
-    [InlineData("Very Rare", NativeCompetencyMasteryTier.Artisan)]
-    [InlineData("Very-Rare", NativeCompetencyMasteryTier.Artisan)]
-    [InlineData("Legendary", NativeCompetencyMasteryTier.Master)]
-    [InlineData("Artifact", NativeCompetencyMasteryTier.Grandmaster)]
-    public void RarityRequiresCorrespondingMastery(
-        string rarity, NativeCompetencyMasteryTier required)
+    [InlineData(0, "Untrained")]
+    [InlineData(1, "Apprentice")]
+    [InlineData(2, "Journeyman")]
+    [InlineData(3, "Expert")]
+    [InlineData(4, "Artisan")]
+    [InlineData(5, "Master")]
+    [InlineData(6, "Grandmaster")]
+    [InlineData(7, "Grandmaster")]
+    public void CompetencyRankTitlesAreDirectlyDerivedFromNumericRanks(
+        int ranks, string title)
     {
-        var atTier = NativeCraftingQualification.Evaluate(
-            new(rarity, required, true, true));
-        Assert.Equal("eligible", atTier.Status);
-        Assert.True(atTier.Eligible);
-        Assert.Equal(required, atTier.MinimumTier);
+        Assert.Equal(title, NativeCompetencyRankNames.ForRank(ranks));
+    }
 
-        if (required == NativeCompetencyMasteryTier.Apprentice) return;
+    [Fact]
+    public void InvalidRankHasNoTitle()
+    {
+        Assert.Null(NativeCompetencyRankNames.ForRank(-1));
+    }
+
+    [Theory]
+    [InlineData("Common", 1)]
+    [InlineData("UNCOMMON", 2)]
+    [InlineData("Rare", 3)]
+    [InlineData("Very Rare", 4)]
+    [InlineData("Very-Rare", 4)]
+    [InlineData("Legendary", 5)]
+    [InlineData("Artifact", 6)]
+    public void RarityRequiresCorrespondingCompetencyRank(
+        string rarity, int required)
+    {
+        var atRank = NativeCraftingQualification.Evaluate(
+            new(rarity, required, true, true));
+        Assert.Equal("eligible", atRank.Status);
+        Assert.True(atRank.Eligible);
+        Assert.Equal(required, atRank.MinimumRanks);
+
         var below = NativeCraftingQualification.Evaluate(
             new(rarity, required - 1, true, true));
         Assert.Equal("ineligible", below.Status);
         Assert.False(below.Eligible);
-        Assert.Contains("competency-tier-below-item-rarity", below.Reasons);
+        Assert.Contains("competency-rank-below-item-rarity", below.Reasons);
 
         var above = NativeCraftingQualification.Evaluate(
-            new(rarity, NativeCompetencyMasteryTier.Grandmaster, true, true));
+            new(rarity, 6, true, true));
         Assert.True(above.Eligible);
+    }
+
+    [Fact]
+    public void RankZeroIsValidUntrainedButCannotCraftEvenCommonMagicItems()
+    {
+        var untrained = NativeCraftingQualification.Evaluate(
+            new("Common", 0, true, true));
+        Assert.Equal("ineligible", untrained.Status);
+        Assert.Equal(1, untrained.MinimumRanks);
+        Assert.Contains("competency-rank-below-item-rarity", untrained.Reasons);
     }
 
     [Theory]
@@ -42,7 +72,7 @@ public sealed class NativeCraftingQualificationTests
         bool knowsRecipe, bool hasMaterials, string reason)
     {
         var result = NativeCraftingQualification.Evaluate(new(
-            "Rare", NativeCompetencyMasteryTier.Master, knowsRecipe, hasMaterials));
+            "Rare", 5, knowsRecipe, hasMaterials));
         Assert.Equal("ineligible", result.Status);
         Assert.Contains(reason, result.Reasons);
     }
@@ -51,22 +81,22 @@ public sealed class NativeCraftingQualificationTests
     public void UnresolvedInformationNeverQualifiesAProject()
     {
         var missingKnowledge = NativeCraftingQualification.Evaluate(new(
-            "Rare", NativeCompetencyMasteryTier.Expert, null, true));
+            "Rare", 3, null, true));
         Assert.Equal("unresolved", missingKnowledge.Status);
         Assert.Null(missingKnowledge.Eligible);
 
-        var unranked = NativeCraftingQualification.Evaluate(
+        var unknownRank = NativeCraftingQualification.Evaluate(
             new("Rare", null, true, true));
-        Assert.Equal("unresolved", unranked.Status);
+        Assert.Equal("unresolved", unknownRank.Status);
 
         var unknownRarity = NativeCraftingQualification.Evaluate(
-            new("Varies", NativeCompetencyMasteryTier.Grandmaster, true, true));
+            new("Varies", 6, true, true));
         Assert.Equal("unresolved", unknownRarity.Status);
-        Assert.Null(unknownRarity.MinimumTier);
+        Assert.Null(unknownRarity.MinimumRanks);
 
-        var invalidTier = NativeCraftingQualification.Evaluate(
-            new("Rare", (NativeCompetencyMasteryTier)100, true, true));
-        Assert.Equal("unresolved", invalidTier.Status);
+        var invalidRank = NativeCraftingQualification.Evaluate(
+            new("Rare", -1, true, true));
+        Assert.Equal("unresolved", invalidRank.Status);
         Assert.False(NativeCraftingQualification.TryParseRarity("99", out _));
     }
 
@@ -82,12 +112,12 @@ public sealed class NativeCraftingQualificationTests
     }
 
     [Theory]
-    [InlineData(NativeCompetencyMasteryTier.Apprentice, NativeCompetencyMasteryTier.Journeyman, false)]
-    [InlineData(NativeCompetencyMasteryTier.Artisan, NativeCompetencyMasteryTier.Artisan, true)]
-    [InlineData(NativeCompetencyMasteryTier.Grandmaster, NativeCompetencyMasteryTier.Master, true)]
-    public void InstructorCanNeverTeachBeyondOwnMastery(
-        NativeCompetencyMasteryTier instructor,
-        NativeCompetencyMasteryTier target, bool expected)
+    [InlineData(0, 1, false)]
+    [InlineData(1, 2, false)]
+    [InlineData(4, 4, true)]
+    [InlineData(6, 5, true)]
+    public void InstructorCanNeverTeachBeyondOwnRank(
+        int instructor, int target, bool expected)
     {
         var result = NativeCraftingQualification.EvaluateTraining(
             new(instructor, target));
@@ -96,13 +126,14 @@ public sealed class NativeCraftingQualificationTests
     }
 
     [Fact]
-    public void UnknownInstructorOrTargetDoesNotAuthorizeTraining()
+    public void InvalidTrainingTargetIsNotAutomaticallyAuthorized()
     {
         Assert.Equal("unresolved", NativeCraftingQualification.EvaluateTraining(
-            new(null, NativeCompetencyMasteryTier.Apprentice)).Status);
+            new(null, 1)).Status);
         Assert.Equal("unresolved", NativeCraftingQualification.EvaluateTraining(
-            new(NativeCompetencyMasteryTier.Master,
-                (NativeCompetencyMasteryTier)99)).Status);
+            new(5, 0)).Status);
+        Assert.Equal("unresolved", NativeCraftingQualification.EvaluateTraining(
+            new(5, 7)).Status);
     }
 
     [Fact]
@@ -115,12 +146,12 @@ public sealed class NativeCraftingQualificationTests
             new("Smithing", 3, true),
             D20Roll: 20, TargetDc: 1, ManualAbilityModifier: 2);
         var denied = resolver.ResolveQualifiedManufacturing(
-            request, new("Legendary", NativeCompetencyMasteryTier.Expert, true, true));
+            request, new("Legendary", 3, true, true));
         Assert.Equal("ineligible", denied.Qualification.Status);
         Assert.Null(denied.Manufacturing);
 
         var allowed = resolver.ResolveQualifiedManufacturing(
-            request, new("Rare", NativeCompetencyMasteryTier.Expert, true, true));
+            request, new("Rare", 3, true, true));
         Assert.True(allowed.Qualification.Eligible);
         Assert.Equal("completed", allowed.Manufacturing?.Outcome);
         Assert.True(allowed.Manufacturing?.InputsConsumed);

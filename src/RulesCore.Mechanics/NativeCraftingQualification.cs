@@ -1,24 +1,30 @@
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// Named mastery milestones for crafting qualification. These are not the
-/// numeric Competency ranks stored in the current character training profile.
-/// The conversion from earned ranks to these milestones requires a separately
-/// approved progression and must be performed by an authorized caller.
+/// Competency ranks are the progression: 0 Untrained, 1 Apprentice,
+/// 2 Journeyman, 3 Expert, 4 Artisan, 5 Master, 6 Grandmaster.
+/// The named milestones do not create a second progression track.
+/// Higher accumulated ranks retain Grandmaster capability without changing
+/// the separate character-grant aggregation or imposing a new gameplay cap.
 /// </summary>
-public enum NativeCompetencyMasteryTier
+public static class NativeCompetencyRankNames
 {
-    Apprentice = 1,
-    Journeyman = 2,
-    Expert = 3,
-    Artisan = 4,
-    Master = 5,
-    Grandmaster = 6
+    public static string? ForRank(int rank) => rank switch
+    {
+        0 => "Untrained",
+        1 => "Apprentice",
+        2 => "Journeyman",
+        3 => "Expert",
+        4 => "Artisan",
+        5 => "Master",
+        >= 6 and <= 1_000_000 => "Grandmaster",
+        _ => null
+    };
 }
 
 /// <summary>
 /// Only the six recognized magical item rarities are covered. Ordinary
-/// nonmagical work has no implicit rarity or mastery-tier assignment.
+/// nonmagical work has no implicit rarity or Competency rank assignment.
 /// </summary>
 public enum NativeCraftingItemRarity
 {
@@ -38,36 +44,38 @@ public enum NativeCraftingItemRarity
 /// </summary>
 public sealed record NativeCraftingQualificationRequest(
     string? ItemRarity,
-    NativeCompetencyMasteryTier? CrafterTier,
+    int? CrafterRanks,
     bool? HasRequiredKnowledge,
     bool? HasRequiredMaterials);
 
 public sealed record NativeCraftingQualificationResult(
     string Status,
     bool? Eligible,
-    NativeCompetencyMasteryTier? MinimumTier,
+    int? MinimumRanks,
     IReadOnlyList<string> Reasons);
 
 /// <summary>
-/// Checks only that an instructor's earned mastery permits teaching the
-/// requested tier. It does not grant training, bypass advancement costs,
+/// Checks only that an instructor's earned Competency ranks permit teaching the
+/// requested rank. It does not grant training, bypass advancement costs,
 /// authorize an NPC, or infer mastery from an NPC stat block.
 /// </summary>
 public sealed record NativeProfessionalTrainingRequest(
-    NativeCompetencyMasteryTier? InstructorTier,
-    NativeCompetencyMasteryTier? TargetTier);
+    int? InstructorRanks,
+    int? TargetRanks);
 
 public sealed record NativeProfessionalTrainingResult(
     string Status, bool? Eligible, string? Reason = null);
 
 /// <summary>
 /// Pure capability gates for crafting and instruction. No source or character
-/// ownership is established here. The caller must verify that mastery, recipe
+/// ownership is established here. The caller must verify that ranks, recipe
 /// access, inventory and training authority are genuine before evaluating.
 /// This utility does not perform harvesting, manufacture or resource mutation.
 /// </summary>
 public static class NativeCraftingQualification
 {
+    private const int TransportRankLimit = 1_000_000;
+
     public static NativeCraftingQualificationResult Evaluate(
         NativeCraftingQualificationRequest request)
     {
@@ -75,18 +83,20 @@ public static class NativeCraftingQualification
 
         var missing = new List<string>();
         var denied = new List<string>();
-        NativeCompetencyMasteryTier? required = null;
+        int? required = null;
 
         if (TryParseRarity(request.ItemRarity, out var rarity))
-            required = (NativeCompetencyMasteryTier)(int)rarity;
+            required = (int)rarity;
         else
             missing.Add("unknown-item-rarity");
 
-        if (request.CrafterTier is not { } tier ||
-            !Enum.IsDefined(tier))
-            missing.Add("unknown-competency-mastery-tier");
-        else if (required is { } minimum && tier < minimum)
-            denied.Add("competency-tier-below-item-rarity");
+        // Rank 0 is a valid Untrained state, but qualifies for no magic
+        // item rarity. Null means unknown, not Untrained.
+        if (request.CrafterRanks is not int ranks ||
+            ranks is < 0 or > TransportRankLimit)
+            missing.Add("competency-rank-unresolved");
+        else if (required is int minimum && ranks < minimum)
+            denied.Add("competency-rank-below-item-rarity");
 
         if (request.HasRequiredKnowledge is null)
             missing.Add("recipe-knowledge-unresolved");
@@ -110,14 +120,17 @@ public static class NativeCraftingQualification
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        if (request.InstructorTier is not { } instructor ||
-            request.TargetTier is not { } target ||
-            !Enum.IsDefined(instructor) || !Enum.IsDefined(target))
-            return new("unresolved", null, "mastery-tier-unresolved");
+        if (request.InstructorRanks is not int instructor ||
+            instructor is < 0 or > TransportRankLimit ||
+            request.TargetRanks is not int target ||
+            target is < 1 or > 6)
+            return new("unresolved", null, "competency-rank-unresolved");
 
+        // Untrained instructors (rank 0) cannot teach rank 1 or beyond.
+        // Training to rank 0 is not an advancement, so it is not a target.
         return target <= instructor
             ? new("eligible", true)
-            : new("ineligible", false, "instructor-tier-below-target");
+            : new("ineligible", false, "instructor-rank-below-target");
     }
 
     public static bool TryParseRarity(

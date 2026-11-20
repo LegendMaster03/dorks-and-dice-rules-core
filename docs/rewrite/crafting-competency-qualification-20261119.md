@@ -1,4 +1,4 @@
-# Crafting mastery and external-content qualification — initial mechanics slice
+# Crafting rank and external-content qualification — initial mechanics slice
 
 **Status:** Implemented as pure mechanics and opt-in qualified manufacturing on `feature/competency-crafting-qualification-20261119`. This is not a completed crafting subsystem, an item importer, or a character-authorized API.
 
@@ -6,16 +6,16 @@
 
 Crafting requires **expertise**, **knowledge**, and **materials** independently.
 
-| Item rarity | Minimum mastery milestone |
+| Item rarity | Minimum Competency rank |
 | --- | --- |
-| Common | Apprentice |
-| Uncommon | Journeyman |
-| Rare | Expert |
-| Very Rare | Artisan |
-| Legendary | Master |
-| Artifact | Grandmaster |
+| Common | 1 — Apprentice |
+| Uncommon | 2 — Journeyman |
+| Rare | 3 — Expert |
+| Very Rare | 4 — Artisan |
+| Legendary | 5 — Master |
+| Artifact | 6 — Grandmaster |
 
-A higher milestone qualifies for lower rarities, but qualification is not an automatic success, recipe grant, or material award. An instructor cannot teach a Competency to a mastery milestone greater than their own. The training evaluator enforces this upper bound only; existing advancement costs, provenance, and authorization still apply.
+**Rank 0 is Untrained.** A higher Competency rank qualifies for lower rarities, but qualification is not an automatic success, recipe grant, or material award. An instructor cannot teach a Competency to a rank greater than their own. The training evaluator enforces this upper bound only; existing advancement costs, provenance, and authorization still apply.
 
 A fundamental method may satisfy knowledge without a unique recipe. Specialized items require their own known designs or techniques. Magical essence, provenance, equipment, facilities, DCs, timing, and actual manufacturing or enchanting outcomes remain the responsibilities of their respective recipes and crafting procedures.
 
@@ -23,12 +23,14 @@ A fundamental method may satisfy knowledge without a unique recipe. Specialized 
 
 ## Code contract and boundaries
 
-- `NativeCraftingQualification.Evaluate` returns `eligible`, `ineligible`, or `unresolved`, together with a minimum mastery milestone and explicit reasons. It recognizes only standard magical item rarity names. Unknown or missing rarity, tier, knowledge, and materials do not silently qualify a project. It does not decide minimum tiers for nonmagical items.
-- `NativeCraftingQualification.EvaluateTraining` enforces the instructor's mastery ceiling, without awarding ranks or training by itself.
+- `NativeCraftingQualification.Evaluate` returns `eligible`, `ineligible`, or `unresolved`, together with a minimum Competency rank and explicit reasons. It recognizes only standard magical item rarity names. Unknown or missing rarity, rank, knowledge, and materials do not silently qualify a project. It does not decide minimum tiers for nonmagical items.
+- `NativeCraftingQualification.EvaluateTraining` enforces the instructor's Competency-rank ceiling, without awarding ranks or training by itself.
 - `NativeCraftingResolver.ResolveQualifiedManufacturing` composes these qualifications with the existing manual Loot Tavern manufacturing check. Failed or unresolved qualifications produce no manufacturing check/result. It does not consume components or roll dice itself.
 - Existing `ResolveManufacturing` and the authenticated manual manufacturing endpoint are preserved for compatibility and explicit playtests. **No new API route authorizes crafting or instruction.**
 
-**Important unresolved dependency:** The native Competency profile currently stores an unbounded numeric rank count and independent proficiency flag. The conversion from earned numeric ranks to Apprentice–Grandmaster titles has **not** been specified. The named mastery tier supplied to this new helper therefore must come from an **upstream trusted/authorized advancement resolver** once milestone thresholds are approved. Do not infer `Master` from five raw numeric ranks, accept a client-asserted mastery title as entitlement, or add an unchecked public endpoint.
+**Rank mapping:** Numeric Competency ranks are the ranks used by this qualification gate: 0 Untrained, 1 Apprentice, 2 Journeyman, 3 Expert, 4 Artisan, 5 Master, and 6 Grandmaster. There is no separate mastery-tier state or conversion step. An existing accumulated rank above 6 retains Grandmaster crafting capability without imposing a new cap on grant aggregation. The independent proficiency flag remains unchanged.
+
+**Authority boundary:** The helper assumes a verified rank supplied by a trusted/authorized character workflow. It does not authorize client-supplied ranks, recipe knowledge, or inventory. The final advancement costs and maximum gameplay rank remain independent balance decisions; do not add an unchecked public endpoint.
 
 The existing manual manufacturing resolver is not a recipe/inventory authorizer. Future production wiring must validate character identity, owned recipes/techniques, material quantities, competent helpers, and source version before qualification; then retain the existing recipe-specific checks, outcomes, and resource handling.
 
@@ -41,4 +43,4 @@ The existing manual manufacturing resolver is not a recipe/inventory authorizer.
 
 ## Test coverage
 
-The new unit tests check all six rarity boundaries, higher-tier compatibility, missing recipe/material gating, unknown/invalid inputs, instructor ceilings, and short-circuiting manufacturing when requirements are not met.
+The new unit tests check all six rarity boundaries and rank 0 Untrained, higher-tier compatibility, missing recipe/material gating, unknown/invalid inputs, instructor rank ceilings, and short-circuiting manufacturing when requirements are not met.
