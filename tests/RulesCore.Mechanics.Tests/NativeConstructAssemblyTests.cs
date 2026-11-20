@@ -76,9 +76,10 @@ public sealed class NativeConstructAssemblyTests
 
     private static NativeConstructAssemblyResult Evaluate(Fixture fixture,
         IReadOnlyList<NativeConstructComponentInstance> components,
-        int? allowance = 20, bool initial = true) =>
+        int? allowance = 20, bool initial = true,
+        IReadOnlyList<NativeConstructPowerConnection>? powerConnections = null) =>
         new NativeConstructAssemblyEvaluator(fixture.Catalog).Evaluate(
-            new(components, allowance, initial));
+            new(components, allowance, initial, powerConnections));
 
     private static bool Operational(NativeConstructAssemblyResult result, string id) =>
         result.Components.Single(x => x.InstanceId == id).Operational;
@@ -176,4 +177,74 @@ public sealed class NativeConstructAssemblyTests
         Assert.Equal(NativeOriginConstructionStatus.Invalid, invalid.Status);
         Assert.Contains(invalid.Issues, x => x.Code == "construct-material-unknown");
     }
+
+    [Fact]
+    public void ExplicitPowerWiringIsSeparateFromFunctionalConnectivity()
+    {
+        using var fixture = new Fixture();
+        var assembly = Parts(weaponEnabled: false);
+        // Legacy calls continue to treat every physical link as a power path.
+        Assert.Equal(NativeOriginConstructionStatus.Authorized,
+            Evaluate(fixture, assembly).Status);
+
+        var wired = Evaluate(fixture, assembly, powerConnections:
+            [new("core", "circulation"), new("circulation", "arm")]);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, wired.Status);
+        Assert.True(Operational(wired, "arm"));
+
+        // An explicitly empty wiring map does not borrow power just because
+        // functional and structural connections exist.
+        var unwired = Evaluate(fixture, assembly, powerConnections: []);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, unwired.Status);
+        Assert.True(Operational(unwired, "core"));
+        Assert.False(Operational(unwired, "circulation"));
+        Assert.False(Operational(unwired, "arm"));
+        Assert.Contains(unwired.Issues, x => x.Code == "construct-power-overallocated");
+    }
+
+    [Fact]
+    public void PowerLinksMustFollowDirectPhysicalConnectionsAndBeUnique()
+    {
+        using var fixture = new Fixture();
+        var assembly = Parts(weaponEnabled: false);
+        var skipped = Evaluate(fixture, assembly, powerConnections:
+            [new("core", "arm")]);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, skipped.Status);
+        Assert.Contains(skipped.Issues, x => x.Code == "construct-power-link-invalid");
+
+        var repeated = Evaluate(fixture, assembly, powerConnections:
+            [new("core", "circulation"), new("circulation", "core")]);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, repeated.Status);
+        Assert.Contains(repeated.Issues, x => x.Code == "construct-power-link-duplicate");
+    }
+
+    [Fact]
+    public void PowerFailuresInvalidateDependentsOnAnotherPowerNetwork()
+    {
+        using var fixture = new Fixture();
+        var assembly = new[]
+        {
+            Part("core", "core", connectedTo: ["circulation"]),
+            Part("circulation", "circulation", connectedTo: ["arm"]),
+            Part("frame", "frame", connectedTo: ["arm"], frame: true),
+            Part("arm", "arm", connectedTo: ["backup"]),
+            Part("backup", "core")
+        };
+        var shared = Evaluate(fixture, assembly);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, shared.Status);
+
+        // The backup powers the arm, but circulation has no power path.
+        // The arm cannot keep using the unpowered circulation capability.
+        var separated = Evaluate(fixture, assembly, powerConnections:
+            [new("arm", "backup")]);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, separated.Status);
+        Assert.True(Operational(separated, "backup"));
+        Assert.True(Operational(separated, "frame"));
+        Assert.False(Operational(separated, "circulation"));
+        Assert.False(Operational(separated, "arm"));
+        Assert.Contains(separated.Issues, x =>
+            x.Code == "construct-dependency-unavailable" &&
+            x.Path == "components.arm");
+    }
+
 }

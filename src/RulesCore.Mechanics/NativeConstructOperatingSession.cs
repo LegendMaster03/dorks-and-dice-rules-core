@@ -32,7 +32,8 @@ public sealed class NativeConstructOperatingSession
                 ConnectedTo = instance.ConnectedTo?.ToArray(),
                 EnhancementIds = instance.EnhancementIds?.ToArray()
             }).ToArray(),
-            approvedAssembly.InitialAllowance, InitialConstruction: true);
+            approvedAssembly.InitialAllowance, InitialConstruction: true,
+            PowerConnections: approvedAssembly.PowerConnections?.ToArray());
 
         _instanceIds = _baseline.Components.Select(x => x.InstanceId)
             .ToHashSet(StringComparer.Ordinal);

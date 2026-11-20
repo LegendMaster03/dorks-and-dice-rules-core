@@ -258,3 +258,41 @@ costs, independent design/enhancement selection, separate source output,
 disconnected requirements, options when shut down, missing or mismatched
 catalog references, duplicate enhancement rejection, unpriced options, and
 unauthored power output. No test-only prices are published as first-party rules.
+
+## Explicit power wiring and cross-network failure propagation
+
+The assembly request can now optionally provide `PowerConnections` as
+undirected, passive links between distinct **directly physically connected**
+component instances. `ConnectedTo` continues to describe physical/functional
+connectivity and authorizes capability dependencies across a connected assembly.
+An explicit power link does **not** supply any capability, grant an Origin trait,
+or imply an anatomical parent.
+
+- `PowerConnections: null` preserves earlier assembly behavior: physical
+  connections also carry power. This compatibility rule must not be mistaken
+  for a general published rule that every attachment conducts power.
+- `PowerConnections: []` explicitly isolates every component's power
+  circuit. A nonempty list defines separate shared-output networks, using
+  only the specified physical edges.
+- Unknown endpoints, self-links, nonphysical links, reverse duplicates and
+  excessive link counts fail closed. There is no implicit long-range power
+  transfer between otherwise connected groups.
+- Network overload is evaluated per **power** network rather than per
+  functional network. Overload does not silently shed load or borrow energy
+  from a disconnected source.
+- After power evaluation, failed providers make dependent components
+  inoperative, including dependents supplied by a separate power network.
+  Those components remain installed; their Origin entitlements are unchanged.
+  The transient operating session retains the approved wiring snapshot.
+
+These links model **distribution connectivity only**. They do not introduce
+energy storage, generation efficiency, voltage, directionality, fuel, energy
+reserves, programmable priorities, or breaker/control behavior. In this
+increment, a link itself is passive even if the connected component is off;
+authoring powered switches or interruptible distribution is future work.
+The feature makes no claim about published power quantities or balance.
+
+Synthetic acceptance tests cover explicit and legacy connections, deliberately
+unwired assemblies, invalid or duplicate paths, and dependency failure across
+separate power networks. CI, rather than the local runtime, must validate
+the full .NET test suite after the branch commit.

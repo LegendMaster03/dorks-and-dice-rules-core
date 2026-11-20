@@ -276,24 +276,78 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             }
         }
 
-        // An unconnected component is permitted. Connectivity is an authored
-        // functional requirement, not a universal humanoid-body topology.
-        var networks = new List<HashSet<string>>();
-        var visited = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var root in parts.Keys.OrderBy(x => x, StringComparer.Ordinal))
+        // An unconnected component is permitted. Physical connectivity
+        // permits functional dependencies; it does not prescribe anatomy.
+        static List<HashSet<string>> ConnectedNetworks(
+            IReadOnlyDictionary<string, HashSet<string>> adjacency)
         {
-            if (!visited.Add(root)) continue;
-            var members = new HashSet<string>(StringComparer.Ordinal) { root };
-            var queue = new Queue<string>();
-            queue.Enqueue(root);
-            while (queue.Count > 0)
-                foreach (var neighbor in links[queue.Dequeue()])
-                    if (visited.Add(neighbor))
-                    {
-                        members.Add(neighbor);
-                        queue.Enqueue(neighbor);
-                    }
-            networks.Add(members);
+            var result = new List<HashSet<string>>();
+            var visited = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var root in adjacency.Keys.OrderBy(x => x, StringComparer.Ordinal))
+            {
+                if (!visited.Add(root)) continue;
+                var members = new HashSet<string>(StringComparer.Ordinal) { root };
+                var queue = new Queue<string>();
+                queue.Enqueue(root);
+                while (queue.Count > 0)
+                    foreach (var neighbor in adjacency[queue.Dequeue()])
+                        if (visited.Add(neighbor))
+                        {
+                            members.Add(neighbor);
+                            queue.Enqueue(neighbor);
+                        }
+                result.Add(members);
+            }
+            return result;
+        }
+
+        var networks = ConnectedNetworks(links);
+
+        // Null retains legacy assemblies: all physical links are also
+        // assumed to conduct power. An explicit list, including an empty
+        // list, instead defines independently wired power networks.
+        // Power links must follow authored physical component connections.
+        var powerNetworks = networks;
+        if (request.PowerConnections is not null)
+        {
+            var powerLinks = parts.Keys.ToDictionary(x => x,
+                _ => new HashSet<string>(StringComparer.Ordinal),
+                StringComparer.Ordinal);
+            if (request.PowerConnections.Count > 4096)
+                Issue("construct-power-link-count-invalid", "powerConnections",
+                    NativeOriginIssueSeverity.Invalid,
+                    "The evaluator supports at most 4096 explicit power links.");
+            var seenPowerLinks = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var connection in request.PowerConnections.Take(4096))
+            {
+                if (connection is null ||
+                    string.IsNullOrWhiteSpace(connection.FromInstanceId) ||
+                    string.IsNullOrWhiteSpace(connection.ToInstanceId) ||
+                    !parts.ContainsKey(connection.FromInstanceId) ||
+                    !parts.ContainsKey(connection.ToInstanceId) ||
+                    connection.FromInstanceId == connection.ToInstanceId ||
+                    !links[connection.FromInstanceId].Contains(connection.ToInstanceId))
+                {
+                    Issue("construct-power-link-invalid", "powerConnections",
+                        NativeOriginIssueSeverity.Invalid,
+                        "Power links must join distinct, directly connected installed components.");
+                    continue;
+                }
+                var a = connection.FromInstanceId;
+                var b = connection.ToInstanceId;
+                var pair = string.CompareOrdinal(a, b) < 0
+                    ? a + "\u0000" + b : b + "\u0000" + a;
+                if (!seenPowerLinks.Add(pair))
+                {
+                    Issue("construct-power-link-duplicate", "powerConnections",
+                        NativeOriginIssueSeverity.Invalid,
+                        "Each undirected power connection may be specified only once.");
+                    continue;
+                }
+                powerLinks[a].Add(b);
+                powerLinks[b].Add(a);
+            }
+            powerNetworks = ConnectedNetworks(powerLinks);
         }
 
         var online = new HashSet<string>(StringComparer.Ordinal);
@@ -331,7 +385,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
 
         var overloaded = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var network in networks)
+        foreach (var network in powerNetworks)
         {
             var demand = network.Where(online.Contains)
                 .Sum(id => (long)(parts[id].PowerDemand ?? 0));
@@ -372,13 +426,47 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     "The configured component costs exceed the starting allowance.");
         }
 
+        // Refuse automatic load shedding. An overallocated power network
+        // cannot operate its powered loads until the requested allocation
+        // changes. Passive zero-demand, dependency-free components remain on.
+        var activeIds = parts.Values.Where(part =>
+                online.Contains(part.Instance.InstanceId) &&
+                (!overloaded.Contains(part.Instance.InstanceId) ||
+                    part.PowerDemand == 0 && part.Requirements.Length == 0))
+            .Select(part => part.Instance.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+
+        // Functional dependents must not appear operational merely because
+        // their provider was provisionally online before the power check.
+        // Propagate power failures through cross-network dependency chains.
+        var dependenciesChanged = true;
+        while (dependenciesChanged)
+        {
+            dependenciesChanged = false;
+            foreach (var part in parts.Values.OrderBy(x => x.Instance.InstanceId,
+                StringComparer.Ordinal))
+            {
+                var id = part.Instance.InstanceId;
+                if (!activeIds.Contains(id)) continue;
+                var network = networks.First(x => x.Contains(id));
+                if (part.Requirements.All(group => group.Any(capability =>
+                    activeIds.Any(providerId => providerId != id &&
+                        network.Contains(providerId) &&
+                        parts[providerId].Provides.Contains(capability, StringComparer.Ordinal)))))
+                    continue;
+                activeIds.Remove(id);
+                dependenciesChanged = true;
+                Issue("construct-dependency-unavailable", "components." + id,
+                    NativeOriginIssueSeverity.Incomplete,
+                    "A connected functional provider is no longer operational after power allocation.");
+            }
+        }
+
         var states = parts.Values.OrderBy(x => x.Instance.InstanceId, StringComparer.Ordinal)
             .Select(part =>
             {
                 var id = part.Instance.InstanceId;
-                var active = online.Contains(id) &&
-                    (!overloaded.Contains(id) || part.PowerDemand == 0 &&
-                        part.Requirements.Length == 0);
+                var active = activeIds.Contains(id);
                 if (!active && part.ShutdownConsequence is string consequence)
                     failures.Add(new(id, consequence));
                 return new NativeConstructComponentState(id, part.Instance.DefinitionId,
@@ -546,9 +634,17 @@ public sealed record NativeConstructComponentInstance(
     string? DesignId = null, IReadOnlyList<string>? EnhancementIds = null,
     string? PowerSourceId = null);
 
+/// <summary>
+/// A passive, undirected power path between directly connected components.
+/// This does not grant capabilities, provide energy, or prescribe a body layout.
+/// </summary>
+public sealed record NativeConstructPowerConnection(
+    string FromInstanceId, string ToInstanceId);
+
 public sealed record NativeConstructAssemblyRequest(
     IReadOnlyList<NativeConstructComponentInstance> Components,
-    int? InitialAllowance = null, bool InitialConstruction = true);
+    int? InitialAllowance = null, bool InitialConstruction = true,
+    IReadOnlyList<NativeConstructPowerConnection>? PowerConnections = null);
 
 public sealed record NativeConstructComponentState(
     string InstanceId, string DefinitionId, bool Installed, bool Operational,
