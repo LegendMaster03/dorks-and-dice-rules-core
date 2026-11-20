@@ -97,6 +97,13 @@ public static class NativeCraftingProcess
         if (byId.Keys.Any(id => !Visit(id)))
             return new("invalid", [], ["cyclic-crafting-stage-dependency"]);
 
+        // A persisted completed stage cannot depend on an unfinished stage.
+        // Accepting that contradictory state would allow later stages to be
+        // marked ready without their prerequisites ever being performed.
+        if (steps.Any(step => step.Completed &&
+            step.Dependencies.Any(id => !byId[id].Completed)))
+            return new("invalid", [], ["completed-stage-has-unfinished-dependency"]);
+
         var results = new List<NativeCraftingProcessStepResult>();
         foreach (var step in steps)
         {

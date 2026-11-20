@@ -81,6 +81,18 @@ public sealed class NativeCraftingProcessTests
     }
 
     [Fact]
+    public void CompletedStageCannotDependOnUnfinishedStage()
+    {
+        var result = NativeCraftingProcess.Evaluate([
+            Step("ore", "competency.smithing", 1, 1),
+            Step("alloy", "competency.alchemy", 2, 2, ["ore"], completed: true)
+        ]);
+        Assert.Equal("invalid", result.Status);
+        Assert.Contains("completed-stage-has-unfinished-dependency", result.Issues);
+        Assert.Empty(result.Steps);
+    }
+
+    [Fact]
     public void InvalidResourceQuantitiesAndDuplicateMaterialsAreRejected()
     {
         var example = Step("one", "competency.smithing", 1, 1);

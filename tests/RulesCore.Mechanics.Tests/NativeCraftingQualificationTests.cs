@@ -116,6 +116,9 @@ public sealed class NativeCraftingQualificationTests
     [InlineData(1, 2, false)]
     [InlineData(4, 4, true)]
     [InlineData(6, 5, true)]
+    [InlineData(6, 7, false)]
+    [InlineData(7, 7, true)]
+    [InlineData(8, 7, true)]
     public void InstructorCanNeverTeachBeyondOwnRank(
         int instructor, int target, bool expected)
     {
@@ -132,8 +135,10 @@ public sealed class NativeCraftingQualificationTests
             new(null, 1)).Status);
         Assert.Equal("unresolved", NativeCraftingQualification.EvaluateTraining(
             new(5, 0)).Status);
-        Assert.Equal("unresolved", NativeCraftingQualification.EvaluateTraining(
+        Assert.Equal("ineligible", NativeCraftingQualification.EvaluateTraining(
             new(5, 7)).Status);
+        Assert.Equal("unresolved", NativeCraftingQualification.EvaluateTraining(
+            new(1_000_000, 1_000_001)).Status);
     }
 
     [Fact]

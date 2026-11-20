@@ -22,7 +22,8 @@ public sealed record NativeRecoveryQualificationRequest(
     bool? HasRequiredEquipment,
     bool? IsPermanent = null,
     bool? IsAttunedToAnother = null,
-    bool ExceptionalDisenchantingAuthorized = false);
+    bool ExceptionalDisenchantingAuthorized = false,
+    int? MinutesSpent = null);
 
 public sealed record NativeRecoveryQualificationResult(
     string Status, bool? Eligible, int? MinimumRanks,
@@ -68,7 +69,7 @@ public static class NativeCraftingRecovery
                 {
                     if (!request.ExceptionalDisenchantingAuthorized)
                         denied.Add("rarity-excluded-from-ordinary-disenchanting");
-                    else if (request.SourceMinimumRanks is null or < 6)
+                    else if (request.SourceMinimumRanks is null)
                         missing.Add("exceptional-recovery-rank-unresolved");
                     else
                         minimum = request.SourceMinimumRanks;
@@ -86,6 +87,14 @@ public static class NativeCraftingRecovery
                 missing.Add("item-attunement-unresolved");
             else if (request.IsAttunedToAnother.Value)
                 denied.Add("item-attuned-to-another");
+
+            // Warcraft's ordinary disenchanting requires one hour. Salvage
+            // durations are defined separately by their source procedures.
+            if (request.MinutesSpent is null ||
+                request.MinutesSpent > 1_000_000)
+                missing.Add("disenchanting-time-unresolved");
+            else if (request.MinutesSpent < 60)
+                denied.Add("disenchanting-time-insufficient");
         }
 
         if (minimum is int level && request.SourceMinimumRanks is int authored)

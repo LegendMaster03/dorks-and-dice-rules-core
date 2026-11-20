@@ -140,11 +140,12 @@ public static class NativeCraftingQualification
         if (request.InstructorRanks is not int instructor ||
             instructor is < 0 or > TransportRankLimit ||
             request.TargetRanks is not int target ||
-            target is < 1 or > 6)
+            target is < 1 or > TransportRankLimit)
             return new("unresolved", null, "competency-rank-unresolved");
 
         // Untrained instructors (rank 0) cannot teach rank 1 or beyond.
-        // Training to rank 0 is not an advancement, so it is not a target.
+        // Training to rank 0 is not an advancement. Numeric ranks above
+        // Grandmaster's threshold are still compared, not silently capped.
         return target <= instructor
             ? new("eligible", true)
             : new("ineligible", false, "instructor-rank-below-target");

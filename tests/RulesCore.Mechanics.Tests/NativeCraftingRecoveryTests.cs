@@ -8,7 +8,8 @@ public sealed class NativeCraftingRecoveryTests
     private static NativeRecoveryQualificationRequest Disenchant(
         string rarity, int ranks) =>
         new(NativeRecoveryOperation.Disenchant, rarity, ranks,
-            null, true, true, true, true, true, false);
+            null, true, true, true, true, true, false,
+            MinutesSpent: 60);
 
     [Theory]
     [InlineData("Common", 2)]
@@ -67,6 +68,37 @@ public sealed class NativeCraftingRecoveryTests
         var temporary = NativeCraftingRecovery.Evaluate(
             Disenchant("Rare", 4) with { IsPermanent = false });
         Assert.Equal("ineligible", temporary.Status);
+    }
+
+    [Fact]
+    public void DisenchantingRequiresOneHourButOrdinarySalvageDoesNot()
+    {
+        var tooShort = NativeCraftingRecovery.Evaluate(
+            Disenchant("Common", 2) with { MinutesSpent = 59 });
+        Assert.Equal("ineligible", tooShort.Status);
+        Assert.Contains("disenchanting-time-insufficient", tooShort.Reasons);
+
+        var unknown = NativeCraftingRecovery.Evaluate(
+            Disenchant("Common", 2) with { MinutesSpent = null });
+        Assert.Equal("unresolved", unknown.Status);
+        Assert.Contains("disenchanting-time-unresolved", unknown.Reasons);
+
+        var salvage = NativeCraftingRecovery.Evaluate(new(
+            NativeRecoveryOperation.Salvage, null, 2, 2,
+            true, true, true, true));
+        Assert.True(salvage.Eligible);
+    }
+
+    [Fact]
+    public void ExceptionalRulesUseTheirOwnAuthoredMinimumRank()
+    {
+        var authorized = NativeCraftingRecovery.Evaluate(
+            Disenchant("Legendary", 5) with {
+                ExceptionalDisenchantingAuthorized = true,
+                SourceMinimumRanks = 5
+            });
+        Assert.True(authorized.Eligible);
+        Assert.Equal(5, authorized.MinimumRanks);
     }
 
     [Fact]
