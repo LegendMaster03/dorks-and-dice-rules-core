@@ -362,15 +362,16 @@ public sealed class NativeConstructOriginProjectionTests
             x => x.Code == "construct-operating-instance-unknown");
         Assert.Empty(injected.ApplicableOriginGrantIds);
 
-        // The session owns a snapshot; modifying the caller's input array
-        // after validation does not alter its authorized component inventory.
-        var mutable = Assert.IsType<NativeConstructComponentInstance[]>(assembly.Components);
-        mutable[2] = Part("forged-scanner", "scanner", enabled: true);
+        // The session owns a deep-enough configuration snapshot: changing a
+        // caller-owned material dictionary can not change authorized content.
+        var materials = Assert.IsType<Dictionary<string, string>>(
+            assembly.Components[1].Materials);
+        materials["surface"] = "construct-material.forged";
         var same = constructed.OperatingSession.EvaluateAllocation(
             new Dictionary<string, bool> { ["scanner"] = true });
         Assert.True(same.IsOperatingConfigurationValid);
-        Assert.DoesNotContain(same.Assembly.Components, x =>
-            x.InstanceId == "forged-scanner");
+        Assert.DoesNotContain(same.Issues, x =>
+            x.Code == "construct-material-unknown");
     }
 
     [Fact]
