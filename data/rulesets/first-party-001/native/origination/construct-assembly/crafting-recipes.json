@@ -1,0 +1,1150 @@
+[
+  {
+    "id": "crafting-recipe.construct-component.structural-frame",
+    "kind": "crafting-recipe",
+    "name": "Structural frame — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.structural-frame",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "frame",
+            "amount": 8
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.articulated-joint",
+    "kind": "crafting-recipe",
+    "name": "Articulated joint — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.articulated-joint",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "joint",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.alchemical-actuator",
+    "kind": "crafting-recipe",
+    "name": "Alchemical actuator — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.alchemical-actuator",
+    "stages": [
+      {
+        "stepId": "prepare-medium",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.alchemical-reagent",
+            "amount": 1
+          }
+        ],
+        "outputs": [
+          {
+            "materialId": "crafting-material.activated-medium",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "stepId": "assemble",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 2,
+        "dependencies": [
+          "prepare-medium"
+        ],
+        "inputs": [
+          {
+            "materialSlot": "actuator",
+            "amount": 3
+          },
+          {
+            "materialId": "crafting-material.activated-medium",
+            "amount": 1
+          },
+          {
+            "materialId": "crafting-material.alchemical-reagent",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.alchemical-circulation",
+    "kind": "crafting-recipe",
+    "name": "Alchemical circulation assembly — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.alchemical-circulation",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "conduit",
+            "amount": 4
+          },
+          {
+            "materialId": "crafting-material.alchemical-reagent",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.external-casing",
+    "kind": "crafting-recipe",
+    "name": "External casing — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.external-casing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "casing",
+            "amount": 4
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.manipulator",
+    "kind": "crafting-recipe",
+    "name": "Manipulator — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.manipulator",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "grip",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.weapon-mount",
+    "kind": "crafting-recipe",
+    "name": "Integrated equipment mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.weapon-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.tether-reel",
+    "kind": "crafting-recipe",
+    "name": "Tether reel — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.tether-reel",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "line",
+            "amount": 2
+          },
+          {
+            "materialId": "construct-material.alchemical-fiber",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.power-source-housing",
+    "kind": "crafting-recipe",
+    "name": "Power-source housing — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.power-source-housing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "housing",
+            "amount": 5
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.limb-assembly",
+    "kind": "crafting-recipe",
+    "name": "Limb assembly — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.limb-assembly",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "limb",
+            "amount": 6
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.sensory-array",
+    "kind": "crafting-recipe",
+    "name": "Sensory array — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.sensory-array",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "sensor",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.optical-elements",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.control-module",
+    "kind": "crafting-recipe",
+    "name": "Control module — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.control-module",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "controller",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.mechanical-transmission",
+    "kind": "crafting-recipe",
+    "name": "Mechanical transmission — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.mechanical-transmission",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "transmission",
+            "amount": 3
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.ball-joint",
+    "kind": "crafting-recipe",
+    "name": "Ball joint — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.ball-joint",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "joint",
+            "amount": 3
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.wing-assembly",
+    "kind": "crafting-recipe",
+    "name": "Wing assembly — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.wing-assembly",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "wing",
+            "amount": 7
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.locomotion-unit",
+    "kind": "crafting-recipe",
+    "name": "Locomotion unit — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.locomotion-unit",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "contact",
+            "amount": 4
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.protective-plating",
+    "kind": "crafting-recipe",
+    "name": "Protective plating — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.protective-plating",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "plating",
+            "amount": 6
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.crystal-eye",
+    "kind": "crafting-recipe",
+    "name": "Crystal eye — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.crystal-eye",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.gemcutting",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "crystal",
+            "amount": 1
+          },
+          {
+            "materialId": "crafting-material.optical-elements",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.docent-interface",
+    "kind": "crafting-recipe",
+    "name": "Docent interface — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.docent-interface",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "interface",
+            "amount": 1
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.auxiliary-control-node",
+    "kind": "crafting-recipe",
+    "name": "Auxiliary control node — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.auxiliary-control-node",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "node",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.crew-compartment",
+    "kind": "crafting-recipe",
+    "name": "Crew compartment — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.crew-compartment",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "housing",
+            "amount": 12
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.passenger-platform",
+    "kind": "crafting-recipe",
+    "name": "Passenger platform — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.passenger-platform",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "platform",
+            "amount": 8
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.armblade-mount",
+    "kind": "crafting-recipe",
+    "name": "Armblade mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.armblade-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.bolt-launcher-mount",
+    "kind": "crafting-recipe",
+    "name": "Bolt launcher mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.bolt-launcher-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 3
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.javelin-launcher-mount",
+    "kind": "crafting-recipe",
+    "name": "Javelin launcher mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.javelin-launcher-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 4
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.heavy-strike-mount",
+    "kind": "crafting-recipe",
+    "name": "Heavy strike mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.heavy-strike-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 4
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.eldritch-turret-mount",
+    "kind": "crafting-recipe",
+    "name": "Eldritch turret mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.eldritch-turret-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 4
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.energy-emitter-mount",
+    "kind": "crafting-recipe",
+    "name": "Energy emitter mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.energy-emitter-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 3
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.shield-mount",
+    "kind": "crafting-recipe",
+    "name": "Shield mount — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.shield-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "mount",
+            "amount": 3
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.storage-compartment",
+    "kind": "crafting-recipe",
+    "name": "Storage compartment — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.storage-compartment",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "housing",
+            "amount": 5
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.maintenance-interface",
+    "kind": "crafting-recipe",
+    "name": "Maintenance interface — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-component.maintenance-interface",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "interface",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-design.reinforced-frame",
+    "kind": "crafting-recipe",
+    "name": "Reinforced frame — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-design.reinforced-frame",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-design.articulated",
+    "kind": "crafting-recipe",
+    "name": "Articulated construction — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-design.articulated",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-design.flexible",
+    "kind": "crafting-recipe",
+    "name": "Flexible construction — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-design.flexible",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.weaving",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.alchemical-fiber",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-design.compartmentalized",
+    "kind": "crafting-recipe",
+    "name": "Compartmentalized housing — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-design.compartmentalized",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.wood",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.reinforced-mount",
+    "kind": "crafting-recipe",
+    "name": "Reinforced mounting — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-enhancement.reinforced-mount",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.concealed-compartment",
+    "kind": "crafting-recipe",
+    "name": "Concealed storage — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-enhancement.concealed-compartment",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.wood",
+            "amount": 1
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.tether-deployment",
+    "kind": "crafting-recipe",
+    "name": "Tether deployment adaptation — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-enhancement.tether-deployment",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.alchemical-fiber",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.environmental-sealing",
+    "kind": "crafting-recipe",
+    "name": "Environmental sealing — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-enhancement.environmental-sealing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.sealing-compound",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.specialized-grip",
+    "kind": "crafting-recipe",
+    "name": "Specialized grip — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-enhancement.specialized-grip",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1
+          },
+          {
+            "materialId": "construct-material.steel",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-power-source.artificial-life-core",
+    "kind": "crafting-recipe",
+    "name": "Artificial-life core — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-power-source.artificial-life-core",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 4,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-power-source.solar-crystal",
+    "kind": "crafting-recipe",
+    "name": "Solar/rechargeable crystal — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-power-source.solar-crystal",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.gemcutting",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 3
+          },
+          {
+            "materialId": "crafting-material.optical-elements",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-power-source.soul-gem",
+    "kind": "crafting-recipe",
+    "name": "Soul gem — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-power-source.soul-gem",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.gemcutting",
+        "minimumRanks": 4,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.soul-essence",
+            "amount": 1
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 1
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-power-source.infernal-engine",
+    "kind": "crafting-recipe",
+    "name": "Infernal Engine — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-power-source.infernal-engine",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 4,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.iron",
+            "amount": 4
+          },
+          {
+            "materialId": "crafting-material.infernal-reagent",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-power-source.arcane-consuming-core",
+    "kind": "crafting-recipe",
+    "name": "Arcane-consuming core — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-power-source.arcane-consuming-core",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 2
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 3
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-power-source.mechanical-engine",
+    "kind": "crafting-recipe",
+    "name": "Mechanical engine — manufacture",
+    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "producesDefinitionId": "construct-power-source.mechanical-engine",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.iron",
+            "amount": 3
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  }
+]

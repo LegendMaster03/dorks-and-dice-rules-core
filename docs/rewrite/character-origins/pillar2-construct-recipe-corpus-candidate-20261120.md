@@ -1,0 +1,33 @@
+# Pillar 2 Construct Assembly — candidate first-party recipe corpus
+
+**Working branch:** `feature/construct-recipe-derived-starting-cost-20261120`
+
+**Status:** Draft first-party authoring; do not advertise these recipes, power numbers, or materials as balanced playable character options. The first-party Construct Assembly method selects the native `recipe-inputs` cost path, but intentionally has **no approved starting allowance or unit-price schedule**. The Origin service must therefore remain unresolved for an unapproved first-party starting Construct.
+
+## Corpus coverage
+
+- 31 existing component definitions linked to source-specific native manufacturing recipes.
+- 4 designs and 5 enhancements linked to recipes for their physical production.
+- 6 existing power-source mechanisms linked to recipes, with provisional simultaneous-output figures.
+- 8 existing materials described with qualitative physical profiles; density, weight, resilience, and damage interaction are not yet mechanically authorized.
+- 8 candidate supplemental crafting inputs needed for source recipes, including one intermediate alchemical product. These are ingredient definitions, **not** new Construct Assembly components.
+- 46 exact-output recipes, all referencing existing native competency IDs. The alchemical actuator illustrates a two-stage recipe whose intermediate is not charged twice.
+
+## Rules and authoring boundaries
+
+1. Every installed component retains its own required material slot. The recipe consumes that slot's actual selected material, rather than charging for a hardcoded default. Multiple instances repeat the recipe.
+2. Designs, enhancements, and power sources contribute their own required manufacturing inputs when selected; their older independent `constructionCost` values are not charged again.
+3. Every recipe carries a required competency and minimum rank. These are **candidate authoring values**, separate from qualified creator identity; a historical NPC creator is not a player-owned progression track.
+4. The starting-character assembly may quote ingredients without replaying historical manufacturing checks. The ordinary crafting procedures govern actual manufacturing and modification during gameplay.
+5. Source-specific power output and demand are provisional. A finite-powered source's output remains subject to its actual availability and any applicable sustenance/energy rules; a numeric `powerOutput` does not grant unlimited fuel.
+6. A component's physical installation, the availability of a power source, and a canonical Origin characteristic are different facts. The current corpus does **not** invent automatic PC immunities or magic animation.
+7. Material `physicalProfile` values are qualitative design notes. They are **not** game effects until paired with general weight, equipment, durability, movement, and other approved rules. Steel-heavy builds are not automatically penalized by this authoring alone.
+8. No fixed body layout, mandatory frame, arbitrary maximum installed attachments, or post-creation construction-point ceiling is introduced.
+
+## Remaining work before first-party authorization
+
+- Resolve size as a result of the actual assembly and its relevant parts, rather than a free, unrelated choice. Do not impose a mandatory universal frame.
+- Add canonical characteristic mappings for supported sensing, manipulation, locomotion, protection, and other effective physical functions, with dependencies and operating applicability as appropriate.
+- Make mass and other material interactions observable through existing universal equipment/encumbrance and combat rules; avoid special Construct-only encumbrance.
+- Compare complete builds in concrete gameplay contexts, then set supported physical properties, recipe quantities, power costs, material resource valuations and an initial allowance. Retain the distinction between resources purchased and actual mechanical effectiveness.
+- Run the aggregate validation suite and sample first-party assembly fixtures **after** the content/integration pass, rather than treating individual catalog edits as independent approval gates.

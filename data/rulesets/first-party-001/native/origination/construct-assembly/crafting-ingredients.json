@@ -1,0 +1,58 @@
+[
+  {
+    "id": "crafting-material.alchemical-reagent",
+    "kind": "crafting-material",
+    "name": "Alchemical reagent",
+    "description": "Prepared chemical reagent for specialized mechanical fabrication.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.activated-medium",
+    "kind": "crafting-material",
+    "name": "Activated alchemical medium",
+    "description": "Recipe-stage intermediate; not a generic free-standing fuel supply.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.fine-mechanisms",
+    "kind": "crafting-material",
+    "name": "Precision mechanisms",
+    "description": "Gears, bearings, controls, and similar manufactured subcomponents.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.optical-elements",
+    "kind": "crafting-material",
+    "name": "Optical elements",
+    "description": "Prepared lenses, reflectors, and sensor elements.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.arcane-catalyst",
+    "kind": "crafting-material",
+    "name": "Arcane catalyst",
+    "description": "Specialized magical manufacturing input; not an animating force by itself.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.sealing-compound",
+    "kind": "crafting-material",
+    "name": "Sealing compound",
+    "description": "Manufactured barrier treatment for environmental sealing.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.soul-essence",
+    "kind": "crafting-material",
+    "name": "Soul essence",
+    "description": "Source-specific magical ingredient; acquisition and ethical restrictions belong to campaign rules.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  },
+  {
+    "id": "crafting-material.infernal-reagent",
+    "kind": "crafting-material",
+    "name": "Infernal reagent",
+    "description": "Source-specific magical ingredient, independent of creature origination method.",
+    "rulesStatus": "candidate input; acquisition and price not balanced"
+  }
+]

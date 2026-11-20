@@ -3,7 +3,7 @@
     "id": "construct-enhancement.reinforced-mount",
     "kind": "construct-enhancement",
     "name": "Reinforced mounting",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Strengthens a compatible mounting interface; does not itself grant a new attack.",
     "compatibleComponentCapabilities": [
       "equipment-mount",
@@ -11,13 +11,14 @@
     ],
     "provides": [
       "reinforced-mount"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.reinforced-mount"
   },
   {
     "id": "construct-enhancement.concealed-compartment",
     "kind": "construct-enhancement",
     "name": "Concealed storage",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adds concealed internal storage to appropriate housing; storage capacity remains to be authored.",
     "compatibleComponentCapabilities": [
       "enclosure",
@@ -25,13 +26,14 @@
     ],
     "provides": [
       "concealed-storage"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.concealed-compartment"
   },
   {
     "id": "construct-enhancement.tether-deployment",
     "kind": "construct-enhancement",
     "name": "Tether deployment adaptation",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adds a tether deployment mechanism to a compatible equipment mount or manipulator.",
     "compatibleComponentCapabilities": [
       "equipment-mount",
@@ -40,13 +42,14 @@
     ],
     "provides": [
       "tether-deployment"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.tether-deployment"
   },
   {
     "id": "construct-enhancement.environmental-sealing",
     "kind": "construct-enhancement",
     "name": "Environmental sealing",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adds environmental barriers to an appropriate casing or housing; protection parameters remain unapproved.",
     "compatibleComponentCapabilities": [
       "enclosure",
@@ -54,19 +57,21 @@
     ],
     "provides": [
       "environmental-sealing"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.environmental-sealing"
   },
   {
     "id": "construct-enhancement.specialized-grip",
     "kind": "construct-enhancement",
     "name": "Specialized grip",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adapts a compatible manipulator for an authored gripping function.",
     "compatibleComponentCapabilities": [
       "manipulation"
     ],
     "provides": [
       "specialized-grip"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.specialized-grip"
   }
 ]

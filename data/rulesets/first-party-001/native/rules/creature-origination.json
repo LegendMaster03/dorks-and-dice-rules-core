@@ -18,7 +18,9 @@
     {
       "id": "construct-assembly",
       "name": "Construct assembly",
-      "description": "Materials, design, assembly, and any animating force may play different input roles; creator Species traits are not inherited automatically."
+      "description": "Construct Assembly evaluates installed physical components and their ordinary crafting recipes. The starting allowance purchases authorized ingredients, not finished component prices. Magical Animation and other supernatural origination processes remain distinct.",
+      "initialConstructionCostModel": "recipe-inputs",
+      "costPolicyStatus": "provisional recipes only; starting allowance and resource values not yet authorized"
     },
     {
       "id": "elemental-manifestation",

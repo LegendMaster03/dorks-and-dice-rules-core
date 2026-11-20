@@ -3,66 +3,78 @@
     "id": "construct-power-source.artificial-life-core",
     "kind": "construct-power-source",
     "name": "Artificial-life core",
-    "rulesStatus": "working concept; output, cost, limitations not balanced",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
     "description": "A proposed source for self-sustaining artificial life. Its ability to bypass other construction limitations is not approved.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "artificial-life"
+    "operatingPrinciple": "artificial-life",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.artificial-life-core",
+    "powerOutput": 6
   },
   {
     "id": "construct-power-source.solar-crystal",
     "kind": "construct-power-source",
     "name": "Solar/rechargeable crystal",
-    "rulesStatus": "working concept; output, cost, recharge not balanced",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
     "description": "A rechargeable crystal source requiring an authored charging and storage model.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "solar-recharge"
+    "operatingPrinciple": "solar-recharge",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.solar-crystal",
+    "powerOutput": 5
   },
   {
     "id": "construct-power-source.soul-gem",
     "kind": "construct-power-source",
     "name": "Soul gem",
-    "rulesStatus": "working concept; output, cost, depletion not balanced",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
     "description": "A soul-energy storage mechanism. Naming and acquisition implications are unresolved.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "soul-energy"
+    "operatingPrinciple": "soul-energy",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.soul-gem",
+    "powerOutput": 6
   },
   {
     "id": "construct-power-source.infernal-engine",
     "kind": "construct-power-source",
     "name": "Infernal Engine",
-    "rulesStatus": "working concept; output, cost, fuel not balanced",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
     "description": "An infernal-energy mechanism requiring separate fuel and failure rules.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "infernal"
+    "operatingPrinciple": "infernal",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.infernal-engine",
+    "powerOutput": 8
   },
   {
     "id": "construct-power-source.arcane-consuming-core",
     "kind": "construct-power-source",
     "name": "Arcane-consuming core",
-    "rulesStatus": "working concept; output, cost, fuel not balanced",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
     "description": "Consumes an available arcane energy resource under separately authored operating rules.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "arcane-consumption"
+    "operatingPrinciple": "arcane-consumption",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.arcane-consuming-core",
+    "powerOutput": 6
   },
   {
     "id": "construct-power-source.mechanical-engine",
     "kind": "construct-power-source",
     "name": "Mechanical engine",
-    "rulesStatus": "working concept; output, cost, energy input not balanced",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
     "description": "A mechanical generator driven by separately authored fuel or winding input.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "mechanical"
+    "operatingPrinciple": "mechanical",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.mechanical-engine",
+    "powerOutput": 4
   }
 ]

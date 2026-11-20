@@ -3,7 +3,7 @@
     "id": "construct-design.reinforced-frame",
     "kind": "construct-design",
     "name": "Reinforced frame",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Strengthens an assembly's structural implementation without assuming its material, dimensions, or limb count.",
     "compatibleComponentCapabilities": [
       "structural-support",
@@ -11,13 +11,14 @@
     ],
     "provides": [
       "reinforced-structure"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.reinforced-frame"
   },
   {
     "id": "construct-design.articulated",
     "kind": "construct-design",
     "name": "Articulated construction",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Jointed or articulated arrangement of suitable components.",
     "compatibleComponentCapabilities": [
       "structural-support",
@@ -26,13 +27,14 @@
     ],
     "provides": [
       "articulated-structure"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.articulated"
   },
   {
     "id": "construct-design.flexible",
     "kind": "construct-design",
     "name": "Flexible construction",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Permits a compliant or deformable structural arrangement when its component and material allow it.",
     "compatibleComponentCapabilities": [
       "structural-support",
@@ -41,13 +43,14 @@
     ],
     "provides": [
       "flexible-structure"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.flexible"
   },
   {
     "id": "construct-design.compartmentalized",
     "kind": "construct-design",
     "name": "Compartmentalized housing",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Divides suitable internal housing into accessible sections.",
     "compatibleComponentCapabilities": [
       "enclosure",
@@ -55,6 +58,7 @@
     ],
     "provides": [
       "compartmentalized-housing"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.compartmentalized"
   }
 ]

@@ -3,48 +3,96 @@
     "id": "construct-material.steel",
     "kind": "construct-material",
     "name": "Steel",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Dense, stiff structural metal; strong under suitable loads but adds substantial mass.",
+    "physicalProfile": {
+      "relativeMassCategory": "dense",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    }
   },
   {
     "id": "construct-material.darkwood",
     "kind": "construct-material",
     "name": "Darkwood",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "A comparatively lightweight magical timber; actual toughness and special properties require a separate authorized material rule.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "rigid",
+      "combustibility": "material-dependent"
+    }
   },
   {
     "id": "construct-material.stone",
     "kind": "construct-material",
     "name": "Stone",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Dense and brittle when improperly supported; suitable for armor or structure when appropriately shaped.",
+    "physicalProfile": {
+      "relativeMassCategory": "heavy",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    }
   },
   {
     "id": "construct-material.crystal",
     "kind": "construct-material",
     "name": "Crystal",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Rigid mineral with optical and magical applications; impact response depends on its particular composition.",
+    "physicalProfile": {
+      "relativeMassCategory": "heavy",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    }
   },
   {
     "id": "construct-material.alchemical-fiber",
     "kind": "construct-material",
     "name": "Alchemical fibers",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Fibrous composite suitable for lines or flexible assemblies; strength depends on its fabrication.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "flexible",
+      "combustibility": "material-dependent"
+    }
   },
   {
     "id": "construct-material.wood",
     "kind": "construct-material",
     "name": "Wood",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Relatively lightweight workable timber; combustible unless protected.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "rigid",
+      "combustibility": "combustible"
+    }
   },
   {
     "id": "construct-material.cloth",
     "kind": "construct-material",
     "name": "Cloth",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Flexible woven fabric; suitable for coverings but not automatically load-bearing.",
+    "physicalProfile": {
+      "relativeMassCategory": "very-light",
+      "rigidity": "flexible",
+      "combustibility": "combustible"
+    }
   },
   {
     "id": "construct-material.iron",
     "kind": "construct-material",
     "name": "Iron",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "candidate physical behavior; density, durability, and weight effects remain unbalanced",
+    "description": "Dense workable ferrous metal, prone to corrosion without treatment.",
+    "physicalProfile": {
+      "relativeMassCategory": "dense",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    }
   }
 ]
