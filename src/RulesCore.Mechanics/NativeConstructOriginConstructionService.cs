@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using RulesCore.Content;
 
 namespace RulesCore.Mechanics;
@@ -85,7 +86,9 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
                 continue;
             }
             var definition = component.Definition;
-            if (!definition.TryGetProperty("installedOriginTraitIds", out var traits))
+            foreach (var field in new[] { "installedOriginTraitIds", "operationalOriginTraitIds" })
+            {
+            if (!definition.TryGetProperty(field, out var traits))
                 continue;
             if (traits.ValueKind != JsonValueKind.Array)
             {
@@ -100,7 +103,7 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
             {
                 var item = index++;
                 var referencePath = "components." + instance.InstanceId +
-                    ".installedOriginTraitIds." + item;
+                    "." + field + "." + item;
                 var id = raw.ValueKind == JsonValueKind.String ? raw.GetString() : null;
                 if (string.IsNullOrWhiteSpace(id) || !seen.Add(id) ||
                     !catalog.TryGetById(id, out var nativeTrait) ||
@@ -114,10 +117,10 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
                     continue;
                 }
 
-                // The initial adapter supports passive installed benefits only.
-                // Power-gated traits need a runtime applicability model separate
-                // from the permanent Origin baseline. Choice-bearing traits also
-                // require a later explicit selection-and-binding adapter.
+                // The installed trait is a permanent entitlement, not necessarily
+                // an active effect. The separately evaluated operating session gates
+                // operationalOriginTraitIds without rewriting the Origin baseline.
+                // Choice-bearing traits still need explicit selection/binding.
                 if (canonical.TryGetProperty("originBindings", out _) ||
                     canonical.TryGetProperty("choices", out _) ||
                     canonical.TryGetProperty("chooseFrom", out _) ||
@@ -139,19 +142,22 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
                         "A description alone cannot authorize a mechanical characteristic."));
                     continue;
                 }
-                // Do not treat a disabled, but still installed, part as removed.
-                // Only explicitly passive traits may use this authoring field.
+                // A powered part can remain installed and manifest the entitlement
+                // even while disabled. Activation is a runtime operating decision.
                 var source = new NativeOriginSourceReference(NativeOriginSourceKind.Native,
                     component.Id);
                 var occurrence = new NativeOriginSourceOccurrence(source,
-                    "/installedOriginTraitIds/" + item + "/instance/" + instance.InstanceId);
-                var candidateId = "construct:" + instance.InstanceId + ":trait:" + item;
+                    "/" + field + "/" + item + "/instance/" + instance.InstanceId);
+                var candidateId = "construct:" + instance.InstanceId +
+                    (field == "installedOriginTraitIds" ? ":trait:" : ":operational-trait:") +
+                    item;
                 offers.Add(new NativeOriginCandidate(candidateId,
                     new(NativeOriginCharacteristicKind.Trait, occurrence, nativeTrait.Id),
                     new(NativeOriginEligibility.Eligible,
                         RuleReference: "rule.creature-origination",
-                        Explanation: "Catalog-authored passive trait of an installed Construct component."),
+                        Explanation: "Catalog-authored installed trait of a Construct component."),
                     OfferedValue: canonical.Clone()));
+            }
             }
         }
 
@@ -198,7 +204,13 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
                 Issues = origin.Issues.Concat([incomplete]).ToArray()
             };
         }
-        return new(assembly, origin);
+        return origin.IsMechanicallyAuthorized && origin.Profile is not null
+            ? new(assembly, origin)
+            {
+                OperatingSession = new NativeConstructOperatingSession(
+                    catalog, request.Assembly, origin.Profile)
+            }
+            : new(assembly, origin);
     }
 
     private static NativeConstructOriginConstructionResult Stop(
@@ -217,6 +229,11 @@ public sealed record NativeConstructOriginConstructionRequest(
 public sealed record NativeConstructOriginConstructionResult(
     NativeConstructAssemblyResult Assembly, NativeOriginConstructionResult Origin)
 {
+    // The session holds a server-verified immutable construction snapshot, not
+    // serialized client state or a substitute for a persisted authorized Origin.
+    [JsonIgnore]
+    public NativeConstructOperatingSession? OperatingSession { get; init; }
+
     public bool IsMechanicallyAuthorized =>
         Assembly.IsAuthorized && Origin.IsMechanicallyAuthorized;
 }
