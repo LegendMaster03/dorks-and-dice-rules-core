@@ -51,3 +51,19 @@ The new unit tests check all six rarity boundaries and rank 0 Untrained, higher-
 - Advanced Competency ranks alone do not provide specialized recipes. A learner must have the recipe's required numeric Competency rank and a verified learning source. A trainer must know the recipe and have at least the recipe's required rank; the existing professional-training rule separately prohibits an NPC from teaching a Competency rank higher than their own.
 - Specialized traditions can be represented by source-defined recipe requirement identifiers and verified character knowledge. They **do not** add new Competency progression tracks, imply mutually exclusive traditions, or introduce deferred rank-granted traits.
 - `NativeRecipeLearning.Evaluate` and the optional specialization check on `NativeCraftingQualification.Evaluate` are pure eligibility operations. They do not create, save, consume, grant, or authorize content. Their caller must validate claimed ranks, sources, recipes, and specialization knowledge.
+
+## Material processing and collaborative stages
+
+`NativeCraftingProcess.Evaluate` accepts source-defined stages with method Competency IDs, required ranks, declared input/output materials, prerequisites, verified completed dependencies, and facility/knowledge/material readiness. This supports refining, smelting, alloying, manufacturing intermediate components, and collaborative multistage construction. Stage order and cycles are validated; independent workers can supply their own earned Competency ranks. The result is a read-only plan, not an inventory transaction. Intermediate processing may remain an internal part of a single recipe rather than requiring additional rolls, costs, or downtime.
+
+## Salvaging and disenchanting
+
+`NativeCraftingRecovery.Evaluate` supports generic source-defined salvaging and a Warcraft-style **ordinary disenchanting** eligibility policy: Common requires rank 2; Uncommon 3; Rare 4; Very Rare 5. This ordinary method requires a permanent magic item not attuned to someone else; Legendary and Artifact items are excluded. An explicitly authored exceptional rule/recipe can permit different recovery without silently broadening ordinary disenchanting. Outputs and losses are always defined by the active recipe/source: the engine never creates a generic residue value, duplicates materials, or replaces Heliana's harvesting/salvaging outcomes. Actual ownership, inventory and resource transfer must be verified elsewhere.
+
+## Archaeology and relic restoration
+
+`NativeRelicReconstruction.Evaluate` checks source-verified fragment counts and provenance, a qualified historical method, required knowledge and facilities, and the existing rarity-to-Competency-rank gate for magical results. Warcraft's six matching fragments are a configurable default, not an assumption that all relics in every setting require six fragments. This operation evaluates **whether reconstruction may be attempted**. It neither gathers fragments in travel, selects an arbitrary magic item, grants an item, nor bypasses the source-defined restoration check.
+
+## Implementation scope and future wiring
+
+These are typed, pure mechanics with unit tests, not character-owned inventory, recipe persistence, NPC training UI, or authenticated API endpoints. No first-party or third-party item catalogs are rewritten. No rank traits, individual profession advancement tracks, new travel gathering, or universal material substitutions are introduced. Production integration must resolve the user's authorized source recipe, character training, known designs, participating characters, facility, and actual inventory before executing item-specific procedures.
