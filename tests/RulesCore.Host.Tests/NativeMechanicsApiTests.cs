@@ -399,6 +399,68 @@ public sealed class NativeMechanicsApiTests
             forged.Body.GetProperty("error").GetString());
     }
 
+    [Fact]
+    public async Task SupernaturalOverlapHttpRequiresIndependentAuthorityEvenWithSiteDelegation()
+    {
+        const string endpoint = "/api/mechanics/v1/characters/supernatural/overlaps/plan";
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var id = Guid.Parse("11111111-2222-3333-4444-555555555555").ToString("D");
+        var payload = new
+        {
+            contractVersion = 1,
+            characterId = id, eventId = "fixture:overlap",
+            intentId = "intent:fixture:overlap",
+            rulesetId = catalog.RulesetId,
+            fingerprint = catalog.Fingerprint,
+            expectedSupernaturalRevision = 1,
+            expectedLedgerRevision = 0,
+            authoritativeInputsFingerprint = "fixture-input-fingerprint",
+            state = new NativeCharacterState(id,
+                new NativeCharacterRequest(
+                    catalog.RulesetId, catalog.Fingerprint,
+                    new Dictionary<string, int> { ["strength"] = 10 },
+                    [new NativeAdvancement("class.demo", 1, "fixture.class")]),
+                [], [], []),
+            ledger = new NativeManifestationLedger(id, 0, [], [], []),
+            progressionJournal = new NativeSupernaturalTransitionJournal(id, 0, [], []),
+            verifiedSource = new
+            {
+                characterId = id, eventId = "fixture:overlap",
+                intentId = "intent:fixture:overlap",
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                decisionId = "fixture.decision",
+                replacedDecisionId = (string?)null,
+                sourceOccurrence = new
+                {
+                    source = new { kind = 0, id = "fixture.supernatural", version = "v1" },
+                    occurrencePath = "fixture.overlap"
+                },
+                authorizationEvidenceId = "fixture:proof"
+            },
+            authorizationEvidenceId = "fixture:proof"
+        };
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint, payload);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(payload));
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        using var body = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.Equal("overlap_authority_unavailable",
+            body.RootElement.GetProperty("error").GetString());
+
+        var malformed = JsonSerializer.SerializeToElement(payload);
+        var changed = System.Text.Json.Nodes.JsonNode.Parse(malformed.GetRawText())!;
+        changed["contractVersion"] = 7;
+        using var invalidRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(changed));
+        using var invalid = await fixture.Client.SendAsync(invalidRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, invalid.StatusCode);
+    }
+
     [Theory]
     [InlineData("null-contributor")]
     [InlineData("null-candidate")]
