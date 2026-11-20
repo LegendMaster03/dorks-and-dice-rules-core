@@ -336,17 +336,18 @@ public sealed class NativeConstructOperatingSession
     }
 
 
-    /// <summary>
-    /// Preview one finite resource-consumption step from a caller-owned
-    /// balance snapshot. This is not an authorization to refill resources
-    /// or proof that an external ledger contains the supplied balances.
-    /// </summary>
-    public NativeConstructResourceStepPreview PreviewResourceStep(
-        IReadOnlyDictionary<string, int> remainingResources,
-        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
-        IReadOnlyDictionary<string, string>? requestedModes = null)
+
+    // The same native source bounds apply to resource consumption and
+    // physical transfer. Caller-provided balances are hypothetical and
+    // never become authority to mint or replenish resources.
+    private sealed record FiniteResource(
+        NativeConstructComponentInstance Part, string Kind,
+        int Capacity, int Usage, int Remaining,
+        bool TransferOut, bool TransferIn);
+
+    private (FiniteResource[] Sources, NativeOriginContractIssue[] Issues)
+        ResolveFiniteResources(IReadOnlyDictionary<string, int> remainingResources)
     {
-        ArgumentNullException.ThrowIfNull(remainingResources);
         var issues = new List<NativeOriginContractIssue>();
         var installed = _baseline.Components.Where(x => x.PowerSourceId is not null)
             .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
@@ -355,9 +356,9 @@ public sealed class NativeConstructOperatingSession
         if (installed.Length == 0)
             issues.Add(new("construct-resource-model-unresolved", "resources",
                 NativeOriginIssueSeverity.Unresolved,
-                "A finite-duration preview requires at least one installed source with an authored resource model."));
-        var sources = new List<(NativeConstructComponentInstance Part,
-            string Kind, int Capacity, int Usage, int Remaining)>();
+                "Finite-resource operations require at least one installed source with authored resource units."));
+
+        var sources = new List<FiniteResource>();
         foreach (var part in installed)
         {
             var path = "resources." + part.InstanceId;
@@ -366,7 +367,7 @@ public sealed class NativeConstructOperatingSession
             {
                 issues.Add(new("construct-resource-source-invalid", path,
                     NativeOriginIssueSeverity.Invalid,
-                    "A resource source must resolve to a native installed power source."));
+                    "The installed source must resolve to a native power-source definition."));
                 continue;
             }
             var raw = native.Definition;
@@ -383,7 +384,7 @@ public sealed class NativeConstructOperatingSession
             {
                 issues.Add(new("construct-resource-model-unresolved", path,
                     NativeOriginIssueSeverity.Unresolved,
-                    "Finite resource kind, positive capacity and viable per-step cost must be authored."));
+                    "The source needs an authored resource kind, finite positive capacity and per-step consumption."));
                 continue;
             }
             if (!remainingResources.TryGetValue(part.InstanceId, out var remaining) ||
@@ -391,18 +392,129 @@ public sealed class NativeConstructOperatingSession
             {
                 issues.Add(new("construct-resource-balance-invalid", path,
                     NativeOriginIssueSeverity.Invalid,
-                    "The source balance must exist within its native capacity."));
+                    "The balance must be present and within the native capacity."));
                 continue;
             }
-            sources.Add((part, kind!, capacity, usage, remaining));
+
+            static bool ReadFlag(JsonElement raw, string field, string path,
+                ICollection<NativeOriginContractIssue> issues)
+            {
+                if (!raw.TryGetProperty(field, out var property)) return false;
+                if (property.ValueKind is JsonValueKind.True or JsonValueKind.False)
+                    return property.ValueKind == JsonValueKind.True;
+                issues.Add(new("construct-resource-transfer-flag-invalid",
+                    path + "." + field, NativeOriginIssueSeverity.Invalid,
+                    "Native resource-transfer ports must be authored booleans."));
+                return false;
+            }
+
+            sources.Add(new(part, kind!, capacity, usage, remaining,
+                ReadFlag(raw, "resourceTransferOut", path, issues),
+                ReadFlag(raw, "resourceTransferIn", path, issues)));
         }
         foreach (var id in remainingResources.Keys)
             if (!known.Contains(id))
                 issues.Add(new("construct-resource-instance-invalid", "resources",
                     NativeOriginIssueSeverity.Invalid,
-                    "Only installed native sources can have resource balances."));
-        if (issues.Count > 0)
-            return new(null, [], [], issues.ToArray());
+                    "Only installed native sources may have resource balances."));
+        return (sources.ToArray(), issues.ToArray());
+    }
+
+    /// <summary>
+    /// Preview a conserved transfer between two *directly physically attached*
+    /// finite reservoirs. Both native mechanisms must explicitly author a
+    /// compatible import/export port for an exact shared resource kind.
+    /// This does not perform a gameplay action or restore a source which
+    /// was already marked unavailable by the trusted installation.
+    /// </summary>
+    public NativeConstructResourceTransferPreview PreviewResourceTransfer(
+        IReadOnlyDictionary<string, int> remainingResources,
+        string fromInstanceId, string toInstanceId, int amount,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(remainingResources);
+        var (sources, issues) = ResolveFiniteResources(remainingResources);
+        if (issues.Length > 0)
+            return new([], null, issues);
+
+        var errors = new List<NativeOriginContractIssue>();
+        var from = sources.SingleOrDefault(x => x.Part.InstanceId == fromInstanceId);
+        var to = sources.SingleOrDefault(x => x.Part.InstanceId == toInstanceId);
+        if (from is null || to is null || fromInstanceId == toInstanceId)
+            errors.Add(new("construct-resource-transfer-endpoints-invalid",
+                "transfer", NativeOriginIssueSeverity.Invalid,
+                "A resource transfer needs two distinct installed finite-resource sources."));
+        if (amount <= 0)
+            errors.Add(new("construct-resource-transfer-amount-invalid",
+                "transfer.amount", NativeOriginIssueSeverity.Invalid,
+                "Transfers require a positive whole number of resource units."));
+
+        if (from is not null && to is not null &&
+            fromInstanceId != toInstanceId)
+        {
+            if (from.Kind != to.Kind)
+                errors.Add(new("construct-resource-transfer-kind-invalid",
+                    "transfer", NativeOriginIssueSeverity.Invalid,
+                    "Reservoirs must use exactly the same native resource kind."));
+            if (!from.TransferOut || !to.TransferIn)
+                errors.Add(new("construct-resource-transfer-port-unavailable",
+                    "transfer", NativeOriginIssueSeverity.Invalid,
+                    "Both reservoirs must declare the appropriate native transfer ports."));
+
+            // A mounting joint is an authored physical contact; a direct
+            // ConnectedTo reference is also physical, even if written from
+            // just one endpoint. Neither condition implies a power wire.
+            var attached = from.Part.ParentInstanceId == toInstanceId ||
+                to.Part.ParentInstanceId == fromInstanceId ||
+                (from.Part.ConnectedTo?.Contains(toInstanceId, StringComparer.Ordinal)
+                    ?? false) ||
+                (to.Part.ConnectedTo?.Contains(fromInstanceId, StringComparer.Ordinal)
+                    ?? false);
+            if (!attached)
+                errors.Add(new("construct-resource-transfer-disconnected",
+                    "transfer", NativeOriginIssueSeverity.Incomplete,
+                    "Internal reservoir transfers require a direct physical attachment."));
+
+            if (amount > 0 && (from.Remaining < amount ||
+                amount > (long)to.Capacity - to.Remaining))
+                errors.Add(new("construct-resource-transfer-capacity-invalid",
+                    "transfer.amount", NativeOriginIssueSeverity.Incomplete,
+                    "Transfers cannot draw more than the source contains or exceed destination capacity."));
+        }
+        if (errors.Count > 0)
+            return new([], null, errors.ToArray());
+
+        var snapshots = sources.Select(x =>
+        {
+            var delta = x.Part.InstanceId == fromInstanceId ? -amount :
+                x.Part.InstanceId == toInstanceId ? amount : 0;
+            return new NativeConstructResourceTransferState(
+                x.Part.InstanceId, x.Part.PowerSourceId!, x.Kind,
+                x.Capacity, x.Remaining, delta, x.Remaining + delta);
+        }).ToArray();
+        var balances = snapshots.ToDictionary(x => x.InstanceId, x => x.After,
+            StringComparer.Ordinal);
+        // This is a separate preview: the transfer's validity is not
+        // conditional on whether the new configuration can power all loads.
+        var nextStep = PreviewResourceStep(balances, requestedEnabled, requestedModes);
+        return new(snapshots, nextStep, []);
+    }
+
+    /// <summary>
+    /// Preview one finite resource-consumption step from a caller-owned
+    /// balance snapshot. This is not an authorization to refill resources
+    /// or proof that an external ledger contains the supplied balances.
+    /// </summary>
+    public NativeConstructResourceStepPreview PreviewResourceStep(
+        IReadOnlyDictionary<string, int> remainingResources,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(remainingResources);
+        var (sources, issues) = ResolveFiniteResources(remainingResources);
+        if (issues.Length > 0)
+            return new(null, [], [], issues);
 
         // The unavailable-source overlay removes source output, not the
         // source housing or any of its installed Origin entitlements.
@@ -620,4 +732,25 @@ public sealed record NativeConstructResourceStepPreview(
 {
     public bool CanAdvance => Evaluation?.IsOperatingConfigurationValid == true &&
         Issues.Count == 0;
+}
+
+/// <summary>
+/// A proposed resource movement: positive Delta means receipt and negative
+/// Delta means export. No units are created, destroyed, or converted.
+/// </summary>
+public sealed record NativeConstructResourceTransferState(
+    string InstanceId, string PowerSourceId, string ResourceKind,
+    int Capacity, int Before, int Delta, int After);
+
+/// <summary>
+/// Storage transfer and subsequent operation are separately evaluated.
+/// CanTransfer never proves an action, a persisted balance, or that the
+/// required physical transfer mechanism is available in gameplay.
+/// </summary>
+public sealed record NativeConstructResourceTransferPreview(
+    IReadOnlyList<NativeConstructResourceTransferState> Sources,
+    NativeConstructResourceStepPreview? NextStep,
+    IReadOnlyList<NativeOriginContractIssue> Issues)
+{
+    public bool CanTransfer => Issues.Count == 0 && NextStep is not null;
 }

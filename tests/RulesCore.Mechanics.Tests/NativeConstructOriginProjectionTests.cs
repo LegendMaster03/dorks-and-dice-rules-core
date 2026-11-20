@@ -114,7 +114,24 @@ public sealed class NativeConstructOriginProjectionTests
                   "name":"Finite generator","constructionCost":1,"powerOutput":4,
                   "compatibleComponentCapabilities":["power-housing"],
                   "resourceKind":"fuel-unit","resourceCapacity":5,
+                  "resourceUsePerStep":2,
+                  "resourceTransferOut":true,"resourceTransferIn":true},
+                 {"id":"construct-power-source.sealed","kind":"construct-power-source",
+                  "name":"Sealed reservoir","constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "resourceKind":"fuel-unit","resourceCapacity":5,
                   "resourceUsePerStep":2},
+                 {"id":"construct-power-source.other-kind","kind":"construct-power-source",
+                  "name":"Other kind","constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "resourceKind":"charge-unit","resourceCapacity":5,
+                  "resourceUsePerStep":2,
+                  "resourceTransferOut":true,"resourceTransferIn":true},
+                 {"id":"construct-power-source.invalid-transfer","kind":"construct-power-source",
+                  "name":"Invalid authored port","constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "resourceKind":"fuel-unit","resourceCapacity":5,
+                  "resourceUsePerStep":2,"resourceTransferIn":"yes"},
                  {"id":"construct-power-source.unknown-endurance",
                   "kind":"construct-power-source","name":"Unbalanced endurance",
                   "constructionCost":1,"powerOutput":4,
@@ -1013,6 +1030,157 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Null(step.Evaluation);
         Assert.Contains(step.Issues, x =>
             x.Code == "construct-resource-model-unresolved");
+    }
+
+
+    private static NativeConstructAssemblyRequest DualReservoirAssembly(
+        string donorSource = "construct-power-source.finite",
+        bool connected = true) =>
+        new([
+            Part("generator", "fuel-housing", links: ["sensor"]) with
+                { PowerSourceId = "construct-power-source.finite" },
+            Part("sensor", "fuel-load"),
+            Part("donor", "fuel-housing", enabled: false,
+                links: connected ? ["generator"] : null) with
+                { PowerSourceId = donorSource }
+        ], InitialAllowance: 20);
+
+    [Fact]
+    public void ReservoirTransferConservesResourcesAndCanRestoreNextStep()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: DualReservoirAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var initial = new Dictionary<string, int>
+            { ["generator"] = 1, ["donor"] = 4 };
+        var profile = JsonSerializer.Serialize(built.Origin.Profile);
+
+        var depleted = session.PreviewResourceStep(initial);
+        Assert.False(depleted.CanAdvance);
+
+        var transfer = session.PreviewResourceTransfer(initial,
+            "donor", "generator", 2);
+        Assert.True(transfer.CanTransfer);
+        Assert.Equal(5, transfer.Sources.Sum(x => x.Before));
+        Assert.Equal(5, transfer.Sources.Sum(x => x.After));
+        Assert.Equal(0, transfer.Sources.Sum(x => x.Delta));
+        Assert.Equal(3, transfer.Sources.Single(x => x.InstanceId == "generator").After);
+        Assert.Equal(2, transfer.Sources.Single(x => x.InstanceId == "donor").After);
+        Assert.True(transfer.NextStep!.CanAdvance);
+        Assert.Equal(1, transfer.NextStep.Sources
+            .Single(x => x.InstanceId == "generator").After);
+        Assert.Equal(2, transfer.NextStep.Sources
+            .Single(x => x.InstanceId == "donor").After);
+        Assert.Equal(profile, JsonSerializer.Serialize(built.Origin.Profile));
+
+        // Previewing a transfer changes neither this caller snapshot nor
+        // the authorized operating session.
+        Assert.Equal(1, initial["generator"]);
+        Assert.False(session.PreviewResourceStep(initial).CanAdvance);
+    }
+
+    [Fact]
+    public void TransferRejectsOverCapacityUnderflowAndFabricatedInputs()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: DualReservoirAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var initial = new Dictionary<string, int>
+            { ["generator"] = 4, ["donor"] = 2 };
+
+        foreach (var (source, destination, amount) in new[]
+        {
+            ("donor", "generator", 2), // destination has room for one
+            ("donor", "generator", 3), // donor has only two
+            ("donor", "generator", 0),
+            ("generator", "generator", 1),
+            ("forged", "generator", 1)
+        })
+        {
+            var preview = session.PreviewResourceTransfer(initial,
+                source, destination, amount);
+            Assert.False(preview.CanTransfer);
+            Assert.Null(preview.NextStep);
+            Assert.Empty(preview.Sources);
+            Assert.NotEmpty(preview.Issues);
+        }
+        var forgedBalance = session.PreviewResourceTransfer(
+            new Dictionary<string, int>
+                { ["generator"] = 1, ["donor"] = 4, ["extra"] = 9 },
+            "donor", "generator", 2);
+        Assert.False(forgedBalance.CanTransfer);
+        Assert.Contains(forgedBalance.Issues, x =>
+            x.Code == "construct-resource-instance-invalid");
+    }
+
+    [Fact]
+    public void TransferRequiresAuthoringAndPhysicalContact()
+    {
+        using var fixture = new Fixture();
+        var balance = new Dictionary<string, int>
+            { ["generator"] = 1, ["donor"] = 4 };
+        var disconnected = Evaluate(fixture,
+            assembly: DualReservoirAssembly(connected: false));
+        Assert.True(disconnected.IsMechanicallyAuthorized);
+        var noContact = disconnected.OperatingSession!.PreviewResourceTransfer(
+            balance, "donor", "generator", 2);
+        Assert.False(noContact.CanTransfer);
+        Assert.Contains(noContact.Issues, x =>
+            x.Code == "construct-resource-transfer-disconnected");
+
+        var other = Evaluate(fixture,
+            assembly: DualReservoirAssembly("construct-power-source.other-kind"));
+        Assert.True(other.IsMechanicallyAuthorized);
+        var mismatch = other.OperatingSession!.PreviewResourceTransfer(
+            balance, "donor", "generator", 2);
+        Assert.False(mismatch.CanTransfer);
+        Assert.Contains(mismatch.Issues, x =>
+            x.Code == "construct-resource-transfer-kind-invalid");
+
+        var sealedDonor = Evaluate(fixture,
+            assembly: DualReservoirAssembly("construct-power-source.sealed"));
+        Assert.True(sealedDonor.IsMechanicallyAuthorized);
+        var blocked = sealedDonor.OperatingSession!.PreviewResourceTransfer(
+            balance, "donor", "generator", 2);
+        Assert.False(blocked.CanTransfer);
+        Assert.Contains(blocked.Issues, x =>
+            x.Code == "construct-resource-transfer-port-unavailable");
+
+        var malformed = Evaluate(fixture,
+            assembly: DualReservoirAssembly("construct-power-source.invalid-transfer"));
+        Assert.True(malformed.IsMechanicallyAuthorized);
+        var denied = malformed.OperatingSession!.PreviewResourceTransfer(
+            balance, "donor", "generator", 2);
+        Assert.False(denied.CanTransfer);
+        Assert.Contains(denied.Issues, x =>
+            x.Code == "construct-resource-transfer-flag-invalid");
+    }
+
+    [Fact]
+    public void ResourceTransferDoesNotClearPreviouslyAuthorizedSourceOutages()
+    {
+        using var fixture = new Fixture();
+        var assembly = DualReservoirAssembly();
+        var trustedOutage = assembly with
+        {
+            Components = assembly.Components.Select(x => x.InstanceId == "sensor"
+                ? x with { Enabled = false } : x).ToArray(),
+            UnavailablePowerSourceInstanceIds = ["generator"]
+        };
+        var built = Evaluate(fixture, assembly: trustedOutage);
+        Assert.True(built.IsMechanicallyAuthorized);
+        var transfer = built.OperatingSession!.PreviewResourceTransfer(
+            new Dictionary<string, int> { ["generator"] = 1, ["donor"] = 4 },
+            "donor", "generator", 2,
+            requestedEnabled: new Dictionary<string, bool> { ["sensor"] = true });
+        Assert.True(transfer.CanTransfer);
+        Assert.False(transfer.NextStep!.CanAdvance);
+        Assert.Equal(false, transfer.NextStep.Evaluation!.Assembly.Components
+            .Single(x => x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.Contains("generator", transfer.NextStep.UnavailablePowerSourceInstanceIds);
+        Assert.Equal(0, transfer.NextStep.Sources.Sum(x => x.Consumed));
     }
 
 }

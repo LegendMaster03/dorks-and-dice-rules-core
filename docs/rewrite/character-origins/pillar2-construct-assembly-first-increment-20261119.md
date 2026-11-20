@@ -496,3 +496,46 @@ obtain a finite-endurance claim from `PreviewResourceStep`. Such a
 simulation reports unresolved source-resource authoring instead of
 interpreting a different, legacy source as unlimited endurance. Ordinary
 instantaneous power evaluation remains supported.
+
+## Conservative recovery through direct reservoir transfers
+
+Finite native sources can optionally author two independent boolean
+properties: `resourceTransferOut` and `resourceTransferIn`. These are
+endpoint capabilities, not automatic resource regeneration. An imported
+resource can only enter a reservoir of the **same exact resourceKind**.
+Malformed transfer-port declarations invalidate a resource preview; missing
+ports default to unavailable and do not imply an unrestricted container.
+
+`NativeConstructOperatingSession.PreviewResourceTransfer` models the
+hypothetical movement of a positive quantity between two **distinct,
+directly physically attached** installed source housings. Either a native
+parent/child attachment or an explicitly selected `ConnectedTo` link
+establishes physical contact. The exporter must authorize transfer out;
+the recipient must authorize transfer in. The source must hold sufficient
+resource, the destination must have sufficient capacity, and resource kind
+must match exactly. A disabled source can still contain a reservoir;
+changing its contents does not turn its power output on.
+
+The result lists every installed source with before, signed delta, and
+after balance. **The sum of all balances is conserved.** The optional
+`NextStep` contains a separate finite-resource operating preview using
+the hypothetical balances after transfer. A transfer can therefore be
+internally valid even when the resulting configuration remains
+inoperative. Actual access to a transfer path, resource handling,
+interaction timing, and any required equipment still require an
+authorized gameplay procedure. Physical adjacency and transfer ports
+are necessary modeling constraints, not permission to perform an action.
+
+Resource movement does **not** clear an unavailable-source condition
+previously captured in a trusted installation/operating-session snapshot.
+Restoration of such a condition must occur through another authorized
+procedure, not by submitting a larger hypothetical balance. Neither
+`CanTransfer` nor `NextStep.CanAdvance` persists a resource ledger
+or permits refueling from an external supply. This pass introduces no
+external fuel creation, source-to-source energy conversion, recharge
+efficiency, time units, or transfer-cost balancing.
+
+Synthetic acceptance tests cover conservation and post-transfer operation,
+nonmutation, underflow/overflow and forged inputs, required physical
+contact, incompatible resource kinds, sealed and malformed transfer
+ports, and preservation of trusted source outages.
