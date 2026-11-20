@@ -719,3 +719,6 @@ authorized acquisition, crafting and installation workflow. Neither the
 initial allowance nor recipe quotation is a permanent upgrade ceiling.
 No Construct-specific crafting engine, persisted inventory mutation, or
 first-party numerical balance values are introduced by this integration.
+
+The assembly result exposes a detached `RequiredConstructionResources` bill
+for recipe-input starting construction. It is not an authorized inventory debit.

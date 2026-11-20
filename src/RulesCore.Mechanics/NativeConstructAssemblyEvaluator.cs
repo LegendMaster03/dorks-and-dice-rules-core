@@ -583,11 +583,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         }
 
         long knownCost = knownMaterialCost + knownModificationCost;
+        IReadOnlyDictionary<string, long>? requiredIngredients = null;
         if (recipeCostMethod is JsonElement costMethod)
         {
             var quote = NativeCraftingResourceQuoter.Evaluate(
                 catalog, costMethod, recipeSelections);
             knownCost = quote.KnownCost;
+            requiredIngredients = quote.RequiredResources;
             issues.AddRange(quote.Issues);
         }
         foreach (var part in parts.Values)
@@ -706,7 +708,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     : issues.Any(x => x.Severity == NativeOriginIssueSeverity.Incomplete)
                         ? NativeOriginConstructionStatus.Incomplete
                         : NativeOriginConstructionStatus.Authorized;
-        return new(status, knownCost, states, failures, issues, powerStates);
+        return new(status, knownCost, states, failures, issues, powerStates)
+        {
+            RequiredConstructionResources = requiredIngredients
+        };
     }
 
     private sealed record Part(NativeConstructComponentInstance Instance, int? ConstructionCost,
@@ -899,5 +904,8 @@ public sealed record NativeConstructAssemblyResult(
     IReadOnlyList<NativeOriginContractIssue> Issues,
     IReadOnlyList<NativeConstructPowerNetworkState>? PowerNetworks = null)
 {
+    // Native recipe-input quotation exposes the sourced ingredient bill.
+    // It is advisory for initial creation, not an inventory withdrawal.
+    public IReadOnlyDictionary<string, long>? RequiredConstructionResources { get; init; }
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }

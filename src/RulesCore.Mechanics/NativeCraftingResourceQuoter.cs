@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Text.Json;
 using RulesCore.Content;
 
@@ -22,8 +23,6 @@ internal sealed record NativeCraftingResourceQuote(
 /// </summary>
 internal static class NativeCraftingResourceQuoter
 {
-    private sealed record Stage(NativeCraftingProcessStep Validation);
-
     internal static NativeCraftingResourceQuote Evaluate(
         NativeCatalogSnapshot catalog, JsonElement method,
         IReadOnlyList<NativeCraftingQuotedSelection> selections)
@@ -246,7 +245,7 @@ internal static class NativeCraftingResourceQuoter
                     "The total starting-resource value exceeds supported quantities.");
             }
         }
-        return new(knownCost, required, issues);
+        return new(knownCost, required.ToFrozenDictionary(StringComparer.Ordinal), issues);
     }
 
     private static bool String(JsonElement element, string property, out string? value)

@@ -67,11 +67,9 @@ public sealed class NativeConstructRecipeCostTests
                 """;
             if (variant == "missing-recipe")
                 components = components.Replace(
+                    "\"materialSlots\":[\"frame\"],",
+                    "\"materialSlots\":[\"frame\"]").Replace(
                     "\"craftingRecipeId\":\"crafting-recipe.frame\"", "");
-            // Do not leave an invalid trailing comma after removing the field.
-            if (variant == "missing-recipe")
-                components = components.Replace("\"materialSlots\":[\"frame\"],\n                  }",
-                    "\"materialSlots\":[\"frame\"]}");
             File.WriteAllText(Path.Combine(native, "components.json"), components);
             File.WriteAllText(Path.Combine(native, "designs.json"), """
                 [{"id":"construct-design.reinforced","kind":"construct-design",
@@ -125,8 +123,8 @@ public sealed class NativeConstructRecipeCostTests
                     "\"producesDefinitionId\":\"construct-component.housing\"");
             if (variant == "cyclic-stages")
                 recipes = recipes.Replace(
-                    "\"stepId\":\"smelt\",\"competencyId\":\"competency.smithing\",\n                    \"minimumRanks\":1,\"dependencies\":[]",
-                    "\"stepId\":\"smelt\",\"competencyId\":\"competency.smithing\",\n                    \"minimumRanks\":1,\"dependencies\":[\"forge\"]");
+                    "\"minimumRanks\":1,\"dependencies\":[]",
+                    "\"minimumRanks\":1,\"dependencies\":[\"forge\"]");
             File.WriteAllText(Path.Combine(native, "recipes.json"), recipes);
             Catalog = NativeCatalogLoader.Load(
                 NativeRulesetLayout.Resolve(_root, "first-party-001"));
@@ -180,6 +178,14 @@ public sealed class NativeConstructRecipeCostTests
         // One intermediate alloy is created and consumed within the recipe,
         // not charged as an additional purchased ingredient.
         Assert.Equal(17, result.KnownConstructionCost);
+        var ingredients = Assert.IsAssignableFrom<IReadOnlyDictionary<string, long>>(
+            result.RequiredConstructionResources);
+        Assert.Equal(4, ingredients["construct-material.steel"]);
+        Assert.Equal(1, ingredients["construct-material.wood"]);
+        Assert.Equal(2, ingredients["crafting-material.ore"]);
+        Assert.Equal(2, ingredients["crafting-material.reagent"]);
+        Assert.Equal(1, ingredients["crafting-material.crystal"]);
+        Assert.False(ingredients.ContainsKey("crafting-material.alloy"));
         Assert.False(result.Components.Single(x => x.InstanceId == "actuator").Operational);
     }
 
