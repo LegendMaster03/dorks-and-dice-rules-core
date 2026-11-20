@@ -9,7 +9,8 @@ namespace RulesCore.Mechanics.Tests;
 /// </summary>
 public sealed class NativeSupernaturalProgressionPlannerTests
 {
-    private sealed class Authority : INativeSupernaturalProgressionAuthority
+    private sealed class Authority : INativeSupernaturalProgressionAuthority,
+        INativeCharacterInfluenceOverlapAuthority
     {
         public bool DenyDefinition, DenyAcquisition, DenyAdvance, DenyEvent,
             DenyExpression, DenyJournal, DenyStoredInfluence;
@@ -35,6 +36,10 @@ public sealed class NativeSupernaturalProgressionPlannerTests
             NativeSheetEarnedProgression record, NativeSheetEarnedGrant grant) => true;
         public bool AuthorizesInfluenceApplicability(string id, string influence,
             NativeInfluenceGrantApplicability rule) => true;
+        public bool AuthorizesOverlapSelection(string id,
+            NativeInfluenceOverlapSelection selection) =>
+            id == "character.test" && selection.AuthorizationEvidenceId ==
+                "fixture:verified-overlap";
         public bool AuthorizesJournal(string id, NativeSupernaturalTransitionJournal journal) =>
             !DenyJournal;
         public bool AuthorizesDefinition(string id, NativeSupernaturalDefinition definition,
@@ -430,6 +435,64 @@ public sealed class NativeSupernaturalProgressionPlannerTests
         Assert.Equal("resolved", NativeCharacterInfluenceResolver.Resolve(
             correctedState, "@primary", authority).Status);
         Assert.Equal("dormant", second.PersistentInfluences![0].Expression["phase"]);
+    }
+
+
+    [Fact]
+    public void IndependentlyVerifiedOverlapDecisionRemainsOwnedThroughFurtherAdvancement()
+    {
+        var first = Definition(
+            [Node("initial", immediate: true)], [Effect("first")]);
+        var second = Definition(
+            [
+                Node("initial", immediate: true, source: "synthetic.other"),
+                Node("advanced", grants: [Grant("advanced", source: "synthetic.other")],
+                    source: "synthetic.other")
+            ],
+            [Effect("second") with
+            {
+                DefinitionOccurrence = Occ("effects.second", "synthetic.other")
+            }],
+            source: "synthetic.other");
+
+        var (stateOne, journalOne) = Committed(Plan(
+            Character(), Journal(), first,
+            Request(NativeSupernaturalTransitionKind.Acquire, "acquire-one")));
+        var (stateTwo, journalTwo) = Committed(Plan(
+            stateOne, journalOne, second,
+            Request(NativeSupernaturalTransitionKind.Acquire, "acquire-two",
+                revision: 1, instance: "influence.two")));
+        Assert.Equal("unresolved",
+            NativeCharacterInfluenceResolver.Resolve(stateTwo, "@primary", new Authority()).Status);
+
+        var writers = stateTwo.PersistentInfluences!
+            .SelectMany(influence => influence.Effects)
+            .Select(effect => effect.Id).ToArray();
+        Assert.Equal(2, writers.Length);
+        var decision = new NativeInfluenceOverlapSelection(
+            "fixture.writer-selection", writers, writers[1],
+            Occ("decisions.primary.strength"), Basis(),
+            "fixture:verified-overlap", "@primary");
+        var selected = NativeInfluenceOverlapDecisionPlanner.Plan(
+            stateTwo, decision, null, new Authority());
+        Assert.Equal("planned", selected.Status);
+        var withDecision = Assert.IsType<NativeCharacterState>(selected.ProposedState);
+        Assert.Equal("resolved", NativeCharacterInfluenceResolver.Resolve(
+            withDecision, "@primary", new Authority()).Status);
+
+        var progression = Plan(withDecision, journalTwo, second,
+            Request(NativeSupernaturalTransitionKind.Advance,
+                "advance-two", revision: 2, instance: "influence.two",
+                nodeId: "advanced"));
+        var (advanced, latestJournal) = Committed(progression);
+        Assert.Equal(3, latestJournal.Revision);
+        Assert.Single(advanced.InfluenceOverlapSelections!);
+        Assert.Equal("fixture.writer-selection",
+            advanced.InfluenceOverlapSelections![0].Id);
+        Assert.Equal("resolved", NativeCharacterInfluenceResolver.Resolve(
+            advanced, "@primary", new Authority()).Status);
+        Assert.Contains(progression.NewGrants,
+            grant => grant.Entitlement.DefinitionId == "capability.advanced");
     }
 
 }
