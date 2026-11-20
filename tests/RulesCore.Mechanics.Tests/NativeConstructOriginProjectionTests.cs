@@ -30,7 +30,14 @@ public sealed class NativeConstructOriginProjectionTests
             File.WriteAllText(Path.Combine(native, "rule.json"), """
                 {"id":"rule.creature-origination","kind":"rule","name":"Origination",
                  "methodDefinitions":[{"id":"construct-assembly","name":"Construct Assembly",
-                                       "initialConstructionAllowance":20}]}
+                                       "initialConstructionAllowance":20}],
+                 "originSynergies":[
+                   {"id":"sensor-guard","resultTraitId":"trait.fixture.sensor-guard",
+                    "inputs":[
+                     {"anyOf":[{"mechanicalDefinitionId":"trait.fixture.passive-plate"}],"count":1},
+                     {"anyOf":[{"mechanicalDefinitionId":"trait.fixture.extended-senses"}],"count":1}
+                    ]}
+                 ]}
                 """);
             File.WriteAllText(Path.Combine(native, "type.json"), """
                 {"id":"creature-type.construct","kind":"creatureType","name":"Construct",
@@ -56,7 +63,8 @@ public sealed class NativeConstructOriginProjectionTests
                   "installedOriginTraitIds":["trait.fixture.passive-plate"]},
                  {"id":"construct-component.scanner","kind":"construct-component",
                   "name":"Scanner","constructionCost":2,"powerDemand":3,
-                  "requiresAnyOf":[["power"]],"provides":["extended-senses"]},
+                  "requiresAnyOf":[["power"]],"provides":["extended-senses"],
+                  "operationalOriginTraitIds":["trait.fixture.extended-senses"]},
                  {"id":"construct-component.overload","kind":"construct-component",
                   "name":"Overload","constructionCost":1,"powerDemand":5,
                   "requiresAnyOf":[["power"]],"provides":["burst"]},
@@ -74,6 +82,14 @@ public sealed class NativeConstructOriginProjectionTests
                   "name":"Passive Plate",
                   "trait":{"id":"passive-plate","name":"Passive Plate",
                            "mechanicalEffect":"fixture.passive-protection"}},
+                 {"id":"trait.fixture.extended-senses","kind":"origin-trait",
+                  "name":"Extended Senses",
+                  "trait":{"id":"extended-senses","name":"Extended Senses",
+                           "mechanicalEffect":"fixture.extended-senses"}},
+                 {"id":"trait.fixture.sensor-guard","kind":"origin-trait",
+                  "name":"Sensor Guard",
+                  "trait":{"id":"sensor-guard","name":"Sensor Guard",
+                           "mechanicalEffect":"fixture.sensor-guard"}},
                  {"id":"trait.fixture.choice","kind":"origin-trait",
                   "name":"A Choice",
                   "trait":{"id":"choice","name":"A Choice",
@@ -264,6 +280,97 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Contains(later.Origin.Issues, x =>
             x.Code == "construct-modification-authorization-deferred");
         Assert.Null(later.Origin.Profile);
+    }
+
+
+    [Fact]
+    public void PoweredTraitIsAuthorizedAtInstallationButChangesApplicabilityWithoutReconstruction()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: Assembly(scannerEnabled: false));
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        Assert.NotNull(constructed.OperatingSession);
+        var profile = constructed.Origin.Profile!;
+        var originalProfile = JsonSerializer.Serialize(profile);
+        var scan = profile.Current.InherentGrants.Single(g =>
+            g.Identity.MechanicalDefinitionId == "trait.fixture.extended-senses");
+        var protection = PassiveGrant(constructed);
+        var derived = profile.Current.InherentGrants.Single(g =>
+            g.Identity.MechanicalDefinitionId == "trait.fixture.sensor-guard");
+        Assert.NotNull(derived.Synergy);
+
+        var inactive = constructed.OperatingSession!.EvaluateAllocation(
+            new Dictionary<string, bool>());
+        Assert.True(inactive.IsOperatingConfigurationValid);
+        Assert.Contains(protection.Id, inactive.ApplicableOriginGrantIds);
+        Assert.Contains(scan.Id, inactive.InactiveOriginGrantIds);
+        Assert.Contains(derived.Id, inactive.InactiveOriginGrantIds);
+
+        var active = constructed.OperatingSession.EvaluateAllocation(
+            new Dictionary<string, bool> { ["scanner"] = true });
+        Assert.True(active.IsOperatingConfigurationValid);
+        Assert.Contains(scan.Id, active.ApplicableOriginGrantIds);
+        Assert.Contains(protection.Id, active.ApplicableOriginGrantIds);
+        Assert.Contains(derived.Id, active.ApplicableOriginGrantIds);
+        Assert.Equal(originalProfile, JsonSerializer.Serialize(profile));
+
+        var offAgain = constructed.OperatingSession.EvaluateAllocation(
+            new Dictionary<string, bool> { ["scanner"] = false });
+        Assert.Contains(scan.Id, offAgain.InactiveOriginGrantIds);
+        Assert.Contains(derived.Id, offAgain.InactiveOriginGrantIds);
+        Assert.Equal(originalProfile, JsonSerializer.Serialize(profile));
+    }
+
+    [Fact]
+    public void LosingPowerSuppressesDependentTraitsAndSynergiesWithoutRemovingInstalledComponents()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: Assembly(scannerEnabled: false));
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var powerOff = constructed.OperatingSession!.EvaluateAllocation(
+            new Dictionary<string, bool> { ["power"] = false, ["scanner"] = true });
+        Assert.False(powerOff.IsOperatingConfigurationValid);
+        Assert.Contains(powerOff.Issues, x => x.Code == "construct-dependency-unavailable");
+        Assert.Equal(4, powerOff.Assembly.Components.Count);
+        Assert.All(powerOff.Assembly.Components, state => Assert.True(state.Installed));
+        Assert.DoesNotContain(constructed.Origin.Profile!.Current.InherentGrants
+            .Where(g => g.Identity.MechanicalDefinitionId == "trait.fixture.extended-senses")
+            .Select(g => g.Id), id => powerOff.ApplicableOriginGrantIds.Contains(id));
+
+        var overloaded = constructed.OperatingSession.EvaluateAllocation(
+            new Dictionary<string, bool> { ["scanner"] = true, ["overload"] = true });
+        Assert.False(overloaded.IsOperatingConfigurationValid);
+        Assert.Contains(overloaded.Issues, x => x.Code == "construct-power-overallocated");
+        var scan = constructed.Origin.Profile.Current.InherentGrants.Single(g =>
+            g.Identity.MechanicalDefinitionId == "trait.fixture.extended-senses");
+        Assert.Contains(scan.Id, overloaded.InactiveOriginGrantIds);
+        Assert.Contains(PassiveGrant(constructed).Id, overloaded.ApplicableOriginGrantIds);
+    }
+
+    [Fact]
+    public void RuntimeAllocationCannotIntroduceComponentsOrChangeInstalledCatalog()
+    {
+        using var fixture = new Fixture();
+        var assembly = Assembly(scannerEnabled: false);
+        var constructed = Evaluate(fixture, assembly: assembly);
+        Assert.True(constructed.IsMechanicallyAuthorized);
+
+        var injected = constructed.OperatingSession!.EvaluateAllocation(
+            new Dictionary<string, bool> { ["extra-weapon"] = true });
+        Assert.False(injected.IsOperatingConfigurationValid);
+        Assert.Contains(injected.Issues,
+            x => x.Code == "construct-operating-instance-unknown");
+        Assert.Empty(injected.ApplicableOriginGrantIds);
+
+        // The session owns a snapshot; modifying the caller's input array
+        // after validation does not alter its authorized component inventory.
+        var mutable = Assert.IsType<NativeConstructComponentInstance[]>(assembly.Components);
+        mutable[2] = Part("forged-scanner", "scanner", enabled: true);
+        var same = constructed.OperatingSession.EvaluateAllocation(
+            new Dictionary<string, bool> { ["scanner"] = true });
+        Assert.True(same.IsOperatingConfigurationValid);
+        Assert.DoesNotContain(same.Assembly.Components, x =>
+            x.InstanceId == "forged-scanner");
     }
 
     [Fact]
