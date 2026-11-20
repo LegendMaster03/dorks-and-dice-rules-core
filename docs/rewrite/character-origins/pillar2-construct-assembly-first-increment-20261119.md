@@ -194,3 +194,67 @@ scaling; and actual first-party mode power values or gameplay effects.
 
 First-party reference components continue to have no approved balance values.
 All mode behavior is demonstrated through isolated synthetic test fixtures.
+
+## Reusable designs, enhancements, and power-source inventory
+
+This increment expands the procedure's *reference catalog* while maintaining
+the separation of component, material, design, enhancement and source.
+
+- `components.json`: 31 component candidates covering structural support,
+  articulation, actuation, manipulators, controls, sensory interfaces,
+  equipment mounts, integrated weapon mounting, storage and transport.
+  Names are design candidates; neither descriptions nor functional tags alone
+  grant mechanical attacks, senses, armor, movement speeds, or other traits.
+- `designs.json`: 4 reusable construction arrangements. A component instance
+  can choose one optional design through `DesignId`.
+- `enhancements.json`: 5 optional improvements. A component may select
+  multiple **distinct** enhancement IDs through `EnhancementIds`, subject
+  to the current bounded evaluator. No design or enhancement is duplicated
+  for each possible material.
+- `power-sources.json`: 6 previously discussed working concepts:
+  artificial-life core, solar/rechargeable crystal, soul gem, Infernal Engine,
+  arcane-consuming core and mechanical engine. A `powerSourceSlot` on a
+  component houses one selected `PowerSourceId`. The housing and power
+  mechanism are different definitions. A source must match its housing's
+  authored compatible component capabilities.
+
+### Executable interpretation
+
+A design or enhancement must have an authored
+`compatibleComponentCapabilities` list matching at least one of its
+component's **base** capabilities. Unrecognized, mismatched, duplicate
+enhancements and wrong catalog entity types are invalid, never automatically
+treated as valid empty options.
+
+An approved option may contribute additive `provides`, `requiresAnyOf`
+and `powerDemand` values to the selected component. These are procedure-level
+*functional* tags and dependencies, not canonical Origin traits; adding them
+does not mint gameplay benefits. Selected modes still determine which base
+capabilities and demands are active. Add-on power demand is incremental to
+the selected mode. Power-source output comes from the catalog-selected
+mechanism, rather than an amount submitted in the instance.
+
+All installed component, material, design, enhancement and source costs count
+toward the **starting construction allowance**, whether currently powered
+or not. Every unresolved initial construction price remains unresolved,
+not zero. Power-source output also remains unresolved until explicitly
+authored; fuel supply, endurance and storage are **not** inferred from output.
+
+Initial reference catalog definitions deliberately omit balancing prices,
+source outputs, and most operating demands. The first-party catalog remains
+nonplayable until those values and canonical characteristic mappings are
+approved. Synthetic fixtures use explicitly **test-only** values.
+
+Neither the number of structural components nor their arrangement is
+prescribed. This increment does not define shape, size-dependent material
+quantities, installation time, crafting access, default power-management
+intelligence, or switching actions. More specialized compatibility requirements
+may be added later without imposing a universal body plan.
+
+### Test evidence
+
+`NativeConstructCatalogCompositionTests` tests combined option and material
+costs, independent design/enhancement selection, separate source output,
+disconnected requirements, options when shut down, missing or mismatched
+catalog references, duplicate enhancement rejection, unpriced options, and
+unauthored power output. No test-only prices are published as first-party rules.

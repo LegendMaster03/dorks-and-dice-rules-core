@@ -207,12 +207,20 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             provides = provides.Concat(addedProvides).Distinct(StringComparer.Ordinal).ToArray();
             needs = needs.Concat(addedNeeds).ToArray();
             if (demand is int authoredDemand)
-                demand = extraDemand > int.MaxValue - authoredDemand
-                    ? null : (int)(authoredDemand + extraDemand);
-            if (extraDemand > int.MaxValue || demand is null && extraDemand > 0)
-                Issue("construct-power-demand-overflow", path + ".powerDemand",
-                    NativeOriginIssueSeverity.Invalid,
-                    "Combined power demand exceeds the supported numerical limit.");
+            {
+                if (extraDemand > int.MaxValue - authoredDemand)
+                {
+                    Issue("construct-power-demand-overflow", path + ".powerDemand",
+                        NativeOriginIssueSeverity.Invalid,
+                        "Combined power demand exceeds the supported numerical limit.");
+                    demand = null;
+                }
+                else
+                    demand = (int)(authoredDemand + extraDemand);
+            }
+            // If the component's demand remains unauthored, additional demand
+            // must not turn it into a zero-cost operating component. The existing
+            // unresolved-demand validation below handles that case.
 
             foreach (var slot in slots)
             {

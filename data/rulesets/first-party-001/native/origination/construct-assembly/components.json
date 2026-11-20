@@ -148,8 +148,7 @@
     ],
     "materialSlots": [
       "limb"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.sensory-array",
@@ -162,8 +161,7 @@
     ],
     "materialSlots": [
       "sensor"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.control-module",
@@ -176,8 +174,7 @@
     ],
     "materialSlots": [
       "controller"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.mechanical-transmission",
@@ -190,8 +187,7 @@
     ],
     "materialSlots": [
       "transmission"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.ball-joint",
@@ -204,8 +200,7 @@
     ],
     "materialSlots": [
       "joint"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.wing-assembly",
@@ -218,8 +213,7 @@
     ],
     "materialSlots": [
       "wing"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.locomotion-unit",
@@ -232,8 +226,7 @@
     ],
     "materialSlots": [
       "contact"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.protective-plating",
@@ -247,8 +240,7 @@
     ],
     "materialSlots": [
       "plating"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.crystal-eye",
@@ -261,8 +253,7 @@
     ],
     "materialSlots": [
       "crystal"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.docent-interface",
@@ -275,8 +266,7 @@
     ],
     "materialSlots": [
       "interface"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.auxiliary-control-node",
@@ -289,8 +279,7 @@
     ],
     "materialSlots": [
       "node"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.crew-compartment",
@@ -304,8 +293,7 @@
     ],
     "materialSlots": [
       "housing"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.passenger-platform",
@@ -318,8 +306,7 @@
     ],
     "materialSlots": [
       "platform"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.armblade-mount",
@@ -333,8 +320,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.bolt-launcher-mount",
@@ -348,8 +334,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.javelin-launcher-mount",
@@ -363,8 +348,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.heavy-strike-mount",
@@ -378,8 +362,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.eldritch-turret-mount",
@@ -393,8 +376,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.energy-emitter-mount",
@@ -408,8 +390,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.shield-mount",
@@ -423,8 +404,7 @@
     ],
     "materialSlots": [
       "mount"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.storage-compartment",
@@ -437,8 +417,7 @@
     ],
     "materialSlots": [
       "housing"
-    ],
-    "powerDemand": 0
+    ]
   },
   {
     "id": "construct-component.maintenance-interface",
@@ -451,7 +430,6 @@
     ],
     "materialSlots": [
       "interface"
-    ],
-    "powerDemand": 0
+    ]
   }
 ]
