@@ -31,6 +31,36 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         var parts = new Dictionary<string, Part>(StringComparer.Ordinal);
         var unavailableSources = (request.UnavailablePowerSourceInstanceIds ?? [])
             .ToHashSet(StringComparer.Ordinal);
+
+        // Native opt-in: reuse crafting recipes and resource-unit prices instead
+        // of charging arbitrary finished-part prices. Older fixture content
+        // retains the original direct-cost contract unchanged.
+        JsonElement? recipeCostMethod = null;
+        if (request.InitialConstruction &&
+            catalog.TryGetById("rule.creature-origination", out var originationRule) &&
+            originationRule?.Definition.TryGetProperty("methodDefinitions",
+                out var methods) == true && methods.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var method in methods.EnumerateArray())
+            {
+                if (method.ValueKind != JsonValueKind.Object ||
+                    !method.TryGetProperty("id", out var methodId) ||
+                    methodId.ValueKind != JsonValueKind.String ||
+                    methodId.GetString() != "construct-assembly" ||
+                    !method.TryGetProperty("initialConstructionCostModel", out var mode))
+                    continue;
+                if (mode.ValueKind == JsonValueKind.String &&
+                    mode.GetString() == "recipe-inputs")
+                    recipeCostMethod = method;
+                else if (mode.ValueKind != JsonValueKind.String ||
+                    mode.GetString() != "direct")
+                    Issue("construct-cost-model-invalid", "method.initialConstructionCostModel",
+                        NativeOriginIssueSeverity.Invalid,
+                        "Unsupported native starting-construction cost model.");
+                break;
+            }
+        }
+        var recipeSelections = new List<NativeCraftingQuotedSelection>();
         long knownMaterialCost = 0;
         long knownModificationCost = 0;
         foreach (var instance in request.Components)
@@ -60,7 +90,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 continue;
             }
             var raw = definition.Definition;
-            var cost = Number(raw, "constructionCost", path, Issue);
+            if (recipeCostMethod.HasValue)
+                recipeSelections.Add(new(definition.Id, instance.Materials));
+            var cost = recipeCostMethod.HasValue ? 0 :
+                Number(raw, "constructionCost", path, Issue);
             var baseDemand = Number(raw, "powerDemand", path, Issue);
             var baseOutput = Number(raw, "powerOutput", path, Issue) ?? 0;
             var outputKnown = true;
@@ -121,13 +154,18 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         "The authored option does not support this component's base capabilities.");
                     return;
                 }
-                var optionCost = Number(option.Definition, "constructionCost",
-                    optionPath, Issue);
-                if (optionCost is int priced) knownModificationCost += priced;
-                else if (request.InitialConstruction)
-                    Issue("construct-option-cost-unresolved", optionPath,
-                        NativeOriginIssueSeverity.Unresolved,
-                        "The option has no authored construction cost.");
+                if (recipeCostMethod.HasValue)
+                    recipeSelections.Add(new(option.Id, instance.Materials));
+                else
+                {
+                    var optionCost = Number(option.Definition, "constructionCost",
+                        optionPath, Issue);
+                    if (optionCost is int priced) knownModificationCost += priced;
+                    else if (request.InitialConstruction)
+                        Issue("construct-option-cost-unresolved", optionPath,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The option has no authored construction cost.");
+                }
                 // Option powerDemand is incremental, unlike a selected operating
                 // mode which replaces the component's general demand.
                 extraDemand += Number(option.Definition, "powerDemand",
@@ -199,13 +237,18 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         Issue("construct-power-source-incompatible", sourcePath,
                             NativeOriginIssueSeverity.Invalid,
                             "The selected source is not compatible with this housing.");
-                    var sourceCost = Number(source.Definition,
-                        "constructionCost", sourcePath, Issue);
-                    if (sourceCost is int priced) knownModificationCost += priced;
-                    else if (request.InitialConstruction)
-                        Issue("construct-power-source-cost-unresolved", sourcePath,
-                            NativeOriginIssueSeverity.Unresolved,
-                            "The selected source's construction cost has not been authored.");
+                    if (recipeCostMethod.HasValue)
+                        recipeSelections.Add(new(source.Id, instance.Materials));
+                    else
+                    {
+                        var sourceCost = Number(source.Definition,
+                            "constructionCost", sourcePath, Issue);
+                        if (sourceCost is int priced) knownModificationCost += priced;
+                        else if (request.InitialConstruction)
+                            Issue("construct-power-source-cost-unresolved", sourcePath,
+                                NativeOriginIssueSeverity.Unresolved,
+                                "The selected source's construction cost has not been authored.");
+                    }
                     var sourceOutput = Number(source.Definition,
                         "powerOutput", sourcePath, Issue);
                     if (sourceOutput is int authoredOutput)
@@ -277,14 +320,19 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 }
                 addedOperationalTraits.AddRange(Texts(material.Definition,
                     "operationalOriginTraitIds", path + ".materials." + slot, Issue));
-                var materialCost = Number(material.Definition, "constructionCost",
-                    path + ".materials." + slot, Issue);
-                if (materialCost is int authoredCost)
-                    knownMaterialCost += authoredCost;
-                else if (request.InitialConstruction)
-                    Issue("construct-material-cost-unresolved",
-                        path + ".materials." + slot, NativeOriginIssueSeverity.Unresolved,
-                        "The selected material has no authorized construction cost.");
+                // Recipe material slots bind an ingredient identity and amount.
+                // Charging the material's old per-slot price here would double-count it.
+                if (!recipeCostMethod.HasValue)
+                {
+                    var materialCost = Number(material.Definition, "constructionCost",
+                        path + ".materials." + slot, Issue);
+                    if (materialCost is int authoredCost)
+                        knownMaterialCost += authoredCost;
+                    else if (request.InitialConstruction)
+                        Issue("construct-material-cost-unresolved",
+                            path + ".materials." + slot, NativeOriginIssueSeverity.Unresolved,
+                            "The selected material has no authorized construction cost.");
+                }
             }
             foreach (var extra in instance.Materials?.Keys ?? [])
                 if (!slots.Contains(extra, StringComparer.Ordinal))
@@ -535,14 +583,24 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         }
 
         long knownCost = knownMaterialCost + knownModificationCost;
+        if (recipeCostMethod is JsonElement costMethod)
+        {
+            var quote = NativeCraftingResourceQuoter.Evaluate(
+                catalog, costMethod, recipeSelections);
+            knownCost = quote.KnownCost;
+            issues.AddRange(quote.Issues);
+        }
         foreach (var part in parts.Values)
         {
-            if (part.ConstructionCost is int cost) knownCost += cost;
-            else if (request.InitialConstruction)
-                Issue("construct-cost-unresolved",
-                    "components." + part.Instance.InstanceId,
-                    NativeOriginIssueSeverity.Unresolved,
-                    "An initial construction cost has not been authored for this component.");
+            if (!recipeCostMethod.HasValue)
+            {
+                if (part.ConstructionCost is int cost) knownCost += cost;
+                else if (request.InitialConstruction)
+                    Issue("construct-cost-unresolved",
+                        "components." + part.Instance.InstanceId,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "An initial construction cost has not been authored for this component.");
+            }
             if (part.PowerDemand is null)
                 Issue("construct-power-demand-unresolved",
                     "components." + part.Instance.InstanceId,

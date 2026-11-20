@@ -679,3 +679,43 @@ mechanical initial origination with synthetic native definitions.
 
 This increment stops at mechanically integrated creation and acceptance
 coverage. It does not implement the complete Construct gameplay simulation.
+
+
+## Recipe-derived starting-resource quotation (candidate integration, 2026-11-20)
+
+The native \`construct-assembly\` method can opt into
+\`initialConstructionCostModel: "recipe-inputs"\` and author a
+\`startingResourceUnitCosts\` object (native material IDs to nonnegative
+integer values). This is a **synthetic-tested infrastructure option**, not an
+approved first-party allowance or resource pricing schedule. The current
+first-party definitions intentionally do not select this mode or invent values.
+
+In this mode each installed component, chosen design/enhancement and selected
+power source resolves its exact native \`craftingRecipeId\`. The referenced
+native \`crafting-recipe\` definition must identify the corresponding
+\`producesDefinitionId\`. Recipes may author flat \`inputs\`, or \`stages\` with
+\`stepId\`, \`competencyId\`, \`minimumRanks\`, \`dependencies\`, \`inputs\`,
+and \`outputs\`. Each recipe material entry has a positive \`amount\` and
+either a fixed \`materialId\` or a \`materialSlot\` resolved from its installed
+component selection. The shared \`NativeCraftingProcess\` contract validates
+stage dependencies and cycles. Resource quotation processes those stages in
+dependency order and credits an intermediate output only against later inputs
+of **the same recipe invocation**. It does not also charge the finished part's
+legacy \`constructionCost\` or the selected material's legacy per-slot price.
+Different installed instances repeat their own recipes.
+
+The resulting external resource quantities are multiplied by the native
+method's starting values and checked against its existing trusted
+\`initialConstructionAllowance\`. Missing recipes, missing input amounts,
+unpriced required inputs, invalid products, or malformed stage graphs cannot
+authorize creation. An incomplete quote is not assumed to be free.
+
+**Boundaries:** A quote is neither inventory authorization nor a completed
+manufacturing check. Starting-character history need not simulate every NPC
+craft roll. The creator's verified expertise, recipe knowledge, facilities
+and material acquisition remain separate responsibilities of the ordinary
+crafting system. Later gameplay modification still requires an independently
+authorized acquisition, crafting and installation workflow. Neither the
+initial allowance nor recipe quotation is a permanent upgrade ceiling.
+No Construct-specific crafting engine, persisted inventory mutation, or
+first-party numerical balance values are introduced by this integration.

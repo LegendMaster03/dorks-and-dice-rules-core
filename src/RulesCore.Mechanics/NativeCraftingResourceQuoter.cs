@@ -1,0 +1,323 @@
+using System.Text.Json;
+using RulesCore.Content;
+
+namespace RulesCore.Mechanics;
+
+/// <summary>
+/// One installed, catalog-verified product requiring a manufacturing recipe.
+/// The caller supplies the already-validated selected material slots, not a price.
+/// </summary>
+internal sealed record NativeCraftingQuotedSelection(
+    string SourceDefinitionId, IReadOnlyDictionary<string, string>? MaterialSlots);
+
+internal sealed record NativeCraftingResourceQuote(
+    long KnownCost, IReadOnlyDictionary<string, long> RequiredResources,
+    IReadOnlyList<NativeOriginContractIssue> Issues);
+
+/// <summary>
+/// Quotes external recipe inputs using a native method's authored starting-resource
+/// values. Intermediate stage outputs offset later inputs within the same recipe.
+/// This does not manufacture items, verify historical NPC proficiency, or change
+/// inventory. Both recipes and prices must come from the native catalog.
+/// </summary>
+internal static class NativeCraftingResourceQuoter
+{
+    private sealed record Stage(NativeCraftingProcessStep Validation);
+
+    internal static NativeCraftingResourceQuote Evaluate(
+        NativeCatalogSnapshot catalog, JsonElement method,
+        IReadOnlyList<NativeCraftingQuotedSelection> selections)
+    {
+        var issues = new List<NativeOriginContractIssue>();
+        var required = new Dictionary<string, long>(StringComparer.Ordinal);
+
+        void Issue(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
+            issues.Add(new(code, path, severity, detail));
+
+        if (selections.Count > 4096)
+        {
+            Issue("crafting-quote-selection-limit", "construction",
+                NativeOriginIssueSeverity.Invalid, "Too many recipe selections.");
+            return new(0, required, issues);
+        }
+
+        var prices = new Dictionary<string, int>(StringComparer.Ordinal);
+        if (!method.TryGetProperty("startingResourceUnitCosts", out var priceData) ||
+            priceData.ValueKind != JsonValueKind.Object)
+            Issue("crafting-quote-prices-unresolved", "method.startingResourceUnitCosts",
+                NativeOriginIssueSeverity.Unresolved,
+                "The native construction method needs a starting-resource price schedule.");
+        else
+        {
+            foreach (var entry in priceData.EnumerateObject())
+            {
+                if (string.IsNullOrWhiteSpace(entry.Name) ||
+                    entry.Value.ValueKind != JsonValueKind.Number ||
+                    !entry.Value.TryGetInt32(out var price) || price is < 0 or > 1_000_000)
+                    Issue("crafting-quote-price-invalid",
+                        "method.startingResourceUnitCosts." + entry.Name,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Resource prices must be bounded nonnegative integers.");
+                else if (!catalog.TryGetById(entry.Name, out _))
+                    Issue("crafting-quote-resource-unknown",
+                        "method.startingResourceUnitCosts." + entry.Name,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A priced resource must be a native catalog identity.");
+                else
+                    prices.Add(entry.Name, price);
+            }
+        }
+
+        foreach (var selection in selections)
+        {
+            var path = "construction." + selection.SourceDefinitionId;
+            if (!catalog.TryGetById(selection.SourceDefinitionId, out var source) ||
+                source is null)
+            {
+                Issue("crafting-quote-product-unknown", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "The constructed product must be a native definition.");
+                continue;
+            }
+            if (!source.Definition.TryGetProperty("craftingRecipeId", out var recipeRef) ||
+                recipeRef.ValueKind == JsonValueKind.Null)
+            {
+                Issue("crafting-quote-recipe-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The selected product has no authored manufacturing recipe.");
+                continue;
+            }
+            if (recipeRef.ValueKind != JsonValueKind.String ||
+                string.IsNullOrWhiteSpace(recipeRef.GetString()) ||
+                !catalog.TryGetById(recipeRef.GetString()!, out var recipe) ||
+                recipe?.Category != "crafting-recipe")
+            {
+                Issue("crafting-quote-recipe-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "The recipe reference must resolve to a native crafting recipe.");
+                continue;
+            }
+            if (!recipe.Definition.TryGetProperty("producesDefinitionId", out var product) ||
+                product.ValueKind != JsonValueKind.String ||
+                product.GetString() != selection.SourceDefinitionId)
+            {
+                Issue("crafting-quote-product-mismatch", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "A selected recipe must produce the exact authorized product.");
+                continue;
+            }
+
+            var before = issues.Count;
+            var operations = new List<NativeCraftingProcessStep>();
+            if (recipe.Definition.TryGetProperty("stages", out var stages))
+            {
+                if (recipe.Definition.TryGetProperty("inputs", out _) ||
+                    stages.ValueKind != JsonValueKind.Array ||
+                    stages.GetArrayLength() is < 1 or > 100)
+                {
+                    Issue("crafting-quote-stages-invalid", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A staged recipe must have one to 100 stages and no duplicate top-level inputs.");
+                    continue;
+                }
+
+                foreach (var stage in stages.EnumerateArray())
+                {
+                    if (stage.ValueKind != JsonValueKind.Object ||
+                        !String(stage, "stepId", out var stepId) ||
+                        !String(stage, "competencyId", out var competencyId) ||
+                        !stage.TryGetProperty("minimumRanks", out var minimumField) ||
+                        !minimumField.TryGetInt32(out var minimum) ||
+                        minimum is < 0 or > 1_000_000 ||
+                        !catalog.TryGetById(competencyId!, out var competency) ||
+                        competency?.Category != "competency")
+                    {
+                        Issue("crafting-quote-stage-invalid", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Every stage needs a valid ID, native competency, and minimum rank.");
+                        continue;
+                    }
+                    var dependencies = new List<string>();
+                    if (stage.TryGetProperty("dependencies", out var deps))
+                    {
+                        if (deps.ValueKind != JsonValueKind.Array ||
+                            deps.EnumerateArray().Any(x => x.ValueKind != JsonValueKind.String ||
+                                string.IsNullOrWhiteSpace(x.GetString())))
+                        {
+                            Issue("crafting-quote-dependencies-invalid", path + "." + stepId,
+                                NativeOriginIssueSeverity.Invalid,
+                                "Stage dependencies must be native-authored identifiers.");
+                            continue;
+                        }
+                        dependencies.AddRange(deps.EnumerateArray().Select(x => x.GetString()!));
+                    }
+                    var inputs = ReadMaterials(catalog, stage, "inputs", true,
+                        selection.MaterialSlots, path + "." + stepId, Issue);
+                    var outputs = ReadMaterials(catalog, stage, "outputs", false,
+                        selection.MaterialSlots, path + "." + stepId, Issue);
+                    if (inputs is null || outputs is null) continue;
+                    // Null readiness is deliberate: quoting does not assert that
+                    // a historical creator owns recipes, materials, or facilities.
+                    operations.Add(new(stepId!, competencyId!, minimum, null,
+                        dependencies, inputs, outputs, null, null, null));
+                }
+
+                if (issues.Count != before) continue;
+                var validation = NativeCraftingProcess.Evaluate(operations);
+                if (validation.Issues.Count > 0)
+                {
+                    Issue("crafting-quote-stage-structure-invalid", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        string.Join(", ", validation.Issues));
+                    continue;
+                }
+                // The shared process validator has checked cycles and missing
+                // prerequisites. Order stages by those dependencies, not JSON order.
+                var byId = operations.ToDictionary(x => x.StepId, StringComparer.Ordinal);
+                var visited = new HashSet<string>(StringComparer.Ordinal);
+                var ordered = new List<NativeCraftingProcessStep>();
+                void Visit(string id)
+                {
+                    if (!visited.Add(id)) return;
+                    foreach (var dependency in byId[id].Dependencies)
+                        Visit(dependency);
+                    ordered.Add(byId[id]);
+                }
+                foreach (var step in operations) Visit(step.StepId);
+                operations = ordered;
+            }
+            else
+            {
+                var inputs = ReadMaterials(catalog, recipe.Definition, "inputs", true,
+                    selection.MaterialSlots, path, Issue);
+                if (inputs is null) continue;
+                operations.Add(new("manufacture", "competency.none", 0, null,
+                    [], inputs, [], null, null, null));
+            }
+            if (issues.Count != before) continue;
+
+            // A private ledger for each recipe invocation avoids double-pricing
+            // its intermediate outputs while not offering hypothetical surplus
+            // products as free resources for a different recipe.
+            var available = new Dictionary<string, long>(StringComparer.Ordinal);
+            try
+            {
+                foreach (var step in operations)
+                {
+                    foreach (var input in step.Inputs)
+                    {
+                        var stocked = available.GetValueOrDefault(input.MaterialId);
+                        var used = Math.Min(stocked, input.Amount);
+                        available[input.MaterialId] = stocked - used;
+                        var external = input.Amount - used;
+                        if (external > 0)
+                            required[input.MaterialId] = checked(
+                                required.GetValueOrDefault(input.MaterialId) + external);
+                    }
+                    foreach (var output in step.Outputs)
+                        available[output.MaterialId] = checked(
+                            available.GetValueOrDefault(output.MaterialId) + output.Amount);
+                }
+            }
+            catch (OverflowException)
+            {
+                Issue("crafting-quote-quantity-overflow", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Recipe resource totals exceed supported quantities.");
+            }
+        }
+
+        long knownCost = 0;
+        foreach (var pair in required.OrderBy(x => x.Key, StringComparer.Ordinal))
+        {
+            if (!prices.TryGetValue(pair.Key, out var unitPrice))
+            {
+                Issue("crafting-quote-resource-price-unresolved",
+                    "method.startingResourceUnitCosts." + pair.Key,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "A required external recipe ingredient has no authorized starting value.");
+                continue;
+            }
+            try { knownCost = checked(knownCost + checked(pair.Value * unitPrice)); }
+            catch (OverflowException)
+            {
+                Issue("crafting-quote-price-overflow", pair.Key,
+                    NativeOriginIssueSeverity.Invalid,
+                    "The total starting-resource value exceeds supported quantities.");
+            }
+        }
+        return new(knownCost, required, issues);
+    }
+
+    private static bool String(JsonElement element, string property, out string? value)
+    {
+        value = element.TryGetProperty(property, out var item) &&
+            item.ValueKind == JsonValueKind.String ? item.GetString() : null;
+        return !string.IsNullOrWhiteSpace(value);
+    }
+
+    private static List<NativeCraftingMaterialQuantity>? ReadMaterials(
+        NativeCatalogSnapshot catalog, JsonElement definition, string key,
+        bool required, IReadOnlyDictionary<string, string>? assigned, string path,
+        Action<string, string, NativeOriginIssueSeverity, string> issue)
+    {
+        if (!definition.TryGetProperty(key, out var values))
+        {
+            if (!required) return [];
+            issue("crafting-quote-inputs-unresolved", path + "." + key,
+                NativeOriginIssueSeverity.Unresolved,
+                "A recipe must author its required input list, even when empty.");
+            return null;
+        }
+        if (values.ValueKind != JsonValueKind.Array || values.GetArrayLength() > 100)
+        {
+            issue("crafting-quote-materials-invalid", path + "." + key,
+                NativeOriginIssueSeverity.Invalid,
+                "Recipe inputs and outputs must be bounded material lists.");
+            return null;
+        }
+
+        var result = new List<NativeCraftingMaterialQuantity>();
+        foreach (var input in values.EnumerateArray())
+        {
+            if (input.ValueKind != JsonValueKind.Object ||
+                !input.TryGetProperty("amount", out var amountElement) ||
+                amountElement.ValueKind != JsonValueKind.Number ||
+                !amountElement.TryGetInt32(out var amount) || amount is < 1 or > 1_000_000)
+            {
+                issue("crafting-quote-amount-invalid", path + "." + key,
+                    NativeOriginIssueSeverity.Invalid,
+                    "An ingredient needs a positive bounded integer quantity.");
+                return null;
+            }
+            var staticId = String(input, "materialId", out var id);
+            var slotId = String(input, "materialSlot", out var slot);
+            if (staticId == slotId)
+            {
+                issue("crafting-quote-material-reference-invalid", path + "." + key,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Specify exactly one material ID or selected component material slot.");
+                return null;
+            }
+            if (slotId)
+            {
+                if (assigned is null || !assigned.TryGetValue(slot!, out id))
+                {
+                    issue("crafting-quote-material-slot-unresolved", path + "." + key,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "The authored recipe requires a verified material-slot assignment.");
+                    return null;
+                }
+            }
+            if (string.IsNullOrWhiteSpace(id) || !catalog.TryGetById(id, out _))
+            {
+                issue("crafting-quote-material-unknown", path + "." + key,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Recipe resource identities must exist in the native catalog.");
+                return null;
+            }
+            result.Add(new(id, amount));
+        }
+        return result;
+    }
+}
