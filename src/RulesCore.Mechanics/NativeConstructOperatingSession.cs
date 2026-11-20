@@ -5,8 +5,8 @@ namespace RulesCore.Mechanics;
 
 /// <summary>
 /// A live, nonpersistent operating view of one already-authorized Construct
-/// build. Caller-controlled input may change only per-instance enabled flags;
-/// installed parts, material assignments, links and Origin grants are captured
+/// build. Caller-controlled input may change only per-instance enabled flags
+/// and authored operating modes. Installed parts, materials, links and grants are captured
 /// from the trusted construction result. This session is not a grant issuer.
 /// </summary>
 public sealed class NativeConstructOperatingSession
@@ -14,7 +14,8 @@ public sealed class NativeConstructOperatingSession
     private readonly NativeConstructAssemblyRequest _baseline;
     private readonly NativeConstructAssemblyEvaluator _assembly;
     private readonly string[] _originGrantIds;
-    private readonly IReadOnlyDictionary<string, string[]> _operationalInputs;
+    private sealed record OperationalInput(string InstanceId, string TraitId);
+    private readonly IReadOnlyDictionary<string, OperationalInput[]> _operationalInputs;
     private readonly IReadOnlyDictionary<string, string[]> _synergyInputs;
     private readonly HashSet<string> _instanceIds;
 
@@ -42,7 +43,7 @@ public sealed class NativeConstructOperatingSession
         // component instances an effective grant requires at runtime.
         // The common Origin engine already verified the complete grant and
         // its source candidates. No new result is synthesized from this map.
-        var operationalCandidates = new Dictionary<string, string>(
+        var operationalCandidates = new Dictionary<string, OperationalInput>(
             StringComparer.Ordinal);
         foreach (var instance in _baseline.Components)
         {
@@ -53,25 +54,26 @@ public sealed class NativeConstructOperatingSession
                 continue;
 
             var index = 0;
-            foreach (var _ in traits.EnumerateArray())
+            foreach (var trait in traits.EnumerateArray())
             {
                 operationalCandidates.Add(
                     "construct:" + instance.InstanceId + ":operational-trait:" +
-                    index++, instance.InstanceId);
+                    index++, new(instance.InstanceId, trait.GetString()!));
             }
         }
 
-        var needs = new Dictionary<string, string[]>(StringComparer.Ordinal);
+        var needs = new Dictionary<string, OperationalInput[]>(StringComparer.Ordinal);
         foreach (var grant in grants)
         {
-            var inputInstances = grant.SourceCandidateIds
+            var inputs = grant.SourceCandidateIds
                 .Where(operationalCandidates.ContainsKey)
                 .Select(candidate => operationalCandidates[candidate])
-                .Distinct(StringComparer.Ordinal)
-                .OrderBy(id => id, StringComparer.Ordinal)
+                .Distinct()
+                .OrderBy(x => x.InstanceId, StringComparer.Ordinal)
+                .ThenBy(x => x.TraitId, StringComparer.Ordinal)
                 .ToArray();
-            if (inputInstances.Length > 0)
-                needs.Add(grant.Id, inputInstances);
+            if (inputs.Length > 0)
+                needs.Add(grant.Id, inputs);
         }
         _operationalInputs = needs;
         _synergyInputs = grants.Where(x => x.Synergy is not null)
@@ -82,45 +84,64 @@ public sealed class NativeConstructOperatingSession
     }
 
     /// <summary>
-    /// Apply a proposed power allocation without reconstructing the permanent
-    /// Origin. Unknown IDs fail closed; an incomplete operating configuration
-    /// suppresses all powered traits while preserving passive entitlements.
+    /// Apply an enabled/disabled power allocation. Existing callers can use
+    /// this shorthand when no authored mode change is needed.
     /// </summary>
     public NativeConstructOperatingStateResult EvaluateAllocation(
-        IReadOnlyDictionary<string, bool> requestedEnabled)
+        IReadOnlyDictionary<string, bool> requestedEnabled) =>
+        EvaluateConfiguration(requestedEnabled, null);
+
+    /// <summary>
+    /// Evaluate a proposed mode selection and power allocation against the
+    /// original validated installation. The caller can neither add components
+    /// nor make an undeclared mode or trait available.
+    /// </summary>
+    public NativeConstructOperatingStateResult EvaluateConfiguration(
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
     {
-        ArgumentNullException.ThrowIfNull(requestedEnabled);
-        var unexpected = requestedEnabled.Keys
-            .Where(id => string.IsNullOrWhiteSpace(id) ||
-                !_instanceIds.Contains(id))
-            .OrderBy(id => id, StringComparer.Ordinal)
-            .ToArray();
-        if (unexpected.Length > 0)
+        requestedEnabled ??= new Dictionary<string, bool>(StringComparer.Ordinal);
+        requestedModes ??= new Dictionary<string, string>(StringComparer.Ordinal);
+        var unexpectedEnabled = requestedEnabled.Keys
+            .Where(id => string.IsNullOrWhiteSpace(id) || !_instanceIds.Contains(id))
+            .OrderBy(id => id, StringComparer.Ordinal).ToArray();
+        var unexpectedModes = requestedModes.Keys
+            .Where(id => string.IsNullOrWhiteSpace(id) || !_instanceIds.Contains(id))
+            .OrderBy(id => id, StringComparer.Ordinal).ToArray();
+        if (unexpectedEnabled.Length > 0 || unexpectedModes.Length > 0)
         {
             var baseline = _assembly.Evaluate(_baseline);
             return new(baseline, [], _originGrantIds,
                 [new("construct-operating-instance-unknown",
-                    "operatingAllocation", NativeOriginIssueSeverity.Invalid,
-                    "Power allocation may only refer to instances in the authorized assembly.")]);
+                    "operatingConfiguration", NativeOriginIssueSeverity.Invalid,
+                    "Operating changes may only address instances in the authorized assembly.")]);
         }
 
         var configured = _baseline with
         {
-            Components = _baseline.Components.Select(instance =>
-                requestedEnabled.TryGetValue(instance.InstanceId, out var enabled)
-                    ? instance with { Enabled = enabled }
-                    : instance).ToArray()
+            Components = _baseline.Components.Select(instance => instance with
+            {
+                Enabled = requestedEnabled.TryGetValue(instance.InstanceId, out var enabled)
+                    ? enabled : instance.Enabled,
+                ModeId = requestedModes.TryGetValue(instance.InstanceId, out var modeId)
+                    ? modeId : instance.ModeId
+            }).ToArray()
         };
         var state = _assembly.Evaluate(configured);
-        var onlineIds = state.Components.Where(x => x.Operational)
-            .Select(x => x.InstanceId).ToHashSet(StringComparer.Ordinal);
+        var componentStates = state.Components.ToDictionary(x => x.InstanceId,
+            StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
 
-        // Invalid and incomplete allocations can not activate new effects.
-        // Passive entitlements remain present; consumers must also check the
-        // overall status before accepting the operating configuration.
+        // Mode-dependent applicability needs both an operational component and
+        // a selected mode which explicitly authorizes this exact trait.
+        // Invalid or overallocated configurations never activate powered grants.
         foreach (var (grantId, providers) in _operationalInputs)
-            if (!state.IsAuthorized || providers.Any(id => !onlineIds.Contains(id)))
+            if (!state.IsAuthorized || providers.Any(input =>
+                !componentStates.TryGetValue(input.InstanceId, out var component) ||
+                !component.Operational ||
+                component.ActiveOperationalOriginTraitIds is null ||
+                !component.ActiveOperationalOriginTraitIds.Contains(input.TraitId,
+                    StringComparer.Ordinal)))
                 active.Remove(grantId);
 
         // Native synergies retain the same authorized effective grant record.
