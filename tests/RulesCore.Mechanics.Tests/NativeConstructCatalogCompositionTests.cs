@@ -104,7 +104,7 @@ public sealed class NativeConstructCatalogCompositionTests
         new("housing", "construct-component.housing",
             Materials: new Dictionary<string, string>
                 { ["shell"] = "construct-material.steel" },
-            ConnectedTo: ["arm", "arm-two"], PowerSourceId: source);
+            ConnectedTo: ["arm"], PowerSourceId: source);
 
     private static NativeConstructComponentInstance Arm(
         string id = "arm",
