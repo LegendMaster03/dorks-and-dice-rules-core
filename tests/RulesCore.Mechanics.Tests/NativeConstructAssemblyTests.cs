@@ -41,6 +41,23 @@ public sealed class NativeConstructAssemblyTests
                   {"id":"construct-component.weapon","kind":"construct-component",
                    "name":"Weapon","constructionCost":4,"powerDemand":5,
                    "provides":["integrated-attack"],"requiresAnyOf":[["manipulation"]]},
+                  {"id":"construct-component.assembly","kind":"construct-component",
+                   "name":"Composite assembly","constructionCost":2,"powerDemand":0,
+                   "provides":["assembly"],"materialSlots":["body"],
+                   "mountInterfaces":["structural"],
+                   "acceptsMountInterfaces":["structural","motion","cover"]},
+                  {"id":"construct-component.segment","kind":"construct-component",
+                   "name":"Segment","constructionCost":1,"powerDemand":0,
+                   "provides":["segment"],"materialSlots":["body"],
+                   "mountInterfaces":["structural"]},
+                  {"id":"construct-component.motor","kind":"construct-component",
+                   "name":"Motor","constructionCost":2,"powerDemand":2,
+                   "provides":["actuation"],"requiresAnyOf":[["power"]],
+                   "mountInterfaces":["motion"]},
+                  {"id":"construct-component.skin","kind":"construct-component",
+                   "name":"Casing","constructionCost":1,"powerDemand":0,
+                   "provides":["enclosure"],"materialSlots":["body"],
+                   "mountInterfaces":["cover"]},
                   {"id":"construct-component.unknown","kind":"construct-component",
                    "name":"Unbalanced Prototype","provides":["special"]}
                 ]
@@ -245,6 +262,110 @@ public sealed class NativeConstructAssemblyTests
         Assert.Contains(separated.Issues, x =>
             x.Code == "construct-dependency-unavailable" &&
             x.Path == "components.arm");
+    }
+
+
+    private static NativeConstructComponentInstance Mounted(string id, string kind,
+        string parent, string mountInterface, bool material = false) =>
+        new(id, "construct-component." + kind,
+            Materials: material
+                ? new Dictionary<string, string>
+                    { ["body"] = "construct-material.steel" } : null,
+            ParentInstanceId: parent, MountInterfaceId: mountInterface);
+
+    [Fact]
+    public void CompositePartContainsIndependentlyConfigurableSubcomponents()
+    {
+        using var fixture = new Fixture();
+        var parts = new[]
+        {
+            new NativeConstructComponentInstance("assembly", "construct-component.assembly",
+                Materials: new Dictionary<string, string>
+                    { ["body"] = "construct-material.steel" },
+                ConnectedTo: ["core"]),
+            Mounted("segment", "segment", "assembly", "structural", material: true),
+            Mounted("motor1", "motor", "assembly", "motion"),
+            Mounted("motor2", "motor", "assembly", "motion"),
+            Mounted("skin", "skin", "assembly", "cover", material: true),
+            Part("core", "core")
+        };
+
+        // Two motors on one assembly are allowed. Every subcomponent has
+        // independent costs/materials without a mandatory anatomy or root.
+        var result = Evaluate(fixture, parts);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal(14, result.KnownConstructionCost);
+        Assert.All(new[] { "motor1", "motor2", "skin", "segment" },
+            id => Assert.True(Operational(result, id)));
+
+        var wiring = Evaluate(fixture, parts, powerConnections:
+            [new("assembly", "core"), new("assembly", "motor1"),
+             new("assembly", "motor2")]);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, wiring.Status);
+        Assert.True(Operational(wiring, "motor1"));
+        Assert.True(Operational(wiring, "motor2"));
+
+        var noMotorPower = Evaluate(fixture, parts, powerConnections:
+            [new("assembly", "core")]);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, noMotorPower.Status);
+        Assert.False(Operational(noMotorPower, "motor1"));
+        Assert.False(Operational(noMotorPower, "motor2"));
+        Assert.True(Operational(noMotorPower, "skin"));
+    }
+
+    [Fact]
+    public void MountInterfacesRejectUnknownParentsAndIncompatibleAttachments()
+    {
+        using var fixture = new Fixture();
+        var parent = new NativeConstructComponentInstance("assembly",
+            "construct-component.assembly",
+            Materials: new Dictionary<string, string>
+                { ["body"] = "construct-material.steel" });
+
+        var missing = Evaluate(fixture,
+            [parent, Mounted("part", "segment", "absent", "structural", material: true)]);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, missing.Status);
+        Assert.Contains(missing.Issues, x => x.Code == "construct-mount-parent-invalid");
+
+        var wrong = Evaluate(fixture,
+            [parent, Mounted("part", "motor", "assembly", "cover")]);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, wrong.Status);
+        Assert.Contains(wrong.Issues, x =>
+            x.Code == "construct-mount-interface-incompatible");
+
+        var absent = Evaluate(fixture,
+            [parent, Mounted("part", "motor", "assembly", "")]);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, absent.Status);
+        Assert.Contains(absent.Issues, x => x.Code == "construct-mount-interface-required");
+
+        var stray = Evaluate(fixture,
+            [parent with { MountInterfaceId = "structural" }]);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, stray.Status);
+        Assert.Contains(stray.Issues, x => x.Code == "construct-mount-parent-required");
+    }
+
+    [Fact]
+    public void NestedCompositionIsAllowedButCyclicContainmentIsNot()
+    {
+        using var fixture = new Fixture();
+        var root = new NativeConstructComponentInstance("root",
+            "construct-component.assembly",
+            Materials: new Dictionary<string, string>
+                { ["body"] = "construct-material.steel" });
+        var child = Mounted("child", "assembly", "root", "structural",
+            material: true);
+        var grandchild = Mounted("grandchild", "segment", "child",
+            "structural", material: true);
+
+        var nested = Evaluate(fixture, [root, child, grandchild]);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, nested.Status);
+        Assert.Equal(8, nested.KnownConstructionCost);
+
+        var cycle = Evaluate(fixture,
+            [root with { ParentInstanceId = "child", MountInterfaceId = "structural" },
+             child]);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, cycle.Status);
+        Assert.Contains(cycle.Issues, x => x.Code == "construct-mount-cycle");
     }
 
 }

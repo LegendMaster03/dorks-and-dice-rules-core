@@ -41,6 +41,8 @@ public sealed class NativeConstructOperatingSession
         _originGrantIds = grants.Select(g => g.Id)
             .OrderBy(id => id, StringComparer.Ordinal).ToArray();
 
+        // A record copy also retains the authorized optional parent and mount
+        // interface selections. Runtime callers cannot reparent installed parts.
         // Catalog-authored operational trait references identify *which*
         // component instances an effective grant requires at runtime.
         // The common Origin engine already verified the complete grant and

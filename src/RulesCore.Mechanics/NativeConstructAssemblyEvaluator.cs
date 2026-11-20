@@ -72,6 +72,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             var needs = selectedMode?.Requirements ?? baseNeeds;
             var modeTraits = selectedMode?.OperationalOriginTraitIds ?? allowedTraits;
             var slots = Texts(raw, "materialSlots", path, Issue);
+            // Structural interfaces are installation properties, independent of
+            // powered capability tags and per-instance operating modes.
+            var mountInterfaces = Texts(raw, "mountInterfaces", path, Issue);
+            var acceptsMountInterfaces = Texts(raw, "acceptsMountInterfaces", path, Issue);
 
             // A design and its optional enhancements are catalog definitions,
             // not duplicated material-specific components or client-supplied effects.
@@ -253,7 +257,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         NativeOriginIssueSeverity.Invalid, "The component does not define this material slot.");
 
             parts.Add(instance.InstanceId, new(instance, cost, demand, output,
-                provides, needs, Text(raw, "shutdownConsequence"), modeTraits));
+                provides, needs, Text(raw, "shutdownConsequence"), modeTraits,
+                mountInterfaces, acceptsMountInterfaces));
         }
 
         var links = parts.Keys.ToDictionary(x => x,
@@ -274,6 +279,80 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 links[part.Instance.InstanceId].Add(target);
                 links[target].Add(part.Instance.InstanceId);
             }
+        }
+
+        // Optional mounting assembles independently configurable native parts
+        // into composite components. An attachment creates physical adjacency,
+        // not a mandatory root, powered capability, or power source. An interface
+        // must be explicitly authored on both parent and child definitions.
+        foreach (var part in parts.Values.OrderBy(x => x.Instance.InstanceId,
+            StringComparer.Ordinal))
+        {
+            var child = part.Instance;
+            var path = "components." + child.InstanceId;
+            if (child.ParentInstanceId is null)
+            {
+                if (child.MountInterfaceId is not null)
+                    Issue("construct-mount-parent-required", path + ".mountInterfaceId",
+                        NativeOriginIssueSeverity.Invalid,
+                        "A mounting interface selection requires a parent component.");
+                continue;
+            }
+
+            if (string.IsNullOrWhiteSpace(child.ParentInstanceId) ||
+                child.ParentInstanceId == child.InstanceId ||
+                !parts.TryGetValue(child.ParentInstanceId, out var parent))
+            {
+                Issue("construct-mount-parent-invalid", path + ".parentInstanceId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "A mounted subcomponent needs another installed parent instance.");
+                continue;
+            }
+            if (string.IsNullOrWhiteSpace(child.MountInterfaceId))
+            {
+                Issue("construct-mount-interface-required", path + ".mountInterfaceId",
+                    NativeOriginIssueSeverity.Incomplete,
+                    "A mounted component needs a selected, authored mounting interface.");
+                continue;
+            }
+            if (!part.MountInterfaces.Contains(child.MountInterfaceId, StringComparer.Ordinal) ||
+                !parent.AcceptsMountInterfaces.Contains(child.MountInterfaceId,
+                    StringComparer.Ordinal))
+            {
+                Issue("construct-mount-interface-incompatible", path + ".mountInterfaceId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "The chosen mounting interface must be supported by both component definitions.");
+                continue;
+            }
+
+            // Following parent references also detects cycles longer than two.
+            // No component is required to have a parent; any number of
+            // independent or composite top-level assemblies are permitted.
+            var ancestors = new HashSet<string>(StringComparer.Ordinal)
+                { child.InstanceId };
+            var cursor = child.ParentInstanceId;
+            var cycle = false;
+            while (cursor is not null && parts.TryGetValue(cursor, out var ancestor))
+            {
+                if (!ancestors.Add(cursor))
+                {
+                    cycle = true;
+                    break;
+                }
+                cursor = ancestor.Instance.ParentInstanceId;
+            }
+            if (cycle)
+            {
+                Issue("construct-mount-cycle", path + ".parentInstanceId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Installed component containment cannot form a cycle.");
+                continue;
+            }
+
+            // The mounting joint is a real physical contact. Only an explicit
+            // PowerConnections edge makes it conduct power in explicit mode.
+            links[child.InstanceId].Add(parent.Instance.InstanceId);
+            links[parent.Instance.InstanceId].Add(child.InstanceId);
         }
 
         // An unconnected component is permitted. Physical connectivity
@@ -489,7 +568,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
     private sealed record Part(NativeConstructComponentInstance Instance, int? ConstructionCost,
         int? PowerDemand, int PowerOutput, string[] Provides, string[][] Requirements,
-        string? ShutdownConsequence, string[] OperationalOriginTraitIds);
+        string? ShutdownConsequence, string[] OperationalOriginTraitIds,
+        string[] MountInterfaces, string[] AcceptsMountInterfaces);
 
     private sealed record OperatingMode(string Id, int? PowerDemand, int? PowerOutput,
         string[]? Provides, string[][]? Requirements, string[] OperationalOriginTraitIds);
@@ -632,7 +712,8 @@ public sealed record NativeConstructComponentInstance(
     IReadOnlyList<string>? ConnectedTo = null,
     bool Enabled = true, string? ModeId = null,
     string? DesignId = null, IReadOnlyList<string>? EnhancementIds = null,
-    string? PowerSourceId = null);
+    string? PowerSourceId = null,
+    string? ParentInstanceId = null, string? MountInterfaceId = null);
 
 /// <summary>
 /// A passive, undirected power path between directly connected components.

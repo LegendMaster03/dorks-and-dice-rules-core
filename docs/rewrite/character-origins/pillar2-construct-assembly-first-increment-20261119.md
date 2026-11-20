@@ -296,3 +296,43 @@ Synthetic acceptance tests cover explicit and legacy connections, deliberately
 unwired assemblies, invalid or duplicate paths, and dependency failure across
 separate power networks. CI, rather than the local runtime, must validate
 the full .NET test suite after the branch commit.
+
+## Optional subcomponent composition and authored mounting interfaces
+
+A Construct can be formed from any number of independent native component
+instances and optional nested assemblies. `ParentInstanceId` and
+`MountInterfaceId` are optional installation-time fields on a component
+instance. Together they designate a single immediate containing instance and
+one selected installation interface. They do not require a top-level root,
+humanoid frame, particular number of components, or a fixed parent hierarchy.
+
+Native component definitions may separately author `mountInterfaces` (usable
+interfaces of a subcomponent) and `acceptsMountInterfaces` (interfaces a
+parent can receive). A relationship is valid only when the exact selected
+interface appears on both sides. An absent selected interface is incomplete;
+unknown parents, unpaired selections, incompatible interfaces, and
+containment cycles are invalid. Mounting capacity/weight restrictions are not
+yet approved and are not inferred from interface names.
+
+Mounting creates a physical edge in the existing undirected component graph,
+so functional prerequisites can traverse a composite assembly. **It does not
+imply an electrical connection** when explicit `PowerConnections` are
+provided. Legacy requests without explicit power wiring continue to treat
+physical connections as power paths for backward compatibility. Every
+subcomponent retains its own native definition, material slots, design,
+enhancements, construction costs, operating state, and exact instance
+provenance. A powered-off parent remains a physical mounting point; functional
+operation still depends on authored prerequisites.
+
+The trusted operating session snapshots installation relationships alongside
+components and wiring; enabling, disabling, and changing modes does not allow
+a component to move between assemblies or reconstruct permanent Origin grants.
+The first-party component reference catalog is unchanged; fixtures demonstrate
+a configurable composite with multiple actuators, casing, structural segments
+and independent materials. The selection of a mounting interface grants no
+movement, extra attack, armor value, or other canonical characteristic.
+
+Synthetic tests cover multi-subcomponent construction, repeated compatible
+child instances, nested components, separate material costs, automatic
+structural connectivity, explicit independent power wiring, invalid or absent
+interfaces, missing parents, and cyclic containment.
