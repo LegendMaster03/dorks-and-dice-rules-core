@@ -68,6 +68,28 @@ public sealed class NativeConstructOriginProjectionTests
                  {"id":"construct-component.overload","kind":"construct-component",
                   "name":"Overload","constructionCost":1,"powerDemand":5,
                   "requiresAnyOf":[["power"]],"provides":["burst"]},
+                 {"id":"construct-component.multi","kind":"construct-component",
+                  "name":"Multifunctional Tool","constructionCost":2,"powerDemand":0,
+                  "operationalOriginTraitIds":["trait.fixture.tether","trait.fixture.blast"],
+                  "operatingModes":[
+                    {"id":"stowed","powerDemand":0,"provides":[],
+                     "operationalOriginTraitIds":[]},
+                    {"id":"tether","powerDemand":2,"provides":["tether-control"],
+                     "operationalOriginTraitIds":["trait.fixture.tether"]},
+                    {"id":"blast","powerDemand":4,"provides":["blast-port"],
+                     "operationalOriginTraitIds":["trait.fixture.blast"]}
+                  ]},
+                 {"id":"construct-component.tether-dependent","kind":"construct-component",
+                  "name":"Tether Receiver","constructionCost":1,"powerDemand":1,
+                  "requiresAnyOf":[["tether-control"]],
+                  "provides":["tether-receiver"]},
+                 {"id":"construct-component.invalid-mode","kind":"construct-component",
+                  "name":"Forged Mode","constructionCost":1,"powerDemand":0,
+                  "operationalOriginTraitIds":["trait.fixture.tether"],
+                  "operatingModes":[
+                    {"id":"forged","powerDemand":0,"provides":["arbitrary"],
+                     "operationalOriginTraitIds":["trait.fixture.blast"]}
+                  ]},
                  {"id":"construct-component.unknown","kind":"construct-component",
                   "name":"Bad reference","constructionCost":1,"powerDemand":0,
                   "installedOriginTraitIds":["trait.fixture.missing"]},
@@ -86,6 +108,14 @@ public sealed class NativeConstructOriginProjectionTests
                   "name":"Extended Senses",
                   "trait":{"id":"extended-senses","name":"Extended Senses",
                            "mechanicalEffect":"fixture.extended-senses"}},
+                 {"id":"trait.fixture.tether","kind":"origin-trait",
+                  "name":"Tether Handling",
+                  "trait":{"id":"tether","name":"Tether Handling",
+                           "mechanicalEffect":"fixture.tether"}},
+                 {"id":"trait.fixture.blast","kind":"origin-trait",
+                  "name":"Blast Configuration",
+                  "trait":{"id":"blast","name":"Blast Configuration",
+                           "mechanicalEffect":"fixture.blast"}},
                  {"id":"trait.fixture.sensor-guard","kind":"origin-trait",
                   "name":"Sensor Guard",
                   "trait":{"id":"sensor-guard","name":"Sensor Guard",
@@ -112,10 +142,10 @@ public sealed class NativeConstructOriginProjectionTests
             SelectedSpeciesId: intent == NativeOriginIntent.Direct ? "species.fixture" : null);
 
     private static NativeConstructComponentInstance Part(string id, string kind,
-        bool enabled = true, string[]? links = null) =>
+        bool enabled = true, string[]? links = null, string? mode = null) =>
         new(id, "construct-component." + kind,
             kind == "plate" ? new Dictionary<string, string>
-                { ["surface"] = "construct-material.steel" } : null, links, enabled);
+                { ["surface"] = "construct-material.steel" } : null, links, enabled, mode);
 
     private static NativeConstructAssemblyRequest Assembly(bool plateEnabled = true,
         bool scannerEnabled = false, bool overloadEnabled = false) =>
@@ -372,6 +402,136 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.True(same.IsOperatingConfigurationValid);
         Assert.DoesNotContain(same.Issues, x =>
             x.Code == "construct-material-unknown");
+    }
+
+
+    private static NativeConstructAssemblyRequest ModularToolAssembly(
+        string? mode = "stowed", bool includeDependent = false,
+        bool includeScanner = false) =>
+        new NativeConstructAssemblyRequest(
+        [
+            Part("power", "power", links: ["tool", "dependent", "scanner"]),
+            Part("tool", "multi", mode: mode),
+            Part("dependent", "tether-dependent", enabled: includeDependent),
+            Part("scanner", "scanner", enabled: includeScanner)
+        ], InitialAllowance: 20);
+
+    [Fact]
+    public void MutuallyExclusiveModesSwitchPoweredTraitsWithoutChangingPermanentOrigin()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture,
+            assembly: ModularToolAssembly());
+        Assert.True(constructed.IsMechanicallyAuthorized,
+            string.Join("; ", constructed.Origin.Issues.Select(x => x.Code)));
+        var profile = constructed.Origin.Profile!;
+        var serialized = JsonSerializer.Serialize(profile);
+        var tether = profile.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.tether");
+        var blast = profile.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.blast");
+
+        var stowed = constructed.OperatingSession!.EvaluateConfiguration();
+        Assert.True(stowed.IsOperatingConfigurationValid);
+        Assert.Contains(tether.Id, stowed.InactiveOriginGrantIds);
+        Assert.Contains(blast.Id, stowed.InactiveOriginGrantIds);
+        Assert.Equal("stowed", stowed.Assembly.Components.Single(x =>
+            x.InstanceId == "tool").ModeId);
+
+        var deployed = constructed.OperatingSession.EvaluateConfiguration(
+            requestedModes: new Dictionary<string, string> { ["tool"] = "tether" });
+        Assert.True(deployed.IsOperatingConfigurationValid);
+        Assert.Contains(tether.Id, deployed.ApplicableOriginGrantIds);
+        Assert.Contains(blast.Id, deployed.InactiveOriginGrantIds);
+        Assert.Contains("tether-control", deployed.Assembly.Components
+            .Single(x => x.InstanceId == "tool").ActiveCapabilities);
+
+        var firing = constructed.OperatingSession.EvaluateConfiguration(
+            requestedModes: new Dictionary<string, string> { ["tool"] = "blast" });
+        Assert.True(firing.IsOperatingConfigurationValid);
+        Assert.Contains(blast.Id, firing.ApplicableOriginGrantIds);
+        Assert.Contains(tether.Id, firing.InactiveOriginGrantIds);
+        Assert.Contains("blast-port", firing.Assembly.Components
+            .Single(x => x.InstanceId == "tool").ActiveCapabilities);
+
+        var disabled = constructed.OperatingSession.EvaluateConfiguration(
+            new Dictionary<string, bool> { ["tool"] = false },
+            new Dictionary<string, string> { ["tool"] = "blast" });
+        Assert.True(disabled.IsOperatingConfigurationValid);
+        Assert.Contains(blast.Id, disabled.InactiveOriginGrantIds);
+        Assert.Equal(serialized, JsonSerializer.Serialize(profile));
+    }
+
+    [Fact]
+    public void ModePowerDemandAndDependencyProvidersChangeTogether()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture,
+            assembly: ModularToolAssembly());
+        Assert.True(constructed.IsMechanicallyAuthorized);
+
+        var tether = constructed.OperatingSession!.EvaluateConfiguration(
+            new Dictionary<string, bool> { ["dependent"] = true },
+            new Dictionary<string, string> { ["tool"] = "tether" });
+        Assert.True(tether.IsOperatingConfigurationValid);
+        Assert.True(tether.Assembly.Components.Single(x =>
+            x.InstanceId == "dependent").Operational);
+
+        var noTether = constructed.OperatingSession.EvaluateConfiguration(
+            new Dictionary<string, bool> { ["dependent"] = true },
+            new Dictionary<string, string> { ["tool"] = "blast" });
+        Assert.False(noTether.IsOperatingConfigurationValid);
+        Assert.Contains(noTether.Issues, x =>
+            x.Code == "construct-dependency-unavailable");
+        Assert.False(noTether.Assembly.Components.Single(x =>
+            x.InstanceId == "dependent").Operational);
+
+        var stowedScanner = constructed.OperatingSession.EvaluateConfiguration(
+            new Dictionary<string, bool> { ["scanner"] = true });
+        Assert.True(stowedScanner.IsOperatingConfigurationValid);
+
+        var overloaded = constructed.OperatingSession.EvaluateConfiguration(
+            new Dictionary<string, bool> { ["scanner"] = true },
+            new Dictionary<string, string> { ["tool"] = "tether" });
+        Assert.False(overloaded.IsOperatingConfigurationValid);
+        Assert.Contains(overloaded.Issues, x =>
+            x.Code == "construct-power-overallocated");
+    }
+
+    [Fact]
+    public void InvalidOperatingModesAndUndeclaredModeTraitsFailClosed()
+    {
+        using var fixture = new Fixture();
+        var original = Evaluate(fixture, assembly: ModularToolAssembly());
+        Assert.True(original.IsMechanicallyAuthorized);
+        var session = original.OperatingSession!;
+
+        var unknown = session.EvaluateConfiguration(
+            requestedModes: new Dictionary<string, string> { ["tool"] = "hacked" });
+        Assert.False(unknown.IsOperatingConfigurationValid);
+        Assert.Contains(unknown.Issues, x => x.Code == "construct-mode-unknown");
+        var blast = original.Origin.Profile!.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.blast");
+        Assert.Contains(blast.Id, unknown.InactiveOriginGrantIds);
+
+        var absent = Evaluate(fixture, assembly: ModularToolAssembly(mode: null));
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, absent.Assembly.Status);
+        Assert.Contains(absent.Assembly.Issues, x =>
+            x.Code == "construct-mode-selection-required");
+        Assert.Null(absent.Origin.Profile);
+
+        var unexpected = Evaluate(fixture, assembly:
+            new([Part("plain", "power", mode: "firing")], InitialAllowance: 20));
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, unexpected.Assembly.Status);
+        Assert.Contains(unexpected.Assembly.Issues, x =>
+            x.Code == "construct-mode-unexpected");
+
+        var forged = Evaluate(fixture, assembly:
+            new([Part("fake", "invalid-mode", mode: "forged")], InitialAllowance: 20));
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, forged.Assembly.Status);
+        Assert.Contains(forged.Assembly.Issues, x =>
+            x.Code == "construct-mode-traits-invalid");
+        Assert.Null(forged.Origin.Profile);
     }
 
     [Fact]
