@@ -313,7 +313,7 @@ public sealed class NativeMechanicsApiTests
         var state = new NativeCharacterState(characterId,
             new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
                 new Dictionary<string, int> { ["strength"] = 10 },
-                [new NativeAdvancement("class.demo", 2, "class:demo")]), []);
+                [new NativeAdvancement("class.demo", 2, "class:demo")]), [], [], []);
         var journal = new NativeSupernaturalTransitionJournal(characterId, 0, [], []);
 
         object Payload(string operation, string eventId, string evidence,
@@ -392,7 +392,7 @@ public sealed class NativeMechanicsApiTests
 
         var forged = await SendAsync(Payload("Acquire", "wolf-acquire",
             "forged-proof", new NativeCharacterState(characterId,
-                state.PrimaryMechanics, []),
+                state.PrimaryMechanics, [], [], []),
             new NativeSupernaturalTransitionJournal(characterId, 0, [], [])));
         Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.Code);
         Assert.Equal("supernatural_authority_unverified",
