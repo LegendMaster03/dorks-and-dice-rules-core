@@ -58,10 +58,18 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             }
             var raw = definition.Definition;
             var cost = Number(raw, "constructionCost", path, Issue);
-            var demand = Number(raw, "powerDemand", path, Issue);
-            var output = Number(raw, "powerOutput", path, Issue) ?? 0;
-            var provides = Texts(raw, "provides", path, Issue);
-            var needs = Requirements(raw, path, Issue);
+            var baseDemand = Number(raw, "powerDemand", path, Issue);
+            var baseOutput = Number(raw, "powerOutput", path, Issue) ?? 0;
+            var baseProvides = Texts(raw, "provides", path, Issue);
+            var baseNeeds = Requirements(raw, path, Issue);
+            var allowedTraits = Texts(raw, "operationalOriginTraitIds", path, Issue);
+            var selectedMode = SelectOperatingMode(raw, instance.ModeId,
+                allowedTraits, path, Issue);
+            var demand = selectedMode?.PowerDemand ?? baseDemand;
+            var output = selectedMode?.PowerOutput ?? baseOutput;
+            var provides = selectedMode?.Provides ?? baseProvides;
+            var needs = selectedMode?.Requirements ?? baseNeeds;
+            var modeTraits = selectedMode?.OperationalOriginTraitIds ?? allowedTraits;
             var slots = Texts(raw, "materialSlots", path, Issue);
             foreach (var slot in slots)
             {
@@ -94,7 +102,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         NativeOriginIssueSeverity.Invalid, "The component does not define this material slot.");
 
             parts.Add(instance.InstanceId, new(instance, cost, demand, output,
-                provides, needs, Text(raw, "shutdownConsequence")));
+                provides, needs, Text(raw, "shutdownConsequence"), modeTraits));
         }
 
         var links = parts.Keys.ToDictionary(x => x,
@@ -223,7 +231,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 if (!active && part.ShutdownConsequence is string consequence)
                     failures.Add(new(id, consequence));
                 return new NativeConstructComponentState(id, part.Instance.DefinitionId,
-                    true, active, active ? part.Provides : [], part.Instance.Enabled);
+                    true, active, active ? part.Provides : [], part.Instance.Enabled,
+                    part.Instance.ModeId,
+                    active ? part.OperationalOriginTraitIds : []);
             }).ToArray();
 
         var status = issues.Any(x => x.Severity == NativeOriginIssueSeverity.Invalid)
@@ -240,7 +250,85 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
     private sealed record Part(NativeConstructComponentInstance Instance, int? ConstructionCost,
         int? PowerDemand, int PowerOutput, string[] Provides, string[][] Requirements,
-        string? ShutdownConsequence);
+        string? ShutdownConsequence, string[] OperationalOriginTraitIds);
+
+    private sealed record OperatingMode(string Id, int? PowerDemand, int? PowerOutput,
+        string[]? Provides, string[][]? Requirements, string[] OperationalOriginTraitIds);
+
+    /// <summary>
+    /// One selected mode replaces the authored operating parameters for this
+    /// instance. It does not change installation cost or grant new Origin traits.
+    /// Every mode's trait IDs must be a subset of the component's installed,
+    /// catalog-authored operational entitlements.
+    /// </summary>
+    private static OperatingMode? SelectOperatingMode(JsonElement component,
+        string? selectedModeId, IReadOnlyList<string> allowedTraits, string path,
+        Action<string, string, NativeOriginIssueSeverity, string> issue)
+    {
+        if (!component.TryGetProperty("operatingModes", out var modes))
+        {
+            if (selectedModeId is not null)
+                issue("construct-mode-unexpected", path + ".modeId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "The component has no authored operating modes.");
+            return null;
+        }
+        if (modes.ValueKind != JsonValueKind.Array ||
+            modes.GetArrayLength() is < 1 or > 32)
+        {
+            issue("construct-modes-invalid", path + ".operatingModes",
+                NativeOriginIssueSeverity.Invalid,
+                "Operating modes must contain between one and 32 authored states.");
+            return null;
+        }
+
+        var definitions = new Dictionary<string, OperatingMode>(StringComparer.Ordinal);
+        var index = 0;
+        foreach (var mode in modes.EnumerateArray())
+        {
+            var modePath = path + ".operatingModes." + index++;
+            var id = mode.ValueKind == JsonValueKind.Object ? Text(mode, "id") : null;
+            if (string.IsNullOrWhiteSpace(id) || id.Length > 96 ||
+                id.Any(c => !(char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.')) ||
+                definitions.ContainsKey(id))
+            {
+                issue("construct-mode-definition-invalid", modePath,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Operating mode IDs must be unique and path-safe.");
+                continue;
+            }
+            var modeDemand = Number(mode, "powerDemand", modePath, issue);
+            var modeOutput = Number(mode, "powerOutput", modePath, issue);
+            var provides = mode.TryGetProperty("provides", out _)
+                ? Texts(mode, "provides", modePath, issue) : null;
+            var needs = mode.TryGetProperty("requiresAnyOf", out _)
+                ? Requirements(mode, modePath, issue) : null;
+            var activeTraits = Texts(mode, "operationalOriginTraitIds", modePath, issue);
+            if (activeTraits.Distinct(StringComparer.Ordinal).Count() != activeTraits.Length ||
+                activeTraits.Any(x => !allowedTraits.Contains(x, StringComparer.Ordinal)))
+                issue("construct-mode-traits-invalid", modePath + ".operationalOriginTraitIds",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Mode capabilities may activate only distinct operational traits installed by the component.");
+            definitions.Add(id, new(id, modeDemand, modeOutput, provides, needs,
+                activeTraits));
+        }
+
+        if (selectedModeId is null)
+        {
+            issue("construct-mode-selection-required", path + ".modeId",
+                NativeOriginIssueSeverity.Incomplete,
+                "A component with authored operating modes needs a selected mode.");
+            return null;
+        }
+        if (!definitions.TryGetValue(selectedModeId, out var selected))
+        {
+            issue("construct-mode-unknown", path + ".modeId",
+                NativeOriginIssueSeverity.Invalid,
+                "The requested operating mode is not authored for this component.");
+            return null;
+        }
+        return selected;
+    }
 
     private static string? Text(JsonElement definition, string key) =>
         definition.TryGetProperty(key, out var field) &&
@@ -303,7 +391,7 @@ public sealed record NativeConstructComponentInstance(
     string InstanceId, string DefinitionId,
     IReadOnlyDictionary<string, string>? Materials = null,
     IReadOnlyList<string>? ConnectedTo = null,
-    bool Enabled = true);
+    bool Enabled = true, string? ModeId = null);
 
 public sealed record NativeConstructAssemblyRequest(
     IReadOnlyList<NativeConstructComponentInstance> Components,
@@ -311,7 +399,8 @@ public sealed record NativeConstructAssemblyRequest(
 
 public sealed record NativeConstructComponentState(
     string InstanceId, string DefinitionId, bool Installed, bool Operational,
-    IReadOnlyList<string> ActiveCapabilities, bool RequestedEnabled);
+    IReadOnlyList<string> ActiveCapabilities, bool RequestedEnabled,
+    string? ModeId = null, IReadOnlyList<string>? ActiveOperationalOriginTraitIds = null);
 
 public sealed record NativeConstructFailure(string InstanceId, string ConsequenceId);
 
