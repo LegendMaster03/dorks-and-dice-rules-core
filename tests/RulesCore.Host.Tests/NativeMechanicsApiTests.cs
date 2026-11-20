@@ -404,7 +404,9 @@ public sealed class NativeMechanicsApiTests
     {
         const string endpoint = "/api/mechanics/v1/characters/supernatural/overlaps/plan";
         await using var fixture = new Fixture();
-        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true);
+        // The authorization test must use a valid Site actor GUID. An
+        // arbitrary "unit-test" identity is rejected before host authority.
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, dm: true);
         var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
         var id = Guid.Parse("11111111-2222-3333-4444-555555555555").ToString("D");
         var payload = new
