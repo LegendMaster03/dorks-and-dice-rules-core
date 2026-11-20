@@ -336,3 +336,35 @@ Synthetic tests cover multi-subcomponent construction, repeated compatible
 child instances, nested components, separate material costs, automatic
 structural connectivity, explicit independent power wiring, invalid or absent
 interfaces, missing parents, and cyclic containment.
+
+## Power-network accounting and operational telemetry
+
+Every evaluated assembly now reports an ordered `PowerNetworks` collection,
+one entry per independently connected distribution circuit. Each entry
+identifies its installed component instance IDs and distinguishes:
+
+- **RequestedDemand:** sum of enabled, prerequisite-eligible demands before
+  overload rejection (known subtotal only when demand is unresolved).
+- **AvailableOutput:** sum of enabled, prerequisite-eligible source output,
+  independent of the power an activated load actually draws.
+- **OperationalDemand** and **OperationalOutput:** sums from the components
+  that remain operational after overload and dependent-failure propagation.
+- **RequestedHeadroom:** output minus demand, including negative values for
+  a known overload. This is `null` if demand or source output is unresolved.
+- **IsOverallocated:** a nullable overload conclusion. Unresolved demands or
+  source output yield `null`, never a fabricated conclusion that power
+  capacity is sufficient.
+- **HasUnresolvedDemand** and **HasUnresolvedOutput:** explicit uncertainty
+  markers, even when known subtotals are available.
+
+The network ID is the lowest ordinal component instance ID in the circuit,
+not a permanent identity to retain across modifications. Accounting uses
+simultaneous power values only and does **not** assume storage, fuel,
+recharge, unlimited endurance, transfer efficiency, or automatic load
+shedding. The ledger is an evaluation result, not an independent authority
+for Origin grants or an approved first-party balancing policy.
+
+Synthetic tests cover a powered network with headroom, an overloaded
+network with shutdown effects, isolated power networks, and unknown
+catalog-authored source output. Existing manual allocation and runtime
+session boundaries are unchanged.

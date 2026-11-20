@@ -61,6 +61,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             var cost = Number(raw, "constructionCost", path, Issue);
             var baseDemand = Number(raw, "powerDemand", path, Issue);
             var baseOutput = Number(raw, "powerOutput", path, Issue) ?? 0;
+            var outputKnown = true;
             var baseProvides = Texts(raw, "provides", path, Issue);
             var baseNeeds = Requirements(raw, path, Issue);
             var allowedTraits = Texts(raw, "operationalOriginTraitIds", path, Issue);
@@ -193,9 +194,12 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     if (sourceOutput is int authoredOutput)
                         baseOutput = authoredOutput;
                     else
+                    {
+                        outputKnown = false;
                         Issue("construct-power-source-output-unresolved", sourcePath,
                             NativeOriginIssueSeverity.Unresolved,
                             "This power source has no authored simultaneous output.");
+                    }
                     extraDemand += Number(source.Definition,
                         "powerDemand", sourcePath, Issue) ?? 0;
                     addedProvides.AddRange(Texts(source.Definition,
@@ -258,7 +262,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
             parts.Add(instance.InstanceId, new(instance, cost, demand, output,
                 provides, needs, Text(raw, "shutdownConsequence"), modeTraits,
-                mountInterfaces, acceptsMountInterfaces));
+                mountInterfaces, acceptsMountInterfaces, outputKnown));
         }
 
         var links = parts.Keys.ToDictionary(x => x,
@@ -554,6 +558,33 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     active ? part.OperationalOriginTraitIds : []);
             }).ToArray();
 
+        // Keep requested power separate from the subset that actually
+        // operates after power and dependency reconciliation. Unknown values
+        // produce unknown headroom, rather than misleading free capacity.
+        var powerStates = powerNetworks.Select(network =>
+        {
+            var members = network.OrderBy(x => x, StringComparer.Ordinal).ToArray();
+            var requestedDemand = members.Where(online.Contains)
+                .Sum(id => (long)(parts[id].PowerDemand ?? 0));
+            var availableOutput = members.Where(online.Contains)
+                .Sum(id => (long)parts[id].PowerOutput);
+            var operationalDemand = members.Where(activeIds.Contains)
+                .Sum(id => (long)(parts[id].PowerDemand ?? 0));
+            var operationalOutput = members.Where(activeIds.Contains)
+                .Sum(id => (long)parts[id].PowerOutput);
+            var unknownDemand = members.Any(id =>
+                parts[id].Instance.Enabled && parts[id].PowerDemand is null);
+            var unknownOutput = members.Any(id =>
+                parts[id].Instance.Enabled && !parts[id].OutputKnown);
+            var known = !unknownDemand && !unknownOutput;
+            return new NativeConstructPowerNetworkState(members[0], members,
+                requestedDemand, availableOutput, operationalDemand,
+                operationalOutput,
+                known ? availableOutput - requestedDemand : null,
+                known ? requestedDemand > availableOutput : null,
+                unknownDemand, unknownOutput);
+        }).OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+
         var status = issues.Any(x => x.Severity == NativeOriginIssueSeverity.Invalid)
             ? NativeOriginConstructionStatus.Invalid
             : issues.Any(x => x.Severity == NativeOriginIssueSeverity.Conflict)
@@ -563,13 +594,14 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     : issues.Any(x => x.Severity == NativeOriginIssueSeverity.Incomplete)
                         ? NativeOriginConstructionStatus.Incomplete
                         : NativeOriginConstructionStatus.Authorized;
-        return new(status, knownCost, states, failures, issues);
+        return new(status, knownCost, states, failures, issues, powerStates);
     }
 
     private sealed record Part(NativeConstructComponentInstance Instance, int? ConstructionCost,
         int? PowerDemand, int PowerOutput, string[] Provides, string[][] Requirements,
         string? ShutdownConsequence, string[] OperationalOriginTraitIds,
-        string[] MountInterfaces, string[] AcceptsMountInterfaces);
+        string[] MountInterfaces, string[] AcceptsMountInterfaces,
+        bool OutputKnown);
 
     private sealed record OperatingMode(string Id, int? PowerDemand, int? PowerOutput,
         string[]? Provides, string[][]? Requirements, string[] OperationalOriginTraitIds);
@@ -734,11 +766,24 @@ public sealed record NativeConstructComponentState(
 
 public sealed record NativeConstructFailure(string InstanceId, string ConsequenceId);
 
+/// <summary>
+/// One connected power circuit. Requested totals describe the attempted
+/// allocation; operational totals reflect dependent shutdowns. These are
+/// simultaneous power figures, not reserves or stored energy.
+/// </summary>
+public sealed record NativeConstructPowerNetworkState(
+    string Id, IReadOnlyList<string> ComponentInstanceIds,
+    long RequestedDemand, long AvailableOutput,
+    long OperationalDemand, long OperationalOutput,
+    long? RequestedHeadroom, bool? IsOverallocated,
+    bool HasUnresolvedDemand, bool HasUnresolvedOutput);
+
 public sealed record NativeConstructAssemblyResult(
     NativeOriginConstructionStatus Status, long KnownConstructionCost,
     IReadOnlyList<NativeConstructComponentState> Components,
     IReadOnlyList<NativeConstructFailure> ShutdownConsequences,
-    IReadOnlyList<NativeOriginContractIssue> Issues)
+    IReadOnlyList<NativeOriginContractIssue> Issues,
+    IReadOnlyList<NativeConstructPowerNetworkState>? PowerNetworks = null)
 {
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }

@@ -368,4 +368,42 @@ public sealed class NativeConstructAssemblyTests
         Assert.Contains(cycle.Issues, x => x.Code == "construct-mount-cycle");
     }
 
+
+    [Fact]
+    public void PowerNetworkLedgerSeparatesRequestedAndOperationalLoads()
+    {
+        using var fixture = new Fixture();
+        var allocated = Evaluate(fixture, Parts(weaponEnabled: false));
+        var network = Assert.Single(allocated.PowerNetworks!);
+        Assert.Equal("arm", network.Id);
+        Assert.Equal(5, network.ComponentInstanceIds.Count);
+        Assert.Equal(5, network.RequestedDemand);
+        Assert.Equal(8, network.AvailableOutput);
+        Assert.Equal(5, network.OperationalDemand);
+        Assert.Equal(8, network.OperationalOutput);
+        Assert.Equal(3, network.RequestedHeadroom);
+        Assert.Equal(false, network.IsOverallocated);
+        Assert.False(network.HasUnresolvedDemand);
+        Assert.False(network.HasUnresolvedOutput);
+
+        var overloaded = Evaluate(fixture, Parts());
+        var conflict = Assert.Single(overloaded.PowerNetworks!);
+        Assert.Equal(10, conflict.RequestedDemand);
+        Assert.Equal(8, conflict.AvailableOutput);
+        Assert.Equal(-2, conflict.RequestedHeadroom);
+        Assert.Equal(true, conflict.IsOverallocated);
+        Assert.Equal(0, conflict.OperationalDemand);
+        Assert.Equal(8, conflict.OperationalOutput);
+
+        var separate = Evaluate(fixture, Parts(weaponEnabled: false),
+            powerConnections: []);
+        Assert.Equal(5, separate.PowerNetworks!.Count);
+        var circulation = separate.PowerNetworks.Single(x =>
+            x.Id == "circulation");
+        Assert.Equal(2, circulation.RequestedDemand);
+        Assert.Equal(0, circulation.AvailableOutput);
+        Assert.Equal(-2, circulation.RequestedHeadroom);
+        Assert.Equal(true, circulation.IsOverallocated);
+    }
+
 }

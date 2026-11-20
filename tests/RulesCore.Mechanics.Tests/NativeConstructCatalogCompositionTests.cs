@@ -238,6 +238,10 @@ public sealed class NativeConstructCatalogCompositionTests
             x.Code == "construct-power-source-output-unresolved");
         Assert.Contains(unbalancedSource.Issues, x =>
             x.Code == "construct-power-source-cost-unresolved");
+        var network = Assert.Single(unbalancedSource.PowerNetworks!);
+        Assert.True(network.HasUnresolvedOutput);
+        Assert.Null(network.RequestedHeadroom);
+        Assert.Null(network.IsOverallocated);
     }
 
     [Fact]
