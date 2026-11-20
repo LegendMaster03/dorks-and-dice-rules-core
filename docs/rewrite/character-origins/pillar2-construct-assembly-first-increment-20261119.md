@@ -94,3 +94,30 @@ modification **preview**, but the Origin adapter refuses to turn that preview
 into a permanent grant until an authorized acquisition and installation
 procedure exists. Ordinary operating-state changes must not reconstruct the
 permanent Origin.
+
+## Runtime allocation and operating applicability increment
+
+The Construct adapter now recognizes two distinct, catalog-authored ways for an installed component to supply an inherent Origin entitlement:
+
+- `installedOriginTraitIds`: an installed, passive characteristic, independent of the current power allocation.
+- `operationalOriginTraitIds`: an inherent characteristic acquired through installation but only **applicable** while its supplying component is operational.
+
+Both fields must contain exact references to canonical native `origin-trait` definitions. The universal Origin engine remains responsible for issuing the effective grant and recording provenance; the Construct adapter does not mint one. Neither field authorizes an unreviewed mechanic, a new starting budget, or a choice-bearing trait. The first-party component inventory currently contains no published active trait mappings or balancing figures.
+
+An **authorized initial** Construct Origin evaluation may return an in-memory `NativeConstructOperatingSession`. It holds a defensive copy of the validated component instances, connections, materials and already-issued Origin grant IDs. The session is explicitly excluded from JSON serialization and must be re-established at a trusted application boundary when loading persisted characters; it is not a serializable bearer token or independent proof of entitlement.
+
+`EvaluateAllocation` accepts only overrides of component enabled states for **already installed** instance IDs. It rechecks dependency closure, power-network output and shutdown consequences using the assembly evaluator. The authoritative permanent Origin profile is not rebuilt or modified when power allocation changes. Unknown instance IDs fail closed without any applicable grants.
+
+The resulting transient applicability view contains:
+
+- `ApplicableOriginGrantIds`: inherently authorized grants usable under the current allocation, including passive installed grants.
+- `InactiveOriginGrantIds`: inherently authorized grants temporarily unavailable from power, dependencies or upstream synergy suppression.
+- The full assembly diagnostic, issue list and `IsOperatingConfigurationValid` status.
+
+The common characteristic-synergy rules are **not** executed a second time. Instead, an already-issued synergy is temporarily inapplicable if one of its input grants is inapplicable; this propagates transitively through later synergies. Neither synergy definitions nor Origin grant records change during switching. If an allocation is incomplete or over capacity, no powered grant becomes applicable; consumers must check the overall operating configuration status rather than applying partial effects as though the configuration were approved.
+
+These runtime results are *views*, not new gameplay entitlements or permanent character mutations. Persistent character modifications, powered abilities requiring configured choices, adjustable power distribution without global network overload rejection, authored operating modes, finite reserves/recharge, and mechanical consequences beyond existing shutdown identifiers are further procedure work. General source-neutral synergy evaluation remains in the shared Origin foundation.
+
+### Synthetic acceptance additions
+
+`NativeConstructOriginProjectionTests` now includes fixture-only tests for retained powered entitlements, active/inactive allocation, transitive synergy applicability, loss of supply, excess simultaneous demand, rejection of unknown component IDs, caller-side input mutation after authorization, and stable permanent Origin serialization.
