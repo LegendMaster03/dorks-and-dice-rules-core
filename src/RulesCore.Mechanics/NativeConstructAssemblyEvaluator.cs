@@ -95,6 +95,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             // not duplicated material-specific components or client-supplied effects.
             // They contribute to the installed cost even when switched off.
             var addedProvides = new List<string>();
+            var addedOperationalTraits = new List<string>();
             var addedNeeds = new List<string[]>();
             long extraDemand = 0;
 
@@ -133,6 +134,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     optionPath, Issue) ?? 0;
                 addedProvides.AddRange(Texts(option.Definition, "provides",
                     optionPath, Issue));
+                addedOperationalTraits.AddRange(Texts(option.Definition,
+                    "operationalOriginTraitIds", optionPath, Issue));
                 addedNeeds.AddRange(Requirements(option.Definition, optionPath, Issue));
             }
 
@@ -224,6 +227,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         extraDemand += sourceDemand;
                         addedProvides.AddRange(sourceProvides);
                         addedNeeds.AddRange(sourceNeeds);
+                        addedOperationalTraits.AddRange(Texts(source.Definition,
+                            "operationalOriginTraitIds", sourcePath, Issue));
                     }
                 }
             }
@@ -270,6 +275,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         "Material assignments must reference native construct materials.");
                     continue;
                 }
+                addedOperationalTraits.AddRange(Texts(material.Definition,
+                    "operationalOriginTraitIds", path + ".materials." + slot, Issue));
                 var materialCost = Number(material.Definition, "constructionCost",
                     path + ".materials." + slot, Issue);
                 if (materialCost is int authoredCost)
@@ -284,6 +291,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     Issue("construct-material-slot-unknown", path + ".materials." + extra,
                         NativeOriginIssueSeverity.Invalid, "The component does not define this material slot.");
 
+            // Installed add-on entitlements may be power-gated by the same
+            // operational component, but are never created by a mode change.
+            modeTraits = modeTraits.Concat(addedOperationalTraits)
+                .Distinct(StringComparer.Ordinal).ToArray();
             parts.Add(instance.InstanceId, new(instance, cost, demand, output,
                 provides, needs, Text(raw, "shutdownConsequence"), modeTraits,
                 mountInterfaces, acceptsMountInterfaces, outputKnown, continuous,
