@@ -46,7 +46,9 @@ public sealed record NativeCraftingQualificationRequest(
     string? ItemRarity,
     int? CrafterRanks,
     bool? HasRequiredKnowledge,
-    bool? HasRequiredMaterials);
+    bool? HasRequiredMaterials,
+    string? RequiredSpecializationId = null,
+    IReadOnlyCollection<string>? KnownSpecializationIds = null);
 
 public sealed record NativeCraftingQualificationResult(
     string Status,
@@ -107,6 +109,21 @@ public static class NativeCraftingQualification
             missing.Add("materials-unresolved");
         else if (!request.HasRequiredMaterials.Value)
             denied.Add("required-materials-missing");
+
+        // Specialized formulas are still ordinary recipes. A specialization
+        // does not grant a new rank or trait, and absent requirements are not
+        // treated as a hidden specialization restriction.
+        if (request.RequiredSpecializationId is { } specialization)
+        {
+            if (string.IsNullOrWhiteSpace(specialization) ||
+                specialization.Length > 160)
+                missing.Add("specialization-requirement-invalid");
+            else if (request.KnownSpecializationIds is null)
+                missing.Add("specialization-knowledge-unresolved");
+            else if (!request.KnownSpecializationIds.Contains(specialization,
+                         StringComparer.Ordinal))
+                denied.Add("required-specialization-missing");
+        }
 
         if (denied.Count > 0)
             return new("ineligible", false, required, denied.Concat(missing).ToArray());

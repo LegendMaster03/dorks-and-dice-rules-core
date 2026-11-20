@@ -44,3 +44,10 @@ The existing manual manufacturing resolver is not a recipe/inventory authorizer.
 ## Test coverage
 
 The new unit tests check all six rarity boundaries and rank 0 Untrained, higher-tier compatibility, missing recipe/material gating, unknown/invalid inputs, instructor rank ceilings, and short-circuiting manufacturing when requirements are not met.
+
+## Warcraft-derived recipe acquisition, training, and specializations
+
+- A recipe can be learned by advancement (fundamental recipes only), instruction, research, discovery, treasure, quest rewards, renown rewards, or purchase. These are **acquisition pathways**, not item grants or automatic permissions to import third-party content.
+- Advanced Competency ranks alone do not provide specialized recipes. A learner must have the recipe's required numeric Competency rank and a verified learning source. A trainer must know the recipe and have at least the recipe's required rank; the existing professional-training rule separately prohibits an NPC from teaching a Competency rank higher than their own.
+- Specialized traditions can be represented by source-defined recipe requirement identifiers and verified character knowledge. They **do not** add new Competency progression tracks, imply mutually exclusive traditions, or introduce deferred rank-granted traits.
+- `NativeRecipeLearning.Evaluate` and the optional specialization check on `NativeCraftingQualification.Evaluate` are pure eligibility operations. They do not create, save, consume, grant, or authorize content. Their caller must validate claimed ranks, sources, recipes, and specialization knowledge.
