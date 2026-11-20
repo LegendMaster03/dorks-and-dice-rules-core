@@ -1,6 +1,6 @@
 # Native Competency Baseline v1 — grant and check contract
 
-**Status:** Usable initial *mechanics slice* on `feature/competency-profile-reconciliation`. The grant reducer, basic numeric character projection, and prerequisite helper are implemented. **This is not yet an end-to-end origin/feature-entitlement integration, a finalized rank scale, or a deploy-ready crafting progression system.**
+**Status:** Usable initial *mechanics slice* on `feature/competency-profile-reconciliation`. The grant reducer, basic numeric character projection, and prerequisite helper are implemented. **This is not yet an end-to-end origin/feature-entitlement integration or a deploy-ready crafting progression system.** The six named rank milestones have been selected for crafting; advancement costs and an overall rank cap are not yet settled.
 
 ## Scope and agreed design
 
@@ -9,7 +9,7 @@
 - Legitimate **multiple rank grants accumulate**, even when they refer to the same Competency. A repeated feat can be represented by **distinct purchase occurrences**. Duplicate proficiencies from **distinct authorized source occurrences** follow the selected ruleset policy: the provisional default grants **one rank in that same Competency per additional proficiency**, while the alternative requires an authorized proficiency choice in another unproficient Competency. Repeating a source occurrence itself remains invalid.
 - Source-based training grants must specify their effect, rather than assuming every 5.x tool proficiency becomes rank + proficiency. A reviewed source-to-native conversion can grant one rank and optionally proficiency, but the conversion value is **not automatically determined by the name of the tool**.
 - **Thieves' Tools** remain a separately granted, binary, nonleveling equipment qualification. `skill.open-lock` is a Skill; trap disarming is task-dependent. A crafting Competency's associated equipment does not give the character the item or automatically confer a second equipment proficiency.
-- The established **Journeyman, Expert, and Master** titles are reference milestones, with **Master** at the top. Their rank thresholds, extra techniques, caps, and advancement costs remain future content/balance work. The number of numeric ranks should follow the design of meaningful benefits, rather than a predetermined count.
+- **Named Competency ranks:** 0 Untrained, 1 Apprentice, 2 Journeyman, 3 Expert, 4 Artisan, 5 Master, 6 Grandmaster. These are names for the existing numeric rank count, **not a second progression track**. For magical item crafting, minimum ranks 1–6 correspond respectively to Common, Uncommon, Rare, Very Rare, Legendary, and Artifact; actual recipe knowledge and materials remain separately required. An overall rank cap, advancement costs, and non-crafting benefits remain future content/balance work.
 
 ## Initial check calculation
 
@@ -25,7 +25,7 @@ resulting check modifier =
 
 The character projector now permits rank + proficiency on **Competencies**, calculates the combined modifier when the Ability and proficiency bonus are available, and reports a missing-Ability or unavailable-proficiency result as unsupported. It continues to enforce the older combined-profile restriction for **Skills**, whose broader rank/proficiency reconciliation is separate.
 
-This **initial numeric behavior** enables ordinary playtesting and must be revisited against bounded accuracy, Skill scaling, high rank totals, multiclass proficiency, and progression costs. The only implemented rank bound is a **transport safety limit**, not a ruleset maximum. No rank threshold automatically grants advanced techniques, crafting speed, improved recipe quality, materials, tool ownership, or success.
+This **initial numeric behavior** enables ordinary playtesting and must be revisited against bounded accuracy, Skill scaling, high rank totals, multiclass proficiency, and progression costs. The only implemented rank bound is a **transport safety limit**, not a ruleset maximum. A rank threshold can qualify the item rarity for crafting, but does not automatically grant advanced techniques, crafting speed, improved recipe quality, materials, tool ownership, or success.
 
 A specific task or recipe still governs whether the character may attempt it, which tools/materials are required, whether proficiency qualifies the actor, which Ability is relevant, and which other modifiers apply. Do not add two full bonuses for an overlapping craft Skill and associated tool proficiency without an explicit rule.
 
@@ -131,6 +131,6 @@ The crosswalk is **identity guidance**, not a universal conversion effect. When 
 
 ## Deferred, not blockers for grant design
 
-Journeyman/Expert/Master thresholds; additional rank titles; a finalized rank maximum; practice and training schedules; feat cost and duplicate-choice balance; rank-based abilities, crafting speed, quirk control, ingredient/reagent substitution; formal source conversion matrices; multi-Competency manufacturing procedure; and full client/server entitlement enforcement.
+a finalized rank maximum; practice and training schedules; feat cost and duplicate-choice balance; rank-based abilities, crafting speed, quirk control, ingredient/reagent substitution; formal source conversion matrices; multi-Competency manufacturing procedure; and full client/server entitlement enforcement.
 
 **Validation:** The finalization branch CI passed the Mechanics tests covering both policies, explicit rank preservation, replacement eligibility, occurrence provenance, and order independence. Manual playtest selection is supported by the authoritative optional-rule metadata and the typed reducer parameter; Character Sheet UI and automatic feedback capture are not yet implemented.
