@@ -111,7 +111,8 @@ public sealed class NativeConstructOriginProjectionTests
                   "installedOriginTraitIds":["trait.fixture.choice"]},
                  {"id":"construct-component.aptitude","kind":"construct-component",
                   "name":"Aptitude Module","constructionCost":1,"powerDemand":0,
-                  "installedOriginTraitIds":["trait.fixture.ability-choice"]}
+                  "installedOriginTraitIds":["trait.fixture.ability-choice",
+                                             "trait.fixture.aptitude-dependent"]}
                 ]
                 """);
             File.WriteAllText(Path.Combine(native, "designs.json"), """
@@ -192,6 +193,13 @@ public sealed class NativeConstructOriginProjectionTests
                   "name":"Aptitude","trait":{"id":"aptitude","name":"Aptitude",
                    "mechanicalEffect":"fixture.aptitude",
                    "abilityChoice":{"from":["intelligence","wisdom"],"perCharacter":true}}},
+                 {"id":"trait.fixture.aptitude-dependent","kind":"origin-trait",
+                  "name":"Aptitude Dependent",
+                  "trait":{"id":"aptitude-dependent",
+                   "mechanicalEffect":"fixture.aptitude-dependent",
+                   "originBindings":{"aptitude":{"lookup":"manifested-trait-choice",
+                    "scope":"contributor","mechanicalDefinitionId":"trait.fixture.ability-choice",
+                    "choiceRequirementId":"abilityChoice"}}}},
                  {"id":"trait.fixture.material-trait","kind":"origin-trait",
                   "name":"Material Trait","trait":{"id":"steel","mechanicalEffect":"fixture.steel"}},
                  {"id":"trait.fixture.design-trait","kind":"origin-trait",
@@ -1434,7 +1442,8 @@ public sealed class NativeConstructOriginProjectionTests
             new("core", Candidate("trait.fixture.source-passive")),
             new("core-active", Candidate("trait.fixture.source-active")),
             new("aptitude", Candidate("trait.fixture.ability-choice"), Choices:
-                [new("abilityChoice", ["wisdom"])])
+                [new("abilityChoice", ["wisdom"])]),
+            new("dependent", Candidate("trait.fixture.aptitude-dependent"))
         };
         var originProposal = Proposal(NativeOriginIntent.Custom) with
         {
@@ -1454,6 +1463,11 @@ public sealed class NativeConstructOriginProjectionTests
             x.Identity.MechanicalDefinitionId == "trait.fixture.ability-choice");
         Assert.Equal("wisdom", Assert.Single(aptitude.ResolvedChoices!).
             SelectedOptionIds.Single());
+        var dependent = profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.aptitude-dependent");
+        Assert.Equal("wisdom", dependent.Parameters!["aptitude"].GetString());
+        Assert.Equal(Candidate("trait.fixture.ability-choice"),
+            dependent.ParameterSources!["aptitude"]);
 
         foreach (var (definition, sourceId) in new[]
         {
@@ -1524,6 +1538,36 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(NativeOriginConstructionStatus.Incomplete, missing.Origin.Status);
         Assert.Contains(missing.Origin.Issues, x =>
             x.Code == "dependent-choice-incomplete");
+    }
+
+    [Fact]
+    public void IdenticalConstructInstancesCannotBorrowAnothersBoundAptitude()
+    {
+        using var fixture = new Fixture();
+        var assembly = new NativeConstructAssemblyRequest(
+            [Part("apt-a", "aptitude"), Part("apt-b", "aptitude")],
+            InitialAllowance: 20);
+        var proposal = Proposal(NativeOriginIntent.Custom) with
+        {
+            Manifestations =
+            [
+                new("type", "construct:intrinsic:creatureType",
+                    SelectedValue: JsonSerializer.SerializeToElement("construct")),
+                new("size", "construct:intrinsic:size", Choices:
+                    [new("size", ["medium"])]),
+                new("aptitude-a", "construct:apt-a:trait:0", Choices:
+                    [new("abilityChoice", ["wisdom"])]),
+                // The dependent on apt-b has no selected aptitude on apt-b.
+                new("dependent-b", "construct:apt-b:trait:1")
+            ]
+        };
+        var result = Evaluate(fixture, proposal, assembly);
+        Assert.False(result.IsMechanicallyAuthorized);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, result.Origin.Status);
+        Assert.Contains(result.Origin.Issues, x =>
+            x.Code == "origin-binding-choice-missing");
+        Assert.DoesNotContain(result.Origin.Profile?.Underlying.InherentGrants ?? [],
+            x => x.Identity.MechanicalDefinitionId == "trait.fixture.aptitude-dependent");
     }
 
 }
