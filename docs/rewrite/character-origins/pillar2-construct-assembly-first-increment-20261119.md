@@ -726,3 +726,7 @@ for recipe-input starting construction. It is not an authorized inventory debit.
 A later-modification assembly preview in recipe-input mode may also quote
 required ingredients, but does **not** apply the historical starting allowance
 or authorize ownership, manufacture, installation, or new permanent traits.
+
+The selected material for every component material slot must be represented
+by at least one manufacturing input through its `materialSlot` binding;
+omitting a slot cannot create a free material-derived characteristic.

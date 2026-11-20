@@ -107,6 +107,7 @@ internal static class NativeCraftingResourceQuoter
             }
 
             var before = issues.Count;
+            var usedMaterialSlots = new HashSet<string>(StringComparer.Ordinal);
             var operations = new List<NativeCraftingProcessStep>();
             if (recipe.Definition.TryGetProperty("stages", out var stages))
             {
@@ -151,9 +152,11 @@ internal static class NativeCraftingResourceQuoter
                         dependencies.AddRange(deps.EnumerateArray().Select(x => x.GetString()!));
                     }
                     var inputs = ReadMaterials(catalog, stage, "inputs", true,
-                        selection.MaterialSlots, path + "." + stepId, Issue);
+                        selection.MaterialSlots, path + "." + stepId, Issue,
+                        usedMaterialSlots);
                     var outputs = ReadMaterials(catalog, stage, "outputs", false,
-                        selection.MaterialSlots, path + "." + stepId, Issue);
+                        selection.MaterialSlots, path + "." + stepId, Issue,
+                        usedMaterialSlots);
                     if (inputs is null || outputs is null) continue;
                     // Null readiness is deliberate: quoting does not assert that
                     // a historical creator owns recipes, materials, or facilities.
@@ -188,10 +191,30 @@ internal static class NativeCraftingResourceQuoter
             else
             {
                 var inputs = ReadMaterials(catalog, recipe.Definition, "inputs", true,
-                    selection.MaterialSlots, path, Issue);
+                    selection.MaterialSlots, path, Issue, usedMaterialSlots);
                 if (inputs is null) continue;
                 operations.Add(new("manufacture", "competency.none", 0, null,
                     [], inputs, [], null, null, null));
+            }
+            if (issues.Count != before) continue;
+            if (source.Category == "construct-component" &&
+                source.Definition.TryGetProperty("materialSlots", out var selectedSlots) &&
+                selectedSlots.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var slot in selectedSlots.EnumerateArray())
+                {
+                    if (slot.ValueKind != JsonValueKind.String ||
+                        string.IsNullOrWhiteSpace(slot.GetString()))
+                    {
+                        Issue("crafting-quote-product-material-slots-invalid", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Component material slot definitions must be valid identifiers.");
+                    }
+                    else if (!usedMaterialSlots.Contains(slot.GetString()!))
+                        Issue("crafting-quote-material-slot-unused", path,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "Every selected component material slot must be represented in its manufacturing inputs.");
+                }
             }
             if (issues.Count != before) continue;
 
@@ -258,7 +281,8 @@ internal static class NativeCraftingResourceQuoter
     private static List<NativeCraftingMaterialQuantity>? ReadMaterials(
         NativeCatalogSnapshot catalog, JsonElement definition, string key,
         bool required, IReadOnlyDictionary<string, string>? assigned, string path,
-        Action<string, string, NativeOriginIssueSeverity, string> issue)
+        Action<string, string, NativeOriginIssueSeverity, string> issue,
+        HashSet<string> usedMaterialSlots)
     {
         if (!definition.TryGetProperty(key, out var values))
         {
@@ -300,6 +324,7 @@ internal static class NativeCraftingResourceQuoter
             }
             if (slotId)
             {
+                if (key == "inputs") usedMaterialSlots.Add(slot!);
                 if (assigned is null || !assigned.TryGetValue(slot!, out id))
                 {
                     issue("crafting-quote-material-slot-unresolved", path + "." + key,

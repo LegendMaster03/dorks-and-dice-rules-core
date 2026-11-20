@@ -117,6 +117,10 @@ public sealed class NativeConstructRecipeCostTests
                   "inputs":[{"materialId":"crafting-material.crystal","amount":1}]}
                 ]
                 """;
+            if (variant == "unpriced-slot")
+                recipes = recipes.Replace(
+                    "\"inputs\":[{\"materialSlot\":\"frame\",\"amount\":3}]",
+                    "\"inputs\":[]");
             if (variant == "wrong-product")
                 recipes = recipes.Replace(
                     "\"producesDefinitionId\":\"construct-component.frame\"",
@@ -212,6 +216,8 @@ public sealed class NativeConstructRecipeCostTests
     [InlineData("missing-recipe", "crafting-quote-recipe-unresolved",
         NativeOriginConstructionStatus.Unresolved)]
     [InlineData("unpriced-ore", "crafting-quote-resource-price-unresolved",
+        NativeOriginConstructionStatus.Unresolved)]
+    [InlineData("unpriced-slot", "crafting-quote-material-slot-unused",
         NativeOriginConstructionStatus.Unresolved)]
     [InlineData("wrong-product", "crafting-quote-product-mismatch",
         NativeOriginConstructionStatus.Invalid)]
