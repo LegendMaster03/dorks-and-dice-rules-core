@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using RulesCore.Content;
 using RulesCore.Mechanics;
 using Xunit;
@@ -18,7 +19,8 @@ public sealed class NativeConstructOriginProjectionTests
 
         public NativeCatalogSnapshot Catalog { get; }
 
-        public Fixture()
+        public Fixture(bool overlappingHousingTrait = false,
+            bool overlappingModeDesignTrait = false)
         {
             var package = Path.Combine(_root, "first-party-001");
             var native = Path.Combine(package, "native");
@@ -215,6 +217,38 @@ public sealed class NativeConstructOriginProjectionTests
                    "mechanicalEffect":"fixture.source-active"}}
                 ]
                 """);
+            // CA-01 fixtures deliberately author overlapping canonical traits.
+            // Only a manifested candidate is authorized for runtime use.
+            if (overlappingHousingTrait || overlappingModeDesignTrait)
+            {
+                var componentPath = Path.Combine(native, "components.json");
+                var components = JsonNode.Parse(File.ReadAllText(componentPath))!.AsArray();
+                if (overlappingHousingTrait)
+                {
+                    var housing = components.Single(node =>
+                        node!["id"]!.GetValue<string>() ==
+                        "construct-component.fuel-housing")!;
+                    housing["operationalOriginTraitIds"] =
+                        new JsonArray(JsonValue.Create("trait.fixture.source-active"));
+                }
+                if (overlappingModeDesignTrait)
+                {
+                    var multi = components.Single(node =>
+                        node!["id"]!.GetValue<string>() ==
+                        "construct-component.multi")!;
+                    multi["provides"] = new JsonArray(JsonValue.Create("tool-base"));
+                    var designPath = Path.Combine(native, "designs.json");
+                    var designs = JsonNode.Parse(File.ReadAllText(designPath))!.AsArray();
+                    designs.Add(JsonNode.Parse("""
+                        {"id":"construct-design.mode-addon","kind":"construct-design",
+                         "name":"Mode Addon","constructionCost":1,
+                         "compatibleComponentCapabilities":["tool-base"],
+                         "operationalOriginTraitIds":["trait.fixture.tether"]}
+                        """));
+                    File.WriteAllText(designPath, designs.ToJsonString());
+                }
+                File.WriteAllText(componentPath, components.ToJsonString());
+            }
             Catalog = NativeCatalogLoader.Load(
                 NativeRulesetLayout.Resolve(_root, "first-party-001"));
         }
@@ -1568,6 +1602,118 @@ public sealed class NativeConstructOriginProjectionTests
             x.Code == "origin-binding-choice-missing");
         Assert.DoesNotContain(result.Origin.Profile?.Underlying.InherentGrants ?? [],
             x => x.Identity.MechanicalDefinitionId == "trait.fixture.aptitude-dependent");
+    }
+
+    private static NativeOriginProposal CustomWithOperationalTrait(
+        string grantId, string candidateId) =>
+        Proposal(NativeOriginIntent.Custom) with
+        {
+            Manifestations =
+            [
+                new("type", "construct:intrinsic:creatureType",
+                    SelectedValue: JsonSerializer.SerializeToElement("construct")),
+                new("size", "construct:intrinsic:size", Choices:
+                    [new("size", ["large"])]),
+                new(grantId, candidateId)
+            ]
+        };
+
+    [Fact]
+    public void Ca01UnavailablePowerSourceCannotBeKeptActiveByUnselectedHousingTrait()
+    {
+        using var fixture = new Fixture(overlappingHousingTrait: true);
+        var assembly = new NativeConstructAssemblyRequest(
+            [new NativeConstructComponentInstance("hub",
+                "construct-component.fuel-housing",
+                PowerSourceId: "construct-power-source.trait-generator")],
+            InitialAllowance: 20);
+        var issued = Evaluate(fixture, CustomWithOperationalTrait(
+            "source", "construct:hub:power-source:operational-trait:0"), assembly);
+        Assert.True(issued.IsMechanicallyAuthorized,
+            string.Join("; ", issued.Origin.Issues.Select(x => x.Code)));
+        var profile = issued.Origin.Profile!;
+        var serialized = JsonSerializer.Serialize(profile);
+        var selected = profile.Underlying.InherentGrants.Single(x => x.Id == "grant:source");
+        Assert.Equal("construct-power-source.trait-generator",
+            selected.Identity.Occurrence.Source.Id);
+        Assert.Equal("/operationalOriginTraitIds/0/power-source/instance/hub",
+            selected.Identity.Occurrence.OccurrencePath);
+        Assert.Equal(new[] { "construct:hub:power-source:operational-trait:0" },
+            selected.SourceCandidateIds);
+
+        var online = issued.OperatingSession!.EvaluateConfiguration();
+        Assert.True(online.IsOperatingConfigurationValid);
+        Assert.Contains(selected.Id, online.ApplicableOriginGrantIds);
+        var sourceOut = issued.OperatingSession.EvaluateConfiguration(
+            unavailablePowerSourceInstanceIds: ["hub"]);
+        Assert.True(sourceOut.IsOperatingConfigurationValid);
+        var housing = sourceOut.Assembly.Components.Single(x => x.InstanceId == "hub");
+        Assert.True(housing.Operational);
+        Assert.Equal(false, housing.SourceSupplyingPower);
+        Assert.Contains("trait.fixture.source-active",
+            housing.ActiveOperationalOriginTraitIds!);
+        Assert.DoesNotContain(selected.Id, sourceOut.ApplicableOriginGrantIds);
+        Assert.Contains(selected.Id, sourceOut.InactiveOriginGrantIds);
+        Assert.Equal(serialized, JsonSerializer.Serialize(profile));
+
+        // Independent selection of the housing occurrence remains valid.
+        var housingIssued = Evaluate(fixture, CustomWithOperationalTrait(
+            "housing", "construct:hub:operational-trait:0"), assembly);
+        Assert.True(housingIssued.IsMechanicallyAuthorized);
+        var housingOut = housingIssued.OperatingSession!.EvaluateConfiguration(
+            unavailablePowerSourceInstanceIds: ["hub"]);
+        Assert.True(housingOut.IsOperatingConfigurationValid);
+        Assert.Contains("grant:housing", housingOut.ApplicableOriginGrantIds);
+    }
+
+    [Fact]
+    public void Ca01ComponentModeCannotBeKeptActiveByUnselectedDesignTrait()
+    {
+        using var fixture = new Fixture(overlappingModeDesignTrait: true);
+        var assembly = new NativeConstructAssemblyRequest(
+        [
+            Part("battery", "power", links: ["tool"]),
+            Part("tool", "multi", mode: "tether") with
+            {
+                DesignId = "construct-design.mode-addon"
+            }
+        ], InitialAllowance: 20);
+        var issued = Evaluate(fixture, CustomWithOperationalTrait(
+            "tool", "construct:tool:operational-trait:0"), assembly);
+        Assert.True(issued.IsMechanicallyAuthorized,
+            string.Join("; ", issued.Origin.Issues.Select(x => x.Code)));
+        var profile = issued.Origin.Profile!;
+        var serialized = JsonSerializer.Serialize(profile);
+        var selected = profile.Underlying.InherentGrants.Single(x => x.Id == "grant:tool");
+        Assert.Equal("construct-component.multi", selected.Identity.Occurrence.Source.Id);
+        Assert.Equal("/operationalOriginTraitIds/0/instance/tool",
+            selected.Identity.Occurrence.OccurrencePath);
+        Assert.Equal(new[] { "construct:tool:operational-trait:0" },
+            selected.SourceCandidateIds);
+
+        var tethered = issued.OperatingSession!.EvaluateConfiguration();
+        Assert.True(tethered.IsOperatingConfigurationValid);
+        Assert.Contains(selected.Id, tethered.ApplicableOriginGrantIds);
+        var stowed = issued.OperatingSession.EvaluateConfiguration(
+            requestedModes: new Dictionary<string, string> { ["tool"] = "stowed" });
+        Assert.True(stowed.IsOperatingConfigurationValid);
+        var tool = stowed.Assembly.Components.Single(x => x.InstanceId == "tool");
+        Assert.True(tool.Operational);
+        Assert.Equal("stowed", tool.ModeId);
+        Assert.Contains("trait.fixture.tether",
+            tool.ActiveOperationalOriginTraitIds!);
+        Assert.DoesNotContain(selected.Id, stowed.ApplicableOriginGrantIds);
+        Assert.Contains(selected.Id, stowed.InactiveOriginGrantIds);
+        Assert.Equal(serialized, JsonSerializer.Serialize(profile));
+
+        // Independent selection of the design occurrence survives stowing.
+        var designIssued = Evaluate(fixture, CustomWithOperationalTrait(
+            "design", "construct:tool:design:operational-trait:0"), assembly);
+        Assert.True(designIssued.IsMechanicallyAuthorized);
+        var designStowed = designIssued.OperatingSession!.EvaluateConfiguration(
+            requestedModes: new Dictionary<string, string> { ["tool"] = "stowed" });
+        Assert.True(designStowed.IsOperatingConfigurationValid);
+        Assert.Contains("grant:design", designStowed.ApplicableOriginGrantIds);
     }
 
 }
