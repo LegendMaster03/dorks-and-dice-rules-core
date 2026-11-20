@@ -1218,11 +1218,12 @@ public sealed class NativeConstructOriginProjectionTests
 
         var second = ledger.TryCommitStep(1);
         Assert.True(second.Committed);
-        Assert.Equal(0, second.Snapshot.Balances["generator"]);
+        // Five initial units minus two authored two-unit steps leaves one.
+        Assert.Equal(1, second.Snapshot.Balances["generator"]);
         var exhausted = ledger.TryCommitStep(2);
         Assert.False(exhausted.Committed);
         Assert.Equal(2, exhausted.Snapshot.Revision);
-        Assert.Equal(0, exhausted.Snapshot.Balances["generator"]);
+        Assert.Equal(1, exhausted.Snapshot.Balances["generator"]);
         Assert.Equal(originalProfile, JsonSerializer.Serialize(built.Origin.Profile));
     }
 
@@ -1306,7 +1307,12 @@ public sealed class NativeConstructOriginProjectionTests
                 new Dictionary<string, int> { ["generator"] = 1, ["donor"] = 4 }).Ledger);
         var transferred = ledger.TryCommitTransfer(0, "donor", "generator", 2);
         Assert.True(transferred.Committed);
-        Assert.False(transferred.Transfer!.NextStep!.CanAdvance);
+        // The sensor is deliberately off in this next-step preview, so the
+        // configuration itself is valid. However, the approved outage still
+        // suppresses the source even after a successful reservoir transfer.
+        Assert.True(transferred.Transfer!.NextStep!.CanAdvance);
+        Assert.Equal(false, transferred.Transfer.NextStep.Evaluation!.Assembly
+            .Components.Single(x => x.InstanceId == "generator").SourceSupplyingPower);
         Assert.Equal(3, ledger.Snapshot().Balances["generator"]);
 
         // Additional fuel can not clear an outage owned by trusted state.
