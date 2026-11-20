@@ -37,3 +37,7 @@
 The native method now includes **provisional resource-unit values** for quotation, but intentionally omits `initialConstructionAllowance`. The reference file `data/reference/construct-assembly-balance-candidates-20261120.json` contains illustrative assemblies and a proposed allowance of 220 **for analysis only**. These are not approved prices or playable starting character entitlements.
 
 The method explicitly authors the Construct creature-type intrinsic. This is classification, not the monster stat-block package. Size remains unresolved until supported by physical construction. Optical sight and physical manipulation now have source-bound canonical trait definitions attached to their corresponding operational parts. Neither effect grants a numeric bonus, extra action, magic sense, or weapon proficiency; power or dependency failure can suppress operational applicability. Other senses, movement speeds, structural protection, and weight still require mechanical authoring and balancing.
+
+## Consolidated integration regression scope
+
+`NativeFirstPartyConstructCraftingTests` exercises the actual first-party native catalog (not only synthetic fixtures) for source-bound slot quantities, substituted materials, intermediate-stage offsetting, physical presence while disabled, optical power gating, nonhumanoid construction, and the deliberate refusal to authorize a starting character without an approved allowance. These tests are intended to be run with the other Rules Core suites **after** the content batch, not as individual external acceptance gates.
