@@ -69,97 +69,13 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
         if (!assembly.IsAuthorized)
             return Stop(assembly.Status, assembly, proposal, assembly.Issues);
 
-        var issues = new List<NativeOriginContractIssue>();
-        var offers = new List<NativeOriginCandidate>();
-        foreach (var instance in request.Assembly.Components
-            .OrderBy(x => x.InstanceId, StringComparer.Ordinal))
-        {
-            // The assembly evaluator already verified every component identity
-            // and definition. Resolve the source again rather than trusting any
-            // serialized candidate, value, or purported entitlement.
-            if (!catalog.TryGetById(instance.DefinitionId, out var component) ||
-                component?.Category != "construct-component")
-            {
-                issues.Add(new("construct-origin-source-invalid", instance.InstanceId,
-                    NativeOriginIssueSeverity.Invalid,
-                    "An Origin component must resolve to a native Construct definition."));
-                continue;
-            }
-            var definition = component.Definition;
-            foreach (var field in new[] { "installedOriginTraitIds", "operationalOriginTraitIds" })
-            {
-            if (!definition.TryGetProperty(field, out var traits))
-                continue;
-            if (traits.ValueKind != JsonValueKind.Array)
-            {
-                issues.Add(new("construct-origin-traits-invalid", component.Id,
-                    NativeOriginIssueSeverity.Invalid,
-                    "Installed Origin traits must be an array of canonical trait IDs."));
-                continue;
-            }
-            var seen = new HashSet<string>(StringComparer.Ordinal);
-            var index = 0;
-            foreach (var raw in traits.EnumerateArray())
-            {
-                var item = index++;
-                var referencePath = "components." + instance.InstanceId +
-                    "." + field + "." + item;
-                var id = raw.ValueKind == JsonValueKind.String ? raw.GetString() : null;
-                if (string.IsNullOrWhiteSpace(id) || !seen.Add(id) ||
-                    !catalog.TryGetById(id, out var nativeTrait) ||
-                    nativeTrait?.Category != "origin-trait" ||
-                    !nativeTrait.Definition.TryGetProperty("trait", out var canonical) ||
-                    canonical.ValueKind != JsonValueKind.Object)
-                {
-                    issues.Add(new("construct-origin-trait-reference-invalid", referencePath,
-                        NativeOriginIssueSeverity.Invalid,
-                        "Each installed trait must reference a distinct, canonical native origin-trait."));
-                    continue;
-                }
-
-                // The installed trait is a permanent entitlement, not necessarily
-                // an active effect. The separately evaluated operating session gates
-                // operationalOriginTraitIds without rewriting the Origin baseline.
-                // Choice-bearing traits still need explicit selection/binding.
-                if (canonical.TryGetProperty("originBindings", out _) ||
-                    canonical.TryGetProperty("choices", out _) ||
-                    canonical.TryGetProperty("chooseFrom", out _) ||
-                    canonical.TryGetProperty("abilityChoice", out _) ||
-                    canonical.TryGetProperty("choiceCount", out _) ||
-                    canonical.TryGetProperty("spellList", out _) ||
-                    canonical.TryGetProperty("sharedUsesFromTrait", out _))
-                {
-                    issues.Add(new("construct-origin-trait-binding-deferred", referencePath,
-                        NativeOriginIssueSeverity.Unresolved,
-                        "A configured or resource-dependent trait requires explicit authoring support."));
-                    continue;
-                }
-                if (!canonical.EnumerateObject().Any(field =>
-                    field.Name is not ("id" or "name" or "description" or "reviewNotes")))
-                {
-                    issues.Add(new("construct-origin-trait-mechanics-unresolved", referencePath,
-                        NativeOriginIssueSeverity.Unresolved,
-                        "A description alone cannot authorize a mechanical characteristic."));
-                    continue;
-                }
-                // A powered part can remain installed and manifest the entitlement
-                // even while disabled. Activation is a runtime operating decision.
-                var source = new NativeOriginSourceReference(NativeOriginSourceKind.Native,
-                    component.Id);
-                var occurrence = new NativeOriginSourceOccurrence(source,
-                    "/" + field + "/" + item + "/instance/" + instance.InstanceId);
-                var candidateId = "construct:" + instance.InstanceId +
-                    (field == "installedOriginTraitIds" ? ":trait:" : ":operational-trait:") +
-                    item;
-                offers.Add(new NativeOriginCandidate(candidateId,
-                    new(NativeOriginCharacteristicKind.Trait, occurrence, nativeTrait.Id),
-                    new(NativeOriginEligibility.Eligible,
-                        RuleReference: "rule.creature-origination",
-                        Explanation: "Catalog-authored installed trait of a Construct component."),
-                    OfferedValue: canonical.Clone()));
-            }
-            }
-        }
+        // Each offer is bound to an actual, previously validated installed native
+        // definition. Shared Origin construction remains responsible for the
+        // selections, provenance, reconciliation and final authorization.
+        var compiled = NativeConstructOriginOfferCompiler.Compile(catalog, proposal,
+            request.Assembly);
+        var issues = compiled.Issues;
+        var offers = compiled.Candidates;
 
         if (issues.Count > 0)
         {
@@ -208,7 +124,7 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
             ? new(assembly, origin)
             {
                 OperatingSession = new NativeConstructOperatingSession(
-                    catalog, request.Assembly, origin.Profile)
+                    catalog, request.Assembly, origin.Profile, compiled.OperationalOffers)
             }
             : new(assembly, origin);
     }
