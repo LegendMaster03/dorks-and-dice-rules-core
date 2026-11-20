@@ -22,7 +22,8 @@ public sealed class NativeConstructOperatingSession
     private readonly HashSet<string> _protectedIds;
 
     internal NativeConstructOperatingSession(NativeCatalogSnapshot catalog,
-        NativeConstructAssemblyRequest approvedAssembly, NativeOriginProfile approvedProfile)
+        NativeConstructAssemblyRequest approvedAssembly, NativeOriginProfile approvedProfile,
+        IReadOnlyList<NativeConstructOriginOfferCompiler.OperationalOffer> operationalOffers)
     {
         _catalog = catalog;
         _assembly = new NativeConstructAssemblyEvaluator(catalog);
@@ -57,24 +58,10 @@ public sealed class NativeConstructOperatingSession
         // component instances an effective grant requires at runtime.
         // The common Origin engine already verified the complete grant and
         // its source candidates. No new result is synthesized from this map.
-        var operationalCandidates = new Dictionary<string, OperationalInput>(
+        var operationalCandidates = operationalOffers.ToDictionary(
+            offer => offer.CandidateId,
+            offer => new OperationalInput(offer.InstanceId, offer.TraitId),
             StringComparer.Ordinal);
-        foreach (var instance in _baseline.Components)
-        {
-            if (!catalog.TryGetById(instance.DefinitionId, out var definition) ||
-                definition?.Category != "construct-component" ||
-                !definition.Definition.TryGetProperty("operationalOriginTraitIds",
-                    out var traits) || traits.ValueKind != JsonValueKind.Array)
-                continue;
-
-            var index = 0;
-            foreach (var trait in traits.EnumerateArray())
-            {
-                operationalCandidates.Add(
-                    "construct:" + instance.InstanceId + ":operational-trait:" +
-                    index++, new(instance.InstanceId, trait.GetString()!));
-            }
-        }
 
         var needs = new Dictionary<string, OperationalInput[]>(StringComparer.Ordinal);
         foreach (var grant in grants)
