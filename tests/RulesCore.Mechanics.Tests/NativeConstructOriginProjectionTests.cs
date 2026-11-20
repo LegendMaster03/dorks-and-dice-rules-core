@@ -672,4 +672,156 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Contains(forged.Evaluation.Issues, x => x.Code == "construct-mode-unknown");
     }
 
+
+    [Fact]
+    public void PresetsRoundTripAndRevalidateWithoutReconstructingOrigin()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: Assembly(scannerEnabled: false));
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var session = constructed.OperatingSession!;
+        var originalProfile = JsonSerializer.Serialize(constructed.Origin.Profile);
+        var dormant = session.CapturePreset("Idle");
+        var scanning = session.CapturePreset("Scanning",
+            requestedEnabled: new Dictionary<string, bool> { ["scanner"] = true });
+        Assert.NotNull(dormant.Preset);
+        Assert.NotNull(scanning.Preset);
+        Assert.True(scanning.Evaluation.IsOperatingConfigurationValid);
+
+        // Serialized presets contain instance/definition identities and modes,
+        // never a trusted installation snapshot or a grant authority token.
+        var serialized = JsonSerializer.Serialize(scanning.Preset);
+        var replay = JsonSerializer.Deserialize<NativeConstructOperatingPreset>(serialized);
+        var evaluated = session.EvaluatePreset(replay);
+        Assert.True(evaluated.IsOperatingConfigurationValid);
+        var scan = constructed.Origin.Profile!.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.extended-senses");
+        var synergy = constructed.Origin.Profile.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.sensor-guard");
+
+        var transition = session.PreviewPresetTransition(dormant.Preset, replay);
+        Assert.True(transition.IsTargetValid);
+        Assert.Equal(new[] { "scanner" }, transition.RestoredComponentInstanceIds);
+        Assert.Contains(scan.Id, transition.NewlyApplicableOriginGrantIds);
+        Assert.Contains(synergy.Id, transition.NewlyApplicableOriginGrantIds);
+        Assert.Empty(transition.NewlyTriggeredShutdownConsequences);
+        Assert.Equal(originalProfile, JsonSerializer.Serialize(constructed.Origin.Profile));
+        Assert.False(session.EvaluateConfiguration().Assembly.Components
+            .Single(x => x.InstanceId == "scanner").RequestedEnabled);
+    }
+
+    [Fact]
+    public void TransitionReportsCriticalRecoveryWithoutUndoingPastConsequences()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture);
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var session = constructed.OperatingSession!;
+        var running = session.CapturePreset("Running").Preset!;
+        var powerOut = running with
+        {
+            Name = "Power Outage",
+            Components = running.Components.Select(x =>
+                x.InstanceId == "power" ? x with { Enabled = false } : x).ToArray()
+        };
+        var lost = session.PreviewPresetTransition(running, powerOut);
+        Assert.False(lost.IsTargetValid);
+        Assert.Contains("power", lost.InterruptedContinuousPowerInstanceIds);
+        Assert.Contains(lost.NewlyTriggeredShutdownConsequences, x =>
+            x.InstanceId == "power" && x.ConsequenceId == "core-unpowered");
+
+        var recovered = session.PreviewPresetTransition(powerOut, running);
+        Assert.True(recovered.IsTargetValid);
+        Assert.Equal(new[] { "power" }, recovered.RestoredContinuousPowerInstanceIds);
+        Assert.Empty(recovered.NewlyTriggeredShutdownConsequences);
+        Assert.Contains(recovered.Before.Operating.Assembly.ShutdownConsequences, x =>
+            x.InstanceId == "power" && x.ConsequenceId == "core-unpowered");
+    }
+
+    [Fact]
+    public void PresetsRejectStaleDefinitionsMissingEntriesAndFabricatedModes()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: ModularToolAssembly());
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var session = constructed.OperatingSession!;
+        var saved = session.CapturePreset("Ready").Preset!;
+
+        var forged = saved with
+        {
+            Components = saved.Components.Select(x => x.InstanceId == "tool"
+                ? x with { DefinitionId = "construct-component.power" } : x).ToArray()
+        };
+        var rejected = session.EvaluatePreset(forged);
+        Assert.False(rejected.IsStructurallyValid);
+        Assert.Empty(rejected.Operating.ApplicableOriginGrantIds);
+        Assert.Contains(rejected.PresetIssues, x =>
+            x.Code == "construct-preset-instance-invalid");
+
+        var missing = saved with { Components = saved.Components.Skip(1).ToArray() };
+        Assert.False(session.EvaluatePreset(missing).IsStructurallyValid);
+
+        var duplicate = saved with
+        {
+            Components = saved.Components.Select((x, i) =>
+                i == 1 ? x with { InstanceId = saved.Components[0].InstanceId } : x)
+                .ToArray()
+        };
+        Assert.False(session.EvaluatePreset(duplicate).IsStructurallyValid);
+
+        var fabricatedMode = saved with
+        {
+            Components = saved.Components.Select(x => x.InstanceId == "tool"
+                ? x with { ModeId = "fabricated" } : x).ToArray()
+        };
+        var denied = session.EvaluatePreset(fabricatedMode);
+        Assert.True(denied.IsStructurallyValid);
+        Assert.False(denied.IsOperatingConfigurationValid);
+        Assert.Contains(denied.Operating.Issues, x => x.Code == "construct-mode-unknown");
+        var transition = session.PreviewPresetTransition(saved, forged);
+        Assert.False(transition.IsTargetValid);
+        Assert.Empty(transition.RestoredComponentInstanceIds);
+        Assert.Empty(transition.NewlyApplicableOriginGrantIds);
+    }
+
+    [Fact]
+    public void ModePresetsSwitchTraitsOnlyThroughNativeOperatingSession()
+    {
+        using var fixture = new Fixture();
+        var constructed = Evaluate(fixture, assembly: ModularToolAssembly());
+        Assert.True(constructed.IsMechanicallyAuthorized);
+        var session = constructed.OperatingSession!;
+        var stowed = session.CapturePreset("Stowed").Preset!;
+        var tether = session.CapturePreset("Tether",
+            requestedModes: new Dictionary<string, string> { ["tool"] = "tether" })
+            .Preset!;
+        var blast = session.CapturePreset("Blast",
+            requestedModes: new Dictionary<string, string> { ["tool"] = "blast" })
+            .Preset!;
+        var tetherGrant = constructed.Origin.Profile!.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.tether");
+        var blastGrant = constructed.Origin.Profile.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.blast");
+
+        var deployed = session.PreviewPresetTransition(stowed, tether);
+        Assert.True(deployed.IsTargetValid);
+        Assert.Contains(tetherGrant.Id, deployed.NewlyApplicableOriginGrantIds);
+        Assert.DoesNotContain(blastGrant.Id, deployed.NewlyApplicableOriginGrantIds);
+
+        var switched = session.PreviewPresetTransition(tether, blast);
+        Assert.True(switched.IsTargetValid);
+        Assert.Contains(blastGrant.Id, switched.NewlyApplicableOriginGrantIds);
+        Assert.Contains(tetherGrant.Id, switched.NewlyInactiveOriginGrantIds);
+        Assert.Equal("blast", switched.After.Operating.Assembly.Components
+            .Single(x => x.InstanceId == "tool").ModeId);
+        Assert.Equal("stowed", session.EvaluateConfiguration().Assembly.Components
+            .Single(x => x.InstanceId == "tool").ModeId);
+
+        var unbalanced = session.CapturePreset("Too Much",
+            requestedEnabled: new Dictionary<string, bool> { ["scanner"] = true },
+            requestedModes: new Dictionary<string, string> { ["tool"] = "tether" });
+        Assert.Null(unbalanced.Preset);
+        Assert.False(unbalanced.Evaluation.IsOperatingConfigurationValid);
+    }
+
 }

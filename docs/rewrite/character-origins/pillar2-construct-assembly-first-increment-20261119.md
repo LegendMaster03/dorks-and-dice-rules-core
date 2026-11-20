@@ -399,3 +399,42 @@ No first-party balance figures, storage/fuel, automatic controller devices,
 or global Construct shutdown policy are introduced. Synthetic tests cover
 load ranking, continuity protection, manual failure, insufficiency, forged
 inputs, authored modes, synergy applicability and immutable Origin state.
+
+## Externally serializable operating presets and recovery transitions
+
+`NativeConstructOperatingPreset` stores a user-named set of operating
+preferences as a complete, ordered list of installed instance IDs, native
+definition IDs, enabled flags, and selected operating modes. It is plain
+serializable data, **not** an Origin profile or an authority token.
+`NativeConstructOperatingSession.CapturePreset` captures only configurations
+which currently pass the native operating evaluator. A preset can be saved
+outside the session by a caller, but there is no implied persistence service,
+embedded Origin state, or server-side preset registry.
+
+`EvaluatePreset` revalidates an imported preset against the session's
+approved installation, requiring exact instance coverage, unique IDs,
+the installed definition identity, and valid native operating modes.
+Missing, duplicate, substituted, or otherwise invalid entries do not
+receive baseline applicable-grant output. A structurally correct but
+underpowered configuration may still be evaluated as an inoperative
+state; it is not an authorized target configuration.
+
+`PreviewPresetTransition` compares two independently revalidated
+operating states. It reports newly restored/inoperative component
+instances, gained/lost applicability of *previously authorized* Origin
+grants, newly exposed native shutdown consequence identifiers, and
+continuous-power interruptions/restorations. An underpowered source
+state is allowed, so the preview can describe recovery from a real
+shutdown without promoting that source state to a valid target.
+Invalid or stale presets produce no actionable delta. The target
+validity flag must be checked before use.
+
+**Recovery of power is not recovery from every consequence.**
+A restoration means that a component can function again; accumulated
+damage, depleted resources, delayed shutdown effects, installation
+changes, and other persistent game state are not reversed automatically.
+The preview neither enforces actions or timing nor mutates the Origin.
+Gameplay must still authorize any real operating transition. Synthetic
+tests cover JSON serialization, exact installation rebinding, stale or
+forged configurations, operating mode changes, restoration, critical
+power loss, and nonmutation of permanent traits and synergies.

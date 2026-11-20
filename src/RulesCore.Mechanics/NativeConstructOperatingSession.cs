@@ -174,6 +174,154 @@ public sealed class NativeConstructOperatingSession
             _originGrantIds.Where(id => !active.Contains(id)).ToArray(),
             state.Issues);
     }
+
+    /// <summary>
+    /// Capture an operating preset as ordinary data, not as authorization.
+    /// Only configurations fully accepted by the current trusted evaluator
+    /// may be captured. A saved preset must be revalidated before reuse.
+    /// </summary>
+    public NativeConstructPresetCapture CapturePreset(
+        string name,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        var evaluated = EvaluateConfiguration(requestedEnabled, requestedModes);
+        var issues = new List<NativeOriginContractIssue>();
+        if (string.IsNullOrWhiteSpace(name) || name.Length > 96 ||
+            name.Any(char.IsControl))
+            issues.Add(new("construct-preset-name-invalid", "name",
+                NativeOriginIssueSeverity.Invalid,
+                "Operating presets need nonempty names of at most 96 printable characters."));
+        if (issues.Count > 0 || !evaluated.IsOperatingConfigurationValid)
+            return new(null, new(evaluated, issues.ToArray()));
+
+        var entries = _baseline.Components
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal)
+            .Select(x => new NativeConstructPresetComponent(
+                x.InstanceId, x.DefinitionId,
+                requestedEnabled is not null &&
+                    requestedEnabled.TryGetValue(x.InstanceId, out var flag)
+                    ? flag : x.Enabled,
+                requestedModes is not null &&
+                    requestedModes.TryGetValue(x.InstanceId, out var mode)
+                    ? mode : x.ModeId))
+            .ToArray();
+        return new(new(name, entries), new(evaluated, []));
+    }
+
+    /// <summary>
+    /// Rebind externally stored operating preferences to this session's
+    /// approved installation. Every instance and its native definition must
+    /// match exactly; the serialized preset never supplies installation data.
+    /// </summary>
+    public NativeConstructPresetEvaluation EvaluatePreset(
+        NativeConstructOperatingPreset? preset)
+    {
+        var issues = new List<NativeOriginContractIssue>();
+        if (preset is null || preset.Components is null ||
+            string.IsNullOrWhiteSpace(preset.Name) ||
+            preset.Name.Length > 96 || preset.Name.Any(char.IsControl) ||
+            preset.Components.Count != _baseline.Components.Count)
+        {
+            issues.Add(new("construct-preset-structure-invalid", "preset",
+                NativeOriginIssueSeverity.Invalid,
+                "A preset needs a valid name and exactly one entry for each installed component."));
+        }
+
+        var known = _baseline.Components.ToDictionary(x => x.InstanceId,
+            StringComparer.Ordinal);
+        var enabled = new Dictionary<string, bool>(StringComparer.Ordinal);
+        var modes = new Dictionary<string, string>(StringComparer.Ordinal);
+        if (preset?.Components is not null)
+        {
+            // Bound the amount of caller-controlled data inspected even when
+            // the reported component count has already failed validation.
+            foreach (var component in preset.Components.Take(257))
+            {
+                if (component is null || string.IsNullOrWhiteSpace(component.InstanceId) ||
+                    !known.TryGetValue(component.InstanceId, out var installed) ||
+                    component.DefinitionId != installed.DefinitionId ||
+                    !enabled.TryAdd(component.InstanceId, component.Enabled) ||
+                    (component.ModeId is null && installed.ModeId is not null))
+                {
+                    issues.Add(new("construct-preset-instance-invalid", "preset.components",
+                        NativeOriginIssueSeverity.Invalid,
+                        "Preset entries must match unique installed instance and native definition IDs."));
+                    continue;
+                }
+                if (component.ModeId is not null)
+                    modes.Add(component.InstanceId, component.ModeId);
+            }
+        }
+
+        if (issues.Count > 0 || enabled.Count != _instanceIds.Count)
+        {
+            if (issues.Count == 0)
+                issues.Add(new("construct-preset-structure-invalid", "preset.components",
+                    NativeOriginIssueSeverity.Invalid, "The preset omits installed components."));
+            // Do not expose applicable grants from the fallback baseline as
+            // though an untrusted preset successfully established their state.
+            var baseline = EvaluateConfiguration();
+            var denied = new NativeConstructOperatingStateResult(
+                baseline.Assembly, [], _originGrantIds, issues.ToArray());
+            return new(denied, issues.ToArray());
+        }
+        return new(EvaluateConfiguration(enabled, modes), []);
+    }
+
+    /// <summary>
+    /// Compare two fully installation-bound presets without executing any
+    /// action or treating recovery as reversal of past failure consequences.
+    /// A power-loss source state may be Incomplete; target validity is
+    /// evaluated independently through the native operating session.
+    /// </summary>
+    public NativeConstructOperatingTransitionPreview PreviewPresetTransition(
+        NativeConstructOperatingPreset? before,
+        NativeConstructOperatingPreset? after)
+    {
+        var source = EvaluatePreset(before);
+        var target = EvaluatePreset(after);
+        if (!source.IsStructurallyValid || !target.IsStructurallyValid ||
+            source.Operating.Assembly.Status is
+                NativeOriginConstructionStatus.Invalid or
+                NativeOriginConstructionStatus.Unresolved or
+                NativeOriginConstructionStatus.Conflicting ||
+            target.Operating.Assembly.Status is
+                NativeOriginConstructionStatus.Invalid or
+                NativeOriginConstructionStatus.Unresolved or
+                NativeOriginConstructionStatus.Conflicting)
+            return new(source, target, [], [], [], [], [], [], []);
+
+        var sourceParts = source.Operating.Assembly.Components.ToDictionary(
+            x => x.InstanceId, StringComparer.Ordinal);
+        var targetParts = target.Operating.Assembly.Components.ToDictionary(
+            x => x.InstanceId, StringComparer.Ordinal);
+        var restored = targetParts.Values.Where(x => x.Operational &&
+                !sourceParts[x.InstanceId].Operational)
+            .Select(x => x.InstanceId).OrderBy(x => x, StringComparer.Ordinal).ToArray();
+        var interrupted = sourceParts.Values.Where(x => x.Operational &&
+                !targetParts[x.InstanceId].Operational)
+            .Select(x => x.InstanceId).OrderBy(x => x, StringComparer.Ordinal).ToArray();
+        var sourceGrants = source.Operating.ApplicableOriginGrantIds.ToHashSet(
+            StringComparer.Ordinal);
+        var targetGrants = target.Operating.ApplicableOriginGrantIds.ToHashSet(
+            StringComparer.Ordinal);
+        // A consequence is newly exposed only when a component was
+        // previously operating. Recovery does not erase historical effects.
+        var newFailures = target.Operating.Assembly.ShutdownConsequences
+            .Where(x => interrupted.Contains(x.InstanceId, StringComparer.Ordinal))
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal)
+            .ThenBy(x => x.ConsequenceId, StringComparer.Ordinal).ToArray();
+        return new(source, target, restored, interrupted,
+            targetGrants.Except(sourceGrants, StringComparer.Ordinal)
+                .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+            sourceGrants.Except(targetGrants, StringComparer.Ordinal)
+                .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+            newFailures,
+            restored.Where(x => targetParts[x].RequiresContinuousPower).ToArray(),
+            interrupted.Where(x => sourceParts[x].RequiresContinuousPower).ToArray());
+    }
+
     /// <summary>
     /// Preview ranked optional shedding without changing the approved Origin.
     /// Shutdown candidates are explicitly ordered, least desired first.
@@ -295,4 +443,48 @@ public sealed record NativeConstructPriorityPreview(
     public bool IsSatisfied => Evaluation.IsOperatingConfigurationValid &&
         InoperativeContinuousPowerInstanceIds.Count == 0 &&
         PlanningIssues.Count == 0;
+}
+
+/// <summary>
+/// Stored operating preferences, not an Origin snapshot or an authority token.
+/// Every entry names an existing instance and the definition it was installed
+/// from; saved data is rechecked on each use in the trusted operating session.
+/// </summary>
+public sealed record NativeConstructOperatingPreset(
+    string Name, IReadOnlyList<NativeConstructPresetComponent> Components);
+
+public sealed record NativeConstructPresetComponent(
+    string InstanceId, string DefinitionId, bool Enabled, string? ModeId);
+
+public sealed record NativeConstructPresetEvaluation(
+    NativeConstructOperatingStateResult Operating,
+    IReadOnlyList<NativeOriginContractIssue> PresetIssues)
+{
+    public bool IsStructurallyValid => PresetIssues.Count == 0;
+    public bool IsOperatingConfigurationValid =>
+        IsStructurallyValid && Operating.IsOperatingConfigurationValid;
+}
+
+public sealed record NativeConstructPresetCapture(
+    NativeConstructOperatingPreset? Preset,
+    NativeConstructPresetEvaluation Evaluation);
+
+/// <summary>
+/// A comparison of authorized installation-bound operating views. "Restored"
+/// means power/function becomes available, not that past injuries, fuel use,
+/// failures, or delayed consequences have been reversed.
+/// </summary>
+public sealed record NativeConstructOperatingTransitionPreview(
+    NativeConstructPresetEvaluation Before,
+    NativeConstructPresetEvaluation After,
+    IReadOnlyList<string> RestoredComponentInstanceIds,
+    IReadOnlyList<string> InterruptedComponentInstanceIds,
+    IReadOnlyList<string> NewlyApplicableOriginGrantIds,
+    IReadOnlyList<string> NewlyInactiveOriginGrantIds,
+    IReadOnlyList<NativeConstructFailure> NewlyTriggeredShutdownConsequences,
+    IReadOnlyList<string> RestoredContinuousPowerInstanceIds,
+    IReadOnlyList<string> InterruptedContinuousPowerInstanceIds)
+{
+    public bool IsTargetValid =>
+        Before.IsStructurallyValid && After.IsOperatingConfigurationValid;
 }
