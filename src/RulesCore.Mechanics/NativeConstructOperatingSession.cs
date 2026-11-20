@@ -486,5 +486,9 @@ public sealed record NativeConstructOperatingTransitionPreview(
     IReadOnlyList<string> InterruptedContinuousPowerInstanceIds)
 {
     public bool IsTargetValid =>
-        Before.IsStructurallyValid && After.IsOperatingConfigurationValid;
+        Before.IsStructurallyValid && After.IsOperatingConfigurationValid &&
+        // A technically evaluable manual shutdown is not a successful
+        // recovery target if it leaves a continuous-power load offline.
+        After.Operating.Assembly.Components.All(x =>
+            !x.RequiresContinuousPower || x.Operational);
 }
