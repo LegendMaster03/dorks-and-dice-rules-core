@@ -1183,4 +1183,91 @@ public sealed class NativeCharacterInfluenceResolverTests
             primaryOnly, "sheet.wolf", new Authority()).Status);
     }
 
+
+    [Fact]
+    public void SeparateVerifiedOverlapEventAddsThenSupersedesExactWriterWithoutChangingOwners()
+    {
+        var a = Influence("influence.a", effects:
+        [
+            Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13)
+        ]);
+        var b = Influence("influence.b", effects:
+        [
+            Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 15)
+        ]);
+        var state = Character([a, b]);
+        Assert.Equal("unresolved", Resolve(state).Status);
+
+        var first = Choose("first-winner", "strength-a",
+            "strength-a", "strength-b");
+        var planned = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, first, null, new Authority());
+        Assert.Equal("planned", planned.Status);
+        var owned = Assert.IsType<NativeCharacterState>(planned.ProposedState);
+        Assert.Empty(state.InfluenceOverlapSelections ?? []);
+        Assert.Equal(13, Resolve(owned).EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(state.PersistentInfluences!.Count, owned.PersistentInfluences!.Count);
+
+        var second = Choose("revised-winner", "strength-b",
+            "strength-a", "strength-b");
+        var replaced = NativeInfluenceOverlapDecisionPlanner.Plan(
+            owned, second, "first-winner", new Authority());
+        Assert.Equal("planned", replaced.Status);
+        var updated = Assert.IsType<NativeCharacterState>(replaced.ProposedState);
+        Assert.Single(updated.InfluenceOverlapSelections!);
+        Assert.Equal("revised-winner", updated.InfluenceOverlapSelections![0].Id);
+        Assert.Equal(15, Resolve(updated).EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal("first-winner", owned.InfluenceOverlapSelections![0].Id);
+
+        var duplicate = NativeInfluenceOverlapDecisionPlanner.Plan(
+            owned, second, null, new Authority());
+        Assert.Equal("invalid", duplicate.Status);
+        Assert.Contains(duplicate.Issues,
+            issue => issue.Code == "duplicate-overlap-decision-scope");
+    }
+
+    [Fact]
+    public void OverlapEventRejectsUnauthorizedDecisionAndCrossScopeReplacement()
+    {
+        var a = Influence("influence.a", effects:
+        [
+            Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13)
+        ]);
+        var b = Influence("influence.b", effects:
+        [
+            Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 15)
+        ]);
+        var prior = Choose("prior", "strength-a", "strength-a", "strength-b");
+        var state = Character([a, b]) with
+        {
+            InfluenceOverlapSelections = [prior]
+        };
+
+        var denied = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, Choose("new", "strength-b", "strength-a", "strength-b"),
+            "prior", new Authority { DenyOverlap = true });
+        Assert.Equal("invalid", denied.Status);
+        Assert.Null(denied.ProposedState);
+
+        var wrong = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, Choose("new", "strength-b", "strength-a", "strength-b") with
+            {
+                TargetSheetId = "sheet.wolf"
+            }, "prior", new Authority());
+        Assert.Equal("invalid", wrong.Status);
+        Assert.Contains(wrong.Issues,
+            issue => issue.Code == "overlap-replacement-scope-changed");
+
+        var missing = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, Choose("new", "strength-b", "strength-a", "strength-b"),
+            "nonexistent", new Authority());
+        Assert.Equal("invalid", missing.Status);
+        Assert.Contains(missing.Issues,
+            issue => issue.Code == "unknown-overlap-decision");
+    }
+
 }
