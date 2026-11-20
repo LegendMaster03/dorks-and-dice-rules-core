@@ -54,6 +54,7 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedManifestationReads();
             group.MapNativeOriginVerifiedUnderlying();
             group.MapVerifiedSupernaturalOwnershipPlans();
+            group.MapVerifiedInfluenceOverlapPlans();
         }
         // Separate trusted DM-reviewed evaluation. The caller must still
         // commit any authorized result through Character Sheet's store.
