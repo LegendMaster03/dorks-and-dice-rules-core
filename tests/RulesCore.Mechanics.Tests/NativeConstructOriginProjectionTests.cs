@@ -30,7 +30,9 @@ public sealed class NativeConstructOriginProjectionTests
             File.WriteAllText(Path.Combine(native, "rule.json"), """
                 {"id":"rule.creature-origination","kind":"rule","name":"Origination",
                  "methodDefinitions":[{"id":"construct-assembly","name":"Construct Assembly",
-                                       "initialConstructionAllowance":20}],
+                                       "initialConstructionAllowance":20,
+                                       "constructIntrinsics":{"creatureType":"construct",
+                                           "sizeChoice":{"from":["small","medium","large"]}}}],
                  "originSynergies":[
                    {"id":"sensor-guard","resultTraitId":"trait.fixture.sensor-guard",
                     "inputs":[
@@ -50,7 +52,8 @@ public sealed class NativeConstructOriginProjectionTests
                 """);
             File.WriteAllText(Path.Combine(native, "materials.json"), """
                 [{"id":"construct-material.steel","kind":"construct-material",
-                  "name":"Steel","constructionCost":1}]
+                  "name":"Steel","constructionCost":1,
+                  "installedOriginTraitIds":["trait.fixture.material-trait"]}]
                 """);
             File.WriteAllText(Path.Combine(native, "components.json"), """
                 [
@@ -105,8 +108,23 @@ public sealed class NativeConstructOriginProjectionTests
                   "installedOriginTraitIds":["trait.fixture.missing"]},
                  {"id":"construct-component.choice","kind":"construct-component",
                   "name":"Unbound choice","constructionCost":1,"powerDemand":0,
-                  "installedOriginTraitIds":["trait.fixture.choice"]}
+                  "installedOriginTraitIds":["trait.fixture.choice"]},
+                 {"id":"construct-component.aptitude","kind":"construct-component",
+                  "name":"Aptitude Module","constructionCost":1,"powerDemand":0,
+                  "installedOriginTraitIds":["trait.fixture.ability-choice"]}
                 ]
+                """);
+            File.WriteAllText(Path.Combine(native, "designs.json"), """
+                [{"id":"construct-design.reinforced","kind":"construct-design",
+                  "name":"Reinforced Plate","constructionCost":1,
+                  "compatibleComponentCapabilities":["protection"],
+                  "installedOriginTraitIds":["trait.fixture.design-trait"]}]
+                """);
+            File.WriteAllText(Path.Combine(native, "enhancements.json"), """
+                [{"id":"construct-enhancement.active-plate","kind":"construct-enhancement",
+                  "name":"Active Plate","constructionCost":1,"powerDemand":1,
+                  "compatibleComponentCapabilities":["protection"],
+                  "operationalOriginTraitIds":["trait.fixture.enhancement-active"]}]
                 """);
             File.WriteAllText(Path.Combine(native, "power-sources.json"), """
                 [
@@ -115,7 +133,9 @@ public sealed class NativeConstructOriginProjectionTests
                   "compatibleComponentCapabilities":["power-housing"],
                   "resourceKind":"fuel-unit","resourceCapacity":5,
                   "resourceUsePerStep":2,
-                  "resourceTransferOut":true,"resourceTransferIn":true},
+                  "resourceTransferOut":true,"resourceTransferIn":true,
+                  "installedOriginTraitIds":["trait.fixture.source-passive"],
+                  "operationalOriginTraitIds":["trait.fixture.source-active"]},
                  {"id":"construct-power-source.sealed","kind":"construct-power-source",
                   "name":"Sealed reservoir","constructionCost":1,"powerOutput":4,
                   "compatibleComponentCapabilities":["power-housing"],
@@ -163,7 +183,24 @@ public sealed class NativeConstructOriginProjectionTests
                  {"id":"trait.fixture.choice","kind":"origin-trait",
                   "name":"A Choice",
                   "trait":{"id":"choice","name":"A Choice",
-                           "chooseFrom":"fixture:any","choiceCount":1}}
+                           "chooseFrom":"fixture:any","choiceCount":1}},
+                 {"id":"trait.fixture.ability-choice","kind":"origin-trait",
+                  "name":"Aptitude","trait":{"id":"aptitude","name":"Aptitude",
+                   "mechanicalEffect":"fixture.aptitude",
+                   "abilityChoice":{"from":["intelligence","wisdom"],"perCharacter":true}}},
+                 {"id":"trait.fixture.material-trait","kind":"origin-trait",
+                  "name":"Material Trait","trait":{"id":"steel","mechanicalEffect":"fixture.steel"}},
+                 {"id":"trait.fixture.design-trait","kind":"origin-trait",
+                  "name":"Design Trait","trait":{"id":"reinforced","mechanicalEffect":"fixture.design"}},
+                 {"id":"trait.fixture.enhancement-active","kind":"origin-trait",
+                  "name":"Active Enhancement","trait":{"id":"active-plate",
+                   "mechanicalEffect":"fixture.enhancement"}},
+                 {"id":"trait.fixture.source-passive","kind":"origin-trait",
+                  "name":"Source Passive","trait":{"id":"source-passive",
+                   "mechanicalEffect":"fixture.source-passive"}},
+                 {"id":"trait.fixture.source-active","kind":"origin-trait",
+                  "name":"Source Active","trait":{"id":"source-active",
+                   "mechanicalEffect":"fixture.source-active"}}
                 ]
                 """);
             Catalog = NativeCatalogLoader.Load(
@@ -301,15 +338,27 @@ public sealed class NativeConstructOriginProjectionTests
     }
 
     [Fact]
-    public void ChoiceBearingTraitsRemainUnresolvedRatherThanSilentlyGranted()
+    public void OpenCatalogChoicesRequireExplicitSelectionAndTrustedEligibility()
     {
         using var fixture = new Fixture();
         var result = Evaluate(fixture, assembly:
             new([Part("choice", "choice")], InitialAllowance: 20));
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Origin.Status);
-        Assert.Null(result.Origin.Profile);
+        var candidate = result.Origin.EvaluatedProposal.Candidates.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.choice");
+        var requirement = Assert.Single(candidate.RequiredChoices!);
+        Assert.Equal("fixture:any", requirement.OptionCatalogId);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, result.Origin.Status);
         Assert.Contains(result.Origin.Issues, x =>
-            x.Code == "construct-origin-trait-binding-deferred");
+            x.Code == "required-origin-selection-missing");
+
+        var selected = Evaluate(fixture, proposal: Proposal() with
+        {
+            Manifestations = [new("choice-selected", candidate.Id, Choices:
+                [new("selection", ["forged-option"])] )]
+        }, assembly: new([Part("choice", "choice")], InitialAllowance: 20));
+        Assert.False(selected.IsMechanicallyAuthorized);
+        Assert.Contains(selected.Origin.Issues, x =>
+            x.Code == "choice-authorization-unresolved");
     }
 
     [Fact]
