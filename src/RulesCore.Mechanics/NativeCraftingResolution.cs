@@ -28,8 +28,29 @@ public sealed record NativeCraftingCheckResolution(
     bool? MeetsTarget, string Outcome, int? Margin, int? FlawCount,
     bool InputsConsumed, bool ProducesFunctionalOutput, string? Reason = null);
 
+public sealed record NativeQualifiedManufacturingResult(
+    NativeCraftingQualificationResult Qualification,
+    NativeCraftingCheckResolution? Manufacturing);
+
 public sealed class NativeCraftingResolver(NativeCatalogSnapshot catalog)
 {
+    /// <summary>
+    /// Apply verified mastery, recipe-knowledge, and material prerequisites
+    /// before invoking the existing manual manufacturing check. Ineligible
+    /// or unresolved projects never receive a manufacturing outcome; this
+    /// method does not consume components or roll dice. The legacy manual
+    /// path remains available for compatibility and explicit playtests.
+    /// </summary>
+    public NativeQualifiedManufacturingResult ResolveQualifiedManufacturing(
+        NativeManufacturingRequest request,
+        NativeCraftingQualificationRequest qualificationRequest)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var qualification = NativeCraftingQualification.Evaluate(qualificationRequest);
+        return new(qualification, qualification.Eligible == true
+            ? ResolveManufacturing(request) : null);
+    }
+
     public NativeCraftingCheckResolution ResolveManufacturing(
         NativeManufacturingRequest request)
     {
