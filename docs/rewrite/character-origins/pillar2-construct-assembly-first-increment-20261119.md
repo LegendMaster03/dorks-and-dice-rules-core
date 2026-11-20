@@ -582,3 +582,100 @@ consumption and conserved transfer, transfer without accidental step
 consumption, invalid starting balances, forged/over-capacity transactions,
 continuing authorized source outages, Origin immutability, and concurrent
 attempts with a shared expected revision.
+
+
+## Construct Assembly origination completion integration (2026-11-20)
+
+This section supersedes earlier interim descriptions that deferred intrinsic
+authoring, configured characteristic selection, and option-derived trait
+projection. It describes the integrated mechanical procedure; it does **not**
+approve first-party numeric balance or publish a playable Construct.
+
+### Trusted integration with the universal Origin procedure
+
+1. Select the existing native `construct-assembly` method. Its native
+   `initialConstructionAllowance` must be an authored nonnegative number
+   exactly matching the initial build's requested allowance. A draft or an
+   externally asserted budget never becomes an authorized first-party Origin.
+2. Assemble any number of component instances with independently selected
+   materials, optional design, distinct compatible enhancements, selected
+   native power source, optional mounting hierarchy and physical/power
+   connections. The existing evaluator validates compatibility, dependencies,
+   total installed costs, power and initial allowance before authorizing
+   any Origin candidates. A component need not be powered to count toward
+   the construction budget.
+3. For a custom Origin, the method may author `constructIntrinsics` containing
+   a native `creatureType` and either a fixed `size` or a finite `sizeChoice.from`
+   array. The type must resolve to a native creature type allowing this
+   origination method. These become trusted *intrinsic candidates* in the
+   universal engine, with normal manifestations, finite choices, reconciliation,
+   provenance and effective grant records. A process-type assertion alone
+   is still not an intrinsic grant; no anatomy or size is inferred from parts.
+   Without these or other approved intrinsic sources, the custom procedure
+   remains incomplete.
+4. Exact `installedOriginTraitIds` and `operationalOriginTraitIds` on native
+   component, material, design, enhancement and power-source definitions
+   produce instance-qualified **canonical** Origin trait candidates. Each
+   candidate records the actual selected native source, its occurrence within
+   the installation, and its canonical mechanical definition. Descriptive
+   capability tags do **not** become traits automatically.
+5. Supported finite `abilityChoice` and open-catalog `chooseFrom` selections
+   are presented through existing `NativeOriginChoiceRequirement` and
+   `NativeOriginManifestation` contracts. Finite bounds and source identity
+   are checked by the common engine; open catalogs still need trusted
+   eligibility evidence. Supported `originBindings` use the existing
+   dependent binder; Construct instance identities prevent choices from
+   being borrowed across distinct installed components. Unsupported
+   authoring remains unresolved, never treated as a silent free grant.
+6. Once the universal Origin engine authorizes the resulting profile,
+   an internal operating session keeps a defensive snapshot of installed
+   parts and permanent grants. It uses verified operational candidate IDs
+   to suppress only the applicable effects while power, operating mode or
+   functional dependencies change. Changing modes, disabling a source,
+   or transferring resources does not rewrite permanent Origin entitlements.
+
+### Distinct source/property categories
+
+- **Construction only:** material/component/option prices, installation
+  allowance, assembly attachment and cost accounting.
+- **Structural/functional:** explicitly authored `provides`,
+  `requiresAnyOf`, compatibility, mounting interfaces and power networks.
+- **Permanent Origin entitlements:** traits and intrinsically selected type
+  or size manifested and authorized through the universal Origin engine.
+- **Operational applicability:** native traits whose permanent entitlement
+  remains installed but whose active effects require an operational provider.
+
+A gameplay modification can still be previewed without initial allowance,
+but does not issue an updated permanent Origin; a separately authenticated
+acquisition and installation procedure is required.
+
+### Synthetic acceptance and unresolved authoring
+
+Fixture-only tests exercise a custom Construct with material, design,
+enhancement, power source, configured traits, intrinsic size choice and
+component-level provenance; verify cost against an explicitly fixture-authored
+allowance; reject unauthorized choices, forged references and incompatible
+states; and assert that changing power does not alter permanent grants.
+Additional focused tests verify configured trait dependencies do not
+cross into another component instance.
+
+**Remaining content authoring:** Reviewed canonical traits and compatible
+mechanical effects for the first-party component/material/design/enhancement/
+source catalog; first-party `constructIntrinsics` policy or another approved
+source of effective creature type and game size; published examples and
+guidance on compatible assembly configurations.
+
+**Unresolved numerical balancing:** Initial construction allowance,
+component/material/design/enhancement/power-source construction costs,
+source outputs, operating demands, and mechanical trait values/limits.
+The published candidate catalog remains intentionally unresolved and
+must not be authorized by inserting fixture-only values.
+
+**Separate future gameplay dependencies:** Durable resource persistence and
+host authorization, post-creation crafting/acquisition/installing, additional
+power-management policies, injury and delayed shutdown consequences, and
+the unified Character Origins UI. None are prerequisites to demonstrating
+mechanical initial origination with synthetic native definitions.
+
+This increment stops at mechanically integrated creation and acceptance
+coverage. It does not implement the complete Construct gameplay simulation.
