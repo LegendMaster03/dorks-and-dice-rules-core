@@ -100,7 +100,10 @@
       "grip"
     ],
     "craftingRecipeId": "crafting-recipe.construct-component.manipulator",
-    "powerDemand": 1
+    "powerDemand": 1,
+    "operationalOriginTraitIds": [
+      "trait.construct.physical-manipulation"
+    ]
   },
   {
     "id": "construct-component.weapon-mount",
@@ -284,7 +287,10 @@
       "crystal"
     ],
     "craftingRecipeId": "crafting-recipe.construct-component.crystal-eye",
-    "powerDemand": 1
+    "powerDemand": 1,
+    "operationalOriginTraitIds": [
+      "trait.construct.ordinary-optical-sight"
+    ]
   },
   {
     "id": "construct-component.docent-interface",

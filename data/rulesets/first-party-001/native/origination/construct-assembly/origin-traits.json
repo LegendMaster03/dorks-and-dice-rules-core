@@ -1,0 +1,28 @@
+[
+  {
+    "id": "trait.construct.ordinary-optical-sight",
+    "name": "Construct Optical Sight",
+    "kind": "origin-trait",
+    "rulesStatus": "candidate physical functional trait; nonvisual conditions apply; no special vision or bonus",
+    "trait": {
+      "id": "ordinary-optical-sight",
+      "name": "Ordinary Optical Sight",
+      "description": "While the installed eye is operational and exposed to sufficient visible light, its user can see through that optical interface. This does not grant darkvision, low-light vision, blindsight, or an independent Perception bonus.",
+      "sense": "ordinary-vision",
+      "requiresOperationalComponent": true
+    }
+  },
+  {
+    "id": "trait.construct.physical-manipulation",
+    "name": "Construct Physical Manipulation",
+    "kind": "origin-trait",
+    "rulesStatus": "candidate physical functional trait; no bonus action or weapon proficiency",
+    "trait": {
+      "id": "physical-manipulation",
+      "name": "Physical Manipulation",
+      "description": "While the installed manipulator and its required actuation and control support are operational, it can physically grasp and handle ordinary objects within its reach. This does not grant extra actions, additional hands for equipment rules, weapon proficiency, or any ability-score increase.",
+      "physicalManipulation": true,
+      "requiresOperationalComponent": true
+    }
+  }
+]

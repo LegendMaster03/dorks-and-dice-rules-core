@@ -31,3 +31,9 @@
 - Make mass and other material interactions observable through existing universal equipment/encumbrance and combat rules; avoid special Construct-only encumbrance.
 - Compare complete builds in concrete gameplay contexts, then set supported physical properties, recipe quantities, power costs, material resource valuations and an initial allowance. Retain the distinction between resources purchased and actual mechanical effectiveness.
 - Run the aggregate validation suite and sample first-party assembly fixtures **after** the content/integration pass, rather than treating individual catalog edits as independent approval gates.
+
+## Candidate pricing and minimal functional trait sources
+
+The native method now includes **provisional resource-unit values** for quotation, but intentionally omits `initialConstructionAllowance`. The reference file `data/reference/construct-assembly-balance-candidates-20261120.json` contains illustrative assemblies and a proposed allowance of 220 **for analysis only**. These are not approved prices or playable starting character entitlements.
+
+The method explicitly authors the Construct creature-type intrinsic. This is classification, not the monster stat-block package. Size remains unresolved until supported by physical construction. Optical sight and physical manipulation now have source-bound canonical trait definitions attached to their corresponding operational parts. Neither effect grants a numeric bonus, extra action, magic sense, or weapon proficiency; power or dependency failure can suppress operational applicability. Other senses, movement speeds, structural protection, and weight still require mechanical authoring and balancing.

@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "status": "candidate values for quantitative assembly comparisons; first-party origin remains unplayable without approved allowance, verified size, and remaining canonical traits",
+    "scope": "Construct Assembly recipe-input resource prices, not mechanical power or economic market prices",
+    "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling"
+  },
+  "candidateStartingAllowance": 220,
+  "candidateResourceUnitCosts": {
+    "construct-material.steel": 4,
+    "construct-material.darkwood": 7,
+    "construct-material.stone": 2,
+    "construct-material.crystal": 6,
+    "construct-material.alchemical-fiber": 5,
+    "construct-material.wood": 2,
+    "construct-material.cloth": 1,
+    "construct-material.iron": 3,
+    "crafting-material.alchemical-reagent": 5,
+    "crafting-material.fine-mechanisms": 6,
+    "crafting-material.optical-elements": 5,
+    "crafting-material.arcane-catalyst": 12,
+    "crafting-material.sealing-compound": 5,
+    "crafting-material.soul-essence": 20,
+    "crafting-material.infernal-reagent": 18
+  },
+  "illustrativeConfigurations": [
+    {
+      "id": "mechanical-medium-like",
+      "description": "Articulated steel-and-wood construct with mechanical power, sensory and manipulatory subsystems. Its creature size must be derived from the completed body before authorization.",
+      "components": [
+        [
+          "frame",
+          "structural-frame",
+          "steel",
+          null
+        ],
+        [
+          "housing",
+          "power-source-housing",
+          "steel",
+          "mechanical-engine"
+        ],
+        [
+          "control",
+          "control-module",
+          "wood",
+          null
+        ],
+        [
+          "circulation",
+          "alchemical-circulation",
+          "steel",
+          null
+        ],
+        [
+          "actuator",
+          "alchemical-actuator",
+          "steel",
+          null
+        ],
+        [
+          "hand",
+          "manipulator",
+          "steel",
+          null
+        ],
+        [
+          "mobility",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "eye",
+          "crystal-eye",
+          "crystal",
+          null
+        ]
+      ],
+      "notes": "At provisional power output 4, the assembly can install all selected mechanisms but cannot operate every active demand (7) simultaneously without another source or power management."
+    },
+    {
+      "id": "all-steel-overbuilt",
+      "description": "Excessive steel plating and extra locomotion; materials remain installed even if inactive.",
+      "components": [
+        [
+          "frame",
+          "structural-frame",
+          "steel",
+          null
+        ],
+        [
+          "housing",
+          "power-source-housing",
+          "steel",
+          "mechanical-engine"
+        ],
+        [
+          "control",
+          "control-module",
+          "steel",
+          null
+        ],
+        [
+          "locomotion-1",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "locomotion-2",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "locomotion-3",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "plate-1",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-2",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-3",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-4",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-5",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-6",
+          "protective-plating",
+          "steel",
+          null
+        ]
+      ],
+      "notes": "The initial allowance will limit what is affordable during creation, but gameplay additions are unrestricted by that allowance. Encumbrance and protection are not yet numerically projected, so this is a required later balance case."
+    },
+    {
+      "id": "minimal-nonhumanoid",
+      "description": "Compact non-humanoid assembly with housing, control, sensory interface and separate locomotion; no forced limb count or fixed frame role.",
+      "components": [
+        [
+          "housing",
+          "power-source-housing",
+          "wood",
+          "solar-crystal"
+        ],
+        [
+          "control",
+          "control-module",
+          "wood",
+          null
+        ],
+        [
+          "sensor",
+          "sensory-array",
+          "crystal",
+          null
+        ],
+        [
+          "locomotion",
+          "locomotion-unit",
+          "wood",
+          null
+        ]
+      ],
+      "notes": "Demonstrates that physical form should not require a structural-frame instance. Creature size remains unresolved."
+    }
+  ],
+  "balanceComparisons": [
+    "Evaluate resource cost separately from movement, survivability, offense, senses, weight and actions.",
+    "Test unpowered hardware as installed mass rather than free usable traits.",
+    "Check the same assembly under different material choices rather than assuming price equals capability.",
+    "Require a general mass/encumbrance mechanical consequence before claiming the overbuild is self-balancing."
+  ]
+}
