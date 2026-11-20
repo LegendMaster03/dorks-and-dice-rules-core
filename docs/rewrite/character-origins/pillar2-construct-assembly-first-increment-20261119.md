@@ -722,3 +722,7 @@ first-party numerical balance values are introduced by this integration.
 
 The assembly result exposes a detached `RequiredConstructionResources` bill
 for recipe-input starting construction. It is not an authorized inventory debit.
+
+A later-modification assembly preview in recipe-input mode may also quote
+required ingredients, but does **not** apply the historical starting allowance
+or authorize ownership, manufacture, installation, or new permanent traits.

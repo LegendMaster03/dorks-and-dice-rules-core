@@ -36,8 +36,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         // of charging arbitrary finished-part prices. Older fixture content
         // retains the original direct-cost contract unchanged.
         JsonElement? recipeCostMethod = null;
-        if (request.InitialConstruction &&
-            catalog.TryGetById("rule.creature-origination", out var originationRule) &&
+        if (catalog.TryGetById("rule.creature-origination", out var originationRule) &&
             originationRule?.Definition.TryGetProperty("methodDefinitions",
                 out var methods) == true && methods.ValueKind == JsonValueKind.Array)
         {

@@ -232,6 +232,7 @@ public sealed class NativeConstructRecipeCostTests
         using var fixture = new Fixture();
         var result = Evaluate(fixture, secondFrame: true, initial: false);
         Assert.True(result.IsAuthorized);
-        Assert.Equal(0, result.KnownConstructionCost);
+        Assert.Equal(23, result.KnownConstructionCost);
+        Assert.NotNull(result.RequiredConstructionResources);
     }
 }
