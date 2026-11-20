@@ -21,7 +21,19 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         INativeOriginAuthority? authority = null,
         INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
         EvaluateCore(request, authority, manifestedContributorAuthority,
-            reconstructionTarget: false);
+            reconstructionTarget: false, trustedNativeOffers: null);
+
+    /// <summary>
+    /// Shared construction path for catalog-verified, procedure-specific native
+    /// offers. Never expose this entrypoint to a client-controlled offer list.
+    /// </summary>
+    internal NativeOriginConstructionResult EvaluateWithTrustedNativeOffers(
+        NativeOriginConstructionRequest request,
+        IReadOnlyList<NativeOriginCandidate> trustedNativeOffers,
+        INativeOriginAuthority? authority = null,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
+        EvaluateCore(request, authority, manifestedContributorAuthority,
+            reconstructionTarget: false, trustedNativeOffers: trustedNativeOffers);
 
     // Only the trusted, result-oriented reconstruction service may construct
     // a target under a post-origination method without claiming a new birth.
@@ -30,19 +42,23 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         INativeOriginAuthority? authority = null,
         INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
         EvaluateCore(request, authority, manifestedContributorAuthority,
-            reconstructionTarget: true);
+            reconstructionTarget: true, trustedNativeOffers: null);
 
     private NativeOriginConstructionResult EvaluateCore(
         NativeOriginConstructionRequest request, INativeOriginAuthority? authority,
         INativeOriginManifestedContributorAuthority? manifestedContributorAuthority,
-        bool reconstructionTarget)
+        bool reconstructionTarget,
+        IReadOnlyList<NativeOriginCandidate>? trustedNativeOffers)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Proposal);
         var (trustedProposal, verifiedManifested, verificationIssues) =
             NativeOriginManifestedContributorVerifier.Resolve(request.Proposal,
                 request.TrustedScope, manifestedContributorAuthority);
-        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(trustedProposal);
+        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(
+            trustedProposal, trustedNativeOffers);
+        var trustedNativeOfferIds = (trustedNativeOffers ?? [])
+            .Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
         // Biology is one origination procedure, not a property of every
         // characteristic or the universal Origin engine. The method's authored
         // rule promotes only permitted offers; the player still selects them.
@@ -324,7 +340,9 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                  proposal.Intent == NativeOriginIntent.Mixed &&
                     proposal.Method.MethodId == "biological" &&
                     candidate.ContributorId is not null &&
-                    candidate.SelectionBasis.RuleReference == "rule.creature-origination");
+                    candidate.SelectionBasis.RuleReference == "rule.creature-origination" ||
+                 candidate.ContributorId is null &&
+                    trustedNativeOfferIds.Contains(candidate.Id));
             var permission = Verified("candidate", candidate.Id) ?? Verified("source", source.Id);
             var decisionEligible = permission is not null &&
                 JsonString(permission.EffectiveOutcome, "eligibility") == "eligible";

@@ -251,6 +251,24 @@ internal static class NativeOriginDependentBinder
         NativeOriginEffectiveGrant dependent, NativeOriginEffectiveGrant owner,
         IReadOnlyDictionary<string, NativeOriginCandidate> offered)
     {
+        // Construct assemblies may contain multiple instances of the same native
+        // component. The existing contributor identity alone is insufficient to
+        // distinguish them; a dependent may only borrow a choice from its own
+        // installed instance, not from a separate identical component.
+        static string? ConstructInstance(NativeOriginSourceOccurrence occurrence)
+        {
+            const string marker = "/instance/";
+            var path = occurrence.OccurrencePath;
+            var at = path.LastIndexOf(marker, StringComparison.Ordinal);
+            return at < 0 ? null : path[(at + marker.Length)..];
+        }
+        var dependentInstance = ConstructInstance(dependent.Identity.Occurrence);
+        var ownerInstance = ConstructInstance(owner.Identity.Occurrence);
+        if ((dependentInstance is not null || ownerInstance is not null) &&
+            (dependentInstance is null || ownerInstance is null ||
+             dependentInstance != ownerInstance))
+            return null;
+
         var from = dependent.SourceCandidateIds.Where(offered.ContainsKey)
             .Select(x => offered[x]).ToArray();
         var owners = owner.SourceCandidateIds.Where(offered.ContainsKey)

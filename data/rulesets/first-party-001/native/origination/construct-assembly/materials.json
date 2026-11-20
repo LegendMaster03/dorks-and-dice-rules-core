@@ -1,0 +1,50 @@
+[
+  {
+    "id": "construct-material.steel",
+    "kind": "construct-material",
+    "name": "Steel",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.darkwood",
+    "kind": "construct-material",
+    "name": "Darkwood",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.stone",
+    "kind": "construct-material",
+    "name": "Stone",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.crystal",
+    "kind": "construct-material",
+    "name": "Crystal",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.alchemical-fiber",
+    "kind": "construct-material",
+    "name": "Alchemical fibers",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.wood",
+    "kind": "construct-material",
+    "name": "Wood",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.cloth",
+    "kind": "construct-material",
+    "name": "Cloth",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  },
+  {
+    "id": "construct-material.iron",
+    "kind": "construct-material",
+    "name": "Iron",
+    "rulesStatus": "reference-material; effects-unbalanced"
+  }
+]

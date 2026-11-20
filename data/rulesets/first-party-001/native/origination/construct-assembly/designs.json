@@ -1,0 +1,60 @@
+[
+  {
+    "id": "construct-design.reinforced-frame",
+    "kind": "construct-design",
+    "name": "Reinforced frame",
+    "rulesStatus": "design-candidate; not balanced",
+    "description": "Strengthens an assembly's structural implementation without assuming its material, dimensions, or limb count.",
+    "compatibleComponentCapabilities": [
+      "structural-support",
+      "articulation"
+    ],
+    "provides": [
+      "reinforced-structure"
+    ]
+  },
+  {
+    "id": "construct-design.articulated",
+    "kind": "construct-design",
+    "name": "Articulated construction",
+    "rulesStatus": "design-candidate; not balanced",
+    "description": "Jointed or articulated arrangement of suitable components.",
+    "compatibleComponentCapabilities": [
+      "structural-support",
+      "manipulation",
+      "articulation"
+    ],
+    "provides": [
+      "articulated-structure"
+    ]
+  },
+  {
+    "id": "construct-design.flexible",
+    "kind": "construct-design",
+    "name": "Flexible construction",
+    "rulesStatus": "design-candidate; not balanced",
+    "description": "Permits a compliant or deformable structural arrangement when its component and material allow it.",
+    "compatibleComponentCapabilities": [
+      "structural-support",
+      "enclosure",
+      "articulation"
+    ],
+    "provides": [
+      "flexible-structure"
+    ]
+  },
+  {
+    "id": "construct-design.compartmentalized",
+    "kind": "construct-design",
+    "name": "Compartmentalized housing",
+    "rulesStatus": "design-candidate; not balanced",
+    "description": "Divides suitable internal housing into accessible sections.",
+    "compatibleComponentCapabilities": [
+      "enclosure",
+      "structural-support"
+    ],
+    "provides": [
+      "compartmentalized-housing"
+    ]
+  }
+]

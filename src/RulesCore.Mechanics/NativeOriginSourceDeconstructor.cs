@@ -10,7 +10,18 @@ namespace RulesCore.Mechanics;
 public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalog)
 {
     public (NativeOriginProposal Proposal, IReadOnlyList<NativeOriginContractIssue> Issues)
-        Deconstruct(NativeOriginProposal proposal)
+        Deconstruct(NativeOriginProposal proposal) => DeconstructCore(proposal, null);
+
+    // Trusted offers are created by a native procedure evaluator, not by an
+    // arbitrary caller of the public source-inspection API.
+    internal (NativeOriginProposal Proposal, IReadOnlyList<NativeOriginContractIssue> Issues)
+        Deconstruct(NativeOriginProposal proposal,
+            IReadOnlyList<NativeOriginCandidate> trustedNativeOffers) =>
+        DeconstructCore(proposal, trustedNativeOffers);
+
+    private (NativeOriginProposal Proposal, IReadOnlyList<NativeOriginContractIssue> Issues)
+        DeconstructCore(NativeOriginProposal proposal,
+            IReadOnlyList<NativeOriginCandidate>? trustedNativeOffers)
     {
         ArgumentNullException.ThrowIfNull(proposal);
         var issues = new List<NativeOriginContractIssue>();
@@ -154,6 +165,17 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             }
             // Custom and process-specific sources may participate in the method without
             // granting any characteristics. Explicit custom candidates are handled below.
+        }
+
+        // Only trusted procedure adapters may supply extra native occurrences.
+        // Client-provided candidates are checked against these canonical offers
+        // below and can never claim new native authorizations by themselves.
+        foreach (var verified in trustedNativeOffers ?? [])
+        {
+            if (!candidates.TryAdd(verified.Id, verified))
+                Issue("procedure-candidate-collision", verified.Id,
+                    NativeOriginIssueSeverity.Invalid,
+                    "A procedure offer collides with another authoritative source occurrence.");
         }
 
         foreach (var supplied in proposal.Candidates ?? [])
