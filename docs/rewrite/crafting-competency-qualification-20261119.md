@@ -39,7 +39,7 @@ The existing manual manufacturing resolver is not a recipe/inventory authorizer.
 - No Loot Tavern item-by-item rebalancing or distributing third-party content.
 - No independent crafting-only Competency advancement track or extra trade-specific rank.
 - No universal material substitutions or creature-family loot from incidental travel gathering; any future commonplace travel gathering belongs to the Travel System.
-- No changes to Heliana harvesting, magic essence, disenchanting, recipe schemas, exploration, UI, permissions, or material inventory storage in this slice.
+- No replacement or modification of Heliana's existing harvesting, essence, item-specific salvage or enchanting procedures, and no changes to third-party recipes, exploration, UI, permissions, or inventory storage in this slice.
 
 ## Test coverage
 
@@ -67,3 +67,7 @@ The new unit tests check all six rarity boundaries and rank 0 Untrained, higher-
 ## Implementation scope and future wiring
 
 These are typed, pure mechanics with unit tests, not character-owned inventory, recipe persistence, NPC training UI, or authenticated API endpoints. No first-party or third-party item catalogs are rewritten. No rank traits, individual profession advancement tracks, new travel gathering, or universal material substitutions are introduced. Production integration must resolve the user's authorized source recipe, character training, known designs, participating characters, facility, and actual inventory before executing item-specific procedures.
+
+## Explicit archaeology dig-site activity
+
+`NativeArchaeologyExcavation.Evaluate` supports a deliberately designated dig site (not a travel-stage gather). It accepts a verified historical-method qualification, a source-defined DC, one hour of excavation, and caller-supplied checks/dice. Normal success yields a caller-rolled 1d6 fragment count, a margin of 5 or more indicates a completed relic, and a natural 20 indicates a magical fragment, following the Warcraft-inspired exceptional result. The DM determines the site's provenance and resulting relic; the output is advisory and creates **no** inventory resource on its own. This does not change the existing monster-family harvesting mechanics.
