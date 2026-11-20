@@ -975,4 +975,44 @@ public sealed class NativeConstructOriginProjectionTests
             x.Code == "construct-power-overallocated");
     }
 
+
+    [Fact]
+    public void ResourceStepCannotReenableAnAlreadyUnavailableNativeSource()
+    {
+        using var fixture = new Fixture();
+        var baseline = FuelAssembly();
+        var approvedOutage = baseline with
+        {
+            Components = baseline.Components.Select(x => x.InstanceId == "sensor"
+                ? x with { Enabled = false } : x).ToArray(),
+            UnavailablePowerSourceInstanceIds = ["generator"]
+        };
+        var built = Evaluate(fixture, assembly: approvedOutage);
+        Assert.True(built.IsMechanicallyAuthorized);
+        var step = built.OperatingSession!.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 5 },
+            new Dictionary<string, bool> { ["sensor"] = true });
+        Assert.False(step.CanAdvance);
+        Assert.Contains("generator", step.UnavailablePowerSourceInstanceIds);
+        Assert.Equal(false, step.Evaluation!.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.Equal(0, step.Evaluation.Assembly.PowerNetworks!.Single().AvailableOutput);
+        Assert.Equal(0, Assert.Single(step.Sources).Consumed);
+        Assert.Equal(5, Assert.Single(step.Sources).After);
+    }
+
+    [Fact]
+    public void FiniteResourcePreviewDoesNotClaimUnlimitedEnduranceWithoutSource()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture);
+        Assert.True(built.IsMechanicallyAuthorized);
+        var step = built.OperatingSession!.PreviewResourceStep(
+            new Dictionary<string, int>());
+        Assert.False(step.CanAdvance);
+        Assert.Null(step.Evaluation);
+        Assert.Contains(step.Issues, x =>
+            x.Code == "construct-resource-model-unresolved");
+    }
+
 }

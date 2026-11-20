@@ -482,3 +482,17 @@ redistribution, or delayed failure. Synthetic acceptance fixtures cover
 consumption, the last available step, depletion effects and Origin grant
 suppression, disabled sources, invalid balances, unbalanced source duration,
 and forged outage references.
+
+### Finite-resource acceptance boundaries
+
+A resource preview can **not** clear an unavailable-source state previously
+captured in an authorized operating-session snapshot. Such a source remains
+unavailable regardless of the hypothetical balance supplied to a preview.
+Restoring a previously unavailable source requires a separate trusted
+recovery or resource-acquisition operation, not a different caller balance.
+
+A Construct without any selected resource-modeled power source cannot
+obtain a finite-endurance claim from `PreviewResourceStep`. Such a
+simulation reports unresolved source-resource authoring instead of
+interpreting a different, legacy source as unlimited endurance. Ordinary
+instantaneous power evaluation remains supported.

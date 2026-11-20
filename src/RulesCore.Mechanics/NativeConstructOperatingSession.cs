@@ -134,9 +134,14 @@ public sealed class NativeConstructOperatingSession
 
         var configured = _baseline with
         {
+            // Never let a transient operating request clear a source outage
+            // already captured in the trusted installation snapshot.
             UnavailablePowerSourceInstanceIds =
-                unavailablePowerSourceInstanceIds ??
-                _baseline.UnavailablePowerSourceInstanceIds,
+                unavailablePowerSourceInstanceIds is null
+                    ? _baseline.UnavailablePowerSourceInstanceIds
+                    : (_baseline.UnavailablePowerSourceInstanceIds ?? [])
+                        .Concat(unavailablePowerSourceInstanceIds)
+                        .Distinct(StringComparer.Ordinal).ToArray(),
             Components = _baseline.Components.Select(instance => instance with
             {
                 Enabled = requestedEnabled.TryGetValue(instance.InstanceId, out var enabled)
@@ -347,6 +352,10 @@ public sealed class NativeConstructOperatingSession
             .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
         var known = installed.Select(x => x.InstanceId)
             .ToHashSet(StringComparer.Ordinal);
+        if (installed.Length == 0)
+            issues.Add(new("construct-resource-model-unresolved", "resources",
+                NativeOriginIssueSeverity.Unresolved,
+                "A finite-duration preview requires at least one installed source with an authored resource model."));
         var sources = new List<(NativeConstructComponentInstance Part,
             string Kind, int Capacity, int Usage, int Remaining)>();
         foreach (var part in installed)
@@ -397,9 +406,11 @@ public sealed class NativeConstructOperatingSession
 
         // The unavailable-source overlay removes source output, not the
         // source housing or any of its installed Origin entitlements.
-        var unavailable = sources.Where(x => x.Remaining < x.Usage)
-            .Select(x => x.Part.InstanceId).OrderBy(x => x, StringComparer.Ordinal)
-            .ToArray();
+        var unavailable = (_baseline.UnavailablePowerSourceInstanceIds ?? [])
+            .Concat(sources.Where(x => x.Remaining < x.Usage)
+                .Select(x => x.Part.InstanceId))
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(x => x, StringComparer.Ordinal).ToArray();
         var operating = EvaluateConfiguration(requestedEnabled, requestedModes,
             unavailable);
         var states = operating.Assembly.Components.ToDictionary(x =>
